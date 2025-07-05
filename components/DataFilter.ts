@@ -10,7 +10,19 @@ import {
 } from "../utils/utils";
 import { WorkoutLogData } from "../types/WorkoutLogData";
 
+/**
+ * Handles filtering of workout log data based on various criteria.
+ * Provides methods for filtering by exercise name, workout name, and other parameters.
+ * Supports both exact and fuzzy matching with intelligent search strategies.
+ */
 export class DataFilter {
+  /**
+   * Filters workout log data based on the provided parameters.
+   * @param logData - Array of workout log data to filter
+   * @param params - Filter parameters (exercise, workout, chartType, etc.)
+   * @param debugMode - Whether to enable debug logging
+   * @returns Filtered data with information about the filtering method used
+   */
   static filterData(
     logData: WorkoutLogData[],
     params: EmbeddedChartParams | EmbeddedTableParams,
@@ -37,6 +49,12 @@ export class DataFilter {
     return { filteredData, filterMethodUsed, titlePrefix };
   }
 
+  /**
+   * Filters data by workout name or path.
+   * @param logData - Array of workout log data to filter
+   * @param params - Filter parameters containing workout or workoutPath
+   * @returns Filtered data with information about the filtering method used
+   */
   private static filterByWorkout(
     logData: WorkoutLogData[],
     params: EmbeddedChartParams | EmbeddedTableParams
@@ -60,6 +78,13 @@ export class DataFilter {
     return { filteredData, filterMethodUsed, titlePrefix };
   }
 
+  /**
+   * Filters data by exercise name using intelligent search strategies.
+   * @param logData - Array of workout log data to filter
+   * @param params - Filter parameters containing exercise name and matching options
+   * @param debugMode - Whether to enable debug logging
+   * @returns Filtered data with information about the filtering method used
+   */
   private static filterByExercise(
     logData: WorkoutLogData[],
     params: EmbeddedChartParams | EmbeddedTableParams,
@@ -104,6 +129,14 @@ export class DataFilter {
     return { filteredData, filterMethodUsed, titlePrefix };
   }
 
+  /**
+   * Generates a human-readable description of the filtering method used.
+   * @param bestStrategy - The strategy used for filtering (field, filename, etc.)
+   * @param bestPathKey - The key used for filtering
+   * @param matchesResult - Results from the matching process
+   * @param bestFileMatchesList - List of best file matches
+   * @returns Human-readable description of the filtering method
+   */
   private static getFilterMethodDescription(
     bestStrategy: string,
     bestPathKey: string,

@@ -1,6 +1,17 @@
 import { TrendIndicators } from "./types";
 
+/**
+ * Calculates trend indicators for workout data.
+ * Analyzes the slope of data points to determine if the trend is increasing,
+ * decreasing, or stable, and provides appropriate visual indicators.
+ */
 export class TrendCalculator {
+  /**
+   * Calculates trend indicators based on the slope of the data.
+   * @param slope - The calculated slope from linear regression
+   * @param volumeData - Array of numerical data points used for trend calculation
+   * @returns Object containing trend direction, color, and icon
+   */
   static getTrendIndicators(
     slope: number,
     volumeData: number[]

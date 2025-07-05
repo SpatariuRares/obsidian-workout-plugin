@@ -16,6 +16,7 @@ import { CreateLogModal } from "./modals/CreateLogModal";
 import { WorkoutChartsSettingTab } from "./settings/WorkoutChartsSettings";
 import { InsertChartModal } from "modals/InsertChartModal";
 import { InsertTableModal } from "modals/InsertTableModal";
+import { CreateExercisePageModal } from "./modals/CreateExercisePageModal";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -78,6 +79,14 @@ export default class WorkoutChartsPlugin extends Plugin {
       name: "Insert Workout Table",
       callback: () => {
         new InsertTableModal(this.app, this).open();
+      },
+    });
+
+    this.addCommand({
+      id: "create-exercise-page",
+      name: "Create Exercise Page",
+      callback: () => {
+        new CreateExercisePageModal(this.app, this).open();
       },
     });
 
@@ -237,23 +246,28 @@ export default class WorkoutChartsPlugin extends Plugin {
           filterLogDataByExercise,
         } = await import("./utils/utils");
 
+        const exerciseName =
+          typeof params.exercise === "string" ? params.exercise : "";
+        const exactMatch =
+          typeof params.exactMatch === "boolean" ? params.exactMatch : false;
+
         const matchesResult = findExerciseMatches(
           logData,
-          params.exercise,
+          exerciseName,
           this.settings.debugMode
         );
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
           determineExerciseFilterStrategy(
             matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
-            params.exactMatch || false,
+            exactMatch,
             this.settings.debugMode,
-            params.exercise // pass exercise name for robust exact match
+            exerciseName // pass exercise name for robust exact match
           );
 
         if (this.settings.debugMode) {
           console.log("Exercise search debug:", {
-            exercise: params.exercise,
+            exercise: exerciseName,
             totalData: logData.length,
             matchesResult,
             bestStrategy,
@@ -274,7 +288,7 @@ export default class WorkoutChartsPlugin extends Plugin {
             ...new Set(logData.map((d) => d.exercise)),
           ].join(", ");
           const noMatchDiv = document.createElement("div");
-          noMatchDiv.textContent = `No data found for exercise: ${params.exercise}. Available exercises: ${availableExercises}`;
+          noMatchDiv.textContent = `No data found for exercise: ${exerciseName}. Available exercises: ${availableExercises}`;
           noMatchDiv.className = "workout-log-no-match";
           el.appendChild(noMatchDiv);
           return;

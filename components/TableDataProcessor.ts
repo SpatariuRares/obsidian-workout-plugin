@@ -1,7 +1,18 @@
 import { WorkoutLogData } from "../types/WorkoutLogData";
-import { EmbeddedTableParams, TableData } from "./types";
+import { EmbeddedTableParams, TableData, TableRow } from "./types";
 
+/**
+ * Processes workout log data for table display.
+ * Handles data formatting, sorting, limiting, and column configuration
+ * for workout log tables.
+ */
 export class TableDataProcessor {
+  /**
+   * Processes workout log data into a format suitable for table display.
+   * @param logData - Array of workout log data to process
+   * @param params - Table parameters including columns, limit, and display options
+   * @returns Processed table data with headers, rows, and metadata
+   */
   static processTableData(
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
@@ -52,12 +63,23 @@ export class TableDataProcessor {
       if (log.file?.path && log.file?.basename) {
         link = `[[${log.file.path}|${log.file.basename}]]`;
       }
-      return [formattedDate, exerciseDisplay, reps, weight, volume, link];
+      return {
+        displayRow: [
+          formattedDate,
+          exerciseDisplay,
+          reps,
+          weight,
+          volume,
+          link,
+        ],
+        originalDate: log.date, // Keep original date for grouping
+        dateKey: this.getDateKey(log.date), // Date key for grouping (YYYY-MM-DD)
+      };
     });
 
     return {
       headers,
-      rows,
+      rows: rows as TableRow[],
       totalRows: limitedData.length,
       filterResult: {
         filteredData: limitedData,
@@ -68,6 +90,11 @@ export class TableDataProcessor {
     };
   }
 
+  /**
+   * Formats a date string for display in the table.
+   * @param dateString - ISO date string to format
+   * @returns Formatted date string in HH:MM - DD/MM format
+   */
   private static formatDate(dateString: string): string {
     try {
       const date = new Date(dateString);
@@ -82,6 +109,11 @@ export class TableDataProcessor {
     }
   }
 
+  /**
+   * Formats exercise name for display by removing file extensions.
+   * @param exercise - Exercise name to format
+   * @returns Formatted exercise name without file extensions
+   */
   private static getExerciseDisplay(exercise: string): string {
     if (!exercise) return "N/D";
 
@@ -89,6 +121,28 @@ export class TableDataProcessor {
     return exercise.replace(/\.md$/i, "");
   }
 
+  /**
+   * Creates a date key for grouping (YYYY-MM-DD format).
+   * @param dateString - ISO date string
+   * @returns Date key string in YYYY-MM-DD format
+   */
+  private static getDateKey(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    } catch (error) {
+      return "invalid-date";
+    }
+  }
+
+  /**
+   * Validates table parameters and returns any validation errors.
+   * @param params - Table parameters to validate
+   * @returns Array of validation error messages
+   */
   static validateTableParams(params: EmbeddedTableParams): string[] {
     const errors: string[] = [];
 
@@ -127,6 +181,10 @@ export class TableDataProcessor {
     return errors;
   }
 
+  /**
+   * Returns default table parameters for new table instances.
+   * @returns Default table parameters with sensible defaults
+   */
   static getDefaultTableParams(): EmbeddedTableParams {
     return {
       limit: 50,

@@ -227,7 +227,7 @@ export function filterLogDataByExercise(
       return getMatchScore(exerciseField, pathKey) >= PATH_MATCH_THRESHOLD;
     });
   }
-  return logData;
+  return [];
 }
 
 /**

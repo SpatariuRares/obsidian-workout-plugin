@@ -42,9 +42,15 @@ export interface FilterResult {
   titlePrefix: string;
 }
 
+export interface TableRow {
+  displayRow: string[];
+  originalDate: string;
+  dateKey: string;
+}
+
 export interface TableData {
   headers: string[];
-  rows: any[][];
+  rows: TableRow[];
   totalRows: number;
   filterResult: FilterResult;
   params: EmbeddedTableParams;

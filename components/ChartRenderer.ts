@@ -2,7 +2,17 @@ import { Chart } from "chart.js/auto";
 import { EmbeddedChartParams, ChartConfig, TrendIndicators } from "./types";
 import { calculateTrendLine } from "../utils/utils";
 
+/**
+ * Handles the rendering of workout data charts using Chart.js.
+ * Provides methods for creating chart containers, configuring chart options,
+ * and rendering interactive charts with trend lines and styling.
+ */
 export class ChartRenderer {
+  /**
+   * Creates a container element for the chart with proper styling.
+   * @param contentDiv - The parent HTML element to append the chart container to
+   * @returns The created chart container element
+   */
   static createChartContainer(contentDiv: HTMLElement): HTMLElement {
     const chartContainer = contentDiv.createEl("div", {
       cls: "embedded-chart-container",
@@ -11,6 +21,11 @@ export class ChartRenderer {
     return chartContainer;
   }
 
+  /**
+   * Creates a canvas element for the chart rendering.
+   * @param chartContainer - The container element to append the canvas to
+   * @returns The created canvas element
+   */
   static createCanvas(chartContainer: HTMLElement): HTMLCanvasElement {
     const canvas = chartContainer.createEl("canvas", {
       cls: "embedded-chart-canvas",
@@ -19,6 +34,12 @@ export class ChartRenderer {
     return canvas;
   }
 
+  /**
+   * Adds a trend line dataset to the existing chart datasets.
+   * Calculates the trend line using linear regression and adds it as a dashed line.
+   * @param datasets - Array of chart datasets to add the trend line to
+   * @param trendIndicators - Trend indicators containing slope and intercept data
+   */
   static addTrendLineToDatasets(
     datasets: any[],
     trendIndicators: TrendIndicators
@@ -45,6 +66,14 @@ export class ChartRenderer {
     }
   }
 
+  /**
+   * Creates a Chart.js configuration object with styling and options.
+   * @param labels - Array of labels for the x-axis (dates)
+   * @param datasets - Array of datasets to display in the chart
+   * @param chartType - Type of chart data (volume, weight, reps)
+   * @param params - Chart parameters including title and display options
+   * @returns Chart.js configuration object
+   */
   static createChartConfig(
     labels: string[],
     datasets: any[],
@@ -161,6 +190,14 @@ export class ChartRenderer {
     };
   }
 
+  /**
+   * Renders a Chart.js chart in the specified container.
+   * @param chartContainer - The container element to render the chart in
+   * @param labels - Array of labels for the x-axis (dates)
+   * @param datasets - Array of datasets to display in the chart
+   * @param params - Chart parameters including title and display options
+   * @returns True if chart was successfully rendered, false if Chart.js is not available
+   */
   static renderChart(
     chartContainer: HTMLElement,
     labels: string[],

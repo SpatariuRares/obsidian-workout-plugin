@@ -104,6 +104,11 @@
   text-decoration: underline;
 }
 
+.workout-table-link {
+  cursor: pointer;
+  font-weight: 500;
+}
+
 .workout-table-date-cell {
   font-weight: 500;
   color: var(--text-accent);
@@ -519,4 +524,14 @@
   border: 1.5px solid var(--background-modifier-border);
   color: var(--text-normal);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+.workout-table-container .workout-log-table tr.group-even {
+  background-color: var(--background-secondary) !important;
+}
+.workout-table-container .workout-log-table tr.group-odd {
+  background-color: var(--background-primary) !important;
+}
+.workout-table-container .workout-table-spacer {
+  background: transparent !important;
 }

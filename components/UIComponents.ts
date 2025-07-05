@@ -1,7 +1,17 @@
 import { Notice } from "obsidian";
 import { CreateLogModal } from "../modals/CreateLogModal";
 
+/**
+ * Provides reusable UI components for the workout charts plugin.
+ * Handles rendering of loading indicators, info messages, error messages,
+ * and interactive elements like buttons and tables.
+ */
 export class UIComponents {
+  /**
+   * Renders a loading indicator with spinner and text.
+   * @param container - The HTML element to render the loading indicator in
+   * @returns The created loading indicator element
+   */
   static renderLoadingIndicator(container: HTMLElement): HTMLElement {
     const loadingDiv = container.createEl("div", {
       cls: "embedded-chart-loading",
@@ -10,6 +20,12 @@ export class UIComponents {
     return loadingDiv;
   }
 
+  /**
+   * Renders an informational message with appropriate styling.
+   * @param container - The HTML element to render the message in
+   * @param message - The message text to display
+   * @param type - The type of message (info, warning, success)
+   */
   static renderInfoMessage(
     container: HTMLElement,
     message: string,
@@ -29,6 +45,11 @@ export class UIComponents {
     infoDiv.innerHTML = `<strong>${icon}</strong> ${message}`;
   }
 
+  /**
+   * Renders an error message with appropriate styling.
+   * @param container - The HTML element to render the error message in
+   * @param message - The error message text to display
+   */
   static renderErrorMessage(container: HTMLElement, message: string): void {
     container.innerHTML = `
       <div class="workout-chart-error">
@@ -37,6 +58,10 @@ export class UIComponents {
     `;
   }
 
+  /**
+   * Renders a message when no workout data is found.
+   * @param container - The HTML element to render the message in
+   */
   static renderNoDataMessage(container: HTMLElement): void {
     container.innerHTML = `
       <div class="workout-log-no-data">
@@ -46,22 +71,31 @@ export class UIComponents {
     `;
   }
 
+  /**
+   * Renders a message when no matching exercise data is found.
+   * @param container - The HTML element to render the message in
+   * @param exercise - The exercise name that was searched for
+   * @param logData - Array of available workout log data
+   */
   static renderNoMatchMessage(
     container: HTMLElement,
     exercise: string,
     logData: any[]
   ): void {
-    const availableExercises = [
-      ...new Set(logData.map((d) => d.exercise)),
-    ].join(", ");
     container.innerHTML = `
       <div class="workout-log-no-match">
         Nessun dato trovato per l'esercizio: <strong>${exercise}</strong>
-        <br>Esercizi disponibili: ${availableExercises}
       </div>
     `;
   }
 
+  /**
+   * Renders debug information for troubleshooting.
+   * @param container - The HTML element to render the debug info in
+   * @param data - Array of data being processed
+   * @param chartType - Type of chart being rendered
+   * @param filterMethod - Method used for filtering the data
+   */
   static renderDebugInfo(
     container: HTMLElement,
     data: any[],
@@ -79,6 +113,13 @@ export class UIComponents {
     `;
   }
 
+  /**
+   * Renders a footer with summary information about the data.
+   * @param contentDiv - The HTML element to render the footer in
+   * @param volumeData - Array of numerical data points
+   * @param filterResult - Result of the data filtering process
+   * @param chartType - Type of chart being displayed
+   */
   static renderFooter(
     contentDiv: HTMLElement,
     volumeData: number[],
@@ -99,6 +140,13 @@ export class UIComponents {
     infoFooterDiv.innerHTML = infoFooterText;
   }
 
+  /**
+   * Renders a fallback table when Chart.js is not available.
+   * @param container - The HTML element to render the fallback table in
+   * @param labels - Array of labels for the table
+   * @param volumeData - Array of numerical data for the table
+   * @param title - Title for the fallback table
+   */
   static renderFallbackTable(
     container: HTMLElement,
     labels: string[],
@@ -122,6 +170,10 @@ export class UIComponents {
       "📊 Tabella di fallback (Plugin Charts non disponibile o errore)";
   }
 
+  /**
+   * Creates the header row for a table.
+   * @param table - The table element to add the header to
+   */
   private static createTableHeader(table: HTMLTableElement): void {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
@@ -131,6 +183,12 @@ export class UIComponents {
     });
   }
 
+  /**
+   * Creates the body rows for a table.
+   * @param table - The table element to add the body rows to
+   * @param labels - Array of labels for the rows
+   * @param volumeData - Array of numerical data for the rows
+   */
   private static createTableBody(
     table: HTMLTableElement,
     labels: string[],
@@ -146,6 +204,14 @@ export class UIComponents {
     });
   }
 
+  /**
+   * Creates an "Add Log" button for creating new workout logs.
+   * @param container - The HTML element to render the button in
+   * @param exerciseName - Name of the exercise to pre-fill in the log
+   * @param currentPageLink - Link to the current page for the log
+   * @param plugin - Plugin instance for opening the create log modal
+   * @param onLogCreated - Callback function to execute when a log is created
+   */
   static createAddLogButton(
     container: HTMLElement,
     exerciseName: string,

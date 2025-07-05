@@ -31,6 +31,19 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
+      .setName("Exercise Folder Path")
+      .setDesc("Path to the folder containing exercise pages")
+      .addText((text) =>
+        text
+          .setPlaceholder("Enter folder path")
+          .setValue(this.plugin.settings.exerciseFolderPath)
+          .onChange(async (value) => {
+            this.plugin.settings.exerciseFolderPath = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
       .setName("Default Exercise")
       .setDesc("Default exercise to show in charts")
       .addText((text) =>

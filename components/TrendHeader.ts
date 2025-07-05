@@ -1,6 +1,17 @@
 import { TrendIndicators } from "./types";
 
+/**
+ * Renders trend header information for workout charts.
+ * Displays trend direction, variation percentage, and visual indicators
+ * to help users understand their workout progress.
+ */
 export class TrendHeader {
+  /**
+   * Renders a trend header with progress information.
+   * @param container - The HTML element to render the trend header in
+   * @param trendIndicators - Trend indicators containing direction, color, and icon
+   * @param volumeData - Array of numerical data for calculating variation
+   */
   static render(
     container: HTMLElement,
     trendIndicators: TrendIndicators,
@@ -30,6 +41,11 @@ export class TrendHeader {
     `;
   }
 
+  /**
+   * Calculates the variation between first and last data points.
+   * @param volumeData - Array of numerical data points
+   * @returns Object containing first value, last value, and percentage change
+   */
   private static calculateVariation(volumeData: number[]) {
     let firstValue: number | undefined,
       lastValue: number | undefined,
@@ -52,6 +68,15 @@ export class TrendHeader {
     return { firstValue, lastValue, percentChange };
   }
 
+  /**
+   * Formats the variation text with appropriate styling and context.
+   * @param firstValue - The first value in the dataset
+   * @param lastValue - The last value in the dataset
+   * @param percentChange - The calculated percentage change as a string
+   * @param trendColor - Color to use for the variation text
+   * @param volumeData - Array of numerical data points for context
+   * @returns Formatted variation text with color coding and units
+   */
   private static formatVariationText(
     firstValue: number | undefined,
     lastValue: number | undefined,

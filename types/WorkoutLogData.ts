@@ -20,6 +20,7 @@ export interface WorkoutLogData {
  */
 export interface WorkoutChartsSettings {
   logFolderPath: string;
+  exerciseFolderPath: string;
   defaultExercise: string;
   chartType: "volume" | "weight" | "reps";
   dateRange: number; // days
@@ -33,6 +34,7 @@ export interface WorkoutChartsSettings {
  */
 export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   logFolderPath: "Log/Data",
+  exerciseFolderPath: "Esercizi",
   defaultExercise: "",
   chartType: "volume",
   dateRange: 30,

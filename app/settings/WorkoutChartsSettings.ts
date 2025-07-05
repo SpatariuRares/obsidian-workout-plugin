@@ -18,33 +18,34 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     containerEl.createEl("h2", { text: "Workout Charts Settings" });
 
-    // CSV Logging Section
-    containerEl.createEl("h3", { text: "CSV Data Storage" });
+    // CSV Mode Info
+    const csvInfo = containerEl.createEl("div", {
+      cls: "setting-item-info",
+    });
+    csvInfo.innerHTML = `
+      <div style="
+        background: var(--background-secondary);
+        border: 1px solid var(--background-modifier-border);
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 20px;
+      ">
+        <h4 style="margin: 0 0 8px 0; color: var(--interactive-accent);">📊 CSV Mode</h4>
+        <p style="margin: 0; font-size: 14px; color: var(--text-muted);">
+          All workout data is stored in a single CSV file for better performance and easier management.
+        </p>
+      </div>
+    `;
 
     new Setting(containerEl)
       .setName("CSV Log File Path")
-      .setDesc("Path to the CSV file for storing all workout logs")
+      .setDesc("Path to the CSV file containing all workout log data")
       .addText((text) =>
         text
           .setPlaceholder("Enter CSV file path")
           .setValue(this.plugin.settings.csvLogFilePath)
           .onChange(async (value) => {
             this.plugin.settings.csvLogFilePath = value;
-            await this.plugin.saveSettings();
-          })
-      );
-
-    new Setting(containerEl)
-      .setName("Legacy Log Folder Path")
-      .setDesc(
-        "Path to the legacy log folder (used for migration from old file-based system)"
-      )
-      .addText((text) =>
-        text
-          .setPlaceholder("Enter legacy folder path")
-          .setValue(this.plugin.settings.logFolderPath)
-          .onChange(async (value) => {
-            this.plugin.settings.logFolderPath = value;
             await this.plugin.saveSettings();
           })
       );
@@ -62,12 +63,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           })
       );
 
-    // General Settings
-    containerEl.createEl("h3", { text: "General Settings" });
-
     new Setting(containerEl)
       .setName("Debug Mode")
-      .setDesc("Enable debug logging")
+      .setDesc("Enable debug logging for troubleshooting")
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.debugMode)
@@ -77,30 +75,21 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           })
       );
 
-    // Migration Section
-    containerEl.createEl("h3", { text: "Data Migration" });
+    // CSV Management Section
+    containerEl.createEl("h3", { text: "CSV File Management" });
 
-    const migrationContainer = containerEl.createEl("div", {
-      cls: "migration-section",
-    });
-
-    migrationContainer.innerHTML = `
-      <p><strong>Note:</strong> If you have existing individual log files from the old system,
-      you can use the migration command below to convert your existing data to CSV format.</p>
-    `;
-
-    const migrateButton = migrationContainer.createEl("button", {
-      text: "Migrate Existing Logs to CSV",
-      cls: "mod-warning",
-    });
-
-    migrateButton.addEventListener("click", async () => {
-      try {
-        await this.plugin.migrateToCSV();
-        new Notice("Migration completed successfully!");
-      } catch (error) {
-        new Notice(`Migration failed: ${error.message}`);
-      }
-    });
+    new Setting(containerEl)
+      .setName("Create CSV Log File")
+      .setDesc("Create a new CSV log file with sample data")
+      .addButton((button) =>
+        button.setButtonText("Create File").onClick(async () => {
+          try {
+            await this.plugin.createCSVLogFile();
+            new Notice("CSV log file created successfully!");
+          } catch (error) {
+            new Notice(`Error creating CSV file: ${error.message}`);
+          }
+        })
+      );
   }
 }

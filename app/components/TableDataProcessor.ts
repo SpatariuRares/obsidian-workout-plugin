@@ -23,15 +23,17 @@ export class TableDataProcessor {
       "Ripetizioni",
       "Peso (kg)",
       "Volume",
+      "Actions",
     ];
 
     let headers = defaultColumns;
     if (params.columns) {
       if (Array.isArray(params.columns)) {
-        headers = params.columns;
+        headers = [...params.columns, "Actions"];
       } else if (typeof params.columns === "string") {
         try {
-          headers = JSON.parse(params.columns);
+          const parsedColumns = JSON.parse(params.columns);
+          headers = [...parsedColumns, "Actions"];
         } catch {
           console.warn(
             "Invalid columns parameter, using default:",
@@ -110,11 +112,24 @@ export class TableDataProcessor {
       const weight = log.weight?.toString() || "N/D";
       const volume = log.volume?.toString() || "N/D";
 
-      rows.push({
-        displayRow: [formattedDate, exerciseDisplay, reps, weight, volume],
+      // Create row with all data columns plus empty string for Actions column
+      const displayRow = [
+        formattedDate,
+        exerciseDisplay,
+        reps,
+        weight,
+        volume,
+        "",
+      ];
+
+      const row = {
+        displayRow,
         originalDate: log.date,
         dateKey: dateKey,
-      });
+        originalLog: log, // Store the original log data for actions
+      };
+
+      rows.push(row);
     }
 
     return rows;

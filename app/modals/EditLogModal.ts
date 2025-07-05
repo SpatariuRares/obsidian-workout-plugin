@@ -1,26 +1,27 @@
-// Refactored CreateLogModal using reusable components
+// EditLogModal for editing existing workout log entries
 import { App, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "../../main";
 import { ModalBase } from "./base/ModalBase";
 import { ExerciseAutocomplete } from "./components/ExerciseAutocomplete";
-import { CSVWorkoutLogEntry } from "../types/WorkoutLogData";
+import { CSVWorkoutLogEntry, WorkoutLogData } from "../types/WorkoutLogData";
 
-export class CreateLogModal extends ModalBase {
+export class EditLogModal extends ModalBase {
   private exerciseName?: string;
   private currentPageLink?: string;
-  private onLogCreated?: () => void;
+  private onLogUpdated?: () => void;
+  private originalLog: WorkoutLogData;
 
   constructor(
     app: App,
     private plugin: WorkoutChartsPlugin,
-    exerciseName?: string,
-    currentPageLink?: string,
-    onLogCreated?: () => void
+    originalLog: WorkoutLogData,
+    onLogUpdated?: () => void
   ) {
     super(app);
-    this.exerciseName = exerciseName;
-    this.currentPageLink = currentPageLink;
-    this.onLogCreated = onLogCreated;
+    this.originalLog = originalLog;
+    this.exerciseName = originalLog.exercise;
+    this.currentPageLink = originalLog.origine;
+    this.onLogUpdated = onLogUpdated;
   }
 
   async onOpen() {
@@ -29,7 +30,7 @@ export class CreateLogModal extends ModalBase {
 
     // Add modal title
     const titleEl = contentEl.createEl("h2", {
-      text: "Create Workout Log (CSV Mode)",
+      text: "Edit Workout Log (CSV Mode)",
     });
 
     // Create form container
@@ -45,6 +46,9 @@ export class CreateLogModal extends ModalBase {
       this.exerciseName
     );
 
+    // Pre-fill exercise field
+    exerciseElements.exerciseInput.value = this.originalLog.exercise || "";
+
     // Reps input
     const repsContainer = this.createFormGroup(formContainer);
     const repsInput = this.createNumberInput(
@@ -55,6 +59,8 @@ export class CreateLogModal extends ModalBase {
       undefined,
       "e.g., 10"
     );
+    // Pre-fill reps field
+    repsInput.value = this.originalLog.reps?.toString() || "";
 
     // Weight input
     const weightContainer = this.createFormGroup(formContainer);
@@ -67,6 +73,8 @@ export class CreateLogModal extends ModalBase {
       "e.g., 10.5"
     );
     weightInput.setAttribute("step", "0.5");
+    // Pre-fill weight field
+    weightInput.value = this.originalLog.weight?.toString() || "";
 
     // Workout section
     const workoutSection = this.createSection(formContainer, "Workout");
@@ -76,7 +84,7 @@ export class CreateLogModal extends ModalBase {
     const currentWorkoutToggle = this.createCheckbox(
       currentWorkoutContainer,
       "Use current page as workout",
-      true,
+      false,
       "currentWorkout"
     );
 
@@ -86,7 +94,7 @@ export class CreateLogModal extends ModalBase {
       workoutContainer,
       "Workout (optional):",
       "",
-      this.currentPageLink || ""
+      this.originalLog.workout || ""
     );
 
     // Handle current workout toggle
@@ -99,18 +107,11 @@ export class CreateLogModal extends ModalBase {
         workoutInput.classList.remove("opacity-100");
       } else {
         workoutInput.disabled = false;
-        workoutInput.value = "";
+        workoutInput.value = this.originalLog.workout || "";
         workoutInput.classList.add("opacity-100");
         workoutInput.classList.remove("opacity-50");
       }
     });
-
-    // Set initial state
-    if (currentWorkoutToggle.checked) {
-      workoutInput.disabled = true;
-      workoutInput.value = currentFileName;
-      workoutInput.classList.add("opacity-50");
-    }
 
     // Buttons container
     const buttonsContainer = this.createButtonsSection(formContainer);
@@ -121,16 +122,16 @@ export class CreateLogModal extends ModalBase {
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
-    // Create button
-    const createBtn = buttonsContainer.createEl("button", {
-      text: "Create Log",
+    // Update button
+    const updateBtn = buttonsContainer.createEl("button", {
+      text: "Update Log",
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
-    createBtn.addEventListener("click", async () => {
+    updateBtn.addEventListener("click", async () => {
       const exercise = exerciseElements.exerciseInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
@@ -152,25 +153,21 @@ export class CreateLogModal extends ModalBase {
       }
 
       try {
-        await this.createLogEntry(exercise, reps, weight, workout);
+        await this.updateLogEntry(exercise, reps, weight, workout);
         this.close();
-        new Notice("Workout log created successfully!");
+        new Notice("Workout log updated successfully!");
 
         // Trigger refresh callback if provided
-        if (this.onLogCreated) {
-          this.onLogCreated();
+        if (this.onLogUpdated) {
+          this.onLogUpdated();
         }
       } catch (error) {
-        new Notice(`Error creating log: ${error.message}`);
+        new Notice(`Error updating log: ${error.message}`);
       }
     });
 
-    // Focus on first empty input
-    if (!this.exerciseName) {
-      exerciseElements.exerciseInput.focus();
-    } else {
-      repsInput.focus();
-    }
+    // Focus on first input
+    repsInput.focus();
   }
 
   onClose() {
@@ -178,22 +175,23 @@ export class CreateLogModal extends ModalBase {
     contentEl.empty();
   }
 
-  private async createLogEntry(
+  private async updateLogEntry(
     exercise: string,
     reps: number,
     weight: number,
     workout: string
   ) {
-    const entry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
-      date: new Date().toISOString(),
+    const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
+      date: this.originalLog.date, // Keep the original date
       exercise: exercise,
       reps: reps,
       weight: weight,
       volume: reps * weight,
-      origine: this.currentPageLink || "[[Workout Charts Plugin]]",
+      origine: this.originalLog.origine || "[[Workout Charts Plugin]]",
       workout: workout || undefined,
     };
 
-    await this.plugin.addWorkoutLogEntry(entry);
+    // Use the plugin's update method
+    await this.plugin.updateWorkoutLogEntry(this.originalLog, updatedEntry);
   }
 }

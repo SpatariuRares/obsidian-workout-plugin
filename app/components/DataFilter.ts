@@ -121,11 +121,17 @@ export class DataFilter {
       if (workoutName) {
         titlePrefix = workoutName;
 
-        // Use more efficient filtering with early termination
-        const workoutNameLower = workoutName.toLowerCase();
+        const workoutNameLower = workoutName
+          .toLowerCase()
+          .replace(/\s+/g, " ")
+          .trim();
         filteredData = logData.filter((log) => {
-          const origine = log.origine || log.workout || "";
-          return origine.toLowerCase().includes(workoutNameLower);
+          const origine = (log.origine || log.workout || "")
+            .toLowerCase()
+            .replace(/\[\[|\]\]/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+          return origine.includes(workoutNameLower);
         });
 
         filterMethodUsed = `campo Origine:: "${workoutName}"`;
@@ -151,16 +157,20 @@ export class DataFilter {
       const exerciseName = params.exercise.trim();
       titlePrefix = exerciseName;
 
-      // Use exact match first for better performance
       if (params.exactMatch) {
-        const exerciseNameLower = exerciseName.toLowerCase();
+        const exerciseNameLower = exerciseName
+          .toLowerCase()
+          .replace(/\s+/g, " ")
+          .trim();
         filteredData = logData.filter((log) => {
-          const exerciseField = log.exercise || "";
-          return exerciseField.toLowerCase() === exerciseNameLower;
+          const exerciseField = (log.exercise || "")
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+          return exerciseField === exerciseNameLower;
         });
         filterMethodUsed = `esatto match su campo esercizio: "${exerciseName}"`;
       } else {
-        // Use fuzzy matching with early optimization
         const matchesResult = findExerciseMatches(
           logData,
           exerciseName,

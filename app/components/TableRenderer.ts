@@ -1,6 +1,7 @@
 import { WorkoutLogData } from "app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "./types";
 import WorkoutChartsPlugin from "main";
+import { Notice } from "obsidian";
 
 /**
  * Handles the rendering of workout log data tables.
@@ -129,12 +130,19 @@ export class TableRenderer {
 
         row.displayRow.forEach((cell, index) => {
           const td = tr.appendChild(document.createElement("td"));
+
           if (index === 0) {
             td.className = "workout-table-date-cell";
+            td.textContent = cell;
           } else if (index === 4) {
             td.className = "workout-table-volume-cell";
+            td.textContent = cell;
+          } else if (index === row.displayRow.length - 1) {
+            td.className = "workout-table-actions-cell";
+            this.renderActionButtons(td, row.originalLog, plugin);
+          } else {
+            td.textContent = cell;
           }
-          td.textContent = cell;
         });
       });
 
@@ -142,5 +150,84 @@ export class TableRenderer {
     } catch (error) {
       console.error("Error applying row grouping:", error);
     }
+  }
+
+  /**
+   * Renders action buttons (edit and delete) for a table row
+   * @param td - The table cell to render the buttons in
+   * @param originalLog - The original log data for this row
+   * @param plugin - Plugin instance for operations
+   */
+  private static renderActionButtons(
+    td: HTMLElement,
+    originalLog: any,
+    plugin?: WorkoutChartsPlugin
+  ): void {
+    if (!originalLog) {
+      return;
+    }
+
+    const actionsContainer = td.createEl("div", {
+      cls: "workout-table-actions",
+    });
+
+    // Edit button
+    const editBtn = actionsContainer.createEl("button", {
+      cls: "workout-table-action-btn workout-table-edit-btn",
+      text: "✏️",
+      attr: {
+        title: "Edit log entry",
+      },
+    });
+
+    // Delete button
+    const deleteBtn = actionsContainer.createEl("button", {
+      cls: "workout-table-action-btn workout-table-delete-btn",
+      text: "🗑️",
+      attr: {
+        title: "Delete log entry",
+      },
+    });
+
+    // Event listeners
+    editBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (plugin) {
+        // Open EditLogModal with the original log data
+        const { EditLogModal } = await import("../modals/EditLogModal");
+        const tableView = plugin.embeddedTableView;
+        const modal = new EditLogModal(plugin.app, plugin, originalLog, () => {
+          if (tableView && typeof tableView.refreshTable === "function") {
+            tableView.refreshTable();
+          }
+        });
+        modal.open();
+      }
+    });
+
+    deleteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (
+        plugin &&
+        confirm("Are you sure you want to delete this log entry?")
+      ) {
+        try {
+          await plugin.deleteWorkoutLogEntry(originalLog);
+          new Notice("Log entry deleted successfully!");
+          // Refresh the table
+          const tableView = plugin.embeddedTableView;
+          if (tableView && typeof tableView.refreshTable === "function") {
+            tableView.refreshTable();
+          }
+        } catch (error) {
+          new Notice("Error deleting log entry: " + error.message);
+          console.error("Error deleting log entry:", error);
+        }
+      }
+    });
   }
 }

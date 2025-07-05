@@ -288,6 +288,50 @@
   box-shadow: none;
 }
 
+/* Table Action Buttons */
+.workout-table-actions-cell {
+  text-align: center;
+  padding: 4px 8px !important;
+}
+
+.workout-table-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.workout-table-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+}
+
+.workout-table-edit-btn:hover {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  transform: scale(1.1);
+}
+
+.workout-table-delete-btn:hover {
+  background: var(--text-error);
+  color: var(--text-on-accent);
+  transform: scale(1.1);
+}
+
+.workout-table-action-btn:active {
+  transform: scale(0.95);
+}
+
 /* Create Log Button for Missing Exercise */
 .create-log-button-container {
   margin-top: 16px;
@@ -1148,8 +1192,7 @@
 /* Button Styles */
 .add-log-button-container,
 .create-log-button-container {
-  margin: 15px 0;
-  text-align: center;
+  text-align: left;
 }
 
 .add-log-button,

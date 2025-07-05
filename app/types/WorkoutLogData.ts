@@ -2,7 +2,22 @@
 import { TFile } from "obsidian";
 
 /**
- * CSV-based workout log entry
+ * Represents a single workout log entry.
+ */
+export interface WorkoutLogData {
+  date: string;
+  exercise: string;
+  reps: number;
+  weight: number;
+  volume: number;
+  file: TFile;
+  origine?: string;
+  workout?: string;
+  timestamp?: number;
+}
+
+/**
+ * CSV-based workout log entry (without file reference)
  */
 export interface CSVWorkoutLogEntry {
   date: string;
@@ -19,8 +34,7 @@ export interface CSVWorkoutLogEntry {
  * Plugin settings interface.
  */
 export interface WorkoutChartsSettings {
-  logFolderPath: string;
-  csvLogFilePath: string; // Path to the CSV log file
+  csvLogFilePath: string;
   exerciseFolderPath: string;
   defaultExercise: string;
   chartType: "volume" | "weight" | "reps";
@@ -34,7 +48,6 @@ export interface WorkoutChartsSettings {
  * Default plugin settings.
  */
 export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
-  logFolderPath: "theGYM/Log/Data",
   csvLogFilePath: "theGYM/Log/workout_logs.csv",
   exerciseFolderPath: "Esercizi",
   defaultExercise: "",
@@ -202,7 +215,7 @@ function parseCSVLine(line: string): string[] {
 }
 
 /**
- * Converts CSVWorkoutLogEntry to WorkoutLogData (for backward compatibility with existing components)
+ * Converts CSVWorkoutLogEntry to WorkoutLogData (for backward compatibility)
  */
 export function convertFromCSVEntry(
   entry: CSVWorkoutLogEntry,
@@ -217,20 +230,6 @@ export function convertFromCSVEntry(
     file: file,
     origine: entry.origine,
     workout: entry.workout,
+    timestamp: entry.timestamp,
   };
-}
-
-/**
- * Legacy interface for backward compatibility with existing components
- * This will be removed once all components are updated to use CSVWorkoutLogEntry
- */
-export interface WorkoutLogData {
-  date: string;
-  exercise: string;
-  reps: number;
-  weight: number;
-  volume: number;
-  file: TFile;
-  origine?: string;
-  workout?: string;
 }

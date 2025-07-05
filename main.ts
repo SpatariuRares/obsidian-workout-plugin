@@ -1,3 +1,4 @@
+// Main plugin file - Workout Charts for Obsidian
 import {
   App,
   Notice,
@@ -7,6 +8,7 @@ import {
   normalizePath,
 } from "obsidian";
 
+// Import types and utilities
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
@@ -14,8 +16,10 @@ import {
   CSVWorkoutLogEntry,
   parseCSVLogFile,
   convertFromCSVEntry,
+  entriesToCSVContent,
 } from "./app/types/WorkoutLogData";
 
+// Import views, modals, and settings
 import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
@@ -31,20 +35,23 @@ import { CreateExerciseSectionModal } from "./app/modals/CreateExerciseSectionMo
 
 export default class WorkoutChartsPlugin extends Plugin {
   settings: WorkoutChartsSettings;
-  private embeddedChartView: EmbeddedChartView;
-  private embeddedTableView: EmbeddedTableView;
+  public embeddedChartView: EmbeddedChartView;
+  public embeddedTableView: EmbeddedTableView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
 
+  // Add caching for performance
   private logDataCache: WorkoutLogData[] | null = null;
   private lastCacheTime: number = 0;
-  private readonly CACHE_DURATION = 5000;
+  private readonly CACHE_DURATION = 5000; // 5 seconds cache
 
   async onload() {
     await this.loadSettings();
 
+    // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
 
+    // Register code block processors
     this.registerMarkdownCodeBlockProcessor(
       "workout-chart",
       this.handleWorkoutChart.bind(this)
@@ -69,14 +76,14 @@ export default class WorkoutChartsPlugin extends Plugin {
     });
 
     this.addCommand({
-      id: "migrate-to-csv",
-      name: "Migrate Logs to CSV",
+      id: "create-csv-log",
+      name: "Create CSV Log File",
       callback: async () => {
         try {
-          await this.migrateToCSV();
-          new Notice("Migration completed successfully!");
+          await this.createCSVLogFile();
+          new Notice("CSV log file created successfully!");
         } catch (error) {
-          new Notice(`Migration failed: ${error.message}`);
+          new Notice(`Error creating CSV file: ${error.message}`);
         }
       },
     });
@@ -99,18 +106,18 @@ export default class WorkoutChartsPlugin extends Plugin {
     });
 
     this.addCommand({
-      id: "create-exercise-page",
-      name: "Create Exercise Page",
-      callback: () => {
-        new CreateExercisePageModal(this.app, this).open();
-      },
-    });
-
-    this.addCommand({
       id: "insert-workout-timer",
       name: "Insert Workout Timer",
       callback: () => {
         new InsertTimerModal(this.app, this).open();
+      },
+    });
+
+    this.addCommand({
+      id: "create-exercise-page",
+      name: "Create Exercise Page",
+      callback: () => {
+        new CreateExercisePageModal(this.app, this).open();
       },
     });
 
@@ -126,13 +133,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 
-  onunload() {
-    // Cleanup all active timers
-    this.activeTimers.forEach((timer) => {
-      timer.destroy();
-    });
-    this.activeTimers.clear();
-  }
+  onunload() {}
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -240,18 +241,49 @@ export default class WorkoutChartsPlugin extends Plugin {
       exactMatch?: boolean;
     }
   ): boolean {
+    if (this.settings.debugMode) {
+      console.log("matchesEarlyFilter: Checking log entry", {
+        logExercise: log.exercise,
+        logOrigine: log.origine,
+        logWorkout: log.workout,
+        filterParams,
+      });
+    }
+
     // Check exercise filter
     if (filterParams.exercise) {
-      const exerciseName = filterParams.exercise.trim();
-      const logExercise = log.exercise || "";
+      const exerciseName = filterParams.exercise
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      const logExercise = (log.exercise || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
 
       if (filterParams.exactMatch) {
-        if (logExercise.toLowerCase() !== exerciseName.toLowerCase()) {
+        const exerciseMatch = logExercise === exerciseName;
+        if (this.settings.debugMode) {
+          console.log("Exercise exact match:", {
+            logExercise,
+            exerciseName,
+            match: exerciseMatch,
+          });
+        }
+        if (!exerciseMatch) {
           return false;
         }
       } else {
         // Simple includes check for early filtering
-        if (!logExercise.toLowerCase().includes(exerciseName.toLowerCase())) {
+        const exerciseMatch = logExercise.includes(exerciseName);
+        if (this.settings.debugMode) {
+          console.log("Exercise includes match:", {
+            logExercise,
+            exerciseName,
+            match: exerciseMatch,
+          });
+        }
+        if (!exerciseMatch) {
           return false;
         }
       }
@@ -259,12 +291,45 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Check workout filter
     if (filterParams.workout) {
-      const workoutName = filterParams.workout.toLowerCase();
-      const logOrigine = (log.origine || log.workout || "").toLowerCase();
+      const workoutName = filterParams.workout
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      const logOrigine = (log.origine || log.workout || "")
+        .toLowerCase()
+        .replace(/\[\[|\]\]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
 
-      if (!logOrigine.includes(workoutName)) {
-        return false;
+      if (filterParams.exactMatch) {
+        const workoutMatch = logOrigine === workoutName;
+        if (this.settings.debugMode) {
+          console.log("Workout exact match:", {
+            logOrigine,
+            workoutName,
+            match: workoutMatch,
+          });
+        }
+        if (!workoutMatch) {
+          return false;
+        }
+      } else {
+        const workoutMatch = logOrigine.includes(workoutName);
+        if (this.settings.debugMode) {
+          console.log("Workout includes match:", {
+            logOrigine,
+            workoutName,
+            match: workoutMatch,
+          });
+        }
+        if (!workoutMatch) {
+          return false;
+        }
       }
+    }
+
+    if (this.settings.debugMode) {
+      console.log("matchesEarlyFilter: Entry matches all filters");
     }
 
     return true;
@@ -338,85 +403,13 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async handleWorkoutTimer(source: string, el: HTMLElement, ctx: any) {
     try {
       const params = this.parseCodeBlockParams(source);
-
-      // Create timer container
-      const timerContainer = el.createEl("div", {
-        cls: "workout-timer-embed",
-      });
-      timerContainer.style.width = "100%";
-
-      // Create timer using the embedded timer view
-      await this.createEmbeddedTimer(timerContainer, params);
+      await this.createEmbeddedTimer(el, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
       errorDiv.textContent = `Error loading timer: ${error.message}`;
       errorDiv.className = "workout-timer-error";
       el.appendChild(errorDiv);
     }
-  }
-
-  // Parse code block parameters
-  private parseCodeBlockParams(source: string): Record<string, unknown> {
-    const params: Record<string, unknown> = {};
-    const lines = source.split("\n");
-
-    for (const line of lines) {
-      const match = line.match(/^(\w+):\s*(.+)$/);
-      if (match) {
-        const [, key, value] = match;
-        params[key] = this.parseParameterValue(value.trim());
-      }
-    }
-
-    return params;
-  }
-
-  // Parse individual parameter values
-  private parseParameterValue(
-    value: string
-  ): string | number | boolean | string[] {
-    // Handle arrays
-    if (value.startsWith("[") && value.endsWith("]")) {
-      try {
-        // Remove brackets and split by comma
-        const arrayContent = value.slice(1, -1);
-        if (arrayContent.trim() === "") return [];
-
-        return arrayContent.split(",").map((item) => {
-          const trimmed = item.trim();
-          // Remove quotes if present
-          if (
-            (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-            (trimmed.startsWith("'") && trimmed.endsWith("'"))
-          ) {
-            return trimmed.slice(1, -1);
-          }
-          return trimmed;
-        });
-      } catch (error) {
-        console.warn("Error parsing array parameter:", value, error);
-        return value;
-      }
-    }
-
-    // Handle booleans
-    if (value.toLowerCase() === "true") return true;
-    if (value.toLowerCase() === "false") return false;
-
-    // Handle numbers
-    if (!isNaN(Number(value)) && value.trim() !== "") {
-      return Number(value);
-    }
-
-    // Return as string (remove quotes if present)
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      return value.slice(1, -1);
-    }
-
-    return value;
   }
 
   // Create embedded chart using the dedicated view
@@ -428,6 +421,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.embeddedChartView.createChart(container, data, params as any);
   }
 
+  // Create embedded table using the dedicated view
   private async createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
@@ -436,246 +430,256 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.embeddedTableView.createTable(container, data, params as any);
   }
 
+  // Create embedded timer using the dedicated view
   private async createEmbeddedTimer(
     container: HTMLElement,
     params: Record<string, unknown>
   ) {
+    const timerId = `timer-${Date.now()}-${Math.random()}`;
     const timerView = new EmbeddedTimerView(this);
-    await timerView.createTimer(container, params as any);
-
-    const timerId = timerView.getId();
     this.activeTimers.set(timerId, timerView);
+    await timerView.createTimer(container, params as any);
+  }
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.removedNodes.forEach((node) => {
-          if (node === container || (node as Element)?.contains?.(container)) {
-            timerView.destroy();
-            this.activeTimers.delete(timerId);
-            observer.disconnect();
+  // Parse code block parameters
+  private parseCodeBlockParams(source: string): Record<string, unknown> {
+    const params: Record<string, unknown> = {};
+    const lines = source.split("\n");
+
+    lines.forEach((line) => {
+      const trimmedLine = line.trim();
+      if (trimmedLine && !trimmedLine.startsWith("#")) {
+        const colonIndex = trimmedLine.indexOf(":");
+        if (colonIndex > 0) {
+          const key = trimmedLine.substring(0, colonIndex).trim();
+          const value = trimmedLine.substring(colonIndex + 1).trim();
+
+          // Try to parse as number, boolean, or keep as string
+          if (value === "true" || value === "false") {
+            params[key] = value === "true";
+          } else if (!isNaN(Number(value))) {
+            params[key] = Number(value);
+          } else {
+            params[key] = value;
           }
-        });
-      });
+        }
+      }
     });
 
-    observer.observe(container.parentElement || document.body, {
-      childList: true,
-      subtree: true,
-    });
+    return params;
   }
 
-  private async createWorkoutLog() {
-    const modal = new CreateLogModal(this.app, this);
-    modal.open();
-  }
+  /**
+   * Create a new CSV log file with header
+   */
+  public async createCSVLogFile(): Promise<void> {
+    const header = "date,exercise,reps,weight,volume,origine,workout,timestamp";
+    const sampleEntry = `2024-01-01T10:00:00.000Z,Sample Exercise,10,50,500,Sample Workout,Sample Workout,1704096000000`;
+    const content = `${header}\n${sampleEntry}`;
 
-  private async createExercisePage() {
-    const modal = new CreateExercisePageModal(this.app, this);
-    modal.open();
-  }
-
-  private async createExerciseSection() {
-    const modal = new CreateExerciseSectionModal(this.app, this);
-    modal.open();
-  }
-
-  private async insertChart() {
-    const modal = new InsertChartModal(this.app, this);
-    modal.open();
-  }
-
-  private async insertTable() {
-    const modal = new InsertTableModal(this.app, this);
-    modal.open();
-  }
-
-  private async insertTimer() {
-    const modal = new InsertTimerModal(this.app, this);
-    modal.open();
-  }
-
-  public onWorkoutLogCreated(): void {
+    await this.app.vault.create(this.settings.csvLogFilePath, content);
     this.clearLogDataCache();
   }
 
   /**
-   * Migrate existing individual log files to CSV format
+   * Add a new workout log entry to the CSV file
    */
-  public async migrateToCSV(): Promise<void> {
+  public async addWorkoutLogEntry(
+    entry: Omit<CSVWorkoutLogEntry, "timestamp">
+  ): Promise<void> {
     try {
-      // Since we're always using CSV mode now, this method is for legacy migration
-      // Read all markdown files from the old log folder
-      const logFolderPath = this.settings.logFolderPath;
-      const allMarkdownFiles = this.app.vault.getMarkdownFiles();
-      const foundFiles = allMarkdownFiles
-        .filter((file) => file.path.startsWith(logFolderPath))
-        .slice(0, 1000);
+      const csvFile = this.app.vault.getAbstractFileByPath(
+        this.settings.csvLogFilePath
+      ) as TFile;
 
-      if (foundFiles.length === 0) {
-        throw new Error("No existing log files found to migrate");
+      if (!csvFile) {
+        // Create the file if it doesn't exist
+        await this.createCSVLogFile();
+        return this.addWorkoutLogEntry(entry); // Retry
       }
 
-      const existingLogs: WorkoutLogData[] = [];
-      const batchSize = 50;
+      const content = await this.app.vault.cachedRead(csvFile);
+      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
-      for (let i = 0; i < foundFiles.length; i += batchSize) {
-        const batch = foundFiles.slice(i, i + batchSize);
+      // Add new entry with timestamp
+      const newEntry: CSVWorkoutLogEntry = {
+        ...entry,
+        timestamp: Date.now(),
+      };
 
-        const batchPromises = batch.map(async (file) => {
-          try {
-            const content = await this.app.vault.cachedRead(file);
-            // Parse the markdown file content to extract workout data
-            const logEntry = this.parseMarkdownLogFile(content, file);
-            return logEntry;
-          } catch (error) {
-            if (this.settings.debugMode) {
-              console.warn(`Error reading file ${file.path}:`, error);
-            }
-            return null;
-          }
-        });
+      csvEntries.push(newEntry);
 
-        const batchResults = await Promise.all(batchPromises);
-        batchResults.forEach((logEntry: WorkoutLogData | null) => {
-          if (logEntry) {
-            existingLogs.push(logEntry);
-          }
-        });
+      // Convert back to CSV content
+      const newContent = entriesToCSVContent(csvEntries);
 
-        if (i + batchSize < foundFiles.length) {
-          await new Promise((resolve) => setTimeout(resolve, 0));
-        }
-      }
+      // Write back to file
+      await this.app.vault.modify(csvFile, newContent);
 
-      // Convert to CSV entries
-      const csvEntries = existingLogs.map((log: WorkoutLogData) => ({
-        date: log.date,
-        exercise: log.exercise,
-        reps: log.reps,
-        weight: log.weight,
-        volume: log.volume,
-        origine: log.origine || "",
-        workout: log.workout || "",
-        timestamp: log.file.stat.ctime,
-      }));
-
-      // Create CSV content
-      const header =
-        "date,exercise,reps,weight,volume,origine,workout,timestamp";
-      const csvLines = [header];
-
-      csvEntries.forEach((entry: any) => {
-        const line = [
-          entry.date,
-          entry.exercise,
-          entry.reps.toString(),
-          entry.weight.toString(),
-          entry.volume.toString(),
-          entry.origine,
-          entry.workout,
-          entry.timestamp.toString(),
-        ]
-          .map((value: string) => {
-            // Escape quotes and wrap in quotes if contains comma, quote, or newline
-            const escaped = value.replace(/"/g, '""');
-            if (
-              escaped.includes(",") ||
-              escaped.includes('"') ||
-              escaped.includes("\n")
-            ) {
-              return `"${escaped}"`;
-            }
-            return escaped;
-          })
-          .join(",");
-
-        csvLines.push(line);
-      });
-
-      const csvContent = csvLines.join("\n");
-
-      // Create CSV file
-      await this.app.vault.create(this.settings.csvLogFilePath, csvContent);
-
-      // Clear cache to force reload
+      // Clear cache
       this.clearLogDataCache();
 
-      new Notice(
-        `Successfully migrated ${existingLogs.length} log entries to CSV format`
-      );
+      if (this.settings.debugMode) {
+        console.log("Added new workout log entry:", newEntry);
+      }
     } catch (error) {
-      console.error("Migration failed:", error);
+      console.error("Error adding workout log entry:", error);
       throw error;
     }
   }
 
   /**
-   * Parse markdown log file content and extract workout data
+   * Update an existing workout log entry in the CSV file
    */
-  private parseMarkdownLogFile(
-    content: string,
-    file: TFile
-  ): WorkoutLogData | null {
+  public async updateWorkoutLogEntry(
+    originalLog: WorkoutLogData,
+    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">
+  ): Promise<void> {
     try {
-      // Simple parsing for markdown log files
-      // Look for lines that contain workout data in format: exercise - reps x weight
-      const lines = content.split("\n");
+      const csvFile = this.app.vault.getAbstractFileByPath(
+        this.settings.csvLogFilePath
+      ) as TFile;
 
-      for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (!trimmedLine || trimmedLine.startsWith("#")) continue;
+      if (!csvFile) {
+        throw new Error("CSV log file not found");
+      }
 
-        // Try to match patterns like: "Bench Press - 10 x 100kg" or "Squats 5x80"
-        const match = trimmedLine.match(
-          /(.+?)\s*[-x]\s*(\d+)\s*[xX]\s*(\d+(?:\.\d+)?)/
-        );
-        if (match) {
-          const exercise = match[1].trim();
-          const reps = parseInt(match[2]);
-          const weight = parseFloat(match[3]);
-          const volume = reps * weight;
+      const content = await this.app.vault.cachedRead(csvFile);
+      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
-          // Extract date from filename or use current date
-          const dateMatch = file.basename.match(/(\d{4}-\d{2}-\d{2})/);
-          const date = dateMatch
-            ? dateMatch[1]
-            : new Date().toISOString().split("T")[0];
+      // Find the entry to update by matching timestamp (most reliable identifier)
+      let entryIndex = csvEntries.findIndex((entry) => {
+        return entry.timestamp === originalLog.timestamp;
+      });
 
-          return {
-            date,
-            exercise,
-            reps,
-            weight,
-            volume,
-            file,
-            origine: file.parent?.name || "",
-            workout: file.basename,
-          };
+      // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
+      if (entryIndex === -1) {
+        const fallbackIndex = csvEntries.findIndex((entry) => {
+          return (
+            entry.date === originalLog.date &&
+            entry.exercise === originalLog.exercise &&
+            entry.reps === originalLog.reps &&
+            entry.weight === originalLog.weight
+          );
+        });
+
+        if (fallbackIndex !== -1) {
+          console.log("Found entry using fallback matching");
+          entryIndex = fallbackIndex;
         }
       }
 
-      return null;
-    } catch (error) {
-      if (this.settings.debugMode) {
-        console.warn(`Error parsing markdown file ${file.path}:`, error);
+      if (entryIndex === -1) {
+        throw new Error("Original log entry not found in CSV file");
       }
-      return null;
+
+      // Update the entry while preserving the original timestamp
+      const updatedEntryWithTimestamp: CSVWorkoutLogEntry = {
+        ...updatedEntry,
+        timestamp: csvEntries[entryIndex].timestamp, // Keep original timestamp
+      };
+
+      csvEntries[entryIndex] = updatedEntryWithTimestamp;
+
+      // Convert back to CSV content
+      const newContent = entriesToCSVContent(csvEntries);
+
+      // Write back to file
+      await this.app.vault.modify(csvFile, newContent);
+
+      // Clear cache
+      this.clearLogDataCache();
+
+      if (this.settings.debugMode) {
+        console.log("Updated workout log entry:", {
+          original: originalLog,
+          updated: updatedEntryWithTimestamp,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating workout log entry:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete a workout log entry from the CSV file
+   */
+  public async deleteWorkoutLogEntry(
+    logToDelete: WorkoutLogData
+  ): Promise<void> {
+    try {
+      const csvFile = this.app.vault.getAbstractFileByPath(
+        this.settings.csvLogFilePath
+      ) as TFile;
+
+      if (!csvFile) {
+        throw new Error("CSV log file not found");
+      }
+
+      const content = await this.app.vault.cachedRead(csvFile);
+      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+
+      // Find the entry to delete by matching timestamp (most reliable identifier)
+      let entryIndex = csvEntries.findIndex((entry) => {
+        return entry.timestamp === logToDelete.timestamp;
+      });
+
+      // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
+      if (entryIndex === -1) {
+        entryIndex = csvEntries.findIndex((entry) => {
+          return (
+            entry.date === logToDelete.date &&
+            entry.exercise === logToDelete.exercise &&
+            entry.reps === logToDelete.reps &&
+            entry.weight === logToDelete.weight
+          );
+        });
+      }
+
+      if (entryIndex === -1) {
+        throw new Error("Log entry not found in CSV file");
+      }
+
+      // Remove the entry
+      csvEntries.splice(entryIndex, 1);
+
+      // Convert back to CSV content
+      const newContent = entriesToCSVContent(csvEntries);
+
+      // Write back to file
+      await this.app.vault.modify(csvFile, newContent);
+
+      // Clear cache
+      this.clearLogDataCache();
+
+      if (this.settings.debugMode) {
+        console.log("Deleted workout log entry:", logToDelete);
+      }
+    } catch (error) {
+      console.error("Error deleting workout log entry:", error);
+      throw error;
     }
   }
 
   public triggerWorkoutLogRefresh(): void {
+    // Clear cache first
     this.clearLogDataCache();
 
+    // Trigger dataview refresh if available (for compatibility)
     if (this.app.workspace.trigger) {
       this.app.workspace.trigger("dataview:refresh-views");
     }
 
+    // Force refresh of all markdown views that contain workout-log code blocks
+    // Use a more efficient approach
     const leaves = this.app.workspace.getLeavesOfType("markdown");
     leaves.forEach((leaf) => {
       const view = leaf.view as any;
       if (view?.editor?.cm) {
+        // Trigger a refresh by updating the view
         view.editor.cm.refresh();
 
+        // Also trigger a file change event to force code block processors to re-run
         if (view.file) {
           this.app.vault.trigger("raw", view.file);
         }

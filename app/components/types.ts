@@ -59,6 +59,7 @@ export interface TableRow {
   displayRow: string[];
   originalDate: string;
   dateKey: string;
+  originalLog?: any;
 }
 
 export interface TableData {

@@ -1,8 +1,10 @@
-// Modal for creating a new exercise page
-import WorkoutChartsPlugin from "main";
-import { App, Modal, Notice, TFile } from "obsidian";
+// Refactored CreateExercisePageModal using reusable components
+import { App, Notice, TFile } from "obsidian";
+import type WorkoutChartsPlugin from "../../main";
+import { ModalBase } from "./base/ModalBase";
+import { ExerciseAutocomplete } from "./components/ExerciseAutocomplete";
 
-export class CreateExercisePageModal extends Modal {
+export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;
 
   constructor(
@@ -14,7 +16,7 @@ export class CreateExercisePageModal extends Modal {
     this.exerciseName = exerciseName;
   }
 
-  onOpen() {
+  async onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
@@ -26,47 +28,33 @@ export class CreateExercisePageModal extends Modal {
       cls: "workout-charts-form",
     });
 
-    // Exercise name input
-    const exerciseContainer = formContainer.createEl("div", {
-      cls: "workout-charts-form-group",
-    });
-    const exerciseLabel = exerciseContainer.createEl("label", {
-      text: "Exercise Name:",
-    });
-    const exerciseInput = exerciseContainer.createEl("input", { type: "text" });
-    exerciseInput.placeholder = "e.g., Pullover Machine";
-
-    // Pre-fill exercise name if provided
-    if (this.exerciseName) {
-      exerciseInput.value = this.exerciseName;
-    }
+    // Exercise autocomplete using reusable component
+    const { elements: exerciseElements } = await ExerciseAutocomplete.create(
+      this,
+      formContainer,
+      this.plugin,
+      this.exerciseName
+    );
 
     // Tags input
-    const tagsContainer = formContainer.createEl("div", {
-      cls: "workout-charts-form-group",
-    });
-    const tagsLabel = tagsContainer.createEl("label", {
-      text: "Tags (comma separated):",
-    });
-    const tagsInput = tagsContainer.createEl("input", { type: "text" });
-    tagsInput.placeholder =
-      "e.g., spalle, deltoidi, laterali, isolamento, macchina";
+    const tagsContainer = this.createFormGroup(formContainer);
+    const tagsInput = this.createTextInput(
+      tagsContainer,
+      "Tags (comma separated):",
+      "e.g., spalle, deltoidi, laterali, isolamento, macchina"
+    );
 
     // Folder path input
-    const folderContainer = formContainer.createEl("div", {
-      cls: "workout-charts-form-group",
-    });
-    const folderLabel = folderContainer.createEl("label", {
-      text: "Folder Path (optional):",
-    });
-    const folderInput = folderContainer.createEl("input", { type: "text" });
-    folderInput.placeholder = "e.g., Exercises or leave empty for root";
-    folderInput.value = this.plugin.settings.exerciseFolderPath;
+    const folderContainer = this.createFormGroup(formContainer);
+    const folderInput = this.createTextInput(
+      folderContainer,
+      "Folder Path (optional):",
+      "e.g., Exercises or leave empty for root",
+      this.plugin.settings.exerciseFolderPath
+    );
 
     // Buttons container
-    const buttonsContainer = formContainer.createEl("div", {
-      cls: "workout-charts-buttons",
-    });
+    const buttonsContainer = this.createButtonsSection(formContainer);
 
     // Cancel button
     const cancelBtn = buttonsContainer.createEl("button", {
@@ -84,7 +72,7 @@ export class CreateExercisePageModal extends Modal {
     cancelBtn.addEventListener("click", () => this.close());
 
     createBtn.addEventListener("click", async () => {
-      const exerciseName = exerciseInput.value.trim();
+      const exerciseName = exerciseElements.exerciseInput.value.trim();
       const tags = tagsInput.value.trim();
       const folderPath = folderInput.value.trim();
 
@@ -103,7 +91,7 @@ export class CreateExercisePageModal extends Modal {
     });
 
     // Focus on exercise input
-    exerciseInput.focus();
+    exerciseElements.exerciseInput.focus();
   }
 
   onClose() {

@@ -1,7 +1,8 @@
 // Embedded Timer View for workout timing functionality
 import { Notice } from "obsidian";
-import type WorkoutChartsPlugin from "../main";
+import type WorkoutChartsPlugin from "../../main";
 import { EmbeddedTimerParams, UIComponents } from "../components";
+import { BaseView } from "./BaseView";
 
 interface TimerState {
   timerInterval?: number;
@@ -17,11 +18,12 @@ interface TimerState {
   startStopBtn?: HTMLButtonElement;
 }
 
-export class EmbeddedTimerView {
+export class EmbeddedTimerView extends BaseView {
   private timerId: string;
   private state: TimerState;
 
-  constructor(private plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutChartsPlugin) {
+    super(plugin);
     this.timerId = `timer-${Date.now()}-${Math.random()
       .toString(36)
       .substr(2, 9)}`;
@@ -47,9 +49,12 @@ export class EmbeddedTimerView {
     params: EmbeddedTimerParams
   ): Promise<void> {
     try {
-      this.logDebug("createTimer called", { params, timerId: this.timerId });
+      this.logDebug("EmbeddedTimerView", "createTimer called", {
+        params,
+        timerId: this.timerId,
+      });
 
-      if (!this.validateAndHandleErrors(container, params)) {
+      if (!this.validateTimerParams(container, params)) {
         return;
       }
 
@@ -71,12 +76,11 @@ export class EmbeddedTimerView {
         this.startTimer();
       }
     } catch (error) {
-      console.error("Error creating embedded timer:", error);
-      UIComponents.renderErrorMessage(container, error.message);
+      this.handleError(container, error, "creating embedded timer");
     }
   }
 
-  private validateAndHandleErrors(
+  private validateTimerParams(
     container: HTMLElement,
     params: EmbeddedTimerParams
   ): boolean {
@@ -94,14 +98,7 @@ export class EmbeddedTimerView {
       validationErrors.push("Rounds must be greater than 0");
     }
 
-    if (validationErrors.length > 0) {
-      UIComponents.renderErrorMessage(
-        container,
-        `Invalid parameters:\n${validationErrors.join("\n")}`
-      );
-      return false;
-    }
-    return true;
+    return this.validateAndHandleErrors(container, validationErrors);
   }
 
   private renderTimerContent(
@@ -180,7 +177,7 @@ export class EmbeddedTimerView {
     this.state.isRunning = true;
     this.state.startTime = Date.now() - this.state.elapsedTime;
 
-    this.logDebug("Timer started", {
+    this.logDebug("EmbeddedTimerView", "Timer started", {
       timerId: this.timerId,
       duration: this.state.duration,
       elapsedTime: this.state.elapsedTime,
@@ -278,7 +275,7 @@ export class EmbeddedTimerView {
 
     // Debug logging for timer updates
     if (this.plugin.settings.debugMode) {
-      this.logDebug("Timer display updated", {
+      this.logDebug("EmbeddedTimerView", "Timer display updated", {
         timerId: this.timerId,
         displayTime,
         isRunning: this.state.isRunning,
@@ -300,7 +297,9 @@ export class EmbeddedTimerView {
     this.stopTimer();
     this.playSound();
 
-    this.logDebug("Timer completed", { timerId: this.timerId });
+    this.logDebug("EmbeddedTimerView", "Timer completed", {
+      timerId: this.timerId,
+    });
 
     if (this.state.startStopBtn) {
       this.state.startStopBtn.textContent = "▶";
@@ -338,12 +337,6 @@ export class EmbeddedTimerView {
     } catch (error) {
       // Fallback to console beep
       console.log("\x07");
-    }
-  }
-
-  private logDebug(message: string, data?: any): void {
-    if (this.plugin.settings.debugMode) {
-      console.log(`EmbeddedTimerView: ${message}`, data);
     }
   }
 

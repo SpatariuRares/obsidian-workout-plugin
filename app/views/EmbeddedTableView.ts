@@ -1,6 +1,6 @@
 // Embedded Table View for workout log data visualization
 import { WorkoutLogData } from "../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../main";
+import type WorkoutChartsPlugin from "../../main";
 import { MarkdownView } from "obsidian";
 import {
   EmbeddedTableParams,
@@ -8,15 +8,17 @@ import {
   TableRenderer,
   TableDataProcessor,
   UIComponents,
-  DataFilter,
 } from "../components";
+import { BaseView } from "./BaseView";
 
-export class EmbeddedTableView {
+export class EmbeddedTableView extends BaseView {
   private currentContainer?: HTMLElement;
   private currentLogData?: WorkoutLogData[];
   private currentParams?: EmbeddedTableParams;
 
-  constructor(private plugin: WorkoutChartsPlugin) {}
+  constructor(plugin: WorkoutChartsPlugin) {
+    super(plugin);
+  }
 
   async createTable(
     container: HTMLElement,
@@ -37,24 +39,23 @@ export class EmbeddedTableView {
     params: EmbeddedTableParams
   ): Promise<void> {
     try {
-      this.logDebug("createTable called", {
+      this.logDebug("EmbeddedTableView", "createTable called", {
         dataLength: logData.length,
         params,
       });
 
-      if (!this.validateAndHandleErrors(container, params)) {
+      if (!this.validateTableParams(container, params)) {
         return;
       }
 
-      const loadingDiv = UIComponents.renderLoadingIndicator(container);
+      const loadingDiv = this.showLoadingIndicator(container);
 
-      if (logData.length === 0) {
+      if (this.handleEmptyData(container, logData)) {
         loadingDiv.remove();
-        UIComponents.renderNoDataMessage(container);
         return;
       }
 
-      const filterResult = DataFilter.filterData(
+      const filterResult = this.filterData(
         logData,
         params,
         this.plugin.settings.debugMode || params.debug || false
@@ -66,13 +67,14 @@ export class EmbeddedTableView {
           container,
           params,
           filterResult.titlePrefix,
-          logData
+          logData,
+          "table"
         );
         return;
       }
 
       loadingDiv.remove();
-      this.logDebug("Processing table data", {
+      this.logDebug("EmbeddedTableView", "Processing table data", {
         filteredDataLength: filterResult.filteredData.length,
         limit: params.limit || 50,
       });
@@ -85,55 +87,16 @@ export class EmbeddedTableView {
 
       this.renderTableContent(container, tableData);
     } catch (error) {
-      console.error("Error creating embedded table:", error);
-      UIComponents.renderErrorMessage(container, error.message);
+      this.handleError(container, error, "creating embedded table");
     }
   }
 
-  private validateAndHandleErrors(
+  private validateTableParams(
     container: HTMLElement,
     params: EmbeddedTableParams
   ): boolean {
     const validationErrors = TableDataProcessor.validateTableParams(params);
-    if (validationErrors.length > 0) {
-      UIComponents.renderErrorMessage(
-        container,
-        `Parametri non validi:\n${validationErrors.join("\n")}`
-      );
-      return false;
-    }
-    return true;
-  }
-
-  private handleNoFilteredData(
-    container: HTMLElement,
-    params: EmbeddedTableParams,
-    titlePrefix: string,
-    logData: WorkoutLogData[]
-  ): void {
-    const tableType = params.exercise ? "exercise" : "workout";
-    if (tableType === "workout") {
-      UIComponents.renderInfoMessage(
-        container,
-        `Nessun dato trovato per l'allenamento <strong>${titlePrefix}</strong>.`,
-        "warning"
-      );
-    } else {
-      UIComponents.renderNoMatchMessage(
-        container,
-        params.exercise || "",
-        logData
-      );
-
-      // Add "Create Log" button when no exercise data is found
-      if (params.exercise) {
-        UIComponents.createCreateLogButtonForMissingExercise(
-          container,
-          params.exercise,
-          this.plugin
-        );
-      }
-    }
+    return this.validateAndHandleErrors(container, validationErrors);
   }
 
   private renderTableContent(
@@ -166,7 +129,10 @@ export class EmbeddedTableView {
     // Create table container
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
 
-    this.logDebug("Creating table with config", { headers, rows });
+    this.logDebug("EmbeddedTableView", "Creating table with config", {
+      headers,
+      rows,
+    });
 
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
@@ -185,22 +151,20 @@ export class EmbeddedTableView {
       );
     }
 
-    if (this.plugin.settings.debugMode || params.debug) {
-      UIComponents.renderDebugInfo(
-        contentDiv,
-        filterResult.filteredData,
-        "table",
-        filterResult.filterMethodUsed
-      );
-    }
+    this.renderDebugInfo(
+      contentDiv,
+      filterResult.filteredData,
+      "table",
+      filterResult.filterMethodUsed,
+      this.plugin.settings.debugMode || params.debug || false
+    );
 
     // Footer with summary information
     this.renderTableFooter(contentDiv, tableData);
 
-    UIComponents.renderInfoMessage(
+    this.showSuccessMessage(
       contentDiv,
-      `Tabella generata con successo! ${totalRows} log elaborati.`,
-      "success"
+      `Tabella generata con successo! ${totalRows} log elaborati.`
     );
   }
 
@@ -249,12 +213,6 @@ export class EmbeddedTableView {
         freshLogData,
         this.currentParams
       );
-    }
-  }
-
-  private logDebug(message: string, data?: any): void {
-    if (this.plugin.settings.debugMode) {
-      console.log(`EmbeddedTableView: ${message}`, data);
     }
   }
 }

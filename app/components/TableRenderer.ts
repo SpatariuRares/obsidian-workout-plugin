@@ -1,4 +1,4 @@
-import { WorkoutLogData } from "types/WorkoutLogData";
+import { WorkoutLogData } from "app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "./types";
 import WorkoutChartsPlugin from "main";
 

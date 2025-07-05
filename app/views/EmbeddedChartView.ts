@@ -5,19 +5,21 @@ import {
   validateUserParams,
 } from "../utils/utils";
 import { WorkoutLogData } from "../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../main";
+import type WorkoutChartsPlugin from "../../main";
 import {
   EmbeddedChartParams,
   TrendHeader,
   StatsBox,
   ChartRenderer,
   UIComponents,
-  DataFilter,
   TrendCalculator,
 } from "../components";
+import { BaseView } from "./BaseView";
 
-export class EmbeddedChartView {
-  constructor(private plugin: WorkoutChartsPlugin) {}
+export class EmbeddedChartView extends BaseView {
+  constructor(plugin: WorkoutChartsPlugin) {
+    super(plugin);
+  }
 
   async createChart(
     container: HTMLElement,
@@ -25,24 +27,23 @@ export class EmbeddedChartView {
     params: EmbeddedChartParams
   ): Promise<void> {
     try {
-      this.logDebug("createChart called", {
+      this.logDebug("EmbeddedChartView", "createChart called", {
         dataLength: logData.length,
         params,
       });
 
-      if (!this.validateAndHandleErrors(container, params, logData)) {
+      if (!this.validateChartParams(container, params, logData)) {
         return;
       }
 
-      const loadingDiv = UIComponents.renderLoadingIndicator(container);
+      const loadingDiv = this.showLoadingIndicator(container);
 
-      if (logData.length === 0) {
+      if (this.handleEmptyData(container, logData)) {
         loadingDiv.remove();
-        UIComponents.renderNoDataMessage(container);
         return;
       }
 
-      const filterResult = DataFilter.filterData(
+      const filterResult = this.filterData(
         logData,
         params,
         this.plugin.settings.debugMode || params.debug || false
@@ -54,13 +55,14 @@ export class EmbeddedChartView {
           container,
           params,
           filterResult.titlePrefix,
-          logData
+          logData,
+          "chart"
         );
         return;
       }
 
       loadingDiv.remove();
-      this.logDebug("Processing chart data", {
+      this.logDebug("EmbeddedChartView", "Processing chart data", {
         dataType: params.type || "volume",
         dateRange: params.dateRange || 30,
       });
@@ -76,7 +78,10 @@ export class EmbeddedChartView {
         params.dateRange || 30
       );
 
-      this.logDebug("Processed chart data", { labels, datasets });
+      this.logDebug("EmbeddedChartView", "Processed chart data", {
+        labels,
+        datasets,
+      });
 
       const volumeData =
         datasets.length > 0 ? (datasets[0].data as number[]) : [];
@@ -95,54 +100,17 @@ export class EmbeddedChartView {
         params,
       });
     } catch (error) {
-      console.error("Error creating embedded chart:", error);
-      UIComponents.renderErrorMessage(container, error.message);
+      this.handleError(container, error, "creating embedded chart");
     }
   }
 
-  private validateAndHandleErrors(
+  private validateChartParams(
     container: HTMLElement,
     params: EmbeddedChartParams,
     logData: WorkoutLogData[]
   ): boolean {
     const validationErrors = validateUserParams(params);
-    if (validationErrors.length > 0) {
-      UIComponents.renderErrorMessage(
-        container,
-        `Parametri non validi:\n${validationErrors.join("\n")}`
-      );
-      return false;
-    }
-    return true;
-  }
-
-  private handleNoFilteredData(
-    container: HTMLElement,
-    params: EmbeddedChartParams,
-    titlePrefix: string,
-    logData: WorkoutLogData[]
-  ): void {
-    const chartType = params.chartType || "exercise";
-    if (chartType === "workout") {
-      UIComponents.renderInfoMessage(
-        container,
-        `Nessun dato trovato per l'allenamento <strong>${titlePrefix}</strong>.`,
-        "warning"
-      );
-    } else {
-      UIComponents.renderNoMatchMessage(
-        container,
-        params.exercise || "",
-        logData
-      );
-      if (params.exercise) {
-        UIComponents.createCreateLogButtonForMissingExercise(
-          container,
-          params.exercise,
-          this.plugin
-        );
-      }
-    }
+    return this.validateAndHandleErrors(container, validationErrors);
   }
 
   private renderChartContent(
@@ -178,7 +146,10 @@ export class EmbeddedChartView {
       ChartRenderer.addTrendLineToDatasets(datasets, trendIndicators);
     }
 
-    this.logDebug("Creating Chart.js with config", { labels, datasets });
+    this.logDebug("EmbeddedChartView", "Creating Chart.js with config", {
+      labels,
+      datasets,
+    });
 
     const chartSuccess = ChartRenderer.renderChart(
       chartContainer,
@@ -205,19 +176,17 @@ export class EmbeddedChartView {
       );
     }
 
-    if (this.plugin.settings.debugMode || params.debug) {
-      UIComponents.renderDebugInfo(
-        contentDiv,
-        filterResult.filteredData,
-        params.type || "volume",
-        filterResult.filterMethodUsed
-      );
-    }
-
-    UIComponents.renderInfoMessage(
+    this.renderDebugInfo(
       contentDiv,
-      `Grafico generato con successo! ${volumeData.length} sessioni elaborate.`,
-      "success"
+      filterResult.filteredData,
+      params.type || "volume",
+      filterResult.filterMethodUsed,
+      this.plugin.settings.debugMode || params.debug || false
+    );
+
+    this.showSuccessMessage(
+      contentDiv,
+      `Grafico generato con successo! ${volumeData.length} sessioni elaborate.`
     );
 
     UIComponents.renderFooter(
@@ -226,11 +195,5 @@ export class EmbeddedChartView {
       filterResult,
       params.chartType || "exercise"
     );
-  }
-
-  private logDebug(message: string, data?: any): void {
-    if (this.plugin.settings.debugMode) {
-      console.log(`EmbeddedChartView: ${message}`, data);
-    }
   }
 }

@@ -564,6 +564,8 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  flex-direction: row;
+  padding-bottom: 8px;
 }
 
 .workout-charts-buttons {
@@ -584,7 +586,7 @@
 .workout-charts-form-group input[type="text"],
 .workout-charts-form-group input[type="number"],
 .workout-charts-form-group select {
-  padding: 10px 12px;
+  /* padding: 10px 12px; */
   border: 1px solid var(--background-modifier-border);
   border-radius: 6px;
   background: var(--background-primary);

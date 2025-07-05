@@ -1,6 +1,6 @@
 // Settings tab for the Workout Charts plugin
 import { App, PluginSettingTab, Setting } from "obsidian";
-import type WorkoutChartsPlugin from "../main";
+import type WorkoutChartsPlugin from "../../main";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;

@@ -7,19 +7,19 @@ import {
   DEFAULT_SETTINGS,
   parseLogFile,
   WorkoutLogData,
-} from "./types/WorkoutLogData";
+} from "./app/types/WorkoutLogData";
 
 // Import views, modals, and settings
-import { EmbeddedChartView } from "./views/EmbeddedChartView";
-import { EmbeddedTableView } from "./views/EmbeddedTableView";
-import { EmbeddedTimerView } from "./views/EmbeddedTimerView";
-import { CreateLogModal } from "./modals/CreateLogModal";
-import { WorkoutChartsSettingTab } from "./settings/WorkoutChartsSettings";
-import { InsertChartModal } from "modals/InsertChartModal";
-import { InsertTableModal } from "modals/InsertTableModal";
-import { InsertTimerModal } from "modals/InsertTimerModal";
-import { CreateExercisePageModal } from "./modals/CreateExercisePageModal";
-import { CreateExerciseSectionModal } from "./modals/CreateExerciseSectionModal";
+import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
+import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
+import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
+import { CreateLogModal } from "./app/modals/CreateLogModal";
+import { WorkoutChartsSettingTab } from "./app/settings/WorkoutChartsSettings";
+import { InsertChartModal } from "./app/modals/InsertChartModal";
+import { InsertTableModal } from "./app/modals/InsertTableModal";
+import { InsertTimerModal } from "./app/modals/InsertTimerModal";
+import { CreateExercisePageModal } from "./app/modals/CreateExercisePageModal";
+import { CreateExerciseSectionModal } from "./app/modals/CreateExerciseSectionModal";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -269,7 +269,7 @@ export default class WorkoutChartsPlugin extends Plugin {
           findExerciseMatches,
           determineExerciseFilterStrategy,
           filterLogDataByExercise,
-        } = await import("./utils/utils");
+        } = await import("./app/utils/utils");
 
         const exerciseName =
           typeof params.exercise === "string" ? params.exercise : "";
@@ -318,7 +318,9 @@ export default class WorkoutChartsPlugin extends Plugin {
           el.appendChild(noMatchDiv);
 
           if (exerciseName) {
-            const { UIComponents } = await import("./components/UIComponents");
+            const { UIComponents } = await import(
+              "./app/components/UIComponents"
+            );
             UIComponents.createCreateLogButtonForMissingExercise(
               el,
               exerciseName,

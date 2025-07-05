@@ -6,6 +6,7 @@ import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
   parseLogFile,
+  WorkoutLogData,
 } from "./types/WorkoutLogData";
 
 // Import views, modals, and settings
@@ -84,11 +85,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 
-  // onunload() {
-  //   // Clean up view
-  //   this.app.workspace.detachLeavesOfType(WORKOUT_CHARTS_VIEW_TYPE);
-  // }
-
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
   }
@@ -97,8 +93,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.saveData(this.settings);
   }
 
-  async getWorkoutLogData(): Promise<any[]> {
-    const logData: any[] = [];
+  async getWorkoutLogData(): Promise<WorkoutLogData[]> {
+    const logData: WorkoutLogData[] = [];
 
     try {
       // Try multiple possible log folder paths
@@ -109,7 +105,7 @@ export default class WorkoutChartsPlugin extends Plugin {
         "Log",
       ];
 
-      let foundFiles: any[] = [];
+      let foundFiles: TFile[] = [];
 
       // Try each possible path
       for (const path of possiblePaths) {
@@ -208,10 +204,10 @@ export default class WorkoutChartsPlugin extends Plugin {
       // Create chart using Chart.js
       await this.createEmbeddedChart(chartContainer, logData, params);
     } catch (error) {
-      el.createEl("div", {
-        text: `Error loading chart: ${error.message}`,
-        cls: "workout-chart-error",
-      });
+      const errorDiv = document.createElement("div");
+      errorDiv.textContent = `Error loading chart: ${error.message}`;
+      errorDiv.className = "workout-chart-error";
+      el.appendChild(errorDiv);
     }
   }
 
@@ -222,10 +218,11 @@ export default class WorkoutChartsPlugin extends Plugin {
       const logData = await this.getWorkoutLogData();
 
       if (logData.length === 0) {
-        el.createEl("div", {
-          text: "No workout data found. Please create some workout logs first using the 'Create Workout Log' command.",
-          cls: "workout-log-no-data",
-        });
+        const noDataDiv = document.createElement("div");
+        noDataDiv.textContent =
+          "No workout data found. Please create some workout logs first using the 'Create Workout Log' command.";
+        noDataDiv.className = "workout-log-no-data";
+        el.appendChild(noDataDiv);
         return;
       }
 
@@ -276,10 +273,10 @@ export default class WorkoutChartsPlugin extends Plugin {
           const availableExercises = [
             ...new Set(logData.map((d) => d.exercise)),
           ].join(", ");
-          el.createEl("div", {
-            text: `No data found for exercise: ${params.exercise}. Available exercises: ${availableExercises}`,
-            cls: "workout-log-no-match",
-          });
+          const noMatchDiv = document.createElement("div");
+          noMatchDiv.textContent = `No data found for exercise: ${params.exercise}. Available exercises: ${availableExercises}`;
+          noMatchDiv.className = "workout-log-no-match";
+          el.appendChild(noMatchDiv);
           return;
         }
       }
@@ -287,16 +284,16 @@ export default class WorkoutChartsPlugin extends Plugin {
       // Create table
       await this.createEmbeddedTable(el, filteredData, params);
     } catch (error) {
-      el.createEl("div", {
-        text: `Error loading log: ${error.message}`,
-        cls: "workout-log-error",
-      });
+      const errorDiv = document.createElement("div");
+      errorDiv.textContent = `Error loading log: ${error.message}`;
+      errorDiv.className = "workout-log-error";
+      el.appendChild(errorDiv);
     }
   }
 
   // Parse code block parameters
-  private parseCodeBlockParams(source: string): any {
-    const params: any = {};
+  private parseCodeBlockParams(source: string): Record<string, unknown> {
+    const params: Record<string, unknown> = {};
     const lines = source.split("\n");
 
     for (const line of lines) {
@@ -311,7 +308,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   // Parse individual parameter values
-  private parseParameterValue(value: string): any {
+  private parseParameterValue(
+    value: string
+  ): string | number | boolean | string[] {
     // Handle arrays
     if (value.startsWith("[") && value.endsWith("]")) {
       try {
@@ -359,19 +358,19 @@ export default class WorkoutChartsPlugin extends Plugin {
   // Create embedded chart using the dedicated view
   private async createEmbeddedChart(
     container: HTMLElement,
-    data: any[],
-    params: any
+    data: WorkoutLogData[],
+    params: Record<string, unknown>
   ) {
-    await this.embeddedChartView.createChart(container, data, params);
+    await this.embeddedChartView.createChart(container, data, params as any);
   }
 
   // Create embedded table using the dedicated view
   private async createEmbeddedTable(
     container: HTMLElement,
-    data: any[],
-    params: any
+    data: WorkoutLogData[],
+    params: Record<string, unknown>
   ) {
-    await this.embeddedTableView.createTable(container, data, params);
+    await this.embeddedTableView.createTable(container, data, params as any);
   }
 
   // Trigger refresh of all workout log views

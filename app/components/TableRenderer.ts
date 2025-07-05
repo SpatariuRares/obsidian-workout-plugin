@@ -224,7 +224,9 @@ export class TableRenderer {
             tableView.refreshTable();
           }
         } catch (error) {
-          new Notice("Error deleting log entry: " + error.message);
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice("Error deleting log entry: " + errorMessage);
           console.error("Error deleting log entry:", error);
         }
       }

@@ -34,9 +34,9 @@ import { CreateExerciseSectionModal } from "./app/modals/CreateExerciseSectionMo
 // ===================== MAIN PLUGIN =====================
 
 export default class WorkoutChartsPlugin extends Plugin {
-  settings: WorkoutChartsSettings;
-  public embeddedChartView: EmbeddedChartView;
-  public embeddedTableView: EmbeddedTableView;
+  settings!: WorkoutChartsSettings;
+  public embeddedChartView!: EmbeddedChartView;
+  public embeddedTableView!: EmbeddedTableView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
 
   // Add caching for performance
@@ -83,7 +83,9 @@ export default class WorkoutChartsPlugin extends Plugin {
           await this.createCSVLogFile();
           new Notice("CSV log file created successfully!");
         } catch (error) {
-          new Notice(`Error creating CSV file: ${error.message}`);
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(`Error creating CSV file: ${errorMessage}`);
         }
       },
     });
@@ -210,7 +212,9 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.lastCacheTime = Date.now();
     } catch (error) {
       console.error("Error reading CSV workout data:", error);
-      new Notice(`Error loading CSV workout data: ${error.message}`);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(`Error loading CSV workout data: ${errorMessage}`);
     }
 
     return logData;
@@ -356,7 +360,9 @@ export default class WorkoutChartsPlugin extends Plugin {
       await this.createEmbeddedChart(chartContainer, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
-      errorDiv.textContent = `Error loading chart: ${error.message}`;
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      errorDiv.textContent = `Error loading chart: ${errorMessage}`;
       errorDiv.className = "workout-chart-error";
       el.appendChild(errorDiv);
     }
@@ -393,7 +399,9 @@ export default class WorkoutChartsPlugin extends Plugin {
       await this.createEmbeddedTable(el, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
-      errorDiv.textContent = `Error loading log: ${error.message}`;
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      errorDiv.textContent = `Error loading log: ${errorMessage}`;
       errorDiv.className = "workout-log-error";
       el.appendChild(errorDiv);
     }
@@ -406,7 +414,9 @@ export default class WorkoutChartsPlugin extends Plugin {
       await this.createEmbeddedTimer(el, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
-      errorDiv.textContent = `Error loading timer: ${error.message}`;
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      errorDiv.textContent = `Error loading timer: ${errorMessage}`;
       errorDiv.className = "workout-timer-error";
       el.appendChild(errorDiv);
     }

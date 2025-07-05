@@ -92,7 +92,9 @@ export class EmbeddedTableView extends BaseView {
 
       this.renderTableContentOptimized(container, tableData);
     } catch (error) {
-      this.handleError(container, error, "creating embedded table");
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
+      this.handleError(container, errorObj, "creating embedded table");
     }
   }
 

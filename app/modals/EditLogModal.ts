@@ -162,7 +162,9 @@ export class EditLogModal extends ModalBase {
           this.onLogUpdated();
         }
       } catch (error) {
-        new Notice(`Error updating log: ${error.message}`);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        new Notice(`Error updating log: ${errorMessage}`);
       }
     });
 

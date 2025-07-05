@@ -86,7 +86,9 @@ export class CreateExercisePageModal extends ModalBase {
         this.close();
         new Notice("Exercise page created successfully!");
       } catch (error) {
-        new Notice(`Error creating exercise page: ${error.message}`);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        new Notice(`Error creating exercise page: ${errorMessage}`);
       }
     });
 

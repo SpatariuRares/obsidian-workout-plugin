@@ -87,7 +87,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
             await this.plugin.createCSVLogFile();
             new Notice("CSV log file created successfully!");
           } catch (error) {
-            new Notice(`Error creating CSV file: ${error.message}`);
+            const errorMessage =
+              error instanceof Error ? error.message : String(error);
+            new Notice(`Error creating CSV file: ${errorMessage}`);
           }
         })
       );

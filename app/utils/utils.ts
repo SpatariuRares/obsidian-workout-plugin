@@ -17,7 +17,6 @@ export interface MatchResult {
 }
 
 const PATH_MATCH_THRESHOLD = 70;
-const NO_EXERCISE_SPECIFIED = "Esercizio Non Specificato";
 
 /**
  * Calculate match score between two strings
@@ -359,26 +358,6 @@ export function validateUserParams(params: any): string[] {
   }
 
   return errors;
-}
-
-/**
- * Generate random color for chart datasets
- */
-function getRandomColor(alpha: number = 1): string {
-  const colors = [
-    `rgba(255, 99, 132, ${alpha})`,
-    `rgba(54, 162, 235, ${alpha})`,
-    `rgba(255, 206, 86, ${alpha})`,
-    `rgba(75, 192, 192, ${alpha})`,
-    `rgba(153, 102, 255, ${alpha})`,
-    `rgba(255, 159, 64, ${alpha})`,
-    `rgba(199, 199, 199, ${alpha})`,
-    `rgba(83, 102, 255, ${alpha})`,
-    `rgba(78, 252, 3, ${alpha})`,
-    `rgba(252, 3, 244, ${alpha})`,
-  ];
-
-  return colors[Math.floor(Math.random() * colors.length)];
 }
 
 /**

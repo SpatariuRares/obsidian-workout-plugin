@@ -161,7 +161,9 @@ export class CreateLogModal extends ModalBase {
           this.onLogCreated();
         }
       } catch (error) {
-        new Notice(`Error creating log: ${error.message}`);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        new Notice(`Error creating log: ${errorMessage}`);
       }
     });
 

@@ -3,8 +3,15 @@ import WorkoutChartsPlugin from "main";
 import { App, Modal, Notice, TFile } from "obsidian";
 
 export class CreateExercisePageModal extends Modal {
-  constructor(app: App, private plugin: WorkoutChartsPlugin) {
+  private exerciseName?: string;
+
+  constructor(
+    app: App,
+    private plugin: WorkoutChartsPlugin,
+    exerciseName?: string
+  ) {
     super(app);
+    this.exerciseName = exerciseName;
   }
 
   onOpen() {
@@ -28,6 +35,11 @@ export class CreateExercisePageModal extends Modal {
     });
     const exerciseInput = exerciseContainer.createEl("input", { type: "text" });
     exerciseInput.placeholder = "e.g., Pullover Machine";
+
+    // Pre-fill exercise name if provided
+    if (this.exerciseName) {
+      exerciseInput.value = this.exerciseName;
+    }
 
     // Tags input
     const tagsContainer = formContainer.createEl("div", {

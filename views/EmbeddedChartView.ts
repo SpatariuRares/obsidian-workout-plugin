@@ -135,6 +135,13 @@ export class EmbeddedChartView {
         params.exercise || "",
         logData
       );
+      if (params.exercise) {
+        UIComponents.createCreateLogButtonForMissingExercise(
+          container,
+          params.exercise,
+          this.plugin
+        );
+      }
     }
   }
 

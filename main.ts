@@ -1,5 +1,5 @@
 // Main plugin file - Workout Charts for Obsidian
-import { App, Notice, Plugin, TFile } from "obsidian";
+import { App, Notice, Plugin, TFile, MarkdownView } from "obsidian";
 
 // Import types and utilities
 import {
@@ -12,11 +12,14 @@ import {
 // Import views, modals, and settings
 import { EmbeddedChartView } from "./views/EmbeddedChartView";
 import { EmbeddedTableView } from "./views/EmbeddedTableView";
+import { EmbeddedTimerView } from "./views/EmbeddedTimerView";
 import { CreateLogModal } from "./modals/CreateLogModal";
 import { WorkoutChartsSettingTab } from "./settings/WorkoutChartsSettings";
 import { InsertChartModal } from "modals/InsertChartModal";
 import { InsertTableModal } from "modals/InsertTableModal";
+import { InsertTimerModal } from "modals/InsertTimerModal";
 import { CreateExercisePageModal } from "./modals/CreateExercisePageModal";
+import { CreateExerciseSectionModal } from "./modals/CreateExerciseSectionModal";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -24,6 +27,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   settings: WorkoutChartsSettings;
   private embeddedChartView: EmbeddedChartView;
   private embeddedTableView: EmbeddedTableView;
+  private embeddedTimerView: EmbeddedTimerView;
 
   async onload() {
     await this.loadSettings();
@@ -31,6 +35,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
+    this.embeddedTimerView = new EmbeddedTimerView(this);
 
     // Register code block processors
     this.registerMarkdownCodeBlockProcessor(
@@ -40,6 +45,10 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.registerMarkdownCodeBlockProcessor(
       "workout-log",
       this.handleWorkoutLog.bind(this)
+    );
+    this.registerMarkdownCodeBlockProcessor(
+      "workout-timer",
+      this.handleWorkoutTimer.bind(this)
     );
 
     this.addCommand({
@@ -87,6 +96,22 @@ export default class WorkoutChartsPlugin extends Plugin {
       name: "Create Exercise Page",
       callback: () => {
         new CreateExercisePageModal(this.app, this).open();
+      },
+    });
+
+    this.addCommand({
+      id: "insert-workout-timer",
+      name: "Insert Workout Timer",
+      callback: () => {
+        new InsertTimerModal(this.app, this).open();
+      },
+    });
+
+    this.addCommand({
+      id: "create-exercise-section",
+      name: "Create Exercise Section",
+      callback: () => {
+        new CreateExerciseSectionModal(this.app, this).open();
       },
     });
 
@@ -291,6 +316,15 @@ export default class WorkoutChartsPlugin extends Plugin {
           noMatchDiv.textContent = `No data found for exercise: ${exerciseName}. Available exercises: ${availableExercises}`;
           noMatchDiv.className = "workout-log-no-match";
           el.appendChild(noMatchDiv);
+
+          if (exerciseName) {
+            const { UIComponents } = await import("./components/UIComponents");
+            UIComponents.createCreateLogButtonForMissingExercise(
+              el,
+              exerciseName,
+              this
+            );
+          }
           return;
         }
       }
@@ -301,6 +335,27 @@ export default class WorkoutChartsPlugin extends Plugin {
       const errorDiv = document.createElement("div");
       errorDiv.textContent = `Error loading log: ${error.message}`;
       errorDiv.className = "workout-log-error";
+      el.appendChild(errorDiv);
+    }
+  }
+
+  // Handle workout timer code blocks
+  private async handleWorkoutTimer(source: string, el: HTMLElement, ctx: any) {
+    try {
+      const params = this.parseCodeBlockParams(source);
+
+      // Create timer container
+      const timerContainer = el.createEl("div", {
+        cls: "workout-timer-embed",
+      });
+      timerContainer.style.width = "100%";
+
+      // Create timer using the embedded timer view
+      await this.createEmbeddedTimer(timerContainer, params);
+    } catch (error) {
+      const errorDiv = document.createElement("div");
+      errorDiv.textContent = `Error loading timer: ${error.message}`;
+      errorDiv.className = "workout-timer-error";
       el.appendChild(errorDiv);
     }
   }
@@ -385,6 +440,14 @@ export default class WorkoutChartsPlugin extends Plugin {
     params: Record<string, unknown>
   ) {
     await this.embeddedTableView.createTable(container, data, params as any);
+  }
+
+  // Create embedded timer using the dedicated view
+  private async createEmbeddedTimer(
+    container: HTMLElement,
+    params: Record<string, unknown>
+  ) {
+    await this.embeddedTimerView.createTimer(container, params as any);
   }
 
   // Trigger refresh of all workout log views

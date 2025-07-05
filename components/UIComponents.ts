@@ -1,5 +1,6 @@
-import { Notice } from "obsidian";
+import { Notice, MarkdownView } from "obsidian";
 import { CreateLogModal } from "../modals/CreateLogModal";
+import { CreateExercisePageModal } from "../modals/CreateExercisePageModal";
 
 /**
  * Provides reusable UI components for the workout charts plugin.
@@ -241,6 +242,47 @@ export class UIComponents {
         exerciseName,
         currentPageLink,
         onLogCreated
+      ).open();
+    });
+  }
+
+  /**
+   * Creates a "Create Log" button for creating new workout logs when no exercise data is found.
+   * @param container - The HTML element to render the button in
+   * @param exerciseName - Name of the exercise to pre-fill in the modal
+   * @param plugin - Plugin instance for opening the create log modal
+   */
+  static createCreateLogButtonForMissingExercise(
+    container: HTMLElement,
+    exerciseName: string,
+    plugin: any
+  ): void {
+    const buttonContainer = container.createEl("div", {
+      cls: "create-log-button-container",
+    });
+
+    const button = buttonContainer.createEl("button", {
+      text: `➕ Crea Log per: ${exerciseName}`,
+      cls: "create-log-button",
+    });
+
+    button.addEventListener("click", () => {
+      // Get current page link for the log
+      const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+      const currentPageLink = activeView?.file
+        ? `[[${activeView.file.basename}]]`
+        : "";
+
+      // Open the create log modal with the exercise name pre-filled
+      new CreateLogModal(
+        plugin.app,
+        plugin,
+        exerciseName,
+        currentPageLink,
+        () => {
+          // Refresh the view after creating the log
+          plugin.triggerWorkoutLogRefresh();
+        }
       ).open();
     });
   }

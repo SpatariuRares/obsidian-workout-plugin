@@ -124,6 +124,15 @@ export class EmbeddedTableView {
         params.exercise || "",
         logData
       );
+
+      // Add "Create Log" button when no exercise data is found
+      if (params.exercise) {
+        UIComponents.createCreateLogButtonForMissingExercise(
+          container,
+          params.exercise,
+          this.plugin
+        );
+      }
     }
   }
 

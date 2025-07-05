@@ -5,6 +5,7 @@ import { ModalBase } from "./base/ModalBase";
 import { TargetSectionWithAutocomplete } from "./components/TargetSectionWithAutocomplete";
 import { AdvancedOptionsSection } from "./components/AdvancedOptionsSection";
 import { CodeGenerator } from "./components/CodeGenerator";
+import { Notice } from "obsidian";
 
 export class InsertTableModal extends ModalBase {
   constructor(app: App, private plugin: WorkoutChartsPlugin) {
@@ -30,6 +31,7 @@ export class InsertTableModal extends ModalBase {
       tableTypeContainer,
       "Tipo Tabella:",
       [
+        { text: "Esercizio + Allenamento", value: "combined" },
         { text: "Esercizio Specifico", value: "exercise" },
         { text: "Allenamento Completo", value: "workout" },
       ]
@@ -37,7 +39,7 @@ export class InsertTableModal extends ModalBase {
 
     // Target Section using reusable component with autocomplete
     const currentFileName = this.getCurrentFileName();
-    const { elements: targetElements } =
+    const { elements: targetElements, handlers: targetHandlers } =
       await TargetSectionWithAutocomplete.create(
         this,
         mainContainer,
@@ -45,6 +47,49 @@ export class InsertTableModal extends ModalBase {
         currentFileName,
         this.plugin
       );
+
+    // Ensure visibility is updated based on initial selection
+    targetHandlers.updateVisibility();
+
+    // Additional check to ensure workout field is visible for combined mode
+    setTimeout(() => {
+      if (tableTypeSelect.value === "combined") {
+        // Force visibility using multiple approaches
+        const workoutField = mainContainer.querySelector(
+          '[data-field-type="workout"]'
+        ) as HTMLElement;
+        const currentWorkoutField = mainContainer.querySelector(
+          '[data-field-type="current-workout"]'
+        ) as HTMLElement;
+        const fileInfoField = mainContainer.querySelector(
+          '[data-field-type="file-info"]'
+        ) as HTMLElement;
+
+        if (workoutField) {
+          workoutField.style.display = "block";
+          workoutField.style.visibility = "visible";
+          workoutField.style.opacity = "1";
+          workoutField.style.height = "auto";
+          workoutField.style.overflow = "visible";
+        }
+
+        if (currentWorkoutField) {
+          currentWorkoutField.style.display = "block";
+          currentWorkoutField.style.visibility = "visible";
+          currentWorkoutField.style.opacity = "1";
+          currentWorkoutField.style.height = "auto";
+          currentWorkoutField.style.overflow = "visible";
+        }
+
+        if (fileInfoField) {
+          fileInfoField.style.display = "block";
+          fileInfoField.style.visibility = "visible";
+          fileInfoField.style.opacity = "1";
+          fileInfoField.style.height = "auto";
+          fileInfoField.style.overflow = "visible";
+        }
+      }
+    }, 200);
 
     // Configuration Section
     const configSection = this.createSection(mainContainer, "Configurazione");
@@ -114,6 +159,10 @@ export class InsertTableModal extends ModalBase {
       }
     );
 
+    // Set default values for combined mode
+    const exactMatchToggle = advancedElements.exactMatchToggle;
+    exactMatchToggle.checked = true; // Default to exact match for combined mode
+
     // Buttons Section
     const buttonsSection = this.createButtonsSection(mainContainer);
 
@@ -145,10 +194,20 @@ export class InsertTableModal extends ModalBase {
       const buttonText = buttonTextInput.value.trim();
       const advancedValues = AdvancedOptionsSection.getValues(advancedElements);
 
+      // Validation for combined mode
+      if (tableType === "combined") {
+        if (!target.exercise || !target.workout) {
+          new Notice(
+            "⚠️ Per il tipo 'Esercizio + Allenamento' devi compilare entrambi i campi!"
+          );
+          return;
+        }
+      }
+
       const tableCode = CodeGenerator.generateTableCode({
         tableType,
-        exercise: target.type === "exercise" ? target.value : "",
-        workout: target.type === "workout" ? target.value : "",
+        exercise: target.exercise || "",
+        workout: target.workout || "",
         limit,
         columnsType,
         showAddButton,

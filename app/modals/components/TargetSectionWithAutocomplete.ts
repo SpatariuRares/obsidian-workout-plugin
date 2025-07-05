@@ -46,14 +46,16 @@ export class TargetSectionWithAutocomplete {
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
+    workoutContainer.setAttribute("data-field-type", "workout");
     const workoutInput = modal.createTextInput(
       workoutContainer,
       "Nome Allenamento:",
-      "Es. Allenamento A, Workout B..."
+      "Es. Allenamento A, Workout B, o usa il checkbox sotto"
     );
 
     // Current Workout checkbox (for workout charts/tables)
     const currentWorkoutContainer = modal.createCheckboxGroup(targetSection);
+    currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
       "Usa Allenamento Corrente (nome file)",
@@ -66,6 +68,7 @@ export class TargetSectionWithAutocomplete {
       targetSection,
       currentFileName
     );
+    currentFileInfo.setAttribute("data-field-type", "file-info");
 
     const elements: TargetSectionWithAutocompleteElements = {
       exerciseContainer,
@@ -81,19 +84,53 @@ export class TargetSectionWithAutocomplete {
 
     // Create handlers
     const updateVisibility = () => {
-      const isExercise = typeSelect.value === "exercise";
-      exerciseContainer.className = isExercise
+      const selectedType = typeSelect.value;
+      const isExercise = selectedType === "exercise";
+      const isWorkout = selectedType === "workout";
+      const isCombined = selectedType === "combined";
+
+      // Exercise container: show for exercise or combined mode
+      const showExercise = isExercise || isCombined;
+      exerciseContainer.className = showExercise
         ? "workout-charts-form-group target-exercise"
         : "workout-charts-form-group target-exercise display-none";
-      workoutContainer.className = isExercise
-        ? "workout-charts-form-group target-workout display-none"
-        : "workout-charts-form-group target-workout";
-      currentWorkoutContainer.className = isExercise
-        ? "workout-charts-checkbox-group target-current-workout display-none"
-        : "workout-charts-checkbox-group target-current-workout";
-      currentFileInfo.className = isExercise
-        ? "current-file-info target-current-file-info display-none"
-        : "current-file-info target-current-file-info";
+      exerciseContainer.style.display = showExercise ? "" : "none";
+
+      // Workout container: show for workout or combined mode
+      const showWorkout = isWorkout || isCombined;
+      workoutContainer.className = showWorkout
+        ? "workout-charts-form-group target-workout"
+        : "workout-charts-form-group target-workout display-none";
+      workoutContainer.style.display = showWorkout ? "" : "none";
+
+      // Current workout toggle: show for workout or combined mode
+      const showCurrentWorkout = isWorkout || isCombined;
+      currentWorkoutContainer.className = showCurrentWorkout
+        ? "workout-charts-checkbox-group target-current-workout"
+        : "workout-charts-checkbox-group target-current-workout display-none";
+      currentWorkoutContainer.style.display = showCurrentWorkout ? "" : "none";
+
+      // Current file info: show for workout or combined mode
+      const showFileInfo = isWorkout || isCombined;
+      currentFileInfo.className = showFileInfo
+        ? "current-file-info target-current-file-info"
+        : "current-file-info target-current-file-info display-none";
+      currentFileInfo.style.display = showFileInfo ? "" : "none";
+
+      // Force visibility for combined mode - additional check
+      if (isCombined) {
+        setTimeout(() => {
+          workoutContainer.style.display = "";
+          workoutContainer.style.visibility = "visible";
+          workoutContainer.style.opacity = "1";
+          currentWorkoutContainer.style.display = "";
+          currentWorkoutContainer.style.visibility = "visible";
+          currentWorkoutContainer.style.opacity = "1";
+          currentFileInfo.style.display = "";
+          currentFileInfo.style.visibility = "visible";
+          currentFileInfo.style.opacity = "1";
+        }, 100);
+      }
     };
 
     const handleCurrentWorkoutToggle = () => {
@@ -130,22 +167,32 @@ export class TargetSectionWithAutocomplete {
     elements: TargetSectionWithAutocompleteElements,
     typeSelect: HTMLSelectElement,
     currentFileName: string
-  ): { type: string; value: string } {
-    const isExercise = typeSelect.value === "exercise";
+  ): { type: string; exercise?: string; workout?: string } {
+    const selectedType = typeSelect.value;
     const useCurrentWorkout = elements.currentWorkoutToggle.checked;
 
-    if (isExercise) {
+    if (selectedType === "exercise") {
       return {
         type: "exercise",
-        value: elements.exerciseInput.value.trim(),
+        exercise: elements.exerciseInput.value.trim(),
       };
-    } else {
+    } else if (selectedType === "workout") {
       return {
         type: "workout",
-        value: useCurrentWorkout
+        workout: useCurrentWorkout
+          ? currentFileName
+          : elements.workoutInput.value.trim(),
+      };
+    } else if (selectedType === "combined") {
+      return {
+        type: "combined",
+        exercise: elements.exerciseInput.value.trim(),
+        workout: useCurrentWorkout
           ? currentFileName
           : elements.workoutInput.value.trim(),
       };
     }
+
+    return { type: "none" };
   }
 }

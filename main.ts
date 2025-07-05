@@ -271,79 +271,8 @@ export default class WorkoutChartsPlugin extends Plugin {
         return;
       }
 
-      // Filter data based on parameters
-      let filteredData = logData;
-
-      if (params.exercise) {
-        // Use the advanced search functions from utils
-        const {
-          findExerciseMatches,
-          determineExerciseFilterStrategy,
-          filterLogDataByExercise,
-        } = await import("./app/utils/utils");
-
-        const exerciseName =
-          typeof params.exercise === "string" ? params.exercise : "";
-        const exactMatch =
-          typeof params.exactMatch === "boolean" ? params.exactMatch : false;
-
-        const matchesResult = findExerciseMatches(
-          logData,
-          exerciseName,
-          this.settings.debugMode
-        );
-        const { bestStrategy, bestPathKey, bestFileMatchesList } =
-          determineExerciseFilterStrategy(
-            matchesResult.fileNameMatches,
-            matchesResult.allExercisePathsAndScores,
-            exactMatch,
-            this.settings.debugMode,
-            exerciseName // pass exercise name for robust exact match
-          );
-
-        if (this.settings.debugMode) {
-          console.log("Exercise search debug:", {
-            exercise: exerciseName,
-            totalData: logData.length,
-            matchesResult,
-            bestStrategy,
-            bestPathKey,
-            bestFileMatchesList,
-          });
-        }
-
-        filteredData = filterLogDataByExercise(
-          logData,
-          bestStrategy,
-          bestPathKey,
-          bestFileMatchesList
-        );
-
-        if (filteredData.length === 0) {
-          const availableExercises = [
-            ...new Set(logData.map((d) => d.exercise)),
-          ].join(", ");
-          const noMatchDiv = document.createElement("div");
-          noMatchDiv.textContent = `No data found for exercise: ${exerciseName}. Available exercises: ${availableExercises}`;
-          noMatchDiv.className = "workout-log-no-match";
-          el.appendChild(noMatchDiv);
-
-          if (exerciseName) {
-            const { UIComponents } = await import(
-              "./app/components/UIComponents"
-            );
-            UIComponents.createCreateLogButtonForMissingExercise(
-              el,
-              exerciseName,
-              this
-            );
-          }
-          return;
-        }
-      }
-
-      // Create table
-      await this.createEmbeddedTable(el, filteredData, params);
+      // Create table - filtering is now handled by the DataFilter class
+      await this.createEmbeddedTable(el, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
       errorDiv.textContent = `Error loading log: ${error.message}`;

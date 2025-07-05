@@ -132,11 +132,19 @@ export class UIComponents {
     });
 
     let infoFooterText = `📊 ${volumeData.length} sessioni elaborate`;
-    if (chartType === "exercise") {
+
+    // Handle combined exercise + workout case
+    if (filterResult.titlePrefix && filterResult.titlePrefix.includes(" + ")) {
+      const [exercise, workout] = filterResult.titlePrefix.split(" + ");
+      const workoutFilename =
+        workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
+      infoFooterText += ` per "${exercise}" nell'allenamento "${workoutFilename}"`;
+    } else if (chartType === "exercise") {
       infoFooterText += ` per \"${filterResult.titlePrefix}\"`;
     } else if (chartType === "workout") {
       infoFooterText += ` per l'allenamento \"${filterResult.titlePrefix}\"`;
     }
+
     infoFooterText += `. (Metodo ricerca: ${filterResult.filterMethodUsed})`;
     infoFooterDiv.innerHTML = infoFooterText;
   }

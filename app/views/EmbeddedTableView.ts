@@ -179,17 +179,24 @@ export class EmbeddedTableView extends BaseView {
     });
 
     let footerText = `📊 Trovati ${totalRows} log`;
-    if (params.exercise) {
+
+    // Handle both exercise and workout case
+    if (params.exercise && params.workout) {
+      const workoutFilename =
+        params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
+        params.workout;
+      footerText += ` per "${params.exercise}" nell'allenamento "${workoutFilename}"`;
+    } else if (params.exercise) {
       footerText += ` per "${params.exercise}"`;
-    }
-    if (params.workout) {
+    } else if (params.workout) {
       const workoutFilename =
         params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
         params.workout;
       footerText += ` nell'allenamento "${workoutFilename}"`;
-    } else if (!params.exercise) {
+    } else {
       footerText += ` in totale`;
     }
+
     footerText += `. (Metodo: ${
       filterResult.filterMethodUsed
     }). Visualizzati max ${params.limit || 50}.`;

@@ -14,6 +14,7 @@ import { WorkoutLogData } from "../types/WorkoutLogData";
  * Handles filtering of workout log data based on various criteria.
  * Provides methods for filtering by exercise name, workout name, and other parameters.
  * Supports both exact and fuzzy matching with intelligent search strategies.
+ * Now supports AND logic when both exercise and workout parameters are provided.
  */
 export class DataFilter {
   /**
@@ -28,22 +29,67 @@ export class DataFilter {
     params: EmbeddedChartParams | EmbeddedTableParams,
     debugMode: boolean
   ): FilterResult {
-    const chartType =
-      "chartType" in params ? params.chartType || "exercise" : "exercise";
     let filteredData = logData;
     let filterMethodUsed = "none";
     let titlePrefix = "Dati Allenamento";
+    const filterMethods: string[] = [];
 
-    if (chartType === "workout") {
+    // Check if both exercise and workout are specified
+    const hasExercise = params.exercise && params.exercise.trim();
+    const hasWorkout = params.workout || params.workoutPath;
+
+    if (hasExercise && hasWorkout) {
+      // Apply AND logic: filter by both exercise and workout
+      if (debugMode) {
+        console.log("DataFilter: Applying AND logic for exercise + workout", {
+          exercise: params.exercise,
+          workout: params.workout || params.workoutPath,
+        });
+      }
+
+      // First filter by exercise
+      const exerciseResult = this.filterByExercise(logData, params, debugMode);
+      if (exerciseResult.filteredData.length === 0) {
+        return {
+          filteredData: [],
+          filterMethodUsed: "Nessun dato trovato per esercizio + allenamento",
+          titlePrefix: `${params.exercise} + ${
+            params.workout || params.workoutPath
+          }`,
+        };
+      }
+
+      // Then filter the exercise results by workout
+      const workoutParams = { ...params, exercise: undefined }; // Remove exercise to avoid recursion
+      const workoutResult = this.filterByWorkout(
+        exerciseResult.filteredData,
+        workoutParams
+      );
+
+      filteredData = workoutResult.filteredData;
+      filterMethods.push(exerciseResult.filterMethodUsed);
+      filterMethods.push(workoutResult.filterMethodUsed);
+      filterMethodUsed = filterMethods.join(" AND ");
+      titlePrefix = `${params.exercise} + ${
+        params.workout || params.workoutPath
+      }`;
+    } else if (hasExercise) {
+      // Filter by exercise only
+      const result = this.filterByExercise(logData, params, debugMode);
+      filteredData = result.filteredData;
+      filterMethodUsed = result.filterMethodUsed;
+      titlePrefix = result.titlePrefix;
+    } else if (hasWorkout) {
+      // Filter by workout only
       const result = this.filterByWorkout(logData, params);
       filteredData = result.filteredData;
       filterMethodUsed = result.filterMethodUsed;
       titlePrefix = result.titlePrefix;
     } else {
-      const result = this.filterByExercise(logData, params, debugMode);
-      filteredData = result.filteredData;
-      filterMethodUsed = result.filterMethodUsed;
-      titlePrefix = result.titlePrefix;
+      // No filters applied - return all data
+      if (debugMode) {
+        console.log("DataFilter: No filters applied, returning all data");
+      }
     }
 
     return { filteredData, filterMethodUsed, titlePrefix };

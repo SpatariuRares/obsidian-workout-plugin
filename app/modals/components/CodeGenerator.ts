@@ -25,8 +25,11 @@ export class CodeGenerator {
     // Add data type
     lines.push(`type: ${params.dataType}`);
 
-    // Add target (exercise or workout)
-    if (params.chartType === "exercise" && params.exercise) {
+    // Add target (exercise, workout, or both)
+    if (params.chartType === "combined") {
+      if (params.exercise) lines.push(`exercise: ${params.exercise}`);
+      if (params.workout) lines.push(`workout: ${params.workout}`);
+    } else if (params.chartType === "exercise" && params.exercise) {
       lines.push(`exercise: ${params.exercise}`);
     } else if (params.chartType === "workout" && params.workout) {
       lines.push(`workout: ${params.workout}`);
@@ -68,8 +71,11 @@ export class CodeGenerator {
   }): string {
     const lines: string[] = ["```workout-log"];
 
-    // Add target (exercise or workout)
-    if (params.tableType === "exercise" && params.exercise) {
+    // Add target (exercise, workout, or both)
+    if (params.tableType === "combined") {
+      if (params.exercise) lines.push(`exercise: ${params.exercise}`);
+      if (params.workout) lines.push(`workout: ${params.workout}`);
+    } else if (params.tableType === "exercise" && params.exercise) {
       lines.push(`exercise: ${params.exercise}`);
     } else if (params.tableType === "workout" && params.workout) {
       lines.push(`workout: ${params.workout}`);

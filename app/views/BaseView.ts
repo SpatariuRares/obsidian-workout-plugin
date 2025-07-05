@@ -54,6 +54,26 @@ export abstract class BaseView {
     logData: WorkoutLogData[],
     viewType: "chart" | "table" | "timer"
   ): void {
+    // Check if this is a combined exercise + workout case
+    if (titlePrefix && titlePrefix.includes(" + ")) {
+      const [exercise, workout] = titlePrefix.split(" + ");
+      const workoutFilename =
+        workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
+      UIComponents.renderInfoMessage(
+        container,
+        `Nessun dato trovato per l'esercizio <strong>${exercise}</strong> nell'allenamento <strong>${workoutFilename}</strong>.`,
+        "warning"
+      );
+      if (exercise) {
+        UIComponents.createCreateLogButtonForMissingExercise(
+          container,
+          exercise,
+          this.plugin
+        );
+      }
+      return;
+    }
+
     const isWorkoutView =
       viewType === "chart"
         ? (params.chartType || "exercise") === "workout"

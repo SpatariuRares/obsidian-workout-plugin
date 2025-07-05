@@ -33,6 +33,23 @@ export class CreateExerciseSectionModal extends ModalBase {
       this.plugin
     );
 
+    // Workout input for combined filtering
+    const workoutContainer = this.createFormGroup(exerciseSection);
+    const workoutInput = this.createTextInput(
+      workoutContainer,
+      "Nome Allenamento (opzionale):",
+      "Es. Allenamento A, Workout B, o usa il checkbox sotto"
+    );
+
+    // Current Workout checkbox
+    const currentWorkoutContainer = this.createCheckboxGroup(exerciseSection);
+    const currentWorkoutToggle = this.createCheckbox(
+      currentWorkoutContainer,
+      "Usa Allenamento Corrente (nome file)",
+      false,
+      "currentWorkout"
+    );
+
     // Sets input
     const setsContainer = this.createFormGroup(exerciseSection);
     const setsInput = this.createNumberInput(
@@ -128,8 +145,28 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
+    // Handle current workout toggle
+    currentWorkoutToggle.addEventListener("change", () => {
+      if (currentWorkoutToggle.checked) {
+        workoutInput.disabled = true;
+        workoutInput.value = this.getCurrentFileName();
+        workoutInput.classList.add("opacity-50");
+        workoutInput.classList.remove("opacity-100");
+      } else {
+        workoutInput.disabled = false;
+        workoutInput.value = "";
+        workoutInput.classList.add("opacity-100");
+        workoutInput.classList.remove("opacity-50");
+      }
+    });
+
     createBtn.addEventListener("click", () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();
+      const useCurrentWorkout = currentWorkoutToggle.checked;
+      const currentFileName = this.getCurrentFileName();
+      const workoutName = useCurrentWorkout
+        ? currentFileName
+        : workoutInput.value.trim();
       const sets = parseInt(setsInput.value) || 4;
       const reps = repsInput.value.trim();
       const restTime = parseInt(restTimeInput.value) || 180;
@@ -146,6 +183,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
       const sectionCode = this.generateExerciseSectionCode({
         exerciseName,
+        workoutName,
         sets,
         reps,
         restTime,
@@ -171,6 +209,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
   private generateExerciseSectionCode(params: {
     exerciseName: string;
+    workoutName: string;
     sets: number;
     reps: string;
     restTime: number;
@@ -200,10 +239,12 @@ export class CreateExerciseSectionModal extends ModalBase {
     }
 
     if (params.showLog) {
+      // Determine table type based on whether workout is specified
+      const tableType = params.workoutName ? "combined" : "exercise";
       const logCode = CodeGenerator.generateTableCode({
-        tableType: "exercise",
+        tableType,
         exercise: params.exerciseName,
-        workout: "",
+        workout: params.workoutName,
         limit: 12,
         columnsType: "standard",
         showAddButton: true,

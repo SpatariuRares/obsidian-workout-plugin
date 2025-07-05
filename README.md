@@ -172,3 +172,15 @@ DateTime:: 2025-01-17T10:30:00
 ## API Documentation
 
 See https://github.com/obsidianmd/obsidian-api
+
+## Third-Party Libraries
+
+This plugin uses the following third-party libraries:
+
+- **Chart.js** (v4.4.0) - For interactive chart rendering
+  - License: MIT
+  - Repository: https://github.com/chartjs/Chart.js
+
+## License
+
+This plugin is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

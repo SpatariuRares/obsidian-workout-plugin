@@ -11,23 +11,7 @@ export abstract class ModalBase extends Modal {
    */
   public createSection(parent: HTMLElement, title: string): HTMLElement {
     const section = parent.createEl("div", { cls: "modal-section" });
-    Object.assign(section.style, {
-      marginBottom: "20px",
-      padding: "15px",
-      backgroundColor: "var(--background-secondary)",
-      borderRadius: "8px",
-      border: "1px solid var(--background-modifier-border)",
-    });
-
     const sectionTitle = section.createEl("h3", { text: title });
-    Object.assign(sectionTitle.style, {
-      margin: "0 0 15px 0",
-      fontSize: "1.1em",
-      color: "var(--text-normal)",
-      borderBottom: "1px solid var(--background-modifier-border)",
-      paddingBottom: "8px",
-    });
-
     return section;
   }
 
@@ -55,14 +39,6 @@ export abstract class ModalBase extends Modal {
   protected createButtonsSection(parent: HTMLElement): HTMLElement {
     const buttonsSection = parent.createEl("div", {
       cls: "workout-charts-buttons",
-    });
-    Object.assign(buttonsSection.style, {
-      display: "flex",
-      gap: "10px",
-      justifyContent: "flex-end",
-      marginTop: "20px",
-      paddingTop: "20px",
-      borderTop: "1px solid var(--background-modifier-border)",
     });
     return buttonsSection;
   }
@@ -167,5 +143,29 @@ export abstract class ModalBase extends Modal {
       container.createEl("label", { text: label });
     }
     return checkbox;
+  }
+
+  /**
+   * Creates a styled main container for modals
+   */
+  protected createStyledMainContainer(contentEl: HTMLElement): HTMLElement {
+    const mainContainer = contentEl.createEl("div", {
+      cls: "workout-charts-form workout-charts-modal-main-container",
+    });
+    return mainContainer;
+  }
+
+  /**
+   * Creates a current file info element
+   */
+  public createCurrentFileInfo(
+    parent: HTMLElement,
+    currentFileName: string
+  ): HTMLElement {
+    const currentFileInfo = parent.createEl("div", {
+      cls: "current-file-info",
+    });
+    currentFileInfo.textContent = `File corrente: ${currentFileName}`;
+    return currentFileInfo;
   }
 }

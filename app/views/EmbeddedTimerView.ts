@@ -69,7 +69,28 @@ export class EmbeddedTimerView extends BaseView {
       this.state.isRunning = false;
       this.state.startTime = undefined;
 
+      // Log timer initialization
+      this.logDebug("EmbeddedTimerView", "Timer initialized", {
+        timerId: this.timerId,
+        timerType: this.state.timerType,
+        duration: this.state.duration,
+        intervalTime: this.state.intervalTime,
+        totalRounds: this.state.totalRounds,
+      });
+
       this.renderTimerContent(container, params);
+
+      // Verify timer display was created
+      if (!this.state.timerDisplay) {
+        this.logDebug(
+          "EmbeddedTimerView",
+          "Timer display not created after rendering",
+          {
+            timerId: this.timerId,
+          }
+        );
+        return;
+      }
 
       // Auto-start if requested
       if (params.autoStart) {
@@ -116,10 +137,13 @@ export class EmbeddedTimerView extends BaseView {
       cls: "workout-timer-display",
     });
 
-    // Create time display
+    // Create time display - ALWAYS create this regardless of controls
     const timeDisplay = timerDisplay.createEl("div", {
       cls: "workout-timer-time",
     });
+
+    // Store reference for updates - ALWAYS set this
+    this.state.timerDisplay = timeDisplay;
 
     // Create minimal controls inline
     if (params.showControls !== false) {
@@ -162,8 +186,7 @@ export class EmbeddedTimerView extends BaseView {
         startStopBtn.textContent = "▶";
       });
 
-      // Store references for updates
-      this.state.timerDisplay = timeDisplay;
+      // Store reference for button updates
       this.state.startStopBtn = startStopBtn;
     }
 
@@ -173,6 +196,18 @@ export class EmbeddedTimerView extends BaseView {
 
   private startTimer(): void {
     if (this.state.isRunning) return;
+
+    // Ensure timer display is available
+    if (!this.state.timerDisplay) {
+      this.logDebug(
+        "EmbeddedTimerView",
+        "Cannot start timer - display not initialized",
+        {
+          timerId: this.timerId,
+        }
+      );
+      return;
+    }
 
     this.state.isRunning = true;
     this.state.startTime = Date.now() - this.state.elapsedTime;
@@ -206,7 +241,17 @@ export class EmbeddedTimerView extends BaseView {
   }
 
   private updateTimer(): void {
-    if (!this.state.startTime) return;
+    if (!this.state.startTime) {
+      this.logDebug(
+        "EmbeddedTimerView",
+        "updateTimer called but startTime is null",
+        {
+          timerId: this.timerId,
+          isRunning: this.state.isRunning,
+        }
+      );
+      return;
+    }
 
     const now = Date.now();
     this.state.elapsedTime = now - this.state.startTime;
@@ -223,7 +268,7 @@ export class EmbeddedTimerView extends BaseView {
     } else if (this.state.timerType === "interval") {
       const intervalElapsed =
         this.state.elapsedTime % (this.state.intervalTime * 1000);
-      if (intervalElapsed === 0 && this.state.elapsedTime > 0) {
+      if (intervalElapsed < 100 && this.state.elapsedTime > 0) {
         this.state.currentRound++;
         if (this.state.currentRound > this.state.totalRounds) {
           this.handleTimerComplete();
@@ -237,7 +282,17 @@ export class EmbeddedTimerView extends BaseView {
   }
 
   private updateDisplay(): void {
-    if (!this.state.timerDisplay) return;
+    if (!this.state.timerDisplay) {
+      this.logDebug(
+        "EmbeddedTimerView",
+        "updateDisplay called but timerDisplay is null",
+        {
+          timerId: this.timerId,
+          isRunning: this.state.isRunning,
+        }
+      );
+      return;
+    }
 
     let displayTime: string;
 
@@ -313,27 +368,45 @@ export class EmbeddedTimerView extends BaseView {
   }
 
   private playSound(): void {
-    // Simple beep sound using Web Audio API
     try {
       const audioContext = new (window.AudioContext ||
         (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      // Create a more pleasant notification sound with multiple tones
+      const playTone = (
+        frequency: number,
+        startTime: number,
+        duration: number,
+        volume: number = 0.15
+      ) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
 
-      oscillator.frequency.value = 800;
-      oscillator.type = "sine";
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
 
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        audioContext.currentTime + 0.5
-      );
+        oscillator.frequency.value = frequency;
+        oscillator.type = "sine";
 
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.5);
+        gainNode.gain.setValueAtTime(0, startTime);
+        gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.08);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+
+        oscillator.start(startTime);
+        oscillator.stop(startTime + duration);
+      };
+
+      const currentTime = audioContext.currentTime;
+
+      playTone(523.25, currentTime, 0.4); // C5
+      playTone(659.25, currentTime + 0.1, 0.4); // E5
+      playTone(783.99, currentTime + 0.2, 0.4); // G5
+      playTone(1046.5, currentTime + 0.3, 0.4); // C6
+
+      // Resolution: descending back to C
+      playTone(783.99, currentTime + 0.5, 0.3); // G5
+      playTone(659.25, currentTime + 0.65, 0.3); // E5
+      playTone(523.25, currentTime + 0.8, 0.4); // C5 (final note)
     } catch (error) {
       // Fallback to console beep
       console.log("\x07");

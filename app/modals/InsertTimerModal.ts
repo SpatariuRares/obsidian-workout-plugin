@@ -15,14 +15,7 @@ export class InsertTimerModal extends ModalBase {
     contentEl.createEl("h2", { text: "Insert Workout Timer" });
 
     // Create main container with better styling
-    const mainContainer = contentEl.createEl("div", {
-      cls: "workout-charts-form",
-    });
-    Object.assign(mainContainer.style, {
-      padding: "20px",
-      maxWidth: "600px",
-      margin: "0 auto",
-    });
+    const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Timer Configuration Section using reusable component
     const { elements: timerElements } = TimerConfigurationSection.create(

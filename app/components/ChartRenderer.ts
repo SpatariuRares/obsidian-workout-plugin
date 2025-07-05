@@ -87,7 +87,6 @@ export class ChartRenderer {
     const chartContainer = contentDiv.createEl("div", {
       cls: "embedded-chart-container",
     });
-    chartContainer.style.width = "100%";
     return chartContainer;
   }
 
@@ -100,7 +99,6 @@ export class ChartRenderer {
     const canvas = chartContainer.createEl("canvas", {
       cls: "embedded-chart-canvas",
     });
-    canvas.style.width = "100%";
     return canvas;
   }
 

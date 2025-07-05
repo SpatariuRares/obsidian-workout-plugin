@@ -27,7 +27,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   settings: WorkoutChartsSettings;
   private embeddedChartView: EmbeddedChartView;
   private embeddedTableView: EmbeddedTableView;
-  private embeddedTimerView: EmbeddedTimerView;
+  private activeTimers: Map<string, EmbeddedTimerView> = new Map();
 
   async onload() {
     await this.loadSettings();
@@ -35,7 +35,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
-    this.embeddedTimerView = new EmbeddedTimerView(this);
 
     // Register code block processors
     this.registerMarkdownCodeBlockProcessor(
@@ -117,6 +116,14 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Add settings tab
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
+  }
+
+  onunload() {
+    // Cleanup all active timers
+    this.activeTimers.forEach((timer) => {
+      timer.destroy();
+    });
+    this.activeTimers.clear();
   }
 
   async loadSettings() {
@@ -449,7 +456,31 @@ export default class WorkoutChartsPlugin extends Plugin {
     container: HTMLElement,
     params: Record<string, unknown>
   ) {
-    await this.embeddedTimerView.createTimer(container, params as any);
+    const timerView = new EmbeddedTimerView(this);
+    await timerView.createTimer(container, params as any);
+
+    // Store the timer instance for cleanup
+    const timerId = timerView.getId();
+    this.activeTimers.set(timerId, timerView);
+
+    // Add cleanup when container is removed
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.removedNodes.forEach((node) => {
+          if (node === container || (node as Element)?.contains?.(container)) {
+            // Timer container was removed, cleanup the timer
+            timerView.destroy();
+            this.activeTimers.delete(timerId);
+            observer.disconnect();
+          }
+        });
+      });
+    });
+
+    observer.observe(container.parentElement || document.body, {
+      childList: true,
+      subtree: true,
+    });
   }
 
   // Trigger refresh of all workout log views

@@ -16,14 +16,7 @@ export class InsertTableModal extends ModalBase {
     contentEl.createEl("h2", { text: "Inserisci Tabella Log Allenamento" });
 
     // Create main container with better styling
-    const mainContainer = contentEl.createEl("div", {
-      cls: "workout-charts-form",
-    });
-    Object.assign(mainContainer.style, {
-      padding: "20px",
-      maxWidth: "600px",
-      margin: "0 auto",
-    });
+    const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Table Type Section
     const tableTypeSection = this.createSection(

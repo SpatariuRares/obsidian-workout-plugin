@@ -174,14 +174,8 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { totalRows, filterResult, params } = tableData;
 
-    const footerDiv = container.createEl("div");
-    Object.assign(footerDiv.style, {
-      fontSize: "0.8em",
-      color: "var(--text-muted)",
-      marginTop: "10px",
-      padding: "8px",
-      backgroundColor: "var(--background-secondary)",
-      borderRadius: "4px",
+    const footerDiv = container.createEl("div", {
+      cls: "table-footer",
     });
 
     let footerText = `📊 Trovati ${totalRows} log`;

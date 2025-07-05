@@ -18,14 +18,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     contentEl.createEl("h2", { text: "Create Exercise Section" });
 
     // Create main container with better styling
-    const mainContainer = contentEl.createEl("div", {
-      cls: "workout-charts-form",
-    });
-    Object.assign(mainContainer.style, {
-      padding: "20px",
-      maxWidth: "600px",
-      margin: "0 auto",
-    });
+    const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Exercise Configuration Section
     const exerciseSection = this.createSection(

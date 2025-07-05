@@ -16,14 +16,7 @@ export class InsertChartModal extends ModalBase {
     contentEl.createEl("h2", { text: "Inserisci Grafico Allenamento" });
 
     // Create main container with better styling
-    const mainContainer = contentEl.createEl("div", {
-      cls: "workout-charts-form",
-    });
-    Object.assign(mainContainer.style, {
-      padding: "20px",
-      maxWidth: "600px",
-      margin: "0 auto",
-    });
+    const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Chart Type Section
     const chartTypeSection = this.createSection(

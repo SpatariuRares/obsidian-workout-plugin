@@ -53,19 +53,10 @@ export class TargetSection {
     );
 
     // Add info text about current file
-    const currentFileInfo = targetSection.createEl("div", {
-      cls: "current-file-info",
-    });
-    Object.assign(currentFileInfo.style, {
-      fontSize: "0.8em",
-      color: "var(--text-muted)",
-      fontStyle: "italic",
-      marginTop: "5px",
-      padding: "5px",
-      backgroundColor: "var(--background-modifier-border)",
-      borderRadius: "4px",
-    });
-    currentFileInfo.textContent = `File corrente: ${currentFileName}`;
+    const currentFileInfo = modal.createCurrentFileInfo(
+      targetSection,
+      currentFileName
+    );
 
     const elements: TargetSectionElements = {
       exerciseContainer,
@@ -79,21 +70,31 @@ export class TargetSection {
     // Create handlers
     const updateVisibility = () => {
       const isExercise = typeSelect.value === "exercise";
-      exerciseContainer.style.display = isExercise ? "block" : "none";
-      workoutContainer.style.display = isExercise ? "none" : "block";
-      currentWorkoutContainer.style.display = isExercise ? "none" : "block";
-      currentFileInfo.style.display = isExercise ? "none" : "block";
+      exerciseContainer.className = isExercise
+        ? "workout-charts-form-group target-exercise"
+        : "workout-charts-form-group target-exercise display-none";
+      workoutContainer.className = isExercise
+        ? "workout-charts-form-group target-workout display-none"
+        : "workout-charts-form-group target-workout";
+      currentWorkoutContainer.className = isExercise
+        ? "workout-charts-checkbox-group target-current-workout display-none"
+        : "workout-charts-checkbox-group target-current-workout";
+      currentFileInfo.className = isExercise
+        ? "current-file-info target-current-file-info display-none"
+        : "current-file-info target-current-file-info";
     };
 
     const handleCurrentWorkoutToggle = () => {
       if (currentWorkoutToggle.checked) {
         workoutInput.disabled = true;
         workoutInput.value = currentFileName;
-        workoutInput.style.opacity = "0.5";
+        workoutInput.classList.add("opacity-50");
+        workoutInput.classList.remove("opacity-100");
       } else {
         workoutInput.disabled = false;
         workoutInput.value = "";
-        workoutInput.style.opacity = "1";
+        workoutInput.classList.add("opacity-100");
+        workoutInput.classList.remove("opacity-50");
       }
     };
 

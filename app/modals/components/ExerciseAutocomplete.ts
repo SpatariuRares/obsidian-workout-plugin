@@ -46,9 +46,8 @@ export class ExerciseAutocomplete {
 
     // Autocomplete container
     const autocompleteContainer = exerciseContainer.createEl("div", {
-      cls: "exercise-autocomplete-container",
+      cls: "exercise-autocomplete-container exercise-autocomplete-hidden",
     });
-    autocompleteContainer.style.display = "none";
 
     // Exercise status indicator and create page button
     const exerciseStatusContainer = exerciseContainer.createEl("div", {
@@ -61,9 +60,8 @@ export class ExerciseAutocomplete {
 
     const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
       text: "📝 Crea Pagina Esercizio",
-      cls: "create-exercise-page-btn",
+      cls: "create-exercise-page-btn display-none",
     });
-    createExercisePageBtn.style.display = "none";
 
     const elements: ExerciseAutocompleteElements = {
       exerciseInput,
@@ -75,9 +73,11 @@ export class ExerciseAutocomplete {
     // Create handlers
     const showAutocomplete = (query: string) => {
       if (!query.trim() || query.length < 1) {
-        autocompleteContainer.style.display = "none";
+        autocompleteContainer.className =
+          "exercise-autocomplete-container exercise-autocomplete-hidden";
         exerciseStatusText.textContent = "";
-        createExercisePageBtn.style.display = "none";
+        createExercisePageBtn.className =
+          "create-exercise-page-btn display-none";
         return;
       }
 
@@ -87,7 +87,8 @@ export class ExerciseAutocomplete {
 
       if (matchingExercises.length > 0) {
         autocompleteContainer.innerHTML = "";
-        autocompleteContainer.style.display = "block";
+        autocompleteContainer.className =
+          "exercise-autocomplete-container exercise-autocomplete-visible";
 
         matchingExercises.slice(0, 8).forEach((exercise) => {
           const suggestion = autocompleteContainer.createEl("div", {
@@ -97,39 +98,49 @@ export class ExerciseAutocomplete {
 
           suggestion.addEventListener("click", () => {
             exerciseInput.value = exercise;
-            autocompleteContainer.style.display = "none";
+            autocompleteContainer.className =
+              "exercise-autocomplete-container exercise-autocomplete-hidden";
             exerciseStatusText.textContent = "✅ Esercizio selezionato";
-            exerciseStatusText.style.color = "var(--text-success)";
-            createExercisePageBtn.style.display = "none";
+            exerciseStatusText.className =
+              "exercise-status-text exercise-status-success";
+            createExercisePageBtn.className =
+              "create-exercise-page-btn display-none";
             instance.exerciseExists = true;
           });
 
           suggestion.addEventListener("mouseenter", () => {
-            suggestion.style.backgroundColor =
-              "var(--background-modifier-hover)";
+            suggestion.classList.add("exercise-autocomplete-suggestion-hover");
           });
 
           suggestion.addEventListener("mouseleave", () => {
-            suggestion.style.backgroundColor = "var(--background-secondary)";
+            suggestion.classList.remove(
+              "exercise-autocomplete-suggestion-hover"
+            );
           });
         });
 
         exerciseStatusText.textContent = `📋 ${matchingExercises.length} esercizi trovati`;
-        exerciseStatusText.style.color = "var(--text-accent)";
-        createExercisePageBtn.style.display = "none";
+        exerciseStatusText.className =
+          "exercise-status-text exercise-status-accent";
+        createExercisePageBtn.className =
+          "create-exercise-page-btn display-none";
         instance.exerciseExists = true;
       } else {
-        autocompleteContainer.style.display = "none";
+        autocompleteContainer.className =
+          "exercise-autocomplete-container exercise-autocomplete-hidden";
         exerciseStatusText.textContent = "⚠️ Nessun esercizio trovato";
-        exerciseStatusText.style.color = "var(--text-warning)";
-        createExercisePageBtn.style.display = "inline-block";
+        exerciseStatusText.className =
+          "exercise-status-text exercise-status-warning";
+        createExercisePageBtn.className =
+          "create-exercise-page-btn display-inline-block";
         instance.exerciseExists = false;
       }
     };
 
     const hideAutocomplete = () => {
       setTimeout(() => {
-        autocompleteContainer.style.display = "none";
+        autocompleteContainer.className =
+          "exercise-autocomplete-container exercise-autocomplete-hidden";
       }, 200);
     };
 

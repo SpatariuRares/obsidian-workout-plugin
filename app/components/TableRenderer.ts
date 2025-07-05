@@ -110,9 +110,10 @@ export class TableRenderer {
             // Spacer
             const spacerRow = tbody.createEl("tr");
             spacerRow.addClass("workout-table-spacer");
-            const spacerCell = spacerRow.createEl("td");
+            const spacerCell = spacerRow.createEl("td", {
+              cls: "table-spacer-cell",
+            });
             spacerCell.setAttribute("colspan", columnCount.toString());
-            spacerCell.style.height = "8px";
           }
           currentDateKey = dateKey;
           isFirstGroup = false;

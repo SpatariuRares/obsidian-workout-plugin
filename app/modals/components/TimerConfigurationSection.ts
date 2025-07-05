@@ -125,9 +125,15 @@ export class TimerConfigurationSection {
     // Create visibility handler
     const updateVisibility = () => {
       const isCountdown = timerTypeSelect.value === "countdown";
-      durationContainer.style.display = isCountdown ? "block" : "none";
-      intervalTimeContainer.style.display = isCountdown ? "none" : "block";
-      roundsContainer.style.display = isCountdown ? "none" : "block";
+      durationContainer.className = isCountdown
+        ? "workout-charts-form-group timer-config-countdown"
+        : "workout-charts-form-group timer-config-countdown display-none";
+      intervalTimeContainer.className = isCountdown
+        ? "workout-charts-form-group timer-config-interval display-none"
+        : "workout-charts-form-group timer-config-interval";
+      roundsContainer.className = isCountdown
+        ? "workout-charts-form-group timer-config-rounds display-none"
+        : "workout-charts-form-group timer-config-rounds";
     };
 
     const handlers: TimerConfigurationHandlers = {

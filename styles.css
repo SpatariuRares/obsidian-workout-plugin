@@ -1,4 +1,4 @@
-/* Workout Charts Plugin - Main Styles */
+/* Workout Charts Plugin - Modern Styles using Obsidian CSS Variables */
 
 /* Main workout charts table */
 .workout-charts-table {
@@ -6,50 +6,58 @@
   border-collapse: collapse;
   margin-top: 10px;
   font-size: 0.9em;
+  background: var(--background-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .workout-charts-table th {
-  background-color: var(--background-secondary);
-  padding: 10px 8px;
+  background: var(--background-secondary);
+  padding: 12px 16px;
   text-align: left;
   border-bottom: 2px solid var(--background-modifier-border);
   font-weight: 600;
   color: var(--text-normal);
+  font-size: 0.9em;
 }
 
 .workout-charts-table td {
-  padding: 8px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--background-modifier-border);
   color: var(--text-normal);
+  transition: background-color 0.2s ease;
 }
 
 .workout-charts-table tr:nth-child(even) {
-  background-color: var(--background-secondary);
+  background: var(--background-secondary);
 }
 
 .workout-charts-table tr:hover {
-  background-color: var(--background-modifier-hover);
+  background: var(--background-modifier-hover);
 }
 
 /* Table Styles */
 .workout-table-container {
   width: 100%;
-  overflow-x: scroll;
-  margin-top: 10px;
+  overflow-x: auto;
+  margin-top: 16px;
+  border-radius: 8px;
+  background: var(--background-primary);
+  /* box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
 }
 
 .workout-log-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
-  background-color: var(--background-primary);
-  border-radius: 6px;
+  background: var(--background-primary);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .workout-log-table thead tr {
-  background-color: var(--background-secondary);
+  background: var(--background-secondary);
   border-bottom: 2px solid var(--background-modifier-border);
 }
 
@@ -60,43 +68,34 @@
   font-weight: 600;
   color: var(--text-normal);
   border-bottom: 1px solid var(--background-modifier-border);
-}
-
-/* Specific selector to override global table styles */
-.workout-table-container .workout-log-table th,
-.embedded-chart-table-fallback .workout-log-table th {
-  white-space: nowrap;
+  font-size: 0.9em;
 }
 
 .workout-log-table tbody tr {
   border-bottom: 1px solid var(--background-modifier-border);
+  transition: background-color 0.2s ease;
 }
 
 .workout-log-table tbody tr:nth-child(even) {
-  background-color: var(--background-secondary);
+  background: var(--background-secondary);
 }
 
 .workout-log-table tbody tr:hover {
-  background-color: var(--background-modifier-hover);
+  background: var(--background-modifier-hover);
 }
 
-.workout-log-table td {
-  padding: 4px 12px;
+.workout-table-container .workout-log-table td {
+  /* padding: 12px 16px; */
   color: var(--text-normal);
   vertical-align: middle;
-  white-space: nowrap;
-}
-
-/* Specific selector to override global table styles */
-.workout-table-container .workout-log-table td,
-.embedded-chart-table-fallback .workout-log-table td {
   white-space: nowrap;
 }
 
 .workout-log-table td a {
   color: var(--text-accent);
   text-decoration: none;
-  transition: color 0.15s ease-in-out;
+  transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .workout-log-table td a:hover {
@@ -107,24 +106,25 @@
 .workout-table-link {
   cursor: pointer;
   font-weight: 500;
+  color: var(--text-accent);
 }
 
 .workout-table-date-cell {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-accent);
 }
 
 .workout-table-volume-cell {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-accent-hover);
 }
 
 .same-day-log {
-  background-color: var(--background-modifier-border-focus);
+  background: var(--background-modifier-border-focus);
 }
 
 .new-day-log {
-  background-color: transparent;
+  background: transparent;
 }
 
 /* Fallback table styles */
@@ -132,47 +132,50 @@
   overflow: auto;
   border: 1px solid var(--background-modifier-border);
   border-radius: 8px;
-  padding: 10px;
+  padding: 16px;
+  background: var(--background-primary);
 }
 
 /* Stats Box Styles */
 .embedded-chart-stats {
-  margin-top: 22px;
-  padding: 18px;
-  background-color: var(--background-secondary, #23272e);
-  border-radius: 10px;
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--background-secondary);
+  border-radius: 12px;
   font-size: 1em;
-  border: 1.5px solid var(--background-modifier-border, #444);
-  color: var(--text-normal, #fff);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Trend Header Styles */
 .embedded-chart-trend-header {
-  padding: 16px;
-  margin-bottom: 18px;
-  background-color: var(--background-secondary, #23272e);
-  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: var(--background-secondary);
+  border-radius: 12px;
   text-align: center;
-  border: 1.5px solid var(--background-modifier-border, #444);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  color: var(--text-normal, #fff);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: var(--text-normal);
 }
 
 .embedded-chart-trend-header-h3 {
   margin: 0;
-  font-size: 1.15em;
-  font-weight: bold;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--text-normal);
 }
 
 .embedded-chart-trend-header-p {
-  margin: 5px 0 0 0;
+  margin: 8px 0 0 0;
   font-size: 1em;
-  color: var(--text-normal, #fff);
+  color: var(--text-muted);
 }
 
 .embedded-chart-trend-variation {
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-accent);
 }
 
 .embedded-chart-table-fallback table {
@@ -182,272 +185,247 @@
 }
 
 .embedded-chart-table-fallback th {
-  padding: 8px;
+  padding: 12px 16px;
   border-bottom: 2px solid var(--background-modifier-border);
   text-align: left;
-  font-weight: bold;
+  font-weight: 600;
   color: var(--text-normal);
 }
 
 .embedded-chart-table-fallback td {
-  padding: 8px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--background-modifier-border);
   color: var(--text-normal);
 }
 
-/* Table error message */
-.workout-table-error {
-  padding: 20px;
-  margin: 10px 0;
-  background-color: var(--background-modifier-error);
-  border: 1px solid var(--color-red);
-  border-radius: 6px;
-  text-align: center;
-  color: var(--text-error);
-}
-
-/* Component Styles */
+/* Loading and Info Messages */
 .embedded-chart-loading {
-  padding: 20px;
   text-align: center;
+  padding: 40px 20px;
   color: var(--text-muted);
+  font-style: italic;
 }
 
 .embedded-chart-info {
-  padding: 10px 20px;
-  margin: 10px 0;
-  border-radius: 6px;
-  text-align: center;
-  font-size: 0.875rem;
+  padding: 16px 20px;
+  margin: 16px 0;
+  border-radius: 8px;
+  border-left: 4px solid;
+  font-weight: 500;
 }
 
 .embedded-chart-info-info {
-  background-color: var(--background-modifier-border);
-  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  border-left-color: var(--text-accent);
   color: var(--text-normal);
 }
 
 .embedded-chart-info-warning {
-  background-color: var(--background-modifier-warning);
-  border: 1px solid var(--text-normal);
+  background: var(--background-secondary);
+  border-left-color: var(--text-warning);
   color: var(--text-normal);
 }
 
 .embedded-chart-info-success {
-  background-color: var(--background-secondary);
-  border: 1px solid var(--text-normal);
+  background: var(--background-secondary);
+  border-left-color: var(--text-success);
   color: var(--text-normal);
 }
 
+/* Error Messages */
 .workout-chart-error,
-.workout-log-error {
-  text-align: center;
+.workout-table-error {
   padding: 20px;
+  margin: 16px 0;
+  background: var(--background-secondary);
+  border: 1px solid var(--text-error);
+  border-radius: 8px;
   color: var(--text-error);
-  font-style: italic;
-}
-
-.workout-log-no-data,
-.workout-log-no-match {
-  text-align: center;
-  padding: 20px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.add-log-button-container {
-  margin-bottom: 16px;
-  text-align: left;
-}
-
-.add-log-button {
-  background-color: var(--interactive-accent);
-  color: var(--text-on-accent);
-  border: none;
-  padding: 12px 18px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease-in-out;
   font-weight: 500;
 }
 
-/* Specific selector to override global button styles */
-.add-log-button-container .add-log-button,
-.workout-charts-modal .add-log-button {
-  background-color: var(--interactive-accent);
+.workout-log-no-data,
+.embedded-chart-no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-style: italic;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+/* Add Log Button */
+.add-log-button-container {
+  margin-bottom: 16px;
+}
+
+.add-log-button-container .add-log-button {
+  background: var(--interactive-accent);
   color: var(--text-on-accent);
-}
-
-/* Additional specific selectors for form elements to prevent global overrides */
-.workout-charts-modal .workout-charts-form-group input,
-.workout-charts-modal .workout-charts-form-group select {
-  background-color: var(--background-primary);
-  color: var(--text-normal);
-  border: 1px solid var(--background-modifier-border);
-}
-
-/* Specific selectors for modal buttons to ensure proper styling */
-.workout-charts-modal .workout-charts-btn-primary {
-  background-color: var(--interactive-accent);
-  color: var(--text-on-accent);
-}
-
-.workout-charts-modal .workout-charts-btn-warning {
-  background-color: var(--background-modifier-warning);
-  color: var(--color-orange);
-  border: 1px solid var(--color-orange);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .add-log-button:hover {
-  background-color: var(--interactive-accent-hover);
+  background: var(--interactive-accent-hover);
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .add-log-button:disabled {
-  opacity: 0.6;
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
   cursor: not-allowed;
   transform: none;
-  background-color: var(--background-secondary);
-  color: var(--text-muted);
+  box-shadow: none;
 }
 
+/* Debug Info */
 .embedded-chart-debug {
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 20px;
+  padding: 16px;
   background: var(--background-secondary);
-  border-radius: 4px;
-  font-size: 0.8em;
-  color: var(--text-normal);
-}
-
-.workout-charts-footer {
-  font-size: 0.92em;
-  color: var(--text-muted);
-  margin-top: 14px;
-  padding: 10px;
-  background-color: var(--background-secondary);
-  border-radius: 6px;
   border: 1px solid var(--background-modifier-border);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 0.85em;
+  color: var(--text-muted);
 }
 
+/* Footer */
+.workout-charts-footer {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  text-align: center;
+  border: 1px solid var(--background-modifier-border);
+}
+
+/* Chart Container */
 .workout-chart-embed {
-  width: 100%;
+  margin: 16px 0;
 }
 
 .workout-chart-embed canvas {
-  max-width: 100%;
-  height: auto;
+  border-radius: 8px;
+  background: var(--background-primary);
 }
 
 /* Modal Styles */
 .workout-charts-modal {
-  padding: 24px;
   background: var(--background-primary);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .workout-charts-modal h2 {
-  text-align: center;
-  margin-bottom: 24px;
+  margin: 0 0 20px 0;
   color: var(--text-normal);
+  font-size: 1.4em;
+  font-weight: 700;
 }
 
 .workout-charts-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  gap: 20px;
 }
 
 .workout-charts-form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 8px;
 }
 
 .workout-charts-checkbox-group {
-  flex-direction: row;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .workout-charts-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--background-modifier-border);
 }
 
 .workout-charts-form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-normal);
+  font-size: 0.95em;
 }
 
-/* Solo input di testo e numero, NO select, NO checkbox */
 .workout-charts-form-group input[type="text"],
-.workout-charts-form-group input[type="number"] {
-  padding: 6px 10px;
-  border-radius: 4px;
+.workout-charts-form-group input[type="number"],
+.workout-charts-form-group select {
+  padding: 10px 12px;
   border: 1px solid var(--background-modifier-border);
-  width: 100%;
-  box-sizing: border-box;
+  border-radius: 6px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.9em;
+  transition: border-color 0.2s ease;
 }
-
-/* Nessuna regola di padding/width per select o checkbox */
 
 .workout-charts-form-group input:focus,
 .workout-charts-form-group select:focus {
   outline: none;
   border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 2px var(--interactive-accent-hover);
+  box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb), 0.2);
 }
 
 .workout-charts-btn {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
-  font-size: 0.875rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9em;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 }
 
 .workout-charts-btn-primary {
-  background-color: var(--interactive-accent);
+  background: var(--interactive-accent);
   color: var(--text-on-accent);
-  border: none;
 }
 
 .workout-charts-btn-primary:hover {
-  background-color: var(--interactive-accent-hover);
+  background: var(--interactive-accent-hover);
+  transform: translateY(-1px);
 }
 
 .workout-charts-btn-warning {
-  background-color: var(--background-modifier-warning);
-  color: var(--color-orange);
-  border: 1px solid var(--color-orange);
+  background: var(--text-warning);
+  color: var(--text-on-accent);
 }
 
 .workout-charts-btn-warning:hover {
-  background-color: var(--background-modifier-error);
+  background: var(--text-warning-hover);
+  transform: translateY(-1px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .workout-charts-controls {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .workout-log-table {
@@ -456,82 +434,71 @@
 
   .workout-log-table th,
   .workout-log-table td {
-    padding: 6px 4px;
+    padding: 8px 12px;
   }
 
   .add-log-button {
-    font-size: 13px;
-    padding: 8px 14px;
+    width: 100%;
+    justify-content: center;
   }
 
   .embedded-chart-info {
-    font-size: 0.9em;
-    padding: 12px;
+    padding: 12px 16px;
   }
 
   .workout-charts-modal {
-    padding: 15px;
+    padding: 20px;
+    margin: 20px;
   }
 
   .workout-charts-buttons {
     flex-direction: column;
-    gap: 8px;
   }
 
   .workout-charts-btn {
     width: 100%;
-    padding: 10px 16px;
   }
 }
 
-/* Print styles */
+/* Print Styles */
 @media print {
-  /* Specific selectors for print to ensure proper hiding */
   .workout-charts-container .workout-charts-controls,
-  .workout-charts-container .add-log-button-container,
-  .embedded-chart-table-fallback .workout-charts-controls,
-  .embedded-chart-table-fallback .add-log-button-container {
-    display: none;
+  .add-log-button-container,
+  .embedded-chart-debug {
+    display: none !important;
+  }
+
+  .workout-charts-container .workout-log-table th,
+  .workout-charts-container .workout-log-table td {
+    border: 1px solid #000;
+    padding: 8px;
+  }
+
+  .workout-charts-container .workout-log-table,
+  .embedded-chart-table-fallback .workout-log-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .embedded-chart-table-fallback .embedded-chart-stats,
+  .embedded-chart-table-fallback .embedded-chart-trend-header {
+    border: 1px solid #000;
+    margin: 10px 0;
+    padding: 15px;
   }
 }
 
-/* Additional specific selectors to prevent global CSS overrides */
-.workout-charts-container .workout-log-table th,
-.workout-charts-container .workout-log-table td {
-  white-space: nowrap;
-}
-
-/* Ensure table styling consistency across all contexts */
-.workout-charts-container .workout-log-table,
-.workout-table-container .workout-log-table,
-.embedded-chart-table-fallback .workout-log-table {
-  border-collapse: collapse;
-  font-size: 0.875rem;
-  background-color: var(--background-primary);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Specific selectors for embedded chart components */
-.embedded-chart-table-fallback .embedded-chart-stats,
-.workout-charts-container .embedded-chart-stats {
-  margin-top: 22px;
-  padding: 18px;
-  background-color: var(--background-secondary);
-  border-radius: 10px;
-  font-size: 1em;
-  border: 1.5px solid var(--background-modifier-border);
-  color: var(--text-normal);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
-}
-
+/* Table Grouping Styles */
 .workout-table-container .workout-log-table tr.group-even {
-  background-color: var(--background-secondary) !important;
+  background: var(--background-secondary);
 }
+
 .workout-table-container .workout-log-table tr.group-odd {
-  background-color: var(--background-primary) !important;
+  background: var(--background-primary);
 }
+
 .workout-table-container .workout-table-spacer {
-  background: transparent !important;
+  background: var(--background-modifier-border);
+  height: 2px;
 }

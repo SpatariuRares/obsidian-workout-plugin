@@ -8,6 +8,46 @@ import { calculateTrendLine } from "../utils/utils";
  * and rendering interactive charts with trend lines and styling.
  */
 export class ChartRenderer {
+  // Modern color palette for charts
+  private static readonly CHART_COLORS = {
+    primary: {
+      main: "#6366F1", // Indigo-500
+      light: "rgba(99, 102, 241, 0.2)",
+      dark: "#4338CA", // Indigo-700
+      point: "#FFFFFF",
+      pointBorder: "#4338CA",
+    },
+    secondary: {
+      main: "#10B981", // Emerald-500
+      light: "rgba(16, 185, 129, 0.2)",
+      dark: "#059669", // Emerald-700
+      point: "#FFFFFF",
+      pointBorder: "#059669",
+    },
+    accent: {
+      main: "#F59E0B", // Amber-500
+      light: "rgba(245, 158, 11, 0.2)",
+      dark: "#D97706", // Amber-600
+      point: "#FFFFFF",
+      pointBorder: "#D97706",
+    },
+    trend: {
+      main: "#EF4444", // Red-500
+      light: "rgba(239, 68, 68, 0.15)",
+      dark: "#DC2626", // Red-600
+      point: "#FFFFFF",
+      pointBorder: "#DC2626",
+    },
+    grid: "rgba(156, 163, 175, 0.2)", // Gray-400 with opacity
+    text: "#374151",
+    background: "rgba(255, 255, 255, 0.95)",
+    tooltip: {
+      background: "rgba(17, 24, 39, 0.95)",
+      border: "#6366F1",
+      text: "#FFFFFF",
+    },
+  };
+
   /**
    * Creates a container element for the chart with proper styling.
    * @param contentDiv - The parent HTML element to append the chart container to
@@ -56,13 +96,32 @@ export class ChartRenderer {
       datasets.push({
         label: "Linea di Tendenza",
         data: trendData,
-        borderColor: "#FFC107",
-        backgroundColor: "rgba(255, 193, 7, 0.10)",
-        borderDash: [6, 6],
-        borderWidth: 3,
+        borderColor: this.CHART_COLORS.trend.main,
+        backgroundColor: this.CHART_COLORS.trend.light,
+        borderDash: [8, 4],
+        borderWidth: 2.5,
         tension: 0,
         pointRadius: 0,
+        pointHoverRadius: 0,
       });
+    }
+  }
+
+  /**
+   * Gets the appropriate color scheme based on chart type
+   * @param chartType - Type of chart data (volume, weight, reps)
+   * @returns Color scheme object
+   */
+  private static getColorScheme(chartType: string) {
+    switch (chartType) {
+      case "volume":
+        return this.CHART_COLORS.primary;
+      case "weight":
+        return this.CHART_COLORS.secondary;
+      case "reps":
+        return this.CHART_COLORS.accent;
+      default:
+        return this.CHART_COLORS.primary;
     }
   }
 
@@ -84,29 +143,35 @@ export class ChartRenderer {
       params.title ||
       `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
 
-    // Migliora i colori delle linee e delle etichette
+    const colorScheme = this.getColorScheme(chartType);
+
+    // Apply modern color scheme to main dataset
     if (datasets[0]) {
-      datasets[0].borderColor = "#4FC3F7"; // azzurro chiaro
-      datasets[0].backgroundColor = "rgba(79, 195, 247, 0.15)";
-      datasets[0].pointBackgroundColor = "#fff";
-      datasets[0].pointBorderColor = "#1976D2"; // blu scuro per contrasto
-      datasets[0].pointRadius = 5;
-      datasets[0].borderWidth = 3;
+      datasets[0].borderColor = colorScheme.main;
+      datasets[0].backgroundColor = colorScheme.light;
+      datasets[0].pointBackgroundColor = colorScheme.point;
+      datasets[0].pointBorderColor = colorScheme.pointBorder;
+      datasets[0].pointRadius = 4;
+      datasets[0].pointHoverRadius = 6;
+      datasets[0].borderWidth = 2.5;
+      datasets[0].tension = 0.3;
+      datasets[0].fill = true;
     }
 
-    // Per la linea di tendenza (se presente):
+    // Apply trend line colors (if present)
     const trendDataset = datasets.find(
       (ds) => ds.label === "Linea di Tendenza"
     );
     if (trendDataset) {
-      trendDataset.borderColor = "#FFC107"; // giallo acceso
-      trendDataset.backgroundColor = "rgba(255, 193, 7, 0.10)";
-      trendDataset.borderDash = [6, 6];
-      trendDataset.borderWidth = 3;
+      trendDataset.borderColor = this.CHART_COLORS.trend.main;
+      trendDataset.backgroundColor = this.CHART_COLORS.trend.light;
+      trendDataset.borderDash = [8, 4];
+      trendDataset.borderWidth = 2.5;
       trendDataset.pointRadius = 0;
+      trendDataset.pointHoverRadius = 0;
     }
 
-    // Opzioni Chart.js
+    // Enhanced Chart.js options
     return {
       type: "line",
       data: { labels, datasets },
@@ -117,39 +182,47 @@ export class ChartRenderer {
           title: {
             display: true,
             text: title,
-            color: "var(--text-normal, #fff)",
-            font: { size: 17, weight: "bold" as const },
+            color: this.CHART_COLORS.text,
+            font: {
+              size: 18,
+              weight: "600" as const,
+              family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+            },
+            padding: { top: 10, bottom: 20 },
           },
           legend: {
             display: true,
+            position: "top" as const,
             labels: {
-              color: "#fff",
-              boxWidth: 24,
-              padding: 16,
+              color: this.CHART_COLORS.text,
+              boxWidth: 20,
+              padding: 20,
+              usePointStyle: true,
+              font: {
+                size: 12,
+                weight: "500" as const,
+              },
             },
           },
           tooltip: {
             mode: "index" as const,
             intersect: false,
-            backgroundColor: "rgba(30,30,30,0.92)",
-            titleColor: "#fff",
-            bodyColor: "#fff",
-            borderColor: "#FFC107",
-            borderWidth: 2,
+            backgroundColor: this.CHART_COLORS.tooltip.background,
+            titleColor: this.CHART_COLORS.tooltip.text,
+            bodyColor: this.CHART_COLORS.tooltip.text,
+            borderColor: this.CHART_COLORS.tooltip.border,
+            borderWidth: 1,
+            cornerRadius: 8,
+            padding: 12,
+            displayColors: true,
             callbacks: {
               label: (context: any) => {
                 const value = context.parsed.y;
-                const labelColor =
-                  context.dataset.label === "Linea di Tendenza"
-                    ? "#FFC107"
-                    : "#4FC3F7";
-                return [
-                  `${context.dataset.label}: ${value.toFixed(1)} ${
-                    chartType === "volume" || chartType === "weight"
-                      ? "kg"
-                      : "reps"
-                  }`,
-                ];
+                const unit =
+                  chartType === "volume" || chartType === "weight"
+                    ? "kg"
+                    : "reps";
+                return `${context.dataset.label}: ${value.toFixed(1)} ${unit}`;
               },
             },
           },
@@ -160,10 +233,20 @@ export class ChartRenderer {
             title: {
               display: true,
               text: "Data",
-              color: "#4FC3F7", // azzurro chiaro per le ascisse
+              color: this.CHART_COLORS.text,
+              font: { size: 14, weight: "500" as const },
             },
-            ticks: { color: "#4FC3F7" },
-            grid: { color: "#444" },
+            ticks: {
+              color: this.CHART_COLORS.text,
+              font: { size: 12 },
+            },
+            grid: {
+              color: this.CHART_COLORS.grid,
+              drawBorder: false,
+            },
+            border: {
+              color: this.CHART_COLORS.grid,
+            },
           },
           y: {
             display: true,
@@ -173,18 +256,34 @@ export class ChartRenderer {
                 chartType === "volume"
                   ? "Volume (kg)"
                   : chartType === "weight"
-                  ? "Weight (kg)"
-                  : "Reps",
-              color: "#4FC3F7",
+                  ? "Peso (kg)"
+                  : "Ripetizioni",
+              color: this.CHART_COLORS.text,
+              font: { size: 14, weight: "500" as const },
             },
-            ticks: { color: "#4FC3F7" },
-            grid: { color: "#444" },
+            ticks: {
+              color: this.CHART_COLORS.text,
+              font: { size: 12 },
+            },
+            grid: {
+              color: this.CHART_COLORS.grid,
+              drawBorder: false,
+            },
+            border: {
+              color: this.CHART_COLORS.grid,
+            },
           },
         },
         interaction: {
           mode: "nearest" as const,
           axis: "x" as const,
           intersect: false,
+        },
+        elements: {
+          point: {
+            hoverRadius: 6,
+            radius: 4,
+          },
         },
       },
     };

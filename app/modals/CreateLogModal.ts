@@ -1,7 +1,9 @@
-import { App, Notice, TFile } from "obsidian";
+import { App, Notice, TFile, MarkdownView } from "obsidian";
 import type WorkoutChartsPlugin from "../../main";
 import { ModalBase } from "./base/ModalBase";
 import { ExerciseAutocomplete } from "./components/ExerciseAutocomplete";
+import { TargetSectionWithAutocomplete } from "./components/TargetSectionWithAutocomplete";
+import { CSVWorkoutLogEntry, entryToCSVLine } from "../types/WorkoutLogData";
 
 export class CreateLogModal extends ModalBase {
   private exerciseName?: string;
@@ -27,16 +29,63 @@ export class CreateLogModal extends ModalBase {
 
     const titleEl = contentEl.createEl("h2", { text: "Create Workout Log" });
 
+    // Show CSV mode info
+    const modeInfo = contentEl.createEl("div", {
+      cls: "workout-charts-mode-info",
+    });
+    modeInfo.innerHTML = `
+      <p><strong>CSV Mode:</strong> Logs will be added to ${this.plugin.settings.csvLogFilePath}</p>
+      <p><small>All workout data is stored in a single CSV file for better performance</small></p>
+    `;
+
     const formContainer = contentEl.createEl("div", {
       cls: "workout-charts-form",
     });
 
+    // Get current file name for workout field
+    const currentFileName = this.getCurrentFileName();
+
+    // Create exercise autocomplete
     const { elements: exerciseElements } = await ExerciseAutocomplete.create(
       this,
       formContainer,
       this.plugin,
       this.exerciseName
     );
+
+    // Create workout target section
+    const workoutContainer = this.createFormGroup(formContainer);
+    const workoutInput = this.createTextInput(
+      workoutContainer,
+      "Allenamento:",
+      "",
+      "Nome dell'allenamento (opzionale)"
+    );
+
+    // Current Workout checkbox
+    const currentWorkoutContainer = this.createCheckboxGroup(formContainer);
+    const currentWorkoutToggle = this.createCheckbox(
+      currentWorkoutContainer,
+      "Usa Allenamento Corrente (nome file)",
+      false,
+      "currentWorkout"
+    );
+
+    // Add info text about current file
+    const currentFileInfo = this.createCurrentFileInfo(
+      formContainer,
+      currentFileName
+    );
+
+    // Add event listener for current workout checkbox
+    currentWorkoutToggle.addEventListener("change", () => {
+      if (currentWorkoutToggle.checked) {
+        workoutInput.value = currentFileName;
+        workoutInput.disabled = true;
+      } else {
+        workoutInput.disabled = false;
+      }
+    });
 
     const repsContainer = this.createFormGroup(formContainer);
     const repsInput = this.createNumberInput(
@@ -75,8 +124,14 @@ export class CreateLogModal extends ModalBase {
 
     createBtn.addEventListener("click", async () => {
       const exercise = exerciseElements.exerciseInput.value.trim();
+      let workout = workoutInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
+
+      // Use current file name if checkbox is checked
+      if (currentWorkoutToggle.checked) {
+        workout = currentFileName;
+      }
 
       if (!exercise || isNaN(reps) || isNaN(weight)) {
         new Notice("Please fill in all fields with valid values");
@@ -89,7 +144,7 @@ export class CreateLogModal extends ModalBase {
       }
 
       try {
-        await this.createLogFile(exercise, reps, weight);
+        await this.createCSVLogEntry(exercise, workout, reps, weight);
         this.close();
         new Notice("Workout log created successfully!");
 
@@ -115,21 +170,45 @@ export class CreateLogModal extends ModalBase {
     contentEl.empty();
   }
 
-  private async createLogFile(exercise: string, reps: number, weight: number) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const safeExerciseName = exercise.replace(/[\\/:"*?<>|]/g, "_");
-    const fileName = `${this.plugin.settings.logFolderPath}/${safeExerciseName}-${timestamp}.md`;
+  private async createCSVLogEntry(
+    exercise: string,
+    workout: string,
+    reps: number,
+    weight: number
+  ) {
+    const volume = reps * weight;
+    const timestamp = Date.now();
+    const date = new Date().toISOString();
 
-    const content = `---
-Rep: ${reps}
-Weight: ${weight}
-Volume: ${reps * weight}
----
-Esercizio:: [[${exercise}]]
-Origine:: ${this.currentPageLink || "[[Workout Charts Plugin]]"}
-DataOra:: ${new Date().toISOString()}
-`;
+    const entry: CSVWorkoutLogEntry = {
+      date,
+      exercise,
+      reps,
+      weight,
+      volume,
+      origine: this.currentPageLink || "Workout Charts Plugin",
+      workout: workout || undefined,
+      timestamp,
+    };
 
-    await this.app.vault.create(fileName, content);
+    const csvLine = entryToCSVLine(entry);
+
+    // Get or create CSV file
+    let csvFile = this.app.vault.getAbstractFileByPath(
+      this.plugin.settings.csvLogFilePath
+    ) as TFile;
+
+    if (!csvFile) {
+      // Create new CSV file with header
+      const header =
+        "date,exercise,reps,weight,volume,origine,workout,timestamp";
+      const content = `${header}\n${csvLine}`;
+      await this.app.vault.create(this.plugin.settings.csvLogFilePath, content);
+    } else {
+      // Append to existing CSV file
+      const currentContent = await this.app.vault.cachedRead(csvFile);
+      const newContent = currentContent + "\n" + csvLine;
+      await this.app.vault.modify(csvFile, newContent);
+    }
   }
 }

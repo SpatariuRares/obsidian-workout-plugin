@@ -2,17 +2,17 @@
 import { TFile } from "obsidian";
 
 /**
- * Represents a single workout log entry.
+ * CSV-based workout log entry
  */
-export interface WorkoutLogData {
+export interface CSVWorkoutLogEntry {
   date: string;
   exercise: string;
   reps: number;
   weight: number;
   volume: number;
-  file: TFile;
-  origine?: string; // Added for workout filtering
-  workout?: string; // Added for workout filtering
+  origine?: string;
+  workout?: string;
+  timestamp: number; // For sorting and unique identification
 }
 
 /**
@@ -20,6 +20,7 @@ export interface WorkoutLogData {
  */
 export interface WorkoutChartsSettings {
   logFolderPath: string;
+  csvLogFilePath: string; // Path to the CSV log file
   exerciseFolderPath: string;
   defaultExercise: string;
   chartType: "volume" | "weight" | "reps";
@@ -33,7 +34,8 @@ export interface WorkoutChartsSettings {
  * Default plugin settings.
  */
 export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
-  logFolderPath: "Log/Data",
+  logFolderPath: "theGYM/Log/Data",
+  csvLogFilePath: "theGYM/Log/workout_logs.csv",
   exerciseFolderPath: "Esercizi",
   defaultExercise: "",
   chartType: "volume",
@@ -44,196 +46,191 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
 };
 
 /**
- * Parses a workout log file and returns a WorkoutLogData object, or null if invalid.
+ * Parses CSV content and returns an array of CSVWorkoutLogEntry objects
  */
-export function parseLogFile(
+export function parseCSVLogFile(
   content: string,
-  file: TFile,
   debugMode = false
-): WorkoutLogData | null {
+): CSVWorkoutLogEntry[] {
   try {
     if (debugMode) {
-      console.log(`=== PARSING FILE: ${file.path} ===`);
+      console.log("=== PARSING CSV FILE ===");
       console.log(`Content length: ${content.length}`);
       console.log(`Content preview:`, content.substring(0, 200) + "...");
     }
 
-    // Parse frontmatter - handle both CRLF and LF line endings
-    const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    const lines = content.split("\n").filter((line) => line.trim());
+    if (lines.length === 0) {
+      if (debugMode) console.log("No content found in CSV file");
+      return [];
+    }
+
+    // Parse header
+    const header = lines[0].split(",").map((h) => h.trim());
     if (debugMode) {
-      console.log(`🔍 Frontmatter regex test:`);
-      console.log(`  Content starts with "---":`, content.startsWith("---"));
-      console.log(
-        `  Content contains "---" at end:`,
-        content.includes("---", 10)
-      );
-      console.log(
-        `  Frontmatter match:`,
-        frontmatterMatch ? `✅ Found` : `❌ Not found`
-      );
-      if (frontmatterMatch) {
-        console.log(`  Frontmatter content:`, frontmatterMatch[1]);
+      console.log("CSV Headers:", header);
+    }
+
+    const entries: CSVWorkoutLogEntry[] = [];
+
+    // Parse data rows
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const values = parseCSVLine(line);
+      if (values.length < 6) {
+        if (debugMode) console.warn(`Skipping invalid line ${i + 1}: ${line}`);
+        continue;
+      }
+
+      try {
+        const entry: CSVWorkoutLogEntry = {
+          date: values[0]?.trim() || "",
+          exercise: values[1]?.trim() || "",
+          reps: parseInt(values[2]) || 0,
+          weight: parseFloat(values[3]) || 0,
+          volume: parseFloat(values[4]) || 0,
+          origine: values[5]?.trim() || undefined,
+          workout: values[6]?.trim() || undefined,
+          timestamp: parseInt(values[7]) || Date.now(),
+        };
+
+        // Validate required fields
+        if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
+          entries.push(entry);
+        } else {
+          if (debugMode)
+            console.warn(`Skipping invalid entry at line ${i + 1}:`, entry);
+        }
+      } catch (error) {
+        if (debugMode) console.warn(`Error parsing line ${i + 1}:`, error);
       }
     }
 
-    if (!frontmatterMatch) {
-      if (debugMode) {
-        console.log(`❌ No frontmatter found in ${file.path}`);
-        console.log(`Content:`, content);
-        console.log(
-          `Content hex:`,
-          Buffer.from(content, "utf8").toString("hex").substring(0, 100)
-        );
-      }
-      return null;
-    }
-
-    const frontmatter = frontmatterMatch[1];
     if (debugMode) {
-      console.log(`✅ Frontmatter found:`, frontmatter);
+      console.log(`Successfully parsed ${entries.length} entries from CSV`);
     }
 
-    // Extract fields from frontmatter with multiple possible formats
-    const repsMatch =
-      frontmatter.match(/Rep:\s*(\d+)/) ||
-      frontmatter.match(/reps:\s*(\d+)/) ||
-      frontmatter.match(/Repetitions:\s*(\d+)/);
-    const weightMatch =
-      frontmatter.match(/Weight:\s*"?(\d+(?:\.\d+)?)"?/) ||
-      frontmatter.match(/weight:\s*"?(\d+(?:\.\d+)?)"?/) ||
-      frontmatter.match(/kg:\s*"?(\d+(?:\.\d+)?)"?/);
-    const volumeMatch =
-      frontmatter.match(/Volume:\s*"?(\d+(?:\.\d+)?)"?/) ||
-      frontmatter.match(/volume:\s*"?(\d+(?:\.\d+)?)"?/);
-
-    if (debugMode) {
-      console.log(`🔍 Field matching results:`);
-      console.log(
-        `  Reps match:`,
-        repsMatch ? `✅ "${repsMatch[1]}"` : `❌ Not found`
-      );
-      console.log(
-        `  Weight match:`,
-        weightMatch ? `✅ "${weightMatch[1]}"` : `❌ Not found`
-      );
-      console.log(
-        `  Volume match:`,
-        volumeMatch ? `✅ "${volumeMatch[1]}"` : `❌ Not found`
-      );
-
-      // Debug: show all possible weight patterns
-      console.log(`🔍 Testing weight patterns:`);
-      const weightPatterns = [
-        /Weight:\s*"?(\d+(?:\.\d+)?)"?/,
-        /weight:\s*"?(\d+(?:\.\d+)?)"?/,
-        /kg:\s*"?(\d+(?:\.\d+)?)"?/,
-      ];
-      weightPatterns.forEach((pattern, index) => {
-        const match = frontmatter.match(pattern);
-        console.log(
-          `  Pattern ${index + 1}:`,
-          match ? `✅ "${match[1]}"` : `❌ No match`
-        );
-      });
-    }
-
-    // Extract fields from body (after frontmatter) - handle both CRLF and LF line endings
-    const bodyContent = content.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "");
-    if (debugMode) {
-      console.log(`📄 Body content:`, bodyContent);
-    }
-
-    const exerciseMatch =
-      bodyContent.match(/Esercizio::\s*\[\[(.+?)\]\]/) ||
-      bodyContent.match(/Exercise::\s*\[\[(.+?)\]\]/) ||
-      bodyContent.match(/exercise::\s*\[\[(.+?)\]\]/);
-    const dateMatch =
-      bodyContent.match(/DataOra::\s*(.+)/) ||
-      bodyContent.match(/Date::\s*(.+)/) ||
-      bodyContent.match(/date::\s*(.+)/);
-    const origineMatch =
-      bodyContent.match(/Origine::\s*\[\[(.+?)\]\]/) ||
-      bodyContent.match(/Origin::\s*\[\[(.+?)\]\]/) ||
-      bodyContent.match(/origine::\s*\[\[(.+?)\]\]/);
-    const workoutMatch =
-      bodyContent.match(/Workout::\s*\[\[(.+?)\]\]/) ||
-      bodyContent.match(/workout::\s*\[\[(.+?)\]\]/);
-
-    if (debugMode) {
-      console.log(`🔍 Body field matching results:`);
-      console.log(
-        `  Exercise match:`,
-        exerciseMatch ? `✅ "${exerciseMatch[1]}"` : `❌ Not found`
-      );
-      console.log(
-        `  Date match:`,
-        dateMatch ? `✅ "${dateMatch[1]}"` : `❌ Not found`
-      );
-      console.log(
-        `  Origine match:`,
-        origineMatch ? `✅ "${origineMatch[1]}"` : `❌ Not found`
-      );
-      console.log(
-        `  Workout match:`,
-        workoutMatch ? `✅ "${workoutMatch[1]}"` : `❌ Not found`
-      );
-    }
-
-    if (!exerciseMatch || !repsMatch || !weightMatch) {
-      if (debugMode) {
-        console.log(`❌ Missing required fields in ${file.path}:`);
-        console.log(
-          `  Exercise:`,
-          exerciseMatch ? `✅ "${exerciseMatch[1]}"` : `❌ missing`
-        );
-        console.log(
-          `  Reps:`,
-          repsMatch ? `✅ "${repsMatch[1]}"` : `❌ missing`
-        );
-        console.log(
-          `  Weight:`,
-          weightMatch ? `✅ "${weightMatch[1]}"` : `❌ missing`
-        );
-        console.log(`  Frontmatter:`, frontmatter);
-        console.log(`  Body content:`, bodyContent);
-      }
-      return null;
-    }
-
-    const exercise = exerciseMatch[1].trim();
-    const reps = parseInt(repsMatch[1]);
-    const weight = parseFloat(weightMatch[1]);
-    const volume = volumeMatch ? parseFloat(volumeMatch[1]) : reps * weight;
-    const date = dateMatch ? dateMatch[1].trim() : file.stat.ctime.toString();
-    const origine = origineMatch ? origineMatch[1].trim() : undefined;
-    const workout = workoutMatch ? workoutMatch[1].trim() : undefined;
-
-    if (debugMode) {
-      console.log(`Successfully parsed ${file.path}:`, {
-        exercise,
-        reps,
-        weight,
-        volume,
-        date,
-        origine,
-        workout,
-      });
-    }
-
-    return {
-      date,
-      exercise,
-      reps,
-      weight,
-      volume,
-      file,
-      origine,
-      workout,
-    };
+    return entries;
   } catch (error) {
     if (debugMode) {
-      console.warn(`Error parsing file ${file.path}:`, error);
+      console.error("Error parsing CSV file:", error);
     }
-    return null;
+    return [];
   }
+}
+
+/**
+ * Converts CSVWorkoutLogEntry to CSV string format
+ */
+export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
+  const values = [
+    entry.date,
+    entry.exercise,
+    entry.reps.toString(),
+    entry.weight.toString(),
+    entry.volume.toString(),
+    entry.origine || "",
+    entry.workout || "",
+    entry.timestamp.toString(),
+  ];
+
+  return values
+    .map((value) => {
+      // Escape quotes and wrap in quotes if contains comma, quote, or newline
+      const escaped = value.replace(/"/g, '""');
+      if (
+        escaped.includes(",") ||
+        escaped.includes('"') ||
+        escaped.includes("\n")
+      ) {
+        return `"${escaped}"`;
+      }
+      return escaped;
+    })
+    .join(",");
+}
+
+/**
+ * Converts array of CSVWorkoutLogEntry to CSV content
+ */
+export function entriesToCSVContent(entries: CSVWorkoutLogEntry[]): string {
+  const header = "date,exercise,reps,weight,volume,origine,workout,timestamp";
+  const lines = [header];
+
+  entries.forEach((entry) => {
+    lines.push(entryToCSVLine(entry));
+  });
+
+  return lines.join("\n");
+}
+
+/**
+ * Parses a single CSV line, handling quoted values
+ */
+function parseCSVLine(line: string): string[] {
+  const values: string[] = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        // Escaped quote
+        current += '"';
+        i++; // Skip next quote
+      } else {
+        // Toggle quote state
+        inQuotes = !inQuotes;
+      }
+    } else if (char === "," && !inQuotes) {
+      // End of field
+      values.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+
+  // Add the last field
+  values.push(current);
+
+  return values;
+}
+
+/**
+ * Converts CSVWorkoutLogEntry to WorkoutLogData (for backward compatibility with existing components)
+ */
+export function convertFromCSVEntry(
+  entry: CSVWorkoutLogEntry,
+  file: TFile
+): WorkoutLogData {
+  return {
+    date: entry.date,
+    exercise: entry.exercise,
+    reps: entry.reps,
+    weight: entry.weight,
+    volume: entry.volume,
+    file: file,
+    origine: entry.origine,
+    workout: entry.workout,
+  };
+}
+
+/**
+ * Legacy interface for backward compatibility with existing components
+ * This will be removed once all components are updated to use CSVWorkoutLogEntry
+ */
+export interface WorkoutLogData {
+  date: string;
+  exercise: string;
+  reps: number;
+  weight: number;
+  volume: number;
+  file: TFile;
+  origine?: string;
+  workout?: string;
 }

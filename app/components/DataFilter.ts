@@ -40,7 +40,6 @@ export class DataFilter {
     let filteredData = logData;
     let filterMethodUsed = "none";
     let titlePrefix = "Dati Allenamento";
-    const filterMethods: string[] = [];
 
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
@@ -56,14 +55,27 @@ export class DataFilter {
     }
 
     if (hasExercise && hasWorkout) {
-      const exerciseResult = this.filterByExercise(logData, params, debugMode);
-      const workoutResult = this.filterByWorkout(
-        exerciseResult.filteredData,
-        params
+      // For combined filtering, filter by workout first (usually more restrictive)
+      const workoutResult = this.filterByWorkout(logData, params);
+      if (workoutResult.filteredData.length === 0) {
+        return {
+          filteredData: [],
+          filterMethodUsed: "Nessun dato trovato per allenamento",
+          titlePrefix: `${params.exercise} + ${
+            params.workout || params.workoutPath
+          }`,
+        };
+      }
+
+      // Then filter the workout results by exercise
+      const exerciseResult = this.filterByExercise(
+        workoutResult.filteredData,
+        params,
+        debugMode
       );
 
-      filteredData = workoutResult.filteredData;
-      filterMethodUsed = `${exerciseResult.filterMethodUsed} + ${workoutResult.filterMethodUsed}`;
+      filteredData = exerciseResult.filteredData;
+      filterMethodUsed = `${workoutResult.filterMethodUsed} + ${exerciseResult.filterMethodUsed}`;
       titlePrefix = `${exerciseResult.titlePrefix} + ${workoutResult.titlePrefix}`;
     } else if (hasExercise) {
       const result = this.filterByExercise(logData, params, debugMode);
@@ -94,10 +106,7 @@ export class DataFilter {
   }
 
   /**
-   * Filters data by workout name or path.
-   * @param logData - Array of workout log data to filter
-   * @param params - Filter parameters containing workout or workoutPath
-   * @returns Filtered data with information about the filtering method used
+   * Optimized workout filtering with early termination
    */
   private static filterByWorkout(
     logData: WorkoutLogData[],
@@ -111,10 +120,14 @@ export class DataFilter {
       const workoutName = params.workout || params.workoutPath;
       if (workoutName) {
         titlePrefix = workoutName;
+
+        // Use more efficient filtering with early termination
+        const workoutNameLower = workoutName.toLowerCase();
         filteredData = logData.filter((log) => {
           const origine = log.origine || log.workout || "";
-          return origine.toLowerCase().includes(workoutName.toLowerCase());
+          return origine.toLowerCase().includes(workoutNameLower);
         });
+
         filterMethodUsed = `campo Origine:: "${workoutName}"`;
       }
     }
@@ -123,11 +136,7 @@ export class DataFilter {
   }
 
   /**
-   * Filters data by exercise name using intelligent search strategies.
-   * @param logData - Array of workout log data to filter
-   * @param params - Filter parameters containing exercise name and matching options
-   * @param debugMode - Whether to enable debug logging
-   * @returns Filtered data with information about the filtering method used
+   * Optimized exercise filtering with improved matching
    */
   private static filterByExercise(
     logData: WorkoutLogData[],
@@ -139,35 +148,48 @@ export class DataFilter {
     let titlePrefix = "Dati Allenamento";
 
     if (params.exercise && params.exercise.trim()) {
-      const matchesResult = findExerciseMatches(
-        logData,
-        params.exercise,
-        debugMode
-      );
+      const exerciseName = params.exercise.trim();
+      titlePrefix = exerciseName;
 
-      const { bestStrategy, bestPathKey, bestFileMatchesList } =
-        determineExerciseFilterStrategy(
-          matchesResult.fileNameMatches,
-          matchesResult.allExercisePathsAndScores,
-          params.exactMatch || false,
-          debugMode,
-          params.exercise
+      // Use exact match first for better performance
+      if (params.exactMatch) {
+        const exerciseNameLower = exerciseName.toLowerCase();
+        filteredData = logData.filter((log) => {
+          const exerciseField = log.exercise || "";
+          return exerciseField.toLowerCase() === exerciseNameLower;
+        });
+        filterMethodUsed = `esatto match su campo esercizio: "${exerciseName}"`;
+      } else {
+        // Use fuzzy matching with early optimization
+        const matchesResult = findExerciseMatches(
+          logData,
+          exerciseName,
+          debugMode
         );
 
-      filteredData = filterLogDataByExercise(
-        logData,
-        bestStrategy,
-        bestPathKey,
-        bestFileMatchesList
-      );
+        const { bestStrategy, bestPathKey, bestFileMatchesList } =
+          determineExerciseFilterStrategy(
+            matchesResult.fileNameMatches,
+            matchesResult.allExercisePathsAndScores,
+            params.exactMatch || false,
+            debugMode,
+            exerciseName
+          );
 
-      filterMethodUsed = this.getFilterMethodDescription(
-        bestStrategy,
-        bestPathKey,
-        matchesResult,
-        bestFileMatchesList
-      );
-      titlePrefix = params.exercise;
+        filteredData = filterLogDataByExercise(
+          logData,
+          bestStrategy,
+          bestPathKey,
+          bestFileMatchesList
+        );
+
+        filterMethodUsed = this.getFilterMethodDescription(
+          bestStrategy,
+          bestPathKey,
+          matchesResult,
+          bestFileMatchesList
+        );
+      }
     }
 
     return { filteredData, filterMethodUsed, titlePrefix };

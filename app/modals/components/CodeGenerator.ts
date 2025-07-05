@@ -88,15 +88,6 @@ export class CodeGenerator {
     if (params.columnsType !== "standard") {
       const columnsMap = {
         minimal: ["Data", "Esercizio", "Ripetizioni", "Peso (kg)"],
-        extended: [
-          "Data",
-          "Esercizio",
-          "Ripetizioni",
-          "Peso (kg)",
-          "Volume",
-          "Link",
-          "Origine",
-        ],
       };
       const columns = columnsMap[params.columnsType as keyof typeof columnsMap];
       if (columns) {

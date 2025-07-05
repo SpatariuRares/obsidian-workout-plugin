@@ -112,16 +112,12 @@ export class InsertTableModal extends ModalBase {
       "Colonne Tabella:",
       [
         {
-          text: "Standard (Data, Esercizio, Ripetizioni, Peso, Volume, Link)",
+          text: "Standard (Data, Esercizio, Ripetizioni, Peso, Volume)",
           value: "standard",
         },
         {
           text: "Minimal (Data, Esercizio, Ripetizioni, Peso)",
           value: "minimal",
-        },
-        {
-          text: "Extended (Data, Esercizio, Ripetizioni, Peso, Volume, Link, Origine)",
-          value: "extended",
         },
       ]
     );

@@ -23,7 +23,6 @@ export class TableDataProcessor {
       "Ripetizioni",
       "Peso (kg)",
       "Volume",
-      "Link",
     ];
 
     let headers = defaultColumns;
@@ -111,20 +110,8 @@ export class TableDataProcessor {
       const weight = log.weight?.toString() || "N/D";
       const volume = log.volume?.toString() || "N/D";
 
-      let link = "Link non disp.";
-      if (log.file?.path && log.file?.basename) {
-        link = `[[${log.file.path}|${log.file.basename}]]`;
-      }
-
       rows.push({
-        displayRow: [
-          formattedDate,
-          exerciseDisplay,
-          reps,
-          weight,
-          volume,
-          link,
-        ],
+        displayRow: [formattedDate, exerciseDisplay, reps, weight, volume],
         originalDate: log.date,
         dateKey: dateKey,
       });
@@ -233,14 +220,7 @@ export class TableDataProcessor {
       searchByName: false,
       exactMatch: false,
       debug: false,
-      columns: [
-        "Data",
-        "Esercizio",
-        "Ripetizioni",
-        "Peso (kg)",
-        "Volume",
-        "Link",
-      ],
+      columns: ["Data", "Esercizio", "Ripetizioni", "Peso (kg)", "Volume"],
     };
   }
 }

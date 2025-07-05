@@ -847,3 +847,456 @@
 .table-spacer-cell {
   height: 8px;
 }
+
+/* Workout Charts Plugin Styles */
+
+/* Modal Styles */
+.workout-charts-modal {
+  padding: 20px;
+  max-width: 600px;
+}
+
+.workout-charts-modal h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--text-normal);
+}
+
+.workout-charts-modal h3 {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 5px;
+}
+
+.workout-charts-mode-info {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.workout-charts-mode-info p {
+  margin: 5px 0;
+}
+
+.workout-charts-mode-info strong {
+  color: var(--text-accent);
+}
+
+.workout-charts-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.workout-charts-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.workout-charts-form-group label {
+  font-weight: 600;
+  color: var(--text-normal);
+}
+
+.workout-charts-form-group input,
+.workout-charts-form-group select {
+  padding: 8px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+}
+
+/* Checkbox specific styling - no padding and flex row */
+.workout-charts-form-group input[type="checkbox"] {
+  padding: 0;
+  margin: 0;
+}
+
+.workout-charts-checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.workout-charts-form-group input:focus,
+.workout-charts-form-group select:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--interactive-accent-hover);
+}
+
+.workout-charts-form-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.workout-charts-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.workout-charts-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workout-charts-btn-primary {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.workout-charts-btn-primary:hover {
+  background: var(--interactive-accent-hover);
+}
+
+.workout-charts-btn-warning {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.workout-charts-btn-warning:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* Migration Section */
+.migration-section {
+  background: var(--background-secondary-alt);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.migration-section p {
+  margin: 0 0 15px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.migration-section button {
+  background: var(--interactive-warning);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.migration-section button:hover {
+  background: var(--interactive-warning-hover);
+}
+
+/* Exercise Autocomplete */
+.exercise-autocomplete-container {
+  position: relative;
+}
+
+.exercise-autocomplete-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+}
+
+.exercise-autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.exercise-autocomplete-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.exercise-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.exercise-autocomplete-item.selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* Chart and Table Styles */
+.workout-chart-container {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background: var(--background-primary);
+}
+
+.workout-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.workout-chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-normal);
+  margin: 0;
+}
+
+.workout-chart-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.workout-chart-controls select,
+.workout-chart-controls input {
+  padding: 4px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 12px;
+}
+
+.workout-chart-canvas {
+  width: 100%;
+  height: 400px;
+  background: var(--background-primary);
+}
+
+/* Table Styles */
+.workout-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.workout-log-table th {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-weight: 600;
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 2px solid var(--background-modifier-border);
+}
+
+.workout-log-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.workout-log-table tr:hover {
+  background: var(--background-modifier-hover);
+}
+
+.workout-log-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Date Group Headers */
+.date-group-header {
+  background: var(--background-secondary-alt);
+  font-weight: 600;
+  color: var(--text-accent);
+  padding: 10px 8px;
+  border-bottom: 2px solid var(--background-modifier-border);
+}
+
+/* Button Styles */
+.add-log-button-container,
+.create-log-button-container {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.add-log-button,
+.create-log-button {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-log-button:hover,
+.create-log-button:hover {
+  background: var(--interactive-accent-hover);
+}
+
+/* Error and No Data States */
+.workout-log-error,
+.workout-log-no-data {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  margin: 15px 0;
+}
+
+.workout-log-error {
+  color: var(--text-error);
+  border-color: var(--text-error);
+}
+
+/* CSV-specific message styling */
+.workout-log-no-data p {
+  margin: 8px 0;
+}
+
+.workout-log-no-data code {
+  background: var(--background-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--text-accent);
+}
+
+.workout-log-no-data button {
+  margin-top: 10px;
+}
+
+/* Timer Styles */
+.workout-timer-container {
+  text-align: center;
+  /* padding: 20px; */
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  /* margin: 15px 0; */
+}
+
+.workout-timer-display {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-normal);
+  font-family: monospace;
+}
+
+.workout-timer-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.workout-timer-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workout-timer-btn-start {
+  background: var(--interactive-success);
+  color: var(--text-on-accent);
+}
+
+.workout-timer-btn-start:hover {
+  background: var(--interactive-success-hover);
+}
+
+.workout-timer-btn-stop {
+  background: var(--interactive-error);
+  color: var(--text-on-accent);
+}
+
+.workout-timer-btn-stop:hover {
+  background: var(--interactive-error-hover);
+}
+
+.workout-timer-btn-reset {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.workout-timer-btn-reset:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .workout-charts-modal {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .workout-chart-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .workout-chart-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .workout-log-table {
+    font-size: 12px;
+  }
+
+  .workout-log-table th,
+  .workout-log-table td {
+    padding: 6px 4px;
+  }
+
+  .workout-timer-display {
+    font-size: 36px;
+  }
+
+  .workout-timer-controls {
+    flex-wrap: wrap;
+  }
+}

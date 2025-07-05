@@ -53,8 +53,16 @@ export class EmbeddedTableView extends BaseView {
         return;
       }
 
+      // Get optimized CSV data with efficient filtering
+      const dataToProcess = await this.getOptimizedCSVData(params);
+
+      this.logDebug("EmbeddedTableView", "CSV data processing completed", {
+        originalDataLength: logData.length,
+        processedDataLength: dataToProcess.length,
+      });
+
       const filterResult = this.filterData(
-        logData,
+        dataToProcess,
         params,
         this.plugin.settings.debugMode || params.debug || false
       );
@@ -65,7 +73,7 @@ export class EmbeddedTableView extends BaseView {
           container,
           params,
           filterResult.titlePrefix,
-          logData,
+          dataToProcess,
           "table"
         );
         return;
@@ -88,6 +96,31 @@ export class EmbeddedTableView extends BaseView {
     }
   }
 
+  /**
+   * Get optimized data for CSV mode with efficient filtering
+   */
+  private async getOptimizedCSVData(
+    params: EmbeddedTableParams
+  ): Promise<WorkoutLogData[]> {
+    // In CSV mode, we can apply more efficient filtering
+    const filterOptions: any = {};
+
+    if (params.exercise) {
+      filterOptions.exercise = params.exercise;
+      filterOptions.exactMatch = params.exactMatch;
+    }
+
+    if (params.workout) {
+      filterOptions.workout = params.workout;
+    }
+
+    this.logDebug("EmbeddedTableView", "CSV optimized filtering", {
+      filterOptions,
+    });
+
+    return await this.plugin.getWorkoutLogData(filterOptions);
+  }
+
   private validateTableParams(
     container: HTMLElement,
     params: EmbeddedTableParams
@@ -106,6 +139,9 @@ export class EmbeddedTableView extends BaseView {
 
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
+
+    // Show CSV mode indicator
+    this.renderCSVModeIndicator(contentDiv);
 
     if (params.showAddButton !== false) {
       const activeView =
@@ -162,10 +198,37 @@ export class EmbeddedTableView extends BaseView {
 
     this.showSuccessMessage(
       contentDiv,
-      `Tabella generata con successo! ${totalRows} log elaborati.`
+      `Tabella generata con successo! ${totalRows} log elaborati. (CSV Mode)`
     );
 
     container.appendChild(fragment);
+  }
+
+  /**
+   * Render CSV mode indicator
+   */
+  private renderCSVModeIndicator(container: HTMLElement): void {
+    const indicatorDiv = container.createEl("div", {
+      cls: "csv-mode-indicator",
+    });
+
+    indicatorDiv.innerHTML = `
+      <div style="
+        background: var(--background-secondary);
+        border: 1px solid var(--background-modifier-border);
+        border-radius: 4px;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+        font-size: 12px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      ">
+        <span style="color: var(--interactive-accent);">📊</span>
+        <span>CSV Mode: Dati caricati da ${this.plugin.settings.csvLogFilePath}</span>
+      </div>
+    `;
   }
 
   private renderTableFooter(
@@ -198,13 +261,17 @@ export class EmbeddedTableView extends BaseView {
 
     footerText += `. (Metodo: ${
       filterResult.filterMethodUsed
-    }). Visualizzati max ${params.limit || 50}.`;
+    }). Visualizzati max ${params.limit || 50}. [CSV Mode]`;
+
     footerDiv.innerHTML = footerText;
   }
 
   public async refreshTable(): Promise<void> {
     if (this.currentContainer && this.currentParams) {
       try {
+        // Clear cache to ensure fresh data
+        this.plugin.clearLogDataCache();
+
         const freshLogData = await this.plugin.getWorkoutLogData();
 
         if (

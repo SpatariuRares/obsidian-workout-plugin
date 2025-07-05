@@ -66,10 +66,61 @@ export class UIComponents {
   static renderNoDataMessage(container: HTMLElement): void {
     container.innerHTML = `
       <div class="workout-log-no-data">
-        Nessun dato di allenamento trovato.
-        <br>Crea alcuni log di allenamento usando il comando "Create Workout Log".
+        <p><strong>Nessun dato trovato nel file CSV</strong></p>
+        <p>Il file CSV non esiste o è vuoto.</p>
+        <p>Crea il tuo primo log di allenamento usando il comando "Create Workout Log".</p>
       </div>
     `;
+  }
+
+  /**
+   * Renders a message when CSV file is not found or empty.
+   * @param container - The HTML element to render the message in
+   * @param csvFilePath - Path to the CSV file
+   * @param plugin - Plugin instance for opening the create log modal
+   */
+  static renderCSVNoDataMessage(
+    container: HTMLElement,
+    csvFilePath: string,
+    plugin: any
+  ): void {
+    container.innerHTML = `
+      <div class="workout-log-no-data">
+        <p><strong>📊 Nessun dato trovato nel file CSV</strong></p>
+        <p><strong>File:</strong> <code>${csvFilePath}</code></p>
+        <p>Il file CSV non esiste o è vuoto. Crea il tuo primo log di allenamento per iniziare a tracciare i tuoi progressi.</p>
+        <div style="margin-top: 15px;">
+          <button class="add-log-button" id="create-first-log-btn">
+            ➕ Crea Primo Log
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Add event listener to the button
+    const button = container.querySelector(
+      "#create-first-log-btn"
+    ) as HTMLButtonElement;
+    if (button) {
+      button.addEventListener("click", () => {
+        const activeView =
+          plugin.app.workspace.getActiveViewOfType(MarkdownView);
+        const currentPageLink = activeView?.file
+          ? `[[${activeView.file.basename}]]`
+          : "";
+
+        new CreateLogModal(
+          plugin.app,
+          plugin,
+          undefined, // No specific exercise name for first log
+          currentPageLink,
+          () => {
+            plugin.onWorkoutLogCreated();
+            plugin.triggerWorkoutLogRefresh();
+          }
+        ).open();
+      });
+    }
   }
 
   /**

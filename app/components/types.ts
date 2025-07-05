@@ -21,6 +21,7 @@ export interface EmbeddedTableParams {
   exercisePath?: string;
   workout?: string;
   workoutPath?: string;
+  dateRange?: number; // Days to look back for filtering
   limit?: number;
   exactMatch?: boolean;
   searchByName?: boolean;

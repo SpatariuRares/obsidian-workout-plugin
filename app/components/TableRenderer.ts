@@ -133,9 +133,6 @@ export class TableRenderer {
             td.className = "workout-table-date-cell";
           } else if (index === 4) {
             td.className = "workout-table-volume-cell";
-          } else if (index === 5) {
-            this.renderLinkCell(td, cell, plugin);
-            return;
           }
           td.textContent = cell;
         });
@@ -144,65 +141,6 @@ export class TableRenderer {
       tbody.appendChild(fragment);
     } catch (error) {
       console.error("Error applying row grouping:", error);
-    }
-  }
-
-  /**
-   * Renders a link cell with HTML anchor tag for Obsidian file links.
-   * @param td - The table cell element to render the link in
-   * @param linkText - The link text in Obsidian wiki-link format [[path|display]]
-   * @param plugin - Plugin instance for file operations
-   */
-  private static renderLinkCell(
-    td: HTMLElement,
-    linkText: string,
-    plugin?: any
-  ): void {
-    if (!linkText || linkText === "Link non disp.") {
-      td.textContent = linkText;
-      return;
-    }
-
-    const linkMatch = linkText.match(/\[\[(.*?)\|(.*?)\]\]/);
-    if (linkMatch) {
-      const [, filePath, displayText] = linkMatch;
-
-      const link = td.createEl("a", {
-        text: displayText,
-        cls: "workout-table-link",
-      });
-
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.openFileInObsidian(filePath, plugin);
-      });
-    } else {
-      td.textContent = linkText;
-    }
-  }
-
-  /**
-   * Opens a file in Obsidian using the app's file manager.
-   * @param filePath - The path of the file to open
-   * @param plugin - Plugin instance for file operations
-   */
-  private static openFileInObsidian(
-    filePath: string,
-    plugin?: WorkoutChartsPlugin
-  ): void {
-    try {
-      if (plugin && plugin.app && plugin.app.workspace) {
-        const file = plugin.app.vault.getAbstractFileByPath(filePath);
-        if (file) {
-          plugin.app.workspace.openLinkText(filePath, "", true);
-        } else {
-          console.warn("File not found:", filePath);
-        }
-      } else {
-        console.warn("Plugin or app not available");
-      }
-    } catch (error) {
-      console.error("Error opening file in Obsidian:", error);
     }
   }
 }

@@ -38,7 +38,11 @@ export abstract class BaseView {
     logData: WorkoutLogData[]
   ): boolean {
     if (logData.length === 0) {
-      UIComponents.renderNoDataMessage(container);
+      UIComponents.renderCSVNoDataMessage(
+        container,
+        this.plugin.settings.csvLogFilePath,
+        this.plugin
+      );
       return true;
     }
     return false;

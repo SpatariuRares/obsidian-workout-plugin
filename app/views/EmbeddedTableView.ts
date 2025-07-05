@@ -1,4 +1,3 @@
-// Embedded Table View for workout log data visualization
 import { WorkoutLogData } from "../types/WorkoutLogData";
 import type WorkoutChartsPlugin from "../../main";
 import { MarkdownView } from "obsidian";
@@ -25,7 +24,6 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): Promise<void> {
-    // Store current state for refresh
     this.currentContainer = container;
     this.currentLogData = logData;
     this.currentParams = params;
@@ -79,13 +77,12 @@ export class EmbeddedTableView extends BaseView {
         limit: params.limit || 50,
       });
 
-      // Process data for table display
       const tableData = TableDataProcessor.processTableData(
         filterResult.filteredData,
         params
       );
 
-      this.renderTableContent(container, tableData);
+      this.renderTableContentOptimized(container, tableData);
     } catch (error) {
       this.handleError(container, error, "creating embedded table");
     }
@@ -99,16 +96,17 @@ export class EmbeddedTableView extends BaseView {
     return this.validateAndHandleErrors(container, validationErrors);
   }
 
-  private renderTableContent(
+  private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData
   ): void {
     const { headers, rows, totalRows, filterResult, params } = tableData;
 
-    container.empty();
-    const contentDiv = container.createEl("div");
+    container.innerHTML = "";
 
-    // Add "Add Log" button if enabled
+    const fragment = document.createDocumentFragment();
+    const contentDiv = fragment.appendChild(document.createElement("div"));
+
     if (params.showAddButton !== false) {
       const activeView =
         this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
@@ -126,7 +124,6 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    // Create table container
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
 
     this.logDebug("EmbeddedTableView", "Creating table with config", {
@@ -139,8 +136,8 @@ export class EmbeddedTableView extends BaseView {
       headers,
       rows,
       params,
-      filterResult.filteredData, // pass the original log objects
-      this.plugin // pass the plugin for file opening
+      filterResult.filteredData,
+      this.plugin
     );
 
     if (!tableSuccess) {
@@ -151,21 +148,24 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    this.renderDebugInfo(
-      contentDiv,
-      filterResult.filteredData,
-      "table",
-      filterResult.filterMethodUsed,
-      this.plugin.settings.debugMode || params.debug || false
-    );
+    if (this.plugin.settings.debugMode || params.debug) {
+      this.renderDebugInfo(
+        contentDiv,
+        filterResult.filteredData,
+        "table",
+        filterResult.filterMethodUsed,
+        true
+      );
+    }
 
-    // Footer with summary information
     this.renderTableFooter(contentDiv, tableData);
 
     this.showSuccessMessage(
       contentDiv,
       `Tabella generata con successo! ${totalRows} log elaborati.`
     );
+
+    container.appendChild(fragment);
   }
 
   private renderTableFooter(
@@ -180,7 +180,6 @@ export class EmbeddedTableView extends BaseView {
 
     let footerText = `📊 Trovati ${totalRows} log`;
 
-    // Handle both exercise and workout case
     if (params.exercise && params.workout) {
       const workoutFilename =
         params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
@@ -203,17 +202,32 @@ export class EmbeddedTableView extends BaseView {
     footerDiv.innerHTML = footerText;
   }
 
-  // Method to refresh the table with new data
   public async refreshTable(): Promise<void> {
-    if (this.currentContainer && this.currentLogData && this.currentParams) {
-      // Get fresh data from the plugin
-      const freshLogData = await this.plugin.getWorkoutLogData();
-      this.currentLogData = freshLogData;
-      await this.renderTable(
-        this.currentContainer,
-        freshLogData,
-        this.currentParams
-      );
+    if (this.currentContainer && this.currentParams) {
+      try {
+        const freshLogData = await this.plugin.getWorkoutLogData();
+
+        if (
+          !this.currentLogData ||
+          freshLogData.length !== this.currentLogData.length
+        ) {
+          this.currentLogData = freshLogData;
+          await this.renderTable(
+            this.currentContainer,
+            freshLogData,
+            this.currentParams
+          );
+        }
+      } catch (error) {
+        console.error("Error refreshing table:", error);
+        if (this.currentLogData) {
+          await this.renderTable(
+            this.currentContainer,
+            this.currentLogData,
+            this.currentParams
+          );
+        }
+      }
     }
   }
 }

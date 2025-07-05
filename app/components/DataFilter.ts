@@ -29,67 +29,65 @@ export class DataFilter {
     params: EmbeddedChartParams | EmbeddedTableParams,
     debugMode: boolean
   ): FilterResult {
+    if (!logData || logData.length === 0) {
+      return {
+        filteredData: [],
+        filterMethodUsed: "none",
+        titlePrefix: "Dati Allenamento",
+      };
+    }
+
     let filteredData = logData;
     let filterMethodUsed = "none";
     let titlePrefix = "Dati Allenamento";
     const filterMethods: string[] = [];
 
-    // Check if both exercise and workout are specified
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
 
+    if (debugMode) {
+      console.log("DataFilter: Starting filtering process", {
+        totalData: logData.length,
+        hasExercise,
+        hasWorkout,
+        exercise: params.exercise,
+        workout: params.workout || params.workoutPath,
+      });
+    }
+
     if (hasExercise && hasWorkout) {
-      // Apply AND logic: filter by both exercise and workout
-      if (debugMode) {
-        console.log("DataFilter: Applying AND logic for exercise + workout", {
-          exercise: params.exercise,
-          workout: params.workout || params.workoutPath,
-        });
-      }
-
-      // First filter by exercise
       const exerciseResult = this.filterByExercise(logData, params, debugMode);
-      if (exerciseResult.filteredData.length === 0) {
-        return {
-          filteredData: [],
-          filterMethodUsed: "Nessun dato trovato per esercizio + allenamento",
-          titlePrefix: `${params.exercise} + ${
-            params.workout || params.workoutPath
-          }`,
-        };
-      }
-
-      // Then filter the exercise results by workout
-      const workoutParams = { ...params, exercise: undefined }; // Remove exercise to avoid recursion
       const workoutResult = this.filterByWorkout(
         exerciseResult.filteredData,
-        workoutParams
+        params
       );
 
       filteredData = workoutResult.filteredData;
-      filterMethods.push(exerciseResult.filterMethodUsed);
-      filterMethods.push(workoutResult.filterMethodUsed);
-      filterMethodUsed = filterMethods.join(" AND ");
-      titlePrefix = `${params.exercise} + ${
-        params.workout || params.workoutPath
-      }`;
+      filterMethodUsed = `${exerciseResult.filterMethodUsed} + ${workoutResult.filterMethodUsed}`;
+      titlePrefix = `${exerciseResult.titlePrefix} + ${workoutResult.titlePrefix}`;
     } else if (hasExercise) {
-      // Filter by exercise only
       const result = this.filterByExercise(logData, params, debugMode);
       filteredData = result.filteredData;
       filterMethodUsed = result.filterMethodUsed;
       titlePrefix = result.titlePrefix;
     } else if (hasWorkout) {
-      // Filter by workout only
       const result = this.filterByWorkout(logData, params);
       filteredData = result.filteredData;
       filterMethodUsed = result.filterMethodUsed;
       titlePrefix = result.titlePrefix;
     } else {
-      // No filters applied - return all data
       if (debugMode) {
         console.log("DataFilter: No filters applied, returning all data");
       }
+    }
+
+    if (debugMode) {
+      console.log("DataFilter: Filtering completed", {
+        originalCount: logData.length,
+        filteredCount: filteredData.length,
+        filterMethodUsed,
+        titlePrefix,
+      });
     }
 
     return { filteredData, filterMethodUsed, titlePrefix };

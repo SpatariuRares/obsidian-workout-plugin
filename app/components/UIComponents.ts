@@ -133,7 +133,6 @@ export class UIComponents {
 
     let infoFooterText = `📊 ${volumeData.length} sessioni elaborate`;
 
-    // Handle combined exercise + workout case
     if (filterResult.titlePrefix && filterResult.titlePrefix.includes(" + ")) {
       const [exercise, workout] = filterResult.titlePrefix.split(" + ");
       const workoutFilename =
@@ -243,7 +242,6 @@ export class UIComponents {
     });
 
     button.addEventListener("click", () => {
-      // Open the create log modal with the exercise name pre-filled
       new CreateLogModal(
         plugin.app,
         plugin,
@@ -275,20 +273,18 @@ export class UIComponents {
     });
 
     button.addEventListener("click", () => {
-      // Get current page link for the log
       const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`
         : "";
 
-      // Open the create log modal with the exercise name pre-filled
       new CreateLogModal(
         plugin.app,
         plugin,
         exerciseName,
         currentPageLink,
         () => {
-          // Refresh the view after creating the log
+          plugin.onWorkoutLogCreated();
           plugin.triggerWorkoutLogRefresh();
         }
       ).open();

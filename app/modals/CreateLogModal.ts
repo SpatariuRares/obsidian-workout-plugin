@@ -1,4 +1,3 @@
-// Refactored CreateLogModal using reusable components
 import { App, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "../../main";
 import { ModalBase } from "./base/ModalBase";
@@ -26,15 +25,12 @@ export class CreateLogModal extends ModalBase {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
-    // Add modal title
     const titleEl = contentEl.createEl("h2", { text: "Create Workout Log" });
 
-    // Create form container
     const formContainer = contentEl.createEl("div", {
       cls: "workout-charts-form",
     });
 
-    // Exercise autocomplete using reusable component
     const { elements: exerciseElements } = await ExerciseAutocomplete.create(
       this,
       formContainer,
@@ -42,7 +38,6 @@ export class CreateLogModal extends ModalBase {
       this.exerciseName
     );
 
-    // Reps input
     const repsContainer = this.createFormGroup(formContainer);
     const repsInput = this.createNumberInput(
       repsContainer,
@@ -53,7 +48,6 @@ export class CreateLogModal extends ModalBase {
       "e.g., 10"
     );
 
-    // Weight input
     const weightContainer = this.createFormGroup(formContainer);
     const weightInput = this.createNumberInput(
       weightContainer,
@@ -65,22 +59,18 @@ export class CreateLogModal extends ModalBase {
     );
     weightInput.setAttribute("step", "0.5");
 
-    // Buttons container
     const buttonsContainer = this.createButtonsSection(formContainer);
 
-    // Cancel button
     const cancelBtn = buttonsContainer.createEl("button", {
       text: "Cancel",
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
-    // Create button
     const createBtn = buttonsContainer.createEl("button", {
       text: "Create Log",
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 
-    // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
     createBtn.addEventListener("click", async () => {
@@ -103,7 +93,8 @@ export class CreateLogModal extends ModalBase {
         this.close();
         new Notice("Workout log created successfully!");
 
-        // Trigger refresh callback if provided
+        this.plugin.onWorkoutLogCreated();
+
         if (this.onLogCreated) {
           this.onLogCreated();
         }
@@ -112,7 +103,6 @@ export class CreateLogModal extends ModalBase {
       }
     });
 
-    // Focus on first empty input
     if (!this.exerciseName) {
       exerciseElements.exerciseInput.focus();
     } else {

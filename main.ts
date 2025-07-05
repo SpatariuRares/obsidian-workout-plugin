@@ -1,4 +1,3 @@
-// Main plugin file - Workout Charts for Obsidian
 import {
   App,
   Notice,
@@ -8,7 +7,6 @@ import {
   normalizePath,
 } from "obsidian";
 
-// Import types and utilities
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
@@ -16,7 +14,6 @@ import {
   WorkoutLogData,
 } from "./app/types/WorkoutLogData";
 
-// Import views, modals, and settings
 import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
@@ -36,14 +33,16 @@ export default class WorkoutChartsPlugin extends Plugin {
   private embeddedTableView: EmbeddedTableView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
 
+  private logDataCache: WorkoutLogData[] | null = null;
+  private lastCacheTime: number = 0;
+  private readonly CACHE_DURATION = 5000;
+
   async onload() {
     await this.loadSettings();
 
-    // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
 
-    // Register code block processors
     this.registerMarkdownCodeBlockProcessor(
       "workout-chart",
       this.handleWorkoutChart.bind(this)
@@ -142,6 +141,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async getWorkoutLogData(): Promise<WorkoutLogData[]> {
+    const now = Date.now();
+    if (this.logDataCache && now - this.lastCacheTime < this.CACHE_DURATION) {
+      return this.logDataCache;
+    }
+
     const logData: WorkoutLogData[] = [];
 
     try {
@@ -160,22 +164,21 @@ export default class WorkoutChartsPlugin extends Plugin {
         const logFolder = this.app.vault.getAbstractFileByPath(path);
 
         if (logFolder) {
-          // Get all markdown files in this folder
           const files = this.app.vault
             .getMarkdownFiles()
-            .filter((file) => file.path.startsWith(path));
+            .filter((file) => file.path.startsWith(path))
+            .slice(0, 1000);
 
           if (files.length > 0) {
             foundFiles = files;
             if (this.settings.debugMode) {
               console.log(`Found ${files.length} files in: ${path}`);
             }
-            break; // Use the first path that has files
+            break;
           }
         }
       }
 
-      // If no files found in any path, try to create the default folder
       if (foundFiles.length === 0) {
         try {
           await this.app.vault.createFolder(this.settings.logFolderPath);
@@ -206,32 +209,51 @@ export default class WorkoutChartsPlugin extends Plugin {
         return logData;
       }
 
-      // Parse all found files
-      for (const file of foundFiles) {
-        try {
-          const content = await this.app.vault.cachedRead(file);
-          const logEntry = parseLogFile(content, file, this.settings.debugMode);
+      const batchSize = 50;
+      for (let i = 0; i < foundFiles.length; i += batchSize) {
+        const batch = foundFiles.slice(i, i + batchSize);
+
+        const batchPromises = batch.map(async (file) => {
+          try {
+            const content = await this.app.vault.cachedRead(file);
+            return parseLogFile(content, file, this.settings.debugMode);
+          } catch (error) {
+            if (this.settings.debugMode) {
+              console.warn(`Error reading file ${file.path}:`, error);
+            }
+            return null;
+          }
+        });
+
+        const batchResults = await Promise.all(batchPromises);
+        batchResults.forEach((logEntry) => {
           if (logEntry) {
             logData.push(logEntry);
-          } else if (this.settings.debugMode) {
-            console.warn("Failed to parse file:", file.path);
           }
-        } catch (error) {
-          if (this.settings.debugMode) {
-            console.warn(`Error reading file ${file.path}:`, error);
-          }
+        });
+
+        if (i + batchSize < foundFiles.length) {
+          await new Promise((resolve) => setTimeout(resolve, 0));
         }
       }
 
       if (this.settings.debugMode) {
         console.log("Total parsed log entries:", logData.length);
       }
+
+      this.logDataCache = logData;
+      this.lastCacheTime = now;
     } catch (error) {
       console.error("Error getting workout log data:", error);
       new Notice(`Error loading workout data: ${error.message}`);
     }
 
     return logData;
+  }
+
+  public clearLogDataCache(): void {
+    this.logDataCache = null;
+    this.lastCacheTime = 0;
   }
 
   // Handle workout chart code blocks
@@ -375,7 +397,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.embeddedChartView.createChart(container, data, params as any);
   }
 
-  // Create embedded table using the dedicated view
   private async createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
@@ -384,7 +405,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.embeddedTableView.createTable(container, data, params as any);
   }
 
-  // Create embedded timer using the dedicated view
   private async createEmbeddedTimer(
     container: HTMLElement,
     params: Record<string, unknown>
@@ -392,16 +412,13 @@ export default class WorkoutChartsPlugin extends Plugin {
     const timerView = new EmbeddedTimerView(this);
     await timerView.createTimer(container, params as any);
 
-    // Store the timer instance for cleanup
     const timerId = timerView.getId();
     this.activeTimers.set(timerId, timerView);
 
-    // Add cleanup when container is removed
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.removedNodes.forEach((node) => {
           if (node === container || (node as Element)?.contains?.(container)) {
-            // Timer container was removed, cleanup the timer
             timerView.destroy();
             this.activeTimers.delete(timerId);
             observer.disconnect();
@@ -416,28 +433,55 @@ export default class WorkoutChartsPlugin extends Plugin {
     });
   }
 
-  // Trigger refresh of all workout log views
+  private async createWorkoutLog() {
+    const modal = new CreateLogModal(this.app, this);
+    modal.open();
+  }
+
+  private async createExercisePage() {
+    const modal = new CreateExercisePageModal(this.app, this);
+    modal.open();
+  }
+
+  private async createExerciseSection() {
+    const modal = new CreateExerciseSectionModal(this.app, this);
+    modal.open();
+  }
+
+  private async insertChart() {
+    const modal = new InsertChartModal(this.app, this);
+    modal.open();
+  }
+
+  private async insertTable() {
+    const modal = new InsertTableModal(this.app, this);
+    modal.open();
+  }
+
+  private async insertTimer() {
+    const modal = new InsertTimerModal(this.app, this);
+    modal.open();
+  }
+
+  public onWorkoutLogCreated(): void {
+    this.clearLogDataCache();
+  }
+
   public triggerWorkoutLogRefresh(): void {
-    // Trigger dataview refresh if available (for compatibility)
+    this.clearLogDataCache();
+
     if (this.app.workspace.trigger) {
       this.app.workspace.trigger("dataview:refresh-views");
     }
 
-    // Force refresh of all markdown views that contain workout-log code blocks
-    this.app.workspace.iterateAllLeaves((leaf) => {
-      if (leaf.view.getViewType() === "markdown") {
-        const view = leaf.view as any;
-        if (view.editor && view.editor.cm) {
-          // Force a refresh by triggering a file change event
-          // This will cause all code block processors to re-run
-          const file = view.file;
-          if (file) {
-            // Trigger a refresh by updating the view
-            view.editor.cm.refresh();
+    const leaves = this.app.workspace.getLeavesOfType("markdown");
+    leaves.forEach((leaf) => {
+      const view = leaf.view as any;
+      if (view?.editor?.cm) {
+        view.editor.cm.refresh();
 
-            // Also trigger a file change event to force code block processors to re-run
-            this.app.vault.trigger("raw", file);
-          }
+        if (view.file) {
+          this.app.vault.trigger("raw", view.file);
         }
       }
     });

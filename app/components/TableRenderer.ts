@@ -39,24 +39,24 @@ export class TableRenderer {
     plugin?: WorkoutChartsPlugin // pass the plugin for file opening
   ): boolean {
     try {
-      // Create table element
-      const table = tableContainer.createEl("table", {
-        cls: "workout-log-table",
-      });
+      const fragment = document.createDocumentFragment();
 
-      // Create table header
-      const thead = table.createEl("thead");
-      const headerRow = thead.createEl("tr");
+      const table = fragment.appendChild(document.createElement("table"));
+      table.className = "workout-log-table";
+
+      const thead = table.appendChild(document.createElement("thead"));
+      const headerRow = thead.appendChild(document.createElement("tr"));
+
       headers.forEach((header) => {
-        const th = headerRow.createEl("th");
+        const th = headerRow.appendChild(document.createElement("th"));
         th.textContent = header;
       });
 
-      // Create table body
-      const tbody = table.createEl("tbody");
+      const tbody = table.appendChild(document.createElement("tbody"));
 
-      // Render rows with grouping
-      this.applyRowGrouping(tbody, rows, plugin);
+      this.applyRowGroupingOptimized(tbody, rows, plugin);
+
+      tableContainer.appendChild(fragment);
 
       return true;
     } catch (error) {
@@ -84,63 +84,64 @@ export class TableRenderer {
   }
 
   /**
-   * Applies row grouping to the table body based on date.
-   * Groups consecutive rows with the same date and adds visual separators.
-   * @param tbody - The table body element to apply grouping to
-   * @param rows - Array of data rows with date grouping info
-   * @param plugin - Plugin instance for file operations
+   * Optimized row grouping with better performance
    */
-  private static applyRowGrouping(
+  private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
     plugin?: any
   ): void {
     try {
+      if (rows.length === 0) return;
+
       let currentDateKey = "";
       let isFirstGroup = true;
-      let groupIndex = 0; // contatore gruppi
-      const columnCount = rows.length > 0 ? rows[0].displayRow.length : 6;
+      let groupIndex = 0;
+      const columnCount = rows[0].displayRow.length;
+
+      const fragment = document.createDocumentFragment();
 
       rows.forEach((row) => {
         const dateKey = row.dateKey;
 
-        // Nuovo gruppo
+        // New group
         if (dateKey !== currentDateKey) {
           if (!isFirstGroup) {
-            // Spacer
-            const spacerRow = tbody.createEl("tr");
-            spacerRow.addClass("workout-table-spacer");
-            const spacerCell = spacerRow.createEl("td", {
-              cls: "table-spacer-cell",
-            });
+            const spacerRow = fragment.appendChild(
+              document.createElement("tr")
+            );
+            spacerRow.className = "workout-table-spacer";
+            const spacerCell = spacerRow.appendChild(
+              document.createElement("td")
+            );
+            spacerCell.className = "table-spacer-cell";
             spacerCell.setAttribute("colspan", columnCount.toString());
           }
           currentDateKey = dateKey;
           isFirstGroup = false;
-          groupIndex++; // incrementa a ogni nuovo gruppo
+          groupIndex++;
         }
 
-        // Crea riga dati
-        const tr = tbody.createEl("tr");
-        tr.addClass("same-day-log");
-        tr.addClass(groupIndex % 2 === 0 ? "group-even" : "group-odd");
+        const tr = fragment.appendChild(document.createElement("tr"));
+        tr.className = `same-day-log ${
+          groupIndex % 2 === 0 ? "group-even" : "group-odd"
+        }`;
 
         row.displayRow.forEach((cell, index) => {
-          const td = tr.createEl("td");
+          const td = tr.appendChild(document.createElement("td"));
           if (index === 0) {
-            // Date column
-            td.addClass("workout-table-date-cell");
+            td.className = "workout-table-date-cell";
           } else if (index === 4) {
-            // Volume column
-            td.addClass("workout-table-volume-cell");
+            td.className = "workout-table-volume-cell";
           } else if (index === 5) {
-            // Link column - render as HTML link
             this.renderLinkCell(td, cell, plugin);
-            return; // Skip the textContent assignment below
+            return;
           }
           td.textContent = cell;
         });
       });
+
+      tbody.appendChild(fragment);
     } catch (error) {
       console.error("Error applying row grouping:", error);
     }
@@ -162,24 +163,20 @@ export class TableRenderer {
       return;
     }
 
-    // Parse Obsidian wiki-link format [[path|display]]
     const linkMatch = linkText.match(/\[\[(.*?)\|(.*?)\]\]/);
     if (linkMatch) {
       const [, filePath, displayText] = linkMatch;
 
-      // Create anchor element
       const link = td.createEl("a", {
         text: displayText,
         cls: "workout-table-link",
       });
 
-      // Add click handler to open file in Obsidian
       link.addEventListener("click", (e) => {
         e.preventDefault();
         this.openFileInObsidian(filePath, plugin);
       });
     } else {
-      // Fallback to plain text if not a valid wiki-link
       td.textContent = linkText;
     }
   }

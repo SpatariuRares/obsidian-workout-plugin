@@ -354,13 +354,33 @@
 .workout-charts-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .workout-charts-form-group {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.workout-charts-checkbox-group {
+  flex-direction: row;
+  align-items: center;
   gap: 8px;
+  margin-bottom: 8px;
+}
+
+.workout-charts-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--background-modifier-border);
 }
 
 .workout-charts-form-group label {
@@ -370,32 +390,23 @@
   color: var(--text-normal);
 }
 
-.workout-charts-form-group input,
-.workout-charts-form-group select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--background-modifier-border);
+/* Solo input di testo e numero, NO select, NO checkbox */
+.workout-charts-form-group input[type="text"],
+.workout-charts-form-group input[type="number"] {
+  padding: 6px 10px;
   border-radius: 4px;
-  background-color: var(--background-primary);
-  color: var(--text-normal);
-  font-size: 0.875rem;
-  transition: all 0.2s ease-in-out;
+  border: 1px solid var(--background-modifier-border);
+  width: 100%;
+  box-sizing: border-box;
 }
+
+/* Nessuna regola di padding/width per select o checkbox */
 
 .workout-charts-form-group input:focus,
 .workout-charts-form-group select:focus {
   outline: none;
   border-color: var(--interactive-accent);
   box-shadow: 0 0 0 2px var(--interactive-accent-hover);
-}
-
-.workout-charts-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--background-modifier-border);
 }
 
 .workout-charts-btn {

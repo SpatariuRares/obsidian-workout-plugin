@@ -13,7 +13,7 @@ export class InsertChartModal extends Modal {
 
     // Create main container with better styling
     const mainContainer = contentEl.createEl("div", {
-      cls: "insert-chart-modal",
+      cls: "workout-charts-form",
     });
     Object.assign(mainContainer.style, {
       padding: "20px",
@@ -29,7 +29,7 @@ export class InsertChartModal extends Modal {
 
     // Chart Type selector (exercise vs workout)
     const chartTypeContainer = chartTypeSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     chartTypeContainer.createEl("label", { text: "Tipo Grafico:" });
     const chartTypeSelect = chartTypeContainer.createEl("select");
@@ -44,7 +44,7 @@ export class InsertChartModal extends Modal {
 
     // Data Type selector (volume, weight, reps)
     const dataTypeContainer = chartTypeSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     dataTypeContainer.createEl("label", { text: "Tipo Dati:" });
     const dataTypeSelect = dataTypeContainer.createEl("select");
@@ -66,7 +66,7 @@ export class InsertChartModal extends Modal {
 
     // Exercise input (for exercise-specific charts)
     const exerciseContainer = targetSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     exerciseContainer.createEl("label", { text: "Nome Esercizio:" });
     const exerciseInput = exerciseContainer.createEl("input", { type: "text" });
@@ -74,7 +74,7 @@ export class InsertChartModal extends Modal {
 
     // Workout input (for workout charts)
     const workoutContainer = targetSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     workoutContainer.createEl("label", { text: "Nome Allenamento:" });
     const workoutInput = workoutContainer.createEl("input", { type: "text" });
@@ -82,7 +82,7 @@ export class InsertChartModal extends Modal {
 
     // Current Workout checkbox (for workout charts)
     const currentWorkoutContainer = targetSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const currentWorkoutToggle = currentWorkoutContainer.createEl("input", {
       type: "checkbox",
@@ -143,7 +143,7 @@ export class InsertChartModal extends Modal {
 
     // Date range selector
     const dateRangeContainer = configSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     dateRangeContainer.createEl("label", { text: "Range Giorni:" });
     const dateRangeInput = dateRangeContainer.createEl("input", {
@@ -155,7 +155,9 @@ export class InsertChartModal extends Modal {
     dateRangeInput.placeholder = "30";
 
     // Limit selector
-    const limitContainer = configSection.createEl("div", { cls: "form-group" });
+    const limitContainer = configSection.createEl("div", {
+      cls: "workout-charts-form-group",
+    });
     limitContainer.createEl("label", { text: "Limite Dati:" });
     const limitInput = limitContainer.createEl("input", {
       type: "number",
@@ -173,7 +175,7 @@ export class InsertChartModal extends Modal {
 
     // Show trend line toggle
     const trendLineContainer = displaySection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const trendLineToggle = trendLineContainer.createEl("input", {
       type: "checkbox",
@@ -187,7 +189,7 @@ export class InsertChartModal extends Modal {
 
     // Show trend header toggle
     const trendHeaderContainer = displaySection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const trendHeaderToggle = trendHeaderContainer.createEl("input", {
       type: "checkbox",
@@ -201,7 +203,7 @@ export class InsertChartModal extends Modal {
 
     // Show statistics toggle
     const statsContainer = displaySection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const statsToggle = statsContainer.createEl("input", {
       type: "checkbox",
@@ -221,7 +223,7 @@ export class InsertChartModal extends Modal {
 
     // Exact match toggle
     const exactMatchContainer = advancedSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const exactMatchToggle = exactMatchContainer.createEl("input", {
       type: "checkbox",
@@ -234,7 +236,7 @@ export class InsertChartModal extends Modal {
 
     // Debug mode toggle
     const debugContainer = advancedSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const debugToggle = debugContainer.createEl("input", {
       type: "checkbox",
@@ -247,7 +249,7 @@ export class InsertChartModal extends Modal {
 
     // Custom title
     const titleContainer = advancedSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     titleContainer.createEl("label", { text: "Titolo Personalizzato:" });
     const titleInput = titleContainer.createEl("input", { type: "text" });
@@ -255,7 +257,7 @@ export class InsertChartModal extends Modal {
 
     // Buttons Section
     const buttonsSection = mainContainer.createEl("div", {
-      cls: "buttons-section",
+      cls: "workout-charts-buttons",
     });
     Object.assign(buttonsSection.style, {
       display: "flex",

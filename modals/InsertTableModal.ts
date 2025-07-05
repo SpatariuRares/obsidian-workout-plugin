@@ -13,7 +13,7 @@ export class InsertTableModal extends Modal {
 
     // Create main container with better styling
     const mainContainer = contentEl.createEl("div", {
-      cls: "insert-table-modal",
+      cls: "workout-charts-form",
     });
     Object.assign(mainContainer.style, {
       padding: "20px",
@@ -29,7 +29,7 @@ export class InsertTableModal extends Modal {
 
     // Table Type selector (exercise vs workout)
     const tableTypeContainer = tableTypeSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     tableTypeContainer.createEl("label", { text: "Tipo Tabella:" });
     const tableTypeSelect = tableTypeContainer.createEl("select");
@@ -47,7 +47,7 @@ export class InsertTableModal extends Modal {
 
     // Exercise input (for exercise-specific tables)
     const exerciseContainer = targetSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     exerciseContainer.createEl("label", { text: "Nome Esercizio:" });
     const exerciseInput = exerciseContainer.createEl("input", { type: "text" });
@@ -55,7 +55,7 @@ export class InsertTableModal extends Modal {
 
     // Workout input (for workout tables)
     const workoutContainer = targetSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     workoutContainer.createEl("label", { text: "Nome Allenamento:" });
     const workoutInput = workoutContainer.createEl("input", { type: "text" });
@@ -63,7 +63,7 @@ export class InsertTableModal extends Modal {
 
     // Current Workout checkbox (for workout tables)
     const currentWorkoutContainer = targetSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const currentWorkoutToggle = currentWorkoutContainer.createEl("input", {
       type: "checkbox",
@@ -123,7 +123,9 @@ export class InsertTableModal extends Modal {
     const configSection = this.createSection(mainContainer, "Configurazione");
 
     // Limit selector
-    const limitContainer = configSection.createEl("div", { cls: "form-group" });
+    const limitContainer = configSection.createEl("div", {
+      cls: "workout-charts-form-group",
+    });
     limitContainer.createEl("label", { text: "Numero Massimo Log:" });
     const limitInput = limitContainer.createEl("input", {
       type: "number",
@@ -135,7 +137,7 @@ export class InsertTableModal extends Modal {
 
     // Columns selector
     const columnsContainer = configSection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     columnsContainer.createEl("label", { text: "Colonne Tabella:" });
     const columnsSelect = columnsContainer.createEl("select");
@@ -160,7 +162,7 @@ export class InsertTableModal extends Modal {
 
     // Show add button toggle
     const addButtonContainer = displaySection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const addButtonToggle = addButtonContainer.createEl("input", {
       type: "checkbox",
@@ -174,7 +176,7 @@ export class InsertTableModal extends Modal {
 
     // Custom button text
     const buttonTextContainer = displaySection.createEl("div", {
-      cls: "form-group",
+      cls: "workout-charts-form-group",
     });
     buttonTextContainer.createEl("label", { text: "Testo Bottone:" });
     const buttonTextInput = buttonTextContainer.createEl("input", {
@@ -191,7 +193,7 @@ export class InsertTableModal extends Modal {
 
     // Search by name toggle
     const searchByNameContainer = advancedSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const searchByNameToggle = searchByNameContainer.createEl("input", {
       type: "checkbox",
@@ -204,7 +206,7 @@ export class InsertTableModal extends Modal {
 
     // Exact match toggle
     const exactMatchContainer = advancedSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const exactMatchToggle = exactMatchContainer.createEl("input", {
       type: "checkbox",
@@ -217,7 +219,7 @@ export class InsertTableModal extends Modal {
 
     // Debug mode toggle
     const debugContainer = advancedSection.createEl("div", {
-      cls: "form-group checkbox-group",
+      cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
     const debugToggle = debugContainer.createEl("input", {
       type: "checkbox",
@@ -230,7 +232,7 @@ export class InsertTableModal extends Modal {
 
     // Buttons Section
     const buttonsSection = mainContainer.createEl("div", {
-      cls: "buttons-section",
+      cls: "workout-charts-buttons",
     });
     Object.assign(buttonsSection.style, {
       display: "flex",

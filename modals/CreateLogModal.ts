@@ -66,7 +66,7 @@ export class CreateLogModal extends Modal {
     const weightInput = weightContainer.createEl("input", { type: "number" });
     weightInput.setAttribute("step", "0.5");
     weightInput.setAttribute("min", "0");
-    weightInput.setAttribute("placeholder", "e.g., 50.5");
+    weightInput.setAttribute("placeholder", "e.g., 10.5");
 
     // Buttons container
     const buttonsContainer = formContainer.createEl("div", {

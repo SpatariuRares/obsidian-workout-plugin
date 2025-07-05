@@ -8,45 +8,75 @@ import { calculateTrendLine } from "../utils/utils";
  * and rendering interactive charts with trend lines and styling.
  */
 export class ChartRenderer {
-  // Modern color palette for charts
-  private static readonly CHART_COLORS = {
-    primary: {
-      main: "#6366F1", // Indigo-500
-      light: "rgba(99, 102, 241, 0.2)",
-      dark: "#4338CA", // Indigo-700
-      point: "#FFFFFF",
-      pointBorder: "#4338CA",
-    },
-    secondary: {
-      main: "#10B981", // Emerald-500
-      light: "rgba(16, 185, 129, 0.2)",
-      dark: "#059669", // Emerald-700
-      point: "#FFFFFF",
-      pointBorder: "#059669",
-    },
-    accent: {
-      main: "#F59E0B", // Amber-500
-      light: "rgba(245, 158, 11, 0.2)",
-      dark: "#D97706", // Amber-600
-      point: "#FFFFFF",
-      pointBorder: "#D97706",
-    },
-    trend: {
-      main: "#EF4444", // Red-500
-      light: "rgba(239, 68, 68, 0.15)",
-      dark: "#DC2626", // Red-600
-      point: "#FFFFFF",
-      pointBorder: "#DC2626",
-    },
-    grid: "rgba(156, 163, 175, 0.2)", // Gray-400 with opacity
-    text: "#374151",
-    background: "rgba(255, 255, 255, 0.95)",
-    tooltip: {
-      background: "rgba(17, 24, 39, 0.95)",
-      border: "#6366F1",
-      text: "#FFFFFF",
-    },
-  };
+  // Dynamic color palette that adapts to Obsidian theme
+  private static getChartColors() {
+    // Get computed styles to access Obsidian CSS variables
+    const style = getComputedStyle(document.documentElement);
+
+    return {
+      primary: {
+        main:
+          style.getPropertyValue("--interactive-accent").trim() || "#6366F1",
+        light:
+          style.getPropertyValue("--interactive-accent").trim() + "20" ||
+          "rgba(99, 102, 241, 0.2)",
+        dark:
+          style.getPropertyValue("--interactive-accent-hover").trim() ||
+          "#4338CA",
+        point: style.getPropertyValue("--text-on-accent").trim() || "#FFFFFF",
+        pointBorder:
+          style.getPropertyValue("--interactive-accent-hover").trim() ||
+          "#4338CA",
+      },
+      secondary: {
+        main: style.getPropertyValue("--text-success").trim() || "#10B981",
+        light:
+          style.getPropertyValue("--text-success").trim() + "20" ||
+          "rgba(16, 185, 129, 0.2)",
+        dark:
+          style.getPropertyValue("--text-success-hover").trim() || "#059669",
+        point: style.getPropertyValue("--text-on-accent").trim() || "#FFFFFF",
+        pointBorder:
+          style.getPropertyValue("--text-success-hover").trim() || "#059669",
+      },
+      accent: {
+        main: style.getPropertyValue("--text-warning").trim() || "#F59E0B",
+        light:
+          style.getPropertyValue("--text-warning").trim() + "20" ||
+          "rgba(245, 158, 11, 0.2)",
+        dark:
+          style.getPropertyValue("--text-warning-hover").trim() || "#D97706",
+        point: style.getPropertyValue("--text-on-accent").trim() || "#FFFFFF",
+        pointBorder:
+          style.getPropertyValue("--text-warning-hover").trim() || "#D97706",
+      },
+      trend: {
+        main: style.getPropertyValue("--text-error").trim() || "#EF4444",
+        light:
+          style.getPropertyValue("--text-error").trim() + "20" ||
+          "rgba(239, 68, 68, 0.2)",
+        dark: style.getPropertyValue("--text-error-hover").trim() || "#DC2626",
+        point: style.getPropertyValue("--text-on-accent").trim() || "#FFFFFF",
+        pointBorder:
+          style.getPropertyValue("--text-error-hover").trim() || "#DC2626",
+      },
+      grid:
+        style.getPropertyValue("--background-modifier-border").trim() + "40" ||
+        "rgba(156, 163, 175, 0.2)",
+      text: style.getPropertyValue("--text-normal").trim() || "#374151",
+      background:
+        style.getPropertyValue("--background-primary").trim() ||
+        "rgba(255, 255, 255, 0.95)",
+      tooltip: {
+        background:
+          style.getPropertyValue("--background-secondary").trim() + "F0" ||
+          "rgba(17, 24, 39, 0.95)",
+        border:
+          style.getPropertyValue("--interactive-accent").trim() || "#6366F1",
+        text: style.getPropertyValue("--text-normal").trim() || "#FFFFFF",
+      },
+    };
+  }
 
   /**
    * Creates a container element for the chart with proper styling.
@@ -93,11 +123,12 @@ export class ChartRenderer {
         (_: any, index: number) => slope * index + intercept
       );
 
+      const colors = this.getChartColors();
       datasets.push({
         label: "Linea di Tendenza",
         data: trendData,
-        borderColor: this.CHART_COLORS.trend.main,
-        backgroundColor: this.CHART_COLORS.trend.light,
+        borderColor: colors.trend.main,
+        backgroundColor: colors.trend.light,
         borderDash: [8, 4],
         borderWidth: 2.5,
         tension: 0,
@@ -113,15 +144,16 @@ export class ChartRenderer {
    * @returns Color scheme object
    */
   private static getColorScheme(chartType: string) {
+    const colors = this.getChartColors();
     switch (chartType) {
       case "volume":
-        return this.CHART_COLORS.primary;
+        return colors.primary;
       case "weight":
-        return this.CHART_COLORS.secondary;
+        return colors.secondary;
       case "reps":
-        return this.CHART_COLORS.accent;
+        return colors.accent;
       default:
-        return this.CHART_COLORS.primary;
+        return colors.primary;
     }
   }
 
@@ -143,12 +175,11 @@ export class ChartRenderer {
       params.title ||
       `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
 
+    const colors = this.getChartColors();
     const colorScheme = this.getColorScheme(chartType);
 
-    // Apply modern color scheme to main dataset
     if (datasets[0]) {
       datasets[0].borderColor = colorScheme.main;
-      datasets[0].backgroundColor = colorScheme.light;
       datasets[0].pointBackgroundColor = colorScheme.point;
       datasets[0].pointBorderColor = colorScheme.pointBorder;
       datasets[0].pointRadius = 4;
@@ -163,15 +194,14 @@ export class ChartRenderer {
       (ds) => ds.label === "Linea di Tendenza"
     );
     if (trendDataset) {
-      trendDataset.borderColor = this.CHART_COLORS.trend.main;
-      trendDataset.backgroundColor = this.CHART_COLORS.trend.light;
+      trendDataset.borderColor = colors.trend.main;
+      trendDataset.backgroundColor = colors.trend.light;
       trendDataset.borderDash = [8, 4];
       trendDataset.borderWidth = 2.5;
       trendDataset.pointRadius = 0;
       trendDataset.pointHoverRadius = 0;
     }
 
-    // Enhanced Chart.js options
     return {
       type: "line",
       data: { labels, datasets },
@@ -182,7 +212,7 @@ export class ChartRenderer {
           title: {
             display: true,
             text: title,
-            color: this.CHART_COLORS.text,
+            color: colors.text,
             font: {
               size: 18,
               weight: "600" as const,
@@ -194,7 +224,7 @@ export class ChartRenderer {
             display: true,
             position: "top" as const,
             labels: {
-              color: this.CHART_COLORS.text,
+              color: colors.text,
               boxWidth: 20,
               padding: 20,
               usePointStyle: true,
@@ -207,10 +237,10 @@ export class ChartRenderer {
           tooltip: {
             mode: "index" as const,
             intersect: false,
-            backgroundColor: this.CHART_COLORS.tooltip.background,
-            titleColor: this.CHART_COLORS.tooltip.text,
-            bodyColor: this.CHART_COLORS.tooltip.text,
-            borderColor: this.CHART_COLORS.tooltip.border,
+            backgroundColor: colors.tooltip.background,
+            titleColor: colors.tooltip.text,
+            bodyColor: colors.tooltip.text,
+            borderColor: colors.tooltip.border,
             borderWidth: 1,
             cornerRadius: 8,
             padding: 12,
@@ -233,19 +263,19 @@ export class ChartRenderer {
             title: {
               display: true,
               text: "Data",
-              color: this.CHART_COLORS.text,
+              color: colors.text,
               font: { size: 14, weight: "500" as const },
             },
             ticks: {
-              color: this.CHART_COLORS.text,
+              color: colors.text,
               font: { size: 12 },
             },
             grid: {
-              color: this.CHART_COLORS.grid,
+              color: colors.grid,
               drawBorder: false,
             },
             border: {
-              color: this.CHART_COLORS.grid,
+              color: colors.grid,
             },
           },
           y: {
@@ -258,19 +288,19 @@ export class ChartRenderer {
                   : chartType === "weight"
                   ? "Peso (kg)"
                   : "Ripetizioni",
-              color: this.CHART_COLORS.text,
+              color: colors.text,
               font: { size: 14, weight: "500" as const },
             },
             ticks: {
-              color: this.CHART_COLORS.text,
+              color: colors.text,
               font: { size: 12 },
             },
             grid: {
-              color: this.CHART_COLORS.grid,
+              color: colors.grid,
               drawBorder: false,
             },
             border: {
-              color: this.CHART_COLORS.grid,
+              color: colors.grid,
             },
           },
         },

@@ -1,5 +1,12 @@
 // Main plugin file - Workout Charts for Obsidian
-import { App, Notice, Plugin, TFile, MarkdownView } from "obsidian";
+import {
+  App,
+  Notice,
+  Plugin,
+  TFile,
+  MarkdownView,
+  normalizePath,
+} from "obsidian";
 
 // Import types and utilities
 import {
@@ -175,7 +182,7 @@ export default class WorkoutChartsPlugin extends Plugin {
           new Notice(`Created log folder: ${this.settings.logFolderPath}`);
         } catch (createError) {
           if (this.settings.debugMode) {
-            console.log("Could not create log folder:", createError);
+            console.warn("Could not create log folder:", createError);
           }
         }
       }
@@ -202,15 +209,12 @@ export default class WorkoutChartsPlugin extends Plugin {
       // Parse all found files
       for (const file of foundFiles) {
         try {
-          const content = await this.app.vault.read(file);
+          const content = await this.app.vault.cachedRead(file);
           const logEntry = parseLogFile(content, file, this.settings.debugMode);
           if (logEntry) {
             logData.push(logEntry);
-            if (this.settings.debugMode) {
-              console.log("Parsed log entry:", logEntry);
-            }
           } else if (this.settings.debugMode) {
-            console.log("Failed to parse file:", file.path);
+            console.warn("Failed to parse file:", file.path);
           }
         } catch (error) {
           if (this.settings.debugMode) {

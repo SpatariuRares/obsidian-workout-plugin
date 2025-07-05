@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-workout-planner",
+  "name": "workout-planner",
   "version": "1.0.0",
   "description": "A plugin for visualizing workout data with charts and graphs in Obsidian",
   "main": "main.js",

@@ -13,6 +13,7 @@ import {
   ChartRenderer,
   UIComponents,
   TrendCalculator,
+  MobileTable,
 } from "../components";
 import { BaseView } from "./BaseView";
 
@@ -141,6 +142,15 @@ export class EmbeddedChartView extends BaseView {
     if (params.showTrend !== false && volumeData.length > 0) {
       TrendHeader.render(contentDiv, trendIndicators, volumeData);
     }
+
+    // Create mobile table (hidden on desktop, shown on mobile)
+    MobileTable.render(
+      contentDiv,
+      labels,
+      datasets,
+      params.type || "volume",
+      params
+    );
 
     const chartContainer = ChartRenderer.createChartContainer(contentDiv);
 

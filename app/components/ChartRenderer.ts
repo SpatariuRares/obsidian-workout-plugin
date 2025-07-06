@@ -205,7 +205,8 @@ export class ChartRenderer {
       data: { labels, datasets },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
+        aspectRatio: 4 / 3,
         plugins: {
           title: {
             display: true,
@@ -331,6 +332,13 @@ export class ChartRenderer {
     datasets: any[],
     params: EmbeddedChartParams
   ): boolean {
+    console.log("ChartRenderer.renderChart called with:", {
+      labels,
+      datasets,
+      params,
+    });
+
+    // Create chart (hidden on mobile, shown on desktop)
     const canvas = this.createCanvas(chartContainer);
     const chartConfig = this.createChartConfig(
       labels,

@@ -89,28 +89,24 @@ export class TargetSectionWithAutocomplete {
       const isWorkout = selectedType === "workout";
       const isCombined = selectedType === "combined";
 
-      // Exercise container: show for exercise or combined mode
       const showExercise = isExercise || isCombined;
       exerciseContainer.className = showExercise
         ? "workout-charts-form-group target-exercise"
         : "workout-charts-form-group target-exercise display-none";
       exerciseContainer.style.display = showExercise ? "" : "none";
 
-      // Workout container: show for workout or combined mode
       const showWorkout = isWorkout || isCombined;
       workoutContainer.className = showWorkout
         ? "workout-charts-form-group target-workout"
         : "workout-charts-form-group target-workout display-none";
       workoutContainer.style.display = showWorkout ? "" : "none";
 
-      // Current workout toggle: show for workout or combined mode
       const showCurrentWorkout = isWorkout || isCombined;
       currentWorkoutContainer.className = showCurrentWorkout
         ? "workout-charts-checkbox-group target-current-workout"
         : "workout-charts-checkbox-group target-current-workout display-none";
       currentWorkoutContainer.style.display = showCurrentWorkout ? "" : "none";
 
-      // Current file info: show for workout or combined mode
       const showFileInfo = isWorkout || isCombined;
       currentFileInfo.className = showFileInfo
         ? "current-file-info target-current-file-info"

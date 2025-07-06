@@ -31,9 +31,8 @@ export class InsertChartModal extends ModalBase {
       chartTypeContainer,
       "Tipo Grafico:",
       [
-        { text: "Esercizio + Allenamento", value: "combined" },
-        { text: "Esercizio Specifico", value: "exercise" },
         { text: "Allenamento Completo", value: "workout" },
+        { text: "Esercizio Specifico", value: "exercise" },
       ]
     );
 
@@ -58,46 +57,6 @@ export class InsertChartModal extends ModalBase {
 
     // Ensure visibility is updated based on initial selection
     targetHandlers.updateVisibility();
-
-    // Additional check to ensure workout field is visible for combined mode
-    setTimeout(() => {
-      if (chartTypeSelect.value === "combined") {
-        // Force visibility using multiple approaches
-        const workoutField = mainContainer.querySelector(
-          '[data-field-type="workout"]'
-        ) as HTMLElement;
-        const currentWorkoutField = mainContainer.querySelector(
-          '[data-field-type="current-workout"]'
-        ) as HTMLElement;
-        const fileInfoField = mainContainer.querySelector(
-          '[data-field-type="file-info"]'
-        ) as HTMLElement;
-
-        if (workoutField) {
-          workoutField.style.display = "block";
-          workoutField.style.visibility = "visible";
-          workoutField.style.opacity = "1";
-          workoutField.style.height = "auto";
-          workoutField.style.overflow = "visible";
-        }
-
-        if (currentWorkoutField) {
-          currentWorkoutField.style.display = "block";
-          currentWorkoutField.style.visibility = "visible";
-          currentWorkoutField.style.opacity = "1";
-          currentWorkoutField.style.height = "auto";
-          currentWorkoutField.style.overflow = "visible";
-        }
-
-        if (fileInfoField) {
-          fileInfoField.style.display = "block";
-          fileInfoField.style.visibility = "visible";
-          fileInfoField.style.opacity = "1";
-          fileInfoField.style.height = "auto";
-          fileInfoField.style.overflow = "visible";
-        }
-      }
-    }, 200);
 
     // Configuration Section
     const configSection = this.createSection(mainContainer, "Configurazione");
@@ -166,9 +125,8 @@ export class InsertChartModal extends ModalBase {
       }
     );
 
-    // Set default values for combined mode
     const exactMatchToggle = advancedElements.exactMatchToggle;
-    exactMatchToggle.checked = true; // Default to exact match for combined mode
+    exactMatchToggle.checked = true;
 
     // Buttons Section
     const buttonsSection = this.createButtonsSection(mainContainer);
@@ -202,16 +160,6 @@ export class InsertChartModal extends ModalBase {
       const showTrend = trendHeaderToggle.checked;
       const showStats = statsToggle.checked;
       const advancedValues = AdvancedOptionsSection.getValues(advancedElements);
-
-      // Validation for combined mode
-      if (chartType === "combined") {
-        if (!target.exercise || !target.workout) {
-          new Notice(
-            "⚠️ Per il tipo 'Esercizio + Allenamento' devi compilare entrambi i campi!"
-          );
-          return;
-        }
-      }
 
       const chartCode = CodeGenerator.generateChartCode({
         chartType,

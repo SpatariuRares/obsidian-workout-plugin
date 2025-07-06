@@ -677,43 +677,6 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .workout-charts-controls {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .workout-log-table {
-    font-size: 0.8em;
-  }
-
-  .workout-log-table th,
-  .workout-log-table td {
-    padding: 8px 12px;
-  }
-
-  .add-log-button {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .embedded-chart-info {
-    padding: 12px 16px;
-  }
-
-  .workout-charts-modal {
-    padding: 20px;
-    margin: 20px;
-  }
-
-  .workout-charts-buttons {
-    flex-direction: column;
-  }
-
-  .workout-charts-btn {
-    width: 100%;
-  }
-}
 
 /* Print Styles */
 @media print {
@@ -798,10 +761,74 @@
 /* Chart Container Styling */
 .embedded-chart-container {
   width: 100%;
+  position: relative;
+  height: 0;
+  padding-bottom: 75%; /* 4:3 aspect ratio (3/4 = 0.75) */
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--background-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 16px;
 }
 
 .embedded-chart-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+/* Mobile table styles */
+.embedded-chart-mobile-table {
+  display: none;
+  margin-top: 16px;
+  border-radius: 8px;
+  background: var(--background-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.embedded-chart-mobile-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.embedded-chart-mobile-table th {
+  background: var(--background-secondary);
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 2px solid var(--background-modifier-border);
+  font-weight: 600;
+  color: var(--text-normal);
+  font-size: 0.85em;
+}
+
+.embedded-chart-mobile-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  font-size: 0.85em;
+}
+
+.embedded-chart-mobile-table tr:nth-child(even) {
+  background: var(--background-secondary);
+}
+
+.embedded-chart-mobile-table tr:hover {
+  background: var(--background-modifier-hover);
+}
+
+.mobile-table-title {
+  margin: 0;
+  padding: 16px;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
 }
 
 /* Table Footer Styling */
@@ -949,12 +976,16 @@
 
 .workout-charts-form-group input,
 .workout-charts-form-group select {
-  padding: 8px 12px;
+  /* padding: 8px 12px; */
   border: 1px solid var(--background-modifier-border);
   border-radius: 4px;
   background: var(--background-primary);
   color: var(--text-normal);
   font-size: 14px;
+}
+
+.workout-charts-form-group input[type="text"] {
+  padding: 8px 12px;
 }
 
 /* Checkbox specific styling - no padding and flex row */
@@ -1341,5 +1372,31 @@
 
   .workout-timer-controls {
     flex-wrap: wrap;
+  }
+
+  /* Chart and Mobile Table Responsive */
+  .workout-charts-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .embedded-chart-info {
+    padding: 12px 16px;
+  }
+
+  .embedded-chart-container {
+    display: none; /* Hide chart on mobile */
+  }
+
+  .embedded-chart-mobile-table {
+    display: block !important; /* Show mobile table on mobile */
+  }
+
+  .workout-charts-buttons {
+    flex-direction: column;
+  }
+
+  .workout-charts-btn {
+    width: 100%;
   }
 }

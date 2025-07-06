@@ -7,3 +7,4 @@ export * from "./DataFilter";
 export * from "./TrendCalculator";
 export * from "./TableRenderer";
 export * from "./TableDataProcessor";
+export * from "./MobileTable";

@@ -2,7 +2,7 @@ import { MarkdownView } from "obsidian";
 import { CreateLogModal } from "../modals/CreateLogModal";
 import { WorkoutLogData } from "../types/WorkoutLogData";
 import { FilterResult } from "./types";
-import { WorkoutChartsPluginInterface } from "./types";
+import type WorkoutChartsPlugin from "../../main";
 
 /**
  * Provides reusable UI components for the workout charts plugin.
@@ -93,7 +93,7 @@ export class UIComponents {
   static renderCSVNoDataMessage(
     container: HTMLElement,
     csvFilePath: string,
-    plugin: WorkoutChartsPluginInterface
+    plugin: WorkoutChartsPlugin
   ): void {
     const noDataDiv = container.createEl("div", {
       cls: "workout-log-no-data",
@@ -301,7 +301,7 @@ export class UIComponents {
     container: HTMLElement,
     exerciseName: string,
     currentPageLink: string,
-    plugin: WorkoutChartsPluginInterface,
+    plugin: WorkoutChartsPlugin,
     onLogCreated?: () => void
   ): void {
     if (!currentPageLink) {
@@ -338,7 +338,7 @@ export class UIComponents {
   static createCreateLogButtonForMissingExercise(
     container: HTMLElement,
     exerciseName: string,
-    plugin: WorkoutChartsPluginInterface
+    plugin: WorkoutChartsPlugin
   ): void {
     const buttonContainer = container.createEl("div", {
       cls: "create-log-button-container",

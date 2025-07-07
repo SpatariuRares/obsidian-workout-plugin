@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
 import { TableRow, EmbeddedTableParams } from "./types";
 import { WorkoutLogData } from "../types/WorkoutLogData";
-import { WorkoutChartsPluginInterface } from "./types";
+import type WorkoutChartsPlugin from "../../main";
 
 export class TableRenderer {
   /**
@@ -32,7 +32,7 @@ export class TableRenderer {
     rows: TableRow[],
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
-    plugin?: WorkoutChartsPluginInterface // pass the plugin for file opening
+    plugin?: WorkoutChartsPlugin // pass the plugin for file opening
   ): boolean {
     try {
       const fragment = document.createDocumentFragment();
@@ -85,7 +85,7 @@ export class TableRenderer {
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
-    plugin?: WorkoutChartsPluginInterface
+    plugin?: WorkoutChartsPlugin
   ): void {
     try {
       if (rows.length === 0) return;
@@ -156,7 +156,7 @@ export class TableRenderer {
   private static renderActionButtons(
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
-    plugin?: WorkoutChartsPluginInterface
+    plugin?: WorkoutChartsPlugin
   ): void {
     if (!originalLog) {
       return;

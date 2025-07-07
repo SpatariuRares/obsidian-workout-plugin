@@ -106,8 +106,6 @@ export interface CodeBlockContext {
   el: HTMLElement;
   [key: string]: unknown;
 }
-
-// Plugin interface for dependency injection
 export interface WorkoutChartsPluginInterface {
   settings: {
     debugMode: boolean;

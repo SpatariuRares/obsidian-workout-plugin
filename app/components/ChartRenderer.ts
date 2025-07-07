@@ -217,7 +217,7 @@ export class ChartRenderer {
             color: colors.text,
             font: {
               size: 18,
-              weight: "600" as const,
+              weight: 600,
               family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
             },
             padding: { top: 10, bottom: 20 },
@@ -232,7 +232,7 @@ export class ChartRenderer {
               usePointStyle: true,
               font: {
                 size: 12,
-                weight: "500" as const,
+                weight: 500,
               },
             },
           },
@@ -248,16 +248,16 @@ export class ChartRenderer {
             padding: 12,
             displayColors: true,
             callbacks: {
-              label: (context: {
-                parsed: { y: number };
-                dataset: { label: string };
-              }) => {
-                const value = context.parsed.y;
+              label: function (tooltipItem) {
+                const value = tooltipItem.parsed.y;
+                const label = tooltipItem.dataset.label ?? "";
                 const unit =
                   chartType === "volume" || chartType === "weight"
                     ? "kg"
                     : "reps";
-                return `${context.dataset.label}: ${value.toFixed(1)} ${unit}`;
+                return `${label}: ${
+                  value?.toFixed ? value.toFixed(1) : value
+                } ${unit}`;
               },
             },
           },
@@ -269,7 +269,7 @@ export class ChartRenderer {
               display: true,
               text: "Data",
               color: colors.text,
-              font: { size: 14, weight: "500" as const },
+              font: { size: 14, weight: 500 },
             },
             ticks: {
               color: colors.text,
@@ -277,7 +277,6 @@ export class ChartRenderer {
             },
             grid: {
               color: colors.grid,
-              drawBorder: false,
             },
             border: {
               color: colors.grid,
@@ -294,7 +293,7 @@ export class ChartRenderer {
                   ? "Peso (kg)"
                   : "Ripetizioni",
               color: colors.text,
-              font: { size: 14, weight: "500" as const },
+              font: { size: 14, weight: 500 },
             },
             ticks: {
               color: colors.text,
@@ -302,7 +301,6 @@ export class ChartRenderer {
             },
             grid: {
               color: colors.grid,
-              drawBorder: false,
             },
             border: {
               color: colors.grid,

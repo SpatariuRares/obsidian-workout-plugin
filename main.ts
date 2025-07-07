@@ -20,11 +20,11 @@ import { InsertTimerModal } from "./app/modals/InsertTimerModal";
 import { CreateExercisePageModal } from "./app/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "./app/modals/CreateExerciseSectionModal";
 import {
-  CodeBlockContext,
   EmbeddedChartParams,
   EmbeddedTableParams,
   EmbeddedTimerParams,
 } from "./app/components/types";
+import type { MarkdownPostProcessorContext } from "obsidian";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -300,7 +300,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async handleWorkoutChart(
     source: string,
     el: HTMLElement,
-    ctx: CodeBlockContext
+    ctx: MarkdownPostProcessorContext
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
@@ -343,7 +343,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async handleWorkoutLog(
     source: string,
     el: HTMLElement,
-    ctx: CodeBlockContext
+    ctx: MarkdownPostProcessorContext
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
@@ -386,7 +386,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async handleWorkoutTimer(
     source: string,
     el: HTMLElement,
-    ctx: CodeBlockContext
+    ctx: MarkdownPostProcessorContext
   ) {
     try {
       const params = this.parseCodeBlockParams(source);

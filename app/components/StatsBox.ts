@@ -20,28 +20,58 @@ export class StatsBox {
     const statsDiv = container.createEl("div", { cls: "workout-charts-stats" });
 
     const stats = this.calculateStats(volumeData, labels);
-    const recentTrendText = this.calculateRecentTrend(volumeData);
+    const recentTrendData = this.calculateRecentTrend(volumeData);
 
-    statsDiv.innerHTML = `
-      <strong style="font-size:1.13em;">📈 Statistiche Volume (${
-        chartType === "workout" ? "Totale Allenamento" : "Esercizio"
-      }):</strong>
-      <ul style="margin-top:10px;margin-bottom:5px;list-style-type:square;padding-left:22px;">
-        <li>Volume medio: <strong>${stats.avgVolume} kg</strong></li>
-        <li>Max: <strong>${stats.maxVolume} kg</strong> (${
-      stats.maxVolumeDate || "N/D"
-    })</li>
-        <li>Min: <strong>${stats.minVolume} kg</strong> (${
-      stats.minVolumeDate || "N/D"
-    })</li>
-        <li>Sessioni: <strong>${labels.length}</strong></li>
-        ${
-          recentTrendText !== "N/A"
-            ? `<li>Trend Recente: ${recentTrendText}</li>`
-            : ""
+    const strongEl = statsDiv.createEl("strong", {
+      cls: "workout-charts-stats-title",
+    });
+    strongEl.textContent = `📈 Statistiche Volume (${
+      chartType === "workout" ? "Totale Allenamento" : "Esercizio"
+    }):`;
+
+    const ul = statsDiv.createEl("ul", { cls: "workout-charts-stats-list" });
+
+    const li1 = ul.createEl("li");
+    li1.textContent = "Volume medio: ";
+    li1.createEl("strong", { text: `${stats.avgVolume} kg` });
+
+    const li2 = ul.createEl("li");
+    li2.textContent = `Max: `;
+    li2.createEl("strong", { text: `${stats.maxVolume} kg` });
+    li2.append(` (${stats.maxVolumeDate || "N/D"})`);
+
+    const li3 = ul.createEl("li");
+    li3.textContent = `Min: `;
+    li3.createEl("strong", { text: `${stats.minVolume} kg` });
+    li3.append(` (${stats.minVolumeDate || "N/D"})`);
+
+    const li4 = ul.createEl("li");
+    li4.textContent = "Sessioni: ";
+    li4.createEl("strong", { text: `${labels.length}` });
+
+    if (recentTrendData.text !== "N/A") {
+      const li5 = ul.createEl("li");
+      li5.textContent = "Trend Recente: ";
+      const span = li5.createEl("span", {
+        cls: "workout-charts-trend-variation",
+      });
+      span.textContent = recentTrendData.text;
+      if (recentTrendData.color) {
+        // Apply color class based on trend color
+        if (recentTrendData.color.includes("green")) {
+          span.classList.add("trend-color-green");
+        } else if (recentTrendData.color.includes("red")) {
+          span.classList.add("trend-color-red");
+        } else if (recentTrendData.color.includes("orange")) {
+          span.classList.add("trend-color-orange");
+        } else {
+          span.classList.add("trend-color-accent");
         }
-      </ul>
-    `;
+      }
+      if (recentTrendData.suffix) {
+        li5.append(recentTrendData.suffix);
+      }
+    }
   }
 
   /**
@@ -68,33 +98,61 @@ export class StatsBox {
    * Calculates the recent trend in the workout data.
    * Analyzes the last 3 data points to determine if the trend is increasing, decreasing, or stable.
    * @param volumeData - Array of numerical data points
-   * @returns Formatted string describing the recent trend with color coding
+   * @returns Object with text, color, and optional suffix for the recent trend
    */
-  private static calculateRecentTrend(volumeData: number[]): string {
+  private static calculateRecentTrend(volumeData: number[]): {
+    text: string;
+    color: string;
+    suffix?: string;
+  } {
     if (volumeData.length >= 3) {
       const recent = volumeData.slice(-3);
       const changeRecent = recent[2] - recent[0];
       const changeRecentAbs = Math.abs(changeRecent).toFixed(1);
 
       if (changeRecent > 0.05 * recent[0]) {
-        return `<span style="color:var(--color-green)">+${changeRecentAbs} kg</span> (ultime 3)`;
+        return {
+          text: `+${changeRecentAbs} kg`,
+          color: "var(--color-green)",
+          suffix: " (ultime 3)",
+        };
       } else if (changeRecent < -0.05 * recent[0]) {
-        return `<span style="color:var(--color-red)">-${changeRecentAbs} kg</span> (ultime 3)`;
+        return {
+          text: `-${changeRecentAbs} kg`,
+          color: "var(--color-red)",
+          suffix: " (ultime 3)",
+        };
       } else {
-        return "<span style='color:var(--color-orange)'>Stabile</span> (ultime 3)";
+        return {
+          text: "Stabile",
+          color: "var(--color-orange)",
+          suffix: " (ultime 3)",
+        };
       }
     } else if (volumeData.length === 2) {
       const changeRecent = volumeData[1] - volumeData[0];
       const changeRecentAbs = Math.abs(changeRecent).toFixed(1);
 
       if (changeRecent > 0) {
-        return `<span style="color:var(--color-green)">+${changeRecentAbs} kg</span> (vs prec.)`;
+        return {
+          text: `+${changeRecentAbs} kg`,
+          color: "var(--color-green)",
+          suffix: " (vs prec.)",
+        };
       } else if (changeRecent < 0) {
-        return `<span style="color:var(--color-red)">-${changeRecentAbs} kg</span> (vs prec.)`;
+        return {
+          text: `-${changeRecentAbs} kg`,
+          color: "var(--color-red)",
+          suffix: " (vs prec.)",
+        };
       } else {
-        return "<span style='color:var(--color-orange)'>Invariato</span> (vs prec.)";
+        return {
+          text: "Invariato",
+          color: "var(--color-orange)",
+          suffix: " (vs prec.)",
+        };
       }
     }
-    return "N/A";
+    return { text: "N/A", color: "" };
   }
 }

@@ -13,7 +13,6 @@ export class TableRenderer {
     const tableContainer = contentDiv.createEl("div", {
       cls: "workout-table-container",
     });
-    tableContainer.style.overflowX = "auto";
     return tableContainer;
   }
 
@@ -73,11 +72,11 @@ export class TableRenderer {
     message: string,
     title: string
   ): void {
-    container.innerHTML = `
-      <div class="workout-table-error">
-        <strong>${title}:</strong> ${message}
-      </div>
-    `;
+    const errorDiv = container.createEl("div", {
+      cls: "workout-table-error",
+    });
+    const strongEl = errorDiv.createEl("strong", { text: `${title}:` });
+    errorDiv.append(` ${message}`);
   }
 
   /**

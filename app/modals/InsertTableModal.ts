@@ -54,7 +54,6 @@ export class InsertTableModal extends ModalBase {
     // Additional check to ensure workout field is visible for combined mode
     setTimeout(() => {
       if (tableTypeSelect.value === "combined") {
-        // Force visibility using multiple approaches
         const workoutField = mainContainer.querySelector(
           '[data-field-type="workout"]'
         ) as HTMLElement;
@@ -66,27 +65,18 @@ export class InsertTableModal extends ModalBase {
         ) as HTMLElement;
 
         if (workoutField) {
-          workoutField.style.display = "block";
-          workoutField.style.visibility = "visible";
-          workoutField.style.opacity = "1";
-          workoutField.style.height = "auto";
-          workoutField.style.overflow = "visible";
+          workoutField.classList.add("modal-field-visible");
+          workoutField.classList.remove("modal-field-hidden");
         }
 
         if (currentWorkoutField) {
-          currentWorkoutField.style.display = "block";
-          currentWorkoutField.style.visibility = "visible";
-          currentWorkoutField.style.opacity = "1";
-          currentWorkoutField.style.height = "auto";
-          currentWorkoutField.style.overflow = "visible";
+          currentWorkoutField.classList.add("modal-field-visible");
+          currentWorkoutField.classList.remove("modal-field-hidden");
         }
 
         if (fileInfoField) {
-          fileInfoField.style.display = "block";
-          fileInfoField.style.visibility = "visible";
-          fileInfoField.style.opacity = "1";
-          fileInfoField.style.height = "auto";
-          fileInfoField.style.overflow = "visible";
+          fileInfoField.classList.add("modal-field-visible");
+          fileInfoField.classList.remove("modal-field-hidden");
         }
       }
     }, 200);

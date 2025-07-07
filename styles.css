@@ -147,6 +147,25 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+.workout-charts-stats-title {
+  font-size: 1.13em;
+}
+
+.workout-charts-stats-list {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  list-style-type: square;
+  padding-left: 22px;
+}
+
+.workout-charts-stats-title {
+  font-size: 1.13em;
+}
+
+.workout-charts-trend-color {
+  /* Dynamic color will be applied via CSS custom properties */
+}
+
 /* Trend Header Styles */
 .workout-charts-trend-header {
   padding: 20px;
@@ -175,6 +194,13 @@
 .workout-charts-trend-variation {
   font-weight: 700;
   color: var(--text-accent);
+}
+
+.workout-charts-trend-header-h3 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--text-normal);
 }
 
 .workout-charts-table-fallback table {
@@ -465,6 +491,61 @@
   color: var(--text-muted);
   text-align: center;
   border: 1px solid var(--background-modifier-border);
+}
+
+.workout-charts-button-container {
+  margin-top: 15px;
+}
+
+.csv-mode-indicator {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.csv-mode-indicator-icon {
+  color: var(--interactive-accent);
+}
+
+/* Modal field visibility states */
+.modal-field-visible {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.modal-field-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Trend color classes */
+.trend-color-green {
+  color: var(--color-green) !important;
+}
+
+.trend-color-red {
+  color: var(--color-red) !important;
+}
+
+.trend-color-orange {
+  color: var(--color-orange) !important;
+}
+
+.trend-color-accent {
+  color: var(--text-accent) !important;
 }
 
 /* Chart Container */

@@ -23,7 +23,7 @@ export class TrendHeader {
 
     const { firstValue, lastValue, percentChange } =
       this.calculateVariation(volumeData);
-    const variationText = this.formatVariationText(
+    const variationData = this.formatVariationData(
       firstValue,
       lastValue,
       percentChange,
@@ -31,14 +31,57 @@ export class TrendHeader {
       volumeData
     );
 
-    trendHeader.innerHTML = `
-      <h3 style="color:${trendIndicators.trendColor};" class="workout-charts-trend-header-h3">
-        ${trendIndicators.trendIcon} Trend Volume: <strong>${trendIndicators.trendDirection}</strong>
-      </h3>
-      <p class="workout-charts-trend-header-p">
-        Variazione Complessiva: ${variationText}
-      </p>
-    `;
+    const h3 = trendHeader.createEl("h3", {
+      cls: "workout-charts-trend-header-h3",
+    });
+
+    // Apply color class based on trend color
+    if (trendIndicators.trendColor.includes("green")) {
+      h3.classList.add("trend-color-green");
+    } else if (trendIndicators.trendColor.includes("red")) {
+      h3.classList.add("trend-color-red");
+    } else if (trendIndicators.trendColor.includes("orange")) {
+      h3.classList.add("trend-color-orange");
+    } else {
+      h3.classList.add("trend-color-accent");
+    }
+
+    h3.textContent = `${trendIndicators.trendIcon} Trend Volume: `;
+    h3.createEl("strong", { text: trendIndicators.trendDirection });
+
+    const p = trendHeader.createEl("p", {
+      cls: "workout-charts-trend-header-p",
+    });
+    p.textContent = "Variazione Complessiva: ";
+    if (variationData.text !== undefined) {
+      const span = p.createEl("span", {
+        cls: "workout-charts-trend-variation",
+      });
+      span.textContent = variationData.text;
+      if (variationData.color) {
+        // Apply color class based on variation color
+        if (variationData.color.includes("green")) {
+          span.classList.add("trend-color-green");
+        } else if (variationData.color.includes("red")) {
+          span.classList.add("trend-color-red");
+        } else if (variationData.color.includes("orange")) {
+          span.classList.add("trend-color-orange");
+        } else {
+          span.classList.add("trend-color-accent");
+        }
+      }
+    }
+    if (
+      firstValue !== undefined &&
+      lastValue !== undefined &&
+      volumeData.length >= 2
+    ) {
+      p.append(
+        ` (da ${firstValue.toFixed(1)} kg a ${lastValue.toFixed(1)} kg)`
+      );
+    } else if (firstValue !== undefined && volumeData.length === 1) {
+      p.append(` (Volume: ${firstValue.toFixed(1)} kg)`);
+    }
   }
 
   /**
@@ -69,35 +112,37 @@ export class TrendHeader {
   }
 
   /**
-   * Formats the variation text with appropriate styling and context.
+   * Formats the variation data for DOM rendering.
    * @param firstValue - The first value in the dataset
    * @param lastValue - The last value in the dataset
    * @param percentChange - The calculated percentage change as a string
    * @param trendColor - Color to use for the variation text
    * @param volumeData - Array of numerical data points for context
-   * @returns Formatted variation text with color coding and units
+   * @returns Object with text and color for the variation
    */
-  private static formatVariationText(
+  private static formatVariationData(
     firstValue: number | undefined,
     lastValue: number | undefined,
     percentChange: string,
     trendColor: string,
     volumeData: number[]
-  ): string {
+  ): { text: string; color: string } {
     if (
       firstValue !== undefined &&
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
       const changeSign = parseFloat(percentChange) > 0 ? "+" : "";
-      return `<span style="color:${trendColor};" class="workout-charts-trend-variation">${
-        percentChange === "Infinity"
-          ? "Aumento signif."
-          : changeSign + percentChange + "%"
-      }</span> (da ${firstValue.toFixed(1)} kg a ${lastValue.toFixed(1)} kg)`;
+      return {
+        text:
+          percentChange === "Infinity"
+            ? "Aumento signif."
+            : changeSign + percentChange + "%",
+        color: trendColor,
+      };
     } else if (firstValue !== undefined && volumeData.length === 1) {
-      return `(Volume: ${firstValue.toFixed(1)} kg)`;
+      return { text: `Volume: ${firstValue.toFixed(1)} kg`, color: "" };
     }
-    return "N/A";
+    return { text: "N/A", color: "" };
   }
 }

@@ -93,38 +93,31 @@ export class TargetSectionWithAutocomplete {
       exerciseContainer.className = showExercise
         ? "workout-charts-form-group target-exercise"
         : "workout-charts-form-group target-exercise display-none";
-      exerciseContainer.style.display = showExercise ? "" : "none";
 
       const showWorkout = isWorkout || isCombined;
       workoutContainer.className = showWorkout
         ? "workout-charts-form-group target-workout"
         : "workout-charts-form-group target-workout display-none";
-      workoutContainer.style.display = showWorkout ? "" : "none";
 
       const showCurrentWorkout = isWorkout || isCombined;
       currentWorkoutContainer.className = showCurrentWorkout
         ? "workout-charts-checkbox-group target-current-workout"
         : "workout-charts-checkbox-group target-current-workout display-none";
-      currentWorkoutContainer.style.display = showCurrentWorkout ? "" : "none";
 
       const showFileInfo = isWorkout || isCombined;
       currentFileInfo.className = showFileInfo
         ? "current-file-info target-current-file-info"
         : "current-file-info target-current-file-info display-none";
-      currentFileInfo.style.display = showFileInfo ? "" : "none";
 
       // Force visibility for combined mode - additional check
       if (isCombined) {
         setTimeout(() => {
-          workoutContainer.style.display = "";
-          workoutContainer.style.visibility = "visible";
-          workoutContainer.style.opacity = "1";
-          currentWorkoutContainer.style.display = "";
-          currentWorkoutContainer.style.visibility = "visible";
-          currentWorkoutContainer.style.opacity = "1";
-          currentFileInfo.style.display = "";
-          currentFileInfo.style.visibility = "visible";
-          currentFileInfo.style.opacity = "1";
+          workoutContainer.classList.add("modal-field-visible");
+          workoutContainer.classList.remove("modal-field-hidden");
+          currentWorkoutContainer.classList.add("modal-field-visible");
+          currentWorkoutContainer.classList.remove("modal-field-hidden");
+          currentFileInfo.classList.add("modal-field-visible");
+          currentFileInfo.classList.remove("modal-field-hidden");
         }, 100);
       }
     };

@@ -22,20 +22,36 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     const csvInfo = containerEl.createEl("div", {
       cls: "setting-item-info",
     });
-    csvInfo.innerHTML = `
-      <div style="
+
+    const infoDiv = csvInfo.createEl("div", {
+      cls: "csv-mode-info",
+    });
+    infoDiv.setAttribute(
+      "style",
+      `
         background: var(--background-secondary);
         border: 1px solid var(--background-modifier-border);
         border-radius: 6px;
         padding: 12px;
         margin-bottom: 20px;
-      ">
-        <h4 style="margin: 0 0 8px 0; color: var(--interactive-accent);">📊 CSV Mode</h4>
-        <p style="margin: 0; font-size: 14px; color: var(--text-muted);">
-          All workout data is stored in a single CSV file for better performance and easier management.
-        </p>
-      </div>
-    `;
+    `
+    );
+
+    const title = infoDiv.createEl("h4", {
+      text: "📊 CSV Mode",
+    });
+    title.setAttribute(
+      "style",
+      "margin: 0 0 8px 0; color: var(--interactive-accent);"
+    );
+
+    const description = infoDiv.createEl("p", {
+      text: "All workout data is stored in a single CSV file for better performance and easier management.",
+    });
+    description.setAttribute(
+      "style",
+      "margin: 0; font-size: 14px; color: var(--text-muted);"
+    );
 
     new Setting(containerEl)
       .setName("CSV Log File Path")

@@ -321,13 +321,17 @@ export class EmbeddedTimerView extends BaseView {
       this.state.timerType === "countdown" &&
       this.state.elapsedTime >= this.state.duration * 1000
     ) {
-      this.state.timerDisplay.innerHTML = `
-        <span class="workout-timer-complete">✓</span>
-      `;
+      this.state.timerDisplay.empty();
+      const completeSpan = this.state.timerDisplay.createEl("span", {
+        cls: "workout-timer-complete",
+        text: "✓",
+      });
     } else {
-      this.state.timerDisplay.innerHTML = `
-        <span class="workout-timer-time-display">${displayTime}</span>
-      `;
+      this.state.timerDisplay.empty();
+      const timeSpan = this.state.timerDisplay.createEl("span", {
+        cls: "workout-timer-time-display",
+        text: displayTime,
+      });
     }
 
     // Debug logging for timer updates

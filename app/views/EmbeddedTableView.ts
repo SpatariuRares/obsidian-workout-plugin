@@ -141,7 +141,7 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { headers, rows, totalRows, filterResult, params } = tableData;
 
-    container.innerHTML = "";
+    container.empty();
 
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
@@ -218,23 +218,13 @@ export class EmbeddedTableView extends BaseView {
       cls: "csv-mode-indicator",
     });
 
-    indicatorDiv.innerHTML = `
-      <div style="
-        background: var(--background-secondary);
-        border: 1px solid var(--background-modifier-border);
-        border-radius: 4px;
-        padding: 8px 12px;
-        margin-bottom: 15px;
-        font-size: 12px;
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      ">
-        <span style="color: var(--interactive-accent);">📊</span>
-        <span>CSV Mode: Dati caricati da ${this.plugin.settings.csvLogFilePath}</span>
-      </div>
-    `;
+    const span1 = indicatorDiv.createEl("span", {
+      cls: "csv-mode-indicator-icon",
+    });
+    span1.textContent = "📊";
+
+    const span2 = indicatorDiv.createEl("span");
+    span2.textContent = `CSV Mode: Dati caricati da ${this.plugin.settings.csvLogFilePath}`;
   }
 
   private renderTableFooter(
@@ -269,7 +259,7 @@ export class EmbeddedTableView extends BaseView {
       filterResult.filterMethodUsed
     }). Visualizzati max ${params.limit || 50}. [CSV Mode]`;
 
-    footerDiv.innerHTML = footerText;
+    footerDiv.textContent = footerText;
   }
 
   public async refreshTable(): Promise<void> {

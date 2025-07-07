@@ -19,7 +19,7 @@ export class UIComponents {
     const loadingDiv = container.createEl("div", {
       cls: "workout-charts-loading",
     });
-    loadingDiv.innerHTML = "⏳ Caricamento dati...";
+    loadingDiv.textContent = "⏳ Caricamento dati...";
     return loadingDiv;
   }
 
@@ -45,7 +45,8 @@ export class UIComponents {
     };
 
     const icon = icons[type] || icons.info;
-    infoDiv.innerHTML = `<strong>${icon}</strong> ${message}`;
+    const strongEl = infoDiv.createEl("strong", { text: icon });
+    infoDiv.append(" ", message);
   }
 
   /**
@@ -54,11 +55,10 @@ export class UIComponents {
    * @param message - The error message text to display
    */
   static renderErrorMessage(container: HTMLElement, message: string): void {
-    container.innerHTML = `
-      <div class="workout-chart-error">
-        ❌ Errore durante la creazione del grafico: ${message}
-      </div>
-    `;
+    const errorDiv = container.createEl("div", {
+      cls: "workout-chart-error",
+    });
+    errorDiv.textContent = `❌ Errore durante la creazione del grafico: ${message}`;
   }
 
   /**
@@ -66,13 +66,22 @@ export class UIComponents {
    * @param container - The HTML element to render the message in
    */
   static renderNoDataMessage(container: HTMLElement): void {
-    container.innerHTML = `
-      <div class="workout-log-no-data">
-        <p><strong>Nessun dato trovato nel file CSV</strong></p>
-        <p>Il file CSV non esiste o è vuoto.</p>
-        <p>Crea il tuo primo log di allenamento usando il comando "Create Workout Log".</p>
-      </div>
-    `;
+    const noDataDiv = container.createEl("div", {
+      cls: "workout-log-no-data",
+    });
+
+    const p1 = noDataDiv.createEl("p");
+    const strong1 = p1.createEl("strong", {
+      text: "Nessun dato trovato nel file CSV",
+    });
+
+    const p2 = noDataDiv.createEl("p", {
+      text: "Il file CSV non esiste o è vuoto.",
+    });
+
+    const p3 = noDataDiv.createEl("p", {
+      text: 'Crea il tuo primo log di allenamento usando il comando "Create Workout Log".',
+    });
   }
 
   /**
@@ -86,18 +95,32 @@ export class UIComponents {
     csvFilePath: string,
     plugin: WorkoutChartsPluginInterface
   ): void {
-    container.innerHTML = `
-      <div class="workout-log-no-data">
-        <p><strong>📊 Nessun dato trovato nel file CSV</strong></p>
-        <p><strong>File:</strong> <code>${csvFilePath}</code></p>
-        <p>Il file CSV non esiste o è vuoto. Crea il tuo primo log di allenamento per iniziare a tracciare i tuoi progressi.</p>
-        <div style="margin-top: 15px;">
-          <button class="add-log-button" id="create-first-log-btn">
-            ➕ Crea Primo Log
-          </button>
-        </div>
-      </div>
-    `;
+    const noDataDiv = container.createEl("div", {
+      cls: "workout-log-no-data",
+    });
+
+    const p1 = noDataDiv.createEl("p");
+    const strong1 = p1.createEl("strong", {
+      text: "📊 Nessun dato trovato nel file CSV",
+    });
+
+    const p2 = noDataDiv.createEl("p");
+    const strong2 = p2.createEl("strong", { text: "File: " });
+    const codeEl = p2.createEl("code", { text: csvFilePath });
+
+    const p3 = noDataDiv.createEl("p", {
+      text: "Il file CSV non esiste o è vuoto. Crea il tuo primo log di allenamento per iniziare a tracciare i tuoi progressi.",
+    });
+
+    const buttonDiv = noDataDiv.createEl("div", {
+      cls: "workout-charts-button-container",
+    });
+
+    const createButton = buttonDiv.createEl("button", {
+      text: "➕ Crea Primo Log",
+      cls: "add-log-button",
+    });
+    createButton.id = "create-first-log-btn";
 
     // Add event listener to the button
     const button = container.querySelector(
@@ -135,11 +158,11 @@ export class UIComponents {
     exercise: string,
     logData: WorkoutLogData[]
   ): void {
-    container.innerHTML = `
-      <div class="workout-log-no-match">
-        Nessun dato trovato per l'esercizio: <strong>${exercise}</strong>
-      </div>
-    `;
+    const noMatchDiv = container.createEl("div", {
+      cls: "workout-log-no-match",
+    });
+    noMatchDiv.textContent = "Nessun dato trovato per l'esercizio: ";
+    const strongEl = noMatchDiv.createEl("strong", { text: exercise });
   }
 
   /**
@@ -158,12 +181,14 @@ export class UIComponents {
     const debugInfo = container.createEl("div", {
       cls: "workout-charts-debug",
     });
-    debugInfo.innerHTML = `
-      <strong>Debug Info:</strong><br>
-      Metodo Filtro: ${filterMethod}<br>
-      Punti Dati: ${data.length}<br>
-      Tipo Grafico: ${chartType}
-    `;
+
+    const strongEl = debugInfo.createEl("strong", { text: "Debug Info:" });
+    debugInfo.createEl("br");
+    debugInfo.append(`Metodo Filtro: ${filterMethod}`);
+    debugInfo.createEl("br");
+    debugInfo.append(`Punti Dati: ${data.length}`);
+    debugInfo.createEl("br");
+    debugInfo.append(`Tipo Grafico: ${chartType}`);
   }
 
   /**
@@ -197,7 +222,7 @@ export class UIComponents {
     }
 
     infoFooterText += `. (Metodo ricerca: ${filterResult.filterMethodUsed})`;
-    infoFooterDiv.innerHTML = infoFooterText;
+    infoFooterDiv.textContent = infoFooterText;
   }
 
   /**
@@ -226,7 +251,7 @@ export class UIComponents {
     const infoDiv = tableDiv.createEl("div", {
       cls: "workout-charts-footer",
     });
-    infoDiv.innerHTML =
+    infoDiv.textContent =
       "📊 Tabella di fallback (Plugin Charts non disponibile o errore)";
   }
 

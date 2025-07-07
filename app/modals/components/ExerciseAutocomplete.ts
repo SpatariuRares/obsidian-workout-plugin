@@ -86,7 +86,7 @@ export class ExerciseAutocomplete {
       );
 
       if (matchingExercises.length > 0) {
-        autocompleteContainer.innerHTML = "";
+        autocompleteContainer.empty();
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-visible";
 

@@ -1,35 +1,31 @@
-import { WorkoutLogData } from "app/types/WorkoutLogData";
-import { EmbeddedTableParams, TableData, TableRow } from "./types";
-import WorkoutChartsPlugin from "main";
 import { Notice } from "obsidian";
+import { TableRow, EmbeddedTableParams } from "./types";
+import { WorkoutLogData } from "../types/WorkoutLogData";
+import { WorkoutChartsPluginInterface } from "./types";
 
-/**
- * Handles the rendering of workout log data tables.
- * Creates HTML tables with proper styling, row grouping, and interactive features
- * for displaying workout log entries.
- */
 export class TableRenderer {
   /**
-   * Creates a container element for the table with proper styling.
-   * @param contentDiv - The parent HTML element to append the table container to
-   * @returns The created table container element
+   * Creates a container for the table
+   * @param contentDiv - The parent element to create the container in
+   * @returns The table container element
    */
   static createTableContainer(contentDiv: HTMLElement): HTMLElement {
     const tableContainer = contentDiv.createEl("div", {
       cls: "workout-table-container",
     });
+    tableContainer.style.overflowX = "auto";
     return tableContainer;
   }
 
   /**
-   * Renders a workout log table with the provided data.
-   * @param tableContainer - The container element to render the table in
+   * Renders a table with the provided data
+   * @param tableContainer - The container to render the table in
    * @param headers - Array of column headers
-   * @param rows - Array of data rows with date grouping info
-   * @param params - Table parameters for configuration
-   * @param logs - Original log objects for file opening functionality
-   * @param plugin - Plugin instance for file operations
-   * @returns True if table was successfully rendered, false otherwise
+   * @param rows - Array of table rows
+   * @param params - Table parameters
+   * @param logs - Original log data objects
+   * @param plugin - Plugin instance for operations
+   * @returns True if rendering was successful, false otherwise
    */
   static renderTable(
     tableContainer: HTMLElement,
@@ -37,7 +33,7 @@ export class TableRenderer {
     rows: TableRow[],
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
-    plugin?: WorkoutChartsPlugin // pass the plugin for file opening
+    plugin?: WorkoutChartsPluginInterface // pass the plugin for file opening
   ): boolean {
     try {
       const fragment = document.createDocumentFragment();
@@ -90,7 +86,7 @@ export class TableRenderer {
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
-    plugin?: any
+    plugin?: WorkoutChartsPluginInterface
   ): void {
     try {
       if (rows.length === 0) return;
@@ -160,8 +156,8 @@ export class TableRenderer {
    */
   private static renderActionButtons(
     td: HTMLElement,
-    originalLog: any,
-    plugin?: WorkoutChartsPlugin
+    originalLog: WorkoutLogData | undefined,
+    plugin?: WorkoutChartsPluginInterface
   ): void {
     if (!originalLog) {
       return;
@@ -197,11 +193,8 @@ export class TableRenderer {
       if (plugin) {
         // Open EditLogModal with the original log data
         const { EditLogModal } = await import("../modals/EditLogModal");
-        const tableView = plugin.embeddedTableView;
         const modal = new EditLogModal(plugin.app, plugin, originalLog, () => {
-          if (tableView && typeof tableView.refreshTable === "function") {
-            tableView.refreshTable();
-          }
+          plugin.triggerWorkoutLogRefresh();
         });
         modal.open();
       }
@@ -219,10 +212,7 @@ export class TableRenderer {
           await plugin.deleteWorkoutLogEntry(originalLog);
           new Notice("Log entry deleted successfully!");
           // Refresh the table
-          const tableView = plugin.embeddedTableView;
-          if (tableView && typeof tableView.refreshTable === "function") {
-            tableView.refreshTable();
-          }
+          plugin.triggerWorkoutLogRefresh();
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : String(error);

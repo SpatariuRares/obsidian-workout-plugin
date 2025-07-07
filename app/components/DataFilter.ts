@@ -7,6 +7,8 @@ import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
   filterLogDataByExercise,
+  MatchResult,
+  ExerciseMatch,
 } from "../utils/utils";
 import { WorkoutLogData } from "../types/WorkoutLogData";
 
@@ -44,16 +46,6 @@ export class DataFilter {
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
 
-    if (debugMode) {
-      console.log("DataFilter: Starting filtering process", {
-        totalData: logData.length,
-        hasExercise,
-        hasWorkout,
-        exercise: params.exercise,
-        workout: params.workout || params.workoutPath,
-      });
-    }
-
     if (hasExercise && hasWorkout) {
       // For combined filtering, filter by workout first (usually more restrictive)
       const workoutResult = this.filterByWorkout(logData, params);
@@ -87,19 +79,6 @@ export class DataFilter {
       filteredData = result.filteredData;
       filterMethodUsed = result.filterMethodUsed;
       titlePrefix = result.titlePrefix;
-    } else {
-      if (debugMode) {
-        console.log("DataFilter: No filters applied, returning all data");
-      }
-    }
-
-    if (debugMode) {
-      console.log("DataFilter: Filtering completed", {
-        originalCount: logData.length,
-        filteredCount: filteredData.length,
-        filterMethodUsed,
-        titlePrefix,
-      });
     }
 
     return { filteredData, filterMethodUsed, titlePrefix };
@@ -216,8 +195,8 @@ export class DataFilter {
   private static getFilterMethodDescription(
     bestStrategy: string,
     bestPathKey: string,
-    matchesResult: any,
-    bestFileMatchesList: any[]
+    matchesResult: MatchResult,
+    bestFileMatchesList: ExerciseMatch[]
   ): string {
     if (bestStrategy === "field") {
       const bestPathScore =

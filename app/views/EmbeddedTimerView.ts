@@ -372,7 +372,8 @@ export class EmbeddedTimerView extends BaseView {
   private playSound(): void {
     try {
       const audioContext = new (window.AudioContext ||
-        (window as any).webkitAudioContext)();
+        (window as typeof window & { webkitAudioContext: typeof AudioContext })
+          .webkitAudioContext)();
 
       // Create a more pleasant notification sound with multiple tones
       const playTone = (
@@ -409,10 +410,7 @@ export class EmbeddedTimerView extends BaseView {
       playTone(783.99, currentTime + 0.5, 0.3); // G5
       playTone(659.25, currentTime + 0.65, 0.3); // E5
       playTone(523.25, currentTime + 0.8, 0.4); // C5 (final note)
-    } catch (error) {
-      // Fallback to console beep
-      console.log("\x07");
-    }
+    } catch (error) {}
   }
 
   // Public methods for external control

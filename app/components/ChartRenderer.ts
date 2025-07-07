@@ -1,6 +1,7 @@
-import { Chart } from "chart.js/auto";
-import { EmbeddedChartParams, ChartConfig, TrendIndicators } from "./types";
+import { Chart, ChartConfiguration } from "chart.js/auto";
+import { EmbeddedChartParams, ChartDataset } from "./types";
 import { calculateTrendLine } from "../utils/utils";
+import { TrendIndicators } from "./types";
 
 /**
  * Handles the rendering of workout data charts using Chart.js.
@@ -8,7 +9,10 @@ import { calculateTrendLine } from "../utils/utils";
  * and rendering interactive charts with trend lines and styling.
  */
 export class ChartRenderer {
-  // Dynamic color palette that adapts to Obsidian theme
+  /**
+   * Gets the color scheme for charts
+   * @returns Color scheme object
+   */
   private static getChartColors() {
     // Get computed styles to access Obsidian CSS variables
     const style = getComputedStyle(document.documentElement);
@@ -85,7 +89,7 @@ export class ChartRenderer {
    */
   static createChartContainer(contentDiv: HTMLElement): HTMLElement {
     const chartContainer = contentDiv.createEl("div", {
-      cls: "embedded-chart-container",
+      cls: "workout-charts-container",
     });
     return chartContainer;
   }
@@ -97,19 +101,18 @@ export class ChartRenderer {
    */
   static createCanvas(chartContainer: HTMLElement): HTMLCanvasElement {
     const canvas = chartContainer.createEl("canvas", {
-      cls: "embedded-chart-canvas",
+      cls: "workout-charts-canvas",
     });
     return canvas;
   }
 
   /**
-   * Adds a trend line dataset to the existing chart datasets.
-   * Calculates the trend line using linear regression and adds it as a dashed line.
-   * @param datasets - Array of chart datasets to add the trend line to
-   * @param trendIndicators - Trend indicators containing slope and intercept data
+   * Adds a trend line to the datasets
+   * @param datasets - Array of chart datasets
+   * @param trendIndicators - Trend indicators for styling
    */
   static addTrendLineToDatasets(
-    datasets: any[],
+    datasets: ChartDataset[],
     trendIndicators: TrendIndicators
   ): void {
     const mainDataset = datasets[0];
@@ -118,7 +121,7 @@ export class ChartRenderer {
         mainDataset.data as number[]
       );
       const trendData = mainDataset.data.map(
-        (_: any, index: number) => slope * index + intercept
+        (_: number, index: number) => slope * index + intercept
       );
 
       const colors = this.getChartColors();
@@ -165,10 +168,10 @@ export class ChartRenderer {
    */
   static createChartConfig(
     labels: string[],
-    datasets: any[],
+    datasets: ChartDataset[],
     chartType: string,
     params: EmbeddedChartParams
-  ): ChartConfig {
+  ): ChartConfiguration {
     const title =
       params.title ||
       `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
@@ -245,7 +248,10 @@ export class ChartRenderer {
             padding: 12,
             displayColors: true,
             callbacks: {
-              label: (context: any) => {
+              label: (context: {
+                parsed: { y: number };
+                dataset: { label: string };
+              }) => {
                 const value = context.parsed.y;
                 const unit =
                   chartType === "volume" || chartType === "weight"
@@ -308,12 +314,6 @@ export class ChartRenderer {
           axis: "x" as const,
           intersect: false,
         },
-        elements: {
-          point: {
-            hoverRadius: 6,
-            radius: 4,
-          },
-        },
       },
     };
   }
@@ -329,16 +329,9 @@ export class ChartRenderer {
   static renderChart(
     chartContainer: HTMLElement,
     labels: string[],
-    datasets: any[],
+    datasets: ChartDataset[],
     params: EmbeddedChartParams
   ): boolean {
-    console.log("ChartRenderer.renderChart called with:", {
-      labels,
-      datasets,
-      params,
-    });
-
-    // Create chart (hidden on mobile, shown on desktop)
     const canvas = this.createCanvas(chartContainer);
     const chartConfig = this.createChartConfig(
       labels,

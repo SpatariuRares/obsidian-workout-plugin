@@ -1,35 +1,30 @@
 // Main plugin file - Workout Charts for Obsidian
-import {
-  App,
-  Notice,
-  Plugin,
-  TFile,
-  MarkdownView,
-  normalizePath,
-} from "obsidian";
-
-// Import types and utilities
+import { Plugin, TFile, MarkdownView, Notice } from "obsidian";
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
   WorkoutLogData,
   CSVWorkoutLogEntry,
   parseCSVLogFile,
-  convertFromCSVEntry,
   entriesToCSVContent,
+  convertFromCSVEntry,
 } from "./app/types/WorkoutLogData";
-
-// Import views, modals, and settings
+import { WorkoutChartsSettingTab } from "./app/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
 import { CreateLogModal } from "./app/modals/CreateLogModal";
-import { WorkoutChartsSettingTab } from "./app/settings/WorkoutChartsSettings";
 import { InsertChartModal } from "./app/modals/InsertChartModal";
 import { InsertTableModal } from "./app/modals/InsertTableModal";
 import { InsertTimerModal } from "./app/modals/InsertTimerModal";
 import { CreateExercisePageModal } from "./app/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "./app/modals/CreateExerciseSectionModal";
+import {
+  CodeBlockContext,
+  EmbeddedChartParams,
+  EmbeddedTableParams,
+  EmbeddedTimerParams,
+} from "./app/components/types";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -174,24 +169,18 @@ export default class WorkoutChartsPlugin extends Plugin {
     const logData: WorkoutLogData[] = [];
 
     try {
-      const csvFile = this.app.vault.getAbstractFileByPath(
+      const abstractFile = this.app.vault.getAbstractFileByPath(
         this.settings.csvLogFilePath
-      ) as TFile;
+      );
 
-      if (!csvFile) {
-        if (this.settings.debugMode) {
-          console.log("CSV log file not found:", this.settings.csvLogFilePath);
-        }
-        // Return empty array - the UI will handle the message
+      if (!abstractFile || !(abstractFile instanceof TFile)) {
         return logData;
       }
 
+      const csvFile = abstractFile;
+
       const content = await this.app.vault.cachedRead(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
-
-      if (this.settings.debugMode) {
-        console.log(`Parsed ${csvEntries.length} entries from CSV file`);
-      }
 
       // Convert CSV entries to WorkoutLogData format
       csvEntries.forEach((entry) => {
@@ -245,15 +234,6 @@ export default class WorkoutChartsPlugin extends Plugin {
       exactMatch?: boolean;
     }
   ): boolean {
-    if (this.settings.debugMode) {
-      console.log("matchesEarlyFilter: Checking log entry", {
-        logExercise: log.exercise,
-        logOrigine: log.origine,
-        logWorkout: log.workout,
-        filterParams,
-      });
-    }
-
     // Check exercise filter
     if (filterParams.exercise) {
       const exerciseName = filterParams.exercise
@@ -267,26 +247,14 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       if (filterParams.exactMatch) {
         const exerciseMatch = logExercise === exerciseName;
-        if (this.settings.debugMode) {
-          console.log("Exercise exact match:", {
-            logExercise,
-            exerciseName,
-            match: exerciseMatch,
-          });
-        }
+
         if (!exerciseMatch) {
           return false;
         }
       } else {
         // Simple includes check for early filtering
         const exerciseMatch = logExercise.includes(exerciseName);
-        if (this.settings.debugMode) {
-          console.log("Exercise includes match:", {
-            logExercise,
-            exerciseName,
-            match: exerciseMatch,
-          });
-        }
+
         if (!exerciseMatch) {
           return false;
         }
@@ -307,33 +275,17 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       if (filterParams.exactMatch) {
         const workoutMatch = logOrigine === workoutName;
-        if (this.settings.debugMode) {
-          console.log("Workout exact match:", {
-            logOrigine,
-            workoutName,
-            match: workoutMatch,
-          });
-        }
+
         if (!workoutMatch) {
           return false;
         }
       } else {
         const workoutMatch = logOrigine.includes(workoutName);
-        if (this.settings.debugMode) {
-          console.log("Workout includes match:", {
-            logOrigine,
-            workoutName,
-            match: workoutMatch,
-          });
-        }
+
         if (!workoutMatch) {
           return false;
         }
       }
-    }
-
-    if (this.settings.debugMode) {
-      console.log("matchesEarlyFilter: Entry matches all filters");
     }
 
     return true;
@@ -345,19 +297,38 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   // Handle workout chart code blocks
-  private async handleWorkoutChart(source: string, el: HTMLElement, ctx: any) {
+  private async handleWorkoutChart(
+    source: string,
+    el: HTMLElement,
+    ctx: CodeBlockContext
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
-      const logData = await this.getWorkoutLogData();
 
-      // Create chart container
-      const chartContainer = el.createEl("div", {
-        cls: "workout-chart-embed",
-      });
-      chartContainer.style.width = "100%";
+      // Use early filtering if we have specific parameters
+      let logData: WorkoutLogData[];
+      if (params.exercise || params.workout) {
+        logData = await this.getWorkoutLogData({
+          exercise: params.exercise as string,
+          workout: params.workout as string,
+          exactMatch: params.exactMatch as boolean,
+        });
+      } else {
+        logData = await this.getWorkoutLogData();
+      }
 
-      // Create chart using Chart.js
-      await this.createEmbeddedChart(chartContainer, logData, params);
+      if (logData.length === 0) {
+        const { UIComponents } = await import("./app/components");
+        UIComponents.renderCSVNoDataMessage(
+          el,
+          this.settings.csvLogFilePath,
+          this
+        );
+        return;
+      }
+
+      // Create chart - filtering is now handled by the DataFilter class
+      await this.createEmbeddedChart(el, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
       const errorMessage =
@@ -369,7 +340,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   // Handle workout log code blocks
-  private async handleWorkoutLog(source: string, el: HTMLElement, ctx: any) {
+  private async handleWorkoutLog(
+    source: string,
+    el: HTMLElement,
+    ctx: CodeBlockContext
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -408,7 +383,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   // Handle workout timer code blocks
-  private async handleWorkoutTimer(source: string, el: HTMLElement, ctx: any) {
+  private async handleWorkoutTimer(
+    source: string,
+    el: HTMLElement,
+    ctx: CodeBlockContext
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
       await this.createEmbeddedTimer(el, params);
@@ -426,29 +405,29 @@ export default class WorkoutChartsPlugin extends Plugin {
   private async createEmbeddedChart(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: Record<string, unknown>
+    params: EmbeddedChartParams
   ) {
-    await this.embeddedChartView.createChart(container, data, params as any);
+    await this.embeddedChartView.createChart(container, data, params);
   }
 
   // Create embedded table using the dedicated view
   private async createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: Record<string, unknown>
+    params: EmbeddedTableParams
   ) {
-    await this.embeddedTableView.createTable(container, data, params as any);
+    await this.embeddedTableView.createTable(container, data, params);
   }
 
   // Create embedded timer using the dedicated view
   private async createEmbeddedTimer(
     container: HTMLElement,
-    params: Record<string, unknown>
+    params: EmbeddedTimerParams
   ) {
     const timerId = `timer-${Date.now()}-${Math.random()}`;
     const timerView = new EmbeddedTimerView(this);
     this.activeTimers.set(timerId, timerView);
-    await timerView.createTimer(container, params as any);
+    await timerView.createTimer(container, params);
   }
 
   // Parse code block parameters
@@ -498,15 +477,17 @@ export default class WorkoutChartsPlugin extends Plugin {
     entry: Omit<CSVWorkoutLogEntry, "timestamp">
   ): Promise<void> {
     try {
-      const csvFile = this.app.vault.getAbstractFileByPath(
+      const abstractFile = this.app.vault.getAbstractFileByPath(
         this.settings.csvLogFilePath
-      ) as TFile;
+      );
 
-      if (!csvFile) {
+      if (!abstractFile || !(abstractFile instanceof TFile)) {
         // Create the file if it doesn't exist
         await this.createCSVLogFile();
         return this.addWorkoutLogEntry(entry); // Retry
       }
+
+      const csvFile = abstractFile;
 
       const content = await this.app.vault.cachedRead(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
@@ -527,10 +508,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       // Clear cache
       this.clearLogDataCache();
-
-      if (this.settings.debugMode) {
-        console.log("Added new workout log entry:", newEntry);
-      }
     } catch (error) {
       console.error("Error adding workout log entry:", error);
       throw error;
@@ -545,13 +522,15 @@ export default class WorkoutChartsPlugin extends Plugin {
     updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">
   ): Promise<void> {
     try {
-      const csvFile = this.app.vault.getAbstractFileByPath(
+      const abstractFile = this.app.vault.getAbstractFileByPath(
         this.settings.csvLogFilePath
-      ) as TFile;
+      );
 
-      if (!csvFile) {
+      if (!abstractFile || !(abstractFile instanceof TFile)) {
         throw new Error("CSV log file not found");
       }
+
+      const csvFile = abstractFile;
 
       const content = await this.app.vault.cachedRead(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
@@ -573,7 +552,6 @@ export default class WorkoutChartsPlugin extends Plugin {
         });
 
         if (fallbackIndex !== -1) {
-          console.log("Found entry using fallback matching");
           entryIndex = fallbackIndex;
         }
       }
@@ -598,13 +576,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       // Clear cache
       this.clearLogDataCache();
-
-      if (this.settings.debugMode) {
-        console.log("Updated workout log entry:", {
-          original: originalLog,
-          updated: updatedEntryWithTimestamp,
-        });
-      }
     } catch (error) {
       console.error("Error updating workout log entry:", error);
       throw error;
@@ -618,13 +589,15 @@ export default class WorkoutChartsPlugin extends Plugin {
     logToDelete: WorkoutLogData
   ): Promise<void> {
     try {
-      const csvFile = this.app.vault.getAbstractFileByPath(
+      const abstractFile = this.app.vault.getAbstractFileByPath(
         this.settings.csvLogFilePath
-      ) as TFile;
+      );
 
-      if (!csvFile) {
+      if (!abstractFile || !(abstractFile instanceof TFile)) {
         throw new Error("CSV log file not found");
       }
+
+      const csvFile = abstractFile;
 
       const content = await this.app.vault.cachedRead(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
@@ -661,10 +634,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       // Clear cache
       this.clearLogDataCache();
-
-      if (this.settings.debugMode) {
-        console.log("Deleted workout log entry:", logToDelete);
-      }
     } catch (error) {
       console.error("Error deleting workout log entry:", error);
       throw error;
@@ -684,14 +653,16 @@ export default class WorkoutChartsPlugin extends Plugin {
     // Use a more efficient approach
     const leaves = this.app.workspace.getLeavesOfType("markdown");
     leaves.forEach((leaf) => {
-      const view = leaf.view as any;
-      if (view?.editor?.cm) {
-        // Trigger a refresh by updating the view
-        view.editor.cm.refresh();
+      if (leaf.view instanceof MarkdownView) {
+        const view = leaf.view;
+        if (view?.editor) {
+          // Trigger a refresh by updating the view
+          view.editor.refresh();
 
-        // Also trigger a file change event to force code block processors to re-run
-        if (view.file) {
-          this.app.vault.trigger("raw", view.file);
+          // Also trigger a file change event to force code block processors to re-run
+          if (view.file) {
+            this.app.vault.trigger("raw", view.file);
+          }
         }
       }
     });

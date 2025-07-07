@@ -105,7 +105,11 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams
   ): Promise<WorkoutLogData[]> {
     // In CSV mode, we can apply more efficient filtering
-    const filterOptions: any = {};
+    const filterOptions: {
+      exercise?: string;
+      workout?: string;
+      exactMatch?: boolean;
+    } = {};
 
     if (params.exercise) {
       filterOptions.exercise = params.exercise;

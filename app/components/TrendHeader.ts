@@ -18,7 +18,7 @@ export class TrendHeader {
     volumeData: number[]
   ): void {
     const trendHeader = container.createEl("div", {
-      cls: "embedded-chart-trend-header",
+      cls: "workout-charts-trend-header",
     });
 
     const { firstValue, lastValue, percentChange } =
@@ -32,10 +32,10 @@ export class TrendHeader {
     );
 
     trendHeader.innerHTML = `
-      <h3 style="color:${trendIndicators.trendColor};" class="embedded-chart-trend-header-h3">
+      <h3 style="color:${trendIndicators.trendColor};" class="workout-charts-trend-header-h3">
         ${trendIndicators.trendIcon} Trend Volume: <strong>${trendIndicators.trendDirection}</strong>
       </h3>
-      <p class="embedded-chart-trend-header-p">
+      <p class="workout-charts-trend-header-p">
         Variazione Complessiva: ${variationText}
       </p>
     `;
@@ -90,7 +90,7 @@ export class TrendHeader {
       volumeData.length >= 2
     ) {
       const changeSign = parseFloat(percentChange) > 0 ? "+" : "";
-      return `<span style="color:${trendColor};" class="embedded-chart-trend-variation">${
+      return `<span style="color:${trendColor};" class="workout-charts-trend-variation">${
         percentChange === "Infinity"
           ? "Aumento signif."
           : changeSign + percentChange + "%"

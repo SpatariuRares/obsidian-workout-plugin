@@ -50,7 +50,7 @@ export interface TrendIndicators {
 }
 
 export interface FilterResult {
-  filteredData: any[];
+  filteredData: WorkoutLogData[];
   filterMethodUsed: string;
   titlePrefix: string;
 }
@@ -59,7 +59,7 @@ export interface TableRow {
   displayRow: string[];
   originalDate: string;
   dateKey: string;
-  originalLog?: any;
+  originalLog?: WorkoutLogData;
 }
 
 export interface TableData {
@@ -72,18 +72,83 @@ export interface TableData {
 
 export interface ChartData {
   labels: string[];
-  datasets: any[];
+  datasets: ChartDataset[];
   volumeData: number[];
   trendIndicators: TrendIndicators;
   filterResult: FilterResult;
   params: EmbeddedChartParams;
 }
 
-export interface ChartConfig {
-  type: "line";
-  data: {
-    labels: string[];
-    datasets: any[];
-  };
-  options: any;
+export interface ChartDataset {
+  label: string;
+  data: number[];
+  borderColor?: string;
+  backgroundColor?: string;
+  tension?: number;
+  fill?: boolean;
+  pointRadius?: number;
+  pointHoverRadius?: number;
+  borderDash?: number[];
+  borderWidth?: number;
+  pointBackgroundColor?: string;
+  pointBorderColor?: string;
 }
+
+// Common parameter type for all embedded views
+export type EmbeddedViewParams =
+  | EmbeddedChartParams
+  | EmbeddedTableParams
+  | EmbeddedTimerParams;
+
+// Context type for code block handlers
+export interface CodeBlockContext {
+  source: string;
+  el: HTMLElement;
+  [key: string]: unknown;
+}
+
+// Plugin interface for dependency injection
+export interface WorkoutChartsPluginInterface {
+  settings: {
+    debugMode: boolean;
+    csvLogFilePath: string;
+  };
+  app: {
+    vault: {
+      create: (path: string, content: string) => Promise<TFile>;
+      getAbstractFileByPath: (path: string) => TAbstractFile | null;
+      cachedRead: (file: TFile) => Promise<string>;
+      modify: (file: TFile, content: string) => Promise<void>;
+      trigger: (event: string, file: TFile) => void;
+    };
+    workspace: {
+      getActiveViewOfType: (type: any) => any;
+      getLeavesOfType: (type: string) => any[];
+      trigger: (event: string) => void;
+    };
+    keymap: any;
+    scope: any;
+    metadataCache: any;
+    fileManager: any;
+    internalPlugins: any;
+    plugins: any;
+    commands: any;
+    lastEvent: any;
+    loadLocalStorage: (key: string) => string | null;
+    saveLocalStorage: (key: string, value: string) => void;
+  };
+  clearLogDataCache: () => void;
+  addWorkoutLogEntry: (
+    entry: Omit<CSVWorkoutLogEntry, "timestamp">
+  ) => Promise<void>;
+  updateWorkoutLogEntry: (
+    originalLog: WorkoutLogData,
+    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">
+  ) => Promise<void>;
+  deleteWorkoutLogEntry: (logToDelete: WorkoutLogData) => Promise<void>;
+  triggerWorkoutLogRefresh: () => void;
+}
+
+// Import the WorkoutLogData type from the types directory
+import { WorkoutLogData, CSVWorkoutLogEntry } from "../types/WorkoutLogData";
+import { TFile, TAbstractFile } from "obsidian";

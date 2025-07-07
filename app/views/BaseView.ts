@@ -1,6 +1,7 @@
 import { WorkoutLogData } from "../types/WorkoutLogData";
 import type WorkoutChartsPlugin from "../../main";
 import { UIComponents, DataFilter } from "../components";
+import { EmbeddedViewParams } from "../components/types";
 
 /**
  * Base class for all embedded views that provides common functionality
@@ -12,11 +13,11 @@ export abstract class BaseView {
   /**
    * Common debug logging method used across all views
    */
-  protected logDebug(className: string, message: string, data?: any): void {
-    if (this.plugin.settings.debugMode) {
-      console.log(`${className}: ${message}`, data);
-    }
-  }
+  protected logDebug(
+    className: string,
+    message: string,
+    data?: unknown
+  ): void {}
 
   /**
    * Common error handling pattern for all views
@@ -53,7 +54,7 @@ export abstract class BaseView {
    */
   protected handleNoFilteredData(
     container: HTMLElement,
-    params: any,
+    params: EmbeddedViewParams,
     titlePrefix: string,
     logData: WorkoutLogData[],
     viewType: "chart" | "table" | "timer"
@@ -80,8 +81,10 @@ export abstract class BaseView {
 
     const isWorkoutView =
       viewType === "chart"
-        ? (params.chartType || "exercise") === "workout"
-        : !params.exercise;
+        ? ("chartType" in params
+            ? params.chartType || "exercise"
+            : "exercise") === "workout"
+        : !("exercise" in params ? params.exercise : undefined);
 
     if (isWorkoutView) {
       UIComponents.renderInfoMessage(
@@ -90,15 +93,12 @@ export abstract class BaseView {
         "warning"
       );
     } else {
-      UIComponents.renderNoMatchMessage(
-        container,
-        params.exercise || "",
-        logData
-      );
-      if (params.exercise) {
+      const exerciseName = "exercise" in params ? params.exercise || "" : "";
+      UIComponents.renderNoMatchMessage(container, exerciseName, logData);
+      if (exerciseName) {
         UIComponents.createCreateLogButtonForMissingExercise(
           container,
-          params.exercise,
+          exerciseName,
           this.plugin
         );
       }
@@ -117,7 +117,7 @@ export abstract class BaseView {
    */
   protected filterData(
     logData: WorkoutLogData[],
-    params: any,
+    params: EmbeddedViewParams,
     debugMode: boolean
   ) {
     return DataFilter.filterData(logData, params, debugMode);

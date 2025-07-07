@@ -195,13 +195,6 @@ export class ExerciseAutocomplete {
 
       // Extract exercise names from filenames (remove .md extension)
       this.availableExercises = files.map((file) => file.basename).sort();
-
-      if (plugin.settings.debugMode) {
-        console.log(
-          `Loaded ${this.availableExercises.length} exercises from ${exerciseFolderPath}:`,
-          this.availableExercises
-        );
-      }
     } catch (error) {
       console.error("Error loading available exercises:", error);
       this.availableExercises = [];

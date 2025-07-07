@@ -66,23 +66,13 @@ export function parseCSVLogFile(
   debugMode = false
 ): CSVWorkoutLogEntry[] {
   try {
-    if (debugMode) {
-      console.log("=== PARSING CSV FILE ===");
-      console.log(`Content length: ${content.length}`);
-      console.log(`Content preview:`, content.substring(0, 200) + "...");
-    }
-
     const lines = content.split("\n").filter((line) => line.trim());
     if (lines.length === 0) {
-      if (debugMode) console.log("No content found in CSV file");
       return [];
     }
 
     // Parse header
     const header = lines[0].split(",").map((h) => h.trim());
-    if (debugMode) {
-      console.log("CSV Headers:", header);
-    }
 
     const entries: CSVWorkoutLogEntry[] = [];
 
@@ -93,7 +83,6 @@ export function parseCSVLogFile(
 
       const values = parseCSVLine(line);
       if (values.length < 6) {
-        if (debugMode) console.warn(`Skipping invalid line ${i + 1}: ${line}`);
         continue;
       }
 
@@ -112,24 +101,12 @@ export function parseCSVLogFile(
         // Validate required fields
         if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
           entries.push(entry);
-        } else {
-          if (debugMode)
-            console.warn(`Skipping invalid entry at line ${i + 1}:`, entry);
         }
-      } catch (error) {
-        if (debugMode) console.warn(`Error parsing line ${i + 1}:`, error);
-      }
-    }
-
-    if (debugMode) {
-      console.log(`Successfully parsed ${entries.length} entries from CSV`);
+      } catch (error) {}
     }
 
     return entries;
   } catch (error) {
-    if (debugMode) {
-      console.error("Error parsing CSV file:", error);
-    }
     return [];
   }
 }

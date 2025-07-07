@@ -1,6 +1,8 @@
-import { Notice, MarkdownView } from "obsidian";
+import { MarkdownView } from "obsidian";
 import { CreateLogModal } from "../modals/CreateLogModal";
-import { CreateExercisePageModal } from "../modals/CreateExercisePageModal";
+import { WorkoutLogData } from "../types/WorkoutLogData";
+import { FilterResult } from "./types";
+import { WorkoutChartsPluginInterface } from "./types";
 
 /**
  * Provides reusable UI components for the workout charts plugin.
@@ -15,7 +17,7 @@ export class UIComponents {
    */
   static renderLoadingIndicator(container: HTMLElement): HTMLElement {
     const loadingDiv = container.createEl("div", {
-      cls: "embedded-chart-loading",
+      cls: "workout-charts-loading",
     });
     loadingDiv.innerHTML = "⏳ Caricamento dati...";
     return loadingDiv;
@@ -33,7 +35,7 @@ export class UIComponents {
     type: "info" | "warning" | "success" = "info"
   ): void {
     const infoDiv = container.createEl("div", {
-      cls: `embedded-chart-info embedded-chart-info-${type}`,
+      cls: `workout-charts-info workout-charts-info-${type}`,
     });
 
     const icons = {
@@ -74,7 +76,7 @@ export class UIComponents {
   }
 
   /**
-   * Renders a message when CSV file is not found or empty.
+   * Renders a message when no CSV data is found.
    * @param container - The HTML element to render the message in
    * @param csvFilePath - Path to the CSV file
    * @param plugin - Plugin instance for opening the create log modal
@@ -82,7 +84,7 @@ export class UIComponents {
   static renderCSVNoDataMessage(
     container: HTMLElement,
     csvFilePath: string,
-    plugin: any
+    plugin: WorkoutChartsPluginInterface
   ): void {
     container.innerHTML = `
       <div class="workout-log-no-data">
@@ -115,7 +117,6 @@ export class UIComponents {
           undefined, // No specific exercise name for first log
           currentPageLink,
           () => {
-            plugin.onWorkoutLogCreated();
             plugin.triggerWorkoutLogRefresh();
           }
         ).open();
@@ -132,7 +133,7 @@ export class UIComponents {
   static renderNoMatchMessage(
     container: HTMLElement,
     exercise: string,
-    logData: any[]
+    logData: WorkoutLogData[]
   ): void {
     container.innerHTML = `
       <div class="workout-log-no-match">
@@ -150,12 +151,12 @@ export class UIComponents {
    */
   static renderDebugInfo(
     container: HTMLElement,
-    data: any[],
+    data: WorkoutLogData[],
     chartType: string,
     filterMethod: string
   ): void {
     const debugInfo = container.createEl("div", {
-      cls: "embedded-chart-debug",
+      cls: "workout-charts-debug",
     });
     debugInfo.innerHTML = `
       <strong>Debug Info:</strong><br>
@@ -175,7 +176,7 @@ export class UIComponents {
   static renderFooter(
     contentDiv: HTMLElement,
     volumeData: number[],
-    filterResult: any,
+    filterResult: FilterResult,
     chartType: string
   ): void {
     const infoFooterDiv = contentDiv.createEl("div", {
@@ -213,7 +214,7 @@ export class UIComponents {
     title: string
   ): void {
     const tableDiv = container.createEl("div", {
-      cls: "embedded-chart-table-fallback",
+      cls: "workout-charts-table-fallback",
     });
 
     const table = tableDiv.createEl("table");
@@ -275,7 +276,7 @@ export class UIComponents {
     container: HTMLElement,
     exerciseName: string,
     currentPageLink: string,
-    plugin: any,
+    plugin: WorkoutChartsPluginInterface,
     onLogCreated?: () => void
   ): void {
     if (!currentPageLink) {
@@ -312,7 +313,7 @@ export class UIComponents {
   static createCreateLogButtonForMissingExercise(
     container: HTMLElement,
     exerciseName: string,
-    plugin: any
+    plugin: WorkoutChartsPluginInterface
   ): void {
     const buttonContainer = container.createEl("div", {
       cls: "create-log-button-container",
@@ -335,7 +336,6 @@ export class UIComponents {
         exerciseName,
         currentPageLink,
         () => {
-          plugin.onWorkoutLogCreated();
           plugin.triggerWorkoutLogRefresh();
         }
       ).open();

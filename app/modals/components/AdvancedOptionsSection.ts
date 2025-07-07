@@ -80,7 +80,12 @@ export class AdvancedOptionsSection {
     title?: string;
     searchByName?: boolean;
   } {
-    const values: any = {
+    const values: {
+      exactMatch: boolean;
+      debug: boolean;
+      title?: string;
+      searchByName?: boolean;
+    } = {
       exactMatch: elements.exactMatchToggle.checked,
       debug: elements.debugToggle.checked,
     };

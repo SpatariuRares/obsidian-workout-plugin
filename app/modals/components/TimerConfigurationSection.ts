@@ -160,7 +160,16 @@ export class TimerConfigurationSection {
     autoStart: boolean;
     sound: boolean;
   } {
-    const values: any = {
+    const values: {
+      timerType: string;
+      title: string;
+      showControls: boolean;
+      autoStart: boolean;
+      sound: boolean;
+      duration?: number;
+      intervalTime?: number;
+      rounds?: number;
+    } = {
       timerType: elements.timerTypeSelect.value,
       title: elements.titleInput.value.trim(),
       showControls: elements.showControlsToggle.checked,

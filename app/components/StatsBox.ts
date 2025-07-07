@@ -17,7 +17,7 @@ export class StatsBox {
     volumeData: number[],
     chartType: string
   ): void {
-    const statsDiv = container.createEl("div", { cls: "embedded-chart-stats" });
+    const statsDiv = container.createEl("div", { cls: "workout-charts-stats" });
 
     const stats = this.calculateStats(volumeData, labels);
     const recentTrendText = this.calculateRecentTrend(volumeData);

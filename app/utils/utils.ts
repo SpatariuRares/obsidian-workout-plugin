@@ -1,4 +1,9 @@
 import { TFile } from "obsidian";
+import { WorkoutLogData } from "../types/WorkoutLogData";
+import { ChartDataset, EmbeddedViewParams } from "../components/types";
+
+// Constants
+const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
 
 // ===================== UTILITY FUNCTIONS =====================
 
@@ -15,8 +20,6 @@ export interface MatchResult {
   bestStrategy: string;
   bestPathKey: string;
 }
-
-const PATH_MATCH_THRESHOLD = 70;
 
 /**
  * Calculate match score between two strings
@@ -52,7 +55,7 @@ export function getMatchScore(str1: string, str2: string): number {
  * Find exercise matches in log data
  */
 export function findExerciseMatches(
-  logData: any[],
+  logData: WorkoutLogData[],
   exerciseName: string,
   debug: boolean = false
 ): MatchResult {
@@ -80,13 +83,6 @@ export function findExerciseMatches(
     if (exerciseScore > 0) {
       allExercisePathsAndScores.set(exerciseField, exerciseScore);
     }
-  }
-
-  if (debug) {
-    console.log("Exercise matches found:", {
-      fileNameMatches: fileNameMatches.length,
-      exercisePaths: allExercisePathsAndScores.size,
-    });
   }
 
   return {
@@ -181,14 +177,6 @@ export function determineExerciseFilterStrategy(
     }
   }
 
-  if (debug) {
-    console.log("Filter strategy determined:", {
-      strategy: bestStrategy,
-      pathKey: bestPathKey,
-      matchesCount: bestFileMatchesList.length,
-    });
-  }
-
   return { bestStrategy, bestPathKey, bestFileMatchesList };
 }
 
@@ -196,11 +184,11 @@ export function determineExerciseFilterStrategy(
  * Filter log data by exercise using the determined strategy
  */
 export function filterLogDataByExercise(
-  logData: any[],
+  logData: WorkoutLogData[],
   strategy: string,
   pathKey: string,
   fileMatches: ExerciseMatch[]
-): any[] {
+): WorkoutLogData[] {
   if (strategy === "exercise_field_exact") {
     return logData.filter(
       (log) =>
@@ -233,17 +221,11 @@ export function filterLogDataByExercise(
  * Process log data for chart display - Updated to match JS version functionality
  */
 export function processChartData(
-  logData: any[],
+  logData: WorkoutLogData[],
   chartType: "volume" | "weight" | "reps",
   dateRange: number = 30,
   dateFormat: string = "DD/MM/YYYY"
-): { labels: string[]; datasets: any[] } {
-  console.log("processChartData called with:", {
-    logData: logData.length,
-    chartType,
-    dateRange,
-  });
-
+): { labels: string[]; datasets: ChartDataset[] } {
   // Filter by date range
   const cutoffDate = new Date();
   cutoffDate.setDate(cutoffDate.getDate() - dateRange);
@@ -253,108 +235,133 @@ export function processChartData(
     return logDate >= cutoffDate;
   });
 
-  console.log("After date filtering:", {
-    filteredData: filteredData.length,
-    cutoffDate,
-  });
-
   // Sort by date
-  const sortedData = filteredData.sort(
+  filteredData.sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-  // Aggrega usando la data completa (YYYY-MM-DD)
-  const dailyVolumes = new Map<string, number>();
-  for (const log of sortedData) {
-    let volumeValue: number;
-    switch (chartType) {
-      case "volume":
-        volumeValue = log.volume || log.reps * log.weight;
-        break;
-      case "weight":
-        volumeValue = log.weight;
-        break;
-      case "reps":
-        volumeValue = log.reps;
-        break;
-      default:
-        volumeValue = log.volume || log.reps * log.weight;
-    }
-    if (
-      volumeValue === undefined ||
-      volumeValue === null ||
-      isNaN(volumeValue)
-    ) {
-      continue;
-    }
-    const dateKey = formatDate(log.date, "YYYY-MM-DD");
-    dailyVolumes.set(dateKey, (dailyVolumes.get(dateKey) || 0) + volumeValue);
-  }
+  // Group by date and calculate values
+  const dateGroups = new Map<
+    string,
+    { volume: number; weight: number; reps: number; count: number }
+  >();
 
-  // Ordina le chiavi per data completa
-  const sortedKeys = Array.from(dailyVolumes.keys()).sort(
-    (a, b) => new Date(a).getTime() - new Date(b).getTime()
-  );
+  filteredData.forEach((log) => {
+    const dateKey = formatDate(log.date, dateFormat);
+    const existing = dateGroups.get(dateKey) || {
+      volume: 0,
+      weight: 0,
+      reps: 0,
+      count: 0,
+    };
 
-  // Labels solo DD/MM per l'asse X
-  const labels = sortedKeys.map((dateStr) => {
-    const d = new Date(dateStr);
-    return `${String(d.getDate()).padStart(2, "0")}/${String(
-      d.getMonth() + 1
-    ).padStart(2, "0")}`;
+    existing.volume += log.volume || 0;
+    existing.weight += log.weight || 0;
+    existing.reps += log.reps || 0;
+    existing.count += 1;
+
+    dateGroups.set(dateKey, existing);
   });
 
-  const volumeData = sortedKeys.map((date) => dailyVolumes.get(date) || 0);
+  // Calculate averages and prepare chart data
+  const labels: string[] = [];
+  const volumeData: number[] = [];
+  const weightData: number[] = [];
+  const repsData: number[] = [];
 
-  return {
-    labels,
-    datasets: [
-      {
-        label: `Volume ${
-          chartType === "volume"
-            ? "Totale"
-            : chartType.charAt(0).toUpperCase() + chartType.slice(1)
-        }`,
-        data: volumeData,
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        tension: 0.2,
-        fill: true,
-        pointRadius: 3,
-        pointHoverRadius: 6,
-      },
-    ],
-  };
+  dateGroups.forEach((values, date) => {
+    labels.push(date);
+    volumeData.push(values.count > 0 ? values.volume / values.count : 0);
+    weightData.push(values.count > 0 ? values.weight / values.count : 0);
+    repsData.push(values.count > 0 ? values.reps / values.count : 0);
+  });
+
+  // Create datasets based on chart type
+  const datasets: ChartDataset[] = [];
+
+  if (
+    chartType === "volume" ||
+    chartType === "weight" ||
+    chartType === "reps"
+  ) {
+    const data =
+      chartType === "volume"
+        ? volumeData
+        : chartType === "weight"
+        ? weightData
+        : repsData;
+    const label =
+      chartType === "volume"
+        ? "Volume"
+        : chartType === "weight"
+        ? "Weight (kg)"
+        : "Reps";
+    const color =
+      chartType === "volume"
+        ? "#4CAF50"
+        : chartType === "weight"
+        ? "#2196F3"
+        : "#FF9800";
+
+    datasets.push({
+      label,
+      data,
+      borderColor: color,
+      backgroundColor: color + "20",
+      tension: 0.4,
+      fill: false,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+    });
+  }
+
+  return { labels, datasets };
 }
 
 /**
  * Validate user parameters and return errors if present
  */
-export function validateUserParams(params: any): string[] {
+export function validateUserParams(params: EmbeddedViewParams): string[] {
   const errors: string[] = [];
 
-  // Validate chartType
-  if (params.chartType && !["exercise", "workout"].includes(params.chartType)) {
-    errors.push(
-      `chartType must be "exercise" or "workout", received: "${params.chartType}"`
-    );
-  }
-
-  // Validate limit
-  if (params.limit !== undefined) {
-    const limit = parseInt(params.limit);
-    if (isNaN(limit) || limit < 1 || limit > 1000) {
-      errors.push(
-        `limit must be a number between 1 and 1000, received: "${params.limit}"`
-      );
+  // Validate dateRange (exists in chart and table params)
+  if ("dateRange" in params && params.dateRange !== undefined) {
+    const dateRange = Number(params.dateRange);
+    if (isNaN(dateRange) || dateRange < 1 || dateRange > 365) {
+      errors.push("dateRange must be a number between 1 and 365");
     }
   }
 
-  // Validate height
-  if (params.height && !/^\d+px$/.test(params.height)) {
-    errors.push(
-      `height must be in format "XXXpx", received: "${params.height}"`
-    );
+  // Validate limit (exists in chart and table params)
+  if ("limit" in params && params.limit !== undefined) {
+    const limit = Number(params.limit);
+    if (isNaN(limit) || limit < 1 || limit > 1000) {
+      errors.push("limit must be a number between 1 and 1000");
+    }
+  }
+
+  // Validate chartType (exists only in chart params)
+  if ("chartType" in params && params.chartType !== undefined) {
+    const chartType = String(params.chartType);
+    if (!["exercise", "workout"].includes(chartType)) {
+      errors.push("chartType must be either 'exercise' or 'workout'");
+    }
+  }
+
+  // Validate type for charts (exists only in chart params)
+  if ("type" in params && params.type !== undefined) {
+    const type = String(params.type);
+    if (!["volume", "weight", "reps"].includes(type)) {
+      errors.push("type must be either 'volume', 'weight', or 'reps'");
+    }
+  }
+
+  // Validate duration for timers (exists only in timer params)
+  if ("duration" in params && params.duration !== undefined) {
+    const duration = Number(params.duration);
+    if (isNaN(duration) || duration < 1 || duration > 3600) {
+      errors.push("duration must be a number between 1 and 3600 seconds");
+    }
   }
 
   return errors;

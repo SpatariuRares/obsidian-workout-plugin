@@ -156,10 +156,10 @@ exercise: ${exerciseName}
     await this.app.vault.create(fileName, content);
 
     // Open the newly created file
-    const file = this.app.vault.getAbstractFileByPath(fileName) as TFile;
-    if (file) {
+    const abstractFile = this.app.vault.getAbstractFileByPath(fileName);
+    if (abstractFile && abstractFile instanceof TFile) {
       const leaf = this.app.workspace.getLeaf();
-      await leaf.openFile(file);
+      await leaf.openFile(abstractFile);
     }
   }
 }

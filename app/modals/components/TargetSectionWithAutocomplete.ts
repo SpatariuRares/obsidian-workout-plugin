@@ -49,8 +49,8 @@ export class TargetSectionWithAutocomplete {
     workoutContainer.setAttribute("data-field-type", "workout");
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      "Nome Allenamento:",
-      "Es. Allenamento A, Workout B, o usa il checkbox sotto"
+      "Workout Name:",
+      "e.g. Workout A, Training B, or use checkbox below"
     );
 
     // Current Workout checkbox (for workout charts/tables)
@@ -58,7 +58,7 @@ export class TargetSectionWithAutocomplete {
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      "Usa Allenamento Corrente (nome file)",
+      "Use Current Workout (file name)",
       false,
       "currentWorkout"
     );

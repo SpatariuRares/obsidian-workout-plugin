@@ -25,8 +25,8 @@ export class StatsBox {
     const strongEl = statsDiv.createEl("strong", {
       cls: "workout-charts-stats-title",
     });
-    strongEl.textContent = `📈 Statistiche Volume (${
-      chartType === "workout" ? "Totale Allenamento" : "Esercizio"
+    strongEl.textContent = `📈 Volume Statistics (${
+      chartType === "workout" ? "Total Workout" : "Exercise"
     }):`;
 
     const ul = statsDiv.createEl("ul", { cls: "workout-charts-stats-list" });

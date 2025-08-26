@@ -87,7 +87,7 @@ export class CodeGenerator {
     // Add columns configuration
     if (params.columnsType !== "standard") {
       const columnsMap = {
-        minimal: ["Data", "Esercizio", "Ripetizioni", "Peso (kg)"],
+        minimal: ["Date", "Exercise", "Reps", "Weight (kg)"],
       };
       const columns = columnsMap[params.columnsType as keyof typeof columnsMap];
       if (columns) {
@@ -97,7 +97,7 @@ export class CodeGenerator {
 
     // Add display options
     if (!params.showAddButton) lines.push(`showAddButton: false`);
-    if (params.buttonText !== "➕ Aggiungi Log") {
+    if (params.buttonText !== "➕ Add Log") {
       lines.push(`buttonText: "${params.buttonText}"`);
     }
 

@@ -37,15 +37,15 @@ export class CreateExerciseSectionModal extends ModalBase {
     const workoutContainer = this.createFormGroup(exerciseSection);
     const workoutInput = this.createTextInput(
       workoutContainer,
-      "Nome Allenamento (opzionale):",
-      "Es. Allenamento A, Workout B, o usa il checkbox sotto"
+      "Workout Name (optional):",
+      "e.g. Workout A, Training B, or use checkbox below"
     );
 
     // Current Workout checkbox
     const currentWorkoutContainer = this.createCheckboxGroup(exerciseSection);
     const currentWorkoutToggle = this.createCheckbox(
       currentWorkoutContainer,
-      "Usa Allenamento Corrente (nome file)",
+      "Use Current Workout (file name)",
       false,
       "currentWorkout"
     );
@@ -86,7 +86,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     const noteInput = this.createTextInput(
       noteContainer,
       "Note:",
-      "Qui spingi pesante. È il tuo esercizio fondamentale."
+      "Push hard here. This is your fundamental exercise."
     );
 
     // Options Section
@@ -220,10 +220,10 @@ export class CreateExerciseSectionModal extends ModalBase {
     showLog: boolean;
   }): string {
     let sectionCode = `## ${params.exerciseName}:\n`;
-    sectionCode += `### ${params.sets} serie x ${params.reps} ripetizioni (Recupero: ${params.restTime}s)\n\n`;
+    sectionCode += `### ${params.sets} sets x ${params.reps} reps (Rest: ${params.restTime}s)\n\n`;
 
     if (params.note) {
-      sectionCode += `**Nota: ${params.note}**\n`;
+      sectionCode += `**Note: ${params.note}**\n`;
     }
 
     if (params.showTimer) {
@@ -248,7 +248,7 @@ export class CreateExerciseSectionModal extends ModalBase {
         limit: 12,
         columnsType: "standard",
         showAddButton: true,
-        buttonText: "➕ Aggiungi Log",
+        buttonText: "➕ Add Log",
         searchByName: false,
         exactMatch: true,
         debug: false,

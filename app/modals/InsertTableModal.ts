@@ -14,7 +14,7 @@ export class InsertTableModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Inserisci Tabella Log Allenamento" });
+    contentEl.createEl("h2", { text: "Insert Workout Log Table" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -22,18 +22,18 @@ export class InsertTableModal extends ModalBase {
     // Table Type Section
     const tableTypeSection = this.createSection(
       mainContainer,
-      "Tipo di Tabella"
+      "Table Type"
     );
 
     // Table Type selector (exercise vs workout)
     const tableTypeContainer = this.createFormGroup(tableTypeSection);
     const tableTypeSelect = this.createSelect(
       tableTypeContainer,
-      "Tipo Tabella:",
+      "Table Type:",
       [
-        { text: "Esercizio + Allenamento", value: "combined" },
-        { text: "Esercizio Specifico", value: "exercise" },
-        { text: "Allenamento Completo", value: "workout" },
+        { text: "Exercise + Workout", value: "combined" },
+        { text: "Specific Exercise", value: "exercise" },
+        { text: "Complete Workout", value: "workout" },
       ]
     );
 
@@ -82,13 +82,13 @@ export class InsertTableModal extends ModalBase {
     }, 200);
 
     // Configuration Section
-    const configSection = this.createSection(mainContainer, "Configurazione");
+    const configSection = this.createSection(mainContainer, "Configuration");
 
     // Limit selector
     const limitContainer = this.createFormGroup(configSection);
     const limitInput = this.createNumberInput(
       limitContainer,
-      "Numero Massimo Log:",
+      "Maximum Log Count:",
       "12",
       1,
       1000,
@@ -99,14 +99,14 @@ export class InsertTableModal extends ModalBase {
     const columnsContainer = this.createFormGroup(configSection);
     const columnsSelect = this.createSelect(
       columnsContainer,
-      "Colonne Tabella:",
+      "Table Columns:",
       [
         {
-          text: "Standard (Data, Esercizio, Ripetizioni, Peso, Volume)",
+          text: "Standard (Date, Exercise, Reps, Weight, Volume)",
           value: "standard",
         },
         {
-          text: "Minimal (Data, Esercizio, Ripetizioni, Peso)",
+          text: "Minimal (Date, Exercise, Reps, Weight)",
           value: "minimal",
         },
       ]
@@ -115,14 +115,14 @@ export class InsertTableModal extends ModalBase {
     // Display Options Section
     const displaySection = this.createSection(
       mainContainer,
-      "Opzioni Visualizzazione"
+      "Display Options"
     );
 
     // Show add button toggle
     const addButtonContainer = this.createCheckboxGroup(displaySection);
     const addButtonToggle = this.createCheckbox(
       addButtonContainer,
-      "Mostra Bottone 'Aggiungi Log'",
+      "Show 'Add Log' Button",
       true,
       "showAddButton"
     );
@@ -131,9 +131,9 @@ export class InsertTableModal extends ModalBase {
     const buttonTextContainer = this.createFormGroup(displaySection);
     const buttonTextInput = this.createTextInput(
       buttonTextContainer,
-      "Testo Bottone:",
-      "➕ Aggiungi Log",
-      "➕ Aggiungi Log"
+      "Button Text:",
+      "➕ Add Log",
+      "➕ Add Log"
     );
 
     // Advanced Options Section using reusable component
@@ -154,13 +154,13 @@ export class InsertTableModal extends ModalBase {
 
     // Cancel button
     const cancelBtn = buttonsSection.createEl("button", {
-      text: "Annulla",
+      text: "Cancel",
       cls: "mod-warning",
     });
 
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
-      text: "Inserisci Tabella",
+      text: "Insert Table",
       cls: "mod-cta",
     });
 
@@ -184,7 +184,7 @@ export class InsertTableModal extends ModalBase {
       if (tableType === "combined") {
         if (!target.exercise || !target.workout) {
           new Notice(
-            "⚠️ Per il tipo 'Esercizio + Allenamento' devi compilare entrambi i campi!"
+            "⚠️ For 'Exercise + Workout' type you must fill both fields!"
           );
           return;
         }
@@ -203,7 +203,7 @@ export class InsertTableModal extends ModalBase {
         debug: advancedValues.debug,
       });
 
-      this.insertIntoEditor(tableCode, "✅ Tabella inserita con successo!");
+      this.insertIntoEditor(tableCode, "✅ Table inserted successfully!");
       this.close();
     });
   }

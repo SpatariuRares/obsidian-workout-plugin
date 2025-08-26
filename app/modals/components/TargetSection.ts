@@ -31,23 +31,23 @@ export class TargetSection {
     const exerciseContainer = modal.createFormGroup(targetSection);
     const exerciseInput = modal.createTextInput(
       exerciseContainer,
-      "Nome Esercizio:",
-      "Es. Panca Piana, Squat, RDL..."
+      "Exercise Name:",
+      "e.g. Bench Press, Squat, RDL..."
     );
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      "Nome Allenamento:",
-      "Es. Allenamento A, Workout B..."
+      "Workout Name:",
+      "e.g. Workout A, Training B..."
     );
 
     // Current Workout checkbox (for workout charts/tables)
     const currentWorkoutContainer = modal.createCheckboxGroup(targetSection);
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      "Usa Allenamento Corrente (nome file)",
+      "Use Current Workout (file name)",
       false,
       "currentWorkout"
     );

@@ -48,7 +48,7 @@ export abstract class ModalBase extends Modal {
    */
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-    return activeView?.file?.basename || "File corrente";
+    return activeView?.file?.basename || "Current file";
   }
 
   /**
@@ -56,7 +56,7 @@ export abstract class ModalBase extends Modal {
    */
   protected insertIntoEditor(
     code: string,
-    successMessage: string = "✅ Codice inserito con successo!"
+    successMessage: string = "✅ Code inserted successfully!"
   ): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
@@ -65,7 +65,7 @@ export abstract class ModalBase extends Modal {
       editor.replaceRange(code + "\n\n", cursor);
       new Notice(successMessage);
     } else {
-      new Notice("❌ Apri un file markdown per inserire il codice.");
+      new Notice("❌ Open a markdown file to insert the code.");
     }
   }
 
@@ -165,7 +165,7 @@ export abstract class ModalBase extends Modal {
     const currentFileInfo = parent.createEl("div", {
       cls: "current-file-info",
     });
-    currentFileInfo.textContent = `File corrente: ${currentFileName}`;
+    currentFileInfo.textContent = `Current file: ${currentFileName}`;
     return currentFileInfo;
   }
 }

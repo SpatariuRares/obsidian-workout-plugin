@@ -66,7 +66,7 @@ export abstract class BaseView {
         workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
       UIComponents.renderInfoMessage(
         container,
-        `Nessun dato trovato per l'esercizio <strong>${exercise}</strong> nell'allenamento <strong>${workoutFilename}</strong>.`,
+        `No data found for exercise <strong>${exercise}</strong> in workout <strong>${workoutFilename}</strong>.`,
         "warning"
       );
       if (exercise) {
@@ -89,7 +89,7 @@ export abstract class BaseView {
     if (isWorkoutView) {
       UIComponents.renderInfoMessage(
         container,
-        `Nessun dato trovato per l'allenamento <strong>${titlePrefix}</strong>.`,
+        `No data found for workout <strong>${titlePrefix}</strong>.`,
         "warning"
       );
     } else {

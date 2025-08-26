@@ -1342,6 +1342,26 @@
   border-color: var(--text-error);
 }
 
+/* CSV mode info styling in settings */
+.csv-mode-info {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.csv-mode-info h4 {
+  margin: 0 0 8px 0; 
+  color: var(--interactive-accent);
+}
+
+.csv-mode-info p {
+  margin: 0; 
+  font-size: 14px; 
+  color: var(--text-muted);
+}
+
 /* CSV-specific message styling */
 .workout-log-no-data p {
   margin: 8px 0;

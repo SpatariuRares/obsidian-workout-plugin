@@ -18,10 +18,10 @@ export class TableDataProcessor {
     params: EmbeddedTableParams
   ): TableData {
     const defaultColumns = [
-      "Data",
-      "Esercizio",
-      "Ripetizioni",
-      "Peso (kg)",
+      "Date",
+      "Exercise",
+      "Reps",
+      "Weight (kg)",
       "Volume",
       "Actions",
     ];
@@ -231,11 +231,11 @@ export class TableDataProcessor {
     return {
       limit: 50,
       showAddButton: true,
-      buttonText: "➕ Aggiungi Log",
+      buttonText: "➕ Add Log",
       searchByName: false,
       exactMatch: false,
       debug: false,
-      columns: ["Data", "Esercizio", "Ripetizioni", "Peso (kg)", "Volume"],
+      columns: ["Date", "Exercise", "Reps", "Weight (kg)", "Volume"],
     };
   }
 }

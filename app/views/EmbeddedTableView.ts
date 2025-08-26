@@ -155,7 +155,7 @@ export class EmbeddedTableView extends BaseView {
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`
         : "";
-      const exerciseName = params.exercise || "Allenamento";
+      const exerciseName = params.exercise || "Workout";
 
       UIComponents.createAddLogButton(
         contentDiv,
@@ -204,7 +204,7 @@ export class EmbeddedTableView extends BaseView {
 
     this.showSuccessMessage(
       contentDiv,
-      `Tabella generata con successo! ${totalRows} log elaborati. (CSV Mode)`
+      `Table generated successfully! ${totalRows} logs processed. (CSV Mode)`
     );
 
     container.appendChild(fragment);

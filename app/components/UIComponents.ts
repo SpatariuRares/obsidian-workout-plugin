@@ -117,7 +117,7 @@ export class UIComponents {
     });
 
     const createButton = buttonDiv.createEl("button", {
-      text: "➕ Crea Primo Log",
+      text: "➕ Create first workout log",
       cls: "add-log-button",
     });
     createButton.id = "create-first-log-btn";
@@ -345,7 +345,7 @@ export class UIComponents {
     });
 
     const button = buttonContainer.createEl("button", {
-      text: `➕ Crea Log per: ${exerciseName}`,
+      text: `➕ Create log for: ${exerciseName}`,
       cls: "create-log-button",
     });
 

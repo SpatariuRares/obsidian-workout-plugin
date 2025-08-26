@@ -93,8 +93,8 @@ export function parseCSVLogFile(
           reps: parseInt(values[2]) || 0,
           weight: parseFloat(values[3]) || 0,
           volume: parseFloat(values[4]) || 0,
-          origine: values[5]?.trim() || undefined,
-          workout: values[6]?.trim() || undefined,
+          origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
+          workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
           timestamp: parseInt(values[7]) || Date.now(),
         };
 

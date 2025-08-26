@@ -16,7 +16,6 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "Workout Charts Settings" });
 
     // CSV Mode Info
     const csvInfo = containerEl.createEl("div", {
@@ -54,7 +53,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     );
 
     new Setting(containerEl)
-      .setName("CSV Log File Path")
+      .setName("CSV log file path")
       .setDesc("Path to the CSV file containing all workout log data")
       .addText((text) =>
         text
@@ -67,7 +66,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
-      .setName("Exercise Folder Path")
+      .setName("Exercise folder path")
       .setDesc("Path to the folder containing exercise pages")
       .addText((text) =>
         text
@@ -80,7 +79,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
-      .setName("Debug Mode")
+      .setName("Debug mode")
       .setDesc("Enable debug logging for troubleshooting")
       .addToggle((toggle) =>
         toggle
@@ -92,10 +91,10 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     // CSV Management Section
-    containerEl.createEl("h3", { text: "CSV File Management" });
+    containerEl.createEl("h3", { text: "CSV file management" });
 
     new Setting(containerEl)
-      .setName("Create CSV Log File")
+      .setName("Create CSV log file")
       .setDesc("Create a new CSV log file with sample data")
       .addButton((button) =>
         button.setButtonText("Create File").onClick(async () => {

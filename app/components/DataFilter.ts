@@ -148,7 +148,7 @@ export class DataFilter {
             .trim();
           return exerciseField === exerciseNameLower;
         });
-        filterMethodUsed = `esatto match su campo esercizio: "${exerciseName}"`;
+        filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
         const matchesResult = findExerciseMatches(
           logData,

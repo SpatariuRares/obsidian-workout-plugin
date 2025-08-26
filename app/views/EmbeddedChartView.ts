@@ -73,7 +73,7 @@ export class EmbeddedChartView extends BaseView {
         dateRange: params.dateRange || 30,
       });
 
-      // Ordina i dati per data crescente
+      // Sort data by ascending date
       const sortedData = [...filterResult.filteredData].sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );

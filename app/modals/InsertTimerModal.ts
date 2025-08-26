@@ -12,7 +12,7 @@ export class InsertTimerModal extends ModalBase {
 
   onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Insert Workout Timer" });
+    contentEl.createEl("h2", { text: "Insert workout timer" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -34,7 +34,7 @@ export class InsertTimerModal extends ModalBase {
 
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert Timer",
+      text: "Insert timer",
       cls: "mod-cta",
     });
 

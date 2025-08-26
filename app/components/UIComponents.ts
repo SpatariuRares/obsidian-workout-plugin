@@ -19,7 +19,7 @@ export class UIComponents {
     const loadingDiv = container.createEl("div", {
       cls: "workout-charts-loading",
     });
-    loadingDiv.textContent = "⏳ Caricamento dati...";
+    loadingDiv.textContent = "⏳ Loading data...";
     return loadingDiv;
   }
 
@@ -58,7 +58,7 @@ export class UIComponents {
     const errorDiv = container.createEl("div", {
       cls: "workout-chart-error",
     });
-    errorDiv.textContent = `❌ Errore durante la creazione del grafico: ${message}`;
+    errorDiv.textContent = `❌ Error creating chart: ${message}`;
   }
 
   /**
@@ -208,20 +208,20 @@ export class UIComponents {
       cls: "workout-charts-footer",
     });
 
-    let infoFooterText = `📊 ${volumeData.length} sessioni elaborate`;
+    let infoFooterText = `📊 ${volumeData.length} sessions processed`;
 
     if (filterResult.titlePrefix && filterResult.titlePrefix.includes(" + ")) {
       const [exercise, workout] = filterResult.titlePrefix.split(" + ");
       const workoutFilename =
         workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
-      infoFooterText += ` per "${exercise}" nell'allenamento "${workoutFilename}"`;
+      infoFooterText += ` for "${exercise}" in workout "${workoutFilename}"`;
     } else if (chartType === "exercise") {
-      infoFooterText += ` per \"${filterResult.titlePrefix}\"`;
+      infoFooterText += ` for \"${filterResult.titlePrefix}\"`;
     } else if (chartType === "workout") {
-      infoFooterText += ` per l'allenamento \"${filterResult.titlePrefix}\"`;
+      infoFooterText += ` for workout \"${filterResult.titlePrefix}\"`;
     }
 
-    infoFooterText += `. (Metodo ricerca: ${filterResult.filterMethodUsed})`;
+    infoFooterText += `. (Search method: ${filterResult.filterMethodUsed})`;
     infoFooterDiv.textContent = infoFooterText;
   }
 

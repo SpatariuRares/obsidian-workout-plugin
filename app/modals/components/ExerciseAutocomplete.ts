@@ -59,7 +59,7 @@ export class ExerciseAutocomplete {
     });
 
     const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
-      text: "📝 Create Exercise Page",
+      text: "📝 Create exercise page",
       cls: "create-exercise-page-btn display-none",
     });
 

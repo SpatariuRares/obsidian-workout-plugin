@@ -30,7 +30,7 @@ export class EditLogModal extends ModalBase {
 
     // Add modal title
     const titleEl = contentEl.createEl("h2", {
-      text: "Edit Workout Log (CSV Mode)",
+      text: "Edit workout log (CSV mode)",
     });
 
     // Create form container
@@ -124,7 +124,7 @@ export class EditLogModal extends ModalBase {
 
     // Update button
     const updateBtn = buttonsContainer.createEl("button", {
-      text: "Update Log",
+      text: "Update log",
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 

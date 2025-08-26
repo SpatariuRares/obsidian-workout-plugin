@@ -14,7 +14,7 @@ export class InsertTableModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Insert Workout Log Table" });
+    contentEl.createEl("h2", { text: "Insert workout log table" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -22,7 +22,7 @@ export class InsertTableModal extends ModalBase {
     // Table Type Section
     const tableTypeSection = this.createSection(
       mainContainer,
-      "Table Type"
+      "Table type"
     );
 
     // Table Type selector (exercise vs workout)
@@ -31,9 +31,9 @@ export class InsertTableModal extends ModalBase {
       tableTypeContainer,
       "Table Type:",
       [
-        { text: "Exercise + Workout", value: "combined" },
-        { text: "Specific Exercise", value: "exercise" },
-        { text: "Complete Workout", value: "workout" },
+        { text: "Exercise + workout", value: "combined" },
+        { text: "Specific exercise", value: "exercise" },
+        { text: "Complete workout", value: "workout" },
       ]
     );
 
@@ -102,11 +102,11 @@ export class InsertTableModal extends ModalBase {
       "Table Columns:",
       [
         {
-          text: "Standard (Date, Exercise, Reps, Weight, Volume)",
+          text: "Standard (Date, exercise, reps, weight, volume)",
           value: "standard",
         },
         {
-          text: "Minimal (Date, Exercise, Reps, Weight)",
+          text: "Minimal (Date, exercise, reps, weight)",
           value: "minimal",
         },
       ]
@@ -115,7 +115,7 @@ export class InsertTableModal extends ModalBase {
     // Display Options Section
     const displaySection = this.createSection(
       mainContainer,
-      "Display Options"
+      "Display options"
     );
 
     // Show add button toggle
@@ -160,7 +160,7 @@ export class InsertTableModal extends ModalBase {
 
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert Table",
+      text: "Insert table",
       cls: "mod-cta",
     });
 

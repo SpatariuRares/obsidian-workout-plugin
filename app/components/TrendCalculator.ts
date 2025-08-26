@@ -18,7 +18,7 @@ export class TrendCalculator {
   ): TrendIndicators {
     if (volumeData.length < 2) {
       return {
-        trendDirection: "dati insuff.",
+        trendDirection: "insuff. data",
         trendColor: "var(--text-muted, #888)",
         trendIcon: "·",
       };

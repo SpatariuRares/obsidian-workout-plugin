@@ -46,12 +46,12 @@ export class StatsBox {
     li3.append(` (${stats.minVolumeDate || "N/D"})`);
 
     const li4 = ul.createEl("li");
-    li4.textContent = "Sessioni: ";
+    li4.textContent = "Sessions: ";
     li4.createEl("strong", { text: `${labels.length}` });
 
     if (recentTrendData.text !== "N/A") {
       const li5 = ul.createEl("li");
-      li5.textContent = "Trend Recente: ";
+      li5.textContent = "Recent Trend: ";
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
       });

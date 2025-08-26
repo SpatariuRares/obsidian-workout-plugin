@@ -62,7 +62,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "create-workout-log",
-      name: "Create Workout Log",
+      name: "Create workout log",
       callback: () => {
         new CreateLogModal(this.app, this, undefined, undefined, () => {
           this.triggerWorkoutLogRefresh();
@@ -72,7 +72,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "create-csv-log",
-      name: "Create CSV Log File",
+      name: "Create CSV log file",
       callback: async () => {
         try {
           await this.createCSVLogFile();
@@ -88,7 +88,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     // Add commands for inserting charts into notes
     this.addCommand({
       id: "insert-workout-chart",
-      name: "Insert Workout Chart",
+      name: "Insert workout chart",
       callback: () => {
         new InsertChartModal(this.app, this).open();
       },
@@ -96,7 +96,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "insert-workout-table",
-      name: "Insert Workout Table",
+      name: "Insert workout table",
       callback: () => {
         new InsertTableModal(this.app, this).open();
       },
@@ -104,7 +104,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "insert-workout-timer",
-      name: "Insert Workout Timer",
+      name: "Insert workout timer",
       callback: () => {
         new InsertTimerModal(this.app, this).open();
       },
@@ -112,7 +112,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "create-exercise-page",
-      name: "Create Exercise Page",
+      name: "Create exercise page",
       callback: () => {
         new CreateExercisePageModal(this.app, this).open();
       },
@@ -120,7 +120,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addCommand({
       id: "create-exercise-section",
-      name: "Create Exercise Section",
+      name: "Create exercise section",
       callback: () => {
         new CreateExerciseSectionModal(this.app, this).open();
       },
@@ -179,7 +179,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       const csvFile = abstractFile;
 
-      const content = await this.app.vault.cachedRead(csvFile);
+      const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
       // Convert CSV entries to WorkoutLogData format
@@ -489,7 +489,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       const csvFile = abstractFile;
 
-      const content = await this.app.vault.cachedRead(csvFile);
+      const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
       // Add new entry with timestamp
@@ -532,7 +532,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       const csvFile = abstractFile;
 
-      const content = await this.app.vault.cachedRead(csvFile);
+      const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
       // Find the entry to update by matching timestamp (most reliable identifier)
@@ -599,7 +599,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
       const csvFile = abstractFile;
 
-      const content = await this.app.vault.cachedRead(csvFile);
+      const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
       // Find the entry to delete by matching timestamp (most reliable identifier)

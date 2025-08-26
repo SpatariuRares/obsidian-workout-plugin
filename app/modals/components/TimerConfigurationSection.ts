@@ -27,7 +27,7 @@ export class TimerConfigurationSection {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
   } {
-    const timerSection = modal.createSection(container, "Timer Configuration");
+    const timerSection = modal.createSection(container, "Timer configuration");
 
     // Timer Type selector
     const timerTypeContainer = modal.createFormGroup(timerSection);
@@ -82,7 +82,7 @@ export class TimerConfigurationSection {
     );
 
     // Display options
-    const displaySection = modal.createSection(container, "Display Options");
+    const displaySection = modal.createSection(container, "Display options");
 
     // Show controls toggle
     const showControlsContainer = modal.createCheckboxGroup(displaySection);

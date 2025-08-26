@@ -133,7 +133,7 @@ export abstract class BaseView {
     if (validationErrors.length > 0) {
       UIComponents.renderErrorMessage(
         container,
-        `Parametri non validi:\n${validationErrors.join("\n")}`
+        `Invalid parameters:\n${validationErrors.join("\n")}`
       );
       return false;
     }

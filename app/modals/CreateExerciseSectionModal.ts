@@ -15,7 +15,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Create Exercise Section" });
+    contentEl.createEl("h2", { text: "Create exercise section" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -23,7 +23,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Exercise Configuration Section
     const exerciseSection = this.createSection(
       mainContainer,
-      "Exercise Configuration"
+      "Exercise configuration"
     );
 
     // Exercise autocomplete using reusable component
@@ -138,7 +138,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     // Create button
     const createBtn = buttonsSection.createEl("button", {
-      text: "Create Section",
+      text: "Create section",
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 

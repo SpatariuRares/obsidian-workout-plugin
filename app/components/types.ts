@@ -115,7 +115,7 @@ export interface WorkoutChartsPluginInterface {
     vault: {
       create: (path: string, content: string) => Promise<TFile>;
       getAbstractFileByPath: (path: string) => TAbstractFile | null;
-      cachedRead: (file: TFile) => Promise<string>;
+      read: (file: TFile) => Promise<string>;
       modify: (file: TFile, content: string) => Promise<void>;
       trigger: (event: string, file: TFile) => void;
     };

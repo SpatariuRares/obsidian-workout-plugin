@@ -14,7 +14,7 @@ export class InsertChartModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Insert Workout Chart" });
+    contentEl.createEl("h2", { text: "Insert workout chart" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -22,7 +22,7 @@ export class InsertChartModal extends ModalBase {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       mainContainer,
-      "Chart Type"
+      "Chart type"
     );
 
     // Chart Type selector (exercise vs workout)
@@ -31,8 +31,8 @@ export class InsertChartModal extends ModalBase {
       chartTypeContainer,
       "Chart Type:",
       [
-        { text: "Complete Workout", value: "workout" },
-        { text: "Specific Exercise", value: "exercise" },
+        { text: "Complete workout", value: "workout" },
+        { text: "Specific exercise", value: "exercise" },
       ]
     );
 
@@ -86,7 +86,7 @@ export class InsertChartModal extends ModalBase {
     // Display Options Section
     const displaySection = this.createSection(
       mainContainer,
-      "Display Options"
+      "Display options"
     );
 
     // Show trend line toggle
@@ -139,7 +139,7 @@ export class InsertChartModal extends ModalBase {
 
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert Chart",
+      text: "Insert chart",
       cls: "mod-cta",
     });
 

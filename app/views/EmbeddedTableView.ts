@@ -185,7 +185,7 @@ export class EmbeddedTableView extends BaseView {
     if (!tableSuccess) {
       TableRenderer.renderFallbackMessage(
         tableContainer,
-        "Errore nel rendering della tabella",
+        "Error in table rendering",
         "Table Error"
       );
     }
@@ -224,7 +224,7 @@ export class EmbeddedTableView extends BaseView {
     span1.textContent = "📊";
 
     const span2 = indicatorDiv.createEl("span");
-    span2.textContent = `CSV Mode: Dati caricati da ${this.plugin.settings.csvLogFilePath}`;
+    span2.textContent = `CSV Mode: Data loaded from ${this.plugin.settings.csvLogFilePath}`;
   }
 
   private renderTableFooter(
@@ -237,27 +237,27 @@ export class EmbeddedTableView extends BaseView {
       cls: "table-footer",
     });
 
-    let footerText = `📊 Trovati ${totalRows} log`;
+    let footerText = `📊 Found ${totalRows} logs`;
 
     if (params.exercise && params.workout) {
       const workoutFilename =
         params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
         params.workout;
-      footerText += ` per "${params.exercise}" nell'allenamento "${workoutFilename}"`;
+      footerText += ` for "${params.exercise}" in workout "${workoutFilename}"`;
     } else if (params.exercise) {
-      footerText += ` per "${params.exercise}"`;
+      footerText += ` for "${params.exercise}"`;
     } else if (params.workout) {
       const workoutFilename =
         params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
         params.workout;
-      footerText += ` nell'allenamento "${workoutFilename}"`;
+      footerText += ` in workout "${workoutFilename}"`;
     } else {
-      footerText += ` in totale`;
+      footerText += ` total`;
     }
 
-    footerText += `. (Metodo: ${
+    footerText += `. (Method: ${
       filterResult.filterMethodUsed
-    }). Visualizzati max ${params.limit || 50}. [CSV Mode]`;
+    }). Showing max ${params.limit || 50}. [CSV Mode]`;
 
     footerDiv.textContent = footerText;
   }

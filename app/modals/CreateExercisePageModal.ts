@@ -21,7 +21,7 @@ export class CreateExercisePageModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    const titleEl = contentEl.createEl("h2", { text: "Create Exercise Page" });
+    const titleEl = contentEl.createEl("h2", { text: "Create exercise page" });
 
     // Create form container
     const formContainer = contentEl.createEl("div", {
@@ -64,7 +64,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Create button
     const createBtn = buttonsContainer.createEl("button", {
-      text: "Create Exercise Page",
+      text: "Create exercise page",
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 

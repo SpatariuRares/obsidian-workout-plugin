@@ -20,13 +20,13 @@ export class AdvancedOptionsSection {
       showSearchByName?: boolean;
     } = {}
   ): AdvancedOptionsElements {
-    const advancedSection = modal.createSection(container, "Opzioni Avanzate");
+    const advancedSection = modal.createSection(container, "Advanced Options");
 
     // Exact match toggle
     const exactMatchContainer = modal.createCheckboxGroup(advancedSection);
     const exactMatchToggle = modal.createCheckbox(
       exactMatchContainer,
-      "Matching Esatto",
+      "Exact Match",
       false,
       "exactMatch"
     );
@@ -35,7 +35,7 @@ export class AdvancedOptionsSection {
     const debugContainer = modal.createCheckboxGroup(advancedSection);
     const debugToggle = modal.createCheckbox(
       debugContainer,
-      "Modalità Debug",
+      "Debug Mode",
       false,
       "debug"
     );
@@ -50,8 +50,8 @@ export class AdvancedOptionsSection {
       const titleContainer = modal.createFormGroup(advancedSection);
       const titleInput = modal.createTextInput(
         titleContainer,
-        "Titolo Personalizzato:",
-        "Lascia vuoto per titolo automatico"
+        "Custom Title:",
+        "Leave empty for automatic title"
       );
       elements.titleInput = titleInput;
     }
@@ -61,7 +61,7 @@ export class AdvancedOptionsSection {
       const searchByNameContainer = modal.createCheckboxGroup(advancedSection);
       const searchByNameToggle = modal.createCheckbox(
         searchByNameContainer,
-        "Ricerca per Nome File",
+        "Search by File Name",
         false,
         "searchByName"
       );

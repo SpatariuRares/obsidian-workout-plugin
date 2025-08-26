@@ -55,7 +55,7 @@ export class InsertTimerModal extends ModalBase {
         sound: timerValues.sound,
       });
 
-      this.insertIntoEditor(timerCode, "✅ Timer inserito con successo!");
+      this.insertIntoEditor(timerCode, "✅ Timer inserted successfully!");
       this.close();
     });
   }

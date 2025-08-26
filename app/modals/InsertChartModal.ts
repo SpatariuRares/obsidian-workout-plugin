@@ -14,7 +14,7 @@ export class InsertChartModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Inserisci Grafico Allenamento" });
+    contentEl.createEl("h2", { text: "Insert Workout Chart" });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -22,26 +22,26 @@ export class InsertChartModal extends ModalBase {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       mainContainer,
-      "Tipo di Grafico"
+      "Chart Type"
     );
 
     // Chart Type selector (exercise vs workout)
     const chartTypeContainer = this.createFormGroup(chartTypeSection);
     const chartTypeSelect = this.createSelect(
       chartTypeContainer,
-      "Tipo Grafico:",
+      "Chart Type:",
       [
-        { text: "Allenamento Completo", value: "workout" },
-        { text: "Esercizio Specifico", value: "exercise" },
+        { text: "Complete Workout", value: "workout" },
+        { text: "Specific Exercise", value: "exercise" },
       ]
     );
 
     // Data Type selector (volume, weight, reps)
     const dataTypeContainer = this.createFormGroup(chartTypeSection);
-    const dataTypeSelect = this.createSelect(dataTypeContainer, "Tipo Dati:", [
+    const dataTypeSelect = this.createSelect(dataTypeContainer, "Data Type:", [
       { text: "Volume (kg)", value: "volume" },
-      { text: "Peso (kg)", value: "weight" },
-      { text: "Ripetizioni", value: "reps" },
+      { text: "Weight (kg)", value: "weight" },
+      { text: "Reps", value: "reps" },
     ]);
 
     // Target Section using reusable component with autocomplete
@@ -59,13 +59,13 @@ export class InsertChartModal extends ModalBase {
     targetHandlers.updateVisibility();
 
     // Configuration Section
-    const configSection = this.createSection(mainContainer, "Configurazione");
+    const configSection = this.createSection(mainContainer, "Configuration");
 
     // Date range selector
     const dateRangeContainer = this.createFormGroup(configSection);
     const dateRangeInput = this.createNumberInput(
       dateRangeContainer,
-      "Range Giorni:",
+      "Days Range:",
       "180",
       1,
       365,
@@ -76,7 +76,7 @@ export class InsertChartModal extends ModalBase {
     const limitContainer = this.createFormGroup(configSection);
     const limitInput = this.createNumberInput(
       limitContainer,
-      "Limite Dati:",
+      "Data Limit:",
       "100",
       1,
       1000,
@@ -86,14 +86,14 @@ export class InsertChartModal extends ModalBase {
     // Display Options Section
     const displaySection = this.createSection(
       mainContainer,
-      "Opzioni Visualizzazione"
+      "Display Options"
     );
 
     // Show trend line toggle
     const trendLineContainer = this.createCheckboxGroup(displaySection);
     const trendLineToggle = this.createCheckbox(
       trendLineContainer,
-      "Mostra Linea di Tendenza",
+      "Show Trend Line",
       true,
       "trendLine"
     );
@@ -102,7 +102,7 @@ export class InsertChartModal extends ModalBase {
     const trendHeaderContainer = this.createCheckboxGroup(displaySection);
     const trendHeaderToggle = this.createCheckbox(
       trendHeaderContainer,
-      "Mostra Header Trend",
+      "Show Trend Header",
       true,
       "trendHeader"
     );
@@ -111,7 +111,7 @@ export class InsertChartModal extends ModalBase {
     const statsContainer = this.createCheckboxGroup(displaySection);
     const statsToggle = this.createCheckbox(
       statsContainer,
-      "Mostra Statistiche",
+      "Show Statistics",
       true,
       "stats"
     );
@@ -133,13 +133,13 @@ export class InsertChartModal extends ModalBase {
 
     // Cancel button
     const cancelBtn = buttonsSection.createEl("button", {
-      text: "Annulla",
+      text: "Cancel",
       cls: "mod-warning",
     });
 
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
-      text: "Inserisci Grafico",
+      text: "Insert Chart",
       cls: "mod-cta",
     });
 
@@ -176,7 +176,7 @@ export class InsertChartModal extends ModalBase {
         title: advancedValues.title || "",
       });
 
-      this.insertIntoEditor(chartCode, "✅ Grafico inserito con successo!");
+      this.insertIntoEditor(chartCode, "✅ Chart inserted successfully!");
       this.close();
     });
   }

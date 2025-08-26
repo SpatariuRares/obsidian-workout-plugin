@@ -59,7 +59,7 @@ export class ExerciseAutocomplete {
     });
 
     const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
-      text: "📝 Crea Pagina Esercizio",
+      text: "📝 Create Exercise Page",
       cls: "create-exercise-page-btn display-none",
     });
 
@@ -100,7 +100,7 @@ export class ExerciseAutocomplete {
             exerciseInput.value = exercise;
             autocompleteContainer.className =
               "exercise-autocomplete-container exercise-autocomplete-hidden";
-            exerciseStatusText.textContent = "✅ Esercizio selezionato";
+            exerciseStatusText.textContent = "✅ Exercise selected";
             exerciseStatusText.className =
               "exercise-status-text exercise-status-success";
             createExercisePageBtn.className =
@@ -119,7 +119,7 @@ export class ExerciseAutocomplete {
           });
         });
 
-        exerciseStatusText.textContent = `📋 ${matchingExercises.length} esercizi trovati`;
+        exerciseStatusText.textContent = `📋 ${matchingExercises.length} exercises found`;
         exerciseStatusText.className =
           "exercise-status-text exercise-status-accent";
         createExercisePageBtn.className =
@@ -128,7 +128,7 @@ export class ExerciseAutocomplete {
       } else {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
-        exerciseStatusText.textContent = "⚠️ Nessun esercizio trovato";
+        exerciseStatusText.textContent = "⚠️ No exercises found";
         exerciseStatusText.className =
           "exercise-status-text exercise-status-warning";
         createExercisePageBtn.className =

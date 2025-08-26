@@ -72,15 +72,15 @@ export class UIComponents {
 
     const p1 = noDataDiv.createEl("p");
     const strong1 = p1.createEl("strong", {
-      text: "Nessun dato trovato nel file CSV",
+      text: "No data found in CSV file",
     });
 
     const p2 = noDataDiv.createEl("p", {
-      text: "Il file CSV non esiste o è vuoto.",
+      text: "The CSV file does not exist or is empty.",
     });
 
     const p3 = noDataDiv.createEl("p", {
-      text: 'Crea il tuo primo log di allenamento usando il comando "Create Workout Log".',
+      text: 'Create your first workout log using the "Create Workout Log" command.',
     });
   }
 
@@ -101,7 +101,7 @@ export class UIComponents {
 
     const p1 = noDataDiv.createEl("p");
     const strong1 = p1.createEl("strong", {
-      text: "📊 Nessun dato trovato nel file CSV",
+      text: "📊 No data found in CSV file",
     });
 
     const p2 = noDataDiv.createEl("p");
@@ -109,7 +109,7 @@ export class UIComponents {
     const codeEl = p2.createEl("code", { text: csvFilePath });
 
     const p3 = noDataDiv.createEl("p", {
-      text: "Il file CSV non esiste o è vuoto. Crea il tuo primo log di allenamento per iniziare a tracciare i tuoi progressi.",
+      text: "The CSV file does not exist or is empty. Create your first workout log to start tracking your progress.",
     });
 
     const buttonDiv = noDataDiv.createEl("div", {
@@ -161,7 +161,7 @@ export class UIComponents {
     const noMatchDiv = container.createEl("div", {
       cls: "workout-log-no-match",
     });
-    noMatchDiv.textContent = "Nessun dato trovato per l'esercizio: ";
+    noMatchDiv.textContent = "No data found for exercise: ";
     const strongEl = noMatchDiv.createEl("strong", { text: exercise });
   }
 
@@ -184,11 +184,11 @@ export class UIComponents {
 
     const strongEl = debugInfo.createEl("strong", { text: "Debug Info:" });
     debugInfo.createEl("br");
-    debugInfo.append(`Metodo Filtro: ${filterMethod}`);
+    debugInfo.append(`Filter Method: ${filterMethod}`);
     debugInfo.createEl("br");
-    debugInfo.append(`Punti Dati: ${data.length}`);
+    debugInfo.append(`Data Points: ${data.length}`);
     debugInfo.createEl("br");
-    debugInfo.append(`Tipo Grafico: ${chartType}`);
+    debugInfo.append(`Chart Type: ${chartType}`);
   }
 
   /**
@@ -252,7 +252,7 @@ export class UIComponents {
       cls: "workout-charts-footer",
     });
     infoDiv.textContent =
-      "📊 Tabella di fallback (Plugin Charts non disponibile o errore)";
+      "📊 Fallback table (Charts plugin not available or error)";
   }
 
   /**
@@ -262,7 +262,7 @@ export class UIComponents {
   private static createTableHeader(table: HTMLTableElement): void {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
-    ["Data", "Volume (kg)"].forEach((txt) => {
+    ["Date", "Volume (kg)"].forEach((txt) => {
       const th = headerRow.createEl("th");
       th.textContent = txt;
     });
@@ -314,7 +314,7 @@ export class UIComponents {
     });
 
     const button = buttonContainer.createEl("button", {
-      text: `➕ Aggiungi Log per ${exerciseName || "Allenamento"}`,
+      text: `➕ Add Log for ${exerciseName || "Workout"}`,
       cls: "add-log-button",
     });
 

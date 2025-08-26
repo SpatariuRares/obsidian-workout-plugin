@@ -203,7 +203,7 @@ export class EmbeddedChartView extends BaseView {
 
     this.showSuccessMessage(
       contentDiv,
-      `Grafico generato con successo! ${volumeData.length} sessioni elaborate.`
+      `Chart generated successfully! ${volumeData.length} sessions processed.`
     );
 
     UIComponents.renderFooter(

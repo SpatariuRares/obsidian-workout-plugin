@@ -1,0 +1,54 @@
+project_type: "obsidian_plugin"
+
+coding_guidelines:
+  # General
+  - "Always use this.app instead of the global app object"
+  - "Avoid unnecessary console logging"
+  - "Organize code in folders when using multiple .ts files"
+  - "Rename placeholder class names (MyPlugin, MyPluginSettings, etc.)"
+  
+  # Mobile compatibility
+  - "Don't use Node.js API or Electron API (not available on mobile)"
+  - "Avoid regex lookbehind (limited iOS support)"
+  
+  # Security
+  - "Don't use innerHTML, outerHTML, insertAdjacentHTML"
+  - "Use createEl(), createDiv(), createSpan() to create DOM elements"
+  - "Use el.empty() to clean HTML contents"
+  
+  # Resource management
+  - "Always clean up resources in onunload"
+  - "Use registerEvent() and addCommand() for automatic cleanup"
+  - "Don't detach leaves in onunload"
+  
+  # Commands
+  - "Don't set default hotkeys for commands"
+  - "Use appropriate callbacks: callback/checkCallback/editorCallback"
+  
+  # Workspace
+  - "Use getActiveViewOfType() instead of workspace.activeLeaf"
+  - "Use activeEditor to access the editor"
+  - "Don't keep references to custom views"
+  
+  # Vault operations
+  - "Use Editor API instead of Vault.modify for active files"
+  - "Use Vault.process instead of Vault.modify for background changes"
+  - "Use FileManager.processFrontMatter to modify frontmatter"
+  - "Prefer Vault API over Adapter API"
+  - "Use getFileByPath instead of iterating all files"
+  - "Always use normalizePath() for user-defined paths"
+  
+  # TypeScript
+  - "Prefer const/let instead of var"
+  - "Use async/await instead of Promise chains"
+
+ui_guidelines:
+  - "Use Sentence case in UI (not Title Case)"
+  - "Avoid 'settings' in settings section titles"
+  - "Use setHeading() instead of <h1>, <h2>"
+  - "Group general settings at top without heading"
+
+styling_rules:
+  - "No hardcoded styling - always use CSS classes"
+  - "Use Obsidian CSS variables for consistency"
+  - "Example: var(--text-normal), var(--background-modifier-error)"

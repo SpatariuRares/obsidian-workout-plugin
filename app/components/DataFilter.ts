@@ -35,13 +35,13 @@ export class DataFilter {
       return {
         filteredData: [],
         filterMethodUsed: "none",
-        titlePrefix: "Dati Allenamento",
+        titlePrefix: "Workout Data",
       };
     }
 
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Dati Allenamento";
+    let titlePrefix = "Workout Data";
 
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
@@ -52,7 +52,7 @@ export class DataFilter {
       if (workoutResult.filteredData.length === 0) {
         return {
           filteredData: [],
-          filterMethodUsed: "Nessun dato trovato per allenamento",
+          filterMethodUsed: "No data found for workout",
           titlePrefix: `${params.exercise} + ${
             params.workout || params.workoutPath
           }`,
@@ -93,7 +93,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Dati Allenamento";
+    let titlePrefix = "Workout Data";
 
     if (params.workout || params.workoutPath) {
       const workoutName = params.workout || params.workoutPath;
@@ -130,7 +130,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Dati Allenamento";
+    let titlePrefix = "Workout Data";
 
     if (params.exercise && params.exercise.trim()) {
       const exerciseName = params.exercise.trim();
@@ -201,10 +201,10 @@ export class DataFilter {
     if (bestStrategy === "field") {
       const bestPathScore =
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
-      return `campo Esercizio:: "${bestPathKey}" (score: ${bestPathScore})`;
+      return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
-      return `nome file (score: ${bestFileMatchesList[0]?.score || "N/D"})`;
+      return `file name (score: ${bestFileMatchesList[0]?.score || "N/A"})`;
     }
-    return "Nessuna corrispondenza trovata";
+    return "No match found";
   }
 }

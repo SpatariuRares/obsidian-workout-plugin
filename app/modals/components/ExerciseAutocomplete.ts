@@ -189,9 +189,44 @@ export class ExerciseAutocomplete {
 
     try {
       // Get all markdown files in the exercise folder
-      const files = plugin.app.vault
-        .getMarkdownFiles()
-        .filter((file) => file.path.startsWith(exerciseFolderPath));
+      const allFiles = plugin.app.vault.getMarkdownFiles();
+      const files = allFiles.filter((file) => {
+        const normalizedFilePath = file.path.replace(/\\/g, "/");
+        
+        // Try multiple path patterns to match the exercise folder
+        const pathsToCheck = [
+          exerciseFolderPath,
+          exerciseFolderPath + "/",
+          exerciseFolderPath + "/Data",
+          exerciseFolderPath + "/Data/",
+          "theGYM/" + exerciseFolderPath,
+          "theGYM/" + exerciseFolderPath + "/",
+          "theGYM/" + exerciseFolderPath + "/Data",
+          "theGYM/" + exerciseFolderPath + "/Data/"
+        ];
+        
+        return pathsToCheck.some(path => 
+          normalizedFilePath.startsWith(path) || 
+          normalizedFilePath.includes(path + "/")
+        );
+      });
+
+      // if (plugin.settings.debugMode) {
+        console.log("ExerciseAutocomplete: Exercise folder path:", exerciseFolderPath);
+        console.log("ExerciseAutocomplete: Total markdown files:", allFiles.length);
+        console.log("ExerciseAutocomplete: Paths to check:", [
+          exerciseFolderPath,
+          exerciseFolderPath + "/",
+          exerciseFolderPath + "/Data",
+          exerciseFolderPath + "/Data/",
+          "theGYM/" + exerciseFolderPath,
+          "theGYM/" + exerciseFolderPath + "/",
+          "theGYM/" + exerciseFolderPath + "/Data",
+          "theGYM/" + exerciseFolderPath + "/Data/"
+        ]);
+        console.log("ExerciseAutocomplete: Filtered exercise files:", files.length);
+        console.log("ExerciseAutocomplete: Exercise files:", files.map(f => f.path));
+      // }
 
       // Extract exercise names from filenames (remove .md extension)
       this.availableExercises = files.map((file) => file.basename).sort();

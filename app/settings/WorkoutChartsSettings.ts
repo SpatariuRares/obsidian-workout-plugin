@@ -1,5 +1,5 @@
 // Settings tab for the Workout Charts plugin
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import type WorkoutChartsPlugin from "../../main";
 import { Notice } from "obsidian";
 
@@ -60,7 +60,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .setPlaceholder("Enter CSV file path")
           .setValue(this.plugin.settings.csvLogFilePath)
           .onChange(async (value) => {
-            this.plugin.settings.csvLogFilePath = value;
+            this.plugin.settings.csvLogFilePath = normalizePath(value);
             await this.plugin.saveSettings();
           })
       );
@@ -73,7 +73,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .setPlaceholder("Enter folder path")
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
-            this.plugin.settings.exerciseFolderPath = value;
+            this.plugin.settings.exerciseFolderPath = normalizePath(value);
             await this.plugin.saveSettings();
           })
       );
@@ -97,7 +97,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .setName("Create CSV log file")
       .setDesc("Create a new CSV log file with sample data")
       .addButton((button) =>
-        button.setButtonText("Create File").onClick(async () => {
+        button.setButtonText("Create file").onClick(async () => {
           try {
             await this.plugin.createCSVLogFile();
             new Notice("CSV log file created successfully!");

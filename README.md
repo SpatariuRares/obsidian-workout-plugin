@@ -20,26 +20,14 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
 
 ## How it Works
 
-The plugin reads workout log files from your vault that follow this format:
-
-```markdown
----
-Rep: 10
-Weight: 80
-Volume: 800
----
-
-Exercise:: [[Squat]]
-Source:: [[Workout A]]
-DateTime:: 2025-01-17T10:30:00
-```
+The plugin reads workout log data from a single CSV file in your vault. This file stores all your workout entries and is used to generate charts and tables.
 
 ## Installation
 
 1. Download the latest release
 2. Extract the files to your `.obsidian/plugins/workout-planner/` folder
 3. Enable the plugin in Obsidian settings
-4. Configure the log folder path in plugin settings
+4. Configure the CSV log file path in the plugin settings. By default, it's `theGYM/Log/workout_logs.csv`.
 
 ## Usage
 
@@ -136,38 +124,36 @@ The plugin includes an intelligent search system that can find exercises even wi
 
 ## Settings
 
-- **Log Folder Path**: Path to your workout log files (default: "Log/Data")
-- **Default Exercise**: Default exercise to show in charts
-- **Chart Type**: Default chart type (Volume/Weight/Reps)
-- **Date Range**: Number of days to include in charts (default: 30)
-- **Show Trend Line**: Enable trend line visualization
-- **Chart Height**: Height of charts in pixels (default: 400)
-- **Debug Mode**: Enable debug logging for troubleshooting
+- **CSV Log File Path**: Path to your workout log CSV file (default: `theGYM/Log/workout_logs.csv`).
+- **Default Exercise**: Default exercise to show in charts.
+- **Chart Type**: Default chart type (Volume/Weight/Reps).
+- **Date Range**: Number of days to include in charts (default: 30).
+- **Show Trend Line**: Enable trend line visualization.
+- **Chart Height**: Height of charts in pixels (default: 400).
+- **Debug Mode**: Enable debug logging for troubleshooting.
 
 ## Data Format
 
-Your workout log files should be in Markdown format with frontmatter containing:
+The plugin uses a single CSV file to store all workout logs. The file must have the following header row:
 
-- `Rep`: Number of repetitions
-- `Weight`: Weight used (in kg)
-- `Volume`: Calculated volume (Reps × Weight)
-- `Exercise`: Exercise name (can be a link)
-- `Source`: Workout source (can be a link)
-- `DateTime`: Date and time in ISO format
+`date,exercise,reps,weight,volume,origine,workout,timestamp`
 
-### Example Log File
+- **date**: The date of the workout in ISO 8601 format (`YYYY-MM-DDTHH:mm:ss.sssZ`).
+- **exercise**: The name of the exercise.
+- **reps**: Number of repetitions.
+- **weight**: Weight used.
+- **volume**: Calculated volume (reps * weight).
+- **origine**: The source or workout routine (e.g., "Push Day"). Can be a link.
+- **workout**: (Optional) Can be used for additional workout details.
+- **timestamp**: The unique timestamp of the log entry (milliseconds since epoch).
 
-```markdown
----
-Rep: 8
-Weight: 100
-Volume: 800
----
+### Example CSV Content
 
-Exercise:: [[Bench Press]]
-Source:: [[Push Day]]
-DateTime:: 2025-01-17T10:30:00
-````
+```csv
+date,exercise,reps,weight,volume,origine,workout,timestamp
+2025-01-17T10:30:00.000Z,Bench Press,8,100,800,[[Push Day]],Workout A,1737138600000
+2025-01-17T10:35:00.000Z,Squat,10,80,800,[[Leg Day]],Workout A,1737138900000
+```
 
 ## API Documentation
 

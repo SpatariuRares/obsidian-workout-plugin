@@ -211,7 +211,7 @@ export class ExerciseAutocomplete {
         );
       });
 
-      // if (plugin.settings.debugMode) {
+      if (plugin.settings.debugMode) {
         console.log("ExerciseAutocomplete: Exercise folder path:", exerciseFolderPath);
         console.log("ExerciseAutocomplete: Total markdown files:", allFiles.length);
         console.log("ExerciseAutocomplete: Paths to check:", [
@@ -226,7 +226,7 @@ export class ExerciseAutocomplete {
         ]);
         console.log("ExerciseAutocomplete: Filtered exercise files:", files.length);
         console.log("ExerciseAutocomplete: Exercise files:", files.map(f => f.path));
-      // }
+      }
 
       // Extract exercise names from filenames (remove .md extension)
       this.availableExercises = files.map((file) => file.basename).sort();

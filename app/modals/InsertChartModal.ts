@@ -29,7 +29,7 @@ export class InsertChartModal extends ModalBase {
     const chartTypeContainer = this.createFormGroup(chartTypeSection);
     const chartTypeSelect = this.createSelect(
       chartTypeContainer,
-      "Chart Type:",
+      "Chart type:",
       [
         { text: "Complete workout", value: "workout" },
         { text: "Specific exercise", value: "exercise" },
@@ -38,7 +38,7 @@ export class InsertChartModal extends ModalBase {
 
     // Data Type selector (volume, weight, reps)
     const dataTypeContainer = this.createFormGroup(chartTypeSection);
-    const dataTypeSelect = this.createSelect(dataTypeContainer, "Data Type:", [
+    const dataTypeSelect = this.createSelect(dataTypeContainer, "Data type:", [
       { text: "Volume (kg)", value: "volume" },
       { text: "Weight (kg)", value: "weight" },
       { text: "Reps", value: "reps" },
@@ -65,7 +65,7 @@ export class InsertChartModal extends ModalBase {
     const dateRangeContainer = this.createFormGroup(configSection);
     const dateRangeInput = this.createNumberInput(
       dateRangeContainer,
-      "Days Range:",
+      "Days range:",
       "180",
       1,
       365,
@@ -76,7 +76,7 @@ export class InsertChartModal extends ModalBase {
     const limitContainer = this.createFormGroup(configSection);
     const limitInput = this.createNumberInput(
       limitContainer,
-      "Data Limit:",
+      "Data limit:",
       "100",
       1,
       1000,
@@ -93,7 +93,7 @@ export class InsertChartModal extends ModalBase {
     const trendLineContainer = this.createCheckboxGroup(displaySection);
     const trendLineToggle = this.createCheckbox(
       trendLineContainer,
-      "Show Trend Line",
+      "Show trend line",
       true,
       "trendLine"
     );
@@ -102,7 +102,7 @@ export class InsertChartModal extends ModalBase {
     const trendHeaderContainer = this.createCheckboxGroup(displaySection);
     const trendHeaderToggle = this.createCheckbox(
       trendHeaderContainer,
-      "Show Trend Header",
+      "Show trend header",
       true,
       "trendHeader"
     );
@@ -111,7 +111,7 @@ export class InsertChartModal extends ModalBase {
     const statsContainer = this.createCheckboxGroup(displaySection);
     const statsToggle = this.createCheckbox(
       statsContainer,
-      "Show Statistics",
+      "Show statistics",
       true,
       "stats"
     );

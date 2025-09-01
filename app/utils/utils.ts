@@ -218,13 +218,15 @@ export function filterLogDataByExercise(
 }
 
 /**
- * Process log data for chart display - Updated to match JS version functionality
+ * CORREZIONE 1: Modifica della funzione processChartData in app/utils/utils.ts
  */
 export function processChartData(
   logData: WorkoutLogData[],
   chartType: "volume" | "weight" | "reps",
   dateRange: number = 30,
-  dateFormat: string = "DD/MM/YYYY"
+  dateFormat: string = "DD/MM/YYYY",
+  // ✨ NUOVO PARAMETRO per distinguere tra workout totale e singolo esercizio
+  displayType: "workout" | "exercise" = "exercise"
 ): { labels: string[]; datasets: ChartDataset[] } {
   // Filter by date range
   const cutoffDate = new Date();
@@ -263,7 +265,7 @@ export function processChartData(
     dateGroups.set(dateKey, existing);
   });
 
-  // Calculate averages and prepare chart data
+  // Calculate values based on display type
   const labels: string[] = [];
   const volumeData: number[] = [];
   const weightData: number[] = [];
@@ -271,9 +273,19 @@ export function processChartData(
 
   dateGroups.forEach((values, date) => {
     labels.push(date);
-    volumeData.push(values.count > 0 ? values.volume / values.count : 0);
-    weightData.push(values.count > 0 ? values.weight / values.count : 0);
-    repsData.push(values.count > 0 ? values.reps / values.count : 0);
+
+    // 🔧 CORREZIONE: Distinguere tra volume totale e media per esercizio
+    if (displayType === "workout") {
+      // Per l'allenamento totale: mostra il volume TOTALE (somma)
+      volumeData.push(values.volume);
+      weightData.push(values.weight); // Somma totale dei pesi
+      repsData.push(values.reps); // Somma totale delle reps
+    } else {
+      // Per singolo esercizio: mantieni la media (comportamento attuale)
+      volumeData.push(values.count > 0 ? values.volume / values.count : 0);
+      weightData.push(values.count > 0 ? values.weight / values.count : 0);
+      repsData.push(values.count > 0 ? values.reps / values.count : 0);
+    }
   });
 
   // Create datasets based on chart type
@@ -290,12 +302,15 @@ export function processChartData(
         : chartType === "weight"
         ? weightData
         : repsData;
+
+    // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
     const label =
       chartType === "volume"
-        ? "Volume"
+        ? displayType === "workout" ? "Volume Totale (kg)" : "Volume Medio (kg)"
         : chartType === "weight"
-        ? "Weight (kg)"
-        : "Reps";
+        ? displayType === "workout" ? "Peso Totale (kg)" : "Peso Medio (kg)"
+        : displayType === "workout" ? "Reps Totali" : "Reps Medie";
+
     const color =
       chartType === "volume"
         ? "#4CAF50"

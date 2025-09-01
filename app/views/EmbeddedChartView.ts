@@ -81,7 +81,9 @@ export class EmbeddedChartView extends BaseView {
       const { labels, datasets } = processChartData(
         sortedData,
         params.type || "volume",
-        params.dateRange || 30
+        params.dateRange || 30,
+        "DD/MM/YYYY",
+        params.chartType || "exercise"
       );
 
       this.logDebug("EmbeddedChartView", "Processed chart data", {

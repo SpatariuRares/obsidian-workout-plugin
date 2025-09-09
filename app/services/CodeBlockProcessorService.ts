@@ -3,10 +3,12 @@ import { WorkoutLogData } from "../types/WorkoutLogData";
 import { EmbeddedChartView } from "../views/EmbeddedChartView";
 import { EmbeddedTableView } from "../views/EmbeddedTableView";
 import { EmbeddedTimerView } from "../views/EmbeddedTimerView";
+import { EmbeddedDashboardView } from "../views/EmbeddedDashboardView";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   EmbeddedTimerParams,
+  EmbeddedDashboardParams,
 } from "../components/types";
 import type WorkoutChartsPlugin from "../../main";
 import { DataService } from "./DataService";
@@ -17,6 +19,7 @@ export class CodeBlockProcessorService {
     private dataService: DataService,
     private embeddedChartView: EmbeddedChartView,
     private embeddedTableView: EmbeddedTableView,
+    private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>
   ) {}
 
@@ -33,6 +36,10 @@ export class CodeBlockProcessorService {
       "workout-timer",
       this.handleWorkoutTimer.bind(this)
     );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      "workout-dashboard",
+      this.handleWorkoutDashboard.bind(this)
+    );
   }
 
   // Handle workout chart code blocks
@@ -47,13 +54,14 @@ export class CodeBlockProcessorService {
       // Use early filtering if we have specific parameters
       let logData: WorkoutLogData[];
       if (params.exercise || params.workout) {
-        logData = await this.dataService.getWorkoutLogData({
-          exercise: params.exercise as string,
-          workout: params.workout as string,
-          exactMatch: params.exactMatch as boolean,
-        });
+        logData =
+          (await this.dataService.getWorkoutLogData({
+            exercise: params.exercise as string,
+            workout: params.workout as string,
+            exactMatch: params.exactMatch as boolean,
+          })) || [];
       } else {
-        logData = await this.dataService.getWorkoutLogData();
+        logData = (await this.dataService.getWorkoutLogData()) || [];
       }
 
       if (logData.length === 0) {
@@ -90,13 +98,14 @@ export class CodeBlockProcessorService {
       // Use early filtering if we have specific parameters
       let logData: WorkoutLogData[];
       if (params.exercise || params.workout) {
-        logData = await this.dataService.getWorkoutLogData({
-          exercise: params.exercise as string,
-          workout: params.workout as string,
-          exactMatch: params.exactMatch as boolean,
-        });
+        logData =
+          (await this.dataService.getWorkoutLogData({
+            exercise: params.exercise as string,
+            workout: params.workout as string,
+            exactMatch: params.exactMatch as boolean,
+          })) || [];
       } else {
-        logData = await this.dataService.getWorkoutLogData();
+        logData = (await this.dataService.getWorkoutLogData()) || [];
       }
 
       if (logData.length === 0) {
@@ -167,6 +176,59 @@ export class CodeBlockProcessorService {
     const timerView = new EmbeddedTimerView(this.plugin);
     this.activeTimers.set(timerId, timerView);
     await timerView.createTimer(container, params);
+  }
+
+  // Handle workout dashboard code blocks
+  private async handleWorkoutDashboard(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext
+  ) {
+    try {
+      const params = this.parseCodeBlockParams(source);
+
+      // Use early filtering if we have specific parameters
+      let logData: WorkoutLogData[];
+      if (params.dateRange) {
+        // Filter data based on date range for better performance
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - (params.dateRange as number));
+
+        logData = (await this.dataService.getWorkoutLogData()) || [];
+        logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
+      } else {
+        logData = (await this.dataService.getWorkoutLogData()) || [];
+      }
+
+      if (logData.length === 0) {
+        const { UIComponents } = await import("../components");
+        UIComponents.renderCSVNoDataMessage(
+          el,
+          this.plugin.settings.csvLogFilePath,
+          this.plugin
+        );
+        return;
+      }
+
+      // Create dashboard
+      await this.createEmbeddedDashboard(el, logData, params);
+    } catch (error) {
+      const errorDiv = document.createElement("div");
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      errorDiv.textContent = `Error loading dashboard: ${errorMessage}`;
+      errorDiv.className = "workout-dashboard-error";
+      el.appendChild(errorDiv);
+    }
+  }
+
+  // Create embedded dashboard using the dedicated view
+  private async createEmbeddedDashboard(
+    container: HTMLElement,
+    data: WorkoutLogData[],
+    params: EmbeddedDashboardParams
+  ) {
+    await this.embeddedDashboardView.createDashboard(container, data, params);
   }
 
   // Parse code block parameters

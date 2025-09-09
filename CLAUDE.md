@@ -26,6 +26,7 @@ This is an Obsidian plugin that visualizes workout data through interactive char
 - **app/modals/**: Modal implementations with base classes for consistency
 - **app/components/**: UI components, data filtering, chart rendering, and utility functions
 - **app/settings/**: Plugin settings management
+- **app/services/**: Core business logic (DataService, CommandHandlerService, CodeBlockProcessorService)
 
 ### Data Flow
 

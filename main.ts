@@ -10,6 +10,7 @@ import { WorkoutChartsSettingTab } from "./app/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
+import { EmbeddedDashboardView } from "./app/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "./app/services/CommandHandlerService";
 import { DataService } from "./app/services/DataService";
 import { CodeBlockProcessorService } from "./app/services/CodeBlockProcessorService";
@@ -20,6 +21,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   settings!: WorkoutChartsSettings;
   public embeddedChartView!: EmbeddedChartView;
   public embeddedTableView!: EmbeddedTableView;
+  public embeddedDashboardView!: EmbeddedDashboardView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
 
   // Services
@@ -27,12 +29,25 @@ export default class WorkoutChartsPlugin extends Plugin {
   private dataService!: DataService;
   private codeBlockProcessorService!: CodeBlockProcessorService;
 
+  // Expose createLogModalHandler for dashboard quick actions
+  public get createLogModalHandler() {
+    return {
+      openModal: () => {
+        const { CreateLogModal } = require("./app/modals/CreateLogModal");
+        new CreateLogModal(this.app, this, undefined, undefined, () => {
+          this.triggerWorkoutLogRefresh();
+        }).open();
+      }
+    };
+  }
+
   async onload() {
     await this.loadSettings();
 
     // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);
     this.embeddedTableView = new EmbeddedTableView(this);
+    this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
     this.dataService = new DataService(this.app, this.settings);
@@ -42,6 +57,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.dataService,
       this.embeddedChartView,
       this.embeddedTableView,
+      this.embeddedDashboardView,
       this.activeTimers
     );
 

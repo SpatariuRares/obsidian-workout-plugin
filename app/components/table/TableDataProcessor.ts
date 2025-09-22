@@ -1,5 +1,5 @@
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import { EmbeddedTableParams, TableData, TableRow } from "./types";
+import { WorkoutLogData } from "../../types/WorkoutLogData";
+import { EmbeddedTableParams, TableData, TableRow } from "../types/types";
 
 /**
  * Processes workout log data for table display.

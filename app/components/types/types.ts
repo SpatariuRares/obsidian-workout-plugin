@@ -162,5 +162,5 @@ export interface WorkoutChartsPluginInterface {
 }
 
 // Import the WorkoutLogData type from the types directory
-import { WorkoutLogData, CSVWorkoutLogEntry } from "../types/WorkoutLogData";
+import { WorkoutLogData, CSVWorkoutLogEntry } from "../../types/WorkoutLogData";
 import { TFile, TAbstractFile } from "obsidian";

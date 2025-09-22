@@ -9,7 +9,7 @@ import {
   EmbeddedTableParams,
   EmbeddedTimerParams,
   EmbeddedDashboardParams,
-} from "../components/types";
+} from "../components/types/types";
 import type WorkoutChartsPlugin from "../../main";
 import { DataService } from "./DataService";
 

@@ -2,15 +2,15 @@ import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   FilterResult,
-} from "./types";
+} from "../types/types";
 import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
   filterLogDataByExercise,
   MatchResult,
   ExerciseMatch,
-} from "../utils/utils";
-import { WorkoutLogData } from "../types/WorkoutLogData";
+} from "../../utils/utils";
+import { WorkoutLogData } from "../../types/WorkoutLogData";
 
 /**
  * Handles filtering of workout log data based on various criteria.

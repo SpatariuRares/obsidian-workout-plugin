@@ -1,7 +1,7 @@
 import { WorkoutLogData } from "../types/WorkoutLogData";
 import type WorkoutChartsPlugin from "../../main";
 import { UIComponents, DataFilter } from "../components";
-import { EmbeddedViewParams } from "../components/types";
+import { EmbeddedViewParams } from "../components/types/types";
 
 /**
  * Base class for all embedded views that provides common functionality

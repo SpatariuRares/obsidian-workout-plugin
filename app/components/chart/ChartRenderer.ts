@@ -1,7 +1,7 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
-import { EmbeddedChartParams, ChartDataset } from "./types";
-import { calculateTrendLine } from "../utils/utils";
-import { TrendIndicators } from "./types";
+import { EmbeddedChartParams, ChartDataset } from "../types/types";
+import { calculateTrendLine } from "../../utils/utils";
+import { TrendIndicators } from "../types/types";
 
 /**
  * Handles the rendering of workout data charts using Chart.js.

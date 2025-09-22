@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "../types/WorkoutLogData";
-import { ChartDataset, EmbeddedViewParams } from "../components/types";
+import { ChartDataset, EmbeddedViewParams } from "../components/types/types";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching

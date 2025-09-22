@@ -1,4 +1,4 @@
-import { TrendIndicators } from "./types";
+import { TrendIndicators } from "../types/types";
 
 /**
  * Renders trend header information for workout charts.

@@ -30,27 +30,40 @@ This is an Obsidian plugin that visualizes workout data through interactive char
 ### Key Directories
 
 - **app/types/**: Type definitions and data models (`WorkoutLogData.ts` contains core interfaces: WorkoutLogData, CSVWorkoutLogEntry, WorkoutChartsSettings)
-- **app/views/**: Embedded view classes (BaseView provides common functionality, EmbeddedChartView, EmbeddedTableView, EmbeddedTimerView)
+- **app/views/**: Embedded view classes (all inherit from BaseView for common functionality):
+  - BaseView: Abstract base class with shared error handling and debug logging
+  - EmbeddedChartView, EmbeddedTableView, EmbeddedTimerView, EmbeddedDashboardView
 - **app/services/**: Service layer (DataService for CSV operations, CommandHandlerService for Obsidian commands, CodeBlockProcessorService for code block rendering)
-- **app/modals/**: Modal implementations with base classes (ModalBase) for consistency
-- **app/components/**: UI components, data filtering (DataFilter), chart rendering (ChartRenderer), table processing (TableRenderer, TableDataProcessor), and utility functions
+- **app/modals/**: Modal implementations with base classes (ModalBase) and reusable components (TargetSection, ExerciseAutocomplete, CodeGenerator)
+- **app/components/**: Organized by feature area:
+  - **chart/**: ChartRenderer for Chart.js integration
+  - **table/**: TableRenderer, TableDataProcessor, and mobile-responsive table components
+  - **timer/**: TimerCore, TimerControls, TimerDisplay, TimerAudio
+  - **dashboard/**: QuickStatsCards, VolumeAnalytics, MuscleHeatMap, RecentWorkouts, SummaryWidget
+  - **data/**: DataFilter (intelligent exercise matching), TrendCalculator
+  - **ui/**: Reusable UI components (StatsBox, TrendHeader, UIComponents)
 - **app/settings/**: Plugin settings management (WorkoutChartsSettingTab)
+- **app/utils/**: Utility functions for exercise matching and filtering
 
 ### Data Flow
 
 1. **Data Source**: CSV file with columns: date, exercise, reps, weight, volume, origine, workout, timestamp
 2. **Caching**: 5-second cache for workout data to improve performance (DataService handles caching)
-3. **Code Block Processing**: Three types of code blocks (`workout-chart`, `workout-log`, `workout-timer`) processed by CodeBlockProcessorService
+3. **Code Block Processing**: Four types of code blocks (`workout-chart`, `workout-log`, `workout-timer`, `workout-dashboard`) processed by CodeBlockProcessorService
 4. **Filtering**: Advanced filtering system with exact/fuzzy matching and early filtering optimization in DataFilter component
+   - Early filtering applies at data retrieval level in DataService before processing
+   - DataFilter supports intelligent exercise matching with multiple search strategies (filename, exercise field, fuzzy matching)
+   - AND logic when both exercise and workout filters are provided
 5. **View Rendering**: Views use BaseView patterns for consistent error handling and data processing
 
 ### Code Block Integration
 
-The plugin processes three code block types:
+The plugin processes four code block types:
 
 - `workout-chart`: Interactive Chart.js visualizations
 - `workout-log`: Data tables with sorting and filtering
 - `workout-timer`: Embedded workout timers
+- `workout-dashboard`: Comprehensive dashboard with stats, charts, and quick actions
 
 Parameters are parsed from YAML-like syntax within code blocks.
 
@@ -77,3 +90,6 @@ Parameters are parsed from YAML-like syntax within code blocks.
 - **Service Layer**: Main plugin delegates to specialized services for separation of concerns
 - **Modal System**: ModalBase provides consistent modal behavior with proper cleanup
 - **Early Filtering**: DataService applies filtering at data retrieval level to optimize performance
+- **Exercise Matching**: Multi-strategy search system (exact match, fuzzy match, filename match, exercise field match) with score-based filtering and confidence thresholds
+- **Dashboard Integration**: Comprehensive dashboard view with quick stats, volume analytics, muscle heat maps, recent workouts, and quick actions
+- **Debug Mode**: Extensive debug logging available (see [DEBUG_GUIDE.md](DEBUG_GUIDE.md) for details on troubleshooting search and filtering issues)

@@ -6,6 +6,7 @@ import { InsertTimerModal } from "../modals/InsertTimerModal";
 import { CreateExercisePageModal } from "../modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "../modals/CreateExerciseSectionModal";
 import type WorkoutChartsPlugin from "../../main";
+import { CreateDashboardSection } from "app/modals/CreateDashboardSection";
 
 export class CommandHandlerService {
   constructor(
@@ -76,6 +77,14 @@ export class CommandHandlerService {
       name: "Create exercise section",
       callback: () => {
         new CreateExerciseSectionModal(this.app, this.plugin).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "create-dashboard-section",
+      name: "Create dashboard section",
+      callback: () => {
+        new CreateDashboardSection(this.app, this.plugin).insert();
       },
     });
   }

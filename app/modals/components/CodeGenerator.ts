@@ -146,4 +146,15 @@ export class CodeGenerator {
 
     return lines.join("\n");
   }
+
+  /**
+ * Generates Dashboard code
+ */
+  static generateDashboardCode(): string {
+    const lines: string[] = ["```workout-dashboard"];
+    lines.push("```");
+
+    return lines.join("\n");
+  }
+
 }

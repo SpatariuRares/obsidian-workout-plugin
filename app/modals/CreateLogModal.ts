@@ -29,7 +29,7 @@ export class CreateLogModal extends ModalBase {
 
     // Add modal title
     const titleEl = contentEl.createEl("h2", {
-      text: "Create workout log (CSV mode)",
+      text: "Create workout log",
     });
 
     // Create form container

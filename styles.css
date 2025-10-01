@@ -1797,22 +1797,236 @@
 }
 
 /* Dashboard Responsive Design */
+/* Muscle Heat Map Styles */
+.muscle-heatmap {
+  grid-column: span 2;
+  min-height: 600px;
+}
+
+.heatmap-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.time-frame-toggle,
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 2px;
+  background: var(--background-secondary);
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.toggle-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.toggle-btn.active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: 600;
+}
+
+.export-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--interactive-accent);
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.export-btn:hover {
+  background: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.heatmap-canvas-container {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.heatmap-canvas-container canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.heatmap-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 400px;
+  height: 500px;
+  pointer-events: none;
+}
+
+.muscle-click-area {
+  pointer-events: auto;
+  transition: background-color 0.2s ease;
+}
+
+.heatmap-info-panel {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.heatmap-info-panel h4 {
+  margin: 0 0 12px 0;
+  color: var(--text-normal);
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.heatmap-info-panel p {
+  margin: 6px 0;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.imbalance-alert {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.alert-title {
+  margin: 0 0 8px 0;
+  color: #856404;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.alert-message {
+  margin: 4px 0;
+  color: #856404;
+  font-size: 0.9em;
+}
+
+.success-message {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.info-message {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.muscle-details {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.muscle-details h4 {
+  margin: 0 0 12px 0;
+  color: var(--text-normal);
+  font-size: 1em;
+  font-weight: 600;
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 6px;
+}
+
+.muscle-details p {
+  margin: 6px 0;
+  color: var(--text-normal);
+  font-size: 0.9em;
+}
+
+.muscle-details ul {
+  margin: 6px 0;
+  padding-left: 16px;
+}
+
+.muscle-details li {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin: 2px 0;
+}
+
 @media (max-width: 768px) {
   .workout-dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .summary-widget,
   .stats-cards,
-  .volume-analytics {
+  .volume-analytics,
+  .muscle-heatmap {
     grid-column: span 1;
   }
-  
+
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .heatmap-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .time-frame-toggle,
+  .view-toggle {
+    justify-content: center;
+  }
+
+  .muscle-details {
+    position: static;
+    margin-top: 16px;
+    width: 100%;
+    max-width: none;
   }
 }

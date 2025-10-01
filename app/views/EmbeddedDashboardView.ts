@@ -8,7 +8,8 @@ import {
   QuickStatsCards,
   VolumeAnalytics,
   RecentWorkouts,
-  QuickActions
+  QuickActions,
+  MuscleHeatMap
 } from "../components";
 
 /**
@@ -123,6 +124,9 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Volume Analytics Section
     VolumeAnalytics.render(gridEl, data, params);
+
+    // Muscle Heat Map Section (Priority: CRITICAL)
+    await MuscleHeatMap.render(gridEl, data, params, this.plugin);
 
     // Recent Workouts Section
     RecentWorkouts.render(gridEl, data, params);

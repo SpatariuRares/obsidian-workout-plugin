@@ -4,3 +4,4 @@ export * from "./VolumeAnalytics";
 export * from "./RecentWorkouts";
 export * from "./QuickActions";
 export * from "./DashboardCalculations";
+export * from "./MuscleHeatMap";

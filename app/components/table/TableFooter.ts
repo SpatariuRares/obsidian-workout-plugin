@@ -1,4 +1,4 @@
-import { TableData } from "./types";
+import { TableData } from "../types/types";
 
 export class TableFooter {
   /**

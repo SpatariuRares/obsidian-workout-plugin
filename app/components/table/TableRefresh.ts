@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { EmbeddedTableParams } from "./types";
+import { EmbeddedTableParams } from "../types/types";
 import type WorkoutChartsPlugin from "../../../main";
 import { TableState, TableCallbacks } from "./TableTypes";
 import { TableDataLoader } from "./TableDataLoader";

@@ -14,6 +14,7 @@ import { EmbeddedDashboardView } from "./app/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "./app/services/CommandHandlerService";
 import { DataService } from "./app/services/DataService";
 import { CodeBlockProcessorService } from "./app/services/CodeBlockProcessorService";
+import { CreateLogModal } from "./app/modals/CreateLogModal";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -33,7 +34,6 @@ export default class WorkoutChartsPlugin extends Plugin {
   public get createLogModalHandler() {
     return {
       openModal: () => {
-        const { CreateLogModal } = require("./app/modals/CreateLogModal");
         new CreateLogModal(this.app, this, undefined, undefined, () => {
           this.triggerWorkoutLogRefresh();
         }).open();

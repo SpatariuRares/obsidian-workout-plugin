@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { EmbeddedTableParams, TableData } from "./types";
+import { EmbeddedTableParams, TableData } from "../types/types";
 
 export interface TableState {
   currentContainer?: HTMLElement;

@@ -934,14 +934,4 @@ export class Body {
         return { ...this.bodyData };
     }
 
-    private showMuscleDetails(part: any): void {
-        // Create popup with muscle details
-        console.log(`Muscle clicked: ${part.label}`, {
-            value: part.value,
-            position: part.position
-        });
-
-        // You can implement a modal or tooltip here
-        // For now, just log to console
-    }
 }

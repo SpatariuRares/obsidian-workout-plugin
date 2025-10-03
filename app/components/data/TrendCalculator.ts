@@ -1,4 +1,4 @@
-import { TrendIndicators } from "./types";
+import { TrendIndicators } from "../types/types";
 
 /**
  * Calculates trend indicators for workout data.

@@ -18,7 +18,7 @@ The global app object is intended for debugging purposes and might be removed in
 
 ### Avoid unnecessary logging to console 
 
-Please avoid unnecessary logging.  
+Please avoid unnecessary logging.
 In it's default configuration, the developer console should only show error messages, debug messages should not be shown.
 
 ### Consider organizing your code base using folders 
@@ -79,11 +79,11 @@ Any text in UI elements should be using [Sentence case](https://en.wiktionary.o
 
 ### Use `setHeading` instead of a `<h1>`, `<h2>` 
 
-Using the heading elements from HTML will result in inconsistent styling between different plugins.  
+Using the heading elements from HTML will result in inconsistent styling between different plugins.
 Instead you should prefer the following:
 
 ```ts
-new Setting(containerEl).setName('your heading title').setHeading();
+new Setting(containerEl).setName("your heading title").setHeading();
 ```
 
 ## Security 
@@ -96,7 +96,7 @@ The following example builds a DOM element using a string that contains user inp
 
 ```ts
 function showName(name: string) {
-  let containerElement = document.querySelector('.my-container');
+  let containerElement = document.querySelector(".my-container");
   // DON'T DO THIS
   containerElement.innerHTML = `<div class="my-class"><b>Your name is: </b>${name}</div>`;
 }
@@ -117,12 +117,12 @@ When possible, use methods like [registerEvent()](https://docs.obsidian.md/Refe
 ```ts
 export default class MyPlugin extends Plugin {
   onload() {
-    this.registerEvent(this.app.vault.on('create', this.onCreate));
+    this.registerEvent(this.app.vault.on("create", this.onCreate));
   }
 
   onCreate: (file: TAbstractFile) => {
     // ...
-  }
+  };
 }
 ```
 
@@ -172,7 +172,7 @@ If you want to access the editor in the active note, use `activeEditor` instea
 const editor = this.app.workspace.activeEditor?.editor;
 
 if (editor) {
-    // ...
+  // ...
 }
 ```
 
@@ -183,7 +183,7 @@ Managing references to custom view can cause memory leaks or unintended conseque
 **Don't** do this:
 
 ```ts
-this.registerView(MY_VIEW_TYPE, () => this.view = new MyCustomView());
+this.registerView(MY_VIEW_TYPE, () => (this.view = new MyCustomView()));
 ```
 
 Do this instead:
@@ -223,7 +223,7 @@ The `process` function modifies the file atomically, which means that your plu
 
 Instead of extracting the frontmatter of a note, parsing and modifying the YAML manually you should use the [FileManager.processFrontMatter](https://docs.obsidian.md/Reference/TypeScript+API/FileManager/processFrontMatter) function.
 
-`processFrontMatter` runs atomically, so modifying the file will not conflict with other plugins editing the same file.  
+`processFrontMatter` runs atomically, so modifying the file will not conflict with other plugins editing the same file.
 It will also ensure a consistent layout of the YAML produced.
 
 ### Prefer the Vault API over the Adapter API 
@@ -242,19 +242,19 @@ This is inefficient, especially for large vaults. Use [Vault.getFileByPath](htt
 **Don't** do this:
 
 ```ts
-this.app.vault.getFiles().find(file => file.path === filePath);
+this.app.vault.getFiles().find((file) => file.path === filePath);
 ```
 
 Do this instead:
 
 ```ts
-const filePath = 'folder/file.md';
+const filePath = "folder/file.md";
 // if you want to get a file
 const file = this.app.vault.getFileByPath(filePath);
 ```
 
 ```ts
-const folderPath = 'folder';
+const folderPath = "folder";
 // or if you want to get a folder
 const folder = this.app.vault.getFolderByPath(folderPath);
 ```
@@ -265,10 +265,10 @@ If you aren't sure if the path provided is for a folder or a file, use:
 const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
 
 if (file instanceof TFile) {
-	// it's a file
+  // it's a file
 }
 if (file instanceof TFolder) {
-	// it's a folder
+  // it's a folder
 }
 ```
 
@@ -284,8 +284,8 @@ Use [normalizePath()](https://docs.obsidian.md/Reference/TypeScript+API/normali
 - Runs the path through [String.prototype.normalize](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize).
 
 ```ts
-import { normalizePath } from 'obsidian';
-const pathToPlugin = normalizePath('//my-folder\file');
+import { normalizePath } from "obsidian";
+const pathToPlugin = normalizePath("//my-folder\file");
 // pathToPlugin contains "my-folder/file" not "//my-folder\"
 ```
 
@@ -319,7 +319,6 @@ class MyPlugin extends Plugin {
     this.app.workspace.updateOptions();
   }
 }
-
 ```
 
 ## Styling 
@@ -330,8 +329,8 @@ class MyPlugin extends Plugin {
 
 ```ts
 const el = containerEl.createDiv();
-el.style.color = 'white';
-el.style.backgroundColor = 'red';
+el.style.color = "white";
+el.style.backgroundColor = "red";
 ```
 
 To make it easy for users to modify the styling of your plugin you should use CSS classes, as hardcoding the styling in the plugin code makes it impossible to modify with themes and snippets.
@@ -339,19 +338,19 @@ To make it easy for users to modify the styling of your plugin you should use CS
 **Do** this instead:
 
 ```ts
-const el = containerEl.createDiv({cls: 'warning-container'});
+const el = containerEl.createDiv({ cls: "warning-container" });
 ```
 
 In the plugins CSS add the following:
 
 ```css
 .warning-container {
-	color: var(--text-normal);
-	background-color: var(--background-modifier-error);
+  color: var(--text-normal);
+  background-color: var(--background-modifier-error);
 }
 ```
 
-To make the styling of your plugin consistent with Obsidian and other plugins you should use the [CSS variables](https://docs.obsidian.md/Reference/CSS+variables/CSS+variables) provided by Obsidian.  
+To make the styling of your plugin consistent with Obsidian and other plugins you should use the [CSS variables](https://docs.obsidian.md/Reference/CSS+variables/CSS+variables) provided by Obsidian.
 If there is no variable available that fits in your case, you can create your own.
 
 ## TypeScript 
@@ -382,11 +381,10 @@ Do this instead:
 ```ts
 async function AsyncTest(): Promise<string | null> {
   try {
-    let res = await requestUrl('https://example.com');
+    let res = await requestUrl("https://example.com");
     let text = await r.text;
     return text;
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e);
     return null;
   }

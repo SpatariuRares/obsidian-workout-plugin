@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
-import { TableRow, EmbeddedTableParams } from "./types";
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../../main";
+import { TableRow, EmbeddedTableParams } from "../types/types";
+import { WorkoutLogData } from "../../types/WorkoutLogData";
+import type WorkoutChartsPlugin from "../../../main";
 
 export class TableRenderer {
   /**
@@ -191,7 +191,7 @@ export class TableRenderer {
 
       if (plugin) {
         // Open EditLogModal with the original log data
-        const { EditLogModal } = await import("../modals/EditLogModal");
+        const { EditLogModal } = await import("../../modals/EditLogModal");
         const modal = new EditLogModal(plugin.app, plugin, originalLog, () => {
           plugin.triggerWorkoutLogRefresh();
         });

@@ -1,8 +1,8 @@
 import { MarkdownView } from "obsidian";
-import { CreateLogModal } from "../modals/CreateLogModal";
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import { FilterResult } from "./types";
-import type WorkoutChartsPlugin from "../../main";
+import { CreateLogModal } from "../../modals/CreateLogModal";
+import { WorkoutLogData } from "../../types/WorkoutLogData";
+import { FilterResult } from "../types/types";
+import type WorkoutChartsPlugin from "../../../main";
 
 /**
  * Provides reusable UI components for the workout charts plugin.

@@ -7,16 +7,35 @@ import {
   TableRenderer,
   TableDataProcessor,
   UIComponents,
+  TableState,
+  TableCallbacks,
+  TableDataLoader,
+  TableValidator,
+  TableCSVIndicator,
+  TableFooter,
+  TableRefresh,
 } from "../components";
 import { BaseView } from "./BaseView";
 
 export class EmbeddedTableView extends BaseView {
-  private currentContainer?: HTMLElement;
-  private currentLogData?: WorkoutLogData[];
-  private currentParams?: EmbeddedTableParams;
+  private tableState: TableState;
+  private callbacks: TableCallbacks;
 
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
+
+    this.tableState = {
+      currentContainer: undefined,
+      currentLogData: undefined,
+      currentParams: undefined,
+    };
+
+    this.callbacks = {
+      onRefresh: () => this.refreshTable(),
+      onError: (error, context) => this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
+      onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
+      onDebug: (component, message, data) => this.logDebug(component, message, data),
+    };
   }
 
   async createTable(
@@ -24,9 +43,9 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): Promise<void> {
-    this.currentContainer = container;
-    this.currentLogData = logData;
-    this.currentParams = params;
+    this.tableState.currentContainer = container;
+    this.tableState.currentLogData = logData;
+    this.tableState.currentParams = params;
 
     await this.renderTable(container, logData, params);
   }
@@ -37,12 +56,14 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams
   ): Promise<void> {
     try {
-      this.logDebug("EmbeddedTableView", "createTable called", {
+      this.callbacks.onDebug?.("EmbeddedTableView", "createTable called", {
         dataLength: logData.length,
         params,
       });
 
-      if (!this.validateTableParams(container, params)) {
+      // Validate parameters using the new component
+      const validationErrors = TableValidator.validateTableParams(params);
+      if (!this.validateAndHandleErrors(container, validationErrors)) {
         return;
       }
 
@@ -53,10 +74,14 @@ export class EmbeddedTableView extends BaseView {
         return;
       }
 
-      // Get optimized CSV data with efficient filtering
-      const dataToProcess = await this.getOptimizedCSVData(params);
+      // Get optimized CSV data using the new component
+      const dataToProcess = await TableDataLoader.getOptimizedCSVData(
+        params,
+        this.plugin,
+        this.callbacks
+      );
 
-      this.logDebug("EmbeddedTableView", "CSV data processing completed", {
+      this.callbacks.onDebug?.("EmbeddedTableView", "CSV data processing completed", {
         originalDataLength: logData.length,
         processedDataLength: dataToProcess.length,
       });
@@ -80,7 +105,7 @@ export class EmbeddedTableView extends BaseView {
       }
 
       loadingDiv.remove();
-      this.logDebug("EmbeddedTableView", "Processing table data", {
+      this.callbacks.onDebug?.("EmbeddedTableView", "Processing table data", {
         filteredDataLength: filterResult.filteredData.length,
         limit: params.limit || 50,
       });
@@ -98,42 +123,6 @@ export class EmbeddedTableView extends BaseView {
     }
   }
 
-  /**
-   * Get optimized data for CSV mode with efficient filtering
-   */
-  private async getOptimizedCSVData(
-    params: EmbeddedTableParams
-  ): Promise<WorkoutLogData[]> {
-    // In CSV mode, we can apply more efficient filtering
-    const filterOptions: {
-      exercise?: string;
-      workout?: string;
-      exactMatch?: boolean;
-    } = {};
-
-    if (params.exercise) {
-      filterOptions.exercise = params.exercise;
-      filterOptions.exactMatch = params.exactMatch;
-    }
-
-    if (params.workout) {
-      filterOptions.workout = params.workout;
-    }
-
-    this.logDebug("EmbeddedTableView", "CSV optimized filtering", {
-      filterOptions,
-    });
-
-    return await this.plugin.getWorkoutLogData(filterOptions);
-  }
-
-  private validateTableParams(
-    container: HTMLElement,
-    params: EmbeddedTableParams
-  ): boolean {
-    const validationErrors = TableDataProcessor.validateTableParams(params);
-    return this.validateAndHandleErrors(container, validationErrors);
-  }
 
   private renderTableContentOptimized(
     container: HTMLElement,
@@ -146,8 +135,8 @@ export class EmbeddedTableView extends BaseView {
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
 
-    // Show CSV mode indicator
-    this.renderCSVModeIndicator(contentDiv);
+    // Show CSV mode indicator using the new component
+    TableCSVIndicator.render(contentDiv, this.plugin);
 
     if (params.showAddButton !== false) {
       const activeView =
@@ -168,7 +157,7 @@ export class EmbeddedTableView extends BaseView {
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
 
-    this.logDebug("EmbeddedTableView", "Creating table with config", {
+    this.callbacks.onDebug?.("EmbeddedTableView", "Creating table with config", {
       headers,
       rows,
     });
@@ -200,7 +189,8 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    this.renderTableFooter(contentDiv, tableData);
+    // Render footer using the new component
+    TableFooter.render(contentDiv, tableData);
 
     this.showSuccessMessage(
       contentDiv,
@@ -210,87 +200,13 @@ export class EmbeddedTableView extends BaseView {
     container.appendChild(fragment);
   }
 
-  /**
-   * Render CSV mode indicator
-   */
-  private renderCSVModeIndicator(container: HTMLElement): void {
-    const indicatorDiv = container.createEl("div", {
-      cls: "csv-mode-indicator",
-    });
-
-    const span1 = indicatorDiv.createEl("span", {
-      cls: "csv-mode-indicator-icon",
-    });
-    span1.textContent = "📊";
-
-    const span2 = indicatorDiv.createEl("span");
-    span2.textContent = `CSV Mode: Data loaded from ${this.plugin.settings.csvLogFilePath}`;
-  }
-
-  private renderTableFooter(
-    container: HTMLElement,
-    tableData: TableData
-  ): void {
-    const { totalRows, filterResult, params } = tableData;
-
-    const footerDiv = container.createEl("div", {
-      cls: "table-footer",
-    });
-
-    let footerText = `📊 Found ${totalRows} logs`;
-
-    if (params.exercise && params.workout) {
-      const workoutFilename =
-        params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
-        params.workout;
-      footerText += ` for "${params.exercise}" in workout "${workoutFilename}"`;
-    } else if (params.exercise) {
-      footerText += ` for "${params.exercise}"`;
-    } else if (params.workout) {
-      const workoutFilename =
-        params.workout.split("/").pop()?.replace(/\.md$/i, "") ||
-        params.workout;
-      footerText += ` in workout "${workoutFilename}"`;
-    } else {
-      footerText += ` total`;
-    }
-
-    footerText += `. (Method: ${
-      filterResult.filterMethodUsed
-    }). Showing max ${params.limit || 50}. [CSV Mode]`;
-
-    footerDiv.textContent = footerText;
-  }
 
   public async refreshTable(): Promise<void> {
-    if (this.currentContainer && this.currentParams) {
-      try {
-        // Clear cache to ensure fresh data
-        this.plugin.clearLogDataCache();
-
-        const freshLogData = await this.plugin.getWorkoutLogData();
-
-        if (
-          !this.currentLogData ||
-          freshLogData.length !== this.currentLogData.length
-        ) {
-          this.currentLogData = freshLogData;
-          await this.renderTable(
-            this.currentContainer,
-            freshLogData,
-            this.currentParams
-          );
-        }
-      } catch (error) {
-        console.error("Error refreshing table:", error);
-        if (this.currentLogData) {
-          await this.renderTable(
-            this.currentContainer,
-            this.currentLogData,
-            this.currentParams
-          );
-        }
-      }
-    }
+    await TableRefresh.refreshTable(
+      this.tableState,
+      this.plugin,
+      (container, logData, params) => this.renderTable(container, logData, params),
+      this.callbacks
+    );
   }
 }

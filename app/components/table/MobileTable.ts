@@ -1,4 +1,4 @@
-import { EmbeddedChartParams, ChartDataset } from "./types";
+import { EmbeddedChartParams, ChartDataset } from "../types/types";
 
 export class MobileTable {
   /**

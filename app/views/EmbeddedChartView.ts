@@ -6,7 +6,7 @@ import {
   ChartDataset,
   FilterResult,
   TrendIndicators,
-} from "../components/types";
+} from "../components/types/types";
 import {
   processChartData,
   calculateTrendLine,

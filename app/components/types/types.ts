@@ -43,6 +43,19 @@ export interface EmbeddedTimerParams {
   debug?: boolean;
 }
 
+export interface EmbeddedDashboardParams {
+  title?: string;
+  dateRange?: number; // Days to include in analytics
+  showSummary?: boolean;
+  showQuickStats?: boolean;
+  showVolumeAnalytics?: boolean;
+  showRecentWorkouts?: boolean;
+  showQuickActions?: boolean;
+  recentWorkoutsLimit?: number;
+  volumeTrendDays?: number;
+  debug?: boolean;
+}
+
 export interface TrendIndicators {
   trendDirection: string;
   trendColor: string;
@@ -98,7 +111,8 @@ export interface ChartDataset {
 export type EmbeddedViewParams =
   | EmbeddedChartParams
   | EmbeddedTableParams
-  | EmbeddedTimerParams;
+  | EmbeddedTimerParams
+  | EmbeddedDashboardParams;
 
 // Context type for code block handlers
 export interface CodeBlockContext {
@@ -148,5 +162,5 @@ export interface WorkoutChartsPluginInterface {
 }
 
 // Import the WorkoutLogData type from the types directory
-import { WorkoutLogData, CSVWorkoutLogEntry } from "../types/WorkoutLogData";
+import { WorkoutLogData, CSVWorkoutLogEntry } from "../../types/WorkoutLogData";
 import { TFile, TAbstractFile } from "obsidian";

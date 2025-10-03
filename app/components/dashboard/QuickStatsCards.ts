@@ -41,31 +41,53 @@ export class QuickStatsCards {
   ): void {
     const cardEl = container.createEl("div", { cls: "stats-card" });
 
-    cardEl.createEl("div", {
+    // Header with icon and title
+    const headerEl = cardEl.createEl("div", { cls: "card-header" });
+
+    headerEl.createEl("div", {
       text: icon,
       cls: "card-icon",
     });
 
-    cardEl.createEl("h4", {
+    headerEl.createEl("h4", {
       text: title,
       cls: "card-title",
     });
 
+    // Stats grid
     const statsEl = cardEl.createEl("div", { cls: "card-stats" });
 
-    statsEl.createEl("div", {
-      text: `${stats.workouts} workouts`,
-      cls: "stat-item",
+    // Workouts stat
+    const workoutsStat = statsEl.createEl("div", { cls: "stat-item" });
+    workoutsStat.createEl("div", {
+      text: stats.workouts.toString(),
+      cls: "stat-value"
+    });
+    workoutsStat.createEl("div", {
+      text: "Workouts",
+      cls: "stat-label"
     });
 
-    statsEl.createEl("div", {
-      text: `${stats.volume.toLocaleString()} kg`,
-      cls: "stat-item",
+    // Total volume stat
+    const volumeStat = statsEl.createEl("div", { cls: "stat-item" });
+    volumeStat.createEl("div", {
+      text: `${stats.volume.toLocaleString()}`,
+      cls: "stat-value"
+    });
+    volumeStat.createEl("div", {
+      text: "Total Volume (kg)",
+      cls: "stat-label"
     });
 
-    statsEl.createEl("div", {
-      text: `${stats.avgVolume.toLocaleString()} avg`,
-      cls: "stat-item",
+    // Average volume stat
+    const avgStat = statsEl.createEl("div", { cls: "stat-item" });
+    avgStat.createEl("div", {
+      text: `${stats.avgVolume.toLocaleString()}`,
+      cls: "stat-value"
+    });
+    avgStat.createEl("div", {
+      text: "Avg Volume (kg)",
+      cls: "stat-label"
     });
   }
 }

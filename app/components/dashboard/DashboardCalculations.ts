@@ -32,12 +32,18 @@ export class DashboardCalculations {
    * Calculate summary metrics for the dashboard
    */
   static calculateSummaryMetrics(data: WorkoutLogData[]): SummaryMetrics {
-    const uniqueWorkouts = new Set(data.map((d) => `${d.date}-${d.workout}`))
-      .size;
+    // Group by date (YYYY-MM-DD) and workout name
+    const uniqueWorkouts = new Set(
+      data.map((d) => {
+        const dateOnly = d.date.split('T')[0];
+        return `${dateOnly}-${d.workout}`;
+      })
+    ).size;
+
     const totalVolume = data.reduce((sum, d) => sum + d.volume, 0);
 
     // Calculate current streak (simplified)
-    const uniqueDates = [...new Set(data.map((d) => d.date))].sort();
+    const uniqueDates = [...new Set(data.map((d) => d.date.split('T')[0]))].sort();
     let currentStreak = 0;
     const today = new Date().toISOString().split("T")[0];
 
@@ -79,9 +85,15 @@ export class DashboardCalculations {
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     const periodData = data.filter((d) => new Date(d.date) >= cutoffDate);
+
+    // Group by date (YYYY-MM-DD) and workout name
     const uniqueWorkouts = new Set(
-      periodData.map((d) => `${d.date}-${d.workout}`)
+      periodData.map((d) => {
+        const dateOnly = d.date.split('T')[0];
+        return `${dateOnly}-${d.workout}`;
+      })
     ).size;
+
     const totalVolume = periodData.reduce((sum, d) => sum + d.volume, 0);
     const avgVolume = uniqueWorkouts > 0 ? totalVolume / uniqueWorkouts : 0;
 
@@ -107,7 +119,7 @@ export class DashboardCalculations {
       labels.push(dateStr);
 
       const dayVolume = data
-        .filter((d) => d.date === dateStr)
+        .filter((d) => d.date.split('T')[0] === dateStr)
         .reduce((sum, d) => sum + d.volume, 0);
 
       volumeData.push(dayVolume);
@@ -142,26 +154,34 @@ export class DashboardCalculations {
         date: string;
         workout: string | undefined;
         totalVolume: number;
+        timestamp: string;
       }
     >();
 
     data.forEach((d) => {
-      const key = `${d.date}-${d.workout || "default"}`;
+      // Extract date from timestamp (YYYY-MM-DD)
+      const dateOnly = d.date.split('T')[0];
+      const key = `${dateOnly}-${d.workout || "default"}`;
       const existing = workoutMap.get(key);
 
       if (existing) {
         existing.totalVolume += d.volume;
+        // Keep the most recent timestamp
+        if (d.date > existing.timestamp) {
+          existing.timestamp = d.date;
+        }
       } else {
         workoutMap.set(key, {
-          date: d.date,
+          date: dateOnly,
           workout: d.workout,
           totalVolume: d.volume,
+          timestamp: d.date,
         });
       }
     });
 
     return Array.from(workoutMap.values())
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
       .slice(0, limit);
   }
 }

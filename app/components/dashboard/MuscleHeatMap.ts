@@ -1,6 +1,10 @@
 import { WorkoutLogData } from "../../types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "../types/types";
 import type WorkoutChartsPlugin from "../../../main";
+import {
+  BodyHeatMap,
+  type BodyData,
+} from "./body";
 
 export interface MuscleGroupData {
   name: string;
@@ -30,10 +34,18 @@ export class MuscleHeatMap {
     // Main muscle groups
     chest: "chest",
     petto: "chest",
+    pettorale: "chest",
+    pettoralesuperior: "chest",
+    pettoraleinferior: "chest",
+    pettoralemedio: "chest",
     back: "back",
     schiena: "back",
+    dorsale: "back",
     shoulders: "shoulders",
     spalle: "shoulders",
+    deltoidi: "shoulders",
+    deltoideanteriore: "shoulders",
+    deltoidilaterale: "shoulders",
     biceps: "biceps",
     bicipiti: "biceps",
     triceps: "triceps",
@@ -44,8 +56,13 @@ export class MuscleHeatMap {
     quadricipiti: "quads",
     hamstrings: "hamstrings",
     ischiocrurali: "hamstrings",
+    femorali: "hamstrings",
     glutes: "glutes",
     glutei: "glutes",
+    gluteo: "glutes",
+    grandegluteo: "glutes",
+    abduttori: "glutes",
+    adduttori: "glutes",
     calves: "calves",
     polpacci: "calves",
     abs: "abs",
@@ -60,6 +77,7 @@ export class MuscleHeatMap {
     trapezi: "traps",
     rear_delts: "rear_delts",
     deltoidi_posteriori: "rear_delts",
+    deltoidiposteriori: "rear_delts",
 
     // Exercise types that help determine muscle groups
     push: "chest",
@@ -71,6 +89,7 @@ export class MuscleHeatMap {
     extension: "triceps",
     fly: "chest",
     row: "back",
+    spintaanca: "glutes",
   };
 
   private static readonly BODY_PARTS: BodyPart[] = [
@@ -319,28 +338,116 @@ export class MuscleHeatMap {
       plugin
     );
 
-    // Create canvas
-    const canvas = container.createEl("canvas", {
-      attr: {
-        width: "400",
-        height: "500",
-      },
-    });
+    // Create body data from muscle volumes
+    const bodyData = this.createBodyDataFromMuscleData(muscleData);
 
-    const ctx = canvas.getContext("2d")!;
-
-    // Clear canvas and set background
-    ctx.fillStyle = "#f8f9fa";
-    ctx.fillRect(0, 0, 400, 500);
-
-    // Draw body outline
-    this.drawBodyOutlineCanvas(ctx, options.view);
-
-    // Render muscle groups with heat map coloring
-    this.renderMuscleGroupsCanvas(ctx, muscleData, options, container);
+    // Create body visualization using muscle components
+    this.renderBodyVisualization(container, bodyData, options);
 
     // Update info panel with imbalance detection
     this.updateInfoPanel(infoPanel, muscleData);
+  }
+
+  private static createBodyDataFromMuscleData(
+    muscleData: Map<string, MuscleGroupData>
+  ): BodyData {
+    const getVolume = (muscleId: string): number => {
+      return muscleData.get(muscleId)?.volume || 0;
+    };
+
+    const bodyData = {
+      shoulders: {
+        frontLeft: getVolume("shoulders") * 0.5,
+        frontRight: getVolume("shoulders") * 0.5,
+        rearLeft: getVolume("rear_delts") * 0.5,
+        rearRight: getVolume("rear_delts") * 0.5,
+      },
+      chest: {
+        upper: getVolume("chest") * 0.4,
+        middle: getVolume("chest") * 0.4,
+        lower: getVolume("chest") * 0.2,
+      },
+      back: {
+        traps: getVolume("traps"),
+        lats: getVolume("back"),
+        lowerBack: getVolume("back") * 0.3,
+        trapsMiddle: getVolume("traps") * 0.5,
+      },
+      arms: {
+        bicepsLeft: getVolume("biceps") * 0.5,
+        bicepsRight: getVolume("biceps") * 0.5,
+        tricepsLeft: getVolume("triceps") * 0.5,
+        tricepsRight: getVolume("triceps") * 0.5,
+        forearmsLeft: getVolume("forearms") * 0.5,
+        forearmsRight: getVolume("forearms") * 0.5,
+      },
+      legs: {
+        quadsLeft: getVolume("quads") * 0.5,
+        quadsRight: getVolume("quads") * 0.5,
+        hamstringsLeft: getVolume("hamstrings") * 0.5,
+        hamstringsRight: getVolume("hamstrings") * 0.5,
+        glutesLeft: getVolume("glutes") * 0.5,
+        glutesRight: getVolume("glutes") * 0.5,
+        calvesLeft: getVolume("calves") * 0.5,
+        calvesRight: getVolume("calves") * 0.5,
+      },
+      core: {
+        abs: getVolume("abs"),
+        obliques: getVolume("core") * 0.5,
+      },
+    };
+
+
+    return bodyData;
+  }
+
+  private static renderBodyVisualization(
+    container: HTMLElement,
+    bodyData: BodyData,
+    options: MuscleHeatMapOptions
+  ): void {
+    // Calculate max value dynamically from actual body data
+    const allValues = [
+      bodyData.shoulders.frontLeft,
+      bodyData.shoulders.frontRight,
+      bodyData.shoulders.rearLeft,
+      bodyData.shoulders.rearRight,
+      bodyData.chest.upper,
+      bodyData.chest.middle,
+      bodyData.chest.lower,
+      bodyData.back.traps,
+      bodyData.back.lats,
+      bodyData.back.lowerBack,
+      bodyData.back.trapsMiddle,
+      bodyData.arms.bicepsLeft,
+      bodyData.arms.bicepsRight,
+      bodyData.arms.tricepsLeft,
+      bodyData.arms.tricepsRight,
+      bodyData.arms.forearmsLeft,
+      bodyData.arms.forearmsRight,
+      bodyData.legs.quadsLeft,
+      bodyData.legs.quadsRight,
+      bodyData.legs.hamstringsLeft,
+      bodyData.legs.hamstringsRight,
+      bodyData.legs.glutesLeft,
+      bodyData.legs.glutesRight,
+      bodyData.legs.calvesLeft,
+      bodyData.legs.calvesRight,
+      bodyData.core.abs,
+      bodyData.core.obliques
+    ];
+
+    const maxValue = Math.max(...allValues, 1); // Ensure at least 1 to avoid division by zero
+
+    // Create BodyHeatMap component with visualization options
+    const bodyHeatMap = new BodyHeatMap(bodyData, {
+      view: options.view,
+      showLabels: true,
+      maxValue: maxValue
+    });
+
+    // Render the body heat map
+    bodyHeatMap.render(container);
   }
 
   private static drawBodyOutlineCanvas(
@@ -625,7 +732,7 @@ export class MuscleHeatMap {
       const content = await plugin.app.vault.read(exerciseFile);
 
       // Parse frontmatter for tags
-      const frontmatterMatch = content.match(/^---\s*\n(.*?)\n---/);
+      const frontmatterMatch = content.match(/^---\s*\n(.*?)\n---/s);
       if (!frontmatterMatch) {
         this.exerciseTagsCache.set(exerciseName, []);
         return [];
@@ -675,6 +782,7 @@ export class MuscleHeatMap {
     tags.forEach((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
       const mappedMuscle = this.TAG_MUSCLE_MAP[normalizedTag];
+
       if (mappedMuscle) {
         muscleGroups.add(mappedMuscle);
       }
@@ -694,10 +802,6 @@ export class MuscleHeatMap {
         }
       });
 
-      // Default fallback
-      if (muscleGroups.size === 0) {
-        muscleGroups.add("core");
-      }
     }
 
     return Array.from(muscleGroups);
@@ -787,8 +891,7 @@ export class MuscleHeatMap {
       imbalanceThreshold
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${
-          frontVolume > backVolume ? "Front" : "Back"
+        `Front-Back imbalance detected (${frontVolume > backVolume ? "Front" : "Back"
         } dominant)`
       );
     }
@@ -843,9 +946,8 @@ export class MuscleHeatMap {
     exportCanvas.toBlob((blob) => {
       if (blob) {
         const link = document.createElement("a");
-        link.download = `muscle-heatmap-${
-          new Date().toISOString().split("T")[0]
-        }.png`;
+        link.download = `muscle-heatmap-${new Date().toISOString().split("T")[0]
+          }.png`;
         link.href = URL.createObjectURL(blob);
         link.click();
         URL.revokeObjectURL(link.href);

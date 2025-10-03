@@ -57,10 +57,22 @@ export class TimerCore {
       return;
     }
 
+    if (this.state.timerType === "countdown") {
+      const remaining = this.state.duration * 1000 - this.state.elapsedTime;
+      if (remaining <= 0) {
+        this.setState({
+          elapsedTime: 0,
+          currentRound: 1,
+        });
+      }
+    }
+
+
     this.setState({
       isRunning: true,
-      startTime: Date.now() - this.state.elapsedTime
+      startTime: Date.now() - this.state.elapsedTime,
     });
+
 
     if (this.debugMode) {
       console.debug("TimerCore: Timer started", {

@@ -202,17 +202,5 @@ export class EmbeddedChartView extends BaseView {
       filterResult.filterMethodUsed,
       this.plugin.settings.debugMode || params.debug || false
     );
-
-    this.showSuccessMessage(
-      contentDiv,
-      `Chart generated successfully! ${volumeData.length} sessions processed.`
-    );
-
-    UIComponents.renderFooter(
-      contentDiv,
-      volumeData,
-      filterResult,
-      params.chartType || "exercise"
-    );
   }
 }

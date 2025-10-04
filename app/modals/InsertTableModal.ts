@@ -152,17 +152,18 @@ export class InsertTableModal extends ModalBase {
     // Buttons Section
     const buttonsSection = this.createButtonsSection(mainContainer);
 
+    // Insert button
+    const insertBtn = buttonsSection.createEl("button", {
+      text: "Insert table",
+      cls: "mod-cta",
+    });
+
     // Cancel button
     const cancelBtn = buttonsSection.createEl("button", {
       text: "Cancel",
       cls: "mod-warning",
     });
 
-    // Insert button
-    const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert table",
-      cls: "mod-cta",
-    });
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

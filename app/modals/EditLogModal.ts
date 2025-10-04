@@ -116,17 +116,18 @@ export class EditLogModal extends ModalBase {
     // Buttons container
     const buttonsContainer = this.createButtonsSection(formContainer);
 
+    // Update button
+    const updateBtn = buttonsContainer.createEl("button", {
+      text: "Update log",
+      cls: "workout-charts-btn workout-charts-btn-primary",
+    });
+
     // Cancel button
     const cancelBtn = buttonsContainer.createEl("button", {
       text: "Cancel",
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
-    // Update button
-    const updateBtn = buttonsContainer.createEl("button", {
-      text: "Update log",
-      cls: "workout-charts-btn workout-charts-btn-primary",
-    });
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

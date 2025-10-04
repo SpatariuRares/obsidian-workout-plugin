@@ -191,39 +191,6 @@ export class UIComponents {
     debugInfo.append(`Chart Type: ${chartType}`);
   }
 
-  /**
-   * Renders a footer with summary information about the data.
-   * @param contentDiv - The HTML element to render the footer in
-   * @param volumeData - Array of numerical data points
-   * @param filterResult - Result of the data filtering process
-   * @param chartType - Type of chart being displayed
-   */
-  static renderFooter(
-    contentDiv: HTMLElement,
-    volumeData: number[],
-    filterResult: FilterResult,
-    chartType: string
-  ): void {
-    const infoFooterDiv = contentDiv.createEl("div", {
-      cls: "workout-charts-footer",
-    });
-
-    let infoFooterText = `📊 ${volumeData.length} sessions processed`;
-
-    if (filterResult.titlePrefix && filterResult.titlePrefix.includes(" + ")) {
-      const [exercise, workout] = filterResult.titlePrefix.split(" + ");
-      const workoutFilename =
-        workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
-      infoFooterText += ` for "${exercise}" in workout "${workoutFilename}"`;
-    } else if (chartType === "exercise") {
-      infoFooterText += ` for \"${filterResult.titlePrefix}\"`;
-    } else if (chartType === "workout") {
-      infoFooterText += ` for workout \"${filterResult.titlePrefix}\"`;
-    }
-
-    infoFooterText += `. (Search method: ${filterResult.filterMethodUsed})`;
-    infoFooterDiv.textContent = infoFooterText;
-  }
 
   /**
    * Renders a fallback table when Chart.js is not available.

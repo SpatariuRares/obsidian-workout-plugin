@@ -115,17 +115,18 @@ export class CreateLogModal extends ModalBase {
     // Buttons container
     const buttonsContainer = this.createButtonsSection(formContainer);
 
+    // Create button
+    const createBtn = buttonsContainer.createEl("button", {
+      text: "Create log",
+      cls: "workout-charts-btn workout-charts-btn-primary",
+    });
+
     // Cancel button
     const cancelBtn = buttonsContainer.createEl("button", {
       text: "Cancel",
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
-    // Create button
-    const createBtn = buttonsContainer.createEl("button", {
-      text: "Create log",
-      cls: "workout-charts-btn workout-charts-btn-primary",
-    });
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

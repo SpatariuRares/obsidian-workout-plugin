@@ -26,16 +26,16 @@ export class InsertTimerModal extends ModalBase {
     // Buttons Section
     const buttonsSection = this.createButtonsSection(mainContainer);
 
-    // Cancel button
-    const cancelBtn = buttonsSection.createEl("button", {
-      text: "Cancel",
-      cls: "mod-warning",
-    });
-
     // Insert button
     const insertBtn = buttonsSection.createEl("button", {
       text: "Insert timer",
       cls: "mod-cta",
+    });
+
+    // Cancel button
+    const cancelBtn = buttonsSection.createEl("button", {
+      text: "Cancel",
+      cls: "mod-warning",
     });
 
     // Event listeners

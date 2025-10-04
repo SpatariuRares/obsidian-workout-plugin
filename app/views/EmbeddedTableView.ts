@@ -11,8 +11,7 @@ import {
   TableCallbacks,
   TableDataLoader,
   TableValidator,
-  TableCSVIndicator,
-  TableFooter,
+
   TableRefresh,
 } from "../components";
 import { BaseView } from "./BaseView";
@@ -135,8 +134,6 @@ export class EmbeddedTableView extends BaseView {
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
 
-    // Show CSV mode indicator using the new component
-    TableCSVIndicator.render(contentDiv, this.plugin);
 
     if (params.showAddButton !== false) {
       const activeView =
@@ -188,14 +185,6 @@ export class EmbeddedTableView extends BaseView {
         true
       );
     }
-
-    // Render footer using the new component
-    TableFooter.render(contentDiv, tableData);
-
-    this.showSuccessMessage(
-      contentDiv,
-      `Table generated successfully! ${totalRows} logs processed. (CSV Mode)`
-    );
 
     container.appendChild(fragment);
   }

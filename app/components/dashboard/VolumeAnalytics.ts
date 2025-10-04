@@ -10,7 +10,7 @@ export class VolumeAnalytics {
     params: EmbeddedDashboardParams
   ): void {
     const analyticsEl = container.createEl("div", {
-      cls: "dashboard-widget volume-analytics",
+      cls: "dashboard-widget  columns-2  volume-analytics",
     });
 
     analyticsEl.createEl("h3", {

@@ -1,7 +1,7 @@
 import { WorkoutLogData } from "../types/WorkoutLogData";
 import type WorkoutChartsPlugin from "../../main";
 import { BaseView } from "./BaseView";
-import { UIComponents, DataFilter } from "../components";
+import { UIComponents, DataFilter, WidgetsFileError } from "../components";
 import {
   EmbeddedDashboardParams,
   SummaryWidget,
@@ -131,6 +131,9 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Recent Workouts Section
     RecentWorkouts.render(gridEl, data, params);
+
+    // Exercise File Errors Widget
+    await WidgetsFileError.render(gridEl, this.plugin);
 
     // Quick Actions Panel
     QuickActions.render(gridEl, params, this.plugin);

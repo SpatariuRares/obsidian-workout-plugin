@@ -1,0 +1,281 @@
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Print Styles */
+@media print {
+  .workout-charts-container .workout-charts-controls,
+  .add-log-button-container,
+  .embedded-chart-debug {
+    display: none !important;
+  }
+
+  .workout-charts-container .workout-log-table th,
+  .workout-charts-container .workout-log-table td {
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    padding: var(--workout-space-sm);
+  }
+
+  .workout-charts-container .workout-log-table,
+  .embedded-chart-table-fallback .workout-log-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--workout-space-md);
+  }
+
+  .workout-charts-table-fallback .workout-charts-stats,
+  .workout-charts-table-fallback .workout-charts-trend-header {
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    margin: var(--workout-space-md) 0;
+    padding: var(--workout-space-lg);
+  }
+}
+
+/* Large Desktop - 8 columns for maximum flexibility */
+@media (min-width: 1600px) {
+  .workout-dashboard-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  /* Adjust widget spans for 8-column grid */
+  .muscle-heatmap,
+  .volume-analytics {
+    grid-column: span 3;
+  }
+
+  .recent-workouts,
+  .quick-stats,
+  .file-errors,
+  .quick-actions {
+    grid-column: span 1;
+  }
+}
+
+/* Tablet breakpoint - 4 columns */
+@media (max-width: 1200px) {
+  .workout-dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--workout-space-md);
+  }
+
+  /* All widgets same size on tablet */
+  .muscle-heatmap,
+  .volume-analytics,
+  .recent-workouts,
+  .quick-stats,
+  .file-errors,
+  .quick-actions {
+    grid-column: span 2;
+  }
+}
+
+/* Mobile breakpoint - single column, natural flow */
+@media (max-width: 768px) {
+  .workout-chart-mobile-table {
+    display: block;
+  }
+
+  .workout-chart-header {
+    flex-direction: column;
+    gap: var(--workout-space-sm);
+    align-items: flex-start;
+  }
+
+  .workout-chart-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .workout-log-table {
+    font-size: var(--workout-space-md);
+  }
+
+  .workout-log-table th,
+  .workout-log-table td {
+    padding: var(--workout-space-sm) var(--workout-space-xs);
+  }
+
+  .workout-timer-display {
+    font-size: var(--workout-size-2xl);
+  }
+
+  .workout-timer-controls {
+    flex-wrap: wrap;
+  }
+
+  /* Chart and Mobile Table Responsive */
+  .workout-charts-controls {
+    flex-direction: column;
+    gap: var(--workout-space-md);
+  }
+
+  .workout-charts-info {
+    padding: var(--workout-space-md) var(--workout-space-lg);
+  }
+
+  .workout-charts-container {
+    display: none; /* Hide chart on mobile */
+  }
+
+  .workout-chart-mobile-table {
+    display: block !important; /* Show mobile table on mobile */
+  }
+
+  .workout-charts-buttons {
+    flex-direction: column;
+  }
+
+  .workout-charts-btn {
+    width: 100%;
+  }
+
+  /* Dashboard Responsive */
+  .workout-dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+    grid-auto-flow: row;
+  }
+
+  /* All widgets full width on mobile */
+  .summary-widget,
+  .stats-cards,
+  .muscle-heatmap,
+  .volume-analytics,
+  .quick-stats,
+  .recent-workouts,
+  .quick-actions,
+  .file-errors {
+    grid-column: 1 / -1;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+
+  .stats-card {
+    padding: var(--workout-space-lg);
+  }
+
+  .stat-value {
+    font-size: var(--workout-space-xl);
+  }
+
+  .stat-label {
+    font-size: var(--workout-font-xs);
+  }
+
+  .card-header {
+    margin-bottom: var(--workout-space-md);
+  }
+
+  .card-icon {
+    font-size: var(--workout-space-xl);
+  }
+
+  .dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+
+  .widget-title {
+    font-size: var(--workout-font-base);
+  }
+
+  .heatmap-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--workout-space-md);
+  }
+
+  .time-frame-toggle,
+  .view-toggle {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: var(--workout-space-md) var(--workout-space-md);
+  }
+
+  .export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .muscle-details {
+    position: static;
+    margin-top: var(--workout-space-lg);
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-chart-container {
+    display: none;
+  }
+
+  .recent-workout-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--workout-space-sm);
+  }
+
+  .workout-date {
+    min-width: auto;
+  }
+
+  .workout-name {
+    margin: 0;
+  }
+
+  .action-buttons {
+    gap: var(--workout-space-md);
+  }
+
+  .action-button {
+    padding: var(--workout-space-lg) var(--workout-space-lg);
+    font-size: var(--workout-font-base);
+  }
+}
+
+@media (max-width: 484px) {
+  .stats-card {
+    padding: var(--workout-space-lg);
+  }
+
+  .stat-value {
+    font-size: var(--workout-font-lg);
+  }
+
+  .stat-label {
+    font-size: var(--workout-font-xs);
+  }
+
+  .card-stats {
+    gap: var(--workout-space-md);
+  }
+
+  .dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+
+  .widget-title {
+    font-size: var(--workout-font-base);
+    margin-bottom: var(--workout-space-md);
+  }
+
+  .workout-dashboard-title {
+    font-size: var(--workout-font-xl);
+    margin-bottom: var(--workout-space-lg);
+  }
+
+  .toggle-btn {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    font-size: var(--workout-font-sm);
+  }
+}

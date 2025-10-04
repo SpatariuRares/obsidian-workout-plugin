@@ -1,0 +1,16 @@
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+
+@import "styles/_variables.css";
+@import "styles/_table.css";
+@import "styles/_chart.css";
+@import "styles/_timer.css";
+@import "styles/_modal.css";
+@import "styles/_dashboard.css";
+@import "styles/_utilities.css";
+@import "styles/_responsive.css";

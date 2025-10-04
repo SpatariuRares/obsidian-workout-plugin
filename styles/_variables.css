@@ -1,0 +1,59 @@
+/* ============================================================================
+   CSS VARIABLES (PLUGIN-SPECIFIC)
+   ============================================================================ */
+:root {
+  /* Spacing System (8px base scale) */
+  --workout-space-xs: 4px;   /* 0.5x */
+  --workout-space-sm: 8px;   /* 1x */
+  --workout-space-md: 12px;  /* 1.5x */
+  --workout-space-lg: 16px;  /* 2x */
+  --workout-space-xl: 20px;  /* 2.5x */
+  --workout-space-2xl: 24px; /* 3x */
+
+  /* Specific Sizes (for large elements like charts/modals) */
+  --workout-size-2xl: 32px;
+  --workout-size-3xl: 60px;
+  --workout-size-4xl: 80px;
+  --workout-size-6xl: 200px;
+  --workout-size-8xl: 300px;
+  --workout-size-9xl: 400px;
+  --workout-size-10xl: 500px;
+  --workout-size-11xl: 600px;
+
+  /* Border Radius - Using Obsidian native variables with fallbacks */
+  --workout-radius-sm: var(--radius-s, 4px);
+  --workout-radius-md: var(--radius-m, 6px);
+  --workout-radius-lg: var(--radius-l, 8px);
+  --workout-radius-xl: var(--radius-xl, 12px);
+
+  /* Typography - Font Sizes */
+  --workout-font-xs: 0.8em;
+  --workout-font-sm: 0.85em;
+  --workout-font-base: 0.9em;
+  --workout-font-lg: 1.1em;
+  --workout-font-xl: 1.2em;
+  --workout-font-2xl: 1.5em;
+
+  /* Typography - Font Weights */
+  --workout-font-weight-medium: 500;
+  --workout-font-weight-semibold: 600;
+  --workout-font-weight-bold: 700;
+
+  /* Shadows - Simplified */
+  --workout-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --workout-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --workout-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* Border Widths - Using Obsidian native variables with fallbacks */
+  --workout-border-thin: var(--border-width, 1px);
+  --workout-border-medium: var(--input-border-width, 2px);
+
+  /* Transitions */
+  --workout-transition: all 0.2s ease;
+
+  /* Alert Colors */
+  --workout-color-warning-bg: rgba(255, 193, 7, 0.1);
+  --workout-color-warning-border: #ffc107;
+  --workout-color-warning-text: #856404;
+  --workout-color-success: #28a745;
+}

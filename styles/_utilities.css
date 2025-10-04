@@ -1,0 +1,407 @@
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/* Stats Box Styles */
+.workout-charts-stats {
+  margin-top: var(--workout-space-2xl);
+  padding: var(--workout-space-xl);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-xl);
+  font-size: var(--workout-font-base);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  color: var(--text-normal);
+  box-shadow: var(--workout-shadow-md);
+}
+
+.workout-charts-stats-title {
+  font-size: var(--workout-font-lg);
+}
+
+.workout-charts-stats-list {
+  margin-top: var(--workout-space-md);
+  margin-bottom: var(--workout-space-xs);
+  list-style-type: square;
+  padding-left: var(--workout-space-2xl);
+}
+
+/* Trend Header Styles */
+.workout-charts-trend-header {
+  padding: var(--workout-space-xl);
+  margin-bottom: var(--workout-space-xl);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-xl);
+  text-align: center;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  box-shadow: var(--workout-shadow-md);
+  color: var(--text-normal);
+}
+
+.workout-charts-trend-header-h3 {
+  margin: 0;
+  font-size: var(--workout-font-xl);
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-normal);
+}
+
+.workout-charts-trend-header-p {
+  margin: var(--workout-space-sm) 0 0 0;
+  font-size: var(--workout-font-base);
+  color: var(--text-muted);
+}
+
+.workout-charts-trend-variation {
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-accent);
+}
+
+/* Loading and Info Messages */
+.workout-charts-loading {
+  text-align: center;
+  padding: 40px var(--workout-space-xl);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.workout-charts-info {
+  padding: var(--workout-space-lg) var(--workout-space-xl);
+  margin: var(--workout-space-lg) 0;
+  border-radius: var(--workout-radius-lg);
+  border-left: var(--workout-space-xs) solid;
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-charts-info-info {
+  background: var(--background-secondary);
+  border-left-color: var(--text-accent);
+  color: var(--text-normal);
+}
+
+.workout-charts-info-warning {
+  background: var(--background-secondary);
+  border-left-color: var(--text-warning);
+  color: var(--text-normal);
+}
+
+.workout-charts-info-success {
+  background: var(--background-secondary);
+  border-left-color: var(--text-success);
+  color: var(--text-normal);
+}
+
+/* Error Messages */
+.workout-chart-error,
+.workout-table-error {
+  padding: var(--workout-space-xl);;
+  margin: var(--workout-space-lg) 0;
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--text-error);
+  border-radius: var(--workout-radius-lg);
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-log-no-data,
+.workout-charts-no-data {
+  text-align: center;
+  padding: 40px var(--workout-space-xl);;
+  color: var(--text-muted);
+  font-style: italic;
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  margin: var(--workout-space-lg) 0;
+}
+
+/* CSV-specific message styling */
+.workout-log-no-data p {
+  margin: var(--workout-space-sm) 0;
+}
+
+.workout-log-no-data code {
+  background: var(--background-primary);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  font-family: monospace;
+  color: var(--text-accent);
+}
+
+.workout-log-no-data button {
+  margin-top: var(--workout-space-md);
+}
+
+/* Error and No Data States */
+.workout-log-error,
+.workout-log-no-data {
+  padding: var(--workout-space-xl);;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  margin: var(--workout-space-lg) 0;
+}
+
+.workout-log-error {
+  color: var(--text-error);
+  border-color: var(--text-error);
+}
+
+/* Exercise Status in Create Log Modal */
+.exercise-status-container {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  margin-top: var(--workout-space-sm);
+  padding: var(--workout-space-sm);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.exercise-status-text {
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.create-exercise-page-btn {
+  background: var(--interactive-success);
+  color: var(--text-on-accent);
+  border: none;
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border-radius: var(--button-radius, var(--workout-radius-sm));
+  cursor: pointer;
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-medium);
+  transition: var(--workout-transition);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}
+
+.create-exercise-page-btn:hover {
+  background: var(--interactive-success-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--workout-shadow-sm);
+}
+
+/* Exercise Autocomplete */
+.exercise-autocomplete-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  box-shadow: var(--workout-shadow-lg);
+  max-height: var(--workout-size-6xl);
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: var(--workout-space-sm);
+}
+
+.exercise-autocomplete-suggestion {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  font-size: var(--workout-font-base);
+  transition: var(--workout-transition);
+}
+
+.exercise-autocomplete-suggestion:last-child {
+  border-bottom: none;
+}
+
+.exercise-autocomplete-suggestion:hover,
+.exercise-autocomplete-suggestion-hover {
+  background: var(--background-modifier-hover);
+}
+
+/* Exercise Autocomplete Wrapper */
+.exercise-autocomplete-wrapper {
+  position: relative;
+}
+
+.exercise-autocomplete-input {
+  width: 100%;
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--workout-space-lg);
+}
+
+.exercise-autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--dropdown-background, var(--background-primary));
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-top: none;
+  border-radius: 0 0 var(--workout-space-xs) var(--workout-space-xs);
+  max-height: var(--workout-size-6xl);
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: var(--workout-shadow-md);
+}
+
+.exercise-autocomplete-item {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.exercise-autocomplete-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.exercise-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.exercise-autocomplete-item.selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* Exercise Autocomplete Visibility */
+.exercise-autocomplete-hidden {
+  display: none;
+}
+
+.exercise-autocomplete-visible {
+  display: block;
+}
+
+.exercise-status-success {
+  color: var(--text-success);
+}
+
+.exercise-status-accent {
+  color: var(--text-accent);
+}
+
+.exercise-status-warning {
+  color: var(--text-warning);
+}
+
+/* Debug Info */
+.workout-charts-debug {
+  margin-top: var(--workout-space-xl);;
+  padding: var(--workout-space-lg);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+
+/* Footer */
+.workout-charts-footer {
+  margin-top: var(--workout-space-xl);;
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  text-align: center;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.workout-charts-button-container {
+  margin-top: var(--workout-space-lg);
+}
+
+.csv-mode-indicator {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
+  font-size: var(--workout-space-md);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+.csv-mode-indicator-icon {
+  color: var(--interactive-accent);
+}
+
+/* Trend color classes */
+.trend-color-green {
+  color: var(--color-green) !important;
+}
+
+.trend-color-red {
+  color: var(--color-red) !important;
+}
+
+.trend-color-orange {
+  color: var(--color-orange) !important;
+}
+
+.trend-color-accent {
+  color: var(--text-accent) !important;
+}
+
+/* Display Control Classes */
+.display-none {
+  display: none !important;
+}
+
+.display-block {
+  display: block !important;
+}
+
+.display-inline-block {
+  display: inline-block !important;
+}
+
+/* Opacity Control Classes */
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* Button Styles */
+.add-log-button-container,
+.create-log-button-container {
+  text-align: left;
+}
+
+.add-log-button,
+.create-log-button {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-md) var(--workout-space-xl);
+  font-size: var(--workout-space-lg);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-log-button:hover,
+.create-log-button:hover {
+  background: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--workout-shadow-lg);
+}
+
+.add-log-button:disabled,
+.create-log-button:disabled {
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

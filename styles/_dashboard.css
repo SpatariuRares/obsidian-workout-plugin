@@ -1,0 +1,671 @@
+/* ============================================================================
+   DASHBOARD STYLES
+   ============================================================================ */
+
+/* Dashboard Styles */
+.workout-dashboard {
+  width: 100%;
+  margin: var(--workout-space-lg) 0;
+}
+
+.workout-dashboard-title {
+  margin: 0 0 var(--workout-space-2xl) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-2xl);
+  font-weight: var(--workout-font-weight-semibold);
+  border-bottom: var(--workout-border-medium) solid var(--interactive-accent);
+  padding-bottom: var(--workout-space-sm);
+}
+
+.workout-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(150px, auto);
+  gap: var(--workout-space-lg);
+  width: 100%;
+  align-items: start;
+  grid-auto-flow: dense;
+}
+
+.dashboard-widget {
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-lg);
+  box-shadow: var(--workout-shadow-sm);
+  transition: var(--workout-transition);
+  grid-column: span 12;
+  height: fit-content;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Widget span configurations (columns) */
+.dashboard-widget.span-3 {
+  grid-column: span 3;
+}
+
+.dashboard-widget.span-4 {
+  grid-column: span 4;
+}
+
+.dashboard-widget.span-6 {
+  grid-column: span 6;
+}
+
+.dashboard-widget.span-8 {
+  grid-column: span 8;
+}
+
+.dashboard-widget.span-12 {
+  grid-column: span 12;
+}
+
+/* Widget row span configurations (vertical height) */
+.dashboard-widget.row-span-1 {
+  grid-row: span 1;
+}
+
+.dashboard-widget.row-span-2 {
+  grid-row: span 1;
+}
+
+.dashboard-widget.row-span-3 {
+  grid-row: span 3;
+}
+
+.dashboard-widget.row-span-4 {
+  grid-row: span 4;
+}
+
+/* Compact widget - less padding, tighter layout */
+.dashboard-widget.compact {
+  padding: var(--workout-space-lg);
+  min-height: auto;
+}
+
+/* Tall widget - more vertical space */
+.dashboard-widget.tall {
+  min-height: 400px;
+}
+
+/* Auto-height widget - fits content exactly */
+.dashboard-widget.auto-height {
+  height: auto;
+  min-height: auto;
+}
+
+.dashboard-widget:hover {
+  border-color: var(--interactive-accent);
+  box-shadow: var(--workout-shadow-md);
+}
+
+.widget-title {
+  margin: 0 0 var(--workout-space-lg) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+/* Smart Auto-Placement Grid Layout - 6 column x row grid system */
+
+/* Full width widgets - 1 row height */
+.summary-widget,
+.stats-cards {
+  grid-column: 1 / -1;
+  grid-row: span 1;
+}
+
+/* Tall widget - spans multiple rows */
+.muscle-heatmap {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+
+/* Medium-tall widgets */
+.volume-analytics,
+.file-errors {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+/* Standard widgets */
+.recent-workouts,
+.quick-stats {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+/* Compact widget */
+.quick-actions {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--workout-space-xs), 1fr));
+  gap: var(--workout-space-lg);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.card-icon {
+  font-size: var(--workout-space-2xl);
+  margin-bottom: var(--workout-space-sm);
+  display: block;
+}
+
+.card-title {
+  margin: 0;
+  font-size: var(--workout-space-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  opacity: 0.8;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+}
+
+.stat-value {
+  font-size: var(--workout-space-2xl);
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-accent);
+}
+
+.stat-label {
+  font-size: var(--workout-space-md);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-card {
+  text-align: center;
+  padding: var(--workout-space-xl);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  transition: var(--workout-transition);
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--workout-shadow-md);
+}
+
+.card-value {
+  font-size: var(--workout-font-2xl);
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--interactive-accent);
+  margin-bottom: var(--workout-space-xs);
+}
+
+/* Stats Cards */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--workout-size-6xl), 1fr));
+  gap: var(--workout-space-lg);
+}
+
+.stats-card {
+  padding: var(--workout-space-xl);
+  background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  border-radius: var(--workout-radius-xl);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--workout-space-xs);
+  background: linear-gradient(90deg, var(--interactive-accent), var(--interactive-accent-hover));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--workout-shadow-lg);
+  border-color: var(--interactive-accent);
+}
+
+.stats-card:hover::before {
+  opacity: 1;
+}
+
+.stats-card .card-icon {
+  font-size: var(--workout-font-2xl);
+  margin-bottom: var(--workout-space-sm);
+}
+
+.stats-card .card-title {
+  font-size: var(--workout-font-base);
+  color: var(--text-normal);
+  margin-bottom: var(--workout-space-md);
+  text-transform: none;
+  letter-spacing: normal;
+  opacity: 1;
+}
+
+
+.dashboard-chart-container {
+  height: var(--workout-size-8xl);
+  margin: var(--workout-space-lg) 0;
+  position: relative;
+}
+
+.muscle-group-breakdown {
+  margin-top: var(--workout-space-xl);;
+  padding-top: var(--workout-space-xl);;
+  border-top: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.muscle-group-breakdown h4 {
+  margin: 0 0 var(--workout-space-md) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.muscle-group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.muscle-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--workout-space-sm) 0;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.muscle-group-item:last-child {
+  border-bottom: none;
+}
+
+.exercise-name {
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+}
+
+.exercise-volume {
+  color: var(--text-muted);
+  font-size: var(--workout-font-base);
+}
+
+/* Recent Workouts */
+.recent-workouts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recent-workout-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--workout-space-md) 0;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  transition: var(--workout-transition);
+}
+
+.recent-workout-item:last-child {
+  border-bottom: none;
+}
+
+.recent-workout-item:hover {
+  background: var(--background-modifier-hover);
+  margin: 0 calc(-1 * var(--workout-space-lg));
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-date {
+  font-size: var(--workout-font-base);
+  color: var(--text-muted);
+  min-width: var(--workout-size-4xl);
+}
+
+.workout-name {
+  flex: 1;
+  margin: 0 var(--workout-space-lg);
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+}
+
+.workout-volume {
+  color: var(--interactive-accent);
+  font-weight: var(--workout-font-weight-semibold);
+  font-size: var(--workout-font-base);
+}
+
+/* Quick Actions */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+
+.action-button {
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  border: none;
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  transition: var(--workout-transition);
+  text-align: center;
+}
+
+.action-button.primary {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.action-button.primary:hover {
+  background: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--workout-shadow-lg);
+}
+
+.action-button.secondary {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.action-button.secondary:hover {
+  background: var(--background-modifier-hover);
+  border-color: var(--interactive-accent);
+  transform: translateY(-1px);
+}
+
+.workout-dashboard-error {
+  background: var(--background-modifier-error);
+  color: var(--text-on-accent);
+  padding: var(--workout-space-lg);
+  border-radius: var(--workout-radius-md);
+  margin: var(--workout-space-lg) 0;
+  border:--workout-border-thin solid var(--color-red);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* Muscle Heat Map Styles */
+.muscle-heatmap {
+  min-height: var(--workout-size-11xl);
+}
+
+.heatmap-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--workout-space-xl);
+  gap: var(--workout-space-lg);
+  flex-wrap: wrap;
+}
+
+.time-frame-toggle,
+.view-toggle {
+  display: flex;
+  gap: var(--workout-space-xs);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-xs);
+  background: var(--background-secondary);
+}
+
+.toggle-btn {
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--workout-font-base);
+  border-radius: var(--button-radius, var(--workout-radius-sm));
+  cursor: pointer;
+  transition: var(--workout-transition);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.toggle-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.toggle-btn.active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.export-btn {
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border: var(--workout-border-thin) solid var(--interactive-accent);
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  cursor: pointer;
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-medium);
+  transition: var(--workout-transition);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+.export-btn:hover {
+  background: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--workout-shadow-md);
+}
+
+.heatmap-canvas-container {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  padding: var(--workout-space-xl);
+  margin-bottom: var(--workout-space-xl);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.heatmap-canvas-container canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--workout-radius-sm);
+  background: var(--background-secondary);
+}
+
+.heatmap-overlay {
+  position: absolute;
+  top: var(--workout-space-xl);;
+  left: var(--workout-space-xl);;
+  width: var(--workout-size-9xl);
+  height: var(--workout-size-10xl);
+  pointer-events: none;
+}
+
+.muscle-click-area {
+  pointer-events: auto;
+  transition: background-color 0.2s ease;
+}
+
+.heatmap-info-panel {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  padding: var(--workout-space-lg);
+  margin-top: var(--workout-space-lg);
+}
+
+.heatmap-info-panel h4 {
+  margin: 0 0 var(--workout-space-md) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.heatmap-info-panel p {
+  margin: var(--workout-space-sm) 0;
+  color: var(--text-muted);
+  font-size: var(--workout-font-base);
+}
+
+.imbalance-alert {
+  background: var(--workout-color-warning-bg);
+  border: var(--workout-border-thin) solid var(--workout-color-warning-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-md);
+  margin-top: var(--workout-space-md);
+}
+
+.alert-title {
+  margin: 0 0 8px 0;
+  color: var(--workout-color-warning-text);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.alert-message {
+  margin: var(--workout-space-xs) 0;
+  color: var(--workout-color-warning-text);
+  font-size: var(--workout-font-base);
+}
+
+.success-message {
+  color: var(--workout-color-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.info-message {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: var(--workout-space-xl);;
+}
+
+.muscle-details {
+  position: absolute;
+  top: var(--workout-space-xl);;
+  right: var(--workout-space-xl);;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  padding: var(--workout-space-lg);
+  box-shadow: var(--workout-shadow-md);
+  z-index: 10;
+  min-width: var(--workout-size-2xl);
+  max-width: var(--workout-size-2xl);
+}
+
+.muscle-details h4 {
+  margin: 0 0 var(--workout-space-md) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  padding-bottom: var(--workout-space-sm);
+}
+
+.muscle-details p {
+  margin: var(--workout-space-sm) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+}
+
+.muscle-details ul {
+  margin: var(--workout-space-sm) 0;
+  padding-left: var(--workout-space-lg);
+}
+
+.muscle-details li {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  margin: var(--workout-space-xs) 0;
+}
+
+.file-errors-success {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+  text-align: center;
+  padding: var(--workout-space-lg);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--text-success);
+}
+
+.file-errors-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.file-error-item {
+  padding: var(--workout-space-md) 0;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+
+.file-error-item:last-child {
+  border-bottom: none;
+}
+
+.file-error-name {
+  margin-bottom: var(--workout-space-sm);
+}
+
+.file-error-link {
+  color: var(--text-accent);
+  font-weight: var(--workout-font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+.file-error-link:hover {
+  color: var(--text-accent-hover);
+  text-decoration: underline;
+}
+
+.file-error-messages {
+  list-style: none;
+  margin: var(--workout-space-sm) 0 0 0;
+  padding: 0;
+}
+
+.file-error-message {
+  color: var(--text-warning);
+  font-size: var(--workout-font-sm);
+  padding: var(--workout-space-xs) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}

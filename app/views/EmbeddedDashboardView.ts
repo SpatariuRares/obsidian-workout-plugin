@@ -132,11 +132,12 @@ export class EmbeddedDashboardView extends BaseView {
     // Recent Workouts Section
     RecentWorkouts.render(gridEl, data, params);
 
+    // Quick Actions Panel
+    QuickActions.render(gridEl, params, this.plugin);
+
     // Exercise File Errors Widget
     await WidgetsFileError.render(gridEl, this.plugin);
 
-    // Quick Actions Panel
-    QuickActions.render(gridEl, params, this.plugin);
   }
 
 }

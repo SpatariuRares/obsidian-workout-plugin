@@ -1,0 +1,134 @@
+/* ============================================================================
+   TIMER STYLES
+   ============================================================================ */
+
+/* Timer Styles */
+.workout-timer-embed {
+  width: 100%;
+  margin: var(--workout-space-sm) 0;
+}
+
+.workout-timer-container {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  font-size: var(--workout-font-base);
+}
+
+.workout-timer-display {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+.workout-timer-time {
+  display: flex;
+  align-items: center;
+}
+
+.workout-timer-time-display {
+  font-size: var(--workout-font-xl);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-accent);
+  font-family: monospace;
+  min-width: var(--workout-size-3xl);
+  text-align: center;
+}
+
+.workout-timer-controls {
+  display: flex;
+  gap: var(--workout-space-xs);
+  align-items: center;
+}
+
+.workout-timer-btn {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border: none;
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  font-size: var(--workout-font-base);
+  cursor: pointer;
+  transition: var(--workout-transition);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  min-width: var(--workout-size-2xl);
+  height: var(--workout-size-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-timer-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+.workout-timer-start-stop {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+
+.workout-timer-start-stop:hover {
+  background: var(--interactive-accent-hover);
+}
+
+.workout-timer-reset {
+  background: var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.workout-timer-reset:hover {
+  background: var(--background-modifier-border-hover);
+}
+
+.workout-timer-complete {
+  font-size: var(--workout-font-xl);
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-success);
+}
+
+.workout-timer-error {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-modifier-error);
+  color: var(--text-error);
+  border-radius: var(--workout-radius-sm);
+  margin: var(--workout-space-sm) 0;
+  border: var(--workout-border-thin) solid var(--background-modifier-error);
+  font-size: var(--workout-font-base);
+}
+
+/* Timer Configuration Visibility */
+.timer-config-countdown {
+  display: block;
+}
+
+.timer-config-interval {
+  display: none;
+}
+
+.timer-config-rounds {
+  display: none;
+}
+
+/* Timer Button Variants */
+.workout-timer-btn-start {
+  background: var(--interactive-success);
+  color: var(--text-on-accent);
+}
+
+.workout-timer-btn-start:hover {
+  background: var(--interactive-success-hover);
+}
+
+.workout-timer-btn-stop {
+  background: var(--interactive-error);
+  color: var(--text-on-accent);
+}
+
+.workout-timer-btn-stop:hover {
+  background: var(--interactive-error-hover);
+}

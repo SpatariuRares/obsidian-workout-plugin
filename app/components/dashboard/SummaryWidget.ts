@@ -33,7 +33,7 @@ export class SummaryWidget {
     this.createSummaryCard(
       summaryEl,
       "Current Streak",
-      `${metrics.currentStreak} days`,
+      `${metrics.currentStreak} weeks`,
       "🔥"
     );
 

@@ -42,18 +42,25 @@ export class DashboardCalculations {
 
     const totalVolume = data.reduce((sum, d) => sum + d.volume, 0);
 
-    // Calculate current streak (simplified)
+    // Calculate current streak (weekly)
     const uniqueDates = [...new Set(data.map((d) => d.date.split('T')[0]))].sort();
     let currentStreak = 0;
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date();
 
-    for (let i = uniqueDates.length - 1; i >= 0; i--) {
-      const daysDiff = Math.floor(
-        (new Date(today).getTime() - new Date(uniqueDates[i]).getTime()) /
-          (1000 * 60 * 60 * 24)
-      );
+    // Funzione per ottenere il numero della settimana (0 = settimana corrente)
+    const getWeekNumber = (date: Date): number => {
+      const diffTime = today.getTime() - date.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      return Math.floor(diffDays / 7);
+    };
 
-      if (daysDiff === currentStreak) {
+    // Raggruppa le date per settimana
+    const weeks = new Set(uniqueDates.map(date => getWeekNumber(new Date(date))));
+    const sortedWeeks = Array.from(weeks).sort((a, b) => a - b);
+
+    // Conta le settimane consecutive partendo dalla settimana corrente (0)
+    for (let i = 0; i < sortedWeeks.length; i++) {
+      if (sortedWeeks[i] === i) {
         currentStreak++;
       } else {
         break;

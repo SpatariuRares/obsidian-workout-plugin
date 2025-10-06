@@ -23,6 +23,7 @@ export class TableDataProcessor {
       "Reps",
       "Weight (kg)",
       "Volume",
+      "Notes",
       "Actions",
     ];
 
@@ -47,7 +48,7 @@ export class TableDataProcessor {
 
     const sortedAndLimitedData = this.sortAndLimitData(logData, limit);
 
-    const rows = this.processRowsEfficiently(sortedAndLimitedData);
+    const rows = this.processRowsEfficiently(sortedAndLimitedData, headers);
 
     return {
       headers,
@@ -88,7 +89,10 @@ export class TableDataProcessor {
   /**
    * Process rows more efficiently with pre-computed values
    */
-  private static processRowsEfficiently(logData: WorkoutLogData[]): TableRow[] {
+  private static processRowsEfficiently(
+    logData: WorkoutLogData[],
+    headers: string[]
+  ): TableRow[] {
     const rows: TableRow[] = [];
 
     const dateCache = new Map<string, string>();
@@ -107,20 +111,17 @@ export class TableDataProcessor {
         dateKeyCache.set(log.date, dateKey);
       }
 
-      const exerciseDisplay = this.getExerciseDisplay(log.exercise);
-      const reps = log.reps?.toString() || "N/D";
-      const weight = log.weight?.toString() || "N/D";
-      const volume = log.volume?.toString() || "N/D";
+      const dataMap: Record<string, string> = {
+        Date: formattedDate,
+        Exercise: this.getExerciseDisplay(log.exercise),
+        Reps: log.reps?.toString() || "N/D",
+        "Weight (kg)": log.weight?.toString() || "N/D",
+        Volume: log.volume?.toString() || "N/D",
+        Notes: log.notes || "",
+        Actions: "", // Placeholder for actions
+      };
 
-      // Create row with all data columns plus empty string for Actions column
-      const displayRow = [
-        formattedDate,
-        exerciseDisplay,
-        reps,
-        weight,
-        volume,
-        "",
-      ];
+      const displayRow = headers.map((header) => dataMap[header] ?? "");
 
       const row = {
         displayRow,
@@ -235,7 +236,7 @@ export class TableDataProcessor {
       searchByName: false,
       exactMatch: false,
       debug: false,
-      columns: ["Date", "Exercise", "Reps", "Weight (kg)", "Volume"],
+      columns: ["Date", "Reps", "Weight (kg)", "Volume", "Notes"],
     };
   }
 }

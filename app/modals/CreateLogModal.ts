@@ -68,6 +68,14 @@ export class CreateLogModal extends ModalBase {
     );
     weightInput.setAttribute("step", "0.5");
 
+    // Notes input
+    const notesContainer = this.createFormGroup(formContainer);
+    notesContainer.createEl("label", { text: "Notes (optional):" });
+    const notesInput = notesContainer.createEl("textarea", {
+      placeholder: "e.g., Good form, felt strong",
+    });
+    notesInput.rows = 3;
+
     // Workout section
     const workoutSection = this.createSection(formContainer, "Workout");
 
@@ -135,6 +143,7 @@ export class CreateLogModal extends ModalBase {
       const exercise = exerciseElements.exerciseInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
+      const notes = notesInput.value.trim();
       let workout = workoutInput.value.trim();
 
       // Handle current workout toggle
@@ -153,7 +162,7 @@ export class CreateLogModal extends ModalBase {
       }
 
       try {
-        await this.createLogEntry(exercise, reps, weight, workout);
+        await this.createLogEntry(exercise, reps, weight, workout, notes);
         this.close();
         new Notice("Workout log created successfully!");
 
@@ -185,7 +194,8 @@ export class CreateLogModal extends ModalBase {
     exercise: string,
     reps: number,
     weight: number,
-    workout: string
+    workout: string,
+    notes: string
   ) {
     const entry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
       date: new Date().toISOString(),
@@ -195,6 +205,7 @@ export class CreateLogModal extends ModalBase {
       volume: reps * weight,
       origine: this.currentPageLink || "[[Workout Charts Plugin]]",
       workout: workout || undefined,
+      notes: notes || undefined,
     };
 
     await this.plugin.addWorkoutLogEntry(entry);

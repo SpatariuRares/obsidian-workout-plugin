@@ -97,8 +97,8 @@ export function parseCSVLogFile(
           volume: parseFloat(values[4]) || 0,
           origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
           workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
-          notes: values[7] && values[7].trim() ? values[7].trim() : undefined,
-          timestamp: parseInt(values[8]) || Date.now(),
+          timestamp: parseInt(values[7]) || Date.now(),
+          notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
         };
 
         // Validate required fields
@@ -126,8 +126,8 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
     entry.volume.toString(),
     entry.origine || "",
     entry.workout || "",
-    entry.notes || "",
     entry.timestamp.toString(),
+    entry.notes || "",
   ];
 
   return values
@@ -151,7 +151,7 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
  */
 export function entriesToCSVContent(entries: CSVWorkoutLogEntry[]): string {
   const header =
-    "date,exercise,reps,weight,volume,origine,workout,notes,timestamp";
+    "date,exercise,reps,weight,volume,origine,workout,timestamp,notes";
   const lines = [header];
 
   entries.forEach((entry) => {

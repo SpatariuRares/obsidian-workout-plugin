@@ -97,24 +97,63 @@ export class TableRenderer {
 
       const fragment = document.createDocumentFragment();
 
+      // Group rows by date for calculating aggregates
+      const groupedRows: { [key: string]: typeof rows } = {};
+      const dateKeys: string[] = [];
       rows.forEach((row) => {
+        if (!groupedRows[row.dateKey]) {
+          groupedRows[row.dateKey] = [];
+          dateKeys.push(row.dateKey);
+        }
+        groupedRows[row.dateKey].push(row);
+      });
+
+      // Helper function to create spacer row
+      const createSpacerRow = (dateKey: string) => {
+        const groupRows = groupedRows[dateKey];
+        let totalVolume = 0;
+        let totalWeight = 0;
+        let totalReps = 0;
+
+        groupRows.forEach((r) => {
+          totalVolume += r.originalLog?.volume || 0;
+          totalWeight += r.originalLog?.weight || 0;
+          totalReps += r.originalLog?.reps || 0;
+        });
+
+        const spacerRow = fragment.appendChild(document.createElement("tr"));
+        spacerRow.className = "workout-table-spacer";
+
+        // First cell: formatted date
+        const dateCell = spacerRow.appendChild(document.createElement("td"));
+        dateCell.className = "table-spacer-date-cell";
+        const formattedDate = this.formatDateForSpacer(
+          groupRows[0].originalDate
+        );
+        dateCell.textContent = formattedDate;
+
+        // Create summary cell for the remaining columns
+        const summaryCell = spacerRow.appendChild(document.createElement("td"));
+        summaryCell.className = "table-spacer-summary-cell";
+        summaryCell.setAttribute("colspan", (columnCount - 1).toString());
+        summaryCell.innerHTML = `
+        <span class="spacer-stat">🔢 Reps: <strong>${totalReps}</strong></span>
+        <span class="spacer-stat">⚖️ Peso: <strong>${totalWeight.toFixed(
+          1
+        )} kg</strong></span>
+        <span class="spacer-stat">📊 Vol: <strong>${totalVolume.toFixed(
+          1
+        )}</strong></span>
+        `;
+      };
+
+      rows.forEach((row, index) => {
         const dateKey = row.dateKey;
 
-        // New group
+        // New group - show spacer BEFORE the group
         if (dateKey !== currentDateKey) {
-          if (!isFirstGroup) {
-            const spacerRow = fragment.appendChild(
-              document.createElement("tr")
-            );
-            spacerRow.className = "workout-table-spacer";
-            const spacerCell = spacerRow.appendChild(
-              document.createElement("td")
-            );
-            spacerCell.className = "table-spacer-cell";
-            spacerCell.setAttribute("colspan", columnCount.toString());
-          }
+          createSpacerRow(dateKey);
           currentDateKey = dateKey;
-          isFirstGroup = false;
           groupIndex++;
         }
 
@@ -123,16 +162,16 @@ export class TableRenderer {
           groupIndex % 2 === 0 ? "group-even" : "group-odd"
         }`;
 
-        row.displayRow.forEach((cell, index) => {
+        row.displayRow.forEach((cell, cellIndex) => {
           const td = tr.appendChild(document.createElement("td"));
 
-          if (index === 0) {
+          if (cellIndex === 0) {
             td.className = "workout-table-date-cell";
             td.textContent = cell;
-          } else if (index === 4) {
+          } else if (cellIndex === 4) {
             td.className = "workout-table-volume-cell";
             td.textContent = cell;
-          } else if (index === row.displayRow.length - 1) {
+          } else if (cellIndex === row.displayRow.length - 1) {
             td.className = "workout-table-actions-cell";
             this.renderActionButtons(td, row.originalLog, plugin);
           } else {
@@ -220,5 +259,19 @@ export class TableRenderer {
         }
       }
     });
+  }
+
+  /**
+   * Format date for spacer row display (DD/MM format)
+   */
+  private static formatDateForSpacer(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      return `${day}/${month}`;
+    } catch {
+      return "";
+    }
   }
 }

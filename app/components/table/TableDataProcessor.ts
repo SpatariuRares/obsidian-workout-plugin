@@ -17,16 +17,20 @@ export class TableDataProcessor {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): TableData {
-    const defaultColumns = [
+    const allAvailableColumns = [
       "Date",
       "Exercise",
       "Reps",
       "Weight (kg)",
       "Volume",
+      "Notes",
       "Actions",
     ];
 
-    let headers = defaultColumns;
+    // Use default visible columns if not specified
+    const defaultVisibleColumns = ["Date", "Reps", "Weight (kg)", "Volume", "Notes"];
+
+    let headers: string[];
     if (params.columns) {
       if (Array.isArray(params.columns)) {
         headers = [...params.columns, "Actions"];
@@ -39,15 +43,21 @@ export class TableDataProcessor {
             "Invalid columns parameter, using default:",
             params.columns
           );
+          headers = [...defaultVisibleColumns, "Actions"];
         }
+      } else {
+        headers = [...defaultVisibleColumns, "Actions"];
       }
+    } else {
+      // No columns specified, use default visible columns
+      headers = [...defaultVisibleColumns, "Actions"];
     }
 
     const limit = params.limit || 50;
 
     const sortedAndLimitedData = this.sortAndLimitData(logData, limit);
 
-    const rows = this.processRowsEfficiently(sortedAndLimitedData);
+    const rows = this.processRowsEfficiently(sortedAndLimitedData, headers);
 
     return {
       headers,
@@ -88,7 +98,10 @@ export class TableDataProcessor {
   /**
    * Process rows more efficiently with pre-computed values
    */
-  private static processRowsEfficiently(logData: WorkoutLogData[]): TableRow[] {
+  private static processRowsEfficiently(
+    logData: WorkoutLogData[],
+    headers: string[]
+  ): TableRow[] {
     const rows: TableRow[] = [];
 
     const dateCache = new Map<string, string>();
@@ -107,20 +120,17 @@ export class TableDataProcessor {
         dateKeyCache.set(log.date, dateKey);
       }
 
-      const exerciseDisplay = this.getExerciseDisplay(log.exercise);
-      const reps = log.reps?.toString() || "N/D";
-      const weight = log.weight?.toString() || "N/D";
-      const volume = log.volume?.toString() || "N/D";
+      const dataMap: Record<string, string> = {
+        Date: formattedDate,
+        Exercise: this.getExerciseDisplay(log.exercise),
+        Reps: log.reps?.toString() || "N/D",
+        "Weight (kg)": log.weight?.toString() || "N/D",
+        Volume: log.volume?.toString() || "N/D",
+        Notes: log.notes || "",
+        Actions: "", // Placeholder for actions
+      };
 
-      // Create row with all data columns plus empty string for Actions column
-      const displayRow = [
-        formattedDate,
-        exerciseDisplay,
-        reps,
-        weight,
-        volume,
-        "",
-      ];
+      const displayRow = headers.map((header) => dataMap[header] ?? "");
 
       const row = {
         displayRow,
@@ -138,17 +148,15 @@ export class TableDataProcessor {
   /**
    * Formats a date string for display in the table.
    * @param dateString - ISO date string to format
-   * @returns Formatted date string in HH:MM - DD/MM format
+   * @returns Formatted date string in HH:MM format
    */
   private static formatDate(dateString: string): string {
     try {
       const date = new Date(dateString);
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const day = date.getDate().toString().padStart(2, "0");
 
-      return `${hours}:${minutes} - ${month}/${day}`;
+      return `${hours}:${minutes}`;
     } catch (error) {
       return "Data non valida";
     }
@@ -235,7 +243,7 @@ export class TableDataProcessor {
       searchByName: false,
       exactMatch: false,
       debug: false,
-      columns: ["Date", "Exercise", "Reps", "Weight (kg)", "Volume"],
+      columns: ["Date", "Reps", "Weight (kg)", "Volume", "Notes"],
     };
   }
 }

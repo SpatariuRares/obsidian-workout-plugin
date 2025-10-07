@@ -13,6 +13,7 @@ export interface WorkoutLogData {
   file: TFile;
   origine?: string;
   workout?: string;
+  notes?: string;
   timestamp?: number;
 }
 
@@ -27,6 +28,7 @@ export interface CSVWorkoutLogEntry {
   volume: number;
   origine?: string;
   workout?: string;
+  notes?: string;
   timestamp: number; // For sorting and unique identification
 }
 
@@ -96,6 +98,7 @@ export function parseCSVLogFile(
           origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
           workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
           timestamp: parseInt(values[7]) || Date.now(),
+          notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
         };
 
         // Validate required fields
@@ -124,6 +127,7 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
     entry.origine || "",
     entry.workout || "",
     entry.timestamp.toString(),
+    entry.notes || "",
   ];
 
   return values
@@ -146,7 +150,8 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
  * Converts array of CSVWorkoutLogEntry to CSV content
  */
 export function entriesToCSVContent(entries: CSVWorkoutLogEntry[]): string {
-  const header = "date,exercise,reps,weight,volume,origine,workout,timestamp";
+  const header =
+    "date,exercise,reps,weight,volume,origine,workout,timestamp,notes";
   const lines = [header];
 
   entries.forEach((entry) => {
@@ -207,6 +212,7 @@ export function convertFromCSVEntry(
     file: file,
     origine: entry.origine,
     workout: entry.workout,
+    notes: entry.notes,
     timestamp: entry.timestamp,
   };
 }

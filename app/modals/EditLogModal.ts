@@ -76,6 +76,16 @@ export class EditLogModal extends ModalBase {
     // Pre-fill weight field
     weightInput.value = this.originalLog.weight?.toString() || "";
 
+    // Notes input
+    const notesContainer = this.createFormGroup(formContainer);
+    notesContainer.createEl("label", { text: "Notes (optional):" });
+    const notesInput = notesContainer.createEl("textarea", {
+      placeholder: "e.g., Good form, felt strong",
+    });
+    notesInput.rows = 3;
+    // Pre-fill notes field
+    notesInput.value = this.originalLog.notes || "";
+
     // Workout section
     const workoutSection = this.createSection(formContainer, "Workout");
 
@@ -136,6 +146,7 @@ export class EditLogModal extends ModalBase {
       const exercise = exerciseElements.exerciseInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
+      const notes = notesInput.value.trim();
       let workout = workoutInput.value.trim();
 
       // Handle current workout toggle
@@ -154,7 +165,7 @@ export class EditLogModal extends ModalBase {
       }
 
       try {
-        await this.updateLogEntry(exercise, reps, weight, workout);
+        await this.updateLogEntry(exercise, reps, weight, workout, notes);
         this.close();
         new Notice("Workout log updated successfully!");
 
@@ -182,7 +193,8 @@ export class EditLogModal extends ModalBase {
     exercise: string,
     reps: number,
     weight: number,
-    workout: string
+    workout: string,
+    notes: string
   ) {
     const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
       date: this.originalLog.date, // Keep the original date
@@ -192,6 +204,7 @@ export class EditLogModal extends ModalBase {
       volume: reps * weight,
       origine: this.originalLog.origine || "[[Workout Charts Plugin]]",
       workout: workout || undefined,
+      notes: notes || undefined,
     };
 
     // Use the plugin's update method

@@ -17,7 +17,7 @@ export class TableDataProcessor {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): TableData {
-    const defaultColumns = [
+    const allAvailableColumns = [
       "Date",
       "Exercise",
       "Reps",
@@ -27,7 +27,10 @@ export class TableDataProcessor {
       "Actions",
     ];
 
-    let headers = defaultColumns;
+    // Use default visible columns if not specified
+    const defaultVisibleColumns = ["Date", "Reps", "Weight (kg)", "Volume", "Notes"];
+
+    let headers: string[];
     if (params.columns) {
       if (Array.isArray(params.columns)) {
         headers = [...params.columns, "Actions"];
@@ -40,8 +43,14 @@ export class TableDataProcessor {
             "Invalid columns parameter, using default:",
             params.columns
           );
+          headers = [...defaultVisibleColumns, "Actions"];
         }
+      } else {
+        headers = [...defaultVisibleColumns, "Actions"];
       }
+    } else {
+      // No columns specified, use default visible columns
+      headers = [...defaultVisibleColumns, "Actions"];
     }
 
     const limit = params.limit || 50;
@@ -139,17 +148,15 @@ export class TableDataProcessor {
   /**
    * Formats a date string for display in the table.
    * @param dateString - ISO date string to format
-   * @returns Formatted date string in HH:MM - DD/MM format
+   * @returns Formatted date string in HH:MM format
    */
   private static formatDate(dateString: string): string {
     try {
       const date = new Date(dateString);
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const day = date.getDate().toString().padStart(2, "0");
 
-      return `${hours}:${minutes} - ${month}/${day}`;
+      return `${hours}:${minutes}`;
     } catch (error) {
       return "Data non valida";
     }

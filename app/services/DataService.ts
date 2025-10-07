@@ -178,8 +178,8 @@ export class DataService {
    * Create a new CSV log file with header
    */
   public async createCSVLogFile(): Promise<void> {
-    const header = "date,exercise,reps,weight,volume,origine,workout,timestamp";
-    const sampleEntry = `2024-01-01T10:00:00.000Z,Sample Exercise,10,50,500,Sample Workout,Sample Workout,1704096000000`;
+    const header = "date,exercise,reps,weight,volume,origine,workout,notes,timestamp";
+    const sampleEntry = `2024-01-01T10:00:00.000Z,Sample Exercise,10,50,500,Sample Workout,Sample Workout,,1704096000000`;
     const content = `${header}\n${sampleEntry}`;
 
     await this.app.vault.create(this.settings.csvLogFilePath, content);

@@ -285,13 +285,38 @@
 
 .workout-table-container .workout-table-spacer {
   background: var(--background-modifier-border);
-  height: var(--workout-space-sm);
+  height: auto;
+  font-size: var(--workout-font-sm);
+  font-weight: 500;
 }
 
-/* Table Spacer Cell */
+/* Table Spacer Date Cell */
 
-.table-spacer-cell {
-  height: var(--workout-space-sm);
+.table-spacer-date-cell {
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--background-primary-alt);
+}
+
+/* Table Spacer Summary Cell */
+
+.table-spacer-summary-cell {
+  padding: var(--workout-space-xs) var(--workout-space-md);
+  text-align: left;
+  background: var(--background-secondary);
+}
+
+.table-spacer-summary-cell .spacer-stat {
+  display: inline-block;
+  margin-right: var(--workout-space-md);
+  color: var(--text-normal);
+}
+
+.table-spacer-summary-cell .spacer-stat strong {
+  color: var(--text-accent);
+  font-weight: 600;
 }
 
 /* Table Footer Styling */

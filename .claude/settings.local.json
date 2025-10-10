@@ -9,7 +9,9 @@
       "Bash(do echo \"\")",
       "Bash(echo \"Classe: $class\")",
       "Bash(grep:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(npm test)",
+      "Bash(npm run test:coverage:*)"
     ],
     "deny": []
   }

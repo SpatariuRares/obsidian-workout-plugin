@@ -10,7 +10,7 @@ export interface WorkoutLogData {
   reps: number;
   weight: number;
   volume: number;
-  file: TFile;
+  file?: TFile;
   origine?: string;
   workout?: string;
   notes?: string;
@@ -105,7 +105,7 @@ export function parseCSVLogFile(
         if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
           entries.push(entry);
         }
-      } catch (error) {}
+      } catch (error) { }
     }
 
     return entries;

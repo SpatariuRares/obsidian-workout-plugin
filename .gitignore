@@ -4,6 +4,7 @@
 # Intellij
 *.iml
 .idea
+**/coverage/*
 
 # npm
 node_modules

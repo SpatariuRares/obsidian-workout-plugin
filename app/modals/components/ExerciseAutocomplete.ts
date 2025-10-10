@@ -2,6 +2,7 @@
 import { ModalBase } from "../base/ModalBase";
 import type WorkoutChartsPlugin from "../../../main";
 import { CreateExercisePageModal } from "../CreateExercisePageModal";
+import { ExercisePathResolver } from "../../utils/ExercisePathResolver";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -181,55 +182,17 @@ export class ExerciseAutocomplete {
    * Loads available exercises from the exercise folder
    */
   private async loadAvailableExercises(plugin: WorkoutChartsPlugin) {
-    const exerciseFolderPath = plugin.settings.exerciseFolderPath;
-    if (!exerciseFolderPath) {
-      this.availableExercises = [];
-      return;
-    }
-
     try {
-      // Get all markdown files in the exercise folder
-      const allFiles = plugin.app.vault.getMarkdownFiles();
-      const files = allFiles.filter((file) => {
-        const normalizedFilePath = file.path.replace(/\\/g, "/");
-        
-        // Try multiple path patterns to match the exercise folder
-        const pathsToCheck = [
-          exerciseFolderPath,
-          exerciseFolderPath + "/",
-          exerciseFolderPath + "/Data",
-          exerciseFolderPath + "/Data/",
-          "theGYM/" + exerciseFolderPath,
-          "theGYM/" + exerciseFolderPath + "/",
-          "theGYM/" + exerciseFolderPath + "/Data",
-          "theGYM/" + exerciseFolderPath + "/Data/"
-        ];
-        
-        return pathsToCheck.some(path => 
-          normalizedFilePath.startsWith(path) || 
-          normalizedFilePath.includes(path + "/")
-        );
-      });
+      // Use ExercisePathResolver to get exercise names
+      this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);
 
+      // Debug logging if enabled
       if (plugin.settings.debugMode) {
-        console.log("ExerciseAutocomplete: Exercise folder path:", exerciseFolderPath);
-        console.log("ExerciseAutocomplete: Total markdown files:", allFiles.length);
-        console.log("ExerciseAutocomplete: Paths to check:", [
-          exerciseFolderPath,
-          exerciseFolderPath + "/",
-          exerciseFolderPath + "/Data",
-          exerciseFolderPath + "/Data/",
-          "theGYM/" + exerciseFolderPath,
-          "theGYM/" + exerciseFolderPath + "/",
-          "theGYM/" + exerciseFolderPath + "/Data",
-          "theGYM/" + exerciseFolderPath + "/Data/"
-        ]);
-        console.log("ExerciseAutocomplete: Filtered exercise files:", files.length);
-        console.log("ExerciseAutocomplete: Exercise files:", files.map(f => f.path));
+        ExercisePathResolver.debugPathResolution(
+          plugin,
+          "ExerciseAutocomplete"
+        );
       }
-
-      // Extract exercise names from filenames (remove .md extension)
-      this.availableExercises = files.map((file) => file.basename).sort();
     } catch (error) {
       console.error("Error loading available exercises:", error);
       this.availableExercises = [];

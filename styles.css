@@ -1579,6 +1579,85 @@
   gap: var(--workout-space-sm);
 }
 
+/* Muscle Tags Widget */
+
+.muscle-tags-widget {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.muscle-tags-widget .widget-description {
+  margin: 0 0 var(--workout-space-lg) 0;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  line-height: 1.5;
+}
+
+.muscle-tags-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.muscle-tag-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--workout-font-sm);
+  color: var(--text-normal);
+}
+
+.muscle-tag-badge:hover {
+  background: var(--background-modifier-hover);
+  border-color: var(--interactive-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--workout-shadow-sm);
+}
+
+.muscle-tag-badge.copied {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+  animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.muscle-tag-emoji {
+  font-size: var(--workout-font-base);
+  line-height: 1;
+}
+
+.muscle-tag-name {
+  font-weight: var(--workout-font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.muscle-tags-info {
+  padding-top: var(--workout-space-md);
+  border-top: var(--workout-border-thin) solid var(--background-modifier-border);
+  text-align: center;
+}
+
+.muscle-tags-count {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-style: italic;
+}
+
 /* ============================================================================
    UTILITY CLASSES
    ============================================================================ */

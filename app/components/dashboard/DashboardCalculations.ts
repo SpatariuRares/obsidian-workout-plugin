@@ -1,4 +1,6 @@
 import { WorkoutLogData } from "../../types/WorkoutLogData";
+import { DateUtils } from "../../utils/DateUtils";
+import { DataAggregation } from "../../utils/DataAggregation";
 
 export interface SummaryMetrics {
   totalWorkouts: number;
@@ -32,33 +34,19 @@ export class DashboardCalculations {
    * Calculate summary metrics for the dashboard
    */
   static calculateSummaryMetrics(data: WorkoutLogData[]): SummaryMetrics {
-    // Group by date (YYYY-MM-DD) and workout name
-    const uniqueWorkouts = new Set(
-      data.map((d) => {
-        const dateOnly = d.date.split('T')[0];
-        return `${dateOnly}-${d.workout}`;
-      })
-    ).size;
+    // Count unique workouts using DataAggregation utility
+    const totalWorkouts = DataAggregation.countUniqueWorkouts(data);
 
-    const totalVolume = data.reduce((sum, d) => sum + d.volume, 0);
+    // Calculate total volume using DataAggregation utility
+    const totalVolume = DataAggregation.calculateTotalVolume(data);
 
     // Calculate current streak (weekly)
-    const uniqueDates = [...new Set(data.map((d) => d.date.split('T')[0]))].sort();
-    let currentStreak = 0;
-    const today = new Date();
-
-    // Funzione per ottenere il numero della settimana (0 = settimana corrente)
-    const getWeekNumber = (date: Date): number => {
-      const diffTime = today.getTime() - date.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      return Math.floor(diffDays / 7);
-    };
-
-    // Raggruppa le date per settimana
-    const weeks = new Set(uniqueDates.map(date => getWeekNumber(new Date(date))));
+    const uniqueDates = DateUtils.getUniqueDates(data);
+    const weeks = DateUtils.groupDatesByWeek(uniqueDates);
     const sortedWeeks = Array.from(weeks).sort((a, b) => a - b);
 
-    // Conta le settimane consecutive partendo dalla settimana corrente (0)
+    // Count consecutive weeks starting from current week (0)
+    let currentStreak = 0;
     for (let i = 0; i < sortedWeeks.length; i++) {
       if (sortedWeeks[i] === i) {
         currentStreak++;
@@ -68,16 +56,10 @@ export class DashboardCalculations {
     }
 
     // Calculate personal records (exercises with max weight)
-    const exerciseMaxWeights = new Map<string, number>();
-    data.forEach((d) => {
-      const currentMax = exerciseMaxWeights.get(d.exercise) || 0;
-      if (d.weight > currentMax) {
-        exerciseMaxWeights.set(d.exercise, d.weight);
-      }
-    });
+    const exerciseMaxWeights = DataAggregation.findMaxWeightsByExercise(data);
 
     return {
-      totalWorkouts: uniqueWorkouts,
+      totalWorkouts,
       currentStreak,
       totalVolume: Math.round(totalVolume),
       personalRecords: exerciseMaxWeights.size,
@@ -88,20 +70,14 @@ export class DashboardCalculations {
    * Calculate statistics for a specific time period
    */
   static calculatePeriodStats(data: WorkoutLogData[], days: number): PeriodStats {
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - days);
+    // Filter data by time period using DateUtils
+    const periodData = DateUtils.filterByDaysAgo(data, days);
 
-    const periodData = data.filter((d) => new Date(d.date) >= cutoffDate);
+    // Count unique workouts using DataAggregation utility
+    const uniqueWorkouts = DataAggregation.countUniqueWorkouts(periodData);
 
-    // Group by date (YYYY-MM-DD) and workout name
-    const uniqueWorkouts = new Set(
-      periodData.map((d) => {
-        const dateOnly = d.date.split('T')[0];
-        return `${dateOnly}-${d.workout}`;
-      })
-    ).size;
-
-    const totalVolume = periodData.reduce((sum, d) => sum + d.volume, 0);
+    // Calculate total volume using DataAggregation utility
+    const totalVolume = DataAggregation.calculateTotalVolume(periodData);
     const avgVolume = uniqueWorkouts > 0 ? totalVolume / uniqueWorkouts : 0;
 
     return {
@@ -115,22 +91,14 @@ export class DashboardCalculations {
    * Prepare volume trend data for charting
    */
   static prepareVolumeTrendData(data: WorkoutLogData[], days: number): VolumeTrendData {
-    const labels: string[] = [];
-    const volumeData: number[] = [];
+    // Get date range using DateUtils
+    const labels = DateUtils.getDateRangeForDays(days);
 
-    for (let i = days - 1; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split("T")[0];
+    // Aggregate daily volumes using DataAggregation
+    const dailyVolumes = DataAggregation.aggregateDailyVolumes(data);
 
-      labels.push(dateStr);
-
-      const dayVolume = data
-        .filter((d) => d.date.split('T')[0] === dateStr)
-        .reduce((sum, d) => sum + d.volume, 0);
-
-      volumeData.push(dayVolume);
-    }
+    // Map labels to volume data (0 if no data for that day)
+    const volumeData = labels.map((dateStr) => dailyVolumes.get(dateStr) || 0);
 
     return { labels, data: volumeData };
   }
@@ -139,54 +107,18 @@ export class DashboardCalculations {
    * Calculate volume by muscle group (simplified as exercise volume)
    */
   static calculateMuscleGroupVolume(data: WorkoutLogData[]): [string, number][] {
-    const exerciseVolumes = new Map<string, number>();
-
-    data.forEach((d) => {
-      const current = exerciseVolumes.get(d.exercise) || 0;
-      exerciseVolumes.set(d.exercise, current + d.volume);
-    });
-
-    return Array.from(exerciseVolumes.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5); // Top 5 exercises by volume
+    // Get top 5 exercises by volume using DataAggregation utility
+    return DataAggregation.getTopExercisesByVolume(data, 5);
   }
 
   /**
    * Get recent workouts with aggregated volume
    */
   static getRecentWorkouts(data: WorkoutLogData[], limit: number): RecentWorkout[] {
-    const workoutMap = new Map<
-      string,
-      {
-        date: string;
-        workout: string | undefined;
-        totalVolume: number;
-        timestamp: string;
-      }
-    >();
+    // Group workouts by date and name using DataAggregation utility
+    const workoutMap = DataAggregation.groupByDateAndWorkout(data);
 
-    data.forEach((d) => {
-      // Extract date from timestamp (YYYY-MM-DD)
-      const dateOnly = d.date.split('T')[0];
-      const key = `${dateOnly}-${d.workout || "default"}`;
-      const existing = workoutMap.get(key);
-
-      if (existing) {
-        existing.totalVolume += d.volume;
-        // Keep the most recent timestamp
-        if (d.date > existing.timestamp) {
-          existing.timestamp = d.date;
-        }
-      } else {
-        workoutMap.set(key, {
-          date: dateOnly,
-          workout: d.workout,
-          totalVolume: d.volume,
-          timestamp: d.date,
-        });
-      }
-    });
-
+    // Sort by timestamp (most recent first) and limit results
     return Array.from(workoutMap.values())
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
       .slice(0, limit);

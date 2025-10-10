@@ -1,5 +1,8 @@
 import type WorkoutChartsPlugin from "../../../main";
 import { TFile } from "obsidian";
+import { ExercisePathResolver } from "../../utils/ExercisePathResolver";
+import { FrontmatterParser } from "../../utils/FrontmatterParser";
+import { MUSCLE_KEYWORDS } from "../../constants/MuscleTags";
 
 interface ExerciseFileError {
   file: TFile;
@@ -71,35 +74,10 @@ export class WidgetsFileError {
   private static async validateExerciseFiles(
     plugin: WorkoutChartsPlugin
   ): Promise<ExerciseFileError[]> {
-    const exerciseFolderPath = plugin.settings.exerciseFolderPath;
-    if (!exerciseFolderPath) {
-      return [];
-    }
-
     const fileErrors: ExerciseFileError[] = [];
 
-    // Get all markdown files in the exercise folder
-    const allFiles = plugin.app.vault.getMarkdownFiles();
-    const exerciseFiles = allFiles.filter((file) => {
-      const normalizedFilePath = file.path.replace(/\\/g, "/");
-
-      const pathsToCheck = [
-        exerciseFolderPath,
-        exerciseFolderPath + "/",
-        exerciseFolderPath + "/Data",
-        exerciseFolderPath + "/Data/",
-        "theGYM/" + exerciseFolderPath,
-        "theGYM/" + exerciseFolderPath + "/",
-        "theGYM/" + exerciseFolderPath + "/Data",
-        "theGYM/" + exerciseFolderPath + "/Data/",
-      ];
-
-      return pathsToCheck.some(
-        (path) =>
-          normalizedFilePath.startsWith(path) ||
-          normalizedFilePath.includes(path + "/")
-      );
-    });
+    // Get all exercise files using the path resolver
+    const exerciseFiles = ExercisePathResolver.findExerciseFiles(plugin);
 
     // Validate each exercise file
     for (const file of exerciseFiles) {
@@ -125,34 +103,14 @@ export class WidgetsFileError {
     try {
       const content = await plugin.app.vault.read(file);
 
-      // Check if file is empty
-      if (!content.trim()) {
-        errors.push("⚠️ File is empty");
-        return errors;
+      // Use FrontmatterParser to validate structure
+      const validationErrors = FrontmatterParser.validateFrontmatter(content);
+      if (validationErrors.length > 0) {
+        return validationErrors.map((err) => `⚠️ ${err}`);
       }
 
-      // Parse frontmatter
-      const frontmatterMatch = content.match(/^---\s*\n(.*?)\n---/s);
-      if (!frontmatterMatch) {
-        errors.push("⚠️ No frontmatter found");
-        return errors;
-      }
-
-      const frontmatter = frontmatterMatch[1];
-
-      // Extract tags
-      const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
-      if (!tagsMatch) {
-        errors.push("⚠️ No tags found");
-        return errors;
-      }
-
-      const tags = tagsMatch[1]
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line.startsWith("- "))
-        .map((line) => line.substring(2).trim())
-        .filter((tag) => tag.length > 0);
+      // Parse tags using FrontmatterParser
+      const tags = FrontmatterParser.parseTags(content);
 
       // Check for muscle tags
       const muscleTags = this.getMuscleTags(tags);
@@ -162,7 +120,7 @@ export class WidgetsFileError {
       } else if (muscleTags.length > 3) {
         errors.push(`⚠️ Too many muscle tags (${muscleTags.length})`);
       }
-    } catch (error) {
+    } catch (error: any) {
       errors.push(`⚠️ Error reading file: ${error.message}`);
     }
 
@@ -170,47 +128,9 @@ export class WidgetsFileError {
   }
 
   private static getMuscleTags(tags: string[]): string[] {
-    const muscleKeywords = [
-      // Main muscle groups
-      "chest",
-      "petto",
-      "pettorale",
-      "back",
-      "schiena",
-      "dorsale",
-      "shoulders",
-      "spalle",
-      "deltoidi",
-      "biceps",
-      "bicipiti",
-      "triceps",
-      "tricipiti",
-      "legs",
-      "gambe",
-      "quads",
-      "quadricipiti",
-      "hamstrings",
-      "ischiocrurali",
-      "femorali",
-      "glutes",
-      "glutei",
-      "gluteo",
-      "abduttori",
-      "adduttori",
-      "calves",
-      "polpacci",
-      "abs",
-      "addominali",
-      "core",
-      "forearms",
-      "avambracci",
-      "traps",
-      "trapezi",
-    ];
-
     return tags.filter((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      return muscleKeywords.some((keyword) =>
+      return MUSCLE_KEYWORDS.some((keyword) =>
         normalizedTag.includes(keyword)
       );
     });

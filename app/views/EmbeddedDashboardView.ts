@@ -9,7 +9,8 @@ import {
   VolumeAnalytics,
   RecentWorkouts,
   QuickActions,
-  MuscleHeatMap
+  MuscleHeatMap,
+  MuscleTagsWidget
 } from "../components";
 
 /**
@@ -135,9 +136,12 @@ export class EmbeddedDashboardView extends BaseView {
     // Quick Actions Panel
     QuickActions.render(gridEl, params, this.plugin);
 
+
     // Exercise File Errors Widget
     await WidgetsFileError.render(gridEl, this.plugin);
 
+    // Muscle Tags Widget (Available muscle groups reference)
+    MuscleTagsWidget.render(gridEl, params);
   }
 
 }

@@ -2,6 +2,7 @@ import { WorkoutLogData } from "../../../types/WorkoutLogData";
 import type WorkoutChartsPlugin from "../../../../main";
 import type { BodyData } from "../body";
 import { MuscleTagMapper } from "./MuscleTagMapper";
+import { DateUtils } from "../../../utils/DateUtils";
 
 export interface MuscleGroupData {
   name: string;
@@ -21,22 +22,8 @@ export class MuscleDataCalculator {
     data: WorkoutLogData[],
     timeFrame: "week" | "month" | "year"
   ): WorkoutLogData[] {
-    const now = new Date();
-    let cutoffDate: Date;
-
-    switch (timeFrame) {
-      case "week":
-        cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        break;
-      case "month":
-        cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        break;
-      case "year":
-        cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-        break;
-    }
-
-    return data.filter((entry) => new Date(entry.date) >= cutoffDate);
+    // Use DateUtils to filter by time frame
+    return DateUtils.filterByTimeFrame(data, timeFrame);
   }
 
   /**

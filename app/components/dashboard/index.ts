@@ -5,6 +5,7 @@ export * from "./RecentWorkouts";
 export * from "./WidgetsFileError";
 export * from "./QuickActions";
 export * from "./DashboardCalculations";
+export * from "./MuscleTagsWidget";
 
 // Export muscle heat map components
 export * from "./muscleHeatMap";

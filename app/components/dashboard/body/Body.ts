@@ -1,4 +1,4 @@
-import { Shoulders, Chest, Back, Arms, Legs, Core, type BodyData } from './index';
+import { Shoulders, Chest, Back, Arms, Legs, Core, type BodyData } from '@app/components/dashboard/body/index';
 
 export interface BodyVisualizationOptions {
     view: 'front' | 'back';

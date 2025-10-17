@@ -1,9 +1,9 @@
 // EditLogModal for editing existing workout log entries
 import { App, Notice, TFile } from "obsidian";
-import type WorkoutChartsPlugin from "../../main";
-import { ModalBase } from "./base/ModalBase";
-import { ExerciseAutocomplete } from "./components/ExerciseAutocomplete";
-import { CSVWorkoutLogEntry, WorkoutLogData } from "../types/WorkoutLogData";
+import type WorkoutChartsPlugin from "main";
+import { ModalBase } from "@app/modals/base/ModalBase";
+import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import { CSVWorkoutLogEntry, WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export class EditLogModal extends ModalBase {
   private exerciseName?: string;

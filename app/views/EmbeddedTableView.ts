@@ -1,9 +1,6 @@
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../../main";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView } from "obsidian";
 import {
-  EmbeddedTableParams,
-  TableData,
   TableRenderer,
   TableDataProcessor,
   UIComponents,
@@ -13,8 +10,10 @@ import {
   TableValidator,
 
   TableRefresh,
-} from "../components";
-import { BaseView } from "./BaseView";
+} from "@app/components";
+import { BaseView } from "@app/views/BaseView";
+import WorkoutChartsPlugin from "main";
+import { EmbeddedTableParams, TableData } from "@app/types";
 
 export class EmbeddedTableView extends BaseView {
   private tableState: TableState;

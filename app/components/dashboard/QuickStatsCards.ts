@@ -1,6 +1,6 @@
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "../types/types";
-import { DashboardCalculations, PeriodStats } from "./DashboardCalculations";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedDashboardParams } from "@app/types";
+import { DashboardCalculations, PeriodStats } from "@app/components/dashboard/DashboardCalculations";
 
 export class QuickStatsCards {
   static render(

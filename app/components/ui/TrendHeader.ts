@@ -1,4 +1,4 @@
-import { TrendIndicators } from "../types/types";
+import { TrendIndicators } from "@app/types";
 
 /**
  * Renders trend header information for workout charts.
@@ -101,8 +101,8 @@ export class TrendHeader {
         firstValue !== 0
           ? (((lastValue - firstValue) / Math.abs(firstValue)) * 100).toFixed(1)
           : lastValue > 0
-          ? "Infinity"
-          : "0.0";
+            ? "Infinity"
+            : "0.0";
     } else if (volumeData.length === 1) {
       firstValue = volumeData[0];
       percentChange = "0.0";

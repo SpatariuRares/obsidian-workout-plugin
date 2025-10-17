@@ -1,5 +1,5 @@
-import { EmbeddedDashboardParams } from "../types/types";
-import type WorkoutChartsPlugin from "../../../main";
+import { EmbeddedDashboardParams } from "@app/types";
+import type WorkoutChartsPlugin from "main";
 
 export class QuickActions {
   static render(

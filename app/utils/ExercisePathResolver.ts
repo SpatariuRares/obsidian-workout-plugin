@@ -1,4 +1,4 @@
-import type WorkoutChartsPlugin from "../../main";
+import WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
 
 /**
@@ -102,33 +102,5 @@ export class ExercisePathResolver {
   static getExerciseNames(plugin: WorkoutChartsPlugin): string[] {
     const files = this.findExerciseFiles(plugin);
     return files.map((file) => file.basename).sort();
-  }
-
-  /**
-   * Debug helper to log path resolution details
-   */
-  static debugPathResolution(
-    plugin: WorkoutChartsPlugin,
-    context: string
-  ): void {
-    if (!plugin.settings.debugMode) {
-      return;
-    }
-
-    const exerciseFolderPath = plugin.settings.exerciseFolderPath;
-    const allFiles = plugin.app.vault.getMarkdownFiles();
-    const exerciseFiles = this.findExerciseFiles(plugin);
-
-    console.log(`${context}: Exercise folder path:`, exerciseFolderPath);
-    console.log(`${context}: Total markdown files:`, allFiles.length);
-    console.log(
-      `${context}: Paths to check:`,
-      this.getExerciseFolderPaths(exerciseFolderPath || "")
-    );
-    console.log(`${context}: Filtered exercise files:`, exerciseFiles.length);
-    console.log(
-      `${context}: Exercise files:`,
-      exerciseFiles.map((f) => f.path)
-    );
   }
 }

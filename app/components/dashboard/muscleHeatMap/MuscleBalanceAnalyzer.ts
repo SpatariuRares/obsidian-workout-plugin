@@ -1,4 +1,4 @@
-import type { MuscleGroupData } from "./MuscleDataCalculator";
+import { MuscleGroupData } from "@app/components";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -49,8 +49,7 @@ export class MuscleBalanceAnalyzer {
       this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${
-          frontVolume > backVolume ? "Front" : "Back"
+        `Front-Back imbalance detected (${frontVolume > backVolume ? "Front" : "Back"
         } dominant)`
       );
     }

@@ -1,5 +1,5 @@
-import { EmbeddedTableParams } from "../types/types";
-import { TableDataProcessor } from "./TableDataProcessor";
+import { EmbeddedTableParams } from "@app/types";
+import { TableDataProcessor } from "@app/components/table/TableDataProcessor";
 
 export class TableValidator {
   /**

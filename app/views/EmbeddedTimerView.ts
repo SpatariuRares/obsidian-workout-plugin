@@ -1,15 +1,14 @@
 // Embedded Timer View for workout timing functionality
-import type WorkoutChartsPlugin from "../../main";
+import WorkoutChartsPlugin from "main";
 import {
-  EmbeddedTimerParams,
-  UIComponents,
   TimerCore,
   TimerDisplay,
   TimerControls,
   TimerControlCallbacks,
   TimerState
-} from "../components";
-import { BaseView } from "./BaseView";
+} from "@app/components";
+import { BaseView } from "@app/views/BaseView";
+import { EmbeddedTimerParams } from "@app/types";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;

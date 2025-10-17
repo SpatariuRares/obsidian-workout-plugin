@@ -1,5 +1,5 @@
-import { Body } from './Body';
-import type { BodyData } from './index';
+import { BodyData } from '@app/components';
+import { Body } from '@app/components/dashboard/body/Body';
 
 export interface BodyHeatMapOptions {
 	view: 'front' | 'back';

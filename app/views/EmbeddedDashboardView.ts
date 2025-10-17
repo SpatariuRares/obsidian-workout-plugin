@@ -1,9 +1,8 @@
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../../main";
-import { BaseView } from "./BaseView";
-import { UIComponents, DataFilter, WidgetsFileError } from "../components";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import type WorkoutChartsPlugin from "main";
+import { BaseView } from "@app/views/BaseView";
+import { WidgetsFileError } from "@app/components";
 import {
-  EmbeddedDashboardParams,
   SummaryWidget,
   QuickStatsCards,
   VolumeAnalytics,
@@ -11,7 +10,8 @@ import {
   QuickActions,
   MuscleHeatMap,
   MuscleTagsWidget
-} from "../components";
+} from "@app/components";
+import { EmbeddedDashboardParams } from "@app/types";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -51,7 +51,7 @@ export class EmbeddedDashboardView extends BaseView {
         params,
         this.plugin.settings.debugMode
       );
-      let filteredData = filterResult.filteredData;
+      const filteredData = filterResult.filteredData;
 
       // Handle no filtered data
       if (filteredData.length === 0) {

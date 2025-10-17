@@ -1,4 +1,4 @@
 /**
  * Export all constants
  */
-export * from "./MuscleTags";
+export * from "@app/constants/MuscleTags";

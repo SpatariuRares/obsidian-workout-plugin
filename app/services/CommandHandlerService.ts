@@ -1,18 +1,18 @@
 import { App, Notice } from "obsidian";
-import { CreateLogModal } from "../modals/CreateLogModal";
-import { InsertChartModal } from "../modals/InsertChartModal";
-import { InsertTableModal } from "../modals/InsertTableModal";
-import { InsertTimerModal } from "../modals/InsertTimerModal";
-import { CreateExercisePageModal } from "../modals/CreateExercisePageModal";
-import { CreateExerciseSectionModal } from "../modals/CreateExerciseSectionModal";
-import type WorkoutChartsPlugin from "../../main";
+import { CreateLogModal } from "@app/modals/CreateLogModal";
+import { InsertChartModal } from "@app/modals/InsertChartModal";
+import { InsertTableModal } from "@app/modals/InsertTableModal";
+import { InsertTimerModal } from "@app/modals/InsertTimerModal";
+import { CreateExercisePageModal } from "@app/modals/CreateExercisePageModal";
+import { CreateExerciseSectionModal } from "@app/modals/CreateExerciseSectionModal";
+import type WorkoutChartsPlugin from "main";
 import { CreateDashboardSection } from "app/modals/CreateDashboardSection";
 
 export class CommandHandlerService {
   constructor(
     private app: App,
     private plugin: WorkoutChartsPlugin
-  ) {}
+  ) { }
 
   registerCommands(): void {
     this.plugin.addCommand({

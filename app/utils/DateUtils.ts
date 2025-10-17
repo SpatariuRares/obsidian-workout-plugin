@@ -1,4 +1,4 @@
-import { WorkoutLogData } from "../types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
  * Utility class for date operations and time period calculations

@@ -1,5 +1,5 @@
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import { DateUtils } from "./DateUtils";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { DateUtils } from "@app/utils/DateUtils";
 
 /**
  * Utility class for data aggregation operations

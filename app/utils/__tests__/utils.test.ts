@@ -10,7 +10,7 @@ import {
 	ExerciseMatch,
 } from "../utils";
 import { TFile } from "obsidian";
-import { WorkoutLogData } from "../../types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 // Mock TFile
 class MockTFile {
@@ -41,7 +41,7 @@ const createMockLog = (
 		volume,
 		origine: "test",
 		workout: "Test Workout",
-		timestamp: date,
+		timestamp: new Date(date).getTime(),
 		file,
 	};
 };
@@ -301,7 +301,7 @@ describe("utils.ts", () => {
 				matches
 			);
 			expect(result.length).toBe(1);
-			expect(result[0].file.basename).toBe("Squat");
+			expect(result[0].file?.basename).toBe("Squat");
 		});
 
 		it("should filter by filename strategy", () => {
@@ -435,7 +435,7 @@ describe("utils.ts", () => {
 		});
 
 		it("should validate chartType parameter", () => {
-			const errors = validateUserParams({ chartType: "invalid" });
+			const errors = validateUserParams({ chartType: "invalid" as any });
 			expect(errors.length).toBeGreaterThan(0);
 			expect(errors[0]).toContain("chartType");
 		});
@@ -446,7 +446,7 @@ describe("utils.ts", () => {
 		});
 
 		it("should validate type parameter for charts", () => {
-			const errors = validateUserParams({ type: "invalid" });
+			const errors = validateUserParams({ type: "invalid" as any });
 			expect(errors.length).toBeGreaterThan(0);
 			expect(errors[0]).toContain("type");
 		});
@@ -471,7 +471,7 @@ describe("utils.ts", () => {
 			const errors = validateUserParams({
 				dateRange: 400,
 				limit: 2000,
-				type: "invalid",
+				type: "invalid" as any,
 			});
 			expect(errors.length).toBe(3);
 		});

@@ -5,16 +5,16 @@ import {
   DEFAULT_SETTINGS,
   WorkoutLogData,
   CSVWorkoutLogEntry,
-} from "./app/types/WorkoutLogData";
-import { WorkoutChartsSettingTab } from "./app/settings/WorkoutChartsSettings";
-import { EmbeddedChartView } from "./app/views/EmbeddedChartView";
-import { EmbeddedTableView } from "./app/views/EmbeddedTableView";
-import { EmbeddedTimerView } from "./app/views/EmbeddedTimerView";
-import { EmbeddedDashboardView } from "./app/views/EmbeddedDashboardView";
-import { CommandHandlerService } from "./app/services/CommandHandlerService";
-import { DataService } from "./app/services/DataService";
-import { CodeBlockProcessorService } from "./app/services/CodeBlockProcessorService";
-import { CreateLogModal } from "./app/modals/CreateLogModal";
+} from "@app/types/WorkoutLogData";
+import { WorkoutChartsSettingTab } from "@app/settings/WorkoutChartsSettings";
+import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
+import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
+import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
+import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
+import { CommandHandlerService } from "@app/services/CommandHandlerService";
+import { DataService } from "@app/services/DataService";
+import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
+import { CreateLogModal } from "@app/modals/CreateLogModal";
 
 // ===================== MAIN PLUGIN =====================
 

@@ -1,16 +1,12 @@
 import {
-  EmbeddedChartParams,
-  EmbeddedTableParams,
-  FilterResult,
-} from "../types/types";
-import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
   filterLogDataByExercise,
   MatchResult,
   ExerciseMatch,
-} from "../../utils/utils";
-import { WorkoutLogData } from "../../types/WorkoutLogData";
+} from "@app/utils/utils";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedChartParams, EmbeddedTableParams, FilterResult } from "@app/types";
 
 /**
  * Handles filtering of workout log data based on various criteria.
@@ -53,9 +49,8 @@ export class DataFilter {
         return {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
-          titlePrefix: `${params.exercise} + ${
-            params.workout || params.workoutPath
-          }`,
+          titlePrefix: `${params.exercise} + ${params.workout || params.workoutPath
+            }`,
         };
       }
 

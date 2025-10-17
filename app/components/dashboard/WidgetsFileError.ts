@@ -1,8 +1,8 @@
-import type WorkoutChartsPlugin from "../../../main";
+import type WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
-import { ExercisePathResolver } from "../../utils/ExercisePathResolver";
-import { FrontmatterParser } from "../../utils/FrontmatterParser";
-import { MUSCLE_KEYWORDS } from "../../constants/MuscleTags";
+import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
+import { FrontmatterParser } from "@app/utils/FrontmatterParser";
+import { MUSCLE_KEYWORDS } from "@app/constants/MuscleTags";
 
 interface ExerciseFileError {
   file: TFile;

@@ -1,4 +1,4 @@
-import { TimerState } from "./TimerTypes";
+import { TimerState } from "@app/components/timer/TimerTypes";
 
 export class TimerDisplay {
   private static formatTime(milliseconds: number): string {

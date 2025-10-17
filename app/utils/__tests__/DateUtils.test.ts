@@ -1,5 +1,5 @@
-import { DateUtils } from '../DateUtils';
-import { WorkoutLogData } from '../../types/WorkoutLogData';
+import { DateUtils } from '@app/utils/DateUtils';
+import { WorkoutLogData } from '@app/types/WorkoutLogData';
 
 describe('DateUtils', () => {
   describe('extractDateOnly', () => {
@@ -91,7 +91,7 @@ describe('DateUtils', () => {
         volume: 1000,
         origine: 'test',
         workout: 'Lower A',
-        timestamp: '2024-01-10T10:00:00'
+        timestamp: new Date('2024-01-10T10:00:00').getTime()
       },
       {
         date: '2024-01-15T10:00:00',
@@ -101,7 +101,7 @@ describe('DateUtils', () => {
         volume: 640,
         origine: 'test',
         workout: 'Upper A',
-        timestamp: '2024-01-15T10:00:00'
+        timestamp: new Date('2024-01-15T10:00:00').getTime()
       },
       {
         date: '2024-01-20T10:00:00',
@@ -111,7 +111,7 @@ describe('DateUtils', () => {
         volume: 750,
         origine: 'test',
         workout: 'Lower B',
-        timestamp: '2024-01-20T10:00:00'
+        timestamp: new Date('2024-01-20T10:00:00').getTime()
       },
     ];
 
@@ -150,7 +150,7 @@ describe('DateUtils', () => {
         volume: 1000,
         origine: 'test',
         workout: 'Lower A',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).getTime()
       },
       {
         date: DateUtils.formatDate(new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000)),
@@ -160,7 +160,7 @@ describe('DateUtils', () => {
         volume: 640,
         origine: 'test',
         workout: 'Upper A',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000).getTime()
       },
       {
         date: DateUtils.formatDate(new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000)),
@@ -170,7 +170,7 @@ describe('DateUtils', () => {
         volume: 750,
         origine: 'test',
         workout: 'Lower B',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).getTime()
       },
       {
         date: DateUtils.formatDate(new Date(today.getTime() - 400 * 24 * 60 * 60 * 1000)),
@@ -180,7 +180,7 @@ describe('DateUtils', () => {
         volume: 500,
         origine: 'test',
         workout: 'Old Workout',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 400 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 400 * 24 * 60 * 60 * 1000).getTime()
       },
     ];
 
@@ -212,7 +212,7 @@ describe('DateUtils', () => {
         volume: 1000,
         origine: 'test',
         workout: 'Lower A',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000).getTime()
       },
       {
         date: DateUtils.formatDate(new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000)),
@@ -222,7 +222,7 @@ describe('DateUtils', () => {
         volume: 640,
         origine: 'test',
         workout: 'Upper A',
-        timestamp: DateUtils.formatDate(new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000))
+        timestamp: new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).getTime()
       },
     ];
 
@@ -244,7 +244,7 @@ describe('DateUtils', () => {
         volume: 1000,
         origine: 'test',
         workout: 'Lower A',
-        timestamp: '2024-01-15T10:00:00'
+        timestamp: new Date('2024-01-15T10:00:00').getTime()
       },
       {
         date: '2024-01-15T14:00:00',
@@ -254,7 +254,7 @@ describe('DateUtils', () => {
         volume: 2400,
         origine: 'test',
         workout: 'Lower A',
-        timestamp: '2024-01-15T14:00:00'
+        timestamp: new Date('2024-01-15T14:00:00').getTime()
       },
       {
         date: '2024-01-16T10:00:00',
@@ -264,7 +264,7 @@ describe('DateUtils', () => {
         volume: 640,
         origine: 'test',
         workout: 'Upper A',
-        timestamp: '2024-01-16T10:00:00'
+        timestamp: new Date('2024-01-16T10:00:00').getTime()
       },
     ];
 

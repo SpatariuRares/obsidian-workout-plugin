@@ -1,6 +1,6 @@
 import { App, MarkdownView, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "../../main";
-import { CodeGenerator } from "./components/CodeGenerator";
+import type WorkoutChartsPlugin from "main";
+import { CodeGenerator } from "@app/modals/components/CodeGenerator";
 
 export class CreateDashboardSection {
   private app: App;

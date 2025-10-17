@@ -1,5 +1,5 @@
 // Reusable target section component for exercise/workout selection
-import { ModalBase } from "../base/ModalBase";
+import { ModalBase } from "@app/modals/base/ModalBase";
 
 export interface TargetSectionElements {
   exerciseContainer: HTMLElement;

@@ -1,7 +1,7 @@
 // Enhanced target section component with exercise autocomplete
-import { ModalBase } from "../base/ModalBase";
-import { ExerciseAutocomplete } from "./ExerciseAutocomplete";
-import type WorkoutChartsPlugin from "../../../main";
+import { ModalBase } from "@app/modals/base/ModalBase";
+import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import type WorkoutChartsPlugin from "main";
 
 export interface TargetSectionWithAutocompleteElements {
   exerciseContainer: HTMLElement;

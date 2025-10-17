@@ -1,9 +1,9 @@
-import { WorkoutLogData } from "../../types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
-import { EmbeddedTableParams } from "../types/types";
-import type WorkoutChartsPlugin from "../../../main";
-import { TableState, TableCallbacks } from "./TableTypes";
-import { TableDataLoader } from "./TableDataLoader";
+import { EmbeddedTableParams } from "@app/types";
+import type WorkoutChartsPlugin from "main";
+import { TableState, TableCallbacks } from "@app/components/table/TableTypes";
+import { TableDataLoader } from "@app/components/table/TableDataLoader";
 
 export class TableRefresh {
   /**

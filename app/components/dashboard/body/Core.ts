@@ -1,4 +1,4 @@
-import { Muscle, MuscleGroupData } from './Muscle';
+import { Muscle, MuscleGroupData } from '@app/components/dashboard/body/Muscle';
 
 export interface CoreData {
 	abs: number;

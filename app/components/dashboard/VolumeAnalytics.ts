@@ -1,7 +1,7 @@
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "../types/types";
-import { ChartRenderer } from "../chart/ChartRenderer";
-import { DashboardCalculations } from "./DashboardCalculations";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedDashboardParams } from "@app/types";
+import { ChartRenderer } from "@app/components/chart/ChartRenderer";
+import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
 
 export class VolumeAnalytics {
   static render(

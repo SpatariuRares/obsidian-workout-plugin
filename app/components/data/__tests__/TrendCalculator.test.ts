@@ -1,4 +1,4 @@
-import { TrendCalculator } from "../TrendCalculator";
+import { TrendCalculator } from "@app/components/data/TrendCalculator";
 
 describe("TrendCalculator", () => {
 	describe("getTrendIndicators", () => {

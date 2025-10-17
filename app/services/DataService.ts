@@ -1,4 +1,3 @@
-import { App, TFile, Notice } from "obsidian";
 import {
   WorkoutLogData,
   CSVWorkoutLogEntry,
@@ -6,7 +5,8 @@ import {
   entriesToCSVContent,
   convertFromCSVEntry,
   WorkoutChartsSettings,
-} from "../types/WorkoutLogData";
+} from "@app/types/WorkoutLogData";
+import { App, TFile, Notice } from "obsidian";
 
 export class DataService {
   private logDataCache: WorkoutLogData[] | null = null;
@@ -16,7 +16,7 @@ export class DataService {
   constructor(
     private app: App,
     private settings: WorkoutChartsSettings
-  ) {}
+  ) { }
 
   async getWorkoutLogData(filterParams?: {
     exercise?: string;
@@ -192,42 +192,38 @@ export class DataService {
   public async addWorkoutLogEntry(
     entry: Omit<CSVWorkoutLogEntry, "timestamp">
   ): Promise<void> {
-    try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(
-        this.settings.csvLogFilePath
-      );
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath
+    );
 
-      if (!abstractFile || !(abstractFile instanceof TFile)) {
-        // Create the file if it doesn't exist
-        await this.createCSVLogFile();
-        return this.addWorkoutLogEntry(entry); // Retry
-      }
-
-      const csvFile = abstractFile;
-
-      const content = await this.app.vault.read(csvFile);
-      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
-
-      // Add new entry with timestamp
-      const newEntry: CSVWorkoutLogEntry = {
-        ...entry,
-        timestamp: Date.now(),
-      };
-
-      csvEntries.push(newEntry);
-
-      // Convert back to CSV content
-      const newContent = entriesToCSVContent(csvEntries);
-
-      // Write back to file
-      await this.app.vault.modify(csvFile, newContent);
-
-      // Clear cache
-      this.clearLogDataCache();
-    } catch (error) {
-      console.error("Error adding workout log entry:", error);
-      throw error;
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      // Create the file if it doesn't exist
+      await this.createCSVLogFile();
+      return this.addWorkoutLogEntry(entry); // Retry
     }
+
+    const csvFile = abstractFile;
+
+    const content = await this.app.vault.read(csvFile);
+    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+
+    // Add new entry with timestamp
+    const newEntry: CSVWorkoutLogEntry = {
+      ...entry,
+      timestamp: Date.now(),
+    };
+
+    csvEntries.push(newEntry);
+
+    // Convert back to CSV content
+    const newContent = entriesToCSVContent(csvEntries);
+
+    // Write back to file
+    await this.app.vault.modify(csvFile, newContent);
+
+    // Clear cache
+    this.clearLogDataCache();
+
   }
 
   /**
@@ -237,65 +233,61 @@ export class DataService {
     originalLog: WorkoutLogData,
     updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">
   ): Promise<void> {
-    try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(
-        this.settings.csvLogFilePath
-      );
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath
+    );
 
-      if (!abstractFile || !(abstractFile instanceof TFile)) {
-        throw new Error("CSV log file not found");
-      }
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      throw new Error("CSV log file not found");
+    }
 
-      const csvFile = abstractFile;
+    const csvFile = abstractFile;
 
-      const content = await this.app.vault.read(csvFile);
-      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+    const content = await this.app.vault.read(csvFile);
+    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
 
-      // Find the entry to update by matching timestamp (most reliable identifier)
-      let entryIndex = csvEntries.findIndex((entry) => {
-        return entry.timestamp === originalLog.timestamp;
+    // Find the entry to update by matching timestamp (most reliable identifier)
+    let entryIndex = csvEntries.findIndex((entry) => {
+      return entry.timestamp === originalLog.timestamp;
+    });
+
+    // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
+    if (entryIndex === -1) {
+      const fallbackIndex = csvEntries.findIndex((entry) => {
+        return (
+          entry.date === originalLog.date &&
+          entry.exercise === originalLog.exercise &&
+          entry.reps === originalLog.reps &&
+          entry.weight === originalLog.weight
+        );
       });
 
-      // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
-      if (entryIndex === -1) {
-        const fallbackIndex = csvEntries.findIndex((entry) => {
-          return (
-            entry.date === originalLog.date &&
-            entry.exercise === originalLog.exercise &&
-            entry.reps === originalLog.reps &&
-            entry.weight === originalLog.weight
-          );
-        });
-
-        if (fallbackIndex !== -1) {
-          entryIndex = fallbackIndex;
-        }
+      if (fallbackIndex !== -1) {
+        entryIndex = fallbackIndex;
       }
-
-      if (entryIndex === -1) {
-        throw new Error("Original log entry not found in CSV file");
-      }
-
-      // Update the entry while preserving the original timestamp
-      const updatedEntryWithTimestamp: CSVWorkoutLogEntry = {
-        ...updatedEntry,
-        timestamp: csvEntries[entryIndex].timestamp, // Keep original timestamp
-      };
-
-      csvEntries[entryIndex] = updatedEntryWithTimestamp;
-
-      // Convert back to CSV content
-      const newContent = entriesToCSVContent(csvEntries);
-
-      // Write back to file
-      await this.app.vault.modify(csvFile, newContent);
-
-      // Clear cache
-      this.clearLogDataCache();
-    } catch (error) {
-      console.error("Error updating workout log entry:", error);
-      throw error;
     }
+
+    if (entryIndex === -1) {
+      throw new Error("Original log entry not found in CSV file");
+    }
+
+    // Update the entry while preserving the original timestamp
+    const updatedEntryWithTimestamp: CSVWorkoutLogEntry = {
+      ...updatedEntry,
+      timestamp: csvEntries[entryIndex].timestamp, // Keep original timestamp
+    };
+
+    csvEntries[entryIndex] = updatedEntryWithTimestamp;
+
+    // Convert back to CSV content
+    const newContent = entriesToCSVContent(csvEntries);
+
+    // Write back to file
+    await this.app.vault.modify(csvFile, newContent);
+
+    // Clear cache
+    this.clearLogDataCache();
+
   }
 
   /**
@@ -304,55 +296,51 @@ export class DataService {
   public async deleteWorkoutLogEntry(
     logToDelete: WorkoutLogData
   ): Promise<void> {
-    try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(
-        this.settings.csvLogFilePath
-      );
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath
+    );
 
-      if (!abstractFile || !(abstractFile instanceof TFile)) {
-        throw new Error("CSV log file not found");
-      }
-
-      const csvFile = abstractFile;
-
-      const content = await this.app.vault.read(csvFile);
-      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
-
-      // Find the entry to delete by matching timestamp (most reliable identifier)
-      let entryIndex = csvEntries.findIndex((entry) => {
-        return entry.timestamp === logToDelete.timestamp;
-      });
-
-      // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
-      if (entryIndex === -1) {
-        entryIndex = csvEntries.findIndex((entry) => {
-          return (
-            entry.date === logToDelete.date &&
-            entry.exercise === logToDelete.exercise &&
-            entry.reps === logToDelete.reps &&
-            entry.weight === logToDelete.weight
-          );
-        });
-      }
-
-      if (entryIndex === -1) {
-        throw new Error("Log entry not found in CSV file");
-      }
-
-      // Remove the entry
-      csvEntries.splice(entryIndex, 1);
-
-      // Convert back to CSV content
-      const newContent = entriesToCSVContent(csvEntries);
-
-      // Write back to file
-      await this.app.vault.modify(csvFile, newContent);
-
-      // Clear cache
-      this.clearLogDataCache();
-    } catch (error) {
-      console.error("Error deleting workout log entry:", error);
-      throw error;
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      throw new Error("CSV log file not found");
     }
+
+    const csvFile = abstractFile;
+
+    const content = await this.app.vault.read(csvFile);
+    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+
+    // Find the entry to delete by matching timestamp (most reliable identifier)
+    let entryIndex = csvEntries.findIndex((entry) => {
+      return entry.timestamp === logToDelete.timestamp;
+    });
+
+    // Fallback: if timestamp not found, try matching by date, exercise, reps, and weight
+    if (entryIndex === -1) {
+      entryIndex = csvEntries.findIndex((entry) => {
+        return (
+          entry.date === logToDelete.date &&
+          entry.exercise === logToDelete.exercise &&
+          entry.reps === logToDelete.reps &&
+          entry.weight === logToDelete.weight
+        );
+      });
+    }
+
+    if (entryIndex === -1) {
+      throw new Error("Log entry not found in CSV file");
+    }
+
+    // Remove the entry
+    csvEntries.splice(entryIndex, 1);
+
+    // Convert back to CSV content
+    const newContent = entriesToCSVContent(csvEntries);
+
+    // Write back to file
+    await this.app.vault.modify(csvFile, newContent);
+
+    // Clear cache
+    this.clearLogDataCache();
+
   }
 }

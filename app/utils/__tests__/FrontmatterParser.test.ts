@@ -1,4 +1,4 @@
-import { FrontmatterParser } from '../FrontmatterParser';
+import { FrontmatterParser } from '@app/utils/FrontmatterParser';
 
 describe('FrontmatterParser', () => {
   const validContent = `---

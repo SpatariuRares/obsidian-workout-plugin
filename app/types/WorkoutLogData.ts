@@ -88,24 +88,23 @@ export function parseCSVLogFile(
         continue;
       }
 
-      try {
-        const entry: CSVWorkoutLogEntry = {
-          date: values[0]?.trim() || "",
-          exercise: values[1]?.trim() || "",
-          reps: parseInt(values[2]) || 0,
-          weight: parseFloat(values[3]) || 0,
-          volume: parseFloat(values[4]) || 0,
-          origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
-          workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
-          timestamp: parseInt(values[7]) || Date.now(),
-          notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
-        };
+      const entry: CSVWorkoutLogEntry = {
+        date: values[0]?.trim() || "",
+        exercise: values[1]?.trim() || "",
+        reps: parseInt(values[2]) || 0,
+        weight: parseFloat(values[3]) || 0,
+        volume: parseFloat(values[4]) || 0,
+        origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
+        workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
+        timestamp: parseInt(values[7]) || Date.now(),
+        notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
+      };
 
-        // Validate required fields
-        if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
-          entries.push(entry);
-        }
-      } catch (error) { }
+      // Validate required fields
+      if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
+        entries.push(entry);
+      }
+
     }
 
     return entries;

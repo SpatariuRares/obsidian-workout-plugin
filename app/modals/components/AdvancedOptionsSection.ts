@@ -1,5 +1,5 @@
 // Reusable advanced options section component
-import { ModalBase } from "../base/ModalBase";
+import { ModalBase } from "@app/modals/base/ModalBase";
 
 export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;

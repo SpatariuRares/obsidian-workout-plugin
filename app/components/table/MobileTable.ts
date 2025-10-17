@@ -1,4 +1,4 @@
-import { EmbeddedChartParams, ChartDataset } from "../types/types";
+import { EmbeddedChartParams, ChartDataset } from "@app/types";
 
 export class MobileTable {
   /**
@@ -42,8 +42,8 @@ export class MobileTable {
         chartType === "volume"
           ? "Volume (kg)"
           : chartType === "weight"
-          ? "Peso (kg)"
-          : "Ripetizioni",
+            ? "Peso (kg)"
+            : "Ripetizioni",
     });
 
     // Create table body

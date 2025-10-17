@@ -1,8 +1,8 @@
-import { WorkoutLogData } from "../../../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../../../../main";
-import type { BodyData } from "../body";
-import { MuscleTagMapper } from "./MuscleTagMapper";
-import { DateUtils } from "../../../utils/DateUtils";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import type WorkoutChartsPlugin from "main";
+import { MuscleTagMapper } from "@app/components/dashboard/muscleHeatMap/MuscleTagMapper";
+import { DateUtils } from "@app/utils/DateUtils";
+import { BodyData } from "@app/components";
 
 export interface MuscleGroupData {
   name: string;

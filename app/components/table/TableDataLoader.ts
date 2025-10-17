@@ -1,7 +1,7 @@
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { EmbeddedTableParams } from "../types/types";
-import type WorkoutChartsPlugin from "../../../main";
-import { TableCallbacks } from "./TableTypes";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedTableParams } from "@app/types";
+import type WorkoutChartsPlugin from "main";
+import { TableCallbacks } from "@app/components/table/TableTypes";
 
 export class TableDataLoader {
   /**

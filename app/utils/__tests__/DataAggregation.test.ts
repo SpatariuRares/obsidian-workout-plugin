@@ -1,5 +1,5 @@
-import { DataAggregation } from '../DataAggregation';
-import { WorkoutLogData } from '../../types/WorkoutLogData';
+import { DataAggregation } from '@app/utils/DataAggregation';
+import { WorkoutLogData } from '@app/types/WorkoutLogData';
 
 describe('DataAggregation', () => {
   const mockData: WorkoutLogData[] = [
@@ -11,7 +11,7 @@ describe('DataAggregation', () => {
       volume: 1000,
       origine: 'test',
       workout: 'Lower A',
-      timestamp: '2024-01-15T10:00:00'
+      timestamp: new Date('2024-01-15T10:00:00').getTime()
     },
     {
       date: '2024-01-15T11:00:00',
@@ -21,7 +21,7 @@ describe('DataAggregation', () => {
       volume: 960,
       origine: 'test',
       workout: 'Lower A',
-      timestamp: '2024-01-15T11:00:00'
+      timestamp: new Date('2024-01-15T11:00:00').getTime()
     },
     {
       date: '2024-01-16T10:00:00',
@@ -31,7 +31,7 @@ describe('DataAggregation', () => {
       volume: 800,
       origine: 'test',
       workout: 'Upper A',
-      timestamp: '2024-01-16T10:00:00'
+      timestamp: new Date('2024-01-16T10:00:00').getTime()
     },
     {
       date: '2024-01-16T11:00:00',
@@ -41,7 +41,7 @@ describe('DataAggregation', () => {
       volume: 750,
       origine: 'test',
       workout: 'Lower B',
-      timestamp: '2024-01-16T11:00:00'
+      timestamp: new Date('2024-01-16T11:00:00').getTime()
     },
   ];
 
@@ -59,7 +59,7 @@ describe('DataAggregation', () => {
     });
 
     it('should handle empty data', () => {
-      const result = DataAggregation.aggregateByKey(
+      const result = DataAggregation.aggregateByKey<WorkoutLogData>(
         [],
         (d) => d.exercise,
         (d) => d.volume
@@ -234,7 +234,7 @@ describe('DataAggregation', () => {
       const result = DataAggregation.groupByDateAndWorkout(mockData);
 
       const lowerA = result.get('2024-01-15-Lower A');
-      expect(lowerA?.timestamp).toBe('2024-01-15T11:00:00'); // More recent
+      expect(lowerA?.timestamp).toBe(new Date('2024-01-15T11:00:00').getTime()); // More recent
     });
 
     it('should handle undefined workout names', () => {

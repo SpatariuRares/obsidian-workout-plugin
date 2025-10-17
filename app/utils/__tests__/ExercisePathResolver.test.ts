@@ -1,6 +1,6 @@
-import { ExercisePathResolver } from "../ExercisePathResolver";
+import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import { TFile } from "obsidian";
-import type WorkoutChartsPlugin from "../../../main";
+import type WorkoutChartsPlugin from "main";
 
 // Mock TFile class
 class MockTFile {

@@ -1,7 +1,7 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
-import { EmbeddedChartParams, ChartDataset } from "../types/types";
-import { calculateTrendLine } from "../../utils/utils";
-import { TrendIndicators } from "../types/types";
+import { EmbeddedChartParams, ChartDataset } from "@app/types";
+import { calculateTrendLine } from "@app/utils/utils";
+import { TrendIndicators } from "@app/types";
 
 /**
  * Handles the rendering of workout data charts using Chart.js.
@@ -255,9 +255,8 @@ export class ChartRenderer {
                   chartType === "volume" || chartType === "weight"
                     ? "kg"
                     : "reps";
-                return `${label}: ${
-                  value?.toFixed ? value.toFixed(1) : value
-                } ${unit}`;
+                return `${label}: ${value?.toFixed ? value.toFixed(1) : value
+                  } ${unit}`;
               },
             },
           },
@@ -290,8 +289,8 @@ export class ChartRenderer {
                 chartType === "volume"
                   ? "Volume (kg)"
                   : chartType === "weight"
-                  ? "Peso (kg)"
-                  : "Ripetizioni",
+                    ? "Peso (kg)"
+                    : "Ripetizioni",
               color: colors.text,
               font: { size: 14, weight: 500 },
             },

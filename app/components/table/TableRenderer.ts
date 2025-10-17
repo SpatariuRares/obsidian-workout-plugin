@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
-import { TableRow, EmbeddedTableParams } from "../types/types";
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import type WorkoutChartsPlugin from "../../../main";
+import { TableRow, EmbeddedTableParams } from "@app/types";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import type WorkoutChartsPlugin from "main";
 
 export class TableRenderer {
   /**
@@ -91,7 +91,7 @@ export class TableRenderer {
       if (rows.length === 0) return;
 
       let currentDateKey = "";
-      let isFirstGroup = true;
+      const isFirstGroup = true;
       let groupIndex = 0;
       const columnCount = rows[0].displayRow.length;
 
@@ -158,9 +158,8 @@ export class TableRenderer {
         }
 
         const tr = fragment.appendChild(document.createElement("tr"));
-        tr.className = `same-day-log ${
-          groupIndex % 2 === 0 ? "group-even" : "group-odd"
-        }`;
+        tr.className = `same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
+          }`;
 
         row.displayRow.forEach((cell, cellIndex) => {
           const td = tr.appendChild(document.createElement("td"));

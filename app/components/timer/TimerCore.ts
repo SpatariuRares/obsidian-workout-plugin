@@ -1,8 +1,8 @@
 import { Notice } from "obsidian";
-import { TimerState, TimerCallbacks } from "./TimerTypes";
-import { TimerAudio } from "./TimerAudio";
-import { TimerDisplay } from "./TimerDisplay";
-import { TimerControls } from "./TimerControls";
+import { TimerState, TimerCallbacks } from "@app/components/timer/TimerTypes";
+import { TimerAudio } from "@app/components/timer/TimerAudio";
+import { TimerDisplay } from "@app/components/timer/TimerDisplay";
+import { TimerControls } from "@app/components/timer/TimerControls";
 
 export class TimerCore {
   private state: TimerState;

@@ -1,7 +1,7 @@
-import type WorkoutChartsPlugin from "../../../../main";
-import { TAG_MUSCLE_MAP, getAllMuscleGroups } from "../../../constants/MuscleTags";
-import { ExercisePathResolver } from "../../../utils/ExercisePathResolver";
-import { FrontmatterParser } from "../../../utils/FrontmatterParser";
+import type WorkoutChartsPlugin from "main";
+import { TAG_MUSCLE_MAP, getAllMuscleGroups } from "@app/constants/MuscleTags";
+import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
+import { FrontmatterParser } from "@app/utils/FrontmatterParser";
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping

@@ -1,10 +1,10 @@
 // Refactored InsertTableModal using reusable components
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "../../main";
-import { ModalBase } from "./base/ModalBase";
-import { TargetSectionWithAutocomplete } from "./components/TargetSectionWithAutocomplete";
-import { AdvancedOptionsSection } from "./components/AdvancedOptionsSection";
-import { CodeGenerator } from "./components/CodeGenerator";
+import type WorkoutChartsPlugin from "main";
+import { ModalBase } from "@app/modals/base/ModalBase";
+import { TargetSectionWithAutocomplete } from "@app/modals/components/TargetSectionWithAutocomplete";
+import { AdvancedOptionsSection } from "@app/modals/components/AdvancedOptionsSection";
+import { CodeGenerator } from "@app/modals/components/CodeGenerator";
 import { Notice } from "obsidian";
 
 export class InsertTableModal extends ModalBase {

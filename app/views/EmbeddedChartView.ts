@@ -1,17 +1,11 @@
 // Embedded Chart View for workout data visualization
-import type WorkoutChartsPlugin from "../../main";
-import { WorkoutLogData } from "../types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   EmbeddedChartParams,
   ChartDataset,
   FilterResult,
   TrendIndicators,
-} from "../components/types/types";
-import {
-  processChartData,
-  calculateTrendLine,
-  validateUserParams,
-} from "../utils/utils";
+} from "@app/types";
 import {
   ChartRenderer,
   UIComponents,
@@ -19,8 +13,15 @@ import {
   MobileTable,
   TrendHeader,
   StatsBox,
-} from "../components";
-import { BaseView } from "./BaseView";
+} from "@app/components";
+import { BaseView } from "@app/views/BaseView";
+import WorkoutChartsPlugin from "main";
+import {
+  processChartData,
+  calculateTrendLine,
+  validateUserParams,
+
+} from "@app/utils";
 
 export class EmbeddedChartView extends BaseView {
   constructor(plugin: WorkoutChartsPlugin) {

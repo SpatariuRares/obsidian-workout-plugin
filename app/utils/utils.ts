@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import { ChartDataset, EmbeddedViewParams } from "../components/types/types";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { ChartDataset, EmbeddedViewParams } from "@app/types";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
@@ -67,7 +67,7 @@ export function findExerciseMatches(
     const fileName = log.file?.basename || "";
     const fileNameScore = getMatchScore(fileName, exerciseName);
 
-    if (fileNameScore > 0) {
+    if (fileNameScore > 0 && log.file) {
       fileNameMatches.push({
         file: log.file,
         score: fileNameScore,
@@ -206,7 +206,7 @@ export function filterLogDataByExercise(
   }
   if (strategy === "filename") {
     const filePaths = fileMatches.map((match) => match.file.path);
-    return logData.filter((log) => filePaths.includes(log.file.path));
+    return logData.filter((log) => log.file && filePaths.includes(log.file.path));
   }
   if (strategy === "exercise_field") {
     return logData.filter((log) => {
@@ -300,23 +300,23 @@ export function processChartData(
       chartType === "volume"
         ? volumeData
         : chartType === "weight"
-        ? weightData
-        : repsData;
+          ? weightData
+          : repsData;
 
     // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
     const label =
       chartType === "volume"
         ? displayType === "workout" ? "Volume Totale (kg)" : "Volume Medio (kg)"
         : chartType === "weight"
-        ? displayType === "workout" ? "Peso Totale (kg)" : "Peso Medio (kg)"
-        : displayType === "workout" ? "Reps Totali" : "Reps Medie";
+          ? displayType === "workout" ? "Peso Totale (kg)" : "Peso Medio (kg)"
+          : displayType === "workout" ? "Reps Totali" : "Reps Medie";
 
     const color =
       chartType === "volume"
         ? "#4CAF50"
         : chartType === "weight"
-        ? "#2196F3"
-        : "#FF9800";
+          ? "#2196F3"
+          : "#FF9800";
 
     datasets.push({
       label,

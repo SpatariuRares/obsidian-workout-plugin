@@ -1,5 +1,5 @@
-import { DashboardCalculations } from "../DashboardCalculations";
-import { WorkoutLogData } from "../../../types/WorkoutLogData";
+import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 // Helper to create mock workout data
 const createMockLog = (
@@ -410,7 +410,7 @@ describe("DashboardCalculations", () => {
 					volume: 1000,
 					origine: "test",
 					workout: undefined,
-					timestamp: today.toISOString(),
+					timestamp: today.getTime(),
 				},
 			];
 

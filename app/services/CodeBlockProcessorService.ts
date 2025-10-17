@@ -1,17 +1,17 @@
 import { MarkdownPostProcessorContext } from "obsidian";
-import { WorkoutLogData } from "../types/WorkoutLogData";
-import { EmbeddedChartView } from "../views/EmbeddedChartView";
-import { EmbeddedTableView } from "../views/EmbeddedTableView";
-import { EmbeddedTimerView } from "../views/EmbeddedTimerView";
-import { EmbeddedDashboardView } from "../views/EmbeddedDashboardView";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
+import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
+import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
+import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   EmbeddedTimerParams,
   EmbeddedDashboardParams,
-} from "../components/types/types";
-import type WorkoutChartsPlugin from "../../main";
-import { DataService } from "./DataService";
+} from "@app/types";
+import type WorkoutChartsPlugin from "main";
+import { DataService } from "@app/services/DataService";
 
 export class CodeBlockProcessorService {
   constructor(
@@ -21,7 +21,7 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>
-  ) {}
+  ) { }
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
@@ -65,7 +65,7 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        const { UIComponents } = await import("../components");
+        const { UIComponents } = await import("@app/components");
         UIComponents.renderCSVNoDataMessage(
           el,
           this.plugin.settings.csvLogFilePath,
@@ -109,7 +109,7 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        const { UIComponents } = await import("../components");
+        const { UIComponents } = await import("@app/components");
         UIComponents.renderCSVNoDataMessage(
           el,
           this.plugin.settings.csvLogFilePath,
@@ -201,7 +201,7 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        const { UIComponents } = await import("../components");
+        const { UIComponents } = await import("@app/components");
         UIComponents.renderCSVNoDataMessage(
           el,
           this.plugin.settings.csvLogFilePath,

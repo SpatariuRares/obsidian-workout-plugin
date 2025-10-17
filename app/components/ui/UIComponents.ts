@@ -1,8 +1,8 @@
 import { MarkdownView } from "obsidian";
-import { CreateLogModal } from "../../modals/CreateLogModal";
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { FilterResult } from "../types/types";
-import type WorkoutChartsPlugin from "../../../main";
+import { CreateLogModal } from "@app/modals/CreateLogModal";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { FilterResult } from "@app/types";
+import type WorkoutChartsPlugin from "main";
 
 /**
  * Provides reusable UI components for the workout charts plugin.
@@ -45,7 +45,7 @@ export class UIComponents {
     };
 
     const icon = icons[type] || icons.info;
-    const strongEl = infoDiv.createEl("strong", { text: icon });
+    // const strongEl = infoDiv.createEl("strong", { text: icon });
     infoDiv.append(" ", message);
   }
 

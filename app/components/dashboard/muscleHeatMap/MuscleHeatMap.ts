@@ -1,11 +1,11 @@
-import { WorkoutLogData } from "../../../types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "../../types/types";
-import type WorkoutChartsPlugin from "../../../../main";
-import { BodyHeatMap, type BodyData } from "../body";
-import { MuscleDataCalculator } from "./MuscleDataCalculator";
-import { MuscleBalanceAnalyzer } from "./MuscleBalanceAnalyzer";
-import { HeatMapControls } from "./HeatMapControls";
-import type { MuscleHeatMapOptions } from "./types";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { EmbeddedDashboardParams } from "@app/types";
+import type WorkoutChartsPlugin from "main";
+import { BodyHeatMap, type BodyData } from "@app/components/dashboard/body";
+import { MuscleDataCalculator } from "@app/components/dashboard/muscleHeatMap/MuscleDataCalculator";
+import { MuscleBalanceAnalyzer } from "@app/components/dashboard/muscleHeatMap/MuscleBalanceAnalyzer";
+import { HeatMapControls } from "@app/components/dashboard/muscleHeatMap/HeatMapControls";
+import { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
 
 /**
  * Main orchestrator for muscle heat map visualization

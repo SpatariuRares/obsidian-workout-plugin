@@ -1,5 +1,5 @@
-import { EmbeddedDashboardParams } from "../types/types";
-import { MUSCLE_TAGS } from "../../constants/MuscleTags";
+import { EmbeddedDashboardParams } from "@app/types";
+import { MUSCLE_TAGS } from "@app/constants/MuscleTags";
 
 /**
  * Widget that displays available muscle group tags in the plugin

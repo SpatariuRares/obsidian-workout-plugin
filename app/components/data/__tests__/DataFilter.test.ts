@@ -1,22 +1,22 @@
-import { DataFilter } from '../DataFilter';
+import { DataFilter } from '@app/components/data/DataFilter';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
-import { EmbeddedChartParams } from '@app/components/types/types';
+import { EmbeddedChartParams } from '@app/types';
+import { findExerciseMatches, determineExerciseFilterStrategy, filterLogDataByExercise } from '@app/utils/utils';
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
-// For now, we will test the parts that don't rely heavily on these utils.
-jest.mock('../../../utils/utils', () => ({
-    ...jest.requireActual('../../../utils/utils'), // Keep original implementations for parts we don't mock
+jest.mock('../@app/utils/utils', () => ({
+    ...jest.requireActual('../@app/utils/utils'),
     findExerciseMatches: jest.fn(),
     determineExerciseFilterStrategy: jest.fn(),
     filterLogDataByExercise: jest.fn(),
 }));
 
 const mockLogData: WorkoutLogData[] = [
-    { date: '2024-01-01', exercise: 'Squat', reps: 5, sets: 3, weight: 100, volume: 1500, file: 'log1.md', origine: '[[Strength Training]]' },
-    { date: '2024-01-15', exercise: 'Bench Press', reps: 5, sets: 3, weight: 80, volume: 1200, file: 'log2.md', origine: '[[Strength Training]]' },
-    { date: '2024-02-01', exercise: 'Deadlift', reps: 5, sets: 1, weight: 120, volume: 600, file: 'log3.md', workout: 'Full Body Workout' },
-    { date: '2024-02-10', exercise: 'Squat', reps: 6, sets: 3, weight: 105, volume: 1890, file: 'log4.md', workout: 'Leg Day' },
-    { date: '2024-02-12', exercise: '   SQUAT   ', reps: 6, sets: 3, weight: 105, volume: 1890, file: 'log5.md', workout: 'Leg Day' },
+    { date: '2024-01-01', exercise: 'Squat', reps: 5, weight: 100, volume: 1500, origine: '[[Strength Training]]' },
+    { date: '2024-01-15', exercise: 'Bench Press', reps: 5, weight: 80, volume: 1200, origine: '[[Strength Training]]' },
+    { date: '2024-02-01', exercise: 'Deadlift', reps: 5, weight: 120, volume: 600, workout: 'Full Body Workout' },
+    { date: '2024-02-10', exercise: 'Squat', reps: 6, weight: 105, volume: 1890, workout: 'Leg Day' },
+    { date: '2024-02-12', exercise: '   SQUAT   ', reps: 6, weight: 105, volume: 1890, workout: 'Leg Day' },
 ];
 
 
@@ -116,54 +116,56 @@ describe('DataFilter', () => {
         });
 
         describe('Fuzzy Exercise Filtering (Mocked)', () => {
-            const { findExerciseMatches, determineExerciseFilterStrategy, filterLogDataByExercise } = require('../../../utils/utils');
+            const mockFindExerciseMatches = findExerciseMatches as jest.MockedFunction<typeof findExerciseMatches>;
+            const mockDetermineExerciseFilterStrategy = determineExerciseFilterStrategy as jest.MockedFunction<typeof determineExerciseFilterStrategy>;
+            const mockFilterLogDataByExercise = filterLogDataByExercise as jest.MockedFunction<typeof filterLogDataByExercise>;
 
             it('should call fuzzy matching utilities when exactMatch is false', () => {
                 const params: Partial<EmbeddedChartParams> = { exercise: 'sqwat' };
-                
+
                 // Setup mocks
-                const mockMatchesResult = { fileNameMatches: new Map(), allExercisePathsAndScores: new Map([['Squat', 90]]) };
+                const mockMatchesResult = { fileNameMatches: [], allExercisePathsAndScores: new Map([['Squat', 90]]), bestStrategy: '', bestPathKey: '' };
                 const mockStrategy = { bestStrategy: 'field', bestPathKey: 'Squat', bestFileMatchesList: [] };
                 const filteredByUtil = [mockLogData[0]];
 
-                findExerciseMatches.mockReturnValue(mockMatchesResult);
-                determineExerciseFilterStrategy.mockReturnValue(mockStrategy);
-                filterLogDataByExercise.mockReturnValue(filteredByUtil);
+                mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
+                mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+                mockFilterLogDataByExercise.mockReturnValue(filteredByUtil);
 
                 const result = DataFilter.filterData(mockLogData, params as EmbeddedChartParams, true);
 
-                expect(findExerciseMatches).toHaveBeenCalledWith(mockLogData, 'sqwat', true);
-                expect(determineExerciseFilterStrategy).toHaveBeenCalled();
-                expect(filterLogDataByExercise).toHaveBeenCalledWith(mockLogData, 'field', 'Squat', []);
+                expect(mockFindExerciseMatches).toHaveBeenCalledWith(mockLogData, 'sqwat', true);
+                expect(mockDetermineExerciseFilterStrategy).toHaveBeenCalled();
+                expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(mockLogData, 'field', 'Squat', []);
                 expect(result.filteredData).toEqual(filteredByUtil);
                 expect(result.filterMethodUsed).toBe('Exercise field:: "Squat" (score: 90)');
             });
 
             it('should use filename strategy when determined', () => {
                 const params: Partial<EmbeddedChartParams> = { exercise: 'bench' };
-                const mockMatchesResult = { fileNameMatches: new Map(), allExercisePathsAndScores: new Map() };
-                const mockFileMatch = { file: 'log2.md', score: 85 };
+                const mockMatchesResult = { fileNameMatches: [], allExercisePathsAndScores: new Map(), bestStrategy: '', bestPathKey: '' };
+                const mockFileMatch = { file: {} as any, score: 85, exerciseName: 'log2.md', strategy: 'filename' };
                 const mockStrategy = { bestStrategy: 'filename', bestPathKey: '', bestFileMatchesList: [mockFileMatch] };
-                
-                findExerciseMatches.mockReturnValue(mockMatchesResult);
-                determineExerciseFilterStrategy.mockReturnValue(mockStrategy);
-                filterLogDataByExercise.mockReturnValue([mockLogData[1]]);
+
+                mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
+                mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+                mockFilterLogDataByExercise.mockReturnValue([mockLogData[1]]);
 
                 const result = DataFilter.filterData(mockLogData, params as EmbeddedChartParams, false);
 
-                expect(filterLogDataByExercise).toHaveBeenCalledWith(mockLogData, 'filename', '', [mockFileMatch]);
+                expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(mockLogData, 'filename', '', [mockFileMatch]);
                 expect(result.filteredData).toHaveLength(1);
                 expect(result.filterMethodUsed).toBe('file name (score: 85)');
             });
 
             it('should handle no match found', () => {
                 const params: Partial<EmbeddedChartParams> = { exercise: 'nonexistent' };
-                const mockMatchesResult = { fileNameMatches: new Map(), allExercisePathsAndScores: new Map() };
+                const mockMatchesResult = { fileNameMatches: [], allExercisePathsAndScores: new Map(), bestStrategy: '', bestPathKey: '' };
                 const mockStrategy = { bestStrategy: 'none', bestPathKey: '', bestFileMatchesList: [] };
 
-                findExerciseMatches.mockReturnValue(mockMatchesResult);
-                determineExerciseFilterStrategy.mockReturnValue(mockStrategy);
-                filterLogDataByExercise.mockReturnValue([]);
+                mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
+                mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+                mockFilterLogDataByExercise.mockReturnValue([]);
 
                 const result = DataFilter.filterData(mockLogData, params as EmbeddedChartParams, false);
 

@@ -1,8 +1,8 @@
 // Refactored CreateExercisePageModal using reusable components
 import { App, Notice, TFile } from "obsidian";
-import type WorkoutChartsPlugin from "../../main";
-import { ModalBase } from "./base/ModalBase";
-import { ExerciseAutocomplete } from "./components/ExerciseAutocomplete";
+import type WorkoutChartsPlugin from "main";
+import { ModalBase } from "@app/modals/base/ModalBase";
+import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
 
 export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;

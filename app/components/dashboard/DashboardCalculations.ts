@@ -1,6 +1,6 @@
-import { WorkoutLogData } from "../../types/WorkoutLogData";
-import { DateUtils } from "../../utils/DateUtils";
-import { DataAggregation } from "../../utils/DataAggregation";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { DateUtils } from "@app/utils/DateUtils";
+import { DataAggregation } from "@app/utils/DataAggregation";
 
 export interface SummaryMetrics {
   totalWorkouts: number;

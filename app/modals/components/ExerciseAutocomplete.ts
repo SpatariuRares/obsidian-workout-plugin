@@ -186,13 +186,6 @@ export class ExerciseAutocomplete {
       // Use ExercisePathResolver to get exercise names
       this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);
 
-      // Debug logging if enabled
-      if (plugin.settings.debugMode) {
-        ExercisePathResolver.debugPathResolution(
-          plugin,
-          "ExerciseAutocomplete"
-        );
-      }
     } catch (error) {
       console.error("Error loading available exercises:", error);
       this.availableExercises = [];

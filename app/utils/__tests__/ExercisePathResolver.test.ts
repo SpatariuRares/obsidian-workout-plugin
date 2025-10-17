@@ -346,7 +346,6 @@ describe("ExercisePathResolver", () => {
 				true
 			);
 
-			ExercisePathResolver.debugPathResolution(plugin, "TestContext");
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				"TestContext: Exercise folder path:",
@@ -369,7 +368,6 @@ describe("ExercisePathResolver", () => {
 				false
 			);
 
-			ExercisePathResolver.debugPathResolution(plugin, "TestContext");
 
 			expect(consoleSpy).not.toHaveBeenCalled();
 		});
@@ -381,7 +379,6 @@ describe("ExercisePathResolver", () => {
 				true
 			);
 
-			ExercisePathResolver.debugPathResolution(plugin, "TestContext");
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				"TestContext: Paths to check:",
@@ -408,7 +405,6 @@ describe("ExercisePathResolver", () => {
 				true
 			);
 
-			ExercisePathResolver.debugPathResolution(plugin, "TestContext");
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				"TestContext: Exercise files:",

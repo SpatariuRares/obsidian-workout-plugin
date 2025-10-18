@@ -27,14 +27,14 @@
     "chart.js": "^4.4.0"
   },
   "devDependencies": {
-    "@codemirror/state": "^6.5.2",
-    "@codemirror/view": "^6.38.0",
+    "@codemirror/state": "6.5.0",
+    "@codemirror/view": "6.38.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^16.11.6",
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
     "builtin-modules": "3.3.0",
-    "esbuild": "0.17.3",
+    "esbuild": "^0.25.11",
     "esbuild-postcss": "^0.0.4",
     "eslint": "^9.38.0",
     "eslint-plugin-import": "^2.32.0",

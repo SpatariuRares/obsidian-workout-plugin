@@ -72,7 +72,9 @@ export class MuscleTagsWidget {
 
     // Add click to copy functionality
     badgeEl.addEventListener("click", () => {
-      navigator.clipboard.writeText(muscleName);
+      navigator.clipboard.writeText(muscleName).catch((err) => {
+        console.error("Failed to copy muscle tag:", err);
+      });
 
       // Show visual feedback
       badgeEl.addClass("copied");

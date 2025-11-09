@@ -39,11 +39,11 @@ export class QuickActions {
     viewExercisesBtn.addEventListener("click", () => {
       // Navigate to exercises folder
       if (plugin.app.workspace.getActiveFile()) {
-        plugin.app.workspace.openLinkText(
-          plugin.settings.exerciseFolderPath,
-          "",
-          false
-        );
+        plugin.app.workspace
+          .openLinkText(plugin.settings.exerciseFolderPath, "", false)
+          .catch((err) => {
+            console.error("Failed to open exercises folder:", err);
+          });
       }
     });
   }

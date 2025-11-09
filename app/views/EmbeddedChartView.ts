@@ -27,18 +27,18 @@ export class EmbeddedChartView extends BaseView {
     super(plugin);
   }
 
-  async createChart(
+  createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedChartParams
-  ): Promise<void> {
+  ): void {
     try {
       this.logDebug("EmbeddedChartView", "createChart called", {
         dataLength: logData.length,
         params,
       });
 
-      if (!this.validateChartParams(container, params, logData)) {
+      if (!this.validateChartParams(container, params)) {
         return;
       }
 
@@ -115,8 +115,7 @@ export class EmbeddedChartView extends BaseView {
 
   private validateChartParams(
     container: HTMLElement,
-    params: EmbeddedChartParams,
-    logData: WorkoutLogData[]
+    params: EmbeddedChartParams
   ): boolean {
     const validationErrors = validateUserParams(params);
     return this.validateAndHandleErrors(container, validationErrors);

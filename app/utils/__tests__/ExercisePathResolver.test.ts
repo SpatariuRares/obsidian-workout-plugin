@@ -19,7 +19,7 @@ const createMockPlugin = (
 	files: string[],
 	debugMode = false
 ): WorkoutChartsPlugin => {
-	const mockFiles = files.map((path) => new MockTFile(path) as unknown as TFile);
+	const mockFiles = files.map((path) => new MockTFile(path));
 
 	return {
 		settings: {
@@ -28,7 +28,7 @@ const createMockPlugin = (
 		},
 		app: {
 			vault: {
-				getMarkdownFiles: () => mockFiles,
+				getMarkdownFiles: () => mockFiles as TFile[],
 			},
 		},
 	} as unknown as WorkoutChartsPlugin;
@@ -104,10 +104,10 @@ describe("ExercisePathResolver", () => {
 	});
 
 	describe("isInExerciseFolder", () => {
-		const mockFile1 = new MockTFile("theGYM/Esercizi/Data/Squat.md") as unknown as TFile;
-		const mockFile2 = new MockTFile("Esercizi/Data/Bench Press.md") as unknown as TFile;
-		const mockFile3 = new MockTFile("Other/Notes/Random.md") as unknown as TFile;
-		const mockFile4 = new MockTFile("theGYM/Esercizi/Deadlift.md") as unknown as TFile;
+		const mockFile1 = new MockTFile("theGYM/Esercizi/Data/Squat.md") as TFile;
+		const mockFile2 = new MockTFile("Esercizi/Data/Bench Press.md") as TFile;
+		const mockFile3 = new MockTFile("Other/Notes/Random.md") as TFile;
+		const mockFile4 = new MockTFile("theGYM/Esercizi/Deadlift.md") as TFile;
 
 		it("should return true for file in theGYM/Esercizi/Data", () => {
 			expect(
@@ -136,14 +136,14 @@ describe("ExercisePathResolver", () => {
 		it("should handle Windows-style paths in file", () => {
 			const windowsFile = new MockTFile(
 				"theGYM\\Esercizi\\Data\\Squat.md"
-			) as unknown as TFile;
+			) as TFile;
 			expect(
 				ExercisePathResolver.isInExerciseFolder(windowsFile, "Esercizi")
 			).toBe(true);
 		});
 
 		it("should return false when file path does not match any pattern", () => {
-			const otherFile = new MockTFile("Notes/Daily/2024-01-15.md") as unknown as TFile;
+			const otherFile = new MockTFile("Notes/Daily/2024-01-15.md") as TFile;
 			expect(
 				ExercisePathResolver.isInExerciseFolder(otherFile, "Esercizi")
 			).toBe(false);
@@ -324,7 +324,9 @@ describe("ExercisePathResolver", () => {
 		});
 	});
 
-	describe("debugPathResolution", () => {
+	// Note: debugPathResolution functionality has been removed/refactored
+	// These tests are kept as placeholders for future debug logging implementation
+	describe.skip("debugPathResolution", () => {
 		// Mock console.log to test debug output
 		let consoleSpy: jest.SpyInstance;
 

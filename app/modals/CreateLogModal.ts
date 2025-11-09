@@ -139,7 +139,7 @@ export class CreateLogModal extends ModalBase {
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
-    createBtn.addEventListener("click", async () => {
+    createBtn.addEventListener("click", () => {
       const exercise = exerciseElements.exerciseInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
@@ -161,20 +161,21 @@ export class CreateLogModal extends ModalBase {
         return;
       }
 
-      try {
-        await this.createLogEntry(exercise, reps, weight, workout, notes);
-        this.close();
-        new Notice("Workout log created successfully!");
+      this.createLogEntry(exercise, reps, weight, workout, notes)
+        .then(() => {
+          this.close();
+          new Notice("Workout log created successfully!");
 
-        // Trigger refresh callback if provided
-        if (this.onLogCreated) {
-          this.onLogCreated();
-        }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        new Notice(`Error creating log: ${errorMessage}`);
-      }
+          // Trigger refresh callback if provided
+          if (this.onLogCreated) {
+            this.onLogCreated();
+          }
+        })
+        .catch((error) => {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(`Error creating log: ${errorMessage}`);
+        });
     });
 
     // Focus on first empty input

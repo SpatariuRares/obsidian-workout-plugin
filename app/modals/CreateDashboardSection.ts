@@ -8,7 +8,7 @@ export class CreateDashboardSection {
     this.app = app;
   }
 
-  async insert() {
+  insert() {
     const sectionCode = CodeGenerator.generateDashboardCode();
     this.insertIntoEditor(sectionCode);
   }

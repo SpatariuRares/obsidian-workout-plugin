@@ -2,10 +2,11 @@ import { DataFilter } from '@app/components/data/DataFilter';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
 import { EmbeddedChartParams } from '@app/types';
 import { findExerciseMatches, determineExerciseFilterStrategy, filterLogDataByExercise } from '@app/utils/utils';
+import { TFile } from 'obsidian';
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
-jest.mock('../@app/utils/utils', () => ({
-    ...jest.requireActual('../@app/utils/utils'),
+jest.mock('@app/utils/utils', () => ({
+    ...jest.requireActual('@app/utils/utils'),
     findExerciseMatches: jest.fn(),
     determineExerciseFilterStrategy: jest.fn(),
     filterLogDataByExercise: jest.fn(),
@@ -36,7 +37,7 @@ describe('DataFilter', () => {
         it('should return empty array if logData is null or empty', () => {
             const params: Partial<EmbeddedChartParams> = {};
             expect(DataFilter.filterData([], params as EmbeddedChartParams, false).filteredData).toHaveLength(0);
-            expect(DataFilter.filterData(null as any, params as EmbeddedChartParams, false).filteredData).toHaveLength(0);
+            expect(DataFilter.filterData(null as unknown as WorkoutLogData[], params as EmbeddedChartParams, false).filteredData).toHaveLength(0);
         });
 
         describe('Workout Filtering', () => {
@@ -144,7 +145,7 @@ describe('DataFilter', () => {
             it('should use filename strategy when determined', () => {
                 const params: Partial<EmbeddedChartParams> = { exercise: 'bench' };
                 const mockMatchesResult = { fileNameMatches: [], allExercisePathsAndScores: new Map(), bestStrategy: '', bestPathKey: '' };
-                const mockFileMatch = { file: {} as any, score: 85, exerciseName: 'log2.md', strategy: 'filename' };
+                const mockFileMatch = { file: {} as TFile, score: 85, exerciseName: 'log2.md', strategy: 'filename' };
                 const mockStrategy = { bestStrategy: 'filename', bestPathKey: '', bestFileMatchesList: [mockFileMatch] };
 
                 mockFindExerciseMatches.mockReturnValue(mockMatchesResult);

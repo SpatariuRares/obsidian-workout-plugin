@@ -16,39 +16,12 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    const csvInfo = containerEl.createEl("div", {
-      cls: "setting-item-info",
-    });
-
-    const infoDiv = csvInfo.createEl("div", {
-      cls: "csv-mode-info",
-    });
-    infoDiv.setAttribute(
-      "style",
-      `
-        background: var(--background-secondary);
-        border: 1px solid var(--background-modifier-border);
-        border-radius: 6px;
-        padding: 12px;
-        margin-bottom: 20px;
-    `
-    );
-
-    const title = infoDiv.createEl("h4", {
-      text: "Workout planner",
-    });
-    title.setAttribute(
-      "style",
-      "margin: 0 0 8px 0; color: var(--interactive-accent);"
-    );
-
-    const description = infoDiv.createEl("p", {
-      text: "All workout data is stored in a single CSV file for better performance and easier management.",
-    });
-    description.setAttribute(
-      "style",
-      "margin: 0; font-size: 14px; color: var(--text-muted);"
-    );
+    new Setting(containerEl)
+      .setName("Workout planner")
+      .setHeading()
+      .setDesc(
+        "All workout data is stored in a single CSV file for better performance and easier management."
+      );
 
     new Setting(containerEl)
       .setName("CSV log file path")
@@ -89,7 +62,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     // CSV Management Section
-    containerEl.createEl("h3", { text: "CSV file management" });
+    new Setting(containerEl)
+      .setName("CSV file management")
+      .setHeading();
 
     new Setting(containerEl)
       .setName("Create CSV log file")

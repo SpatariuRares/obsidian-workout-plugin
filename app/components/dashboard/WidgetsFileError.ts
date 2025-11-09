@@ -54,7 +54,12 @@ export class WidgetsFileError {
         cls: "file-error-link",
       });
       link.addEventListener("click", () => {
-        plugin.app.workspace.getLeaf().openFile(fileError.file);
+        plugin.app.workspace
+          .getLeaf()
+          .openFile(fileError.file)
+          .catch((err) => {
+            console.error("Failed to open exercise file:", err);
+          });
       });
 
       // Error messages
@@ -120,8 +125,9 @@ export class WidgetsFileError {
       } else if (muscleTags.length > 3) {
         errors.push(`⚠️ Too many muscle tags (${muscleTags.length})`);
       }
-    } catch (error: any) {
-      errors.push(`⚠️ Error reading file: ${error.message}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      errors.push(`⚠️ Error reading file: ${errorMessage}`);
     }
 
     return errors;

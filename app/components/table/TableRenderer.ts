@@ -2,6 +2,8 @@ import { Notice } from "obsidian";
 import { TableRow, EmbeddedTableParams } from "@app/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
+import { EditLogModal } from "@app/modals/EditLogModal";
+import { ConfirmModal } from "@app/modals/ConfirmModal";
 
 export class TableRenderer {
   /**
@@ -136,15 +138,19 @@ export class TableRenderer {
         const summaryCell = spacerRow.appendChild(document.createElement("td"));
         summaryCell.className = "table-spacer-summary-cell";
         summaryCell.setAttribute("colspan", (columnCount - 1).toString());
-        summaryCell.innerHTML = `
-        <span class="spacer-stat">🔢 Reps: <strong>${totalReps}</strong></span>
-        <span class="spacer-stat">⚖️ Peso: <strong>${totalWeight.toFixed(
-          1
-        )} kg</strong></span>
-        <span class="spacer-stat">📊 Vol: <strong>${totalVolume.toFixed(
-          1
-        )}</strong></span>
-        `;
+
+        // Create stat spans using DOM methods
+        const repsSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        repsSpan.appendText("🔢 Reps: ");
+        repsSpan.createEl("strong", { text: totalReps.toString() });
+
+        const weightSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        weightSpan.appendText("⚖️ Peso: ");
+        weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
+
+        const volumeSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        volumeSpan.appendText("📊 Vol: ");
+        volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
 
       rows.forEach((row, index) => {
@@ -158,8 +164,9 @@ export class TableRenderer {
         }
 
         const tr = fragment.appendChild(document.createElement("tr"));
-        tr.className = `same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
-          }`;
+        tr.className = `same-day-log ${
+          groupIndex % 2 === 0 ? "group-even" : "group-odd"
+        }`;
 
         row.displayRow.forEach((cell, cellIndex) => {
           const td = tr.appendChild(document.createElement("td"));
@@ -223,13 +230,12 @@ export class TableRenderer {
     });
 
     // Event listeners
-    editBtn.addEventListener("click", async (e) => {
+    editBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
 
       if (plugin) {
         // Open EditLogModal with the original log data
-        const { EditLogModal } = await import("../../modals/EditLogModal");
         const modal = new EditLogModal(plugin.app, plugin, originalLog, () => {
           plugin.triggerWorkoutLogRefresh();
         });
@@ -237,25 +243,32 @@ export class TableRenderer {
       }
     });
 
-    deleteBtn.addEventListener("click", async (e) => {
+    deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
 
-      if (
-        plugin &&
-        confirm("Are you sure you want to delete this log entry?")
-      ) {
-        try {
-          await plugin.deleteWorkoutLogEntry(originalLog);
-          new Notice("Log entry deleted successfully!");
-          // Refresh the table
-          plugin.triggerWorkoutLogRefresh();
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          new Notice("Error deleting log entry: " + errorMessage);
-          console.error("Error deleting log entry:", error);
-        }
+      if (plugin) {
+        // Open confirmation modal
+        const modal = new ConfirmModal(
+          plugin.app,
+          "Are you sure you want to delete this log entry?",
+          () => {
+            plugin
+              .deleteWorkoutLogEntry(originalLog)
+              .then(() => {
+                new Notice("Log entry deleted successfully!");
+                // Refresh the table
+                plugin.triggerWorkoutLogRefresh();
+              })
+              .catch((error) => {
+                const errorMessage =
+                  error instanceof Error ? error.message : String(error);
+                new Notice("Error deleting log entry: " + errorMessage);
+                console.error("Error deleting log entry:", error);
+              });
+          }
+        );
+        modal.open();
       }
     });
   }

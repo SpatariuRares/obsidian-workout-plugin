@@ -75,14 +75,29 @@ export class Body {
     }
 
     private drawFemaleBackOutline(svg: SVGSVGElement): void {
-        svg.innerHTML = `
-			<defs>
-				<radialGradient id="jointradial" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-					<stop offset="0%" style="stop-color: rgb(254, 91, 127); stop-opacity: 1;"></stop>
-					<stop offset="100%" style="stop-color: rgb(231, 236, 239); stop-opacity: 1;"></stop>
-				</radialGradient>
-			</defs>
-		`;
+        // Create SVG defs using DOM methods
+        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+
+        const gradient = document.createElementNS("http://www.w3.org/2000/svg", "radialGradient");
+        gradient.setAttribute("id", "jointradial");
+        gradient.setAttribute("cx", "50%");
+        gradient.setAttribute("cy", "50%");
+        gradient.setAttribute("r", "50%");
+        gradient.setAttribute("fx", "50%");
+        gradient.setAttribute("fy", "50%");
+
+        const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+        stop1.setAttribute("offset", "0%");
+        stop1.setAttribute("style", "stop-color: rgb(254, 91, 127); stop-opacity: 1;");
+
+        const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+        stop2.setAttribute("offset", "100%");
+        stop2.setAttribute("style", "stop-color: rgb(231, 236, 239); stop-opacity: 1;");
+
+        gradient.appendChild(stop1);
+        gradient.appendChild(stop2);
+        defs.appendChild(gradient);
+        svg.appendChild(defs);
     }
 
     private renderFrontView(svg: SVGSVGElement): void {

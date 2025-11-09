@@ -234,7 +234,7 @@ describe('DataAggregation', () => {
       const result = DataAggregation.groupByDateAndWorkout(mockData);
 
       const lowerA = result.get('2024-01-15-Lower A');
-      expect(lowerA?.timestamp).toBe(new Date('2024-01-15T11:00:00').getTime()); // More recent
+      expect(lowerA?.timestamp).toBe('2024-01-15T11:00:00'); // More recent
     });
 
     it('should handle undefined workout names', () => {

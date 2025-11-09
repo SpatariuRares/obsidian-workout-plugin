@@ -57,7 +57,7 @@ export abstract class BaseView {
     params: EmbeddedViewParams,
     titlePrefix: string,
     logData: WorkoutLogData[],
-    viewType: "chart" | "table" | "timer"
+    viewType: "chart" | "table" | "timer" | "dashboard"
   ): void {
     // Check if this is a combined exercise + workout case
     if (titlePrefix && titlePrefix.includes(" + ")) {

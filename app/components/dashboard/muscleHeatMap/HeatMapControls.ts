@@ -79,14 +79,14 @@ export class HeatMapControls {
 
     // Setup time frame event listeners
     [weekBtn, monthBtn, yearBtn].forEach((btn, index) => {
-      btn.addEventListener("click", async () => {
+      btn.addEventListener("click", () => {
         [weekBtn, monthBtn, yearBtn].forEach((b) => b.removeClass("active"));
         btn.addClass("active");
         currentOptions.timeFrame = ["week", "month", "year"][index] as
           | "week"
           | "month"
           | "year";
-        await renderCallback(
+        void renderCallback(
           canvasContainer,
           data,
           currentOptions,
@@ -98,11 +98,11 @@ export class HeatMapControls {
 
     // Setup view toggle event listeners
     [frontBtn, backBtn].forEach((btn, index) => {
-      btn.addEventListener("click", async () => {
+      btn.addEventListener("click", () => {
         [frontBtn, backBtn].forEach((b) => b.removeClass("active"));
         btn.addClass("active");
         currentOptions.view = ["front", "back"][index] as "front" | "back";
-        await renderCallback(
+        void renderCallback(
           canvasContainer,
           data,
           currentOptions,

@@ -32,7 +32,7 @@ const createMockLog = (
 	reps: number,
 	filePath: string
 ): WorkoutLogData => {
-	const file = new MockTFile(filePath) as unknown as TFile;
+	const file = new MockTFile(filePath) as TFile;
 	return {
 		date,
 		exercise,
@@ -145,7 +145,7 @@ describe("utils.ts", () => {
 	describe("determineExerciseFilterStrategy", () => {
 		const mockMatches: ExerciseMatch[] = [
 			{
-				file: new MockTFile("Squat.md") as unknown as TFile,
+				file: new MockTFile("Squat.md") as TFile,
 				score: 100,
 				exerciseName: "Squat",
 				strategy: "filename",
@@ -196,7 +196,7 @@ describe("utils.ts", () => {
 		it("should use filename strategy when score is above threshold", () => {
 			const highScoreMatches: ExerciseMatch[] = [
 				{
-					file: new MockTFile("Squat.md") as unknown as TFile,
+					file: new MockTFile("Squat.md") as TFile,
 					score: 90,
 					exerciseName: "Squat",
 					strategy: "filename",
@@ -215,7 +215,7 @@ describe("utils.ts", () => {
 		it("should use exercise_field strategy when score is higher than filename", () => {
 			const lowScoreMatches: ExerciseMatch[] = [
 				{
-					file: new MockTFile("Squat.md") as unknown as TFile,
+					file: new MockTFile("Squat.md") as TFile,
 					score: 70,
 					exerciseName: "Squat",
 					strategy: "filename",
@@ -236,7 +236,7 @@ describe("utils.ts", () => {
 		it("should return none when scores are below threshold", () => {
 			const lowScoreMatches: ExerciseMatch[] = [
 				{
-					file: new MockTFile("Squat.md") as unknown as TFile,
+					file: new MockTFile("Squat.md") as TFile,
 					score: 50,
 					exerciseName: "Squat",
 					strategy: "filename",
@@ -288,7 +288,7 @@ describe("utils.ts", () => {
 		it("should filter by filename_exact strategy", () => {
 			const matches: ExerciseMatch[] = [
 				{
-					file: new MockTFile("Squat.md") as unknown as TFile,
+					file: new MockTFile("Squat.md") as TFile,
 					score: 100,
 					exerciseName: "Squat",
 					strategy: "filename",
@@ -307,7 +307,7 @@ describe("utils.ts", () => {
 		it("should filter by filename strategy", () => {
 			const matches: ExerciseMatch[] = [
 				{
-					file: new MockTFile("Squat.md") as unknown as TFile,
+					file: new MockTFile("Squat.md") as TFile,
 					score: 90,
 					exerciseName: "Squat",
 					strategy: "filename",
@@ -435,7 +435,7 @@ describe("utils.ts", () => {
 		});
 
 		it("should validate chartType parameter", () => {
-			const errors = validateUserParams({ chartType: "invalid" as any });
+			const errors = validateUserParams({ chartType: "invalid" as "exercise" });
 			expect(errors.length).toBeGreaterThan(0);
 			expect(errors[0]).toContain("chartType");
 		});
@@ -446,7 +446,7 @@ describe("utils.ts", () => {
 		});
 
 		it("should validate type parameter for charts", () => {
-			const errors = validateUserParams({ type: "invalid" as any });
+			const errors = validateUserParams({ type: "invalid" as "volume" });
 			expect(errors.length).toBeGreaterThan(0);
 			expect(errors[0]).toContain("type");
 		});
@@ -471,13 +471,13 @@ describe("utils.ts", () => {
 			const errors = validateUserParams({
 				dateRange: 400,
 				limit: 2000,
-				type: "invalid" as any,
+				type: "invalid" as "volume",
 			});
 			expect(errors.length).toBe(3);
 		});
 
 		it("should handle NaN values", () => {
-			const errors = validateUserParams({ dateRange: "abc" as any });
+			const errors = validateUserParams({ dateRange: "abc" as unknown as number });
 			expect(errors.length).toBeGreaterThan(0);
 		});
 	});
@@ -513,7 +513,7 @@ describe("utils.ts", () => {
 		});
 
 		it("should handle invalid format by using default", () => {
-			expect(formatDate(testDate, "INVALID" as any)).toBe("15/01/2024");
+			expect(formatDate(testDate, "INVALID" as "DD/MM/YYYY")).toBe("15/01/2024");
 		});
 	});
 

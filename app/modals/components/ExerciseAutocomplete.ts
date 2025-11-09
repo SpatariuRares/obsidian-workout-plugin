@@ -34,7 +34,7 @@ export class ExerciseAutocomplete {
     exerciseExists: boolean;
   }> {
     const instance = new ExerciseAutocomplete();
-    await instance.loadAvailableExercises(plugin);
+    instance.loadAvailableExercises(plugin);
 
     // Exercise input with autocomplete
     const exerciseContainer = modal.createFormGroup(container);
@@ -181,7 +181,7 @@ export class ExerciseAutocomplete {
   /**
    * Loads available exercises from the exercise folder
    */
-  private async loadAvailableExercises(plugin: WorkoutChartsPlugin) {
+  private loadAvailableExercises(plugin: WorkoutChartsPlugin) {
     try {
       // Use ExercisePathResolver to get exercise names
       this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);

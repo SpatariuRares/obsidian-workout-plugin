@@ -71,7 +71,7 @@ export class CreateExercisePageModal extends ModalBase {
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
-    createBtn.addEventListener("click", async () => {
+    createBtn.addEventListener("click", () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();
       const tags = tagsInput.value.trim();
       const folderPath = folderInput.value.trim();
@@ -81,15 +81,16 @@ export class CreateExercisePageModal extends ModalBase {
         return;
       }
 
-      try {
-        await this.createExercisePage(exerciseName, tags, folderPath);
-        this.close();
-        new Notice("Exercise page created successfully!");
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        new Notice(`Error creating exercise page: ${errorMessage}`);
-      }
+      this.createExercisePage(exerciseName, tags, folderPath)
+        .then(() => {
+          this.close();
+          new Notice("Exercise page created successfully!");
+        })
+        .catch((error) => {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(`Error creating exercise page: ${errorMessage}`);
+        });
     });
 
     // Focus on exercise input

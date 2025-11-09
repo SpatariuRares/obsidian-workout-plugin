@@ -141,7 +141,7 @@ export class EditLogModal extends ModalBase {
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
-    updateBtn.addEventListener("click", async () => {
+    updateBtn.addEventListener("click", () => {
       const exercise = exerciseElements.exerciseInput.value.trim();
       const reps = parseInt(repsInput.value);
       const weight = parseFloat(weightInput.value);
@@ -163,20 +163,21 @@ export class EditLogModal extends ModalBase {
         return;
       }
 
-      try {
-        await this.updateLogEntry(exercise, reps, weight, workout, notes);
-        this.close();
-        new Notice("Workout log updated successfully!");
+      this.updateLogEntry(exercise, reps, weight, workout, notes)
+        .then(() => {
+          this.close();
+          new Notice("Workout log updated successfully!");
 
-        // Trigger refresh callback if provided
-        if (this.onLogUpdated) {
-          this.onLogUpdated();
-        }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        new Notice(`Error updating log: ${errorMessage}`);
-      }
+          // Trigger refresh callback if provided
+          if (this.onLogUpdated) {
+            this.onLogUpdated();
+          }
+        })
+        .catch((error) => {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(`Error updating log: ${errorMessage}`);
+        });
     });
 
     // Focus on first input

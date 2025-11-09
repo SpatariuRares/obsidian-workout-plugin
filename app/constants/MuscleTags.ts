@@ -217,7 +217,7 @@ export function getAllMuscleGroups(): Set<string> {
  */
 export function isValidMuscleTag(tag: string): boolean {
   const normalizedTag = tag.toLowerCase().trim();
-  return MUSCLE_TAGS.includes(normalizedTag as any);
+  return MUSCLE_TAGS.includes(normalizedTag as typeof MUSCLE_TAGS[number]);
 }
 
 /**

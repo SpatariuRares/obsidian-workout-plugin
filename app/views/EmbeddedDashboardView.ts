@@ -61,7 +61,7 @@ export class EmbeddedDashboardView extends BaseView {
           params,
           params.title || "Dashboard",
           logData,
-          "dashboard" as any
+          "dashboard"
         );
         return;
       }

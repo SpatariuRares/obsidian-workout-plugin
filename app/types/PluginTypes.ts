@@ -21,18 +21,18 @@ export interface WorkoutChartsPluginInterface {
 			trigger: (event: string, file: TFile) => void;
 		};
 		workspace: {
-			getActiveViewOfType: (type: any) => any;
-			getLeavesOfType: (type: string) => any[];
+			getActiveViewOfType: (type: unknown) => unknown;
+			getLeavesOfType: (type: string) => unknown[];
 			trigger: (event: string) => void;
 		};
-		keymap: any;
-		scope: any;
-		metadataCache: any;
-		fileManager: any;
-		internalPlugins: any;
-		plugins: any;
-		commands: any;
-		lastEvent: any;
+		keymap: unknown;
+		scope: unknown;
+		metadataCache: unknown;
+		fileManager: unknown;
+		internalPlugins: unknown;
+		plugins: unknown;
+		commands: unknown;
+		lastEvent: unknown;
 		loadLocalStorage: (key: string) => string | null;
 		saveLocalStorage: (key: string, value: string) => void;
 	};

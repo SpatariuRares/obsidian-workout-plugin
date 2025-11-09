@@ -18,7 +18,7 @@ export class EmbeddedTimerView extends BaseView {
     super(plugin);
     this.timerId = `timer-${Date.now()}-${Math.random()
       .toString(36)
-      .substr(2, 9)}`;
+      .substring(2, 9)}`;
 
     // Initialize timer core with callbacks
     this.timerCore = new TimerCore(
@@ -45,10 +45,7 @@ export class EmbeddedTimerView extends BaseView {
     );
   }
 
-  async createTimer(
-    container: HTMLElement,
-    params: EmbeddedTimerParams
-  ): Promise<void> {
+  createTimer(container: HTMLElement, params: EmbeddedTimerParams): void {
     try {
       this.logDebug("EmbeddedTimerView", "createTimer called", {
         params,

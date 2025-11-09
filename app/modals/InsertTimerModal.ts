@@ -6,7 +6,7 @@ import { TimerConfigurationSection } from "@app/modals/components/TimerConfigura
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
 
 export class InsertTimerModal extends ModalBase {
-  constructor(app: App, private plugin: WorkoutChartsPlugin) {
+  constructor(app: App) {
     super(app);
   }
 

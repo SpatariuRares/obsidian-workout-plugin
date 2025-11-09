@@ -86,9 +86,9 @@ export class UIComponents {
       cls: "workout-log-no-data",
     });
 
-    const p1 = noDataDiv.createEl("p");
+    noDataDiv.createEl("p");
 
-    const p2 = noDataDiv.createEl("p");
+    noDataDiv.createEl("p");
 
     const buttonDiv = noDataDiv.createEl("div", {
       cls: "workout-charts-button-container",
@@ -128,14 +128,8 @@ export class UIComponents {
   /**
    * Renders a message when no matching exercise data is found.
    * @param container - The HTML element to render the message in
-   * @param exercise - The exercise name that was searched for
-   * @param logData - Array of available workout log data
    */
-  static renderNoMatchMessage(
-    container: HTMLElement,
-    exercise: string,
-    logData: WorkoutLogData[]
-  ): void {
+  static renderNoMatchMessage(container: HTMLElement): void {
     const noMatchDiv = container.createEl("div", {
       cls: "workout-log-no-match",
     });
@@ -247,7 +241,6 @@ export class UIComponents {
     onLogCreated?: () => void
   ): void {
     if (!currentPageLink) {
-      console.warn("'Add Log' button not created: currentPageLink is missing.");
       return;
     }
 

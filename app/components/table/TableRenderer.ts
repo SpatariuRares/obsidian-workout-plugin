@@ -57,8 +57,8 @@ export class TableRenderer {
       tableContainer.appendChild(fragment);
 
       return true;
-    } catch (error) {
-      console.error("Error rendering table:", error);
+    } catch {
+      // Silent error - table rendering failed
       return false;
     }
   }
@@ -77,7 +77,7 @@ export class TableRenderer {
     const errorDiv = container.createEl("div", {
       cls: "workout-table-error",
     });
-    const strongEl = errorDiv.createEl("strong", { text: `${title}:` });
+    errorDiv.createEl("strong", { text: `${title}:` });
     errorDiv.append(` ${message}`);
   }
 
@@ -93,7 +93,6 @@ export class TableRenderer {
       if (rows.length === 0) return;
 
       let currentDateKey = "";
-      const isFirstGroup = true;
       let groupIndex = 0;
       const columnCount = rows[0].displayRow.length;
 
@@ -153,7 +152,7 @@ export class TableRenderer {
         volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
 
-      rows.forEach((row, index) => {
+      rows.forEach((row) => {
         const dateKey = row.dateKey;
 
         // New group - show spacer BEFORE the group
@@ -187,8 +186,8 @@ export class TableRenderer {
       });
 
       tbody.appendChild(fragment);
-    } catch (error) {
-      console.error("Error applying row grouping:", error);
+    } catch {
+      // Silent error - grouping failed
     }
   }
 
@@ -264,7 +263,6 @@ export class TableRenderer {
                 const errorMessage =
                   error instanceof Error ? error.message : String(error);
                 new Notice("Error deleting log entry: " + errorMessage);
-                console.error("Error deleting log entry:", error);
               });
           }
         );

@@ -9,7 +9,7 @@ export class QuickStatsCards {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams
   ): void {
     const cardsEl = container.createEl("div", {
       cls: "dashboard-widget stats-cards",

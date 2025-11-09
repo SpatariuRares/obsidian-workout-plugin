@@ -40,7 +40,7 @@ export class TimerAudio {
       playTone(783.99, currentTime + 0.5, 0.3); // G5
       playTone(659.25, currentTime + 0.65, 0.3); // E5
       playTone(523.25, currentTime + 0.8, 0.4); // C5 (final note)
-    } catch (error) {
+    } catch {
       // Silently fail if audio context creation fails
     }
   }

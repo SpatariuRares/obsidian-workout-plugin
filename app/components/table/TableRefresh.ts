@@ -12,7 +12,7 @@ export class TableRefresh {
   static async refreshTable(
     state: TableState,
     plugin: WorkoutChartsPlugin,
-    renderCallback: (container: HTMLElement, logData: WorkoutLogData[], params: EmbeddedTableParams) => Promise<void>,
+    renderCallback: (_container: HTMLElement, _logData: WorkoutLogData[], _params: EmbeddedTableParams) => Promise<void>,
     callbacks?: TableCallbacks
   ): Promise<void> {
     if (!state.currentContainer || !state.currentParams) {
@@ -44,7 +44,7 @@ export class TableRefresh {
       }
     } catch (error) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
-      console.error("Error refreshing table:", errorObj);
+      // Silent error - table refresh failed
       callbacks?.onError?.(errorObj, "refreshing table");
 
       // Fallback to current data if available

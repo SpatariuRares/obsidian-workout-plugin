@@ -49,13 +49,8 @@ export class MuscleTagMapper {
 
       this.exerciseTagsCache.set(exerciseName, tags);
       return tags;
-    } catch (error) {
-      if (plugin.settings.debugMode) {
-        console.error(
-          `Error loading exercise tags for "${exerciseName}":`,
-          error
-        );
-      }
+    } catch {
+      // Silent fail - error loading exercise tags
       this.exerciseTagsCache.set(exerciseName, []);
       return [];
     }

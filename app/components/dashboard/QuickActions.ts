@@ -41,8 +41,8 @@ export class QuickActions {
       if (plugin.app.workspace.getActiveFile()) {
         plugin.app.workspace
           .openLinkText(plugin.settings.exerciseFolderPath, "", false)
-          .catch((err) => {
-            console.error("Failed to open exercises folder:", err);
+          .catch(() => {
+            // Silent fail - failed to open exercises folder
           });
       }
     });

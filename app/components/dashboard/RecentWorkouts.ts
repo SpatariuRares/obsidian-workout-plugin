@@ -6,7 +6,7 @@ export class RecentWorkouts {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams
   ): void {
     const recentEl = container.createEl("div", {
       cls: "dashboard-widget  columns-2  recent-workouts",

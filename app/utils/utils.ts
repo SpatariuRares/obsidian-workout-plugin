@@ -56,8 +56,7 @@ export function getMatchScore(str1: string, str2: string): number {
  */
 export function findExerciseMatches(
   logData: WorkoutLogData[],
-  exerciseName: string,
-  debug: boolean = false
+  exerciseName: string
 ): MatchResult {
   const fileNameMatches: ExerciseMatch[] = [];
   const allExercisePathsAndScores = new Map<string, number>();
@@ -100,7 +99,6 @@ export function determineExerciseFilterStrategy(
   fileNameMatches: ExerciseMatch[],
   allExercisePathsAndScores: Map<string, number>,
   exactMatch: boolean = false,
-  debug: boolean = false,
   exerciseName: string = ""
 ): {
   bestStrategy: string;
@@ -206,7 +204,9 @@ export function filterLogDataByExercise(
   }
   if (strategy === "filename") {
     const filePaths = fileMatches.map((match) => match.file.path);
-    return logData.filter((log) => log.file && filePaths.includes(log.file.path));
+    return logData.filter(
+      (log) => log.file && filePaths.includes(log.file.path)
+    );
   }
   if (strategy === "exercise_field") {
     return logData.filter((log) => {
@@ -300,23 +300,29 @@ export function processChartData(
       chartType === "volume"
         ? volumeData
         : chartType === "weight"
-          ? weightData
-          : repsData;
+        ? weightData
+        : repsData;
 
     // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
     const label =
       chartType === "volume"
-        ? displayType === "workout" ? "Volume Totale (kg)" : "Volume Medio (kg)"
+        ? displayType === "workout"
+          ? "Volume Totale (kg)"
+          : "Volume Medio (kg)"
         : chartType === "weight"
-          ? displayType === "workout" ? "Peso Totale (kg)" : "Peso Medio (kg)"
-          : displayType === "workout" ? "Reps Totali" : "Reps Medie";
+        ? displayType === "workout"
+          ? "Peso Totale (kg)"
+          : "Peso Medio (kg)"
+        : displayType === "workout"
+        ? "Reps Totali"
+        : "Reps Medie";
 
     const color =
       chartType === "volume"
         ? "#4CAF50"
         : chartType === "weight"
-          ? "#2196F3"
-          : "#FF9800";
+        ? "#2196F3"
+        : "#FF9800";
 
     datasets.push({
       label,

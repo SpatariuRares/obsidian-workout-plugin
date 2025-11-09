@@ -4,11 +4,11 @@ import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
 import { HeatMapExporter } from "@app/components/dashboard/muscleHeatMap/HeatMapExporter";
 
 type RenderCallback = (
-  canvasContainer: HTMLElement,
-  data: WorkoutLogData[],
-  options: MuscleHeatMapOptions,
-  infoPanel: HTMLElement,
-  plugin: WorkoutChartsPlugin
+  _canvasContainer: HTMLElement,
+  _data: WorkoutLogData[],
+  _options: MuscleHeatMapOptions,
+  _infoPanel: HTMLElement,
+  _plugin: WorkoutChartsPlugin
 ) => Promise<void>;
 
 /**

@@ -25,7 +25,7 @@ export class MobileTable {
       `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
 
     // Create table header
-    const tableHeader = mobileTableContainer.createEl("h3", {
+    mobileTableContainer.createEl("h3", {
       text: title,
       cls: "mobile-table-title",
     });
@@ -36,8 +36,8 @@ export class MobileTable {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
 
-    const dateHeader = headerRow.createEl("th", { text: "Data" });
-    const valueHeader = headerRow.createEl("th", {
+    headerRow.createEl("th", { text: "Data" });
+    headerRow.createEl("th", {
       text:
         chartType === "volume"
           ? "Volume (kg)"

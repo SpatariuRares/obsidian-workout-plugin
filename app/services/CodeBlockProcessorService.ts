@@ -21,7 +21,7 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>
-  ) { }
+  ) {}
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
@@ -43,11 +43,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout chart code blocks
-  private async handleWorkoutChart(
-    source: string,
-    el: HTMLElement,
-    ctx: MarkdownPostProcessorContext
-  ) {
+  private async handleWorkoutChart(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -87,11 +83,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout log code blocks
-  private async handleWorkoutLog(
-    source: string,
-    el: HTMLElement,
-    ctx: MarkdownPostProcessorContext
-  ) {
+  private async handleWorkoutLog(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -131,11 +123,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout timer code blocks
-  private async handleWorkoutTimer(
-    source: string,
-    el: HTMLElement,
-    ctx: MarkdownPostProcessorContext
-  ) {
+  private async handleWorkoutTimer(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
       await this.createEmbeddedTimer(el, params);
@@ -179,11 +167,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout dashboard code blocks
-  private async handleWorkoutDashboard(
-    source: string,
-    el: HTMLElement,
-    ctx: MarkdownPostProcessorContext
-  ) {
+  private async handleWorkoutDashboard(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
 

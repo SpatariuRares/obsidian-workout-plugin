@@ -22,12 +22,7 @@ export abstract class BaseView {
   /**
    * Common error handling pattern for all views
    */
-  protected handleError(
-    container: HTMLElement,
-    error: Error,
-    context: string
-  ): void {
-    console.error(`Error in ${context}:`, error);
+  protected handleError(container: HTMLElement, error: Error): void {
     UIComponents.renderErrorMessage(container, error.message);
   }
 

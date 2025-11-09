@@ -33,10 +33,7 @@ export class ExercisePathResolver {
   /**
    * Check if a file is in the exercise folder
    */
-  static isInExerciseFolder(
-    file: TFile,
-    exerciseFolderPath: string
-  ): boolean {
+  static isInExerciseFolder(file: TFile, exerciseFolderPath: string): boolean {
     const normalizedFilePath = this.normalizeFilePath(file.path);
     const pathsToCheck = this.getExerciseFolderPaths(exerciseFolderPath);
 
@@ -79,7 +76,7 @@ export class ExercisePathResolver {
     const searchName = exerciseName.toLowerCase();
 
     return allFiles.find((file) => {
-      const normalizedFilePath = this.normalizeFilePath(file.path);
+      this.normalizeFilePath(file.path);
       const fileName = file.basename.toLowerCase();
 
       // Check if this file is in the exercise folder

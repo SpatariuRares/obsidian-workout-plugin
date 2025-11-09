@@ -11,7 +11,7 @@ export class HeatMapExporter {
   static export(container: HTMLElement): void {
     const canvas = container.querySelector("canvas");
     if (!canvas) {
-      console.warn("No canvas found in container for export");
+      // Silent fail - no canvas found in container for export
       return;
     }
 
@@ -22,7 +22,7 @@ export class HeatMapExporter {
     const exportCtx = exportCanvas.getContext("2d");
 
     if (!exportCtx) {
-      console.error("Failed to get canvas context for export");
+      // Silent fail - failed to get canvas context for export
       return;
     }
 

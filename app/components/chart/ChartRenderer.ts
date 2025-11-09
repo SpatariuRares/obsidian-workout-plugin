@@ -1,7 +1,6 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
 import { EmbeddedChartParams, ChartDataset } from "@app/types";
 import { calculateTrendLine } from "@app/utils/utils";
-import { TrendIndicators } from "@app/types";
 
 /**
  * Handles the rendering of workout data charts using Chart.js.
@@ -109,12 +108,8 @@ export class ChartRenderer {
   /**
    * Adds a trend line to the datasets
    * @param datasets - Array of chart datasets
-   * @param trendIndicators - Trend indicators for styling
    */
-  static addTrendLineToDatasets(
-    datasets: ChartDataset[],
-    trendIndicators: TrendIndicators
-  ): void {
+  static addTrendLineToDatasets(datasets: ChartDataset[]): void {
     const mainDataset = datasets[0];
     if (mainDataset.data && mainDataset.data.length > 1) {
       const { slope, intercept } = calculateTrendLine(mainDataset.data);
@@ -337,10 +332,10 @@ export class ChartRenderer {
     );
 
     try {
-      const chart = new Chart(canvas, chartConfig);
+      new Chart(canvas, chartConfig);
       return true;
-    } catch (error) {
-      console.warn("Chart.js not available, rendering fallback table:", error);
+    } catch {
+      // Chart.js not available, rendering fallback table
       return false;
     }
   }

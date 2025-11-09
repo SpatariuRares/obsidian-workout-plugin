@@ -74,7 +74,6 @@ export class DataService {
       this.logDataCache = logData;
       this.lastCacheTime = Date.now();
     } catch (error) {
-      console.error("Error reading CSV workout data:", error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       new Notice(`Error loading CSV workout data: ${errorMessage}`);

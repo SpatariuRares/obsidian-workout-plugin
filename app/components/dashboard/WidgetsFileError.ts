@@ -57,8 +57,8 @@ export class WidgetsFileError {
         plugin.app.workspace
           .getLeaf()
           .openFile(fileError.file)
-          .catch((err) => {
-            console.error("Failed to open exercise file:", err);
+          .catch(() => {
+            // Silent fail - failed to open exercise file
           });
       });
 

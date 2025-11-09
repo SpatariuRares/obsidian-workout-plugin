@@ -11,7 +11,7 @@ export abstract class ModalBase extends Modal {
    */
   public createSection(parent: HTMLElement, title: string): HTMLElement {
     const section = parent.createEl("div", { cls: "modal-section" });
-    const sectionTitle = section.createEl("h3", { text: title });
+    section.createEl("h3", { text: title });
     return section;
   }
 

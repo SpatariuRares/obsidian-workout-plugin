@@ -8,16 +8,10 @@ export class TimerCore {
   private state: TimerState;
   private timerId: string;
   private callbacks: TimerCallbacks;
-  private debugMode: boolean;
 
-  constructor(
-    timerId: string,
-    callbacks: TimerCallbacks = {},
-    debugMode: boolean = false
-  ) {
+  constructor(timerId: string, callbacks: TimerCallbacks = {}) {
     this.timerId = timerId;
     this.callbacks = callbacks;
-    this.debugMode = debugMode;
 
     // Initialize state for this timer instance
     this.state = {
@@ -49,11 +43,6 @@ export class TimerCore {
 
     // Ensure timer display is available
     if (!this.state.timerDisplay) {
-      if (this.debugMode) {
-        console.debug("TimerCore: Cannot start timer - display not initialized", {
-          timerId: this.timerId,
-        });
-      }
       return;
     }
 
@@ -67,20 +56,10 @@ export class TimerCore {
       }
     }
 
-
     this.setState({
       isRunning: true,
       startTime: Date.now() - this.state.elapsedTime,
     });
-
-
-    if (this.debugMode) {
-      console.debug("TimerCore: Timer started", {
-        timerId: this.timerId,
-        duration: this.state.duration,
-        elapsedTime: this.state.elapsedTime,
-      });
-    }
 
     this.state.timerInterval = window.setInterval(() => {
       this.updateTimer();
@@ -102,19 +81,13 @@ export class TimerCore {
     this.stop();
     this.setState({
       elapsedTime: 0,
-      currentRound: 1
+      currentRound: 1,
     });
     this.updateDisplay();
   }
 
   private updateTimer(): void {
     if (!this.state.startTime) {
-      if (this.debugMode) {
-        console.debug("TimerCore: updateTimer called but startTime is null", {
-          timerId: this.timerId,
-          isRunning: this.state.isRunning,
-        });
-      }
       return;
     }
 
@@ -148,18 +121,12 @@ export class TimerCore {
   }
 
   private updateDisplay(): void {
-    TimerDisplay.updateDisplay(this.state, this.timerId, this.debugMode);
+    TimerDisplay.updateDisplay(this.state, this.timerId);
   }
 
   private handleTimerComplete(): void {
     this.stop();
     TimerAudio.playSound();
-
-    if (this.debugMode) {
-      console.debug("TimerCore: Timer completed", {
-        timerId: this.timerId,
-      });
-    }
 
     if (this.state.startStopBtn) {
       TimerControls.updateStartStopButton(this.state.startStopBtn, false);

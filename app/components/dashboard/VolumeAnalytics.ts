@@ -7,7 +7,7 @@ export class VolumeAnalytics {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams
   ): void {
     const analyticsEl = container.createEl("div", {
       cls: "dashboard-widget  columns-2  volume-analytics",

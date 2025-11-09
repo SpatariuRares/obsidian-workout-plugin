@@ -63,18 +63,15 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
 /**
  * Parses CSV content and returns an array of CSVWorkoutLogEntry objects
  */
-export function parseCSVLogFile(
-  content: string,
-  debugMode = false
-): CSVWorkoutLogEntry[] {
+export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
   try {
     const lines = content.split("\n").filter((line) => line.trim());
     if (lines.length === 0) {
       return [];
     }
 
-    // Parse header
-    const header = lines[0].split(",").map((h) => h.trim());
+    // Parse header - currently not used but kept for future validation
+    // const header = lines[0].split(",").map((h) => h.trim());
 
     const entries: CSVWorkoutLogEntry[] = [];
 
@@ -104,11 +101,10 @@ export function parseCSVLogFile(
       if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
         entries.push(entry);
       }
-
     }
 
     return entries;
-  } catch (error) {
+  } catch {
     return [];
   }
 }

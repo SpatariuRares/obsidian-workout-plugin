@@ -160,7 +160,7 @@ export class EmbeddedChartView extends BaseView {
     const chartContainer = ChartRenderer.createChartContainer(contentDiv);
 
     if (params.showTrendLine && datasets.length > 0) {
-      ChartRenderer.addTrendLineToDatasets(datasets, trendIndicators);
+      ChartRenderer.addTrendLineToDatasets(datasets);
     }
 
     this.logDebug("EmbeddedChartView", "Creating Chart.js with config", {

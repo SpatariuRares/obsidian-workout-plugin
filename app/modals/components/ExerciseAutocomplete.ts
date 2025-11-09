@@ -12,7 +12,7 @@ export interface ExerciseAutocompleteElements {
 }
 
 export interface ExerciseAutocompleteHandlers {
-  showAutocomplete: (query: string) => void;
+  showAutocomplete: () => void;
   hideAutocomplete: () => void;
 }
 
@@ -185,8 +185,7 @@ export class ExerciseAutocomplete {
     try {
       // Use ExercisePathResolver to get exercise names
       this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);
-    } catch (error) {
-      console.error("Error loading available exercises:", error);
+    } catch {
       this.availableExercises = [];
     }
   }

@@ -6,7 +6,7 @@ export class SummaryWidget {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams
   ): void {
     const widgetEl = container.createEl("div", {
       cls: "dashboard-widget summary-widget",

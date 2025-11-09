@@ -1,156 +1,190 @@
-import { Shoulders, Chest, Back, Arms, Legs, Core, type BodyData } from '@app/components/dashboard/body/index';
+import {
+  Shoulders,
+  Chest,
+  Back,
+  Arms,
+  Legs,
+  Core,
+  type BodyData,
+} from "@app/components/dashboard/body/index";
 
 export interface BodyVisualizationOptions {
-    view: 'front' | 'back';
-    showLabels: boolean;
-    maxValue: number;
+  view: "front" | "back";
+  showLabels: boolean;
+  maxValue: number;
 }
 
 export class Body {
-    private bodyData: BodyData;
-    private options: BodyVisualizationOptions;
-    private shoulders: Shoulders;
-    private chest: Chest;
-    private back: Back;
-    private arms: Arms;
-    private legs: Legs;
-    private core: Core;
+  private bodyData: BodyData;
+  private options: BodyVisualizationOptions;
+  private shoulders: Shoulders;
+  private chest: Chest;
+  private back: Back;
+  private arms: Arms;
+  private legs: Legs;
+  private core: Core;
 
-    constructor(bodyData: BodyData, options?: Partial<BodyVisualizationOptions>) {
-        this.bodyData = bodyData;
-        this.options = {
-            view: options?.view || 'front',
-            showLabels: options?.showLabels ?? true,
-            maxValue: options?.maxValue || 1000
-        };
+  constructor(bodyData: BodyData, options?: Partial<BodyVisualizationOptions>) {
+    this.bodyData = bodyData;
+    this.options = {
+      view: options?.view || "front",
+      showLabels: options?.showLabels ?? true,
+      maxValue: options?.maxValue || 1000,
+    };
 
-        // Initialize muscle components
-        this.shoulders = new Shoulders(bodyData.shoulders);
-        this.chest = new Chest(bodyData.chest);
-        this.back = new Back(bodyData.back);
-        this.arms = new Arms(bodyData.arms);
-        this.legs = new Legs(bodyData.legs);
-        this.core = new Core(bodyData.core);
+    // Initialize muscle components
+    this.shoulders = new Shoulders(bodyData.shoulders);
+    this.chest = new Chest(bodyData.chest);
+    this.back = new Back(bodyData.back);
+    this.arms = new Arms(bodyData.arms);
+    this.legs = new Legs(bodyData.legs);
+    this.core = new Core(bodyData.core);
+  }
+
+  render(container: HTMLElement): void {
+    container.empty();
+    container.addClass("body-visualization");
+
+    // Create SVG
+    const svg = this.createSVG(container);
+
+    // Draw body outline
+    this.drawBodyOutline(svg);
+
+    // Render muscles based on view
+    if (this.options.view === "front") {
+      this.renderFrontView(svg);
+    } else {
+      this.renderBackView(svg);
     }
+  }
 
-    render(container: HTMLElement): void {
-        container.empty();
-        container.addClass('body-visualization');
+  private createSVG(container: HTMLElement): SVGSVGElement {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 660.46 1206.46");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "100%");
+    svg.classList.add("body-svg");
+    container.appendChild(svg);
+    return svg;
+  }
 
-        // Create SVG
-        const svg = this.createSVG(container);
-
-        // Draw body outline
-        this.drawBodyOutline(svg);
-
-        // Render muscles based on view
-        if (this.options.view === 'front') {
-            this.renderFrontView(svg);
-        } else {
-            this.renderBackView(svg);
-        }
+  private drawBodyOutline(svg: SVGSVGElement): void {
+    if (this.options.view === "front") {
+      this.drawFemaleFrontOutline(svg);
+    } else {
+      this.drawFemaleBackOutline(svg);
     }
+  }
 
-    private createSVG(container: HTMLElement): SVGSVGElement {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 660.46 1206.46');
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
-        svg.classList.add('body-svg');
-        container.appendChild(svg);
-        return svg;
-    }
+  private drawFemaleFrontOutline(_svg: SVGSVGElement): void {
+    // TODO: Implement new back outline rendering
+  }
 
-    private drawBodyOutline(svg: SVGSVGElement): void {
-        if (this.options.view === 'front') {
-            this.drawFemaleFrontOutline(svg);
-        } else {
-            this.drawFemaleBackOutline(svg);
-        }
-    }
+  private drawFemaleBackOutline(svg: SVGSVGElement): void {
+    // Create SVG defs using DOM methods
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
 
-    private drawFemaleFrontOutline(svg: SVGSVGElement): void {
-        // TODO: Implement new back outline rendering
+    const gradient = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "radialGradient"
+    );
+    gradient.setAttribute("id", "jointradial");
+    gradient.setAttribute("cx", "50%");
+    gradient.setAttribute("cy", "50%");
+    gradient.setAttribute("r", "50%");
+    gradient.setAttribute("fx", "50%");
+    gradient.setAttribute("fy", "50%");
 
-    }
+    const stop1 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "stop"
+    );
+    stop1.setAttribute("offset", "0%");
+    stop1.setAttribute(
+      "style",
+      "stop-color: rgb(254, 91, 127); stop-opacity: 1;"
+    );
 
-    private drawFemaleBackOutline(svg: SVGSVGElement): void {
-        // Create SVG defs using DOM methods
-        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    const stop2 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "stop"
+    );
+    stop2.setAttribute("offset", "100%");
+    stop2.setAttribute(
+      "style",
+      "stop-color: rgb(231, 236, 239); stop-opacity: 1;"
+    );
 
-        const gradient = document.createElementNS("http://www.w3.org/2000/svg", "radialGradient");
-        gradient.setAttribute("id", "jointradial");
-        gradient.setAttribute("cx", "50%");
-        gradient.setAttribute("cy", "50%");
-        gradient.setAttribute("r", "50%");
-        gradient.setAttribute("fx", "50%");
-        gradient.setAttribute("fy", "50%");
+    gradient.appendChild(stop1);
+    gradient.appendChild(stop2);
+    defs.appendChild(gradient);
+    svg.appendChild(defs);
+  }
 
-        const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-        stop1.setAttribute("offset", "0%");
-        stop1.setAttribute("style", "stop-color: rgb(254, 91, 127); stop-opacity: 1;");
+  private renderFrontView(svg: SVGSVGElement): void {
+    const backData = this.back.getBackData();
+    const armsData = this.arms.getArmsData();
+    const legsData = this.legs.getLegsData();
+    const coreData = this.core.getCoreData();
+    const shouldersData = this.shoulders.getShouldersData();
+    const chestData = this.chest.getChestData();
 
-        const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-        stop2.setAttribute("offset", "100%");
-        stop2.setAttribute("style", "stop-color: rgb(231, 236, 239); stop-opacity: 1;");
+    // Calculate intensities (0-1 scale)
+    const trapsIntensity = Math.min(backData.traps / this.options.maxValue, 1);
+    const bicepsIntensity = Math.min(
+      Math.max(armsData.bicepsRight, armsData.bicepsLeft) /
+        this.options.maxValue,
+      1
+    );
+    const forearmsIntensity = Math.min(
+      Math.max(armsData.forearmsRight, armsData.forearmsLeft) /
+        this.options.maxValue,
+      1
+    );
+    const quadsIntensity = Math.min(
+      Math.max(legsData.quadsRight, legsData.quadsLeft) / this.options.maxValue,
+      1
+    );
+    const calvesIntensity = Math.min(
+      Math.max(legsData.calvesRight, legsData.calvesLeft) /
+        this.options.maxValue,
+      1
+    );
+    const absIntensity = Math.min(coreData.abs / this.options.maxValue, 1);
+    const obliquesIntensity = Math.min(
+      coreData.obliques / this.options.maxValue,
+      1
+    );
+    const frontShouldersIntensity = Math.min(
+      Math.max(shouldersData.frontRight, shouldersData.frontLeft) /
+        this.options.maxValue,
+      1
+    );
+    const upperChestIntensity = Math.min(
+      chestData.upper / this.options.maxValue,
+      1
+    );
+    const middleChestIntensity = Math.min(
+      chestData.middle / this.options.maxValue,
+      1
+    );
 
-        gradient.appendChild(stop1);
-        gradient.appendChild(stop2);
-        defs.appendChild(gradient);
-        svg.appendChild(defs);
-    }
+    // Get colors
+    const trapsColor = this.getHeatMapColor(trapsIntensity);
+    const bicepsColor = this.getHeatMapColor(bicepsIntensity);
+    const forearmsColor = this.getHeatMapColor(forearmsIntensity);
+    const quadsColor = this.getHeatMapColor(quadsIntensity);
+    const calvesColor = this.getHeatMapColor(calvesIntensity);
+    const absColor = this.getHeatMapColor(absIntensity);
+    const obliquesColor = this.getHeatMapColor(obliquesIntensity);
+    const frontShouldersColor = this.getHeatMapColor(frontShouldersIntensity);
+    const upperChestColor = this.getHeatMapColor(upperChestIntensity);
+    const middleChestColor = this.getHeatMapColor(middleChestIntensity);
 
-    private renderFrontView(svg: SVGSVGElement): void {
-        const backData = this.back.getBackData();
-        const armsData = this.arms.getArmsData();
-        const legsData = this.legs.getLegsData();
-        const coreData = this.core.getCoreData();
-        const shouldersData = this.shoulders.getShouldersData();
-        const chestData = this.chest.getChestData();
+    // Render SVG parts with colors
 
-        // Calculate intensities (0-1 scale)
-        const lowerBackIntensity = Math.min(backData.lowerBack / this.options.maxValue, 1);
-        const trapsIntensity = Math.min(backData.traps / this.options.maxValue, 1);
-        const trapsMiddleIntensity = Math.min(backData.trapsMiddle / this.options.maxValue, 1);
-        const latsIntensity = Math.min(backData.lats / this.options.maxValue, 1);
-        const bicepsIntensity = Math.min(Math.max(armsData.bicepsRight, armsData.bicepsLeft) / this.options.maxValue, 1);
-        const tricepsIntensity = Math.min(Math.max(armsData.tricepsRight, armsData.tricepsLeft) / this.options.maxValue, 1);
-        const forearmsIntensity = Math.min(Math.max(armsData.forearmsRight, armsData.forearmsLeft) / this.options.maxValue, 1);
-        const glutesIntensity = Math.min(Math.max(legsData.glutesRight, legsData.glutesLeft) / this.options.maxValue, 1);
-        const quadsIntensity = Math.min(Math.max(legsData.quadsRight, legsData.quadsLeft) / this.options.maxValue, 1);
-        const hamstringsIntensity = Math.min(Math.max(legsData.hamstringsRight, legsData.hamstringsLeft) / this.options.maxValue, 1);
-        const calvesIntensity = Math.min(Math.max(legsData.calvesRight, legsData.calvesLeft) / this.options.maxValue, 1);
-        const absIntensity = Math.min(coreData.abs / this.options.maxValue, 1);
-        const obliquesIntensity = Math.min(coreData.obliques / this.options.maxValue, 1);
-        const frontShouldersIntensity = Math.min(Math.max(shouldersData.frontRight, shouldersData.frontLeft) / this.options.maxValue, 1);
-        const rearShouldersIntensity = Math.min(Math.max(shouldersData.rearRight, shouldersData.rearLeft) / this.options.maxValue, 1);
-        const upperChestIntensity = Math.min(chestData.upper / this.options.maxValue, 1);
-        const lowerChestIntensity = Math.min(chestData.lower / this.options.maxValue, 1);
-        const middleChestIntensity = Math.min(chestData.middle / this.options.maxValue, 1);
-
-        // Get colors
-        const lowerBackColor = this.getHeatMapColor(lowerBackIntensity);
-        const trapsColor = this.getHeatMapColor(trapsIntensity);
-        const trapsMiddleColor = this.getHeatMapColor(trapsMiddleIntensity);
-        const latsColor = this.getHeatMapColor(latsIntensity);
-        const bicepsColor = this.getHeatMapColor(bicepsIntensity);
-        const tricepsColor = this.getHeatMapColor(tricepsIntensity);
-        const forearmsColor = this.getHeatMapColor(forearmsIntensity);
-        const glutesColor = this.getHeatMapColor(glutesIntensity);
-        const quadsColor = this.getHeatMapColor(quadsIntensity);
-        const hamstringsColor = this.getHeatMapColor(hamstringsIntensity);
-        const calvesColor = this.getHeatMapColor(calvesIntensity);
-        const absColor = this.getHeatMapColor(absIntensity);
-        const obliquesColor = this.getHeatMapColor(obliquesIntensity);
-        const frontShouldersColor = this.getHeatMapColor(frontShouldersIntensity);
-        const rearShouldersColor = this.getHeatMapColor(rearShouldersIntensity);
-        const upperChestColor = this.getHeatMapColor(upperChestIntensity);
-        const lowerChestColor = this.getHeatMapColor(lowerChestIntensity);
-        const middleChestColor = this.getHeatMapColor(middleChestIntensity);
-
-        // Render SVG parts with colors
-
-        const bodyG = `
+    const bodyG = `
 			    <g id="neck" style="color: ${trapsColor}">
         <path
             d="M377.14,220.31c-16.42.43-28.06,3.71-34.7,9.77-1.83,1.66-3.22,3.53-4.19,5.54-.96-2.02-2.36-3.88-4.18-5.54-6.63-6.06-18.28-9.34-34.71-9.77,2.13-4.46,3.29-14.36,3.95-35.95.14-1.47.25-3.3.33-5.46v-.02c0-.05,0-.11,0-.18v-.09c0-.08.02-.15.02-.22,0-.2,0-.4,0-.61,0-.27.02-.55.02-.82.06-1.72.09-3.45.11-5.2v-.92c.08-3.63.06-6.81-.05-9.36v-.11c0-.27,0-.54-.02-.78h0c-.03-1.06-.05-2.06-.08-2.99,4.97,6.39,14.89,14.68,33.94,17.92.11.03.21.03.32.03.1,0,.2,0,.3-.03h.02c.1.02.2.03.3.03.11,0,.22,0,.33-.03,19.04-3.24,28.96-11.53,33.94-17.92-.03.93-.06,1.92-.08,2.97v.21l-.02.65c0,.17,0,.34,0,.51v.03c-.09,2.34-.1,5.08-.05,8.15v.89c0,.1,0,.19,0,.29v.11c.03,2.29.07,4.43.14,6.31v.09c0,.11,0,.23,0,.33,0,.08,0,.17,0,.25,0,.07,0,.14,0,.21,0,.04,0,.07,0,.1.07,2.23.19,4.12.33,5.64.66,21.6,1.83,31.51,3.95,35.97Z"
@@ -510,60 +544,77 @@ export class Body {
 
 		`;
 
-        svg.innerHTML += bodyG;
-    }
+    svg.innerHTML += bodyG;
+  }
 
-    private renderBackView(svg: SVGSVGElement): void {
-        const backData = this.back.getBackData();
-        const armsData = this.arms.getArmsData();
-        const legsData = this.legs.getLegsData();
-        const coreData = this.core.getCoreData();
-        const shouldersData = this.shoulders.getShouldersData();
-        const chestData = this.chest.getChestData();
+  private renderBackView(svg: SVGSVGElement): void {
+    const backData = this.back.getBackData();
+    const armsData = this.arms.getArmsData();
+    const legsData = this.legs.getLegsData();
+    const shouldersData = this.shoulders.getShouldersData();
 
-        // Calculate intensities (0-1 scale)
-        const lowerBackIntensity = Math.min(backData.lowerBack / this.options.maxValue, 1);
-        const trapsIntensity = Math.min(backData.traps / this.options.maxValue, 1);
-        const trapsMiddleIntensity = Math.min(backData.trapsMiddle / this.options.maxValue, 1);
-        const latsIntensity = Math.min(backData.lats / this.options.maxValue, 1);
-        const bicepsIntensity = Math.min(Math.max(armsData.bicepsRight, armsData.bicepsLeft) / this.options.maxValue, 1);
-        const tricepsIntensity = Math.min(Math.max(armsData.tricepsRight, armsData.tricepsLeft) / this.options.maxValue, 1);
-        const forearmsIntensity = Math.min(Math.max(armsData.forearmsRight, armsData.forearmsLeft) / this.options.maxValue, 1);
-        const glutesIntensity = Math.min(Math.max(legsData.glutesRight, legsData.glutesLeft) / this.options.maxValue, 1);
-        const quadsIntensity = Math.min(Math.max(legsData.quadsRight, legsData.quadsLeft) / this.options.maxValue, 1);
-        const hamstringsIntensity = Math.min(Math.max(legsData.hamstringsRight, legsData.hamstringsLeft) / this.options.maxValue, 1);
-        const calvesIntensity = Math.min(Math.max(legsData.calvesRight, legsData.calvesLeft) / this.options.maxValue, 1);
-        const absIntensity = Math.min(coreData.abs / this.options.maxValue, 1);
-        const obliquesIntensity = Math.min(coreData.obliques / this.options.maxValue, 1);
-        const frontShouldersIntensity = Math.min(Math.max(shouldersData.frontRight, shouldersData.frontLeft) / this.options.maxValue, 1);
-        const rearShouldersIntensity = Math.min(Math.max(shouldersData.rearRight, shouldersData.rearLeft) / this.options.maxValue, 1);
-        const upperChestIntensity = Math.min(chestData.upper / this.options.maxValue, 1);
-        const lowerChestIntensity = Math.min(chestData.lower / this.options.maxValue, 1);
-        const middleChestIntensity = Math.min(chestData.middle / this.options.maxValue, 1);
+    // Calculate intensities (0-1 scale)
+    const lowerBackIntensity = Math.min(
+      backData.lowerBack / this.options.maxValue,
+      1
+    );
+    const trapsIntensity = Math.min(backData.traps / this.options.maxValue, 1);
+    const trapsMiddleIntensity = Math.min(
+      backData.trapsMiddle / this.options.maxValue,
+      1
+    );
+    const latsIntensity = Math.min(backData.lats / this.options.maxValue, 1);
+    const tricepsIntensity = Math.min(
+      Math.max(armsData.tricepsRight, armsData.tricepsLeft) /
+        this.options.maxValue,
+      1
+    );
+    const forearmsIntensity = Math.min(
+      Math.max(armsData.forearmsRight, armsData.forearmsLeft) /
+        this.options.maxValue,
+      1
+    );
+    const glutesIntensity = Math.min(
+      Math.max(legsData.glutesRight, legsData.glutesLeft) /
+        this.options.maxValue,
+      1
+    );
+    const quadsIntensity = Math.min(
+      Math.max(legsData.quadsRight, legsData.quadsLeft) / this.options.maxValue,
+      1
+    );
+    const hamstringsIntensity = Math.min(
+      Math.max(legsData.hamstringsRight, legsData.hamstringsLeft) /
+        this.options.maxValue,
+      1
+    );
+    const calvesIntensity = Math.min(
+      Math.max(legsData.calvesRight, legsData.calvesLeft) /
+        this.options.maxValue,
+      1
+    );
+    const rearShouldersIntensity = Math.min(
+      Math.max(shouldersData.rearRight, shouldersData.rearLeft) /
+        this.options.maxValue,
+      1
+    );
 
-        // Get colors
-        const lowerBackColor = this.getHeatMapColor(lowerBackIntensity);
-        const trapsColor = this.getHeatMapColor(trapsIntensity);
-        const trapsMiddleColor = this.getHeatMapColor(trapsMiddleIntensity);
-        const latsColor = this.getHeatMapColor(latsIntensity);
-        const bicepsColor = this.getHeatMapColor(bicepsIntensity);
-        const tricepsColor = this.getHeatMapColor(tricepsIntensity);
-        const forearmsColor = this.getHeatMapColor(forearmsIntensity);
-        const glutesColor = this.getHeatMapColor(glutesIntensity);
-        const quadsColor = this.getHeatMapColor(quadsIntensity);
-        const hamstringsColor = this.getHeatMapColor(hamstringsIntensity);
-        const calvesColor = this.getHeatMapColor(calvesIntensity);
-        const absColor = this.getHeatMapColor(absIntensity);
-        const obliquesColor = this.getHeatMapColor(obliquesIntensity);
-        const frontShouldersColor = this.getHeatMapColor(frontShouldersIntensity);
-        const rearShouldersColor = this.getHeatMapColor(rearShouldersIntensity);
-        const upperChestColor = this.getHeatMapColor(upperChestIntensity);
-        const lowerChestColor = this.getHeatMapColor(lowerChestIntensity);
-        const middleChestColor = this.getHeatMapColor(middleChestIntensity);
+    // Get colors
+    const lowerBackColor = this.getHeatMapColor(lowerBackIntensity);
+    const trapsColor = this.getHeatMapColor(trapsIntensity);
+    const trapsMiddleColor = this.getHeatMapColor(trapsMiddleIntensity);
+    const latsColor = this.getHeatMapColor(latsIntensity);
+    const tricepsColor = this.getHeatMapColor(tricepsIntensity);
+    const forearmsColor = this.getHeatMapColor(forearmsIntensity);
+    const glutesColor = this.getHeatMapColor(glutesIntensity);
+    const quadsColor = this.getHeatMapColor(quadsIntensity);
+    const hamstringsColor = this.getHeatMapColor(hamstringsIntensity);
+    const calvesColor = this.getHeatMapColor(calvesIntensity);
+    const rearShouldersColor = this.getHeatMapColor(rearShouldersIntensity);
 
-        // Render SVG parts with colors
+    // Render SVG parts with colors
 
-        const bodyG = `
+    const bodyG = `
 			<g id="neck"  style="color: ${trapsColor}">
         <path
             d="M340.53,131.46c16.8.29,28.51,4.08,33.82,10.94.31.39.59.8.85,1.2-.61.77-1.18,1.55-1.59,2.3-1.16,2.17-1.4,16.38-.81,25.34-8.57-2.68-20.8-5.64-33.58-5.87-.08,0-.16-.02-.24-.02-.22,0-.44,0-.66,0-.23,0-.44,0-.67,0-.09,0-.17,0-.25.02-12.43.22-24.35,3.03-32.88,5.65.58-8.98.33-22.99-.83-25.14-.41-.73-.96-1.5-1.56-2.27,2.69-4.18,7.28-7.58,16.14-9.93,7.79-2.06,14.87-2.37,22.27-2.24Z"
@@ -880,73 +931,75 @@ export class Body {
     </g>
 		`;
 
-        svg.innerHTML += bodyG;
+    svg.innerHTML += bodyG;
+  }
+
+  private getHeatMapColor(intensity: number): string {
+    if (intensity === 0) return "#e9ecef";
+
+    // Gradient from light gray (low intensity) to red (high intensity)
+    // intensity: 0 → 1
+    // color: light gray → orange → red
+
+    if (intensity < 0.3) {
+      // Low intensity: gray to light orange
+      const t = intensity / 0.3;
+      const red = Math.floor(200 + t * 55); // 200 → 255
+      const green = Math.floor(200 - t * 50); // 200 → 150
+      const blue = Math.floor(200 - t * 100); // 200 → 100
+      return `rgb(${red}, ${green}, ${blue})`;
+    } else if (intensity < 0.7) {
+      // Medium intensity: orange to bright red
+      const t = (intensity - 0.3) / 0.4;
+      const red = 255;
+      const green = Math.floor(150 - t * 100); // 150 → 50
+      const blue = Math.floor(100 - t * 80); // 100 → 20
+      return `rgb(${red}, ${green}, ${blue})`;
+    } else {
+      // High intensity: bright red to dark red
+      const t = (intensity - 0.7) / 0.3;
+      const red = Math.floor(255 - t * 100); // 255 → 155
+      const green = Math.floor(50 * (1 - t)); // 50 → 0
+      const blue = Math.floor(20 * (1 - t)); // 20 → 0
+      return `rgb(${red}, ${green}, ${blue})`;
     }
+  }
 
-    private getHeatMapColor(intensity: number): string {
-        if (intensity === 0) return '#e9ecef';
-
-        // Gradient from light gray (low intensity) to red (high intensity)
-        // intensity: 0 → 1
-        // color: light gray → orange → red
-
-        if (intensity < 0.3) {
-            // Low intensity: gray to light orange
-            const t = intensity / 0.3;
-            const red = Math.floor(200 + t * 55);      // 200 → 255
-            const green = Math.floor(200 - t * 50);    // 200 → 150
-            const blue = Math.floor(200 - t * 100);    // 200 → 100
-            return `rgb(${red}, ${green}, ${blue})`;
-        } else if (intensity < 0.7) {
-            // Medium intensity: orange to bright red
-            const t = (intensity - 0.3) / 0.4;
-            const red = 255;
-            const green = Math.floor(150 - t * 100);   // 150 → 50
-            const blue = Math.floor(100 - t * 80);     // 100 → 20
-            return `rgb(${red}, ${green}, ${blue})`;
-        } else {
-            // High intensity: bright red to dark red
-            const t = (intensity - 0.7) / 0.3;
-            const red = Math.floor(255 - t * 100);     // 255 → 155
-            const green = Math.floor(50 * (1 - t));    // 50 → 0
-            const blue = Math.floor(20 * (1 - t));     // 20 → 0
-            return `rgb(${red}, ${green}, ${blue})`;
-        }
+  updateBodyData(bodyData: Partial<BodyData>): void {
+    if (bodyData.shoulders) {
+      this.bodyData.shoulders = {
+        ...this.bodyData.shoulders,
+        ...bodyData.shoulders,
+      };
+      this.shoulders = new Shoulders(this.bodyData.shoulders);
     }
-
-    updateBodyData(bodyData: Partial<BodyData>): void {
-        if (bodyData.shoulders) {
-            this.bodyData.shoulders = { ...this.bodyData.shoulders, ...bodyData.shoulders };
-            this.shoulders = new Shoulders(this.bodyData.shoulders);
-        }
-        if (bodyData.chest) {
-            this.bodyData.chest = { ...this.bodyData.chest, ...bodyData.chest };
-            this.chest = new Chest(this.bodyData.chest);
-        }
-        if (bodyData.back) {
-            this.bodyData.back = { ...this.bodyData.back, ...bodyData.back };
-            this.back = new Back(this.bodyData.back);
-        }
-        if (bodyData.arms) {
-            this.bodyData.arms = { ...this.bodyData.arms, ...bodyData.arms };
-            this.arms = new Arms(this.bodyData.arms);
-        }
-        if (bodyData.legs) {
-            this.bodyData.legs = { ...this.bodyData.legs, ...bodyData.legs };
-            this.legs = new Legs(this.bodyData.legs);
-        }
-        if (bodyData.core) {
-            this.bodyData.core = { ...this.bodyData.core, ...bodyData.core };
-            this.core = new Core(this.bodyData.core);
-        }
+    if (bodyData.chest) {
+      this.bodyData.chest = { ...this.bodyData.chest, ...bodyData.chest };
+      this.chest = new Chest(this.bodyData.chest);
     }
-
-    setView(view: 'front' | 'back'): void {
-        this.options.view = view;
+    if (bodyData.back) {
+      this.bodyData.back = { ...this.bodyData.back, ...bodyData.back };
+      this.back = new Back(this.bodyData.back);
     }
-
-    getBodyData(): BodyData {
-        return { ...this.bodyData };
+    if (bodyData.arms) {
+      this.bodyData.arms = { ...this.bodyData.arms, ...bodyData.arms };
+      this.arms = new Arms(this.bodyData.arms);
     }
+    if (bodyData.legs) {
+      this.bodyData.legs = { ...this.bodyData.legs, ...bodyData.legs };
+      this.legs = new Legs(this.bodyData.legs);
+    }
+    if (bodyData.core) {
+      this.bodyData.core = { ...this.bodyData.core, ...bodyData.core };
+      this.core = new Core(this.bodyData.core);
+    }
+  }
 
+  setView(view: "front" | "back"): void {
+    this.options.view = view;
+  }
+
+  getBodyData(): BodyData {
+    return { ...this.bodyData };
+  }
 }

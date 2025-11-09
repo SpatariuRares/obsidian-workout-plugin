@@ -17,16 +17,6 @@ export class TableDataProcessor {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): TableData {
-    const allAvailableColumns = [
-      "Date",
-      "Exercise",
-      "Reps",
-      "Weight (kg)",
-      "Volume",
-      "Notes",
-      "Actions",
-    ];
-
     // Use default visible columns if not specified
     const defaultVisibleColumns = [
       "Date",
@@ -45,10 +35,7 @@ export class TableDataProcessor {
           const parsedColumns = JSON.parse(params.columns);
           headers = [...parsedColumns, "Actions"];
         } catch {
-          console.warn(
-            "Invalid columns parameter, using default:",
-            params.columns
-          );
+          // Invalid columns parameter, using default
           headers = [...defaultVisibleColumns, "Actions"];
         }
       } else {
@@ -163,7 +150,7 @@ export class TableDataProcessor {
       const minutes = date.getMinutes().toString().padStart(2, "0");
 
       return `${hours}:${minutes}`;
-    } catch (error) {
+    } catch {
       return "Data non valida";
     }
   }
@@ -192,7 +179,7 @@ export class TableDataProcessor {
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
       const day = date.getDate().toString().padStart(2, "0");
       return `${year}-${month}-${day}`;
-    } catch (error) {
+    } catch {
       return "invalid-date";
     }
   }

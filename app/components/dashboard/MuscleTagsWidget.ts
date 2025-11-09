@@ -6,7 +6,7 @@ import { MUSCLE_TAGS } from "@app/constants/MuscleTags";
  * Helps users reference valid tags when creating exercises
  */
 export class MuscleTagsWidget {
-  static render(container: HTMLElement, params: EmbeddedDashboardParams): void {
+  static render(container: HTMLElement, _params: EmbeddedDashboardParams): void {
     const widgetEl = container.createEl("div", {
       cls: "dashboard-widget muscle-tags-widget",
     });
@@ -16,7 +16,7 @@ export class MuscleTagsWidget {
       cls: "widget-title",
     });
 
-    const descriptionEl = widgetEl.createEl("p", {
+    widgetEl.createEl("p", {
       cls: "widget-description",
       text: "Click on any tag to copy it. Use these tags in exercise files for proper categorization and tracking.",
     });
@@ -72,8 +72,8 @@ export class MuscleTagsWidget {
 
     // Add click to copy functionality
     badgeEl.addEventListener("click", () => {
-      navigator.clipboard.writeText(muscleName).catch((err) => {
-        console.error("Failed to copy muscle tag:", err);
+      navigator.clipboard.writeText(muscleName).catch(() => {
+        // Silent fail - clipboard copy failed
       });
 
       // Show visual feedback

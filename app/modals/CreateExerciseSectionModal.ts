@@ -196,7 +196,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
       this.insertIntoEditor(
         sectionCode,
-        "✅ Exercise section created successfully!"
+        "✅ exercise section created successfully!"
       );
       this.close();
     });

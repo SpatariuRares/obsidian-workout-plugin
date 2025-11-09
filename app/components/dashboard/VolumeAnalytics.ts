@@ -14,7 +14,7 @@ export class VolumeAnalytics {
     });
 
     analyticsEl.createEl("h3", {
-      text: "Volume Analytics",
+      text: "Volume analytics",
       cls: "widget-title",
     });
 
@@ -24,7 +24,10 @@ export class VolumeAnalytics {
     });
 
     // Prepare volume trend data
-    const volumeTrendData = DashboardCalculations.prepareVolumeTrendData(data, 30); // Last 30 days
+    const volumeTrendData = DashboardCalculations.prepareVolumeTrendData(
+      data,
+      30
+    ); // Last 30 days
 
     // Create volume trend chart
     ChartRenderer.renderChart(
@@ -32,7 +35,7 @@ export class VolumeAnalytics {
       volumeTrendData.labels,
       [
         {
-          label: "Daily Volume (kg)",
+          label: "Daily volume (kg)",
           data: volumeTrendData.data,
         },
       ],
@@ -47,16 +50,16 @@ export class VolumeAnalytics {
       cls: "muscle-group-breakdown",
     });
 
-    const muscleGroupData = DashboardCalculations.calculateMuscleGroupVolume(data);
+    const muscleGroupData =
+      DashboardCalculations.calculateMuscleGroupVolume(data);
     this.renderMuscleGroupBreakdown(muscleGroupEl, muscleGroupData);
   }
-
 
   private static renderMuscleGroupBreakdown(
     container: HTMLElement,
     data: [string, number][]
   ): void {
-    container.createEl("h4", { text: "Top Exercises by Volume" });
+    container.createEl("h4", { text: "Top exercises by volume" });
 
     const listEl = container.createEl("ul", { cls: "muscle-group-list" });
 

@@ -1,7 +1,6 @@
 import { MarkdownView } from "obsidian";
 import { CreateLogModal } from "@app/modals/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { FilterResult } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 
 /**
@@ -19,7 +18,7 @@ export class UIComponents {
     const loadingDiv = container.createEl("div", {
       cls: "workout-charts-loading",
     });
-    loadingDiv.textContent = "⏳ Loading data...";
+    loadingDiv.textContent = "⏳ loading data...";
     return loadingDiv;
   }
 
@@ -44,7 +43,6 @@ export class UIComponents {
       success: "✅",
     };
 
-    const icon = icons[type] || icons.info;
     // const strongEl = infoDiv.createEl("strong", { text: icon });
     infoDiv.append(" ", message);
   }
@@ -71,17 +69,6 @@ export class UIComponents {
     });
 
     const p1 = noDataDiv.createEl("p");
-    const strong1 = p1.createEl("strong", {
-      text: "No data found in CSV file",
-    });
-
-    const p2 = noDataDiv.createEl("p", {
-      text: "The CSV file does not exist or is empty.",
-    });
-
-    const p3 = noDataDiv.createEl("p", {
-      text: 'Create your first workout log using the "Create Workout Log" command.',
-    });
   }
 
   /**
@@ -100,24 +87,15 @@ export class UIComponents {
     });
 
     const p1 = noDataDiv.createEl("p");
-    const strong1 = p1.createEl("strong", {
-      text: "📊 No data found in CSV file",
-    });
 
     const p2 = noDataDiv.createEl("p");
-    const strong2 = p2.createEl("strong", { text: "File: " });
-    const codeEl = p2.createEl("code", { text: csvFilePath });
-
-    const p3 = noDataDiv.createEl("p", {
-      text: "The CSV file does not exist or is empty. Create your first workout log to start tracking your progress.",
-    });
 
     const buttonDiv = noDataDiv.createEl("div", {
       cls: "workout-charts-button-container",
     });
 
     const createButton = buttonDiv.createEl("button", {
-      text: "➕ Create first workout log",
+      text: "➕ create first workout log",
       cls: "add-log-button",
     });
     createButton.id = "create-first-log-btn";
@@ -162,7 +140,6 @@ export class UIComponents {
       cls: "workout-log-no-match",
     });
     noMatchDiv.textContent = "No data found for exercise: ";
-    const strongEl = noMatchDiv.createEl("strong", { text: exercise });
   }
 
   /**
@@ -182,7 +159,6 @@ export class UIComponents {
       cls: "workout-charts-debug",
     });
 
-    const strongEl = debugInfo.createEl("strong", { text: "Debug Info:" });
     debugInfo.createEl("br");
     debugInfo.append(`Filter Method: ${filterMethod}`);
     debugInfo.createEl("br");
@@ -190,7 +166,6 @@ export class UIComponents {
     debugInfo.createEl("br");
     debugInfo.append(`Chart Type: ${chartType}`);
   }
-
 
   /**
    * Renders a fallback table when Chart.js is not available.
@@ -219,7 +194,7 @@ export class UIComponents {
       cls: "workout-charts-footer",
     });
     infoDiv.textContent =
-      "📊 Fallback table (Charts plugin not available or error)";
+      "📊 fallback table (charts plugin not available or error)";
   }
 
   /**

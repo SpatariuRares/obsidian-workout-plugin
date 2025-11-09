@@ -20,7 +20,7 @@ export class WidgetsFileError {
     });
 
     errorEl.createEl("h3", {
-      text: "Exercise File Errors",
+      text: "Exercise file errors",
       cls: "widget-title",
     });
 
@@ -130,9 +130,7 @@ export class WidgetsFileError {
   private static getMuscleTags(tags: string[]): string[] {
     return tags.filter((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      return MUSCLE_KEYWORDS.some((keyword) =>
-        normalizedTag.includes(keyword)
-      );
+      return MUSCLE_KEYWORDS.some((keyword) => normalizedTag.includes(keyword));
     });
   }
 }

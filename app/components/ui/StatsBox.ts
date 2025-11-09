@@ -51,7 +51,7 @@ export class StatsBox {
 
     if (recentTrendData.text !== "N/A") {
       const li5 = ul.createEl("li");
-      li5.textContent = "Recent Trend: ";
+      li5.textContent = "Recent trend: ";
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
       });

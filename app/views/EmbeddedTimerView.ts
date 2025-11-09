@@ -5,7 +5,7 @@ import {
   TimerDisplay,
   TimerControls,
   TimerControlCallbacks,
-  TimerState
+  TimerState,
 } from "@app/components";
 import { BaseView } from "@app/views/BaseView";
 import { EmbeddedTimerParams } from "@app/types";
@@ -39,7 +39,7 @@ export class EmbeddedTimerView extends BaseView {
             timerId: this.timerId,
             state,
           });
-        }
+        },
       },
       this.plugin.settings.debugMode
     );
@@ -59,11 +59,8 @@ export class EmbeddedTimerView extends BaseView {
         return;
       }
 
-      // Stop any existing timer
       this.timerCore.stop();
 
-      // Update timer core state with new parameters
-      const state = this.timerCore.getState();
       this.timerCore.setState({
         timerType: params.type || "countdown",
         duration: params.duration || 300,
@@ -149,12 +146,14 @@ export class EmbeddedTimerView extends BaseView {
 
     // Create controls if requested
     if (params.showControls !== false) {
-      const timerDisplay = contentDiv.querySelector('.workout-timer-display') as HTMLElement;
+      const timerDisplay = contentDiv.querySelector(
+        ".workout-timer-display"
+      ) as HTMLElement;
 
       const callbacks: TimerControlCallbacks = {
         onStart: () => this.timerCore.start(),
         onStop: () => this.timerCore.stop(),
-        onReset: () => this.timerCore.reset()
+        onReset: () => this.timerCore.reset(),
       };
 
       const startStopBtn = TimerControls.createControls(

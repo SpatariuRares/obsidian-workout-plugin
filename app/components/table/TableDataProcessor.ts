@@ -28,7 +28,13 @@ export class TableDataProcessor {
     ];
 
     // Use default visible columns if not specified
-    const defaultVisibleColumns = ["Date", "Reps", "Weight (kg)", "Volume", "Notes"];
+    const defaultVisibleColumns = [
+      "Date",
+      "Reps",
+      "Weight (kg)",
+      "Volume",
+      "Notes",
+    ];
 
     let headers: string[];
     if (params.columns) {
@@ -61,7 +67,7 @@ export class TableDataProcessor {
 
     return {
       headers,
-      rows: rows as TableRow[],
+      rows: rows,
       totalRows: sortedAndLimitedData.length,
       filterResult: {
         filteredData: sortedAndLimitedData,

@@ -1,5 +1,5 @@
 // Main plugin file - Workout Charts for Obsidian
-import { Plugin, MarkdownView, Notice } from "obsidian";
+import { Plugin, MarkdownView } from "obsidian";
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
@@ -37,7 +37,7 @@ export default class WorkoutChartsPlugin extends Plugin {
         new CreateLogModal(this.app, this, undefined, undefined, () => {
           this.triggerWorkoutLogRefresh();
         }).open();
-      }
+      },
     };
   }
 
@@ -69,7 +69,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 
-  onunload() { }
+  onunload() {}
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -145,9 +145,16 @@ export default class WorkoutChartsPlugin extends Plugin {
           view.editor.refresh();
 
           // Only trigger raw event if file path is valid
-          if (view.file && view.file.path && typeof view.file.path === 'string') {
+          if (
+            view.file &&
+            view.file.path &&
+            typeof view.file.path === "string"
+          ) {
             // Extra safety: ensure the path looks valid
-            if (view.file.path.length > 0 && !view.file.path.includes('undefined')) {
+            if (
+              view.file.path.length > 0 &&
+              !view.file.path.includes("undefined")
+            ) {
               this.app.vault.trigger("raw", view.file.path);
             }
           }

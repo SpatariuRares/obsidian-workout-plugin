@@ -13,7 +13,12 @@ export class MuscleBalanceAnalyzer {
   private static readonly IMBALANCE_THRESHOLD = 0.3; // 30% difference
 
   private static readonly FRONT_MUSCLES = ["chest", "abs", "biceps", "quads"];
-  private static readonly BACK_MUSCLES = ["back", "triceps", "hamstrings", "glutes"];
+  private static readonly BACK_MUSCLES = [
+    "back",
+    "triceps",
+    "hamstrings",
+    "glutes",
+  ];
 
   /**
    * Analyze muscle balance and detect imbalances
@@ -31,7 +36,8 @@ export class MuscleBalanceAnalyzer {
       };
     }
 
-    const avgVolume = volumes.reduce((sum, vol) => sum + vol, 0) / volumes.length;
+    const avgVolume =
+      volumes.reduce((sum, vol) => sum + vol, 0) / volumes.length;
     const imbalances: string[] = [];
 
     // Check front-back imbalance
@@ -49,7 +55,8 @@ export class MuscleBalanceAnalyzer {
       this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${frontVolume > backVolume ? "Front" : "Back"
+        `Front-Back imbalance detected (${
+          frontVolume > backVolume ? "Front" : "Back"
         } dominant)`
       );
     }
@@ -81,10 +88,10 @@ export class MuscleBalanceAnalyzer {
     }
 
     // Display analysis header
-    infoPanel.createEl("h4", { text: "Training Analysis" });
+    infoPanel.createEl("h4", { text: "Training analysis" });
 
     infoPanel.createEl("p", {
-      text: `Average Volume: ${analysis.avgVolume.toFixed(0)} kg`,
+      text: `Average volume: ${analysis.avgVolume.toFixed(0)} kg`,
     });
 
     // Display imbalance alerts or success message
@@ -94,7 +101,7 @@ export class MuscleBalanceAnalyzer {
       });
 
       alertEl.createEl("h5", {
-        text: "⚠️ Imbalance Alerts",
+        text: "⚠️ imbalance alerts",
         cls: "alert-title",
       });
 
@@ -106,7 +113,7 @@ export class MuscleBalanceAnalyzer {
       });
     } else {
       infoPanel.createEl("p", {
-        text: "✅ No major muscle imbalances detected",
+        text: "✅ no major muscle imbalances detected",
         cls: "success-message",
       });
     }

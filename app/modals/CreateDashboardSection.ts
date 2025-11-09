@@ -1,14 +1,11 @@
 import { App, MarkdownView, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "main";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
 
 export class CreateDashboardSection {
   private app: App;
-  private plugin: WorkoutChartsPlugin;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App) {
     this.app = app;
-    this.plugin = plugin;
   }
 
   async insert() {
@@ -20,7 +17,7 @@ export class CreateDashboardSection {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 
     if (!activeView) {
-      new Notice("❌ No active markdown editor");
+      new Notice("❌ no active markdown editor");
       return;
     }
 
@@ -28,6 +25,6 @@ export class CreateDashboardSection {
     const cursor = editor.getCursor();
     editor.replaceRange(code, cursor);
 
-    new Notice("✅ Dashboard section created successfully!");
+    new Notice("✅ dashboard section created successfully!");
   }
 }

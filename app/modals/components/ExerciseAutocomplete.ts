@@ -60,7 +60,7 @@ export class ExerciseAutocomplete {
     });
 
     const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
-      text: "📝 Create exercise page",
+      text: "📝 create exercise page",
       cls: "create-exercise-page-btn display-none",
     });
 
@@ -101,7 +101,7 @@ export class ExerciseAutocomplete {
             exerciseInput.value = exercise;
             autocompleteContainer.className =
               "exercise-autocomplete-container exercise-autocomplete-hidden";
-            exerciseStatusText.textContent = "✅ Exercise selected";
+            exerciseStatusText.textContent = "✅ exercise selected";
             exerciseStatusText.className =
               "exercise-status-text exercise-status-success";
             createExercisePageBtn.className =
@@ -129,7 +129,7 @@ export class ExerciseAutocomplete {
       } else {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
-        exerciseStatusText.textContent = "⚠️ No exercises found";
+        exerciseStatusText.textContent = "⚠️ no exercises found";
         exerciseStatusText.className =
           "exercise-status-text exercise-status-warning";
         createExercisePageBtn.className =
@@ -185,7 +185,6 @@ export class ExerciseAutocomplete {
     try {
       // Use ExercisePathResolver to get exercise names
       this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);
-
     } catch (error) {
       console.error("Error loading available exercises:", error);
       this.availableExercises = [];

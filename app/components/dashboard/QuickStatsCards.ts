@@ -1,6 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
-import { DashboardCalculations, PeriodStats } from "@app/components/dashboard/DashboardCalculations";
+import {
+  DashboardCalculations,
+  PeriodStats,
+} from "@app/components/dashboard/DashboardCalculations";
 
 export class QuickStatsCards {
   static render(
@@ -13,7 +16,7 @@ export class QuickStatsCards {
     });
 
     cardsEl.createEl("h3", {
-      text: "Quick Stats",
+      text: "Quick stats",
       cls: "widget-title",
     });
 
@@ -31,7 +34,6 @@ export class QuickStatsCards {
     this.createStatsCard(statsGrid, "This Month", monthStats, "📆");
     this.createStatsCard(statsGrid, "This Year", yearStats, "🗓️");
   }
-
 
   private static createStatsCard(
     container: HTMLElement,
@@ -61,33 +63,33 @@ export class QuickStatsCards {
     const workoutsStat = statsEl.createEl("div", { cls: "stat-item" });
     workoutsStat.createEl("div", {
       text: stats.workouts.toString(),
-      cls: "stat-value"
+      cls: "stat-value",
     });
     workoutsStat.createEl("div", {
       text: "Workouts",
-      cls: "stat-label"
+      cls: "stat-label",
     });
 
     // Total volume stat
     const volumeStat = statsEl.createEl("div", { cls: "stat-item" });
     volumeStat.createEl("div", {
       text: `${stats.volume.toLocaleString()}`,
-      cls: "stat-value"
+      cls: "stat-value",
     });
     volumeStat.createEl("div", {
-      text: "Total Volume (kg)",
-      cls: "stat-label"
+      text: "Total volume (kg)",
+      cls: "stat-label",
     });
 
     // Average volume stat
     const avgStat = statsEl.createEl("div", { cls: "stat-item" });
     avgStat.createEl("div", {
       text: `${stats.avgVolume.toLocaleString()}`,
-      cls: "stat-value"
+      cls: "stat-value",
     });
     avgStat.createEl("div", {
-      text: "Avg Volume (kg)",
-      cls: "stat-label"
+      text: "Avg volume (kg)",
+      cls: "stat-label",
     });
   }
 }

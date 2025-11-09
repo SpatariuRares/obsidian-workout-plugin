@@ -20,7 +20,6 @@ import {
   processChartData,
   calculateTrendLine,
   validateUserParams,
-
 } from "@app/utils";
 
 export class EmbeddedChartView extends BaseView {
@@ -92,8 +91,7 @@ export class EmbeddedChartView extends BaseView {
         datasets,
       });
 
-      const volumeData =
-        datasets.length > 0 ? (datasets[0].data as number[]) : [];
+      const volumeData = datasets.length > 0 ? datasets[0].data : [];
       const { slope } = calculateTrendLine(volumeData);
       const trendIndicators = TrendCalculator.getTrendIndicators(
         slope,

@@ -13,7 +13,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "isolatedModules": true,
+    "strict": true,
     "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["DOM", "ES2018"],
     "skipLibCheck": true,
     "types": ["jest"]

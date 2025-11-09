@@ -52,7 +52,7 @@ export class TrendHeader {
     const p = trendHeader.createEl("p", {
       cls: "workout-charts-trend-header-p",
     });
-    p.textContent = "Variazione Complessiva: ";
+    p.textContent = "Overall variation: ";
     if (variationData.text !== undefined) {
       const span = p.createEl("span", {
         cls: "workout-charts-trend-variation",
@@ -101,8 +101,8 @@ export class TrendHeader {
         firstValue !== 0
           ? (((lastValue - firstValue) / Math.abs(firstValue)) * 100).toFixed(1)
           : lastValue > 0
-            ? "Infinity"
-            : "0.0";
+          ? "Infinity"
+          : "0.0";
     } else if (volumeData.length === 1) {
       firstValue = volumeData[0];
       percentChange = "0.0";

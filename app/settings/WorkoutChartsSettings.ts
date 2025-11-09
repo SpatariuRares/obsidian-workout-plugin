@@ -16,8 +16,6 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-
-    // CSV Mode Info
     const csvInfo = containerEl.createEl("div", {
       cls: "setting-item-info",
     });
@@ -37,7 +35,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     );
 
     const title = infoDiv.createEl("h4", {
-      text: "📊 CSV Mode",
+      text: "Workout planner",
     });
     title.setAttribute(
       "style",

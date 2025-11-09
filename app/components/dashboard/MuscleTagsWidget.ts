@@ -6,17 +6,13 @@ import { MUSCLE_TAGS } from "@app/constants/MuscleTags";
  * Helps users reference valid tags when creating exercises
  */
 export class MuscleTagsWidget {
-
-  static render(
-    container: HTMLElement,
-    params: EmbeddedDashboardParams
-  ): void {
+  static render(container: HTMLElement, params: EmbeddedDashboardParams): void {
     const widgetEl = container.createEl("div", {
       cls: "dashboard-widget muscle-tags-widget",
     });
 
     widgetEl.createEl("h3", {
-      text: "Available Muscle Tags",
+      text: "Available muscle tags",
       cls: "widget-title",
     });
 
@@ -107,27 +103,60 @@ export class MuscleTagsWidget {
     const lowerName = muscleName.toLowerCase();
 
     // Chest variations
-    if (lowerName.includes("chest") || lowerName.includes("petto") || lowerName.includes("pettorale")) return "💪";
+    if (
+      lowerName.includes("chest") ||
+      lowerName.includes("petto") ||
+      lowerName.includes("pettorale")
+    )
+      return "💪";
     // Back variations
-    if (lowerName.includes("back") || lowerName.includes("schiena") || lowerName.includes("dorsale")) return "🦾";
+    if (
+      lowerName.includes("back") ||
+      lowerName.includes("schiena") ||
+      lowerName.includes("dorsale")
+    )
+      return "🦾";
     // Shoulders variations
-    if (lowerName.includes("shoulder") || lowerName.includes("spalle") || lowerName.includes("deltoidi") || lowerName.includes("delts")) return "🏋️";
+    if (
+      lowerName.includes("shoulder") ||
+      lowerName.includes("spalle") ||
+      lowerName.includes("deltoidi") ||
+      lowerName.includes("delts")
+    )
+      return "🏋️";
     // Arms
-    if (lowerName.includes("biceps") || lowerName.includes("bicipiti")) return "💪";
-    if (lowerName.includes("triceps") || lowerName.includes("tricipiti")) return "💪";
-    if (lowerName.includes("forearm") || lowerName.includes("avambracci")) return "✊";
+    if (lowerName.includes("biceps") || lowerName.includes("bicipiti"))
+      return "💪";
+    if (lowerName.includes("triceps") || lowerName.includes("tricipiti"))
+      return "💪";
+    if (lowerName.includes("forearm") || lowerName.includes("avambracci"))
+      return "✊";
     // Legs
     if (lowerName.includes("legs") || lowerName.includes("gambe")) return "🦵";
-    if (lowerName.includes("quad") || lowerName.includes("quadricipiti")) return "🦵";
-    if (lowerName.includes("hamstring") || lowerName.includes("ischiocrurali") || lowerName.includes("femorali")) return "🦵";
-    if (lowerName.includes("calves") || lowerName.includes("polpacci")) return "🦿";
+    if (lowerName.includes("quad") || lowerName.includes("quadricipiti"))
+      return "🦵";
+    if (
+      lowerName.includes("hamstring") ||
+      lowerName.includes("ischiocrurali") ||
+      lowerName.includes("femorali")
+    )
+      return "🦵";
+    if (lowerName.includes("calves") || lowerName.includes("polpacci"))
+      return "🦿";
     // Glutes
-    if (lowerName.includes("glute") || lowerName.includes("abduttori") || lowerName.includes("adduttori")) return "🍑";
+    if (
+      lowerName.includes("glute") ||
+      lowerName.includes("abduttori") ||
+      lowerName.includes("adduttori")
+    )
+      return "🍑";
     // Core
-    if (lowerName.includes("abs") || lowerName.includes("addominali")) return "🎯";
+    if (lowerName.includes("abs") || lowerName.includes("addominali"))
+      return "🎯";
     if (lowerName.includes("core") || lowerName.includes("cardio")) return "⭐";
     // Other
-    if (lowerName.includes("traps") || lowerName.includes("trapezi")) return "🔺";
+    if (lowerName.includes("traps") || lowerName.includes("trapezi"))
+      return "🔺";
     // Exercise types
     if (lowerName.includes("push") || lowerName.includes("press")) return "🔼";
     if (lowerName.includes("pull") || lowerName.includes("row")) return "⬇️";

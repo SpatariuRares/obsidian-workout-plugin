@@ -20,10 +20,7 @@ export class InsertTableModal extends ModalBase {
     const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Table Type Section
-    const tableTypeSection = this.createSection(
-      mainContainer,
-      "Table type"
-    );
+    const tableTypeSection = this.createSection(mainContainer, "Table type");
 
     // Table Type selector (exercise vs workout)
     const tableTypeContainer = this.createFormGroup(tableTypeSection);
@@ -113,10 +110,7 @@ export class InsertTableModal extends ModalBase {
     );
 
     // Display Options Section
-    const displaySection = this.createSection(
-      mainContainer,
-      "Display options"
-    );
+    const displaySection = this.createSection(mainContainer, "Display options");
 
     // Show add button toggle
     const addButtonContainer = this.createCheckboxGroup(displaySection);
@@ -164,7 +158,6 @@ export class InsertTableModal extends ModalBase {
       cls: "mod-warning",
     });
 
-
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 
@@ -185,7 +178,7 @@ export class InsertTableModal extends ModalBase {
       if (tableType === "combined") {
         if (!target.exercise || !target.workout) {
           new Notice(
-            "⚠️ For 'Exercise + Workout' type you must fill both fields!"
+            "⚠️ for 'exercise + workout' type you must fill both fields!"
           );
           return;
         }

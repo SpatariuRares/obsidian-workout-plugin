@@ -67,7 +67,7 @@ export class HeatMapControls {
 
     // Export button
     const exportBtn = controlsEl.createEl("button", {
-      text: "📸 Export",
+      text: "📸 export",
       cls: "export-btn",
     });
 

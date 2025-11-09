@@ -23,7 +23,7 @@ export class MuscleHeatMap {
     });
 
     heatMapEl.createEl("h3", {
-      text: "Muscle Heat Map",
+      text: "Muscle heat map",
       cls: "widget-title",
     });
 
@@ -50,7 +50,10 @@ export class MuscleHeatMap {
     // Move controls to be first child after title
     const controlsEl = heatMapEl.querySelector(".heatmap-controls");
     if (controlsEl) {
-      heatMapEl.insertAfter(controlsEl, heatMapEl.querySelector(".widget-title")!);
+      heatMapEl.insertAfter(
+        controlsEl,
+        heatMapEl.querySelector(".widget-title")!
+      );
     }
 
     // Render initial heat map
@@ -85,7 +88,8 @@ export class MuscleHeatMap {
     );
 
     // Create body data from muscle volumes
-    const bodyData = MuscleDataCalculator.createBodyDataFromMuscleData(muscleData);
+    const bodyData =
+      MuscleDataCalculator.createBodyDataFromMuscleData(muscleData);
 
     // Render body visualization
     this.renderBodyVisualization(container, bodyData, options);

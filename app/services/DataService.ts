@@ -13,10 +13,7 @@ export class DataService {
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
 
-  constructor(
-    private app: App,
-    private settings: WorkoutChartsSettings
-  ) { }
+  constructor(private app: App, private settings: WorkoutChartsSettings) {}
 
   async getWorkoutLogData(filterParams?: {
     exercise?: string;
@@ -32,7 +29,6 @@ export class DataService {
       return this.logDataCache;
     }
 
-    // Always use CSV mode
     return this.getCSVWorkoutLogData(filterParams);
   }
 
@@ -178,7 +174,8 @@ export class DataService {
    * Create a new CSV log file with header
    */
   public async createCSVLogFile(): Promise<void> {
-    const header = "date,exercise,reps,weight,volume,origine,workout,timestamp,notes";
+    const header =
+      "date,exercise,reps,weight,volume,origine,workout,timestamp,notes";
     const sampleEntry = `2024-01-01T10:00:00.000Z,Sample Exercise,10,50,500,Sample Workout,Sample Workout,1704096000000,`;
     const content = `${header}\n${sampleEntry}`;
 
@@ -223,7 +220,6 @@ export class DataService {
 
     // Clear cache
     this.clearLogDataCache();
-
   }
 
   /**
@@ -287,7 +283,6 @@ export class DataService {
 
     // Clear cache
     this.clearLogDataCache();
-
   }
 
   /**
@@ -341,6 +336,5 @@ export class DataService {
 
     // Clear cache
     this.clearLogDataCache();
-
   }
 }

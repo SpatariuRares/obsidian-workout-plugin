@@ -12,7 +12,7 @@ export class QuickActions {
     });
 
     actionsEl.createEl("h3", {
-      text: "Quick Actions",
+      text: "Quick actions",
       cls: "widget-title",
     });
 
@@ -22,7 +22,7 @@ export class QuickActions {
 
     // Add workout log button
     const addLogBtn = buttonsEl.createEl("button", {
-      text: "Add Workout Log",
+      text: "Add workout log",
       cls: "action-button primary",
     });
 
@@ -32,7 +32,7 @@ export class QuickActions {
 
     // View all exercises button
     const viewExercisesBtn = buttonsEl.createEl("button", {
-      text: "View Exercises",
+      text: "View exercises",
       cls: "action-button secondary",
     });
 

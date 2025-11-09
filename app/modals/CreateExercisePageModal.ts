@@ -68,7 +68,6 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
-
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());
 

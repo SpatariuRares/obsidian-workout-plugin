@@ -9,10 +9,7 @@ import type WorkoutChartsPlugin from "main";
 import { CreateDashboardSection } from "app/modals/CreateDashboardSection";
 
 export class CommandHandlerService {
-  constructor(
-    private app: App,
-    private plugin: WorkoutChartsPlugin
-  ) { }
+  constructor(private app: App, private plugin: WorkoutChartsPlugin) {}
 
   registerCommands(): void {
     this.plugin.addCommand({
@@ -84,7 +81,7 @@ export class CommandHandlerService {
       id: "create-dashboard-section",
       name: "Create dashboard section",
       callback: () => {
-        new CreateDashboardSection(this.app, this.plugin).insert();
+        new CreateDashboardSection(this.app).insert();
       },
     });
   }

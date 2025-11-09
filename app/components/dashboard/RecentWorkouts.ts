@@ -13,7 +13,7 @@ export class RecentWorkouts {
     });
 
     recentEl.createEl("h3", {
-      text: "Recent Workouts",
+      text: "Recent workouts",
       cls: "widget-title",
     });
 
@@ -45,5 +45,4 @@ export class RecentWorkouts {
       });
     });
   }
-
 }

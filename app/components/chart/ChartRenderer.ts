@@ -117,9 +117,7 @@ export class ChartRenderer {
   ): void {
     const mainDataset = datasets[0];
     if (mainDataset.data && mainDataset.data.length > 1) {
-      const { slope, intercept } = calculateTrendLine(
-        mainDataset.data as number[]
-      );
+      const { slope, intercept } = calculateTrendLine(mainDataset.data);
       const trendData = mainDataset.data.map(
         (_: number, index: number) => slope * index + intercept
       );
@@ -255,8 +253,9 @@ export class ChartRenderer {
                   chartType === "volume" || chartType === "weight"
                     ? "kg"
                     : "reps";
-                return `${label}: ${value?.toFixed ? value.toFixed(1) : value
-                  } ${unit}`;
+                return `${label}: ${
+                  value?.toFixed ? value.toFixed(1) : value
+                } ${unit}`;
               },
             },
           },
@@ -289,8 +288,8 @@ export class ChartRenderer {
                 chartType === "volume"
                   ? "Volume (kg)"
                   : chartType === "weight"
-                    ? "Peso (kg)"
-                    : "Ripetizioni",
+                  ? "Peso (kg)"
+                  : "Ripetizioni",
               color: colors.text,
               font: { size: 14, weight: 500 },
             },

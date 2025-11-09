@@ -8,7 +8,7 @@ import { EmbeddedViewParams } from "@app/types";
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
-  constructor(protected plugin: WorkoutChartsPlugin) { }
+  constructor(protected plugin: WorkoutChartsPlugin) {}
 
   /**
    * Common debug logging method used across all views
@@ -17,7 +17,7 @@ export abstract class BaseView {
     className: string,
     message: string,
     data?: unknown
-  ): void { }
+  ): void {}
 
   /**
    * Common error handling pattern for all views
@@ -82,8 +82,8 @@ export abstract class BaseView {
     const isWorkoutView =
       viewType === "chart"
         ? ("chartType" in params
-          ? params.chartType || "exercise"
-          : "exercise") === "workout"
+            ? params.chartType || "exercise"
+            : "exercise") === "workout"
         : !("exercise" in params ? params.exercise : undefined);
 
     if (isWorkoutView) {

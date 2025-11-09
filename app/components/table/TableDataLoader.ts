@@ -12,7 +12,6 @@ export class TableDataLoader {
     plugin: WorkoutChartsPlugin,
     callbacks?: TableCallbacks
   ): Promise<WorkoutLogData[]> {
-    // In CSV mode, we can apply more efficient filtering
     const filterOptions: {
       exercise?: string;
       workout?: string;
@@ -50,7 +49,8 @@ export class TableDataLoader {
 
       return await plugin.getWorkoutLogData();
     } catch (error) {
-      const errorObj = error instanceof Error ? error : new Error(String(error));
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
       callbacks?.onError?.(errorObj, "loading fresh workout data");
       throw errorObj;
     }

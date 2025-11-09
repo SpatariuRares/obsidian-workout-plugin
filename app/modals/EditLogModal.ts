@@ -30,7 +30,7 @@ export class EditLogModal extends ModalBase {
 
     // Add modal title
     const titleEl = contentEl.createEl("h2", {
-      text: "Edit workout log (CSV mode)",
+      text: "Edit workout log",
     });
 
     // Create form container
@@ -137,7 +137,6 @@ export class EditLogModal extends ModalBase {
       text: "Cancel",
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
-
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

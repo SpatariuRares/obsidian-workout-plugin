@@ -8,7 +8,6 @@ import {
   TableCallbacks,
   TableDataLoader,
   TableValidator,
-
   TableRefresh,
 } from "@app/components";
 import { BaseView } from "@app/views/BaseView";
@@ -30,9 +29,11 @@ export class EmbeddedTableView extends BaseView {
 
     this.callbacks = {
       onRefresh: () => this.refreshTable(),
-      onError: (error, context) => this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
+      onError: (error, context) =>
+        this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
       onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
-      onDebug: (component, message, data) => this.logDebug(component, message, data),
+      onDebug: (component, message, data) =>
+        this.logDebug(component, message, data),
     };
   }
 
@@ -79,10 +80,14 @@ export class EmbeddedTableView extends BaseView {
         this.callbacks
       );
 
-      this.callbacks.onDebug?.("EmbeddedTableView", "CSV data processing completed", {
-        originalDataLength: logData.length,
-        processedDataLength: dataToProcess.length,
-      });
+      this.callbacks.onDebug?.(
+        "EmbeddedTableView",
+        "CSV data processing completed",
+        {
+          originalDataLength: logData.length,
+          processedDataLength: dataToProcess.length,
+        }
+      );
 
       const filterResult = this.filterData(
         dataToProcess,
@@ -121,18 +126,16 @@ export class EmbeddedTableView extends BaseView {
     }
   }
 
-
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData
   ): void {
-    const { headers, rows, totalRows, filterResult, params } = tableData;
+    const { headers, rows, filterResult, params } = tableData;
 
     container.empty();
 
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
-
 
     if (params.showAddButton !== false) {
       const activeView =
@@ -153,10 +156,14 @@ export class EmbeddedTableView extends BaseView {
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
 
-    this.callbacks.onDebug?.("EmbeddedTableView", "Creating table with config", {
-      headers,
-      rows,
-    });
+    this.callbacks.onDebug?.(
+      "EmbeddedTableView",
+      "Creating table with config",
+      {
+        headers,
+        rows,
+      }
+    );
 
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
@@ -188,12 +195,12 @@ export class EmbeddedTableView extends BaseView {
     container.appendChild(fragment);
   }
 
-
   public async refreshTable(): Promise<void> {
     await TableRefresh.refreshTable(
       this.tableState,
       this.plugin,
-      (container, logData, params) => this.renderTable(container, logData, params),
+      (container, logData, params) =>
+        this.renderTable(container, logData, params),
       this.callbacks
     );
   }

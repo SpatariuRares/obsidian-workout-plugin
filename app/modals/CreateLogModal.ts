@@ -1,5 +1,5 @@
 // Refactored CreateLogModal using reusable components
-import { App, Notice, TFile } from "obsidian";
+import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
@@ -28,7 +28,7 @@ export class CreateLogModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    const titleEl = contentEl.createEl("h2", {
+    contentEl.createEl("h2", {
       text: "Create workout log",
     });
 
@@ -38,7 +38,7 @@ export class CreateLogModal extends ModalBase {
     });
 
     // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = await ExerciseAutocomplete.create(
+    const { elements: exerciseElements } = ExerciseAutocomplete.create(
       this,
       formContainer,
       this.plugin,

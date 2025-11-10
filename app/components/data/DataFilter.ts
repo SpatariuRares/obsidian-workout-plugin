@@ -6,7 +6,11 @@ import {
   ExerciseMatch,
 } from "@app/utils/utils";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedChartParams, EmbeddedTableParams, FilterResult } from "@app/types";
+import {
+  EmbeddedChartParams,
+  EmbeddedTableParams,
+  FilterResult,
+} from "@app/types";
 
 /**
  * Handles filtering of workout log data based on various criteria.
@@ -49,8 +53,9 @@ export class DataFilter {
         return {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
-          titlePrefix: `${params.exercise} + ${params.workout || params.workoutPath
-            }`,
+          titlePrefix: `${params.exercise} + ${
+            params.workout || params.workoutPath
+          }`,
         };
       }
 
@@ -121,7 +126,7 @@ export class DataFilter {
   private static filterByExercise(
     logData: WorkoutLogData[],
     params: EmbeddedChartParams | EmbeddedTableParams,
-    debugMode: boolean
+    _debugMode: boolean
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
@@ -145,18 +150,13 @@ export class DataFilter {
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = findExerciseMatches(
-          logData,
-          exerciseName,
-          debugMode
-        );
+        const matchesResult = findExerciseMatches(logData, exerciseName);
 
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
           determineExerciseFilterStrategy(
             matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
             params.exactMatch || false,
-            debugMode,
             exerciseName
           );
 

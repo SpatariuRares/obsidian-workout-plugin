@@ -14,9 +14,9 @@ export abstract class BaseView {
    * Common debug logging method used across all views
    */
   protected logDebug(
-    className: string,
-    message: string,
-    data?: unknown
+    _className: string,
+    _message: string,
+    _data?: unknown
   ): void {}
 
   /**
@@ -89,7 +89,7 @@ export abstract class BaseView {
       );
     } else {
       const exerciseName = "exercise" in params ? params.exercise || "" : "";
-      UIComponents.renderNoMatchMessage(container, exerciseName, logData);
+      UIComponents.renderNoMatchMessage(container);
       if (exerciseName) {
         UIComponents.createCreateLogButtonForMissingExercise(
           container,

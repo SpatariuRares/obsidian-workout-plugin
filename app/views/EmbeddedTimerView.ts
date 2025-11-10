@@ -21,28 +21,24 @@ export class EmbeddedTimerView extends BaseView {
       .substring(2, 9)}`;
 
     // Initialize timer core with callbacks
-    this.timerCore = new TimerCore(
-      this.timerId,
-      {
-        onTimerComplete: () => {
-          this.logDebug("EmbeddedTimerView", "Timer completed callback", {
-            timerId: this.timerId,
-          });
-        },
-        onSoundPlay: () => {
-          this.logDebug("EmbeddedTimerView", "Sound played callback", {
-            timerId: this.timerId,
-          });
-        },
-        onStateChange: (state: TimerState) => {
-          this.logDebug("EmbeddedTimerView", "Timer state changed", {
-            timerId: this.timerId,
-            state,
-          });
-        },
+    this.timerCore = new TimerCore(this.timerId, {
+      onTimerComplete: () => {
+        this.logDebug("EmbeddedTimerView", "Timer completed callback", {
+          timerId: this.timerId,
+        });
       },
-      this.plugin.settings.debugMode
-    );
+      onSoundPlay: () => {
+        this.logDebug("EmbeddedTimerView", "Sound played callback", {
+          timerId: this.timerId,
+        });
+      },
+      onStateChange: (state: TimerState) => {
+        this.logDebug("EmbeddedTimerView", "Timer state changed", {
+          timerId: this.timerId,
+          state,
+        });
+      },
+    });
   }
 
   createTimer(container: HTMLElement, params: EmbeddedTimerParams): void {
@@ -100,7 +96,7 @@ export class EmbeddedTimerView extends BaseView {
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj, "creating embedded timer");
+      this.handleError(container, errorObj);
     }
   }
 
@@ -164,11 +160,7 @@ export class EmbeddedTimerView extends BaseView {
     }
 
     // Initial display update
-    TimerDisplay.updateDisplay(
-      this.timerCore.getState(),
-      this.timerId,
-      this.plugin.settings.debugMode
-    );
+    TimerDisplay.updateDisplay(this.timerCore.getState(), this.timerId);
   }
 
   // Public methods for external control - delegated to TimerCore

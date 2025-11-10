@@ -29,7 +29,7 @@ export class WidgetsFileError {
 
     if (fileErrors.length === 0) {
       errorEl.createEl("div", {
-        text: "✓ All exercise files are valid",
+        text: "All exercise files are valid",
         cls: "file-errors-success",
       });
       return;
@@ -126,7 +126,8 @@ export class WidgetsFileError {
         errors.push(`⚠️ Too many muscle tags (${muscleTags.length})`);
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       errors.push(`⚠️ Error reading file: ${errorMessage}`);
     }
 

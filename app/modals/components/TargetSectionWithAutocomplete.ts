@@ -38,7 +38,7 @@ export class TargetSectionWithAutocomplete {
 
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
-    const { elements: exerciseElements } = await ExerciseAutocomplete.create(
+    const { elements: exerciseElements } = ExerciseAutocomplete.create(
       modal,
       exerciseContainer,
       plugin

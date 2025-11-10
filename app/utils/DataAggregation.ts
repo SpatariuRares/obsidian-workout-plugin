@@ -11,8 +11,8 @@ export class DataAggregation {
    */
   static aggregateByKey<T>(
     data: T[],
-    keyFn: (item: T) => string,
-    valueFn: (item: T) => number
+    keyFn: (_item: T) => string,
+    valueFn: (_item: T) => number
   ): Map<string, number> {
     const result = new Map<string, number>();
     data.forEach((item) => {

@@ -1,5 +1,5 @@
 // Refactored CreateExerciseSectionModal using reusable components
-import { App, MarkdownView } from "obsidian";
+import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
@@ -27,7 +27,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = await ExerciseAutocomplete.create(
+    const { elements: exerciseElements } = ExerciseAutocomplete.create(
       this,
       exerciseSection,
       this.plugin

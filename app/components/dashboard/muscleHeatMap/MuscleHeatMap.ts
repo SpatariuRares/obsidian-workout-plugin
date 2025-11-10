@@ -52,7 +52,7 @@ export class MuscleHeatMap {
     if (controlsEl) {
       heatMapEl.insertAfter(
         controlsEl,
-        heatMapEl.querySelector(".widget-title")!
+        heatMapEl.querySelector(".widget-title")
       );
     }
 

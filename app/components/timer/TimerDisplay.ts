@@ -10,7 +10,7 @@ export class TimerDisplay {
       .padStart(2, "0")}`;
   }
 
-  static updateDisplay(state: TimerState, timerId: string): void {
+  static updateDisplay(state: TimerState, _timerId: string): void {
     if (!state.timerDisplay) {
       return;
     }

@@ -57,7 +57,7 @@ export class CommandHandlerService {
       id: "insert-workout-timer",
       name: "Insert workout timer",
       callback: () => {
-        new InsertTimerModal(this.app, this.plugin).open();
+        new InsertTimerModal(this.app).open();
       },
     });
 

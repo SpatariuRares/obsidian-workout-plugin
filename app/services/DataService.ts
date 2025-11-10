@@ -54,7 +54,7 @@ export class DataService {
       const csvFile = abstractFile;
 
       const content = await this.app.vault.read(csvFile);
-      const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+      const csvEntries = parseCSVLogFile(content);
 
       // Convert CSV entries to WorkoutLogData format
       csvEntries.forEach((entry) => {
@@ -201,7 +201,7 @@ export class DataService {
     const csvFile = abstractFile;
 
     const content = await this.app.vault.read(csvFile);
-    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+    const csvEntries = parseCSVLogFile(content);
 
     // Add new entry with timestamp
     const newEntry: CSVWorkoutLogEntry = {
@@ -239,7 +239,7 @@ export class DataService {
     const csvFile = abstractFile;
 
     const content = await this.app.vault.read(csvFile);
-    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+    const csvEntries = parseCSVLogFile(content);
 
     // Find the entry to update by matching timestamp (most reliable identifier)
     let entryIndex = csvEntries.findIndex((entry) => {
@@ -301,7 +301,7 @@ export class DataService {
     const csvFile = abstractFile;
 
     const content = await this.app.vault.read(csvFile);
-    const csvEntries = parseCSVLogFile(content, this.settings.debugMode);
+    const csvEntries = parseCSVLogFile(content);
 
     // Find the entry to delete by matching timestamp (most reliable identifier)
     let entryIndex = csvEntries.findIndex((entry) => {

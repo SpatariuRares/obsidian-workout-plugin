@@ -15,5 +15,5 @@ export interface TimerState {
 export interface TimerCallbacks {
   onTimerComplete?: () => void;
   onSoundPlay?: () => void;
-  onStateChange?: (state: TimerState) => void;
+  onStateChange?: (_state: TimerState) => void;
 }

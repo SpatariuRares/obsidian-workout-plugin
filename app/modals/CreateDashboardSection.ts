@@ -17,7 +17,7 @@ export class CreateDashboardSection {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 
     if (!activeView) {
-      new Notice("❌ no active markdown editor");
+      new Notice("No active markdown editor");
       return;
     }
 

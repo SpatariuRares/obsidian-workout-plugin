@@ -17,13 +17,6 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName("Workout planner")
-      .setHeading()
-      .setDesc(
-        "All workout data is stored in a single CSV file for better performance and easier management."
-      );
-
-    new Setting(containerEl)
       .setName("CSV log file path")
       .setDesc("Path to the CSV file containing all workout log data")
       .addText((text) =>
@@ -62,9 +55,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     // CSV Management Section
-    new Setting(containerEl)
-      .setName("CSV file management")
-      .setHeading();
+    new Setting(containerEl).setName("CSV file management").setHeading();
 
     new Setting(containerEl)
       .setName("Create CSV log file")

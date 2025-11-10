@@ -109,7 +109,7 @@ export class EmbeddedChartView extends BaseView {
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj, "creating embedded chart");
+      this.handleError(container, errorObj);
     }
   }
 

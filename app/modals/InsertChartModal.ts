@@ -5,7 +5,6 @@ import { ModalBase } from "@app/modals/base/ModalBase";
 import { TargetSectionWithAutocomplete } from "@app/modals/components/TargetSectionWithAutocomplete";
 import { AdvancedOptionsSection } from "@app/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
-import { Notice } from "obsidian";
 
 export class InsertChartModal extends ModalBase {
   constructor(app: App, private plugin: WorkoutChartsPlugin) {

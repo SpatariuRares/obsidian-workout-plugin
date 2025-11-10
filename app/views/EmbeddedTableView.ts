@@ -122,7 +122,7 @@ export class EmbeddedTableView extends BaseView {
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
-      this.handleError(container, errorObj, "creating embedded table");
+      this.handleError(container, errorObj);
     }
   }
 
@@ -150,7 +150,7 @@ export class EmbeddedTableView extends BaseView {
         exerciseName,
         currentPageLink,
         this.plugin,
-        () => this.refreshTable()
+        () => void this.refreshTable()
       );
     }
 

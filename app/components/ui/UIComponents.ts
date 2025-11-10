@@ -37,12 +37,6 @@ export class UIComponents {
       cls: `workout-charts-info workout-charts-info-${type}`,
     });
 
-    const icons = {
-      info: "ℹ️",
-      warning: "⚠️",
-      success: "✅",
-    };
-
     // const strongEl = infoDiv.createEl("strong", { text: icon });
     infoDiv.append(" ", message);
   }
@@ -64,11 +58,9 @@ export class UIComponents {
    * @param container - The HTML element to render the message in
    */
   static renderNoDataMessage(container: HTMLElement): void {
-    const noDataDiv = container.createEl("div", {
+    container.createEl("div", {
       cls: "workout-log-no-data",
     });
-
-    const p1 = noDataDiv.createEl("p");
   }
 
   /**
@@ -172,7 +164,7 @@ export class UIComponents {
     container: HTMLElement,
     labels: string[],
     volumeData: number[],
-    title: string
+    _title: string
   ): void {
     const tableDiv = container.createEl("div", {
       cls: "workout-charts-table-fallback",

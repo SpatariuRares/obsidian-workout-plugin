@@ -12,7 +12,7 @@ export interface ExerciseAutocompleteElements {
 }
 
 export interface ExerciseAutocompleteHandlers {
-  showAutocomplete: () => void;
+  showAutocomplete: (_query: string) => void;
   hideAutocomplete: () => void;
 }
 
@@ -23,16 +23,16 @@ export class ExerciseAutocomplete {
   /**
    * Creates the exercise autocomplete component
    */
-  static async create(
+  static create(
     modal: ModalBase,
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
     exerciseName?: string
-  ): Promise<{
+  ): {
     elements: ExerciseAutocompleteElements;
     handlers: ExerciseAutocompleteHandlers;
     exerciseExists: boolean;
-  }> {
+  } {
     const instance = new ExerciseAutocomplete();
     instance.loadAvailableExercises(plugin);
 

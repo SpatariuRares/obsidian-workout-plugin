@@ -1,6 +1,5 @@
 // Refactored InsertTimerModal using reusable components
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { TimerConfigurationSection } from "@app/modals/components/TimerConfigurationSection";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";

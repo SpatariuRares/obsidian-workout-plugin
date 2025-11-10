@@ -9,7 +9,7 @@ import {
   RecentWorkouts,
   QuickActions,
   MuscleHeatMap,
-  MuscleTagsWidget
+  MuscleTagsWidget,
 } from "@app/components";
 import { EmbeddedDashboardParams } from "@app/types";
 
@@ -87,7 +87,7 @@ export class EmbeddedDashboardView extends BaseView {
         `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`
       );
     } catch (error) {
-      this.handleError(container, error as Error, "createDashboard");
+      this.handleError(container, error as Error);
     }
   }
 
@@ -129,13 +129,11 @@ export class EmbeddedDashboardView extends BaseView {
     // Volume Analytics Section
     VolumeAnalytics.render(gridEl, data, params);
 
-
     // Recent Workouts Section
     RecentWorkouts.render(gridEl, data, params);
 
     // Quick Actions Panel
     QuickActions.render(gridEl, params, this.plugin);
-
 
     // Exercise File Errors Widget
     await WidgetsFileError.render(gridEl, this.plugin);
@@ -143,5 +141,4 @@ export class EmbeddedDashboardView extends BaseView {
     // Muscle Tags Widget (Available muscle groups reference)
     MuscleTagsWidget.render(gridEl, params);
   }
-
 }

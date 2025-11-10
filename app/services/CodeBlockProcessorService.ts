@@ -1,4 +1,3 @@
-import { MarkdownPostProcessorContext } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
@@ -143,7 +142,7 @@ export class CodeBlockProcessorService {
     data: WorkoutLogData[],
     params: EmbeddedChartParams
   ) {
-    await this.embeddedChartView.createChart(container, data, params);
+    this.embeddedChartView.createChart(container, data, params);
   }
 
   // Create embedded table using the dedicated view
@@ -163,7 +162,7 @@ export class CodeBlockProcessorService {
     const timerId = `timer-${Date.now()}-${Math.random()}`;
     const timerView = new EmbeddedTimerView(this.plugin);
     this.activeTimers.set(timerId, timerView);
-    await timerView.createTimer(container, params);
+    timerView.createTimer(container, params);
   }
 
   // Handle workout dashboard code blocks

@@ -9,9 +9,9 @@ export interface TableState {
 
 export interface TableCallbacks {
   onRefresh?: () => Promise<void>;
-  onError?: (error: Error, context: string) => void;
-  onSuccess?: (message: string) => void;
-  onDebug?: (component: string, message: string, data?: unknown) => void;
+  onError?: (_error: Error, _context: string) => void;
+  onSuccess?: (_message: string) => void;
+  onDebug?: (_component: string, _message: string, _data?: unknown) => void;
 }
 
 export interface TableRenderContext {

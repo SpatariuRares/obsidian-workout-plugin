@@ -21,7 +21,7 @@ export class CreateExercisePageModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    const titleEl = contentEl.createEl("h2", { text: "Create exercise page" });
+    contentEl.createEl("h2", { text: "Create exercise page" });
 
     // Create form container
     const formContainer = contentEl.createEl("div", {
@@ -29,7 +29,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = await ExerciseAutocomplete.create(
+    const { elements: exerciseElements } = ExerciseAutocomplete.create(
       this,
       formContainer,
       this.plugin,

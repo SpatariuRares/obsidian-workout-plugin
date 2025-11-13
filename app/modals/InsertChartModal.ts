@@ -11,7 +11,7 @@ export class InsertChartModal extends ModalBase {
     super(app);
   }
 
-  onOpen() {
+  async onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", { text: "Insert workout chart" });
 

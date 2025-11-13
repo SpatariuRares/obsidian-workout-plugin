@@ -12,7 +12,7 @@ export class InsertTableModal extends ModalBase {
     super(app);
   }
 
-  onOpen() {
+  async onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", { text: "Insert workout log table" });
 

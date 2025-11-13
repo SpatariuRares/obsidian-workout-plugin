@@ -98,18 +98,6 @@ export class CodeBlockProcessorService {
       } else {
         logData = (await this.dataService.getWorkoutLogData()) || [];
       }
-
-      if (logData.length === 0) {
-        const { UIComponents } = await import("@app/components");
-        UIComponents.renderCSVNoDataMessage(
-          el,
-          this.plugin.settings.csvLogFilePath,
-          this.plugin
-        );
-        return;
-      }
-
-      // Create table - filtering is now handled by the DataFilter class
       await this.createEmbeddedTable(el, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");

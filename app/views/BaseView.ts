@@ -31,13 +31,15 @@ export abstract class BaseView {
    */
   protected handleEmptyData(
     container: HTMLElement,
-    logData: WorkoutLogData[]
+    logData: WorkoutLogData[],
+    exerciseName?: string
   ): boolean {
     if (logData.length === 0) {
       UIComponents.renderCSVNoDataMessage(
         container,
         this.plugin.settings.csvLogFilePath,
-        this.plugin
+        this.plugin,
+        exerciseName
       );
       return true;
     }

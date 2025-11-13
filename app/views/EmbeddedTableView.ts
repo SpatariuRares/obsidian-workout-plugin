@@ -67,8 +67,7 @@ export class EmbeddedTableView extends BaseView {
       }
 
       const loadingDiv = this.showLoadingIndicator(container);
-
-      if (this.handleEmptyData(container, logData)) {
+      if (this.handleEmptyData(container, logData, params.exercise)) {
         loadingDiv.remove();
         return;
       }

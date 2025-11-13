@@ -72,7 +72,8 @@ export class UIComponents {
   static renderCSVNoDataMessage(
     container: HTMLElement,
     csvFilePath: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
+    exerciseName?: string
   ): void {
     const noDataDiv = container.createEl("div", {
       cls: "workout-log-no-data",
@@ -87,7 +88,7 @@ export class UIComponents {
     });
 
     const createButton = buttonDiv.createEl("button", {
-      text: "➕ create first workout log",
+      text: `➕ create first workout log for ${exerciseName}`,
       cls: "add-log-button",
     });
     createButton.id = "create-first-log-btn";
@@ -107,7 +108,7 @@ export class UIComponents {
         new CreateLogModal(
           plugin.app,
           plugin,
-          undefined, // No specific exercise name for first log
+          exerciseName,
           currentPageLink,
           () => {
             plugin.triggerWorkoutLogRefresh();

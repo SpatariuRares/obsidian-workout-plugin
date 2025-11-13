@@ -24,7 +24,7 @@ export class EditLogModal extends ModalBase {
     this.onLogUpdated = onLogUpdated;
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 

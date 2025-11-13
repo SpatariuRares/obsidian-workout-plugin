@@ -11,7 +11,7 @@ export class InsertChartModal extends ModalBase {
     super(app);
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", { text: "Insert workout chart" });
 
@@ -19,10 +19,7 @@ export class InsertChartModal extends ModalBase {
     const mainContainer = this.createStyledMainContainer(contentEl);
 
     // Chart Type Section
-    const chartTypeSection = this.createSection(
-      mainContainer,
-      "Chart type"
-    );
+    const chartTypeSection = this.createSection(mainContainer, "Chart type");
 
     // Chart Type selector (exercise vs workout)
     const chartTypeContainer = this.createFormGroup(chartTypeSection);
@@ -83,10 +80,7 @@ export class InsertChartModal extends ModalBase {
     );
 
     // Display Options Section
-    const displaySection = this.createSection(
-      mainContainer,
-      "Display options"
-    );
+    const displaySection = this.createSection(mainContainer, "Display options");
 
     // Show trend line toggle
     const trendLineContainer = this.createCheckboxGroup(displaySection);
@@ -141,7 +135,6 @@ export class InsertChartModal extends ModalBase {
       text: "Cancel",
       cls: "mod-warning",
     });
-
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

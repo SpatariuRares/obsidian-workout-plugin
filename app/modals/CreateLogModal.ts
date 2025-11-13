@@ -23,7 +23,7 @@ export class CreateLogModal extends ModalBase {
     this.onLogCreated = onLogCreated;
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
@@ -134,7 +134,6 @@ export class CreateLogModal extends ModalBase {
       text: "Cancel",
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
-
 
     // Event listeners
     cancelBtn.addEventListener("click", () => this.close());

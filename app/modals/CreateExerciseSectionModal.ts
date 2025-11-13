@@ -13,7 +13,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     this.plugin = plugin;
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", { text: "Create exercise section" });
 

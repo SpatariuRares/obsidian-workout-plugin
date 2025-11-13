@@ -70,7 +70,7 @@ export class CodeBlockProcessorService {
       }
 
       // Create chart - filtering is now handled by the DataFilter class
-      await this.createEmbeddedChart(el, logData, params);
+      this.createEmbeddedChart(el, logData, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
       const errorMessage =
@@ -125,7 +125,7 @@ export class CodeBlockProcessorService {
   private async handleWorkoutTimer(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
-      await this.createEmbeddedTimer(el, params);
+      this.createEmbeddedTimer(el, params);
     } catch (error) {
       const errorDiv = document.createElement("div");
       const errorMessage =
@@ -137,7 +137,7 @@ export class CodeBlockProcessorService {
   }
 
   // Create embedded chart using the dedicated view
-  private async createEmbeddedChart(
+  private createEmbeddedChart(
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedChartParams
@@ -146,16 +146,16 @@ export class CodeBlockProcessorService {
   }
 
   // Create embedded table using the dedicated view
-  private async createEmbeddedTable(
+  private createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedTableParams
   ) {
-    await this.embeddedTableView.createTable(container, data, params);
+    this.embeddedTableView.createTable(container, data, params);
   }
 
   // Create embedded timer using the dedicated view
-  private async createEmbeddedTimer(
+  private createEmbeddedTimer(
     container: HTMLElement,
     params: EmbeddedTimerParams
   ) {

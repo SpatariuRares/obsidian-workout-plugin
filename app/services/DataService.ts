@@ -29,7 +29,7 @@ export class DataService {
       return this.logDataCache;
     }
 
-    return this.getCSVWorkoutLogData(filterParams);
+    return await this.getCSVWorkoutLogData(filterParams);
   }
 
   /**

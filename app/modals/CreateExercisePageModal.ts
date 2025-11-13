@@ -16,7 +16,7 @@ export class CreateExercisePageModal extends ModalBase {
     this.exerciseName = exerciseName;
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 

@@ -25,6 +25,6 @@ export class CreateDashboardSection {
     const cursor = editor.getCursor();
     editor.replaceRange(code, cursor);
 
-    new Notice("✅ dashboard section created successfully!");
+    new Notice("Dashboard section created successfully");
   }
 }

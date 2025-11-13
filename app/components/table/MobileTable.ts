@@ -1,3 +1,4 @@
+import { TABLE_COLUMNS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { EmbeddedChartParams, ChartDataset } from "@app/types";
 
 export class MobileTable {
@@ -36,14 +37,14 @@ export class MobileTable {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
 
-    headerRow.createEl("th", { text: "Data" });
+    headerRow.createEl("th", { text: TABLE_LABELS.DATA });
     headerRow.createEl("th", {
       text:
         chartType === "volume"
-          ? "Volume (kg)"
+          ? TABLE_LABELS.VOLUME
           : chartType === "weight"
-            ? "Peso (kg)"
-            : "Ripetizioni",
+          ? TABLE_LABELS.WEIGHT
+          : TABLE_LABELS.REPETITIONS,
     });
 
     // Create table body
@@ -51,7 +52,8 @@ export class MobileTable {
 
     // Get the main dataset (first dataset, excluding trend line)
     const mainDataset =
-      datasets.find((ds) => ds.label !== "Linea di Tendenza") || datasets[0];
+      datasets.find((ds) => ds.label !== TABLE_LABELS.TREND_LINE) ||
+      datasets[0];
 
     if (mainDataset && mainDataset.data) {
       labels.forEach((label, index) => {
@@ -66,7 +68,7 @@ export class MobileTable {
       // Fallback: create empty table with message
       const row = tbody.createEl("tr");
       row.createEl("td", {
-        text: "Nessun dato disponibile",
+        text: TABLE_LABELS.NO_DATA,
         attr: { colspan: "2" },
       });
     }

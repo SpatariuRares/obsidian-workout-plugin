@@ -1,5 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "@app/types";
+import { TABLE_COLUMNS, TABLE_LABELS } from "@app/constants/TableConstats";
+import { DateUtils } from "@app/utils/DateUtils";
 
 /**
  * Processes workout log data for table display.
@@ -19,31 +21,31 @@ export class TableDataProcessor {
   ): TableData {
     // Use default visible columns if not specified
     const defaultVisibleColumns = [
-      "Date",
-      "Reps",
-      "Weight (kg)",
-      "Volume",
-      "Notes",
+      TABLE_COLUMNS.DATE,
+      TABLE_COLUMNS.REPS,
+      TABLE_COLUMNS.WEIGHT,
+      TABLE_COLUMNS.VOLUME,
+      TABLE_COLUMNS.NOTES,
     ];
 
     let headers: string[];
     if (params.columns) {
       if (Array.isArray(params.columns)) {
-        headers = [...params.columns, "Actions"];
+        headers = [...params.columns, TABLE_COLUMNS.ACTIONS];
       } else if (typeof params.columns === "string") {
         try {
           const parsedColumns = JSON.parse(params.columns);
-          headers = [...parsedColumns, "Actions"];
+          headers = [...parsedColumns, TABLE_COLUMNS.ACTIONS];
         } catch {
           // Invalid columns parameter, using default
-          headers = [...defaultVisibleColumns, "Actions"];
+          headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
         }
       } else {
-        headers = [...defaultVisibleColumns, "Actions"];
+        headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
       }
     } else {
       // No columns specified, use default visible columns
-      headers = [...defaultVisibleColumns, "Actions"];
+      headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
     }
 
     const limit = params.limit || 50;
@@ -103,22 +105,22 @@ export class TableDataProcessor {
     for (const log of logData) {
       let formattedDate = dateCache.get(log.date);
       if (!formattedDate) {
-        formattedDate = this.formatDate(log.date);
+        formattedDate = DateUtils.toTime(log.date);
         dateCache.set(log.date, formattedDate);
       }
 
       let dateKey = dateKeyCache.get(log.date);
       if (!dateKey) {
-        dateKey = this.getDateKey(log.date);
+        dateKey = DateUtils.toDateKey(log.date);
         dateKeyCache.set(log.date, dateKey);
       }
 
       const dataMap: Record<string, string> = {
         Date: formattedDate,
         Exercise: this.getExerciseDisplay(log.exercise),
-        Reps: log.reps?.toString() || "N/D",
-        "Weight (kg)": log.weight?.toString() || "N/D",
-        Volume: log.volume?.toString() || "N/D",
+        Reps: log.reps?.toString() || TABLE_LABELS.NOT_AVAILABLE,
+        "Weight (kg)": log.weight?.toString() || TABLE_LABELS.NOT_AVAILABLE,
+        Volume: log.volume?.toString() || TABLE_LABELS.NOT_AVAILABLE,
         Notes: log.notes || "",
         Actions: "", // Placeholder for actions
       };
@@ -139,104 +141,14 @@ export class TableDataProcessor {
   }
 
   /**
-   * Formats a date string for display in the table.
-   * @param dateString - ISO date string to format
-   * @returns Formatted date string in HH:MM format
-   */
-  private static formatDate(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const hours = date.getHours().toString().padStart(2, "0");
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-
-      return `${hours}:${minutes}`;
-    } catch {
-      return "Data non valida";
-    }
-  }
-
-  /**
    * Formats exercise name for display by removing file extensions.
    * @param exercise - Exercise name to format
    * @returns Formatted exercise name without file extensions
    */
   private static getExerciseDisplay(exercise: string): string {
-    if (!exercise) return "N/D";
+    if (!exercise) return TABLE_LABELS.NOT_AVAILABLE;
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");
-  }
-
-  /**
-   * Creates a date key for grouping (YYYY-MM-DD format).
-   * @param dateString - ISO date string
-   * @returns Date key string in YYYY-MM-DD format
-   */
-  private static getDateKey(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const day = date.getDate().toString().padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    } catch {
-      return "invalid-date";
-    }
-  }
-
-  /**
-   * Validates table parameters and returns any validation errors.
-   * @param params - Table parameters to validate
-   * @returns Array of validation error messages
-   */
-  static validateTableParams(params: EmbeddedTableParams): string[] {
-    const errors: string[] = [];
-
-    if (params.limit !== undefined) {
-      const limit = parseInt(params.limit.toString());
-      if (isNaN(limit) || limit < 1 || limit > 1000) {
-        errors.push(
-          `limit deve essere un numero tra 1 e 1000, ricevuto: "${params.limit}"`
-        );
-      }
-    }
-
-    if (params.columns) {
-      if (
-        !Array.isArray(params.columns) &&
-        typeof params.columns !== "string"
-      ) {
-        errors.push(
-          "columns deve essere un array di stringhe o una stringa JSON"
-        );
-      } else if (
-        Array.isArray(params.columns) &&
-        !params.columns.every((c) => typeof c === "string")
-      ) {
-        errors.push("columns deve essere un array di stringhe");
-      }
-    }
-
-    if (params.buttonText && typeof params.buttonText !== "string") {
-      errors.push("buttonText deve essere una stringa");
-    }
-
-    return errors;
-  }
-
-  /**
-   * Returns default table parameters for new table instances.
-   * @returns Default table parameters with sensible defaults
-   */
-  static getDefaultTableParams(): EmbeddedTableParams {
-    return {
-      limit: 50,
-      showAddButton: true,
-      buttonText: "➕ Add Log",
-      searchByName: false,
-      exactMatch: false,
-      debug: false,
-      columns: ["Date", "Reps", "Weight (kg)", "Volume", "Notes"],
-    };
   }
 }

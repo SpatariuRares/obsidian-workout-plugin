@@ -1,25 +1,29 @@
 import { EmbeddedTableParams } from "@app/types";
-import { TableDataProcessor } from "@app/components/table/TableDataProcessor";
+import { TableConfig } from "@app/components/table/TableConfig";
 
+/**
+ * @deprecated Use TableConfig directly instead.
+ * This class exists for backward compatibility and will be removed in a future version.
+ */
 export class TableValidator {
   /**
-   * Validate table parameters using existing TableDataProcessor validation
+   * @deprecated Use TableConfig.validateParams() instead
    */
   static validateTableParams(params: EmbeddedTableParams): string[] {
-    return TableDataProcessor.validateTableParams(params);
+    return TableConfig.validateParams(params);
   }
 
   /**
-   * Check if validation errors exist and should prevent rendering
+   * @deprecated Use TableConfig.hasValidationErrors() instead
    */
   static hasValidationErrors(validationErrors: string[]): boolean {
-    return validationErrors.length > 0;
+    return TableConfig.hasValidationErrors(validationErrors);
   }
 
   /**
-   * Format validation errors for display
+   * @deprecated Use TableConfig.formatValidationErrors() instead
    */
   static formatValidationErrors(validationErrors: string[]): string {
-    return validationErrors.join(", ");
+    return TableConfig.formatValidationErrors(validationErrors);
   }
 }

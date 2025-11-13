@@ -1,3 +1,4 @@
+import { TABLE_DATE_KEYS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
@@ -121,5 +122,67 @@ export class DateUtils {
       labels.push(this.formatDate(date));
     }
     return labels;
+  }
+
+  /**
+   * Format date as time (HH:MM)
+   * Used in table cells for workout time
+   */
+  static toTime(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    } catch {
+      return TABLE_LABELS.NOT_AVAILABLE;
+    }
+  }
+
+  /**
+   * Format date as key (YYYY-MM-DD)
+   * Used for grouping rows by date
+   */
+  static toDateKey(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    } catch {
+      return TABLE_DATE_KEYS.INVALID;
+    }
+  }
+
+  /**
+   * Format date as short date (DD/MM)
+   * Used in spacer rows for date headers
+   */
+  static toShortDate(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      return `${day}/${month}`;
+    } catch {
+      return TABLE_DATE_KEYS.INVALID;
+    }
+  }
+
+  /**
+   * Format date as full date (DD/MM/YYYY)
+   * Future use for detailed views
+   */
+  static toFullDate(dateString: string): string {
+    try {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    } catch {
+      return TABLE_LABELS.INVALID_DATE;
+    }
   }
 }

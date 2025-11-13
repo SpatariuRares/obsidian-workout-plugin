@@ -1,9 +1,9 @@
-import { Notice } from "obsidian";
 import { TableRow, EmbeddedTableParams } from "@app/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { EditLogModal } from "@app/modals/EditLogModal";
-import { ConfirmModal } from "@app/modals/ConfirmModal";
+import { TABLE_ICONS, TABLE_LABELS } from "@app/constants/TableConstats";
+import { DateUtils } from "@app/utils/DateUtils";
+import { TableActions } from "@app/components/table/TableActions";
 
 export class TableRenderer {
   /**
@@ -128,9 +128,7 @@ export class TableRenderer {
         // First cell: formatted date
         const dateCell = spacerRow.appendChild(document.createElement("td"));
         dateCell.className = "table-spacer-date-cell";
-        const formattedDate = this.formatDateForSpacer(
-          groupRows[0].originalDate
-        );
+        const formattedDate = DateUtils.toShortDate(groupRows[0].originalDate);
         dateCell.textContent = formattedDate;
 
         // Create summary cell for the remaining columns
@@ -140,15 +138,15 @@ export class TableRenderer {
 
         // Create stat spans using DOM methods
         const repsSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
-        repsSpan.appendText("🔢 Reps: ");
+        repsSpan.appendText(TABLE_ICONS.REPS + TABLE_LABELS.REPETITIONS + ": ");
         repsSpan.createEl("strong", { text: totalReps.toString() });
 
         const weightSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
-        weightSpan.appendText("⚖️ Peso: ");
+        weightSpan.appendText(TABLE_ICONS.WEIGHT + TABLE_LABELS.WEIGHT + ": ");
         weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
 
         const volumeSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
-        volumeSpan.appendText("📊 Vol: ");
+        volumeSpan.appendText(TABLE_ICONS.VOLUME + TABLE_LABELS.VOLUME + ": ");
         volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
 
@@ -178,7 +176,7 @@ export class TableRenderer {
             td.textContent = cell;
           } else if (cellIndex === row.displayRow.length - 1) {
             td.className = "workout-table-actions-cell";
-            this.renderActionButtons(td, row.originalLog, plugin);
+            TableActions.renderActionButtons(td, row.originalLog, plugin);
           } else {
             td.textContent = cell;
           }
@@ -188,100 +186,6 @@ export class TableRenderer {
       tbody.appendChild(fragment);
     } catch {
       // Silent error - grouping failed
-    }
-  }
-
-  /**
-   * Renders action buttons (edit and delete) for a table row
-   * @param td - The table cell to render the buttons in
-   * @param originalLog - The original log data for this row
-   * @param plugin - Plugin instance for operations
-   */
-  private static renderActionButtons(
-    td: HTMLElement,
-    originalLog: WorkoutLogData | undefined,
-    plugin?: WorkoutChartsPlugin
-  ): void {
-    if (!originalLog) {
-      return;
-    }
-
-    const actionsContainer = td.createEl("div", {
-      cls: "workout-table-actions",
-    });
-
-    // Edit button
-    const editBtn = actionsContainer.createEl("button", {
-      cls: "workout-table-action-btn workout-table-edit-btn",
-      text: "✏️",
-      attr: {
-        title: "Edit log entry",
-      },
-    });
-
-    // Delete button
-    const deleteBtn = actionsContainer.createEl("button", {
-      cls: "workout-table-action-btn workout-table-delete-btn",
-      text: "🗑️",
-      attr: {
-        title: "Delete log entry",
-      },
-    });
-
-    // Event listeners
-    editBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (plugin) {
-        // Open EditLogModal with the original log data
-        const modal = new EditLogModal(plugin.app, plugin, originalLog, () => {
-          plugin.triggerWorkoutLogRefresh();
-        });
-        modal.open();
-      }
-    });
-
-    deleteBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (plugin) {
-        // Open confirmation modal
-        const modal = new ConfirmModal(
-          plugin.app,
-          "Are you sure you want to delete this log entry?",
-          () => {
-            plugin
-              .deleteWorkoutLogEntry(originalLog)
-              .then(() => {
-                new Notice("Log entry deleted successfully!");
-                // Refresh the table
-                plugin.triggerWorkoutLogRefresh();
-              })
-              .catch((error) => {
-                const errorMessage =
-                  error instanceof Error ? error.message : String(error);
-                new Notice("Error deleting log entry: " + errorMessage);
-              });
-          }
-        );
-        modal.open();
-      }
-    });
-  }
-
-  /**
-   * Format date for spacer row display (DD/MM format)
-   */
-  private static formatDateForSpacer(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      return `${day}/${month}`;
-    } catch {
-      return "";
     }
   }
 }

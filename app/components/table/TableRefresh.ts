@@ -1,9 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-
 import { EmbeddedTableParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { TableState, TableCallbacks } from "@app/components/table/TableTypes";
 import { TableDataLoader } from "@app/components/table/TableDataLoader";
+import { TABLE_MESSAGES } from "@app/constants/TableConstats";
 
 export class TableRefresh {
   /**
@@ -38,7 +38,7 @@ export class TableRefresh {
           state.currentParams
         );
 
-        callbacks?.onSuccess?.("Table refreshed successfully");
+        callbacks?.onSuccess?.(TABLE_MESSAGES.REFRESH_SUCCESS);
       } else {
         callbacks?.onDebug?.("TableRefresh", "No data changes detected, skipping refresh");
       }

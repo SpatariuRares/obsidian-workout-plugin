@@ -4,28 +4,47 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- **Development build**: `npm run dev` - Runs esbuild in watch mode for live development
-- **Production build**: `npm run build` - TypeScript compilation check + production build with minification
+- **Development build**: `npm run dev` - Builds CSS then runs esbuild in watch mode for live development
+- **Production build**: `npm run build` - TypeScript compilation check + CSS build + production build with minification
 - **Version bump**: `npm run version` - Updates manifest.json and versions.json, then stages the changes
+- **Linting**: `npm run lint` - Runs ESLint on the codebase
+- **Linting with fixes**: `npm run lint:fix` - Runs ESLint and auto-fixes issues
+- **Testing**: `npm test` - Runs Jest test suite
+- **Testing with watch**: `npm run test:watch` - Runs Jest in watch mode
+- **Testing with coverage**: `npm run test:coverage` - Runs Jest with coverage report
 
-## Key Commands for Development
+## Build Process
 
-- **Install dependencies**: `npm install`
-- **Type checking**: The build command includes TypeScript compilation with `tsc -noEmit -skipLibCheck`
-- **No test suite**: This project does not have automated tests configured
+1. **CSS Build** (`node build-css.mjs`): Uses PostCSS to bundle modular CSS files from `styles/` directory into a single `styles.css` file
+2. **TypeScript Compilation**: `tsc -noEmit -skipLibCheck` validates TypeScript without emitting files
+3. **esbuild Bundling**: Bundles `main.ts` into `main.js` with Obsidian-specific externals, minification in production mode
+
+## Testing
+
+- **Test framework**: Jest with ts-jest for TypeScript support
+- **Test files**: Located in `__tests__` directories alongside source files or with `.test.ts` suffix
+- **Coverage**: 80% threshold for statements, branches, functions, and lines
+- **Coverage scope**: Utilities, constants, data components, and dashboard calculations
 
 ## Project Architecture
 
 This is an Obsidian plugin that visualizes workout data through interactive charts, tables, and timers. The plugin follows a modular architecture with clear separation of concerns.
 
+### TypeScript Configuration
+
+- **Path aliases**: `@app/*` maps to `app/*` (configured in tsconfig.json and jest.config.js)
+- **Import example**: `import { WorkoutLogData } from "@app/types/WorkoutLogData"`
+- **Target**: ES2018 with ESNext modules
+- **Strict mode**: Enabled with strict null checks
+
 ### Core Architecture
 
-- **main.ts**: Central plugin class (WorkoutChartsPlugin) that handles initialization, command registration, and code block processing
+- **[main.ts](main.ts)**: Central plugin class (WorkoutChartsPlugin) that handles initialization, command registration, and code block processing
 - **Service-based architecture**: Modular services for data handling (DataService), command handling (CommandHandlerService), and code block processing (CodeBlockProcessorService)
 - **CSV-based data storage**: Uses a single CSV file (`theGYM/Log/workout_logs.csv`) for workout data with 5-second caching for performance
-- **Embedded views**: Chart, Table, and Timer views that can be embedded in notes via code blocks
+- **Embedded views**: Chart, Table, Timer, and Dashboard views that can be embedded in notes via code blocks
 - **Modal system**: Comprehensive modal system for creating logs, inserting code blocks, and managing exercises
-- **BaseView pattern**: All embedded views inherit from BaseView class for common functionality and error handling
+- **BaseView pattern**: All embedded views inherit from [BaseView](app/views/BaseView.ts) class for common functionality and error handling
 
 ### Key Directories
 
@@ -67,20 +86,27 @@ The plugin processes four code block types:
 
 Parameters are parsed from YAML-like syntax within code blocks.
 
+### CSS Organization
+
+- **Source file**: [styles.source.css](styles.source.css) - Entry point that imports modular CSS files
+- **Modular CSS**: Individual CSS files organized in `styles/` directory by feature
+- **Build output**: Bundled into single [styles.css](styles.css) file via PostCSS
+- **CSS variables**: Uses Obsidian's CSS variables for theme consistency (see [OBSIDIAN_GUIDELINES.md](OBSIDIAN_GUIDELINES.md))
+
 ### Dependencies
 
 - **Chart.js v4.4.0**: For interactive chart rendering
 - **Obsidian API**: Core plugin functionality
 - **esbuild**: Build system with external module handling for Obsidian environment
+- **PostCSS**: CSS bundling with postcss-import plugin
 
 ### Development Notes
 
-- Uses TypeScript with strict null checks and ES6+ features
-- esbuild handles bundling with Obsidian-specific externals (see esbuild.config.mjs)
-- Plugin follows Obsidian's plugin architecture patterns
-- Includes comprehensive error handling and debug mode functionality
-- No automated testing suite - manual testing required
+- Plugin follows Obsidian's plugin architecture patterns (see [OBSIDIAN_GUIDELINES.md](OBSIDIAN_GUIDELINES.md))
+- esbuild externalizes Obsidian API, Electron, and CodeMirror modules (see [esbuild.config.mjs](esbuild.config.mjs))
 - Uses semantic versioning with GitHub Actions for releases
+- Includes comprehensive error handling and debug mode functionality
+- Source maps enabled in development mode, disabled in production
 
 ### Important Implementation Details
 
@@ -93,3 +119,31 @@ Parameters are parsed from YAML-like syntax within code blocks.
 - **Exercise Matching**: Multi-strategy search system (exact match, fuzzy match, filename match, exercise field match) with score-based filtering and confidence thresholds
 - **Dashboard Integration**: Comprehensive dashboard view with quick stats, volume analytics, muscle heat maps, recent workouts, and quick actions
 - **Debug Mode**: Extensive debug logging available (see [DEBUG_GUIDE.md](DEBUG_GUIDE.md) for details on troubleshooting search and filtering issues)
+
+## Key Development Practices
+
+### When Adding New Features
+
+1. **Use path aliases**: Import with `@app/*` instead of relative paths
+2. **Follow BaseView pattern**: Extend BaseView for new embedded views
+3. **Use ModalBase**: Extend ModalBase for new modal implementations
+4. **Add tests**: Write unit tests for utilities and data processing logic in `__tests__` directories
+5. **Update CSS modularly**: Add feature-specific CSS in `styles/` directory, import in `styles.source.css`
+6. **Use Obsidian CSS variables**: Avoid hardcoded colors, use theme-compatible CSS variables
+7. **Handle errors consistently**: Use UIComponents.renderErrorMessage() for error display
+
+### Code Style
+
+- Use async/await over Promise chains
+- Prefer const/let over var
+- Use sentence case for UI text (not Title Case)
+- Avoid `innerHTML` - use Obsidian's `createEl()`, `createDiv()`, `createSpan()` helpers
+- Clean up resources in `onunload()` using `registerEvent()` and `addCommand()`
+
+### Testing Changes
+
+1. Run `npm run build` to validate TypeScript and build
+2. Reload the plugin in Obsidian (Ctrl/Cmd + R)
+3. Test in both light and dark themes for CSS changes
+4. Test on mobile if making UI changes
+5. Run `npm test` if modifying utilities or data processing logic

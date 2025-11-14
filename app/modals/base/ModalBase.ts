@@ -65,7 +65,7 @@ export abstract class ModalBase extends Modal {
       editor.replaceRange(code + "\n\n", cursor);
       new Notice(successMessage);
     } else {
-      new Notice("Open a markdown file to insert the code");
+      new Notice("open a markdown file to insert the code");
     }
   }
 

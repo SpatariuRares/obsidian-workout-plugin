@@ -37,7 +37,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     const workoutContainer = this.createFormGroup(exerciseSection);
     const workoutInput = this.createTextInput(
       workoutContainer,
-      "Workout Name (optional):",
+      "Workout name (optional):",
       "e.g. Workout A, Training B, or use checkbox below"
     );
 
@@ -45,7 +45,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     const currentWorkoutContainer = this.createCheckboxGroup(exerciseSection);
     const currentWorkoutToggle = this.createCheckbox(
       currentWorkoutContainer,
-      "Use Current Workout (file name)",
+      "Use current workout (file name)",
       false,
       "currentWorkout"
     );

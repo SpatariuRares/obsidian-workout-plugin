@@ -7,7 +7,7 @@ import {
   TableState,
   TableCallbacks,
   TableDataLoader,
-  TableValidator,
+  TableConfig,
   TableRefresh,
 } from "@app/components";
 import { BaseView } from "@app/views/BaseView";
@@ -61,7 +61,7 @@ export class EmbeddedTableView extends BaseView {
       });
 
       // Validate parameters using the new component
-      const validationErrors = TableValidator.validateTableParams(params);
+      const validationErrors = TableConfig.validateParams(params);
       if (!this.validateAndHandleErrors(container, validationErrors)) {
         return;
       }

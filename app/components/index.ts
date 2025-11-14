@@ -9,7 +9,6 @@ export * from "@app/components/table/TableDataProcessor";
 export * from "@app/components/table/MobileTable";
 export * from "@app/components/table/TableTypes";
 export * from "@app/components/table/TableDataLoader";
-export * from "@app/components/table/TableValidator";
 export * from "@app/components/table/TableRefresh";
 export * from "@app/components/table/TableConfig";
 export * from "@app/components/table/TableActions";

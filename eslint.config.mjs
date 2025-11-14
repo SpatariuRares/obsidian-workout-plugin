@@ -1,6 +1,7 @@
 import obsidianmd from "eslint-plugin-obsidianmd";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import importPlugin from "eslint-plugin-import";
 
@@ -33,7 +34,8 @@ export default [
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
-        sourceType: "module"
+        sourceType: "module",
+        project: "./tsconfig.json"
       },
       globals: {
         ...globals.browser,
@@ -43,7 +45,8 @@ export default [
 
     plugins: {
       obsidianmd,
-      import: importPlugin
+      import: importPlugin,
+      "@typescript-eslint": tsPlugin
     },
 
     settings: {
@@ -65,6 +68,9 @@ export default [
           }
         ]
       }],
+
+      // TypeScript-specific rules
+      "@typescript-eslint/no-floating-promises": "error",
 
       // Additional TypeScript/JavaScript best practices
       "no-console": "warn",

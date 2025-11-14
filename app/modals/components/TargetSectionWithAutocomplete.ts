@@ -24,16 +24,16 @@ export class TargetSectionWithAutocomplete {
   /**
    * Creates the target section with exercise autocomplete and workout selection
    */
-  static async create(
+  static create(
     modal: ModalBase,
     container: HTMLElement,
     typeSelect: HTMLSelectElement,
     currentFileName: string,
     plugin: WorkoutChartsPlugin
-  ): Promise<{
+  ): {
     elements: TargetSectionWithAutocompleteElements;
     handlers: TargetSectionWithAutocompleteHandlers;
-  }> {
+  } {
     const targetSection = modal.createSection(container, "Target");
 
     // Exercise autocomplete (for exercise-specific charts/tables)
@@ -49,7 +49,7 @@ export class TargetSectionWithAutocomplete {
     workoutContainer.setAttribute("data-field-type", "workout");
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      "Workout Name:",
+      "Workout name:",
       "e.g. Workout A, Training B, or use checkbox below"
     );
 
@@ -58,7 +58,7 @@ export class TargetSectionWithAutocomplete {
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      "Use Current Workout (file name)",
+      "Use current workout (file name)",
       false,
       "currentWorkout"
     );

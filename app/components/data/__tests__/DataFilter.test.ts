@@ -135,7 +135,7 @@ describe('DataFilter', () => {
 
                 const result = DataFilter.filterData(mockLogData, params as EmbeddedChartParams, true);
 
-                expect(mockFindExerciseMatches).toHaveBeenCalledWith(mockLogData, 'sqwat', true);
+                expect(mockFindExerciseMatches).toHaveBeenCalledWith(mockLogData, 'sqwat');
                 expect(mockDetermineExerciseFilterStrategy).toHaveBeenCalled();
                 expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(mockLogData, 'field', 'Squat', []);
                 expect(result.filteredData).toEqual(filteredByUtil);

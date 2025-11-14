@@ -31,7 +31,7 @@ export class TargetSection {
     const exerciseContainer = modal.createFormGroup(targetSection);
     const exerciseInput = modal.createTextInput(
       exerciseContainer,
-      "Exercise Name:",
+      "Exercise name:",
       "e.g. Bench Press, Squat, RDL..."
     );
 
@@ -39,7 +39,7 @@ export class TargetSection {
     const workoutContainer = modal.createFormGroup(targetSection);
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      "Workout Name:",
+      "Workout name:",
       "e.g. Workout A, Training B..."
     );
 
@@ -47,7 +47,7 @@ export class TargetSection {
     const currentWorkoutContainer = modal.createCheckboxGroup(targetSection);
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      "Use Current Workout (file name)",
+      "Use current workout (file name)",
       false,
       "currentWorkout"
     );

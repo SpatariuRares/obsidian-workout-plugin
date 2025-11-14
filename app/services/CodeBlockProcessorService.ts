@@ -110,7 +110,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout timer code blocks
-  private async handleWorkoutTimer(source: string, el: HTMLElement) {
+  private handleWorkoutTimer(source: string, el: HTMLElement) {
     try {
       const params = this.parseCodeBlockParams(source);
       this.createEmbeddedTimer(el, params);
@@ -134,12 +134,12 @@ export class CodeBlockProcessorService {
   }
 
   // Create embedded table using the dedicated view
-  private createEmbeddedTable(
+  private async createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedTableParams
   ) {
-    this.embeddedTableView.createTable(container, data, params);
+    await this.embeddedTableView.createTable(container, data, params);
   }
 
   // Create embedded timer using the dedicated view

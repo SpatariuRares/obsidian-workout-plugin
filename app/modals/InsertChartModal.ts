@@ -11,7 +11,7 @@ export class InsertChartModal extends ModalBase {
     super(app);
   }
 
-  async onOpen() {
+  onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", { text: "Insert workout chart" });
 
@@ -43,7 +43,7 @@ export class InsertChartModal extends ModalBase {
     // Target Section using reusable component with autocomplete
     const currentFileName = this.getCurrentFileName();
     const { elements: targetElements, handlers: targetHandlers } =
-      await TargetSectionWithAutocomplete.create(
+      TargetSectionWithAutocomplete.create(
         this,
         mainContainer,
         chartTypeSelect,

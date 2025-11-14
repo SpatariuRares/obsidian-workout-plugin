@@ -1,4 +1,4 @@
-import { TABLE_COLUMNS, TABLE_LABELS } from "@app/constants/TableConstats";
+import { TABLE_LABELS } from "@app/constants/TableConstats";
 import { EmbeddedChartParams, ChartDataset } from "@app/types";
 
 export class MobileTable {

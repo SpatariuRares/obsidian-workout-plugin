@@ -3,3 +3,4 @@
  */
 export * from "@app/constants/MuscleTags";
 export * from "@app/constants/TableConstats";
+export * from "@app/constants/ModalConstants";

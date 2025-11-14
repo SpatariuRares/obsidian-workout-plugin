@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { ChartDataType, EmbeddedDashboardParams } from "@app/types";
 import { ChartRenderer } from "@app/components/chart/ChartRenderer";
 import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
 
@@ -40,7 +40,7 @@ export class VolumeAnalytics {
         },
       ],
       {
-        type: "volume",
+        type: ChartDataType.VOLUME,
         title: "Volume Trend (Last 30 Days)",
       }
     );

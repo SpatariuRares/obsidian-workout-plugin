@@ -3,6 +3,14 @@ import { App, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import {
+  MODAL_TITLES,
+  MODAL_BUTTONS,
+  MODAL_LABELS,
+  MODAL_PLACEHOLDERS,
+  MODAL_NOTICES,
+  MODAL_CODE_BLOCKS,
+} from "@app/constants/ModalConstants";
 
 export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;
@@ -21,7 +29,7 @@ export class CreateExercisePageModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    contentEl.createEl("h2", { text: "Create exercise page" });
+    contentEl.createEl("h2", { text: MODAL_TITLES.CREATE_EXERCISE_PAGE });
 
     // Create form container
     const formContainer = contentEl.createEl("div", {
@@ -37,19 +45,17 @@ export class CreateExercisePageModal extends ModalBase {
     );
 
     // Tags input
-    const tagsContainer = this.createFormGroup(formContainer);
-    const tagsInput = this.createTextInput(
-      tagsContainer,
-      "Tags (comma separated):",
-      "e.g., spalle, deltoidi, laterali, isolamento, macchina"
+    const tagsInput = this.createTextField(
+      formContainer,
+      MODAL_LABELS.TAGS,
+      MODAL_PLACEHOLDERS.TAGS
     );
 
     // Folder path input
-    const folderContainer = this.createFormGroup(formContainer);
-    const folderInput = this.createTextInput(
-      folderContainer,
-      "Folder Path (optional):",
-      "e.g., Exercises or leave empty for root",
+    const folderInput = this.createTextField(
+      formContainer,
+      MODAL_LABELS.FOLDER_PATH,
+      MODAL_PLACEHOLDERS.FOLDER_PATH,
       this.plugin.settings.exerciseFolderPath
     );
 
@@ -58,13 +64,13 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Create button
     const createBtn = buttonsContainer.createEl("button", {
-      text: "Create exercise page",
+      text: MODAL_BUTTONS.CREATE_EXERCISE,
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 
     // Cancel button
     const cancelBtn = buttonsContainer.createEl("button", {
-      text: "Cancel",
+      text: MODAL_BUTTONS.CANCEL,
       cls: "workout-charts-btn workout-charts-btn-warning",
     });
 
@@ -77,19 +83,19 @@ export class CreateExercisePageModal extends ModalBase {
       const folderPath = folderInput.value.trim();
 
       if (!exerciseName) {
-        new Notice("Please enter an exercise name");
+        new Notice(MODAL_NOTICES.EXERCISE_PAGE_NAME_REQUIRED);
         return;
       }
 
       this.createExercisePage(exerciseName, tags, folderPath)
         .then(() => {
           this.close();
-          new Notice("Exercise page created successfully!");
+          new Notice(MODAL_NOTICES.EXERCISE_PAGE_CREATED);
         })
         .catch((error) => {
           const errorMessage =
             error instanceof Error ? error.message : String(error);
-          new Notice(`Error creating exercise page: ${errorMessage}`);
+          new Notice(`${MODAL_NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`);
         });
     });
 
@@ -136,13 +142,13 @@ ${tagList.map((tag) => `  - ${tag}`).join("\n")}
 
 # Log delle Performance
 
-\`\`\`workout-log
+\`\`\`${MODAL_CODE_BLOCKS.TABLE}
 exercise: ${exerciseName}
 \`\`\`
 
 ### grafico
 
-\`\`\`workout-chart
+\`\`\`${MODAL_CODE_BLOCKS.CHART}
 exercise: ${exerciseName}
 \`\`\`
 `;

@@ -5,6 +5,7 @@ import {
   ChartDataset,
   FilterResult,
   TrendIndicators,
+  ChartType,
 } from "@app/types";
 import {
   ChartRenderer,
@@ -83,7 +84,7 @@ export class EmbeddedChartView extends BaseView {
         params.type || "volume",
         params.dateRange || 30,
         "DD/MM/YYYY",
-        params.chartType || "exercise"
+        params.chartType || ChartType.EXERCISE
       );
 
       this.logDebug("EmbeddedChartView", "Processed chart data", {

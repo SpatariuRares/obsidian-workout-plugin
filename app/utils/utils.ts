@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataset, EmbeddedViewParams } from "@app/types";
+import { ChartDataset, ChartType, EmbeddedViewParams } from "@app/types";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
@@ -226,7 +226,7 @@ export function processChartData(
   dateRange: number = 30,
   dateFormat: string = "DD/MM/YYYY",
   // ✨ NUOVO PARAMETRO per distinguere tra workout totale e singolo esercizio
-  displayType: "workout" | "exercise" = "exercise"
+  displayType: ChartType = ChartType.EXERCISE
 ): { labels: string[]; datasets: ChartDataset[] } {
   // Filter by date range
   const cutoffDate = new Date();

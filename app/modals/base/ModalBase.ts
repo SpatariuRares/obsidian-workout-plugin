@@ -146,6 +146,25 @@ export abstract class ModalBase extends Modal {
   }
 
   /**
+   * Creates a textarea field
+   */
+  public createTextarea(
+    container: HTMLElement,
+    label: string,
+    placeholder: string = "",
+    rows: number = 3,
+    value: string = ""
+  ): HTMLTextAreaElement {
+    container.createEl("label", { text: label });
+    const textarea = container.createEl("textarea", {
+      placeholder: placeholder,
+    });
+    textarea.rows = rows;
+    if (value) textarea.value = value;
+    return textarea;
+  }
+
+  /**
    * Creates a styled main container for modals
    */
   protected createStyledMainContainer(contentEl: HTMLElement): HTMLElement {
@@ -167,5 +186,86 @@ export abstract class ModalBase extends Modal {
     });
     currentFileInfo.textContent = `Current file: ${currentFileName}`;
     return currentFileInfo;
+  }
+
+  /**
+   * Helper methods that combine form group creation with input creation
+   * These reduce boilerplate by ~30%
+   */
+
+  /**
+   * Creates a text input field with form group wrapper
+   */
+  public createTextField(
+    parent: HTMLElement,
+    label: string,
+    placeholder: string = "",
+    value: string = ""
+  ): HTMLInputElement {
+    const container = this.createFormGroup(parent);
+    return this.createTextInput(container, label, placeholder, value);
+  }
+
+  /**
+   * Creates a number input field with form group wrapper
+   */
+  public createNumberField(
+    parent: HTMLElement,
+    label: string,
+    defaultValue: number,
+    options?: {
+      min?: number;
+      max?: number;
+      placeholder?: string;
+    }
+  ): HTMLInputElement {
+    const container = this.createFormGroup(parent);
+    return this.createNumberInput(
+      container,
+      label,
+      defaultValue.toString(),
+      options?.min,
+      options?.max,
+      options?.placeholder
+    );
+  }
+
+  /**
+   * Creates a select field with form group wrapper
+   */
+  public createSelectField(
+    parent: HTMLElement,
+    label: string,
+    options: Array<{ text: string; value: string }>
+  ): HTMLSelectElement {
+    const container = this.createFormGroup(parent);
+    return this.createSelect(container, label, options);
+  }
+
+  /**
+   * Creates a checkbox field with checkbox group wrapper
+   */
+  public createCheckboxField(
+    parent: HTMLElement,
+    label: string,
+    checked: boolean = false,
+    id?: string
+  ): HTMLInputElement {
+    const container = this.createCheckboxGroup(parent);
+    return this.createCheckbox(container, label, checked, id);
+  }
+
+  /**
+   * Creates a textarea field with form group wrapper
+   */
+  public createTextareaField(
+    parent: HTMLElement,
+    label: string,
+    placeholder: string = "",
+    rows: number = 3,
+    value: string = ""
+  ): HTMLTextAreaElement {
+    const container = this.createFormGroup(parent);
+    return this.createTextarea(container, label, placeholder, rows, value);
   }
 }

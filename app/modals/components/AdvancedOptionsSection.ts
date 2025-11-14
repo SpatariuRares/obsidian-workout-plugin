@@ -1,4 +1,9 @@
 // Reusable advanced options section component
+import {
+  MODAL_CHECKBOXES,
+  MODAL_LABELS,
+  MODAL_PLACEHOLDERS,
+} from "@app/constants";
 import { ModalBase } from "@app/modals/base/ModalBase";
 
 export interface AdvancedOptionsElements {
@@ -26,7 +31,7 @@ export class AdvancedOptionsSection {
     const exactMatchContainer = modal.createCheckboxGroup(advancedSection);
     const exactMatchToggle = modal.createCheckbox(
       exactMatchContainer,
-      "Exact match",
+      MODAL_CHECKBOXES.EXACT_MATCH,
       false,
       "exactMatch"
     );
@@ -35,7 +40,7 @@ export class AdvancedOptionsSection {
     const debugContainer = modal.createCheckboxGroup(advancedSection);
     const debugToggle = modal.createCheckbox(
       debugContainer,
-      "Debug mode",
+      MODAL_CHECKBOXES.DEBUG_MODE,
       false,
       "debug"
     );
@@ -50,8 +55,8 @@ export class AdvancedOptionsSection {
       const titleContainer = modal.createFormGroup(advancedSection);
       const titleInput = modal.createTextInput(
         titleContainer,
-        "Custom title:",
-        "Leave empty for automatic title"
+        MODAL_LABELS.CUSTOM_TITLE,
+        MODAL_PLACEHOLDERS.CUSTOM_TITLE
       );
       elements.titleInput = titleInput;
     }
@@ -61,7 +66,7 @@ export class AdvancedOptionsSection {
       const searchByNameContainer = modal.createCheckboxGroup(advancedSection);
       const searchByNameToggle = modal.createCheckbox(
         searchByNameContainer,
-        "Search by file name",
+        MODAL_CHECKBOXES.SEARCH_BY_NAME,
         false,
         "searchByName"
       );

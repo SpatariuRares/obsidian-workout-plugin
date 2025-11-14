@@ -1,66 +1,62 @@
-// Refactored InsertTimerModal using reusable components
+// Refactored InsertTimerModal extending BaseInsertModal
 import { App } from "obsidian";
-import { ModalBase } from "@app/modals/base/ModalBase";
-import { TimerConfigurationSection } from "@app/modals/components/TimerConfigurationSection";
+import { BaseInsertModal } from "@app/modals/base/BaseInsertModal";
+import {
+  TimerConfigurationSection,
+  TimerConfigurationElements,
+} from "@app/modals/components/TimerConfigurationSection";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
+import {
+  MODAL_TITLES,
+  MODAL_BUTTONS,
+  MODAL_NOTICES,
+} from "@app/constants/ModalConstants";
+import { TimerType } from "@app/types";
 
-export class InsertTimerModal extends ModalBase {
+export class InsertTimerModal extends BaseInsertModal {
+  private timerElements?: TimerConfigurationElements;
+
   constructor(app: App) {
     super(app);
   }
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Insert workout timer" });
+  protected getModalTitle(): string {
+    return MODAL_TITLES.INSERT_TIMER;
+  }
 
-    // Create main container with better styling
-    const mainContainer = this.createStyledMainContainer(contentEl);
+  protected getButtonText(): string {
+    return MODAL_BUTTONS.INSERT_TIMER;
+  }
 
+  protected getSuccessMessage(): string {
+    return MODAL_NOTICES.TIMER_INSERTED;
+  }
+
+  protected createConfigurationSections(container: HTMLElement): void {
     // Timer Configuration Section using reusable component
     const { elements: timerElements } = TimerConfigurationSection.create(
       this,
-      mainContainer
+      container
     );
-
-    // Buttons Section
-    const buttonsSection = this.createButtonsSection(mainContainer);
-
-    // Insert button
-    const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert timer",
-      cls: "mod-cta",
-    });
-
-    // Cancel button
-    const cancelBtn = buttonsSection.createEl("button", {
-      text: "Cancel",
-      cls: "mod-warning",
-    });
-
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
-
-    insertBtn.addEventListener("click", () => {
-      const timerValues = TimerConfigurationSection.getValues(timerElements);
-
-      const timerCode = CodeGenerator.generateTimerCode({
-        timerType: timerValues.timerType,
-        duration: timerValues.duration,
-        intervalTime: timerValues.intervalTime,
-        rounds: timerValues.rounds,
-        title: timerValues.title,
-        showControls: timerValues.showControls,
-        autoStart: timerValues.autoStart,
-        sound: timerValues.sound,
-      });
-
-      this.insertIntoEditor(timerCode, "✅ Timer inserted successfully!");
-      this.close();
-    });
+    this.timerElements = timerElements;
   }
 
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+  protected generateCode(): string {
+    if (!this.timerElements) {
+      throw new Error(MODAL_NOTICES.TIMER_ELEMENTS_NOT_INITIALIZED);
+    }
+
+    const timerValues = TimerConfigurationSection.getValues(this.timerElements);
+
+    return CodeGenerator.generateTimerCode({
+      type: timerValues.type as TimerType,
+      duration: timerValues.duration,
+      intervalTime: timerValues.intervalTime,
+      rounds: timerValues.rounds,
+      title: timerValues.title,
+      showControls: timerValues.showControls,
+      autoStart: timerValues.autoStart,
+      sound: timerValues.sound,
+    });
   }
 }

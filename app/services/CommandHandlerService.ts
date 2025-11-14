@@ -3,10 +3,10 @@ import { CreateLogModal } from "@app/modals/CreateLogModal";
 import { InsertChartModal } from "@app/modals/InsertChartModal";
 import { InsertTableModal } from "@app/modals/InsertTableModal";
 import { InsertTimerModal } from "@app/modals/InsertTimerModal";
+import { InsertDashboardModal } from "@app/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/modals/CreateExerciseSectionModal";
 import type WorkoutChartsPlugin from "main";
-import { CreateDashboardSection } from "app/modals/CreateDashboardSection";
 
 export class CommandHandlerService {
   constructor(private app: App, private plugin: WorkoutChartsPlugin) {}
@@ -78,10 +78,10 @@ export class CommandHandlerService {
     });
 
     this.plugin.addCommand({
-      id: "create-dashboard-section",
-      name: "Create dashboard section",
+      id: "insert-workout-dashboard",
+      name: "Insert workout dashboard",
       callback: () => {
-        new CreateDashboardSection(this.app).insert();
+        new InsertDashboardModal(this.app).open();
       },
     });
   }

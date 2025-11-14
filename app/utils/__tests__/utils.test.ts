@@ -11,6 +11,7 @@ import {
 } from "../utils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { ChartDataType, ChartType } from "@app/types/ChartTypes";
 
 // Mock TFile
 class MockTFile {
@@ -345,7 +346,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        "exercise"
+        ChartType.EXERCISE
       );
       expect(result.labels.length).toBeGreaterThan(0);
       expect(result.datasets.length).toBe(1);
@@ -358,7 +359,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        "workout"
+        ChartType.EXERCISE
       );
       expect(result.datasets[0].label).toContain("Volume Totale");
     });
@@ -401,7 +402,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        "exercise"
+        ChartType.EXERCISE
       );
       // Data is sorted by date, so date2 (6 days ago) comes first, then date1 (5 days ago)
       // date2 has 1 log with volume 1500, average = 1500
@@ -416,7 +417,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        "workout"
+        ChartType.EXERCISE
       );
       // Data is sorted by date, so date2 (6 days ago) comes first, then date1 (5 days ago)
       // date2 has 1 log with volume 1500, total = 1500
@@ -455,24 +456,24 @@ describe("utils.ts", () => {
     });
 
     it("should validate chartType parameter", () => {
-      const errors = validateUserParams({ chartType: "invalid" as "exercise" });
+      const errors = validateUserParams({ chartType: "invalid" as ChartType });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("chartType");
     });
 
     it("should accept valid chartType", () => {
-      const errors = validateUserParams({ chartType: "exercise" });
+      const errors = validateUserParams({ chartType: ChartType.EXERCISE });
       expect(errors.length).toBe(0);
     });
 
     it("should validate type parameter for charts", () => {
-      const errors = validateUserParams({ type: "invalid" as "volume" });
+      const errors = validateUserParams({ type: "invalid" as ChartDataType });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("type");
     });
 
     it("should accept valid type", () => {
-      const errors = validateUserParams({ type: "volume" });
+      const errors = validateUserParams({ type: ChartDataType.VOLUME });
       expect(errors.length).toBe(0);
     });
 
@@ -491,7 +492,7 @@ describe("utils.ts", () => {
       const errors = validateUserParams({
         dateRange: 400,
         limit: 2000,
-        type: "invalid" as "volume",
+        type: "invalid" as ChartDataType,
       });
       expect(errors.length).toBe(3);
     });

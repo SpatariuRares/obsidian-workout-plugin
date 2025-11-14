@@ -1,63 +1,99 @@
-// Refactored InsertTableModal using reusable components
-import { App } from "obsidian";
+// Refactored InsertTableModal extending BaseInsertModal
+import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import { ModalBase } from "@app/modals/base/ModalBase";
-import { TargetSectionWithAutocomplete } from "@app/modals/components/TargetSectionWithAutocomplete";
-import { AdvancedOptionsSection } from "@app/modals/components/AdvancedOptionsSection";
+import { BaseInsertModal } from "@app/modals/base/BaseInsertModal";
+import {
+  TargetSectionWithAutocomplete,
+  TargetSectionWithAutocompleteElements,
+} from "@app/modals/components/TargetSectionWithAutocomplete";
+import {
+  AdvancedOptionsSection,
+  AdvancedOptionsElements,
+} from "@app/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
-import { Notice } from "obsidian";
+import {
+  MODAL_TITLES,
+  MODAL_BUTTONS,
+  MODAL_LABELS,
+  MODAL_SELECT_OPTIONS,
+  MODAL_SECTIONS,
+  MODAL_CHECKBOXES,
+  MODAL_NOTICES,
+  MODAL_DEFAULT_VALUES,
+} from "@app/constants/ModalConstants";
+import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
+import { TableColumnType, TableType } from "@app/types/TableTypes";
 
-export class InsertTableModal extends ModalBase {
-  constructor(app: App, private plugin: WorkoutChartsPlugin) {
-    super(app);
+export class InsertTableModal extends BaseInsertModal {
+  private tableTypeSelect?: HTMLSelectElement;
+  private targetElements?: TargetSectionWithAutocompleteElements;
+  private limitInput?: HTMLInputElement;
+  private columnsSelect?: HTMLSelectElement;
+  private addButtonToggle?: HTMLInputElement;
+  private buttonTextInput?: HTMLInputElement;
+  private advancedElements?: AdvancedOptionsElements;
+  private currentFileName: string;
+
+  constructor(app: App, plugin: WorkoutChartsPlugin) {
+    super(app, plugin);
+    this.currentFileName = this.getCurrentFileName();
   }
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Insert workout log table" });
+  protected getModalTitle(): string {
+    return MODAL_TITLES.INSERT_TABLE;
+  }
 
-    // Create main container with better styling
-    const mainContainer = this.createStyledMainContainer(contentEl);
+  protected getButtonText(): string {
+    return MODAL_BUTTONS.INSERT_TABLE;
+  }
 
+  protected getSuccessMessage(): string {
+    return MODAL_NOTICES.TABLE_INSERTED;
+  }
+
+  protected createConfigurationSections(container: HTMLElement): void {
     // Table Type Section
-    const tableTypeSection = this.createSection(mainContainer, "Table type");
+    const tableTypeSection = this.createSection(
+      container,
+      MODAL_SECTIONS.TABLE_TYPE
+    );
 
     // Table Type selector (exercise vs workout)
-    const tableTypeContainer = this.createFormGroup(tableTypeSection);
-    const tableTypeSelect = this.createSelect(
-      tableTypeContainer,
-      "Table Type:",
-      [
-        { text: "Exercise + workout", value: "combined" },
-        { text: "Specific exercise", value: "exercise" },
-        { text: "Complete workout", value: "workout" },
-      ]
+    this.tableTypeSelect = this.createSelectField(
+      tableTypeSection,
+      MODAL_LABELS.TABLE_TYPE,
+      [...MODAL_SELECT_OPTIONS.TABLE_TYPE]
     );
 
     // Target Section using reusable component with autocomplete
-    const currentFileName = this.getCurrentFileName();
+    if (!this.plugin) {
+      throw new Error("Plugin is required for InsertTableModal");
+    }
+
     const { elements: targetElements, handlers: targetHandlers } =
       TargetSectionWithAutocomplete.create(
         this,
-        mainContainer,
-        tableTypeSelect,
-        currentFileName,
+        container,
+        this.tableTypeSelect,
+        this.currentFileName,
         this.plugin
       );
+
+    this.targetElements = targetElements;
 
     // Ensure visibility is updated based on initial selection
     targetHandlers.updateVisibility();
 
     // Additional check to ensure workout field is visible for combined mode
     setTimeout(() => {
-      if (tableTypeSelect.value === "combined") {
-        const workoutField = mainContainer.querySelector(
+      if (this.tableTypeSelect && this.tableTypeSelect.value === "combined") {
+        const workoutField = container.querySelector(
           '[data-field-type="workout"]'
         ) as HTMLElement;
-        const currentWorkoutField = mainContainer.querySelector(
+        const currentWorkoutField = container.querySelector(
           '[data-field-type="current-workout"]'
         ) as HTMLElement;
-        const fileInfoField = mainContainer.querySelector(
+        const fileInfoField = container.querySelector(
           '[data-field-type="file-info"]'
         ) as HTMLElement;
 
@@ -79,131 +115,108 @@ export class InsertTableModal extends ModalBase {
     }, 200);
 
     // Configuration Section
-    const configSection = this.createSection(mainContainer, "Configuration");
+    const configSection = this.createSection(
+      container,
+      MODAL_SECTIONS.CONFIGURATION
+    );
 
     // Limit selector
-    const limitContainer = this.createFormGroup(configSection);
-    const limitInput = this.createNumberInput(
-      limitContainer,
-      "Maximum Log Count:",
-      "12",
-      1,
-      1000,
-      "12"
+    this.limitInput = this.createNumberField(
+      configSection,
+      MODAL_LABELS.MAX_LOG_COUNT,
+      MODAL_DEFAULT_VALUES.TABLE_LIMIT,
+      {
+        min: MODAL_DEFAULT_VALUES.TABLE_LIMIT_MIN,
+        max: MODAL_DEFAULT_VALUES.TABLE_LIMIT_MAX,
+      }
     );
 
     // Columns selector
-    const columnsContainer = this.createFormGroup(configSection);
-    const columnsSelect = this.createSelect(
-      columnsContainer,
-      "Table Columns:",
-      [
-        {
-          text: "Standard (Date, exercise, reps, weight, volume)",
-          value: "standard",
-        },
-        {
-          text: "Minimal (Date, exercise, reps, weight)",
-          value: "minimal",
-        },
-      ]
+    this.columnsSelect = this.createSelectField(
+      configSection,
+      MODAL_LABELS.TABLE_COLUMNS,
+      [...MODAL_SELECT_OPTIONS.TABLE_COLUMNS]
     );
 
     // Display Options Section
-    const displaySection = this.createSection(mainContainer, "Display options");
+    const displaySection = this.createSection(
+      container,
+      MODAL_SECTIONS.DISPLAY_OPTIONS
+    );
 
     // Show add button toggle
-    const addButtonContainer = this.createCheckboxGroup(displaySection);
-    const addButtonToggle = this.createCheckbox(
-      addButtonContainer,
-      "Show 'Add Log' Button",
+    this.addButtonToggle = this.createCheckboxField(
+      displaySection,
+      MODAL_CHECKBOXES.SHOW_ADD_BUTTON,
       true,
       "showAddButton"
     );
 
     // Custom button text
-    const buttonTextContainer = this.createFormGroup(displaySection);
-    const buttonTextInput = this.createTextInput(
-      buttonTextContainer,
-      "Button Text:",
-      "➕ Add Log",
-      "➕ Add Log"
+    this.buttonTextInput = this.createTextField(
+      displaySection,
+      MODAL_LABELS.BUTTON_TEXT,
+      TABLE_DEFAULTS.BUTTON_TEXT,
+      TABLE_DEFAULTS.BUTTON_TEXT
     );
 
     // Advanced Options Section using reusable component
-    const advancedElements = AdvancedOptionsSection.create(
-      this,
-      mainContainer,
-      {
-        showSearchByName: true,
-      }
-    );
+    this.advancedElements = AdvancedOptionsSection.create(this, container, {
+      showSearchByName: true,
+    });
 
     // Set default values for combined mode
-    const exactMatchToggle = advancedElements.exactMatchToggle;
-    exactMatchToggle.checked = true; // Default to exact match for combined mode
-
-    // Buttons Section
-    const buttonsSection = this.createButtonsSection(mainContainer);
-
-    // Insert button
-    const insertBtn = buttonsSection.createEl("button", {
-      text: "Insert table",
-      cls: "mod-cta",
-    });
-
-    // Cancel button
-    const cancelBtn = buttonsSection.createEl("button", {
-      text: "Cancel",
-      cls: "mod-warning",
-    });
-
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
-
-    insertBtn.addEventListener("click", () => {
-      const tableType = tableTypeSelect.value;
-      const target = TargetSectionWithAutocomplete.getTargetValue(
-        targetElements,
-        tableTypeSelect,
-        currentFileName
-      );
-      const limit = parseInt(limitInput.value) || 50;
-      const columnsType = columnsSelect.value;
-      const showAddButton = addButtonToggle.checked;
-      const buttonText = buttonTextInput.value.trim();
-      const advancedValues = AdvancedOptionsSection.getValues(advancedElements);
-
-      // Validation for combined mode
-      if (tableType === "combined") {
-        if (!target.exercise || !target.workout) {
-          new Notice(
-            "⚠️ for 'exercise + workout' type you must fill both fields!"
-          );
-          return;
-        }
-      }
-
-      const tableCode = CodeGenerator.generateTableCode({
-        tableType,
-        exercise: target.exercise || "",
-        workout: target.workout || "",
-        limit,
-        columnsType,
-        showAddButton,
-        buttonText,
-        searchByName: advancedValues.searchByName || false,
-        exactMatch: advancedValues.exactMatch,
-        debug: advancedValues.debug,
-      });
-
-      this.insertIntoEditor(tableCode, "✅ Table inserted successfully!");
-      this.close();
-    });
+    this.advancedElements.exactMatchToggle.checked = true;
   }
 
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+  protected generateCode(): string {
+    if (
+      !this.tableTypeSelect ||
+      !this.targetElements ||
+      !this.limitInput ||
+      !this.columnsSelect ||
+      !this.addButtonToggle ||
+      !this.buttonTextInput ||
+      !this.advancedElements
+    ) {
+      throw new Error("Table elements not initialized");
+    }
+
+    const tableType = this.tableTypeSelect.value;
+    const target = TargetSectionWithAutocomplete.getTargetValue(
+      this.targetElements,
+      this.tableTypeSelect,
+      this.currentFileName
+    );
+    const limit = parseInt(this.limitInput.value) || 50;
+    const columnsType = this.columnsSelect.value;
+    const showAddButton = this.addButtonToggle.checked;
+    const buttonText = this.buttonTextInput.value.trim();
+    const advancedValues = AdvancedOptionsSection.getValues(
+      this.advancedElements
+    );
+
+    // Validation for combined mode
+    if (tableType === "combined") {
+      if (!target.exercise || !target.workout) {
+        new Notice(MODAL_NOTICES.VALIDATION_COMBINED_MODE);
+        throw new Error(
+          "Both exercise and workout are required for combined mode"
+        );
+      }
+    }
+
+    return CodeGenerator.generateTableCode({
+      tableType: tableType as TableType,
+      exercise: target.exercise || "",
+      workout: target.workout || "",
+      limit,
+      columnsType: columnsType as TableColumnType,
+      showAddButton,
+      buttonText,
+      searchByName: advancedValues.searchByName || false,
+      exactMatch: advancedValues.exactMatch,
+      debug: advancedValues.debug,
+    });
   }
 }

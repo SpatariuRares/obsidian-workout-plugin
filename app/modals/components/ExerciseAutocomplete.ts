@@ -3,6 +3,11 @@ import { ModalBase } from "@app/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/modals/CreateExercisePageModal";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
+import {
+  MODAL_EXERCISE_STATUS,
+  MODAL_LABELS,
+  MODAL_PLACEHOLDERS,
+} from "@app/constants";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -40,8 +45,8 @@ export class ExerciseAutocomplete {
     const exerciseContainer = modal.createFormGroup(container);
     const exerciseInput = modal.createTextInput(
       exerciseContainer,
-      "Exercise:",
-      "Start typing to see available exercises...",
+      MODAL_LABELS.EXERCISE,
+      MODAL_PLACEHOLDERS.EXERCISE_AUTOCOMPLETE,
       exerciseName || ""
     );
 
@@ -60,7 +65,7 @@ export class ExerciseAutocomplete {
     });
 
     const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
-      text: "📝 create exercise page",
+      text: MODAL_EXERCISE_STATUS.CREATE_PAGE,
       cls: "create-exercise-page-btn display-none",
     });
 
@@ -101,7 +106,7 @@ export class ExerciseAutocomplete {
             exerciseInput.value = exercise;
             autocompleteContainer.className =
               "exercise-autocomplete-container exercise-autocomplete-hidden";
-            exerciseStatusText.textContent = "✅ exercise selected";
+            exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.SELECTED;
             exerciseStatusText.className =
               "exercise-status-text exercise-status-success";
             createExercisePageBtn.className =
@@ -129,7 +134,7 @@ export class ExerciseAutocomplete {
       } else {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
-        exerciseStatusText.textContent = "⚠️ no exercises found";
+        exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "exercise-status-text exercise-status-warning";
         createExercisePageBtn.className =

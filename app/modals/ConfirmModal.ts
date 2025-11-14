@@ -1,5 +1,6 @@
 import { App } from "obsidian";
 import { ModalBase } from "@app/modals/base/ModalBase";
+import { MODAL_BUTTONS, MODAL_LABELS } from "@app/constants";
 
 /**
  * Simple confirmation modal
@@ -28,7 +29,7 @@ export class ConfirmModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Title
-    contentEl.createEl("h2", { text: "Confirm action" });
+    contentEl.createEl("h2", { text: MODAL_LABELS.CONFIRM_ACTION });
 
     // Message
     contentEl.createEl("p", { text: this.message });
@@ -39,7 +40,9 @@ export class ConfirmModal extends ModalBase {
     });
 
     // Cancel button
-    const cancelBtn = buttonContainer.createEl("button", { text: "Cancel" });
+    const cancelBtn = buttonContainer.createEl("button", {
+      text: MODAL_BUTTONS.CANCEL,
+    });
     cancelBtn.addEventListener("click", () => {
       if (this.onCancel) {
         this.onCancel();
@@ -49,7 +52,7 @@ export class ConfirmModal extends ModalBase {
 
     // Confirm button
     const confirmBtn = buttonContainer.createEl("button", {
-      text: "Confirm",
+      text: MODAL_BUTTONS.CONFIRM,
       cls: "mod-cta",
     });
     confirmBtn.addEventListener("click", () => {

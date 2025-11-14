@@ -1,5 +1,6 @@
 // Reusable timer configuration section component
 import { ModalBase } from "@app/modals/base/ModalBase";
+import { EmbeddedTimerParams, TimerType } from "@app/types";
 
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
@@ -150,27 +151,9 @@ export class TimerConfigurationSection {
   /**
    * Gets the timer configuration values
    */
-  static getValues(elements: TimerConfigurationElements): {
-    timerType: string;
-    duration?: number;
-    intervalTime?: number;
-    rounds?: number;
-    title: string;
-    showControls: boolean;
-    autoStart: boolean;
-    sound: boolean;
-  } {
-    const values: {
-      timerType: string;
-      title: string;
-      showControls: boolean;
-      autoStart: boolean;
-      sound: boolean;
-      duration?: number;
-      intervalTime?: number;
-      rounds?: number;
-    } = {
-      timerType: elements.timerTypeSelect.value,
+  static getValues(elements: TimerConfigurationElements): EmbeddedTimerParams {
+    const values: EmbeddedTimerParams = {
+      type: elements.timerTypeSelect.value as TimerType,
       title: elements.titleInput.value.trim(),
       showControls: elements.showControlsToggle.checked,
       autoStart: elements.autoStartToggle.checked,

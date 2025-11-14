@@ -4,6 +4,18 @@ import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { CodeGenerator } from "@app/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import {
+  MODAL_TITLES,
+  MODAL_BUTTONS,
+  MODAL_LABELS,
+  MODAL_PLACEHOLDERS,
+  MODAL_CHECKBOXES,
+  MODAL_SECTIONS,
+  MODAL_NOTICES,
+  MODAL_DEFAULT_VALUES,
+} from "@app/constants/ModalConstants";
+import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
+import { TableColumnType, TableType, TimerType } from "@app/types";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -15,7 +27,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
   onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Create exercise section" });
+    contentEl.createEl("h2", { text: MODAL_TITLES.CREATE_EXERCISE_SECTION });
 
     // Create main container with better styling
     const mainContainer = this.createStyledMainContainer(contentEl);
@@ -23,7 +35,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Exercise Configuration Section
     const exerciseSection = this.createSection(
       mainContainer,
-      "Exercise configuration"
+      MODAL_SECTIONS.EXERCISE_CONFIGURATION
     );
 
     // Exercise autocomplete using reusable component
@@ -34,95 +46,90 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     // Workout input for combined filtering
-    const workoutContainer = this.createFormGroup(exerciseSection);
-    const workoutInput = this.createTextInput(
-      workoutContainer,
-      "Workout name (optional):",
-      "e.g. Workout A, Training B, or use checkbox below"
+    const workoutInput = this.createTextField(
+      exerciseSection,
+      MODAL_LABELS.WORKOUT_NAME_OPTIONAL,
+      MODAL_PLACEHOLDERS.WORKOUT
     );
 
     // Current Workout checkbox
-    const currentWorkoutContainer = this.createCheckboxGroup(exerciseSection);
-    const currentWorkoutToggle = this.createCheckbox(
-      currentWorkoutContainer,
-      "Use current workout (file name)",
+    const currentWorkoutToggle = this.createCheckboxField(
+      exerciseSection,
+      MODAL_CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
       false,
       "currentWorkout"
     );
 
     // Sets input
-    const setsContainer = this.createFormGroup(exerciseSection);
-    const setsInput = this.createNumberInput(
-      setsContainer,
-      "Sets:",
-      "4",
-      1,
-      20,
-      "4"
+    const setsInput = this.createNumberField(
+      exerciseSection,
+      MODAL_LABELS.SETS,
+      parseInt(MODAL_PLACEHOLDERS.SETS),
+      {
+        min: 1,
+        max: 20,
+      }
     );
 
     // Reps input
-    const repsContainer = this.createFormGroup(exerciseSection);
-    const repsInput = this.createTextInput(
-      repsContainer,
-      "Reps:",
-      "8-10",
-      "8-10"
+    const repsInput = this.createTextField(
+      exerciseSection,
+      MODAL_LABELS.REPS,
+      MODAL_PLACEHOLDERS.REPS_RANGE,
+      MODAL_PLACEHOLDERS.REPS_RANGE
     );
 
     // Rest time input
-    const restTimeContainer = this.createFormGroup(exerciseSection);
-    const restTimeInput = this.createNumberInput(
-      restTimeContainer,
-      "Rest Time (seconds):",
-      "90",
-      30,
-      600,
-      "90"
+    const restTimeInput = this.createNumberField(
+      exerciseSection,
+      MODAL_LABELS.REST_TIME,
+      parseInt(MODAL_PLACEHOLDERS.REST_TIME),
+      {
+        min: 30,
+        max: 600,
+      }
     );
 
     // Note input
-    const noteContainer = this.createFormGroup(exerciseSection);
-    const noteInput = this.createTextInput(
-      noteContainer,
-      "Note:",
-      "Push hard here. This is your fundamental exercise."
+    const noteInput = this.createTextField(
+      exerciseSection,
+      MODAL_LABELS.NOTE,
+      MODAL_PLACEHOLDERS.NOTE
     );
 
     // Options Section
-    const optionsSection = this.createSection(mainContainer, "Options");
+    const optionsSection = this.createSection(
+      mainContainer,
+      MODAL_SECTIONS.OPTIONS
+    );
 
     // Show timer toggle
-    const showTimerContainer = this.createCheckboxGroup(optionsSection);
-    const showTimerToggle = this.createCheckbox(
-      showTimerContainer,
-      "Include Timer",
+    const showTimerToggle = this.createCheckboxField(
+      optionsSection,
+      MODAL_CHECKBOXES.INCLUDE_TIMER,
       true,
       "showTimer"
     );
 
     // Timer options (conditional)
-    const timerOptionsContainer = this.createCheckboxGroup(optionsSection);
-    const timerAutoStartToggle = this.createCheckbox(
-      timerOptionsContainer,
-      "Timer Auto Start",
+    const timerAutoStartToggle = this.createCheckboxField(
+      optionsSection,
+      MODAL_CHECKBOXES.TIMER_AUTO_START,
       false,
       "timerAutoStart"
     );
 
-    const timerSoundContainer = this.createCheckboxGroup(optionsSection);
-    const timerSoundToggle = this.createCheckbox(
-      timerSoundContainer,
-      "Timer Sound",
+    const timerSoundToggle = this.createCheckboxField(
+      optionsSection,
+      MODAL_CHECKBOXES.TIMER_SOUND,
       true,
       "timerSound"
     );
 
     // Show log toggle
-    const showLogContainer = this.createCheckboxGroup(optionsSection);
-    const showLogToggle = this.createCheckbox(
-      showLogContainer,
-      "Include Log",
+    const showLogToggle = this.createCheckboxField(
+      optionsSection,
+      MODAL_CHECKBOXES.INCLUDE_LOG,
       true,
       "showLog"
     );
@@ -132,13 +139,13 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     // Cancel button
     const cancelBtn = buttonsSection.createEl("button", {
-      text: "Cancel",
+      text: MODAL_BUTTONS.CANCEL,
       cls: "workout-charts-btn",
     });
 
     // Create button
     const createBtn = buttonsSection.createEl("button", {
-      text: "Create section",
+      text: MODAL_BUTTONS.CREATE_SECTION,
       cls: "workout-charts-btn workout-charts-btn-primary",
     });
 
@@ -177,7 +184,7 @@ export class CreateExerciseSectionModal extends ModalBase {
       const showLog = showLogToggle.checked;
 
       if (!exerciseName) {
-        this.insertIntoEditor("", "❌ Please enter an exercise name");
+        this.insertIntoEditor("", MODAL_NOTICES.EXERCISE_NAME_REQUIRED);
         return;
       }
 
@@ -196,7 +203,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
       this.insertIntoEditor(
         sectionCode,
-        "✅ exercise section created successfully!"
+        MODAL_NOTICES.EXERCISE_SECTION_CREATED
       );
       this.close();
     });
@@ -228,7 +235,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     if (params.showTimer) {
       const timerCode = CodeGenerator.generateTimerCode({
-        timerType: "countdown",
+        type: TimerType.COUNTDOWN,
         duration: params.restTime,
         title: params.exerciseName,
         showControls: true,
@@ -240,15 +247,17 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     if (params.showLog) {
       // Determine table type based on whether workout is specified
-      const tableType = params.workoutName ? "combined" : "exercise";
+      const tableType: TableType = params.workoutName
+        ? TableType.COMBINED
+        : TableType.EXERCISE;
       const logCode = CodeGenerator.generateTableCode({
         tableType,
         exercise: params.exerciseName,
         workout: params.workoutName,
-        limit: 12,
-        columnsType: "standard",
+        limit: MODAL_DEFAULT_VALUES.TABLE_LIMIT,
+        columnsType: TableColumnType.STANDARD,
         showAddButton: true,
-        buttonText: "➕ Add Log",
+        buttonText: TABLE_DEFAULTS.BUTTON_TEXT,
         searchByName: false,
         exactMatch: true,
         debug: false,

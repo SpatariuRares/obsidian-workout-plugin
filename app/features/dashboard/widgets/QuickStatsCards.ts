@@ -5,6 +5,8 @@ import {
   PeriodStats,
 } from "@app/features/dashboard/business/DashboardCalculations";
 import { StatCard } from "@app/components/molecules";
+import { UI_LABELS } from "@app/constants/LabelConstants";
+import { UI_ICONS } from "@app/constants/IconConstants";
 
 export class QuickStatsCards {
   static render(
@@ -17,7 +19,7 @@ export class QuickStatsCards {
     });
 
     cardsEl.createEl("h3", {
-      text: "Quick stats",
+      text: UI_LABELS.DASHBOARD.QUICK_STATS.TITLE,
       cls: "widget-title",
     });
 
@@ -31,9 +33,24 @@ export class QuickStatsCards {
     const yearStats = DashboardCalculations.calculatePeriodStats(data, 365);
 
     // Render stats cards
-    this.createStatsCard(statsGrid, "This Week", weekStats, "📅");
-    this.createStatsCard(statsGrid, "This Month", monthStats, "📆");
-    this.createStatsCard(statsGrid, "This Year", yearStats, "🗓️");
+    this.createStatsCard(
+      statsGrid,
+      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
+      weekStats,
+      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK
+    );
+    this.createStatsCard(
+      statsGrid,
+      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
+      monthStats,
+      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH
+    );
+    this.createStatsCard(
+      statsGrid,
+      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
+      yearStats,
+      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR
+    );
   }
 
   private static createStatsCard(
@@ -63,27 +80,26 @@ export class QuickStatsCards {
 
     // Workouts stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: "🏋️",
+      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       value: stats.workouts.toString(),
-      label: "Workouts",
+      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       className: "stat-item",
     });
 
     // Total volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: "📊",
+      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       value: stats.volume.toLocaleString(),
-      label: "Total volume (kg)",
+      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       className: "stat-item",
     });
 
     // Average volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: "📈",
+      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
       value: stats.avgVolume.toLocaleString(),
-      label: "Avg volume (kg)",
+      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
       className: "stat-item",
     });
   }
 }
-

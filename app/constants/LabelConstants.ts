@@ -57,4 +57,70 @@ export const UI_LABELS = {
       `Create workout log for ${exerciseName}`,
     NO_MATCH_MESSAGE: "No matching exercise data found",
   },
+  DASHBOARD: {
+    QUICK_ACTIONS: {
+      TITLE: "Quick actions",
+      ADD_WORKOUT_LOG: "Add workout log",
+      VIEW_EXERCISES: "View exercises",
+    },
+    QUICK_STATS: {
+      TITLE: "Quick stats",
+      PERIODS: {
+        WEEK: "This Week",
+        MONTH: "This Month",
+        YEAR: "This Year",
+      },
+      METRICS: {
+        WORKOUTS: "Workouts",
+        TOTAL_VOLUME: "Total volume (kg)",
+        AVG_VOLUME: "Avg volume (kg)",
+      },
+    },
+    RECENT_WORKOUTS: {
+      TITLE: "Recent workouts",
+      FALLBACK_NAME: "Workout",
+      VOLUME_SUFFIX: "kg",
+    },
+    SUMMARY: {
+      TITLE: "Summary",
+      TOTAL_WORKOUTS: "Total Workouts",
+      CURRENT_STREAK: "Current Streak",
+      CURRENT_STREAK_SUFFIX: "weeks",
+      TOTAL_VOLUME: "Total Volume",
+      TOTAL_VOLUME_SUFFIX: "kg",
+      PERSONAL_RECORDS: "Personal Records",
+    },
+    VOLUME_ANALYTICS: {
+      TITLE: "Volume analytics",
+      DATASET_LABEL: "Daily volume (kg)",
+      CHART_TITLE: "Volume Trend (Last 30 Days)",
+      MUSCLE_BREAKDOWN_TITLE: "Top exercises by volume",
+      VOLUME_SUFFIX: "kg",
+    },
+    MUSCLE_TAGS: {
+      TITLE: "Available muscle tags",
+      DESCRIPTION:
+        "Click on any tag to copy it. Use these tags in exercise files for proper categorization and tracking.",
+      TOTAL_COUNT: (count: number) => `Total: ${count} tags available`,
+      TOOLTIP: (tag: string) => `Click to copy: ${tag}`,
+    },
+    FILE_ERRORS: {
+      TITLE: "Exercise file errors",
+      ALL_VALID: "All exercise files are valid",
+      NO_TAGS: "No muscle tags found",
+      TOO_MANY_TAGS: (count: number) => `Too many muscle tags (${count})`,
+      READ_ERROR: (message: string) => `Error reading file: ${message}`,
+    },
+  },
+  CHARTS: {
+    TREND_TITLE_PREFIX: "Trend Volume: ",
+    OVERALL_VARIATION_PREFIX: "Overall variation: ",
+    VARIATION_FROM_TO: (startKg: string, endKg: string) =>
+      ` (da ${startKg} kg a ${endKg} kg)`,
+    VARIATION_SINGLE_VALUE: (value: string) => ` (Volume: ${value} kg)`,
+    VARIATION_VALUE_LABEL: (value: string) => `Volume: ${value} kg`,
+    SIGNIFICANT_INCREASE: "Aumento signif.",
+    FALLBACK_TABLE_MESSAGE:
+      "fallback table (charts plugin not available or error)",
+  },
 } as const;

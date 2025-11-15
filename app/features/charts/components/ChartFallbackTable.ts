@@ -1,3 +1,6 @@
+import { UI_ICONS } from "@app/constants/IconConstants";
+import { UI_LABELS } from "@app/constants/LabelConstants";
+
 /**
  * Fallback table shown when Chart.js rendering is unavailable.
  * Lives with chart organisms because it mirrors the same dataset.
@@ -22,14 +25,17 @@ export class ChartFallbackTable {
 		tableDiv
 			.createEl("div", { cls: "workout-charts-footer" })
 			.appendText(
-				"⚠️ fallback table (charts plugin not available or error)"
+				`${UI_ICONS.STATUS.INFO} ${UI_LABELS.CHARTS.FALLBACK_TABLE_MESSAGE}`
 			);
 	}
 
 	private static createHeader(table: HTMLTableElement): void {
 		const thead = table.createEl("thead");
 		const headerRow = thead.createEl("tr");
-		["Date", "Volume (kg)"].forEach((label) => {
+		[
+			UI_LABELS.TABLE.DATE,
+			UI_LABELS.TABLE.VOLUME_WITH_UNIT,
+		].forEach((label) => {
 			headerRow.createEl("th", { text: label });
 		});
 	}
@@ -47,4 +53,3 @@ export class ChartFallbackTable {
 		});
 	}
 }
-

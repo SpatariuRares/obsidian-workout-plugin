@@ -4,8 +4,7 @@ import type WorkoutChartsPlugin from "main";
 import { TABLE_ICONS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import { TableContainer } from "@app/features/tables/ui";
-import { ErrorMessage } from "@app/components/shared";
+import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
 
 export class TableRenderer {
   /**
@@ -73,7 +72,7 @@ export class TableRenderer {
     message: string,
     title: string
   ): void {
-    ErrorMessage.render(container, message, title);
+    TableErrorMessage.render(container, message, title);
   }
 
   /**
@@ -184,4 +183,3 @@ export class TableRenderer {
     }
   }
 }
-

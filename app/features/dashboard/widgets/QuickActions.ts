@@ -1,4 +1,5 @@
 import { EmbeddedDashboardParams } from "@app/types";
+import { UI_LABELS } from "@app/constants/LabelConstants";
 import type WorkoutChartsPlugin from "main";
 
 export class QuickActions {
@@ -12,7 +13,7 @@ export class QuickActions {
     });
 
     actionsEl.createEl("h3", {
-      text: "Quick actions",
+      text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.TITLE,
       cls: "widget-title",
     });
 
@@ -22,7 +23,7 @@ export class QuickActions {
 
     // Add workout log button
     const addLogBtn = buttonsEl.createEl("button", {
-      text: "Add workout log",
+      text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
       cls: "action-button primary",
     });
 
@@ -32,7 +33,7 @@ export class QuickActions {
 
     // View all exercises button
     const viewExercisesBtn = buttonsEl.createEl("button", {
-      text: "View exercises",
+      text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
       cls: "action-button secondary",
     });
 

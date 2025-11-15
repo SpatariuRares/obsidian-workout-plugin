@@ -1,6 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
+import { UI_LABELS } from "@app/constants/LabelConstants";
 
 export class RecentWorkouts {
   static render(
@@ -13,7 +14,7 @@ export class RecentWorkouts {
     });
 
     recentEl.createEl("h3", {
-      text: "Recent workouts",
+      text: UI_LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
       cls: "widget-title",
     });
 
@@ -35,12 +36,14 @@ export class RecentWorkouts {
       });
 
       itemEl.createEl("div", {
-        text: workout.workout || "Workout",
+        text:
+          workout.workout ||
+          UI_LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
         cls: "workout-name",
       });
 
       itemEl.createEl("div", {
-        text: `${workout.totalVolume.toLocaleString()} kg`,
+        text: `${workout.totalVolume.toLocaleString()} ${UI_LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
         cls: "workout-volume",
       });
     });

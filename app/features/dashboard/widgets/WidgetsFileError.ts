@@ -3,6 +3,8 @@ import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/FrontmatterParser";
 import { MUSCLE_KEYWORDS } from "@app/constants/MuscleTags";
+import { UI_LABELS } from "@app/constants/LabelConstants";
+import { UI_ICONS } from "@app/constants/IconConstants";
 
 interface ExerciseFileError {
   file: TFile;
@@ -20,7 +22,7 @@ export class WidgetsFileError {
     });
 
     errorEl.createEl("h3", {
-      text: "Exercise file errors",
+      text: UI_LABELS.DASHBOARD.FILE_ERRORS.TITLE,
       cls: "widget-title",
     });
 
@@ -29,7 +31,7 @@ export class WidgetsFileError {
 
     if (fileErrors.length === 0) {
       errorEl.createEl("div", {
-        text: "All exercise files are valid",
+        text: `${UI_ICONS.STATUS.SUCCESS} ${UI_LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
         cls: "file-errors-success",
       });
       return;
@@ -111,7 +113,9 @@ export class WidgetsFileError {
       // Use FrontmatterParser to validate structure
       const validationErrors = FrontmatterParser.validateFrontmatter(content);
       if (validationErrors.length > 0) {
-        return validationErrors.map((err) => `⚠️ ${err}`);
+        return validationErrors.map(
+          (err) => `${UI_ICONS.STATUS.WARNING} ${err}`
+        );
       }
 
       // Parse tags using FrontmatterParser
@@ -121,14 +125,24 @@ export class WidgetsFileError {
       const muscleTags = this.getMuscleTags(tags);
 
       if (muscleTags.length === 0) {
-        errors.push("⚠️ No muscle tags found");
+        errors.push(
+          `${UI_ICONS.STATUS.WARNING} ${UI_LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`
+        );
       } else if (muscleTags.length > 3) {
-        errors.push(`⚠️ Too many muscle tags (${muscleTags.length})`);
+        errors.push(
+          `${UI_ICONS.STATUS.WARNING} ${UI_LABELS.DASHBOARD.FILE_ERRORS.TOO_MANY_TAGS(
+            muscleTags.length
+          )}`
+        );
       }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      errors.push(`⚠️ Error reading file: ${errorMessage}`);
+      errors.push(
+        `${UI_ICONS.STATUS.ERROR} ${UI_LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
+          errorMessage
+        )}`
+      );
     }
 
     return errors;
@@ -141,4 +155,3 @@ export class WidgetsFileError {
     });
   }
 }
-

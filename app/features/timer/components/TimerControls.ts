@@ -1,4 +1,4 @@
-import { TimerState } from "@app/features/timer/TimerTypes";
+import { TimerState } from "@app/features/timer/types/TimerTypes";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -54,10 +54,12 @@ export class TimerControls {
     return startStopBtn;
   }
 
-  static updateStartStopButton(button: HTMLButtonElement | undefined, isRunning: boolean): void {
+  static updateStartStopButton(
+    button: HTMLButtonElement | undefined,
+    isRunning: boolean
+  ): void {
     if (button) {
       button.textContent = isRunning ? "⏸" : "▶";
     }
   }
 }
-

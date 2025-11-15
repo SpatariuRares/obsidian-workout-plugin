@@ -1,5 +1,6 @@
 import { EmbeddedDashboardParams } from "@app/types";
 import { MUSCLE_TAGS } from "@app/constants/MuscleTags";
+import { UI_LABELS } from "@app/constants/LabelConstants";
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -12,13 +13,13 @@ export class MuscleTagsWidget {
     });
 
     widgetEl.createEl("h3", {
-      text: "Available muscle tags",
+      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
       cls: "widget-title",
     });
 
     widgetEl.createEl("p", {
       cls: "widget-description",
-      text: "Click on any tag to copy it. Use these tags in exercise files for proper categorization and tracking.",
+      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.DESCRIPTION,
     });
 
     // Create muscle tags grid
@@ -39,7 +40,7 @@ export class MuscleTagsWidget {
     });
 
     infoEl.createEl("small", {
-      text: `Total: ${MUSCLE_TAGS.length} tags available`,
+      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TOTAL_COUNT(MUSCLE_TAGS.length),
       cls: "muscle-tags-count",
     });
   }
@@ -84,7 +85,10 @@ export class MuscleTagsWidget {
     });
 
     // Add hover tooltip
-    badgeEl.setAttribute("title", `Click to copy: ${muscleName}`);
+    badgeEl.setAttribute(
+      "title",
+      UI_LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName)
+    );
   }
 
   /**

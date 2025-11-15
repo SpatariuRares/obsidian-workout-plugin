@@ -1,4 +1,4 @@
-import type { MuscleGroupData } from "@app/features/dashboard/body";
+import type { MuscleGroupData } from "@app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -119,4 +119,3 @@ export class MuscleBalanceAnalyzer {
     }
   }
 }
-

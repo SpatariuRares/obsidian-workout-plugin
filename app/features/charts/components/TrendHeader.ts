@@ -1,5 +1,6 @@
 import { TrendIndicators } from "@app/types";
 import { TrendIndicator } from "@app/components/molecules";
+import { UI_LABELS } from "@app/constants/LabelConstants";
 
 /**
  * Renders trend header information for workout charts.
@@ -47,13 +48,15 @@ export class TrendHeader {
       h3.classList.add("trend-color-accent");
     }
 
-    h3.textContent = `${trendIndicators.trendIcon} Trend Volume: `;
+    h3.textContent = `${trendIndicators.trendIcon} ${UI_LABELS.CHARTS.TREND_TITLE_PREFIX}`;
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 
     const p = trendHeader.createEl("p", {
       cls: "workout-charts-trend-header-p",
     });
-    p.createEl("span", { text: "Overall variation: " });
+    p.createEl("span", {
+      text: UI_LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
+    });
 
     if (variationData.text !== undefined && percentChange !== "N/A") {
       // Determine trend direction based on percentage
@@ -94,10 +97,15 @@ export class TrendHeader {
       volumeData.length >= 2
     ) {
       p.append(
-        ` (da ${firstValue.toFixed(1)} kg a ${lastValue.toFixed(1)} kg)`
+        UI_LABELS.CHARTS.VARIATION_FROM_TO(
+          firstValue.toFixed(1),
+          lastValue.toFixed(1)
+        )
       );
     } else if (firstValue !== undefined && volumeData.length === 1) {
-      p.append(` (Volume: ${firstValue.toFixed(1)} kg)`);
+      p.append(
+        UI_LABELS.CHARTS.VARIATION_SINGLE_VALUE(firstValue.toFixed(1))
+      );
     }
   }
 
@@ -153,14 +161,17 @@ export class TrendHeader {
       return {
         text:
           percentChange === "Infinity"
-            ? "Aumento signif."
+            ? UI_LABELS.CHARTS.SIGNIFICANT_INCREASE
             : changeSign + percentChange + "%",
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {
-      return { text: `Volume: ${firstValue.toFixed(1)} kg`, color: "" };
+      return {
+        text: UI_LABELS.CHARTS.VARIATION_VALUE_LABEL(firstValue.toFixed(1)),
+        color: "",
+      };
     }
-    return { text: "N/A", color: "" };
+    return { text: UI_LABELS.TABLE.NOT_AVAILABLE, color: "" };
   }
 }
 

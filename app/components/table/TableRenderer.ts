@@ -4,6 +4,8 @@ import type WorkoutChartsPlugin from "main";
 import { TABLE_ICONS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/components/table/TableActions";
+import { TableContainer } from "@app/components/table/ui";
+import { ErrorMessage } from "@app/components/shared";
 
 export class TableRenderer {
   /**
@@ -12,10 +14,7 @@ export class TableRenderer {
    * @returns The table container element
    */
   static createTableContainer(contentDiv: HTMLElement): HTMLElement {
-    const tableContainer = contentDiv.createEl("div", {
-      cls: "workout-table-container",
-    });
-    return tableContainer;
+    return TableContainer.create(contentDiv);
   }
 
   /**
@@ -74,11 +73,7 @@ export class TableRenderer {
     message: string,
     title: string
   ): void {
-    const errorDiv = container.createEl("div", {
-      cls: "workout-table-error",
-    });
-    errorDiv.createEl("strong", { text: `${title}:` });
-    errorDiv.append(` ${message}`);
+    ErrorMessage.render(container, message, title);
   }
 
   /**

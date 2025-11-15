@@ -1,14 +1,8 @@
-export * from "@app/components/dashboard/SummaryWidget";
-export * from "@app/components/dashboard/QuickStatsCards";
-export * from "@app/components/dashboard/VolumeAnalytics";
-export * from "@app/components/dashboard/RecentWorkouts";
-export * from "@app/components/dashboard/WidgetsFileError";
-export * from "@app/components/dashboard/QuickActions";
-export * from "@app/components/dashboard/DashboardCalculations";
-export * from "@app/components/dashboard/MuscleTagsWidget";
+// Export widgets
+export * from "@app/components/dashboard/widgets";
 
-// Export muscle heat map components
-export * from "@app/components/dashboard/muscleHeatMap";
+// Export business logic
+export * from "@app/components/dashboard/business";
 
 // Re-export body components with explicit exports to avoid conflicts
 export {
@@ -19,7 +13,6 @@ export {
   Arms,
   Legs,
   Core,
-  BodyHeatMap
 } from "@app/components/dashboard/body";
 
 export type {
@@ -31,5 +24,4 @@ export type {
   LegsData,
   CoreData,
   BodyData,
-  BodyHeatMapOptions
 } from "@app/components/dashboard/body";

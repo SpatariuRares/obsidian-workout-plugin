@@ -4,6 +4,7 @@ import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { MODAL_BUTTONS } from "@app/constants/ModalConstants";
+import { Button } from "@app/components/atoms";
 
 /**
  * Abstract base class for insert modals.
@@ -46,24 +47,27 @@ export abstract class BaseInsertModal extends ModalBase {
 
   /**
    * Creates Insert and Cancel buttons with standard behavior
+   * Uses Button atom for consistent button styling
    */
   protected createButtons(container: HTMLElement): void {
-    // Insert button
-    const insertBtn = container.createEl("button", {
+    // Insert button using Button atom
+    const insertBtn = Button.create(container, {
       text: this.getButtonText(),
-      cls: "mod-cta",
+      className: "mod-cta",
+      ariaLabel: this.getButtonText(),
     });
 
-    // Cancel button
-    const cancelBtn = container.createEl("button", {
+    // Cancel button using Button atom
+    const cancelBtn = Button.create(container, {
       text: MODAL_BUTTONS.CANCEL,
-      cls: "mod-warning",
+      className: "mod-warning",
+      ariaLabel: MODAL_BUTTONS.CANCEL,
     });
 
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
+    // Event listeners using Button helper
+    Button.onClick(cancelBtn, () => this.close());
 
-    insertBtn.addEventListener("click", () => {
+    Button.onClick(insertBtn, () => {
       const code = this.generateCode();
       this.insertIntoEditor(code, this.getSuccessMessage());
       this.close();

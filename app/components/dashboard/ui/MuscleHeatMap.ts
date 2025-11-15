@@ -1,10 +1,12 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
-import { BodyHeatMap, type BodyData } from "@app/components/dashboard/body";
-import { MuscleDataCalculator } from "@app/components/dashboard/muscleHeatMap/MuscleDataCalculator";
-import { MuscleBalanceAnalyzer } from "@app/components/dashboard/muscleHeatMap/MuscleBalanceAnalyzer";
-import { HeatMapControls } from "@app/components/dashboard/muscleHeatMap/HeatMapControls";
+import { Body, type BodyData } from "@app/components/dashboard/body";
+import {
+  MuscleDataCalculator,
+  MuscleBalanceAnalyzer,
+} from "@app/components/dashboard/business/muscleHeatMap";
+import { HeatMapControls } from "@app/components/dashboard/ui/HeatMapControls";
 import { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
 
 /**
@@ -136,14 +138,14 @@ export class MuscleHeatMap {
 
     const maxValue = Math.max(...allValues, 1); // Ensure at least 1 to avoid division by zero
 
-    // Create BodyHeatMap component with visualization options
-    const bodyHeatMap = new BodyHeatMap(bodyData, {
+    // Create Body component with visualization options
+    const body = new Body(bodyData, {
       view: options.view,
       showLabels: true,
       maxValue: maxValue,
     });
 
-    // Render the body heat map
-    bodyHeatMap.render(container);
+    // Render the body visualization
+    body.render(container);
   }
 }

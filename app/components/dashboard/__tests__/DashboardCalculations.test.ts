@@ -1,4 +1,4 @@
-import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
+import { DashboardCalculations } from "@app/components/dashboard/business/DashboardCalculations";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 // Helper to create mock workout data

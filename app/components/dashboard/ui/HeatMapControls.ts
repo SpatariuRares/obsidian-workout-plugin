@@ -1,7 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
-import { HeatMapExporter } from "@app/components/dashboard/muscleHeatMap/HeatMapExporter";
+import { HeatMapExporter } from "@app/components/dashboard/business/muscleHeatMap";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,

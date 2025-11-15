@@ -16,6 +16,7 @@ import {
 } from "@app/constants/ModalConstants";
 import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
 import { TableColumnType, TableType, TimerType } from "@app/types";
+import { Button } from "@app/components/atoms";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -137,20 +138,22 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Buttons Section
     const buttonsSection = this.createButtonsSection(mainContainer);
 
-    // Cancel button
-    const cancelBtn = buttonsSection.createEl("button", {
+    // Cancel button using Button atom
+    const cancelBtn = Button.create(buttonsSection, {
       text: MODAL_BUTTONS.CANCEL,
-      cls: "workout-charts-btn",
+      className: "workout-charts-btn",
+      ariaLabel: MODAL_BUTTONS.CANCEL,
     });
 
-    // Create button
-    const createBtn = buttonsSection.createEl("button", {
+    // Create button using Button atom
+    const createBtn = Button.create(buttonsSection, {
       text: MODAL_BUTTONS.CREATE_SECTION,
-      cls: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-charts-btn workout-charts-btn-primary",
+      ariaLabel: MODAL_BUTTONS.CREATE_SECTION,
     });
 
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
+    // Event listeners using Button helper
+    Button.onClick(cancelBtn, () => this.close());
 
     // Handle current workout toggle
     currentWorkoutToggle.addEventListener("change", () => {
@@ -167,7 +170,7 @@ export class CreateExerciseSectionModal extends ModalBase {
       }
     });
 
-    createBtn.addEventListener("click", () => {
+    Button.onClick(createBtn, () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();
       const useCurrentWorkout = currentWorkoutToggle.checked;
       const currentFileName = this.getCurrentFileName();

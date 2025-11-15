@@ -8,6 +8,7 @@ import {
   MODAL_LABELS,
   MODAL_PLACEHOLDERS,
 } from "@app/constants";
+import { Button } from "@app/components/atoms";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -64,9 +65,11 @@ export class ExerciseAutocomplete {
       cls: "exercise-status-text",
     });
 
-    const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
+    // Create exercise page button using Button atom
+    const createExercisePageBtn = Button.create(exerciseStatusContainer, {
       text: MODAL_EXERCISE_STATUS.CREATE_PAGE,
-      cls: "create-exercise-page-btn display-none",
+      className: "create-exercise-page-btn display-none",
+      ariaLabel: MODAL_EXERCISE_STATUS.CREATE_PAGE,
     });
 
     const elements: ExerciseAutocompleteElements = {
@@ -163,8 +166,8 @@ export class ExerciseAutocomplete {
 
     exerciseInput.addEventListener("blur", hideAutocomplete);
 
-    // Create exercise page button event listener
-    createExercisePageBtn.addEventListener("click", () => {
+    // Create exercise page button event listener using Button helper
+    Button.onClick(createExercisePageBtn, () => {
       const exerciseName = exerciseInput.value.trim();
       if (exerciseName) {
         new CreateExercisePageModal(modal.app, plugin, exerciseName).open();

@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { MuscleTagMapper } from "@app/components/dashboard/muscleHeatMap/MuscleTagMapper";
+import { MuscleTagMapper } from "@app/components/dashboard/business/muscleHeatMap";
 import { DateUtils } from "@app/utils/DateUtils";
 import { BodyData } from "@app/components";
 

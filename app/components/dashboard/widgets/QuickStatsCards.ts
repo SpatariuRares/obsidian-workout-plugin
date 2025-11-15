@@ -3,7 +3,8 @@ import { EmbeddedDashboardParams } from "@app/types";
 import {
   DashboardCalculations,
   PeriodStats,
-} from "@app/components/dashboard/DashboardCalculations";
+} from "@app/components/dashboard/business/DashboardCalculations";
+import { StatCard } from "@app/components/molecules";
 
 export class QuickStatsCards {
   static render(
@@ -41,7 +42,8 @@ export class QuickStatsCards {
     stats: PeriodStats,
     icon: string
   ): void {
-    const cardEl = container.createEl("div", { cls: "stats-card" });
+    // Create period card container
+    const cardEl = container.createEl("div", { cls: "stats-card-period" });
 
     // Header with icon and title
     const headerEl = cardEl.createEl("div", { cls: "card-header" });
@@ -56,40 +58,31 @@ export class QuickStatsCards {
       cls: "card-title",
     });
 
-    // Stats grid
+    // Stats grid using StatCard molecules
     const statsEl = cardEl.createEl("div", { cls: "card-stats" });
 
-    // Workouts stat
-    const workoutsStat = statsEl.createEl("div", { cls: "stat-item" });
-    workoutsStat.createEl("div", {
-      text: stats.workouts.toString(),
-      cls: "stat-value",
-    });
-    workoutsStat.createEl("div", {
-      text: "Workouts",
-      cls: "stat-label",
+    // Workouts stat using StatCard molecule
+    StatCard.create(statsEl, {
+      icon: "🏋️",
+      value: stats.workouts.toString(),
+      label: "Workouts",
+      className: "stat-item",
     });
 
-    // Total volume stat
-    const volumeStat = statsEl.createEl("div", { cls: "stat-item" });
-    volumeStat.createEl("div", {
-      text: `${stats.volume.toLocaleString()}`,
-      cls: "stat-value",
-    });
-    volumeStat.createEl("div", {
-      text: "Total volume (kg)",
-      cls: "stat-label",
+    // Total volume stat using StatCard molecule
+    StatCard.create(statsEl, {
+      icon: "📊",
+      value: stats.volume.toLocaleString(),
+      label: "Total volume (kg)",
+      className: "stat-item",
     });
 
-    // Average volume stat
-    const avgStat = statsEl.createEl("div", { cls: "stat-item" });
-    avgStat.createEl("div", {
-      text: `${stats.avgVolume.toLocaleString()}`,
-      cls: "stat-value",
-    });
-    avgStat.createEl("div", {
-      text: "Avg volume (kg)",
-      cls: "stat-label",
+    // Average volume stat using StatCard molecule
+    StatCard.create(statsEl, {
+      icon: "📈",
+      value: stats.avgVolume.toLocaleString(),
+      label: "Avg volume (kg)",
+      className: "stat-item",
     });
   }
 }

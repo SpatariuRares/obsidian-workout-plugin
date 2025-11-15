@@ -1,4 +1,5 @@
 import { TrendIndicators } from "@app/types";
+import { TrendIndicator } from "@app/components/molecules";
 
 /**
  * Renders trend header information for workout charts.
@@ -52,8 +53,24 @@ export class TrendHeader {
     const p = trendHeader.createEl("p", {
       cls: "workout-charts-trend-header-p",
     });
-    p.textContent = "Overall variation: ";
-    if (variationData.text !== undefined) {
+    p.createEl("span", { text: "Overall variation: " });
+
+    if (variationData.text !== undefined && percentChange !== "N/A") {
+      // Determine trend direction based on percentage
+      const percentValue = parseFloat(percentChange);
+      const direction =
+        percentValue > 0 ? "up" :
+        percentValue < 0 ? "down" :
+        "neutral";
+
+      // Use TrendIndicator molecule for variation display
+      TrendIndicator.create(p, {
+        percentage: Math.abs(percentValue),
+        direction: direction as "up" | "down" | "neutral",
+        className: "workout-charts-trend-variation",
+      });
+    } else if (variationData.text !== undefined) {
+      // Fallback for non-percentage values (e.g., "N/A", "Aumento signif.")
       const span = p.createEl("span", {
         cls: "workout-charts-trend-variation",
       });

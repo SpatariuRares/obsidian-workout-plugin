@@ -1,4 +1,5 @@
-import { Muscle, MuscleGroupData } from '@app/components/dashboard/body/Muscle';
+import { GenericMuscle } from "@app/components/dashboard/body/GenericMuscle";
+import { CHEST_CONFIG } from "@app/components/dashboard/body/config/MuscleConfigurations";
 
 export interface ChestData {
 	upper: number;
@@ -6,45 +7,28 @@ export interface ChestData {
 	lower: number;
 }
 
-export class Chest extends Muscle {
+/**
+ * Chest muscle class using GenericMuscle implementation.
+ * Maintains backward compatibility while using the new configuration system.
+ */
+export class Chest extends GenericMuscle<ChestData> {
 	constructor(data: ChestData) {
-		const muscleGroups: MuscleGroupData[] = [
-			{
-				title: 'Petto',
-				parts: [
-					{
-						label: 'Sup',
-						value: data.upper,
-					},
-					{
-						label: 'Mid',
-						value: data.middle,
-					},
-					{
-						label: 'Inf',
-						value: data.lower,
-					}
-				]
-			}
-		];
-		super(muscleGroups);
+		super(data, CHEST_CONFIG);
 	}
 
-	getType(): string {
-		return 'chest';
-	}
-
+	/**
+	 * Gets chest-specific data.
+	 * @returns ChestData object
+	 */
 	getChestData(): ChestData {
-		return {
-			upper: this.data[0].parts[0].value,
-			middle: this.data[0].parts[1].value,
-			lower: this.data[0].parts[2].value
-		};
+		return this.getTypedData();
 	}
 
+	/**
+	 * Updates chest-specific data.
+	 * @param data - Partial ChestData to update
+	 */
 	updateChestData(data: Partial<ChestData>): void {
-		if (data.upper !== undefined) this.updateData(0, 0, data.upper);
-		if (data.middle !== undefined) this.updateData(0, 1, data.middle);
-		if (data.lower !== undefined) this.updateData(0, 2, data.lower);
+		this.updateTypedData(data);
 	}
 }

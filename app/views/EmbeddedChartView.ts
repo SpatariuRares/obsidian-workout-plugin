@@ -11,9 +11,9 @@ import {
   ChartRenderer,
   UIComponents,
   TrendCalculator,
-  MobileTable,
   TrendHeader,
   StatsBox,
+  MobileTable,
 } from "@app/components";
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";

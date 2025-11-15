@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
-import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
+import { DashboardCalculations } from "@app/components/dashboard/business/DashboardCalculations";
 
 export class SummaryWidget {
   static render(
@@ -51,7 +51,6 @@ export class SummaryWidget {
       "🏆"
     );
   }
-
 
   private static createSummaryCard(
     container: HTMLElement,

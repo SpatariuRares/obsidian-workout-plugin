@@ -1,4 +1,5 @@
-import { Muscle, MuscleGroupData } from '@app/components/dashboard/body/Muscle';
+import { GenericMuscle } from "@app/components/dashboard/body/GenericMuscle";
+import { ARMS_CONFIG } from "@app/components/dashboard/body/config/MuscleConfigurations";
 
 export interface ArmsData {
 	bicepsLeft: number;
@@ -9,74 +10,28 @@ export interface ArmsData {
 	forearmsRight: number;
 }
 
-export class Arms extends Muscle {
+/**
+ * Arms muscle class using GenericMuscle implementation.
+ * Maintains backward compatibility while using the new configuration system.
+ */
+export class Arms extends GenericMuscle<ArmsData> {
 	constructor(data: ArmsData) {
-		const muscleGroups: MuscleGroupData[] = [
-			{
-				title: 'Bicipiti',
-				parts: [
-					{
-						label: 'R',
-						value: data.bicepsRight,
-
-					},
-					{
-						label: 'L',
-						value: data.bicepsLeft,
-					}
-				]
-			},
-			{
-				title: 'Tricipiti',
-				parts: [
-					{
-						label: 'R',
-						value: data.tricepsRight,
-					},
-					{
-						label: 'L',
-						value: data.tricepsLeft,
-					}
-				]
-			},
-			{
-				title: 'Avambracci',
-				parts: [
-					{
-						label: 'R',
-						value: data.forearmsRight,
-					},
-					{
-						label: 'L',
-						value: data.forearmsLeft,
-					}
-				]
-			}
-		];
-		super(muscleGroups);
+		super(data, ARMS_CONFIG);
 	}
 
-	getType(): string {
-		return 'arms';
-	}
-
+	/**
+	 * Gets arms-specific data.
+	 * @returns ArmsData object
+	 */
 	getArmsData(): ArmsData {
-		return {
-			bicepsRight: this.data[0].parts[0].value,
-			bicepsLeft: this.data[0].parts[1].value,
-			tricepsRight: this.data[1].parts[0].value,
-			tricepsLeft: this.data[1].parts[1].value,
-			forearmsRight: this.data[2].parts[0].value,
-			forearmsLeft: this.data[2].parts[1].value
-		};
+		return this.getTypedData();
 	}
 
+	/**
+	 * Updates arms-specific data.
+	 * @param data - Partial ArmsData to update
+	 */
 	updateArmsData(data: Partial<ArmsData>): void {
-		if (data.bicepsRight !== undefined) this.updateData(0, 0, data.bicepsRight);
-		if (data.bicepsLeft !== undefined) this.updateData(0, 1, data.bicepsLeft);
-		if (data.tricepsRight !== undefined) this.updateData(1, 0, data.tricepsRight);
-		if (data.tricepsLeft !== undefined) this.updateData(1, 1, data.tricepsLeft);
-		if (data.forearmsRight !== undefined) this.updateData(2, 0, data.forearmsRight);
-		if (data.forearmsLeft !== undefined) this.updateData(2, 1, data.forearmsLeft);
+		this.updateTypedData(data);
 	}
 }

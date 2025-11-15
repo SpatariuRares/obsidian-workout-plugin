@@ -2,7 +2,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { TableState, TableCallbacks } from "@app/components/table/TableTypes";
-import { TableDataLoader } from "@app/components/table/TableDataLoader";
+import { TableDataLoader } from "@app/components/table/business/TableDataLoader";
 import { TABLE_MESSAGES } from "@app/constants/TableConstats";
 
 export class TableRefresh {

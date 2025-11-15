@@ -1,7 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ChartDataType, EmbeddedDashboardParams } from "@app/types";
 import { ChartRenderer } from "@app/components/chart/ChartRenderer";
-import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
+import { DashboardCalculations } from "@app/components/dashboard/business/DashboardCalculations";
 
 export class VolumeAnalytics {
   static render(

@@ -1,43 +1,33 @@
-import { Muscle, MuscleGroupData } from '@app/components/dashboard/body/Muscle';
+import { GenericMuscle } from "@app/components/dashboard/body/GenericMuscle";
+import { CORE_CONFIG } from "@app/components/dashboard/body/config/MuscleConfigurations";
 
 export interface CoreData {
 	abs: number;
 	obliques: number;
 }
 
-export class Core extends Muscle {
+/**
+ * Core muscle class using GenericMuscle implementation.
+ * Maintains backward compatibility while using the new configuration system.
+ */
+export class Core extends GenericMuscle<CoreData> {
 	constructor(data: CoreData) {
-		const muscleGroups: MuscleGroupData[] = [
-			{
-				title: 'Core',
-				parts: [
-					{
-						label: 'Abs',
-						value: data.abs,
-					},
-					{
-						label: 'Obl',
-						value: data.obliques,
- 					}
-				]
-			}
-		];
-		super(muscleGroups);
+		super(data, CORE_CONFIG);
 	}
 
-	getType(): string {
-		return 'core';
-	}
-
+	/**
+	 * Gets core-specific data.
+	 * @returns CoreData object
+	 */
 	getCoreData(): CoreData {
-		return {
-			abs: this.data[0].parts[0].value,
-			obliques: this.data[0].parts[1].value
-		};
+		return this.getTypedData();
 	}
 
+	/**
+	 * Updates core-specific data.
+	 * @param data - Partial CoreData to update
+	 */
 	updateCoreData(data: Partial<CoreData>): void {
-		if (data.abs !== undefined) this.updateData(0, 0, data.abs);
-		if (data.obliques !== undefined) this.updateData(0, 1, data.obliques);
+		this.updateTypedData(data);
 	}
 }

@@ -3,11 +3,12 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { EditLogModal } from "@app/modals/EditLogModal";
 import { ConfirmModal } from "@app/modals/ConfirmModal";
-import { TABLE_ICONS, TABLE_MESSAGES } from "@app/constants/TableConstats";
+import { TABLE_MESSAGES } from "@app/constants/TableConstats";
+import { ActionButtons } from "@app/components/table/ui";
 
 /**
  * Handles actions for table rows (edit, delete)
- * Extracted from TableRenderer for better separation of concerns
+ * Business logic layer that uses UI components from table/ui
  */
 export class TableActions {
   /**
@@ -55,35 +56,8 @@ export class TableActions {
   }
 
   /**
-   * Create edit button element
-   */
-  static createEditButton(
-    container: HTMLElement,
-    title = TABLE_MESSAGES.EDIT_TITLE
-  ): HTMLElement {
-    return container.createEl("button", {
-      cls: "workout-table-action-btn workout-table-edit-btn",
-      text: TABLE_ICONS.EDIT,
-      attr: { title },
-    });
-  }
-
-  /**
-   * Create delete button element
-   */
-  static createDeleteButton(
-    container: HTMLElement,
-    title = TABLE_MESSAGES.DELETE_TITLE
-  ): HTMLElement {
-    return container.createEl("button", {
-      cls: "workout-table-action-btn workout-table-delete-btn",
-      text: TABLE_ICONS.DELETE,
-      attr: { title },
-    });
-  }
-
-  /**
    * Render action buttons (edit and delete) for a table row
+   * Delegates UI creation to ActionButtons component
    */
   static renderActionButtons(
     td: HTMLElement,
@@ -94,15 +68,11 @@ export class TableActions {
       return;
     }
 
-    const actionsContainer = td.createEl("div", {
-      cls: "workout-table-actions",
-    });
+    // Use UI component to create buttons
+    const { editBtn, deleteBtn } =
+      ActionButtons.createActionButtonsContainer(td);
 
-    // Create buttons
-    const editBtn = this.createEditButton(actionsContainer);
-    const deleteBtn = this.createDeleteButton(actionsContainer);
-
-    // Add event listeners
+    // Add event listeners with business logic
     editBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();

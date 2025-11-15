@@ -2,6 +2,8 @@ import { MarkdownView } from "obsidian";
 import { CreateLogModal } from "@app/modals/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
+import { LoadingSpinner, EmptyState } from "@app/components/molecules";
+import { Button } from "@app/components/atoms";
 
 /**
  * Provides reusable UI components for the workout charts plugin.
@@ -11,15 +13,16 @@ import type WorkoutChartsPlugin from "main";
 export class UIComponents {
   /**
    * Renders a loading indicator with spinner and text.
+   * Uses LoadingSpinner molecule for consistent styling.
    * @param container - The HTML element to render the loading indicator in
    * @returns The created loading indicator element
    */
   static renderLoadingIndicator(container: HTMLElement): HTMLElement {
-    const loadingDiv = container.createEl("div", {
-      cls: "workout-charts-loading",
+    return LoadingSpinner.create(container, {
+      message: "loading data...",
+      icon: "⏳",
+      className: "workout-charts-loading",
     });
-    loadingDiv.textContent = "⏳ loading data...";
-    return loadingDiv;
   }
 
   /**
@@ -55,11 +58,14 @@ export class UIComponents {
 
   /**
    * Renders a message when no workout data is found.
+   * Uses EmptyState molecule for consistent styling.
    * @param container - The HTML element to render the message in
    */
   static renderNoDataMessage(container: HTMLElement): void {
-    container.createEl("div", {
-      cls: "workout-log-no-data",
+    EmptyState.create(container, {
+      icon: "📭",
+      message: "No workout data found",
+      className: "workout-log-no-data",
     });
   }
 
@@ -87,46 +93,45 @@ export class UIComponents {
       cls: "workout-charts-button-container",
     });
 
-    const createButton = buttonDiv.createEl("button", {
-      text: `➕ create first workout log for ${exerciseName}`,
-      cls: "add-log-button",
+    // Use Button atom for create button
+    const createButton = Button.create(buttonDiv, {
+      text: `create first workout log for ${exerciseName}`,
+      icon: "➕",
+      className: "add-log-button",
+      ariaLabel: `Create first workout log for ${exerciseName}`,
     });
-    createButton.id = "create-first-log-btn";
 
-    // Add event listener to the button
-    const button = container.querySelector(
-      "#create-first-log-btn"
-    ) as HTMLButtonElement;
-    if (button) {
-      button.addEventListener("click", () => {
-        const activeView =
-          plugin.app.workspace.getActiveViewOfType(MarkdownView);
-        const currentPageLink = activeView?.file
-          ? `[[${activeView.file.basename}]]`
-          : "";
+    // Add event listener using Button helper
+    Button.onClick(createButton, () => {
+      const activeView =
+        plugin.app.workspace.getActiveViewOfType(MarkdownView);
+      const currentPageLink = activeView?.file
+        ? `[[${activeView.file.basename}]]`
+        : "";
 
-        new CreateLogModal(
-          plugin.app,
-          plugin,
-          exerciseName,
-          currentPageLink,
-          () => {
-            plugin.triggerWorkoutLogRefresh();
-          }
-        ).open();
-      });
-    }
+      new CreateLogModal(
+        plugin.app,
+        plugin,
+        exerciseName,
+        currentPageLink,
+        () => {
+          plugin.triggerWorkoutLogRefresh();
+        }
+      ).open();
+    });
   }
 
   /**
    * Renders a message when no matching exercise data is found.
+   * Uses EmptyState molecule for consistent styling.
    * @param container - The HTML element to render the message in
    */
   static renderNoMatchMessage(container: HTMLElement): void {
-    const noMatchDiv = container.createEl("div", {
-      cls: "workout-log-no-match",
+    EmptyState.create(container, {
+      icon: "🔍",
+      message: "No matching exercise data found",
+      className: "workout-log-no-match",
     });
-    noMatchDiv.textContent = "No data found for exercise: ";
   }
 
   /**
@@ -241,12 +246,16 @@ export class UIComponents {
       cls: "add-log-button-container",
     });
 
-    const button = buttonContainer.createEl("button", {
-      text: `➕ Add Log for ${exerciseName || "Workout"}`,
-      cls: "add-log-button",
+    // Use Button atom for add log button
+    const button = Button.create(buttonContainer, {
+      text: `Add Log for ${exerciseName || "Workout"}`,
+      icon: "➕",
+      className: "add-log-button",
+      ariaLabel: `Add workout log for ${exerciseName || "Workout"}`,
     });
 
-    button.addEventListener("click", () => {
+    // Add event listener using Button helper
+    Button.onClick(button, () => {
       new CreateLogModal(
         plugin.app,
         plugin,
@@ -272,12 +281,16 @@ export class UIComponents {
       cls: "create-log-button-container",
     });
 
-    const button = buttonContainer.createEl("button", {
-      text: `➕ Create log for: ${exerciseName}`,
-      cls: "create-log-button",
+    // Use Button atom for create log button
+    const button = Button.create(buttonContainer, {
+      text: `Create log for: ${exerciseName}`,
+      icon: "➕",
+      className: "create-log-button",
+      ariaLabel: `Create workout log for ${exerciseName}`,
     });
 
-    button.addEventListener("click", () => {
+    // Add event listener using Button helper
+    Button.onClick(button, () => {
       const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`

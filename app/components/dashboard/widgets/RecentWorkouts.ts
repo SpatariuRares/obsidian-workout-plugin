@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
-import { DashboardCalculations } from "@app/components/dashboard/DashboardCalculations";
+import { DashboardCalculations } from "@app/components/dashboard/business/DashboardCalculations";
 
 export class RecentWorkouts {
   static render(

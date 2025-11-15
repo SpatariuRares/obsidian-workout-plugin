@@ -633,7 +633,8 @@
   margin-top: var(--workout-space-xl);
   margin-bottom: var(--workout-space-lg);
   color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   padding-bottom: var(--workout-space-xs);
 }
 
@@ -663,7 +664,7 @@
   display: flex;
   gap: var(--workout-space-md);
   justify-content: flex-end;
- }
+}
 
 .workout-charts-form-group label {
   font-weight: var(--workout-font-weight-semibold);
@@ -674,7 +675,8 @@
 .workout-charts-form-group input[type="text"],
 .workout-charts-form-group input[type="number"],
 .workout-charts-form-group select {
-  border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+  border: var(--input-border-width, var(--workout-border-thin)) solid
+    var(--background-modifier-border);
   border-radius: var(--input-radius, var(--workout-radius-md));
   background: var(--background-primary);
   color: var(--text-normal);
@@ -695,7 +697,8 @@
 .workout-charts-form-group select:focus {
   outline: none;
   border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+  box-shadow: 0 0 0 var(--workout-border-medium)
+    rgba(var(--interactive-accent-rgb), 0.2);
 }
 
 .workout-charts-form-group input::placeholder {
@@ -753,7 +756,6 @@
 /* Modal Main Container Styling */
 
 .workout-charts-modal-main-container {
-  padding: var(--workout-space-xl);;
   max-width: var(--workout-size-11xl);
   margin: 0 auto;
 }
@@ -761,7 +763,6 @@
 /* Modal Section Styling */
 
 .modal-section {
-  margin-bottom: var(--workout-space-xl);;
   padding: var(--workout-space-lg);
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
@@ -772,7 +773,8 @@
   margin: 0 0 15px 0;
   font-size: var(--workout-font-lg);
   color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   padding-bottom: var(--workout-space-sm);
 }
 
@@ -1727,7 +1729,7 @@
 
 .workout-chart-error,
 .workout-table-error {
-  padding: var(--workout-space-xl);;
+  padding: var(--workout-space-xl);
   margin: var(--workout-space-lg) 0;
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--text-error);
@@ -1739,7 +1741,7 @@
 .workout-log-no-data,
 .workout-charts-no-data {
   text-align: center;
-  padding: 40px var(--workout-space-xl);;
+  padding: 40px var(--workout-space-xl);
   color: var(--text-muted);
   font-style: italic;
   background: var(--background-secondary);
@@ -1769,7 +1771,7 @@
 
 .workout-log-error,
 .workout-log-no-data {
-  padding: var(--workout-space-xl);;
+  padding: var(--workout-space-xl);
   text-align: center;
   color: var(--text-muted);
   background: var(--background-secondary);
@@ -1789,7 +1791,6 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
-  margin-top: var(--workout-space-sm);
   padding: var(--workout-space-sm);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
@@ -1836,13 +1837,13 @@
   max-height: var(--workout-size-6xl);
   overflow-y: auto;
   z-index: 1000;
-  margin-top: var(--workout-space-sm);
 }
 
 .exercise-autocomplete-suggestion {
   padding: var(--workout-space-sm) var(--workout-space-md);
   cursor: pointer;
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   font-size: var(--workout-font-base);
   transition: var(--workout-transition);
 }
@@ -1890,7 +1891,8 @@
 .exercise-autocomplete-item {
   padding: var(--workout-space-sm) var(--workout-space-md);
   cursor: pointer;
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
 }
 
 .exercise-autocomplete-item:hover {
@@ -1931,7 +1933,7 @@
 /* Debug Info */
 
 .workout-charts-debug {
-  margin-top: var(--workout-space-xl);;
+  margin-top: var(--workout-space-xl);
   padding: var(--workout-space-lg);
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -1944,7 +1946,7 @@
 /* Footer */
 
 .workout-charts-footer {
-  margin-top: var(--workout-space-xl);;
+  margin-top: var(--workout-space-xl);
   padding: var(--workout-space-md) var(--workout-space-lg);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-lg);

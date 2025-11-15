@@ -92,7 +92,7 @@
 /* Error Messages */
 .workout-chart-error,
 .workout-table-error {
-  padding: var(--workout-space-xl);;
+  padding: var(--workout-space-xl);
   margin: var(--workout-space-lg) 0;
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--text-error);
@@ -104,7 +104,7 @@
 .workout-log-no-data,
 .workout-charts-no-data {
   text-align: center;
-  padding: 40px var(--workout-space-xl);;
+  padding: 40px var(--workout-space-xl);
   color: var(--text-muted);
   font-style: italic;
   background: var(--background-secondary);
@@ -132,7 +132,7 @@
 /* Error and No Data States */
 .workout-log-error,
 .workout-log-no-data {
-  padding: var(--workout-space-xl);;
+  padding: var(--workout-space-xl);
   text-align: center;
   color: var(--text-muted);
   background: var(--background-secondary);
@@ -151,7 +151,6 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
-  margin-top: var(--workout-space-sm);
   padding: var(--workout-space-sm);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
@@ -197,13 +196,13 @@
   max-height: var(--workout-size-6xl);
   overflow-y: auto;
   z-index: 1000;
-  margin-top: var(--workout-space-sm);
 }
 
 .exercise-autocomplete-suggestion {
   padding: var(--workout-space-sm) var(--workout-space-md);
   cursor: pointer;
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   font-size: var(--workout-font-base);
   transition: var(--workout-transition);
 }
@@ -250,7 +249,8 @@
 .exercise-autocomplete-item {
   padding: var(--workout-space-sm) var(--workout-space-md);
   cursor: pointer;
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
 }
 
 .exercise-autocomplete-item:hover {
@@ -289,7 +289,7 @@
 
 /* Debug Info */
 .workout-charts-debug {
-  margin-top: var(--workout-space-xl);;
+  margin-top: var(--workout-space-xl);
   padding: var(--workout-space-lg);
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -301,7 +301,7 @@
 
 /* Footer */
 .workout-charts-footer {
-  margin-top: var(--workout-space-xl);;
+  margin-top: var(--workout-space-xl);
   padding: var(--workout-space-md) var(--workout-space-lg);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-lg);

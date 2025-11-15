@@ -58,7 +58,7 @@ export class ExerciseAutocomplete {
 
     // Exercise status indicator and create page button
     const exerciseStatusContainer = exerciseContainer.createEl("div", {
-      cls: "exercise-status-container",
+      cls: "exercise-autocomplete-hidden",
     });
 
     const exerciseStatusText = exerciseStatusContainer.createEl("span", {
@@ -84,7 +84,6 @@ export class ExerciseAutocomplete {
       if (!query.trim() || query.length < 1) {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
-        exerciseStatusText.textContent = "";
         createExercisePageBtn.className =
           "create-exercise-page-btn display-none";
         return;
@@ -109,9 +108,6 @@ export class ExerciseAutocomplete {
             exerciseInput.value = exercise;
             autocompleteContainer.className =
               "exercise-autocomplete-container exercise-autocomplete-hidden";
-            exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.SELECTED;
-            exerciseStatusText.className =
-              "exercise-status-text exercise-status-success";
             createExercisePageBtn.className =
               "create-exercise-page-btn display-none";
             instance.exerciseExists = true;
@@ -127,16 +123,14 @@ export class ExerciseAutocomplete {
             );
           });
         });
-
-        exerciseStatusText.textContent = `📋 ${matchingExercises.length} exercises found`;
-        exerciseStatusText.className =
-          "exercise-status-text exercise-status-accent";
+        exerciseStatusContainer.className = "exercise-autocomplete-hidden";
         createExercisePageBtn.className =
           "create-exercise-page-btn display-none";
         instance.exerciseExists = true;
       } else {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
+        exerciseStatusContainer.className = "exercise-status-container";
         exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "exercise-status-text exercise-status-warning";

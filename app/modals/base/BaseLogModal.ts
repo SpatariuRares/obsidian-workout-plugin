@@ -3,7 +3,10 @@
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
-import { ExerciseAutocomplete, ExerciseAutocompleteElements } from "@app/modals/components/ExerciseAutocomplete";
+import {
+  ExerciseAutocomplete,
+  ExerciseAutocompleteElements,
+} from "@app/modals/components/ExerciseAutocomplete";
 import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import {
   MODAL_LABELS,
@@ -145,7 +148,10 @@ export abstract class BaseLogModal extends ModalBase {
     );
 
     // Workout section
-    const workoutSection = this.createSection(formContainer, MODAL_SECTIONS.WORKOUT);
+    const workoutSection = this.createSection(
+      formContainer,
+      MODAL_SECTIONS.WORKOUT
+    );
 
     // Current workout toggle
     const currentWorkoutToggle = this.createCheckboxField(

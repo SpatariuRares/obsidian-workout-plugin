@@ -15,7 +15,8 @@
   margin-top: var(--workout-space-xl);
   margin-bottom: var(--workout-space-lg);
   color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   padding-bottom: var(--workout-space-xs);
 }
 
@@ -45,7 +46,7 @@
   display: flex;
   gap: var(--workout-space-md);
   justify-content: flex-end;
- }
+}
 
 .workout-charts-form-group label {
   font-weight: var(--workout-font-weight-semibold);
@@ -56,7 +57,8 @@
 .workout-charts-form-group input[type="text"],
 .workout-charts-form-group input[type="number"],
 .workout-charts-form-group select {
-  border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+  border: var(--input-border-width, var(--workout-border-thin)) solid
+    var(--background-modifier-border);
   border-radius: var(--input-radius, var(--workout-radius-md));
   background: var(--background-primary);
   color: var(--text-normal);
@@ -77,7 +79,8 @@
 .workout-charts-form-group select:focus {
   outline: none;
   border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+  box-shadow: 0 0 0 var(--workout-border-medium)
+    rgba(var(--interactive-accent-rgb), 0.2);
 }
 
 .workout-charts-form-group input::placeholder {
@@ -133,14 +136,12 @@
 
 /* Modal Main Container Styling */
 .workout-charts-modal-main-container {
-  padding: var(--workout-space-xl);;
   max-width: var(--workout-size-11xl);
   margin: 0 auto;
 }
 
 /* Modal Section Styling */
 .modal-section {
-  margin-bottom: var(--workout-space-xl);;
   padding: var(--workout-space-lg);
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
@@ -151,7 +152,8 @@
   margin: 0 0 15px 0;
   font-size: var(--workout-font-lg);
   color: var(--text-normal);
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   padding-bottom: var(--workout-space-sm);
 }
 

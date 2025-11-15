@@ -7,14 +7,14 @@ import {
   TrendIndicators,
   ChartType,
 } from "@app/types";
+import { TrendCalculator } from "@app/services/data/TrendCalculator";
+import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
+import { MobileTable } from "@app/features/tables";
 import {
   ChartRenderer,
-  UIComponents,
-  TrendCalculator,
   TrendHeader,
-  StatsBox,
-  MobileTable,
-} from "@app/components";
+  ChartFallbackTable,
+} from "@app/features/charts";
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import {
@@ -177,12 +177,7 @@ export class EmbeddedChartView extends BaseView {
     );
 
     if (!chartSuccess) {
-      UIComponents.renderFallbackTable(
-        chartContainer,
-        labels,
-        volumeData,
-        params.title || "Volume Chart"
-      );
+      ChartFallbackTable.render(chartContainer, labels, volumeData);
     }
 
     if (params.showStats !== false && volumeData.length > 0) {

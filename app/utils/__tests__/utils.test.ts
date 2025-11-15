@@ -359,7 +359,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        ChartType.EXERCISE
+        ChartType.WORKOUT
       );
       expect(result.datasets[0].label).toContain("Volume Totale");
     });
@@ -417,7 +417,7 @@ describe("utils.ts", () => {
         "volume",
         30,
         "DD/MM/YYYY",
-        ChartType.EXERCISE
+        ChartType.WORKOUT
       );
       // Data is sorted by date, so date2 (6 days ago) comes first, then date1 (5 days ago)
       // date2 has 1 log with volume 1500, total = 1500

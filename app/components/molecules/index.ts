@@ -41,6 +41,10 @@ export {
 	LoadingSpinner,
 	type LoadingSpinnerProps,
 } from "@app/components/molecules/LoadingSpinner";
+export {
+	InfoBanner,
+	type InfoBannerType,
+} from "@app/components/molecules/InfoBanner";
 
 // Priority 3 Molecules
 export {
@@ -56,3 +60,4 @@ export {
 	ProgressBar,
 	type ProgressBarProps,
 } from "@app/components/molecules/ProgressBar";
+

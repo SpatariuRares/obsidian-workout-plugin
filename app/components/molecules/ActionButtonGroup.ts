@@ -5,6 +5,8 @@
  */
 
 import { Button, Container } from "@app/components/atoms";
+import { UI_ICONS } from "@app/constants/IconConstants";
+import { UI_LABELS } from "@app/constants/LabelConstants";
 
 export interface ActionButtonGroupProps {
 	editTitle?: string;
@@ -37,10 +39,10 @@ export interface ActionButtonGroupResult {
  */
 export class ActionButtonGroup {
 	// Default icons
-	private static readonly DEFAULT_EDIT_ICON = "✏️";
-	private static readonly DEFAULT_DELETE_ICON = "🗑️";
-	private static readonly DEFAULT_EDIT_TITLE = "Edit";
-	private static readonly DEFAULT_DELETE_TITLE = "Delete";
+	private static readonly DEFAULT_EDIT_ICON = UI_ICONS.ACTIONS.EDIT;
+	private static readonly DEFAULT_DELETE_ICON = UI_ICONS.ACTIONS.DELETE;
+	private static readonly DEFAULT_EDIT_TITLE = UI_LABELS.ACTIONS.EDIT;
+	private static readonly DEFAULT_DELETE_TITLE = UI_LABELS.ACTIONS.DELETE;
 
 	/**
 	 * Create an action button group

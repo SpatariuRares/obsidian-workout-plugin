@@ -11,6 +11,7 @@ import {
 } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/DataService";
+import { LogCallouts } from "@app/features/logs/components/LogCallouts";
 
 export class CodeBlockProcessorService {
   constructor(
@@ -60,12 +61,7 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        const { UIComponents } = await import("@app/components");
-        UIComponents.renderCSVNoDataMessage(
-          el,
-          this.plugin.settings.csvLogFilePath,
-          this.plugin
-        );
+        LogCallouts.renderCsvNoDataMessage(el, this.plugin);
         return;
       }
 
@@ -172,12 +168,7 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        const { UIComponents } = await import("@app/components");
-        UIComponents.renderCSVNoDataMessage(
-          el,
-          this.plugin.settings.csvLogFilePath,
-          this.plugin
-        );
+        LogCallouts.renderCsvNoDataMessage(el, this.plugin);
         return;
       }
 
@@ -230,3 +221,4 @@ export class CodeBlockProcessorService {
     return params;
   }
 }
+

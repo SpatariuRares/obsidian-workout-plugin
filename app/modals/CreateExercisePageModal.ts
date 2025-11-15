@@ -11,6 +11,7 @@ import {
   MODAL_NOTICES,
   MODAL_CODE_BLOCKS,
 } from "@app/constants/ModalConstants";
+import { Button } from "@app/components/atoms";
 
 export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;
@@ -62,22 +63,24 @@ export class CreateExercisePageModal extends ModalBase {
     // Buttons container
     const buttonsContainer = this.createButtonsSection(formContainer);
 
-    // Create button
-    const createBtn = buttonsContainer.createEl("button", {
+    // Create button using Button atom
+    const createBtn = Button.create(buttonsContainer, {
       text: MODAL_BUTTONS.CREATE_EXERCISE,
-      cls: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-charts-btn workout-charts-btn-primary",
+      ariaLabel: MODAL_BUTTONS.CREATE_EXERCISE,
     });
 
-    // Cancel button
-    const cancelBtn = buttonsContainer.createEl("button", {
+    // Cancel button using Button atom
+    const cancelBtn = Button.create(buttonsContainer, {
       text: MODAL_BUTTONS.CANCEL,
-      cls: "workout-charts-btn workout-charts-btn-warning",
+      className: "workout-charts-btn workout-charts-btn-warning",
+      ariaLabel: MODAL_BUTTONS.CANCEL,
     });
 
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
+    // Event listeners using Button helper
+    Button.onClick(cancelBtn, () => this.close());
 
-    createBtn.addEventListener("click", () => {
+    Button.onClick(createBtn, () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();
       const tags = tagsInput.value.trim();
       const folderPath = folderInput.value.trim();

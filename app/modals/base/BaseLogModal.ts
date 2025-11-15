@@ -3,7 +3,10 @@
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/modals/base/ModalBase";
-import { ExerciseAutocomplete, ExerciseAutocompleteElements } from "@app/modals/components/ExerciseAutocomplete";
+import {
+  ExerciseAutocomplete,
+  ExerciseAutocompleteElements,
+} from "@app/modals/components/ExerciseAutocomplete";
 import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import {
   MODAL_LABELS,
@@ -13,6 +16,7 @@ import {
   MODAL_BUTTONS,
   MODAL_NOTICES,
 } from "@app/constants/ModalConstants";
+import { Button } from "@app/components/atoms";
 
 export interface LogFormData {
   exercise: string;
@@ -144,7 +148,10 @@ export abstract class BaseLogModal extends ModalBase {
     );
 
     // Workout section
-    const workoutSection = this.createSection(formContainer, MODAL_SECTIONS.WORKOUT);
+    const workoutSection = this.createSection(
+      formContainer,
+      MODAL_SECTIONS.WORKOUT
+    );
 
     // Current workout toggle
     const currentWorkoutToggle = this.createCheckboxField(
@@ -232,27 +239,30 @@ export abstract class BaseLogModal extends ModalBase {
 
   /**
    * Creates submit and cancel buttons
+   * Uses Button atom for consistent button styling
    */
   protected createButtons(
     container: HTMLElement,
     formElements: LogFormElements
   ): void {
-    // Submit button
-    const submitBtn = container.createEl("button", {
+    // Submit button using Button atom
+    const submitBtn = Button.create(container, {
       text: this.getButtonText(),
-      cls: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-charts-btn workout-charts-btn-primary",
+      ariaLabel: this.getButtonText(),
     });
 
-    // Cancel button
-    const cancelBtn = container.createEl("button", {
+    // Cancel button using Button atom
+    const cancelBtn = Button.create(container, {
       text: MODAL_BUTTONS.CANCEL,
-      cls: "workout-charts-btn workout-charts-btn-warning",
+      className: "workout-charts-btn workout-charts-btn-warning",
+      ariaLabel: MODAL_BUTTONS.CANCEL,
     });
 
-    // Event listeners
-    cancelBtn.addEventListener("click", () => this.close());
+    // Event listeners using Button helper
+    Button.onClick(cancelBtn, () => this.close());
 
-    submitBtn.addEventListener("click", () => {
+    Button.onClick(submitBtn, () => {
       this.handleFormSubmit(formElements);
     });
   }

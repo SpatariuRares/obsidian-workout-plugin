@@ -1,6 +1,7 @@
 import { App } from "obsidian";
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { MODAL_BUTTONS, MODAL_LABELS } from "@app/constants";
+import { Button } from "@app/components/atoms";
 
 /**
  * Simple confirmation modal
@@ -39,23 +40,25 @@ export class ConfirmModal extends ModalBase {
       cls: "modal-button-container",
     });
 
-    // Cancel button
-    const cancelBtn = buttonContainer.createEl("button", {
+    // Cancel button using Button atom
+    const cancelBtn = Button.create(buttonContainer, {
       text: MODAL_BUTTONS.CANCEL,
+      ariaLabel: MODAL_BUTTONS.CANCEL,
     });
-    cancelBtn.addEventListener("click", () => {
+    Button.onClick(cancelBtn, () => {
       if (this.onCancel) {
         this.onCancel();
       }
       this.close();
     });
 
-    // Confirm button
-    const confirmBtn = buttonContainer.createEl("button", {
+    // Confirm button using Button atom
+    const confirmBtn = Button.create(buttonContainer, {
       text: MODAL_BUTTONS.CONFIRM,
-      cls: "mod-cta",
+      className: "mod-cta",
+      ariaLabel: MODAL_BUTTONS.CONFIRM,
     });
-    confirmBtn.addEventListener("click", () => {
+    Button.onClick(confirmBtn, () => {
       this.onConfirm();
       this.close();
     });

@@ -1,5 +1,6 @@
 // Base modal class with common functionality
 import { App, Modal, Notice, MarkdownView } from "obsidian";
+import { FormField } from "@app/components/molecules";
 
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
@@ -71,6 +72,7 @@ export abstract class ModalBase extends Modal {
 
   /**
    * Creates a text input field
+   * Uses FormField molecule for consistent styling
    */
   public createTextInput(
     container: HTMLElement,
@@ -78,15 +80,20 @@ export abstract class ModalBase extends Modal {
     placeholder: string = "",
     value: string = ""
   ): HTMLInputElement {
-    container.createEl("label", { text: label });
-    const input = container.createEl("input", { type: "text" });
-    input.placeholder = placeholder;
-    if (value) input.value = value;
+    const { input } = FormField.create(container, {
+      label: label,
+      inputProps: {
+        type: "text",
+        placeholder: placeholder,
+        value: value,
+      },
+    });
     return input;
   }
 
   /**
    * Creates a number input field
+   * Uses FormField molecule for consistent styling
    */
   public createNumberInput(
     container: HTMLElement,
@@ -96,12 +103,16 @@ export abstract class ModalBase extends Modal {
     max?: number,
     placeholder: string = ""
   ): HTMLInputElement {
-    container.createEl("label", { text: label });
-    const input = container.createEl("input", { type: "number" });
-    if (value) input.value = value;
-    if (min !== undefined) input.setAttribute("min", min.toString());
-    if (max !== undefined) input.setAttribute("max", max.toString());
-    if (placeholder) input.placeholder = placeholder;
+    const { input } = FormField.create(container, {
+      label: label,
+      inputProps: {
+        type: "number",
+        placeholder: placeholder,
+        value: value,
+        min: min,
+        max: max,
+      },
+    });
     return input;
   }
 

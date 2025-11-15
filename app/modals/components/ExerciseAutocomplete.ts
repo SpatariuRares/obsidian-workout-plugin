@@ -8,6 +8,7 @@ import {
   MODAL_LABELS,
   MODAL_PLACEHOLDERS,
 } from "@app/constants";
+import { Button } from "@app/components/atoms";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -57,16 +58,18 @@ export class ExerciseAutocomplete {
 
     // Exercise status indicator and create page button
     const exerciseStatusContainer = exerciseContainer.createEl("div", {
-      cls: "exercise-status-container",
+      cls: "exercise-autocomplete-hidden",
     });
 
     const exerciseStatusText = exerciseStatusContainer.createEl("span", {
       cls: "exercise-status-text",
     });
 
-    const createExercisePageBtn = exerciseStatusContainer.createEl("button", {
+    // Create exercise page button using Button atom
+    const createExercisePageBtn = Button.create(exerciseStatusContainer, {
       text: MODAL_EXERCISE_STATUS.CREATE_PAGE,
-      cls: "create-exercise-page-btn display-none",
+      className: "create-exercise-page-btn display-none",
+      ariaLabel: MODAL_EXERCISE_STATUS.CREATE_PAGE,
     });
 
     const elements: ExerciseAutocompleteElements = {
@@ -81,7 +84,6 @@ export class ExerciseAutocomplete {
       if (!query.trim() || query.length < 1) {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
-        exerciseStatusText.textContent = "";
         createExercisePageBtn.className =
           "create-exercise-page-btn display-none";
         return;
@@ -106,9 +108,6 @@ export class ExerciseAutocomplete {
             exerciseInput.value = exercise;
             autocompleteContainer.className =
               "exercise-autocomplete-container exercise-autocomplete-hidden";
-            exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.SELECTED;
-            exerciseStatusText.className =
-              "exercise-status-text exercise-status-success";
             createExercisePageBtn.className =
               "create-exercise-page-btn display-none";
             instance.exerciseExists = true;
@@ -124,16 +123,14 @@ export class ExerciseAutocomplete {
             );
           });
         });
-
-        exerciseStatusText.textContent = `📋 ${matchingExercises.length} exercises found`;
-        exerciseStatusText.className =
-          "exercise-status-text exercise-status-accent";
+        exerciseStatusContainer.className = "exercise-autocomplete-hidden";
         createExercisePageBtn.className =
           "create-exercise-page-btn display-none";
         instance.exerciseExists = true;
       } else {
         autocompleteContainer.className =
           "exercise-autocomplete-container exercise-autocomplete-hidden";
+        exerciseStatusContainer.className = "exercise-status-container";
         exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "exercise-status-text exercise-status-warning";
@@ -163,8 +160,8 @@ export class ExerciseAutocomplete {
 
     exerciseInput.addEventListener("blur", hideAutocomplete);
 
-    // Create exercise page button event listener
-    createExercisePageBtn.addEventListener("click", () => {
+    // Create exercise page button event listener using Button helper
+    Button.onClick(createExercisePageBtn, () => {
       const exerciseName = exerciseInput.value.trim();
       if (exerciseName) {
         new CreateExercisePageModal(modal.app, plugin, exerciseName).open();

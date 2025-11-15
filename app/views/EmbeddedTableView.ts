@@ -3,13 +3,13 @@ import { MarkdownView } from "obsidian";
 import {
   TableRenderer,
   TableDataProcessor,
-  UIComponents,
   TableState,
   TableCallbacks,
   TableDataLoader,
   TableConfig,
   TableRefresh,
-} from "@app/components";
+} from "@app/features/tables";
+import { LogCallouts } from "@app/features/logs/components/LogCallouts";
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { EmbeddedTableParams, TableData } from "@app/types";
@@ -144,7 +144,7 @@ export class EmbeddedTableView extends BaseView {
         : "";
       const exerciseName = params.exercise || "Workout";
 
-      UIComponents.createAddLogButton(
+      LogCallouts.renderAddLogButton(
         contentDiv,
         exerciseName,
         currentPageLink,
@@ -204,3 +204,4 @@ export class EmbeddedTableView extends BaseView {
     );
   }
 }
+

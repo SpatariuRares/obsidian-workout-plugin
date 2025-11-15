@@ -1,30 +1,30 @@
 module.exports = {
   // Use Node environment for testing utilities
   // (Obsidian environment not needed for pure utility functions)
-  testEnvironment: 'node',
+  testEnvironment: "node",
 
   // Use ts-jest for TypeScript support
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    "^.+\\.tsx?$": "ts-jest",
   },
 
   // Test file patterns
-  testMatch: ['**/__tests__/**/*.test.ts', '**/*.test.ts'],
+  testMatch: ["**/__tests__/**/*.test.ts", "**/*.test.ts"],
 
   // Module file extensions
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 
   // Coverage configuration
   collectCoverageFrom: [
-    'app/utils/**/*.ts',
-    'app/constants/**/*.ts',
-    'app/components/data/**/*.ts',
-    'app/components/dashboard/DashboardCalculations.ts',
-    '!app/**/*.d.ts',
-    '!app/**/__tests__/**',
-    '!app/**/index.ts',
+    "app/utils/**/*.ts",
+    "app/constants/**/*.ts",
+    "app/components/data/**/*.ts",
+    "app/components/dashboard/business/DashboardCalculations.ts",
+    "!app/**/*.d.ts",
+    "!app/**/__tests__/**",
+    "!app/**/index.ts",
   ],
-   coverageThreshold: {
+  coverageThreshold: {
     global: {
       statements: 80,
       branches: 80,
@@ -34,23 +34,23 @@ module.exports = {
   },
 
   // Coverage output
-  coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html'],
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov", "html"],
 
   // TypeScript configuration for ts-jest
   globals: {
-    'ts-jest': {
+    "ts-jest": {
       tsconfig: {
         esModuleInterop: true,
         allowSyntheticDefaultImports: true,
         resolveJsonModule: true,
-      }
-    }
+      },
+    },
   },
 
   // Module path aliases (if needed)
   moduleNameMapper: {
-    '^obsidian$': '<rootDir>/node_modules/obsidian',
-    '^@app/(.*)$': '<rootDir>/app/$1',
+    "^obsidian$": "<rootDir>/node_modules/obsidian",
+    "^@app/(.*)$": "<rootDir>/app/$1",
   },
 };

@@ -1,22 +1,25 @@
+import { UI_ICONS } from "@app/constants/IconConstants";
+import { UI_LABELS } from "@app/constants/LabelConstants";
+
 export const TABLE_COLUMNS = {
-  DATE: "Date",
-  EXERCISE: "Exercise",
-  REPS: "Reps",
-  WEIGHT: "Weight (kg)",
-  VOLUME: "Volume",
-  NOTES: "Notes",
-  ACTIONS: "Actions",
+  DATE: UI_LABELS.TABLE.DATE,
+  EXERCISE: UI_LABELS.TABLE.EXERCISE,
+  REPS: UI_LABELS.TABLE.REPS,
+  WEIGHT: UI_LABELS.TABLE.WEIGHT,
+  VOLUME: UI_LABELS.TABLE.VOLUME,
+  NOTES: UI_LABELS.TABLE.NOTES,
+  ACTIONS: UI_LABELS.TABLE.ACTIONS,
 } as const;
 
 export const TABLE_LABELS = {
-  DATA: "Date",
-  VOLUME: "Volume (kg)",
-  WEIGHT: "Weight (kg)",
-  REPETITIONS: "Repetitions",
-  NO_DATA: "No data available",
-  INVALID_DATE: "Invalid date",
-  NOT_AVAILABLE: "N/A",
-  TREND_LINE: "Trend Line",
+  DATA: UI_LABELS.TABLE.DATE,
+  VOLUME: UI_LABELS.TABLE.VOLUME_WITH_UNIT,
+  WEIGHT: UI_LABELS.TABLE.WEIGHT,
+  REPETITIONS: UI_LABELS.TABLE.REPETITIONS,
+  NO_DATA: UI_LABELS.TABLE.NO_DATA,
+  INVALID_DATE: UI_LABELS.TABLE.INVALID_DATE,
+  NOT_AVAILABLE: UI_LABELS.TABLE.NOT_AVAILABLE,
+  TREND_LINE: UI_LABELS.TABLE.TREND_LINE,
 } as const;
 
 export const TABLE_LIMITS = {
@@ -26,11 +29,11 @@ export const TABLE_LIMITS = {
 } as const;
 
 export const TABLE_ICONS = {
-  REPS: "🔢",
-  WEIGHT: "⚖️",
-  VOLUME: "📊",
-  EDIT: "✏️",
-  DELETE: "🗑️",
+  REPS: UI_ICONS.TABLE.REPS,
+  WEIGHT: UI_ICONS.TABLE.WEIGHT,
+  VOLUME: UI_ICONS.TABLE.VOLUME,
+  EDIT: UI_ICONS.ACTIONS.EDIT,
+  DELETE: UI_ICONS.ACTIONS.DELETE,
 } as const;
 
 export const DEFAULT_VISIBLE_COLUMNS = [
@@ -42,12 +45,12 @@ export const DEFAULT_VISIBLE_COLUMNS = [
 ] as const;
 
 export const TABLE_MESSAGES = {
-  DELETE_CONFIRM: "Are you sure you want to delete this log entry?",
-  DELETE_SUCCESS: "Log entry deleted successfully!",
-  DELETE_ERROR: "Error deleting log entry: ",
-  REFRESH_SUCCESS: "Table refreshed successfully",
-  EDIT_TITLE: "Edit log entry",
-  DELETE_TITLE: "Delete log entry",
+  DELETE_CONFIRM: UI_LABELS.ACTIONS.DELETE_CONFIRM,
+  DELETE_SUCCESS: UI_LABELS.ACTIONS.DELETE_SUCCESS,
+  DELETE_ERROR: UI_LABELS.ACTIONS.DELETE_ERROR,
+  REFRESH_SUCCESS: UI_LABELS.ACTIONS.REFRESH_SUCCESS,
+  EDIT_TITLE: UI_LABELS.ACTIONS.EDIT_LOG_ENTRY,
+  DELETE_TITLE: UI_LABELS.ACTIONS.DELETE_LOG_ENTRY,
 } as const;
 
 export const TABLE_DATE_KEYS = {
@@ -55,7 +58,7 @@ export const TABLE_DATE_KEYS = {
 } as const;
 
 export const TABLE_DEFAULTS = {
-  BUTTON_TEXT: "➕ Add Log",
+  BUTTON_TEXT: `${UI_ICONS.ACTIONS.ADD} ${UI_LABELS.TABLE.ADD_LOG_BUTTON}`,
 } as const;
 
 export const TABLE_VALIDATION_ERRORS = {

@@ -1,16 +1,16 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
-import { WidgetsFileError } from "@app/components";
 import {
   SummaryWidget,
   QuickStatsCards,
   VolumeAnalytics,
   RecentWorkouts,
   QuickActions,
-  MuscleHeatMap,
   MuscleTagsWidget,
-} from "@app/components";
+  WidgetsFileError,
+} from "@app/features/dashboard/widgets";
+import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
 
 /**
@@ -142,3 +142,4 @@ export class EmbeddedDashboardView extends BaseView {
     MuscleTagsWidget.render(gridEl, params);
   }
 }
+

@@ -1,6 +1,14 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { UIComponents, DataFilter } from "@app/components";
+import { DataFilter } from "@app/services/data/DataFilter";
+import {
+  LoadingSpinner,
+  EmptyState,
+  InfoBanner,
+} from "@app/components/molecules";
+import { ErrorMessage } from "@app/components/atoms";
+import { DebugInfoPanel } from "@app/components/shared";
+import { LogCallouts } from "@app/features/logs/components/LogCallouts";
 import { EmbeddedViewParams } from "@app/types";
 
 /**
@@ -23,7 +31,7 @@ export abstract class BaseView {
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
-    UIComponents.renderErrorMessage(container, error.message);
+    ErrorMessage.render(container, error.message, "Error");
   }
 
   /**
@@ -35,12 +43,7 @@ export abstract class BaseView {
     exerciseName?: string
   ): boolean {
     if (logData.length === 0) {
-      UIComponents.renderCSVNoDataMessage(
-        container,
-        this.plugin.settings.csvLogFilePath,
-        this.plugin,
-        exerciseName
-      );
+      LogCallouts.renderCsvNoDataMessage(container, this.plugin, exerciseName);
       return true;
     }
     return false;
@@ -61,13 +64,13 @@ export abstract class BaseView {
       const [exercise, workout] = titlePrefix.split(" + ");
       const workoutFilename =
         workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
-      UIComponents.renderInfoMessage(
+      InfoBanner.render(
         container,
-        `No data found for exercise <strong>${exercise}</strong> in workout <strong>${workoutFilename}</strong>.`,
+        `No data found for exercise ${exercise} in workout ${workoutFilename}.`,
         "warning"
       );
       if (exercise) {
-        UIComponents.createCreateLogButtonForMissingExercise(
+        LogCallouts.renderCreateLogButtonForExercise(
           container,
           exercise,
           this.plugin
@@ -84,16 +87,16 @@ export abstract class BaseView {
         : !("exercise" in params ? params.exercise : undefined);
 
     if (isWorkoutView) {
-      UIComponents.renderInfoMessage(
+      InfoBanner.render(
         container,
-        `No data found for workout <strong>${titlePrefix}</strong>.`,
+        `No data found for workout ${titlePrefix}.`,
         "warning"
       );
     } else {
       const exerciseName = "exercise" in params ? params.exercise || "" : "";
-      UIComponents.renderNoMatchMessage(container);
+      LogCallouts.renderNoMatchMessage(container);
       if (exerciseName) {
-        UIComponents.createCreateLogButtonForMissingExercise(
+        LogCallouts.renderCreateLogButtonForExercise(
           container,
           exerciseName,
           this.plugin
@@ -106,7 +109,11 @@ export abstract class BaseView {
    * Common loading indicator pattern
    */
   protected showLoadingIndicator(container: HTMLElement): HTMLElement {
-    return UIComponents.renderLoadingIndicator(container);
+    return LoadingSpinner.create(container, {
+      message: "loading data...",
+      icon: "⏳",
+      className: "workout-charts-loading",
+    });
   }
 
   /**
@@ -128,9 +135,10 @@ export abstract class BaseView {
     validationErrors: string[]
   ): boolean {
     if (validationErrors.length > 0) {
-      UIComponents.renderErrorMessage(
+      ErrorMessage.render(
         container,
-        `Invalid parameters:\n${validationErrors.join("\n")}`
+        `Invalid parameters:\n${validationErrors.join("\n")}`,
+        "Validation Error"
       );
       return false;
     }
@@ -141,7 +149,7 @@ export abstract class BaseView {
    * Common success message pattern
    */
   protected showSuccessMessage(container: HTMLElement, message: string): void {
-    UIComponents.renderInfoMessage(container, message, "success");
+    InfoBanner.render(container, message, "success");
   }
 
   /**
@@ -155,7 +163,7 @@ export abstract class BaseView {
     debugMode: boolean
   ): void {
     if (debugMode) {
-      UIComponents.renderDebugInfo(
+      DebugInfoPanel.render(
         container,
         filteredData,
         dataType,

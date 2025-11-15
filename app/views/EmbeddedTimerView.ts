@@ -6,7 +6,7 @@ import {
   TimerControls,
   TimerControlCallbacks,
   TimerState,
-} from "@app/components";
+} from "@app/features/timer";
 import { BaseView } from "@app/views/BaseView";
 import { EmbeddedTimerParams } from "@app/types";
 
@@ -189,3 +189,4 @@ export class EmbeddedTimerView extends BaseView {
     this.timerCore.destroy();
   }
 }
+

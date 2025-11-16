@@ -1,7 +1,7 @@
 {
   "id": "workout-planner",
   "name": "Workout Planner",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "minAppVersion": "0.15.0",
   "description": "A plugin for visualizing workout data with interactive charts and advanced search capabilities.",
   "author": "Rares Spatariu",

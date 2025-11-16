@@ -757,7 +757,6 @@
 
 .workout-charts-modal-main-container {
   max-width: var(--workout-size-11xl);
-  margin: 0 auto;
 }
 
 /* Modal Section Styling */
@@ -2126,6 +2125,12 @@
   .file-errors,
   .quick-actions {
     grid-column: span 2;
+  }
+}
+
+@media (min-width: 769px) {
+  .workout-charts-modal-main-container {
+    margin: 0 auto;
   }
 }
 

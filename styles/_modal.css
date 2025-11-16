@@ -137,7 +137,6 @@
 /* Modal Main Container Styling */
 .workout-charts-modal-main-container {
   max-width: var(--workout-size-11xl);
-  margin: 0 auto;
 }
 
 /* Modal Section Styling */

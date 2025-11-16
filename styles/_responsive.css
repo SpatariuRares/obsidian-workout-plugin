@@ -68,6 +68,11 @@
     grid-column: span 2;
   }
 }
+@media (min-width: 769px) {
+  .workout-charts-modal-main-container {
+    margin: 0 auto;
+  }
+}
 
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: 768px) {

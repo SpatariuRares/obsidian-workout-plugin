@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { MODAL_BUTTONS, MODAL_LABELS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 

@@ -1,7 +1,7 @@
 // Reusable exercise autocomplete component
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
-import { CreateExercisePageModal } from "@app/modals/CreateExercisePageModal";
+import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import {
   MODAL_EXERCISE_STATUS,

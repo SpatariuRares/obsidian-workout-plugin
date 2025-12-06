@@ -1,6 +1,6 @@
 import { MODAL_CHECKBOXES, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Enhanced target section component with exercise autocomplete
-import { ModalBase } from "@app/modals/base/ModalBase";
-import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { TEXT_CONSTANTS } from "@app/constants";

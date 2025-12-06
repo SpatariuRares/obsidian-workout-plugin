@@ -4,7 +4,7 @@ import {
   MODAL_LABELS,
   MODAL_PLACEHOLDERS,
 } from "@app/constants";
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 
 export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;

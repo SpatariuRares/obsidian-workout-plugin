@@ -14,7 +14,7 @@ import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
-import { CreateLogModal } from "@app/modals/CreateLogModal";
+import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -69,7 +69,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 
-  onunload() {}
+  onunload() { }
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());

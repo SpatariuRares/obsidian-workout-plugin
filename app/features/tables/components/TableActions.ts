@@ -1,8 +1,8 @@
 import { Notice } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { EditLogModal } from "@app/modals/EditLogModal";
-import { ConfirmModal } from "@app/modals/ConfirmModal";
+import { EditLogModal } from "@app/features/modals/EditLogModal";
+import { ConfirmModal } from "@app/features/modals/ConfirmModal";
 import { TABLE_MESSAGES } from "@app/constants/TableConstats";
 import { ActionButtons } from "@app/features/tables/ui";
 

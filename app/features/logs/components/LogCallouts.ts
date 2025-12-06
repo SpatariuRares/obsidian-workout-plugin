@@ -3,8 +3,8 @@ import { Button, Text } from "@app/components/atoms";
 import { EmptyState } from "@app/components/molecules";
 import { UI_ICONS } from "@app/constants/IconConstants";
 import { UI_LABELS } from "@app/constants/LabelConstants";
-import { CreateLogModal } from "@app/modals/CreateLogModal";
 import type WorkoutChartsPlugin from "main";
+import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.

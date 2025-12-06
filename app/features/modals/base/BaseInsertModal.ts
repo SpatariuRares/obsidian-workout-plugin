@@ -2,7 +2,7 @@
 // Extracts common structure and button creation logic
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { MODAL_BUTTONS } from "@app/constants/ModalConstants";
 import { Button } from "@app/components/atoms";
 

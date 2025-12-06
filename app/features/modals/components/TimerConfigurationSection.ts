@@ -1,5 +1,5 @@
 import { MODAL_CHECKBOXES, MODAL_LABELS, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Reusable timer configuration section component
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
 import { TEXT_CONSTANTS } from "@app/constants";
 

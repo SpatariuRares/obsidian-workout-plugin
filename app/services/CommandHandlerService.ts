@@ -1,12 +1,12 @@
 import { MODAL_BUTTONS, MODAL_TITLES } from "@app/constants/ModalConstants";
 import { App, Notice } from "obsidian";
-import { CreateLogModal } from "@app/modals/CreateLogModal";
-import { InsertChartModal } from "@app/modals/InsertChartModal";
-import { InsertTableModal } from "@app/modals/InsertTableModal";
-import { InsertTimerModal } from "@app/modals/InsertTimerModal";
-import { InsertDashboardModal } from "@app/modals/InsertDashboardModal";
-import { CreateExercisePageModal } from "@app/modals/CreateExercisePageModal";
-import { CreateExerciseSectionModal } from "@app/modals/CreateExerciseSectionModal";
+import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { InsertChartModal } from "@app/features/modals/InsertChartModal";
+import { InsertTableModal } from "@app/features/modals/InsertTableModal";
+import { InsertTimerModal } from "@app/features/modals/InsertTimerModal";
+import { InsertDashboardModal } from "@app/features/modals/InsertDashboardModal";
+import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
+import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import type WorkoutChartsPlugin from "main";
 import { TEXT_CONSTANTS } from "@app/constants";
 

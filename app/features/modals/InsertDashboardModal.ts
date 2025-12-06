@@ -1,7 +1,7 @@
 // Refactored InsertDashboardModal extending BaseInsertModal
 import { App } from "obsidian";
-import { BaseInsertModal } from "@app/modals/base/BaseInsertModal";
-import { CodeGenerator } from "@app/modals/components/CodeGenerator";
+import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
+import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import {
   MODAL_TITLES,
   MODAL_BUTTONS,

@@ -1,16 +1,16 @@
 // Refactored InsertTableModal extending BaseInsertModal
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import { BaseInsertModal } from "@app/modals/base/BaseInsertModal";
+import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
   TargetSectionWithAutocomplete,
   TargetSectionWithAutocompleteElements,
-} from "@app/modals/components/TargetSectionWithAutocomplete";
+} from "@app/features/modals/components/TargetSectionWithAutocomplete";
 import {
   AdvancedOptionsSection,
   AdvancedOptionsElements,
-} from "@app/modals/components/AdvancedOptionsSection";
-import { CodeGenerator } from "@app/modals/components/CodeGenerator";
+} from "@app/features/modals/components/AdvancedOptionsSection";
+import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import {
   MODAL_TITLES,
   MODAL_BUTTONS,

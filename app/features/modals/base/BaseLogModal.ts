@@ -2,11 +2,11 @@
 // Extracts common form creation and validation logic
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import { ModalBase } from "@app/modals/base/ModalBase";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
 import {
   ExerciseAutocomplete,
   ExerciseAutocompleteElements,
-} from "@app/modals/components/ExerciseAutocomplete";
+} from "@app/features/modals/components/ExerciseAutocomplete";
 import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import {
   MODAL_LABELS,

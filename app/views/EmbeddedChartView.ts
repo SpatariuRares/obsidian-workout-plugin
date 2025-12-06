@@ -5,7 +5,6 @@ import {
   ChartDataset,
   FilterResult,
   TrendIndicators,
-  CHART_TYPE,
 } from "@app/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
@@ -22,6 +21,8 @@ import {
   calculateTrendLine,
   validateUserParams,
 } from "@app/utils";
+import { VIEW_TYPES } from "@app/types/ViewTypes";
+import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
 
 export class EmbeddedChartView extends BaseView {
   constructor(plugin: WorkoutChartsPlugin) {
@@ -62,8 +63,7 @@ export class EmbeddedChartView extends BaseView {
           container,
           params,
           filterResult.titlePrefix,
-          logData,
-          "chart"
+          VIEW_TYPES.CHART
         );
         return;
       }
@@ -154,7 +154,7 @@ export class EmbeddedChartView extends BaseView {
       contentDiv,
       labels,
       datasets,
-      params.type || "volume",
+      params.type || CHART_DATA_TYPE.VOLUME,
       params
     );
 
@@ -185,14 +185,14 @@ export class EmbeddedChartView extends BaseView {
         contentDiv,
         labels,
         volumeData,
-        params.chartType || "exercise"
+        params.chartType || CHART_TYPE.EXERCISE
       );
     }
 
     this.renderDebugInfo(
       contentDiv,
       filterResult.filteredData,
-      params.type || "volume",
+      params.type || CHART_DATA_TYPE.VOLUME,
       filterResult.filterMethodUsed,
       this.plugin.settings.debugMode || params.debug || false
     );

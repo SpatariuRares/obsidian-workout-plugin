@@ -12,6 +12,7 @@ import {
 } from "@app/features/dashboard/widgets";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
+import { VIEW_TYPES } from "@app/types/ViewTypes";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -60,8 +61,7 @@ export class EmbeddedDashboardView extends BaseView {
           container,
           params,
           params.title || "Dashboard",
-          logData,
-          "dashboard"
+          VIEW_TYPES.DASHBOARD
         );
         return;
       }
@@ -76,7 +76,7 @@ export class EmbeddedDashboardView extends BaseView {
       this.renderDebugInfo(
         container,
         filteredData,
-        "dashboard",
+        VIEW_TYPES.DASHBOARD,
         filterResult.filterMethodUsed,
         this.plugin.settings.debugMode
       );

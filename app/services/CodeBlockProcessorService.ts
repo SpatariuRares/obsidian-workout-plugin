@@ -21,7 +21,7 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>
-  ) {}
+  ) { }
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(

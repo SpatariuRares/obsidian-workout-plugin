@@ -2,6 +2,8 @@
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { FormField } from "@app/components/molecules";
 import { MODAL_NOTICES } from "@app/constants/ModalConstants";
+import { TEXT_CONSTANTS } from "@app/constants";
+import { INPUT_TYPE } from "@app/types";
 
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
@@ -50,7 +52,7 @@ export abstract class ModalBase extends Modal {
    */
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-    return activeView?.file?.basename || "Current file";
+    return activeView?.file?.basename || TEXT_CONSTANTS.UI.LABELS.CURRENT_FILE;
   }
 
   /**
@@ -58,7 +60,7 @@ export abstract class ModalBase extends Modal {
    */
   protected insertIntoEditor(
     code: string,
-    successMessage: string = "✅ Code inserted successfully!"
+    successMessage: string = TEXT_CONSTANTS.MESSAGES.SUCCESS.CODE_INSERTED
   ): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
@@ -84,7 +86,7 @@ export abstract class ModalBase extends Modal {
     const { input } = FormField.create(container, {
       label: label,
       inputProps: {
-        type: "text",
+        type: INPUT_TYPE.TEXT,
         placeholder: placeholder,
         value: value,
       },
@@ -107,7 +109,7 @@ export abstract class ModalBase extends Modal {
     const { input } = FormField.create(container, {
       label: label,
       inputProps: {
-        type: "number",
+        type: INPUT_TYPE.NUMBER,
         placeholder: placeholder,
         value: value,
         min: min,

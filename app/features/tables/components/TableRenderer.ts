@@ -65,14 +65,12 @@ export class TableRenderer {
    * Renders a fallback message when table rendering fails.
    * @param container - The container element to render the message in
    * @param message - Error message to display
-   * @param title - Title for the error section
    */
   static renderFallbackMessage(
     container: HTMLElement,
     message: string,
-    title: string
   ): void {
-    TableErrorMessage.render(container, message, title);
+    TableErrorMessage.render(container, message);
   }
 
   /**
@@ -155,9 +153,8 @@ export class TableRenderer {
         }
 
         const tr = fragment.appendChild(document.createElement("tr"));
-        tr.className = `same-day-log ${
-          groupIndex % 2 === 0 ? "group-even" : "group-odd"
-        }`;
+        tr.className = `same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
+          }`;
 
         row.displayRow.forEach((cell, cellIndex) => {
           const td = tr.appendChild(document.createElement("td"));

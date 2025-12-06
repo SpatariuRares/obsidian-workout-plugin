@@ -1,4 +1,5 @@
 import { FrontmatterParser } from '@app/utils/FrontmatterParser';
+import { TEXT_CONSTANTS } from "@app/constants";
 
 describe('FrontmatterParser', () => {
   const validContent = `---
@@ -183,23 +184,23 @@ field2: value2
 
     it('should return error for empty content', () => {
       const result = FrontmatterParser.validateFrontmatter('');
-      expect(result).toContain('File is empty');
+      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
     });
 
     it('should return error for content without frontmatter', () => {
       const result = FrontmatterParser.validateFrontmatter(noFrontmatterContent);
-      expect(result).toContain('No frontmatter found');
+      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_FRONTMATTER);
     });
 
     it('should return error for frontmatter without tags', () => {
       const result = FrontmatterParser.validateFrontmatter(noTagsContent);
-      expect(result).toContain('No tags found');
+      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_TAGS);
     });
 
     it('should return only one error for whitespace content', () => {
       const result = FrontmatterParser.validateFrontmatter('   \n  \n  ');
       expect(result).toHaveLength(1);
-      expect(result[0]).toBe('File is empty');
+      expect(result[0]).toBe(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
     });
   });
 });

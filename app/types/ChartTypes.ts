@@ -28,7 +28,6 @@ export interface EmbeddedChartParams {
   height?: string;
   limit?: number;
   exactMatch?: boolean;
-  debug?: boolean;
 }
 
 export interface ChartDataset {

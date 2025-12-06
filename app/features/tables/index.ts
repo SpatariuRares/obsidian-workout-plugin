@@ -10,6 +10,6 @@ export {
   type TableState,
   type TableCallbacks,
   type TableRenderContext,
-} from "@app/features/tables/types/TableTypes";
+} from "@app/types/TableTypes";
 export { MobileTable, TableContainer, TableHeader } from "@app/features/tables/ui";
 

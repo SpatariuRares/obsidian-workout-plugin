@@ -8,7 +8,6 @@ import {
 
 export interface WorkoutChartsPluginInterface {
   settings: {
-    debugMode: boolean;
     csvLogFilePath: string;
   };
   app: {

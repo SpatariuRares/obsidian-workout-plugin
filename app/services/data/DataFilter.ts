@@ -6,6 +6,7 @@ import {
   ExerciseMatch,
 } from "@app/utils/utils";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
@@ -23,25 +24,23 @@ export class DataFilter {
    * Filters workout log data based on the provided parameters.
    * @param logData - Array of workout log data to filter
    * @param params - Filter parameters (exercise, workout, chartType, etc.)
-   * @param debugMode - Whether to enable debug logging
    * @returns Filtered data with information about the filtering method used
    */
   static filterData(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams,
-    debugMode: boolean
+    params: EmbeddedChartParams | EmbeddedTableParams
   ): FilterResult {
     if (!logData || logData.length === 0) {
       return {
         filteredData: [],
         filterMethodUsed: "none",
-        titlePrefix: "Workout Data",
+        titlePrefix: TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA,
       };
     }
 
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Workout Data";
+    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
 
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
@@ -53,9 +52,8 @@ export class DataFilter {
         return {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
-          titlePrefix: `${params.exercise} + ${
-            params.workout || params.workoutPath
-          }`,
+          titlePrefix: `${params.exercise} + ${params.workout || params.workoutPath
+            }`,
         };
       }
 
@@ -63,14 +61,13 @@ export class DataFilter {
       const exerciseResult = this.filterByExercise(
         workoutResult.filteredData,
         params,
-        debugMode
       );
 
       filteredData = exerciseResult.filteredData;
       filterMethodUsed = `${workoutResult.filterMethodUsed} + ${exerciseResult.filterMethodUsed}`;
       titlePrefix = `${exerciseResult.titlePrefix} + ${workoutResult.titlePrefix}`;
     } else if (hasExercise) {
-      const result = this.filterByExercise(logData, params, debugMode);
+      const result = this.filterByExercise(logData, params);
       filteredData = result.filteredData;
       filterMethodUsed = result.filterMethodUsed;
       titlePrefix = result.titlePrefix;
@@ -93,7 +90,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Workout Data";
+    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
 
     if (params.workout || params.workoutPath) {
       const workoutName = params.workout || params.workoutPath;
@@ -126,11 +123,10 @@ export class DataFilter {
   private static filterByExercise(
     logData: WorkoutLogData[],
     params: EmbeddedChartParams | EmbeddedTableParams,
-    _debugMode: boolean
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix = "Workout Data";
+    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
 
     if (params.exercise && params.exercise.trim()) {
       const exerciseName = params.exercise.trim();
@@ -198,7 +194,7 @@ export class DataFilter {
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
-      return `file name (score: ${bestFileMatchesList[0]?.score || "N/A"})`;
+      return `file name (score: ${bestFileMatchesList[0]?.score || UI_LABELS.TABLE.NOT_AVAILABLE})`;
     }
     return "No match found";
   }

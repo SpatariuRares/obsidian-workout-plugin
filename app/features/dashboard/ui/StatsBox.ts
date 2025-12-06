@@ -1,4 +1,5 @@
 import { CHART_TYPE } from "@app/types";
+import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 
 /**
  * Renders statistical information about workout data.
@@ -27,32 +28,32 @@ export class StatsBox {
     const strongEl = statsDiv.createEl("strong", {
       cls: "workout-charts-stats-title",
     });
-    strongEl.textContent = `📈 Volume Statistics (${chartType === CHART_TYPE.WORKOUT ? "Total Workout" : "Exercise"
+    strongEl.textContent = `📈 Volume Statistics (${chartType === CHART_TYPE.WORKOUT ? TEXT_CONSTANTS.UI.LABELS.TOTAL_WORKOUT : UI_LABELS.TABLE.EXERCISE
       }):`;
 
     const ul = statsDiv.createEl("ul", { cls: "workout-charts-stats-list" });
 
     const li1 = ul.createEl("li");
-    li1.textContent = "Volume medio: ";
+    li1.textContent = TEXT_CONSTANTS.STATS.LABELS_IT.AVG_VOLUME;
     li1.createEl("strong", { text: `${stats.avgVolume} kg` });
 
     const li2 = ul.createEl("li");
     li2.textContent = `Max: `;
     li2.createEl("strong", { text: `${stats.maxVolume} kg` });
-    li2.append(` (${stats.maxVolumeDate || "N/D"})`);
+    li2.append(` (${stats.maxVolumeDate || TEXT_CONSTANTS.COMMON.NOT_AVAILABLE_IT})`);
 
     const li3 = ul.createEl("li");
     li3.textContent = `Min: `;
     li3.createEl("strong", { text: `${stats.minVolume} kg` });
-    li3.append(` (${stats.minVolumeDate || "N/D"})`);
+    li3.append(` (${stats.minVolumeDate || TEXT_CONSTANTS.COMMON.NOT_AVAILABLE_IT})`);
 
     const li4 = ul.createEl("li");
-    li4.textContent = "Sessions: ";
+    li4.textContent = TEXT_CONSTANTS.STATS.LABELS.SESSIONS;
     li4.createEl("strong", { text: `${labels.length}` });
 
-    if (recentTrendData.text !== "N/A") {
+    if (recentTrendData.text !== UI_LABELS.TABLE.NOT_AVAILABLE) {
       const li5 = ul.createEl("li");
-      li5.textContent = "Recent trend: ";
+      li5.textContent = TEXT_CONSTANTS.STATS.LABELS.RECENT_TREND;
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
       });
@@ -125,7 +126,7 @@ export class StatsBox {
         };
       } else {
         return {
-          text: "Stabile",
+          text: TEXT_CONSTANTS.TRENDS.STATUS_IT.STABILE,
           color: "var(--color-orange)",
           suffix: " (ultime 3)",
         };
@@ -148,13 +149,13 @@ export class StatsBox {
         };
       } else {
         return {
-          text: "Invariato",
+          text: TEXT_CONSTANTS.TRENDS.STATUS_IT.INVARIATO,
           color: "var(--color-orange)",
           suffix: " (vs prec.)",
         };
       }
     }
-    return { text: "N/A", color: "" };
+    return { text: UI_LABELS.TABLE.NOT_AVAILABLE, color: "" };
   }
 }
 

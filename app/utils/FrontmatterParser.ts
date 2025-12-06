@@ -1,3 +1,4 @@
+import { TEXT_CONSTANTS } from "@app/constants";
 /**
  * Utility for parsing YAML frontmatter from markdown files
  * Centralizes frontmatter parsing logic used across the application
@@ -97,19 +98,19 @@ export class FrontmatterParser {
 
     // Check if content is empty
     if (!content.trim()) {
-      errors.push("File is empty");
+      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
       return errors;
     }
 
     // Check for frontmatter
     if (!this.hasFrontmatter(content)) {
-      errors.push("No frontmatter found");
+      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_FRONTMATTER);
       return errors;
     }
 
     // Check for tags
     if (!this.hasTags(content)) {
-      errors.push("No tags found");
+      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_TAGS);
     }
 
     return errors;

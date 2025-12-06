@@ -1,3 +1,4 @@
+import { TEXT_CONSTANTS } from "@app/constants/TextConstants";
 export const MODAL_TITLES = {
   CREATE_LOG: "Create workout log",
   EDIT_LOG: "Edit workout log",
@@ -129,18 +130,18 @@ export const MODAL_EXERCISE_STATUS = {
 
 export const MODAL_SELECT_OPTIONS = {
   CHART_TYPE: [
-    { text: "Complete workout", value: "workout" },
-    { text: "Specific exercise", value: "exercise" },
+    { text: "Complete workout", value: TEXT_CONSTANTS.COMMON.TYPES.WORKOUT },
+    { text: "Specific exercise", value: TEXT_CONSTANTS.COMMON.TYPES.EXERCISE },
   ],
   DATA_TYPE: [
-    { text: "Volume (kg)", value: "volume" },
-    { text: "Weight (kg)", value: "weight" },
-    { text: "Reps", value: "reps" },
+    { text: "Volume (kg)", value: TEXT_CONSTANTS.CHARTS.TYPES.VOLUME },
+    { text: TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG, value: TEXT_CONSTANTS.CHARTS.TYPES.WEIGHT },
+    { text: TEXT_CONSTANTS.CHARTS.LABELS.REPS, value: TEXT_CONSTANTS.CHARTS.TYPES.REPS },
   ],
   TABLE_TYPE: [
     { text: "Exercise + workout", value: "combined" },
-    { text: "Specific exercise", value: "exercise" },
-    { text: "Complete workout", value: "workout" },
+    { text: "Specific exercise", value: TEXT_CONSTANTS.COMMON.TYPES.EXERCISE },
+    { text: "Complete workout", value: TEXT_CONSTANTS.COMMON.TYPES.WORKOUT },
   ],
   TABLE_COLUMNS: [
     {
@@ -150,8 +151,8 @@ export const MODAL_SELECT_OPTIONS = {
     { text: "Minimal (Date, exercise, reps, weight)", value: "minimal" },
   ],
   TIMER_TYPE: [
-    { text: "Countdown", value: "countdown" },
-    { text: "Interval", value: "interval" },
+    { text: TEXT_CONSTANTS.TIMER.TYPES.COUNTDOWN, value: TEXT_CONSTANTS.TIMER.TYPES.COUNTDOWN_LOWER },
+    { text: TEXT_CONSTANTS.TIMER.TYPES.INTERVAL, value: "interval" },
   ],
 } as const;
 

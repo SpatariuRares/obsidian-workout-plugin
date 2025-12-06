@@ -20,7 +20,7 @@ export interface EmptyStateProps {
  * ```typescript
  * EmptyState.create(container, {
  *   icon: "📭",
- *   message: "No workout data available"
+ *   message: TEXT_CONSTANTS.MESSAGES.NO_DATA
  * });
  * ```
  */

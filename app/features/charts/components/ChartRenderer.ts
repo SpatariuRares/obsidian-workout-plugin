@@ -1,5 +1,5 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
-import { EmbeddedChartParams, ChartDataset } from "@app/types";
+import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
 import { calculateTrendLine } from "@app/utils/utils";
 import {
   ChartColors,
@@ -63,7 +63,7 @@ export class ChartRenderer {
   static createChartConfig(
     labels: string[],
     datasets: ChartDataset[],
-    chartType: string,
+    chartType: CHART_DATA_TYPE,
     params: EmbeddedChartParams
   ): ChartConfiguration {
     const title = params.title || getDefaultChartTitle(chartType);
@@ -101,7 +101,7 @@ export class ChartRenderer {
     const chartConfig = this.createChartConfig(
       labels,
       datasets,
-      params.type || "volume",
+      params.type || CHART_DATA_TYPE.VOLUME,
       params
     );
 

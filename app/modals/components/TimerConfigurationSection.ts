@@ -1,7 +1,7 @@
-// Reusable timer configuration section component
+import { MODAL_CHECKBOXES, MODAL_LABELS, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Reusable timer configuration section component
 import { ModalBase } from "@app/modals/base/ModalBase";
-import { EmbeddedTimerParams, TimerType } from "@app/types";
-import { TIMER_TYPE } from "@app/types/TimerTypes";
+import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
@@ -29,16 +29,16 @@ export class TimerConfigurationSection {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
   } {
-    const timerSection = modal.createSection(container, "Timer configuration");
+    const timerSection = modal.createSection(container, MODAL_SECTIONS.TIMER_CONFIGURATION);
 
     // Timer Type selector
     const timerTypeContainer = modal.createFormGroup(timerSection);
     const timerTypeSelect = modal.createSelect(
       timerTypeContainer,
-      "Timer Type:",
+      MODAL_LABELS.TIMER_TYPE,
       [
-        { text: "Countdown", value: TIMER_TYPE.COUNTDOWN },
-        { text: "Interval", value: TIMER_TYPE.INTERVAL },
+        { text: TEXT_CONSTANTS.TIMER.TYPES.COUNTDOWN, value: TIMER_TYPE.COUNTDOWN as string },
+        { text: TEXT_CONSTANTS.TIMER.TYPES.INTERVAL, value: TIMER_TYPE.INTERVAL as string },
       ]
     );
 
@@ -46,8 +46,8 @@ export class TimerConfigurationSection {
     const durationContainer = modal.createFormGroup(timerSection);
     const durationInput = modal.createNumberInput(
       durationContainer,
-      "Duration (seconds):",
-      "90",
+      MODAL_LABELS.DURATION,
+      MODAL_PLACEHOLDERS.REST_TIME,
       1,
       3600,
       "300"
@@ -57,7 +57,7 @@ export class TimerConfigurationSection {
     const intervalTimeContainer = modal.createFormGroup(timerSection);
     const intervalTimeInput = modal.createNumberInput(
       intervalTimeContainer,
-      "Interval Time (seconds):",
+      MODAL_LABELS.INTERVAL_TIME,
       "30",
       1,
       3600,
@@ -67,7 +67,7 @@ export class TimerConfigurationSection {
     const roundsContainer = modal.createFormGroup(timerSection);
     const roundsInput = modal.createNumberInput(
       roundsContainer,
-      "Rounds:",
+      MODAL_LABELS.ROUNDS,
       "5",
       1,
       100,
@@ -78,19 +78,19 @@ export class TimerConfigurationSection {
     const titleContainer = modal.createFormGroup(timerSection);
     const titleInput = modal.createTextInput(
       titleContainer,
-      "Title:",
-      "Workout Timer",
-      "Workout Timer"
+      MODAL_LABELS.TITLE,
+      MODAL_PLACEHOLDERS.TIMER_TITLE,
+      MODAL_PLACEHOLDERS.TIMER_TITLE
     );
 
     // Display options
-    const displaySection = modal.createSection(container, "Display options");
+    const displaySection = modal.createSection(container, MODAL_SECTIONS.DISPLAY_OPTIONS);
 
     // Show controls toggle
     const showControlsContainer = modal.createCheckboxGroup(displaySection);
     const showControlsToggle = modal.createCheckbox(
       showControlsContainer,
-      "Show Controls",
+      MODAL_CHECKBOXES.SHOW_CONTROLS,
       true,
       "showControls"
     );
@@ -99,7 +99,7 @@ export class TimerConfigurationSection {
     const autoStartContainer = modal.createCheckboxGroup(displaySection);
     const autoStartToggle = modal.createCheckbox(
       autoStartContainer,
-      "Auto Start",
+      MODAL_CHECKBOXES.AUTO_START,
       false,
       "autoStart"
     );
@@ -108,7 +108,7 @@ export class TimerConfigurationSection {
     const soundContainer = modal.createCheckboxGroup(displaySection);
     const soundToggle = modal.createCheckbox(
       soundContainer,
-      "Sound",
+      MODAL_CHECKBOXES.SOUND,
       false,
       "sound"
     );
@@ -154,7 +154,7 @@ export class TimerConfigurationSection {
    */
   static getValues(elements: TimerConfigurationElements): EmbeddedTimerParams {
     const values: EmbeddedTimerParams = {
-      type: elements.timerTypeSelect.value as TimerType,
+      type: elements.timerTypeSelect.value as TIMER_TYPE,
       title: elements.titleInput.value.trim(),
       showControls: elements.showControlsToggle.checked,
       autoStart: elements.autoStartToggle.checked,

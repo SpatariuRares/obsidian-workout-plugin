@@ -363,17 +363,17 @@ export function validateUserParams(params: EmbeddedViewParams): string[] {
 
   // Validate chartType (exists only in chart params)
   if ("chartType" in params && params.chartType !== undefined) {
-    const chartType = String(params.chartType);
-    if (!["exercise", "workout"].includes(chartType)) {
-      errors.push("chartType must be either 'exercise' or 'workout'");
+    const chartType = params.chartType;
+    if (![CHART_TYPE.EXERCISE, CHART_TYPE.WORKOUT].includes(chartType)) {
+      errors.push("chartType must be either CHART_TYPE.EXERCISE or CHART_TYPE.WORKOUT");
     }
   }
 
   // Validate type for charts (exists only in chart params)
   if ("type" in params && params.type !== undefined) {
     const type = String(params.type);
-    if (!["volume", "weight", "reps"].includes(type)) {
-      errors.push("type must be either 'volume', 'weight', or 'reps'");
+    if (!([CHART_DATA_TYPE.VOLUME, CHART_DATA_TYPE.WEIGHT, CHART_DATA_TYPE.REPS] as string[]).includes(type)) {
+      errors.push("type must be either TEXT_CONSTANTS.CHARTS.TYPES.VOLUME, TEXT_CONSTANTS.CHARTS.TYPES.WEIGHT, or TEXT_CONSTANTS.CHARTS.TYPES.REPS");
     }
   }
 

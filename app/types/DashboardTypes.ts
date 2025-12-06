@@ -8,5 +8,4 @@ export interface EmbeddedDashboardParams {
 	showQuickActions?: boolean;
 	recentWorkoutsLimit?: number;
 	volumeTrendDays?: number;
-	debug?: boolean;
 }

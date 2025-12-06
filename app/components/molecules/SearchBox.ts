@@ -5,6 +5,8 @@
  */
 
 import { Icon, Input, Container } from "@app/components/atoms";
+import { UI_LABELS } from "@app/constants";
+import { INPUT_TYPE } from "@app/types";
 
 export interface SearchBoxProps {
 	placeholder?: string;
@@ -25,10 +27,7 @@ export interface SearchBoxResult {
  *
  * @example
  * ```typescript
- * const { input } = SearchBox.create(container, {
- *   placeholder: "Search exercises...",
- *   icon: "🔍"
- * });
+ * const { input } = SearchBox.create(container);
  *
  * Input.onChange(input, (e) => handleSearch(Input.getValue(input)));
  * ```
@@ -60,8 +59,8 @@ export class SearchBox {
 
 		// Add input
 		const input = Input.create(container, {
-			type: "text",
-			placeholder: props?.placeholder || "Search...",
+			type: INPUT_TYPE.TEXT,
+			placeholder: props?.placeholder || UI_LABELS.LABELCONSTANTS.SEARCH,
 			value: props?.value,
 			className: "search-box-input",
 		});

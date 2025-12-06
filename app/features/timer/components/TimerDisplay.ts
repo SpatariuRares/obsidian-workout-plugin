@@ -1,5 +1,5 @@
 import { UI_ICONS } from "@app/constants";
-import { TimerState } from "@app/features/timer/types/TimerTypes";
+import { TimerState } from "@app/types/TimerTypes";
 import { TIMER_TYPE } from "@app/types/TimerTypes";
 
 export class TimerDisplay {

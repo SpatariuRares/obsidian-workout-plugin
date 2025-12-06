@@ -1,8 +1,9 @@
-// Enhanced target section component with exercise autocomplete
+import { MODAL_CHECKBOXES, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Enhanced target section component with exercise autocomplete
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/types";
 import type WorkoutChartsPlugin from "main";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TargetSectionWithAutocompleteElements {
   exerciseContainer: HTMLElement;
@@ -35,7 +36,7 @@ export class TargetSectionWithAutocomplete {
     elements: TargetSectionWithAutocompleteElements;
     handlers: TargetSectionWithAutocompleteHandlers;
   } {
-    const targetSection = modal.createSection(container, "Target");
+    const targetSection = modal.createSection(container, MODAL_SECTIONS.TARGET);
 
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
@@ -47,11 +48,11 @@ export class TargetSectionWithAutocomplete {
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
-    workoutContainer.setAttribute("data-field-type", "workout");
+    workoutContainer.setAttribute("data-field-type", TEXT_CONSTANTS.COMMON.TYPES.WORKOUT);
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      "Workout name:",
-      "e.g. Workout A, Training B, or use checkbox below"
+      TEXT_CONSTANTS.FORMS.LABELS_IT.WORKOUT_NAME,
+      MODAL_PLACEHOLDERS.WORKOUT
     );
 
     // Current Workout checkbox (for workout charts/tables)
@@ -59,7 +60,7 @@ export class TargetSectionWithAutocomplete {
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      "Use current workout (file name)",
+      MODAL_CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
       false,
       "currentWorkout"
     );

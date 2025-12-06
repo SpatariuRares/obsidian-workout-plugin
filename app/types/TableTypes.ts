@@ -1,6 +1,3 @@
-
-// import { FilterResult } from "./CommonTypes";
-// import { WorkoutLogData } from "./WorkoutLogData";
 import { WorkoutLogData, FilterResult } from "@app/types";
 
 export interface EmbeddedTableParams {
@@ -15,7 +12,6 @@ export interface EmbeddedTableParams {
   showAddButton?: boolean;
   buttonText?: string;
   columns?: string[] | string;
-  debug?: boolean;
 }
 
 export interface TableRow {
@@ -57,5 +53,24 @@ export interface TableCodeOptions {
   buttonText: string;
   searchByName: boolean;
   exactMatch: boolean;
-  debug: boolean;
 }
+export interface TableState {
+  currentContainer?: HTMLElement;
+  currentLogData?: WorkoutLogData[];
+  currentParams?: EmbeddedTableParams;
+}
+
+export interface TableCallbacks {
+  onRefresh?: () => Promise<void>;
+  onError?: (_error: Error, _context: string) => void;
+  onSuccess?: (_message: string) => void;
+}
+
+export interface TableRenderContext {
+  container: HTMLElement;
+  logData: WorkoutLogData[];
+  params: EmbeddedTableParams;
+  tableData: TableData;
+  callbacks: TableCallbacks;
+}
+

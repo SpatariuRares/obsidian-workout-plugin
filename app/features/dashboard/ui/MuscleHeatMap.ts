@@ -1,13 +1,14 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
-import { Body, type BodyData } from "@app/features/dashboard/body";
+import { Body, type BodyData, VIEW_TYPE } from "@app/features/dashboard/body";
 import {
   MuscleDataCalculator,
   MuscleBalanceAnalyzer,
 } from "@app/features/dashboard/business/muscleHeatMap";
 import { HeatMapControls } from "@app/features/dashboard/ui/HeatMapControls";
 import { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Main orchestrator for muscle heat map visualization
@@ -25,7 +26,7 @@ export class MuscleHeatMap {
     });
 
     heatMapEl.createEl("h3", {
-      text: "Muscle heat map",
+      text: TEXT_CONSTANTS.UI.LABELS.MUSCLE_HEAT_MAP,
       cls: "widget-title",
     });
 
@@ -140,7 +141,7 @@ export class MuscleHeatMap {
 
     // Create Body component with visualization options
     const body = new Body(bodyData, {
-      view: options.view,
+      view: options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
       showLabels: true,
       maxValue: maxValue,
     });

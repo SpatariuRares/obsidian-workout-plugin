@@ -1,6 +1,7 @@
 import { TrendIndicators } from "@app/types";
 import { TrendIndicator } from "@app/components/molecules";
 import { UI_LABELS } from "@app/constants/LabelConstants";
+import { UI_ICONS } from "@app/constants";
 
 /**
  * Renders trend header information for workout charts.
@@ -58,13 +59,13 @@ export class TrendHeader {
       text: UI_LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
     });
 
-    if (variationData.text !== undefined && percentChange !== "N/A") {
+    if (variationData.text !== undefined && percentChange !== UI_LABELS.TABLE.NOT_AVAILABLE) {
       // Determine trend direction based on percentage
       const percentValue = parseFloat(percentChange);
       const direction =
-        percentValue > 0 ? "up" :
-          percentValue < 0 ? "down" :
-            "neutral";
+        percentValue > 0 ? UI_LABELS.CHARTS.UP :
+          percentValue < 0 ? UI_LABELS.CHARTS.DOWN :
+            UI_LABELS.CHARTS.NEUTRAL;
 
       // Use TrendIndicator molecule for variation display
       TrendIndicator.create(p, {
@@ -73,7 +74,7 @@ export class TrendHeader {
         className: "workout-charts-trend-variation",
       });
     } else if (variationData.text !== undefined) {
-      // Fallback for non-percentage values (e.g., "N/A", "Aumento signif.")
+      // Fallback for non-percentage values (e.g., UI_LABELS.TABLE.NOT_AVAILABLE, "Aumento signif.")
       const span = p.createEl("span", {
         cls: "workout-charts-trend-variation",
       });
@@ -117,7 +118,7 @@ export class TrendHeader {
   private static calculateVariation(volumeData: number[]) {
     let firstValue: number | undefined,
       lastValue: number | undefined,
-      percentChange = "N/A";
+      percentChange: string = UI_LABELS.TABLE.NOT_AVAILABLE;
 
     if (volumeData.length >= 2) {
       firstValue = volumeData[0];
@@ -157,12 +158,12 @@ export class TrendHeader {
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
-      const changeSign = parseFloat(percentChange) > 0 ? "+" : "";
+      const changeSign = parseFloat(percentChange) > 0 ? UI_ICONS.COMMON.PLUS : UI_ICONS.COMMON.EMPTY;
       return {
         text:
           percentChange === "Infinity"
             ? UI_LABELS.CHARTS.SIGNIFICANT_INCREASE
-            : changeSign + percentChange + "%",
+            : changeSign + percentChange + UI_ICONS.COMMON.PERCENTAGE,
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {

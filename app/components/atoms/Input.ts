@@ -3,8 +3,9 @@
  * Basic input field - indivisible UI primitive
  */
 
+import { INPUT_TYPE } from "@app/types";;
 export interface InputProps {
-	type?: "text" | "number" | "email" | "password" | "date" | "time";
+	type?: INPUT_TYPE;
 	placeholder?: string;
 	value?: string | number;
 	className?: string;
@@ -33,7 +34,7 @@ export class Input {
 		const input = parent.createEl("input", {
 			cls: props?.className || "input",
 			attr: {
-				type: props?.type || "text",
+				type: props?.type || INPUT_TYPE.TEXT,
 				...(props?.placeholder && { placeholder: props.placeholder }),
 				...(props?.value !== undefined && { value: String(props.value) }),
 				...(props?.disabled && { disabled: "true" }),

@@ -7,8 +7,9 @@ import {
 } from "@app/components/molecules";
 import { ErrorMessage } from "@app/components/atoms";
 import { LogCallouts } from "@app/features/logs/components/LogCallouts";
-import { CHART_TYPE, EmbeddedViewParams } from "@app/types";
+import { CHART_TYPE, EmbeddedChartParams, EmbeddedViewParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
+import { TEXT_CONSTANTS } from "@app/constants";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -29,7 +30,7 @@ export abstract class BaseView {
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
-    ErrorMessage.render(container, error.message, "Error");
+    ErrorMessage.render(container, error.message, TEXT_CONSTANTS.ERRORS.TYPES.GENERIC);
   }
 
   /**
@@ -88,7 +89,7 @@ export abstract class BaseView {
               : CHART_TYPE.EXERCISE;
           return effectiveChartCategory === CHART_TYPE.WORKOUT;
         })()
-        : !("exercise" in params && params.exercise);
+        : !(TEXT_CONSTANTS.COMMON.TYPES.EXERCISE in params && params.exercise);
 
     if (isWorkoutView) {
       InfoBanner.render(
@@ -97,7 +98,7 @@ export abstract class BaseView {
         "warning"
       );
     } else {
-      const exerciseName = "exercise" in params ? params.exercise || "" : "";
+      const exerciseName = TEXT_CONSTANTS.COMMON.TYPES.EXERCISE in params ? params.exercise || "" : "";
       LogCallouts.renderNoMatchMessage(container);
       if (exerciseName) {
         LogCallouts.renderCreateLogButtonForExercise(
@@ -126,9 +127,8 @@ export abstract class BaseView {
   protected filterData(
     logData: WorkoutLogData[],
     params: EmbeddedViewParams,
-    debugMode: boolean
   ) {
-    return DataFilter.filterData(logData, params, debugMode);
+    return DataFilter.filterData(logData, params as EmbeddedChartParams);
   }
 
   /**
@@ -142,7 +142,6 @@ export abstract class BaseView {
       ErrorMessage.render(
         container,
         `Invalid parameters:\n${validationErrors.join("\n")}`,
-        "Validation Error"
       );
       return false;
     }

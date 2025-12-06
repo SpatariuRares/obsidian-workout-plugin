@@ -88,7 +88,7 @@ export class InsertTableModal extends BaseInsertModal {
     setTimeout(() => {
       if (this.tableTypeSelect && (this.tableTypeSelect.value as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
         const workoutField = container.querySelector(
-          '[data-field-type="workout"]'
+          '[data-field-type=TEXT_CONSTANTS.COMMON.TYPES.WORKOUT]'
         ) as HTMLElement;
         const currentWorkoutField = container.querySelector(
           '[data-field-type="current-workout"]'
@@ -216,7 +216,6 @@ export class InsertTableModal extends BaseInsertModal {
       buttonText,
       searchByName: advancedValues.searchByName || false,
       exactMatch: advancedValues.exactMatch,
-      debug: advancedValues.debug,
     });
   }
 }

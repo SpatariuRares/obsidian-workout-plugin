@@ -2,13 +2,14 @@
 
 import { LoadingSpinner } from "@app/components/molecules/LoadingSpinner";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 describe("LoadingSpinner molecule", () => {
 	it("renders spinner with optional icon and message", () => {
 		const parent = createObsidianContainer();
 
 		const spinner = LoadingSpinner.create(parent, {
-			message: "Loading workout data...",
+			message: TEXT_CONSTANTS.MESSAGES.LOADING,
 			icon: "⏳",
 			className: "mt-md",
 		});
@@ -19,7 +20,7 @@ describe("LoadingSpinner molecule", () => {
 			"⏳"
 		);
 		expect(spinner.querySelector(".loading-spinner-message")?.textContent).toBe(
-			"Loading workout data..."
+			TEXT_CONSTANTS.MESSAGES.LOADING
 		);
 	});
 

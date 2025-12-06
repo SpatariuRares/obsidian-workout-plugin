@@ -3,6 +3,8 @@
  * Provides theme-aware colors using Obsidian CSS variables with fallbacks.
  */
 
+import { CHART_DATA_TYPE } from "@app/types";
+
 /**
  * Represents a complete color scheme for a chart element
  */
@@ -180,14 +182,14 @@ export class ChartColors {
 	 * @param chartType - Type of chart data (volume, weight, reps)
 	 * @returns Color scheme object
 	 */
-	static getColorSchemeForType(chartType: string): ColorScheme {
+	static getColorSchemeForType(chartType: CHART_DATA_TYPE): ColorScheme {
 		const colors = this.getChartColors();
 		switch (chartType) {
-			case "volume":
+			case CHART_DATA_TYPE.VOLUME:
 				return colors.primary;
-			case "weight":
+			case CHART_DATA_TYPE.WEIGHT:
 				return colors.secondary;
-			case "reps":
+			case CHART_DATA_TYPE.REPS:
 				return colors.accent;
 			default:
 				return colors.primary;

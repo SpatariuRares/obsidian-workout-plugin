@@ -1,4 +1,5 @@
 import type { MuscleGroupData } from "@app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -55,8 +56,7 @@ export class MuscleBalanceAnalyzer {
       this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${
-          frontVolume > backVolume ? "Front" : "Back"
+        `Front-Back imbalance detected (${frontVolume > backVolume ? "Front" : "Back"
         } dominant)`
       );
     }
@@ -81,14 +81,14 @@ export class MuscleBalanceAnalyzer {
 
     if (!analysis.hasData) {
       infoPanel.createEl("p", {
-        text: "No workout data found for the selected time period.",
+        text: TEXT_CONSTANTS.MESSAGES.NO_DATA_PERIOD,
         cls: "info-message",
       });
       return;
     }
 
     // Display analysis header
-    infoPanel.createEl("h4", { text: "Training analysis" });
+    infoPanel.createEl("h4", { text: TEXT_CONSTANTS.UI.LABELS.TRAINING_ANALYSIS });
 
     infoPanel.createEl("p", {
       text: `Average volume: ${analysis.avgVolume.toFixed(0)} kg`,
@@ -101,7 +101,7 @@ export class MuscleBalanceAnalyzer {
       });
 
       alertEl.createEl("h5", {
-        text: "⚠️ imbalance alerts",
+        text: TEXT_CONSTANTS.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
         cls: "alert-title",
       });
 
@@ -113,7 +113,7 @@ export class MuscleBalanceAnalyzer {
       });
     } else {
       infoPanel.createEl("p", {
-        text: "✅ no major muscle imbalances detected",
+        text: TEXT_CONSTANTS.MESSAGES.SUCCESS.NO_IMBALANCES,
         cls: "success-message",
       });
     }

@@ -1,4 +1,3 @@
-export * from "@app/features/timer/types/TimerTypes";
 export * from "@app/features/timer/components/TimerDisplay";
 export * from "@app/features/timer/components/TimerControls";
 export * from "@app/features/timer/components/TimerAudio";

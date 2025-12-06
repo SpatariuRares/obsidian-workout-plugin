@@ -7,6 +7,7 @@ import {
   filterLogDataByExercise,
 } from "@app/utils/utils";
 import { TFile } from "obsidian";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
 jest.mock("@app/utils/utils", () => ({
@@ -70,7 +71,6 @@ describe("DataFilter", () => {
       const result = DataFilter.filterData(
         mockLogData,
         params as EmbeddedChartParams,
-        false
       );
       expect(result.filteredData).toHaveLength(mockLogData.length);
       expect(result.filterMethodUsed).toBe("none");
@@ -79,25 +79,23 @@ describe("DataFilter", () => {
     it("should return empty array if logData is null or empty", () => {
       const params: Partial<EmbeddedChartParams> = {};
       expect(
-        DataFilter.filterData([], params as EmbeddedChartParams, false)
+        DataFilter.filterData([], params as EmbeddedChartParams)
           .filteredData
       ).toHaveLength(0);
       expect(
         DataFilter.filterData(
           null as unknown as WorkoutLogData[],
           params as EmbeddedChartParams,
-          false
         ).filteredData
       ).toHaveLength(0);
     });
 
     describe("Workout Filtering", () => {
-      it('should filter by workout name using the "workout" field', () => {
+      it('should filter by workout name using the UI_LABELS.COMMON.TYPES.WORKOUT field', () => {
         const params: Partial<EmbeddedChartParams> = { workout: "Leg Day" };
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(2);
         expect(result.filteredData[0].workout).toBe("Leg Day");
@@ -113,7 +111,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(2);
         expect(result.filteredData[0].origine).toBe("[[Strength Training]]");
@@ -127,7 +124,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(1);
         expect(result.filteredData[0].exercise).toBe("Deadlift");
@@ -143,7 +139,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(1);
         expect(result.filteredData[0].exercise).toBe("Bench Press");
@@ -161,7 +156,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         // It will match 'Squat' and '   SQUAT   '
         expect(result.filteredData).toHaveLength(3);
@@ -176,7 +170,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(0);
       });
@@ -192,7 +185,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(2);
         expect(result.filteredData[0].exercise).toBe("Squat");
@@ -211,7 +203,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(0);
       });
@@ -225,7 +216,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
         expect(result.filteredData).toHaveLength(0);
         expect(result.filterMethodUsed).toBe("No data found for workout");
@@ -267,8 +257,7 @@ describe("DataFilter", () => {
 
         const result = DataFilter.filterData(
           mockLogData,
-          params as EmbeddedChartParams,
-          true
+          params as EmbeddedChartParams
         );
 
         expect(mockFindExerciseMatches).toHaveBeenCalledWith(
@@ -315,7 +304,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
 
         expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
@@ -351,7 +339,6 @@ describe("DataFilter", () => {
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
-          false
         );
 
         expect(result.filteredData).toHaveLength(0);

@@ -2,11 +2,12 @@ import { Notice } from "obsidian";
 import {
   TimerState,
   TimerCallbacks,
-} from "@app/features/timer/types/TimerTypes";
+} from "@app/types/TimerTypes";
 import { TimerAudio } from "@app/features/timer/components/TimerAudio";
 import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import { TimerControls } from "@app/features/timer/components/TimerControls";
-import { TIMER_TYPE } from "@app/types/TimerTypes";
+import { TIMER_TYPE } from "@app/types";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export class TimerCore {
   private state: TimerState;
@@ -140,7 +141,7 @@ export class TimerCore {
     this.updateDisplay();
 
     // Show completion message
-    new Notice("Timer completed!");
+    new Notice(TEXT_CONSTANTS.MESSAGES.TIMER_COMPLETED);
 
     this.callbacks.onTimerComplete?.();
   }

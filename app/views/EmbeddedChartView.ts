@@ -51,11 +51,7 @@ export class EmbeddedChartView extends BaseView {
         return;
       }
 
-      const filterResult = this.filterData(
-        logData,
-        params,
-        this.plugin.settings.debugMode || params.debug || false
-      );
+      const filterResult = this.filterData(logData, params);
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
@@ -69,10 +65,6 @@ export class EmbeddedChartView extends BaseView {
       }
 
       loadingDiv.remove();
-      this.logDebug("EmbeddedChartView", "Processing chart data", {
-        dataType: params.type || "volume",
-        dateRange: params.dateRange || 30,
-      });
 
       // Sort data by ascending date
       const sortedData = [...filterResult.filteredData].sort(
@@ -81,16 +73,11 @@ export class EmbeddedChartView extends BaseView {
 
       const { labels, datasets } = processChartData(
         sortedData,
-        params.type || "volume",
+        params.type || CHART_DATA_TYPE.VOLUME,
         params.dateRange || 30,
         "DD/MM/YYYY",
         params.chartType || CHART_TYPE.EXERCISE
       );
-
-      this.logDebug("EmbeddedChartView", "Processed chart data", {
-        labels,
-        datasets,
-      });
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
       const { slope } = calculateTrendLine(volumeData);
@@ -138,7 +125,6 @@ export class EmbeddedChartView extends BaseView {
       datasets,
       volumeData,
       trendIndicators,
-      filterResult,
       params,
     } = data;
 
@@ -188,13 +174,5 @@ export class EmbeddedChartView extends BaseView {
         params.chartType || CHART_TYPE.EXERCISE
       );
     }
-
-    this.renderDebugInfo(
-      contentDiv,
-      filterResult.filteredData,
-      params.type || CHART_DATA_TYPE.VOLUME,
-      filterResult.filterMethodUsed,
-      this.plugin.settings.debugMode || params.debug || false
-    );
   }
 }

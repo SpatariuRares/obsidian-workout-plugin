@@ -2,13 +2,14 @@
 
 import { Badge } from "@app/components/molecules/Badge";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 describe("Badge molecule", () => {
 	it("renders badges with optional icons and variants", () => {
 		const parent = createObsidianContainer();
 
 		const badge = Badge.create(parent, {
-			text: "Upper Body",
+			text: TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY,
 			icon: "💪",
 			variant: "info",
 			className: "mb-2",
@@ -19,7 +20,7 @@ describe("Badge molecule", () => {
 		expect(badge.className).toContain("badge-info");
 		expect(badge.className).toContain("mb-2");
 		expect(badge.querySelector(".badge-icon")?.textContent).toBe("💪");
-		expect(badge.querySelector(".badge-text")?.textContent).toBe("Upper Body");
+		expect(badge.querySelector(".badge-text")?.textContent).toBe(TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY);
 	});
 
 	it("creates count badges via helper", () => {

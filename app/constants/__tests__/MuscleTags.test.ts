@@ -1,3 +1,4 @@
+import { TEXT_CONSTANTS } from "@app/constants";
 import {
   MUSCLE_TAGS,
   TAG_MUSCLE_MAP,
@@ -141,7 +142,7 @@ describe('MuscleTags', () => {
     it('should be case insensitive', () => {
       expect(isValidMuscleTag('CHEST')).toBe(true);
       expect(isValidMuscleTag('ChEsT')).toBe(true);
-      expect(isValidMuscleTag('Petto')).toBe(true);
+      expect(isValidMuscleTag(TEXT_CONSTANTS.MUSCLES.NAMES_IT.PETTO)).toBe(true);
     });
 
     it('should handle tags with whitespace', () => {
@@ -200,7 +201,7 @@ describe('MuscleTags', () => {
 
     it('should be case insensitive', () => {
       expect(tagToMuscleGroup('CHEST')).toBe('chest');
-      expect(tagToMuscleGroup('Petto')).toBe('chest');
+      expect(tagToMuscleGroup(TEXT_CONSTANTS.MUSCLES.NAMES_IT.PETTO)).toBe('chest');
       expect(tagToMuscleGroup('SQUAT')).toBe('quads');
     });
 

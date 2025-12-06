@@ -29,8 +29,8 @@ export interface ActionButtonGroupResult {
  * @example
  * ```typescript
  * const { editBtn, deleteBtn } = ActionButtonGroup.create(parent, {
- *   editTitle: "Edit workout",
- *   deleteTitle: "Delete workout"
+ *   editTitle: TEXT_CONSTANTS.UI.ACTIONS.EDIT_WORKOUT,
+ *   deleteTitle: TEXT_CONSTANTS.UI.ACTIONS.DELETE_WORKOUT
  * });
  *
  * Button.onClick(editBtn, () => handleEdit());

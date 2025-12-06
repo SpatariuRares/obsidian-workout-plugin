@@ -1,3 +1,4 @@
+import { MODAL_SECTIONS } from "@app/constants/ModalConstants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView } from "obsidian";
 import {
@@ -33,8 +34,6 @@ export class EmbeddedTableView extends BaseView {
       onError: (error, context) =>
         this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
       onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
-      onDebug: (component, message, data) =>
-        this.logDebug(component, message, data),
     };
   }
 
@@ -56,10 +55,6 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams
   ): Promise<void> {
     try {
-      this.callbacks.onDebug?.("EmbeddedTableView", "createTable called", {
-        dataLength: logData.length,
-        params,
-      });
 
       // Validate parameters using the new component
       const validationErrors = TableConfig.validateParams(params);
@@ -77,22 +72,13 @@ export class EmbeddedTableView extends BaseView {
       const dataToProcess = await TableDataLoader.getOptimizedCSVData(
         params,
         this.plugin,
-        this.callbacks
       );
 
-      this.callbacks.onDebug?.(
-        "EmbeddedTableView",
-        "CSV data processing completed",
-        {
-          originalDataLength: logData.length,
-          processedDataLength: dataToProcess.length,
-        }
-      );
+
 
       const filterResult = this.filterData(
         dataToProcess,
         params,
-        this.plugin.settings.debugMode || params.debug || false
       );
 
       if (filterResult.filteredData.length === 0) {
@@ -107,10 +93,7 @@ export class EmbeddedTableView extends BaseView {
       }
 
       loadingDiv.remove();
-      this.callbacks.onDebug?.("EmbeddedTableView", "Processing table data", {
-        filteredDataLength: filterResult.filteredData.length,
-        limit: params.limit || 50,
-      });
+
 
       const tableData = TableDataProcessor.processTableData(
         filterResult.filteredData,
@@ -142,7 +125,7 @@ export class EmbeddedTableView extends BaseView {
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`
         : "";
-      const exerciseName = params.exercise || "Workout";
+      const exerciseName = params.exercise || MODAL_SECTIONS.WORKOUT;
 
       LogCallouts.renderAddLogButton(
         contentDiv,
@@ -155,14 +138,7 @@ export class EmbeddedTableView extends BaseView {
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
 
-    this.callbacks.onDebug?.(
-      "EmbeddedTableView",
-      "Creating table with config",
-      {
-        headers,
-        rows,
-      }
-    );
+
 
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
@@ -177,7 +153,6 @@ export class EmbeddedTableView extends BaseView {
       TableRenderer.renderFallbackMessage(
         tableContainer,
         "Error in table rendering",
-        "Table Error"
       );
     }
 

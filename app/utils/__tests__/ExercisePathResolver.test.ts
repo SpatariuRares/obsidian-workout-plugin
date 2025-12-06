@@ -16,15 +16,13 @@ class MockTFile {
 // Mock Plugin
 const createMockPlugin = (
 	exerciseFolderPath: string,
-	files: string[],
-	debugMode = false
+	files: string[]
 ): WorkoutChartsPlugin => {
 	const mockFiles = files.map((path) => new MockTFile(path));
 
 	return {
 		settings: {
 			exerciseFolderPath,
-			debugMode,
 		},
 		app: {
 			vault: {
@@ -345,7 +343,7 @@ describe("ExercisePathResolver", () => {
 					"theGYM/Esercizi/Data/Squat.md",
 					"Esercizi/Data/Bench Press.md",
 				],
-				true
+
 			);
 
 
@@ -367,7 +365,7 @@ describe("ExercisePathResolver", () => {
 			const plugin = createMockPlugin(
 				"Esercizi",
 				["theGYM/Esercizi/Data/Squat.md"],
-				false
+
 			);
 
 
@@ -378,7 +376,7 @@ describe("ExercisePathResolver", () => {
 			const plugin = createMockPlugin(
 				"Esercizi",
 				["theGYM/Esercizi/Data/Squat.md"],
-				true
+
 			);
 
 
@@ -404,7 +402,7 @@ describe("ExercisePathResolver", () => {
 					"theGYM/Esercizi/Data/Squat.md",
 					"Esercizi/Data/Bench Press.md",
 				],
-				true
+
 			);
 
 

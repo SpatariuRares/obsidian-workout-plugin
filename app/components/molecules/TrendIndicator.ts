@@ -5,10 +5,11 @@
  */
 
 import { Icon, Text, Container } from "@app/components/atoms";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TrendIndicatorProps {
 	percentage: number;
-	direction: "up" | "down" | "neutral";
+	direction: typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS[keyof typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS];
 	label?: string;
 	className?: string;
 }
@@ -21,8 +22,7 @@ export interface TrendIndicatorProps {
  * ```typescript
  * TrendIndicator.create(container, {
  *   percentage: 15.5,
- *   direction: "up",
- *   label: "vs last week"
+ *   direction: TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP,
  * });
  * ```
  */
@@ -37,13 +37,13 @@ export class TrendIndicator {
 	 * @param direction - Trend direction
 	 * @returns Arrow emoji
 	 */
-	private static getArrow(direction: "up" | "down" | "neutral"): string {
+	private static getArrow(direction: typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS[keyof typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS]): string {
 		switch (direction) {
-			case "up":
+			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP:
 				return this.ARROW_UP;
-			case "down":
+			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.DOWN:
 				return this.ARROW_DOWN;
-			case "neutral":
+			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.NEUTRAL:
 				return this.ARROW_NEUTRAL;
 		}
 	}

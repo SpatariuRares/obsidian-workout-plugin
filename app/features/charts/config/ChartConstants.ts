@@ -3,13 +3,15 @@
  * Centralizes all magic strings, labels, and default values.
  */
 
+import { UI_LABELS, TEXT_CONSTANTS } from "@app/constants";
+
 /**
  * Chart type identifiers
  */
 export const ChartType = {
-	VOLUME: "volume",
-	WEIGHT: "weight",
-	REPS: "reps",
+	VOLUME: TEXT_CONSTANTS.CHARTS.TYPES.VOLUME,
+	WEIGHT: TEXT_CONSTANTS.CHARTS.TYPES.WEIGHT,
+	REPS: TEXT_CONSTANTS.CHARTS.TYPES.REPS,
 } as const;
 
 export type ChartTypeValue = typeof ChartType[keyof typeof ChartType];
@@ -18,16 +20,16 @@ export type ChartTypeValue = typeof ChartType[keyof typeof ChartType];
  * Default chart labels and text
  */
 export const ChartLabels = {
-	TREND_LINE: "Linea di Tendenza",
-	X_AXIS: "Data",
+	TREND_LINE: TEXT_CONSTANTS.CHARTS.LABELS_IT.TREND_LINE,
+	X_AXIS: TEXT_CONSTANTS.CHARTS.LABELS_IT.DATE,
 	Y_AXIS: {
-		VOLUME: "Volume (kg)",
-		WEIGHT: "Peso (kg)",
-		REPS: "Ripetizioni",
+		VOLUME: UI_LABELS.TABLE.VOLUME_WITH_UNIT,
+		WEIGHT: UI_LABELS.TABLE.WEIGHT_WITH_UNIT,
+		REPS: UI_LABELS.TABLE.REPS,
 	},
 	UNITS: {
-		WEIGHT: "kg",
-		REPS: "reps",
+		WEIGHT: UI_LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX,
+		REPS: UI_LABELS.TABLE.REPS,
 	},
 } as const;
 

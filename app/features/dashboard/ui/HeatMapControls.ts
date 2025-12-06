@@ -2,6 +2,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
 import { HeatMapExporter } from "@app/features/dashboard/business/muscleHeatMap";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,
@@ -36,17 +37,17 @@ export class HeatMapControls {
     });
 
     const weekBtn = timeFrameEl.createEl("button", {
-      text: "Week",
+      text: TEXT_CONSTANTS.TIME_PERIODS.WEEK,
       cls: "toggle-btn active",
     });
 
     const monthBtn = timeFrameEl.createEl("button", {
-      text: "Month",
+      text: TEXT_CONSTANTS.TIME_PERIODS.MONTH,
       cls: "toggle-btn",
     });
 
     const yearBtn = timeFrameEl.createEl("button", {
-      text: "Year",
+      text: TEXT_CONSTANTS.TIME_PERIODS.YEAR,
       cls: "toggle-btn",
     });
 
@@ -56,18 +57,18 @@ export class HeatMapControls {
     });
 
     const frontBtn = viewToggleEl.createEl("button", {
-      text: "Front",
+      text: TEXT_CONSTANTS.UI.LABELS.FRONT,
       cls: "toggle-btn active",
     });
 
     const backBtn = viewToggleEl.createEl("button", {
-      text: "Back",
+      text: TEXT_CONSTANTS.UI.LABELS.BACK,
       cls: "toggle-btn",
     });
 
     // Export button
     const exportBtn = controlsEl.createEl("button", {
-      text: "📸 export",
+      text: TEXT_CONSTANTS.UI.ACTIONS.EXPORT,
       cls: "export-btn",
     });
 

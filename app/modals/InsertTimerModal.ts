@@ -11,7 +11,7 @@ import {
   MODAL_BUTTONS,
   MODAL_NOTICES,
 } from "@app/constants/ModalConstants";
-import { TimerType } from "@app/types";
+import { TIMER_TYPE } from "@app/types";
 
 export class InsertTimerModal extends BaseInsertModal {
   private timerElements?: TimerConfigurationElements;
@@ -49,7 +49,7 @@ export class InsertTimerModal extends BaseInsertModal {
     const timerValues = TimerConfigurationSection.getValues(this.timerElements);
 
     return CodeGenerator.generateTimerCode({
-      type: timerValues.type as TimerType,
+      type: timerValues.type as TIMER_TYPE,
       duration: timerValues.duration,
       intervalTime: timerValues.intervalTime,
       rounds: timerValues.rounds,

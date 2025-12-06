@@ -2,6 +2,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "@app/types";
 import { TABLE_COLUMNS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { DateUtils } from "@app/utils/DateUtils";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Processes workout log data for table display.
@@ -61,7 +62,7 @@ export class TableDataProcessor {
       filterResult: {
         filteredData: sortedAndLimitedData,
         filterMethodUsed: "table processing",
-        titlePrefix: "Workout Log",
+        titlePrefix: TEXT_CONSTANTS.UI.LABELS.WORKOUT_LOG,
       },
       params,
     };
@@ -119,7 +120,7 @@ export class TableDataProcessor {
         Date: formattedDate,
         Exercise: this.getExerciseDisplay(log.exercise),
         Reps: log.reps?.toString() || TABLE_LABELS.NOT_AVAILABLE,
-        "Weight (kg)": log.weight?.toString() || TABLE_LABELS.NOT_AVAILABLE,
+        [TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG]: log.weight?.toString() || TABLE_LABELS.NOT_AVAILABLE,
         Volume: log.volume?.toString() || TABLE_LABELS.NOT_AVAILABLE,
         Notes: log.notes || "",
         Actions: "", // Placeholder for actions

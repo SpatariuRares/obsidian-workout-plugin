@@ -19,7 +19,7 @@ export interface LoadingSpinnerProps {
  * @example
  * ```typescript
  * const spinner = LoadingSpinner.create(container, {
- *   message: "Loading workout data..."
+ *   message: TEXT_CONSTANTS.MESSAGES.LOADING
  * });
  *
  * // Later, when loading is complete:

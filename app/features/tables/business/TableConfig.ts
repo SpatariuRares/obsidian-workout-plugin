@@ -21,7 +21,6 @@ export class TableConfig {
       buttonText: TABLE_DEFAULTS.BUTTON_TEXT,
       searchByName: false,
       exactMatch: false,
-      debug: false,
       columns: [...DEFAULT_VISIBLE_COLUMNS],
     };
   }

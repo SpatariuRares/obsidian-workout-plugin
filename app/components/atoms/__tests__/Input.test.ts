@@ -2,12 +2,13 @@
 
 import { Input } from "@app/components/atoms/Input";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { INPUT_TYPE } from "@app/types";
 
 describe("Input atom", () => {
 	it("creates an input with provided attributes", () => {
 		const parent = createObsidianContainer();
 		const input = Input.create(parent, {
-			type: "number",
+			type: INPUT_TYPE.NUMBER,
 			placeholder: "Weight",
 			value: 42,
 			className: "weight-input",

@@ -12,6 +12,7 @@ import {
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
+import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 
 // Mock TFile
 class MockTFile {
@@ -343,35 +344,35 @@ describe("utils.ts", () => {
     it("should process volume chart data for exercise", () => {
       const result = processChartData(
         mockData,
-        "volume",
+        CHART_DATA_TYPE.VOLUME,
         30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE
       );
       expect(result.labels.length).toBeGreaterThan(0);
       expect(result.datasets.length).toBe(1);
-      expect(result.datasets[0].label).toContain("Volume Medio");
+      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_VOLUME);
     });
 
     it("should process volume chart data for workout", () => {
       const result = processChartData(
         mockData,
-        "volume",
+        CHART_DATA_TYPE.VOLUME,
         30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT
       );
-      expect(result.datasets[0].label).toContain("Volume Totale");
+      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.TOTAL_VOLUME);
     });
 
     it("should process weight chart data", () => {
-      const result = processChartData(mockData, "weight", 30);
-      expect(result.datasets[0].label).toContain("Peso");
+      const result = processChartData(mockData, CHART_DATA_TYPE.WEIGHT, 30);
+      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_WEIGHT);
     });
 
     it("should process reps chart data", () => {
-      const result = processChartData(mockData, "reps", 30);
-      expect(result.datasets[0].label).toContain("Reps");
+      const result = processChartData(mockData, CHART_DATA_TYPE.REPS, 30);
+      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_REPS);
     });
 
     it("should filter data by date range", () => {
@@ -386,12 +387,12 @@ describe("utils.ts", () => {
           "Squat.md"
         ),
       ];
-      const result = processChartData(oldData, "volume", 30);
+      const result = processChartData(oldData, CHART_DATA_TYPE.VOLUME, 30);
       expect(result.labels.length).toBe(0);
     });
 
     it("should group data by date", () => {
-      const result = processChartData(mockData, "volume", 30);
+      const result = processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30);
       // Two dates in mock data: date1 and date2
       expect(result.labels.length).toBe(2);
     });
@@ -399,8 +400,7 @@ describe("utils.ts", () => {
     it("should calculate average for exercise display type", () => {
       const result = processChartData(
         mockData,
-        "volume",
-        30,
+        CHART_DATA_TYPE.VOLUME, 30,
         "DD/MM/YYYY",
         CHART_TYPE.EXERCISE
       );
@@ -414,7 +414,7 @@ describe("utils.ts", () => {
     it("should calculate total for workout display type", () => {
       const result = processChartData(
         mockData,
-        "volume",
+        CHART_DATA_TYPE.VOLUME,
         30,
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT
@@ -427,7 +427,7 @@ describe("utils.ts", () => {
     });
 
     it("should handle different date formats", () => {
-      const result = processChartData(mockData, "volume", 30, "YYYY-MM-DD");
+      const result = processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30, "YYYY-MM-DD");
       expect(result.labels[0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     });
   });

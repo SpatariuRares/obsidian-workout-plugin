@@ -3,6 +3,7 @@ import type WorkoutChartsPlugin from "main";
 import { MuscleTagMapper } from "@app/features/dashboard/business/muscleHeatMap";
 import { DateUtils } from "@app/utils/DateUtils";
 import type { BodyData } from "@app/features/dashboard/body";
+import { TAG_MUSCLE_MAP } from "@app/constants";
 
 export interface MuscleGroupData {
   name: string;
@@ -89,43 +90,43 @@ export class MuscleDataCalculator {
 
     const bodyData = {
       shoulders: {
-        frontLeft: getVolume("shoulders") * 0.5,
-        frontRight: getVolume("shoulders") * 0.5,
-        rearLeft: getVolume("rear_delts") * 0.5,
-        rearRight: getVolume("rear_delts") * 0.5,
+        frontLeft: getVolume(TAG_MUSCLE_MAP.shoulders) * 0.5,
+        frontRight: getVolume(TAG_MUSCLE_MAP.shoulders) * 0.5,
+        rearLeft: getVolume(TAG_MUSCLE_MAP.rear_delts) * 0.5,
+        rearRight: getVolume(TAG_MUSCLE_MAP.rear_delts) * 0.5,
       },
       chest: {
-        upper: getVolume("chest") * 0.4,
-        middle: getVolume("chest") * 0.4,
-        lower: getVolume("chest") * 0.2,
+        upper: getVolume(TAG_MUSCLE_MAP.chest) * 0.4,
+        middle: getVolume(TAG_MUSCLE_MAP.chest) * 0.4,
+        lower: getVolume(TAG_MUSCLE_MAP.chest) * 0.2,
       },
       back: {
-        traps: getVolume("traps"),
-        lats: getVolume("back"),
-        lowerBack: getVolume("back") * 0.3,
-        trapsMiddle: getVolume("traps") * 0.5,
+        traps: getVolume(TAG_MUSCLE_MAP.traps),
+        lats: getVolume(TAG_MUSCLE_MAP.back),
+        lowerBack: getVolume(TAG_MUSCLE_MAP.back) * 0.3,
+        trapsMiddle: getVolume(TAG_MUSCLE_MAP.traps) * 0.5,
       },
       arms: {
-        bicepsLeft: getVolume("biceps") * 0.5,
-        bicepsRight: getVolume("biceps") * 0.5,
-        tricepsLeft: getVolume("triceps") * 0.5,
-        tricepsRight: getVolume("triceps") * 0.5,
-        forearmsLeft: getVolume("forearms") * 0.5,
-        forearmsRight: getVolume("forearms") * 0.5,
+        bicepsLeft: getVolume(TAG_MUSCLE_MAP.biceps) * 0.5,
+        bicepsRight: getVolume(TAG_MUSCLE_MAP.biceps) * 0.5,
+        tricepsLeft: getVolume(TAG_MUSCLE_MAP.triceps) * 0.5,
+        tricepsRight: getVolume(TAG_MUSCLE_MAP.triceps) * 0.5,
+        forearmsLeft: getVolume(TAG_MUSCLE_MAP.forearms) * 0.5,
+        forearmsRight: getVolume(TAG_MUSCLE_MAP.forearms) * 0.5,
       },
       legs: {
-        quadsLeft: getVolume("quads") * 0.5,
-        quadsRight: getVolume("quads") * 0.5,
-        hamstringsLeft: getVolume("hamstrings") * 0.5,
-        hamstringsRight: getVolume("hamstrings") * 0.5,
-        glutesLeft: getVolume("glutes") * 0.5,
-        glutesRight: getVolume("glutes") * 0.5,
-        calvesLeft: getVolume("calves") * 0.5,
-        calvesRight: getVolume("calves") * 0.5,
+        quadsLeft: getVolume(TAG_MUSCLE_MAP.legs) * 0.5,
+        quadsRight: getVolume(TAG_MUSCLE_MAP.legs) * 0.5,
+        hamstringsLeft: getVolume(TAG_MUSCLE_MAP.hamstrings) * 0.5,
+        hamstringsRight: getVolume(TAG_MUSCLE_MAP.hamstrings) * 0.5,
+        glutesLeft: getVolume(TAG_MUSCLE_MAP.glutes) * 0.5,
+        glutesRight: getVolume(TAG_MUSCLE_MAP.glutes) * 0.5,
+        calvesLeft: getVolume(TAG_MUSCLE_MAP.calves) * 0.5,
+        calvesRight: getVolume(TAG_MUSCLE_MAP.calves) * 0.5,
       },
       core: {
-        abs: getVolume("abs"),
-        obliques: getVolume("core") * 0.5,
+        abs: getVolume(TAG_MUSCLE_MAP.abs),
+        obliques: getVolume(TAG_MUSCLE_MAP.core) * 0.5,
       },
     };
 

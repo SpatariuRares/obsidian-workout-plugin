@@ -20,13 +20,13 @@ export interface BadgeProps {
  * @example
  * ```typescript
  * Badge.create(container, {
- *   text: "Upper Body",
- *   icon: "💪",
+ *   text: TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY,
+ *   icon: UI_ICONS.EXERCISE.CURL,
  *   variant: "info"
  * });
  *
  * Badge.create(container, {
- *   text: "3 exercises",
+ *   text: TEXT_CONSTANTS.UI.LABELS.EXERCISES_COUNT,
  *   variant: "default"
  * });
  * ```

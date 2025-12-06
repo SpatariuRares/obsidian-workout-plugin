@@ -15,7 +15,7 @@ import {
   MODAL_DEFAULT_VALUES,
 } from "@app/constants/ModalConstants";
 import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
-import { TableColumnType, TableType, TimerType } from "@app/types";
+import { TableColumnType, TABLE_TYPE, TIMER_TYPE } from "@app/types";
 import { Button } from "@app/components/atoms";
 
 export class CreateExerciseSectionModal extends ModalBase {
@@ -238,7 +238,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     if (params.showTimer) {
       const timerCode = CodeGenerator.generateTimerCode({
-        type: TimerType.COUNTDOWN,
+        type: TIMER_TYPE.COUNTDOWN,
         duration: params.restTime,
         title: params.exerciseName,
         showControls: true,
@@ -250,9 +250,9 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     if (params.showLog) {
       // Determine table type based on whether workout is specified
-      const tableType: TableType = params.workoutName
-        ? TableType.COMBINED
-        : TableType.EXERCISE;
+      const tableType: TABLE_TYPE = params.workoutName
+        ? TABLE_TYPE.COMBINED
+        : TABLE_TYPE.EXERCISE;
       const logCode = CodeGenerator.generateTableCode({
         tableType,
         exercise: params.exerciseName,
@@ -263,7 +263,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         buttonText: TABLE_DEFAULTS.BUTTON_TEXT,
         searchByName: false,
         exactMatch: true,
-        debug: false,
       });
       sectionCode += logCode;
     }

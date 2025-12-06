@@ -1,7 +1,8 @@
 // Utility class for generating code blocks
 import { MODAL_CODE_BLOCKS } from "@app/constants/ModalConstants";
 import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
-import { CHART_TYPE, EmbeddedChartParams, EmbeddedTimerParams, TableCodeOptions, TableColumnType, TableType, TimerType } from "@app/types";
+import { CHART_TYPE, EmbeddedChartParams, EmbeddedTimerParams, TableCodeOptions, TableColumnType, TIMER_TYPE, TABLE_TYPE } from "@app/types";
+import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 
 export class CodeGenerator {
   /**
@@ -37,7 +38,6 @@ export class CodeGenerator {
 
     // Add advanced options
     if (params.exactMatch) lines.push(`exactMatch: true`);
-    if (params.debug) lines.push(`debug: true`);
     if (params.title) lines.push(`title: ${params.title}`);
 
     lines.push("```");
@@ -52,12 +52,12 @@ export class CodeGenerator {
     const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.TABLE}`];
 
     // Add target (exercise, workout, or both)
-    if (params.tableType === TableType.COMBINED) {
+    if (params.tableType === TABLE_TYPE.COMBINED) {
       if (params.exercise) lines.push(`exercise: ${params.exercise}`);
       if (params.workout) lines.push(`workout: ${params.workout}`);
-    } else if (params.tableType === TableType.EXERCISE && params.exercise) {
+    } else if (params.tableType === TABLE_TYPE.EXERCISE && params.exercise) {
       lines.push(`exercise: ${params.exercise}`);
-    } else if (params.tableType === TableType.WORKOUT && params.workout) {
+    } else if (params.tableType === TABLE_TYPE.WORKOUT && params.workout) {
       lines.push(`workout: ${params.workout}`);
     }
 
@@ -67,7 +67,7 @@ export class CodeGenerator {
     // Add columns configuration
     if (params.columnsType !== TableColumnType.STANDARD) {
       const columnsMap = {
-        minimal: ["Date", "Exercise", "Reps", "Weight (kg)"],
+        minimal: [UI_LABELS.TABLE.DATE, UI_LABELS.TABLE.EXERCISE, TEXT_CONSTANTS.CHARTS.LABELS.REPS, TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG],
       };
       const columns = columnsMap[params.columnsType as keyof typeof columnsMap];
       if (columns) {
@@ -84,7 +84,6 @@ export class CodeGenerator {
     // Add advanced options
     if (params.searchByName) lines.push(`searchByName: true`);
     if (params.exactMatch) lines.push(`exactMatch: true`);
-    if (params.debug) lines.push(`debug: true`);
 
     lines.push("```");
 
@@ -100,10 +99,10 @@ export class CodeGenerator {
       throw new Error("Timer type is required");
     }
 
-    if (params.type === TimerType.COUNTDOWN && params.duration) {
+    if (params.type === TIMER_TYPE.COUNTDOWN && params.duration) {
       lines.push(`duration: ${params.duration}`);
     } else if (
-      params.type === TimerType.INTERVAL &&
+      params.type === TIMER_TYPE.INTERVAL &&
       params.intervalTime &&
       params.rounds
     ) {

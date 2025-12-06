@@ -5,10 +5,12 @@ import {
   TimerDisplay,
   TimerControls,
   TimerControlCallbacks,
-  TimerState,
 } from "@app/features/timer";
+import {
+  TimerState,
+} from "@app/types/TimerTypes"
 import { BaseView } from "@app/views/BaseView";
-import { EmbeddedTimerParams } from "@app/types";
+import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;
@@ -55,7 +57,7 @@ export class EmbeddedTimerView extends BaseView {
       this.timerCore.stop();
 
       this.timerCore.setState({
-        timerType: params.type || "countdown",
+        timerType: params.type || TIMER_TYPE.COUNTDOWN,
         duration: params.duration || 300,
         intervalTime: params.intervalTime || 30,
         totalRounds: params.rounds || 1,
@@ -68,7 +70,7 @@ export class EmbeddedTimerView extends BaseView {
       // Log timer initialization
       this.logDebug("EmbeddedTimerView", "Timer initialized", {
         timerId: this.timerId,
-        timerType: params.type || "countdown",
+        timerType: params.type || TIMER_TYPE.COUNTDOWN,
         duration: params.duration || 300,
         intervalTime: params.intervalTime || 30,
         totalRounds: params.rounds || 1,

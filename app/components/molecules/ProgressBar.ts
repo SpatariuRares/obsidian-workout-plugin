@@ -22,7 +22,7 @@ export interface ProgressBarProps {
  * ```typescript
  * ProgressBar.create(container, {
  *   percentage: 75,
- *   label: "Workout Progress",
+ *   label: TEXT_CONSTANTS.UI.LABELS.WORKOUT_PROGRESS,
  *   showPercentage: true,
  *   variant: "success"
  * });

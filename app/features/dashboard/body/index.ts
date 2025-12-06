@@ -22,6 +22,7 @@ export { Core, type CoreData } from "@app/features/dashboard/body/Core";
 export {
   Body,
   type BodyVisualizationOptions,
+  VIEW_TYPE,
 } from "@app/features/dashboard/body/Body";
 
 export interface BodyData {

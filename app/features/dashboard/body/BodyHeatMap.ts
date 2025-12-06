@@ -1,4 +1,4 @@
-import { type BodyData, Body } from '@app/features/dashboard/body';
+import { type BodyData, Body, VIEW_TYPE } from '@app/features/dashboard/body';
 
 export interface BodyHeatMapOptions {
 	view: 'front' | 'back';
@@ -12,7 +12,7 @@ export class BodyHeatMap {
 
 	constructor(bodyData: BodyData, options?: Partial<BodyHeatMapOptions>) {
 		this.body = new Body(bodyData, {
-			view: options?.view || 'front',
+			view: options?.view === 'back' ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
 			showLabels: options?.showLabels ?? true,
 			maxValue: options?.maxValue || 1000
 		});
@@ -24,7 +24,7 @@ export class BodyHeatMap {
 	}
 
 	setView(view: 'front' | 'back'): void {
-		this.body.setView(view);
+		this.body.setView(view === 'back' ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT);
 		if (this.container) {
 			this.body.render(this.container);
 		}

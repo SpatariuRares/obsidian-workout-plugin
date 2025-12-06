@@ -7,12 +7,12 @@ describe("ErrorMessage atom", () => {
 	it("renders titled error messages", () => {
 		const parent = createObsidianContainer();
 
-		ErrorMessage.render(parent, "Missing workout file", "Warning");
+		ErrorMessage.render(parent, "Missing workout file", "Error");
 
 		const error = parent.querySelector(".error-message") as HTMLElement;
 		expect(error).toBeTruthy();
-		expect(error.querySelector("strong")?.textContent).toBe("Warning:");
-		expect(error.textContent?.trim()).toBe("Warning: Missing workout file");
+		expect(error.querySelector("strong")?.textContent).toBe("Error:");
+		expect(error.textContent?.trim()).toBe("Error: Missing workout file");
 	});
 
 	it("renders simple error messages and clears them", () => {

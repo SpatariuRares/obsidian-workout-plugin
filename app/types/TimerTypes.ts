@@ -1,4 +1,3 @@
-
 export enum TIMER_TYPE {
   COUNTDOWN = "countdown",
   INTERVAL = "interval",
@@ -14,5 +13,25 @@ export interface EmbeddedTimerParams {
   intervalTime?: number; // For interval timer
   rounds?: number; // For interval timer
   sound?: boolean;
-  debug?: boolean;
 }
+
+export interface TimerState {
+  timerInterval?: number;
+  startTime?: number;
+  elapsedTime: number;
+  isRunning: boolean;
+  currentRound: number;
+  totalRounds: number;
+  intervalTime: number;
+  timerType: TIMER_TYPE;
+  duration: number;
+  timerDisplay?: HTMLElement;
+  startStopBtn?: HTMLButtonElement;
+}
+
+export interface TimerCallbacks {
+  onTimerComplete?: () => void;
+  onSoundPlay?: () => void;
+  onStateChange?: (_state: TimerState) => void;
+}
+

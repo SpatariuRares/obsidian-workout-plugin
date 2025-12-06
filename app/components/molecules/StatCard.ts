@@ -20,9 +20,8 @@ export interface StatCardProps {
  * @example
  * ```typescript
  * StatCard.create(container, {
- *   icon: "📊",
- *   value: "42",
- *   label: "Total Workouts"
+ *   icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+ *   label: UI_LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS
  * });
  * ```
  */

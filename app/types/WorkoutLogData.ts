@@ -1,5 +1,6 @@
 // Types and utilities for workout log data
 import { TFile } from "obsidian";
+import { CHART_DATA_TYPE } from "@app/types";
 
 /**
  * Represents a single workout log entry.
@@ -39,11 +40,10 @@ export interface WorkoutChartsSettings {
   csvLogFilePath: string;
   exerciseFolderPath: string;
   defaultExercise: string;
-  chartType: "volume" | "weight" | "reps";
+  chartType: CHART_DATA_TYPE;
   dateRange: number; // days
   showTrendLine: boolean;
   chartHeight: number;
-  debugMode: boolean;
 }
 
 /**
@@ -53,11 +53,10 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   csvLogFilePath: "theGYM/Log/workout_logs.csv",
   exerciseFolderPath: "Esercizi",
   defaultExercise: "",
-  chartType: "volume",
+  chartType: CHART_DATA_TYPE.VOLUME,
   dateRange: 30,
   showTrendLine: true,
   chartHeight: 400,
-  debugMode: false,
 };
 
 /**

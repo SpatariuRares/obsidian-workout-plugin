@@ -2,6 +2,7 @@
 import WorkoutChartsPlugin from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { Notice } from "obsidian";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;
@@ -17,11 +18,11 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName("CSV log file path")
-      .setDesc("Path to the CSV file containing all workout log data")
+      .setName(TEXT_CONSTANTS.SETTINGS.LABELS.CSV_PATH)
+      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.CSV_PATH)
       .addText((text) =>
         text
-          .setPlaceholder("Enter CSV file path")
+          .setPlaceholder(TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
           .setValue(this.plugin.settings.csvLogFilePath)
           .onChange(async (value) => {
             this.plugin.settings.csvLogFilePath = normalizePath(value);
@@ -30,11 +31,11 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
-      .setName("Exercise folder path")
-      .setDesc("Path to the folder containing exercise pages")
+      .setName(TEXT_CONSTANTS.SETTINGS.LABELS.EXERCISE_FOLDER)
+      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.EXERCISE_FOLDER)
       .addText((text) =>
         text
-          .setPlaceholder("Enter folder path")
+          .setPlaceholder(TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH)
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
             this.plugin.settings.exerciseFolderPath = normalizePath(value);
@@ -42,29 +43,19 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           })
       );
 
-    new Setting(containerEl)
-      .setName("Debug mode")
-      .setDesc("Enable debug logging for troubleshooting")
-      .addToggle((toggle) =>
-        toggle
-          .setValue(this.plugin.settings.debugMode)
-          .onChange(async (value) => {
-            this.plugin.settings.debugMode = value;
-            await this.plugin.saveSettings();
-          })
-      );
+
 
     // CSV Management Section
-    new Setting(containerEl).setName("CSV file management").setHeading();
+    new Setting(containerEl).setName(TEXT_CONSTANTS.SETTINGS.SECTIONS.CSV_MANAGEMENT).setHeading();
 
     new Setting(containerEl)
-      .setName("Create CSV log file")
-      .setDesc("Create a new CSV log file with sample data")
+      .setName(TEXT_CONSTANTS.COMMANDS.CREATE_CSV)
+      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.CREATE_CSV)
       .addButton((button) =>
-        button.setButtonText("Create file").onClick(async () => {
+        button.setButtonText(TEXT_CONSTANTS.UI.BUTTONS.CREATE_FILE).onClick(async () => {
           try {
             await this.plugin.createCSVLogFile();
-            new Notice("CSV log file created successfully!");
+            new Notice(TEXT_CONSTANTS.MESSAGES.SUCCESS.CSV_CREATED);
           } catch (error) {
             const errorMessage =
               error instanceof Error ? error.message : String(error);

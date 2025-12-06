@@ -2,6 +2,7 @@
 
 import { SearchBox } from "@app/components/molecules/SearchBox";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { UI_LABELS } from "@app/constants";
 
 describe("SearchBox molecule", () => {
 	it("renders icon and input with provided props", () => {
@@ -28,7 +29,7 @@ describe("SearchBox molecule", () => {
 		const parent = createObsidianContainer();
 		const searchBox = SearchBox.create(parent);
 
-		expect(searchBox.input.getAttribute("placeholder")).toBe("Search...");
+		expect(searchBox.input.getAttribute("placeholder")).toBe(UI_LABELS.LABELCONSTANTS.SEARCH);
 
 		searchBox.input.value = "squat";
 		expect(SearchBox.getValue(searchBox)).toBe("squat");

@@ -1,6 +1,7 @@
 import { EmbeddedDashboardParams } from "@app/types";
-import { MUSCLE_TAGS } from "@app/constants/MuscleTags";
+import { MUSCLE_TAGS, TAG_MUSCLE_MAP } from "@app/constants/MuscleTags";
 import { UI_LABELS } from "@app/constants/LabelConstants";
+import { UI_ICONS } from "@app/constants";
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -110,70 +111,72 @@ export class MuscleTagsWidget {
 
     // Chest variations
     if (
-      lowerName.includes("chest") ||
+      lowerName.includes(TAG_MUSCLE_MAP.chest) ||
       lowerName.includes("petto") ||
       lowerName.includes("pettorale")
     )
-      return "💪";
+      return UI_ICONS.EXERCISE.CURL;
     // Back variations
     if (
-      lowerName.includes("back") ||
+      lowerName.includes(TAG_MUSCLE_MAP.back) ||
       lowerName.includes("schiena") ||
       lowerName.includes("dorsale")
     )
-      return "🦾";
+      return UI_ICONS.EXERCISE.BACK;
     // Shoulders variations
     if (
-      lowerName.includes("shoulder") ||
+      lowerName.includes(TAG_MUSCLE_MAP.shoulder) ||
       lowerName.includes("spalle") ||
       lowerName.includes("deltoidi") ||
       lowerName.includes("delts")
     )
-      return "🏋️";
+      return UI_ICONS.EXERCISE.SHOULDERS;
     // Arms
-    if (lowerName.includes("biceps") || lowerName.includes("bicipiti"))
-      return "💪";
-    if (lowerName.includes("triceps") || lowerName.includes("tricipiti"))
-      return "💪";
+    if (lowerName.includes(TAG_MUSCLE_MAP.biceps) || lowerName.includes("bicipiti"))
+      return UI_ICONS.EXERCISE.BICEPS;
+    if (lowerName.includes(TAG_MUSCLE_MAP.triceps) || lowerName.includes("tricipiti"))
+      return UI_ICONS.EXERCISE.TRICEPS;
     if (lowerName.includes("forearm") || lowerName.includes("avambracci"))
-      return "✊";
+      return UI_ICONS.EXERCISE.FOREARM;
     // Legs
     if (lowerName.includes("legs") || lowerName.includes("gambe")) return "🦵";
     if (lowerName.includes("quad") || lowerName.includes("quadricipiti"))
-      return "🦵";
+      return UI_ICONS.EXERCISE.LEGS;
     if (
       lowerName.includes("hamstring") ||
       lowerName.includes("ischiocrurali") ||
       lowerName.includes("femorali")
     )
-      return "🦵";
-    if (lowerName.includes("calves") || lowerName.includes("polpacci"))
-      return "🦿";
+      return UI_ICONS.EXERCISE.LEGS;
+    if (lowerName.includes(TAG_MUSCLE_MAP.calves) || lowerName.includes("polpacci"))
+      return UI_ICONS.EXERCISE.CALVES;
     // Glutes
     if (
       lowerName.includes("glute") ||
       lowerName.includes("abduttori") ||
       lowerName.includes("adduttori")
     )
-      return "🍑";
+      return UI_ICONS.EXERCISE.GLUTES;
     // Core
-    if (lowerName.includes("abs") || lowerName.includes("addominali"))
-      return "🎯";
-    if (lowerName.includes("core") || lowerName.includes("cardio")) return "⭐";
+    if (lowerName.includes(TAG_MUSCLE_MAP.abs) || lowerName.includes("addominali"))
+      return UI_ICONS.EXERCISE.CORE;
+    // Cardio
+    if (lowerName.includes(TAG_MUSCLE_MAP.core) || lowerName.includes("cardio"))
+      return UI_ICONS.EXERCISE.CARDIO;
     // Other
-    if (lowerName.includes("traps") || lowerName.includes("trapezi"))
-      return "🔺";
+    if (lowerName.includes(TAG_MUSCLE_MAP.traps) || lowerName.includes("trapezi"))
+      return UI_ICONS.EXERCISE.TRAPS;
     // Exercise types
-    if (lowerName.includes("push") || lowerName.includes("press")) return "🔼";
-    if (lowerName.includes("pull") || lowerName.includes("row")) return "⬇️";
-    if (lowerName.includes("squat")) return "🏋️";
-    if (lowerName.includes("deadlift")) return "💀";
-    if (lowerName.includes("curl")) return "💪";
-    if (lowerName.includes("extension")) return "📏";
-    if (lowerName.includes("fly")) return "🦅";
-    if (lowerName.includes("spintaanca")) return "🍑";
+    if (lowerName.includes("push") || lowerName.includes("press")) return UI_ICONS.EXERCISE.PUSH;
+    if (lowerName.includes("pull") || lowerName.includes("row")) return UI_ICONS.EXERCISE.PULL;
+    if (lowerName.includes("squat")) return UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS;
+    if (lowerName.includes("deadlift")) return UI_ICONS.EXERCISE.DEADLIFT;
+    if (lowerName.includes("curl")) return UI_ICONS.EXERCISE.CURL;
+    if (lowerName.includes("extension")) return UI_ICONS.EXERCISE.EXTENSION;
+    if (lowerName.includes("fly")) return UI_ICONS.EXERCISE.FLY;
+    if (lowerName.includes("spintaanca")) return UI_ICONS.EXERCISE.HIP_TRUST;
 
-    return "💪"; // Default
+    return UI_ICONS.EXERCISE.DEADLIFT;
   }
 }
 

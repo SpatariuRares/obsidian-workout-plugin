@@ -2,6 +2,7 @@
 
 import { TrendIndicator } from "@app/components/molecules/TrendIndicator";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { TEXT_CONSTANTS } from "@app/constants";
 
 describe("TrendIndicator molecule", () => {
 	it("renders arrow, percentage, and optional label", () => {
@@ -14,7 +15,7 @@ describe("TrendIndicator molecule", () => {
 
 		const indicator = TrendIndicator.create(parent, {
 			percentage: -12.34,
-			direction: "down",
+			direction: TEXT_CONSTANTS.TRENDS.DIRECTIONS.DOWN,
 			label: "vs last week",
 			className: "mt-lg",
 		});
@@ -43,7 +44,7 @@ describe("TrendIndicator molecule", () => {
 		};
 		const indicator = TrendIndicator.create(parent, {
 			percentage: 0,
-			direction: "neutral",
+			direction: TEXT_CONSTANTS.TRENDS.DIRECTIONS.NEUTRAL,
 		});
 
 		expect(indicator.querySelector(".trend-label")).toBeNull();

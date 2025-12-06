@@ -1,4 +1,5 @@
-const DEFAULT_EXERCISE_NAME = "exercise";
+import { TEXT_CONSTANTS } from "@app/constants/TextConstants";
+const DEFAULT_EXERCISE_NAME = TEXT_CONSTANTS.COMMON.TYPES.EXERCISE;
 const DEFAULT_WORKOUT_NAME = "Workout";
 
 const getExerciseName = (exerciseName?: string): string =>
@@ -20,14 +21,14 @@ export const UI_LABELS = {
     TOTAL_REPS: "Total Reps",
     AVG_REPS: "Average Reps",
     WORKOUTS: "Workouts",
-
+    SEARCH: "Search",
   },
   TABLE: {
     DATE: "Date",
     EXERCISE: "Exercise",
-    REPS: "Reps",
+    REPS: TEXT_CONSTANTS.CHARTS.LABELS.REPS,
     REPETITIONS: "Repetitions",
-    WEIGHT: "Weight (kg)",
+    WEIGHT_WITH_UNIT: TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG,
     VOLUME: "Volume",
     VOLUME_WITH_UNIT: "Volume (kg)",
     NOTES: "Notes",
@@ -37,7 +38,11 @@ export const UI_LABELS = {
     NOT_AVAILABLE: "N/A",
     TREND_LINE: "Trend Line",
     ADD_LOG_BUTTON: "Add Log",
+    UP: TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP,
+    DOWN: TEXT_CONSTANTS.TRENDS.DIRECTIONS.DOWN,
+    NEUTRAL: TEXT_CONSTANTS.TRENDS.DIRECTIONS.NEUTRAL,
   },
+
   ACTIONS: {
     ADD: "Add",
     ADD_LOG: "Add Log",
@@ -123,6 +128,9 @@ export const UI_LABELS = {
     },
   },
   CHARTS: {
+    UP: TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP,
+    DOWN: TEXT_CONSTANTS.TRENDS.DIRECTIONS.DOWN,
+    NEUTRAL: TEXT_CONSTANTS.TRENDS.DIRECTIONS.NEUTRAL,
     TREND_TITLE_PREFIX: "Trend Volume: ",
     OVERALL_VARIATION_PREFIX: "Overall variation: ",
     VARIATION_FROM_TO: (startKg: string, endKg: string) =>

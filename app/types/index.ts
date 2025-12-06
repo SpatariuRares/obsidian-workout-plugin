@@ -5,6 +5,7 @@ export type {
   CodeBlockContext,
 } from "@app/types/CommonTypes";
 
+export { INPUT_TYPE } from "@app/types/InputTypes";
 // Chart-related types
 export type {
   EmbeddedChartParams,
@@ -20,11 +21,11 @@ export type {
   TableData,
   TableCodeOptions,
 } from "@app/types/TableTypes";
-export { TABLE_TYPE as TableType, TableColumnType } from "@app/types/TableTypes";
+export { TABLE_TYPE, TableColumnType } from "@app/types/TableTypes";
 
 // Timer-related types
 export type { EmbeddedTimerParams } from "@app/types/TimerTypes";
-export { TIMER_TYPE as TimerType } from "@app/types/TimerTypes";
+export { TIMER_TYPE } from "@app/types/TimerTypes";
 
 // Dashboard-related types
 export type { EmbeddedDashboardParams } from "@app/types/DashboardTypes";

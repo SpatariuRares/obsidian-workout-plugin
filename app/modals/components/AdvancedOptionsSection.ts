@@ -1,4 +1,4 @@
-// Reusable advanced options section component
+import { MODAL_SECTIONS } from "@app/constants/ModalConstants";// Reusable advanced options section component
 import {
   MODAL_CHECKBOXES,
   MODAL_LABELS,
@@ -8,7 +8,6 @@ import { ModalBase } from "@app/modals/base/ModalBase";
 
 export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;
-  debugToggle: HTMLInputElement;
   titleInput?: HTMLInputElement;
   searchByNameToggle?: HTMLInputElement;
 }
@@ -25,7 +24,7 @@ export class AdvancedOptionsSection {
       showSearchByName?: boolean;
     } = {}
   ): AdvancedOptionsElements {
-    const advancedSection = modal.createSection(container, "Advanced options");
+    const advancedSection = modal.createSection(container, MODAL_SECTIONS.ADVANCED_OPTIONS);
 
     // Exact match toggle
     const exactMatchContainer = modal.createCheckboxGroup(advancedSection);
@@ -36,18 +35,8 @@ export class AdvancedOptionsSection {
       "exactMatch"
     );
 
-    // Debug mode toggle
-    const debugContainer = modal.createCheckboxGroup(advancedSection);
-    const debugToggle = modal.createCheckbox(
-      debugContainer,
-      MODAL_CHECKBOXES.DEBUG_MODE,
-      false,
-      "debug"
-    );
-
     const elements: AdvancedOptionsElements = {
       exactMatchToggle,
-      debugToggle,
     };
 
     // Optional title input
@@ -81,18 +70,15 @@ export class AdvancedOptionsSection {
    */
   static getValues(elements: AdvancedOptionsElements): {
     exactMatch: boolean;
-    debug: boolean;
     title?: string;
     searchByName?: boolean;
   } {
     const values: {
       exactMatch: boolean;
-      debug: boolean;
       title?: string;
       searchByName?: boolean;
     } = {
       exactMatch: elements.exactMatchToggle.checked,
-      debug: elements.debugToggle.checked,
     };
 
     if (elements.titleInput) {

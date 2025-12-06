@@ -201,7 +201,6 @@ export class InsertChartModal extends BaseInsertModal {
       showTrend,
       showStats,
       exactMatch: advancedValues.exactMatch,
-      debug: advancedValues.debug,
       title: advancedValues.title || "",
     });
   }

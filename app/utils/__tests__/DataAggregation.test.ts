@@ -1,5 +1,6 @@
 import { DataAggregation } from '@app/utils/DataAggregation';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
+import { TEXT_CONSTANTS } from "@app/constants";
 
 describe('DataAggregation', () => {
   const mockData: WorkoutLogData[] = [
@@ -111,7 +112,7 @@ describe('DataAggregation', () => {
       ];
 
       const result = DataAggregation.aggregateWorkoutVolumes(dataWithUndefined);
-      expect(result.get('Unknown')).toBe(1000);
+      expect(result.get(TEXT_CONSTANTS.COMMON.DEFAULTS.UNKNOWN)).toBe(1000);
     });
   });
 

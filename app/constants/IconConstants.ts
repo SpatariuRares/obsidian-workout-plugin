@@ -1,4 +1,13 @@
 export const UI_ICONS = {
+  COMMON: {
+    PERCENTAGE: "%",
+    PLUS: "+",
+    MINUS: "-",
+    ARROW_UP: "⬆️",
+    ARROW_DOWN: "⬇️",
+    ARROW_NEUTRAL: "↔️",
+    EMPTY: "",
+  },
   TABLE: {
     REPS: "🔁 ",
     WEIGHT: "🏋️ ",
@@ -35,5 +44,27 @@ export const UI_ICONS = {
       TOTAL_VOLUME: "📦",
       PERSONAL_RECORDS: "🏅",
     },
+  },
+  EXERCISE: {
+    DEADLIFT: "💀",
+    CURL: "💪",
+    EXTENSION: "📏",
+    BICEPS: "💪",
+    TRICEPS: "💪",
+    CORE: "🎯",
+    FOREARM: "✊",
+    BACK: "🦾",
+    FLY: "🦅",
+    HIP_TRUST: "🍑",
+    SHOULDERS: "🦵",
+    ARMS: "🦵",
+    LEGS: "🦵",
+    GLUTES: "🍑",
+    CALVES: "🦵",
+    TRAPS: "🔺",
+    CARDIO: "⭐",
+    PUSH: "🔼",
+    PULL: "⬇️",
+
   },
 } as const;

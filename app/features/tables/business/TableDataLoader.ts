@@ -1,7 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
-import { TableCallbacks } from "@app/features/tables/types/TableTypes";
+import { TableCallbacks } from "@app/types/TableTypes";
 
 export class TableDataLoader {
   /**
@@ -10,7 +10,6 @@ export class TableDataLoader {
   static async getOptimizedCSVData(
     params: EmbeddedTableParams,
     plugin: WorkoutChartsPlugin,
-    callbacks?: TableCallbacks
   ): Promise<WorkoutLogData[]> {
     const filterOptions: {
       exercise?: string;
@@ -27,9 +26,6 @@ export class TableDataLoader {
       filterOptions.workout = params.workout;
     }
 
-    callbacks?.onDebug?.("TableDataLoader", "CSV optimized filtering", {
-      filterOptions,
-    });
 
     return await plugin.getWorkoutLogData(filterOptions);
   }
@@ -45,7 +41,6 @@ export class TableDataLoader {
       // Clear cache to ensure fresh data
       plugin.clearLogDataCache();
 
-      callbacks?.onDebug?.("TableDataLoader", "Loading fresh workout data");
 
       return await plugin.getWorkoutLogData();
     } catch (error) {

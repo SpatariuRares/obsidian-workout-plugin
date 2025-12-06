@@ -86,9 +86,9 @@ export class TargetSectionWithAutocomplete {
     // Create handlers
     const updateVisibility = () => {
       const selectedType = typeSelect.value;
-      const isExercise = selectedType === CHART_TYPE.EXERCISE;
-      const isWorkout = selectedType === CHART_TYPE.WORKOUT;
-      const isCombined = selectedType === CHART_TYPE.COMBINED;
+      const isExercise = (selectedType as CHART_TYPE) === CHART_TYPE.EXERCISE;
+      const isWorkout = (selectedType as CHART_TYPE) === CHART_TYPE.WORKOUT;
+      const isCombined = (selectedType as CHART_TYPE) === CHART_TYPE.COMBINED;
 
       const showExercise = isExercise || isCombined;
       exerciseContainer.className = showExercise
@@ -161,19 +161,19 @@ export class TargetSectionWithAutocomplete {
     const selectedType = typeSelect.value;
     const useCurrentWorkout = elements.currentWorkoutToggle.checked;
 
-    if (selectedType === CHART_TYPE.EXERCISE) {
+    if ((selectedType as CHART_TYPE) === CHART_TYPE.EXERCISE) {
       return {
         type: CHART_TYPE.EXERCISE,
         exercise: elements.exerciseInput.value.trim(),
       };
-    } else if (selectedType === CHART_TYPE.WORKOUT) {
+    } else if ((selectedType as CHART_TYPE) === CHART_TYPE.WORKOUT) {
       return {
         type: CHART_TYPE.WORKOUT,
         workout: useCurrentWorkout
           ? currentFileName
           : elements.workoutInput.value.trim(),
       };
-    } else if (selectedType === CHART_TYPE.COMBINED) {
+    } else if ((selectedType as CHART_TYPE) === CHART_TYPE.COMBINED) {
       return {
         type: CHART_TYPE.COMBINED,
         exercise: elements.exerciseInput.value.trim(),

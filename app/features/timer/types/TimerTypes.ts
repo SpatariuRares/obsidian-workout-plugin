@@ -1,3 +1,5 @@
+import { TIMER_TYPE } from "@app/types";
+
 export interface TimerState {
   timerInterval?: number;
   startTime?: number;
@@ -6,7 +8,7 @@ export interface TimerState {
   currentRound: number;
   totalRounds: number;
   intervalTime: number;
-  timerType: "countdown" | "stopwatch" | "interval";
+  timerType: TIMER_TYPE;
   duration: number;
   timerDisplay?: HTMLElement;
   startStopBtn?: HTMLButtonElement;

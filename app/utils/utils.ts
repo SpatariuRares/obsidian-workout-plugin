@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataset, ChartDataType, CHART_TYPE, EmbeddedViewParams } from "@app/types";
+import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE, EmbeddedViewParams } from "@app/types";
 import { UI_LABELS } from "@app/constants";
 
 // Constants
@@ -223,7 +223,7 @@ export function filterLogDataByExercise(
  */
 export function processChartData(
   logData: WorkoutLogData[],
-  chartType: "volume" | "weight" | "reps",
+  chartType: CHART_DATA_TYPE,
   dateRange: number = 30,
   dateFormat: string = "DD/MM/YYYY",
   // ✨ NUOVO PARAMETRO per distinguere tra workout totale e singolo esercizio
@@ -293,24 +293,24 @@ export function processChartData(
   const datasets: ChartDataset[] = [];
 
   if (
-    chartType === ChartDataType.VOLUME ||
-    chartType === ChartDataType.WEIGHT ||
-    chartType === ChartDataType.REPS
+    chartType === CHART_DATA_TYPE.VOLUME ||
+    chartType === CHART_DATA_TYPE.WEIGHT ||
+    chartType === CHART_DATA_TYPE.REPS
   ) {
     const data =
-      chartType === ChartDataType.VOLUME
+      chartType === CHART_DATA_TYPE.VOLUME
         ? volumeData
-        : chartType === ChartDataType.WEIGHT
+        : chartType === CHART_DATA_TYPE.WEIGHT
           ? weightData
           : repsData;
 
     // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
     const label =
-      chartType === ChartDataType.VOLUME
+      chartType === CHART_DATA_TYPE.VOLUME
         ? displayType === CHART_TYPE.WORKOUT
           ? UI_LABELS.LABELCONSTANTS.TOTAL_VOLUME
           : UI_LABELS.LABELCONSTANTS.AVG_VOLUME
-        : chartType === ChartDataType.WEIGHT
+        : chartType === CHART_DATA_TYPE.WEIGHT
           ? displayType === CHART_TYPE.WORKOUT
             ? UI_LABELS.LABELCONSTANTS.TOTAL_WEIGHT
             : UI_LABELS.LABELCONSTANTS.AVG_WEIGHT
@@ -318,9 +318,9 @@ export function processChartData(
             ? UI_LABELS.LABELCONSTANTS.TOTAL_REPS
             : UI_LABELS.LABELCONSTANTS.AVG_REPS;
     const color =
-      chartType === ChartDataType.VOLUME
+      chartType === CHART_DATA_TYPE.VOLUME
         ? "#4CAF50"
-        : chartType === ChartDataType.WEIGHT
+        : chartType === CHART_DATA_TYPE.WEIGHT
           ? "#FF9800"
           : "#FF9800";
 

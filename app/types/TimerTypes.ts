@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 export enum TIMER_TYPE {
   COUNTDOWN = "countdown",
   INTERVAL = "interval",

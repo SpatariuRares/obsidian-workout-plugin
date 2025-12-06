@@ -11,7 +11,7 @@ export type {
   ChartDataset,
   ChartData,
 } from "@app/types/ChartTypes";
-export { CHART_TYPE, CHART_DATA_TYPE as ChartDataType } from "@app/types/ChartTypes";
+export { CHART_TYPE, CHART_DATA_TYPE } from "@app/types/ChartTypes";
 
 // Table-related types
 export type {

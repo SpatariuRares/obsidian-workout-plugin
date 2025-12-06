@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 // import { FilterResult } from "./CommonTypes";
 // import { WorkoutLogData } from "./WorkoutLogData";
 import { WorkoutLogData, FilterResult } from "@app/types";

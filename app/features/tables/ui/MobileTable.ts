@@ -1,5 +1,5 @@
 import { TABLE_LABELS } from "@app/constants/TableConstats";
-import { EmbeddedChartParams, ChartDataset, ChartDataType } from "@app/types";
+import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
 
 export class MobileTable {
   /**
@@ -14,7 +14,7 @@ export class MobileTable {
     container: HTMLElement,
     labels: string[],
     datasets: ChartDataset[],
-    chartType: ChartDataType,
+    chartType: CHART_DATA_TYPE,
     params: EmbeddedChartParams
   ): void {
     const mobileTableContainer = container.createEl("div", {
@@ -40,9 +40,9 @@ export class MobileTable {
     headerRow.createEl("th", { text: TABLE_LABELS.DATA });
     headerRow.createEl("th", {
       text:
-        chartType === ChartDataType.VOLUME
+        chartType === CHART_DATA_TYPE.VOLUME
           ? TABLE_LABELS.VOLUME
-          : chartType === ChartDataType.WEIGHT
+          : chartType === CHART_DATA_TYPE.WEIGHT
             ? TABLE_LABELS.WEIGHT
             : TABLE_LABELS.REPETITIONS,
     });

@@ -37,8 +37,8 @@ export class TimerConfigurationSection {
       timerTypeContainer,
       "Timer Type:",
       [
-        { text: "Countdown", value: "countdown" },
-        { text: "Interval", value: "interval" },
+        { text: "Countdown", value: TIMER_TYPE.COUNTDOWN },
+        { text: "Interval", value: TIMER_TYPE.INTERVAL },
       ]
     );
 
@@ -126,7 +126,7 @@ export class TimerConfigurationSection {
 
     // Create visibility handler
     const updateVisibility = () => {
-      const isCountdown = timerTypeSelect.value === TIMER_TYPE.COUNTDOWN;
+      const isCountdown = (timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.COUNTDOWN;
       durationContainer.className = isCountdown
         ? "workout-charts-form-group timer-config-countdown"
         : "workout-charts-form-group timer-config-countdown display-none";
@@ -162,11 +162,11 @@ export class TimerConfigurationSection {
     };
 
     if (
-      elements.timerTypeSelect.value === TIMER_TYPE.COUNTDOWN &&
+      (elements.timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.COUNTDOWN &&
       elements.durationInput
     ) {
       values.duration = parseInt(elements.durationInput.value) || 90;
-    } else if (elements.timerTypeSelect.value === TIMER_TYPE.INTERVAL) {
+    } else if ((elements.timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.INTERVAL) {
       if (elements.intervalTimeInput) {
         values.intervalTime = parseInt(elements.intervalTimeInput.value) || 30;
       }

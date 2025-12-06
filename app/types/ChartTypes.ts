@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import { TrendIndicators, FilterResult } from "@app/types/CommonTypes";
 export enum CHART_TYPE {
   EXERCISE = "exercise",

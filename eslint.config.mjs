@@ -20,7 +20,7 @@ export default [
       "esbuild.config.mjs",
       "version-bump.mjs",
       "**/__tests__/**", // Ignore test files for now
-    ]
+    ],
   },
 
   // Base ESLint recommended rules
@@ -29,6 +29,10 @@ export default [
   // TypeScript files configuration
   {
     files: ["**/*.ts", "**/*.tsx"],
+
+    linterOptions: {
+      reportUnusedDisableDirectives: "error"
+    },
 
     languageOptions: {
       parser: tsParser,
@@ -59,6 +63,9 @@ export default [
     },
 
     rules: {
+      // Obsidian Plugin Rules
+      ...obsidianmd.configs.recommended,
+
       // Import rules - Enforce @app/* alias usage
       "no-restricted-imports": ["error", {
         patterns: [
@@ -71,12 +78,14 @@ export default [
 
       // TypeScript-specific rules
       "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-unsafe-enum-comparison": "error",
 
       // Additional TypeScript/JavaScript best practices
       "no-console": "warn",
       "prefer-const": "error",
       "no-var": "error",
-      "no-unused-vars": ["warn", {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_"
       }],

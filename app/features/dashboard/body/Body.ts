@@ -5,9 +5,7 @@ import { ViewDataPreparer } from "@app/features/dashboard/body/renderers/ViewDat
 import { BODY_VIEWS_SVG } from "@app/features/dashboard/body/renderers/FrontView";
 
 export enum VIEW_TYPE {
-  // eslint-disable-next-line no-unused-vars
   FRONT = "front",
-  // eslint-disable-next-line no-unused-vars
   BACK = "back",
 }
 export interface BodyVisualizationOptions {

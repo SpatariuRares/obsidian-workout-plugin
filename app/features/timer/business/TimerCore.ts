@@ -26,7 +26,7 @@ export class TimerCore {
       currentRound: 1,
       totalRounds: 1,
       intervalTime: 30,
-      timerType: "countdown",
+      timerType: TIMER_TYPE.COUNTDOWN,
       duration: 90,
       timerDisplay: undefined,
       startStopBtn: undefined,

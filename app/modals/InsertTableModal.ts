@@ -86,7 +86,7 @@ export class InsertTableModal extends BaseInsertModal {
 
     // Additional check to ensure workout field is visible for combined mode
     setTimeout(() => {
-      if (this.tableTypeSelect && this.tableTypeSelect.value === TABLE_TYPE.COMBINED) {
+      if (this.tableTypeSelect && (this.tableTypeSelect.value as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
         const workoutField = container.querySelector(
           '[data-field-type="workout"]'
         ) as HTMLElement;
@@ -197,7 +197,7 @@ export class InsertTableModal extends BaseInsertModal {
     );
 
     // Validation for combined mode
-    if (tableType === TABLE_TYPE.COMBINED) {
+    if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
         new Notice(MODAL_NOTICES.VALIDATION_COMBINED_MODE);
         throw new Error(

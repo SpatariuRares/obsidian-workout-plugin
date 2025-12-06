@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataType, EmbeddedDashboardParams } from "@app/types";
+import { CHART_DATA_TYPE, EmbeddedDashboardParams } from "@app/types";
 import { ChartRenderer } from "@app/features/charts";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
 import { UI_LABELS } from "@app/constants/LabelConstants";
@@ -41,7 +41,7 @@ export class VolumeAnalytics {
         },
       ],
       {
-        type: ChartDataType.VOLUME,
+        type: CHART_DATA_TYPE.VOLUME,
         title: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.CHART_TITLE,
       }
     );

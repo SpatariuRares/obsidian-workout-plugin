@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import { FilterResult } from "./CommonTypes";
 // import { WorkoutLogData } from "./WorkoutLogData";
 import { WorkoutLogData, FilterResult } from "@app/types";
@@ -40,14 +41,14 @@ export enum TableColumnType {
   STANDARD = "standard",
   MINIMAL = "minimal",
 }
-export enum TableType {
+export enum TABLE_TYPE {
   EXERCISE = "exercise",
   WORKOUT = "workout",
   COMBINED = "combined",
 }
 
 export interface TableCodeOptions {
-  tableType: TableType;
+  tableType: TABLE_TYPE;
   exercise: string;
   workout: string;
   limit: number;

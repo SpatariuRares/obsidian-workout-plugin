@@ -1,4 +1,5 @@
 import { TimerState } from "@app/features/timer/types/TimerTypes";
+import { TIMER_TYPE } from "@app/types/TimerTypes";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -35,7 +36,7 @@ export class TimerControls {
         startStopBtn.textContent = "▶";
       } else {
         if (
-          state.timerType === "countdown" &&
+          state.timerType === TIMER_TYPE.COUNTDOWNSSSSSSSSSSSSSSSSSSSSS &&
           state.elapsedTime >= state.duration * 1000
         ) {
           state.elapsedTime = 0;

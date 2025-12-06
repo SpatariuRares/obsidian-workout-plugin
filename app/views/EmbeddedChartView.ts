@@ -5,7 +5,7 @@ import {
   ChartDataset,
   FilterResult,
   TrendIndicators,
-  ChartType,
+  CHART_TYPE,
 } from "@app/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
@@ -84,7 +84,7 @@ export class EmbeddedChartView extends BaseView {
         params.type || "volume",
         params.dateRange || 30,
         "DD/MM/YYYY",
-        params.chartType || ChartType.EXERCISE
+        params.chartType || CHART_TYPE.EXERCISE
       );
 
       this.logDebug("EmbeddedChartView", "Processed chart data", {

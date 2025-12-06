@@ -12,6 +12,16 @@ const getWorkoutName = (exerciseName?: string): string =>
     : DEFAULT_WORKOUT_NAME;
 
 export const UI_LABELS = {
+  LABELCONSTANTS: {
+    TOTAL_VOLUME: "Total Volume (kg)",
+    AVG_VOLUME: "Average Volume (KG)",
+    TOTAL_WEIGHT: "Total Weight (KG)",
+    AVG_WEIGHT: "Average Weight (KG)",
+    TOTAL_REPS: "Total Reps",
+    AVG_REPS: "Average Reps",
+    WORKOUTS: "Workouts",
+
+  },
   TABLE: {
     DATE: "Date",
     EXERCISE: "Exercise",

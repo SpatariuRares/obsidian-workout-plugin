@@ -1,11 +1,13 @@
-export enum TimerType {
+/* eslint-disable no-unused-vars */
+export enum TIMER_TYPE {
   COUNTDOWN = "countdown",
   INTERVAL = "interval",
+  STOPWATCH = "stopwatch",
 }
 
 export interface EmbeddedTimerParams {
   duration?: number; // Duration in seconds
-  type?: TimerType;
+  type?: TIMER_TYPE;
   autoStart?: boolean;
   showControls?: boolean;
   title?: string;

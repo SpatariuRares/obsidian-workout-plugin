@@ -1,3 +1,5 @@
+import { CHART_TYPE } from "@app/types";
+
 /**
  * Renders statistical information about workout data.
  * Calculates and displays average, maximum, minimum values, and recent trends
@@ -15,7 +17,7 @@ export class StatsBox {
     container: HTMLElement,
     labels: string[],
     volumeData: number[],
-    chartType: string
+    chartType: CHART_TYPE
   ): void {
     const statsDiv = container.createEl("div", { cls: "workout-charts-stats" });
 
@@ -25,9 +27,8 @@ export class StatsBox {
     const strongEl = statsDiv.createEl("strong", {
       cls: "workout-charts-stats-title",
     });
-    strongEl.textContent = `📈 Volume Statistics (${
-      chartType === "workout" ? "Total Workout" : "Exercise"
-    }):`;
+    strongEl.textContent = `📈 Volume Statistics (${chartType === CHART_TYPE.WORKOUT ? "Total Workout" : "Exercise"
+      }):`;
 
     const ul = statsDiv.createEl("ul", { cls: "workout-charts-stats-list" });
 

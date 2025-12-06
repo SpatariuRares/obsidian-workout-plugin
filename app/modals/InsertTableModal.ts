@@ -22,7 +22,7 @@ import {
   MODAL_DEFAULT_VALUES,
 } from "@app/constants/ModalConstants";
 import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
-import { TableColumnType, TableType } from "@app/types/TableTypes";
+import { TableColumnType, TABLE_TYPE } from "@app/types/TableTypes";
 
 export class InsertTableModal extends BaseInsertModal {
   private tableTypeSelect?: HTMLSelectElement;
@@ -86,7 +86,7 @@ export class InsertTableModal extends BaseInsertModal {
 
     // Additional check to ensure workout field is visible for combined mode
     setTimeout(() => {
-      if (this.tableTypeSelect && this.tableTypeSelect.value === "combined") {
+      if (this.tableTypeSelect && this.tableTypeSelect.value === TABLE_TYPE.COMBINED) {
         const workoutField = container.querySelector(
           '[data-field-type="workout"]'
         ) as HTMLElement;
@@ -197,7 +197,7 @@ export class InsertTableModal extends BaseInsertModal {
     );
 
     // Validation for combined mode
-    if (tableType === "combined") {
+    if (tableType === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
         new Notice(MODAL_NOTICES.VALIDATION_COMBINED_MODE);
         throw new Error(
@@ -207,7 +207,7 @@ export class InsertTableModal extends BaseInsertModal {
     }
 
     return CodeGenerator.generateTableCode({
-      tableType: tableType as TableType,
+      tableType: tableType as TABLE_TYPE,
       exercise: target.exercise || "",
       workout: target.workout || "",
       limit,

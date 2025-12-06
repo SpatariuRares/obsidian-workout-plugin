@@ -21,7 +21,7 @@ import {
   MODAL_NOTICES,
   MODAL_DEFAULT_VALUES,
 } from "@app/constants/ModalConstants";
-import { ChartDataType, ChartType } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
 
 export class InsertChartModal extends BaseInsertModal {
   private chartTypeSelect?: HTMLSelectElement;
@@ -191,8 +191,8 @@ export class InsertChartModal extends BaseInsertModal {
     );
 
     return CodeGenerator.generateChartCode({
-      type: dataType as ChartDataType,
-      chartType: chartType as ChartType,
+      type: dataType as CHART_DATA_TYPE,
+      chartType: chartType as CHART_TYPE,
       exercise: target.exercise || "",
       workout: target.workout || "",
       dateRange,

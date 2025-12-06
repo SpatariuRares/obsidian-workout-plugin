@@ -1,19 +1,21 @@
+/* eslint-disable no-unused-vars */
 import { TrendIndicators, FilterResult } from "@app/types/CommonTypes";
-export enum ChartType {
+export enum CHART_TYPE {
   EXERCISE = "exercise",
   WORKOUT = "workout",
   COMBINED = "combined",
+  NONE = "NONE",
 }
 
-export enum ChartDataType {
+export enum CHART_DATA_TYPE {
   VOLUME = "volume",
   WEIGHT = "weight",
   REPS = "reps",
 }
 
 export interface EmbeddedChartParams {
-  type?: ChartDataType;
-  chartType?: ChartType;
+  type?: CHART_DATA_TYPE;
+  chartType?: CHART_TYPE;
   exercise?: string;
   exercisePath?: string;
   workout?: string;

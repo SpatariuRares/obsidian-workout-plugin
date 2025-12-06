@@ -4,8 +4,14 @@ import { HeatMapColors } from "@app/features/dashboard/body/utils/HeatMapColors"
 import { ViewDataPreparer } from "@app/features/dashboard/body/renderers/ViewDataPrepar";
 import { BODY_VIEWS_SVG } from "@app/features/dashboard/body/renderers/FrontView";
 
+export enum VIEW_TYPE {
+  // eslint-disable-next-line no-unused-vars
+  FRONT = "front",
+  // eslint-disable-next-line no-unused-vars
+  BACK = "back",
+}
 export interface BodyVisualizationOptions {
-  view: "front" | "back";
+  view: VIEW_TYPE;
   showLabels: boolean;
   maxValue: number;
 }
@@ -19,7 +25,7 @@ export class Body {
   constructor(bodyData: BodyData, options?: Partial<BodyVisualizationOptions>) {
     this.bodyData = bodyData;
     this.options = {
-      view: options?.view || "front",
+      view: options?.view || VIEW_TYPE.FRONT,
       showLabels: options?.showLabels ?? true,
       maxValue: options?.maxValue || 1000,
     };
@@ -40,7 +46,7 @@ export class Body {
     this.drawBodyOutline(svg);
 
     // Render muscles based on view
-    if (this.options.view === "front") {
+    if (this.options.view === VIEW_TYPE.FRONT) {
       this.renderFrontView(svg);
     } else {
       this.renderBackView(svg);
@@ -59,7 +65,7 @@ export class Body {
   }
 
   private drawBodyOutline(svg: SVGSVGElement): void {
-    if (this.options.view === "front") {
+    if (this.options.view === VIEW_TYPE.FRONT) {
       this.drawFemaleFrontOutline(svg);
     } else {
       this.drawFemaleBackOutline(svg);
@@ -194,7 +200,7 @@ export class Body {
     }
   }
 
-  setView(view: "front" | "back"): void {
+  setView(view: VIEW_TYPE): void {
     this.options.view = view;
 
     // Re-render if container is available

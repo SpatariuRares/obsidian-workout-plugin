@@ -44,7 +44,7 @@ export class Input {
 			},
 		});
 
-		return input as HTMLInputElement;
+		return input;
 	}
 
 	/**

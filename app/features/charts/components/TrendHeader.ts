@@ -63,13 +63,13 @@ export class TrendHeader {
       const percentValue = parseFloat(percentChange);
       const direction =
         percentValue > 0 ? "up" :
-        percentValue < 0 ? "down" :
-        "neutral";
+          percentValue < 0 ? "down" :
+            "neutral";
 
       // Use TrendIndicator molecule for variation display
       TrendIndicator.create(p, {
         percentage: Math.abs(percentValue),
-        direction: direction as "up" | "down" | "neutral",
+        direction: direction,
         className: "workout-charts-trend-variation",
       });
     } else if (variationData.text !== undefined) {
@@ -126,8 +126,8 @@ export class TrendHeader {
         firstValue !== 0
           ? (((lastValue - firstValue) / Math.abs(firstValue)) * 100).toFixed(1)
           : lastValue > 0
-          ? "Infinity"
-          : "0.0";
+            ? "Infinity"
+            : "0.0";
     } else if (volumeData.length === 1) {
       firstValue = volumeData[0];
       percentChange = "0.0";

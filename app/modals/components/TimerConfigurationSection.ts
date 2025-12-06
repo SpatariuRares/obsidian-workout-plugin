@@ -1,6 +1,7 @@
 // Reusable timer configuration section component
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { EmbeddedTimerParams, TimerType } from "@app/types";
+import { TIMER_TYPE } from "@app/types/TimerTypes";
 
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
@@ -125,7 +126,7 @@ export class TimerConfigurationSection {
 
     // Create visibility handler
     const updateVisibility = () => {
-      const isCountdown = timerTypeSelect.value === "countdown";
+      const isCountdown = timerTypeSelect.value === TIMER_TYPE.COUNTDOWN;
       durationContainer.className = isCountdown
         ? "workout-charts-form-group timer-config-countdown"
         : "workout-charts-form-group timer-config-countdown display-none";
@@ -161,11 +162,11 @@ export class TimerConfigurationSection {
     };
 
     if (
-      elements.timerTypeSelect.value === "countdown" &&
+      elements.timerTypeSelect.value === TIMER_TYPE.COUNTDOWN &&
       elements.durationInput
     ) {
       values.duration = parseInt(elements.durationInput.value) || 90;
-    } else if (elements.timerTypeSelect.value === "interval") {
+    } else if (elements.timerTypeSelect.value === TIMER_TYPE.INTERVAL) {
       if (elements.intervalTimeInput) {
         values.intervalTime = parseInt(elements.intervalTimeInput.value) || 30;
       }

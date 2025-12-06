@@ -1,4 +1,6 @@
+import { UI_ICONS } from "@app/constants";
 import { TimerState } from "@app/features/timer/types/TimerTypes";
+import { TIMER_TYPE } from "@app/types/TimerTypes";
 
 export class TimerDisplay {
   private static formatTime(milliseconds: number): string {
@@ -17,12 +19,12 @@ export class TimerDisplay {
 
     let displayTime: string;
 
-    if (state.timerType === "countdown") {
+    if (state.timerType === TIMER_TYPE.COUNTDOWN) {
       const remaining = Math.max(0, state.duration * 1000 - state.elapsedTime);
       displayTime = this.formatTime(remaining);
-    } else if (state.timerType === "stopwatch") {
+    } else if (state.timerType === TIMER_TYPE.STOPWATCH) {
       displayTime = this.formatTime(state.elapsedTime);
-    } else if (state.timerType === "interval") {
+    } else if (state.timerType === TIMER_TYPE.INTERVAL) {
       const intervalElapsed = state.elapsedTime % (state.intervalTime * 1000);
       const remaining = state.intervalTime * 1000 - intervalElapsed;
       displayTime = this.formatTime(remaining);
@@ -33,13 +35,13 @@ export class TimerDisplay {
     // Only show completion checkmark if timer is stopped and completed
     if (
       !state.isRunning &&
-      state.timerType === "countdown" &&
+      state.timerType === TIMER_TYPE.COUNTDOWN &&
       state.elapsedTime >= state.duration * 1000
     ) {
       state.timerDisplay.empty();
       state.timerDisplay.createEl("span", {
         cls: "workout-timer-complete",
-        text: "✓",
+        text: UI_ICONS.STATUS.SUCCESS,
       });
     } else {
       state.timerDisplay.empty();

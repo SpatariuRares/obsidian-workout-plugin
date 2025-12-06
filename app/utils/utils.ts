@@ -1,6 +1,7 @@
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataset, ChartType, EmbeddedViewParams } from "@app/types";
+import { ChartDataset, ChartDataType, CHART_TYPE, EmbeddedViewParams } from "@app/types";
+import { UI_LABELS } from "@app/constants";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
@@ -226,7 +227,7 @@ export function processChartData(
   dateRange: number = 30,
   dateFormat: string = "DD/MM/YYYY",
   // ✨ NUOVO PARAMETRO per distinguere tra workout totale e singolo esercizio
-  displayType: ChartType = ChartType.EXERCISE
+  displayType: CHART_TYPE = CHART_TYPE.EXERCISE
 ): { labels: string[]; datasets: ChartDataset[] } {
   // Filter by date range
   const cutoffDate = new Date();
@@ -275,7 +276,7 @@ export function processChartData(
     labels.push(date);
 
     // 🔧 CORREZIONE: Distinguere tra volume totale e media per esercizio
-    if (displayType === "workout") {
+    if (displayType === CHART_TYPE.WORKOUT) {
       // Per l'allenamento totale: mostra il volume TOTALE (somma)
       volumeData.push(values.volume);
       weightData.push(values.weight); // Somma totale dei pesi
@@ -292,37 +293,36 @@ export function processChartData(
   const datasets: ChartDataset[] = [];
 
   if (
-    chartType === "volume" ||
-    chartType === "weight" ||
-    chartType === "reps"
+    chartType === ChartDataType.VOLUME ||
+    chartType === ChartDataType.WEIGHT ||
+    chartType === ChartDataType.REPS
   ) {
     const data =
-      chartType === "volume"
+      chartType === ChartDataType.VOLUME
         ? volumeData
-        : chartType === "weight"
-        ? weightData
-        : repsData;
+        : chartType === ChartDataType.WEIGHT
+          ? weightData
+          : repsData;
 
     // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
     const label =
-      chartType === "volume"
-        ? displayType === "workout"
-          ? "Volume Totale (kg)"
-          : "Volume Medio (kg)"
-        : chartType === "weight"
-        ? displayType === "workout"
-          ? "Peso Totale (kg)"
-          : "Peso Medio (kg)"
-        : displayType === "workout"
-        ? "Reps Totali"
-        : "Reps Medie";
-
+      chartType === ChartDataType.VOLUME
+        ? displayType === CHART_TYPE.WORKOUT
+          ? UI_LABELS.LABELCONSTANTS.TOTAL_VOLUME
+          : UI_LABELS.LABELCONSTANTS.AVG_VOLUME
+        : chartType === ChartDataType.WEIGHT
+          ? displayType === CHART_TYPE.WORKOUT
+            ? UI_LABELS.LABELCONSTANTS.TOTAL_WEIGHT
+            : UI_LABELS.LABELCONSTANTS.AVG_WEIGHT
+          : displayType === CHART_TYPE.WORKOUT
+            ? UI_LABELS.LABELCONSTANTS.TOTAL_REPS
+            : UI_LABELS.LABELCONSTANTS.AVG_REPS;
     const color =
-      chartType === "volume"
+      chartType === ChartDataType.VOLUME
         ? "#4CAF50"
-        : chartType === "weight"
-        ? "#2196F3"
-        : "#FF9800";
+        : chartType === ChartDataType.WEIGHT
+          ? "#FF9800"
+          : "#FF9800";
 
     datasets.push({
       label,

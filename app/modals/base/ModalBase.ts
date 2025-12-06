@@ -1,6 +1,7 @@
 // Base modal class with common functionality
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { FormField } from "@app/components/molecules";
+import { MODAL_NOTICES } from "@app/constants/ModalConstants";
 
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
@@ -66,7 +67,7 @@ export abstract class ModalBase extends Modal {
       editor.replaceRange(code + "\n\n", cursor);
       new Notice(successMessage);
     } else {
-      new Notice("open a markdown file to insert the code");
+      new Notice(MODAL_NOTICES.INSERT_CODE_NO_FILE);
     }
   }
 

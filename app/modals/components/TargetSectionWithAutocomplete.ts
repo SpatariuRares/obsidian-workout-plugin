@@ -1,6 +1,7 @@
 // Enhanced target section component with exercise autocomplete
 import { ModalBase } from "@app/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/modals/components/ExerciseAutocomplete";
+import { CHART_TYPE } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 
 export interface TargetSectionWithAutocompleteElements {
@@ -85,9 +86,9 @@ export class TargetSectionWithAutocomplete {
     // Create handlers
     const updateVisibility = () => {
       const selectedType = typeSelect.value;
-      const isExercise = selectedType === "exercise";
-      const isWorkout = selectedType === "workout";
-      const isCombined = selectedType === "combined";
+      const isExercise = selectedType === CHART_TYPE.EXERCISE;
+      const isWorkout = selectedType === CHART_TYPE.WORKOUT;
+      const isCombined = selectedType === CHART_TYPE.COMBINED;
 
       const showExercise = isExercise || isCombined;
       exerciseContainer.className = showExercise
@@ -160,21 +161,21 @@ export class TargetSectionWithAutocomplete {
     const selectedType = typeSelect.value;
     const useCurrentWorkout = elements.currentWorkoutToggle.checked;
 
-    if (selectedType === "exercise") {
+    if (selectedType === CHART_TYPE.EXERCISE) {
       return {
-        type: "exercise",
+        type: CHART_TYPE.EXERCISE,
         exercise: elements.exerciseInput.value.trim(),
       };
-    } else if (selectedType === "workout") {
+    } else if (selectedType === CHART_TYPE.WORKOUT) {
       return {
-        type: "workout",
+        type: CHART_TYPE.WORKOUT,
         workout: useCurrentWorkout
           ? currentFileName
           : elements.workoutInput.value.trim(),
       };
-    } else if (selectedType === "combined") {
+    } else if (selectedType === CHART_TYPE.COMBINED) {
       return {
-        type: "combined",
+        type: CHART_TYPE.COMBINED,
         exercise: elements.exerciseInput.value.trim(),
         workout: useCurrentWorkout
           ? currentFileName
@@ -182,6 +183,6 @@ export class TargetSectionWithAutocomplete {
       };
     }
 
-    return { type: "none" };
+    return { type: CHART_TYPE.NONE };
   }
 }

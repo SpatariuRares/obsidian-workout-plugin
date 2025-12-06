@@ -3,20 +3,19 @@ import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";
 import {
   LoadingSpinner,
-  EmptyState,
   InfoBanner,
 } from "@app/components/molecules";
 import { ErrorMessage } from "@app/components/atoms";
 import { DebugInfoPanel } from "@app/components/shared";
 import { LogCallouts } from "@app/features/logs/components/LogCallouts";
-import { EmbeddedViewParams } from "@app/types";
-
+import { CHART_TYPE, EmbeddedViewParams } from "@app/types";
+import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
-  constructor(protected plugin: WorkoutChartsPlugin) {}
+  constructor(protected plugin: WorkoutChartsPlugin) { }
 
   /**
    * Common debug logging method used across all views
@@ -25,7 +24,7 @@ export abstract class BaseView {
     _className: string,
     _message: string,
     _data?: unknown
-  ): void {}
+  ): void { }
 
   /**
    * Common error handling pattern for all views
@@ -52,12 +51,12 @@ export abstract class BaseView {
   /**
    * Common pattern for handling no filtered data
    */
+
   protected handleNoFilteredData(
     container: HTMLElement,
     params: EmbeddedViewParams,
     titlePrefix: string,
-    logData: WorkoutLogData[],
-    viewType: "chart" | "table" | "timer" | "dashboard"
+    viewType: VIEW_TYPES
   ): void {
     // Check if this is a combined exercise + workout case
     if (titlePrefix && titlePrefix.includes(" + ")) {
@@ -80,11 +79,17 @@ export abstract class BaseView {
     }
 
     const isWorkoutView =
-      viewType === "chart"
-        ? ("chartType" in params
-            ? params.chartType || "exercise"
-            : "exercise") === "workout"
-        : !("exercise" in params ? params.exercise : undefined);
+      viewType === VIEW_TYPES.CHART
+        ? (() => {
+          type ViewCategory = CHART_TYPE.EXERCISE | CHART_TYPE.WORKOUT;
+          const effectiveChartCategory: ViewCategory =
+            "chartType" in params &&
+              (params.chartType === CHART_TYPE.EXERCISE || params.chartType === CHART_TYPE.WORKOUT)
+              ? params.chartType
+              : CHART_TYPE.EXERCISE;
+          return effectiveChartCategory === CHART_TYPE.WORKOUT;
+        })()
+        : !("exercise" in params && params.exercise);
 
     if (isWorkoutView) {
       InfoBanner.render(

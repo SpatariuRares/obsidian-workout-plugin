@@ -6,6 +6,7 @@ import {
 import { TimerAudio } from "@app/features/timer/components/TimerAudio";
 import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import { TimerControls } from "@app/features/timer/components/TimerControls";
+import { TIMER_TYPE } from "@app/types/TimerTypes";
 
 export class TimerCore {
   private state: TimerState;
@@ -49,7 +50,7 @@ export class TimerCore {
       return;
     }
 
-    if (this.state.timerType === "countdown") {
+    if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
       const remaining = this.state.duration * 1000 - this.state.elapsedTime;
       if (remaining <= 0) {
         this.setState({
@@ -97,7 +98,7 @@ export class TimerCore {
     const now = Date.now();
     this.setState({ elapsedTime: now - this.state.startTime });
 
-    if (this.state.timerType === "countdown") {
+    if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
       const remaining = Math.max(
         0,
         this.state.duration * 1000 - this.state.elapsedTime
@@ -106,7 +107,7 @@ export class TimerCore {
         this.handleTimerComplete();
         return;
       }
-    } else if (this.state.timerType === "interval") {
+    } else if (this.state.timerType === TIMER_TYPE.INTERVAL) {
       const intervalElapsed =
         this.state.elapsedTime % (this.state.intervalTime * 1000);
       if (intervalElapsed < 100 && this.state.elapsedTime > 0) {

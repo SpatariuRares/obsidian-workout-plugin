@@ -1,7 +1,7 @@
 // Utility class for generating code blocks
 import { MODAL_CODE_BLOCKS } from "@app/constants/ModalConstants";
 import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
-import { EmbeddedChartParams, EmbeddedTimerParams, TableCodeOptions } from "@app/types";
+import { CHART_TYPE, EmbeddedChartParams, EmbeddedTimerParams, TableCodeOptions, TableColumnType, TableType, TimerType } from "@app/types";
 
 export class CodeGenerator {
   /**
@@ -17,12 +17,12 @@ export class CodeGenerator {
     lines.push(`type: ${params.type}`);
 
     // Add target (exercise, workout, or both)
-    if (params.chartType === "combined") {
+    if (params.chartType === CHART_TYPE.COMBINED) {
       if (params.exercise) lines.push(`exercise: ${params.exercise}`);
       if (params.workout) lines.push(`workout: ${params.workout}`);
-    } else if (params.chartType === "exercise" && params.exercise) {
+    } else if (params.chartType === CHART_TYPE.EXERCISE && params.exercise) {
       lines.push(`exercise: ${params.exercise}`);
-    } else if (params.chartType === "workout" && params.workout) {
+    } else if (params.chartType === CHART_TYPE.WORKOUT && params.workout) {
       lines.push(`workout: ${params.workout}`);
     }
 
@@ -52,12 +52,12 @@ export class CodeGenerator {
     const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.TABLE}`];
 
     // Add target (exercise, workout, or both)
-    if (params.tableType === "combined") {
+    if (params.tableType === TableType.COMBINED) {
       if (params.exercise) lines.push(`exercise: ${params.exercise}`);
       if (params.workout) lines.push(`workout: ${params.workout}`);
-    } else if (params.tableType === "exercise" && params.exercise) {
+    } else if (params.tableType === TableType.EXERCISE && params.exercise) {
       lines.push(`exercise: ${params.exercise}`);
-    } else if (params.tableType === "workout" && params.workout) {
+    } else if (params.tableType === TableType.WORKOUT && params.workout) {
       lines.push(`workout: ${params.workout}`);
     }
 
@@ -65,7 +65,7 @@ export class CodeGenerator {
     lines.push(`limit: ${params.limit}`);
 
     // Add columns configuration
-    if (params.columnsType !== "standard") {
+    if (params.columnsType !== TableColumnType.STANDARD) {
       const columnsMap = {
         minimal: ["Date", "Exercise", "Reps", "Weight (kg)"],
       };
@@ -100,10 +100,10 @@ export class CodeGenerator {
       throw new Error("Timer type is required");
     }
 
-    if (params.type === "countdown" && params.duration) {
+    if (params.type === TimerType.COUNTDOWN && params.duration) {
       lines.push(`duration: ${params.duration}`);
     } else if (
-      params.type === "interval" &&
+      params.type === TimerType.INTERVAL &&
       params.intervalTime &&
       params.rounds
     ) {

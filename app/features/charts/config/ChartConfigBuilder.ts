@@ -13,7 +13,7 @@ import {
   getYAxisLabel,
   getUnitForChartType,
 } from "@app/features/charts/config/ChartConstants";
-
+import { ChartTypeRegistry, TooltipItem } from 'chart.js';
 /**
  * Builds Chart.js configuration objects with modular, reusable methods
  */
@@ -85,13 +85,12 @@ export class ChartConfigBuilder {
       padding: ChartStyling.TOOLTIP_PADDING,
       displayColors: true,
       callbacks: {
-        label: function (tooltipItem: any) {
+        label: function (tooltipItem: TooltipItem<keyof ChartTypeRegistry>) {
           const value = tooltipItem.parsed.y;
           const label = tooltipItem.dataset.label ?? "";
           const unit = getUnitForChartType(chartType);
-          return `${label}: ${
-            value?.toFixed ? value.toFixed(1) : value
-          } ${unit}`;
+          return `${label}: ${value?.toFixed ? value.toFixed(1) : value
+            } ${unit}`;
         },
       },
     };

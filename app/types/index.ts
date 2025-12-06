@@ -11,7 +11,7 @@ export type {
   ChartDataset,
   ChartData,
 } from "@app/types/ChartTypes";
-export { ChartType, ChartDataType } from "@app/types/ChartTypes";
+export { CHART_TYPE, CHART_DATA_TYPE as ChartDataType } from "@app/types/ChartTypes";
 
 // Table-related types
 export type {
@@ -20,11 +20,11 @@ export type {
   TableData,
   TableCodeOptions,
 } from "@app/types/TableTypes";
-export { TableType, TableColumnType } from "@app/types/TableTypes";
+export { TABLE_TYPE as TableType, TableColumnType } from "@app/types/TableTypes";
 
 // Timer-related types
 export type { EmbeddedTimerParams } from "@app/types/TimerTypes";
-export { TimerType } from "@app/types/TimerTypes";
+export { TIMER_TYPE as TimerType } from "@app/types/TimerTypes";
 
 // Dashboard-related types
 export type { EmbeddedDashboardParams } from "@app/types/DashboardTypes";

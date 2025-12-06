@@ -181,16 +181,6 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    if (this.plugin.settings.debugMode || params.debug) {
-      this.renderDebugInfo(
-        contentDiv,
-        filterResult.filteredData,
-        "table",
-        filterResult.filterMethodUsed,
-        true
-      );
-    }
-
     container.appendChild(fragment);
   }
 

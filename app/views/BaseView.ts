@@ -6,7 +6,6 @@ import {
   InfoBanner,
 } from "@app/components/molecules";
 import { ErrorMessage } from "@app/components/atoms";
-import { DebugInfoPanel } from "@app/components/shared";
 import { LogCallouts } from "@app/features/logs/components/LogCallouts";
 import { CHART_TYPE, EmbeddedViewParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
@@ -155,25 +154,5 @@ export abstract class BaseView {
    */
   protected showSuccessMessage(container: HTMLElement, message: string): void {
     InfoBanner.render(container, message, "success");
-  }
-
-  /**
-   * Common debug info rendering pattern
-   */
-  protected renderDebugInfo(
-    container: HTMLElement,
-    filteredData: WorkoutLogData[],
-    dataType: string,
-    filterMethodUsed: string,
-    debugMode: boolean
-  ): void {
-    if (debugMode) {
-      DebugInfoPanel.render(
-        container,
-        filteredData,
-        dataType,
-        filterMethodUsed
-      );
-    }
   }
 }

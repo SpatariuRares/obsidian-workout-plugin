@@ -14,7 +14,7 @@ export class DataService {
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
 
-  constructor(private app: App, private settings: WorkoutChartsSettings) {}
+  constructor(private app: App, private settings: WorkoutChartsSettings) { }
 
   async getWorkoutLogData(filterParams?: {
     exercise?: string;

@@ -1,5 +1,5 @@
 // Refactored CreateExercisePageModal using reusable components
-import { App, Notice, TFile } from "obsidian";
+import { App, normalizePath, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
@@ -158,10 +158,7 @@ exercise: ${exerciseName}
 
     // Create file path
     const safeExerciseName = exerciseName.replace(/[\\/:"*?<>|]/g, "_");
-    const fileName = folderPath
-      ? `${folderPath}/${safeExerciseName}.md`
-      : `${safeExerciseName}.md`;
-
+    const fileName = normalizePath(folderPath + "/" + safeExerciseName + ".md");
     // Create the file
     await this.app.vault.create(fileName, content);
 

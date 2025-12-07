@@ -3,6 +3,7 @@
  * Single source of truth for all muscle structures, preventing index misalignment bugs.
  */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import type { MuscleGroupData } from "@app/features/dashboard/body/Muscle";
 import type { ArmsData } from "@app/features/dashboard/body/Arms";
 import type { BackData } from "@app/features/dashboard/body/Back";
@@ -10,7 +11,6 @@ import type { ChestData } from "@app/features/dashboard/body/Chest";
 import type { CoreData } from "@app/features/dashboard/body/Core";
 import type { LegsData } from "@app/features/dashboard/body/Legs";
 import type { ShoulderData } from "@app/features/dashboard/body/Shoulders";
-import { TAG_MUSCLE_MAP, TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Configuration for a muscle type
@@ -33,21 +33,21 @@ export const ARMS_CONFIG: MuscleConfig<ArmsData> = {
 	type: "arms",
 	toMuscleGroups: (data: ArmsData) => [
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.BICIPITI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.BICIPITI,
 			parts: [
 				{ label: "R", value: data.bicepsRight },
 				{ label: "L", value: data.bicepsLeft },
 			],
 		},
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.TRICIPITI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.TRICIPITI,
 			parts: [
 				{ label: "R", value: data.tricepsRight },
 				{ label: "L", value: data.tricepsLeft },
 			],
 		},
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.AVAMBRACCI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.AVAMBRACCI,
 			parts: [
 				{ label: "R", value: data.forearmsRight },
 				{ label: "L", value: data.forearmsLeft },
@@ -76,15 +76,15 @@ export const ARMS_CONFIG: MuscleConfig<ArmsData> = {
  * Back muscle configuration
  */
 export const BACK_CONFIG: MuscleConfig<BackData> = {
-	type: TAG_MUSCLE_MAP.back,
+	type: CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.back,
 	toMuscleGroups: (data: BackData) => [
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.SCHIENA,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.SCHIENA,
 			parts: [
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES.TRAP, value: data.traps },
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES.TRAP_MID, value: data.trapsMiddle },
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES.LATS, value: data.lats },
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES.LOWER, value: data.lowerBack },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.TRAP, value: data.traps },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.TRAP_MID, value: data.trapsMiddle },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.LATS, value: data.lats },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.LOWER, value: data.lowerBack },
 			],
 		},
 	],
@@ -106,14 +106,14 @@ export const BACK_CONFIG: MuscleConfig<BackData> = {
  * Chest muscle configuration
  */
 export const CHEST_CONFIG: MuscleConfig<ChestData> = {
-	type: TAG_MUSCLE_MAP.chest,
+	type: CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest,
 	toMuscleGroups: (data: ChestData) => [
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.PETTO,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.PETTO,
 			parts: [
-				{ label: TEXT_CONSTANTS.MUSCLES.POSITIONS_IT.ALTO, value: data.upper },
-				{ label: TEXT_CONSTANTS.MUSCLES.POSITIONS_IT.MEDIO, value: data.middle },
-				{ label: TEXT_CONSTANTS.MUSCLES.POSITIONS_IT.BASSO, value: data.lower },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.POSITIONS.ALTO, value: data.upper },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.POSITIONS.MEDIO, value: data.middle },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.POSITIONS.BASSO, value: data.lower },
 			],
 		},
 	],
@@ -133,13 +133,13 @@ export const CHEST_CONFIG: MuscleConfig<ChestData> = {
  * Core muscle configuration
  */
 export const CORE_CONFIG: MuscleConfig<CoreData> = {
-	type: TAG_MUSCLE_MAP.core,
+	type: CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.core,
 	toMuscleGroups: (data: CoreData) => [
 		{
-			title: TEXT_CONSTANTS.MUSCLES.GROUPS.CORE,
+			title: CONSTANTS.WORKOUT.MUSCLES.GROUPS.CORE,
 			parts: [
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES_IT.ADDOMINALI, value: data.abs },
-				{ label: TEXT_CONSTANTS.MUSCLES.NAMES_IT.OBLIQUI, value: data.obliques },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.ADDOMINALI, value: data.abs },
+				{ label: CONSTANTS.WORKOUT.MUSCLES.NAMES.OBLIQUI, value: data.obliques },
 			],
 		},
 	],
@@ -160,28 +160,28 @@ export const LEGS_CONFIG: MuscleConfig<LegsData> = {
 	type: "legs",
 	toMuscleGroups: (data: LegsData) => [
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.QUADRICIPITI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.QUADRICIPITI,
 			parts: [
 				{ label: "R", value: data.quadsRight },
 				{ label: "L", value: data.quadsLeft },
 			],
 		},
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.FEMORALI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.FEMORALI,
 			parts: [
 				{ label: "R", value: data.hamstringsRight },
 				{ label: "L", value: data.hamstringsLeft },
 			],
 		},
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.GLUTEI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.GLUTEI,
 			parts: [
 				{ label: "R", value: data.glutesRight },
 				{ label: "L", value: data.glutesLeft },
 			],
 		},
 		{
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.POLPACCI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.POLPACCI,
 			parts: [
 				{ label: "R", value: data.calvesRight },
 				{ label: "L", value: data.calvesLeft },
@@ -214,11 +214,11 @@ export const LEGS_CONFIG: MuscleConfig<LegsData> = {
  * Shoulders muscle configuration
  */
 export const SHOULDERS_CONFIG: MuscleConfig<ShoulderData> = {
-	type: TAG_MUSCLE_MAP.shoulders,
+	type: CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.shoulders,
 	toMuscleGroups: (data: ShoulderData) => {
 		const groups: MuscleGroupData[] = [
 			{
-				title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.SPALLE_ANTERIORI,
+				title: CONSTANTS.WORKOUT.MUSCLES.NAMES.SPALLE_ANTERIORI,
 				parts: [
 					{ label: "R", value: data.frontRight },
 					{ label: "L", value: data.frontLeft },
@@ -229,7 +229,7 @@ export const SHOULDERS_CONFIG: MuscleConfig<ShoulderData> = {
 		// Add lateral shoulders if provided
 		if (data.lateralRight !== undefined || data.lateralLeft !== undefined) {
 			groups.push({
-				title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.SPALLE_LATERALI,
+				title: CONSTANTS.WORKOUT.MUSCLES.NAMES.SPALLE_LATERALI,
 				parts: [
 					{ label: "R", value: data.lateralRight || 0 },
 					{ label: "L", value: data.lateralLeft || 0 },
@@ -238,7 +238,7 @@ export const SHOULDERS_CONFIG: MuscleConfig<ShoulderData> = {
 		}
 
 		groups.push({
-			title: TEXT_CONSTANTS.MUSCLES.NAMES_IT.SPALLE_POSTERIORI,
+			title: CONSTANTS.WORKOUT.MUSCLES.NAMES.SPALLE_POSTERIORI,
 			parts: [
 				{ label: "R", value: data.rearRight },
 				{ label: "L", value: data.rearLeft },

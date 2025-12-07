@@ -1,4 +1,4 @@
-import { TABLE_LABELS } from "@app/constants/TableConstats";
+import { CONSTANTS } from "@app/constants/Constants";
 import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
 
 export class MobileTable {
@@ -37,14 +37,14 @@ export class MobileTable {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
 
-    headerRow.createEl("th", { text: TABLE_LABELS.DATA });
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.LABELS.DATA });
     headerRow.createEl("th", {
       text:
         chartType === CHART_DATA_TYPE.VOLUME
-          ? TABLE_LABELS.VOLUME
+          ? CONSTANTS.WORKOUT.TABLE.LABELS.VOLUME
           : chartType === CHART_DATA_TYPE.WEIGHT
-            ? TABLE_LABELS.WEIGHT
-            : TABLE_LABELS.REPETITIONS,
+            ? CONSTANTS.WORKOUT.TABLE.LABELS.WEIGHT
+            : CONSTANTS.WORKOUT.TABLE.LABELS.REPETITIONS,
     });
 
     // Create table body
@@ -52,7 +52,7 @@ export class MobileTable {
 
     // Get the main dataset (first dataset, excluding trend line)
     const mainDataset =
-      datasets.find((ds) => ds.label !== TABLE_LABELS.TREND_LINE) ||
+      datasets.find((ds) => ds.label !== CONSTANTS.WORKOUT.TABLE.LABELS.TREND_LINE) ||
       datasets[0];
 
     if (mainDataset && mainDataset.data) {
@@ -68,7 +68,7 @@ export class MobileTable {
       // Fallback: create empty table with message
       const row = tbody.createEl("tr");
       row.createEl("td", {
-        text: TABLE_LABELS.NO_DATA,
+        text: CONSTANTS.WORKOUT.TABLE.LABELS.NO_DATA,
         attr: { colspan: "2" },
       });
     }

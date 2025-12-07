@@ -1,4 +1,4 @@
-import { MODAL_CODE_BLOCKS } from "@app/constants/ModalConstants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
@@ -26,19 +26,19 @@ export class CodeBlockProcessorService {
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
-      MODAL_CODE_BLOCKS.CHART,
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
       this.handleWorkoutChart.bind(this)
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      MODAL_CODE_BLOCKS.TABLE,
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
       this.handleWorkoutLog.bind(this)
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      MODAL_CODE_BLOCKS.TIMER,
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
       this.handleWorkoutTimer.bind(this)
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      MODAL_CODE_BLOCKS.DASHBOARD,
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
       this.handleWorkoutDashboard.bind(this)
     );
   }

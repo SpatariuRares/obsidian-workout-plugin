@@ -1,7 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { TableRow, EmbeddedTableParams } from "@app/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { TABLE_ICONS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
 import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
@@ -129,15 +129,15 @@ export class TableRenderer {
 
         // Create stat spans using DOM methods
         const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        repsSpan.appendText(TABLE_ICONS.REPS + TABLE_LABELS.REPETITIONS + ": ");
+        repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS + CONSTANTS.WORKOUT.TABLE.LABELS.REPETITIONS + ": ");
         repsSpan.createEl("strong", { text: totalReps.toString() });
 
         const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        weightSpan.appendText(TABLE_ICONS.WEIGHT + TABLE_LABELS.WEIGHT + ": ");
+        weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT + CONSTANTS.WORKOUT.TABLE.LABELS.WEIGHT + ": ");
         weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
 
         const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        volumeSpan.appendText(TABLE_ICONS.VOLUME + TABLE_LABELS.VOLUME + ": ");
+        volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME + CONSTANTS.WORKOUT.TABLE.LABELS.VOLUME + ": ");
         volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
 

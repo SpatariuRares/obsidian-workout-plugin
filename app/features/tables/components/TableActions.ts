@@ -1,9 +1,9 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { Notice } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { EditLogModal } from "@app/features/modals/EditLogModal";
 import { ConfirmModal } from "@app/features/modals/ConfirmModal";
-import { TABLE_MESSAGES } from "@app/constants/TableConstats";
 import { ActionButtons } from "@app/features/tables/ui";
 
 /**
@@ -36,19 +36,19 @@ export class TableActions {
   ): void {
     const modal = new ConfirmModal(
       plugin.app,
-      TABLE_MESSAGES.DELETE_CONFIRM,
+      CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_CONFIRM,
       () => {
         plugin
           .deleteWorkoutLogEntry(log)
           .then(() => {
-            new Notice(TABLE_MESSAGES.DELETE_SUCCESS);
+            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
             plugin.triggerWorkoutLogRefresh();
             onComplete?.();
           })
           .catch((error) => {
             const errorMessage =
               error instanceof Error ? error.message : String(error);
-            new Notice(TABLE_MESSAGES.DELETE_ERROR + errorMessage);
+            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage);
           });
       }
     );

@@ -4,8 +4,8 @@
  * Combines: Icon + Input + Container atoms
  */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { Icon, Input, Container } from "@app/components/atoms";
-import { UI_LABELS } from "@app/constants";
 import { INPUT_TYPE } from "@app/types";
 
 export interface SearchBoxProps {
@@ -60,7 +60,7 @@ export class SearchBox {
 		// Add input
 		const input = Input.create(container, {
 			type: INPUT_TYPE.TEXT,
-			placeholder: props?.placeholder || UI_LABELS.LABELCONSTANTS.SEARCH,
+			placeholder: props?.placeholder || CONSTANTS.WORKOUT.LABELS.GENERAL.SEARCH,
 			value: props?.value,
 			className: "search-box-input",
 		});

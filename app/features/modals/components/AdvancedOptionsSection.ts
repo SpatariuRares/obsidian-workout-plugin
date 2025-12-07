@@ -1,9 +1,4 @@
-import { MODAL_SECTIONS } from "@app/constants/ModalConstants";// Reusable advanced options section component
-import {
-  MODAL_CHECKBOXES,
-  MODAL_LABELS,
-  MODAL_PLACEHOLDERS,
-} from "@app/constants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 
 export interface AdvancedOptionsElements {
@@ -24,13 +19,13 @@ export class AdvancedOptionsSection {
       showSearchByName?: boolean;
     } = {}
   ): AdvancedOptionsElements {
-    const advancedSection = modal.createSection(container, MODAL_SECTIONS.ADVANCED_OPTIONS);
+    const advancedSection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.ADVANCED_OPTIONS);
 
     // Exact match toggle
     const exactMatchContainer = modal.createCheckboxGroup(advancedSection);
     const exactMatchToggle = modal.createCheckbox(
       exactMatchContainer,
-      MODAL_CHECKBOXES.EXACT_MATCH,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.EXACT_MATCH,
       false,
       "exactMatch"
     );
@@ -44,8 +39,8 @@ export class AdvancedOptionsSection {
       const titleContainer = modal.createFormGroup(advancedSection);
       const titleInput = modal.createTextInput(
         titleContainer,
-        MODAL_LABELS.CUSTOM_TITLE,
-        MODAL_PLACEHOLDERS.CUSTOM_TITLE
+        CONSTANTS.WORKOUT.MODAL.LABELS.CUSTOM_TITLE,
+        CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.CUSTOM_TITLE
       );
       elements.titleInput = titleInput;
     }
@@ -55,7 +50,7 @@ export class AdvancedOptionsSection {
       const searchByNameContainer = modal.createCheckboxGroup(advancedSection);
       const searchByNameToggle = modal.createCheckbox(
         searchByNameContainer,
-        MODAL_CHECKBOXES.SEARCH_BY_NAME,
+        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SEARCH_BY_NAME,
         false,
         "searchByName"
       );

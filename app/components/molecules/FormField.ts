@@ -27,10 +27,10 @@ export interface FormFieldResult {
  * @example
  * ```typescript
  * const { input } = FormField.create(container, {
- *   label: TEXT_CONSTANTS.FORMS.LABELS.EXERCISE_NAME,
+ *   label: CONSTANTS.WORKOUT.FORMS.LABELS.EXERCISE_NAME,
  *   inputProps: {
  *     type: "text",
- *     placeholder: TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_EXERCISE_NAME,
+ *     placeholder: CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_EXERCISE_NAME,
  *     required: true
  *   },
  *   required: true

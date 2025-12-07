@@ -1,4 +1,5 @@
 // Refactored InsertTimerModal extending BaseInsertModal
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
@@ -6,11 +7,6 @@ import {
   TimerConfigurationElements,
 } from "@app/features/modals/components/TimerConfigurationSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_NOTICES,
-} from "@app/constants/ModalConstants";
 import { TIMER_TYPE } from "@app/types";
 
 export class InsertTimerModal extends BaseInsertModal {
@@ -21,15 +17,15 @@ export class InsertTimerModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return MODAL_TITLES.INSERT_TIMER;
+    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TIMER;
   }
 
   protected getButtonText(): string {
-    return MODAL_BUTTONS.INSERT_TIMER;
+    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_TIMER;
   }
 
   protected getSuccessMessage(): string {
-    return MODAL_NOTICES.TIMER_INSERTED;
+    return CONSTANTS.WORKOUT.MODAL.NOTICES.TIMER_INSERTED;
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
@@ -43,7 +39,7 @@ export class InsertTimerModal extends BaseInsertModal {
 
   protected generateCode(): string {
     if (!this.timerElements) {
-      throw new Error(MODAL_NOTICES.TIMER_ELEMENTS_NOT_INITIALIZED);
+      throw new Error(CONSTANTS.WORKOUT.MODAL.NOTICES.TIMER_ELEMENTS_NOT_INITIALIZED);
     }
 
     const timerValues = TimerConfigurationSection.getValues(this.timerElements);

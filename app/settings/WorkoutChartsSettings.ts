@@ -1,8 +1,8 @@
 // Settings tab for the Workout Charts plugin
+import { CONSTANTS } from "@app/constants/Constants";
 import WorkoutChartsPlugin from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { Notice } from "obsidian";
-import { TEXT_CONSTANTS } from "@app/constants";
 import { FolderSuggest } from "@app/suggest/FolderSuggest";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
@@ -19,11 +19,11 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName(TEXT_CONSTANTS.SETTINGS.LABELS.CSV_PATH)
-      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.CSV_PATH)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.CSV_PATH)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CSV_PATH)
       .addText((text) =>
         text
-          .setPlaceholder(TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
+          .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
           .setValue(this.plugin.settings.csvLogFilePath)
           .onChange(async (value) => {
             this.plugin.settings.csvLogFilePath = normalizePath(value);
@@ -32,12 +32,12 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
-      .setName(TEXT_CONSTANTS.SETTINGS.LABELS.EXERCISE_FOLDER)
-      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.EXERCISE_FOLDER)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_FOLDER)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.EXERCISE_FOLDER)
       .addText((text) => {
         new FolderSuggest(this.app, text.inputEl);
         text
-          .setPlaceholder(TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH)
+          .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH)
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
             this.plugin.settings.exerciseFolderPath = normalizePath(value);
@@ -48,16 +48,16 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
 
     // CSV Management Section
-    new Setting(containerEl).setName(TEXT_CONSTANTS.SETTINGS.SECTIONS.CSV_MANAGEMENT).setHeading();
+    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CSV_MANAGEMENT).setHeading();
 
     new Setting(containerEl)
-      .setName(TEXT_CONSTANTS.COMMANDS.CREATE_CSV)
-      .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.CREATE_CSV)
+      .setName(CONSTANTS.WORKOUT.COMMANDS.CREATE_CSV)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CREATE_CSV)
       .addButton((button) =>
-        button.setButtonText(TEXT_CONSTANTS.UI.BUTTONS.CREATE_FILE).onClick(async () => {
+        button.setButtonText(CONSTANTS.WORKOUT.UI.BUTTONS.CREATE_FILE).onClick(async () => {
           try {
             await this.plugin.createCSVLogFile();
-            new Notice(TEXT_CONSTANTS.MESSAGES.SUCCESS.CSV_CREATED);
+            new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
           } catch (error) {
             const errorMessage =
               error instanceof Error ? error.message : String(error);

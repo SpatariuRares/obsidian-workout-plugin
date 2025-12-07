@@ -1,10 +1,5 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { EmbeddedTableParams } from "@app/types";
-import {
-  TABLE_LIMITS,
-  DEFAULT_VISIBLE_COLUMNS,
-  TABLE_DEFAULTS,
-  TABLE_VALIDATION_ERRORS,
-} from "@app/constants/TableConstats";
 
 /**
  * Configuration and validation for table parameters.
@@ -16,12 +11,12 @@ export class TableConfig {
    */
   static getDefaults(): EmbeddedTableParams {
     return {
-      limit: TABLE_LIMITS.DEFAULT,
+      limit: CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT,
       showAddButton: true,
-      buttonText: TABLE_DEFAULTS.BUTTON_TEXT,
+      buttonText: CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
       searchByName: false,
       exactMatch: false,
-      columns: [...DEFAULT_VISIBLE_COLUMNS],
+      columns: [...CONSTANTS.WORKOUT.TABLE.DEFAULT_VISIBLE_COLUMNS],
     };
   }
 
@@ -35,13 +30,13 @@ export class TableConfig {
       const limit = parseInt(params.limit.toString());
       if (
         isNaN(limit) ||
-        limit < TABLE_LIMITS.MIN ||
-        limit > TABLE_LIMITS.MAX
+        limit < CONSTANTS.WORKOUT.TABLE.LIMITS.MIN ||
+        limit > CONSTANTS.WORKOUT.TABLE.LIMITS.MAX
       ) {
         errors.push(
-          TABLE_VALIDATION_ERRORS.LIMIT_RANGE(
-            TABLE_LIMITS.MIN,
-            TABLE_LIMITS.MAX,
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(
+            CONSTANTS.WORKOUT.TABLE.LIMITS.MIN,
+            CONSTANTS.WORKOUT.TABLE.LIMITS.MAX,
             params.limit.toString()
           )
         );
@@ -53,17 +48,17 @@ export class TableConfig {
         !Array.isArray(params.columns) &&
         typeof params.columns !== "string"
       ) {
-        errors.push(TABLE_VALIDATION_ERRORS.COLUMNS_INVALID_TYPE);
+        errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_INVALID_TYPE);
       } else if (
         Array.isArray(params.columns) &&
         !params.columns.every((c) => typeof c === "string")
       ) {
-        errors.push(TABLE_VALIDATION_ERRORS.COLUMNS_NOT_STRINGS);
+        errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_NOT_STRINGS);
       }
     }
 
     if (params.buttonText && typeof params.buttonText !== "string") {
-      errors.push(TABLE_VALIDATION_ERRORS.BUTTON_TEXT_NOT_STRING);
+      errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.BUTTON_TEXT_NOT_STRING);
     }
 
     return errors;

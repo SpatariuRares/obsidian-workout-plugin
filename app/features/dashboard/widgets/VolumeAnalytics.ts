@@ -1,8 +1,8 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, EmbeddedDashboardParams } from "@app/types";
 import { ChartRenderer } from "@app/features/charts";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
-import { UI_LABELS } from "@app/constants/LabelConstants";
 
 export class VolumeAnalytics {
   static render(
@@ -15,7 +15,7 @@ export class VolumeAnalytics {
     });
 
     analyticsEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
       cls: "workout-widget-title",
     });
 
@@ -36,13 +36,13 @@ export class VolumeAnalytics {
       volumeTrendData.labels,
       [
         {
-          label: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.DATASET_LABEL,
+          label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.DATASET_LABEL,
           data: volumeTrendData.data,
         },
       ],
       {
         type: CHART_DATA_TYPE.VOLUME,
-        title: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.CHART_TITLE,
+        title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.CHART_TITLE,
       }
     );
 
@@ -61,7 +61,7 @@ export class VolumeAnalytics {
     data: [string, number][]
   ): void {
     container.createEl("h4", {
-      text: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.MUSCLE_BREAKDOWN_TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.MUSCLE_BREAKDOWN_TITLE,
     });
 
     const listEl = container.createEl("ul", { cls: "workout-muscle-group-list" });
@@ -75,7 +75,7 @@ export class VolumeAnalytics {
       });
 
       itemEl.createEl("span", {
-        text: `${volume.toLocaleString()} ${UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
+        text: `${volume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
         cls: "workout-exercise-volume",
       });
     });

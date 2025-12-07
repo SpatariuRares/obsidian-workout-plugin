@@ -1,9 +1,9 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { TableState, TableCallbacks } from "@app/types/TableTypes";
 import { TableDataLoader } from "@app/features/tables/business/TableDataLoader";
-import { TABLE_MESSAGES } from "@app/constants/TableConstats";
 
 export class TableRefresh {
   /**
@@ -32,7 +32,7 @@ export class TableRefresh {
           state.currentParams
         );
 
-        callbacks?.onSuccess?.(TABLE_MESSAGES.REFRESH_SUCCESS);
+        callbacks?.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
       }
     } catch (error) {
       const errorObj = error instanceof Error ? error : new Error(String(error));

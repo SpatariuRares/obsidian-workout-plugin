@@ -4,7 +4,7 @@
  * Combines: Icon + Text + Container atoms
  */
 
-import { Icon, Text, Container } from "@app/components/atoms";
+ import { Icon, Text, Container } from "@app/components/atoms";
 
 export interface EmptyStateProps {
 	icon?: string;
@@ -20,7 +20,7 @@ export interface EmptyStateProps {
  * ```typescript
  * EmptyState.create(container, {
  *   icon: "📭",
- *   message: TEXT_CONSTANTS.MESSAGES.NO_DATA
+ *   message: CONSTANTS.WORKOUT.MESSAGES.NO_DATA
  * });
  * ```
  */

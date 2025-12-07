@@ -1,10 +1,8 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import type WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/FrontmatterParser";
-import { MUSCLE_KEYWORDS } from "@app/constants/MuscleTags";
-import { UI_LABELS } from "@app/constants/LabelConstants";
-import { UI_ICONS } from "@app/constants/IconConstants";
 
 interface ExerciseFileError {
   file: TFile;
@@ -22,7 +20,7 @@ export class WidgetsFileError {
     });
 
     errorEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.FILE_ERRORS.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TITLE,
       cls: "workout-widget-title",
     });
 
@@ -31,7 +29,7 @@ export class WidgetsFileError {
 
     if (fileErrors.length === 0) {
       errorEl.createEl("div", {
-        text: `${UI_ICONS.STATUS.SUCCESS} ${UI_LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
+        text: `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
         cls: "workout-file-errors-success",
       });
       return;
@@ -114,7 +112,7 @@ export class WidgetsFileError {
       const validationErrors = FrontmatterParser.validateFrontmatter(content);
       if (validationErrors.length > 0) {
         return validationErrors.map(
-          (err) => `${UI_ICONS.STATUS.WARNING} ${err}`
+          (err) => `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${err}`
         );
       }
 
@@ -126,11 +124,11 @@ export class WidgetsFileError {
 
       if (muscleTags.length === 0) {
         errors.push(
-          `${UI_ICONS.STATUS.WARNING} ${UI_LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`
+          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`
         );
       } else if (muscleTags.length > 3) {
         errors.push(
-          `${UI_ICONS.STATUS.WARNING} ${UI_LABELS.DASHBOARD.FILE_ERRORS.TOO_MANY_TAGS(
+          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TOO_MANY_TAGS(
             muscleTags.length
           )}`
         );
@@ -139,7 +137,7 @@ export class WidgetsFileError {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       errors.push(
-        `${UI_ICONS.STATUS.ERROR} ${UI_LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
+        `${CONSTANTS.WORKOUT.ICONS.STATUS.ERROR} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
           errorMessage
         )}`
       );
@@ -151,7 +149,7 @@ export class WidgetsFileError {
   private static getMuscleTags(tags: string[]): string[] {
     return tags.filter((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      return MUSCLE_KEYWORDS.some((keyword) => normalizedTag.includes(keyword));
+      return CONSTANTS.WORKOUT.MUSCLES.KEYWORDS.some((keyword) => normalizedTag.includes(keyword));
     });
   }
 }

@@ -1,7 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
-import { UI_LABELS } from "@app/constants/LabelConstants";
 
 export class RecentWorkouts {
   static render(
@@ -14,7 +14,7 @@ export class RecentWorkouts {
     });
 
     recentEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
       cls: "workout-widget-title",
     });
 
@@ -38,12 +38,12 @@ export class RecentWorkouts {
       itemEl.createEl("div", {
         text:
           workout.workout ||
-          UI_LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
+          CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
         cls: "workout-recent-workout-name",
       });
 
       itemEl.createEl("div", {
-        text: `${workout.totalVolume.toLocaleString()} ${UI_LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
+        text: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
         cls: "workout-recent-workout-volume",
       });
     });

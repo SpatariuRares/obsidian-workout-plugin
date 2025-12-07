@@ -1,4 +1,4 @@
-import { MODAL_BUTTONS, MODAL_TITLES } from "@app/constants/ModalConstants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { App, Notice } from "obsidian";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { InsertChartModal } from "@app/features/modals/InsertChartModal";
@@ -8,7 +8,6 @@ import { InsertDashboardModal } from "@app/features/modals/InsertDashboardModal"
 import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import type WorkoutChartsPlugin from "main";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export class CommandHandlerService {
   constructor(private app: App, private plugin: WorkoutChartsPlugin) { }
@@ -16,7 +15,7 @@ export class CommandHandlerService {
   registerCommands(): void {
     this.plugin.addCommand({
       id: "create-workout-log",
-      name: MODAL_TITLES.CREATE_LOG,
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
       callback: () => {
         new CreateLogModal(this.app, this.plugin, undefined, undefined, () => {
           this.plugin.triggerWorkoutLogRefresh();
@@ -26,11 +25,11 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-csv-log",
-      name: TEXT_CONSTANTS.COMMANDS.CREATE_CSV,
+      name: CONSTANTS.WORKOUT.COMMANDS.CREATE_CSV,
       callback: async () => {
         try {
           await this.plugin.createCSVLogFile();
-          new Notice(TEXT_CONSTANTS.MESSAGES.SUCCESS.CSV_CREATED);
+          new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : String(error);
@@ -41,7 +40,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-chart",
-      name: MODAL_TITLES.INSERT_CHART,
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_CHART,
       callback: () => {
         new InsertChartModal(this.app, this.plugin).open();
       },
@@ -49,7 +48,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-table",
-      name: TEXT_CONSTANTS.COMMANDS.INSERT_TABLE,
+      name: CONSTANTS.WORKOUT.COMMANDS.INSERT_TABLE,
       callback: () => {
         new InsertTableModal(this.app, this.plugin).open();
       },
@@ -57,7 +56,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-timer",
-      name: MODAL_TITLES.INSERT_TIMER,
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TIMER,
       callback: () => {
         new InsertTimerModal(this.app).open();
       },
@@ -65,7 +64,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-exercise-page",
-      name: MODAL_BUTTONS.CREATE_EXERCISE,
+      name: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
       callback: () => {
         new CreateExercisePageModal(this.app, this.plugin).open();
       },
@@ -73,7 +72,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-exercise-section",
-      name: MODAL_TITLES.CREATE_EXERCISE_SECTION,
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_SECTION,
       callback: () => {
         new CreateExerciseSectionModal(this.app, this.plugin).open();
       },
@@ -81,7 +80,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-dashboard",
-      name: MODAL_TITLES.INSERT_DASHBOARD,
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DASHBOARD,
       callback: () => {
         new InsertDashboardModal(this.app).open();
       },

@@ -1,4 +1,4 @@
-import { TEXT_CONSTANTS } from "@app/constants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { parseYaml } from "obsidian";
 /**
  * Utility for parsing YAML frontmatter from markdown files
@@ -94,19 +94,19 @@ export class FrontmatterParser {
 
     // Check if content is empty
     if (!content.trim()) {
-      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
+      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.FILE_EMPTY);
       return errors;
     }
 
     // Check for frontmatter
     if (!this.hasFrontmatter(content)) {
-      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_FRONTMATTER);
+      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_FRONTMATTER);
       return errors;
     }
 
     // Check for tags
     if (!this.hasTags(content)) {
-      errors.push(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_TAGS);
+      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_TAGS);
     }
 
     return errors;

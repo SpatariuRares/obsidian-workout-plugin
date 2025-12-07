@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
@@ -8,7 +9,6 @@ import {
 } from "@app/features/dashboard/business/muscleHeatMap";
 import { HeatMapControls } from "@app/features/dashboard/ui/HeatMapControls";
 import { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Main orchestrator for muscle heat map visualization
@@ -26,7 +26,7 @@ export class MuscleHeatMap {
     });
 
     heatMapEl.createEl("h3", {
-      text: TEXT_CONSTANTS.UI.LABELS.MUSCLE_HEAT_MAP,
+      text: CONSTANTS.WORKOUT.UI.LABELS.MUSCLE_HEAT_MAP,
       cls: "workout-widget-title",
     });
 

@@ -1,5 +1,6 @@
 // Base class for log modals (Create and Edit)
 // Extracts common form creation and validation logic
+import { CONSTANTS } from "@app/constants/Constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
@@ -8,14 +9,6 @@ import {
   ExerciseAutocompleteElements,
 } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
-import {
-  MODAL_LABELS,
-  MODAL_PLACEHOLDERS,
-  MODAL_CHECKBOXES,
-  MODAL_SECTIONS,
-  MODAL_BUTTONS,
-  MODAL_NOTICES,
-} from "@app/constants/ModalConstants";
 import { Button } from "@app/components/atoms";
 
 export interface LogFormData {
@@ -117,11 +110,11 @@ export abstract class BaseLogModal extends ModalBase {
     // Reps input
     const repsInput = this.createNumberField(
       formContainer,
-      MODAL_LABELS.REPS,
+      CONSTANTS.WORKOUT.MODAL.LABELS.REPS,
       0,
       {
         min: 1,
-        placeholder: MODAL_PLACEHOLDERS.REPS,
+        placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS,
       }
     );
     repsInput.value = ""; // Allow empty for user input
@@ -129,11 +122,11 @@ export abstract class BaseLogModal extends ModalBase {
     // Weight input
     const weightInput = this.createNumberField(
       formContainer,
-      MODAL_LABELS.WEIGHT,
+      CONSTANTS.WORKOUT.MODAL.LABELS.WEIGHT,
       0,
       {
         min: 0,
-        placeholder: MODAL_PLACEHOLDERS.WEIGHT,
+        placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WEIGHT,
       }
     );
     weightInput.value = ""; // Allow empty for user input
@@ -142,21 +135,21 @@ export abstract class BaseLogModal extends ModalBase {
     // Notes input
     const notesInput = this.createTextareaField(
       formContainer,
-      MODAL_LABELS.NOTES,
-      MODAL_PLACEHOLDERS.NOTES,
+      CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
       3
     );
 
     // Workout section
     const workoutSection = this.createSection(
       formContainer,
-      MODAL_SECTIONS.WORKOUT
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT
     );
 
     // Current workout toggle
     const currentWorkoutToggle = this.createCheckboxField(
       workoutSection,
-      MODAL_CHECKBOXES.USE_CURRENT_WORKOUT,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
       this.getInitialWorkoutToggleState(),
       "currentWorkout"
     );
@@ -164,7 +157,7 @@ export abstract class BaseLogModal extends ModalBase {
     // Workout input (optional)
     const workoutInput = this.createTextField(
       workoutSection,
-      MODAL_LABELS.WORKOUT,
+      CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT,
       "",
       this.currentPageLink || ""
     );
@@ -254,9 +247,9 @@ export abstract class BaseLogModal extends ModalBase {
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
-      text: MODAL_BUTTONS.CANCEL,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       className: "workout-charts-btn workout-charts-btn-warning",
-      ariaLabel: MODAL_BUTTONS.CANCEL,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
     // Event listeners using Button helper
@@ -312,7 +305,7 @@ export abstract class BaseLogModal extends ModalBase {
       .catch((error) => {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
-        new Notice(`${MODAL_NOTICES.GENERIC_ERROR}${errorMessage}`);
+        new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`);
       });
   }
 
@@ -325,12 +318,12 @@ export abstract class BaseLogModal extends ModalBase {
     weight: number
   ): boolean {
     if (!exercise || isNaN(reps) || isNaN(weight)) {
-      new Notice(MODAL_NOTICES.VALIDATION_FILL_ALL);
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_FILL_ALL);
       return false;
     }
 
     if (reps <= 0 || weight < 0) {
-      new Notice(MODAL_NOTICES.VALIDATION_POSITIVE_VALUES);
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_POSITIVE_VALUES);
       return false;
     }
 

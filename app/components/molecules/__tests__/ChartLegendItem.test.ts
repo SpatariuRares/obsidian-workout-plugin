@@ -1,8 +1,8 @@
 /** @jest-environment jsdom */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { ChartLegendItem } from "@app/components/molecules/ChartLegendItem";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 describe("ChartLegendItem molecule", () => {
 	it("renders color indicator and text", () => {
@@ -10,8 +10,8 @@ describe("ChartLegendItem molecule", () => {
 
 		const item = ChartLegendItem.create(parent, {
 			color: "#FF6384",
-			label: TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY,
-			value: TEXT_CONSTANTS.UI.DISPLAY.PERCENTAGE_45,
+			label: CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY,
+			value: CONSTANTS.WORKOUT.UI.DISPLAY.PERCENTAGE_45,
 			className: "ml-sm",
 		});
 
@@ -23,9 +23,9 @@ describe("ChartLegendItem molecule", () => {
 		expect(colorBox.style.backgroundColor).toBe("rgb(255, 99, 132)");
 
 		expect(item.querySelector(".chart-legend-label")?.textContent).toBe(
-			TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY
+			CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY
 		);
-		expect(item.querySelector(".chart-legend-value")?.textContent).toBe(TEXT_CONSTANTS.UI.DISPLAY.PERCENTAGE_45);
+		expect(item.querySelector(".chart-legend-value")?.textContent).toBe(CONSTANTS.WORKOUT.UI.DISPLAY.PERCENTAGE_45);
 	});
 
 	it("omits the value section when not provided", () => {

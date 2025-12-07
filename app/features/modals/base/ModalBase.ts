@@ -1,8 +1,7 @@
 // Base modal class with common functionality
+import { CONSTANTS } from "@app/constants/Constants";
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { FormField } from "@app/components/molecules";
-import { MODAL_NOTICES } from "@app/constants/ModalConstants";
-import { TEXT_CONSTANTS } from "@app/constants";
 import { INPUT_TYPE } from "@app/types";
 
 export abstract class ModalBase extends Modal {
@@ -52,7 +51,7 @@ export abstract class ModalBase extends Modal {
    */
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-    return activeView?.file?.basename || TEXT_CONSTANTS.UI.LABELS.CURRENT_FILE;
+    return activeView?.file?.basename || CONSTANTS.WORKOUT.UI.LABELS.CURRENT_FILE;
   }
 
   /**
@@ -60,7 +59,7 @@ export abstract class ModalBase extends Modal {
    */
   protected insertIntoEditor(
     code: string,
-    successMessage: string = TEXT_CONSTANTS.MESSAGES.SUCCESS.CODE_INSERTED
+    successMessage: string = CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CODE_INSERTED
   ): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
@@ -69,7 +68,7 @@ export abstract class ModalBase extends Modal {
       editor.replaceRange(code + "\n\n", cursor);
       new Notice(successMessage);
     } else {
-      new Notice(MODAL_NOTICES.INSERT_CODE_NO_FILE);
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.INSERT_CODE_NO_FILE);
     }
   }
 

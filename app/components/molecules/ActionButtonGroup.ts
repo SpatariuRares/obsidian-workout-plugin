@@ -4,9 +4,8 @@
  * Combines: Button + Container atoms
  */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { Button, Container } from "@app/components/atoms";
-import { UI_ICONS } from "@app/constants/IconConstants";
-import { UI_LABELS } from "@app/constants/LabelConstants";
 
 export interface ActionButtonGroupProps {
 	editTitle?: string;
@@ -29,8 +28,8 @@ export interface ActionButtonGroupResult {
  * @example
  * ```typescript
  * const { editBtn, deleteBtn } = ActionButtonGroup.create(parent, {
- *   editTitle: TEXT_CONSTANTS.UI.ACTIONS.EDIT_WORKOUT,
- *   deleteTitle: TEXT_CONSTANTS.UI.ACTIONS.DELETE_WORKOUT
+ *   editTitle: CONSTANTS.WORKOUT.UI.ACTIONS.EDIT_WORKOUT,
+ *   deleteTitle: CONSTANTS.WORKOUT.UI.ACTIONS.DELETE_WORKOUT
  * });
  *
  * Button.onClick(editBtn, () => handleEdit());
@@ -39,10 +38,10 @@ export interface ActionButtonGroupResult {
  */
 export class ActionButtonGroup {
 	// Default icons
-	private static readonly DEFAULT_EDIT_ICON = UI_ICONS.ACTIONS.EDIT;
-	private static readonly DEFAULT_DELETE_ICON = UI_ICONS.ACTIONS.DELETE;
-	private static readonly DEFAULT_EDIT_TITLE = UI_LABELS.ACTIONS.EDIT;
-	private static readonly DEFAULT_DELETE_TITLE = UI_LABELS.ACTIONS.DELETE;
+	private static readonly DEFAULT_EDIT_ICON = CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT;
+	private static readonly DEFAULT_DELETE_ICON = CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE;
+	private static readonly DEFAULT_EDIT_TITLE = CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT;
+	private static readonly DEFAULT_DELETE_TITLE = CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE;
 
 	/**
 	 * Create an action button group

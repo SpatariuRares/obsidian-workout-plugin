@@ -1,9 +1,9 @@
 // Base class for insert modals (Chart, Table, Timer)
 // Extracts common structure and button creation logic
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { MODAL_BUTTONS } from "@app/constants/ModalConstants";
 import { Button } from "@app/components/atoms";
 
 /**
@@ -59,9 +59,9 @@ export abstract class BaseInsertModal extends ModalBase {
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
-      text: MODAL_BUTTONS.CANCEL,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       className: "mod-warning",
-      ariaLabel: MODAL_BUTTONS.CANCEL,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
     // Event listeners using Button helper

@@ -1,5 +1,5 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { TrendIndicators } from "@app/types";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Calculates trend indicators for workout data.
@@ -19,7 +19,7 @@ export class TrendCalculator {
   ): TrendIndicators {
     if (volumeData.length < 2) {
       return {
-        trendDirection: TEXT_CONSTANTS.MESSAGES.STATUS.INSUFFICIENT_DATA,
+        trendDirection: CONSTANTS.WORKOUT.MESSAGES.STATUS.INSUFFICIENT_DATA,
         trendColor: "var(--text-muted, #888)",
         trendIcon: "·",
       };
@@ -31,19 +31,19 @@ export class TrendCalculator {
 
     if (slope > slopeThreshold) {
       return {
-        trendDirection: TEXT_CONSTANTS.TRENDS.STATUS_IT.IN_AUMENTO,
+        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
         trendColor: "var(--color-green, #4CAF50)",
         trendIcon: "↗️",
       };
     } else if (slope < -slopeThreshold) {
       return {
-        trendDirection: TEXT_CONSTANTS.TRENDS.STATUS_IT.IN_DIMINUZIONE,
+        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.DECREASING,
         trendColor: "var(--color-red, #F44336)",
         trendIcon: "↘️",
       };
     } else {
       return {
-        trendDirection: TEXT_CONSTANTS.TRENDS.STATUS_IT.STABILE_LOWER,
+        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
         trendColor: "var(--color-accent, #FFC107)", // più visibile di orange
         trendIcon: "→",
       };

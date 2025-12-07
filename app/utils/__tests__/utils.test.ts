@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import {
   getMatchScore,
   findExerciseMatches,
@@ -12,7 +13,6 @@ import {
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
-import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 
 // Mock TFile
 class MockTFile {
@@ -351,7 +351,7 @@ describe("utils.ts", () => {
       );
       expect(result.labels.length).toBeGreaterThan(0);
       expect(result.datasets.length).toBe(1);
-      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_VOLUME);
+      expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME);
     });
 
     it("should process volume chart data for workout", () => {
@@ -362,17 +362,17 @@ describe("utils.ts", () => {
         "DD/MM/YYYY",
         CHART_TYPE.WORKOUT
       );
-      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.TOTAL_VOLUME);
+      expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME);
     });
 
     it("should process weight chart data", () => {
       const result = processChartData(mockData, CHART_DATA_TYPE.WEIGHT, 30);
-      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_WEIGHT);
+      expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT);
     });
 
     it("should process reps chart data", () => {
       const result = processChartData(mockData, CHART_DATA_TYPE.REPS, 30);
-      expect(result.datasets[0].label).toContain(UI_LABELS.LABELCONSTANTS.AVG_REPS);
+      expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS);
     });
 
     it("should filter data by date range", () => {

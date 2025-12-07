@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import {
   WorkoutLogData,
   CSVWorkoutLogEntry,
@@ -7,7 +8,6 @@ import {
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export class DataService {
   private logDataCache: WorkoutLogData[] | null = null;
@@ -234,7 +234,7 @@ export class DataService {
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
-      throw new Error(TEXT_CONSTANTS.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
     }
 
     const csvFile = abstractFile;
@@ -296,7 +296,7 @@ export class DataService {
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
-      throw new Error(TEXT_CONSTANTS.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
     }
 
     const csvFile = abstractFile;

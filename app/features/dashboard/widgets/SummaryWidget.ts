@@ -1,8 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
-import { UI_LABELS } from "@app/constants/LabelConstants";
-import { UI_ICONS } from "@app/constants/IconConstants";
 
 export class SummaryWidget {
   static render(
@@ -15,7 +14,7 @@ export class SummaryWidget {
     });
 
     widgetEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.SUMMARY.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TITLE,
       cls: "workout-widget-title",
     });
 
@@ -27,30 +26,30 @@ export class SummaryWidget {
 
     this.createSummaryCard(
       summaryEl,
-      UI_LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS,
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS,
       metrics.totalWorkouts.toString(),
-      UI_ICONS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS
     );
 
     this.createSummaryCard(
       summaryEl,
-      UI_LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK,
-      `${metrics.currentStreak} ${UI_LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK_SUFFIX}`,
-      UI_ICONS.DASHBOARD.SUMMARY.CURRENT_STREAK
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK,
+      `${metrics.currentStreak} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK_SUFFIX}`,
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.CURRENT_STREAK
     );
 
     this.createSummaryCard(
       summaryEl,
-      UI_LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME,
-      `${metrics.totalVolume.toLocaleString()} ${UI_LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME_SUFFIX}`,
-      UI_ICONS.DASHBOARD.SUMMARY.TOTAL_VOLUME
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME,
+      `${metrics.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME_SUFFIX}`,
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_VOLUME
     );
 
     this.createSummaryCard(
       summaryEl,
-      UI_LABELS.DASHBOARD.SUMMARY.PERSONAL_RECORDS,
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.PERSONAL_RECORDS,
       metrics.personalRecords.toString(),
-      UI_ICONS.DASHBOARD.SUMMARY.PERSONAL_RECORDS
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.PERSONAL_RECORDS
     );
   }
 

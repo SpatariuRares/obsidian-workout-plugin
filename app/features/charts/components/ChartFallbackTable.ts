@@ -1,5 +1,4 @@
-import { UI_ICONS } from "@app/constants/IconConstants";
-import { UI_LABELS } from "@app/constants/LabelConstants";
+import { CONSTANTS } from "@app/constants/Constants";
 
 /**
  * Fallback table shown when Chart.js rendering is unavailable.
@@ -25,7 +24,7 @@ export class ChartFallbackTable {
 		tableDiv
 			.createEl("div", { cls: "workout-charts-footer" })
 			.appendText(
-				`${UI_ICONS.STATUS.INFO} ${UI_LABELS.CHARTS.FALLBACK_TABLE_MESSAGE}`
+				`${CONSTANTS.WORKOUT.ICONS.STATUS.INFO} ${CONSTANTS.WORKOUT.LABELS.CHARTS.FALLBACK_TABLE_MESSAGE}`
 			);
 	}
 
@@ -33,8 +32,8 @@ export class ChartFallbackTable {
 		const thead = table.createEl("thead");
 		const headerRow = thead.createEl("tr");
 		[
-			UI_LABELS.TABLE.DATE,
-			UI_LABELS.TABLE.VOLUME_WITH_UNIT,
+			CONSTANTS.WORKOUT.LABELS.TABLE.DATE,
+			CONSTANTS.WORKOUT.LABELS.TABLE.VOLUME_WITH_UNIT,
 		].forEach((label) => {
 			headerRow.createEl("th", { text: label });
 		});

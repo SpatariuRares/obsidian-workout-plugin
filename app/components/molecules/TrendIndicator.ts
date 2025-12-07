@@ -4,12 +4,12 @@
  * Combines: Icon + Text + Container atoms
  */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { Icon, Text, Container } from "@app/components/atoms";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TrendIndicatorProps {
 	percentage: number;
-	direction: typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS[keyof typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS];
+	direction: typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS[keyof typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS];
 	label?: string;
 	className?: string;
 }
@@ -22,7 +22,7 @@ export interface TrendIndicatorProps {
  * ```typescript
  * TrendIndicator.create(container, {
  *   percentage: 15.5,
- *   direction: TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP,
+ *   direction: CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.UP,
  * });
  * ```
  */
@@ -37,13 +37,13 @@ export class TrendIndicator {
 	 * @param direction - Trend direction
 	 * @returns Arrow emoji
 	 */
-	private static getArrow(direction: typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS[keyof typeof TEXT_CONSTANTS.TRENDS.DIRECTIONS]): string {
+	private static getArrow(direction: typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS[keyof typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS]): string {
 		switch (direction) {
-			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.UP:
+			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.UP:
 				return this.ARROW_UP;
-			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.DOWN:
+			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.DOWN:
 				return this.ARROW_DOWN;
-			case TEXT_CONSTANTS.TRENDS.DIRECTIONS.NEUTRAL:
+			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.NEUTRAL:
 				return this.ARROW_NEUTRAL;
 		}
 	}

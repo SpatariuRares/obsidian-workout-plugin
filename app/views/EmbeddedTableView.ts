@@ -1,4 +1,4 @@
-import { MODAL_SECTIONS } from "@app/constants/ModalConstants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView } from "obsidian";
 import {
@@ -125,7 +125,7 @@ export class EmbeddedTableView extends BaseView {
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`
         : "";
-      const exerciseName = params.exercise || MODAL_SECTIONS.WORKOUT;
+      const exerciseName = params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
       LogCallouts.renderAddLogButton(
         contentDiv,

@@ -1,16 +1,9 @@
 // Refactored CreateExercisePageModal using reusable components
+import { CONSTANTS } from "@app/constants/Constants";
 import { App, normalizePath, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_LABELS,
-  MODAL_PLACEHOLDERS,
-  MODAL_NOTICES,
-  MODAL_CODE_BLOCKS,
-} from "@app/constants/ModalConstants";
 import { Button } from "@app/components/atoms";
 
 export class CreateExercisePageModal extends ModalBase {
@@ -30,7 +23,7 @@ export class CreateExercisePageModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    contentEl.createEl("h2", { text: MODAL_TITLES.CREATE_EXERCISE_PAGE });
+    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_PAGE });
 
     // Create form container
     const formContainer = contentEl.createEl("div", {
@@ -48,15 +41,15 @@ export class CreateExercisePageModal extends ModalBase {
     // Tags input
     const tagsInput = this.createTextField(
       formContainer,
-      MODAL_LABELS.TAGS,
-      MODAL_PLACEHOLDERS.TAGS
+      CONSTANTS.WORKOUT.MODAL.LABELS.TAGS,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TAGS
     );
 
     // Folder path input
     const folderInput = this.createTextField(
       formContainer,
-      MODAL_LABELS.FOLDER_PATH,
-      MODAL_PLACEHOLDERS.FOLDER_PATH,
+      CONSTANTS.WORKOUT.MODAL.LABELS.FOLDER_PATH,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.FOLDER_PATH,
       this.plugin.settings.exerciseFolderPath
     );
 
@@ -65,16 +58,16 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
-      text: MODAL_BUTTONS.CREATE_EXERCISE,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
       className: "workout-charts-btn workout-charts-btn-primary",
-      ariaLabel: MODAL_BUTTONS.CREATE_EXERCISE,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsContainer, {
-      text: MODAL_BUTTONS.CANCEL,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       className: "workout-charts-btn workout-charts-btn-warning",
-      ariaLabel: MODAL_BUTTONS.CANCEL,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
     // Event listeners using Button helper
@@ -86,19 +79,19 @@ export class CreateExercisePageModal extends ModalBase {
       const folderPath = folderInput.value.trim();
 
       if (!exerciseName) {
-        new Notice(MODAL_NOTICES.EXERCISE_PAGE_NAME_REQUIRED);
+        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_NAME_REQUIRED);
         return;
       }
 
       this.createExercisePage(exerciseName, tags, folderPath)
         .then(() => {
           this.close();
-          new Notice(MODAL_NOTICES.EXERCISE_PAGE_CREATED);
+          new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
         })
         .catch((error) => {
           const errorMessage =
             error instanceof Error ? error.message : String(error);
-          new Notice(`${MODAL_NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`);
+          new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`);
         });
     });
 
@@ -145,13 +138,13 @@ ${tagList.map((tag) => `  - ${tag}`).join("\n")}
 
 # Log delle Performance
 
-\`\`\`${MODAL_CODE_BLOCKS.TABLE}
+\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE}
 exercise: ${exerciseName}
 \`\`\`
 
 ### grafico
 
-\`\`\`${MODAL_CODE_BLOCKS.CHART}
+\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART}
 exercise: ${exerciseName}
 \`\`\`
 `;

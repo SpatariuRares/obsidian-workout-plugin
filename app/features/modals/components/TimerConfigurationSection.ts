@@ -1,7 +1,6 @@
-import { MODAL_CHECKBOXES, MODAL_LABELS, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Reusable timer configuration section component
+import { CONSTANTS } from "@app/constants/Constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
@@ -29,16 +28,16 @@ export class TimerConfigurationSection {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
   } {
-    const timerSection = modal.createSection(container, MODAL_SECTIONS.TIMER_CONFIGURATION);
+    const timerSection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.TIMER_CONFIGURATION);
 
     // Timer Type selector
     const timerTypeContainer = modal.createFormGroup(timerSection);
     const timerTypeSelect = modal.createSelect(
       timerTypeContainer,
-      MODAL_LABELS.TIMER_TYPE,
+      CONSTANTS.WORKOUT.MODAL.LABELS.TIMER_TYPE,
       [
-        { text: TEXT_CONSTANTS.TIMER.TYPES.COUNTDOWN, value: TIMER_TYPE.COUNTDOWN as string },
-        { text: TEXT_CONSTANTS.TIMER.TYPES.INTERVAL, value: TIMER_TYPE.INTERVAL as string },
+        { text: CONSTANTS.WORKOUT.TIMER.TYPES.COUNTDOWN, value: TIMER_TYPE.COUNTDOWN as string },
+        { text: CONSTANTS.WORKOUT.TIMER.TYPES.INTERVAL, value: TIMER_TYPE.INTERVAL as string },
       ]
     );
 
@@ -46,8 +45,8 @@ export class TimerConfigurationSection {
     const durationContainer = modal.createFormGroup(timerSection);
     const durationInput = modal.createNumberInput(
       durationContainer,
-      MODAL_LABELS.DURATION,
-      MODAL_PLACEHOLDERS.REST_TIME,
+      CONSTANTS.WORKOUT.MODAL.LABELS.DURATION,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REST_TIME,
       1,
       3600,
       "300"
@@ -57,7 +56,7 @@ export class TimerConfigurationSection {
     const intervalTimeContainer = modal.createFormGroup(timerSection);
     const intervalTimeInput = modal.createNumberInput(
       intervalTimeContainer,
-      MODAL_LABELS.INTERVAL_TIME,
+      CONSTANTS.WORKOUT.MODAL.LABELS.INTERVAL_TIME,
       "30",
       1,
       3600,
@@ -67,7 +66,7 @@ export class TimerConfigurationSection {
     const roundsContainer = modal.createFormGroup(timerSection);
     const roundsInput = modal.createNumberInput(
       roundsContainer,
-      MODAL_LABELS.ROUNDS,
+      CONSTANTS.WORKOUT.MODAL.LABELS.ROUNDS,
       "5",
       1,
       100,
@@ -78,19 +77,19 @@ export class TimerConfigurationSection {
     const titleContainer = modal.createFormGroup(timerSection);
     const titleInput = modal.createTextInput(
       titleContainer,
-      MODAL_LABELS.TITLE,
-      MODAL_PLACEHOLDERS.TIMER_TITLE,
-      MODAL_PLACEHOLDERS.TIMER_TITLE
+      CONSTANTS.WORKOUT.MODAL.LABELS.TITLE,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TIMER_TITLE,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TIMER_TITLE
     );
 
     // Display options
-    const displaySection = modal.createSection(container, MODAL_SECTIONS.DISPLAY_OPTIONS);
+    const displaySection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS);
 
     // Show controls toggle
     const showControlsContainer = modal.createCheckboxGroup(displaySection);
     const showControlsToggle = modal.createCheckbox(
       showControlsContainer,
-      MODAL_CHECKBOXES.SHOW_CONTROLS,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_CONTROLS,
       true,
       "showControls"
     );
@@ -99,7 +98,7 @@ export class TimerConfigurationSection {
     const autoStartContainer = modal.createCheckboxGroup(displaySection);
     const autoStartToggle = modal.createCheckbox(
       autoStartContainer,
-      MODAL_CHECKBOXES.AUTO_START,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.AUTO_START,
       false,
       "autoStart"
     );
@@ -108,7 +107,7 @@ export class TimerConfigurationSection {
     const soundContainer = modal.createCheckboxGroup(displaySection);
     const soundToggle = modal.createCheckbox(
       soundContainer,
-      MODAL_CHECKBOXES.SOUND,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SOUND,
       false,
       "sound"
     );

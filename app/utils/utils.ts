@@ -1,7 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE, EmbeddedViewParams } from "@app/types";
-import { UI_LABELS } from "@app/constants";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
@@ -308,15 +308,15 @@ export function processChartData(
     const label =
       chartType === CHART_DATA_TYPE.VOLUME
         ? displayType === CHART_TYPE.WORKOUT
-          ? UI_LABELS.LABELCONSTANTS.TOTAL_VOLUME
-          : UI_LABELS.LABELCONSTANTS.AVG_VOLUME
+          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
+          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME
         : chartType === CHART_DATA_TYPE.WEIGHT
           ? displayType === CHART_TYPE.WORKOUT
-            ? UI_LABELS.LABELCONSTANTS.TOTAL_WEIGHT
-            : UI_LABELS.LABELCONSTANTS.AVG_WEIGHT
+            ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_WEIGHT
+            : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT
           : displayType === CHART_TYPE.WORKOUT
-            ? UI_LABELS.LABELCONSTANTS.TOTAL_REPS
-            : UI_LABELS.LABELCONSTANTS.AVG_REPS;
+            ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_REPS
+            : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS;
     const color =
       chartType === CHART_DATA_TYPE.VOLUME
         ? "#4CAF50"
@@ -373,7 +373,7 @@ export function validateUserParams(params: EmbeddedViewParams): string[] {
   if ("type" in params && params.type !== undefined) {
     const type = String(params.type);
     if (!([CHART_DATA_TYPE.VOLUME, CHART_DATA_TYPE.WEIGHT, CHART_DATA_TYPE.REPS] as string[]).includes(type)) {
-      errors.push("type must be either TEXT_CONSTANTS.CHARTS.TYPES.VOLUME, TEXT_CONSTANTS.CHARTS.TYPES.WEIGHT, or TEXT_CONSTANTS.CHARTS.TYPES.REPS");
+      errors.push("type must be either CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME, CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT, or CONSTANTS.WORKOUT.CHARTS.TYPES.REPS");
     }
   }
 

@@ -1,15 +1,15 @@
 /** @jest-environment jsdom */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { FormField } from "@app/components/molecules/FormField";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 describe("FormField molecule", () => {
 	it("renders label, required indicator, and input", () => {
 		const parent = createObsidianContainer();
 
 		const result = FormField.create(parent, {
-			label: TEXT_CONSTANTS.FORMS.LABELS.EXERCISE_NAME,
+			label: CONSTANTS.WORKOUT.FORMS.LABELS.EXERCISE_NAME,
 			required: true,
 			className: "mb-4",
 			inputProps: {

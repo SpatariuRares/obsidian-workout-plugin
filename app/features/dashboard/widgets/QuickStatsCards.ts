@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import {
@@ -5,8 +6,6 @@ import {
   PeriodStats,
 } from "@app/features/dashboard/business/DashboardCalculations";
 import { StatCard } from "@app/components/molecules";
-import { UI_LABELS } from "@app/constants/LabelConstants";
-import { UI_ICONS } from "@app/constants/IconConstants";
 
 export class QuickStatsCards {
   static render(
@@ -19,7 +18,7 @@ export class QuickStatsCards {
     });
 
     cardsEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.QUICK_STATS.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.TITLE,
       cls: "workout-widget-title",
     });
 
@@ -35,21 +34,21 @@ export class QuickStatsCards {
     // Render stats cards
     this.createStatsCard(
       statsGrid,
-      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
       weekStats,
-      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK
     );
     this.createStatsCard(
       statsGrid,
-      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
       monthStats,
-      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH
     );
     this.createStatsCard(
       statsGrid,
-      UI_LABELS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
       yearStats,
-      UI_ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR
     );
   }
 
@@ -80,25 +79,25 @@ export class QuickStatsCards {
 
     // Workouts stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
+      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       value: stats.workouts.toString(),
-      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
+      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       className: "workout-stat-item",
     });
 
     // Total volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
+      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       value: stats.volume.toLocaleString(),
-      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
+      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       className: "workout-stat-item",
     });
 
     // Average volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
       value: stats.avgVolume.toLocaleString(),
-      label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
       className: "workout-stat-item",
     });
   }

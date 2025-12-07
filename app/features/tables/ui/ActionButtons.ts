@@ -1,4 +1,4 @@
-import { TABLE_ICONS, TABLE_MESSAGES } from "@app/constants/TableConstats";
+import { CONSTANTS } from "@app/constants/Constants";
 import { ActionButtonGroup } from "@app/components/molecules";
 
 /**
@@ -21,10 +21,10 @@ export class ActionButtons {
 	} {
 		// Use ActionButtonGroup molecule for edit + delete buttons
 		const result = ActionButtonGroup.create(container, {
-			editTitle: TABLE_MESSAGES.EDIT_TITLE,
-			deleteTitle: TABLE_MESSAGES.DELETE_TITLE,
-			editIcon: TABLE_ICONS.EDIT,
-			deleteIcon: TABLE_ICONS.DELETE,
+			editTitle: CONSTANTS.WORKOUT.TABLE.MESSAGES.EDIT_TITLE,
+			deleteTitle: CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_TITLE,
+			editIcon: CONSTANTS.WORKOUT.TABLE.ICONS.EDIT,
+			deleteIcon: CONSTANTS.WORKOUT.TABLE.ICONS.DELETE,
 			className: "workout-table-actions",
 		});
 

@@ -1,7 +1,5 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { EmbeddedDashboardParams } from "@app/types";
-import { MUSCLE_TAGS, TAG_MUSCLE_MAP } from "@app/constants/MuscleTags";
-import { UI_LABELS } from "@app/constants/LabelConstants";
-import { UI_ICONS } from "@app/constants";
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -14,13 +12,13 @@ export class MuscleTagsWidget {
     });
 
     widgetEl.createEl("h3", {
-      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
       cls: "workout-widget-title",
     });
 
     widgetEl.createEl("p", {
       cls: "workout-widget-description",
-      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.DESCRIPTION,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.DESCRIPTION,
     });
 
     // Create muscle tags grid
@@ -29,7 +27,7 @@ export class MuscleTagsWidget {
     });
 
     // Sort tags for consistent display
-    const sortedTags = [...MUSCLE_TAGS].sort();
+    const sortedTags = [...CONSTANTS.WORKOUT.MUSCLES.TAGS].sort();
 
     sortedTags.forEach((tag) => {
       this.createMuscleTagBadge(tagsGrid, tag);
@@ -41,7 +39,7 @@ export class MuscleTagsWidget {
     });
 
     infoEl.createEl("small", {
-      text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TOTAL_COUNT(MUSCLE_TAGS.length),
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOTAL_COUNT(sortedTags.length),
       cls: "workout-muscle-tags-count",
     });
   }
@@ -88,7 +86,7 @@ export class MuscleTagsWidget {
     // Add hover tooltip
     badgeEl.setAttribute(
       "title",
-      UI_LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName)
+      CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName)
     );
   }
 
@@ -111,72 +109,72 @@ export class MuscleTagsWidget {
 
     // Chest variations
     if (
-      lowerName.includes(TAG_MUSCLE_MAP.chest) ||
+      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest) ||
       lowerName.includes("petto") ||
       lowerName.includes("pettorale")
     )
-      return UI_ICONS.EXERCISE.CURL;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CURL;
     // Back variations
     if (
-      lowerName.includes(TAG_MUSCLE_MAP.back) ||
+      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.back) ||
       lowerName.includes("schiena") ||
       lowerName.includes("dorsale")
     )
-      return UI_ICONS.EXERCISE.BACK;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.BACK;
     // Shoulders variations
     if (
-      lowerName.includes(TAG_MUSCLE_MAP.shoulder) ||
+      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.shoulder) ||
       lowerName.includes("spalle") ||
       lowerName.includes("deltoidi") ||
       lowerName.includes("delts")
     )
-      return UI_ICONS.EXERCISE.SHOULDERS;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.SHOULDERS;
     // Arms
-    if (lowerName.includes(TAG_MUSCLE_MAP.biceps) || lowerName.includes("bicipiti"))
-      return UI_ICONS.EXERCISE.BICEPS;
-    if (lowerName.includes(TAG_MUSCLE_MAP.triceps) || lowerName.includes("tricipiti"))
-      return UI_ICONS.EXERCISE.TRICEPS;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.biceps) || lowerName.includes("bicipiti"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.BICEPS;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.triceps) || lowerName.includes("tricipiti"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.TRICEPS;
     if (lowerName.includes("forearm") || lowerName.includes("avambracci"))
-      return UI_ICONS.EXERCISE.FOREARM;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.FOREARM;
     // Legs
     if (lowerName.includes("legs") || lowerName.includes("gambe")) return "🦵";
     if (lowerName.includes("quad") || lowerName.includes("quadricipiti"))
-      return UI_ICONS.EXERCISE.LEGS;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.LEGS;
     if (
       lowerName.includes("hamstring") ||
       lowerName.includes("ischiocrurali") ||
       lowerName.includes("femorali")
     )
-      return UI_ICONS.EXERCISE.LEGS;
-    if (lowerName.includes(TAG_MUSCLE_MAP.calves) || lowerName.includes("polpacci"))
-      return UI_ICONS.EXERCISE.CALVES;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.LEGS;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.calves) || lowerName.includes("polpacci"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CALVES;
     // Glutes
     if (
       lowerName.includes("glute") ||
       lowerName.includes("abduttori") ||
       lowerName.includes("adduttori")
     )
-      return UI_ICONS.EXERCISE.GLUTES;
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.GLUTES;
     // Core
-    if (lowerName.includes(TAG_MUSCLE_MAP.abs) || lowerName.includes("addominali"))
-      return UI_ICONS.EXERCISE.CORE;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.abs) || lowerName.includes("addominali"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CORE;
     // Cardio
-    if (lowerName.includes(TAG_MUSCLE_MAP.core) || lowerName.includes("cardio"))
-      return UI_ICONS.EXERCISE.CARDIO;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.core) || lowerName.includes("cardio"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CARDIO;
     // Other
-    if (lowerName.includes(TAG_MUSCLE_MAP.traps) || lowerName.includes("trapezi"))
-      return UI_ICONS.EXERCISE.TRAPS;
+    if (lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.traps) || lowerName.includes("trapezi"))
+      return CONSTANTS.WORKOUT.ICONS.EXERCISE.TRAPS;
     // Exercise types
-    if (lowerName.includes("push") || lowerName.includes("press")) return UI_ICONS.EXERCISE.PUSH;
-    if (lowerName.includes("pull") || lowerName.includes("row")) return UI_ICONS.EXERCISE.PULL;
-    if (lowerName.includes("squat")) return UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS;
-    if (lowerName.includes("deadlift")) return UI_ICONS.EXERCISE.DEADLIFT;
-    if (lowerName.includes("curl")) return UI_ICONS.EXERCISE.CURL;
-    if (lowerName.includes("extension")) return UI_ICONS.EXERCISE.EXTENSION;
-    if (lowerName.includes("fly")) return UI_ICONS.EXERCISE.FLY;
-    if (lowerName.includes("spintaanca")) return UI_ICONS.EXERCISE.HIP_TRUST;
+    if (lowerName.includes("push") || lowerName.includes("press")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.PUSH;
+    if (lowerName.includes("pull") || lowerName.includes("row")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.PULL;
+    if (lowerName.includes("squat")) return CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS;
+    if (lowerName.includes("deadlift")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.DEADLIFT;
+    if (lowerName.includes("curl")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.CURL;
+    if (lowerName.includes("extension")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.EXTENSION;
+    if (lowerName.includes("fly")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.FLY;
+    if (lowerName.includes("spintaanca")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.HIP_TRUST;
 
-    return UI_ICONS.EXERCISE.DEADLIFT;
+    return CONSTANTS.WORKOUT.ICONS.EXERCISE.DEADLIFT;
   }
 }
 

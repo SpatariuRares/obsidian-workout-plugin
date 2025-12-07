@@ -1,6 +1,6 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { MODAL_BUTTONS, MODAL_LABELS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 
 /**
@@ -30,7 +30,7 @@ export class ConfirmModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Title
-    contentEl.createEl("h2", { text: MODAL_LABELS.CONFIRM_ACTION });
+    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.LABELS.CONFIRM_ACTION });
 
     // Message
     contentEl.createEl("p", { text: this.message });
@@ -42,8 +42,8 @@ export class ConfirmModal extends ModalBase {
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonContainer, {
-      text: MODAL_BUTTONS.CANCEL,
-      ariaLabel: MODAL_BUTTONS.CANCEL,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
     Button.onClick(cancelBtn, () => {
       if (this.onCancel) {
@@ -54,9 +54,9 @@ export class ConfirmModal extends ModalBase {
 
     // Confirm button using Button atom
     const confirmBtn = Button.create(buttonContainer, {
-      text: MODAL_BUTTONS.CONFIRM,
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
       className: "mod-cta",
-      ariaLabel: MODAL_BUTTONS.CONFIRM,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
     });
     Button.onClick(confirmBtn, () => {
       this.onConfirm();

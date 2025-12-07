@@ -21,8 +21,8 @@ export interface ChartLegendItemProps {
  * ```typescript
  * ChartLegendItem.create(legendContainer, {
  *   color: "#FF6384",
- *   label: TEXT_CONSTANTS.MUSCLES.BODY_PARTS.UPPER_BODY,
- *   value: TEXT_CONSTANTS.UI.DISPLAY.PERCENTAGE_45
+ *   label: CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY,
+ *   value: CONSTANTS.WORKOUT.UI.DISPLAY.PERCENTAGE_45
  * });
  * ```
  */

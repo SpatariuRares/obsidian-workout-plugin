@@ -1,15 +1,13 @@
 // Utility class for generating code blocks
-import { MODAL_CODE_BLOCKS } from "@app/constants/ModalConstants";
-import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
+import { CONSTANTS } from "@app/constants/Constants";
 import { CHART_TYPE, EmbeddedChartParams, EmbeddedTimerParams, TableCodeOptions, TableColumnType, TIMER_TYPE, TABLE_TYPE } from "@app/types";
-import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 
 export class CodeGenerator {
   /**
    * Generates workout chart code
    */
   static generateChartCode(params: EmbeddedChartParams): string {
-    const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.CHART}`];
+    const lines: string[] = [`\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART}`];
 
     // Add chart type
     lines.push(`chartType: ${params.chartType}`);
@@ -49,7 +47,7 @@ export class CodeGenerator {
    * Generates workout table code
    */
   static generateTableCode(params: TableCodeOptions): string {
-    const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.TABLE}`];
+    const lines: string[] = [`\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE}`];
 
     // Add target (exercise, workout, or both)
     if (params.tableType === TABLE_TYPE.COMBINED) {
@@ -67,7 +65,7 @@ export class CodeGenerator {
     // Add columns configuration
     if (params.columnsType !== TableColumnType.STANDARD) {
       const columnsMap = {
-        minimal: [UI_LABELS.TABLE.DATE, UI_LABELS.TABLE.EXERCISE, TEXT_CONSTANTS.CHARTS.LABELS.REPS, TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG],
+        minimal: [CONSTANTS.WORKOUT.LABELS.TABLE.DATE, CONSTANTS.WORKOUT.LABELS.TABLE.EXERCISE, CONSTANTS.WORKOUT.CHARTS.LABELS.REPS, CONSTANTS.WORKOUT.COMMON.UNITS.WEIGHT_KG],
       };
       const columns = columnsMap[params.columnsType as keyof typeof columnsMap];
       if (columns) {
@@ -77,7 +75,7 @@ export class CodeGenerator {
 
     // Add display options
     if (!params.showAddButton) lines.push(`showAddButton: false`);
-    if (params.buttonText !== TABLE_DEFAULTS.BUTTON_TEXT) {
+    if (params.buttonText !== CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT) {
       lines.push(`buttonText: "${params.buttonText}"`);
     }
 
@@ -94,7 +92,7 @@ export class CodeGenerator {
    * Generates workout timer code
    */
   static generateTimerCode(params: EmbeddedTimerParams): string {
-    const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.TIMER}`];
+    const lines: string[] = [`\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER}`];
     if (!params.type) {
       throw new Error("Timer type is required");
     }
@@ -124,7 +122,7 @@ export class CodeGenerator {
    * Generates Dashboard code
    */
   static generateDashboardCode(): string {
-    const lines: string[] = [`\`\`\`${MODAL_CODE_BLOCKS.DASHBOARD}`];
+    const lines: string[] = [`\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD}`];
     lines.push("```");
 
     return lines.join("\n");

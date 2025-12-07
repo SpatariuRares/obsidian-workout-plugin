@@ -1,4 +1,4 @@
-import { UI_ICONS } from "@app/constants";
+import { CONSTANTS } from "@app/constants/Constants";
 import { TimerState } from "@app/types/TimerTypes";
 import { TIMER_TYPE } from "@app/types/TimerTypes";
 
@@ -41,7 +41,7 @@ export class TimerDisplay {
       state.timerDisplay.empty();
       state.timerDisplay.createEl("span", {
         cls: "workout-timer-complete",
-        text: UI_ICONS.STATUS.SUCCESS,
+        text: CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS,
       });
     } else {
       state.timerDisplay.empty();

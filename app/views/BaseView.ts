@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";
@@ -9,7 +10,6 @@ import { ErrorMessage } from "@app/components/atoms";
 import { LogCallouts } from "@app/features/logs/components/LogCallouts";
 import { CHART_TYPE, EmbeddedChartParams, EmbeddedViewParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { TEXT_CONSTANTS } from "@app/constants";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -30,7 +30,7 @@ export abstract class BaseView {
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
-    ErrorMessage.render(container, error.message, TEXT_CONSTANTS.ERRORS.TYPES.GENERIC);
+    ErrorMessage.render(container, error.message, CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC);
   }
 
   /**
@@ -89,7 +89,7 @@ export abstract class BaseView {
               : CHART_TYPE.EXERCISE;
           return effectiveChartCategory === CHART_TYPE.WORKOUT;
         })()
-        : !(TEXT_CONSTANTS.COMMON.TYPES.EXERCISE in params && params.exercise);
+        : !(CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params && params.exercise);
 
     if (isWorkoutView) {
       InfoBanner.render(
@@ -98,7 +98,7 @@ export abstract class BaseView {
         "warning"
       );
     } else {
-      const exerciseName = TEXT_CONSTANTS.COMMON.TYPES.EXERCISE in params ? params.exercise || "" : "";
+      const exerciseName = CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params ? params.exercise || "" : "";
       LogCallouts.renderNoMatchMessage(container);
       if (exerciseName) {
         LogCallouts.renderCreateLogButtonForExercise(

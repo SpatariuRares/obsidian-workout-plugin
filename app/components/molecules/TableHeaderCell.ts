@@ -25,7 +25,7 @@ export interface TableHeaderCellResult {
  * @example
  * ```typescript
  * const { cell, sortIcon } = TableHeaderCell.create(headerRow, {
- *   text: UI_LABELS.TABLE.EXERCISE,
+ *   text: CONSTANTS.WORKOUT.LABELS.TABLE.EXERCISE,
  *   sortable: true,
  *   sortDirection: "asc"
  * });

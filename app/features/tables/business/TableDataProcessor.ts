@@ -1,8 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "@app/types";
-import { TABLE_COLUMNS, TABLE_LABELS } from "@app/constants/TableConstats";
 import { DateUtils } from "@app/utils/DateUtils";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Processes workout log data for table display.
@@ -22,31 +21,31 @@ export class TableDataProcessor {
   ): TableData {
     // Use default visible columns if not specified
     const defaultVisibleColumns = [
-      TABLE_COLUMNS.DATE,
-      TABLE_COLUMNS.REPS,
-      TABLE_COLUMNS.WEIGHT,
-      TABLE_COLUMNS.VOLUME,
-      TABLE_COLUMNS.NOTES,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES,
     ];
 
     let headers: string[];
     if (params.columns) {
       if (Array.isArray(params.columns)) {
-        headers = [...params.columns, TABLE_COLUMNS.ACTIONS];
+        headers = [...params.columns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
       } else if (typeof params.columns === "string") {
         try {
           const parsedColumns = JSON.parse(params.columns);
-          headers = [...parsedColumns, TABLE_COLUMNS.ACTIONS];
+          headers = [...parsedColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
         } catch {
           // Invalid columns parameter, using default
-          headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
+          headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
         }
       } else {
-        headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
+        headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
       }
     } else {
       // No columns specified, use default visible columns
-      headers = [...defaultVisibleColumns, TABLE_COLUMNS.ACTIONS];
+      headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
     }
 
     const limit = params.limit || 50;
@@ -62,7 +61,7 @@ export class TableDataProcessor {
       filterResult: {
         filteredData: sortedAndLimitedData,
         filterMethodUsed: "table processing",
-        titlePrefix: TEXT_CONSTANTS.UI.LABELS.WORKOUT_LOG,
+        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_LOG,
       },
       params,
     };
@@ -119,9 +118,9 @@ export class TableDataProcessor {
       const dataMap: Record<string, string> = {
         Date: formattedDate,
         Exercise: this.getExerciseDisplay(log.exercise),
-        Reps: log.reps?.toString() || TABLE_LABELS.NOT_AVAILABLE,
-        Weight: log.weight?.toString() || TABLE_LABELS.NOT_AVAILABLE,
-        Volume: log.volume?.toString() || TABLE_LABELS.NOT_AVAILABLE,
+        Reps: log.reps?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+        Weight: log.weight?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+        Volume: log.volume?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
         Notes: log.notes || "",
         Actions: "", // Placeholder for actions
       };
@@ -147,7 +146,7 @@ export class TableDataProcessor {
    * @returns Formatted exercise name without file extensions
    */
   private static getExerciseDisplay(exercise: string): string {
-    if (!exercise) return TABLE_LABELS.NOT_AVAILABLE;
+    if (!exercise) return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");

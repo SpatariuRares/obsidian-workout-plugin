@@ -1,4 +1,4 @@
-import { TEXT_CONSTANTS } from "@app/constants";
+import { CONSTANTS } from "@app/constants/Constants";
 /**
  * ErrorMessage Atom
  * Basic error message display - indivisible UI primitive
@@ -13,12 +13,12 @@ export class ErrorMessage {
 	 * Render an error message with title
 	 * @param container - The container element
 	 * @param message - Error message to display
-	 * @param title - Title for the error section (default: TEXT_CONSTANTS.ERRORS.TYPES.GENERIC)
+	 * @param title - Title for the error section (default: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC)
 	 */
 	static render(
 		container: HTMLElement,
 		message: string,
-		title = TEXT_CONSTANTS.ERRORS.TYPES.GENERIC
+		title = CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC
 	): void {
 		const errorDiv = container.createEl("div", {
 			cls: "error-message",

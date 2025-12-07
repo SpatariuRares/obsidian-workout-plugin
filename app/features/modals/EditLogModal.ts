@@ -1,13 +1,9 @@
 // EditLogModal - extends BaseLogModal for editing existing workout logs
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseLogModal, LogFormData } from "@app/features/modals/base/BaseLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_NOTICES,
-} from "@app/constants/ModalConstants";
 
 export class EditLogModal extends BaseLogModal {
   private originalLog: WorkoutLogData;
@@ -29,15 +25,15 @@ export class EditLogModal extends BaseLogModal {
   }
 
   protected getModalTitle(): string {
-    return MODAL_TITLES.EDIT_LOG;
+    return CONSTANTS.WORKOUT.MODAL.TITLES.EDIT_LOG;
   }
 
   protected getButtonText(): string {
-    return MODAL_BUTTONS.UPDATE;
+    return CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE;
   }
 
   protected getSuccessMessage(): string {
-    return MODAL_NOTICES.LOG_UPDATED;
+    return CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_UPDATED;
   }
 
   protected getInitialWorkoutToggleState(): boolean {

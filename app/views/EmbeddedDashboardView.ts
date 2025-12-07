@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
@@ -13,7 +14,6 @@ import {
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -60,7 +60,7 @@ export class EmbeddedDashboardView extends BaseView {
         this.handleNoFilteredData(
           container,
           params,
-          params.title || TEXT_CONSTANTS.UI.LABELS.DASHBOARD,
+          params.title || CONSTANTS.WORKOUT.UI.LABELS.DASHBOARD,
           VIEW_TYPES.DASHBOARD
         );
         return;

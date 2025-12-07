@@ -20,8 +20,8 @@ export interface StatCardProps {
  * @example
  * ```typescript
  * StatCard.create(container, {
- *   icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
- *   label: UI_LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS
+ *   icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+ *   label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS
  * });
  * ```
  */

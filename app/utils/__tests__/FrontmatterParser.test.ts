@@ -1,5 +1,5 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { FrontmatterParser } from '@app/utils/FrontmatterParser';
-import { TEXT_CONSTANTS } from "@app/constants";
 
 describe('FrontmatterParser', () => {
   const validContent = `---
@@ -184,23 +184,23 @@ field2: value2
 
     it('should return error for empty content', () => {
       const result = FrontmatterParser.validateFrontmatter('');
-      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
+      expect(result).toContain(CONSTANTS.WORKOUT.MESSAGES.ERRORS.FILE_EMPTY);
     });
 
     it('should return error for content without frontmatter', () => {
       const result = FrontmatterParser.validateFrontmatter(noFrontmatterContent);
-      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_FRONTMATTER);
+      expect(result).toContain(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_FRONTMATTER);
     });
 
     it('should return error for frontmatter without tags', () => {
       const result = FrontmatterParser.validateFrontmatter(noTagsContent);
-      expect(result).toContain(TEXT_CONSTANTS.MESSAGES.ERRORS.NO_TAGS);
+      expect(result).toContain(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_TAGS);
     });
 
     it('should return only one error for whitespace content', () => {
       const result = FrontmatterParser.validateFrontmatter('   \n  \n  ');
       expect(result).toHaveLength(1);
-      expect(result[0]).toBe(TEXT_CONSTANTS.MESSAGES.ERRORS.FILE_EMPTY);
+      expect(result[0]).toBe(CONSTANTS.WORKOUT.MESSAGES.ERRORS.FILE_EMPTY);
     });
   });
 });

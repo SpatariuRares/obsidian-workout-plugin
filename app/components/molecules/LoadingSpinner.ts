@@ -19,7 +19,7 @@ export interface LoadingSpinnerProps {
  * @example
  * ```typescript
  * const spinner = LoadingSpinner.create(container, {
- *   message: TEXT_CONSTANTS.MESSAGES.LOADING
+ *   message: CONSTANTS.WORKOUT.MESSAGES.LOADING
  * });
  *
  * // Later, when loading is complete:

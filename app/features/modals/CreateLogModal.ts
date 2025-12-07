@@ -1,12 +1,8 @@
 // CreateLogModal - extends BaseLogModal for creating new workout logs
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseLogModal, LogFormData } from "@app/features/modals/base/BaseLogModal";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_NOTICES,
-} from "@app/constants/ModalConstants";
 
 export class CreateLogModal extends BaseLogModal {
   constructor(
@@ -20,15 +16,15 @@ export class CreateLogModal extends BaseLogModal {
   }
 
   protected getModalTitle(): string {
-    return MODAL_TITLES.CREATE_LOG;
+    return CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG;
   }
 
   protected getButtonText(): string {
-    return MODAL_BUTTONS.CREATE;
+    return CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE;
   }
 
   protected getSuccessMessage(): string {
-    return MODAL_NOTICES.LOG_CREATED;
+    return CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATED;
   }
 
   protected getInitialWorkoutToggleState(): boolean {

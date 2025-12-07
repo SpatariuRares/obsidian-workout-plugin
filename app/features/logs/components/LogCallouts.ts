@@ -1,8 +1,7 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { MarkdownView } from "obsidian";
 import { Button, Text } from "@app/components/atoms";
 import { EmptyState } from "@app/components/molecules";
-import { UI_ICONS } from "@app/constants/IconConstants";
-import { UI_LABELS } from "@app/constants/LabelConstants";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 
@@ -22,7 +21,7 @@ export class LogCallouts {
 
     noDataDiv.createEl("p");
     Text.create(noDataDiv, {
-      text: UI_LABELS.LOGS.NO_DATA_TITLE(exerciseName),
+      text: CONSTANTS.WORKOUT.LABELS.LOGS.NO_DATA_TITLE(exerciseName),
       className: "workout-log-no-data-title",
       tag: "strong",
     });
@@ -33,10 +32,10 @@ export class LogCallouts {
     });
 
     const createButton = Button.create(buttonDiv, {
-      text: UI_LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(exerciseName),
-      icon: UI_ICONS.ACTIONS.ADD,
+      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(exerciseName),
+      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "add-log-button",
-      ariaLabel: UI_LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(exerciseName),
     });
 
     Button.onClick(createButton, () => {
@@ -73,10 +72,10 @@ export class LogCallouts {
     });
 
     const button = Button.create(buttonContainer, {
-      text: UI_LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
-      icon: UI_ICONS.ACTIONS.ADD,
+      text: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
+      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "add-log-button",
-      ariaLabel: UI_LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
     });
 
     Button.onClick(button, () => {
@@ -100,10 +99,10 @@ export class LogCallouts {
     });
 
     const button = Button.create(buttonContainer, {
-      text: UI_LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),
-      icon: UI_ICONS.ACTIONS.ADD,
+      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),
+      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "create-log-button",
-      ariaLabel: UI_LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
     });
 
     Button.onClick(button, () => {
@@ -126,8 +125,8 @@ export class LogCallouts {
 
   static renderNoMatchMessage(container: HTMLElement): void {
     EmptyState.create(container, {
-      icon: UI_ICONS.STATUS.INFO,
-      message: UI_LABELS.LOGS.NO_MATCH_MESSAGE,
+      icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
+      message: CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE,
       className: "workout-log-no-match",
     });
   }

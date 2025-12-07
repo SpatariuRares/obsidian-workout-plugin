@@ -1,7 +1,6 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { TrendIndicators } from "@app/types";
 import { TrendIndicator } from "@app/components/molecules";
-import { UI_LABELS } from "@app/constants/LabelConstants";
-import { UI_ICONS } from "@app/constants";
 
 /**
  * Renders trend header information for workout charts.
@@ -49,23 +48,23 @@ export class TrendHeader {
       h3.classList.add("trend-color-accent");
     }
 
-    h3.textContent = `${trendIndicators.trendIcon} ${UI_LABELS.CHARTS.TREND_TITLE_PREFIX}`;
+    h3.textContent = `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE_PREFIX}`;
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 
     const p = trendHeader.createEl("p", {
       cls: "workout-charts-trend-header-p",
     });
     p.createEl("span", {
-      text: UI_LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
+      text: CONSTANTS.WORKOUT.LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
     });
 
-    if (variationData.text !== undefined && percentChange !== UI_LABELS.TABLE.NOT_AVAILABLE) {
+    if (variationData.text !== undefined && percentChange !== CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE) {
       // Determine trend direction based on percentage
       const percentValue = parseFloat(percentChange);
       const direction =
-        percentValue > 0 ? UI_LABELS.CHARTS.UP :
-          percentValue < 0 ? UI_LABELS.CHARTS.DOWN :
-            UI_LABELS.CHARTS.NEUTRAL;
+        percentValue > 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP :
+          percentValue < 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN :
+            CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
 
       // Use TrendIndicator molecule for variation display
       TrendIndicator.create(p, {
@@ -74,7 +73,7 @@ export class TrendHeader {
         className: "workout-charts-trend-variation",
       });
     } else if (variationData.text !== undefined) {
-      // Fallback for non-percentage values (e.g., UI_LABELS.TABLE.NOT_AVAILABLE, "Aumento signif.")
+      // Fallback for non-percentage values (e.g., CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, "Aumento signif.")
       const span = p.createEl("span", {
         cls: "workout-charts-trend-variation",
       });
@@ -98,14 +97,14 @@ export class TrendHeader {
       volumeData.length >= 2
     ) {
       p.append(
-        UI_LABELS.CHARTS.VARIATION_FROM_TO(
+        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO(
           firstValue.toFixed(1),
           lastValue.toFixed(1)
         )
       );
     } else if (firstValue !== undefined && volumeData.length === 1) {
       p.append(
-        UI_LABELS.CHARTS.VARIATION_SINGLE_VALUE(firstValue.toFixed(1))
+        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE(firstValue.toFixed(1))
       );
     }
   }
@@ -118,7 +117,7 @@ export class TrendHeader {
   private static calculateVariation(volumeData: number[]) {
     let firstValue: number | undefined,
       lastValue: number | undefined,
-      percentChange: string = UI_LABELS.TABLE.NOT_AVAILABLE;
+      percentChange: string = CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE;
 
     if (volumeData.length >= 2) {
       firstValue = volumeData[0];
@@ -158,21 +157,21 @@ export class TrendHeader {
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
-      const changeSign = parseFloat(percentChange) > 0 ? UI_ICONS.COMMON.PLUS : UI_ICONS.COMMON.EMPTY;
+      const changeSign = parseFloat(percentChange) > 0 ? CONSTANTS.WORKOUT.ICONS.COMMON.PLUS : CONSTANTS.WORKOUT.ICONS.COMMON.EMPTY;
       return {
         text:
           percentChange === "Infinity"
-            ? UI_LABELS.CHARTS.SIGNIFICANT_INCREASE
-            : changeSign + percentChange + UI_ICONS.COMMON.PERCENTAGE,
+            ? CONSTANTS.WORKOUT.LABELS.CHARTS.SIGNIFICANT_INCREASE
+            : changeSign + percentChange + CONSTANTS.WORKOUT.ICONS.COMMON.PERCENTAGE,
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {
       return {
-        text: UI_LABELS.CHARTS.VARIATION_VALUE_LABEL(firstValue.toFixed(1)),
+        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL(firstValue.toFixed(1)),
         color: "",
       };
     }
-    return { text: UI_LABELS.TABLE.NOT_AVAILABLE, color: "" };
+    return { text: CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, color: "" };
   }
 }
 

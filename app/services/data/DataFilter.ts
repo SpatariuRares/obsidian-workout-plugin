@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
@@ -6,7 +7,6 @@ import {
   ExerciseMatch,
 } from "@app/utils/utils";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { TEXT_CONSTANTS, UI_LABELS } from "@app/constants";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
@@ -34,13 +34,13 @@ export class DataFilter {
       return {
         filteredData: [],
         filterMethodUsed: "none",
-        titlePrefix: TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA,
+        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
       };
     }
 
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
 
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout || params.workoutPath;
@@ -90,7 +90,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
 
     if (params.workout || params.workoutPath) {
       const workoutName = params.workout || params.workoutPath;
@@ -126,7 +126,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = TEXT_CONSTANTS.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
 
     if (params.exercise && params.exercise.trim()) {
       const exerciseName = params.exercise.trim();
@@ -194,7 +194,7 @@ export class DataFilter {
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
-      return `file name (score: ${bestFileMatchesList[0]?.score || UI_LABELS.TABLE.NOT_AVAILABLE})`;
+      return `file name (score: ${bestFileMatchesList[0]?.score || CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE})`;
     }
     return "No match found";
   }

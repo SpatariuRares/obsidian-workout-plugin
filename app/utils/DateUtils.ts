@@ -1,4 +1,4 @@
-import { TABLE_DATE_KEYS, TABLE_LABELS } from "@app/constants/TableConstats";
+import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
@@ -135,7 +135,7 @@ export class DateUtils {
       const minutes = date.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
     } catch {
-      return TABLE_LABELS.NOT_AVAILABLE;
+      return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
     }
   }
 
@@ -151,7 +151,7 @@ export class DateUtils {
       const day = date.getDate().toString().padStart(2, "0");
       return `${year}-${month}-${day}`;
     } catch {
-      return TABLE_DATE_KEYS.INVALID;
+      return CONSTANTS.WORKOUT.TABLE.DATE_KEYS.INVALID;
     }
   }
 
@@ -166,7 +166,7 @@ export class DateUtils {
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
       return `${day}/${month}`;
     } catch {
-      return TABLE_DATE_KEYS.INVALID;
+      return CONSTANTS.WORKOUT.TABLE.DATE_KEYS.INVALID;
     }
   }
 
@@ -182,7 +182,7 @@ export class DateUtils {
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     } catch {
-      return TABLE_LABELS.INVALID_DATE;
+      return CONSTANTS.WORKOUT.TABLE.LABELS.INVALID_DATE;
     }
   }
 }

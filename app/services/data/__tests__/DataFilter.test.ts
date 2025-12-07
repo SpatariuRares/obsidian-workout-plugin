@@ -1,3 +1,4 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams } from "@app/types";
@@ -7,7 +8,6 @@ import {
   filterLogDataByExercise,
 } from "@app/utils/utils";
 import { TFile } from "obsidian";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
 jest.mock("@app/utils/utils", () => ({
@@ -91,7 +91,7 @@ describe("DataFilter", () => {
     });
 
     describe("Workout Filtering", () => {
-      it('should filter by workout name using the UI_LABELS.COMMON.TYPES.WORKOUT field', () => {
+      it('should filter by workout name using the CONSTANTS.WORKOUT.LABELS.COMMON.TYPES.WORKOUT field', () => {
         const params: Partial<EmbeddedChartParams> = { workout: "Leg Day" };
         const result = DataFilter.filterData(
           mockLogData,

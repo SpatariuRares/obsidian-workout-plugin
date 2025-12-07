@@ -1,13 +1,10 @@
 // Reusable exercise autocomplete component
+import { CONSTANTS } from "@app/constants/Constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
-import {
-  MODAL_EXERCISE_STATUS,
-  MODAL_LABELS,
-  MODAL_PLACEHOLDERS,
-} from "@app/constants";
+
 import { Button } from "@app/components/atoms";
 
 export interface ExerciseAutocompleteElements {
@@ -46,8 +43,8 @@ export class ExerciseAutocomplete {
     const exerciseContainer = modal.createFormGroup(container);
     const exerciseInput = modal.createTextInput(
       exerciseContainer,
-      MODAL_LABELS.EXERCISE,
-      MODAL_PLACEHOLDERS.EXERCISE_AUTOCOMPLETE,
+      CONSTANTS.WORKOUT.MODAL.LABELS.EXERCISE,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.EXERCISE_AUTOCOMPLETE,
       exerciseName || ""
     );
 
@@ -67,9 +64,9 @@ export class ExerciseAutocomplete {
 
     // Create exercise page button using Button atom
     const createExercisePageBtn = Button.create(exerciseStatusContainer, {
-      text: MODAL_EXERCISE_STATUS.CREATE_PAGE,
+      text: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
       className: "workout-create-exercise-page-btn workout-display-none",
-      ariaLabel: MODAL_EXERCISE_STATUS.CREATE_PAGE,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
     });
 
     const elements: ExerciseAutocompleteElements = {
@@ -131,7 +128,7 @@ export class ExerciseAutocomplete {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
         exerciseStatusContainer.className = "workout-exercise-status-container";
-        exerciseStatusText.textContent = MODAL_EXERCISE_STATUS.NOT_FOUND;
+        exerciseStatusText.textContent = CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
         createExercisePageBtn.className =

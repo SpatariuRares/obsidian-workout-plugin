@@ -1,9 +1,8 @@
-import { MODAL_CHECKBOXES, MODAL_PLACEHOLDERS, MODAL_SECTIONS } from "@app/constants/ModalConstants";// Enhanced target section component with exercise autocomplete
+import { CONSTANTS } from "@app/constants/Constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/types";
 import type WorkoutChartsPlugin from "main";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface TargetSectionWithAutocompleteElements {
   exerciseContainer: HTMLElement;
@@ -36,7 +35,7 @@ export class TargetSectionWithAutocomplete {
     elements: TargetSectionWithAutocompleteElements;
     handlers: TargetSectionWithAutocompleteHandlers;
   } {
-    const targetSection = modal.createSection(container, MODAL_SECTIONS.TARGET);
+    const targetSection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.TARGET);
 
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
@@ -48,11 +47,11 @@ export class TargetSectionWithAutocomplete {
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
-    workoutContainer.setAttribute("data-field-type", TEXT_CONSTANTS.COMMON.TYPES.WORKOUT);
+    workoutContainer.setAttribute("data-field-type", CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT);
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      TEXT_CONSTANTS.FORMS.LABELS_IT.WORKOUT_NAME,
-      MODAL_PLACEHOLDERS.WORKOUT
+      CONSTANTS.WORKOUT.FORMS.LABELS.WORKOUT_NAME,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WORKOUT
     );
 
     // Current Workout checkbox (for workout charts/tables)
@@ -60,7 +59,7 @@ export class TargetSectionWithAutocomplete {
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      MODAL_CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
       false,
       "currentWorkout"
     );

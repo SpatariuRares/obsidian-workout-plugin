@@ -1,4 +1,5 @@
 // Refactored InsertTableModal extending BaseInsertModal
+import { CONSTANTS } from "@app/constants/Constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -11,17 +12,6 @@ import {
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_LABELS,
-  MODAL_SELECT_OPTIONS,
-  MODAL_SECTIONS,
-  MODAL_CHECKBOXES,
-  MODAL_NOTICES,
-  MODAL_DEFAULT_VALUES,
-} from "@app/constants/ModalConstants";
-import { TABLE_DEFAULTS } from "@app/constants/TableConstats";
 import { TableColumnType, TABLE_TYPE } from "@app/types/TableTypes";
 
 export class InsertTableModal extends BaseInsertModal {
@@ -40,29 +30,29 @@ export class InsertTableModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return MODAL_TITLES.INSERT_TABLE;
+    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TABLE;
   }
 
   protected getButtonText(): string {
-    return MODAL_BUTTONS.INSERT_TABLE;
+    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_TABLE;
   }
 
   protected getSuccessMessage(): string {
-    return MODAL_NOTICES.TABLE_INSERTED;
+    return CONSTANTS.WORKOUT.MODAL.NOTICES.TABLE_INSERTED;
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
     // Table Type Section
     const tableTypeSection = this.createSection(
       container,
-      MODAL_SECTIONS.TABLE_TYPE
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.TABLE_TYPE
     );
 
     // Table Type selector (exercise vs workout)
     this.tableTypeSelect = this.createSelectField(
       tableTypeSection,
-      MODAL_LABELS.TABLE_TYPE,
-      [...MODAL_SELECT_OPTIONS.TABLE_TYPE]
+      CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_TYPE,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE]
     );
 
     // Target Section using reusable component with autocomplete
@@ -88,7 +78,7 @@ export class InsertTableModal extends BaseInsertModal {
     setTimeout(() => {
       if (this.tableTypeSelect && (this.tableTypeSelect.value as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
         const workoutField = container.querySelector(
-          '[data-field-type=TEXT_CONSTANTS.COMMON.TYPES.WORKOUT]'
+          '[data-field-type=CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT]'
         ) as HTMLElement;
         const currentWorkoutField = container.querySelector(
           '[data-field-type="current-workout"]'
@@ -117,37 +107,37 @@ export class InsertTableModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      MODAL_SECTIONS.CONFIGURATION
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION
     );
 
     // Limit selector
     this.limitInput = this.createNumberField(
       configSection,
-      MODAL_LABELS.MAX_LOG_COUNT,
-      MODAL_DEFAULT_VALUES.TABLE_LIMIT,
+      CONSTANTS.WORKOUT.MODAL.LABELS.MAX_LOG_COUNT,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
       {
-        min: MODAL_DEFAULT_VALUES.TABLE_LIMIT_MIN,
-        max: MODAL_DEFAULT_VALUES.TABLE_LIMIT_MAX,
+        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
+        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
       }
     );
 
     // Columns selector
     this.columnsSelect = this.createSelectField(
       configSection,
-      MODAL_LABELS.TABLE_COLUMNS,
-      [...MODAL_SELECT_OPTIONS.TABLE_COLUMNS]
+      CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_COLUMNS,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_COLUMNS]
     );
 
     // Display Options Section
     const displaySection = this.createSection(
       container,
-      MODAL_SECTIONS.DISPLAY_OPTIONS
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS
     );
 
     // Show add button toggle
     this.addButtonToggle = this.createCheckboxField(
       displaySection,
-      MODAL_CHECKBOXES.SHOW_ADD_BUTTON,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_ADD_BUTTON,
       true,
       "showAddButton"
     );
@@ -155,9 +145,9 @@ export class InsertTableModal extends BaseInsertModal {
     // Custom button text
     this.buttonTextInput = this.createTextField(
       displaySection,
-      MODAL_LABELS.BUTTON_TEXT,
-      TABLE_DEFAULTS.BUTTON_TEXT,
-      TABLE_DEFAULTS.BUTTON_TEXT
+      CONSTANTS.WORKOUT.MODAL.LABELS.BUTTON_TEXT,
+      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
+      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT
     );
 
     // Advanced Options Section using reusable component
@@ -199,7 +189,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Validation for combined mode
     if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
-        new Notice(MODAL_NOTICES.VALIDATION_COMBINED_MODE);
+        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_COMBINED_MODE);
         throw new Error(
           "Both exercise and workout are required for combined mode"
         );

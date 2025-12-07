@@ -1,9 +1,8 @@
 /** @jest-environment jsdom */
 
+import { CONSTANTS } from "@app/constants/Constants";
 import { ActionButtonGroup } from "@app/components/molecules/ActionButtonGroup";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { UI_ICONS } from "@app/constants/IconConstants";
-import { UI_LABELS } from "@app/constants/LabelConstants";
 
 describe("ActionButtonGroup", () => {
 	const createParent = () => createObsidianContainer();
@@ -20,14 +19,14 @@ describe("ActionButtonGroup", () => {
 		expect(renderedButtons).toHaveLength(2);
 
 		expect(editBtn.classList.contains("action-btn-edit")).toBe(true);
-		expect(editBtn.getAttribute("title")).toBe(UI_LABELS.ACTIONS.EDIT);
-		expect(editBtn.getAttribute("aria-label")).toBe(UI_LABELS.ACTIONS.EDIT);
-		expect(editBtn.textContent).toBe(UI_ICONS.ACTIONS.EDIT.trim());
+		expect(editBtn.getAttribute("title")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT);
+		expect(editBtn.getAttribute("aria-label")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT);
+		expect(editBtn.textContent).toBe(CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT.trim());
 
 		expect(deleteBtn.classList.contains("action-btn-delete")).toBe(true);
-		expect(deleteBtn.getAttribute("title")).toBe(UI_LABELS.ACTIONS.DELETE);
-		expect(deleteBtn.getAttribute("aria-label")).toBe(UI_LABELS.ACTIONS.DELETE);
-		expect(deleteBtn.textContent).toBe(UI_ICONS.ACTIONS.DELETE.trim());
+		expect(deleteBtn.getAttribute("title")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE);
+		expect(deleteBtn.getAttribute("aria-label")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE);
+		expect(deleteBtn.textContent).toBe(CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE.trim());
 	});
 
 	it("supports overriding titles, icons, and container classes", () => {

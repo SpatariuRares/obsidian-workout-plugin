@@ -1,4 +1,5 @@
 // Refactored InsertChartModal extending BaseInsertModal
+import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -11,16 +12,6 @@ import {
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import {
-  MODAL_TITLES,
-  MODAL_BUTTONS,
-  MODAL_LABELS,
-  MODAL_SELECT_OPTIONS,
-  MODAL_SECTIONS,
-  MODAL_CHECKBOXES,
-  MODAL_NOTICES,
-  MODAL_DEFAULT_VALUES,
-} from "@app/constants/ModalConstants";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
 
 export class InsertChartModal extends BaseInsertModal {
@@ -41,36 +32,36 @@ export class InsertChartModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return MODAL_TITLES.INSERT_CHART;
+    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_CHART;
   }
 
   protected getButtonText(): string {
-    return MODAL_BUTTONS.INSERT_CHART;
+    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_CHART;
   }
 
   protected getSuccessMessage(): string {
-    return MODAL_NOTICES.CHART_INSERTED;
+    return CONSTANTS.WORKOUT.MODAL.NOTICES.CHART_INSERTED;
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       container,
-      MODAL_SECTIONS.CHART_TYPE
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CHART_TYPE
     );
 
     // Chart Type selector (exercise vs workout)
     this.chartTypeSelect = this.createSelectField(
       chartTypeSection,
-      MODAL_LABELS.CHART_TYPE,
-      [...MODAL_SELECT_OPTIONS.CHART_TYPE]
+      CONSTANTS.WORKOUT.MODAL.LABELS.CHART_TYPE,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE]
     );
 
     // Data Type selector (volume, weight, reps)
     this.dataTypeSelect = this.createSelectField(
       chartTypeSection,
-      MODAL_LABELS.DATA_TYPE,
-      [...MODAL_SELECT_OPTIONS.DATA_TYPE]
+      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_TYPE,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE]
     );
 
     // Target Section using reusable component with autocomplete
@@ -95,41 +86,41 @@ export class InsertChartModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      MODAL_SECTIONS.CONFIGURATION
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION
     );
 
     // Date range selector
     this.dateRangeInput = this.createNumberField(
       configSection,
-      MODAL_LABELS.DAYS_RANGE,
-      MODAL_DEFAULT_VALUES.CHART_DATE_RANGE,
+      CONSTANTS.WORKOUT.MODAL.LABELS.DAYS_RANGE,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE,
       {
-        min: MODAL_DEFAULT_VALUES.CHART_DATE_RANGE_MIN,
-        max: MODAL_DEFAULT_VALUES.CHART_DATE_RANGE_MAX,
+        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
+        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
       }
     );
 
     // Limit selector
     this.limitInput = this.createNumberField(
       configSection,
-      MODAL_LABELS.DATA_LIMIT,
-      MODAL_DEFAULT_VALUES.CHART_LIMIT,
+      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_LIMIT,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT,
       {
-        min: MODAL_DEFAULT_VALUES.CHART_LIMIT_MIN,
-        max: MODAL_DEFAULT_VALUES.CHART_LIMIT_MAX,
+        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
+        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
       }
     );
 
     // Display Options Section
     const displaySection = this.createSection(
       container,
-      MODAL_SECTIONS.DISPLAY_OPTIONS
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS
     );
 
     // Show trend line toggle
     this.trendLineToggle = this.createCheckboxField(
       displaySection,
-      MODAL_CHECKBOXES.SHOW_TREND_LINE,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_LINE,
       true,
       "trendLine"
     );
@@ -137,7 +128,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Show trend header toggle
     this.trendHeaderToggle = this.createCheckboxField(
       displaySection,
-      MODAL_CHECKBOXES.SHOW_TREND_HEADER,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_HEADER,
       true,
       "trendHeader"
     );
@@ -145,7 +136,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Show statistics toggle
     this.statsToggle = this.createCheckboxField(
       displaySection,
-      MODAL_CHECKBOXES.SHOW_STATISTICS,
+      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_STATISTICS,
       true,
       "stats"
     );

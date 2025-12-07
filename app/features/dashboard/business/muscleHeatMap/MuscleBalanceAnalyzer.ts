@@ -1,5 +1,5 @@
+import { CONSTANTS } from "@app/constants/Constants";
 import type { MuscleGroupData } from "@app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator";
-import { TEXT_CONSTANTS } from "@app/constants";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -81,14 +81,14 @@ export class MuscleBalanceAnalyzer {
 
     if (!analysis.hasData) {
       infoPanel.createEl("p", {
-        text: TEXT_CONSTANTS.MESSAGES.NO_DATA_PERIOD,
+        text: CONSTANTS.WORKOUT.MESSAGES.NO_DATA_PERIOD,
         cls: "workout-info-message",
       });
       return;
     }
 
     // Display analysis header
-    infoPanel.createEl("h4", { text: TEXT_CONSTANTS.UI.LABELS.TRAINING_ANALYSIS });
+    infoPanel.createEl("h4", { text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS });
 
     infoPanel.createEl("p", {
       text: `Average volume: ${analysis.avgVolume.toFixed(0)} kg`,
@@ -101,7 +101,7 @@ export class MuscleBalanceAnalyzer {
       });
 
       alertEl.createEl("h5", {
-        text: TEXT_CONSTANTS.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
+        text: CONSTANTS.WORKOUT.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
         cls: "workout-alert-title",
       });
 
@@ -113,7 +113,7 @@ export class MuscleBalanceAnalyzer {
       });
     } else {
       infoPanel.createEl("p", {
-        text: TEXT_CONSTANTS.MESSAGES.SUCCESS.NO_IMBALANCES,
+        text: CONSTANTS.WORKOUT.MESSAGES.SUCCESS.NO_IMBALANCES,
         cls: "workout-success-message",
       });
     }

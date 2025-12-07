@@ -14,7 +14,7 @@ export class DataService {
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
 
-  constructor(private app: App, private settings: WorkoutChartsSettings) {}
+  constructor(private app: App, private settings: WorkoutChartsSettings) { }
 
   async getWorkoutLogData(filterParams?: {
     exercise?: string;
@@ -216,7 +216,7 @@ export class DataService {
     const newContent = entriesToCSVContent(csvEntries);
 
     // Write back to file
-    await this.app.vault.modify(csvFile, newContent);
+    await this.app.vault.process(csvFile, (content) => content.replace(content, newContent));
 
     // Clear cache
     this.clearLogDataCache();
@@ -279,7 +279,7 @@ export class DataService {
     const newContent = entriesToCSVContent(csvEntries);
 
     // Write back to file
-    await this.app.vault.modify(csvFile, newContent);
+    await this.app.vault.process(csvFile, (content) => content.replace(content, newContent));
 
     // Clear cache
     this.clearLogDataCache();
@@ -332,7 +332,7 @@ export class DataService {
     const newContent = entriesToCSVContent(csvEntries);
 
     // Write back to file
-    await this.app.vault.modify(csvFile, newContent);
+    await this.app.vault.process(csvFile, (content) => content.replace(content, newContent));
 
     // Clear cache
     this.clearLogDataCache();

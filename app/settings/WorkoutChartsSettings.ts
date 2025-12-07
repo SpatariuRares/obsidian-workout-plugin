@@ -3,6 +3,7 @@ import WorkoutChartsPlugin from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { Notice } from "obsidian";
 import { TEXT_CONSTANTS } from "@app/constants";
+import { FolderSuggest } from "@app/suggest/FolderSuggest";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;
@@ -33,15 +34,16 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName(TEXT_CONSTANTS.SETTINGS.LABELS.EXERCISE_FOLDER)
       .setDesc(TEXT_CONSTANTS.SETTINGS.DESCRIPTIONS.EXERCISE_FOLDER)
-      .addText((text) =>
+      .addText((text) => {
+        new FolderSuggest(this.app, text.inputEl);
         text
           .setPlaceholder(TEXT_CONSTANTS.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH)
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
             this.plugin.settings.exerciseFolderPath = normalizePath(value);
             await this.plugin.saveSettings();
-          })
-      );
+          });
+      });
 
 
 

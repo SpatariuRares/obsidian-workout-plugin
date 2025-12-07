@@ -82,7 +82,7 @@ export class MuscleBalanceAnalyzer {
     if (!analysis.hasData) {
       infoPanel.createEl("p", {
         text: TEXT_CONSTANTS.MESSAGES.NO_DATA_PERIOD,
-        cls: "info-message",
+        cls: "workout-info-message",
       });
       return;
     }
@@ -97,24 +97,24 @@ export class MuscleBalanceAnalyzer {
     // Display imbalance alerts or success message
     if (analysis.imbalances.length > 0) {
       const alertEl = infoPanel.createEl("div", {
-        cls: "imbalance-alert",
+        cls: "workout-imbalance-alert",
       });
 
       alertEl.createEl("h5", {
         text: TEXT_CONSTANTS.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
-        cls: "alert-title",
+        cls: "workout-alert-title",
       });
 
       analysis.imbalances.forEach((imbalance) => {
         alertEl.createEl("p", {
           text: imbalance,
-          cls: "alert-message",
+          cls: "workout-alert-message",
         });
       });
     } else {
       infoPanel.createEl("p", {
         text: TEXT_CONSTANTS.MESSAGES.SUCCESS.NO_IMBALANCES,
-        cls: "success-message",
+        cls: "workout-success-message",
       });
     }
   }

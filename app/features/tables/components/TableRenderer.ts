@@ -119,25 +119,25 @@ export class TableRenderer {
 
         // First cell: formatted date
         const dateCell = spacerRow.appendChild(document.createElement("td"));
-        dateCell.className = "table-spacer-date-cell";
+        dateCell.className = "workout-table-spacer-date-cell";
         const formattedDate = DateUtils.toShortDate(groupRows[0].originalDate);
         dateCell.textContent = formattedDate;
 
         // Create summary cell for the remaining columns
         const summaryCell = spacerRow.appendChild(document.createElement("td"));
-        summaryCell.className = "table-spacer-summary-cell";
+        summaryCell.className = "workout-table-spacer-summary-cell";
         summaryCell.setAttribute("colspan", (columnCount - 1).toString());
 
         // Create stat spans using DOM methods
-        const repsSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
         repsSpan.appendText(TABLE_ICONS.REPS + TABLE_LABELS.REPETITIONS + ": ");
         repsSpan.createEl("strong", { text: totalReps.toString() });
 
-        const weightSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
         weightSpan.appendText(TABLE_ICONS.WEIGHT + TABLE_LABELS.WEIGHT + ": ");
         weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
 
-        const volumeSpan = summaryCell.createEl("span", { cls: "spacer-stat" });
+        const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
         volumeSpan.appendText(TABLE_ICONS.VOLUME + TABLE_LABELS.VOLUME + ": ");
         volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
@@ -153,7 +153,7 @@ export class TableRenderer {
         }
 
         const tr = fragment.appendChild(document.createElement("tr"));
-        tr.className = `same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
+        tr.className = `workout-same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
           }`;
 
         row.displayRow.forEach((cell, cellIndex) => {

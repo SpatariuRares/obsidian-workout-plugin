@@ -1,0 +1,46 @@
+/* ============================================================================
+   GENERAL HELPERS
+   ============================================================================ */
+
+/* Trend color classes */
+.workout-trend-color {
+  &-green {
+    color: var(--color-green) !important;
+  }
+  &-red {
+    color: var(--color-red) !important;
+  }
+  &-orange {
+    color: var(--color-orange) !important;
+  }
+  &-accent {
+    color: var(--text-accent) !important;
+  }
+}
+
+/* Display Control Classes */
+.workout-display {
+  &-none {
+    display: none !important;
+  }
+  &-block {
+    display: block !important;
+  }
+  &-inline-block {
+    display: inline-block !important;
+  }
+}
+
+/* Opacity Control Classes */
+.workout-opacity {
+  &-50 {
+    opacity: 0.5;
+  }
+  &-100 {
+    opacity: 1;
+  }
+}
+
+.workout-button-container {
+  margin-top: var(--workout-space-lg);
+}

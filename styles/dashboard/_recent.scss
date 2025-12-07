@@ -1,0 +1,63 @@
+/* ============================================================================
+   DASHBOARD RECENT WORKOUTS
+   ============================================================================ */
+
+.workout-recent {
+  &-workouts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-workout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--workout-space-md) 0;
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
+    transition: var(--workout-transition);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--background-modifier-hover);
+      margin: 0 calc(-1 * var(--workout-space-lg));
+      padding: var(--workout-space-md) var(--workout-space-lg);
+      border-radius: var(--workout-radius-md);
+    }
+  }
+
+  &-date {
+    font-size: var(--workout-font-base);
+    color: var(--text-muted);
+    min-width: var(--workout-size-4xl);
+  }
+
+  &-name {
+    flex: 1;
+    margin: 0 var(--workout-space-lg);
+    font-weight: var(--workout-font-weight-medium);
+    color: var(--text-normal);
+  }
+
+  &-volume {
+    color: var(--interactive-accent);
+    font-weight: var(--workout-font-weight-semibold);
+    font-size: var(--workout-font-base);
+  }
+}
+
+.workout-exercise {
+  &-name {
+    font-weight: var(--workout-font-weight-medium);
+    color: var(--text-normal);
+  }
+
+  &-volume {
+    color: var(--text-muted);
+    font-size: var(--workout-font-base);
+  }
+}

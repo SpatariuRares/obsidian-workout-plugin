@@ -1,0 +1,102 @@
+/* ============================================================================
+   DASHBOARD WIDGETS
+   ============================================================================ */
+
+.workout-dashboard-widget {
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-lg);
+  box-shadow: var(--workout-shadow-sm);
+  transition: var(--workout-transition);
+  grid-column: span 12;
+  height: fit-content;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+
+  /* Widget span configurations (columns) */
+  &.span-3 {
+    grid-column: span 3;
+  }
+  &.span-4 {
+    grid-column: span 4;
+  }
+  &.span-6 {
+    grid-column: span 6;
+  }
+  &.span-8 {
+    grid-column: span 8;
+  }
+  &.span-12 {
+    grid-column: span 12;
+  }
+
+  /* Widget row span configurations (vertical height) */
+  &.row-span-1,
+  &.row-span-2 {
+    grid-row: span 1;
+  }
+  &.row-span-3 {
+    grid-row: span 3;
+  }
+  &.row-span-4 {
+    grid-row: span 4;
+  }
+
+  /* Compact widget - less padding, tighter layout */
+  &.compact {
+    padding: var(--workout-space-lg);
+    min-height: 0;
+  }
+
+  /* Tall widget - more vertical space */
+  &.tall {
+    min-height: var(--workout-size-9xl);
+  }
+
+  /* Auto-height widget - fits content exactly */
+  &.auto-height {
+    height: auto;
+    min-height: 0;
+  }
+
+  &:hover {
+    border-color: var(--interactive-accent);
+    box-shadow: var(--workout-shadow-md);
+  }
+}
+
+.workout-widget-title {
+  margin: 0 0 var(--workout-space-lg) 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+/* Specific Widget Placements */
+.workout-summary-widget,
+.workout-stats-cards {
+  grid-column: 1 / -1;
+  grid-row: span 1;
+}
+
+.workout-volume-analytics,
+.workout-file-errors {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+.workout-recent-workouts,
+.workout-quick-stats {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.workout-quick-actions {
+  grid-column: span 2;
+  grid-row: span 1;
+}

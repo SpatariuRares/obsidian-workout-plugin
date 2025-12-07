@@ -1,0 +1,140 @@
+/* ============================================================================
+   DASHBOARD SUMMARY & STATS
+   ============================================================================ */
+
+/* Summary Grid */
+.workout-summary {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--workout-space-xs), 1fr)
+    );
+    gap: var(--workout-space-lg);
+  }
+
+  &-card {
+    text-align: center;
+    padding: var(--workout-space-xl);
+    background: var(--background-secondary);
+    border-radius: var(--workout-radius-lg);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    transition: var(--workout-transition);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--workout-shadow-md);
+    }
+  }
+}
+
+/* Card Styles */
+.workout-card {
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: var(--workout-space-sm);
+    margin-bottom: var(--workout-space-lg);
+  }
+
+  &-icon {
+    font-size: var(--workout-space-2xl);
+    margin-bottom: var(--workout-space-sm);
+    display: block;
+  }
+
+  &-title {
+    margin: 0;
+    font-size: var(--workout-space-lg);
+    font-weight: var(--workout-font-weight-semibold);
+    opacity: 0.8;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &-stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--workout-space-md);
+  }
+
+  &-value {
+    font-size: var(--workout-font-2xl);
+    font-weight: var(--workout-font-weight-bold);
+    color: var(--interactive-accent);
+    margin-bottom: var(--workout-space-xs);
+  }
+}
+
+.workout-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+}
+
+/* Stats Cards (Gradient) */
+.workout-stats {
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--workout-size-6xl), 1fr)
+    );
+    gap: var(--workout-space-lg);
+  }
+
+  &-card {
+    padding: var(--workout-space-xl);
+    background: linear-gradient(
+      135deg,
+      var(--background-secondary) 0%,
+      var(--background-primary) 100%
+    );
+    border-radius: var(--workout-radius-xl);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--workout-space-xs);
+      background: linear-gradient(
+        90deg,
+        var(--interactive-accent),
+        var(--interactive-accent-hover)
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--workout-shadow-lg);
+      border-color: var(--interactive-accent);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    .workout-card-icon {
+      font-size: var(--workout-font-2xl);
+      margin-bottom: var(--workout-space-sm);
+    }
+
+    .workout-card-title {
+      font-size: var(--workout-font-base);
+      color: var(--text-normal);
+      margin-bottom: var(--workout-space-md);
+      text-transform: none;
+      letter-spacing: normal;
+      opacity: 1;
+    }
+  }
+}

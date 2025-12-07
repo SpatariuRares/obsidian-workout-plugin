@@ -32,7 +32,7 @@ export class InsertDashboardModal extends BaseInsertModal {
     // - Time range for data
     // - Custom styling options
 
-    const infoSection = container.createDiv({ cls: "modal-section" });
+    const infoSection = container.createDiv({ cls: "workout-modal-section" });
     infoSection.createEl("p", {
       text: "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions.",
       cls: "setting-item-description",

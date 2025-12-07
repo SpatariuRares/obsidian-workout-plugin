@@ -22,22 +22,22 @@ export class MuscleHeatMap {
     plugin: WorkoutChartsPlugin
   ): Promise<void> {
     const heatMapEl = container.createEl("div", {
-      cls: "dashboard-widget muscle-heatmap",
+      cls: "workout-dashboard-widget workout-muscle-heatmap",
     });
 
     heatMapEl.createEl("h3", {
       text: TEXT_CONSTANTS.UI.LABELS.MUSCLE_HEAT_MAP,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     // Heat map canvas container
     const canvasContainer = heatMapEl.createEl("div", {
-      cls: "heatmap-canvas-container",
+      cls: "workout-heatmap-canvas-container",
     });
 
     // Info panel for imbalance alerts
     const infoPanel = heatMapEl.createEl("div", {
-      cls: "heatmap-info-panel",
+      cls: "workout-heatmap-info-panel",
     });
 
     // Create controls and get initial options (placed before canvas)
@@ -51,11 +51,11 @@ export class MuscleHeatMap {
     );
 
     // Move controls to be first child after title
-    const controlsEl = heatMapEl.querySelector(".heatmap-controls");
+    const controlsEl = heatMapEl.querySelector(".workout-heatmap-controls");
     if (controlsEl) {
       heatMapEl.insertAfter(
         controlsEl,
-        heatMapEl.querySelector(".widget-title")
+        heatMapEl.querySelector(".workout-widget-title")
       );
     }
 

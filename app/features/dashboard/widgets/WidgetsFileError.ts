@@ -18,12 +18,12 @@ export class WidgetsFileError {
     plugin: WorkoutChartsPlugin
   ): Promise<void> {
     const errorEl = container.createEl("div", {
-      cls: "dashboard-widget  columns-2  file-errors",
+      cls: "workout-dashboard-widget  columns-2  workout-file-errors",
     });
 
     errorEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.FILE_ERRORS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     // Get exercise files with errors
@@ -32,28 +32,28 @@ export class WidgetsFileError {
     if (fileErrors.length === 0) {
       errorEl.createEl("div", {
         text: `${UI_ICONS.STATUS.SUCCESS} ${UI_LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
-        cls: "file-errors-success",
+        cls: "workout-file-errors-success",
       });
       return;
     }
 
     const listEl = errorEl.createEl("ul", {
-      cls: "file-errors-list",
+      cls: "workout-file-errors-list",
     });
 
     fileErrors.forEach((fileError) => {
       const itemEl = listEl.createEl("li", {
-        cls: "file-error-item",
+        cls: "workout-file-error-item",
       });
 
       // File name as clickable link
       const fileNameEl = itemEl.createEl("div", {
-        cls: "file-error-name",
+        cls: "workout-file-error-name",
       });
 
       const link = fileNameEl.createEl("a", {
         text: fileError.fileName,
-        cls: "file-error-link",
+        cls: "workout-file-error-link",
       });
       link.addEventListener("click", () => {
         plugin.app.workspace
@@ -66,13 +66,13 @@ export class WidgetsFileError {
 
       // Error messages
       const errorsEl = itemEl.createEl("ul", {
-        cls: "file-error-messages",
+        cls: "workout-file-error-messages",
       });
 
       fileError.errors.forEach((error) => {
         errorsEl.createEl("li", {
           text: error,
-          cls: "file-error-message",
+          cls: "workout-file-error-message",
         });
       });
     });

@@ -15,16 +15,16 @@ export class QuickStatsCards {
     _params: EmbeddedDashboardParams
   ): void {
     const cardsEl = container.createEl("div", {
-      cls: "dashboard-widget stats-cards",
+      cls: "workout-dashboard-widget workout-stats-cards",
     });
 
     cardsEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.QUICK_STATS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     const statsGrid = cardsEl.createEl("div", {
-      cls: "stats-grid",
+      cls: "workout-stats-grid",
     });
 
     // Calculate stats for different periods
@@ -60,30 +60,30 @@ export class QuickStatsCards {
     icon: string
   ): void {
     // Create period card container
-    const cardEl = container.createEl("div", { cls: "stats-card-period" });
+    const cardEl = container.createEl("div", { cls: "workout-stats-card" });
 
     // Header with icon and title
-    const headerEl = cardEl.createEl("div", { cls: "card-header" });
+    const headerEl = cardEl.createEl("div", { cls: "workout-card-header" });
 
     headerEl.createEl("div", {
       text: icon,
-      cls: "card-icon",
+      cls: "workout-card-icon",
     });
 
     headerEl.createEl("h4", {
       text: title,
-      cls: "card-title",
+      cls: "workout-card-title",
     });
 
     // Stats grid using StatCard molecules
-    const statsEl = cardEl.createEl("div", { cls: "card-stats" });
+    const statsEl = cardEl.createEl("div", { cls: "workout-card-stats" });
 
     // Workouts stat using StatCard molecule
     StatCard.create(statsEl, {
       icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       value: stats.workouts.toString(),
       label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
-      className: "stat-item",
+      className: "workout-stat-item",
     });
 
     // Total volume stat using StatCard molecule
@@ -91,7 +91,7 @@ export class QuickStatsCards {
       icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       value: stats.volume.toLocaleString(),
       label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
-      className: "stat-item",
+      className: "workout-stat-item",
     });
 
     // Average volume stat using StatCard molecule
@@ -99,7 +99,7 @@ export class QuickStatsCards {
       icon: UI_ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
       value: stats.avgVolume.toLocaleString(),
       label: UI_LABELS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
-      className: "stat-item",
+      className: "workout-stat-item",
     });
   }
 }

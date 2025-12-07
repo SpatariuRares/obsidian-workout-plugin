@@ -11,17 +11,17 @@ export class VolumeAnalytics {
     _params: EmbeddedDashboardParams
   ): void {
     const analyticsEl = container.createEl("div", {
-      cls: "dashboard-widget  columns-2  volume-analytics",
+      cls: "workout-dashboard-widget  columns-2  workout-volume-analytics",
     });
 
     analyticsEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     // Create chart container
     const chartContainer = analyticsEl.createEl("div", {
-      cls: "dashboard-chart-container",
+      cls: "workout-dashboard-chart-container",
     });
 
     // Prepare volume trend data
@@ -48,7 +48,7 @@ export class VolumeAnalytics {
 
     // Volume by muscle group breakdown
     const muscleGroupEl = analyticsEl.createEl("div", {
-      cls: "muscle-group-breakdown",
+      cls: "workout-muscle-group-breakdown",
     });
 
     const muscleGroupData =
@@ -64,19 +64,19 @@ export class VolumeAnalytics {
       text: UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.MUSCLE_BREAKDOWN_TITLE,
     });
 
-    const listEl = container.createEl("ul", { cls: "muscle-group-list" });
+    const listEl = container.createEl("ul", { cls: "workout-muscle-group-list" });
 
     data.forEach(([exercise, volume]) => {
-      const itemEl = listEl.createEl("li", { cls: "muscle-group-item" });
+      const itemEl = listEl.createEl("li", { cls: "workout-muscle-group-item" });
 
       itemEl.createEl("span", {
         text: exercise,
-        cls: "exercise-name",
+        cls: "workout-exercise-name",
       });
 
       itemEl.createEl("span", {
         text: `${volume.toLocaleString()} ${UI_LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
-        cls: "exercise-volume",
+        cls: "workout-exercise-volume",
       });
     });
   }

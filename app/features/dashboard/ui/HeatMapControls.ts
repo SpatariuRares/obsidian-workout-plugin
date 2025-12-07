@@ -28,48 +28,48 @@ export class HeatMapControls {
     renderCallback: RenderCallback
   ): MuscleHeatMapOptions {
     const controlsEl = container.createEl("div", {
-      cls: "heatmap-controls",
+      cls: "workout-heatmap-controls",
     });
 
     // Time frame toggle
     const timeFrameEl = controlsEl.createEl("div", {
-      cls: "time-frame-toggle",
+      cls: "workout-time-frame-toggle",
     });
 
     const weekBtn = timeFrameEl.createEl("button", {
       text: TEXT_CONSTANTS.TIME_PERIODS.WEEK,
-      cls: "toggle-btn active",
+      cls: "workout-toggle-btn active",
     });
 
     const monthBtn = timeFrameEl.createEl("button", {
       text: TEXT_CONSTANTS.TIME_PERIODS.MONTH,
-      cls: "toggle-btn",
+      cls: "workout-toggle-btn",
     });
 
     const yearBtn = timeFrameEl.createEl("button", {
       text: TEXT_CONSTANTS.TIME_PERIODS.YEAR,
-      cls: "toggle-btn",
+      cls: "workout-toggle-btn",
     });
 
     // View toggle
     const viewToggleEl = controlsEl.createEl("div", {
-      cls: "view-toggle",
+      cls: "workout-view-toggle",
     });
 
     const frontBtn = viewToggleEl.createEl("button", {
       text: TEXT_CONSTANTS.UI.LABELS.FRONT,
-      cls: "toggle-btn active",
+      cls: "workout-toggle-btn active",
     });
 
     const backBtn = viewToggleEl.createEl("button", {
       text: TEXT_CONSTANTS.UI.LABELS.BACK,
-      cls: "toggle-btn",
+      cls: "workout-toggle-btn",
     });
 
     // Export button
     const exportBtn = controlsEl.createEl("button", {
       text: TEXT_CONSTANTS.UI.ACTIONS.EXPORT,
-      cls: "export-btn",
+      cls: "workout-export-btn",
     });
 
     // Current options state

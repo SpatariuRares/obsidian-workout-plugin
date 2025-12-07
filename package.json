@@ -45,6 +45,7 @@
     "obsidian": "latest",
     "postcss": "^8.5.6",
     "postcss-import": "^16.1.1",
+    "sass": "^1.94.2",
     "ts-jest": "^29.4.5",
     "tslib": "2.4.0",
     "typescript": "~5.7.0",

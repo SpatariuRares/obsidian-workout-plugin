@@ -9,22 +9,22 @@ export class QuickActions {
     plugin: WorkoutChartsPlugin
   ): void {
     const actionsEl = container.createEl("div", {
-      cls: "dashboard-widget columns-2 quick-actions",
+      cls: "workout-dashboard-widget workout-quick-actions",
     });
 
     actionsEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     const buttonsEl = actionsEl.createEl("div", {
-      cls: "action-buttons",
+      cls: "workout-action-buttons",
     });
 
     // Add workout log button
     const addLogBtn = buttonsEl.createEl("button", {
       text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
-      cls: "action-button primary",
+      cls: "workout-action-button primary",
     });
 
     addLogBtn.addEventListener("click", () => {
@@ -34,7 +34,7 @@ export class QuickActions {
     // View all exercises button
     const viewExercisesBtn = buttonsEl.createEl("button", {
       text: UI_LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
-      cls: "action-button secondary",
+      cls: "workout-action-button secondary",
     });
 
     viewExercisesBtn.addEventListener("click", () => {

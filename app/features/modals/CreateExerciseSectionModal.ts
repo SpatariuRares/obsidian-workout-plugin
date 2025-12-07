@@ -160,13 +160,13 @@ export class CreateExerciseSectionModal extends ModalBase {
       if (currentWorkoutToggle.checked) {
         workoutInput.disabled = true;
         workoutInput.value = this.getCurrentFileName();
-        workoutInput.classList.add("opacity-50");
-        workoutInput.classList.remove("opacity-100");
+        workoutInput.classList.add("workout-opacity-50");
+        workoutInput.classList.remove("workout-opacity-100");
       } else {
         workoutInput.disabled = false;
         workoutInput.value = "";
-        workoutInput.classList.add("opacity-100");
-        workoutInput.classList.remove("opacity-50");
+        workoutInput.classList.add("workout-opacity-100");
+        workoutInput.classList.remove("workout-opacity-50");
       }
     });
 

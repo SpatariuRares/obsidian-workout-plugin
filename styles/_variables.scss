@@ -1,14 +1,23 @@
 /* ============================================================================
    CSS VARIABLES (PLUGIN-SPECIFIC)
    ============================================================================ */
+
+/* Breakpoints */
+$breakpoint-huge: 1600px;
+$breakpoint-xl: 1200px;
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 484px;
+
 :root {
   /* Spacing System (8px base scale) */
-  --workout-space-xs: 4px;   /* 0.5x */
-  --workout-space-sm: 8px;   /* 1x */
-  --workout-space-md: 12px;  /* 1.5x */
-  --workout-space-lg: 16px;  /* 2x */
-  --workout-space-xl: 20px;  /* 2.5x */
+  --workout-space-xs: 4px; /* 0.5x */
+  --workout-space-sm: 8px; /* 1x */
+  --workout-space-md: 12px; /* 1.5x */
+  --workout-space-lg: 16px; /* 2x */
+  --workout-space-xl: 20px; /* 2.5x */
   --workout-space-2xl: 24px; /* 3x */
+  --workout-space-3xl: 32px; /* 4x */
+  --workout-space-4xl: 40px; /* 5x */
 
   /* Specific Sizes (for large elements like charts/modals) */
   --workout-size-2xl: 32px;
@@ -19,6 +28,9 @@
   --workout-size-9xl: 400px;
   --workout-size-10xl: 500px;
   --workout-size-11xl: 600px;
+
+  --workout-widget-min-height: 150px;
+  --workout-tag-min-width: 120px;
 
   /* Border Radius - Using Obsidian native variables with fallbacks */
   --workout-radius-sm: var(--radius-s, 4px);

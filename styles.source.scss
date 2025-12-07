@@ -6,11 +6,12 @@
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
 
-@import "styles/_variables.css";
-@import "styles/_table.css";
-@import "styles/_chart.css";
-@import "styles/_timer.css";
-@import "styles/_modal.css";
-@import "styles/_dashboard.css";
-@import "styles/_utilities.css";
-@import "styles/_responsive.css";
+@import "styles/variables";
+@import "styles/utilities/helpers";
+@import "styles/components/index";
+@import "styles/table";
+@import "styles/chart";
+@import "styles/timer";
+@import "styles/modal";
+@import "styles/dashboard/index";
+@import "styles/responsive";

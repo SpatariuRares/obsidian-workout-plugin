@@ -1,0 +1,25 @@
+/* ============================================================================
+   CHART STYLES
+   ============================================================================ */
+
+/* Chart Container Styling */
+.workout-charts-container {
+  width: 100%;
+  position: relative;
+  height: 0;
+  padding-bottom: 75%; /* 4:3 aspect ratio (3/4 = 0.75) */
+  overflow: hidden;
+  border-radius: var(--workout-radius-lg);
+  background: var(--background-primary);
+  box-shadow: var(--workout-shadow-md);
+  margin-top: var(--workout-space-lg);
+
+  .workout-charts-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--workout-radius-lg);
+  }
+}

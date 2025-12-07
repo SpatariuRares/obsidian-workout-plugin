@@ -37,7 +37,7 @@ export class ConfirmModal extends ModalBase {
 
     // Button container
     const buttonContainer = contentEl.createEl("div", {
-      cls: "modal-button-container",
+      cls: "workout-modal-button-container",
     });
 
     // Cancel button using Button atom

@@ -10,22 +10,22 @@ import { UI_ICONS } from "@app/constants";
 export class MuscleTagsWidget {
   static render(container: HTMLElement, _params: EmbeddedDashboardParams): void {
     const widgetEl = container.createEl("div", {
-      cls: "dashboard-widget muscle-tags-widget",
+      cls: "workout-dashboard-widget workout-muscle-tags-widget",
     });
 
     widgetEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     widgetEl.createEl("p", {
-      cls: "widget-description",
+      cls: "workout-widget-description",
       text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.DESCRIPTION,
     });
 
     // Create muscle tags grid
     const tagsGrid = widgetEl.createEl("div", {
-      cls: "muscle-tags-grid",
+      cls: "workout-muscle-tags-grid",
     });
 
     // Sort tags for consistent display
@@ -37,12 +37,12 @@ export class MuscleTagsWidget {
 
     // Add info section
     const infoEl = widgetEl.createEl("div", {
-      cls: "muscle-tags-info",
+      cls: "workout-muscle-tags-info",
     });
 
     infoEl.createEl("small", {
       text: UI_LABELS.DASHBOARD.MUSCLE_TAGS.TOTAL_COUNT(MUSCLE_TAGS.length),
-      cls: "muscle-tags-count",
+      cls: "workout-muscle-tags-count",
     });
   }
 
@@ -54,7 +54,7 @@ export class MuscleTagsWidget {
     muscleName: string
   ): void {
     const badgeEl = container.createEl("div", {
-      cls: "muscle-tag-badge",
+      cls: "workout-muscle-tag-badge",
       attr: {
         "data-muscle": muscleName,
       },
@@ -63,13 +63,13 @@ export class MuscleTagsWidget {
     // Emoji
     badgeEl.createEl("span", {
       text: this.getMuscleEmoji(muscleName),
-      cls: "muscle-tag-emoji",
+      cls: "workout-muscle-tag-emoji",
     });
 
     // Name
     badgeEl.createEl("span", {
       text: this.formatMuscleName(muscleName),
-      cls: "muscle-tag-name",
+      cls: "workout-muscle-tag-name",
     });
 
     // Add click to copy functionality
@@ -79,9 +79,9 @@ export class MuscleTagsWidget {
       });
 
       // Show visual feedback
-      badgeEl.addClass("copied");
+      badgeEl.addClass("workout-copied");
       setTimeout(() => {
-        badgeEl.removeClass("copied");
+        badgeEl.removeClass("workout-copied");
       }, 1000);
     });
 

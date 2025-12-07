@@ -14,7 +14,7 @@ export abstract class ModalBase extends Modal {
    * Creates a styled section container
    */
   public createSection(parent: HTMLElement, title: string): HTMLElement {
-    const section = parent.createEl("div", { cls: "modal-section" });
+    const section = parent.createEl("div", { cls: "workout-modal-section" });
     section.createEl("h3", { text: title });
     return section;
   }
@@ -196,7 +196,7 @@ export abstract class ModalBase extends Modal {
     currentFileName: string
   ): HTMLElement {
     const currentFileInfo = parent.createEl("div", {
-      cls: "current-file-info",
+      cls: "workout-current-file-info",
     });
     currentFileInfo.textContent = `Current file: ${currentFileName}`;
     return currentFileInfo;

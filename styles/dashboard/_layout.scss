@@ -1,0 +1,27 @@
+/* ============================================================================
+   DASHBOARD LAYOUT
+   ============================================================================ */
+
+.workout-dashboard {
+  width: 100%;
+  margin: var(--workout-space-lg) 0;
+
+  &-title {
+    margin: 0 0 var(--workout-space-2xl) 0;
+    color: var(--text-normal);
+    font-size: var(--workout-font-2xl);
+    font-weight: var(--workout-font-weight-semibold);
+    border-bottom: var(--workout-border-medium) solid var(--interactive-accent);
+    padding-bottom: var(--workout-space-sm);
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(var(--workout-widget-min-height), auto);
+    gap: var(--workout-space-lg);
+    width: 100%;
+    align-items: start;
+    grid-auto-flow: dense;
+  }
+}

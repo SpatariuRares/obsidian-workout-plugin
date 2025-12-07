@@ -11,16 +11,16 @@ export class SummaryWidget {
     _params: EmbeddedDashboardParams
   ): void {
     const widgetEl = container.createEl("div", {
-      cls: "dashboard-widget summary-widget",
+      cls: "workout-dashboard-widget workout-summary-widget",
     });
 
     widgetEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.SUMMARY.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     const summaryEl = widgetEl.createEl("div", {
-      cls: "summary-grid",
+      cls: "workout-summary-grid",
     });
 
     const metrics = DashboardCalculations.calculateSummaryMetrics(data);
@@ -60,21 +60,21 @@ export class SummaryWidget {
     value: string,
     icon: string
   ): void {
-    const cardEl = container.createEl("div", { cls: "summary-card" });
+    const cardEl = container.createEl("div", { cls: "workout-summary-card" });
 
     cardEl.createEl("div", {
       text: icon,
-      cls: "card-icon",
+      cls: "workout-card-icon",
     });
 
     cardEl.createEl("div", {
       text: value,
-      cls: "card-value",
+      cls: "workout-card-value",
     });
 
     cardEl.createEl("div", {
       text: title,
-      cls: "card-title",
+      cls: "workout-card-title",
     });
   }
 }

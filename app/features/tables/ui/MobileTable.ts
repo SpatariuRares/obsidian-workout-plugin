@@ -28,7 +28,7 @@ export class MobileTable {
     // Create table header
     mobileTableContainer.createEl("h3", {
       text: title,
-      cls: "mobile-table-title",
+      cls: "workout-mobile-table-title",
     });
 
     const table = mobileTableContainer.createEl("table");

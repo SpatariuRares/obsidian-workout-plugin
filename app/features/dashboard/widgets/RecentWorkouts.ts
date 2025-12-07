@@ -10,41 +10,41 @@ export class RecentWorkouts {
     _params: EmbeddedDashboardParams
   ): void {
     const recentEl = container.createEl("div", {
-      cls: "dashboard-widget  columns-2  recent-workouts",
+      cls: "workout-dashboard-widget columns-2 workout-recent-workouts",
     });
 
     recentEl.createEl("h3", {
       text: UI_LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
-      cls: "widget-title",
+      cls: "workout-widget-title",
     });
 
     // Get recent workouts (last 5)
     const recentWorkouts = DashboardCalculations.getRecentWorkouts(data, 5);
 
     const listEl = recentEl.createEl("ul", {
-      cls: "recent-workouts-list",
+      cls: "workout-recent-workouts-list",
     });
 
     recentWorkouts.forEach((workout) => {
       const itemEl = listEl.createEl("li", {
-        cls: "recent-workout-item",
+        cls: "workout-recent-workout-item",
       });
 
       itemEl.createEl("div", {
         text: workout.date,
-        cls: "workout-date",
+        cls: "workout-date-group-header",
       });
 
       itemEl.createEl("div", {
         text:
           workout.workout ||
           UI_LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
-        cls: "workout-name",
+        cls: "workout-recent-workout-name",
       });
 
       itemEl.createEl("div", {
         text: `${workout.totalVolume.toLocaleString()} ${UI_LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
-        cls: "workout-volume",
+        cls: "workout-recent-workout-volume",
       });
     });
   }

@@ -98,18 +98,18 @@ export class InsertTableModal extends BaseInsertModal {
         ) as HTMLElement;
 
         if (workoutField) {
-          workoutField.classList.add("modal-field-visible");
-          workoutField.classList.remove("modal-field-hidden");
+          workoutField.classList.add("workout-modal-field-visible");
+          workoutField.classList.remove("workout-modal-field-hidden");
         }
 
         if (currentWorkoutField) {
-          currentWorkoutField.classList.add("modal-field-visible");
-          currentWorkoutField.classList.remove("modal-field-hidden");
+          currentWorkoutField.classList.add("workout-modal-field-visible");
+          currentWorkoutField.classList.remove("workout-modal-field-hidden");
         }
 
         if (fileInfoField) {
-          fileInfoField.classList.add("modal-field-visible");
-          fileInfoField.classList.remove("modal-field-hidden");
+          fileInfoField.classList.add("workout-modal-field-visible");
+          fileInfoField.classList.remove("workout-modal-field-hidden");
         }
       }
     }, 200);

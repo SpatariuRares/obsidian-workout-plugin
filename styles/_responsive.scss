@@ -1,0 +1,245 @@
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Print Styles */
+@media print {
+  .workout {
+    &-charts {
+      &-container {
+        .workout-charts-controls,
+        .workout-log-table th,
+        .workout-log-table td {
+          border: var(--workout-border-thin) solid
+            var(--background-modifier-border);
+          padding: var(--workout-space-sm);
+        }
+
+        .workout-charts-controls {
+          display: none !important;
+        }
+
+        .workout-log-table {
+          border-collapse: collapse;
+          width: 100%;
+          font-size: var(--workout-space-md);
+        }
+      }
+
+      &-table-fallback {
+        .workout-charts-stats,
+        .workout-charts-trend-header {
+          border: var(--workout-border-thin) solid
+            var(--background-modifier-border);
+          margin: var(--workout-space-md) 0;
+          padding: var(--workout-space-lg);
+        }
+      }
+    }
+
+    &-add-log-button-container,
+    &-embedded-chart-debug {
+      display: none !important;
+    }
+
+    &-embedded-chart-table-fallback {
+      .workout-log-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: var(--workout-space-md);
+      }
+    }
+  }
+}
+
+/* Large Desktop - 8 columns for maximum flexibility */
+@media (min-width: $breakpoint-huge) {
+  .workout {
+    &-dashboard-grid {
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    /* Adjust widget spans for 8-column grid */
+    &-muscle-heatmap,
+    &-volume-analytics {
+      grid-column: span 3;
+    }
+
+    &-recent-workouts,
+    &-quick-stats,
+    &-file-errors,
+    &-quick-actions {
+      grid-column: span 1;
+    }
+  }
+}
+
+/* Tablet breakpoint - 4 columns */
+@media (max-width: $breakpoint-xl) {
+  .workout {
+    &-dashboard-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--workout-space-md);
+    }
+
+    /* All widgets same size on tablet */
+    &-muscle-heatmap,
+    &-volume-analytics,
+    &-recent-workouts,
+    &-quick-stats,
+    &-file-errors,
+    &-quick-actions {
+      grid-column: span 2;
+    }
+  }
+}
+
+/* Mobile breakpoint - single column, natural flow */
+@media (max-width: $breakpoint-tablet) {
+  .workout {
+    /* All widgets full width on mobile */
+    &-summary-widget,
+    &-stats-cards,
+    &-muscle-heatmap,
+    &-volume-analytics,
+    &-quick-stats,
+    &-recent-workouts,
+    &-quick-actions,
+    &-file-errors {
+      grid-column: 1 / -1;
+    }
+
+    &-summary-grid {
+      grid-template-columns: 1fr;
+      gap: var(--workout-space-md);
+    }
+
+    &-stats {
+      &-grid {
+        grid-template-columns: 1fr;
+        gap: var(--workout-space-md);
+      }
+
+      &-card {
+        padding: var(--workout-space-lg);
+      }
+    }
+
+    &-card {
+      &-header {
+        margin-bottom: var(--workout-space-md);
+      }
+
+      &-icon {
+        font-size: var(--workout-space-xl);
+      }
+    }
+
+    &-dashboard {
+      &-widget {
+        padding: var(--workout-space-lg);
+      }
+
+      &-title {
+        font-size: var(--workout-font-base);
+      }
+
+      &-chart-container {
+        display: none;
+      }
+    }
+
+    &-widget-title {
+      font-size: var(--workout-font-base);
+    }
+
+    &-heatmap-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--workout-space-md);
+    }
+
+    &-time-frame-toggle,
+    &-view-toggle {
+      justify-content: center;
+      width: 100%;
+    }
+
+    &-toggle-btn {
+      flex: 1;
+      padding: var(--workout-space-md) var(--workout-space-md);
+    }
+
+    &-export-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &-muscle-details {
+      position: static;
+      margin-top: var(--workout-space-lg);
+      width: 100%;
+      max-width: none;
+    }
+
+    &-recent {
+      &-workout-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--workout-space-sm);
+      }
+
+      &-date {
+        min-width: auto;
+      }
+
+      &-name {
+        margin: 0;
+      }
+    }
+
+    &-action {
+      &-buttons {
+        gap: var(--workout-space-md);
+      }
+
+      &-button {
+        padding: var(--workout-space-lg) var(--workout-space-lg);
+        font-size: var(--workout-font-base);
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .workout {
+    &-stats-card {
+      padding: var(--workout-space-lg);
+    }
+
+    &-card-stats {
+      gap: var(--workout-space-md);
+    }
+
+    &-dashboard {
+      &-widget {
+        padding: var(--workout-space-lg);
+      }
+
+      &-title {
+        font-size: var(--workout-font-xl);
+        margin-bottom: var(--workout-space-lg);
+      }
+    }
+
+    &-widget-title {
+      font-size: var(--workout-font-base);
+      margin-bottom: var(--workout-space-md);
+    }
+
+    &-toggle-btn {
+      padding: var(--workout-space-sm) var(--workout-space-md);
+      font-size: var(--workout-font-sm);
+    }
+  }
+}

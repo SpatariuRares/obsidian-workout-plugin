@@ -1,0 +1,152 @@
+/* ============================================================================
+   DASHBOARD HEATMAP
+   ============================================================================ */
+
+.workout-muscle-heatmap {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+
+.workout-muscle {
+  &-heatmap {
+    min-height: var(--workout-size-11xl);
+  }
+
+  &-group-breakdown {
+    margin-top: var(--workout-space-xl);
+    padding-top: var(--workout-space-xl);
+    border-top: var(--workout-border-thin) solid
+      var(--background-modifier-border);
+
+    h4 {
+      margin: 0 0 var(--workout-space-md) 0;
+      color: var(--text-normal);
+      font-size: var(--workout-font-base);
+      font-weight: var(--workout-font-weight-semibold);
+    }
+  }
+
+  &-group-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--workout-space-sm) 0;
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &-click-area {
+    pointer-events: auto;
+    transition: background-color 0.2s ease;
+  }
+
+  &-details {
+    position: absolute;
+    top: var(--workout-space-xl);
+    right: var(--workout-space-xl);
+    background: var(--background-primary);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-radius: var(--workout-radius-lg);
+    padding: var(--workout-space-lg);
+    box-shadow: var(--workout-shadow-md);
+    z-index: 10;
+    min-width: var(--workout-size-2xl);
+    max-width: var(--workout-size-2xl);
+
+    h4 {
+      margin: 0 0 var(--workout-space-md) 0;
+      color: var(--text-normal);
+      font-size: var(--workout-font-base);
+      font-weight: var(--workout-font-weight-semibold);
+      border-bottom: var(--workout-border-thin) solid
+        var(--background-modifier-border);
+      padding-bottom: var(--workout-space-sm);
+    }
+
+    p {
+      margin: var(--workout-space-sm) 0;
+      color: var(--text-normal);
+      font-size: var(--workout-font-base);
+    }
+
+    ul {
+      margin: var(--workout-space-sm) 0;
+      padding-left: var(--workout-space-lg);
+    }
+
+    li {
+      color: var(--text-muted);
+      font-size: var(--workout-font-sm);
+      margin: var(--workout-space-xs) 0;
+    }
+  }
+}
+
+.workout-heatmap {
+  &-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--workout-space-xl);
+    gap: var(--workout-space-lg);
+    flex-wrap: wrap;
+  }
+
+  &-canvas-container {
+    background: var(--background-secondary);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-radius: var(--workout-radius-lg);
+    padding: var(--workout-space-xl);
+    margin-bottom: var(--workout-space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--workout-radius-sm);
+      background: var(--background-secondary);
+    }
+  }
+
+  &-overlay {
+    position: absolute;
+    top: var(--workout-space-xl);
+    left: var(--workout-space-xl);
+    width: var(--workout-size-9xl);
+    height: var(--workout-size-10xl);
+    pointer-events: none;
+  }
+
+  &-info-panel {
+    background: var(--background-secondary);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-radius: var(--workout-radius-lg);
+    padding: var(--workout-space-lg);
+    margin-top: var(--workout-space-lg);
+
+    h4 {
+      margin: 0 0 var(--workout-space-md) 0;
+      color: var(--text-normal);
+      font-size: var(--workout-font-base);
+      font-weight: var(--workout-font-weight-semibold);
+    }
+
+    p {
+      margin: var(--workout-space-sm) 0;
+      color: var(--text-muted);
+      font-size: var(--workout-font-base);
+    }
+  }
+}

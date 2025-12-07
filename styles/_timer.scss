@@ -1,0 +1,138 @@
+/* ============================================================================
+   TIMER STYLES
+   ============================================================================ */
+
+/* Timer Styles */
+.workout-timer {
+  &-embed {
+    width: 100%;
+    margin: var(--workout-space-sm) 0;
+  }
+
+  &-container {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    background: var(--background-secondary);
+    border-radius: var(--workout-radius-md);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--workout-space-md);
+    font-size: var(--workout-font-base);
+  }
+
+  &-display {
+    display: flex;
+    align-items: center;
+    gap: var(--workout-space-sm);
+  }
+
+  &-time {
+    display: flex;
+    align-items: center;
+
+    &-display {
+      font-size: var(--workout-font-xl);
+      font-weight: var(--workout-font-weight-semibold);
+      color: var(--text-accent);
+      font-family: monospace;
+      min-width: var(--workout-size-3xl);
+      text-align: center;
+    }
+  }
+
+  &-controls {
+    display: flex;
+    gap: var(--workout-space-xs);
+    align-items: center;
+  }
+
+  &-btn {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    border: none;
+    border-radius: var(--button-radius, var(--workout-radius-md));
+    font-size: var(--workout-font-base);
+    cursor: pointer;
+    transition: var(--workout-transition);
+    background: var(--background-primary);
+    color: var(--text-normal);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    min-width: var(--workout-size-2xl);
+    height: var(--workout-size-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
+
+    /* Timer Button Variants */
+    &-start {
+      background: var(--interactive-success);
+      color: var(--text-on-accent);
+
+      &:hover {
+        background: var(--interactive-success-hover);
+      }
+    }
+
+    &-stop {
+      background: var(--interactive-error);
+      color: var(--text-on-accent);
+
+      &:hover {
+        background: var(--interactive-error-hover);
+      }
+    }
+  }
+
+  &-start-stop {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-color: var(--interactive-accent);
+
+    &:hover {
+      background: var(--interactive-accent-hover);
+    }
+  }
+
+  &-reset {
+    background: var(--background-modifier-border);
+    color: var(--text-normal);
+
+    &:hover {
+      background: var(--background-modifier-border-hover);
+    }
+  }
+
+  &-complete {
+    font-size: var(--workout-font-xl);
+    font-weight: var(--workout-font-weight-bold);
+    color: var(--text-success);
+  }
+
+  &-error {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    background: var(--background-modifier-error);
+    color: var(--text-error);
+    border-radius: var(--workout-radius-sm);
+    margin: var(--workout-space-sm) 0;
+    border: var(--workout-border-thin) solid var(--background-modifier-error);
+    font-size: var(--workout-font-base);
+  }
+}
+
+/* Timer Configuration Visibility */
+.timer-config {
+  &-countdown {
+    display: block;
+  }
+
+  &-interval {
+    display: none;
+  }
+
+  &-rounds {
+    display: none;
+  }
+}

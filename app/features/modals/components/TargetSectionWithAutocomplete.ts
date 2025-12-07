@@ -93,33 +93,33 @@ export class TargetSectionWithAutocomplete {
 
       const showExercise = isExercise || isCombined;
       exerciseContainer.className = showExercise
-        ? "workout-charts-form-group target-exercise"
-        : "workout-charts-form-group target-exercise display-none";
+        ? "workout-charts-form-group workout-target-exercise"
+        : "workout-charts-form-group workout-target-exercise workout-display-none";
 
       const showWorkout = isWorkout || isCombined;
       workoutContainer.className = showWorkout
-        ? "workout-charts-form-group target-workout"
-        : "workout-charts-form-group target-workout display-none";
+        ? "workout-charts-form-group workout-target-workout"
+        : "workout-charts-form-group workout-target-workout workout-display-none";
 
       const showCurrentWorkout = isWorkout || isCombined;
       currentWorkoutContainer.className = showCurrentWorkout
-        ? "workout-charts-checkbox-group target-current-workout"
-        : "workout-charts-checkbox-group target-current-workout display-none";
+        ? "workout-charts-checkbox-group workout-target-current-workout"
+        : "workout-charts-checkbox-group workout-target-current-workout workout-display-none";
 
       const showFileInfo = isWorkout || isCombined;
       currentFileInfo.className = showFileInfo
-        ? "current-file-info target-current-file-info"
-        : "current-file-info target-current-file-info display-none";
+        ? "workout-current-file-info workout-target-current-file-info"
+        : "workout-current-file-info workout-target-current-file-info workout-display-none";
 
       // Force visibility for combined mode - additional check
       if (isCombined) {
         setTimeout(() => {
-          workoutContainer.classList.add("modal-field-visible");
-          workoutContainer.classList.remove("modal-field-hidden");
-          currentWorkoutContainer.classList.add("modal-field-visible");
-          currentWorkoutContainer.classList.remove("modal-field-hidden");
-          currentFileInfo.classList.add("modal-field-visible");
-          currentFileInfo.classList.remove("modal-field-hidden");
+          workoutContainer.classList.add("workout-modal-field-visible");
+          workoutContainer.classList.remove("workout-modal-field-hidden");
+          currentWorkoutContainer.classList.add("workout-modal-field-visible");
+          currentWorkoutContainer.classList.remove("workout-modal-field-hidden");
+          currentFileInfo.classList.add("workout-modal-field-visible");
+          currentFileInfo.classList.remove("workout-modal-field-hidden");
         }, 100);
       }
     };
@@ -128,13 +128,13 @@ export class TargetSectionWithAutocomplete {
       if (currentWorkoutToggle.checked) {
         workoutInput.disabled = true;
         workoutInput.value = currentFileName;
-        workoutInput.classList.add("opacity-50");
-        workoutInput.classList.remove("opacity-100");
+        workoutInput.classList.add("workout-opacity-50");
+        workoutInput.classList.remove("workout-opacity-100");
       } else {
         workoutInput.disabled = false;
         workoutInput.value = "";
-        workoutInput.classList.add("opacity-100");
-        workoutInput.classList.remove("opacity-50");
+        workoutInput.classList.add("workout-opacity-100");
+        workoutInput.classList.remove("workout-opacity-50");
       }
     };
 

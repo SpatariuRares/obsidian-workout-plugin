@@ -128,14 +128,14 @@ export class TimerConfigurationSection {
     const updateVisibility = () => {
       const isCountdown = (timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.COUNTDOWN;
       durationContainer.className = isCountdown
-        ? "workout-charts-form-group timer-config-countdown"
-        : "workout-charts-form-group timer-config-countdown display-none";
+        ? "workout-charts-form-group workout-timer-config-countdown"
+        : "workout-charts-form-group workout-timer-config-countdown workout-display-none";
       intervalTimeContainer.className = isCountdown
-        ? "workout-charts-form-group timer-config-interval display-none"
-        : "workout-charts-form-group timer-config-interval";
+        ? "workout-charts-form-group workout-timer-config-interval workout-display-none"
+        : "workout-charts-form-group workout-timer-config-interval";
       roundsContainer.className = isCountdown
-        ? "workout-charts-form-group timer-config-rounds display-none"
-        : "workout-charts-form-group timer-config-rounds";
+        ? "workout-charts-form-group workout-timer-config-rounds workout-display-none"
+        : "workout-charts-form-group workout-timer-config-rounds";
     };
 
     const handlers: TimerConfigurationHandlers = {

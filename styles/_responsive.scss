@@ -1,3 +1,5 @@
+@use "variables";
+
 /* ============================================================================
    RESPONSIVE DESIGN
    ============================================================================ */
@@ -53,7 +55,7 @@
 }
 
 /* Large Desktop - 8 columns for maximum flexibility */
-@media (min-width: $breakpoint-huge) {
+@media (min-width: variables.$breakpoint-huge) {
   .workout {
     &-dashboard-grid {
       grid-template-columns: repeat(8, 1fr);
@@ -75,7 +77,7 @@
 }
 
 /* Tablet breakpoint - 4 columns */
-@media (max-width: $breakpoint-xl) {
+@media (max-width: variables.$breakpoint-xl) {
   .workout {
     &-dashboard-grid {
       grid-template-columns: repeat(4, 1fr);
@@ -95,7 +97,7 @@
 }
 
 /* Mobile breakpoint - single column, natural flow */
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: variables.$breakpoint-tablet) {
   .workout {
     /* All widgets full width on mobile */
     &-summary-widget,
@@ -211,7 +213,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: variables.$breakpoint-mobile) {
   .workout {
     &-stats-card {
       padding: var(--workout-space-lg);

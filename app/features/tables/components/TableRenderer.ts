@@ -56,7 +56,6 @@ export class TableRenderer {
 
       return true;
     } catch {
-      // Silent error - table rendering failed
       return false;
     }
   }

@@ -30,6 +30,7 @@ export const UI_LABELS = {
     REPETITIONS: "Repetitions",
     WEIGHT_WITH_UNIT: TEXT_CONSTANTS.COMMON.UNITS.WEIGHT_KG,
     VOLUME: "Volume",
+    WEIGHT: "Weight",
     VOLUME_WITH_UNIT: "Volume (kg)",
     NOTES: "Notes",
     ACTIONS: "Actions",

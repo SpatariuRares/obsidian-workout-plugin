@@ -1,4 +1,5 @@
 import { TEXT_CONSTANTS } from "@app/constants";
+import { parseYaml } from "obsidian";
 /**
  * Utility for parsing YAML frontmatter from markdown files
  * Centralizes frontmatter parsing logic used across the application
@@ -22,17 +23,13 @@ export class FrontmatterParser {
       return [];
     }
 
-    const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
+    // const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
+    const tagsMatch = parseYaml(frontmatter);
     if (!tagsMatch) {
       return [];
     }
 
-    return tagsMatch[1]
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line.startsWith("- "))
-      .map((line) => line.substring(2).trim())
-      .filter((tag) => tag.length > 0);
+    return tagsMatch.tags;
   }
 
   /**
@@ -62,9 +59,8 @@ export class FrontmatterParser {
       return null;
     }
 
-    const fieldRegex = new RegExp(`${fieldName}:\\s*(.+)`, "i");
-    const match = frontmatter.match(fieldRegex);
-    return match ? match[1].trim() : null;
+    const fieldRegex = parseYaml(frontmatter);
+    return fieldRegex ? fieldRegex[fieldName] : null;
   }
 
   /**
@@ -80,9 +76,9 @@ export class FrontmatterParser {
     const lines = frontmatter.split("\n");
 
     for (const line of lines) {
-      const match = line.match(/^(\w+):\s*(.+)$/);
+      const match = parseYaml(line);
       if (match) {
-        fields[match[1]] = match[2].trim();
+        fields[match[1]] = match[2];
       }
     }
 

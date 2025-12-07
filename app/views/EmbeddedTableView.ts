@@ -137,9 +137,6 @@ export class EmbeddedTableView extends BaseView {
     }
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
-
-
-
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
       headers,

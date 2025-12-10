@@ -43,8 +43,9 @@
 
   &-column-right {
     grid-column: span 8;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: min-content;
     gap: var(--workout-space-lg);
   }
 }

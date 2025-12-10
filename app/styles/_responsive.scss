@@ -80,7 +80,6 @@
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: variables.$breakpoint-tablet) {
   .workout {
-    /* Dashboard Columns Stacking */
     &-dashboard-columns {
       grid-template-columns: 1fr;
     }
@@ -88,19 +87,23 @@
     &-dashboard-column-left,
     &-dashboard-column-right {
       grid-column: 1 / -1;
-    }
-
-    /* All widgets full width on mobile */
-    &-summary-widget,
-    &-stats-cards,
-    &-muscle-heatmap,
-    &-volume-analytics,
-    &-quick-stats,
-    &-recent-workouts,
-    &-quick-actions,
-    &-file-errors {
-      grid-column: auto;
-      width: 100%;
+      /* All widgets full width on mobile */
+      .workout-summary-widget,
+      .workout-stats-cards,
+      .workout-muscle-heatmap,
+      .workout-volume-analytics,
+      .workout-quick-stats,
+      .workout-recent-workouts,
+      .workout-quick-actions,
+      .workout-file-errors {
+        &.span-2,
+        &.span-4,
+        &.span-6,
+        &.span-8,
+        &.span-12 {
+          grid-column: 1 / -1;
+        }
+      }
     }
 
     &-summary-grid {

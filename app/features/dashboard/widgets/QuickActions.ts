@@ -9,7 +9,7 @@ export class QuickActions {
     plugin: WorkoutChartsPlugin
   ): void {
     const actionsEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-quick-actions",
+      cls: "workout-dashboard-widget span-4 workout-quick-actions",
     });
 
     actionsEl.createEl("h3", {

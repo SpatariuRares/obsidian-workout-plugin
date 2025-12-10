@@ -10,7 +10,7 @@ export class RecentWorkouts {
     _params: EmbeddedDashboardParams
   ): void {
     const recentEl = container.createEl("div", {
-      cls: "workout-dashboard-widget columns-2 workout-recent-workouts",
+      cls: "workout-dashboard-widget span-4 workout-recent-workouts",
     });
 
     recentEl.createEl("h3", {

@@ -9,11 +9,33 @@
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
   transition: var(--workout-transition);
-  /* Widget is now a flex item inside a column container */
-  width: 100%;
-  grid-column: auto; /* Reset grid column */
 
-  /* Removed hardcoded row spans */
+  /* Default behavior: Flex item filling width */
+  width: 100%;
+  grid-column: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Nested Grid Logic for Right Column (8 cols) */
+  .workout-dashboard-column-right & {
+    /* Default to full width of the 8-col container */
+    grid-column: 1 / -1;
+
+    /* Override for side-by-side widgets */
+    &.span-2 {
+      grid-column: span 2; /* Half width (4/8) */
+    }
+    &.span-4 {
+      grid-column: span 4; /* Half width (4/8) */
+    }
+    &.span-6 {
+      grid-column: span 6; /* 3/4 width */
+    }
+    &.span-8 {
+      grid-column: span 8; /* Full width */
+    }
+  }
 
   /* Compact widget - less padding, tighter layout */
   &.compact {
@@ -49,4 +71,11 @@
 }
 
 /* Specific Widget Placements */
-/* Grid placements handled by HTML structure now */
+/* Top level widgets are direct children of the MAIN grid, not the columns */
+.workout-summary-widget,
+.workout-stats-cards {
+  grid-column: 1 / -1;
+  width: auto; /* Allow grid stretching */
+}
+
+/* Other widgets are inside column containers, so they rely on the nested logic above */

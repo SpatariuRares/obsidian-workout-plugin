@@ -11,7 +11,7 @@ export class VolumeAnalytics {
     _params: EmbeddedDashboardParams
   ): void {
     const analyticsEl = container.createEl("div", {
-      cls: "workout-dashboard-widget  columns-2  workout-volume-analytics",
+      cls: "workout-dashboard-widget  span-4  workout-volume-analytics",
     });
 
     analyticsEl.createEl("h3", {

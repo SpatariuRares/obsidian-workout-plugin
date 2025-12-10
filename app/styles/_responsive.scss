@@ -54,44 +54,25 @@
   }
 }
 
-/* Large Desktop - 8 columns for maximum flexibility */
-@media (min-width: variables.$breakpoint-huge) {
-  .workout {
-    &-dashboard-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-
-    /* Adjust widget spans for 8-column grid */
-    &-muscle-heatmap,
-    &-volume-analytics {
-      grid-column: span 3;
-    }
-
-    &-recent-workouts,
-    &-quick-stats,
-    &-file-errors,
-    &-quick-actions {
-      grid-column: span 1;
-    }
-  }
-}
+/* Large Desktop - Removed 8-column override to maintain consistent 12-column grid */
 
 /* Tablet breakpoint - 4 columns */
+/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
 @media (max-width: variables.$breakpoint-xl) {
   .workout {
     &-dashboard-grid {
-      grid-template-columns: repeat(4, 1fr);
+      /* Keep 12 columns, just adjust spans */
       gap: var(--workout-space-md);
     }
 
-    /* All widgets same size on tablet */
+    /* Widgets take half width on tablet */
     &-muscle-heatmap,
     &-volume-analytics,
     &-recent-workouts,
     &-quick-stats,
     &-file-errors,
     &-quick-actions {
-      grid-column: span 2;
+      grid-column: span 6;
     }
   }
 }

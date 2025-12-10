@@ -17,32 +17,23 @@
 
   /* Widget span configurations (columns) */
   &.span-3 {
-    grid-column: span 3;
-  }
-  &.span-4 {
-    grid-column: span 4;
-  }
-  &.span-6 {
     grid-column: span 6;
   }
+  &.span-4 {
+    grid-column: span 8;
+  }
+  &.span-6 {
+    grid-column: span 12;
+  }
   &.span-8 {
+    // 8 columns in 12-col grid is 2/3
     grid-column: span 8;
   }
   &.span-12 {
     grid-column: span 12;
   }
 
-  /* Widget row span configurations (vertical height) */
-  &.row-span-1,
-  &.row-span-2 {
-    grid-row: span 1;
-  }
-  &.row-span-3 {
-    grid-row: span 3;
-  }
-  &.row-span-4 {
-    grid-row: span 4;
-  }
+  /* Removed hardcoded row spans */
 
   /* Compact widget - less padding, tighter layout */
   &.compact {
@@ -81,22 +72,22 @@
 .workout-summary-widget,
 .workout-stats-cards {
   grid-column: 1 / -1;
-  grid-row: span 1;
+  /* grid-row: span 1; removed */
 }
 
 .workout-volume-analytics,
 .workout-file-errors {
-  grid-column: span 2;
-  grid-row: span 3;
+  grid-column: span 4;
+  /* grid-row: span 3; removed */
 }
 
 .workout-recent-workouts,
 .workout-quick-stats {
-  grid-column: span 2;
-  grid-row: span 1;
+  grid-column: span 4;
+  /* grid-row: span 1; removed */
 }
 
 .workout-quick-actions {
-  grid-column: span 2;
-  grid-row: span 1;
+  grid-column: span 4;
+  /* grid-row: span 1; removed */
 }

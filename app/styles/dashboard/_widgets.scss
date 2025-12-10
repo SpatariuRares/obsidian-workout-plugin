@@ -9,29 +9,9 @@
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
   transition: var(--workout-transition);
-  grid-column: span 12;
-  height: fit-content;
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-
-  /* Widget span configurations (columns) */
-  &.span-3 {
-    grid-column: span 6;
-  }
-  &.span-4 {
-    grid-column: span 8;
-  }
-  &.span-6 {
-    grid-column: span 12;
-  }
-  &.span-8 {
-    // 8 columns in 12-col grid is 2/3
-    grid-column: span 8;
-  }
-  &.span-12 {
-    grid-column: span 12;
-  }
+  /* Widget is now a flex item inside a column container */
+  width: 100%;
+  grid-column: auto; /* Reset grid column */
 
   /* Removed hardcoded row spans */
 
@@ -69,25 +49,4 @@
 }
 
 /* Specific Widget Placements */
-.workout-summary-widget,
-.workout-stats-cards {
-  grid-column: 1 / -1;
-  /* grid-row: span 1; removed */
-}
-
-.workout-volume-analytics,
-.workout-file-errors {
-  grid-column: span 4;
-  /* grid-row: span 3; removed */
-}
-
-.workout-recent-workouts,
-.workout-quick-stats {
-  grid-column: span 4;
-  /* grid-row: span 1; removed */
-}
-
-.workout-quick-actions {
-  grid-column: span 4;
-  /* grid-row: span 1; removed */
-}
+/* Grid placements handled by HTML structure now */

@@ -1247,8 +1247,28 @@
   grid-auto-rows: minmax(var(--workout-widget-min-height), auto);
   gap: var(--workout-space-lg);
   width: 100%;
-  align-items: start;
+  align-items: stretch;
   grid-auto-flow: dense;
+}
+.workout-dashboard-columns {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--workout-space-lg);
+  width: 100%;
+  align-items: start;
+}
+.workout-dashboard-column-left {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-lg);
+}
+.workout-dashboard-column-right {
+  grid-column: span 8;
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-lg);
 }
 
 /* ============================================================================
@@ -1261,29 +1281,9 @@
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
   transition: var(--workout-transition);
-  grid-column: span 12;
-  height: fit-content;
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  /* Widget span configurations (columns) */
-}
-.workout-dashboard-widget.span-3 {
-  grid-column: span 6;
-}
-.workout-dashboard-widget.span-4 {
-  grid-column: span 8;
-}
-.workout-dashboard-widget.span-6 {
-  grid-column: span 12;
-}
-.workout-dashboard-widget.span-8 {
-  grid-column: span 8;
-}
-.workout-dashboard-widget.span-12 {
-  grid-column: span 12;
-}
-.workout-dashboard-widget {
+  /* Widget is now a flex item inside a column container */
+  width: 100%;
+  grid-column: auto; /* Reset grid column */
   /* Removed hardcoded row spans */
   /* Compact widget - less padding, tighter layout */
 }
@@ -1320,29 +1320,7 @@
 }
 
 /* Specific Widget Placements */
-.workout-summary-widget,
-.workout-stats-cards {
-  grid-column: 1/-1;
-  /* grid-row: span 1; removed */
-}
-
-.workout-volume-analytics,
-.workout-file-errors {
-  grid-column: span 4;
-  /* grid-row: span 3; removed */
-}
-
-.workout-recent-workouts,
-.workout-quick-stats {
-  grid-column: span 4;
-  /* grid-row: span 1; removed */
-}
-
-.workout-quick-actions {
-  grid-column: span 4;
-  /* grid-row: span 1; removed */
-}
-
+/* Grid placements handled by HTML structure now */
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
@@ -1455,7 +1433,7 @@
    DASHBOARD HEATMAP
    ============================================================================ */
 .workout-muscle-heatmap {
-  grid-column: span 4;
+  /* grid-column handled by parent column */
   /* grid-row: span 4; removed */
 }
 
@@ -1755,10 +1733,20 @@
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: 768px) {
   .workout {
+    /* Dashboard Columns Stacking */
+  }
+  .workout-dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+  .workout-dashboard-column-left, .workout-dashboard-column-right {
+    grid-column: 1/-1;
+  }
+  .workout {
     /* All widgets full width on mobile */
   }
   .workout-summary-widget, .workout-stats-cards, .workout-muscle-heatmap, .workout-volume-analytics, .workout-quick-stats, .workout-recent-workouts, .workout-quick-actions, .workout-file-errors {
-    grid-column: 1/-1;
+    grid-column: auto;
+    width: 100%;
   }
   .workout-summary-grid {
     grid-template-columns: 1fr;

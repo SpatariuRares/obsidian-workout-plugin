@@ -80,6 +80,16 @@
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: variables.$breakpoint-tablet) {
   .workout {
+    /* Dashboard Columns Stacking */
+    &-dashboard-columns {
+      grid-template-columns: 1fr;
+    }
+
+    &-dashboard-column-left,
+    &-dashboard-column-right {
+      grid-column: 1 / -1;
+    }
+
     /* All widgets full width on mobile */
     &-summary-widget,
     &-stats-cards,
@@ -89,7 +99,8 @@
     &-recent-workouts,
     &-quick-actions,
     &-file-errors {
-      grid-column: 1 / -1;
+      grid-column: auto;
+      width: 100%;
     }
 
     &-summary-grid {

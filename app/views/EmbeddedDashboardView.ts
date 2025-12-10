@@ -109,29 +109,44 @@ export class EmbeddedDashboardView extends BaseView {
       cls: "workout-dashboard-grid",
     });
 
-    // Summary Widget Section
+    // Summary Widget Section (Full Width)
     SummaryWidget.render(gridEl, data, params);
 
-    // Quick Stats Cards Section
+    // Quick Stats Cards Section (Full Width)
     QuickStatsCards.render(gridEl, data, params);
 
-    // Muscle Heat Map Section (Priority: CRITICAL)
-    await MuscleHeatMap.render(gridEl, data, params, this.plugin);
+    // Create Main Columns Container
+    const mainColumnsEl = gridEl.createEl("div", {
+      cls: "workout-dashboard-columns",
+    });
 
-    // Volume Analytics Section
-    VolumeAnalytics.render(gridEl, data, params);
+    // Left Column (Heatmap)
+    const leftCol = mainColumnsEl.createEl("div", {
+      cls: "workout-dashboard-column-left",
+    });
 
-    // Recent Workouts Section
-    RecentWorkouts.render(gridEl, data, params);
+    // Right Column (Analytics & Others)
+    const rightCol = mainColumnsEl.createEl("div", {
+      cls: "workout-dashboard-column-right",
+    });
 
-    // Quick Actions Panel
-    QuickActions.render(gridEl, params, this.plugin);
+    // Muscle Heat Map Section (Left Column)
+    await MuscleHeatMap.render(leftCol, data, params, this.plugin);
 
-    // Exercise File Errors Widget
-    await WidgetsFileError.render(gridEl, this.plugin);
+    // Volume Analytics Section (Right Column)
+    VolumeAnalytics.render(rightCol, data, params);
 
-    // Muscle Tags Widget (Available muscle groups reference)
-    MuscleTagsWidget.render(gridEl, params);
+    // Recent Workouts Section (Right Column)
+    RecentWorkouts.render(rightCol, data, params);
+
+    // Quick Actions Panel (Right Column)
+    QuickActions.render(rightCol, params, this.plugin);
+
+    // Exercise File Errors Widget (Right Column)
+    await WidgetsFileError.render(rightCol, this.plugin);
+
+    // Muscle Tags Widget (Right Column)
+    MuscleTagsWidget.render(rightCol, params);
   }
 }
 

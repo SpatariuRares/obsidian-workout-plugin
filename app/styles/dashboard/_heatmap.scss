@@ -2,11 +2,6 @@
    DASHBOARD HEATMAP
    ============================================================================ */
 
-.workout-muscle-heatmap {
-  grid-column: span 4;
-  /* grid-row: span 4; removed */
-}
-
 .workout-muscle {
   &-heatmap {
     min-height: var(--workout-size-11xl);

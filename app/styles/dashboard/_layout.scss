@@ -17,11 +17,35 @@
 
   &-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: minmax(var(--workout-widget-min-height), auto);
     gap: var(--workout-space-lg);
     width: 100%;
-    align-items: start;
+    align-items: stretch;
     grid-auto-flow: dense;
+  }
+
+  &-columns {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--workout-space-lg);
+    width: 100%;
+    align-items: start;
+  }
+
+  &-column-left {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--workout-space-lg);
+  }
+
+  &-column-right {
+    grid-column: span 8;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: min-content;
+    gap: var(--workout-space-lg);
   }
 }

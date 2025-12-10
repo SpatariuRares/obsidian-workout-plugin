@@ -1243,12 +1243,33 @@
 }
 .workout-dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: minmax(var(--workout-widget-min-height), auto);
   gap: var(--workout-space-lg);
   width: 100%;
-  align-items: start;
+  align-items: stretch;
   grid-auto-flow: dense;
+}
+.workout-dashboard-columns {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--workout-space-lg);
+  width: 100%;
+  align-items: start;
+}
+.workout-dashboard-column-left {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-lg);
+}
+.workout-dashboard-column-right {
+  grid-column: span 8;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: min-content;
+  gap: var(--workout-space-lg);
 }
 
 /* ============================================================================
@@ -1261,39 +1282,29 @@
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
   transition: var(--workout-transition);
-  grid-column: span 12;
-  height: fit-content;
-  align-self: start;
+  /* Default behavior: Flex item filling width */
+  width: 100%;
+  grid-column: auto;
   display: flex;
   flex-direction: column;
-  /* Widget span configurations (columns) */
+  /* Nested Grid Logic for Right Column (8 cols) */
 }
-.workout-dashboard-widget.span-3 {
-  grid-column: span 3;
+.workout-dashboard-column-right .workout-dashboard-widget {
+  /* Default to full width of the 8-col container */
+  grid-column: 1/-1;
+  /* Override for side-by-side widgets */
 }
-.workout-dashboard-widget.span-4 {
-  grid-column: span 4;
+.workout-dashboard-column-right .workout-dashboard-widget.span-2 {
+  grid-column: span 2; /* Half width (4/8) */
 }
-.workout-dashboard-widget.span-6 {
-  grid-column: span 6;
+.workout-dashboard-column-right .workout-dashboard-widget.span-4 {
+  grid-column: span 4; /* Half width (4/8) */
 }
-.workout-dashboard-widget.span-8 {
-  grid-column: span 8;
+.workout-dashboard-column-right .workout-dashboard-widget.span-6 {
+  grid-column: span 6; /* 3/4 width */
 }
-.workout-dashboard-widget.span-12 {
-  grid-column: span 12;
-}
-.workout-dashboard-widget {
-  /* Widget row span configurations (vertical height) */
-}
-.workout-dashboard-widget.row-span-1, .workout-dashboard-widget.row-span-2 {
-  grid-row: span 1;
-}
-.workout-dashboard-widget.row-span-3 {
-  grid-row: span 3;
-}
-.workout-dashboard-widget.row-span-4 {
-  grid-row: span 4;
+.workout-dashboard-column-right .workout-dashboard-widget.span-8 {
+  grid-column: span 8; /* Full width */
 }
 .workout-dashboard-widget {
   /* Compact widget - less padding, tighter layout */
@@ -1331,29 +1342,14 @@
 }
 
 /* Specific Widget Placements */
+/* Top level widgets are direct children of the MAIN grid, not the columns */
 .workout-summary-widget,
 .workout-stats-cards {
   grid-column: 1/-1;
-  grid-row: span 1;
+  width: auto; /* Allow grid stretching */
 }
 
-.workout-volume-analytics,
-.workout-file-errors {
-  grid-column: span 2;
-  grid-row: span 3;
-}
-
-.workout-recent-workouts,
-.workout-quick-stats {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-.workout-quick-actions {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
+/* Other widgets are inside column containers, so they rely on the nested logic above */
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
@@ -1465,11 +1461,6 @@
 /* ============================================================================
    DASHBOARD HEATMAP
    ============================================================================ */
-.workout-muscle-heatmap {
-  grid-column: span 2;
-  grid-row: span 4;
-}
-
 .workout-muscle-heatmap {
   min-height: var(--workout-size-11xl);
 }
@@ -1748,40 +1739,101 @@
     font-size: var(--workout-space-md);
   }
 }
-/* Large Desktop - 8 columns for maximum flexibility */
-@media (min-width: 1600px) {
-  .workout-dashboard-grid {
-    grid-template-columns: repeat(8, 1fr);
-  }
-  .workout {
-    /* Adjust widget spans for 8-column grid */
-  }
-  .workout-muscle-heatmap, .workout-volume-analytics {
-    grid-column: span 3;
-  }
-  .workout-recent-workouts, .workout-quick-stats, .workout-file-errors, .workout-quick-actions {
-    grid-column: span 1;
-  }
-}
+/* Large Desktop - Removed 8-column override to maintain consistent 12-column grid */
 /* Tablet breakpoint - 4 columns */
+/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
 @media (max-width: 1200px) {
   .workout-dashboard-grid {
-    grid-template-columns: repeat(4, 1fr);
+    /* Keep 12 columns, just adjust spans */
     gap: var(--workout-space-md);
   }
   .workout {
-    /* All widgets same size on tablet */
+    /* Widgets take half width on tablet */
   }
   .workout-muscle-heatmap, .workout-volume-analytics, .workout-recent-workouts, .workout-quick-stats, .workout-file-errors, .workout-quick-actions {
-    grid-column: span 2;
+    grid-column: span 6;
   }
 }
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: 768px) {
-  .workout {
+  .workout-dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+  .workout-dashboard-column-left, .workout-dashboard-column-right {
+    grid-column: 1/-1;
     /* All widgets full width on mobile */
   }
-  .workout-summary-widget, .workout-stats-cards, .workout-muscle-heatmap, .workout-volume-analytics, .workout-quick-stats, .workout-recent-workouts, .workout-quick-actions, .workout-file-errors {
+  .workout-dashboard-column-left .workout-summary-widget.span-2, .workout-dashboard-column-left .workout-summary-widget.span-4, .workout-dashboard-column-left .workout-summary-widget.span-6, .workout-dashboard-column-left .workout-summary-widget.span-8, .workout-dashboard-column-left .workout-summary-widget.span-12,
+  .workout-dashboard-column-left .workout-stats-cards.span-2,
+  .workout-dashboard-column-left .workout-stats-cards.span-4,
+  .workout-dashboard-column-left .workout-stats-cards.span-6,
+  .workout-dashboard-column-left .workout-stats-cards.span-8,
+  .workout-dashboard-column-left .workout-stats-cards.span-12,
+  .workout-dashboard-column-left .workout-muscle-heatmap.span-2,
+  .workout-dashboard-column-left .workout-muscle-heatmap.span-4,
+  .workout-dashboard-column-left .workout-muscle-heatmap.span-6,
+  .workout-dashboard-column-left .workout-muscle-heatmap.span-8,
+  .workout-dashboard-column-left .workout-muscle-heatmap.span-12,
+  .workout-dashboard-column-left .workout-volume-analytics.span-2,
+  .workout-dashboard-column-left .workout-volume-analytics.span-4,
+  .workout-dashboard-column-left .workout-volume-analytics.span-6,
+  .workout-dashboard-column-left .workout-volume-analytics.span-8,
+  .workout-dashboard-column-left .workout-volume-analytics.span-12,
+  .workout-dashboard-column-left .workout-quick-stats.span-2,
+  .workout-dashboard-column-left .workout-quick-stats.span-4,
+  .workout-dashboard-column-left .workout-quick-stats.span-6,
+  .workout-dashboard-column-left .workout-quick-stats.span-8,
+  .workout-dashboard-column-left .workout-quick-stats.span-12,
+  .workout-dashboard-column-left .workout-recent-workouts.span-2,
+  .workout-dashboard-column-left .workout-recent-workouts.span-4,
+  .workout-dashboard-column-left .workout-recent-workouts.span-6,
+  .workout-dashboard-column-left .workout-recent-workouts.span-8,
+  .workout-dashboard-column-left .workout-recent-workouts.span-12,
+  .workout-dashboard-column-left .workout-quick-actions.span-2,
+  .workout-dashboard-column-left .workout-quick-actions.span-4,
+  .workout-dashboard-column-left .workout-quick-actions.span-6,
+  .workout-dashboard-column-left .workout-quick-actions.span-8,
+  .workout-dashboard-column-left .workout-quick-actions.span-12,
+  .workout-dashboard-column-left .workout-file-errors.span-2,
+  .workout-dashboard-column-left .workout-file-errors.span-4,
+  .workout-dashboard-column-left .workout-file-errors.span-6,
+  .workout-dashboard-column-left .workout-file-errors.span-8,
+  .workout-dashboard-column-left .workout-file-errors.span-12, .workout-dashboard-column-right .workout-summary-widget.span-2, .workout-dashboard-column-right .workout-summary-widget.span-4, .workout-dashboard-column-right .workout-summary-widget.span-6, .workout-dashboard-column-right .workout-summary-widget.span-8, .workout-dashboard-column-right .workout-summary-widget.span-12,
+  .workout-dashboard-column-right .workout-stats-cards.span-2,
+  .workout-dashboard-column-right .workout-stats-cards.span-4,
+  .workout-dashboard-column-right .workout-stats-cards.span-6,
+  .workout-dashboard-column-right .workout-stats-cards.span-8,
+  .workout-dashboard-column-right .workout-stats-cards.span-12,
+  .workout-dashboard-column-right .workout-muscle-heatmap.span-2,
+  .workout-dashboard-column-right .workout-muscle-heatmap.span-4,
+  .workout-dashboard-column-right .workout-muscle-heatmap.span-6,
+  .workout-dashboard-column-right .workout-muscle-heatmap.span-8,
+  .workout-dashboard-column-right .workout-muscle-heatmap.span-12,
+  .workout-dashboard-column-right .workout-volume-analytics.span-2,
+  .workout-dashboard-column-right .workout-volume-analytics.span-4,
+  .workout-dashboard-column-right .workout-volume-analytics.span-6,
+  .workout-dashboard-column-right .workout-volume-analytics.span-8,
+  .workout-dashboard-column-right .workout-volume-analytics.span-12,
+  .workout-dashboard-column-right .workout-quick-stats.span-2,
+  .workout-dashboard-column-right .workout-quick-stats.span-4,
+  .workout-dashboard-column-right .workout-quick-stats.span-6,
+  .workout-dashboard-column-right .workout-quick-stats.span-8,
+  .workout-dashboard-column-right .workout-quick-stats.span-12,
+  .workout-dashboard-column-right .workout-recent-workouts.span-2,
+  .workout-dashboard-column-right .workout-recent-workouts.span-4,
+  .workout-dashboard-column-right .workout-recent-workouts.span-6,
+  .workout-dashboard-column-right .workout-recent-workouts.span-8,
+  .workout-dashboard-column-right .workout-recent-workouts.span-12,
+  .workout-dashboard-column-right .workout-quick-actions.span-2,
+  .workout-dashboard-column-right .workout-quick-actions.span-4,
+  .workout-dashboard-column-right .workout-quick-actions.span-6,
+  .workout-dashboard-column-right .workout-quick-actions.span-8,
+  .workout-dashboard-column-right .workout-quick-actions.span-12,
+  .workout-dashboard-column-right .workout-file-errors.span-2,
+  .workout-dashboard-column-right .workout-file-errors.span-4,
+  .workout-dashboard-column-right .workout-file-errors.span-6,
+  .workout-dashboard-column-right .workout-file-errors.span-8,
+  .workout-dashboard-column-right .workout-file-errors.span-12 {
     grid-column: 1/-1;
   }
   .workout-summary-grid {

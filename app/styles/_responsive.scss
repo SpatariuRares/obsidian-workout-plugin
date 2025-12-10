@@ -54,44 +54,25 @@
   }
 }
 
-/* Large Desktop - 8 columns for maximum flexibility */
-@media (min-width: variables.$breakpoint-huge) {
-  .workout {
-    &-dashboard-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
-
-    /* Adjust widget spans for 8-column grid */
-    &-muscle-heatmap,
-    &-volume-analytics {
-      grid-column: span 3;
-    }
-
-    &-recent-workouts,
-    &-quick-stats,
-    &-file-errors,
-    &-quick-actions {
-      grid-column: span 1;
-    }
-  }
-}
+/* Large Desktop - Removed 8-column override to maintain consistent 12-column grid */
 
 /* Tablet breakpoint - 4 columns */
+/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
 @media (max-width: variables.$breakpoint-xl) {
   .workout {
     &-dashboard-grid {
-      grid-template-columns: repeat(4, 1fr);
+      /* Keep 12 columns, just adjust spans */
       gap: var(--workout-space-md);
     }
 
-    /* All widgets same size on tablet */
+    /* Widgets take half width on tablet */
     &-muscle-heatmap,
     &-volume-analytics,
     &-recent-workouts,
     &-quick-stats,
     &-file-errors,
     &-quick-actions {
-      grid-column: span 2;
+      grid-column: span 6;
     }
   }
 }
@@ -99,16 +80,30 @@
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: variables.$breakpoint-tablet) {
   .workout {
-    /* All widgets full width on mobile */
-    &-summary-widget,
-    &-stats-cards,
-    &-muscle-heatmap,
-    &-volume-analytics,
-    &-quick-stats,
-    &-recent-workouts,
-    &-quick-actions,
-    &-file-errors {
+    &-dashboard-columns {
+      grid-template-columns: 1fr;
+    }
+
+    &-dashboard-column-left,
+    &-dashboard-column-right {
       grid-column: 1 / -1;
+      /* All widgets full width on mobile */
+      .workout-summary-widget,
+      .workout-stats-cards,
+      .workout-muscle-heatmap,
+      .workout-volume-analytics,
+      .workout-quick-stats,
+      .workout-recent-workouts,
+      .workout-quick-actions,
+      .workout-file-errors {
+        &.span-2,
+        &.span-4,
+        &.span-6,
+        &.span-8,
+        &.span-12 {
+          grid-column: 1 / -1;
+        }
+      }
     }
 
     &-summary-grid {

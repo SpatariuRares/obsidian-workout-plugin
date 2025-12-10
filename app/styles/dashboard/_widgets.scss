@@ -9,39 +9,32 @@
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
   transition: var(--workout-transition);
-  grid-column: span 12;
-  height: fit-content;
-  align-self: start;
+
+  /* Default behavior: Flex item filling width */
+  width: 100%;
+  grid-column: auto;
+
   display: flex;
   flex-direction: column;
 
-  /* Widget span configurations (columns) */
-  &.span-3 {
-    grid-column: span 3;
-  }
-  &.span-4 {
-    grid-column: span 4;
-  }
-  &.span-6 {
-    grid-column: span 6;
-  }
-  &.span-8 {
-    grid-column: span 8;
-  }
-  &.span-12 {
-    grid-column: span 12;
-  }
+  /* Nested Grid Logic for Right Column (8 cols) */
+  .workout-dashboard-column-right & {
+    /* Default to full width of the 8-col container */
+    grid-column: 1 / -1;
 
-  /* Widget row span configurations (vertical height) */
-  &.row-span-1,
-  &.row-span-2 {
-    grid-row: span 1;
-  }
-  &.row-span-3 {
-    grid-row: span 3;
-  }
-  &.row-span-4 {
-    grid-row: span 4;
+    /* Override for side-by-side widgets */
+    &.span-2 {
+      grid-column: span 2; /* Half width (4/8) */
+    }
+    &.span-4 {
+      grid-column: span 4; /* Half width (4/8) */
+    }
+    &.span-6 {
+      grid-column: span 6; /* 3/4 width */
+    }
+    &.span-8 {
+      grid-column: span 8; /* Full width */
+    }
   }
 
   /* Compact widget - less padding, tighter layout */
@@ -78,25 +71,11 @@
 }
 
 /* Specific Widget Placements */
+/* Top level widgets are direct children of the MAIN grid, not the columns */
 .workout-summary-widget,
 .workout-stats-cards {
   grid-column: 1 / -1;
-  grid-row: span 1;
+  width: auto; /* Allow grid stretching */
 }
 
-.workout-volume-analytics,
-.workout-file-errors {
-  grid-column: span 2;
-  grid-row: span 3;
-}
-
-.workout-recent-workouts,
-.workout-quick-stats {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-.workout-quick-actions {
-  grid-column: span 2;
-  grid-row: span 1;
-}
+/* Other widgets are inside column containers, so they rely on the nested logic above */

@@ -6,7 +6,7 @@ import {
   WorkoutLogData,
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
-import { WorkoutChartsSettingTab } from "@app/settings/WorkoutChartsSettings";
+import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";

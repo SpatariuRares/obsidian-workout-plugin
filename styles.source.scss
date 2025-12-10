@@ -6,12 +6,12 @@
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
 
-@use "styles/variables";
-@use "styles/utilities/helpers";
-@use "styles/components/index" as components;
-@use "styles/table";
-@use "styles/chart";
-@use "styles/timer";
-@use "styles/modal";
-@use "styles/dashboard/index" as dashboard;
-@use "styles/responsive";
+@use "app/styles/variables";
+@use "app/styles/utilities/helpers";
+@use "app/styles/components/index" as components;
+@use "app/styles/table";
+@use "app/styles/chart";
+@use "app/styles/timer";
+@use "app/styles/modal";
+@use "app/styles/dashboard/index" as dashboard;
+@use "app/styles/responsive";

@@ -62,7 +62,8 @@ export class TableActions {
   static renderActionButtons(
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
+    onRefresh?: () => void
   ): void {
     if (!originalLog || !plugin) {
       return;
@@ -76,13 +77,13 @@ export class TableActions {
     editBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.handleEdit(originalLog, plugin);
+      this.handleEdit(originalLog, plugin, onRefresh);
     });
 
     deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.handleDelete(originalLog, plugin);
+      this.handleDelete(originalLog, plugin, onRefresh);
     });
   }
 }

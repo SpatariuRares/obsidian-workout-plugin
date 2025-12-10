@@ -12,7 +12,7 @@ import {
 } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/DataService";
-import { LogCallouts } from "@app/features/logs/components/LogCallouts";
+import { LogCallouts } from "@app/components/organism/LogCallouts";
 
 export class CodeBlockProcessorService {
   constructor(

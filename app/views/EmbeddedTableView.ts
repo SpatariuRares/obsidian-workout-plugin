@@ -4,33 +4,24 @@ import { MarkdownView } from "obsidian";
 import {
   TableRenderer,
   TableDataProcessor,
-  TableState,
   TableCallbacks,
   TableDataLoader,
   TableConfig,
-  TableRefresh,
 } from "@app/features/tables";
-import { LogCallouts } from "@app/features/logs/components/LogCallouts";
+import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { EmbeddedTableParams, TableData } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 
 export class EmbeddedTableView extends BaseView {
-  private tableState: TableState;
   private callbacks: TableCallbacks;
 
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
 
-    this.tableState = {
-      currentContainer: undefined,
-      currentLogData: undefined,
-      currentParams: undefined,
-    };
-
     this.callbacks = {
-      onRefresh: () => this.refreshTable(),
+      onRefresh: async () => { }, // Default no-op
       onError: (error, context) =>
         this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
       onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
@@ -42,17 +33,19 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams
   ): Promise<void> {
-    this.tableState.currentContainer = container;
-    this.tableState.currentLogData = logData;
-    this.tableState.currentParams = params;
+    // Create a bound refresh function for this specific table instance
+    const onRefresh = async () => {
+      await this.refreshTable(container, params);
+    };
 
-    await this.renderTable(container, logData, params);
+    await this.renderTable(container, logData, params, onRefresh);
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    params: EmbeddedTableParams
+    params: EmbeddedTableParams,
+    onRefresh: () => Promise<void>
   ): Promise<void> {
     try {
 
@@ -73,7 +66,6 @@ export class EmbeddedTableView extends BaseView {
         params,
         this.plugin,
       );
-
 
 
       const filterResult = this.filterData(
@@ -100,7 +92,7 @@ export class EmbeddedTableView extends BaseView {
         params
       );
 
-      this.renderTableContentOptimized(container, tableData);
+      this.renderTableContentOptimized(container, tableData, () => { void onRefresh(); });
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -110,7 +102,8 @@ export class EmbeddedTableView extends BaseView {
 
   private renderTableContentOptimized(
     container: HTMLElement,
-    tableData: TableData
+    tableData: TableData,
+    onRefresh: () => void
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -132,7 +125,7 @@ export class EmbeddedTableView extends BaseView {
         exerciseName,
         currentPageLink,
         this.plugin,
-        () => void this.refreshTable()
+        onRefresh
       );
     }
 
@@ -143,7 +136,8 @@ export class EmbeddedTableView extends BaseView {
       rows,
       params,
       filterResult.filteredData,
-      this.plugin
+      this.plugin,
+      onRefresh
     );
 
     if (!tableSuccess) {
@@ -156,14 +150,25 @@ export class EmbeddedTableView extends BaseView {
     container.appendChild(fragment);
   }
 
-  public async refreshTable(): Promise<void> {
-    await TableRefresh.refreshTable(
-      this.tableState,
-      this.plugin,
-      (container, logData, params) =>
-        this.renderTable(container, logData, params),
-      this.callbacks
-    );
+  public async refreshTable(
+    container: HTMLElement,
+    params: EmbeddedTableParams
+  ): Promise<void> {
+    try {
+      this.plugin.clearLogDataCache();
+
+      const freshLogData = await this.plugin.getWorkoutLogData();
+      const onRefresh = async () => {
+        await this.refreshTable(container, params);
+      };
+
+      await this.renderTable(container, freshLogData, params, onRefresh);
+
+      this.callbacks.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
+    } catch (error) {
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+      this.callbacks.onError?.(errorObj, "refreshing table");
+    }
   }
 }
 

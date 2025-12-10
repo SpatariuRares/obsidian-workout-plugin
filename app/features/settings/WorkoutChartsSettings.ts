@@ -3,7 +3,7 @@ import { CONSTANTS } from "@app/constants/Constants";
 import WorkoutChartsPlugin from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { Notice } from "obsidian";
-import { FolderSuggest } from "@app/suggest/FolderSuggest";
+import { FolderSuggest } from "@app/services/suggest/FolderSuggest";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;

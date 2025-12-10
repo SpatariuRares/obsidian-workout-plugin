@@ -7,7 +7,7 @@ import {
   InfoBanner,
 } from "@app/components/molecules";
 import { ErrorMessage } from "@app/components/atoms";
-import { LogCallouts } from "@app/features/logs/components/LogCallouts";
+import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { CHART_TYPE, EmbeddedChartParams, EmbeddedViewParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**

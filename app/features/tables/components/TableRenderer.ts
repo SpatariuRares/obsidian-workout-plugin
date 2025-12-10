@@ -32,7 +32,8 @@ export class TableRenderer {
     rows: TableRow[],
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
-    plugin?: WorkoutChartsPlugin // pass the plugin for file opening
+    plugin?: WorkoutChartsPlugin, // pass the plugin for file opening
+    onRefresh?: () => void
   ): boolean {
     try {
       const fragment = document.createDocumentFragment();
@@ -50,7 +51,7 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(tbody, rows, plugin);
+      this.applyRowGroupingOptimized(tbody, rows, plugin, onRefresh);
 
       tableContainer.appendChild(fragment);
 
@@ -78,7 +79,8 @@ export class TableRenderer {
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
+    onRefresh?: () => void
   ): void {
     try {
       if (rows.length === 0) return;
@@ -166,7 +168,7 @@ export class TableRenderer {
             td.textContent = cell;
           } else if (cellIndex === row.displayRow.length - 1) {
             td.className = "workout-table-actions-cell";
-            TableActions.renderActionButtons(td, row.originalLog, plugin);
+            TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh);
           } else {
             td.textContent = cell;
           }

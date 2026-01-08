@@ -2,20 +2,21 @@ import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";
-import {
-  LoadingSpinner,
-  InfoBanner,
-} from "@app/components/molecules";
+import { LoadingSpinner, InfoBanner } from "@app/components/molecules";
 import { ErrorMessage } from "@app/components/atoms";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
-import { CHART_TYPE, EmbeddedChartParams, EmbeddedViewParams } from "@app/types";
+import {
+  CHART_TYPE,
+  EmbeddedChartParams,
+  EmbeddedViewParams,
+} from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
-  constructor(protected plugin: WorkoutChartsPlugin) { }
+  constructor(protected plugin: WorkoutChartsPlugin) {}
 
   /**
    * Common debug logging method used across all views
@@ -24,13 +25,17 @@ export abstract class BaseView {
     _className: string,
     _message: string,
     _data?: unknown
-  ): void { }
+  ): void {}
 
   /**
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
-    ErrorMessage.render(container, error.message, CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC);
+    ErrorMessage.render(
+      container,
+      error.message,
+      CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC
+    );
   }
 
   /**
@@ -81,15 +86,18 @@ export abstract class BaseView {
     const isWorkoutView =
       viewType === VIEW_TYPES.CHART
         ? (() => {
-          type ViewCategory = CHART_TYPE.EXERCISE | CHART_TYPE.WORKOUT;
-          const effectiveChartCategory: ViewCategory =
-            "chartType" in params &&
-              (params.chartType === CHART_TYPE.EXERCISE || params.chartType === CHART_TYPE.WORKOUT)
-              ? params.chartType
-              : CHART_TYPE.EXERCISE;
-          return effectiveChartCategory === CHART_TYPE.WORKOUT;
-        })()
-        : !(CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params && params.exercise);
+            type ViewCategory = CHART_TYPE.EXERCISE | CHART_TYPE.WORKOUT;
+            const effectiveChartCategory: ViewCategory =
+              "chartType" in params &&
+              (params.chartType === CHART_TYPE.EXERCISE ||
+                params.chartType === CHART_TYPE.WORKOUT)
+                ? params.chartType
+                : CHART_TYPE.EXERCISE;
+            return effectiveChartCategory === CHART_TYPE.WORKOUT;
+          })()
+        : !(
+            CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params && params.exercise
+          );
 
     if (isWorkoutView) {
       InfoBanner.render(
@@ -98,7 +106,10 @@ export abstract class BaseView {
         "warning"
       );
     } else {
-      const exerciseName = CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params ? params.exercise || "" : "";
+      const exerciseName =
+        CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params
+          ? params.exercise || ""
+          : "";
       LogCallouts.renderNoMatchMessage(container);
       if (exerciseName) {
         LogCallouts.renderCreateLogButtonForExercise(
@@ -115,7 +126,7 @@ export abstract class BaseView {
    */
   protected showLoadingIndicator(container: HTMLElement): HTMLElement {
     return LoadingSpinner.create(container, {
-      message: "loading data...",
+      message: "Loading data...",
       icon: "⏳",
       className: "workout-charts-loading",
     });
@@ -124,10 +135,7 @@ export abstract class BaseView {
   /**
    * Common data filtering pattern
    */
-  protected filterData(
-    logData: WorkoutLogData[],
-    params: EmbeddedViewParams,
-  ) {
+  protected filterData(logData: WorkoutLogData[], params: EmbeddedViewParams) {
     return DataFilter.filterData(logData, params as EmbeddedChartParams);
   }
 
@@ -141,7 +149,7 @@ export abstract class BaseView {
     if (validationErrors.length > 0) {
       ErrorMessage.render(
         container,
-        `Invalid parameters:\n${validationErrors.join("\n")}`,
+        `Invalid parameters:\n${validationErrors.join("\n")}`
       );
       return false;
     }

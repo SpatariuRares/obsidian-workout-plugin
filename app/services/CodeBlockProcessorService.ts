@@ -13,6 +13,29 @@ import {
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/DataService";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
+
+class TimerRenderChild extends MarkdownRenderChild {
+  constructor(
+    containerEl: HTMLElement,
+    private timerView: EmbeddedTimerView,
+    private activeTimers: Map<string, EmbeddedTimerView>,
+  ) {
+    super(containerEl);
+  }
+
+  onload() {
+    // Timer is already created/rendered by the view
+  }
+
+  onunload() {
+    const timerId = this.timerView.getId();
+    this.timerView.destroy();
+    if (this.activeTimers.has(timerId)) {
+      this.activeTimers.delete(timerId);
+    }
+  }
+}
 
 export class CodeBlockProcessorService {
   constructor(
@@ -21,30 +44,34 @@ export class CodeBlockProcessorService {
     private embeddedChartView: EmbeddedChartView,
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
-    private activeTimers: Map<string, EmbeddedTimerView>
-  ) { }
+    private activeTimers: Map<string, EmbeddedTimerView>,
+  ) {}
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
-      this.handleWorkoutChart.bind(this)
+      (source, el, ctx) => this.handleWorkoutChart(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
-      this.handleWorkoutLog.bind(this)
+      (source, el, ctx) => this.handleWorkoutLog(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
-      this.handleWorkoutTimer.bind(this)
+      (source, el, ctx) => this.handleWorkoutTimer(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
-      this.handleWorkoutDashboard.bind(this)
+      (source, el, ctx) => this.handleWorkoutDashboard(source, el, ctx),
     );
   }
 
   // Handle workout chart code blocks
-  private async handleWorkoutChart(source: string, el: HTMLElement) {
+  private async handleWorkoutChart(
+    source: string,
+    el: HTMLElement,
+    _ctx: MarkdownPostProcessorContext,
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -69,17 +96,21 @@ export class CodeBlockProcessorService {
       // Create chart - filtering is now handled by the DataFilter class
       this.createEmbeddedChart(el, logData, params);
     } catch (error) {
-      const errorDiv = document.createElement("div");
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      errorDiv.textContent = `Error loading chart: ${errorMessage}`;
-      errorDiv.className = "workout-chart-error";
-      el.appendChild(errorDiv);
+      el.createDiv({
+        cls: "workout-chart-error",
+        text: `Error loading chart: ${errorMessage}`,
+      });
     }
   }
 
   // Handle workout log code blocks
-  private async handleWorkoutLog(source: string, el: HTMLElement) {
+  private async handleWorkoutLog(
+    source: string,
+    el: HTMLElement,
+    _ctx: MarkdownPostProcessorContext,
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -97,27 +128,31 @@ export class CodeBlockProcessorService {
       }
       await this.createEmbeddedTable(el, logData, params);
     } catch (error) {
-      const errorDiv = document.createElement("div");
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      errorDiv.textContent = `Error loading log: ${errorMessage}`;
-      errorDiv.className = "workout-log-error";
-      el.appendChild(errorDiv);
+      el.createDiv({
+        cls: "workout-log-error",
+        text: `Error loading log: ${errorMessage}`,
+      });
     }
   }
 
   // Handle workout timer code blocks
-  private handleWorkoutTimer(source: string, el: HTMLElement) {
+  private handleWorkoutTimer(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
-      this.createEmbeddedTimer(el, params);
+      this.createEmbeddedTimer(el, params, ctx);
     } catch (error) {
-      const errorDiv = document.createElement("div");
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      errorDiv.textContent = `Error loading timer: ${errorMessage}`;
-      errorDiv.className = "workout-timer-error";
-      el.appendChild(errorDiv);
+      el.createDiv({
+        cls: "workout-timer-error",
+        text: `Error loading timer: ${errorMessage}`,
+      });
     }
   }
 
@@ -125,7 +160,7 @@ export class CodeBlockProcessorService {
   private createEmbeddedChart(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ) {
     this.embeddedChartView.createChart(container, data, params);
   }
@@ -134,7 +169,7 @@ export class CodeBlockProcessorService {
   private async createEmbeddedTable(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedTableParams
+    params: EmbeddedTableParams,
   ) {
     await this.embeddedTableView.createTable(container, data, params);
   }
@@ -142,16 +177,30 @@ export class CodeBlockProcessorService {
   // Create embedded timer using the dedicated view
   private createEmbeddedTimer(
     container: HTMLElement,
-    params: EmbeddedTimerParams
+    params: EmbeddedTimerParams,
+    ctx: MarkdownPostProcessorContext,
   ) {
-    const timerId = `timer-${Date.now()}-${Math.random()}`;
     const timerView = new EmbeddedTimerView(this.plugin);
+    const timerId = timerView.getId(); // Get ID generated by view
     this.activeTimers.set(timerId, timerView);
+
+    // Register lifecycle manager
+    const timerChild = new TimerRenderChild(
+      container,
+      timerView,
+      this.activeTimers,
+    );
+    ctx.addChild(timerChild);
+
     timerView.createTimer(container, params);
   }
 
   // Handle workout dashboard code blocks
-  private async handleWorkoutDashboard(source: string, el: HTMLElement) {
+  private async handleWorkoutDashboard(
+    source: string,
+    el: HTMLElement,
+    _ctx: MarkdownPostProcessorContext,
+  ) {
     try {
       const params = this.parseCodeBlockParams(source);
 
@@ -176,12 +225,12 @@ export class CodeBlockProcessorService {
       // Create dashboard
       await this.createEmbeddedDashboard(el, logData, params);
     } catch (error) {
-      const errorDiv = document.createElement("div");
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      errorDiv.textContent = `Error loading dashboard: ${errorMessage}`;
-      errorDiv.className = "workout-dashboard-error";
-      el.appendChild(errorDiv);
+      el.createDiv({
+        cls: "workout-dashboard-error",
+        text: `Error loading dashboard: ${errorMessage}`,
+      });
     }
   }
 
@@ -189,7 +238,7 @@ export class CodeBlockProcessorService {
   private async createEmbeddedDashboard(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    params: EmbeddedDashboardParams,
   ) {
     await this.embeddedDashboardView.createDashboard(container, data, params);
   }
@@ -222,4 +271,3 @@ export class CodeBlockProcessorService {
     return params;
   }
 }
-

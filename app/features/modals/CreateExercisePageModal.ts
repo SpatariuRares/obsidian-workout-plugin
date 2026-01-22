@@ -12,7 +12,7 @@ export class CreateExercisePageModal extends ModalBase {
   constructor(
     app: App,
     private plugin: WorkoutChartsPlugin,
-    exerciseName?: string
+    exerciseName?: string,
   ) {
     super(app);
     this.exerciseName = exerciseName;
@@ -23,7 +23,9 @@ export class CreateExercisePageModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Add modal title
-    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_PAGE });
+    contentEl.createEl("h2", {
+      text: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_PAGE,
+    });
 
     // Create form container
     const formContainer = contentEl.createEl("div", {
@@ -35,14 +37,14 @@ export class CreateExercisePageModal extends ModalBase {
       this,
       formContainer,
       this.plugin,
-      this.exerciseName
+      this.exerciseName,
     );
 
     // Tags input
     const tagsInput = this.createTextField(
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.TAGS,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TAGS
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TAGS,
     );
 
     // Folder path input
@@ -50,7 +52,7 @@ export class CreateExercisePageModal extends ModalBase {
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.FOLDER_PATH,
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.FOLDER_PATH,
-      this.plugin.settings.exerciseFolderPath
+      this.plugin.settings.exerciseFolderPath,
     );
 
     // Buttons container
@@ -73,7 +75,7 @@ export class CreateExercisePageModal extends ModalBase {
     // Event listeners using Button helper
     Button.onClick(cancelBtn, () => this.close());
 
-    Button.onClick(createBtn, () => {
+    Button.onClick(createBtn, async () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();
       const tags = tagsInput.value.trim();
       const folderPath = folderInput.value.trim();
@@ -83,16 +85,17 @@ export class CreateExercisePageModal extends ModalBase {
         return;
       }
 
-      this.createExercisePage(exerciseName, tags, folderPath)
-        .then(() => {
-          this.close();
-          new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
-        })
-        .catch((error) => {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`);
-        });
+      try {
+        await this.createExercisePage(exerciseName, tags, folderPath);
+        this.close();
+        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        new Notice(
+          `${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`,
+        );
+      }
     });
 
     // Focus on exercise input
@@ -107,7 +110,7 @@ export class CreateExercisePageModal extends ModalBase {
   private async createExercisePage(
     exerciseName: string,
     tags: string,
-    folderPath: string
+    folderPath: string,
   ) {
     // Parse tags
     const tagList = tags

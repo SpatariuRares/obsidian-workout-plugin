@@ -43,7 +43,7 @@ export abstract class BaseLogModal extends ModalBase {
     protected plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
-    onComplete?: () => void
+    onComplete?: () => void,
   ) {
     super(app);
     this.exerciseName = exerciseName;
@@ -104,7 +104,7 @@ export abstract class BaseLogModal extends ModalBase {
       this,
       formContainer,
       this.plugin,
-      this.exerciseName
+      this.exerciseName,
     );
 
     // Reps input
@@ -115,7 +115,7 @@ export abstract class BaseLogModal extends ModalBase {
       {
         min: 1,
         placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS,
-      }
+      },
     );
     repsInput.value = ""; // Allow empty for user input
 
@@ -127,7 +127,7 @@ export abstract class BaseLogModal extends ModalBase {
       {
         min: 0,
         placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WEIGHT,
-      }
+      },
     );
     weightInput.value = ""; // Allow empty for user input
     weightInput.setAttribute("step", "0.5");
@@ -137,13 +137,13 @@ export abstract class BaseLogModal extends ModalBase {
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
-      3
+      3,
     );
 
     // Workout section
     const workoutSection = this.createSection(
       formContainer,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT,
     );
 
     // Current workout toggle
@@ -151,7 +151,7 @@ export abstract class BaseLogModal extends ModalBase {
       workoutSection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
       this.getInitialWorkoutToggleState(),
-      "currentWorkout"
+      "currentWorkout",
     );
 
     // Workout input (optional)
@@ -159,7 +159,7 @@ export abstract class BaseLogModal extends ModalBase {
       workoutSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT,
       "",
-      this.currentPageLink || ""
+      this.currentPageLink || "",
     );
 
     // Setup workout toggle behavior
@@ -180,7 +180,7 @@ export abstract class BaseLogModal extends ModalBase {
    */
   protected setupWorkoutToggle(
     toggle: HTMLInputElement,
-    workoutInput: HTMLInputElement
+    workoutInput: HTMLInputElement,
   ): void {
     const currentFileName = this.getCurrentFileName();
 
@@ -236,7 +236,7 @@ export abstract class BaseLogModal extends ModalBase {
    */
   protected createButtons(
     container: HTMLElement,
-    formElements: LogFormElements
+    formElements: LogFormElements,
   ): void {
     // Submit button using Button atom
     const submitBtn = Button.create(container, {
@@ -255,15 +255,17 @@ export abstract class BaseLogModal extends ModalBase {
     // Event listeners using Button helper
     Button.onClick(cancelBtn, () => this.close());
 
-    Button.onClick(submitBtn, () => {
-      this.handleFormSubmit(formElements);
+    Button.onClick(submitBtn, async () => {
+      await this.handleFormSubmit(formElements);
     });
   }
 
   /**
    * Handles form submission with validation
    */
-  protected handleFormSubmit(formElements: LogFormElements): void {
+  protected async handleFormSubmit(
+    formElements: LogFormElements,
+  ): Promise<void> {
     const currentFileName = this.getCurrentFileName();
 
     // Extract form data
@@ -292,21 +294,22 @@ export abstract class BaseLogModal extends ModalBase {
     };
 
     // Submit data
-    this.handleSubmit(data)
-      .then(() => {
-        this.close();
-        new Notice(this.getSuccessMessage());
+    try {
+      await this.handleSubmit(data);
+      this.close();
+      new Notice(this.getSuccessMessage());
 
-        // Trigger refresh callback if provided
-        if (this.onComplete) {
-          this.onComplete();
-        }
-      })
-      .catch((error) => {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`);
-      });
+      // Trigger refresh callback if provided
+      if (this.onComplete) {
+        this.onComplete();
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(
+        `${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`,
+      );
+    }
   }
 
   /**
@@ -315,7 +318,7 @@ export abstract class BaseLogModal extends ModalBase {
   protected validateLogData(
     exercise: string,
     reps: number,
-    weight: number
+    weight: number,
   ): boolean {
     if (!exercise || isNaN(reps) || isNaN(weight)) {
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_FILL_ALL);
@@ -350,7 +353,7 @@ export abstract class BaseLogModal extends ModalBase {
     weight: number,
     workout: string,
     notes: string,
-    date?: string
+    date?: string,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
     return {
       date: date || new Date().toISOString(),

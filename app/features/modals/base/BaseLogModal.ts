@@ -4,29 +4,10 @@ import { CONSTANTS } from "@app/constants/Constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import {
-  ExerciseAutocomplete,
-  ExerciseAutocompleteElements,
-} from "@app/features/modals/components/ExerciseAutocomplete";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
-
-export interface LogFormData {
-  exercise: string;
-  reps: number;
-  weight: number;
-  workout: string;
-  notes: string;
-}
-
-export interface LogFormElements {
-  exerciseElements: ExerciseAutocompleteElements;
-  repsInput: HTMLInputElement;
-  weightInput: HTMLInputElement;
-  notesInput: HTMLTextAreaElement;
-  workoutInput: HTMLInputElement;
-  currentWorkoutToggle: HTMLInputElement;
-}
+import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 
 /**
  * Abstract base class for workout log modals.
@@ -61,6 +42,14 @@ export abstract class BaseLogModal extends ModalBase {
   protected abstract handleSubmit(_data: LogFormData): Promise<void>;
   protected abstract shouldPreFillForm(): boolean;
   protected abstract getPreFillData(): Partial<LogFormData> | null;
+
+  /**
+   * Determines if the date field should be shown in the form.
+   * Defaults to false.
+   */
+  protected shouldShowDateField(): boolean {
+    return false;
+  }
 
   onOpen() {
     const { contentEl } = this;
@@ -140,6 +129,18 @@ export abstract class BaseLogModal extends ModalBase {
       3,
     );
 
+    // Optional Date input
+    let dateInput: HTMLInputElement | undefined;
+    if (this.shouldShowDateField()) {
+      dateInput = this.createTextField(
+        formContainer,
+        "Date", // TODO: Add to constants if needed, hardcoded for now as per minimal change
+        "",
+        "",
+      );
+      dateInput.type = "date";
+    }
+
     // Workout section
     const workoutSection = this.createSection(
       formContainer,
@@ -172,6 +173,7 @@ export abstract class BaseLogModal extends ModalBase {
       notesInput,
       workoutInput,
       currentWorkoutToggle,
+      dateInput,
     };
   }
 
@@ -227,6 +229,10 @@ export abstract class BaseLogModal extends ModalBase {
     }
     if (data.workout) {
       formElements.workoutInput.value = data.workout;
+    }
+    if (data.date && formElements.dateInput && this.shouldShowDateField()) {
+      const dateValue = data.date.split("T")[0];
+      formElements.dateInput.value = dateValue;
     }
   }
 
@@ -291,6 +297,7 @@ export abstract class BaseLogModal extends ModalBase {
       weight,
       workout,
       notes,
+      date: formElements.dateInput?.value || undefined,
     };
 
     // Submit data
@@ -367,3 +374,4 @@ export abstract class BaseLogModal extends ModalBase {
     };
   }
 }
+export { LogFormData };

@@ -2,7 +2,8 @@
 import { CONSTANTS } from "@app/constants/Constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import { BaseLogModal, LogFormData } from "@app/features/modals/base/BaseLogModal";
+import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
+import { LogFormData } from "@app/types/ModalTypes";
 
 export class CreateLogModal extends BaseLogModal {
   constructor(
@@ -10,7 +11,7 @@ export class CreateLogModal extends BaseLogModal {
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
-    onLogCreated?: () => void
+    onLogCreated?: () => void,
   ) {
     super(app, plugin, exerciseName, currentPageLink, onLogCreated);
   }
@@ -45,7 +46,7 @@ export class CreateLogModal extends BaseLogModal {
       data.reps,
       data.weight,
       data.workout,
-      data.notes
+      data.notes,
     );
 
     await this.plugin.addWorkoutLogEntry(entry);

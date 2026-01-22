@@ -261,8 +261,10 @@ export abstract class BaseLogModal extends ModalBase {
     // Event listeners using Button helper
     Button.onClick(cancelBtn, () => this.close());
 
-    Button.onClick(submitBtn, async () => {
-      await this.handleFormSubmit(formElements);
+    Button.onClick(submitBtn, () => {
+      void (async () => {
+        await this.handleFormSubmit(formElements);
+      })();
     });
   }
 
@@ -374,4 +376,4 @@ export abstract class BaseLogModal extends ModalBase {
     };
   }
 }
-export { LogFormData };
+export type { LogFormData };

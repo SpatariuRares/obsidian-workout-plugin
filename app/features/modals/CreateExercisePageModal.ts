@@ -75,27 +75,31 @@ export class CreateExercisePageModal extends ModalBase {
     // Event listeners using Button helper
     Button.onClick(cancelBtn, () => this.close());
 
-    Button.onClick(createBtn, async () => {
-      const exerciseName = exerciseElements.exerciseInput.value.trim();
-      const tags = tagsInput.value.trim();
-      const folderPath = folderInput.value.trim();
+    Button.onClick(createBtn, () => {
+      void (async () => {
+        const exerciseName = exerciseElements.exerciseInput.value.trim();
+        const tags = tagsInput.value.trim();
+        const folderPath = folderInput.value.trim();
 
-      if (!exerciseName) {
-        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_NAME_REQUIRED);
-        return;
-      }
+        if (!exerciseName) {
+          new Notice(
+            CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_NAME_REQUIRED,
+          );
+          return;
+        }
 
-      try {
-        await this.createExercisePage(exerciseName, tags, folderPath);
-        this.close();
-        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
-        new Notice(
-          `${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`,
-        );
-      }
+        try {
+          await this.createExercisePage(exerciseName, tags, folderPath);
+          this.close();
+          new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(
+            `${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`,
+          );
+        }
+      })();
     });
 
     // Focus on exercise input

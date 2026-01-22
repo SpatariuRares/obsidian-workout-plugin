@@ -37,19 +37,21 @@ export class TableActions {
     const modal = new ConfirmModal(
       plugin.app,
       CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_CONFIRM,
-      async () => {
-        try {
-          await plugin.deleteWorkoutLogEntry(log);
-          new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
-          plugin.triggerWorkoutLogRefresh();
-          onComplete?.();
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          new Notice(
-            CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage,
-          );
-        }
+      () => {
+        void (async () => {
+          try {
+            await plugin.deleteWorkoutLogEntry(log);
+            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
+            plugin.triggerWorkoutLogRefresh();
+            onComplete?.();
+          } catch (error) {
+            const errorMessage =
+              error instanceof Error ? error.message : String(error);
+            new Notice(
+              CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage,
+            );
+          }
+        })();
       },
     );
     modal.open();

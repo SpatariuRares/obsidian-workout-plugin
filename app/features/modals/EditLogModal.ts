@@ -80,8 +80,8 @@ export class EditLogModal extends BaseLogModal {
 
           finalDate = originalDateObj.toISOString();
         }
-      } catch (e) {
-        console.error("Failed to parse date, keeping original", e);
+      } catch {
+        // Failed to parse date, keeping original
       }
     }
 

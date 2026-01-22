@@ -122,10 +122,17 @@ export class Body {
       obliquesColor,
       frontShouldersColor,
       upperChestColor,
-      middleChestColor
+      middleChestColor,
     );
 
-    svg.innerHTML += bodyG;
+    // Parse the SVG string into DOM nodes safely
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(bodyG, "image/svg+xml");
+
+    // Move children from parsed document to the main SVG
+    while (doc.documentElement.firstChild) {
+      svg.appendChild(doc.documentElement.firstChild);
+    }
   }
 
   private renderBackView(svg: SVGSVGElement): void {
@@ -158,10 +165,18 @@ export class Body {
       quadsColor,
       hamstringsColor,
       calvesColor,
-      rearShouldersColor
+      rearShouldersColor,
     );
 
-    svg.innerHTML += bodyG;
+    // Parse the SVG string into DOM nodes safely
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(bodyG, "image/svg+xml");
+
+    // Move children from parsed document to the main SVG
+    // We iterate backwards or while firstChild exists to ensure we get all nodes
+    while (doc.documentElement.firstChild) {
+      svg.appendChild(doc.documentElement.firstChild);
+    }
   }
 
   private getHeatMapColor(intensity: number): string {
@@ -211,4 +226,3 @@ export class Body {
     return { ...this.bodyData };
   }
 }
-

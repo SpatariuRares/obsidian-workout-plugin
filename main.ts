@@ -58,7 +58,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedChartView,
       this.embeddedTableView,
       this.embeddedDashboardView,
-      this.activeTimers
+      this.activeTimers,
     );
 
     // Register services
@@ -69,7 +69,13 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 
-  onunload() { }
+  onunload() {
+    // Clean up all active timers
+    for (const timerView of this.activeTimers.values()) {
+      timerView.destroy();
+    }
+    this.activeTimers.clear();
+  }
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -102,7 +108,7 @@ export default class WorkoutChartsPlugin extends Plugin {
    * Add a new workout log entry to the CSV file
    */
   public async addWorkoutLogEntry(
-    entry: Omit<CSVWorkoutLogEntry, "timestamp">
+    entry: Omit<CSVWorkoutLogEntry, "timestamp">,
   ): Promise<void> {
     return this.dataService.addWorkoutLogEntry(entry);
   }
@@ -112,7 +118,7 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public async updateWorkoutLogEntry(
     originalLog: WorkoutLogData,
-    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">
+    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">,
   ): Promise<void> {
     return this.dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
   }
@@ -121,7 +127,7 @@ export default class WorkoutChartsPlugin extends Plugin {
    * Delete a workout log entry from the CSV file
    */
   public async deleteWorkoutLogEntry(
-    logToDelete: WorkoutLogData
+    logToDelete: WorkoutLogData,
   ): Promise<void> {
     return this.dataService.deleteWorkoutLogEntry(logToDelete);
   }

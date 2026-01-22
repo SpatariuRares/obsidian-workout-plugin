@@ -17,7 +17,7 @@ export class TableActions {
   static handleEdit(
     log: WorkoutLogData,
     plugin: WorkoutChartsPlugin,
-    onComplete?: () => void
+    onComplete?: () => void,
   ): void {
     const modal = new EditLogModal(plugin.app, plugin, log, () => {
       plugin.triggerWorkoutLogRefresh();
@@ -32,25 +32,25 @@ export class TableActions {
   static handleDelete(
     log: WorkoutLogData,
     plugin: WorkoutChartsPlugin,
-    onComplete?: () => void
+    onComplete?: () => void,
   ): void {
     const modal = new ConfirmModal(
       plugin.app,
       CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_CONFIRM,
-      () => {
-        plugin
-          .deleteWorkoutLogEntry(log)
-          .then(() => {
-            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
-            plugin.triggerWorkoutLogRefresh();
-            onComplete?.();
-          })
-          .catch((error) => {
-            const errorMessage =
-              error instanceof Error ? error.message : String(error);
-            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage);
-          });
-      }
+      async () => {
+        try {
+          await plugin.deleteWorkoutLogEntry(log);
+          new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
+          plugin.triggerWorkoutLogRefresh();
+          onComplete?.();
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          new Notice(
+            CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage,
+          );
+        }
+      },
     );
     modal.open();
   }
@@ -63,7 +63,7 @@ export class TableActions {
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
     plugin?: WorkoutChartsPlugin,
-    onRefresh?: () => void
+    onRefresh?: () => void,
   ): void {
     if (!originalLog || !plugin) {
       return;
@@ -87,4 +87,3 @@ export class TableActions {
     });
   }
 }
-

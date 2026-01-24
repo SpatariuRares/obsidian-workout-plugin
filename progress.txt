@@ -493,3 +493,47 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - Next task is US-005: Display target progress indicator
 - The target header is now displayed, ready for US-005 to add progress bar visualization
 
+## 2026-01-24 - Phase 2 Core Features - US-005: Display target progress indicator
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/views/EmbeddedTableView.ts`:
+   - Modified `renderTargetHeader()` to accept `filteredData` parameter and pass it to progress bar renderer
+   - Modified `renderTableContentOptimized()` to pass filtered data to `renderTargetHeader()`
+   - Added `renderProgressBar()` method that renders progress bar when both targetWeight and targetReps are set
+   - Added `calculateBestRepsAtWeight()` method to find best (maximum) reps at target weight from filtered data
+   - Progress bar only shown when there is data at target weight
+   - Progress percent calculated as `(bestReps / targetReps) * 100`, capped at 100%
+
+2. Updated `app/styles/_table.scss`:
+   - Added `.workout-target-text` styling to display target text as block with margin
+   - Added `.workout-progress-container` for progress bar container
+   - Added `.workout-progress-bar` with background, border-radius, and cursor styling
+   - Added `.workout-progress-fill` with smooth transition animations
+   - Added color coding classes using Obsidian CSS variables:
+     - `.workout-progress-low` (red) for 0-50% progress
+     - `.workout-progress-medium` (yellow) for 50-90% progress
+     - `.workout-progress-high` (green) for 90-100% progress
+     - `.workout-progress-complete` (bright green/accent) for 100%+ progress
+   - Built CSS from SCSS using `node build-css.mjs`
+
+**Features implemented:**
+- Progress bar displays in target header when both targetWeight and targetReps are set
+- Calculates progress by finding best reps achieved at target weight
+- Progress bar fills proportionally based on (bestReps / targetReps) * 100
+- Color coding changes based on progress: red (0-50%), yellow (50-90%), green (90-100%), bright green (100%+)
+- Tooltip shows exact numbers: "Best: X reps / Target: Y reps"
+- Progress bar styled with Obsidian CSS variables for theme consistency
+- Smooth transitions for width and color changes
+- Only shows progress bar when user has data at target weight (gracefully handles empty state)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-006: Target achievement notification badge
+- The progress bar provides visual feedback on progression, preparing the groundwork for achievement notifications
+- Progress calculation is efficient since it uses already-filtered data passed from parent method
+

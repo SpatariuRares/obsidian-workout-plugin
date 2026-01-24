@@ -130,7 +130,7 @@ export class EmbeddedTableView extends BaseView {
     }
 
     // Render target header if targetWeight or targetReps is set
-    this.renderTargetHeader(contentDiv, params);
+    this.renderTargetHeader(contentDiv, params, filterResult.filteredData);
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
     const tableSuccess = TableRenderer.renderTable(
@@ -155,7 +155,8 @@ export class EmbeddedTableView extends BaseView {
 
   private renderTargetHeader(
     container: HTMLElement,
-    params: EmbeddedTableParams
+    params: EmbeddedTableParams,
+    filteredData: WorkoutLogData[]
   ): void {
     const { targetWeight, targetReps } = params;
 
@@ -177,7 +178,83 @@ export class EmbeddedTableView extends BaseView {
     }
 
     const targetText = `${CONSTANTS.WORKOUT.LABELS.TABLE.TARGET_PREFIX} ${parts.join("")}`;
-    targetDiv.textContent = targetText;
+    const targetTextSpan = targetDiv.createSpan({ cls: "workout-target-text" });
+    targetTextSpan.textContent = targetText;
+
+    // Render progress bar if both targetWeight and targetReps are set
+    if (targetWeight !== undefined && targetReps !== undefined) {
+      this.renderProgressBar(targetDiv, params, filteredData);
+    }
+  }
+
+  private renderProgressBar(
+    container: HTMLElement,
+    params: EmbeddedTableParams,
+    filteredData: WorkoutLogData[]
+  ): void {
+    const { targetWeight, targetReps } = params;
+
+    if (targetWeight === undefined || targetReps === undefined) {
+      return;
+    }
+
+    // Calculate progress: find best reps at target weight
+    const bestReps = this.calculateBestRepsAtWeight(targetWeight, filteredData);
+
+    if (bestReps === 0) {
+      // No data at target weight yet
+      return;
+    }
+
+    const progressPercent = Math.min((bestReps / targetReps) * 100, 100);
+
+    // Create progress bar container
+    const progressContainer = container.createDiv({ cls: "workout-progress-container" });
+
+    // Create progress bar background
+    const progressBar = progressContainer.createDiv({ cls: "workout-progress-bar" });
+
+    // Create progress fill with color coding
+    const progressFill = progressBar.createDiv({ cls: "workout-progress-fill" });
+    progressFill.style.width = `${progressPercent}%`;
+
+    // Apply color coding based on progress
+    if (progressPercent >= 100) {
+      progressFill.addClass("workout-progress-complete");
+    } else if (progressPercent >= 90) {
+      progressFill.addClass("workout-progress-high");
+    } else if (progressPercent >= 50) {
+      progressFill.addClass("workout-progress-medium");
+    } else {
+      progressFill.addClass("workout-progress-low");
+    }
+
+    // Add tooltip
+    const tooltip = `Best: ${bestReps} reps / Target: ${targetReps} reps`;
+    progressBar.setAttribute("title", tooltip);
+    progressBar.setAttribute("aria-label", tooltip);
+  }
+
+  private calculateBestRepsAtWeight(
+    targetWeight: number,
+    filteredData: WorkoutLogData[]
+  ): number {
+    try {
+      // Find all entries at target weight
+      const entriesAtTargetWeight = filteredData.filter(
+        (entry) => entry.weight === targetWeight
+      );
+
+      if (entriesAtTargetWeight.length === 0) {
+        return 0;
+      }
+
+      // Find the best (maximum) reps at target weight
+      const bestReps = Math.max(...entriesAtTargetWeight.map((entry) => entry.reps));
+      return bestReps;
+    } catch {
+      return 0;
+    }
   }
 
   public async refreshTable(

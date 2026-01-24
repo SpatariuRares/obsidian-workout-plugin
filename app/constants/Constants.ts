@@ -619,6 +619,8 @@ export const CONSTANTS = {
         CREATE: "Create log",
         UPDATE: "Update log",
         INSERT_CHART: "Insert chart",
+        RENAME_IN_CSV: "Rename in CSV",
+        RENAME_FILE: "Rename file",
         INSERT_TABLE: "Insert table",
         INSERT_TIMER: "Insert timer",
         INSERT_DASHBOARD: "Insert dashboard",
@@ -653,6 +655,9 @@ export const CONSTANTS = {
         TIMER_ELEMENTS_NOT_INITIALIZED: "Timer elements not initialized",
         AUDIT_NO_MISMATCHES: "✅ No mismatches found. All exercise files match CSV entries.",
         AUDIT_SCANNING: "Scanning exercise files...",
+        AUDIT_RENAME_SUCCESS: "Successfully renamed exercise in CSV",
+        AUDIT_RENAME_ERROR: "Error renaming exercise: ",
+        AUDIT_CONFIRM_RENAME: "Are you sure you want to rename this exercise in the CSV?",
       },
       LABELS: {
         EXERCISE: "Exercise:",

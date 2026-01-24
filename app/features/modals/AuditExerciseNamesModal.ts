@@ -151,6 +151,7 @@ export class AuditExerciseNamesModal extends ModalBase {
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.CSV_EXERCISE });
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILARITY });
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.STATUS });
+    headerRow.createEl("th", { text: "Actions" });
 
     // Table body
     const tbody = table.createEl("tbody");
@@ -194,6 +195,53 @@ export class AuditExerciseNamesModal extends ModalBase {
         text: statusText,
         cls: statusClass,
       });
+
+      // Actions cell with Rename in CSV button
+      const actionsCell = row.createEl("td");
+
+      // Only show rename button if there's a valid match to rename to
+      if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
+        const renameButton = actionsCell.createEl("button", {
+          text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
+          cls: "mod-cta",
+        });
+        renameButton.addEventListener("click", async () => {
+          await this.handleRenameInCSV(mismatch);
+        });
+      }
+    }
+  }
+
+  /**
+   * Handles renaming an exercise in the CSV
+   */
+  private async handleRenameInCSV(mismatch: MismatchEntry): Promise<void> {
+    const oldName = mismatch.closestMatch;
+    const newName = mismatch.fileName;
+
+    // Show confirmation dialog with preview
+    const confirmMessage = `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_CONFIRM_RENAME}\n\n"${oldName}" → "${newName}"`;
+
+    // Use Obsidian's built-in confirm dialog
+    const confirmed = confirm(confirmMessage);
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      // Rename exercise in CSV using plugin's public method
+      const count = await this.plugin.renameExercise(oldName, newName);
+
+      // Show success message with count
+      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_SUCCESS} (${count} ${count === 1 ? 'entry' : 'entries'} updated)`);
+
+      // Refresh modal to show updated state
+      await this.scanExerciseFiles();
+      this.renderResults();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`);
     }
   }
 }

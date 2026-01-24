@@ -132,6 +132,16 @@ export default class WorkoutChartsPlugin extends Plugin {
     return this.dataService.deleteWorkoutLogEntry(logToDelete);
   }
 
+  /**
+   * Rename an exercise in the CSV file
+   */
+  public async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
+    return this.dataService.renameExercise(oldName, newName);
+  }
+
   public triggerWorkoutLogRefresh(): void {
     // Clear cache first
     this.clearLogDataCache();

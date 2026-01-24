@@ -197,3 +197,40 @@ This will use "My Rest Timer" preset as base, but override duration to 60 second
   - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
   - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
 - Next task is US-006: Add renameExercise method to DataService
+## 2026-01-24 - US-006: Add renameExercise method to DataService
+
+**Status:** Completed
+
+**Changes made:**
+1. Added `renameExercise(oldName: string, newName: string): Promise<number>` method to DataService in `app/services/DataService.ts`
+
+**Implementation details:**
+- Method reads CSV file using existing `parseCSVLogFile` utility
+- Normalizes exercise names for comparison (case-insensitive, trimmed whitespace)
+- Updates all matching entries in the CSV to the new exercise name
+- Writes back to CSV using existing `entriesToCSVContent` utility
+- Clears cache via `clearLogDataCache()` to ensure changes are reflected immediately
+- Returns count of updated entries for feedback
+- Wraps operations in try-catch with descriptive error messages
+
+**Method signature:**
+```typescript
+public async renameExercise(
+  oldName: string,
+  newName: string,
+): Promise<number>
+```
+
+**Error handling:**
+- Throws error if CSV file not found (reuses existing CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND)
+- Catches and wraps any processing errors with descriptive message
+- Uses Obsidian's vault.process() API for atomic file updates
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-007: Add Rename in CSV button to Audit Modal
+- This method is foundational for the audit modal's rename functionality
+

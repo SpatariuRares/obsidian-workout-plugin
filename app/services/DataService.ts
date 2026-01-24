@@ -334,4 +334,56 @@ export class DataService {
     // Clear cache
     this.clearLogDataCache();
   }
+
+  /**
+   * Rename an exercise in the CSV file
+   * @param oldName The current exercise name
+   * @param newName The new exercise name
+   * @returns The count of updated entries
+   */
+  public async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath,
+    );
+
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+    }
+
+    const csvFile = abstractFile;
+    let updateCount = 0;
+
+    try {
+      await this.app.vault.process(csvFile, (content) => {
+        const csvEntries = parseCSVLogFile(content);
+
+        // Normalize names for comparison (trim whitespace, case-insensitive)
+        const normalizedOldName = oldName.trim().toLowerCase();
+
+        // Update all matching entries
+        csvEntries.forEach((entry) => {
+          const normalizedEntryName = entry.exercise.trim().toLowerCase();
+          if (normalizedEntryName === normalizedOldName) {
+            entry.exercise = newName.trim();
+            updateCount++;
+          }
+        });
+
+        // Convert back to CSV content
+        return entriesToCSVContent(csvEntries);
+      });
+
+      // Clear cache to reflect changes
+      this.clearLogDataCache();
+
+      return updateCount;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to rename exercise: ${errorMessage}`);
+    }
+  }
 }

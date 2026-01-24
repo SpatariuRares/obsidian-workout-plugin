@@ -96,8 +96,8 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added renameExercise method to DataService that: (1) Reads CSV file using parseCSVLogFile, (2) Normalizes exercise names for comparison (case-insensitive, trimmed), (3) Updates all matching entries to the new name, (4) Writes back to CSV using entriesToCSVContent, (5) Clears cache to reflect changes, (6) Returns count of updated entries, (7) Handles errors gracefully with descriptive error messages. TypeScript compilation passes. Pre-existing test failures remain unrelated."
     },
     {
       "id": "US-007",

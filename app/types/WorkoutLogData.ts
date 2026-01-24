@@ -49,6 +49,7 @@ export interface WorkoutChartsSettings {
   defaultTimerPreset: string | null;
   exerciseBlockTemplate: string;
   weightIncrement: number;
+  achievedTargets: Record<string, number>;
 }
 
 /**
@@ -77,6 +78,7 @@ exercise: {{exercise}}
 workout: {{workout}}
 \`\`\``,
   weightIncrement: 2.5,
+  achievedTargets: {},
 };
 
 /**

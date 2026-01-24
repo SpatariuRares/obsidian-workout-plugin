@@ -132,6 +132,11 @@ export class EmbeddedTableView extends BaseView {
     // Render target header if targetWeight or targetReps is set
     this.renderTargetHeader(contentDiv, params, filterResult.filteredData);
 
+    // Render achievement badge if target is achieved
+    if (params.targetWeight !== undefined && params.targetReps !== undefined && params.exercise) {
+      this.renderAchievementBadge(contentDiv, params, filterResult.filteredData);
+    }
+
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
@@ -275,6 +280,85 @@ export class EmbeddedTableView extends BaseView {
     } catch (error) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
       this.callbacks.onError?.(errorObj, "refreshing table");
+    }
+  }
+
+  private renderAchievementBadge(
+    container: HTMLElement,
+    params: EmbeddedTableParams,
+    filteredData: WorkoutLogData[]
+  ): void {
+    const { targetWeight, targetReps, exercise } = params;
+
+    if (targetWeight === undefined || targetReps === undefined || !exercise) {
+      return;
+    }
+
+    // Check if target is achieved
+    const isAchieved = this.checkTargetAchieved(targetWeight, targetReps, filteredData);
+
+    if (!isAchieved) {
+      return;
+    }
+
+    // Generate a unique key for this achievement: exercise name + target weight
+    // This way, the achievement reappears when targetWeight changes
+    const achievementKey = `${exercise}:${targetWeight}`;
+    const dismissedWeight = this.plugin.settings.achievedTargets[exercise];
+
+    // Don't show badge if it was dismissed for this specific target weight
+    if (dismissedWeight === targetWeight) {
+      return;
+    }
+
+    // Create achievement badge
+    const badgeDiv = container.createDiv({ cls: "workout-achievement-badge" });
+
+    const badgeText = badgeDiv.createSpan({ cls: "workout-achievement-text" });
+    badgeText.textContent = CONSTANTS.WORKOUT.MODAL.NOTICES.TARGET_ACHIEVED;
+
+    // Add dismiss button
+    const dismissButton = badgeDiv.createEl("button", { cls: "workout-achievement-dismiss" });
+    dismissButton.textContent = "×";
+    dismissButton.setAttribute("aria-label", "Dismiss achievement");
+
+    dismissButton.addEventListener("click", async () => {
+      // Store the target weight when dismissed
+      this.plugin.settings.achievedTargets[exercise] = targetWeight;
+      await this.plugin.saveSettings();
+      badgeDiv.remove();
+    });
+  }
+
+  private checkTargetAchieved(
+    targetWeight: number,
+    targetReps: number,
+    filteredData: WorkoutLogData[]
+  ): boolean {
+    try {
+      // Get the latest entry (filteredData is sorted by date descending in most cases)
+      // Find entries at target weight
+      const entriesAtTargetWeight = filteredData.filter(
+        (entry) => entry.weight === targetWeight
+      );
+
+      if (entriesAtTargetWeight.length === 0) {
+        return false;
+      }
+
+      // Get the most recent entry at target weight
+      const sortedEntries = entriesAtTargetWeight.sort((a, b) => {
+        const dateA = a.timestamp || new Date(a.date).getTime();
+        const dateB = b.timestamp || new Date(b.date).getTime();
+        return dateB - dateA; // Most recent first
+      });
+
+      const latestEntry = sortedEntries[0];
+
+      // Check if latest entry meets or exceeds target reps
+      return latestEntry.reps >= targetReps;
+    } catch {
+      return false;
     }
   }
 }

@@ -537,3 +537,61 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The progress bar provides visual feedback on progression, preparing the groundwork for achievement notifications
 - Progress calculation is efficient since it uses already-filtered data passed from parent method
 
+## 2026-01-24 - Phase 2 Core Features - US-006: Target achievement notification badge
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `achievedTargets: Record<string, number>` field to `WorkoutChartsSettings` interface
+   - Stores the target weight value (not boolean) to track which specific weight was dismissed
+   - Added `achievedTargets: {}` to `DEFAULT_SETTINGS`
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.NOTICES.TARGET_ACHIEVED: "Target Reached! Consider increasing weight"`
+   - Added `MODAL.NOTICES.TARGET_DISMISSED: "Achievement badge dismissed"`
+
+3. Updated `app/views/EmbeddedTableView.ts`:
+   - Modified `renderTableContentOptimized()` to call `renderAchievementBadge()` when both targetWeight and targetReps are set
+   - Added `renderAchievementBadge()` method that:
+     - Checks if target is achieved using `checkTargetAchieved()` method
+     - Generates unique achievement key: `${exercise}:${targetWeight}`
+     - Checks if badge was dismissed for this specific target weight
+     - Renders badge with text "Target Reached! Consider increasing weight"
+     - Includes dismiss button (×) that stores target weight in achievedTargets[exercise]
+     - Badge removed immediately on dismiss, state persists via plugin.saveSettings()
+   - Added `checkTargetAchieved()` method that:
+     - Filters data to entries at target weight
+     - Finds most recent entry at target weight (sorted by timestamp)
+     - Returns true if latest entry's reps >= targetReps
+     - Handles edge cases with try-catch
+
+4. Updated `app/styles/_table.scss`:
+   - Added `.workout-achievement-badge` styling with:
+     - Flexbox layout with space-between for text and dismiss button
+     - Green background using `var(--text-success)`
+     - White text using `var(--text-on-accent)`
+     - Border-left accent using `var(--interactive-accent)`
+     - Box shadow and rounded corners
+     - Slide-in animation (fadeIn from top)
+   - Added `.workout-achievement-text` for badge text styling
+   - Added `.workout-achievement-dismiss` for dismiss button styling with hover opacity
+   - Added `@keyframes slideIn` animation for smooth appearance
+   - Built CSS from SCSS using `node build-css.mjs`
+
+**Key implementation details:**
+- Achievement key uses `${exercise}:${targetWeight}` format so badge reappears when targetWeight changes
+- Badge only shows when latest (most recent) entry at targetWeight meets or exceeds targetReps
+- Dismiss button stores the specific target weight value, not just a boolean flag
+- This design ensures the badge reappears when user increases target weight for progression
+- Badge appears below target header and progress bar, above workout log table
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-007: Suggest next weight progression
+- US-007 will add a suggestion button to the achievement badge with the next weight value
+- The achievement badge provides the foundation for the weight progression suggestion feature
+

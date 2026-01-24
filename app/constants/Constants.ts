@@ -672,6 +672,8 @@ export const CONSTANTS = {
         AUDIT_RENAME_FILE_ERROR: "Error renaming file: ",
         AUDIT_CONFIRM_RENAME_FILE: "Are you sure you want to rename this file?",
         EXERCISE_BLOCK_INSERTED: "✅ Exercise block inserted successfully!",
+        TARGET_ACHIEVED: "Target Reached! Consider increasing weight",
+        TARGET_DISMISSED: "Achievement badge dismissed",
       },
       LABELS: {
         EXERCISE: "Exercise:",

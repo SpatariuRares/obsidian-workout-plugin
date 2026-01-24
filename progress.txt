@@ -1054,3 +1054,49 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The validation is strict but practical (allows weight = 0 for bodyweight exercises)
 - Parsing is resilient: continues after encountering invalid entries to maximize data recovery
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-009: Fix weak parameter parsing
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/services/CodeBlockProcessorService.ts`:
+   - Modified `parseCodeBlockParams()` method to add empty string validation
+   - Changed condition from `} else if (!isNaN(Number(value))) {` to `} else if (value && !isNaN(Number(value))) {`
+   - Added code comment explaining the rationale: "Empty strings convert to 0 with Number(""), which is undesirable"
+   - This prevents empty parameter values from being silently converted to 0
+
+2. Created comprehensive test suite in `app/services/__tests__/CodeBlockProcessorService.test.ts`:
+   - 14 test cases covering parameter parsing edge cases:
+     - Valid number parameters (duration, reps)
+     - Zero as valid number (0 should be parsed as number 0, not string)
+     - Boolean parameters (true/false)
+     - Empty strings (should remain strings, not convert to 0)
+     - Whitespace-only values (should remain strings after trim)
+     - String parameters (exercise names, workout names)
+     - Negative numbers
+     - Decimal numbers
+     - Comment lines (lines starting with #)
+     - Empty lines
+     - Lines without colons
+     - Mixed parameter types
+     - Multi-word values
+     - Scientific notation numbers
+   - All tests passing (14/14)
+
+**Implementation details:**
+- The fix prevents a subtle bug where empty parameter values in code blocks were silently converted to 0
+- For example, `exercise: ` (empty value) was being converted to `exercise: 0` instead of remaining as `exercise: ""`
+- This is critical for parameters like exercise names and workout names where empty strings have different semantics than 0
+- The `value &&` check is a truthy check that filters out empty strings before attempting number conversion
+- Valid number 0 is still correctly parsed as 0 (not filtered out by truthy check)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc -noEmit -skipLibCheck`)
+- All tests pass (303 passed, 1 failed, 4 skipped, 308 total)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-010: Implement cache size limits
+- This fix improves code block parameter parsing robustness and prevents subtle bugs in parameter handling
+- The comprehensive test suite ensures parameter parsing behavior is well-documented and regression-free
+

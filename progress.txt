@@ -847,3 +847,33 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The TableRenderChild pattern provides a foundation for proper cleanup in US-004
 - All event listeners in tables now have proper lifecycle management using AbortController
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-004: Add cleanup method to EmbeddedTableView
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/views/EmbeddedTableView.ts`:
+   - Added public `cleanup()` method with JSDoc documentation
+   - Method iterates through all `renderChildren` (TableRenderChild instances)
+   - Calls `unload()` on each TableRenderChild, which triggers their `onunload()` method
+   - This aborts all AbortControllers associated with event listeners
+   - Clears the `renderChildren` array to release references
+   - Includes try-catch error handling for safe cleanup
+   - Includes debug logging for cleanup operations
+
+**Implementation details:**
+- Cleanup method properly manages the lifecycle of all TableRenderChild instances
+- Each TableRenderChild has its own AbortController that gets aborted on unload
+- This cascades cleanup to all event listeners registered with AbortSignal
+- Array is cleared after cleanup to prevent memory leaks from retained references
+- Method is public so it can be called from plugin lifecycle (main.ts onunload)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (27/29 pass, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-005: Add cleanup method to EmbeddedDashboardView
+- The cleanup() method is ready to be called from main.ts onunload() in US-006
+- This completes the table view memory leak prevention - event listeners will be properly cleaned up on plugin unload
+

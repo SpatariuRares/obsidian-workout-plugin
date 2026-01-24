@@ -532,5 +532,32 @@ export class EmbeddedTableView extends BaseView {
       return false;
     }
   }
+
+  /**
+   * Cleanup method to be called during plugin unload
+   * Aborts all AbortControllers from TableRenderChild instances to clean up event listeners
+   * and clears internal state to prevent memory leaks
+   */
+  public cleanup(): void {
+    try {
+      this.logDebug("EmbeddedTableView", "Cleaning up table view resources");
+
+      // Unload all TableRenderChild instances - this will abort all their AbortControllers
+      for (const renderChild of this.renderChildren) {
+        try {
+          renderChild.unload();
+        } catch (error) {
+          console.error("Error unloading TableRenderChild:", error);
+        }
+      }
+
+      // Clear the renderChildren array to release references
+      this.renderChildren = [];
+
+      this.logDebug("EmbeddedTableView", "Table view cleanup completed");
+    } catch (error) {
+      console.error("Error during EmbeddedTableView cleanup:", error);
+    }
+  }
 }
 

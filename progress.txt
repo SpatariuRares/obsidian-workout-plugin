@@ -149,3 +149,51 @@ This will use "My Rest Timer" preset as base, but override duration to 60 second
   - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
   - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
 - Next task is US-005: Create Audit Exercise Names command and modal
+
+## 2026-01-24 - US-005: Create Audit Exercise Names command and modal
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/modals/AuditExerciseNamesModal.ts`:
+   - Extends `ModalBase` for consistent modal behavior
+   - `scanExerciseFiles()` method scans exercise folder and compares filenames against CSV exercise names
+   - Uses existing `getMatchScore()` utility from `app/utils/utils.ts` for fuzzy matching (0-100 similarity scores)
+   - `renderResults()` displays results in a table with columns: File name, CSV exercise, Similarity, Status
+   - File names are clickable links that open the exercise file
+   - Results sorted by score (worst matches first)
+   - Shows success message when no mismatches found
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `COMMANDS.AUDIT_EXERCISE_NAMES: "Audit exercise names"`
+   - Added `MODAL.TITLES.AUDIT_EXERCISE_NAMES: "Audit exercise names"`
+   - Added `MODAL.LABELS.FILE_NAME`, `CSV_EXERCISE`, `SIMILARITY`, `STATUS`
+   - Added `MODAL.NOTICES.AUDIT_NO_MISMATCHES` and `AUDIT_SCANNING`
+
+3. Updated `app/services/CommandHandlerService.ts`:
+   - Imported `AuditExerciseNamesModal`
+   - Registered `audit-exercise-names` command that opens the modal
+
+4. Updated `app/styles/_modal.scss`:
+   - Added `.workout-audit-success` styling for success message
+   - Added `.workout-audit-table-container` with max-height and scrolling
+   - Added `.workout-audit-table` with sticky header, hover effects, and cell styling
+   - Added `.workout-audit-status-green/yellow/red` for color-coded status indicators
+
+5. Rebuilt CSS from SCSS using `node build-css.mjs`
+
+**Features implemented:**
+- Command "Audit exercise names" available in command palette
+- Modal scans exercise folder for .md files and compares against CSV exercise names
+- Fuzzy matching with similarity scores (0-100%)
+- Color-coded status: red (no match/0%), yellow (partial/close match/1-99%), green (exact match/100%)
+- Clickable file names open the exercise file
+- Results sorted by score (worst matches first)
+- Success message when no mismatches found
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-006: Add renameExercise method to DataService

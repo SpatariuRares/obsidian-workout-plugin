@@ -1,0 +1,199 @@
+import { CONSTANTS } from "@app/constants/Constants";
+import { App, Notice, TFile } from "obsidian";
+import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { getMatchScore } from "@app/utils/utils";
+import type WorkoutChartsPlugin from "main";
+
+interface MismatchEntry {
+  file: TFile;
+  fileName: string;
+  closestMatch: string;
+  score: number;
+}
+
+/**
+ * Modal for auditing exercise file names against CSV entries
+ * Identifies mismatches and provides fuzzy matching with similarity scores
+ */
+export class AuditExerciseNamesModal extends ModalBase {
+  private plugin: WorkoutChartsPlugin;
+  private mismatches: MismatchEntry[] = [];
+  private contentContainer: HTMLElement | null = null;
+
+  constructor(app: App, plugin: WorkoutChartsPlugin) {
+    super(app);
+    this.plugin = plugin;
+  }
+
+  async onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.addClass("workout-charts-modal");
+
+    // Title
+    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.TITLES.AUDIT_EXERCISE_NAMES });
+
+    // Main container
+    this.contentContainer = contentEl.createEl("div", {
+      cls: "workout-charts-form",
+    });
+
+    // Show loading message
+    this.contentContainer.createEl("p", {
+      text: CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_SCANNING,
+    });
+
+    // Scan for mismatches
+    await this.scanExerciseFiles();
+
+    // Re-render with results
+    this.renderResults();
+  }
+
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+
+  /**
+   * Scans exercise files and compares against CSV entries
+   */
+  private async scanExerciseFiles(): Promise<void> {
+    this.mismatches = [];
+
+    try {
+      // Get all CSV exercise names
+      const logData = await this.plugin.getWorkoutLogData();
+      const csvExercises = new Set(logData.map((log) => log.exercise.toLowerCase().trim()));
+
+      // Get all exercise files from the exercise folder
+      const exerciseFolder = this.plugin.settings.exerciseFolderPath;
+      const files = this.app.vault.getMarkdownFiles();
+      const exerciseFiles = files.filter((file) =>
+        file.path.startsWith(exerciseFolder)
+      );
+
+      // Check each file for mismatches
+      for (const file of exerciseFiles) {
+        const fileName = file.basename;
+        const fileNameLower = fileName.toLowerCase().trim();
+
+        // Check for exact match
+        if (csvExercises.has(fileNameLower)) {
+          continue; // Perfect match, skip
+        }
+
+        // Find closest match using fuzzy matching
+        let bestMatch = "";
+        let bestScore = 0;
+
+        for (const csvExercise of csvExercises) {
+          const score = getMatchScore(fileNameLower, csvExercise);
+          if (score > bestScore) {
+            bestScore = score;
+            bestMatch = csvExercise;
+          }
+        }
+
+        // Add to mismatches (even if no close match found)
+        this.mismatches.push({
+          file,
+          fileName,
+          closestMatch: bestMatch || "No match found",
+          score: bestScore,
+        });
+      }
+
+      // Sort by score (lowest first - worst matches first)
+      this.mismatches.sort((a, b) => a.score - b.score);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(`Error scanning exercise files: ${errorMessage}`);
+    }
+  }
+
+  /**
+   * Renders the audit results
+   */
+  private renderResults(): void {
+    if (!this.contentContainer) return;
+
+    this.contentContainer.empty();
+
+    // If no mismatches, show success message
+    if (this.mismatches.length === 0) {
+      this.contentContainer.createEl("p", {
+        text: CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_NO_MISMATCHES,
+        cls: "workout-audit-success",
+      });
+      return;
+    }
+
+    // Show mismatch count
+    this.contentContainer.createEl("p", {
+      text: `Found ${this.mismatches.length} potential mismatch${this.mismatches.length !== 1 ? "es" : ""}:`,
+    });
+
+    // Create table
+    const tableContainer = this.contentContainer.createEl("div", {
+      cls: "workout-audit-table-container",
+    });
+
+    const table = tableContainer.createEl("table", {
+      cls: "workout-audit-table",
+    });
+
+    // Table header
+    const thead = table.createEl("thead");
+    const headerRow = thead.createEl("tr");
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.FILE_NAME });
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.CSV_EXERCISE });
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILARITY });
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.STATUS });
+
+    // Table body
+    const tbody = table.createEl("tbody");
+    for (const mismatch of this.mismatches) {
+      const row = tbody.createEl("tr");
+
+      // File name (with link)
+      const fileCell = row.createEl("td");
+      const fileLink = fileCell.createEl("a", {
+        text: mismatch.fileName,
+        href: "#",
+      });
+      fileLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.app.workspace.openLinkText(mismatch.file.path, "", false);
+      });
+
+      // Closest match
+      row.createEl("td", { text: mismatch.closestMatch });
+
+      // Similarity score
+      row.createEl("td", { text: `${mismatch.score}%` });
+
+      // Status with color coding
+      const statusCell = row.createEl("td");
+      let statusClass = "workout-audit-status-red";
+      let statusText = "No match";
+
+      if (mismatch.score === 100) {
+        statusClass = "workout-audit-status-green";
+        statusText = "Exact match";
+      } else if (mismatch.score >= 70) {
+        statusClass = "workout-audit-status-yellow";
+        statusText = "Close match";
+      } else if (mismatch.score > 0) {
+        statusClass = "workout-audit-status-yellow";
+        statusText = "Partial match";
+      }
+
+      statusCell.createEl("span", {
+        text: statusText,
+        cls: statusClass,
+      });
+    }
+  }
+}

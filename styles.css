@@ -1226,6 +1226,67 @@
   display: none;
 }
 
+/* Audit Exercise Names Modal Styles */
+.workout-audit-success {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-semibold);
+  text-align: center;
+  padding: var(--workout-space-2xl);
+}
+.workout-audit-table-container {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: var(--workout-space-lg);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+}
+.workout-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+}
+.workout-audit-table thead {
+  position: sticky;
+  top: 0;
+  background: var(--background-secondary);
+  z-index: 1;
+}
+.workout-audit-table th {
+  padding: var(--workout-space-md);
+  text-align: left;
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  border-bottom: 2px solid var(--background-modifier-border);
+}
+.workout-audit-table td {
+  padding: var(--workout-space-md);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  color: var(--text-normal);
+}
+.workout-audit-table td a {
+  color: var(--link-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+.workout-audit-table td a:hover {
+  text-decoration: underline;
+}
+.workout-audit-table tbody tr:hover {
+  background: var(--background-modifier-hover);
+}
+.workout-audit-status-green {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-audit-status-yellow {
+  color: var(--text-warning);
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-audit-status-red {
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
 /* ============================================================================
    DASHBOARD LAYOUT
    ============================================================================ */

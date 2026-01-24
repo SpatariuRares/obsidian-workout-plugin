@@ -343,6 +343,7 @@ export const CONSTANTS = {
     COMMANDS: {
       CREATE_CSV: "Create CSV log file",
       INSERT_TABLE: "Insert workout table",
+      AUDIT_EXERCISE_NAMES: "Audit exercise names",
     },
     DESCRIPTIONS: {
       INSERT_TABLE:
@@ -612,6 +613,7 @@ export const CONSTANTS = {
         CREATE_EXERCISE_PAGE: "Create exercise page",
         CREATE_EXERCISE_SECTION: "Create exercise section",
         CONFIRM_ACTION: "Confirm action",
+        AUDIT_EXERCISE_NAMES: "Audit exercise names",
       },
       BUTTONS: {
         CREATE: "Create log",
@@ -649,6 +651,8 @@ export const CONSTANTS = {
         DASHBOARD_CREATED: "Dashboard section created successfully",
         GENERIC_ERROR: "Error: ",
         TIMER_ELEMENTS_NOT_INITIALIZED: "Timer elements not initialized",
+        AUDIT_NO_MISMATCHES: "✅ No mismatches found. All exercise files match CSV entries.",
+        AUDIT_SCANNING: "Scanning exercise files...",
       },
       LABELS: {
         EXERCISE: "Exercise:",
@@ -680,6 +684,10 @@ export const CONSTANTS = {
         TAGS: "Tags (comma separated):",
         FOLDER_PATH: "Folder path (optional):",
         CONFIRM_ACTION: "Confirm action",
+        FILE_NAME: "File name",
+        CSV_EXERCISE: "CSV exercise",
+        SIMILARITY: "Similarity",
+        STATUS: "Status",
       },
       PLACEHOLDERS: {
         EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",

@@ -80,8 +80,8 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Created AuditExerciseNamesModal that: (1) Scans exercise folder for markdown files, (2) Compares filenames against all unique CSV exercise names, (3) Uses getMatchScore utility for fuzzy matching with 0-100 similarity scores, (4) Displays results in sortable table (worst matches first), (5) Color-codes status: red for no match (0%), yellow for partial/close match (1-99%), green for exact match (100%), (6) File names are clickable links that open the exercise file, (7) Shows success message when no mismatches found. Registered 'audit-exercise-names' command in CommandHandlerService. Added constants to Constants.ts for modal titles, labels, and notices. Added CSS styles to _modal.scss for table, status indicators, and container. Typecheck passes. Pre-existing test failures remain unrelated."
     },
     {
       "id": "US-006",

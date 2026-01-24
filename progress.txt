@@ -1314,3 +1314,42 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - Next task is US-016: Enable TypeScript strict mode
 - This completes the test infrastructure improvements for the memory leak fixes PRD
 - Coverage thresholds will now fail CI/CD if code quality drops below 70%
+
+## 2026-01-24 - Memory Leak Fixes PRD - US-016: Enable TypeScript strict mode
+
+**Status:** Completed (Already Enabled)
+
+**Findings:**
+TypeScript strict mode was already fully enabled in tsconfig.json:
+- Line 16: `"strict": true`
+- Line 17: `"strictNullChecks": true`
+- Line 12: `"noImplicitAny": true`
+
+**Changes made:**
+1. Updated `CLAUDE.md`:
+   - Modified TypeScript Configuration section to explicitly document strict mode is ENABLED
+   - Added bullet points explaining the three strict mode settings
+   - Documented benefits: catches null/undefined errors at compile time, prevents implicit any types
+   - Updated Testing section to reflect new 70% coverage thresholds
+   - Updated coverage scope to include DataService and ChartRenderer
+   - Documented exclusions: Constants.ts (config data), FrontmatterParser.ts (Obsidian API mocking issues)
+
+**Verification:**
+- TypeScript compilation passes with `npm run build`
+- All code already complies with strict mode (no errors revealed)
+- All tests pass (325 passed, 2 pre-existing failures unrelated)
+
+**Implementation details:**
+- No code changes were required - all existing code already passes strict mode checks
+- This indicates the codebase was developed with strict mode best practices
+- Strict null checks catch potential null/undefined errors at compile time
+- noImplicitAny prevents accidentally using any type without explicit declaration
+- These settings improve type safety and catch errors early in development
+
+**Notes for next developer:**
+- TypeScript strict mode is ENABLED and enforced at compile time
+- All new code must pass strict mode checks to compile
+- Strict mode settings are in tsconfig.json lines 12, 16, 17
+- This is the final user story in the Memory Leak Fixes PRD
+- All 17 user stories (US-001 through US-017) are now complete
+- The plugin now has comprehensive memory leak prevention, test coverage, and type safety

@@ -196,17 +196,26 @@ export class AuditExerciseNamesModal extends ModalBase {
         cls: statusClass,
       });
 
-      // Actions cell with Rename in CSV button
+      // Actions cell with Rename in CSV and Rename File buttons
       const actionsCell = row.createEl("td");
+      actionsCell.style.display = "flex";
+      actionsCell.style.gap = "8px";
 
-      // Only show rename button if there's a valid match to rename to
+      // Only show rename buttons if there's a valid match to rename to
       if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
-        const renameButton = actionsCell.createEl("button", {
+        const renameInCSVButton = actionsCell.createEl("button", {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
           cls: "mod-cta",
         });
-        renameButton.addEventListener("click", async () => {
+        renameInCSVButton.addEventListener("click", async () => {
           await this.handleRenameInCSV(mismatch);
+        });
+
+        const renameFileButton = actionsCell.createEl("button", {
+          text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
+        });
+        renameFileButton.addEventListener("click", async () => {
+          await this.handleRenameFile(mismatch);
         });
       }
     }
@@ -242,6 +251,46 @@ export class AuditExerciseNamesModal extends ModalBase {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`);
+    }
+  }
+
+  /**
+   * Handles renaming an exercise file to match the CSV
+   */
+  private async handleRenameFile(mismatch: MismatchEntry): Promise<void> {
+    const oldFileName = mismatch.fileName;
+    const newFileName = mismatch.closestMatch;
+
+    // Show confirmation dialog with preview
+    const confirmMessage = `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_CONFIRM_RENAME_FILE}\n\n"${oldFileName}.md" → "${newFileName}.md"`;
+
+    // Use Obsidian's built-in confirm dialog
+    const confirmed = confirm(confirmMessage);
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      // Calculate new file path
+      const oldPath = mismatch.file.path;
+      const newPath = oldPath.replace(
+        `${oldFileName}.md`,
+        `${newFileName}.md`
+      );
+
+      // Rename file using Obsidian vault API
+      await this.app.vault.rename(mismatch.file, newPath);
+
+      // Show success message
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_SUCCESS);
+
+      // Refresh modal to show updated state
+      await this.scanExerciseFiles();
+      this.renderResults();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR}${errorMessage}`);
     }
   }
 }

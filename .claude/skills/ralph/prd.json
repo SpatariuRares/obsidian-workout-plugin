@@ -128,8 +128,8 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added 'Rename File' button to each mismatch row in AuditExerciseNamesModal (only shown for valid matches with score > 0, alongside the existing 'Rename in CSV' button). Button opens confirmation dialog showing 'oldFileName.md → newFileName.md' preview using browser's confirm() dialog. On confirmation, uses Obsidian's vault.rename() API to rename the exercise file. Shows success message on completion or error message on failure. Modal refreshes automatically after rename to show updated state. Added constants: MODAL.NOTICES.AUDIT_RENAME_FILE_SUCCESS, AUDIT_RENAME_FILE_ERROR, AUDIT_CONFIRM_RENAME_FILE. Actions cell uses flexbox layout with 8px gap for button spacing. TypeScript compilation passes. Pre-existing test failures remain unrelated."
     }
   ]
 }

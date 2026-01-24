@@ -658,6 +658,9 @@ export const CONSTANTS = {
         AUDIT_RENAME_SUCCESS: "Successfully renamed exercise in CSV",
         AUDIT_RENAME_ERROR: "Error renaming exercise: ",
         AUDIT_CONFIRM_RENAME: "Are you sure you want to rename this exercise in the CSV?",
+        AUDIT_RENAME_FILE_SUCCESS: "Successfully renamed exercise file",
+        AUDIT_RENAME_FILE_ERROR: "Error renaming file: ",
+        AUDIT_CONFIRM_RENAME_FILE: "Are you sure you want to rename this file?",
       },
       LABELS: {
         EXERCISE: "Exercise:",

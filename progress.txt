@@ -277,3 +277,42 @@ public async renameExercise(
 - Next task is US-008: Add Rename File button to Audit Modal
 - The rename functionality integrates seamlessly with the existing audit modal UI
 
+## 2026-01-24 - US-008: Add Rename File button to Audit Modal
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.NOTICES.AUDIT_RENAME_FILE_SUCCESS: "Successfully renamed exercise file"`
+   - Added `MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR: "Error renaming file: "`
+   - Added `MODAL.NOTICES.AUDIT_CONFIRM_RENAME_FILE: "Are you sure you want to rename this file?"`
+
+2. Updated `app/features/modals/AuditExerciseNamesModal.ts`:
+   - Modified Actions column to use flexbox layout with 8px gap for button spacing
+   - Added "Rename File" button next to "Rename in CSV" button in each mismatch row
+   - Both buttons only appear when there's a valid match to rename to (score > 0)
+   - Added `handleRenameFile()` method that:
+     - Shows confirmation dialog with "oldFileName.md → newFileName.md" preview using browser's confirm()
+     - Calculates new file path by replacing old filename with CSV exercise name
+     - Uses `app.vault.rename()` API to rename the exercise file
+     - Displays success message on completion
+     - Refreshes modal automatically by calling `scanExerciseFiles()` and `renderResults()`
+     - Handles errors gracefully with error notices
+
+**Features implemented:**
+- "Rename File" button appears in Actions column for each mismatch with a valid match (score > 0)
+- Confirmation dialog shows clear preview: "oldFileName.md" → "newFileName.md"
+- Uses Obsidian's vault.rename() API for file operations
+- Success/error messages guide the user through the operation
+- Modal refreshes automatically after rename to show updated audit results
+- Button only appears when there's a valid match (not for "No match found" entries)
+- Both rename buttons (CSV and File) are displayed side-by-side with proper spacing
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- All user stories in the PRD are now complete
+- The audit modal now provides comprehensive bidirectional rename functionality: rename CSV to match files OR rename files to match CSV
+

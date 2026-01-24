@@ -1194,3 +1194,41 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - This optimization provides significant performance improvements for users with large workout datasets
 - The pre-computation pattern can be applied to other filtering/processing loops if needed
 
+
+## 2026-01-24 - Memory Leak Fixes PRD - US-012: Replace custom trigger logic with Obsidian APIs
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `main.ts`:
+   - Replaced `app.workspace.trigger("dataview:refresh-views")` with `app.workspace.iterateRootLeaves()`
+   - Replaced `app.vault.trigger("raw", view.file.path)` with `app.metadataCache.trigger("changed", view.file)`
+   - Removed dependency on Dataview plugin for refresh functionality
+   - Added comprehensive JSDoc documentation explaining the refresh process
+   - Simplified logic by using Obsidian's public workspace API to iterate through markdown leaves
+   - Used proper metadata cache trigger for notifying other components of content changes
+
+**Implementation details:**
+- `iterateRootLeaves()` provides a clean way to iterate through all workspace leaves without relying on `getLeavesOfType()`
+- `app.metadataCache.trigger("changed", file)` is the proper Obsidian API for signaling content changes to other plugins/components
+- Removed all references to external plugin triggers (dataview:refresh-views)
+- Removed undocumented vault.trigger("raw") usage
+- The refresh logic now works independently of any external plugins
+
+**Key improvements:**
+- No dependency on Dataview plugin installation
+- Uses only documented, public Obsidian APIs
+- Cleaner, more maintainable code
+- Better compatibility with future Obsidian versions
+- Proper event propagation through metadata cache
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (315 passed, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-013: Add DataService unit tests (already completed based on progress.txt)
+- Next task is US-014: Add ChartRenderer unit tests (already completed based on progress.txt)
+- Next task is US-015: Configure Jest coverage thresholds
+- This change improves plugin stability and removes external dependencies
+- The refresh mechanism now uses proper Obsidian lifecycle APIs

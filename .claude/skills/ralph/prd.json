@@ -1,146 +1,288 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/phase2-core-features",
-  "description": "Phase 2 Core Features - Exercise block automation and progressive overload tracking",
+  "branchName": "ralph/memory-leak-fixes-and-performance",
+  "description": "Memory Leak Fixes and Performance Improvements - Critical stability fixes for production use",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Configure Exercise Block Template in Settings",
-      "description": "As a user, I want to customize the exercise block template in settings so that it matches my preferred structure.",
+      "title": "Track and destroy Chart.js instances",
+      "description": "As a user with multiple workout charts open, I want the plugin to properly clean up chart instances so my browser doesn't run out of memory.",
       "acceptanceCriteria": [
-        "Add exerciseBlockTemplate field to WorkoutChartsSettings as string",
-        "Add default template to DEFAULT_SETTINGS with placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
-        "Add 'Exercise Block Template' textarea in settings tab under new 'Templates' section",
-        "Template textarea shows default template with placeholder documentation",
-        "Template persists across plugin reloads",
-        "Typecheck passes"
+        "Add chartInstances: Map<string, Chart> to ChartRenderer class in app/features/charts/components/ChartRenderer.ts",
+        "Before creating new chart, destroy existing chart if present using chart.destroy()",
+        "Generate unique chart IDs based on container element ID or hash of chart parameters",
+        "Implement destroyAllCharts() method that iterates Map and calls destroy() on each chart",
+        "Export destroyAllCharts() for use in plugin lifecycle cleanup",
+        "Typecheck passes",
+        "Write unit test mocking Chart.js to verify destroy() is called"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Completed: Added exerciseBlockTemplate field to settings interface, default template with all required placeholders, new Templates section in settings tab with textarea and documentation."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-002",
-      "title": "Add Exercise Block Command with Modal",
-      "description": "As a user, I want a command to insert a complete exercise block structure so that I don't have to manually create timer and log blocks each time.",
+      "title": "Add cleanup method to EmbeddedChartView",
+      "description": "As a developer, I need EmbeddedChartView to expose a cleanup method so it can be called during plugin unload.",
       "acceptanceCriteria": [
-        "Register 'workout-planner:add-exercise-block' command in CommandHandlerService",
-        "Create AddExerciseBlockModal that extends ModalBase",
-        "Modal includes exercise name input with ExerciseAutocomplete component",
-        "Modal includes timer duration selector with preset dropdown (if presets exist)",
-        "Modal includes workout file selector that defaults to current file",
-        "Clicking 'Insert' parses template from settings, replaces placeholders, and inserts at cursor",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Add cleanup() method to EmbeddedChartView in app/views/EmbeddedChartView.ts",
+        "cleanup() calls ChartRenderer.destroyAllCharts()",
+        "cleanup() clears any internal state or references",
+        "Document cleanup() method with JSDoc comment",
+        "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Completed: Added 'add-exercise-block' command to CommandHandlerService, created AddExerciseBlockModal extending BaseInsertModal with ExerciseAutocomplete, timer preset dropdown (if presets exist), timer duration input, and workout file selector. Modal parses template from settings and replaces all placeholders ({{exercise}}, {{duration}}, {{workout}}, {{preset}}). TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Add targetWeight and targetReps parameters to workout-log",
-      "description": "As a user, I want to set target weight and reps in workout-log blocks so that the system can track my progression goal.",
+      "title": "Refactor EmbeddedTableView with MarkdownRenderChild",
+      "description": "As a user with multiple workout log tables, I want event listeners to be properly cleaned up so memory doesn't leak when tables are refreshed.",
       "acceptanceCriteria": [
-        "Add targetWeight optional parameter to EmbeddedTableParams interface (number)",
-        "Add targetReps optional parameter to EmbeddedTableParams interface (number)",
-        "Add weightIncrement field to WorkoutChartsSettings (number, default 2.5)",
-        "Add weightIncrement setting in settings tab under new 'Progressive Overload' section",
-        "EmbeddedTableView parses targetWeight and targetReps from code block parameters",
+        "Create TableRenderChild class extending MarkdownRenderChild in app/views/EmbeddedTableView.ts",
+        "Add abortController: AbortController property to TableRenderChild",
+        "Move event listener registration from direct addEventListener to onload() method",
+        "Use { signal: this.abortController.signal } option for all event listeners",
+        "Implement onunload() method that calls this.abortController.abort()",
+        "Replace direct addEventListener calls with TableRenderChild instances",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Completed: Added targetWeight and targetReps optional parameters to EmbeddedTableParams interface. Added weightIncrement field to WorkoutChartsSettings with default value 2.5. Created new 'Progressive Overload' section in settings tab with weight increment input field. Parameters are automatically parsed by parseCodeBlockParams in CodeBlockProcessorService. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Display target header in workout log",
-      "description": "As a user, I want to see my target weight and reps displayed in the log header so that I know my current goal.",
+      "title": "Add cleanup method to EmbeddedTableView",
+      "description": "As a developer, I need EmbeddedTableView to expose a cleanup method so it can be called during plugin unload.",
       "acceptanceCriteria": [
-        "When targetWeight or targetReps is set, render target header above the log table",
-        "Header format: 'Target: {weight}kg × {reps} reps' or partial if only one is set",
-        "Header styled with subtle background color using Obsidian CSS variables",
-        "Header appears between exercise name and table",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Add cleanup() method to EmbeddedTableView in app/views/EmbeddedTableView.ts",
+        "cleanup() aborts all AbortControllers from TableRenderChild instances",
+        "cleanup() clears any internal state or references",
+        "Document cleanup() method with JSDoc comment",
+        "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Completed: Added renderTargetHeader() method to EmbeddedTableView that renders target header when targetWeight or targetReps is set. Header displays 'Target: Xkg × Y reps' format (or partial if only one is set). Added TARGET_PREFIX constant to CONSTANTS.WORKOUT.LABELS.TABLE. Added CSS styling for .workout-target-header with subtle background color, border-left accent, centered text using Obsidian CSS variables. Header appears between Add Log button and table container. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Display target progress indicator",
-      "description": "As a user, I want to see visual progress toward my target so that I know how close I am to progression.",
+      "title": "Add cleanup method to EmbeddedDashboardView",
+      "description": "As a developer, I need EmbeddedDashboardView to expose a cleanup method so it can be called during plugin unload.",
       "acceptanceCriteria": [
-        "Progress bar component shown in target header when both targetWeight and targetReps are set",
-        "Calculate progress: find best recent reps at targetWeight, compare to targetReps",
-        "Progress bar fills based on (bestReps / targetReps) * 100",
-        "Color coding: red (0-50%), yellow (50-90%), green (90-100%), bright green (100%+)",
-        "Tooltip shows exact numbers: 'Best: X reps / Target: Y reps'",
-        "Progress bar styled with Obsidian CSS variables",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Add cleanup() method to EmbeddedDashboardView in app/views/EmbeddedDashboardView.ts",
+        "cleanup() clears any event listeners or timers",
+        "cleanup() clears any internal state or references",
+        "Document cleanup() method with JSDoc comment",
+        "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Completed: Added renderProgressBar() method to EmbeddedTableView that renders progress bar when both targetWeight and targetReps are set. Progress calculation finds best (max) reps at target weight from filtered data. Progress bar fills based on (bestReps / targetReps) * 100 with color coding: red (0-50%), yellow (50-90%), green (90-100%), bright green (100%+). Tooltip shows 'Best: X reps / Target: Y reps'. Added CSS styling for .workout-progress-container, .workout-progress-bar, .workout-progress-fill, and color classes using Obsidian CSS variables. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Target achievement notification badge",
-      "description": "As a user, I want to see a notification when I achieve my target so that I know it's time to increase the weight.",
+      "title": "Complete plugin lifecycle cleanup in main.ts",
+      "description": "As a user who enables/disables the plugin, I want all resources to be properly cleaned up to prevent memory leaks and zombie event listeners.",
       "acceptanceCriteria": [
-        "Add achievedTargets field to WorkoutChartsSettings as Record<string, boolean>",
-        "When latest entry meets or exceeds targetReps at targetWeight, show achievement badge",
-        "Badge text: 'Target Reached! Consider increasing weight'",
-        "Badge styled with celebratory color (green) using Obsidian CSS variables",
-        "Badge has dismiss button that sets achievedTargets[exerciseName] = true",
-        "Badge does not re-appear after dismissal until targetWeight changes",
-        "Achievement state persists across plugin reloads",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Call embeddedChartView?.cleanup() in main.ts onunload() method",
+        "Call embeddedTableView?.cleanup() in main.ts onunload() method",
+        "Call embeddedDashboardView?.cleanup() in main.ts onunload() method",
+        "Call dataService.clearLogDataCache() in onunload() method",
+        "Call ChartRenderer.destroyAllCharts() in onunload() method",
+        "Nullify service references: codeBlockProcessorService = null!, commandHandlerService = null!",
+        "Add code comments documenting cleanup order and rationale",
+        "Typecheck passes"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Completed: Added achievedTargets field to WorkoutChartsSettings as Record<string, number> (stores target weight, not boolean). Implemented renderAchievementBadge() and checkTargetAchieved() methods in EmbeddedTableView. Badge shows 'Target Reached! Consider increasing weight' when latest entry at targetWeight meets or exceeds targetReps. Badge styled with green background using Obsidian CSS variables with slide-in animation. Dismiss button (×) stores the target weight in achievedTargets[exercise], preventing badge from reappearing until targetWeight changes. Achievement state persists via plugin.saveSettings(). Added CSS styling in _table.scss with animation. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Suggest next weight progression",
-      "description": "As a user, I want a suggested next weight when I hit my target so that I have a clear progression path.",
+      "title": "Add recursion protection to addWorkoutLogEntry",
+      "description": "As a user trying to log workouts with an invalid CSV path, I want to receive a clear error message instead of a stack overflow crash.",
       "acceptanceCriteria": [
-        "When target achieved (badge shown), display suggested next weight",
-        "Suggestion text: 'Suggested next: {currentWeight + increment}kg'",
-        "Uses weightIncrement from settings (default 2.5kg)",
-        "Suggestion appears next to achievement badge",
-        "Clicking suggestion opens confirmation: 'Update target weight to Xkg?'",
-        "On confirm, updates targetWeight parameter in the code block using Obsidian edit API",
+        "Add retryCount parameter with default value 0 to addWorkoutLogEntry() in app/services/DataService.ts",
+        "Define MAX_RETRIES = 1 constant at top of DataService class",
+        "Check if retryCount >= MAX_RETRIES before recursive call",
+        "Throw descriptive Error with CSV path if MAX_RETRIES exceeded",
+        "Display user-friendly Notice when CSV creation fails",
+        "Increment retryCount on recursive call: addWorkoutLogEntry(entry, retryCount + 1)",
         "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Write unit test for recursion protection scenario"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Completed: Added weight progression suggestion feature to achievement badge. Implemented renderWeightSuggestion() method that displays suggested next weight (current + increment) next to achievement badge. Added updateTargetWeight() method that uses editor API to find and update targetWeight parameter in code block. Added confirmation dialog before updating. Added constants SUGGESTED_NEXT_WEIGHT, CONFIRM_UPDATE_TARGET, UPDATE_TARGET_WEIGHT. Added CSS styling for .workout-weight-suggestion, .workout-suggestion-text, and .workout-update-target-button with hover effects. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Quick log with previous values and adjust buttons",
-      "description": "As a user, I want to quickly log a set with my previous values so that logging during workouts is faster.",
+      "title": "Strengthen CSV parsing validation",
+      "description": "As a user, I want malformed CSV entries to be rejected with clear warnings so I can identify and fix data quality issues.",
       "acceptanceCriteria": [
-        "Add 'Repeat Last' button in workout-log table header (only when entries exist)",
-        "Clicking opens CreateLogModal pre-filled with latest entry values (exercise, weight, reps, workout)",
-        "Add quick adjust buttons to weight field: '+{increment}' and '-{increment}' (uses weightIncrement setting)",
-        "Add quick adjust buttons to reps field: '+1' and '-1'",
-        "Quick adjust buttons positioned next to input fields",
-        "Buttons styled as compact icons/text using Obsidian CSS variables",
+        "Add isNaN() validation checks for reps, weight, volume in parseWorkoutLogCSV() in app/types/WorkoutLogData.ts",
+        "Reject entries where reps <= 0 using continue statement",
+        "Reject entries where weight < 0 using continue statement",
+        "Log console.warn() with line number and raw line content for each skipped entry",
+        "Add JSDoc comment documenting expected CSV format",
+        "Continue parsing remaining entries after encountering invalid entry",
         "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Write unit tests for malformed CSV input scenarios (NaN, negative values, empty fields)"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Completed: Modified CreateLogModal to accept initialValues parameter for pre-filling form. Added quick adjust buttons to weight and reps fields in BaseLogModal with +/- functionality. Weight buttons use weightIncrement from settings. Added renderRepeatLastButton() method to LogCallouts that opens CreateLogModal with latest entry values. Modified EmbeddedTableView to render Repeat Last button in button container when entries exist. Added constants for REPEAT_LAST, ADJUST_PLUS, ADJUST_MINUS buttons. Added CSS styling for workout-field-with-adjust, workout-input-with-adjust, workout-adjust-buttons, and workout-repeat-last-button classes. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Fix weak parameter parsing",
+      "description": "As a developer debugging code block parameters, I want proper validation so empty strings aren't silently converted to 0.",
+      "acceptanceCriteria": [
+        "Add value && check before !isNaN(Number(value)) in parseCodeBlockParams() in app/services/CodeBlockProcessorService.ts",
+        "Change condition to: } else if (value && !isNaN(Number(value))) {",
+        "Add code comment explaining why empty string check is needed",
+        "Typecheck passes",
+        "Write unit tests for parameter parsing edge cases (empty string, whitespace, '0', valid numbers)"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Implement cache size limits",
+      "description": "As a user with a large workout history (10,000+ entries), I want the plugin cache to have size limits so it doesn't consume excessive memory.",
+      "acceptanceCriteria": [
+        "Define MAX_CACHE_SIZE = 5000 constant in DataService in app/services/DataService.ts",
+        "Add cache size check in getWorkoutLogData() before using cached data",
+        "Clear cache if logDataCache.length > MAX_CACHE_SIZE before repopulating",
+        "Add debug mode logging for cache statistics (size, hit/miss)",
+        "Add JSDoc comment documenting cache strategy and size limit rationale",
+        "Typecheck passes",
+        "Write unit test for cache eviction when size exceeds limit"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Optimize filtering string operations",
+      "description": "As a user filtering workout logs, I want fast filtering performance even with thousands of entries.",
+      "acceptanceCriteria": [
+        "Pre-compute normalized exercise filter before loop in applyEarlyFiltering() in app/services/DataService.ts",
+        "Pre-compute normalized workout filter before loop in applyEarlyFiltering()",
+        "Store normalized filters in const variables outside filter loop",
+        "Remove redundant toLowerCase().replace().trim() calls from inside filter loop",
+        "Add code comment documenting optimization rationale",
+        "Typecheck passes",
+        "Write unit tests verifying filter correctness is preserved after optimization"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Replace custom trigger logic with Obsidian APIs",
+      "description": "As a plugin user, I want workout log refreshes to use proper Obsidian APIs so the plugin doesn't depend on external plugins or use undocumented APIs.",
+      "acceptanceCriteria": [
+        "Replace app.workspace.trigger('dataview:refresh-views') with workspace.iterateRootLeaves() in main.ts",
+        "Use app.metadataCache.trigger('changed', file) for metadata updates instead of vault.trigger('raw')",
+        "Remove Dataview plugin dependency from refresh logic",
+        "Test refresh behavior works correctly without Dataview installed",
+        "Add code comments documenting proper Obsidian API usage",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Add DataService unit tests",
+      "description": "As a developer, I want unit tests for DataService to prevent regressions in CSV parsing and caching.",
+      "acceptanceCriteria": [
+        "Create __tests__/DataService.test.ts file",
+        "Write test for CSV parsing with malformed input (invalid numbers, missing fields)",
+        "Write test for recursion protection in addWorkoutLogEntry",
+        "Write test for cache eviction when size exceeds MAX_CACHE_SIZE",
+        "Write test for filtering optimization correctness",
+        "Mock TFile and Vault APIs using Jest mocks",
+        "All tests pass with npm test",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Add ChartRenderer unit tests",
+      "description": "As a developer, I want unit tests for ChartRenderer to verify Chart.js instances are properly destroyed.",
+      "acceptanceCriteria": [
+        "Create __tests__/ChartRenderer.test.ts file",
+        "Mock Chart.js constructor and destroy() method using Jest",
+        "Write test verifying destroy() is called on existing chart before creating new one",
+        "Write test verifying destroyAllCharts() calls destroy() on all tracked instances",
+        "Write test verifying chartInstances Map is cleared after destroyAllCharts()",
+        "All tests pass with npm test",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Configure Jest coverage thresholds",
+      "description": "As a developer, I want enforced test coverage thresholds to maintain code quality.",
+      "acceptanceCriteria": [
+        "Update jest.config.js to set coverage thresholds: statements: 70, branches: 70, functions: 70, lines: 70",
+        "Add collectCoverageFrom patterns for app/services/DataService.ts, app/features/charts/components/ChartRenderer.ts",
+        "Run npm run test:coverage and verify it passes",
+        "Add coverage report to .gitignore if not already present",
+        "Typecheck passes",
+        "All tests pass with npm test"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Enable TypeScript strict mode",
+      "description": "As a developer, I want strict null checks enabled to catch potential null/undefined errors at compile time.",
+      "acceptanceCriteria": [
+        "Add \"strict\": true to tsconfig.json compilerOptions",
+        "Add \"strictNullChecks\": true to tsconfig.json compilerOptions",
+        "Add \"noImplicitAny\": true to tsconfig.json compilerOptions",
+        "Fix all TypeScript errors revealed by strict mode (null checks, implicit any, etc.)",
+        "Run npm run build and verify TypeScript compilation passes",
+        "Update CLAUDE.md documenting strict mode is now enabled",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Add CSV injection protection",
+      "description": "As a user exporting workout data to external spreadsheets, I want protection against CSV formula injection.",
+      "acceptanceCriteria": [
+        "Add formula injection detection regex /^[=+\\-@]/ to entryToCSVLine() in app/types/WorkoutLogData.ts",
+        "Prefix detected formulas with single quote character before escaping",
+        "Add code comment documenting CSV injection protection rationale",
+        "Typecheck passes",
+        "Write unit tests for formula injection scenarios (=1+1, +1, -1, @SUM)"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
     }
   ]
 }

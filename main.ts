@@ -15,6 +15,7 @@ import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -70,11 +71,43 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   onunload() {
-    // Clean up all active timers
+    /**
+     * PLUGIN LIFECYCLE CLEANUP
+     *
+     * Order of operations:
+     * 1. Clean up active timers (component-level cleanup)
+     * 2. Clean up embedded views (calls their cleanup methods which handle internal resources)
+     * 3. Clear data cache (release memory from cached workout data)
+     * 4. Destroy all Chart.js instances (additional safety net for chart cleanup)
+     * 5. Nullify service references (release references to allow garbage collection)
+     *
+     * This prevents memory leaks from:
+     * - Chart.js instances accumulating in memory
+     * - Event listeners not being properly removed (zombie listeners)
+     * - Cached data consuming excessive memory
+     * - Service references preventing garbage collection
+     */
+
+    // 1. Clean up all active timers
     for (const timerView of this.activeTimers.values()) {
       timerView.destroy();
     }
     this.activeTimers.clear();
+
+    // 2. Clean up embedded views (each view handles its own cleanup)
+    this.embeddedChartView?.cleanup();
+    this.embeddedTableView?.cleanup();
+    this.embeddedDashboardView?.cleanup();
+
+    // 3. Clear data service cache to release memory
+    this.dataService?.clearLogDataCache();
+
+    // 4. Destroy all Chart.js instances (additional safety net)
+    ChartRenderer.destroyAllCharts();
+
+    // 5. Nullify service references to allow garbage collection
+    this.codeBlockProcessorService = null!;
+    this.commandHandlerService = null!;
   }
 
   async loadSettings() {

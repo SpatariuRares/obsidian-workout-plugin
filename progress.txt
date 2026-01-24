@@ -907,3 +907,45 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - All three view classes (EmbeddedChartView, EmbeddedTableView, EmbeddedDashboardView) now have cleanup() methods
 - This provides a consistent cleanup interface for the plugin lifecycle
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-006: Complete plugin lifecycle cleanup in main.ts
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `main.ts`:
+   - Added import for `ChartRenderer` to access static `destroyAllCharts()` method
+   - Completely rewrote `onunload()` method with comprehensive cleanup logic
+   - Added detailed JSDoc-style comment block documenting cleanup order and rationale
+
+**Cleanup order implemented:**
+1. **Active timers**: Clean up all active timer views via `destroy()` and clear the Map
+2. **Embedded views**: Call `cleanup()` on chart, table, and dashboard views
+   - Chart view cleanup destroys all Chart.js instances
+   - Table view cleanup aborts all AbortControllers (event listener cleanup)
+   - Dashboard view cleanup provides consistent interface for future extensions
+3. **Data cache**: Clear cached workout data via `dataService.clearLogDataCache()` to release memory
+4. **Chart.js instances**: Additional safety net via `ChartRenderer.destroyAllCharts()`
+5. **Service references**: Nullify service references to allow garbage collection
+
+**Implementation details:**
+- Uses optional chaining (`?.`) for view cleanup to handle any edge cases
+- Comprehensive comment block explains cleanup order and what memory leaks are prevented
+- Cleanup order is deliberate: component-level → view-level → data-level → instance-level → reference-level
+- Service nullification uses `null!` assertion (non-null assertion operator) for type safety
+
+**Memory leak prevention:**
+- Chart.js instances accumulating in memory
+- Event listeners not being properly removed (zombie listeners)
+- Cached data consuming excessive memory
+- Service references preventing garbage collection
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (27/29 pass, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-007: Add recursion protection to addWorkoutLogEntry
+- The plugin lifecycle cleanup is now complete and comprehensive
+- All cleanup methods from US-001 through US-005 are now integrated into the plugin lifecycle
+- This completes the critical memory leak prevention infrastructure
+

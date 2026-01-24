@@ -28,6 +28,7 @@ export interface EmbeddedTimerParams {
   intervalTime?: number; // For interval timer
   rounds?: number; // For interval timer
   sound?: boolean;
+  preset?: string; // Name of a saved timer preset to use as base configuration
 }
 
 export interface TimerState {

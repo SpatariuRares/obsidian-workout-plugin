@@ -48,8 +48,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added 'preset' parameter to EmbeddedTimerParams interface in TimerTypes.ts. Added resolveTimerParams() method to EmbeddedTimerView that implements the resolution order: explicit params > preset params > default preset > hardcoded defaults. Error message displays available presets when specified preset not found."
     },
     {
       "id": "US-004",

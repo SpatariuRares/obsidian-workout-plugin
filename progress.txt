@@ -68,3 +68,43 @@
 - TypeScript compilation passes
 - Pre-existing test failures remain (unrelated to this change)
 - Next task is US-003: Add preset parameter to workout-timer blocks
+
+## 2026-01-24 - US-003: Add preset parameter to workout-timer blocks
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/TimerTypes.ts`:
+   - Added optional `preset?: string` parameter to `EmbeddedTimerParams` interface
+
+2. Updated `app/views/EmbeddedTimerView.ts`:
+   - Added import for `TimerPresetConfig`
+   - Added `resolveTimerParams()` method that implements parameter resolution:
+     - Checks for explicitly specified preset in code block params
+     - Falls back to default preset from settings if no explicit preset
+     - Merges preset params with explicit params (explicit override preset)
+   - Added `presetToParams()` helper to convert TimerPresetConfig to EmbeddedTimerParams
+   - Added `filterUndefined()` helper for proper parameter merging
+   - Added `renderPresetError()` to display error when preset not found
+   - Updated `createTimer()` to use resolved parameters
+
+**Resolution order implemented:**
+1. Explicit parameters from code block
+2. Parameters from specified preset (if preset parameter provided)
+3. Parameters from default preset (if configured in settings)
+4. Hardcoded defaults (TIMER_TYPE.COUNTDOWN, 300 seconds, etc.)
+
+**Usage example:**
+```
+workout-timer
+preset: My Rest Timer
+duration: 60
+```
+This will use "My Rest Timer" preset as base, but override duration to 60 seconds.
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-004: Change DEFAULT_EXACT_MATCH to true

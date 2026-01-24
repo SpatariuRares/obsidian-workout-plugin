@@ -8,6 +8,7 @@ import {
 } from "@app/features/timer";
 import {
   TimerState,
+  TimerPresetConfig,
 } from "@app/types/TimerTypes"
 import { BaseView } from "@app/views/BaseView";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
@@ -50,17 +51,25 @@ export class EmbeddedTimerView extends BaseView {
         timerId: this.timerId,
       });
 
-      if (!this.validateTimerParams(container, params)) {
+      // Resolve parameters from preset and defaults
+      const resolveResult = this.resolveTimerParams(params);
+      if (resolveResult.error) {
+        this.renderPresetError(container, resolveResult.error);
+        return;
+      }
+      const resolvedParams = resolveResult.params;
+
+      if (!this.validateTimerParams(container, resolvedParams)) {
         return;
       }
 
       this.timerCore.stop();
 
       this.timerCore.setState({
-        timerType: params.type || TIMER_TYPE.COUNTDOWN,
-        duration: params.duration || 300,
-        intervalTime: params.intervalTime || 30,
-        totalRounds: params.rounds || 1,
+        timerType: resolvedParams.type || TIMER_TYPE.COUNTDOWN,
+        duration: resolvedParams.duration || 300,
+        intervalTime: resolvedParams.intervalTime || 30,
+        totalRounds: resolvedParams.rounds || 1,
         elapsedTime: 0,
         currentRound: 1,
         isRunning: false,
@@ -70,13 +79,13 @@ export class EmbeddedTimerView extends BaseView {
       // Log timer initialization
       this.logDebug("EmbeddedTimerView", "Timer initialized", {
         timerId: this.timerId,
-        timerType: params.type || TIMER_TYPE.COUNTDOWN,
-        duration: params.duration || 300,
-        intervalTime: params.intervalTime || 30,
-        totalRounds: params.rounds || 1,
+        timerType: resolvedParams.type || TIMER_TYPE.COUNTDOWN,
+        duration: resolvedParams.duration || 300,
+        intervalTime: resolvedParams.intervalTime || 30,
+        totalRounds: resolvedParams.rounds || 1,
       });
 
-      this.renderTimerContent(container, params);
+      this.renderTimerContent(container, resolvedParams);
 
       // Verify timer display was created
       const currentState = this.timerCore.getState();
@@ -92,7 +101,7 @@ export class EmbeddedTimerView extends BaseView {
       }
 
       // Auto-start if requested
-      if (params.autoStart) {
+      if (resolvedParams.autoStart) {
         this.timerCore.start();
       }
     } catch (error) {
@@ -100,6 +109,104 @@ export class EmbeddedTimerView extends BaseView {
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
     }
+  }
+
+  /**
+   * Resolves timer parameters using the following priority order:
+   * 1. Explicit parameters from the code block
+   * 2. Parameters from the specified preset (if any)
+   * 3. Parameters from the default preset (if configured)
+   * 4. Hardcoded defaults
+   */
+  private resolveTimerParams(params: EmbeddedTimerParams): {
+    params: EmbeddedTimerParams;
+    error?: string;
+  } {
+    const settings = this.plugin.settings;
+    let baseParams: Partial<EmbeddedTimerParams> = {};
+
+    // Check for explicitly specified preset
+    if (params.preset) {
+      const preset = settings.timerPresets[params.preset];
+      if (!preset) {
+        return {
+          params,
+          error: `Timer preset "${params.preset}" not found. Available presets: ${Object.keys(settings.timerPresets).join(", ") || "none"}`,
+        };
+      }
+      baseParams = this.presetToParams(preset);
+      this.logDebug("EmbeddedTimerView", "Using specified preset", {
+        presetName: params.preset,
+        preset,
+      });
+    }
+    // Check for default preset if no explicit preset specified
+    else if (settings.defaultTimerPreset) {
+      const defaultPreset = settings.timerPresets[settings.defaultTimerPreset];
+      if (defaultPreset) {
+        baseParams = this.presetToParams(defaultPreset);
+        this.logDebug("EmbeddedTimerView", "Using default preset", {
+          presetName: settings.defaultTimerPreset,
+          preset: defaultPreset,
+        });
+      }
+    }
+
+    // Merge: explicit params override preset params
+    const resolvedParams: EmbeddedTimerParams = {
+      ...baseParams,
+      ...this.filterUndefined(params),
+    };
+
+    // Remove the preset key from resolved params (it's not needed for timer operation)
+    delete resolvedParams.preset;
+
+    this.logDebug("EmbeddedTimerView", "Resolved parameters", {
+      originalParams: params,
+      baseParams,
+      resolvedParams,
+    });
+
+    return { params: resolvedParams };
+  }
+
+  /**
+   * Converts a TimerPresetConfig to EmbeddedTimerParams format
+   */
+  private presetToParams(preset: TimerPresetConfig): Partial<EmbeddedTimerParams> {
+    return {
+      type: preset.type,
+      duration: preset.duration,
+      showControls: preset.showControls,
+      autoStart: preset.autoStart,
+      sound: preset.sound,
+      intervalTime: preset.intervalTime,
+      rounds: preset.rounds,
+    };
+  }
+
+  /**
+   * Filters out undefined values from params to ensure proper merging
+   */
+  private filterUndefined(params: EmbeddedTimerParams): Partial<EmbeddedTimerParams> {
+    const filtered: Partial<EmbeddedTimerParams> = {};
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined) {
+        filtered[key as keyof EmbeddedTimerParams] = value;
+      }
+    }
+    return filtered;
+  }
+
+  /**
+   * Renders an error message when a preset is not found
+   */
+  private renderPresetError(container: HTMLElement, errorMessage: string): void {
+    container.empty();
+    container.createEl("div", {
+      cls: "workout-timer-error",
+      text: errorMessage,
+    });
   }
 
   private validateTimerParams(

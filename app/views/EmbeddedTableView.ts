@@ -120,13 +120,26 @@ export class EmbeddedTableView extends BaseView {
         : "";
       const exerciseName = params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
+      const buttonContainer = contentDiv.createDiv({ cls: "add-log-button-container" });
+
       LogCallouts.renderAddLogButton(
-        contentDiv,
+        buttonContainer,
         exerciseName,
         currentPageLink,
         this.plugin,
         onRefresh
       );
+
+      // Add "Repeat Last" button if there are entries
+      if (filterResult.filteredData.length > 0) {
+        const latestEntry = filterResult.filteredData[0]; // Assuming data is sorted by date descending
+        LogCallouts.renderRepeatLastButton(
+          buttonContainer,
+          latestEntry,
+          this.plugin,
+          onRefresh
+        );
+      }
     }
 
     // Render target header if targetWeight or targetReps is set

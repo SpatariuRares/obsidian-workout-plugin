@@ -4,6 +4,7 @@ import { Button, Text } from "@app/components/atoms";
 import { EmptyState } from "@app/components/molecules";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -128,6 +129,42 @@ export class LogCallouts {
       icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
       message: CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE,
       className: "workout-log-no-match",
+    });
+  }
+
+  static renderRepeatLastButton(
+    container: HTMLElement,
+    latestEntry: WorkoutLogData,
+    plugin: WorkoutChartsPlugin,
+    onLogCreated?: () => void
+  ): void {
+    const button = Button.create(container, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REPEAT_LAST,
+      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
+      className: "workout-repeat-last-button",
+      ariaLabel: "Repeat last workout entry",
+    });
+
+    Button.onClick(button, () => {
+      const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+      const currentPageLink = activeView?.file
+        ? `[[${activeView.file.basename}]]`
+        : "";
+
+      new CreateLogModal(
+        plugin.app,
+        plugin,
+        latestEntry.exercise,
+        currentPageLink,
+        onLogCreated,
+        {
+          exercise: latestEntry.exercise,
+          weight: latestEntry.weight,
+          reps: latestEntry.reps,
+          workout: latestEntry.workout || "",
+          notes: latestEntry.notes || "",
+        }
+      ).open();
     });
   }
 }

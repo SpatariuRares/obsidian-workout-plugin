@@ -6,14 +6,18 @@ import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 
 export class CreateLogModal extends BaseLogModal {
+  private initialValues?: Partial<LogFormData>;
+
   constructor(
     app: App,
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
     onLogCreated?: () => void,
+    initialValues?: Partial<LogFormData>,
   ) {
     super(app, plugin, exerciseName, currentPageLink, onLogCreated);
+    this.initialValues = initialValues;
   }
 
   protected getModalTitle(): string {
@@ -33,11 +37,11 @@ export class CreateLogModal extends BaseLogModal {
   }
 
   protected shouldPreFillForm(): boolean {
-    return false; // No pre-fill for create modal
+    return !!this.initialValues; // Pre-fill if initialValues provided
   }
 
-  protected getPreFillData(): null {
-    return null;
+  protected getPreFillData(): Partial<LogFormData> | null {
+    return this.initialValues || null;
   }
 
   protected async handleSubmit(data: LogFormData): Promise<void> {

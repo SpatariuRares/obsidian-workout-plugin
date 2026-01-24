@@ -648,3 +648,72 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The weight progression feature provides a smooth user flow: achieve target → see suggestion → click to update → continue training
 - The updateTargetWeight() method uses a line-by-line parsing approach to safely update only the matching code block
 
+## 2026-01-24 - Phase 2 Core Features - US-008: Quick log with previous values and adjust buttons
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.BUTTONS.REPEAT_LAST: "Repeat Last"`
+   - Added `MODAL.BUTTONS.ADJUST_PLUS: "+"`
+   - Added `MODAL.BUTTONS.ADJUST_MINUS: "-"`
+
+2. Modified `app/features/modals/CreateLogModal.ts`:
+   - Added `initialValues?: Partial<LogFormData>` parameter to constructor
+   - Modified `shouldPreFillForm()` to return true when initialValues provided
+   - Modified `getPreFillData()` to return initialValues
+
+3. Modified `app/features/modals/base/BaseLogModal.ts`:
+   - Replaced simple reps input with field-with-adjust structure
+   - Added quick adjust buttons for reps: "+1" and "-1"
+   - Replaced simple weight input with field-with-adjust structure
+   - Added quick adjust buttons for weight: "+{increment}" and "-{increment}"
+   - Weight buttons use `plugin.settings.weightIncrement` value
+   - Buttons update input values with proper bounds (min 0 for both)
+
+4. Updated `app/components/organism/LogCallouts.ts`:
+   - Added import for `WorkoutLogData` type
+   - Added `renderRepeatLastButton()` method that:
+     - Creates button with class `workout-repeat-last-button`
+     - Opens CreateLogModal with initialValues from latestEntry
+     - Pre-fills exercise, weight, reps, workout, and notes fields
+
+5. Modified `app/views/EmbeddedTableView.ts`:
+   - Wrapped Add Log button in a button container div
+   - Added conditional rendering of Repeat Last button when entries exist
+   - Uses first entry from filteredData as latest entry
+
+6. Updated `app/styles/_modal.scss`:
+   - Added `.workout-field-with-adjust` for flex container
+   - Added `.workout-field-label` for field labels
+   - Added `.workout-input-with-adjust` for input + buttons layout
+   - Added `.workout-adjust-buttons` for button group
+   - Added `.workout-adjust-btn` with hover and active states
+   - Added color coding: plus buttons green, minus buttons red
+
+7. Updated `app/styles/components/_buttons.scss`:
+   - Added `workout-repeat-last-button` to button styling
+   - Modified `&-container` to use flexbox with gap
+   - Added specific styling for repeat-last-button with secondary style
+
+8. Rebuilt CSS from SCSS using `node build-css.mjs`
+
+**Features implemented:**
+- "Repeat Last" button appears in workout-log table header when entries exist
+- Button opens CreateLogModal pre-filled with latest entry values (exercise, weight, reps, workout, notes)
+- Quick adjust buttons for reps field: "+1" and "-1"
+- Quick adjust buttons for weight field: "+{increment}" and "-{increment}" using weightIncrement setting
+- Buttons positioned next to input fields in horizontal layout
+- Compact button styling with Obsidian CSS variables
+- Hover effects and color coding for visual feedback
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- All user stories (US-001 through US-008) in Phase 2 Core Features PRD are now complete
+- The quick log feature significantly speeds up workout logging by pre-filling previous values
+- Quick adjust buttons allow for small incremental changes without manual typing
+- Feature follows existing modal patterns and integrates seamlessly with the table view
+

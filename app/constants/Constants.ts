@@ -639,6 +639,9 @@ export const CONSTANTS = {
         CREATE_SECTION: "Create section",
         INSERT_EXERCISE_BLOCK: "Insert",
         UPDATE_TARGET_WEIGHT: "Update target",
+        REPEAT_LAST: "Repeat Last",
+        ADJUST_PLUS: "+",
+        ADJUST_MINUS: "-",
       },
       NOTICES: {
         LOG_CREATED: "Workout log created successfully!",

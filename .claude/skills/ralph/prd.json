@@ -32,8 +32,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added Timer Presets section to WorkoutChartsSettingTab with: (1) Default Timer Preset dropdown with 'None' option, (2) Add preset button that opens inline editor, (3) Preset list with edit/delete buttons, (4) Inline editor with all configuration fields (name, type, duration, interval, rounds, controls, auto-start, sound), (5) Validation for preset names. Settings persist via plugin.saveSettings()."
     },
     {
       "id": "US-003",

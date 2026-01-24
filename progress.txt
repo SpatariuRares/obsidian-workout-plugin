@@ -31,3 +31,40 @@
   - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
   - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
 - Next task is US-002: Add Timer Presets UI to settings tab
+
+## 2026-01-24 - US-002: Add Timer Presets UI to settings tab
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts` with new settings labels, descriptions, buttons, and messages for timer presets:
+   - Labels: TIMER_PRESETS, DEFAULT_TIMER_PRESET, PRESET_NAME, PRESET_TYPE, PRESET_DURATION, etc.
+   - Descriptions: TIMER_PRESETS, DEFAULT_TIMER_PRESET, NO_PRESETS
+   - Sections: TIMER_PRESETS
+   - Buttons: ADD_PRESET, DELETE_PRESET, SAVE_PRESET, CANCEL
+   - Messages: PRESET_NAME_REQUIRED, PRESET_NAME_EXISTS, PRESET_DELETED, PRESET_SAVED, CONFIRM_DELETE_PRESET
+
+2. Completely rewrote `app/features/settings/WorkoutChartsSettings.ts` to include Timer Presets UI:
+   - Added `renderTimerPresetsSection()` method with section heading
+   - Added Default Timer Preset dropdown with "None" option + all existing presets
+   - Added `renderPresetsList()` to display all configured presets with edit/delete buttons
+   - Added `renderPresetItem()` to display individual preset with formatted details
+   - Added `formatPresetDetails()` to format preset config as readable string
+   - Added `showPresetEditor()` for inline preset editing (supports both create and edit)
+   - Added `savePreset()` with name validation and duplicate checking
+   - Added `deletePreset()` with cleanup of default preset reference if needed
+   - Editor conditionally shows interval-specific fields (intervalTime, rounds) only for interval timer type
+
+**Features implemented:**
+- Settings tab includes 'Timer Presets' section
+- Can add a new preset with name input and all configuration fields
+- Can edit existing presets inline (clicking pencil icon)
+- Can delete presets with confirmation dialog
+- Default Timer Preset dropdown shows available presets plus 'None' option
+- Presets persist across plugin reloads via plugin.saveSettings()
+- Dynamic form that shows/hides interval-specific fields based on timer type
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change)
+- Next task is US-003: Add preset parameter to workout-timer blocks

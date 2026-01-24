@@ -62,7 +62,8 @@ export class LogCallouts {
     exerciseName: string,
     currentPageLink: string,
     plugin: WorkoutChartsPlugin,
-    onLogCreated?: () => void
+    onLogCreated?: () => void,
+    signal?: AbortSignal
   ): void {
     if (!currentPageLink) {
       return;
@@ -87,7 +88,7 @@ export class LogCallouts {
         currentPageLink,
         onLogCreated
       ).open();
-    });
+    }, signal);
   }
 
   static renderCreateLogButtonForExercise(
@@ -136,7 +137,8 @@ export class LogCallouts {
     container: HTMLElement,
     latestEntry: WorkoutLogData,
     plugin: WorkoutChartsPlugin,
-    onLogCreated?: () => void
+    onLogCreated?: () => void,
+    signal?: AbortSignal
   ): void {
     const button = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REPEAT_LAST,
@@ -165,6 +167,6 @@ export class LogCallouts {
           notes: latestEntry.notes || "",
         }
       ).open();
-    });
+    }, signal);
   }
 }

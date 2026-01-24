@@ -792,3 +792,58 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The cleanup() method is ready to be called from main.ts onunload() in US-006
 - This completes the chart view memory leak prevention - charts will be properly destroyed on plugin unload
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-003: Refactor EmbeddedTableView with MarkdownRenderChild
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `TableRenderChild` class in `app/views/EmbeddedTableView.ts`:
+   - Extends `MarkdownRenderChild` for proper lifecycle management
+   - Added `abortController: AbortController` property for event listener cleanup
+   - Implemented `onload()` method (placeholder for lifecycle hook)
+   - Implemented `onunload()` method that calls `this.abortController.abort()`
+   - Added `getSignal()` method to expose AbortSignal for event listener registration
+
+2. Refactored `EmbeddedTableView` class:
+   - Added `renderChildren: TableRenderChild[]` property to track all render children
+   - Modified `renderTableContentOptimized()` to create TableRenderChild instance
+   - Passed AbortSignal to all components that register event listeners
+   - Called `renderChild.load()` after rendering to activate the render child
+
+3. Updated `TableRenderer.renderTable()` and `applyRowGroupingOptimized()` in `app/features/tables/components/TableRenderer.ts`:
+   - Added optional `signal?: AbortSignal` parameter
+   - Passed signal through to `TableActions.renderActionButtons()`
+
+4. Updated `TableActions.renderActionButtons()` in `app/features/tables/components/TableActions.ts`:
+   - Added optional `signal?: AbortSignal` parameter
+   - Modified edit and delete button event listeners to use `{ signal }` option
+   - Event listeners are now properly cleaned up when AbortController is aborted
+
+5. Updated `LogCallouts.renderAddLogButton()` and `renderRepeatLastButton()` in `app/components/organism/LogCallouts.ts`:
+   - Added optional `signal?: AbortSignal` parameter to both methods
+   - Passed signal to `Button.onClick()` for proper event listener cleanup
+
+6. Updated `Button.onClick()` in `app/components/atoms/Button.ts`:
+   - Added optional `signal?: AbortSignal` parameter
+   - Modified addEventListener to use `{ signal }` option when signal is provided
+
+7. Updated achievement badge and weight suggestion in `EmbeddedTableView`:
+   - Modified `renderAchievementBadge()` to accept and use signal parameter
+   - Modified `renderWeightSuggestion()` to accept and use signal parameter
+   - Both dismiss button and update button now use AbortSignal for cleanup
+
+**Implementation details:**
+- All event listeners in workout log tables now use AbortSignal for automatic cleanup
+- TableRenderChild instances are created per table render and tracked in renderChildren array
+- When tables are refreshed or removed, onunload() is called, aborting all event listeners
+- This prevents memory leaks from zombie event listeners accumulating over time
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (27/29 pass, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-004: Add cleanup method to EmbeddedTableView
+- The TableRenderChild pattern provides a foundation for proper cleanup in US-004
+- All event listeners in tables now have proper lifecycle management using AbortController
+

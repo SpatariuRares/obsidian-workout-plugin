@@ -42,12 +42,14 @@ export class Button {
    * Attach click handler to button
    * @param button - Button element
    * @param handler - Click event handler
+   * @param signal - Optional AbortSignal for event listener cleanup
    */
   static onClick(
     button: HTMLButtonElement,
-    handler: (e: MouseEvent) => void
+    handler: (e: MouseEvent) => void,
+    signal?: AbortSignal
   ): void {
-    button.addEventListener("click", handler);
+    button.addEventListener("click", handler, signal ? { signal } : undefined);
   }
 
   /**

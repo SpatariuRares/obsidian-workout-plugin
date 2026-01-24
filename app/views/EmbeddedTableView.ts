@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { MarkdownView } from "obsidian";
+import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import {
   TableRenderer,
   TableDataProcessor,
@@ -14,8 +14,38 @@ import WorkoutChartsPlugin from "main";
 import { EmbeddedTableParams, TableData } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 
+/**
+ * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
+ * This ensures all event listeners are properly cleaned up when the table is refreshed or removed
+ */
+class TableRenderChild extends MarkdownRenderChild {
+  private abortController: AbortController;
+
+  constructor(containerEl: HTMLElement) {
+    super(containerEl);
+    this.abortController = new AbortController();
+  }
+
+  onload(): void {
+    // Event listeners will be registered here with { signal: this.abortController.signal }
+  }
+
+  onunload(): void {
+    // Abort all event listeners when the child is unloaded
+    this.abortController.abort();
+  }
+
+  /**
+   * Get the abort signal for registering event listeners
+   */
+  getSignal(): AbortSignal {
+    return this.abortController.signal;
+  }
+}
+
 export class EmbeddedTableView extends BaseView {
   private callbacks: TableCallbacks;
+  private renderChildren: TableRenderChild[] = [];
 
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
@@ -109,6 +139,10 @@ export class EmbeddedTableView extends BaseView {
 
     container.empty();
 
+    // Create a TableRenderChild for managing event listener lifecycle
+    const renderChild = new TableRenderChild(container);
+    this.renderChildren.push(renderChild);
+
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
 
@@ -127,7 +161,8 @@ export class EmbeddedTableView extends BaseView {
         exerciseName,
         currentPageLink,
         this.plugin,
-        onRefresh
+        onRefresh,
+        renderChild.getSignal()
       );
 
       // Add "Repeat Last" button if there are entries
@@ -137,17 +172,18 @@ export class EmbeddedTableView extends BaseView {
           buttonContainer,
           latestEntry,
           this.plugin,
-          onRefresh
+          onRefresh,
+          renderChild.getSignal()
         );
       }
     }
 
     // Render target header if targetWeight or targetReps is set
-    this.renderTargetHeader(contentDiv, params, filterResult.filteredData);
+    this.renderTargetHeader(contentDiv, params, filterResult.filteredData, renderChild.getSignal());
 
     // Render achievement badge if target is achieved
     if (params.targetWeight !== undefined && params.targetReps !== undefined && params.exercise) {
-      this.renderAchievementBadge(contentDiv, params, filterResult.filteredData);
+      this.renderAchievementBadge(contentDiv, params, filterResult.filteredData, renderChild.getSignal());
     }
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
@@ -158,7 +194,8 @@ export class EmbeddedTableView extends BaseView {
       params,
       filterResult.filteredData,
       this.plugin,
-      onRefresh
+      onRefresh,
+      renderChild.getSignal()
     );
 
     if (!tableSuccess) {
@@ -169,12 +206,16 @@ export class EmbeddedTableView extends BaseView {
     }
 
     container.appendChild(fragment);
+
+    // Load the render child to activate event listeners
+    renderChild.load();
   }
 
   private renderTargetHeader(
     container: HTMLElement,
     params: EmbeddedTableParams,
-    filteredData: WorkoutLogData[]
+    filteredData: WorkoutLogData[],
+    signal?: AbortSignal
   ): void {
     const { targetWeight, targetReps } = params;
 
@@ -299,7 +340,8 @@ export class EmbeddedTableView extends BaseView {
   private renderAchievementBadge(
     container: HTMLElement,
     params: EmbeddedTableParams,
-    filteredData: WorkoutLogData[]
+    filteredData: WorkoutLogData[],
+    signal?: AbortSignal
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
@@ -331,7 +373,7 @@ export class EmbeddedTableView extends BaseView {
     badgeText.textContent = CONSTANTS.WORKOUT.MODAL.NOTICES.TARGET_ACHIEVED;
 
     // Render weight suggestion next to achievement text
-    this.renderWeightSuggestion(badgeDiv, params, container);
+    this.renderWeightSuggestion(badgeDiv, params, container, signal);
 
     // Add dismiss button
     const dismissButton = badgeDiv.createEl("button", { cls: "workout-achievement-dismiss" });
@@ -343,13 +385,14 @@ export class EmbeddedTableView extends BaseView {
       this.plugin.settings.achievedTargets[exercise] = targetWeight;
       await this.plugin.saveSettings();
       badgeDiv.remove();
-    });
+    }, signal ? { signal } : undefined);
   }
 
   private renderWeightSuggestion(
     badgeDiv: HTMLElement,
     params: EmbeddedTableParams,
-    tableContainer: HTMLElement
+    tableContainer: HTMLElement,
+    signal?: AbortSignal
   ): void {
     const { targetWeight } = params;
 
@@ -378,7 +421,7 @@ export class EmbeddedTableView extends BaseView {
       if (confirmed) {
         await this.updateTargetWeight(params, suggestedWeight, tableContainer);
       }
-    });
+    }, signal ? { signal } : undefined);
   }
 
   private async updateTargetWeight(

@@ -66,6 +66,7 @@ export class TableActions {
     originalLog: WorkoutLogData | undefined,
     plugin?: WorkoutChartsPlugin,
     onRefresh?: () => void,
+    signal?: AbortSignal
   ): void {
     if (!originalLog || !plugin) {
       return;
@@ -75,17 +76,17 @@ export class TableActions {
     const { editBtn, deleteBtn } =
       ActionButtons.createActionButtonsContainer(td);
 
-    // Add event listeners with business logic
+    // Add event listeners with business logic, using AbortSignal for cleanup
     editBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
       this.handleEdit(originalLog, plugin, onRefresh);
-    });
+    }, signal ? { signal } : undefined);
 
     deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
       this.handleDelete(originalLog, plugin, onRefresh);
-    });
+    }, signal ? { signal } : undefined);
   }
 }

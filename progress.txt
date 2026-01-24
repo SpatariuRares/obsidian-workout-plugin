@@ -717,3 +717,51 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - Quick adjust buttons allow for small incremental changes without manual typing
 - Feature follows existing modal patterns and integrates seamlessly with the table view
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-001: Track and destroy Chart.js instances
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/charts/components/ChartRenderer.ts`:
+   - Added `private static chartInstances: Map<string, Chart>` to track all Chart.js instances
+   - Added `generateChartId()` private method that creates unique IDs based on:
+     - Container element ID if available
+     - Hash of chart parameters (exercise, workout, type, title) as fallback
+   - Modified `renderChart()` method to:
+     - Generate unique chart ID for each chart
+     - Check if chart with same ID already exists
+     - Call `destroy()` on existing chart before creating new one
+     - Store new chart instance in the Map with its ID
+   - Added `destroyAllCharts()` public static method that:
+     - Iterates through all tracked chart instances
+     - Calls `destroy()` on each chart
+     - Clears the chartInstances Map
+
+2. Created comprehensive unit tests in `app/features/charts/components/__tests__/ChartRenderer.test.ts`:
+   - Mocked Chart.js, ChartContainer, and Chart config modules to run in Node environment
+   - Test suite covers:
+     - Chart instance creation
+     - Destroying existing chart before creating new one with same ID
+     - Tracking multiple charts with different IDs
+     - destroyAllCharts() destroying all tracked instances
+     - Clearing the Map after destroyAllCharts()
+     - Chart ID generation using container ID
+     - Chart ID generation using hash when no container ID
+   - All 7 tests passing
+
+**Implementation notes:**
+- Chart tracking uses Map for O(1) lookup and cleanup performance
+- Unique ID generation ensures charts are properly identified even without container IDs
+- The destroy() method is called before creating new charts to prevent memory leaks
+- destroyAllCharts() is exported for use in plugin lifecycle cleanup (will be used in US-006)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All ChartRenderer tests pass (7/7)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-002: Add cleanup method to EmbeddedChartView
+- The chartInstances Map is ready to be used in plugin unload lifecycle (US-006)
+- This change is critical for preventing memory leaks when users have multiple workout charts open
+

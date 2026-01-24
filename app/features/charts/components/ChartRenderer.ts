@@ -16,6 +16,12 @@ import { ChartContainer } from "@app/features/charts/components/ChartContainer";
  */
 export class ChartRenderer {
   /**
+   * Map of chart IDs to Chart instances for proper cleanup and lifecycle management.
+   * This prevents memory leaks by allowing us to destroy chart instances before creating new ones.
+   */
+  private static chartInstances: Map<string, Chart> = new Map();
+
+  /**
    * Creates a container element for the chart with proper styling.
    * @param contentDiv - The parent HTML element to append the chart container to
    * @returns The created chart container element
@@ -84,7 +90,42 @@ export class ChartRenderer {
   }
 
   /**
+   * Generates a unique chart ID based on container element ID or hash of chart parameters.
+   * @param chartContainer - The container element for the chart
+   * @param params - Chart parameters
+   * @returns A unique identifier for the chart
+   */
+  private static generateChartId(
+    chartContainer: HTMLElement,
+    params: EmbeddedChartParams
+  ): string {
+    // Use container element ID if available
+    if (chartContainer.id) {
+      return chartContainer.id;
+    }
+
+    // Generate hash based on chart parameters
+    const paramsString = JSON.stringify({
+      exercise: params.exercise,
+      workout: params.workout,
+      type: params.type,
+      title: params.title,
+    });
+
+    // Simple hash function for generating unique IDs
+    let hash = 0;
+    for (let i = 0; i < paramsString.length; i++) {
+      const char = paramsString.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+
+    return `chart-${Math.abs(hash)}`;
+  }
+
+  /**
    * Renders a Chart.js chart in the specified container.
+   * Before creating a new chart, destroys any existing chart with the same ID to prevent memory leaks.
    * @param chartContainer - The container element to render the chart in
    * @param labels - Array of labels for the x-axis (dates)
    * @param datasets - Array of datasets to display in the chart
@@ -105,13 +146,36 @@ export class ChartRenderer {
       params
     );
 
+    // Generate unique chart ID for tracking
+    const chartId = this.generateChartId(chartContainer, params);
+
+    // Destroy existing chart if present to prevent memory leaks
+    const existingChart = this.chartInstances.get(chartId);
+    if (existingChart) {
+      existingChart.destroy();
+      this.chartInstances.delete(chartId);
+    }
+
     try {
-      new Chart(canvas, chartConfig);
+      const newChart = new Chart(canvas, chartConfig);
+      // Track the new chart instance for lifecycle management
+      this.chartInstances.set(chartId, newChart);
       return true;
     } catch {
       // Chart.js not available, rendering fallback table
       return false;
     }
+  }
+
+  /**
+   * Destroys all tracked chart instances to prevent memory leaks.
+   * Should be called during plugin unload or when cleaning up chart views.
+   */
+  static destroyAllCharts(): void {
+    this.chartInstances.forEach((chart) => {
+      chart.destroy();
+    });
+    this.chartInstances.clear();
   }
 }
 

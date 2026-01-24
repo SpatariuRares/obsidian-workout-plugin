@@ -13,6 +13,7 @@ export class DataService {
   private logDataCache: WorkoutLogData[] | null = null;
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
+  private readonly MAX_RETRIES = 1; // Maximum retry attempts for CSV creation
 
   constructor(
     private app: App,
@@ -188,18 +189,28 @@ export class DataService {
 
   /**
    * Add a new workout log entry to the CSV file
+   * @param entry - The workout log entry to add (timestamp will be auto-generated)
+   * @param retryCount - Internal retry counter for recursion protection (default: 0)
    */
   public async addWorkoutLogEntry(
     entry: Omit<CSVWorkoutLogEntry, "timestamp">,
+    retryCount = 0,
   ): Promise<void> {
     const abstractFile = this.app.vault.getAbstractFileByPath(
       this.settings.csvLogFilePath,
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
+      // Recursion protection: prevent infinite retry loop
+      if (retryCount >= this.MAX_RETRIES) {
+        const errorMsg = `Failed to create CSV file at path: ${this.settings.csvLogFilePath}. Please check the path in settings.`;
+        new Notice(errorMsg);
+        throw new Error(errorMsg);
+      }
+
       // Create the file if it doesn't exist
       await this.createCSVLogFile();
-      return this.addWorkoutLogEntry(entry); // Retry
+      return this.addWorkoutLogEntry(entry, retryCount + 1); // Retry with incremented counter
     }
 
     const csvFile = abstractFile;

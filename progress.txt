@@ -949,3 +949,48 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - All cleanup methods from US-001 through US-005 are now integrated into the plugin lifecycle
 - This completes the critical memory leak prevention infrastructure
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-007: Add recursion protection to addWorkoutLogEntry
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/services/DataService.ts`:
+   - Added `private readonly MAX_RETRIES = 1` constant to DataService class
+   - Modified `addWorkoutLogEntry()` to accept optional `retryCount` parameter with default value 0
+   - Added recursion protection check before recursive call
+   - Throws descriptive error with CSV file path when MAX_RETRIES exceeded
+   - Displays user-friendly Notice when CSV creation fails persistently
+   - Increments retryCount on recursive call: `addWorkoutLogEntry(entry, retryCount + 1)`
+
+2. Created `app/services/__tests__/DataService.test.ts`:
+   - Comprehensive test suite for recursion protection feature
+   - 5 test cases covering:
+     - Successful entry addition when CSV file exists
+     - CSV file creation and retry when file doesn't exist
+     - Error thrown after MAX_RETRIES exceeded
+     - Process not called when recursion limit reached
+     - CSV path included in error message
+   - Mocked Obsidian API (App, Vault, TFile, Notice) for isolated unit testing
+   - All tests passing (5/5)
+
+3. Updated `jest.config.js`:
+   - Removed obsidian module mapping to allow virtual mocking in tests
+   - Maintains @app path alias for module resolution
+
+**Implementation details:**
+- Recursion protection prevents infinite stack overflow when CSV file creation fails repeatedly
+- MAX_RETRIES = 1 allows one retry attempt (initial call + 1 retry)
+- Error message includes actual CSV file path for easier debugging
+- Notice provides user-friendly feedback when operation fails
+- JSDoc documentation updated to include retryCount parameter
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc -noEmit -skipLibCheck`)
+- All DataService tests pass (5/5)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-008: Strengthen CSV parsing validation
+- This critical stability fix prevents stack overflow crashes when users have invalid CSV paths
+- The recursion protection provides clear error messages to help users fix configuration issues
+

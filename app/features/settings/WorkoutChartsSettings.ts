@@ -86,6 +86,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Templates Section
     this.renderTemplatesSection(containerEl);
+
+    // Progressive Overload Section
+    this.renderProgressiveOverloadSection(containerEl);
   }
 
   private renderTimerPresetsSection(containerEl: HTMLElement): void {
@@ -418,5 +421,26 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
         text.inputEl.rows = 10;
         text.inputEl.cols = 50;
       });
+  }
+
+  private renderProgressiveOverloadSection(containerEl: HTMLElement): void {
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.PROGRESSIVE_OVERLOAD)
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.WEIGHT_INCREMENT)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.WEIGHT_INCREMENT)
+      .addText((text) =>
+        text
+          .setValue(String(this.plugin.settings.weightIncrement))
+          .onChange(async (value) => {
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue > 0) {
+              this.plugin.settings.weightIncrement = numValue;
+              await this.plugin.saveSettings();
+            }
+          })
+      );
   }
 }

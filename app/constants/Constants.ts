@@ -366,6 +366,7 @@ export const CONSTANTS = {
         PRESET_AUTO_START: "Auto start",
         PRESET_SOUND: "Sound",
         EXERCISE_BLOCK_TEMPLATE: "Exercise block template",
+        WEIGHT_INCREMENT: "Weight increment (kg)",
       },
       DESCRIPTIONS: {
         CSV_PATH: "Path to the CSV file containing all workout log data",
@@ -376,12 +377,14 @@ export const CONSTANTS = {
         DEFAULT_TIMER_PRESET: "Select a default preset for new timers",
         NO_PRESETS: "No timer presets configured. Click 'Add preset' to create one.",
         EXERCISE_BLOCK_TEMPLATE: "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
+        WEIGHT_INCREMENT: "Default weight increment for progressive overload (e.g., 2.5 for 2.5kg increments)",
       },
       SECTIONS: {
         CSV_MANAGEMENT: "CSV file management",
         FILTERING: "Filtering",
         TIMER_PRESETS: "Timer presets",
         TEMPLATES: "Templates",
+        PROGRESSIVE_OVERLOAD: "Progressive overload",
       },
       BUTTONS: {
         ADD_PRESET: "Add preset",

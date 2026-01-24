@@ -50,8 +50,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed: Added targetWeight and targetReps optional parameters to EmbeddedTableParams interface. Added weightIncrement field to WorkoutChartsSettings with default value 2.5. Created new 'Progressive Overload' section in settings tab with weight increment input field. Parameters are automatically parsed by parseCodeBlockParams in CodeBlockProcessorService. TypeScript compilation passes."
     },
     {
       "id": "US-004",

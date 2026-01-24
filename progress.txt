@@ -399,3 +399,49 @@ public async renameExercise(
 - The exercise block template is fully functional and can be customized in settings
 - The modal follows the same pattern as other insert modals (InsertTimerModal, InsertChartModal)
 
+## 2026-01-24 - Phase 2 Core Features - US-003: Add targetWeight and targetReps parameters to workout-log
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/TableTypes.ts`:
+   - Added `targetWeight?: number` optional parameter to `EmbeddedTableParams` interface
+   - Added `targetReps?: number` optional parameter to `EmbeddedTableParams` interface
+
+2. Updated `app/types/WorkoutLogData.ts`:
+   - Added `weightIncrement: number` field to `WorkoutChartsSettings` interface
+   - Added `weightIncrement: 2.5` to `DEFAULT_SETTINGS` (2.5kg default increment)
+
+3. Updated `app/constants/Constants.ts`:
+   - Added `SETTINGS.LABELS.WEIGHT_INCREMENT: "Weight increment (kg)"`
+   - Added `SETTINGS.DESCRIPTIONS.WEIGHT_INCREMENT` with explanation of progressive overload
+   - Added `SETTINGS.SECTIONS.PROGRESSIVE_OVERLOAD: "Progressive overload"`
+
+4. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added `renderProgressiveOverloadSection()` method to display Progressive Overload section
+   - Added text input for weight increment with validation (must be positive number)
+   - Setting persists via plugin.saveSettings() on change
+   - Section added after Templates section in settings display
+
+**Parameter parsing:**
+- Parameters are automatically parsed by existing `parseCodeBlockParams()` method in `CodeBlockProcessorService`
+- Method already handles number parsing, so `targetWeight` and `targetReps` are correctly parsed as numbers
+- No changes needed to parsing logic - it just works!
+
+**Usage example:**
+```
+workout-log
+exercise: Bench Press
+targetWeight: 100
+targetReps: 5
+```
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-004: Display target header in workout log
+- The parameters are now available in `EmbeddedTableParams` and ready to be used for displaying target information
+- The weightIncrement setting is available in `plugin.settings.weightIncrement` for future progression calculations
+

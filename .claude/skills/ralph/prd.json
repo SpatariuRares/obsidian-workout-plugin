@@ -112,8 +112,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added 'Rename in CSV' button to each mismatch row in AuditExerciseNamesModal (only shown for valid matches with score > 0). Button opens confirmation dialog showing 'oldName → newName' preview using browser's confirm() dialog. On confirmation, uses plugin.renameExercise() (added public method to main.ts that wraps dataService.renameExercise). Shows success message with count of updated entries. Modal refreshes automatically after rename to show updated state. Added constants: MODAL.BUTTONS.RENAME_IN_CSV, MODAL.NOTICES.AUDIT_RENAME_SUCCESS, AUDIT_RENAME_ERROR, AUDIT_CONFIRM_RENAME. TypeScript compilation passes. Pre-existing test failures remain unrelated."
     },
     {
       "id": "US-008",

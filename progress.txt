@@ -234,3 +234,46 @@ public async renameExercise(
 - Next task is US-007: Add Rename in CSV button to Audit Modal
 - This method is foundational for the audit modal's rename functionality
 
+## 2026-01-24 - US-007: Add Rename in CSV button to Audit Modal
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.BUTTONS.RENAME_IN_CSV: "Rename in CSV"`
+   - Added `MODAL.BUTTONS.RENAME_FILE: "Rename file"`
+   - Added `MODAL.NOTICES.AUDIT_RENAME_SUCCESS: "Successfully renamed exercise in CSV"`
+   - Added `MODAL.NOTICES.AUDIT_RENAME_ERROR: "Error renaming exercise: "`
+   - Added `MODAL.NOTICES.AUDIT_CONFIRM_RENAME: "Are you sure you want to rename this exercise in the CSV?"`
+
+2. Updated `main.ts`:
+   - Added public method `renameExercise(oldName: string, newName: string): Promise<number>`
+   - Method wraps `dataService.renameExercise()` to expose functionality to modals
+   - Follows same pattern as other public methods (deleteWorkoutLogEntry, updateWorkoutLogEntry, etc.)
+
+3. Updated `app/features/modals/AuditExerciseNamesModal.ts`:
+   - Added "Actions" column header to audit results table
+   - Added "Rename in CSV" button to each mismatch row (only shown for valid matches with score > 0)
+   - Added `handleRenameInCSV()` method that:
+     - Shows confirmation dialog with "oldName → newName" preview using browser's confirm()
+     - Calls `plugin.renameExercise()` to update CSV
+     - Displays success message with count of updated entries (e.g., "Successfully renamed exercise in CSV (3 entries updated)")
+     - Refreshes modal automatically by calling `scanExerciseFiles()` and `renderResults()`
+     - Handles errors gracefully with error notices
+
+**Features implemented:**
+- "Rename in CSV" button appears in Actions column for each mismatch with a valid match (score > 0)
+- Confirmation dialog shows clear preview: "oldName" → "newName"
+- Success message indicates how many CSV entries were updated
+- Modal refreshes automatically after rename to show updated audit results
+- Button only appears when there's a valid match to rename to (not for "No match found" entries)
+- Error handling with user-friendly error messages
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-008: Add Rename File button to Audit Modal
+- The rename functionality integrates seamlessly with the existing audit modal UI
+

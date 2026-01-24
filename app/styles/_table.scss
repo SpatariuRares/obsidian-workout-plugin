@@ -262,6 +262,20 @@
   background: transparent;
 }
 
+/* Target Header */
+.workout-target-header {
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  margin-top: var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+  text-align: center;
+  border-left: 3px solid var(--text-accent);
+}
+
 /* Mobile Table */
 .workout-chart-mobile-table {
   display: none;

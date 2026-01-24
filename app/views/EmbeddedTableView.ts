@@ -129,6 +129,9 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
+    // Render target header if targetWeight or targetReps is set
+    this.renderTargetHeader(contentDiv, params);
+
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
@@ -148,6 +151,33 @@ export class EmbeddedTableView extends BaseView {
     }
 
     container.appendChild(fragment);
+  }
+
+  private renderTargetHeader(
+    container: HTMLElement,
+    params: EmbeddedTableParams
+  ): void {
+    const { targetWeight, targetReps } = params;
+
+    // Only render if at least one target is set
+    if (targetWeight === undefined && targetReps === undefined) {
+      return;
+    }
+
+    const targetDiv = container.createDiv({ cls: "workout-target-header" });
+
+    // Build the target text
+    const parts: string[] = [];
+    if (targetWeight !== undefined) {
+      parts.push(`${targetWeight}kg`);
+    }
+    if (targetReps !== undefined) {
+      const separator = targetWeight !== undefined ? " × " : "";
+      parts.push(`${separator}${targetReps} reps`);
+    }
+
+    const targetText = `${CONSTANTS.WORKOUT.LABELS.TABLE.TARGET_PREFIX} ${parts.join("")}`;
+    targetDiv.textContent = targetText;
   }
 
   public async refreshTable(

@@ -445,3 +445,51 @@ targetReps: 5
 - The parameters are now available in `EmbeddedTableParams` and ready to be used for displaying target information
 - The weightIncrement setting is available in `plugin.settings.weightIncrement` for future progression calculations
 
+## 2026-01-24 - Phase 2 Core Features - US-004: Display target header in workout log
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `TARGET_PREFIX: "Target:"` to `CONSTANTS.WORKOUT.LABELS.TABLE`
+
+2. Updated `app/views/EmbeddedTableView.ts`:
+   - Added `renderTargetHeader()` private method to render target header when targetWeight or targetReps is set
+   - Method renders a div with class `workout-target-header` containing formatted target text
+   - Header format: "Target: {weight}kg × {reps} reps" (or partial if only one is set)
+   - Header is rendered between Add Log button and table container in `renderTableContentOptimized()`
+   - Only renders when at least one of targetWeight or targetReps is defined
+
+3. Updated `app/styles/_table.scss`:
+   - Added `.workout-target-header` styling with:
+     - Padding and margins for spacing
+     - Subtle background color using `var(--background-secondary)`
+     - Border-left accent using `var(--text-accent)`
+     - Centered text with medium font weight
+     - Border radius for rounded corners
+   - Built CSS from SCSS using `node build-css.mjs`
+
+**Features implemented:**
+- Target header displays when targetWeight or targetReps parameters are set in workout-log code blocks
+- Header format shows weight and/or reps in clear, readable format
+- Header styled with Obsidian CSS variables for theme consistency
+- Header positioned between exercise name (Add Log button) and table
+- Supports partial display (weight only, reps only, or both)
+
+**Usage example:**
+```
+workout-log
+exercise: Bench Press
+targetWeight: 100
+targetReps: 5
+```
+This will display: "Target: 100kg × 5 reps" above the workout log table.
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-005: Display target progress indicator
+- The target header is now displayed, ready for US-005 to add progress bar visualization
+

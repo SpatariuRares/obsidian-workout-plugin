@@ -509,6 +509,7 @@ export const CONSTANTS = {
         UP: "up",
         DOWN: "down",
         NEUTRAL: "neutral",
+        TARGET_PREFIX: "Target:",
       },
       ACTIONS: {
         ADD: "Add",

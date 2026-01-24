@@ -66,8 +66,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed: Added renderTargetHeader() method to EmbeddedTableView that renders target header when targetWeight or targetReps is set. Header displays 'Target: Xkg × Y reps' format (or partial if only one is set). Added TARGET_PREFIX constant to CONSTANTS.WORKOUT.LABELS.TABLE. Added CSS styling for .workout-target-header with subtle background color, border-left accent, centered text using Obsidian CSS variables. Header appears between Add Log button and table container. TypeScript compilation passes."
     },
     {
       "id": "US-005",

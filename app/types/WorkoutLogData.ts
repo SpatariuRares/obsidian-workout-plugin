@@ -83,6 +83,12 @@ workout: {{workout}}
 
 /**
  * Parses CSV content and returns an array of CSVWorkoutLogEntry objects
+ *
+ * Expected CSV format:
+ * - Header: date,exercise,reps,weight,volume,origine,workout,timestamp,notes
+ * - Data rows: date,exercise,reps,weight,volume,origine,workout,timestamp,notes
+ * - Validates numeric fields for NaN, reps must be > 0, weight must be >= 0
+ * - Skips invalid entries with console warnings for debugging
  */
 export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
   try {
@@ -103,29 +109,66 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
 
       const values = parseCSVLine(line);
       if (values.length < 6) {
+        console.warn(
+          `[WorkoutLogData] Skipping line ${i + 1}: insufficient columns (expected at least 6, got ${values.length}). Line: ${line}`
+        );
+        continue;
+      }
+
+      const reps = parseInt(values[2]);
+      const weight = parseFloat(values[3]);
+      const volume = parseFloat(values[4]);
+      const timestamp = parseInt(values[7]);
+
+      // Validate numeric fields for NaN
+      if (isNaN(reps) || isNaN(weight) || isNaN(volume)) {
+        console.warn(
+          `[WorkoutLogData] Skipping line ${i + 1}: invalid numeric values (reps: ${values[2]}, weight: ${values[3]}, volume: ${values[4]}). Line: ${line}`
+        );
+        continue;
+      }
+
+      // Reject entries where reps <= 0
+      if (reps <= 0) {
+        console.warn(
+          `[WorkoutLogData] Skipping line ${i + 1}: reps must be > 0 (got ${reps}). Line: ${line}`
+        );
+        continue;
+      }
+
+      // Reject entries where weight < 0
+      if (weight < 0) {
+        console.warn(
+          `[WorkoutLogData] Skipping line ${i + 1}: weight must be >= 0 (got ${weight}). Line: ${line}`
+        );
         continue;
       }
 
       const entry: CSVWorkoutLogEntry = {
         date: values[0]?.trim() || "",
         exercise: values[1]?.trim() || "",
-        reps: parseInt(values[2]) || 0,
-        weight: parseFloat(values[3]) || 0,
-        volume: parseFloat(values[4]) || 0,
+        reps: reps,
+        weight: weight,
+        volume: volume,
         origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
         workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
-        timestamp: parseInt(values[7]) || Date.now(),
+        timestamp: isNaN(timestamp) ? Date.now() : timestamp,
         notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
       };
 
       // Validate required fields
-      if (entry.exercise && entry.reps > 0 && entry.weight >= 0) {
+      if (entry.exercise) {
         entries.push(entry);
+      } else {
+        console.warn(
+          `[WorkoutLogData] Skipping line ${i + 1}: missing exercise name. Line: ${line}`
+        );
       }
     }
 
     return entries;
-  } catch {
+  } catch (error) {
+    console.error("[WorkoutLogData] Error parsing CSV:", error);
     return [];
   }
 }

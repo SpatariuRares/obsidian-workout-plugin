@@ -133,8 +133,8 @@
         "Write unit tests for malformed CSV input scenarios (NaN, negative values, empty fields)"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-24 - Added comprehensive validation to parseCSVLogFile() in WorkoutLogData.ts. Validates numeric fields (reps, weight, volume) for NaN, rejects reps <= 0, rejects weight < 0. Console.warn() logs for all skipped entries with line numbers and raw line content. Added detailed JSDoc documenting expected CSV format. Parsing continues after invalid entries. Created comprehensive test suite with 17 test cases covering: valid entries, NaN values (reps/weight/volume), negative values (reps/weight), zero values (reps/weight), empty fields, insufficient columns, multiple validation failures, empty CSV, header-only CSV, parse exceptions, and timestamp fallbacks. All tests passing. TypeScript compilation passes."
     },
     {
       "id": "US-009",

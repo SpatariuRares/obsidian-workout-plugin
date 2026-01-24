@@ -994,3 +994,63 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - This critical stability fix prevents stack overflow crashes when users have invalid CSV paths
 - The recursion protection provides clear error messages to help users fix configuration issues
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-008: Strengthen CSV parsing validation
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Modified `parseCSVLogFile()` function to add comprehensive validation
+   - Added isNaN() checks for reps, weight, and volume fields
+   - Rejects entries where reps <= 0 (logs warning with line number and raw line content)
+   - Rejects entries where weight < 0 (logs warning with line number and raw line content)
+   - Accepts weight = 0 for bodyweight exercises
+   - Added validation for insufficient columns (< 6 columns required)
+   - Added validation for missing exercise name
+   - All validations include console.warn() with descriptive messages showing line number and raw content
+   - Parsing continues after encountering invalid entries (uses continue statement)
+   - Updated JSDoc comment to document expected CSV format and validation rules
+   - Improved error handling with console.error() for parse exceptions
+
+2. Created `app/types/__tests__/WorkoutLogData.test.ts`:
+   - Comprehensive test suite with 17 test cases covering:
+     - Valid CSV entries parsing correctly
+     - NaN validation for reps, weight, volume (separate tests for each)
+     - Rejection of reps <= 0 (zero and negative values)
+     - Rejection of weight < 0 (negative values)
+     - Acceptance of weight = 0 for bodyweight exercises
+     - Empty field validation (missing exercise name)
+     - Insufficient columns validation
+     - Continuation of parsing after invalid entries
+     - Empty CSV content handling
+     - CSV with only header handling
+     - Parse exception handling with error logging
+     - Multiple validation failures in single line
+     - Timestamp fallback to Date.now() when NaN
+   - All tests use mock console.warn and console.error to verify warning messages
+   - All tests passing (17/17)
+
+**Validation rules implemented:**
+- reps: Must be a valid number > 0
+- weight: Must be a valid number >= 0 (0 allowed for bodyweight exercises)
+- volume: Must be a valid number (can be 0 or negative for calculated values)
+- exercise: Must be non-empty string
+- Minimum 6 columns required per CSV line
+
+**Warning message format:**
+- "[WorkoutLogData] Skipping line X: [reason]. Line: [raw line content]"
+- Includes line number (1-indexed) for easy identification in CSV file
+- Includes raw line content for debugging
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc -noEmit -skipLibCheck`)
+- All tests pass (289 passed, 1 failed, 4 skipped, 31 test suites)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-009: Fix weak parameter parsing
+- This feature significantly improves data quality by rejecting malformed CSV entries with clear warnings
+- Users can now identify and fix data quality issues by checking console warnings
+- The validation is strict but practical (allows weight = 0 for bodyweight exercises)
+- Parsing is resilient: continues after encountering invalid entries to maximize data recovery
+

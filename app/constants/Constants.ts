@@ -344,6 +344,7 @@ export const CONSTANTS = {
       CREATE_CSV: "Create CSV log file",
       INSERT_TABLE: "Insert workout table",
       AUDIT_EXERCISE_NAMES: "Audit exercise names",
+      ADD_EXERCISE_BLOCK: "Add exercise block",
     },
     DESCRIPTIONS: {
       INSERT_TABLE:
@@ -617,6 +618,7 @@ export const CONSTANTS = {
         CREATE_EXERCISE_SECTION: "Create exercise section",
         CONFIRM_ACTION: "Confirm action",
         AUDIT_EXERCISE_NAMES: "Audit exercise names",
+        ADD_EXERCISE_BLOCK: "Add exercise block",
       },
       BUTTONS: {
         CREATE: "Create log",
@@ -631,6 +633,7 @@ export const CONSTANTS = {
         CONFIRM: "Confirm",
         CREATE_EXERCISE: "Create exercise page",
         CREATE_SECTION: "Create section",
+        INSERT_EXERCISE_BLOCK: "Insert",
       },
       NOTICES: {
         LOG_CREATED: "Workout log created successfully!",
@@ -664,6 +667,7 @@ export const CONSTANTS = {
         AUDIT_RENAME_FILE_SUCCESS: "Successfully renamed exercise file",
         AUDIT_RENAME_FILE_ERROR: "Error renaming file: ",
         AUDIT_CONFIRM_RENAME_FILE: "Are you sure you want to rename this file?",
+        EXERCISE_BLOCK_INSERTED: "✅ Exercise block inserted successfully!",
       },
       LABELS: {
         EXERCISE: "Exercise:",
@@ -699,6 +703,9 @@ export const CONSTANTS = {
         CSV_EXERCISE: "CSV exercise",
         SIMILARITY: "Similarity",
         STATUS: "Status",
+        TIMER_DURATION: "Timer duration (seconds):",
+        TIMER_PRESET: "Timer preset:",
+        WORKOUT_FILE: "Workout file:",
       },
       PLACEHOLDERS: {
         EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",

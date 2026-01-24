@@ -34,8 +34,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed: Added 'add-exercise-block' command to CommandHandlerService, created AddExerciseBlockModal extending BaseInsertModal with ExerciseAutocomplete, timer preset dropdown (if presets exist), timer duration input, and workout file selector. Modal parses template from settings and replaces all placeholders ({{exercise}}, {{duration}}, {{workout}}, {{preset}}). TypeScript compilation passes."
     },
     {
       "id": "US-003",

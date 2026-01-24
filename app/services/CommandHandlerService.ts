@@ -8,6 +8,7 @@ import { InsertDashboardModal } from "@app/features/modals/InsertDashboardModal"
 import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
+import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
 import type WorkoutChartsPlugin from "main";
 
 export class CommandHandlerService {
@@ -92,6 +93,14 @@ export class CommandHandlerService {
       name: CONSTANTS.WORKOUT.COMMANDS.AUDIT_EXERCISE_NAMES,
       callback: () => {
         new AuditExerciseNamesModal(this.app, this.plugin).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "add-exercise-block",
+      name: CONSTANTS.WORKOUT.COMMANDS.ADD_EXERCISE_BLOCK,
+      callback: () => {
+        new AddExerciseBlockModal(this.app, this.plugin).open();
       },
     });
   }

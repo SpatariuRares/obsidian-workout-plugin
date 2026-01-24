@@ -350,3 +350,52 @@ public async renameExercise(
 - Next task is US-002: Add Exercise Block Command with Modal
 - The template is now configurable but not yet used - US-002 will implement the command to insert exercise blocks using this template
 
+## 2026-01-24 - Phase 2 Core Features - US-002: Add Exercise Block Command with Modal
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `COMMANDS.ADD_EXERCISE_BLOCK: "Add exercise block"`
+   - Added `MODAL.TITLES.ADD_EXERCISE_BLOCK: "Add exercise block"`
+   - Added `MODAL.BUTTONS.INSERT_EXERCISE_BLOCK: "Insert"`
+   - Added `MODAL.NOTICES.EXERCISE_BLOCK_INSERTED: "✅ Exercise block inserted successfully!"`
+   - Added `MODAL.LABELS.TIMER_DURATION: "Timer duration (seconds):"`
+   - Added `MODAL.LABELS.TIMER_PRESET: "Timer preset:"`
+   - Added `MODAL.LABELS.WORKOUT_FILE: "Workout file:"`
+
+2. Created `app/features/modals/AddExerciseBlockModal.ts`:
+   - Extends `BaseInsertModal` for consistent modal behavior
+   - Implements `ExerciseAutocomplete` component for exercise name input with autocomplete
+   - Includes timer preset dropdown (only shown if presets exist in settings)
+   - Sets default timer preset from settings if configured
+   - Includes timer duration input (default 90 seconds)
+   - Includes workout file selector that defaults to current file
+   - `generateCode()` method parses template from `plugin.settings.exerciseBlockTemplate`
+   - Replaces all placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}
+   - Validates exercise name is provided before generating code
+
+3. Updated `app/services/CommandHandlerService.ts`:
+   - Imported `AddExerciseBlockModal`
+   - Registered `add-exercise-block` command that opens the modal
+
+**Features implemented:**
+- Command "Add exercise block" available in command palette
+- Modal with three sections: Exercise, Timer, Workout
+- Exercise section uses ExerciseAutocomplete for smart exercise selection
+- Timer section shows preset dropdown (if presets exist) with default preset pre-selected
+- Timer section includes duration input field
+- Workout section has file selector defaulting to current file
+- Insert button parses template from settings and replaces placeholders
+- Template placeholders support: {{exercise}}, {{duration}}, {{workout}}, {{preset}}
+- Validation ensures exercise name is provided
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-003: Add targetWeight and targetReps parameters to workout-log
+- The exercise block template is fully functional and can be customized in settings
+- The modal follows the same pattern as other insert modals (InsertTimerModal, InsertChartModal)
+

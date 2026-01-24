@@ -765,3 +765,30 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The chartInstances Map is ready to be used in plugin unload lifecycle (US-006)
 - This change is critical for preventing memory leaks when users have multiple workout charts open
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-002: Add cleanup method to EmbeddedChartView
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/views/EmbeddedChartView.ts`:
+   - Added public `cleanup()` method with JSDoc documentation
+   - Method calls `ChartRenderer.destroyAllCharts()` to destroy all Chart.js instances
+   - Includes try-catch error handling for safe cleanup
+   - Includes debug logging for cleanup operations
+   - Method is public so it can be called from plugin lifecycle (main.ts onunload)
+
+**Implementation details:**
+- Cleanup method is straightforward since ChartRenderer handles all chart instance tracking
+- EmbeddedChartView has no internal state to clear beyond the charts
+- Error handling ensures cleanup failures don't crash the plugin
+- Debug logging helps track cleanup operations during development
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (27/29 pass, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-003: Refactor EmbeddedTableView with MarkdownRenderChild
+- The cleanup() method is ready to be called from main.ts onunload() in US-006
+- This completes the chart view memory leak prevention - charts will be properly destroyed on plugin unload
+

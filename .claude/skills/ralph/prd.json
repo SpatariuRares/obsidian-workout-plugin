@@ -1,0 +1,135 @@
+{
+  "project": "obsidian-workout-plugin",
+  "branchName": "ralph/phase1-quick-wins",
+  "description": "Phase 1 Quick Wins - Timer presets, exactMatch defaults, and exercise name audit",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add TimerPresetConfig type and settings field",
+      "description": "As a developer, I need the type definitions and settings structure for timer presets.",
+      "acceptanceCriteria": [
+        "Add TimerPresetConfig interface to app/types with fields: name, type, duration, showControls, autoStart, sound",
+        "Add timerPresets field to WorkoutChartsSettings as Record<string, TimerPresetConfig>",
+        "Add defaultTimerPreset field to WorkoutChartsSettings as string | null",
+        "Update DEFAULT_SETTINGS in Constants.ts with empty timerPresets object and null defaultTimerPreset",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented 2026-01-24. TimerPresetConfig added to TimerTypes.ts with all required fields plus optional intervalTime and rounds for interval timers. Settings fields added to WorkoutChartsSettings and DEFAULT_SETTINGS in WorkoutLogData.ts."
+    },
+    {
+      "id": "US-002",
+      "title": "Add Timer Presets UI to settings tab",
+      "description": "As a user, I want to create, edit, and delete timer presets in the settings tab.",
+      "acceptanceCriteria": [
+        "Settings tab includes 'Timer Presets' section",
+        "Can add a new preset with name input and configuration fields",
+        "Can edit existing presets inline",
+        "Can delete presets with confirmation",
+        "Default Timer Preset dropdown shows available presets plus 'None' option",
+        "Presets persist across plugin reloads",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Add preset parameter to workout-timer blocks",
+      "description": "As a user, I want to reference a preset in my workout-timer block.",
+      "acceptanceCriteria": [
+        "Add optional 'preset' parameter to TimerParams interface",
+        "EmbeddedTimerView resolves preset from settings before applying explicit parameters",
+        "Resolution order: explicit params > preset params > default preset > hardcoded defaults",
+        "Error message shown if preset name doesn't exist",
+        "Existing blocks without preset continue to work unchanged",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Change DEFAULT_EXACT_MATCH to true",
+      "description": "As a user, I want exactMatch to default to true for correct exercise filtering.",
+      "acceptanceCriteria": [
+        "Change DEFAULT_EXACT_MATCH in Constants.ts from false to true",
+        "Add defaultExactMatch field to WorkoutChartsSettings (boolean, default true)",
+        "Add toggle for 'Default Exact Match' in settings tab",
+        "Existing blocks with explicit exactMatch: false continue to work",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Create Audit Exercise Names command and modal",
+      "description": "As a user, I want a command to find mismatches between exercise file names and CSV entries.",
+      "acceptanceCriteria": [
+        "Register 'workout-planner:audit-exercise-names' command in command palette",
+        "Command opens AuditModal that scans exercise folder for .md files",
+        "Modal compares filenames (without extension) against CSV exercise column",
+        "Uses fuzzy matching to find closest matches with similarity score",
+        "Modal displays list of mismatches with: file path, file name, closest CSV match, similarity score",
+        "Color-coding: red for no match, yellow for close match, green for exact match",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Add renameExercise method to DataService",
+      "description": "As a developer, I need a method to rename exercises in the CSV file.",
+      "acceptanceCriteria": [
+        "Add renameExercise(oldName: string, newName: string): Promise<number> method to DataService",
+        "Method reads CSV, updates all matching exercise entries, and rewrites file",
+        "Method returns count of updated entries",
+        "Cache is invalidated after rename",
+        "Method handles errors gracefully with appropriate error messages",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Add Rename in CSV button to Audit Modal",
+      "description": "As a user, I want to rename exercises in the CSV directly from the audit modal.",
+      "acceptanceCriteria": [
+        "Each mismatch row has 'Rename in CSV' button",
+        "Clicking opens confirmation with old name → new name preview",
+        "On confirm, uses DataService.renameExercise to update CSV",
+        "Shows success message with count of updated entries",
+        "Modal refreshes to show updated state after rename",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Add Rename File button to Audit Modal",
+      "description": "As a user, I want to rename exercise files to match the CSV.",
+      "acceptanceCriteria": [
+        "Each mismatch row has 'Rename File' button",
+        "Clicking opens confirmation with old filename → new filename preview",
+        "On confirm, file renamed using Obsidian vault.rename API",
+        "Shows success/error message after operation",
+        "Modal refreshes to show updated state",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

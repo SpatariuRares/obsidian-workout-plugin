@@ -1,6 +1,6 @@
 // Types and utilities for workout log data
 import { TFile } from "obsidian";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE, TimerPresetConfig } from "@app/types";
 
 /**
  * Represents a single workout log entry.
@@ -44,6 +44,8 @@ export interface WorkoutChartsSettings {
   dateRange: number; // days
   showTrendLine: boolean;
   chartHeight: number;
+  timerPresets: Record<string, TimerPresetConfig>;
+  defaultTimerPreset: string | null;
 }
 
 /**
@@ -57,6 +59,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   dateRange: 30,
   showTrendLine: true,
   chartHeight: 400,
+  timerPresets: {},
+  defaultTimerPreset: null,
 };
 
 /**

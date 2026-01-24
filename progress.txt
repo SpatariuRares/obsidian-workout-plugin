@@ -1,0 +1,33 @@
+# Ralph Progress Log
+
+## 2026-01-24 - US-001: Add TimerPresetConfig type and settings field
+
+**Status:** Completed
+
+**Changes made:**
+1. Added `TimerPresetConfig` interface to `app/types/TimerTypes.ts` with fields:
+   - `name: string`
+   - `type: TIMER_TYPE`
+   - `duration: number`
+   - `showControls: boolean`
+   - `autoStart: boolean`
+   - `sound: boolean`
+   - `intervalTime?: number` (optional, for interval timers)
+   - `rounds?: number` (optional, for interval timers)
+
+2. Exported `TimerPresetConfig` from `app/types/index.ts`
+
+3. Updated `WorkoutChartsSettings` in `app/types/WorkoutLogData.ts` with:
+   - `timerPresets: Record<string, TimerPresetConfig>`
+   - `defaultTimerPreset: string | null`
+
+4. Updated `DEFAULT_SETTINGS` in `app/types/WorkoutLogData.ts` with:
+   - `timerPresets: {}`
+   - `defaultTimerPreset: null`
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures unrelated to this change:
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-002: Add Timer Presets UI to settings tab

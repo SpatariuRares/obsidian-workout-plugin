@@ -1,4 +1,8 @@
-import { parseCSVLogFile, CSVWorkoutLogEntry } from "../WorkoutLogData";
+import {
+  parseCSVLogFile,
+  CSVWorkoutLogEntry,
+  entryToCSVLine,
+} from "../WorkoutLogData";
 
 describe("parseCSVLogFile - CSV Parsing Validation", () => {
   // Mock console.warn to test warning messages
@@ -228,5 +232,143 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     expect(entries).toHaveLength(1);
     expect(entries[0].timestamp).toBeGreaterThan(0);
     expect(typeof entries[0].timestamp).toBe("number");
+  });
+});
+
+describe("entryToCSVLine - CSV Injection Protection", () => {
+  const baseEntry: CSVWorkoutLogEntry = {
+    date: "2024-01-24",
+    exercise: "Bench Press",
+    reps: 10,
+    weight: 100,
+    volume: 1000,
+    origine: "mobile",
+    workout: "Push Day",
+    timestamp: 1706054400000,
+  };
+
+  test("should prefix formula starting with = with single quote", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "=1+1",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    // The notes field should be prefixed with single quote
+    expect(csvLine).toContain("'=1+1");
+    expect(csvLine).not.toContain(",=1+1");
+  });
+
+  test("should prefix formula starting with + with single quote", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "+1",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("'+1");
+    expect(csvLine).not.toContain(",+1");
+  });
+
+  test("should prefix formula starting with - with single quote", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "-1",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("'-1");
+    expect(csvLine).not.toContain(",-1");
+  });
+
+  test("should prefix formula starting with @ with single quote", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "@SUM(A1:A10)",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("'@SUM(A1:A10)");
+    expect(csvLine).not.toContain(",@SUM(A1:A10)");
+  });
+
+  test("should protect exercise names starting with formula characters", () => {
+    const entry = {
+      ...baseEntry,
+      exercise: "=HYPERLINK(\"http://evil.com\",\"Click me\")",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    // Exercise field (2nd field) should be protected
+    expect(csvLine).toContain("'=HYPERLINK");
+  });
+
+  test("should not prefix normal text values", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "This is a normal note",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("This is a normal note");
+    expect(csvLine).not.toContain("'This is a normal note");
+  });
+
+  test("should protect workout names starting with formula characters", () => {
+    const entry = {
+      ...baseEntry,
+      workout: "+EVIL_FORMULA",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("'+EVIL_FORMULA");
+  });
+
+  test("should handle empty fields correctly without adding prefix", () => {
+    const entry = {
+      ...baseEntry,
+      notes: "",
+      origine: "",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    // Should not have single quotes for empty values
+    const fields = csvLine.split(",");
+    expect(fields[fields.length - 1]).toBe(""); // Last field (notes) should be empty
+  });
+
+  test("should combine injection protection with quote escaping", () => {
+    const entry = {
+      ...baseEntry,
+      notes: '=1+1"test',
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    // Should prefix with single quote AND escape the quote character
+    expect(csvLine).toContain("'=1+1\"\"test"); // Double quote escaped
+  });
+
+  test("should protect multiple fields in same entry", () => {
+    const entry = {
+      ...baseEntry,
+      exercise: "=EVIL1",
+      workout: "+EVIL2",
+      notes: "@EVIL3",
+    };
+
+    const csvLine = entryToCSVLine(entry);
+
+    expect(csvLine).toContain("'=EVIL1");
+    expect(csvLine).toContain("'+EVIL2");
+    expect(csvLine).toContain("'@EVIL3");
   });
 });

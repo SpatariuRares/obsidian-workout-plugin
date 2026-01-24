@@ -191,8 +191,26 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
 
   return values
     .map((value) => {
+      /**
+       * CSV Formula Injection Protection
+       *
+       * Prefix values starting with formula characters (=, +, -, @) with a single quote
+       * to prevent formula injection attacks when CSV is opened in spreadsheet applications.
+       *
+       * Without this protection, malicious values like "=1+1" or "@SUM(A1:A10)" would be
+       * executed as formulas in Excel, LibreOffice, Google Sheets, etc., potentially leading
+       * to security issues or data exfiltration.
+       *
+       * The single quote prefix makes spreadsheet applications treat the value as text
+       * rather than a formula.
+       */
+      let sanitized = value;
+      if (/^[=+\-@]/.test(value)) {
+        sanitized = "'" + value;
+      }
+
       // Escape quotes and wrap in quotes if contains comma, quote, or newline
-      const escaped = value.replace(/"/g, '""');
+      const escaped = sanitized.replace(/"/g, '""');
       if (
         escaped.includes(",") ||
         escaped.includes('"') ||

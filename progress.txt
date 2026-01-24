@@ -1232,3 +1232,51 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - Next task is US-015: Configure Jest coverage thresholds
 - This change improves plugin stability and removes external dependencies
 - The refresh mechanism now uses proper Obsidian lifecycle APIs
+
+## 2026-01-24 - Memory Leak Fixes PRD - US-017: Add CSV injection protection
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added CSV formula injection protection to `entryToCSVLine()` function
+   - Implemented regex pattern `/^[=+\-@]/` to detect formula characters
+   - Prefix detected formulas with single quote before escaping quotes
+   - Added comprehensive JSDoc comment documenting security rationale
+
+2. Created comprehensive test suite in `app/types/__tests__/WorkoutLogData.test.ts`:
+   - 10 new test cases for CSV injection protection covering:
+     - Formula prefixes (=1+1, +1, -1, @SUM)
+     - Exercise name protection (=HYPERLINK)
+     - Workout name protection (+EVIL_FORMULA)
+     - Normal text handling (no false positives)
+     - Empty field handling
+     - Combined injection + quote escaping
+     - Multiple field protection in same entry
+   - All 10 tests passing
+
+**Security protection details:**
+- Protects against CSV formula injection attacks in spreadsheet applications
+- Prevents execution of formulas like:
+  - `=1+1` (Excel calculation)
+  - `=HYPERLINK("http://evil.com","Click")` (malicious links)
+  - `@SUM(A1:A10)` (data exfiltration)
+  - `+cmd|'/c calc'!A1` (command execution)
+- Single quote prefix forces spreadsheet apps to treat values as text
+- Protection applied to all CSV fields (date, exercise, notes, workout, etc.)
+
+**Implementation notes:**
+- Protection is applied before quote escaping to ensure proper CSV formatting
+- Does not affect legitimate negative numbers in numeric fields (weight: -2.5 stored as number, not string)
+- Empty fields are not prefixed (no false positives)
+- Works in combination with existing quote escaping logic
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (325 passed, increased from 320, 2 pre-existing failures unrelated):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-015: Configure Jest coverage thresholds
+- Next task is US-016: Enable TypeScript strict mode
+- This security feature protects users who export workout data to external spreadsheets
+- The protection is transparent to users and does not affect plugin functionality

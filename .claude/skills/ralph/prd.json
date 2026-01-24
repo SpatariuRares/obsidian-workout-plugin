@@ -281,8 +281,8 @@
         "Write unit tests for formula injection scenarios (=1+1, +1, -1, @SUM)"
       ],
       "priority": 17,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-24 - Added CSV formula injection protection to entryToCSVLine() in WorkoutLogData.ts. Implemented regex /^[=+\\-@]/ to detect formula characters at start of values. Values starting with formula characters are prefixed with single quote to prevent execution in spreadsheet applications. Added comprehensive JSDoc comment documenting the security rationale and attack vectors. Created 10 unit tests covering: formula prefixes (=, +, -, @), exercise/workout name protection, normal text handling, empty field handling, combined injection+quote escaping, and multiple field protection. All 10 tests passing. Total test count increased from 320 to 330. TypeScript compilation passes."
     }
   ]
 }

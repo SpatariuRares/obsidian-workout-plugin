@@ -1100,3 +1100,46 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - This fix improves code block parameter parsing robustness and prevents subtle bugs in parameter handling
 - The comprehensive test suite ensures parameter parsing behavior is well-documented and regression-free
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-010: Implement cache size limits
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/services/DataService.ts`:
+   - Added `private readonly MAX_CACHE_SIZE = 5000` constant with comprehensive JSDoc documentation
+   - JSDoc explains cache strategy: balancing performance with memory consumption for users with 10,000+ entries
+   - Modified `getWorkoutLogData()` to validate cache size before using cached data
+   - Cache validation now checks: cache exists AND within time duration AND size <= MAX_CACHE_SIZE
+   - Added automatic cache eviction when size exceeds MAX_CACHE_SIZE
+   - Added debug mode logging for cache statistics:
+     - Cache hit: logs cache size
+     - Cache miss: logs reason (expired or first fetch)
+     - Cache eviction: logs when size exceeds limit
+
+2. Created comprehensive test suite in `app/services/__tests__/DataService.test.ts`:
+   - Test 1: Cache eviction when size exceeds MAX_CACHE_SIZE (6000 entries)
+     - Verifies cache is cleared and rebuilt when exceeding limit
+     - Validates that CSV is read again after eviction
+   - Test 2: Cache usage when size is within MAX_CACHE_SIZE (1000 entries)
+     - Verifies cache is used for subsequent calls within time window
+     - Validates that CSV is NOT read when cache is valid
+   - Test 3: Manual cache clearing via clearLogDataCache()
+     - Verifies manual cache clearing forces CSV read on next call
+   - All 8 DataService tests passing
+
+**Implementation details:**
+- MAX_CACHE_SIZE set to 5,000 entries to balance performance and memory usage
+- For users with 10,000+ entries, cache will be cleared and rebuilt on each request after 5-second window
+- This prevents memory bloat while still providing performance benefits for users with reasonable workout histories
+- Cache eviction is automatic and transparent to the user
+- Debug logging helps developers understand cache behavior and troubleshoot performance issues
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (306 passed, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-011: Optimize filtering string operations
+- Cache size limits provide critical memory protection for users with large workout histories
+- Debug logging can be enabled in plugin settings to monitor cache behavior in production
+

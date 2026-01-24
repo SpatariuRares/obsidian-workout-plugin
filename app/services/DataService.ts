@@ -14,6 +14,18 @@ export class DataService {
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
   private readonly MAX_RETRIES = 1; // Maximum retry attempts for CSV creation
+  /**
+   * Maximum cache size to prevent excessive memory consumption.
+   * For users with large workout histories (10,000+ entries), we limit the cache
+   * to 5,000 entries. This balances performance (avoiding repeated CSV parsing)
+   * with memory consumption (preventing browser slowdowns/crashes).
+   *
+   * Cache strategy:
+   * - If cached data exists and is within CACHE_DURATION, use cache
+   * - If cache exceeds MAX_CACHE_SIZE, clear and rebuild cache
+   * - Cache is also cleared on any data modification (add/update/delete)
+   */
+  private readonly MAX_CACHE_SIZE = 5000;
 
   constructor(
     private app: App,
@@ -26,12 +38,34 @@ export class DataService {
     exactMatch?: boolean;
   }): Promise<WorkoutLogData[]> {
     const now = Date.now();
-    if (this.logDataCache && now - this.lastCacheTime < this.CACHE_DURATION) {
+
+    // Check if cache is valid and within size limits
+    const cacheValid = this.logDataCache &&
+                       now - this.lastCacheTime < this.CACHE_DURATION &&
+                       this.logDataCache.length <= this.MAX_CACHE_SIZE;
+
+    if (cacheValid) {
+      // Debug logging for cache statistics
+      if ((this.app as any).plugins?.plugins?.["obsidian-workout-plugin"]?.settings?.debugMode) {
+        console.log(`[DataService] Cache hit - size: ${this.logDataCache!.length} entries`);
+      }
+
       // If we have cached data and filter params, apply filtering to cached data
       if (filterParams) {
-        return this.applyEarlyFiltering(this.logDataCache, filterParams);
+        return this.applyEarlyFiltering(this.logDataCache!, filterParams);
       }
-      return this.logDataCache;
+      return this.logDataCache!;
+    }
+
+    // Cache miss or exceeded size limit
+    if (this.logDataCache && this.logDataCache.length > this.MAX_CACHE_SIZE) {
+      // Debug logging for cache eviction
+      if ((this.app as any).plugins?.plugins?.["obsidian-workout-plugin"]?.settings?.debugMode) {
+        console.log(`[DataService] Cache exceeded MAX_CACHE_SIZE (${this.logDataCache.length} > ${this.MAX_CACHE_SIZE}), clearing cache`);
+      }
+      this.clearLogDataCache();
+    } else if ((this.app as any).plugins?.plugins?.["obsidian-workout-plugin"]?.settings?.debugMode) {
+      console.log(`[DataService] Cache miss - fetching from CSV`);
     }
 
     return await this.getCSVWorkoutLogData(filterParams);

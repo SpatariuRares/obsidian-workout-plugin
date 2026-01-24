@@ -203,4 +203,91 @@ describe("DataService", () => {
       );
     });
   });
+
+  describe("Cache Size Limits", () => {
+    it("should clear cache when size exceeds MAX_CACHE_SIZE", async () => {
+      // Create a large CSV content with 6000 entries (exceeds MAX_CACHE_SIZE of 5000)
+      const largeCSVContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        ...Array.from({ length: 6000 }, (_, i) =>
+          `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`
+        )
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(largeCSVContent);
+
+      // First call - should populate cache with 6000 entries
+      const firstResult = await dataService.getWorkoutLogData();
+      expect(firstResult.length).toBe(6000);
+
+      // Clear the read mock to verify cache behavior
+      mockVault.read.mockClear();
+
+      // Second call - cache should be invalid due to size exceeding MAX_CACHE_SIZE
+      // So it should read from CSV again
+      mockVault.read.mockResolvedValue(largeCSVContent);
+      const secondResult = await dataService.getWorkoutLogData();
+
+      // Verify that read was called again (cache was cleared and rebuilt)
+      expect(mockVault.read).toHaveBeenCalledTimes(1);
+      expect(secondResult.length).toBe(6000);
+    });
+
+    it("should use cache when size is within MAX_CACHE_SIZE", async () => {
+      // Create a CSV content with 1000 entries (well within MAX_CACHE_SIZE of 5000)
+      const smallCSVContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        ...Array.from({ length: 1000 }, (_, i) =>
+          `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`
+        )
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(smallCSVContent);
+
+      // First call - should populate cache with 1000 entries
+      const firstResult = await dataService.getWorkoutLogData();
+      expect(firstResult.length).toBe(1000);
+
+      // Clear the read mock to verify cache behavior
+      mockVault.read.mockClear();
+
+      // Second call immediately after (within CACHE_DURATION)
+      // Should use cache and NOT read from CSV
+      const secondResult = await dataService.getWorkoutLogData();
+
+      // Verify that read was NOT called (cache was used)
+      expect(mockVault.read).not.toHaveBeenCalled();
+      expect(secondResult.length).toBe(1000);
+    });
+
+    it("should clear cache when manually calling clearLogDataCache", async () => {
+      const smallCSVContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(smallCSVContent);
+
+      // First call - populate cache
+      await dataService.getWorkoutLogData();
+
+      // Clear cache manually
+      dataService.clearLogDataCache();
+
+      // Clear read mock
+      mockVault.read.mockClear();
+      mockVault.read.mockResolvedValue(smallCSVContent);
+
+      // Second call - should read from CSV again since cache was cleared
+      await dataService.getWorkoutLogData();
+
+      expect(mockVault.read).toHaveBeenCalledTimes(1);
+    });
+  });
 });

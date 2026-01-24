@@ -204,6 +204,221 @@ describe("DataService", () => {
     });
   });
 
+  describe("Filtering Optimization", () => {
+    it("should correctly filter by exercise name with exact match", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout A,Workout A,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Workout B,Workout B,1704182400000,",
+        "2024-01-03T10:00:00.000Z,bench press,8,110,880,Workout A,Workout A,1704268800000,",
+        "2024-01-04T10:00:00.000Z,Deadlift,5,200,1000,Workout C,Workout C,1704355200000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        exercise: "Bench Press",
+        exactMatch: true,
+      });
+
+      // Should match both "Bench Press" and "bench press" (case-insensitive)
+      expect(result.length).toBe(2);
+      expect(result[0].exercise).toBe("Bench Press");
+      expect(result[1].exercise).toBe("bench press");
+    });
+
+    it("should correctly filter by exercise name with fuzzy match", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout A,Workout A,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Incline Bench Press,10,80,800,Workout B,Workout B,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Squat,10,150,1500,Workout C,Workout C,1704268800000,",
+        "2024-01-04T10:00:00.000Z,Decline Bench Press,8,90,720,Workout D,Workout D,1704355200000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        exercise: "Bench",
+        exactMatch: false,
+      });
+
+      // Should match all exercises containing "bench" (case-insensitive)
+      expect(result.length).toBe(3);
+      expect(result.every(log => log.exercise.toLowerCase().includes("bench"))).toBe(true);
+    });
+
+    it("should correctly filter by workout name with exact match", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Push Day,Push Day,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Leg Day,Leg Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Overhead Press,8,60,480,push day,push day,1704268800000,",
+        "2024-01-04T10:00:00.000Z,Deadlift,5,200,1000,Pull Day,Pull Day,1704355200000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        workout: "Push Day",
+        exactMatch: true,
+      });
+
+      // Should match both "Push Day" and "push day" (case-insensitive)
+      expect(result.length).toBe(2);
+      expect(result[0].origine).toBe("Push Day");
+      expect(result[1].origine).toBe("push day");
+    });
+
+    it("should correctly filter by workout name with fuzzy match", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Push Day A,Push Day A,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Leg Day,Leg Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Overhead Press,8,60,480,Push Day B,Push Day B,1704268800000,",
+        "2024-01-04T10:00:00.000Z,Deadlift,5,200,1000,Pull Day,Pull Day,1704355200000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        workout: "Push",
+        exactMatch: false,
+      });
+
+      // Should match all workouts containing "push" (case-insensitive)
+      expect(result.length).toBe(2);
+      expect(result.every(log => log.origine?.toLowerCase().includes("push"))).toBe(true);
+    });
+
+    it("should correctly filter with both exercise and workout filters (AND logic)", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Push Day,Push Day,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Push Day,Push Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Bench Press,8,110,880,Leg Day,Leg Day,1704268800000,",
+        "2024-01-04T10:00:00.000Z,Deadlift,5,200,1000,Pull Day,Pull Day,1704355200000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        exercise: "Bench Press",
+        workout: "Push Day",
+        exactMatch: true,
+      });
+
+      // Should match only entries with both "Bench Press" AND "Push Day"
+      expect(result.length).toBe(1);
+      expect(result[0].exercise).toBe("Bench Press");
+      expect(result[0].origine).toBe("Push Day");
+    });
+
+    it("should handle whitespace normalization correctly", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench  Press,10,100,1000,Push Day,Push Day,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Bench Press,10,110,1100,Push  Day,Push  Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,  Bench Press  ,8,120,960,  Push Day  ,  Push Day  ,1704268800000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        exercise: "  Bench   Press  ",
+        workout: "  Push   Day  ",
+        exactMatch: true,
+      });
+
+      // Should normalize whitespace and match all entries
+      expect(result.length).toBe(3);
+    });
+
+    it("should handle workout names with wiki-link brackets correctly", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,[[Push Day]],[[Push Day]],1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,[[Leg Day]],[[Leg Day]],1704182400000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData({
+        workout: "Push Day",
+        exactMatch: true,
+      });
+
+      // Should strip wiki-link brackets and match
+      expect(result.length).toBe(1);
+      expect(result[0].origine).toBe("[[Push Day]]");
+    });
+
+    it("should return all entries when no filters are provided", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Push Day,Push Day,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Leg Day,Leg Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Deadlift,5,200,1000,Pull Day,Pull Day,1704268800000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      const result = await dataService.getWorkoutLogData();
+
+      // Should return all entries when no filters provided
+      expect(result.length).toBe(3);
+    });
+
+    it("should work correctly with cached data filtering", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+        "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Push Day,Push Day,1704096000000,",
+        "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Leg Day,Leg Day,1704182400000,",
+        "2024-01-03T10:00:00.000Z,Deadlift,5,200,1000,Pull Day,Pull Day,1704268800000,",
+      ].join("\n");
+
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      // First call - populates cache with all data
+      const allData = await dataService.getWorkoutLogData();
+      expect(allData.length).toBe(3);
+
+      // Clear read mock to verify cache is used
+      mockVault.read.mockClear();
+
+      // Second call with filter - should use cached data and apply filter
+      const filteredData = await dataService.getWorkoutLogData({
+        exercise: "Bench Press",
+        exactMatch: true,
+      });
+
+      // Verify cache was used (no read call)
+      expect(mockVault.read).not.toHaveBeenCalled();
+
+      // Verify filtering worked correctly
+      expect(filteredData.length).toBe(1);
+      expect(filteredData[0].exercise).toBe("Bench Press");
+    });
+  });
+
   describe("Cache Size Limits", () => {
     it("should clear cache when size exceeds MAX_CACHE_SIZE", async () => {
       // Create a large CSV content with 6000 entries (exceeds MAX_CACHE_SIZE of 5000)

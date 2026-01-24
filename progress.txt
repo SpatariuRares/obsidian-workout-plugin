@@ -1143,3 +1143,54 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - Cache size limits provide critical memory protection for users with large workout histories
 - Debug logging can be enabled in plugin settings to monitor cache behavior in production
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-011: Optimize filtering string operations
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/services/DataService.ts`:
+   - Modified `applyEarlyFiltering()` method to pre-compute normalized filter values before the filter loop
+   - Added `normalizedFilters` object with pre-computed `exerciseName` and `workoutName` values
+   - Pre-computation performed outside the loop: `toLowerCase().replace(/\s+/g, " ").trim()`
+   - Reduces complexity from O(n * m) to O(n) where n = entries, m = normalization cost
+   - Updated `matchesEarlyFilter()` signature to accept optional `normalizedFilters` parameter
+   - Modified method to use pre-computed values when available, fallback to inline normalization for compatibility
+   - Updated `getCSVWorkoutLogData()` to also pre-compute normalized filters before CSV entry processing loop
+   - Added comprehensive JSDoc comments documenting performance optimization rationale
+
+**Performance optimization details:**
+- **Before**: For 1000 entries with exercise filter, normalization happened 1000 times (once per entry)
+- **After**: Normalization happens once before filtering, then reused for all 1000 entries
+- For large datasets (10,000+ entries), this significantly reduces CPU time spent on string operations
+- Particularly beneficial for users with large workout histories and frequent filtering
+
+**Testing:**
+2. Created comprehensive test suite in `app/services/__tests__/DataService.test.ts`:
+   - Added "Filtering Optimization" test suite with 9 test cases:
+     1. Exact match exercise filtering (case-insensitive)
+     2. Fuzzy match exercise filtering (includes check)
+     3. Exact match workout filtering (case-insensitive)
+     4. Fuzzy match workout filtering (includes check)
+     5. Combined exercise AND workout filters (AND logic)
+     6. Whitespace normalization (multiple spaces, leading/trailing)
+     7. Wiki-link bracket handling ([[workout name]] format)
+     8. No filters provided (return all entries)
+     9. Cached data filtering (uses cache and applies filter)
+   - All tests verify filter correctness is preserved after optimization
+   - Tests use realistic CSV data with various edge cases
+   - All 17 DataService tests passing (5 recursion protection + 3 cache + 9 filtering)
+
+**Implementation notes:**
+- Backward compatible: `matchesEarlyFilter()` works with or without pre-computed filters
+- Both code paths (CSV read and cache filtering) use the optimization
+- No changes to public API or behavior, purely internal optimization
+- Filter correctness is mathematically identical to before, just computed more efficiently
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (315 passed, 1 pre-existing failure unrelated to this change):
+  - Pre-existing failure: `FormField.test.ts` - expects "Exercise Name" but code uses "Exercise name"
+- Next task is US-012: Replace custom trigger logic with Obsidian APIs
+- This optimization provides significant performance improvements for users with large workout datasets
+- The pre-computation pattern can be applied to other filtering/processing loops if needed
+

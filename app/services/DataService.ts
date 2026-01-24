@@ -95,13 +95,31 @@ export class DataService {
       const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content);
 
+      // Pre-compute normalized filter values for performance (if filtering is enabled)
+      let normalizedFilters: { exerciseName?: string; workoutName?: string } | undefined;
+      if (filterParams) {
+        normalizedFilters = {};
+        if (filterParams.exercise) {
+          normalizedFilters.exerciseName = filterParams.exercise
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+        }
+        if (filterParams.workout) {
+          normalizedFilters.workoutName = filterParams.workout
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
+        }
+      }
+
       // Convert CSV entries to WorkoutLogData format
       csvEntries.forEach((entry) => {
         const logEntry = convertFromCSVEntry(entry, csvFile);
 
         // Apply filtering if specified
         if (filterParams) {
-          if (!this.matchesEarlyFilter(logEntry, filterParams)) {
+          if (!this.matchesEarlyFilter(logEntry, filterParams, normalizedFilters)) {
             return;
           }
         }
@@ -123,6 +141,11 @@ export class DataService {
 
   /**
    * Apply early filtering to reduce data processing
+   *
+   * Performance optimization: Pre-compute normalized filter values before the filter loop
+   * to avoid redundant string operations (toLowerCase, replace, trim) on every iteration.
+   * For large datasets (1000+ entries), this reduces O(n * m) operations to O(n),
+   * where n is the number of entries and m is the cost of string normalization.
    */
   private applyEarlyFiltering(
     logData: WorkoutLogData[],
@@ -132,11 +155,36 @@ export class DataService {
       exactMatch?: boolean;
     },
   ): WorkoutLogData[] {
-    return logData.filter((log) => this.matchesEarlyFilter(log, filterParams));
+    // Pre-compute normalized filter values outside the loop
+    const normalizedFilters: {
+      exerciseName?: string;
+      workoutName?: string;
+    } = {};
+
+    if (filterParams.exercise) {
+      normalizedFilters.exerciseName = filterParams.exercise
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    if (filterParams.workout) {
+      normalizedFilters.workoutName = filterParams.workout
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    return logData.filter((log) =>
+      this.matchesEarlyFilter(log, filterParams, normalizedFilters)
+    );
   }
 
   /**
    * Check if a log entry matches early filtering criteria
+   * @param log The workout log entry to check
+   * @param filterParams The filter parameters (must include normalized exercise/workout names)
+   * @param normalizedFilters Pre-computed normalized filter values for performance
    */
   private matchesEarlyFilter(
     log: WorkoutLogData,
@@ -145,13 +193,18 @@ export class DataService {
       workout?: string;
       exactMatch?: boolean;
     },
+    normalizedFilters?: {
+      exerciseName?: string;
+      workoutName?: string;
+    },
   ): boolean {
     // Check exercise filter
     if (filterParams.exercise) {
-      const exerciseName = filterParams.exercise
-        .toLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
+      // Performance optimization: Use pre-computed normalized exercise name
+      // instead of normalizing on every iteration
+      const exerciseName = normalizedFilters?.exerciseName ||
+        filterParams.exercise.toLowerCase().replace(/\s+/g, " ").trim();
+
       const logExercise = (log.exercise || "")
         .toLowerCase()
         .replace(/\s+/g, " ")
@@ -175,10 +228,11 @@ export class DataService {
 
     // Check workout filter
     if (filterParams.workout) {
-      const workoutName = filterParams.workout
-        .toLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
+      // Performance optimization: Use pre-computed normalized workout name
+      // instead of normalizing on every iteration
+      const workoutName = normalizedFilters?.workoutName ||
+        filterParams.workout.toLowerCase().replace(/\s+/g, " ").trim();
+
       const logOrigine = (log.origine || log.workout || "")
         .toLowerCase()
         .replace(/\[\[|\]\]/g, "")

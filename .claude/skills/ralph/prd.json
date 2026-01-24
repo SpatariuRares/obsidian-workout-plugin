@@ -1,135 +1,146 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/phase1-quick-wins",
-  "description": "Phase 1 Quick Wins - Timer presets, exactMatch defaults, and exercise name audit",
+  "branchName": "ralph/phase2-core-features",
+  "description": "Phase 2 Core Features - Exercise block automation and progressive overload tracking",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Add TimerPresetConfig type and settings field",
-      "description": "As a developer, I need the type definitions and settings structure for timer presets.",
+      "title": "Configure Exercise Block Template in Settings",
+      "description": "As a user, I want to customize the exercise block template in settings so that it matches my preferred structure.",
       "acceptanceCriteria": [
-        "Add TimerPresetConfig interface to app/types with fields: name, type, duration, showControls, autoStart, sound",
-        "Add timerPresets field to WorkoutChartsSettings as Record<string, TimerPresetConfig>",
-        "Add defaultTimerPreset field to WorkoutChartsSettings as string | null",
-        "Update DEFAULT_SETTINGS in Constants.ts with empty timerPresets object and null defaultTimerPreset",
+        "Add exerciseBlockTemplate field to WorkoutChartsSettings as string",
+        "Add default template to DEFAULT_SETTINGS with placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
+        "Add 'Exercise Block Template' textarea in settings tab under new 'Templates' section",
+        "Template textarea shows default template with placeholder documentation",
+        "Template persists across plugin reloads",
         "Typecheck passes"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Implemented 2026-01-24. TimerPresetConfig added to TimerTypes.ts with all required fields plus optional intervalTime and rounds for interval timers. Settings fields added to WorkoutChartsSettings and DEFAULT_SETTINGS in WorkoutLogData.ts."
+      "notes": "Completed: Added exerciseBlockTemplate field to settings interface, default template with all required placeholders, new Templates section in settings tab with textarea and documentation."
     },
     {
       "id": "US-002",
-      "title": "Add Timer Presets UI to settings tab",
-      "description": "As a user, I want to create, edit, and delete timer presets in the settings tab.",
+      "title": "Add Exercise Block Command with Modal",
+      "description": "As a user, I want a command to insert a complete exercise block structure so that I don't have to manually create timer and log blocks each time.",
       "acceptanceCriteria": [
-        "Settings tab includes 'Timer Presets' section",
-        "Can add a new preset with name input and configuration fields",
-        "Can edit existing presets inline",
-        "Can delete presets with confirmation",
-        "Default Timer Preset dropdown shows available presets plus 'None' option",
-        "Presets persist across plugin reloads",
-        "Typecheck passes"
+        "Register 'workout-planner:add-exercise-block' command in CommandHandlerService",
+        "Create AddExerciseBlockModal that extends ModalBase",
+        "Modal includes exercise name input with ExerciseAutocomplete component",
+        "Modal includes timer duration selector with preset dropdown (if presets exist)",
+        "Modal includes workout file selector that defaults to current file",
+        "Clicking 'Insert' parses template from settings, replaces placeholders, and inserts at cursor",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added Timer Presets section to WorkoutChartsSettingTab with: (1) Default Timer Preset dropdown with 'None' option, (2) Add preset button that opens inline editor, (3) Preset list with edit/delete buttons, (4) Inline editor with all configuration fields (name, type, duration, interval, rounds, controls, auto-start, sound), (5) Validation for preset names. Settings persist via plugin.saveSettings()."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Add preset parameter to workout-timer blocks",
-      "description": "As a user, I want to reference a preset in my workout-timer block.",
+      "title": "Add targetWeight and targetReps parameters to workout-log",
+      "description": "As a user, I want to set target weight and reps in workout-log blocks so that the system can track my progression goal.",
       "acceptanceCriteria": [
-        "Add optional 'preset' parameter to TimerParams interface",
-        "EmbeddedTimerView resolves preset from settings before applying explicit parameters",
-        "Resolution order: explicit params > preset params > default preset > hardcoded defaults",
-        "Error message shown if preset name doesn't exist",
-        "Existing blocks without preset continue to work unchanged",
+        "Add targetWeight optional parameter to EmbeddedTableParams interface (number)",
+        "Add targetReps optional parameter to EmbeddedTableParams interface (number)",
+        "Add weightIncrement field to WorkoutChartsSettings (number, default 2.5)",
+        "Add weightIncrement setting in settings tab under new 'Progressive Overload' section",
+        "EmbeddedTableView parses targetWeight and targetReps from code block parameters",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added 'preset' parameter to EmbeddedTimerParams interface in TimerTypes.ts. Added resolveTimerParams() method to EmbeddedTimerView that implements the resolution order: explicit params > preset params > default preset > hardcoded defaults. Error message displays available presets when specified preset not found."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Change DEFAULT_EXACT_MATCH to true",
-      "description": "As a user, I want exactMatch to default to true for correct exercise filtering.",
+      "title": "Display target header in workout log",
+      "description": "As a user, I want to see my target weight and reps displayed in the log header so that I know my current goal.",
       "acceptanceCriteria": [
-        "Change DEFAULT_EXACT_MATCH in Constants.ts from false to true",
-        "Add defaultExactMatch field to WorkoutChartsSettings (boolean, default true)",
-        "Add toggle for 'Default Exact Match' in settings tab",
-        "Existing blocks with explicit exactMatch: false continue to work",
-        "Typecheck passes"
+        "When targetWeight or targetReps is set, render target header above the log table",
+        "Header format: 'Target: {weight}kg × {reps} reps' or partial if only one is set",
+        "Header styled with subtle background color using Obsidian CSS variables",
+        "Header appears between exercise name and table",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH = true in Constants.ts. Added defaultExactMatch field (boolean, default true) to WorkoutChartsSettings in WorkoutLogData.ts. Added 'Default exact match' toggle in settings tab under new 'Filtering' section. Updated InsertChartModal and InsertTableModal to use plugin.settings.defaultExactMatch. Updated TableConfig.getDefaults() to use the constant. Existing blocks with explicit exactMatch: false continue to work as the explicit parameter always overrides."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Create Audit Exercise Names command and modal",
-      "description": "As a user, I want a command to find mismatches between exercise file names and CSV entries.",
+      "title": "Display target progress indicator",
+      "description": "As a user, I want to see visual progress toward my target so that I know how close I am to progression.",
       "acceptanceCriteria": [
-        "Register 'workout-planner:audit-exercise-names' command in command palette",
-        "Command opens AuditModal that scans exercise folder for .md files",
-        "Modal compares filenames (without extension) against CSV exercise column",
-        "Uses fuzzy matching to find closest matches with similarity score",
-        "Modal displays list of mismatches with: file path, file name, closest CSV match, similarity score",
-        "Color-coding: red for no match, yellow for close match, green for exact match",
-        "Typecheck passes"
+        "Progress bar component shown in target header when both targetWeight and targetReps are set",
+        "Calculate progress: find best recent reps at targetWeight, compare to targetReps",
+        "Progress bar fills based on (bestReps / targetReps) * 100",
+        "Color coding: red (0-50%), yellow (50-90%), green (90-100%), bright green (100%+)",
+        "Tooltip shows exact numbers: 'Best: X reps / Target: Y reps'",
+        "Progress bar styled with Obsidian CSS variables",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Created AuditExerciseNamesModal that: (1) Scans exercise folder for markdown files, (2) Compares filenames against all unique CSV exercise names, (3) Uses getMatchScore utility for fuzzy matching with 0-100 similarity scores, (4) Displays results in sortable table (worst matches first), (5) Color-codes status: red for no match (0%), yellow for partial/close match (1-99%), green for exact match (100%), (6) File names are clickable links that open the exercise file, (7) Shows success message when no mismatches found. Registered 'audit-exercise-names' command in CommandHandlerService. Added constants to Constants.ts for modal titles, labels, and notices. Added CSS styles to _modal.scss for table, status indicators, and container. Typecheck passes. Pre-existing test failures remain unrelated."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Add renameExercise method to DataService",
-      "description": "As a developer, I need a method to rename exercises in the CSV file.",
+      "title": "Target achievement notification badge",
+      "description": "As a user, I want to see a notification when I achieve my target so that I know it's time to increase the weight.",
       "acceptanceCriteria": [
-        "Add renameExercise(oldName: string, newName: string): Promise<number> method to DataService",
-        "Method reads CSV, updates all matching exercise entries, and rewrites file",
-        "Method returns count of updated entries",
-        "Cache is invalidated after rename",
-        "Method handles errors gracefully with appropriate error messages",
-        "Typecheck passes"
+        "Add achievedTargets field to WorkoutChartsSettings as Record<string, boolean>",
+        "When latest entry meets or exceeds targetReps at targetWeight, show achievement badge",
+        "Badge text: 'Target Reached! Consider increasing weight'",
+        "Badge styled with celebratory color (green) using Obsidian CSS variables",
+        "Badge has dismiss button that sets achievedTargets[exerciseName] = true",
+        "Badge does not re-appear after dismissal until targetWeight changes",
+        "Achievement state persists across plugin reloads",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added renameExercise method to DataService that: (1) Reads CSV file using parseCSVLogFile, (2) Normalizes exercise names for comparison (case-insensitive, trimmed), (3) Updates all matching entries to the new name, (4) Writes back to CSV using entriesToCSVContent, (5) Clears cache to reflect changes, (6) Returns count of updated entries, (7) Handles errors gracefully with descriptive error messages. TypeScript compilation passes. Pre-existing test failures remain unrelated."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Add Rename in CSV button to Audit Modal",
-      "description": "As a user, I want to rename exercises in the CSV directly from the audit modal.",
+      "title": "Suggest next weight progression",
+      "description": "As a user, I want a suggested next weight when I hit my target so that I have a clear progression path.",
       "acceptanceCriteria": [
-        "Each mismatch row has 'Rename in CSV' button",
-        "Clicking opens confirmation with old name → new name preview",
-        "On confirm, uses DataService.renameExercise to update CSV",
-        "Shows success message with count of updated entries",
-        "Modal refreshes to show updated state after rename",
-        "Typecheck passes"
+        "When target achieved (badge shown), display suggested next weight",
+        "Suggestion text: 'Suggested next: {currentWeight + increment}kg'",
+        "Uses weightIncrement from settings (default 2.5kg)",
+        "Suggestion appears next to achievement badge",
+        "Clicking suggestion opens confirmation: 'Update target weight to Xkg?'",
+        "On confirm, updates targetWeight parameter in the code block using Obsidian edit API",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added 'Rename in CSV' button to each mismatch row in AuditExerciseNamesModal (only shown for valid matches with score > 0). Button opens confirmation dialog showing 'oldName → newName' preview using browser's confirm() dialog. On confirmation, uses plugin.renameExercise() (added public method to main.ts that wraps dataService.renameExercise). Shows success message with count of updated entries. Modal refreshes automatically after rename to show updated state. Added constants: MODAL.BUTTONS.RENAME_IN_CSV, MODAL.NOTICES.AUDIT_RENAME_SUCCESS, AUDIT_RENAME_ERROR, AUDIT_CONFIRM_RENAME. TypeScript compilation passes. Pre-existing test failures remain unrelated."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Add Rename File button to Audit Modal",
-      "description": "As a user, I want to rename exercise files to match the CSV.",
+      "title": "Quick log with previous values and adjust buttons",
+      "description": "As a user, I want to quickly log a set with my previous values so that logging during workouts is faster.",
       "acceptanceCriteria": [
-        "Each mismatch row has 'Rename File' button",
-        "Clicking opens confirmation with old filename → new filename preview",
-        "On confirm, file renamed using Obsidian vault.rename API",
-        "Shows success/error message after operation",
-        "Modal refreshes to show updated state",
-        "Typecheck passes"
+        "Add 'Repeat Last' button in workout-log table header (only when entries exist)",
+        "Clicking opens CreateLogModal pre-filled with latest entry values (exercise, weight, reps, workout)",
+        "Add quick adjust buttons to weight field: '+{increment}' and '-{increment}' (uses weightIncrement setting)",
+        "Add quick adjust buttons to reps field: '+1' and '-1'",
+        "Quick adjust buttons positioned next to input fields",
+        "Buttons styled as compact icons/text using Obsidian CSS variables",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Implemented 2026-01-24. Added 'Rename File' button to each mismatch row in AuditExerciseNamesModal (only shown for valid matches with score > 0, alongside the existing 'Rename in CSV' button). Button opens confirmation dialog showing 'oldFileName.md → newFileName.md' preview using browser's confirm() dialog. On confirmation, uses Obsidian's vault.rename() API to rename the exercise file. Shows success message on completion or error message on failure. Modal refreshes automatically after rename to show updated state. Added constants: MODAL.NOTICES.AUDIT_RENAME_FILE_SUCCESS, AUDIT_RENAME_FILE_ERROR, AUDIT_CONFIRM_RENAME_FILE. Actions cell uses flexbox layout with 8px gap for button spacing. TypeScript compilation passes. Pre-existing test failures remain unrelated."
+      "passes": false,
+      "notes": ""
     }
   ]
 }

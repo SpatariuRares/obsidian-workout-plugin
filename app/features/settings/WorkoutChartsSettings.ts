@@ -83,6 +83,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Timer Presets Section
     this.renderTimerPresetsSection(containerEl);
+
+    // Templates Section
+    this.renderTemplatesSection(containerEl);
   }
 
   private renderTimerPresetsSection(containerEl: HTMLElement): void {
@@ -394,5 +397,26 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Re-render the entire settings page to update all sections
     this.display();
+  }
+
+  private renderTemplatesSection(containerEl: HTMLElement): void {
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.TEMPLATES)
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_BLOCK_TEMPLATE)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.EXERCISE_BLOCK_TEMPLATE)
+      .addTextArea((text) => {
+        text
+          .setValue(this.plugin.settings.exerciseBlockTemplate)
+          .setPlaceholder(this.plugin.settings.exerciseBlockTemplate)
+          .onChange(async (value) => {
+            this.plugin.settings.exerciseBlockTemplate = value;
+            await this.plugin.saveSettings();
+          });
+        text.inputEl.rows = 10;
+        text.inputEl.cols = 50;
+      });
   }
 }

@@ -47,6 +47,7 @@ export interface WorkoutChartsSettings {
   defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;
+  exerciseBlockTemplate: string;
 }
 
 /**
@@ -63,6 +64,17 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   defaultExactMatch: true,
   timerPresets: {},
   defaultTimerPreset: null,
+  exerciseBlockTemplate: `## {{exercise}}
+
+\`\`\`workout-timer
+duration: {{duration}}
+preset: {{preset}}
+\`\`\`
+
+\`\`\`workout-log
+exercise: {{exercise}}
+workout: {{workout}}
+\`\`\``,
 };
 
 /**

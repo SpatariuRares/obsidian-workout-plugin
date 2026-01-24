@@ -316,3 +316,37 @@ public async renameExercise(
 - All user stories in the PRD are now complete
 - The audit modal now provides comprehensive bidirectional rename functionality: rename CSV to match files OR rename files to match CSV
 
+## 2026-01-24 - Phase 2 Core Features - US-001: Configure Exercise Block Template in Settings
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `exerciseBlockTemplate: string` field to `WorkoutChartsSettings` interface
+   - Added default template to `DEFAULT_SETTINGS` with placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}
+   - Default template includes markdown heading, workout-timer code block, and workout-log code block
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `SETTINGS.LABELS.EXERCISE_BLOCK_TEMPLATE: "Exercise block template"`
+   - Added `SETTINGS.DESCRIPTIONS.EXERCISE_BLOCK_TEMPLATE` with placeholder documentation
+   - Added `SETTINGS.SECTIONS.TEMPLATES: "Templates"`
+
+3. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added `renderTemplatesSection()` method to display Templates section
+   - Added textarea setting for exercise block template with 10 rows, 50 cols
+   - Template persists via plugin.saveSettings() on change
+
+**Features implemented:**
+- New "Templates" section in settings tab
+- Exercise Block Template textarea with default template pre-filled
+- Description shows available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}
+- Template persists across plugin reloads via settings
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-002: Add Exercise Block Command with Modal
+- The template is now configurable but not yet used - US-002 will implement the command to insert exercise blocks using this template
+

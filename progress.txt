@@ -877,3 +877,33 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - The cleanup() method is ready to be called from main.ts onunload() in US-006
 - This completes the table view memory leak prevention - event listeners will be properly cleaned up on plugin unload
 
+## 2026-01-24 - Memory Leak Fixes PRD - US-005: Add cleanup method to EmbeddedDashboardView
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/views/EmbeddedDashboardView.ts`:
+   - Added public `cleanup()` method with comprehensive JSDoc documentation
+   - Method includes try-catch error handling for safe cleanup
+   - Includes debug logging for cleanup operations
+   - Currently no internal state to clear, but method provides:
+     - Consistency with other view cleanup patterns (EmbeddedChartView, EmbeddedTableView)
+     - Future-proofing if dashboard adds stateful components (event listeners, timers, AbortControllers)
+     - Plugin lifecycle compliance for onunload() hook
+
+**Implementation details:**
+- Unlike EmbeddedTableView (which manages TableRenderChild instances and AbortControllers) and EmbeddedChartView (which manages Chart.js instances), EmbeddedDashboardView currently delegates all rendering to stateless widget components
+- Widgets (SummaryWidget, QuickStatsCards, VolumeAnalytics, etc.) handle their own rendering without maintaining long-lived resources
+- The cleanup() method serves as a placeholder and consistency interface, ready for future dashboard features that may require cleanup
+- Error handling ensures cleanup failures don't crash the plugin during unload
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (27/29 pass, 2 pre-existing failures unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-006: Complete plugin lifecycle cleanup in main.ts
+- The cleanup() method is ready to be called from main.ts onunload() in US-006
+- All three view classes (EmbeddedChartView, EmbeddedTableView, EmbeddedDashboardView) now have cleanup() methods
+- This provides a consistent cleanup interface for the plugin lifecycle
+

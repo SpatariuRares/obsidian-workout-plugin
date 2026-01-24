@@ -25,6 +25,27 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
+   * Cleanup method to be called during plugin unload.
+   * Clears any internal state and ensures proper resource cleanup to prevent memory leaks.
+   * Currently, the dashboard does not maintain long-lived resources (event listeners or timers),
+   * but this method provides a consistent interface for future extensions.
+   */
+  public cleanup(): void {
+    try {
+      this.logDebug("EmbeddedDashboardView", "Cleaning up dashboard view resources");
+
+      // Currently no internal state to clear, but method is here for:
+      // 1. Consistency with other view cleanup patterns
+      // 2. Future-proofing if dashboard adds stateful components
+      // 3. Plugin lifecycle compliance
+
+      this.logDebug("EmbeddedDashboardView", "Dashboard view cleanup completed");
+    } catch (error) {
+      console.error("Error during EmbeddedDashboardView cleanup:", error);
+    }
+  }
+
+  /**
    * Creates a workout dashboard with summary widgets and analytics
    */
   async createDashboard(

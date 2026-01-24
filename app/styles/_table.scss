@@ -358,6 +358,43 @@
   }
 }
 
+/* Weight Suggestion */
+.workout-weight-suggestion {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  flex: 1;
+}
+
+.workout-suggestion-text {
+  font-size: var(--workout-font-sm);
+  color: var(--text-on-accent);
+  opacity: 0.9;
+}
+
+.workout-update-target-button {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border: none;
+  padding: var(--workout-space-xs) var(--workout-space-md);
+  border-radius: var(--workout-radius-sm);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--interactive-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--workout-shadow-sm);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;

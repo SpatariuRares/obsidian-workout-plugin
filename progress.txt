@@ -595,3 +595,56 @@ This will display: "Target: 100kg × 5 reps" above the workout log table.
 - US-007 will add a suggestion button to the achievement badge with the next weight value
 - The achievement badge provides the foundation for the weight progression suggestion feature
 
+## 2026-01-24 - Phase 2 Core Features - US-007: Suggest next weight progression
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT: "Suggested next:"`
+   - Added `MODAL.NOTICES.CONFIRM_UPDATE_TARGET: "Update target weight to"`
+   - Added `MODAL.BUTTONS.UPDATE_TARGET_WEIGHT: "Update target"`
+
+2. Updated `app/views/EmbeddedTableView.ts`:
+   - Modified `renderAchievementBadge()` to call `renderWeightSuggestion()` method
+   - Added `renderWeightSuggestion()` method that:
+     - Calculates suggested next weight as currentWeight + weightIncrement (from settings)
+     - Displays suggestion text "Suggested next: Xkg" next to achievement badge
+     - Creates "Update target" button with click handler
+     - Shows confirmation dialog before updating: "Update target weight to Xkg?"
+   - Added `updateTargetWeight()` method that:
+     - Gets active MarkdownView editor
+     - Parses editor content line by line to find the workout-log code block
+     - Identifies correct code block by matching exercise name
+     - Updates targetWeight parameter in the code block
+     - Refreshes table to show updated target
+     - Uses Obsidian's editor.setValue() API for atomic updates
+
+3. Updated `app/styles/_table.scss`:
+   - Added `.workout-weight-suggestion` with flexbox layout for suggestion container
+   - Added `.workout-suggestion-text` styling for suggestion text (smaller, slightly transparent)
+   - Added `.workout-update-target-button` with:
+     - Interactive accent background color
+     - Hover effects (translateY, shadow)
+     - Active state animation
+     - Smooth transitions
+   - Built CSS from SCSS using `node build-css.mjs`
+
+**Features implemented:**
+- Weight suggestion displays next to achievement badge when target is reached
+- Suggestion calculates next weight using weightIncrement from settings
+- "Update target" button opens confirmation dialog
+- Confirmation shows clear message: "Update target weight to Xkg?"
+- On confirm, updates targetWeight parameter in code block
+- Table refreshes automatically after update to show new target
+- Button styled with hover and active states using Obsidian CSS variables
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-008: Quick log with previous values and adjust buttons
+- The weight progression feature provides a smooth user flow: achieve target → see suggestion → click to update → continue training
+- The updateTargetWeight() method uses a line-by-line parsing approach to safely update only the matching code block
+

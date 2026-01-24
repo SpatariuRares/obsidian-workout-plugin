@@ -317,6 +317,9 @@ export class EmbeddedTableView extends BaseView {
     const badgeText = badgeDiv.createSpan({ cls: "workout-achievement-text" });
     badgeText.textContent = CONSTANTS.WORKOUT.MODAL.NOTICES.TARGET_ACHIEVED;
 
+    // Render weight suggestion next to achievement text
+    this.renderWeightSuggestion(badgeDiv, params, container);
+
     // Add dismiss button
     const dismissButton = badgeDiv.createEl("button", { cls: "workout-achievement-dismiss" });
     dismissButton.textContent = "×";
@@ -328,6 +331,118 @@ export class EmbeddedTableView extends BaseView {
       await this.plugin.saveSettings();
       badgeDiv.remove();
     });
+  }
+
+  private renderWeightSuggestion(
+    badgeDiv: HTMLElement,
+    params: EmbeddedTableParams,
+    tableContainer: HTMLElement
+  ): void {
+    const { targetWeight } = params;
+
+    if (targetWeight === undefined) {
+      return;
+    }
+
+    const weightIncrement = this.plugin.settings.weightIncrement;
+    const suggestedWeight = targetWeight + weightIncrement;
+
+    // Create suggestion container
+    const suggestionDiv = badgeDiv.createDiv({ cls: "workout-weight-suggestion" });
+
+    const suggestionText = suggestionDiv.createSpan({ cls: "workout-suggestion-text" });
+    suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}kg`;
+
+    // Create update button
+    const updateButton = suggestionDiv.createEl("button", { cls: "workout-update-target-button" });
+    updateButton.textContent = CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT;
+
+    updateButton.addEventListener("click", async () => {
+      const confirmed = confirm(
+        `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}kg?`
+      );
+
+      if (confirmed) {
+        await this.updateTargetWeight(params, suggestedWeight, tableContainer);
+      }
+    });
+  }
+
+  private async updateTargetWeight(
+    params: EmbeddedTableParams,
+    newWeight: number,
+    tableContainer: HTMLElement
+  ): Promise<void> {
+    try {
+      // Get the active markdown view
+      const activeView = this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
+
+      if (!activeView) {
+        return;
+      }
+
+      const editor = activeView.editor;
+      const content = editor.getValue();
+
+      // Find the code block with the current parameters
+      // We need to update the targetWeight parameter in the code block
+      const lines = content.split("\n");
+      let inCodeBlock = false;
+      let codeBlockStart = -1;
+      let codeBlockEnd = -1;
+      let foundTargetWeight = false;
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        if (line.startsWith("```workout-log")) {
+          inCodeBlock = true;
+          codeBlockStart = i;
+          continue;
+        }
+
+        if (inCodeBlock && line.startsWith("```")) {
+          codeBlockEnd = i;
+          // Check if we found the targetWeight in this code block
+          if (foundTargetWeight) {
+            break;
+          }
+          // Reset for next code block
+          inCodeBlock = false;
+          codeBlockStart = -1;
+          foundTargetWeight = false;
+          continue;
+        }
+
+        if (inCodeBlock && line.startsWith("targetWeight:")) {
+          // Check if this is the right code block by matching exercise name
+          const exerciseLineIndex = lines
+            .slice(codeBlockStart, i)
+            .findIndex((l) => l.trim().startsWith("exercise:"));
+
+          if (exerciseLineIndex !== -1) {
+            const exerciseLine = lines[codeBlockStart + exerciseLineIndex].trim();
+            const exerciseMatch = exerciseLine.match(/exercise:\s*(.+)/);
+
+            if (exerciseMatch && params.exercise && exerciseMatch[1].trim() === params.exercise) {
+              foundTargetWeight = true;
+              // Update this line
+              lines[i] = lines[i].replace(/targetWeight:\s*\d+(\.\d+)?/, `targetWeight: ${newWeight}`);
+            }
+          }
+        }
+      }
+
+      if (foundTargetWeight) {
+        // Update the editor content
+        editor.setValue(lines.join("\n"));
+
+        // Refresh the table to show updated target
+        await this.refreshTable(tableContainer, { ...params, targetWeight: newWeight });
+      }
+    } catch (error) {
+      console.error("Error updating target weight:", error);
+    }
   }
 
   private checkTargetAchieved(

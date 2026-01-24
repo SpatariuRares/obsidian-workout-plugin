@@ -638,6 +638,7 @@ export const CONSTANTS = {
         CREATE_EXERCISE: "Create exercise page",
         CREATE_SECTION: "Create section",
         INSERT_EXERCISE_BLOCK: "Insert",
+        UPDATE_TARGET_WEIGHT: "Update target",
       },
       NOTICES: {
         LOG_CREATED: "Workout log created successfully!",
@@ -674,6 +675,8 @@ export const CONSTANTS = {
         EXERCISE_BLOCK_INSERTED: "✅ Exercise block inserted successfully!",
         TARGET_ACHIEVED: "Target Reached! Consider increasing weight",
         TARGET_DISMISSED: "Achievement badge dismissed",
+        SUGGESTED_NEXT_WEIGHT: "Suggested next:",
+        CONFIRM_UPDATE_TARGET: "Update target weight to",
       },
       LABELS: {
         EXERCISE: "Exercise:",

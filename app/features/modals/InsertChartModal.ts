@@ -146,8 +146,8 @@ export class InsertChartModal extends BaseInsertModal {
       showTitle: true,
     });
 
-    // Set exact match default
-    this.advancedElements.exactMatchToggle.checked = true;
+    // Set exact match default based on plugin settings
+    this.advancedElements.exactMatchToggle.checked = this.plugin.settings.defaultExactMatch;
   }
 
   protected generateCode(): string {

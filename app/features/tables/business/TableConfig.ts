@@ -15,7 +15,7 @@ export class TableConfig {
       showAddButton: true,
       buttonText: CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
       searchByName: false,
-      exactMatch: false,
+      exactMatch: CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH,
       columns: [...CONSTANTS.WORKOUT.TABLE.DEFAULT_VISIBLE_COLUMNS],
     };
   }

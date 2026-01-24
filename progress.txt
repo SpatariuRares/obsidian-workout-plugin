@@ -108,3 +108,44 @@ This will use "My Rest Timer" preset as base, but override duration to 60 second
   - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
   - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
 - Next task is US-004: Change DEFAULT_EXACT_MATCH to true
+
+## 2026-01-24 - US-004: Change DEFAULT_EXACT_MATCH to true
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH = true`
+   - Added `CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_EXACT_MATCH`
+   - Added `CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.DEFAULT_EXACT_MATCH`
+   - Added `CONSTANTS.WORKOUT.SETTINGS.SECTIONS.FILTERING`
+
+2. Updated `app/types/WorkoutLogData.ts`:
+   - Added `defaultExactMatch: boolean` field to `WorkoutChartsSettings` interface
+   - Added `defaultExactMatch: true` to `DEFAULT_SETTINGS`
+
+3. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added new "Filtering" section with toggle for "Default exact match" setting
+   - Toggle saves to `plugin.settings.defaultExactMatch`
+
+4. Updated `app/features/modals/InsertChartModal.ts`:
+   - Changed `exactMatchToggle.checked = true` to use `plugin.settings.defaultExactMatch`
+
+5. Updated `app/features/modals/InsertTableModal.ts`:
+   - Changed `exactMatchToggle.checked = true` to use `plugin.settings.defaultExactMatch`
+
+6. Updated `app/features/tables/business/TableConfig.ts`:
+   - Changed `exactMatch: false` to `exactMatch: CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH`
+
+**Features implemented:**
+- exactMatch defaults to `true` across the codebase
+- New "Filtering" section in settings with "Default exact match" toggle
+- Modals use the setting value for their default checkbox state
+- Existing code blocks with explicit `exactMatch: false` continue to work unchanged
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `FrontmatterParser.test.ts` - Obsidian module mock configuration issue
+  - `FormField.test.ts` - Expects "Exercise Name" but code uses sentence case "Exercise name"
+- Next task is US-005: Create Audit Exercise Names command and modal

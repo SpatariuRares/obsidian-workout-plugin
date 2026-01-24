@@ -63,8 +63,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-24. Added CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH = true in Constants.ts. Added defaultExactMatch field (boolean, default true) to WorkoutChartsSettings in WorkoutLogData.ts. Added 'Default exact match' toggle in settings tab under new 'Filtering' section. Updated InsertChartModal and InsertTableModal to use plugin.settings.defaultExactMatch. Updated TableConfig.getDefaults() to use the constant. Existing blocks with explicit exactMatch: false continue to work as the explicit parameter always overrides."
     },
     {
       "id": "US-005",

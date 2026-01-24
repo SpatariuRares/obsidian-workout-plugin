@@ -47,6 +47,21 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           });
       });
 
+    // Filtering Section
+    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.FILTERING).setHeading();
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_EXACT_MATCH)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.DEFAULT_EXACT_MATCH)
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.defaultExactMatch)
+          .onChange(async (value) => {
+            this.plugin.settings.defaultExactMatch = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
     // CSV Management Section
     new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CSV_MANAGEMENT).setHeading();
 

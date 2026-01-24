@@ -44,6 +44,7 @@ export interface WorkoutChartsSettings {
   dateRange: number; // days
   showTrendLine: boolean;
   chartHeight: number;
+  defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;
 }
@@ -59,6 +60,7 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   dateRange: 30,
   showTrendLine: true,
   chartHeight: 400,
+  defaultExactMatch: true,
   timerPresets: {},
   defaultTimerPreset: null,
 };

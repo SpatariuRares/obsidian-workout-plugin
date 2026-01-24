@@ -352,6 +352,7 @@ export const CONSTANTS = {
       LABELS: {
         CSV_PATH: "CSV log file path",
         EXERCISE_FOLDER: "Exercise folder path",
+        DEFAULT_EXACT_MATCH: "Default exact match",
         TIMER_PRESETS: "Timer presets",
         DEFAULT_TIMER_PRESET: "Default timer preset",
         PRESET_NAME: "Preset name",
@@ -367,12 +368,14 @@ export const CONSTANTS = {
         CSV_PATH: "Path to the CSV file containing all workout log data",
         EXERCISE_FOLDER: "Path to the folder containing exercise pages",
         CREATE_CSV: "Create a new CSV log file with sample data",
+        DEFAULT_EXACT_MATCH: "When enabled, exercise filtering uses exact name matching by default. Disable for fuzzy matching.",
         TIMER_PRESETS: "Create and manage reusable timer presets",
         DEFAULT_TIMER_PRESET: "Select a default preset for new timers",
         NO_PRESETS: "No timer presets configured. Click 'Add preset' to create one.",
       },
       SECTIONS: {
         CSV_MANAGEMENT: "CSV file management",
+        FILTERING: "Filtering",
         TIMER_PRESETS: "Timer presets",
       },
       BUTTONS: {
@@ -833,6 +836,7 @@ export const CONSTANTS = {
       },
       DEFAULTS: {
         BUTTON_TEXT: "➕ Add Log",
+        EXACT_MATCH: true,
       },
       VALIDATION_ERRORS: {
         LIMIT_RANGE: (min: number, max: number, received: string) =>

@@ -155,8 +155,8 @@ export class InsertTableModal extends BaseInsertModal {
       showSearchByName: true,
     });
 
-    // Set default values for combined mode
-    this.advancedElements.exactMatchToggle.checked = true;
+    // Set default values based on plugin settings
+    this.advancedElements.exactMatchToggle.checked = this.plugin.settings.defaultExactMatch;
   }
 
   protected generateCode(): string {

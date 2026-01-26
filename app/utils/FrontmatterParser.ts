@@ -23,13 +23,12 @@ export class FrontmatterParser {
       return [];
     }
 
-    // const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
-    const tagsMatch = parseYaml(frontmatter);
-    if (!tagsMatch) {
+    const parsed = parseYaml(frontmatter);
+    if (!parsed || !parsed.tags) {
       return [];
     }
 
-    return tagsMatch.tags;
+    return Array.isArray(parsed.tags) ? parsed.tags : [];
   }
 
   /**
@@ -52,6 +51,7 @@ export class FrontmatterParser {
 
   /**
    * Parse a specific field from frontmatter
+   * Case-insensitive field name lookup
    */
   static parseField(content: string, fieldName: string): string | null {
     const frontmatter = this.extractFrontmatter(content);
@@ -59,12 +59,26 @@ export class FrontmatterParser {
       return null;
     }
 
-    const fieldRegex = parseYaml(frontmatter);
-    return fieldRegex ? fieldRegex[fieldName] : null;
+    const parsed = parseYaml(frontmatter);
+    if (!parsed) {
+      return null;
+    }
+
+    // Case-insensitive field lookup
+    const lowerFieldName = fieldName.toLowerCase();
+    for (const key of Object.keys(parsed)) {
+      if (key.toLowerCase() === lowerFieldName) {
+        const value = parsed[key];
+        return typeof value === "string" ? value : null;
+      }
+    }
+
+    return null;
   }
 
   /**
    * Parse all frontmatter fields into a key-value object
+   * Only returns simple string fields (excludes arrays and objects)
    */
   static parseAllFields(content: string): Record<string, string> {
     const frontmatter = this.extractFrontmatter(content);
@@ -72,13 +86,16 @@ export class FrontmatterParser {
       return {};
     }
 
-    const fields: Record<string, string> = {};
-    const lines = frontmatter.split("\n");
+    const parsed = parseYaml(frontmatter);
+    if (!parsed) {
+      return {};
+    }
 
-    for (const line of lines) {
-      const match = parseYaml(line);
-      if (match) {
-        fields[match[1]] = match[2];
+    const fields: Record<string, string> = {};
+    for (const [key, value] of Object.entries(parsed)) {
+      // Only include simple string values
+      if (typeof value === "string") {
+        fields[key] = value;
       }
     }
 

@@ -11,7 +11,8 @@
       "Bash(grep:*)",
       "Bash(done)",
       "Bash(npm test)",
-      "Bash(npm run test:coverage:*)"
+      "Bash(npm run test:coverage:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": []
   }

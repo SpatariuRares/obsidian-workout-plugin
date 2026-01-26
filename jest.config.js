@@ -50,7 +50,7 @@ module.exports = {
 
   // Module path aliases (if needed)
   moduleNameMapper: {
-    "^obsidian$": "<rootDir>/node_modules/obsidian",
+    "^obsidian$": "<rootDir>/__mocks__/obsidian.ts",
     "^@app/(.*)$": "<rootDir>/app/$1",
   },
 };

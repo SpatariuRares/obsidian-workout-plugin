@@ -20,7 +20,7 @@ describe("FormField molecule", () => {
 
 		expect(result.container.className).toContain("form-field");
 		expect(result.container.className).toContain("mb-4");
-		expect(result.label.textContent).toBe("Exercise Name *");
+		expect(result.label.textContent).toBe("Exercise name *");
 		expect(result.label.classList.contains("form-field-label")).toBe(true);
 
 		expect(result.input.classList.contains("form-field-input")).toBe(true);

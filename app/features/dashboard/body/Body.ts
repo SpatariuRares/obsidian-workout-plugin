@@ -126,8 +126,17 @@ export class Body {
     );
 
     // Parse the SVG string into DOM nodes safely
+    // Wrap in SVG element for proper parsing since bodyG contains SVG fragments
     const parser = new DOMParser();
-    const doc = parser.parseFromString(bodyG, "image/svg+xml");
+    const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${bodyG}</svg>`;
+    const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
+
+    // Check for parsing errors
+    const parseError = doc.querySelector("parsererror");
+    if (parseError) {
+      console.error("SVG parsing error:", parseError.textContent);
+      return;
+    }
 
     // Move children from parsed document to the main SVG
     while (doc.documentElement.firstChild) {
@@ -169,11 +178,19 @@ export class Body {
     );
 
     // Parse the SVG string into DOM nodes safely
+    // Wrap in SVG element for proper parsing since bodyG contains SVG fragments
     const parser = new DOMParser();
-    const doc = parser.parseFromString(bodyG, "image/svg+xml");
+    const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${bodyG}</svg>`;
+    const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
+
+    // Check for parsing errors
+    const parseError = doc.querySelector("parsererror");
+    if (parseError) {
+      console.error("SVG parsing error:", parseError.textContent);
+      return;
+    }
 
     // Move children from parsed document to the main SVG
-    // We iterate backwards or while firstChild exists to ensure we get all nodes
     while (doc.documentElement.firstChild) {
       svg.appendChild(doc.documentElement.firstChild);
     }

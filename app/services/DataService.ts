@@ -10,9 +10,13 @@ import {
 import { App, TFile, Notice } from "obsidian";
 
 export class DataService {
+  // Cache stores RAW (unfiltered) data only
   private logDataCache: WorkoutLogData[] | null = null;
   private lastCacheTime: number = 0;
   private readonly CACHE_DURATION = 5000; // 5 seconds cache
+
+  // Lock to prevent parallel CSV loading (race condition fix)
+  private loadingPromise: Promise<WorkoutLogData[]> | null = null;
 
   constructor(
     private app: App,
@@ -24,27 +28,52 @@ export class DataService {
     workout?: string;
     exactMatch?: boolean;
   }): Promise<WorkoutLogData[]> {
-    const now = Date.now();
-    if (this.logDataCache && now - this.lastCacheTime < this.CACHE_DURATION) {
-      // If we have cached data and filter params, apply filtering to cached data
-      if (filterParams) {
-        return this.applyEarlyFiltering(this.logDataCache, filterParams);
-      }
-      return this.logDataCache;
+    // Get raw data (from cache or CSV)
+    const rawData = await this.getRawData();
+
+    // Apply filtering if needed
+    if (filterParams) {
+      return this.applyEarlyFiltering(rawData, filterParams);
     }
 
-    return await this.getCSVWorkoutLogData(filterParams);
+    return rawData;
   }
 
   /**
-   * Get workout log data from CSV file
+   * Get raw (unfiltered) data from cache or CSV
+   * Uses a loading lock to prevent parallel CSV reads
    */
-  private async getCSVWorkoutLogData(filterParams?: {
-    exercise?: string;
-    workout?: string;
-    exactMatch?: boolean;
-  }): Promise<WorkoutLogData[]> {
+  private async getRawData(): Promise<WorkoutLogData[]> {
+    const now = Date.now();
+
+    // Check cache first
+    if (this.logDataCache && now - this.lastCacheTime < this.CACHE_DURATION) {
+      return this.logDataCache;
+    }
+
+    // If already loading, wait for that promise
+    if (this.loadingPromise) {
+      return this.loadingPromise;
+    }
+
+    // Start loading with lock
+    this.loadingPromise = this.loadCSVData();
+
+    try {
+      const data = await this.loadingPromise;
+      return data;
+    } finally {
+      this.loadingPromise = null;
+    }
+  }
+
+  /**
+   * Load all data from CSV file (no filtering)
+   */
+  private async loadCSVData(retryCount = 0): Promise<WorkoutLogData[]> {
     const logData: WorkoutLogData[] = [];
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 100; // ms
 
     try {
       const abstractFile = this.app.vault.getAbstractFileByPath(
@@ -52,29 +81,25 @@ export class DataService {
       );
 
       if (!abstractFile || !(abstractFile instanceof TFile)) {
+        // Retry if vault might not be fully loaded yet
+        if (retryCount < MAX_RETRIES) {
+          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+          return this.loadCSVData(retryCount + 1);
+        }
         return logData;
       }
 
       const csvFile = abstractFile;
-
       const content = await this.app.vault.read(csvFile);
       const csvEntries = parseCSVLogFile(content);
 
-      // Convert CSV entries to WorkoutLogData format
+      // Convert ALL CSV entries to WorkoutLogData format (no filtering here!)
       csvEntries.forEach((entry) => {
         const logEntry = convertFromCSVEntry(entry, csvFile);
-
-        // Apply filtering if specified
-        if (filterParams) {
-          if (!this.matchesEarlyFilter(logEntry, filterParams)) {
-            return;
-          }
-        }
-
         logData.push(logEntry);
       });
 
-      // Update cache
+      // Update cache with RAW (unfiltered) data
       this.logDataCache = logData;
       this.lastCacheTime = Date.now();
     } catch (error) {
@@ -87,7 +112,7 @@ export class DataService {
   }
 
   /**
-   * Apply early filtering to reduce data processing
+   * Apply filtering to data
    */
   private applyEarlyFiltering(
     logData: WorkoutLogData[],
@@ -101,7 +126,7 @@ export class DataService {
   }
 
   /**
-   * Check if a log entry matches early filtering criteria
+   * Check if a log entry matches filtering criteria
    */
   private matchesEarlyFilter(
     log: WorkoutLogData,
@@ -171,6 +196,7 @@ export class DataService {
   public clearLogDataCache(): void {
     this.logDataCache = null;
     this.lastCacheTime = 0;
+    this.loadingPromise = null;
   }
 
   /**

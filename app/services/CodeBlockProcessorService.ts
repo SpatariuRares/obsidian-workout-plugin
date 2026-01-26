@@ -94,7 +94,7 @@ export class CodeBlockProcessorService {
       }
 
       // Create chart - filtering is now handled by the DataFilter class
-      this.createEmbeddedChart(el, logData, params);
+      await this.createEmbeddedChart(el, logData, params);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
@@ -157,12 +157,12 @@ export class CodeBlockProcessorService {
   }
 
   // Create embedded chart using the dedicated view
-  private createEmbeddedChart(
+  private async createEmbeddedChart(
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedChartParams,
-  ) {
-    this.embeddedChartView.createChart(container, data, params);
+  ): Promise<void> {
+    await this.embeddedChartView.createChart(container, data, params);
   }
 
   // Create embedded table using the dedicated view

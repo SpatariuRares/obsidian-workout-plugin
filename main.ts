@@ -61,11 +61,12 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.activeTimers,
     );
 
-    // Register services
-    this.commandHandlerService.registerCommands();
     this.codeBlockProcessorService.registerProcessors();
 
-    // Add settings tab
+    this.app.workspace.onLayoutReady(() => {
+      this.commandHandlerService.registerCommands();
+    });
+
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
   }
 

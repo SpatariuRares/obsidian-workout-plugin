@@ -29,11 +29,11 @@ export class EmbeddedChartView extends BaseView {
     super(plugin);
   }
 
-  createChart(
+  async createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedChartParams
-  ): void {
+  ): Promise<void> {
     try {
       this.logDebug("EmbeddedChartView", "createChart called", {
         dataLength: logData.length,

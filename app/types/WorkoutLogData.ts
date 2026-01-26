@@ -3,6 +3,19 @@ import { TFile } from "obsidian";
 import { CHART_DATA_TYPE, TimerPresetConfig } from "@app/types";
 
 /**
+ * Workout protocol enum for specialized training techniques.
+ * Used to track different training methods applied to sets.
+ */
+export enum WorkoutProtocol {
+  STANDARD = "standard",
+  DROP_SET = "drop_set",
+  MYO_REPS = "myo_reps",
+  REST_PAUSE = "rest_pause",
+  SUPERSET = "superset",
+  TWENTYONE = "twentyone",
+}
+
+/**
  * Represents a single workout log entry.
  */
 export interface WorkoutLogData {
@@ -16,6 +29,7 @@ export interface WorkoutLogData {
   workout?: string;
   notes?: string;
   timestamp?: number;
+  protocol?: WorkoutProtocol;
 }
 
 /**
@@ -31,6 +45,7 @@ export interface CSVWorkoutLogEntry {
   workout?: string;
   notes?: string;
   timestamp: number; // For sorting and unique identification
+  protocol?: WorkoutProtocol;
 }
 
 /**
@@ -85,8 +100,9 @@ workout: {{workout}}
  * Parses CSV content and returns an array of CSVWorkoutLogEntry objects
  *
  * Expected CSV format:
- * - Header: date,exercise,reps,weight,volume,origine,workout,timestamp,notes
- * - Data rows: date,exercise,reps,weight,volume,origine,workout,timestamp,notes
+ * - Header: date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
+ * - Data rows: date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
+ * - Protocol column is optional for backward compatibility (defaults to 'standard')
  * - Validates numeric fields for NaN, reps must be > 0, weight must be >= 0
  * - Skips invalid entries with console warnings for debugging
  */
@@ -144,6 +160,12 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
         continue;
       }
 
+      // Parse protocol field (column 9) - backward compatible, defaults to 'standard'
+      const protocolValue = values[9]?.trim().toLowerCase() || "";
+      const protocol = Object.values(WorkoutProtocol).includes(protocolValue as WorkoutProtocol)
+        ? (protocolValue as WorkoutProtocol)
+        : WorkoutProtocol.STANDARD;
+
       const entry: CSVWorkoutLogEntry = {
         date: values[0]?.trim() || "",
         exercise: values[1]?.trim() || "",
@@ -154,6 +176,7 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
         workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
         timestamp: isNaN(timestamp) ? Date.now() : timestamp,
         notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
+        protocol: protocol,
       };
 
       // Validate required fields
@@ -187,6 +210,7 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
     entry.workout || "",
     entry.timestamp.toString(),
     entry.notes || "",
+    entry.protocol || WorkoutProtocol.STANDARD,
   ];
 
   return values
@@ -228,7 +252,7 @@ export function entryToCSVLine(entry: CSVWorkoutLogEntry): string {
  */
 export function entriesToCSVContent(entries: CSVWorkoutLogEntry[]): string {
   const header =
-    "date,exercise,reps,weight,volume,origine,workout,timestamp,notes";
+    "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol";
   const lines = [header];
 
   entries.forEach((entry) => {
@@ -291,5 +315,6 @@ export function convertFromCSVEntry(
     workout: entry.workout,
     notes: entry.notes,
     timestamp: entry.timestamp,
+    protocol: entry.protocol,
   };
 }

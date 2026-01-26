@@ -1401,3 +1401,61 @@ All 17 user stories in the Memory Leak Fixes and Performance Improvements PRD ha
 - Test coverage ensures regressions are caught early
 - Strict mode catches type errors at compile time
 - Security hardened against CSV injection attacks
+
+## 2026-01-26 - Phase 3 Advanced Features PRD - US-001: Add Protocol Field to Log Entry
+
+**Status:** Completed
+
+**Changes made:**
+1. Added `WorkoutProtocol` enum to `app/types/WorkoutLogData.ts` with values:
+   - STANDARD = "standard"
+   - DROP_SET = "drop_set"
+   - MYO_REPS = "myo_reps"
+   - REST_PAUSE = "rest_pause"
+   - SUPERSET = "superset"
+   - TWENTYONE = "twentyone"
+
+2. Exported `WorkoutProtocol` from `app/types/index.ts`
+
+3. Updated `CSVWorkoutLogEntry` and `WorkoutLogData` interfaces to include optional `protocol` field
+
+4. Updated CSV parsing in `parseCSVLogFile()`:
+   - Protocol is the 10th column (index 9)
+   - Backward compatible: defaults to 'standard' if column is missing or empty
+   - Validates protocol value against enum, defaults to STANDARD if invalid
+
+5. Updated `entryToCSVLine()` and `entriesToCSVContent()` to include protocol column
+
+6. Updated `convertFromCSVEntry()` to pass through protocol field
+
+7. Added `PROTOCOL` label and select options to `Constants.ts`
+
+8. Updated `ModalTypes.ts`:
+   - Added `protocol` field to `LogFormData` interface
+   - Added `protocolSelect` to `LogFormElements` interface
+
+9. Updated `BaseLogModal.ts`:
+   - Added Protocol dropdown after weight input, before notes
+   - Default selection: Standard
+   - Protocol included in form submission data
+   - Protocol pre-filled when editing existing entries
+   - `createLogEntryObject()` now accepts protocol parameter
+
+10. Updated `CreateLogModal.ts` to pass protocol to `createLogEntryObject()`
+
+11. Updated `EditLogModal.ts`:
+    - Pre-fills protocol from existing entry
+    - Passes protocol to `createLogEntryObject()`
+
+12. Updated test file `WorkoutLogData.test.ts`:
+    - Tests now expect protocol field in parsed entries
+    - Updated empty fields test to check correct field positions
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (352 passed, 4 skipped)
+- CSV header is now: date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
+- Existing CSV files without protocol column will parse correctly (default to 'standard')
+- Next task is US-002: Display Protocol in Log Table
+- The protocol dropdown appears between weight input and notes in log modals
+- Protocol value is stored in CSV and can be filtered/displayed in future features

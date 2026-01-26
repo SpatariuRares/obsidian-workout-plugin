@@ -60,7 +60,7 @@ export class CommandHandlerService {
       id: "insert-workout-timer",
       name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TIMER,
       callback: () => {
-        new InsertTimerModal(this.app).open();
+        new InsertTimerModal(this.app, this.plugin).open();
       },
     });
 

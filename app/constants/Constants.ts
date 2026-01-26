@@ -717,6 +717,10 @@ export const CONSTANTS = {
         TIMER_DURATION: "Timer duration (seconds):",
         TIMER_PRESET: "Timer preset:",
         WORKOUT_FILE: "Workout file:",
+        DATE_RANGE: "Date range (days):",
+        TARGET_WEIGHT: "Target weight (kg):",
+        TARGET_REPS: "Target reps:",
+        PROTOCOL: "Protocol:",
       },
       PLACEHOLDERS: {
         EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",
@@ -754,6 +758,7 @@ export const CONSTANTS = {
         INCLUDE_LOG: "Include log",
         TIMER_AUTO_START: "Timer auto start",
         TIMER_SOUND: "Timer sound",
+        USE_PRESET_ONLY: "Use preset only (minimal code)",
       },
       EXERCISE_STATUS: {
         CREATE_PAGE: "📝 create exercise page",
@@ -787,6 +792,14 @@ export const CONSTANTS = {
           { text: "Countdown", value: "countdown" },
           { text: "Interval", value: "interval" },
         ],
+        PROTOCOL: [
+          { text: "Standard", value: "standard" },
+          { text: "Drop set", value: "drop_set" },
+          { text: "Myo-reps", value: "myo_reps" },
+          { text: "Rest-pause", value: "rest_pause" },
+          { text: "Superset", value: "superset" },
+          { text: "21s", value: "twentyone" },
+        ],
       },
       SECTIONS: {
         CHART_TYPE: "Chart type",
@@ -799,6 +812,8 @@ export const CONSTANTS = {
         WORKOUT: "Workout",
         EXERCISE_CONFIGURATION: "Exercise configuration",
         OPTIONS: "Options",
+        PRESET: "Preset",
+        PROGRESSIVE_OVERLOAD: "Progressive overload",
       },
       CODE_BLOCKS: {
         CHART: "workout-chart",

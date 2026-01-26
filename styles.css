@@ -670,6 +670,7 @@
 .workout-table-container {
   width: 100%;
   overflow-x: auto;
+  margin-top: var(--workout-space-lg);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
 }
@@ -1067,7 +1068,7 @@
   align-items: center;
 }
 .workout-timer-time-display {
-  font-size: var(--workout-font-2xl);
+  font-size: var(--workout-font-xl);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-accent);
   font-family: monospace;

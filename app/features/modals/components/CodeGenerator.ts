@@ -61,6 +61,7 @@ export class CodeGenerator {
 
     // Add configuration
     lines.push(`limit: ${params.limit}`);
+    if (params.dateRange) lines.push(`dateRange: ${params.dateRange}`);
 
     // Add columns configuration
     if (params.columnsType !== TableColumnType.STANDARD) {
@@ -83,6 +84,10 @@ export class CodeGenerator {
     if (params.searchByName) lines.push(`searchByName: true`);
     if (params.exactMatch) lines.push(`exactMatch: true`);
 
+    // Add progressive overload targets
+    if (params.targetWeight) lines.push(`targetWeight: ${params.targetWeight}`);
+    if (params.targetReps) lines.push(`targetReps: ${params.targetReps}`);
+
     lines.push("```");
 
     return lines.join("\n");
@@ -93,8 +98,21 @@ export class CodeGenerator {
    */
   static generateTimerCode(params: EmbeddedTimerParams): string {
     const lines: string[] = [`\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER}`];
+
+    // If only preset is specified, generate minimal code
+    if (params.preset && !params.type) {
+      lines.push(`preset: ${params.preset}`);
+      lines.push("```");
+      return lines.join("\n");
+    }
+
     if (!params.type) {
       throw new Error("Timer type is required");
+    }
+
+    // Add preset reference if specified (allows overriding preset values)
+    if (params.preset) {
+      lines.push(`preset: ${params.preset}`);
     }
 
     if (params.type === TIMER_TYPE.COUNTDOWN && params.duration) {
@@ -109,7 +127,7 @@ export class CodeGenerator {
     }
 
     lines.push(`type: ${params.type}`);
-    lines.push(`title: ${params.title}`);
+    if (params.title) lines.push(`title: ${params.title}`);
     lines.push(`showControls: ${params.showControls}`);
     lines.push(`autoStart: ${params.autoStart}`);
     lines.push(`sound: ${params.sound}`);

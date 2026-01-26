@@ -5,7 +5,7 @@ import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
+import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 
@@ -176,6 +176,14 @@ export abstract class BaseLogModal extends ModalBase {
       weightInput.value = (currentValue + weightIncrement).toFixed(1);
     });
 
+    // Protocol dropdown
+    const protocolSelect = this.createSelectField(
+      formContainer,
+      CONSTANTS.WORKOUT.MODAL.LABELS.PROTOCOL,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL],
+    );
+    protocolSelect.value = WorkoutProtocol.STANDARD;
+
     // Notes input
     const notesInput = this.createTextareaField(
       formContainer,
@@ -229,6 +237,7 @@ export abstract class BaseLogModal extends ModalBase {
       workoutInput,
       currentWorkoutToggle,
       dateInput,
+      protocolSelect,
     };
   }
 
@@ -289,6 +298,9 @@ export abstract class BaseLogModal extends ModalBase {
       const dateValue = data.date.split("T")[0];
       formElements.dateInput.value = dateValue;
     }
+    if (data.protocol && formElements.protocolSelect) {
+      formElements.protocolSelect.value = data.protocol;
+    }
   }
 
   /**
@@ -337,6 +349,7 @@ export abstract class BaseLogModal extends ModalBase {
     const weight = parseFloat(formElements.weightInput.value);
     const notes = formElements.notesInput.value.trim();
     let workout = formElements.workoutInput.value.trim();
+    const protocol = (formElements.protocolSelect?.value || WorkoutProtocol.STANDARD) as WorkoutProtocol;
 
     // Handle current workout toggle
     if (formElements.currentWorkoutToggle.checked) {
@@ -355,6 +368,7 @@ export abstract class BaseLogModal extends ModalBase {
       workout,
       notes,
       date: formElements.dateInput?.value || undefined,
+      protocol,
     };
 
     // Submit data
@@ -418,6 +432,7 @@ export abstract class BaseLogModal extends ModalBase {
     workout: string,
     notes: string,
     date?: string,
+    protocol?: WorkoutProtocol,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
     return {
       date: date || new Date().toISOString(),
@@ -428,6 +443,7 @@ export abstract class BaseLogModal extends ModalBase {
       origine: this.currentPageLink || "[[Workout Charts Plugin]]",
       workout: workout || undefined,
       notes: notes || undefined,
+      protocol: protocol || WorkoutProtocol.STANDARD,
     };
   }
 }

@@ -51,6 +51,8 @@ export class CreateLogModal extends BaseLogModal {
       data.weight,
       data.workout,
       data.notes,
+      undefined,
+      data.protocol,
     );
 
     await this.plugin.addWorkoutLogEntry(entry);

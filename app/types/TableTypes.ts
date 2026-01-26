@@ -55,6 +55,9 @@ export interface TableCodeOptions {
   buttonText: string;
   searchByName: boolean;
   exactMatch: boolean;
+  dateRange?: number;
+  targetWeight?: number;
+  targetReps?: number;
 }
 export interface TableState {
   currentContainer?: HTMLElement;

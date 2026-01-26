@@ -1,4 +1,5 @@
 import { ExerciseAutocompleteElements } from "@app/features/modals/components/ExerciseAutocomplete";
+import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 export interface LogFormData {
   exercise: string;
@@ -7,6 +8,7 @@ export interface LogFormData {
   workout: string;
   notes: string;
   date?: string;
+  protocol?: WorkoutProtocol;
 }
 
 export interface LogFormElements {
@@ -17,4 +19,5 @@ export interface LogFormElements {
   workoutInput: HTMLInputElement;
   currentWorkoutToggle: HTMLInputElement;
   dateInput?: HTMLInputElement;
+  protocolSelect?: HTMLSelectElement;
 }

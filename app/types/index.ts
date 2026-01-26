@@ -45,6 +45,7 @@ export type {
   CSVWorkoutLogEntry,
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
+export { WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 // Muscle heat map types
 export type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";

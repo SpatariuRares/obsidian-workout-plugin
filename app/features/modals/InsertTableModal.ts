@@ -18,10 +18,13 @@ export class InsertTableModal extends BaseInsertModal {
   private tableTypeSelect?: HTMLSelectElement;
   private targetElements?: TargetSectionWithAutocompleteElements;
   private limitInput?: HTMLInputElement;
+  private dateRangeInput?: HTMLInputElement;
   private columnsSelect?: HTMLSelectElement;
   private addButtonToggle?: HTMLInputElement;
   private buttonTextInput?: HTMLInputElement;
   private advancedElements?: AdvancedOptionsElements;
+  private targetWeightInput?: HTMLInputElement;
+  private targetRepsInput?: HTMLInputElement;
   private currentFileName: string;
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
@@ -121,6 +124,18 @@ export class InsertTableModal extends BaseInsertModal {
       }
     );
 
+    // Date range selector
+    this.dateRangeInput = this.createNumberField(
+      configSection,
+      CONSTANTS.WORKOUT.MODAL.LABELS.DATE_RANGE,
+      0,
+      {
+        min: 0,
+        max: 365,
+        placeholder: "0 = all time",
+      }
+    );
+
     // Columns selector
     this.columnsSelect = this.createSelectField(
       configSection,
@@ -148,6 +163,36 @@ export class InsertTableModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.LABELS.BUTTON_TEXT,
       CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
       CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT
+    );
+
+    // Progressive Overload Section
+    const progressiveSection = this.createSection(
+      container,
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD
+    );
+
+    // Target weight input
+    this.targetWeightInput = this.createNumberField(
+      progressiveSection,
+      CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_WEIGHT,
+      0,
+      {
+        min: 0,
+        max: 1000,
+        placeholder: "0 = no target",
+      }
+    );
+
+    // Target reps input
+    this.targetRepsInput = this.createNumberField(
+      progressiveSection,
+      CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_REPS,
+      0,
+      {
+        min: 0,
+        max: 100,
+        placeholder: "0 = no target",
+      }
     );
 
     // Advanced Options Section using reusable component
@@ -179,12 +224,15 @@ export class InsertTableModal extends BaseInsertModal {
       this.currentFileName
     );
     const limit = parseInt(this.limitInput.value) || 50;
+    const dateRange = this.dateRangeInput ? parseInt(this.dateRangeInput.value) || 0 : 0;
     const columnsType = this.columnsSelect.value;
     const showAddButton = this.addButtonToggle.checked;
     const buttonText = this.buttonTextInput.value.trim();
     const advancedValues = AdvancedOptionsSection.getValues(
       this.advancedElements
     );
+    const targetWeight = this.targetWeightInput ? parseFloat(this.targetWeightInput.value) || 0 : 0;
+    const targetReps = this.targetRepsInput ? parseInt(this.targetRepsInput.value) || 0 : 0;
 
     // Validation for combined mode
     if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
@@ -201,11 +249,14 @@ export class InsertTableModal extends BaseInsertModal {
       exercise: target.exercise || "",
       workout: target.workout || "",
       limit,
+      dateRange: dateRange > 0 ? dateRange : undefined,
       columnsType: columnsType as TableColumnType,
       showAddButton,
       buttonText,
       searchByName: advancedValues.searchByName || false,
       exactMatch: advancedValues.exactMatch,
+      targetWeight: targetWeight > 0 ? targetWeight : undefined,
+      targetReps: targetReps > 0 ? targetReps : undefined,
     });
   }
 }

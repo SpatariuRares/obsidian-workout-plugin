@@ -1,288 +1,206 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/memory-leak-fixes-and-performance",
-  "description": "Memory Leak Fixes and Performance Improvements - Critical stability fixes for production use",
+  "branchName": "ralph/phase3-advanced-features",
+  "description": "Phase 3 - Advanced Features: Protocol tracking for specialized workout techniques and workout duration estimation",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Track and destroy Chart.js instances",
-      "description": "As a user with multiple workout charts open, I want the plugin to properly clean up chart instances so my browser doesn't run out of memory.",
+      "title": "Add Protocol Field to Log Entry",
+      "description": "As a user, I want to select a workout protocol when logging so that my advanced techniques are tracked structurally.",
       "acceptanceCriteria": [
-        "Add chartInstances: Map<string, Chart> to ChartRenderer class in app/features/charts/components/ChartRenderer.ts",
-        "Before creating new chart, destroy existing chart if present using chart.destroy()",
-        "Generate unique chart IDs based on container element ID or hash of chart parameters",
-        "Implement destroyAllCharts() method that iterates Map and calls destroy() on each chart",
-        "Export destroyAllCharts() for use in plugin lifecycle cleanup",
+        "Add WorkoutProtocol enum to app/types with values: STANDARD, DROP_SET, MYO_REPS, REST_PAUSE, SUPERSET, TWENTYONE",
+        "Add 'protocol' column to CSV schema in WorkoutLogData.ts (default: 'standard', backward compatible)",
+        "CreateLogModal includes 'Protocol' dropdown populated from enum",
+        "Default selection: Standard",
+        "Protocol value saved to CSV when logging entry",
+        "Existing CSV entries without protocol column parse correctly (default to 'standard')",
         "Typecheck passes",
-        "Write unit test mocking Chart.js to verify destroy() is called"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Completed 2026-01-24 - Added Map-based chart tracking, generateChartId method, destroy logic in renderChart, and destroyAllCharts method. Unit tests created and passing."
+      "notes": "Completed 2026-01-26. WorkoutProtocol enum added, CSV schema updated with protocol column (10th column), CreateLogModal and EditLogModal updated with Protocol dropdown. All tests pass (352 passed)."
     },
     {
       "id": "US-002",
-      "title": "Add cleanup method to EmbeddedChartView",
-      "description": "As a developer, I need EmbeddedChartView to expose a cleanup method so it can be called during plugin unload.",
+      "title": "Display Protocol in Log Table",
+      "description": "As a user, I want to see which protocol was used for each logged set so that I can review my training variety.",
       "acceptanceCriteria": [
-        "Add cleanup() method to EmbeddedChartView in app/views/EmbeddedChartView.ts",
-        "cleanup() calls ChartRenderer.destroyAllCharts()",
-        "cleanup() clears any internal state or references",
-        "Document cleanup() method with JSDoc comment",
-        "Typecheck passes"
+        "Protocol column added to workout-log table in TableRenderer",
+        "Column shows protocol badge with distinct styling per protocol type",
+        "Standard protocol shows no badge (clean default view)",
+        "Column is hideable via 'showProtocol: false' parameter in code block",
+        "Badge colors work in both light and dark themes",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added public cleanup() method with JSDoc documentation. Method calls ChartRenderer.destroyAllCharts() and includes error handling. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Refactor EmbeddedTableView with MarkdownRenderChild",
-      "description": "As a user with multiple workout log tables, I want event listeners to be properly cleaned up so memory doesn't leak when tables are refreshed.",
+      "title": "Filter Log by Protocol",
+      "description": "As a user, I want to filter my workout log by protocol so that I can analyze specific technique usage.",
       "acceptanceCriteria": [
-        "Create TableRenderChild class extending MarkdownRenderChild in app/views/EmbeddedTableView.ts",
-        "Add abortController: AbortController property to TableRenderChild",
-        "Move event listener registration from direct addEventListener to onload() method",
-        "Use { signal: this.abortController.signal } option for all event listeners",
-        "Implement onunload() method that calls this.abortController.abort()",
-        "Replace direct addEventListener calls with TableRenderChild instances",
+        "'protocol' parameter accepted in workout-log code blocks",
+        "Filter accepts single protocol string (e.g., protocol: drop_set)",
+        "Filter accepts array of protocols (e.g., protocol: [drop_set, myo_reps])",
+        "Works in combination with existing exercise and workout filters",
+        "DataFilter updated to support protocol filtering",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Created TableRenderChild class with AbortController. Refactored all event listeners in EmbeddedTableView, TableActions, LogCallouts, and Button component to use AbortSignal for cleanup. Event listeners are now properly cleaned up when tables are refreshed or removed."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Add cleanup method to EmbeddedTableView",
-      "description": "As a developer, I need EmbeddedTableView to expose a cleanup method so it can be called during plugin unload.",
+      "title": "Add Custom Protocol Settings",
+      "description": "As a user, I want to add my own protocols so that I can track techniques not in the default list.",
       "acceptanceCriteria": [
-        "Add cleanup() method to EmbeddedTableView in app/views/EmbeddedTableView.ts",
-        "cleanup() aborts all AbortControllers from TableRenderChild instances",
-        "cleanup() clears any internal state or references",
-        "Document cleanup() method with JSDoc comment",
+        "Settings tab includes 'Custom Protocols' section",
+        "Can add new protocol with: name, abbreviation (3 chars max), color",
+        "Can edit existing custom protocols",
+        "Can delete custom protocols",
+        "Custom protocols saved to plugin settings (customProtocols array)",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added public cleanup() method with JSDoc documentation. Method iterates through renderChildren array, unloads each TableRenderChild (which aborts their AbortControllers), and clears the array to release references. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Add cleanup method to EmbeddedDashboardView",
-      "description": "As a developer, I need EmbeddedDashboardView to expose a cleanup method so it can be called during plugin unload.",
+      "title": "Integrate Custom Protocols in Log Modal",
+      "description": "As a user, I want my custom protocols to appear in the CreateLogModal dropdown alongside built-in protocols.",
       "acceptanceCriteria": [
-        "Add cleanup() method to EmbeddedDashboardView in app/views/EmbeddedDashboardView.ts",
-        "cleanup() clears any event listeners or timers",
-        "cleanup() clears any internal state or references",
-        "Document cleanup() method with JSDoc comment",
-        "Typecheck passes"
+        "CreateLogModal Protocol dropdown shows built-in protocols first, then custom protocols",
+        "Custom protocols display with their configured abbreviation and color",
+        "Custom protocol selection saves to CSV correctly",
+        "Custom protocols display correctly in log table",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added public cleanup() method with JSDoc documentation. Currently the dashboard does not maintain long-lived resources like event listeners or timers (widgets handle their own rendering), but the method provides a consistent interface with other views and is ready for future extensions. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Complete plugin lifecycle cleanup in main.ts",
-      "description": "As a user who enables/disables the plugin, I want all resources to be properly cleaned up to prevent memory leaks and zombie event listeners.",
+      "title": "Protocol Statistics Dashboard Card",
+      "description": "As a user, I want to see protocol usage statistics in my dashboard so that I understand my training distribution.",
       "acceptanceCriteria": [
-        "Call embeddedChartView?.cleanup() in main.ts onunload() method",
-        "Call embeddedTableView?.cleanup() in main.ts onunload() method",
-        "Call embeddedDashboardView?.cleanup() in main.ts onunload() method",
-        "Call dataService.clearLogDataCache() in onunload() method",
-        "Call ChartRenderer.destroyAllCharts() in onunload() method",
-        "Nullify service references: codeBlockProcessorService = null!, commandHandlerService = null!",
-        "Add code comments documenting cleanup order and rationale",
-        "Typecheck passes"
+        "Dashboard includes 'Protocol Distribution' card in EmbeddedDashboardView",
+        "Shows pie chart of protocol usage for last 30 days",
+        "Shows count and percentage per protocol",
+        "Pie chart uses accessible patterns in addition to colors",
+        "Standard protocol included in distribution",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added comprehensive cleanup to main.ts onunload() method. Cleanup order: 1) active timers, 2) embedded views (chart/table/dashboard cleanup methods), 3) data service cache, 4) Chart.js instances, 5) service references nullified. Added detailed code comments documenting cleanup order and rationale. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Add recursion protection to addWorkoutLogEntry",
-      "description": "As a user trying to log workouts with an invalid CSV path, I want to receive a clear error message instead of a stack overflow crash.",
+      "title": "Protocol Dashboard Click Filtering",
+      "description": "As a user, I want to click on a pie chart slice to filter recent workouts by that protocol.",
       "acceptanceCriteria": [
-        "Add retryCount parameter with default value 0 to addWorkoutLogEntry() in app/services/DataService.ts",
-        "Define MAX_RETRIES = 1 constant at top of DataService class",
-        "Check if retryCount >= MAX_RETRIES before recursive call",
-        "Throw descriptive Error with CSV path if MAX_RETRIES exceeded",
-        "Display user-friendly Notice when CSV creation fails",
-        "Increment retryCount on recursive call: addWorkoutLogEntry(entry, retryCount + 1)",
+        "Clicking pie chart slice updates dashboard to show only that protocol's entries",
+        "Filter state shown visually (active filter indicator)",
+        "Click again or click 'clear' to remove filter",
+        "Filtered view updates all dashboard sections that support protocol filtering",
         "Typecheck passes",
-        "Write unit test for recursion protection scenario"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added MAX_RETRIES constant and retryCount parameter to addWorkoutLogEntry(). Recursion protection prevents infinite retry loop when CSV file creation fails. Throws descriptive error with CSV path and displays user-friendly Notice. Created comprehensive unit tests with 5 test cases covering: successful add, file creation retry, MAX_RETRIES exceeded, process not called on limit, and error message validation. All tests passing. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Strengthen CSV parsing validation",
-      "description": "As a user, I want malformed CSV entries to be rejected with clear warnings so I can identify and fix data quality issues.",
+      "title": "Protocol Effectiveness Analysis",
+      "description": "As a user, I want to see if certain protocols correlate with better progression so that I can optimize my training.",
       "acceptanceCriteria": [
-        "Add isNaN() validation checks for reps, weight, volume in parseWorkoutLogCSV() in app/types/WorkoutLogData.ts",
-        "Reject entries where reps <= 0 using continue statement",
-        "Reject entries where weight < 0 using continue statement",
-        "Log console.warn() with line number and raw line content for each skipped entry",
-        "Add JSDoc comment documenting expected CSV format",
-        "Continue parsing remaining entries after encountering invalid entry",
+        "Dashboard includes 'Protocol Effectiveness' section",
+        "Shows average volume increase per protocol type (comparing sets before/after)",
+        "Shows progression rate comparison between protocols",
+        "Includes disclaimer text: 'Note: Correlation does not imply causation'",
+        "Only shows protocols with sufficient data (minimum 5 entries)",
         "Typecheck passes",
-        "Write unit tests for malformed CSV input scenarios (NaN, negative values, empty fields)"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added comprehensive validation to parseCSVLogFile() in WorkoutLogData.ts. Validates numeric fields (reps, weight, volume) for NaN, rejects reps <= 0, rejects weight < 0. Console.warn() logs for all skipped entries with line numbers and raw line content. Added detailed JSDoc documenting expected CSV format. Parsing continues after invalid entries. Created comprehensive test suite with 17 test cases covering: valid entries, NaN values (reps/weight/volume), negative values (reps/weight), zero values (reps/weight), empty fields, insufficient columns, multiple validation failures, empty CSV, header-only CSV, parse exceptions, and timestamp fallbacks. All tests passing. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-009",
-      "title": "Fix weak parameter parsing",
-      "description": "As a developer debugging code block parameters, I want proper validation so empty strings aren't silently converted to 0.",
+      "title": "Workout Duration Estimator Code Block",
+      "description": "As a user, I want to see estimated workout duration so that I can plan my gym time.",
       "acceptanceCriteria": [
-        "Add value && check before !isNaN(Number(value)) in parseCodeBlockParams() in app/services/CodeBlockProcessorService.ts",
-        "Change condition to: } else if (value && !isNaN(Number(value))) {",
-        "Add code comment explaining why empty string check is needed",
+        "Register 'workout-duration' code block processor in CodeBlockProcessorService",
+        "Create EmbeddedDurationView extending BaseView",
+        "Calculates total rest time by summing workout-timer durations in current file",
+        "Calculates total set time using setDuration setting (default 45 seconds)",
+        "Displays: total rest time, total set time, total estimated duration",
+        "Visual design distinct from timer (e.g., info card style, not countdown)",
         "Typecheck passes",
-        "Write unit tests for parameter parsing edge cases (empty string, whitespace, '0', valid numbers)"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added empty string check to parseCodeBlockParams() in CodeBlockProcessorService.ts. The condition now checks for truthy value before attempting number conversion to prevent empty strings from being converted to 0. Added detailed comment explaining the rationale. Created comprehensive test suite with 14 test cases covering: valid numbers, zero values, booleans, empty strings, whitespace, string parameters, negative numbers, decimals, comment lines, empty lines, lines without colons, mixed parameter types, multi-word values, and scientific notation. All tests passing. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-010",
-      "title": "Implement cache size limits",
-      "description": "As a user with a large workout history (10,000+ entries), I want the plugin cache to have size limits so it doesn't consume excessive memory.",
+      "title": "Duration Estimator Settings",
+      "description": "As a user, I want to configure the default set duration used in estimation.",
       "acceptanceCriteria": [
-        "Define MAX_CACHE_SIZE = 5000 constant in DataService in app/services/DataService.ts",
-        "Add cache size check in getWorkoutLogData() before using cached data",
-        "Clear cache if logDataCache.length > MAX_CACHE_SIZE before repopulating",
-        "Add debug mode logging for cache statistics (size, hit/miss)",
-        "Add JSDoc comment documenting cache strategy and size limit rationale",
-        "Typecheck passes",
-        "Write unit test for cache eviction when size exceeds limit"
+        "Add 'setDuration' field to plugin settings (number, default 45)",
+        "Settings tab includes 'Default Set Duration (seconds)' input",
+        "EmbeddedDurationView uses this setting for calculations",
+        "Input validates for positive numbers only",
+        "Typecheck passes"
       ],
       "priority": 10,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added MAX_CACHE_SIZE constant (5000 entries) to DataService. Modified getWorkoutLogData() to validate cache size before using cached data. Cache is cleared and rebuilt when size exceeds limit. Added comprehensive JSDoc documenting cache strategy and rationale. Added debug mode logging for cache hit/miss and eviction events. Created comprehensive test suite with 3 test cases: cache eviction when exceeding MAX_CACHE_SIZE, cache usage when within limits, manual cache clearing. All tests passing (8/8 DataService tests). TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-011",
-      "title": "Optimize filtering string operations",
-      "description": "As a user filtering workout logs, I want fast filtering performance even with thousands of entries.",
+      "title": "Duration Estimator Workout Parameter",
+      "description": "As a user, I want to estimate duration for a specific workout file so that I can use this widget on any page.",
       "acceptanceCriteria": [
-        "Pre-compute normalized exercise filter before loop in applyEarlyFiltering() in app/services/DataService.ts",
-        "Pre-compute normalized workout filter before loop in applyEarlyFiltering()",
-        "Store normalized filters in const variables outside filter loop",
-        "Remove redundant toLowerCase().replace().trim() calls from inside filter loop",
-        "Add code comment documenting optimization rationale",
-        "Typecheck passes",
-        "Write unit tests verifying filter correctness is preserved after optimization"
+        "'workout' parameter specifies which file to analyze (relative or absolute path)",
+        "Scans specified file for workout-timer blocks to sum rest times",
+        "Counts sets from workout-log blocks in specified file",
+        "Defaults to current file if workout parameter not specified",
+        "Shows error message if specified file not found",
+        "Typecheck passes"
       ],
       "priority": 11,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Optimized applyEarlyFiltering() and getCSVWorkoutLogData() by pre-computing normalized filter values before the filter loop. This reduces redundant string operations (toLowerCase, replace, trim) from O(n*m) to O(n) complexity where n is entries and m is normalization cost. Updated matchesEarlyFilter() to accept optional normalizedFilters parameter. Added comprehensive JSDoc documenting performance optimization rationale. Created 9 unit tests verifying filter correctness preserved: exact/fuzzy matching, exercise/workout filters, AND logic, whitespace normalization, wiki-link handling, no-filter case, and cached data filtering. All 17 DataService tests passing. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-012",
-      "title": "Replace custom trigger logic with Obsidian APIs",
-      "description": "As a plugin user, I want workout log refreshes to use proper Obsidian APIs so the plugin doesn't depend on external plugins or use undocumented APIs.",
+      "title": "Actual Duration Tracking",
+      "description": "As a user, I want to track actual workout duration so that I can compare estimated vs real time.",
       "acceptanceCriteria": [
-        "Replace app.workspace.trigger('dataview:refresh-views') with workspace.iterateRootLeaves() in main.ts",
-        "Use app.metadataCache.trigger('changed', file) for metadata updates instead of vault.trigger('raw')",
-        "Remove Dataview plugin dependency from refresh logic",
-        "Test refresh behavior works correctly without Dataview installed",
-        "Add code comments documenting proper Obsidian API usage",
-        "Typecheck passes"
+        "Dashboard includes 'Duration Comparison' section",
+        "Calculates actual duration from first log timestamp to last log timestamp per workout session",
+        "Shows estimated vs actual for 5 most recent workouts",
+        "Shows variance trend (are estimates getting more accurate?)",
+        "Handles timezone correctly using stored timestamps",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 12,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Replaced app.workspace.trigger('dataview:refresh-views') with app.workspace.iterateRootLeaves() to iterate through all markdown views. Replaced app.vault.trigger('raw') with app.metadataCache.trigger('changed', file) for proper metadata updates. Removed dependency on Dataview plugin - refresh logic now uses only public Obsidian APIs. Added comprehensive JSDoc documentation explaining the refresh process and API usage. TypeScript compilation passes. All existing tests pass (315 passed, 2 pre-existing failures unrelated)."
-    },
-    {
-      "id": "US-013",
-      "title": "Add DataService unit tests",
-      "description": "As a developer, I want unit tests for DataService to prevent regressions in CSV parsing and caching.",
-      "acceptanceCriteria": [
-        "Create __tests__/DataService.test.ts file",
-        "Write test for CSV parsing with malformed input (invalid numbers, missing fields)",
-        "Write test for recursion protection in addWorkoutLogEntry",
-        "Write test for cache eviction when size exceeds MAX_CACHE_SIZE",
-        "Write test for filtering optimization correctness",
-        "Mock TFile and Vault APIs using Jest mocks",
-        "All tests pass with npm test",
-        "Typecheck passes"
-      ],
-      "priority": 13,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Created comprehensive DataService.test.ts with 17 test cases covering: recursion protection (5 tests), cache size limits (3 tests), filtering optimization (9 tests). Tests verify CSV parsing with malformed input, cache eviction when exceeding MAX_CACHE_SIZE, and filter correctness after optimization. All tests use proper mocking of TFile and Vault APIs. All 17 tests passing. TypeScript compilation passes."
-    },
-    {
-      "id": "US-014",
-      "title": "Add ChartRenderer unit tests",
-      "description": "As a developer, I want unit tests for ChartRenderer to verify Chart.js instances are properly destroyed.",
-      "acceptanceCriteria": [
-        "Create __tests__/ChartRenderer.test.ts file",
-        "Mock Chart.js constructor and destroy() method using Jest",
-        "Write test verifying destroy() is called on existing chart before creating new one",
-        "Write test verifying destroyAllCharts() calls destroy() on all tracked instances",
-        "Write test verifying chartInstances Map is cleared after destroyAllCharts()",
-        "All tests pass with npm test",
-        "Typecheck passes"
-      ],
-      "priority": 14,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Created ChartRenderer.test.ts with 7 comprehensive test cases covering: chart instance creation, destroying existing chart before creating new one, tracking multiple charts, destroyAllCharts() functionality, Map clearing, chart ID generation from container ID, and chart ID generation using hash. All tests use proper mocking of Chart.js, ChartContainer, and chart config modules. All 7 tests passing. TypeScript compilation passes."
-    },
-    {
-      "id": "US-015",
-      "title": "Configure Jest coverage thresholds",
-      "description": "As a developer, I want enforced test coverage thresholds to maintain code quality.",
-      "acceptanceCriteria": [
-        "Update jest.config.js to set coverage thresholds: statements: 70, branches: 70, functions: 70, lines: 70",
-        "Add collectCoverageFrom patterns for app/services/DataService.ts, app/features/charts/components/ChartRenderer.ts",
-        "Run npm run test:coverage and verify it passes",
-        "Add coverage report to .gitignore if not already present",
-        "Typecheck passes",
-        "All tests pass with npm test"
-      ],
-      "priority": 15,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Updated jest.config.js to set coverage thresholds to 70% for statements, branches, functions, and lines. Added DataService.ts and ChartRenderer.ts to collectCoverageFrom patterns. Excluded FrontmatterParser.ts (Obsidian API mocking issues) and Constants.ts (config data with no logic to test). Coverage results: statements 80.11%, branches 72.97%, functions 81.25%, lines 79.75% - all exceed 70% threshold. Coverage reports already in .gitignore (coverage/*). All tests pass (325 passed, 2 pre-existing failures unrelated). TypeScript compilation passes."
-    },
-    {
-      "id": "US-016",
-      "title": "Enable TypeScript strict mode",
-      "description": "As a developer, I want strict null checks enabled to catch potential null/undefined errors at compile time.",
-      "acceptanceCriteria": [
-        "Add \"strict\": true to tsconfig.json compilerOptions",
-        "Add \"strictNullChecks\": true to tsconfig.json compilerOptions",
-        "Add \"noImplicitAny\": true to tsconfig.json compilerOptions",
-        "Fix all TypeScript errors revealed by strict mode (null checks, implicit any, etc.)",
-        "Run npm run build and verify TypeScript compilation passes",
-        "Update CLAUDE.md documenting strict mode is now enabled",
-        "Typecheck passes"
-      ],
-      "priority": 16,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - TypeScript strict mode was already enabled in tsconfig.json (strict: true, strictNullChecks: true, noImplicitAny: true). All code already passes strict mode compilation with no errors. Updated CLAUDE.md to explicitly document that strict mode is ENABLED with all three settings, added bullet points explaining the benefits (catches null/undefined errors at compile time, prevents implicit any types). Updated Testing section to reflect new 70% coverage thresholds and coverage scope. TypeScript compilation passes with npm run build. All tests pass (325 passed, 2 pre-existing failures unrelated)."
-    },
-    {
-      "id": "US-017",
-      "title": "Add CSV injection protection",
-      "description": "As a user exporting workout data to external spreadsheets, I want protection against CSV formula injection.",
-      "acceptanceCriteria": [
-        "Add formula injection detection regex /^[=+\\-@]/ to entryToCSVLine() in app/types/WorkoutLogData.ts",
-        "Prefix detected formulas with single quote character before escaping",
-        "Add code comment documenting CSV injection protection rationale",
-        "Typecheck passes",
-        "Write unit tests for formula injection scenarios (=1+1, +1, -1, @SUM)"
-      ],
-      "priority": 17,
-      "passes": true,
-      "notes": "Completed 2026-01-24 - Added CSV formula injection protection to entryToCSVLine() in WorkoutLogData.ts. Implemented regex /^[=+\\-@]/ to detect formula characters at start of values. Values starting with formula characters are prefixed with single quote to prevent execution in spreadsheet applications. Added comprehensive JSDoc comment documenting the security rationale and attack vectors. Created 10 unit tests covering: formula prefixes (=, +, -, @), exercise/workout name protection, normal text handling, empty field handling, combined injection+quote escaping, and multiple field protection. All 10 tests passing. Total test count increased from 320 to 330. TypeScript compilation passes."
+      "passes": false,
+      "notes": ""
     }
   ]
 }

@@ -2,6 +2,7 @@ import {
   parseCSVLogFile,
   CSVWorkoutLogEntry,
   entryToCSVLine,
+  WorkoutProtocol,
 } from "../WorkoutLogData";
 
 describe("parseCSVLogFile - CSV Parsing Validation", () => {
@@ -34,6 +35,7 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
       workout: "Push Day",
       timestamp: 1706054400000,
       notes: "Good set",
+      protocol: WorkoutProtocol.STANDARD,
     });
     expect(entries[1]).toEqual({
       date: "2024-01-24",
@@ -45,6 +47,7 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
       workout: "Leg Day",
       timestamp: 1706054500000,
       notes: undefined,
+      protocol: WorkoutProtocol.STANDARD,
     });
   });
 
@@ -342,7 +345,9 @@ describe("entryToCSVLine - CSV Injection Protection", () => {
 
     // Should not have single quotes for empty values
     const fields = csvLine.split(",");
-    expect(fields[fields.length - 1]).toBe(""); // Last field (notes) should be empty
+    // Notes is the 9th field (index 8), protocol is the 10th field (index 9)
+    expect(fields[8]).toBe(""); // Notes field should be empty
+    expect(fields[9]).toBe(WorkoutProtocol.STANDARD); // Protocol field should be standard
   });
 
   test("should combine injection protection with quote escaping", () => {

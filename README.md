@@ -14,20 +14,12 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
 - **Log Creation**: Create new workout logs directly from the plugin
 - **Exercise Management**: Create exercise pages and sections for better organization
 - **Trend Lines**: Visualize progress trends with automatic trend line calculation
-- **Debug Mode**: Detailed logging for troubleshooting and optimization
 - **Responsive Design**: Works on desktop and mobile devices
 - **Code Block Integration**: Embed charts, tables, and timers directly in your notes
 
 ## How it Works
 
 The plugin reads workout log data from a single CSV file in your vault. This file stores all your workout entries and is used to generate charts and tables.
-
-## Installation
-
-1. Download the latest release
-2. Extract the files to your `.obsidian/plugins/workout-planner/` folder
-3. Enable the plugin in Obsidian settings
-4. Configure the CSV log file path in the plugin settings. By default, it's `theGYM/Log/workout_logs.csv`.
 
 ## Usage
 
@@ -55,42 +47,33 @@ The plugin supports three types of code blocks that you can embed directly in yo
 
 #### Workout Charts
 
-````markdown
 ```workout-chart
 exercise: Squat
 chartType: Volume
 dateRange: 30
 showTrendLine: true
 ```
-````
-
-````
 
 #### Workout Tables
 
-```markdown
 ```workout-log
 exercise: Bench Press
 exactMatch: false
 dateRange: 14
-````
-
-````
+```
 
 #### Workout Timers
 
-```markdown
 ```workout-timer
 duration: 90
 label: Rest Period
 autoStart: false
-````
-
-````
+```
 
 ### Code Block Parameters
 
 #### Chart Parameters
+
 - `exercise`: Exercise name to filter (optional)
 - `chartType`: Type of chart (Volume, Weight, Reps)
 - `dateRange`: Number of days to include (default: 30)
@@ -98,6 +81,7 @@ autoStart: false
 - `height`: Chart height in pixels
 
 #### Table Parameters
+
 - `exercise`: Exercise name to filter (optional)
 - `exactMatch`: Use exact matching for exercise names (true/false)
 - `dateRange`: Number of days to include
@@ -105,6 +89,7 @@ autoStart: false
 - `sortOrder`: Sort order (asc, desc)
 
 #### Timer Parameters
+
 - `duration`: Timer duration in seconds
 - `label`: Timer label
 - `autoStart`: Start timer automatically (true/false)
@@ -142,7 +127,7 @@ The plugin uses a single CSV file to store all workout logs. The file must have 
 - **exercise**: The name of the exercise.
 - **reps**: Number of repetitions.
 - **weight**: Weight used.
-- **volume**: Calculated volume (reps * weight).
+- **volume**: Calculated volume (reps \* weight).
 - **origine**: The source or workout routine (e.g., "Push Day"). Can be a link.
 - **workout**: (Optional) Can be used for additional workout details.
 - **timestamp**: The unique timestamp of the log entry (milliseconds since epoch).

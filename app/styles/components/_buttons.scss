@@ -24,8 +24,7 @@
 }
 
 .workout-add-log-button,
-.workout-create-log-button,
-.workout-repeat-last-button {
+.workout-create-log-button {
   background: var(--interactive-accent);
   color: var(--text-on-accent);
   border: none;
@@ -56,17 +55,6 @@
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
-  }
-}
-
-.workout-repeat-last-button {
-  background: var(--interactive-normal);
-  color: var(--text-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-
-  &:hover {
-    background: var(--interactive-hover);
-    border-color: var(--interactive-accent);
   }
 }
 

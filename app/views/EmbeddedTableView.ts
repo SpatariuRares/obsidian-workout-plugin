@@ -156,26 +156,20 @@ export class EmbeddedTableView extends BaseView {
 
       const buttonContainer = contentDiv.createDiv({ cls: "add-log-button-container" });
 
+      // Get latest entry to pre-fill the form if available
+      const latestEntry = filterResult.filteredData.length > 0
+        ? filterResult.filteredData[0]
+        : undefined;
+
       LogCallouts.renderAddLogButton(
         buttonContainer,
         exerciseName,
         currentPageLink,
         this.plugin,
         onRefresh,
-        renderChild.getSignal()
+        renderChild.getSignal(),
+        latestEntry
       );
-
-      // Add "Repeat Last" button if there are entries
-      if (filterResult.filteredData.length > 0) {
-        const latestEntry = filterResult.filteredData[0]; // Assuming data is sorted by date descending
-        LogCallouts.renderRepeatLastButton(
-          buttonContainer,
-          latestEntry,
-          this.plugin,
-          onRefresh,
-          renderChild.getSignal()
-        );
-      }
     }
 
     // Render target header if targetWeight or targetReps is set

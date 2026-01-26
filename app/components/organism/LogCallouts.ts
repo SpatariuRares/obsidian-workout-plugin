@@ -63,7 +63,8 @@ export class LogCallouts {
     currentPageLink: string,
     plugin: WorkoutChartsPlugin,
     onLogCreated?: () => void,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    latestEntry?: WorkoutLogData
   ): void {
     if (!currentPageLink) {
       return;
@@ -81,12 +82,24 @@ export class LogCallouts {
     });
 
     Button.onClick(button, () => {
+      // If there's a latest entry, pre-fill the form with those values
+      const prefillData = latestEntry
+        ? {
+            exercise: latestEntry.exercise,
+            weight: latestEntry.weight,
+            reps: latestEntry.reps,
+            workout: latestEntry.workout || "",
+            notes: latestEntry.notes || "",
+          }
+        : undefined;
+
       new CreateLogModal(
         plugin.app,
         plugin,
         exerciseName,
         currentPageLink,
-        onLogCreated
+        onLogCreated,
+        prefillData
       ).open();
     }, signal);
   }
@@ -133,40 +146,4 @@ export class LogCallouts {
     });
   }
 
-  static renderRepeatLastButton(
-    container: HTMLElement,
-    latestEntry: WorkoutLogData,
-    plugin: WorkoutChartsPlugin,
-    onLogCreated?: () => void,
-    signal?: AbortSignal
-  ): void {
-    const button = Button.create(container, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REPEAT_LAST,
-      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
-      className: "workout-repeat-last-button",
-      ariaLabel: "Repeat last workout entry",
-    });
-
-    Button.onClick(button, () => {
-      const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-      const currentPageLink = activeView?.file
-        ? `[[${activeView.file.basename}]]`
-        : "";
-
-      new CreateLogModal(
-        plugin.app,
-        plugin,
-        latestEntry.exercise,
-        currentPageLink,
-        onLogCreated,
-        {
-          exercise: latestEntry.exercise,
-          weight: latestEntry.weight,
-          reps: latestEntry.reps,
-          workout: latestEntry.workout || "",
-          notes: latestEntry.notes || "",
-        }
-      ).open();
-    }, signal);
-  }
 }

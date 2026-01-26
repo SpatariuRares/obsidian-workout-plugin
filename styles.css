@@ -235,8 +235,7 @@
 }
 
 .workout-add-log-button,
-.workout-create-log-button,
-.workout-repeat-last-button {
+.workout-create-log-button {
   background: var(--interactive-accent);
   color: var(--text-on-accent);
   border: none;
@@ -248,8 +247,7 @@
   transition: background 0.2s ease;
 }
 .workout-add-log-button-container,
-.workout-create-log-button-container,
-.workout-repeat-last-button-container {
+.workout-create-log-button-container {
   text-align: left;
   display: flex;
   gap: var(--workout-space-sm);
@@ -257,30 +255,18 @@
   flex-wrap: wrap;
 }
 .workout-add-log-button:hover,
-.workout-create-log-button:hover,
-.workout-repeat-last-button:hover {
+.workout-create-log-button:hover {
   background: var(--interactive-accent-hover);
   transform: translateY(-1px);
   box-shadow: var(--workout-shadow-lg);
 }
 .workout-add-log-button:disabled,
-.workout-create-log-button:disabled,
-.workout-repeat-last-button:disabled {
+.workout-create-log-button:disabled {
   background: var(--background-modifier-border);
   color: var(--text-muted);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-}
-
-.workout-repeat-last-button {
-  background: var(--interactive-normal);
-  color: var(--text-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-}
-.workout-repeat-last-button:hover {
-  background: var(--interactive-hover);
-  border-color: var(--interactive-accent);
 }
 
 .workout-export-btn {
@@ -684,7 +670,6 @@
 .workout-table-container {
   width: 100%;
   overflow-x: auto;
-  margin-top: var(--workout-space-lg);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
 }
@@ -1082,7 +1067,7 @@
   align-items: center;
 }
 .workout-timer-time-display {
-  font-size: var(--workout-font-xl);
+  font-size: var(--workout-font-2xl);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-accent);
   font-family: monospace;

@@ -259,7 +259,9 @@ export class CodeBlockProcessorService {
           // Try to parse as number, boolean, or keep as string
           if (value === "true" || value === "false") {
             params[key] = value === "true";
-          } else if (!isNaN(Number(value))) {
+          } else if (value && !isNaN(Number(value))) {
+            // Check for empty string before number conversion
+            // Empty strings convert to 0 with Number(""), which is undesirable
             params[key] = Number(value);
           } else {
             params[key] = value;

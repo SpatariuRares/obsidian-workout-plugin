@@ -24,7 +24,10 @@ export type {
 export { TABLE_TYPE, TableColumnType } from "@app/types/TableTypes";
 
 // Timer-related types
-export type { EmbeddedTimerParams } from "@app/types/TimerTypes";
+export type {
+  EmbeddedTimerParams,
+  TimerPresetConfig,
+} from "@app/types/TimerTypes";
 export { TIMER_TYPE } from "@app/types/TimerTypes";
 
 // Dashboard-related types

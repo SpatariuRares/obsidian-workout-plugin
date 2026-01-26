@@ -24,6 +24,8 @@ export class TableRenderer {
    * @param params - Table parameters
    * @param logs - Original log data objects
    * @param plugin - Plugin instance for operations
+   * @param onRefresh - Callback to refresh table
+   * @param signal - AbortSignal for event listener cleanup
    * @returns True if rendering was successful, false otherwise
    */
   static renderTable(
@@ -33,7 +35,8 @@ export class TableRenderer {
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
     plugin?: WorkoutChartsPlugin, // pass the plugin for file opening
-    onRefresh?: () => void
+    onRefresh?: () => void,
+    signal?: AbortSignal
   ): boolean {
     try {
       const fragment = document.createDocumentFragment();
@@ -51,7 +54,7 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(tbody, rows, plugin, onRefresh);
+      this.applyRowGroupingOptimized(tbody, rows, plugin, onRefresh, signal);
 
       tableContainer.appendChild(fragment);
 
@@ -80,7 +83,8 @@ export class TableRenderer {
     tbody: HTMLElement,
     rows: TableRow[],
     plugin?: WorkoutChartsPlugin,
-    onRefresh?: () => void
+    onRefresh?: () => void,
+    signal?: AbortSignal
   ): void {
     try {
       if (rows.length === 0) return;
@@ -168,7 +172,7 @@ export class TableRenderer {
             td.textContent = cell;
           } else if (cellIndex === row.displayRow.length - 1) {
             td.className = "workout-table-actions-cell";
-            TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh);
+            TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh, signal);
           } else {
             td.textContent = cell;
           }

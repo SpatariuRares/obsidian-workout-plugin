@@ -4,6 +4,21 @@ export enum TIMER_TYPE {
   STOPWATCH = "stopwatch",
 }
 
+/**
+ * Configuration for a reusable timer preset.
+ * Presets allow users to save timer configurations and reference them by name.
+ */
+export interface TimerPresetConfig {
+  name: string;
+  type: TIMER_TYPE;
+  duration: number; // Duration in seconds
+  showControls: boolean;
+  autoStart: boolean;
+  sound: boolean;
+  intervalTime?: number; // For interval timer
+  rounds?: number; // For interval timer
+}
+
 export interface EmbeddedTimerParams {
   duration?: number; // Duration in seconds
   type?: TIMER_TYPE;
@@ -13,6 +28,7 @@ export interface EmbeddedTimerParams {
   intervalTime?: number; // For interval timer
   rounds?: number; // For interval timer
   sound?: boolean;
+  preset?: string; // Name of a saved timer preset to use as base configuration
 }
 
 export interface TimerState {

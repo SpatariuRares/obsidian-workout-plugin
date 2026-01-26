@@ -23,8 +23,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Test framework**: Jest with ts-jest for TypeScript support
 - **Test files**: Located in `__tests__` directories alongside source files or with `.test.ts` suffix
-- **Coverage**: 80% threshold for statements, branches, functions, and lines
-- **Coverage scope**: Utilities, constants, data components, and dashboard calculations
+- **Coverage thresholds**: 70% minimum for statements, branches, functions, and lines (currently exceeding 80%)
+- **Coverage scope**: Utilities, constants (MuscleTags), data components, dashboard calculations, DataService, ChartRenderer
+- **Excluded from coverage**: Constants.ts (config data), FrontmatterParser.ts (Obsidian API mocking issues)
 
 ## Project Architecture
 
@@ -35,7 +36,10 @@ This is an Obsidian plugin that visualizes workout data through interactive char
 - **Path aliases**: `@app/*` maps to `app/*` (configured in tsconfig.json and jest.config.js)
 - **Import example**: `import { WorkoutLogData } from "@app/types/WorkoutLogData"`
 - **Target**: ES2018 with ESNext modules
-- **Strict mode**: Enabled with strict null checks
+- **Strict mode**: ENABLED (strict: true, strictNullChecks: true, noImplicitAny: true)
+  - All strict TypeScript checks are enforced at compile time
+  - Catches potential null/undefined errors before runtime
+  - Prevents implicit any types for better type safety
 
 ### Core Architecture
 

@@ -96,30 +96,85 @@ export abstract class BaseLogModal extends ModalBase {
       this.exerciseName,
     );
 
-    // Reps input
-    const repsInput = this.createNumberField(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.REPS,
-      0,
-      {
-        min: 1,
+    // Reps input with adjust buttons
+    const repsSection = formContainer.createDiv({ cls: "workout-field-with-adjust" });
+    const repsLabel = repsSection.createDiv({ cls: "workout-field-label" });
+    repsLabel.textContent = CONSTANTS.WORKOUT.MODAL.LABELS.REPS;
+
+    const repsInputContainer = repsSection.createDiv({ cls: "workout-input-with-adjust" });
+    const repsInput = repsInputContainer.createEl("input", {
+      type: "number",
+      cls: "workout-charts-input",
+      attr: {
+        min: "1",
         placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS,
       },
-    );
+    });
     repsInput.value = ""; // Allow empty for user input
 
-    // Weight input
-    const weightInput = this.createNumberField(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.WEIGHT,
-      0,
-      {
-        min: 0,
+    // Quick adjust buttons for reps
+    const repsAdjustButtons = repsInputContainer.createDiv({ cls: "workout-adjust-buttons" });
+    const repsMinusBtn = repsAdjustButtons.createEl("button", {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + "1",
+      cls: "workout-adjust-btn workout-adjust-minus",
+      attr: { type: "button", "aria-label": "Decrease reps by 1" },
+    });
+    const repsPlusBtn = repsAdjustButtons.createEl("button", {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + "1",
+      cls: "workout-adjust-btn workout-adjust-plus",
+      attr: { type: "button", "aria-label": "Increase reps by 1" },
+    });
+
+    repsMinusBtn.addEventListener("click", () => {
+      const currentValue = parseInt(repsInput.value) || 0;
+      repsInput.value = Math.max(0, currentValue - 1).toString();
+    });
+
+    repsPlusBtn.addEventListener("click", () => {
+      const currentValue = parseInt(repsInput.value) || 0;
+      repsInput.value = (currentValue + 1).toString();
+    });
+
+    // Weight input with adjust buttons
+    const weightSection = formContainer.createDiv({ cls: "workout-field-with-adjust" });
+    const weightLabel = weightSection.createDiv({ cls: "workout-field-label" });
+    weightLabel.textContent = CONSTANTS.WORKOUT.MODAL.LABELS.WEIGHT;
+
+    const weightInputContainer = weightSection.createDiv({ cls: "workout-input-with-adjust" });
+    const weightInput = weightInputContainer.createEl("input", {
+      type: "number",
+      cls: "workout-charts-input",
+      attr: {
+        min: "0",
+        step: "0.5",
         placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WEIGHT,
       },
-    );
+    });
     weightInput.value = ""; // Allow empty for user input
-    weightInput.setAttribute("step", "0.5");
+
+    // Quick adjust buttons for weight
+    const weightIncrement = this.plugin.settings.weightIncrement;
+    const weightAdjustButtons = weightInputContainer.createDiv({ cls: "workout-adjust-buttons" });
+    const weightMinusBtn = weightAdjustButtons.createEl("button", {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + weightIncrement,
+      cls: "workout-adjust-btn workout-adjust-minus",
+      attr: { type: "button", "aria-label": `Decrease weight by ${weightIncrement}kg` },
+    });
+    const weightPlusBtn = weightAdjustButtons.createEl("button", {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + weightIncrement,
+      cls: "workout-adjust-btn workout-adjust-plus",
+      attr: { type: "button", "aria-label": `Increase weight by ${weightIncrement}kg` },
+    });
+
+    weightMinusBtn.addEventListener("click", () => {
+      const currentValue = parseFloat(weightInput.value) || 0;
+      weightInput.value = Math.max(0, currentValue - weightIncrement).toFixed(1);
+    });
+
+    weightPlusBtn.addEventListener("click", () => {
+      const currentValue = parseFloat(weightInput.value) || 0;
+      weightInput.value = (currentValue + weightIncrement).toFixed(1);
+    });
 
     // Notes input
     const notesInput = this.createTextareaField(

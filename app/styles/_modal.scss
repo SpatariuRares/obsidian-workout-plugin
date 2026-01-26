@@ -254,3 +254,134 @@
     display: none;
   }
 }
+
+/* Audit Exercise Names Modal Styles */
+.workout-audit {
+  &-success {
+    color: var(--text-success);
+    font-weight: var(--workout-font-weight-semibold);
+    text-align: center;
+    padding: var(--workout-space-2xl);
+  }
+
+  &-table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: var(--workout-space-lg);
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-radius: var(--workout-radius-md);
+  }
+
+  &-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--workout-font-sm);
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: var(--background-secondary);
+      z-index: 1;
+    }
+
+    th {
+      padding: var(--workout-space-md);
+      text-align: left;
+      font-weight: var(--workout-font-weight-semibold);
+      color: var(--text-normal);
+      border-bottom: 2px solid var(--background-modifier-border);
+    }
+
+    td {
+      padding: var(--workout-space-md);
+      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+      color: var(--text-normal);
+
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    tbody tr:hover {
+      background: var(--background-modifier-hover);
+    }
+  }
+
+  &-status {
+    &-green {
+      color: var(--text-success);
+      font-weight: var(--workout-font-weight-medium);
+    }
+
+    &-yellow {
+      color: var(--text-warning);
+      font-weight: var(--workout-font-weight-medium);
+    }
+
+    &-red {
+      color: var(--text-error);
+      font-weight: var(--workout-font-weight-medium);
+    }
+  }
+}
+
+/* Quick Adjust Buttons for Weight and Reps Fields */
+.workout-field-with-adjust {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+
+.workout-field-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+}
+
+.workout-input-with-adjust {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+.workout-adjust-buttons {
+  display: flex;
+  gap: var(--workout-space-xs);
+}
+
+.workout-adjust-btn {
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  background: var(--interactive-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-normal);
+  cursor: pointer;
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  transition: var(--workout-transition);
+  min-width: 2rem;
+  text-align: center;
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--interactive-accent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.workout-adjust-plus {
+    color: var(--text-success);
+  }
+
+  &.workout-adjust-minus {
+    color: var(--text-error);
+  }
+}

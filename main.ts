@@ -15,6 +15,7 @@ import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 
 // ===================== MAIN PLUGIN =====================
 
@@ -71,11 +72,43 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   onunload() {
-    // Clean up all active timers
+    /**
+     * PLUGIN LIFECYCLE CLEANUP
+     *
+     * Order of operations:
+     * 1. Clean up active timers (component-level cleanup)
+     * 2. Clean up embedded views (calls their cleanup methods which handle internal resources)
+     * 3. Clear data cache (release memory from cached workout data)
+     * 4. Destroy all Chart.js instances (additional safety net for chart cleanup)
+     * 5. Nullify service references (release references to allow garbage collection)
+     *
+     * This prevents memory leaks from:
+     * - Chart.js instances accumulating in memory
+     * - Event listeners not being properly removed (zombie listeners)
+     * - Cached data consuming excessive memory
+     * - Service references preventing garbage collection
+     */
+
+    // 1. Clean up all active timers
     for (const timerView of this.activeTimers.values()) {
       timerView.destroy();
     }
     this.activeTimers.clear();
+
+    // 2. Clean up embedded views (each view handles its own cleanup)
+    this.embeddedChartView?.cleanup();
+    this.embeddedTableView?.cleanup();
+    this.embeddedDashboardView?.cleanup();
+
+    // 3. Clear data service cache to release memory
+    this.dataService?.clearLogDataCache();
+
+    // 4. Destroy all Chart.js instances (additional safety net)
+    ChartRenderer.destroyAllCharts();
+
+    // 5. Nullify service references to allow garbage collection
+    this.codeBlockProcessorService = null!;
+    this.commandHandlerService = null!;
   }
 
   async loadSettings() {
@@ -133,38 +166,48 @@ export default class WorkoutChartsPlugin extends Plugin {
     return this.dataService.deleteWorkoutLogEntry(logToDelete);
   }
 
+  /**
+   * Rename an exercise in the CSV file
+   */
+  public async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
+    return this.dataService.renameExercise(oldName, newName);
+  }
+
+  /**
+   * Trigger refresh of workout log views using proper Obsidian APIs
+   *
+   * This method refreshes all markdown views to update workout-log code blocks
+   * after data changes. It uses Obsidian's public APIs instead of undocumented
+   * or plugin-specific triggers.
+   *
+   * Process:
+   * 1. Clear data cache to force fresh data load
+   * 2. Iterate through all markdown views
+   * 3. Trigger editor refresh to re-render code blocks
+   * 4. Trigger metadata cache update to notify other plugins
+   */
   public triggerWorkoutLogRefresh(): void {
-    // Clear cache first
+    // Clear cache first to ensure fresh data on next render
     this.clearLogDataCache();
 
-    // Trigger dataview refresh if available (for compatibility)
-    if (this.app.workspace.trigger) {
-      this.app.workspace.trigger("dataview:refresh-views");
-    }
-
-    // Force refresh of all markdown views that contain workout-log code blocks
-    const leaves = this.app.workspace.getLeavesOfType("markdown");
-    leaves.forEach((leaf) => {
+    // Iterate through all markdown leaves using Obsidian's workspace API
+    this.app.workspace.iterateRootLeaves((leaf) => {
+      // Only process markdown views
       if (leaf.view instanceof MarkdownView) {
         const view = leaf.view;
-        if (view?.editor) {
-          // Trigger a refresh by updating the view
-          view.editor.refresh();
 
-          // Only trigger raw event if file path is valid
-          if (
-            view.file &&
-            view.file.path &&
-            typeof view.file.path === "string"
-          ) {
-            // Extra safety: ensure the path looks valid
-            if (
-              view.file.path.length > 0 &&
-              !view.file.path.includes("undefined")
-            ) {
-              this.app.vault.trigger("raw", view.file.path);
-            }
-          }
+        // Refresh the editor to re-render code blocks
+        if (view?.editor) {
+          view.editor.refresh();
+        }
+
+        // Trigger metadata cache update to notify other components
+        // This is the proper Obsidian API for signaling content changes
+        if (view.file) {
+          this.app.metadataCache.trigger("changed", view.file);
         }
       }
     });

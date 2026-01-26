@@ -29,6 +29,21 @@ export class EmbeddedChartView extends BaseView {
     super(plugin);
   }
 
+  /**
+   * Cleanup method to be called during plugin unload.
+   * Destroys all Chart.js instances and clears internal state to prevent memory leaks.
+   */
+  public cleanup(): void {
+    try {
+      // Destroy all Chart.js instances managed by ChartRenderer
+      ChartRenderer.destroyAllCharts();
+
+      this.logDebug("EmbeddedChartView", "Cleanup completed successfully");
+    } catch (error) {
+      console.error("Error during EmbeddedChartView cleanup:", error);
+    }
+  }
+
   async createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],

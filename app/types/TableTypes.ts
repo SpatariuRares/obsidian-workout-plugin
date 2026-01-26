@@ -12,6 +12,8 @@ export interface EmbeddedTableParams {
   showAddButton?: boolean;
   buttonText?: string;
   columns?: string[] | string;
+  targetWeight?: number;
+  targetReps?: number;
 }
 
 export interface TableRow {

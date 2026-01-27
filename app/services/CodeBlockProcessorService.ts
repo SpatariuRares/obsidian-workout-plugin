@@ -256,8 +256,15 @@ export class CodeBlockProcessorService {
           const key = trimmedLine.substring(0, colonIndex).trim();
           const value = trimmedLine.substring(colonIndex + 1).trim();
 
-          // Try to parse as number, boolean, or keep as string
-          if (value === "true" || value === "false") {
+          // Check for array syntax: [value1, value2, ...]
+          if (value.startsWith("[") && value.endsWith("]")) {
+            const arrayStr = value.slice(1, -1);
+            params[key] = arrayStr
+              .split(",")
+              .map((v) => v.trim())
+              .filter((v) => v.length > 0);
+          } else if (value === "true" || value === "false") {
+            // Try to parse as boolean
             params[key] = value === "true";
           } else if (value && !isNaN(Number(value))) {
             // Check for empty string before number conversion

@@ -51,8 +51,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Added protocol parameter to EmbeddedTableParams. Enhanced CodeBlockProcessorService to parse array syntax [value1, value2]. Implemented filterByProtocol() in DataFilter with AND logic for combining with exercise/workout filters. Protocol filter supports single string or array of protocols (OR within protocols). Case-insensitive matching. Entries without protocol default to STANDARD. All tests pass (368 passed, 16 new tests added for protocol filtering and array parsing)."
     },
     {
       "id": "US-004",

@@ -15,6 +15,7 @@ export interface EmbeddedTableParams {
   targetWeight?: number;
   targetReps?: number;
   showProtocol?: boolean; // Show protocol column (default: true)
+  protocol?: string | string[]; // Filter by protocol (single value or array)
 }
 
 export interface TableRow {

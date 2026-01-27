@@ -188,5 +188,65 @@ workout: `;
       expect(result.value).toBe(1000);
       expect(result.small).toBe(0.01);
     });
+
+    it("should parse array syntax with single value", () => {
+      const source = "protocol: [drop_set]";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(Array.isArray(result.protocol)).toBe(true);
+      expect(result.protocol).toEqual(["drop_set"]);
+    });
+
+    it("should parse array syntax with multiple values", () => {
+      const source = "protocol: [drop_set, myo_reps, rest_pause]";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(Array.isArray(result.protocol)).toBe(true);
+      expect(result.protocol).toEqual(["drop_set", "myo_reps", "rest_pause"]);
+    });
+
+    it("should trim whitespace from array values", () => {
+      const source = "protocol: [  drop_set  ,   myo_reps   ]";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(result.protocol).toEqual(["drop_set", "myo_reps"]);
+    });
+
+    it("should filter out empty array values", () => {
+      const source = "protocol: [drop_set, , myo_reps, ]";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(result.protocol).toEqual(["drop_set", "myo_reps"]);
+    });
+
+    it("should handle empty array", () => {
+      const source = "protocol: []";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(Array.isArray(result.protocol)).toBe(true);
+      expect(result.protocol).toEqual([]);
+    });
+
+    it("should parse string value when not using array syntax", () => {
+      const source = "protocol: drop_set";
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(typeof result.protocol).toBe("string");
+      expect(result.protocol).toBe("drop_set");
+    });
+
+    it("should handle mixed array and non-array parameters", () => {
+      const source = `exercise: Squat
+protocol: [drop_set, myo_reps]
+exactMatch: true
+limit: 10`;
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(result.exercise).toBe("Squat");
+      expect(Array.isArray(result.protocol)).toBe(true);
+      expect(result.protocol).toEqual(["drop_set", "myo_reps"]);
+      expect(result.exactMatch).toBe(true);
+      expect(result.limit).toBe(10);
+    });
   });
 });

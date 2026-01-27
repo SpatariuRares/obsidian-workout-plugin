@@ -1518,3 +1518,81 @@ All 17 user stories in the Memory Leak Fixes and Performance Improvements PRD ha
 - Next task is US-003: Filter Log by Protocol
 - The protocol badge system is extensible for future custom protocols (US-004, US-005)
 - Badge colors use rgba() with fallback values for broad theme compatibility
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-003: Filter Log by Protocol
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/TableTypes.ts`:
+   - Added `protocol?: string | string[]` parameter to `EmbeddedTableParams` interface
+   - Supports single protocol string or array of protocols
+
+2. Updated `app/services/CodeBlockProcessorService.ts`:
+   - Enhanced `parseCodeBlockParams()` to parse array syntax `[value1, value2, ...]`
+   - Array values are split by comma, trimmed, and filtered for empty strings
+   - Non-array values continue to work as before
+
+3. Updated `app/services/data/DataFilter.ts`:
+   - Added import for `WorkoutProtocol` enum
+   - Added `hasProtocolFilter()` private method to check if protocol filter is present
+   - Added `filterByProtocol()` private method that:
+     - Supports single protocol string or array of protocols
+     - Uses case-insensitive matching (lowercased comparison)
+     - Defaults entries without protocol to STANDARD
+     - Uses OR logic within protocol array (matches any of the specified protocols)
+   - Modified `filterData()` to apply protocol filter with AND logic after exercise/workout filters
+
+4. Added comprehensive tests in `app/services/data/__tests__/DataFilter.test.ts`:
+   - Test data with protocol field variations
+   - Tests for single protocol filtering
+   - Tests for array protocol filtering (OR logic)
+   - Tests for case-insensitive matching
+   - Tests for entries without protocol (defaults to STANDARD)
+   - Tests for combined filters (exercise + protocol, workout + protocol)
+   - Tests for empty protocol filter handling
+   - 10 new protocol filtering tests added
+
+5. Added array parsing tests in `app/services/__tests__/CodeBlockProcessorService.test.ts`:
+   - Tests for single value arrays
+   - Tests for multiple value arrays
+   - Tests for whitespace trimming in arrays
+   - Tests for empty value filtering
+   - Tests for empty arrays
+   - Tests for non-array strings
+   - Tests for mixed parameter types
+   - 8 new array parsing tests added
+
+**Usage examples:**
+```yaml
+# Filter by single protocol
+workout-log
+exercise: Bench Press
+protocol: drop_set
+
+# Filter by multiple protocols (OR logic)
+workout-log
+exercise: Squat
+protocol: [drop_set, myo_reps, rest_pause]
+
+# Combined with workout filter (AND logic)
+workout-log
+workout: Leg Day
+protocol: drop_set
+```
+
+**Features implemented:**
+- Protocol parameter accepted in workout-log code blocks
+- Single protocol string filter (e.g., `protocol: drop_set`)
+- Array of protocols filter (e.g., `protocol: [drop_set, myo_reps]`)
+- Case-insensitive matching
+- AND logic when combined with exercise/workout filters
+- OR logic within protocol array (matches any specified protocol)
+- Entries without protocol field default to STANDARD
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-004: Add Custom Protocol Settings
+- The protocol filter integrates seamlessly with existing filters
+- Array parsing in CodeBlockProcessorService can be reused for other array parameters

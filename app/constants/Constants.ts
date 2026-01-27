@@ -850,6 +850,7 @@ export const CONSTANTS = {
         WEIGHT: "Weight",
         VOLUME: "Volume",
         NOTES: "Notes",
+        PROTOCOL: "Protocol",
         ACTIONS: "Actions",
       },
       LABELS: {

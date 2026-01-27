@@ -1,10 +1,22 @@
 import { CONSTANTS } from "@app/constants/Constants";
 import { TableRow, EmbeddedTableParams } from "@app/types";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
 import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
+
+/**
+ * Protocol display configuration for badges
+ */
+const PROTOCOL_DISPLAY: Record<string, { label: string; className: string }> = {
+  [WorkoutProtocol.STANDARD]: { label: "", className: "" }, // No badge for standard
+  [WorkoutProtocol.DROP_SET]: { label: "Drop", className: "workout-protocol-badge-drop" },
+  [WorkoutProtocol.MYO_REPS]: { label: "Myo", className: "workout-protocol-badge-myo" },
+  [WorkoutProtocol.REST_PAUSE]: { label: "RP", className: "workout-protocol-badge-rp" },
+  [WorkoutProtocol.SUPERSET]: { label: "SS", className: "workout-protocol-badge-superset" },
+  [WorkoutProtocol.TWENTYONE]: { label: "21s", className: "workout-protocol-badge-21" },
+};
 
 export class TableRenderer {
   /**
@@ -54,7 +66,7 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(tbody, rows, plugin, onRefresh, signal);
+      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, onRefresh, signal);
 
       tableContainer.appendChild(fragment);
 
@@ -82,6 +94,7 @@ export class TableRenderer {
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
+    headers: string[],
     plugin?: WorkoutChartsPlugin,
     onRefresh?: () => void,
     signal?: AbortSignal
@@ -147,6 +160,9 @@ export class TableRenderer {
         volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
       };
 
+      // Find the protocol column index
+      const protocolColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+
       rows.forEach((row) => {
         const dateKey = row.dateKey;
 
@@ -173,6 +189,10 @@ export class TableRenderer {
           } else if (cellIndex === row.displayRow.length - 1) {
             td.className = "workout-table-actions-cell";
             TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh, signal);
+          } else if (cellIndex === protocolColumnIndex) {
+            // Render protocol badge
+            td.className = "workout-table-protocol-cell";
+            this.renderProtocolBadge(td, cell);
           } else {
             td.textContent = cell;
           }
@@ -183,5 +203,25 @@ export class TableRenderer {
     } catch {
       // Silent error - grouping failed
     }
+  }
+
+  /**
+   * Renders a protocol badge in the given cell
+   * @param cell - The table cell to render the badge in
+   * @param protocol - The protocol value to display
+   */
+  private static renderProtocolBadge(cell: HTMLElement, protocol: string): void {
+    const displayConfig = PROTOCOL_DISPLAY[protocol];
+
+    // If no display config found or it's standard (empty label), don't render a badge
+    if (!displayConfig || !displayConfig.label) {
+      return;
+    }
+
+    const badge = cell.createEl("span", {
+      cls: `workout-protocol-badge ${displayConfig.className}`,
+      text: displayConfig.label,
+    });
+    badge.setAttribute("title", protocol.replace(/_/g, " "));
   }
 }

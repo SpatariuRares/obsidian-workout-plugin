@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants/Constants";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData, TableRow } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
 
@@ -28,24 +28,48 @@ export class TableDataProcessor {
       CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES,
     ];
 
+    // Check if protocol column should be shown (default: true)
+    const showProtocol = params.showProtocol !== false;
+
     let headers: string[];
     if (params.columns) {
       if (Array.isArray(params.columns)) {
-        headers = [...params.columns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+        headers = [...params.columns];
+        // Add protocol column before actions if showProtocol is true
+        if (showProtocol) {
+          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+        }
+        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
       } else if (typeof params.columns === "string") {
         try {
           const parsedColumns = JSON.parse(params.columns);
-          headers = [...parsedColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+          headers = [...parsedColumns];
+          if (showProtocol) {
+            headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+          }
+          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
         } catch {
           // Invalid columns parameter, using default
-          headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+          headers = [...defaultVisibleColumns];
+          if (showProtocol) {
+            headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+          }
+          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
         }
       } else {
-        headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+        headers = [...defaultVisibleColumns];
+        if (showProtocol) {
+          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+        }
+        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
       }
     } else {
       // No columns specified, use default visible columns
-      headers = [...defaultVisibleColumns, CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+      headers = [...defaultVisibleColumns];
+      if (showProtocol) {
+        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+      }
+      headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
     }
 
     const limit = params.limit || 50;
@@ -122,6 +146,7 @@ export class TableDataProcessor {
         Weight: log.weight?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
         Volume: log.volume?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
         Notes: log.notes || "",
+        Protocol: log.protocol || WorkoutProtocol.STANDARD,
         Actions: "", // Placeholder for actions
       };
 

@@ -35,8 +35,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Protocol column added to TableRenderer with badge styling. Protocol badges display with distinct colors per protocol type (Drop=red, Myo=purple, RP=orange, SS=blue, 21s=green). Standard protocol shows no badge. Column hideable via showProtocol: false parameter. All tests pass (356 total, 352 passed)."
     },
     {
       "id": "US-003",

@@ -1459,3 +1459,62 @@ All 17 user stories in the Memory Leak Fixes and Performance Improvements PRD ha
 - Next task is US-002: Display Protocol in Log Table
 - The protocol dropdown appears between weight input and notes in log modals
 - Protocol value is stored in CSV and can be filtered/displayed in future features
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-002: Display Protocol in Log Table
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `PROTOCOL: "Protocol"` to `TABLE.COLUMNS`
+
+2. Updated `app/types/TableTypes.ts`:
+   - Added `showProtocol?: boolean` parameter to `EmbeddedTableParams` interface
+   - Parameter allows hiding the protocol column via `showProtocol: false` in code blocks
+
+3. Updated `app/features/tables/business/TableDataProcessor.ts`:
+   - Added import for `WorkoutProtocol` enum
+   - Modified `processTableData()` to conditionally include Protocol column based on `showProtocol` parameter (default: true)
+   - Added `Protocol` to the data map in `processRowsEfficiently()` method
+   - Protocol column is added before the Actions column in the headers
+
+4. Updated `app/features/tables/components/TableRenderer.ts`:
+   - Added `PROTOCOL_DISPLAY` configuration object with badge labels and CSS classes for each protocol type:
+     - STANDARD: No badge (empty label for clean default view)
+     - DROP_SET: "Drop" with red styling
+     - MYO_REPS: "Myo" with purple styling
+     - REST_PAUSE: "RP" with orange styling
+     - SUPERSET: "SS" with blue styling
+     - TWENTYONE: "21s" with green styling
+   - Modified `applyRowGroupingOptimized()` to accept headers parameter
+   - Added logic to detect protocol column index and render badge instead of text
+   - Added `renderProtocolBadge()` method that creates styled badge elements
+   - Badge includes title attribute with human-readable protocol name
+
+5. Updated `app/styles/_table.scss`:
+   - Added `.workout-table-protocol-cell` styling for centered cell
+   - Added `.workout-protocol-badge` base styling with padding, border-radius, uppercase text
+   - Added distinct color classes for each protocol type using Obsidian CSS variables:
+     - `.workout-protocol-badge-drop` - Red theme
+     - `.workout-protocol-badge-myo` - Purple theme
+     - `.workout-protocol-badge-rp` - Orange theme
+     - `.workout-protocol-badge-superset` - Blue theme
+     - `.workout-protocol-badge-21` - Green theme
+   - All colors use rgba() with CSS variables for light/dark theme compatibility
+
+6. Rebuilt CSS using `node build-css.mjs`
+
+**Features implemented:**
+- Protocol column displays in workout-log tables with colored badges
+- Standard protocol shows no badge (clean default view)
+- Each protocol type has distinct color coding
+- Column is hideable via `showProtocol: false` parameter in code blocks
+- Badges show abbreviated labels (Drop, Myo, RP, SS, 21s) with full name in tooltip
+- Colors work in both light and dark themes using Obsidian CSS variables
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (356 total, 352 passed, 4 skipped)
+- Next task is US-003: Filter Log by Protocol
+- The protocol badge system is extensible for future custom protocols (US-004, US-005)
+- Badge colors use rgba() with fallback values for broad theme compatibility

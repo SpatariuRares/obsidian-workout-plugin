@@ -11,6 +11,7 @@ import {
   MuscleTagsWidget,
   WidgetsFileError,
   ProtocolDistribution,
+  ProtocolEffectiveness,
 } from "@app/features/dashboard/widgets";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
@@ -220,6 +221,9 @@ export class EmbeddedDashboardView extends BaseView {
       this.plugin,
       this.handleProtocolFilterChange
     );
+
+    // Protocol Effectiveness Section (Right Column) - uses all data for statistical analysis
+    ProtocolEffectiveness.render(rightCol, data, params, this.plugin);
 
     // Recent Workouts Section (Right Column) - uses filtered data
     RecentWorkouts.render(rightCol, displayData, params);

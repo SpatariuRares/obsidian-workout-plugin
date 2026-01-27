@@ -608,6 +608,15 @@ export const CONSTANTS = {
           CLEAR_FILTER: "Clear filter",
           CLICK_TO_FILTER: "Click to filter",
         },
+        PROTOCOL_EFFECTIVENESS: {
+          TITLE: "Protocol effectiveness",
+          NO_DATA: "Not enough data (minimum 5 entries per protocol)",
+          DISCLAIMER: "Note: Correlation does not imply causation",
+          COLUMN_PROTOCOL: "Protocol",
+          COLUMN_ENTRIES: "Entries",
+          COLUMN_VOLUME_CHANGE: "Avg volume change",
+          COLUMN_PROGRESSION: "Progression rate",
+        },
         MUSCLE_TAGS: {
           TITLE: "Available muscle tags",
           DESCRIPTION:

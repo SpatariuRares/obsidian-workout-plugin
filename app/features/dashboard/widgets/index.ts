@@ -11,3 +11,4 @@ export * from "@app/features/dashboard/widgets/QuickActions";
 export * from "@app/features/dashboard/widgets/MuscleTagsWidget";
 export * from "@app/features/dashboard/widgets/WidgetsFileError";
 export * from "@app/features/dashboard/widgets/ProtocolDistribution";
+export * from "@app/features/dashboard/widgets/ProtocolEffectiveness";

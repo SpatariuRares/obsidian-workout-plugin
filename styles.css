@@ -2148,6 +2148,92 @@
 }
 
 /* ============================================================================
+   PROTOCOL EFFECTIVENESS WIDGET
+   ============================================================================ */
+.workout-protocol-effectiveness {
+  min-height: 200px;
+}
+
+.workout-protocol-effectiveness-no-data {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--workout-space-xl);
+  font-style: italic;
+}
+
+.workout-protocol-effectiveness-disclaimer {
+  margin-top: var(--workout-space-md);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-sm);
+  border-left: 3px solid var(--text-warning);
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.workout-protocol-effectiveness-table-container {
+  overflow-x: auto;
+}
+
+.workout-protocol-effectiveness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+}
+.workout-protocol-effectiveness-table th,
+.workout-protocol-effectiveness-table td {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.workout-protocol-effectiveness-table th {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.workout-protocol-effectiveness-table tr:hover {
+  background: var(--background-secondary);
+}
+
+.workout-protocol-effectiveness-protocol-cell {
+  /* Contains the badge */
+}
+
+.workout-protocol-effectiveness-badge {
+  display: inline-block;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.workout-protocol-effectiveness-entries-cell,
+.workout-protocol-effectiveness-volume-cell,
+.workout-protocol-effectiveness-progression-cell {
+  text-align: center;
+}
+
+.workout-protocol-effectiveness-positive {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-protocol-effectiveness-negative {
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-protocol-effectiveness-neutral {
+  color: var(--text-muted);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
 

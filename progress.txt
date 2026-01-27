@@ -1839,3 +1839,70 @@ protocol: drop_set
 - Dashboard re-renders on filter change using stored state
 - ProtocolDistribution receives original data to always show full distribution
 - Other widgets receive filtered data when filter is active
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-008: Protocol Effectiveness Analysis
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/dashboard/widgets/ProtocolEffectiveness.ts`:
+   - New widget class for displaying protocol effectiveness analysis in dashboard
+   - Calculates average volume change per protocol (comparing entries before/after using the protocol)
+   - Calculates progression rate (percentage of sets followed by same or higher weight)
+   - Uses MIN_ENTRIES_FOR_STATS = 5 to ensure statistical relevance
+   - Groups entries by exercise for accurate before/after comparisons
+   - Supports both built-in protocols and custom protocols from settings
+   - Renders as a table with columns: Protocol, Entries, Avg Volume Change, Progression Rate
+   - Color-coded indicators: green for positive, red for negative, muted for neutral
+   - Protocol badges with proper contrast colors
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `PROTOCOL_EFFECTIVENESS` section under `LABELS.DASHBOARD` with:
+     - TITLE: "Protocol effectiveness"
+     - NO_DATA: "Not enough data (minimum 5 entries per protocol)"
+     - DISCLAIMER: "Note: Correlation does not imply causation"
+     - COLUMN_PROTOCOL: "Protocol"
+     - COLUMN_ENTRIES: "Entries"
+     - COLUMN_VOLUME_CHANGE: "Avg volume change"
+     - COLUMN_PROGRESSION: "Progression rate"
+
+3. Updated `app/features/dashboard/widgets/index.ts`:
+   - Exported ProtocolEffectiveness widget
+
+4. Updated `app/views/EmbeddedDashboardView.ts`:
+   - Imported ProtocolEffectiveness widget
+   - Added ProtocolEffectiveness.render() call in right column after ProtocolDistribution
+   - Uses all data (not filtered) for statistical analysis
+
+5. Updated `app/styles/dashboard/_protocol.scss`:
+   - Added `.workout-protocol-effectiveness` widget container styling
+   - Added `.workout-protocol-effectiveness-no-data` empty state styling
+   - Added `.workout-protocol-effectiveness-disclaimer` with warning border styling
+   - Added `.workout-protocol-effectiveness-table-container` for scrollable table
+   - Added `.workout-protocol-effectiveness-table` with full table styling (headers, rows, hover)
+   - Added `.workout-protocol-effectiveness-badge` for protocol badge in table
+   - Added `.workout-protocol-effectiveness-positive/negative/neutral` color classes
+
+6. Rebuilt CSS using `node build-css.mjs`
+
+**Features implemented:**
+- Dashboard includes 'Protocol Effectiveness' section after Protocol Distribution
+- Shows average volume change per protocol (percentage with +/- indicator)
+- Shows progression rate comparison between protocols (percentage)
+- Includes disclaimer: "Note: Correlation does not imply causation" with warning styling
+- Only shows protocols with sufficient data (minimum 5 entries)
+- Table sorted by progression rate descending
+- Color-coded indicators for positive (green), negative (red), and neutral (muted)
+- Protocol badges display with correct colors and contrast
+
+**Algorithm details:**
+- Volume change: For each protocol entry, compares average volume of up to 3 entries before vs. up to 3 entries after (same exercise)
+- Progression rate: Percentage of protocol entries followed by an entry with same or higher weight (same exercise)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-009: Workout Duration Estimator Code Block
+- The widget uses all workout data (not protocol-filtered) for accurate statistical analysis
+- Custom protocols from plugin.settings.customProtocols are supported
+- The MIN_ENTRIES_FOR_STATS constant (5) ensures only statistically relevant protocols are shown

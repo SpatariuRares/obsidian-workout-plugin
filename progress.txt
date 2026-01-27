@@ -2057,3 +2057,53 @@ workout: Workouts/Push Day
 - All tests pass (368 passed, 4 skipped, 372 total)
 - Next task is US-012: Actual Duration Tracking (dashboard "Duration Comparison" section)
 - The workout parameter was already functional; main fix was changing set counting from timer-based proxy to workout-log block parsing
+
+## 2026-01-27 - US-012: Actual Duration Tracking
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/dashboard/widgets/DurationComparison.ts`:
+   - Widget for displaying actual vs estimated workout duration comparison
+   - Calculates actual duration from first to last timestamp per workout session
+   - Groups entries by workout name and date to identify sessions
+   - Estimates duration based on set count (45s per set + 90s rest between sets)
+   - Displays table with last 5 workouts (most recent first)
+   - Shows variance percentage with color-coded indicators (green/yellow/red)
+   - Includes variance trend analysis (improving/declining/stable)
+   - Trend compares average variance of recent vs older sessions
+
+2. Updated `app/constants/Constants.ts`:
+   - Added DURATION_COMPARISON section under LABELS.DASHBOARD
+   - Includes all UI strings: title, subtitle, column headers, trend messages
+
+3. Created `app/styles/dashboard/_duration.scss`:
+   - Table styling matching existing widget patterns
+   - Variance color indicators (good/moderate/poor)
+   - Trend section with direction-specific colors
+   - Responsive table container
+
+4. Updated `app/styles/dashboard/_index.scss`:
+   - Added @forward "duration" to include new styles
+
+5. Updated `app/features/dashboard/widgets/index.ts`:
+   - Exported DurationComparison widget
+
+6. Updated `app/views/EmbeddedDashboardView.ts`:
+   - Imported DurationComparison widget
+   - Added render call in right column after Protocol Effectiveness
+
+**Features implemented:**
+- Dashboard includes 'Duration Comparison' section (styled table widget)
+- Calculates actual duration from first log timestamp to last log timestamp per workout session
+- Shows estimated vs actual for 5 most recent workouts
+- Shows variance trend (improving/declining/stable based on comparison of recent vs older sessions)
+- Handles timezone correctly using stored timestamps (all times in milliseconds, converted to seconds for display)
+- Variance displayed as percentage with +/- sign and color coding
+- Trend analysis includes average variance statistic
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- This completes US-012 and all user stories in Phase 3 (protocol tracking and duration estimation)
+- PRD is now complete with all 12 user stories passing

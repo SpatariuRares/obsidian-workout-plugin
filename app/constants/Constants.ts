@@ -620,6 +620,23 @@ export const CONSTANTS = {
           COLUMN_VOLUME_CHANGE: "Avg volume change",
           COLUMN_PROGRESSION: "Progression rate",
         },
+        DURATION_COMPARISON: {
+          TITLE: "Actual vs estimated duration",
+          SUBTITLE: "Last 5 workouts",
+          NO_DATA: "Not enough workout data to compare durations",
+          COLUMN_WORKOUT: "Workout",
+          COLUMN_DATE: "Date",
+          COLUMN_ESTIMATED: "Estimated",
+          COLUMN_ACTUAL: "Actual",
+          COLUMN_VARIANCE: "Variance",
+          VARIANCE_TREND_TITLE: "Accuracy trend",
+          VARIANCE_TREND_IMPROVING: "Estimates are getting more accurate",
+          VARIANCE_TREND_DECLINING: "Estimates are getting less accurate",
+          VARIANCE_TREND_STABLE: "Estimate accuracy is stable",
+          MINUTES_SUFFIX: "m",
+          OVER_ESTIMATED: "Over",
+          UNDER_ESTIMATED: "Under",
+        },
         MUSCLE_TAGS: {
           TITLE: "Available muscle tags",
           DESCRIPTION:

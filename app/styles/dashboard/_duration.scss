@@ -1,0 +1,150 @@
+/* ============================================================================
+   DURATION COMPARISON WIDGET
+   ============================================================================ */
+
+.workout-duration-comparison {
+  min-height: 200px;
+}
+
+.workout-duration-comparison-no-data {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--workout-space-xl);
+  font-style: italic;
+}
+
+.workout-duration-comparison-table-container {
+  overflow-x: auto;
+}
+
+.workout-duration-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+
+  th,
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--background-modifier-border);
+  }
+
+  th {
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-muted);
+    font-size: var(--workout-font-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  tr:hover {
+    background: var(--background-secondary);
+  }
+}
+
+.workout-duration-comparison-workout-cell {
+  /* Contains workout name and date */
+}
+
+.workout-duration-comparison-workout-name {
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+}
+
+.workout-duration-comparison-workout-date {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.workout-duration-comparison-duration-cell {
+  text-align: center;
+  font-family: var(--font-monospace);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-duration-comparison-variance-cell {
+  text-align: center;
+}
+
+/* Variance indicators */
+.workout-duration-comparison-variance-good {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-duration-comparison-variance-moderate {
+  color: var(--text-warning);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-duration-comparison-variance-poor {
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* ============================================================================
+   VARIANCE TREND SECTION
+   ============================================================================ */
+
+.workout-duration-comparison-trend {
+  margin-top: var(--workout-space-md);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-duration-comparison-trend-title {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--workout-space-xs);
+}
+
+.workout-duration-comparison-trend-message {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-duration-comparison-trend-icon {
+  font-size: var(--workout-font-md);
+}
+
+.workout-duration-comparison-trend-text {
+  flex: 1;
+}
+
+.workout-duration-comparison-trend-stat {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  margin-top: var(--workout-space-xs);
+}
+
+/* Trend direction colors */
+.workout-duration-comparison-trend-improving {
+  color: var(--text-success);
+
+  .workout-duration-comparison-trend-icon {
+    color: var(--text-success);
+  }
+}
+
+.workout-duration-comparison-trend-declining {
+  color: var(--text-error);
+
+  .workout-duration-comparison-trend-icon {
+    color: var(--text-error);
+  }
+}
+
+.workout-duration-comparison-trend-stable {
+  color: var(--text-muted);
+
+  .workout-duration-comparison-trend-icon {
+    color: var(--text-muted);
+  }
+}

@@ -12,6 +12,7 @@ import {
   WidgetsFileError,
   ProtocolDistribution,
   ProtocolEffectiveness,
+  DurationComparison,
 } from "@app/features/dashboard/widgets";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
@@ -224,6 +225,9 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Protocol Effectiveness Section (Right Column) - uses all data for statistical analysis
     ProtocolEffectiveness.render(rightCol, data, params, this.plugin);
+
+    // Duration Comparison Section (Right Column) - uses all data for duration analysis
+    DurationComparison.render(rightCol, data, params);
 
     // Recent Workouts Section (Right Column) - uses filtered data
     RecentWorkouts.render(rightCol, displayData, params);

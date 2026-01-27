@@ -100,8 +100,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Created ProtocolDistribution widget with pie chart using Chart.js. Widget displays protocol usage statistics for last 30 days with count and percentage for each protocol. Supports both built-in protocols (Standard, Drop Set, Myo Reps, Rest Pause, Superset, 21s) and custom protocols from settings. Pie chart with distinct colors per protocol, legend shows counts and percentages. Standard protocol included in distribution. Added SCSS styles in _protocol.scss. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-007",

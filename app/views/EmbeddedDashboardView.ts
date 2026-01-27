@@ -10,6 +10,7 @@ import {
   QuickActions,
   MuscleTagsWidget,
   WidgetsFileError,
+  ProtocolDistribution,
 } from "@app/features/dashboard/widgets";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
@@ -156,6 +157,9 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Volume Analytics Section (Right Column)
     VolumeAnalytics.render(rightCol, data, params);
+
+    // Protocol Distribution Section (Right Column)
+    ProtocolDistribution.render(rightCol, data, params, this.plugin);
 
     // Recent Workouts Section (Right Column)
     RecentWorkouts.render(rightCol, data, params);

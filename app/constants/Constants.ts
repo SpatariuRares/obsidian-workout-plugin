@@ -598,6 +598,13 @@ export const CONSTANTS = {
           MUSCLE_BREAKDOWN_TITLE: "Top exercises by volume",
           VOLUME_SUFFIX: "kg",
         },
+        PROTOCOL_DISTRIBUTION: {
+          TITLE: "Protocol distribution",
+          SUBTITLE: "Last 30 days",
+          NO_DATA: "No protocol data available",
+          SETS_LABEL: "sets",
+          PERCENT_LABEL: "%",
+        },
         MUSCLE_TAGS: {
           TITLE: "Available muscle tags",
           DESCRIPTION:

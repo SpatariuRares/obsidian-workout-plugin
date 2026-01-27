@@ -1693,3 +1693,73 @@ protocol: drop_set
 - Custom protocols integrate seamlessly with existing protocol system
 - The `getContrastColor()` helper in TableRenderer uses luminance formula for accessibility
 - Custom protocol badges use `.workout-protocol-badge-custom` class with inline styles for color
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-006: Protocol Statistics Dashboard Card
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/dashboard/widgets/ProtocolDistribution.ts`:
+   - New widget class for displaying protocol usage distribution in dashboard
+   - Uses Chart.js pie chart to visualize protocol distribution
+   - Filters data for last 30 days using DateUtils.filterByDaysAgo()
+   - Calculates protocol statistics: count and percentage per protocol
+   - Supports both built-in protocols (STANDARD, DROP_SET, MYO_REPS, REST_PAUSE, SUPERSET, TWENTYONE) and custom protocols from settings
+   - Legend displays protocol name, count, and percentage
+   - Includes cleanup() method for proper Chart.js instance management
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `PROTOCOL_DISTRIBUTION` section under `LABELS.DASHBOARD` with:
+     - TITLE: "Protocol distribution"
+     - SUBTITLE: "Last 30 days"
+     - NO_DATA: "No protocol data available"
+     - SETS_LABEL: "sets"
+     - PERCENT_LABEL: "%"
+
+3. Updated `app/features/dashboard/widgets/index.ts`:
+   - Exported ProtocolDistribution widget
+
+4. Updated `app/views/EmbeddedDashboardView.ts`:
+   - Imported ProtocolDistribution widget
+   - Added ProtocolDistribution.render() call in right column after VolumeAnalytics
+
+5. Created `app/styles/dashboard/_protocol.scss`:
+   - Styling for protocol distribution widget
+   - .workout-protocol-distribution - widget container with min-height
+   - .workout-widget-subtitle - subtitle text styling
+   - .workout-protocol-no-data - empty state styling
+   - .workout-protocol-chart-container - pie chart container with max dimensions
+   - .workout-protocol-legend - legend list styling
+   - .workout-protocol-legend-item - individual legend item with hover effect
+   - .workout-protocol-legend-color - color indicator square
+   - .workout-protocol-legend-label - protocol name text
+   - .workout-protocol-legend-count - count and percentage text
+
+6. Updated `app/styles/dashboard/_index.scss`:
+   - Added `@forward "protocol"` to include new stylesheet
+
+7. Rebuilt CSS using `node build-css.mjs`
+
+**Features implemented:**
+- Dashboard includes 'Protocol Distribution' card in EmbeddedDashboardView
+- Shows pie chart of protocol usage for last 30 days
+- Shows count and percentage per protocol in legend
+- Pie chart uses distinct colors per protocol type:
+  - Standard: Gray
+  - Drop Set: Red
+  - Myo Reps: Purple
+  - Rest Pause: Orange
+  - Superset: Blue
+  - 21s: Green
+- Custom protocols use their configured colors with proper contrast
+- Standard protocol included in distribution
+- Tooltip shows detailed information on hover
+- Empty state message when no protocol data available
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-007: Protocol Dashboard Click Filtering
+- The ProtocolDistribution widget has a cleanup() method for Chart.js memory management
+- Widget renders in the right column of the dashboard after VolumeAnalytics
+- Custom protocols from plugin.settings.customProtocols are supported with hexToRgba() conversion

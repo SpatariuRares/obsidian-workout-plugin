@@ -138,9 +138,7 @@ export class EmbeddedDurationView extends BaseView {
       result.setCount = result.restPeriodCount > 0 ? result.restPeriodCount : 1;
 
       // Calculate set time using settings or default
-      const setDuration =
-        (this.plugin.settings as { setDuration?: number }).setDuration ||
-        DEFAULT_SET_DURATION;
+      const setDuration = this.plugin.settings.setDuration || DEFAULT_SET_DURATION;
       result.totalSetTime = result.setCount * setDuration;
 
       // Calculate total duration
@@ -253,9 +251,7 @@ export class EmbeddedDurationView extends BaseView {
           workoutPath: analysis.workoutPath,
           restPeriodCount: analysis.restPeriodCount,
           setCount: analysis.setCount,
-          setDuration:
-            (this.plugin.settings as { setDuration?: number }).setDuration ||
-            DEFAULT_SET_DURATION,
+          setDuration: this.plugin.settings.setDuration || DEFAULT_SET_DURATION,
         },
         null,
         2

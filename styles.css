@@ -1212,6 +1212,110 @@
 }
 
 /* ============================================================================
+   DURATION ESTIMATOR STYLES
+   Info card style for workout duration estimation (distinct from timer countdown)
+   ============================================================================ */
+.workout-duration-card {
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-xl);
+  padding: var(--workout-space-lg);
+  box-shadow: var(--workout-shadow-sm);
+  max-width: 320px;
+}
+
+.workout-duration-header {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-duration-icon {
+  font-size: var(--workout-font-xl);
+}
+
+.workout-duration-title {
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.workout-duration-main {
+  text-align: center;
+  padding: var(--workout-space-lg) 0;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-duration-value {
+  font-size: 2.5em;
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--interactive-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-duration-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-duration-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--workout-space-xs) 0;
+}
+
+.workout-duration-label {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-duration-detail {
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-duration-error {
+  color: var(--text-error);
+  font-size: var(--workout-font-sm);
+  padding: var(--workout-space-md);
+  background: rgba(var(--color-red-rgb), 0.1);
+  border-radius: var(--workout-radius-md);
+  text-align: center;
+}
+
+/* Debug section styling */
+.workout-duration-debug {
+  margin-top: var(--workout-space-lg);
+  padding-top: var(--workout-space-md);
+  border-top: var(--workout-border-thin) dashed var(--background-modifier-border);
+}
+
+.workout-duration-debug-title {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--workout-space-sm);
+}
+
+.workout-duration-debug-content {
+  font-size: var(--workout-font-xs);
+  background: var(--background-secondary);
+  padding: var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  overflow-x: auto;
+  margin: 0;
+}
+
+/* ============================================================================
    MODAL STYLES
    ============================================================================ */
 /* Modal Styles */

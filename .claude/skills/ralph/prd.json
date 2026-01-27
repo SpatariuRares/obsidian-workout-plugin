@@ -166,8 +166,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Added setDuration field to WorkoutChartsSettings interface and DEFAULT_SETTINGS (default: 45 seconds). Added 'Duration estimation' section in Settings tab with 'Default set duration (seconds)' text input. Input validates for positive integers only before saving. Updated EmbeddedDurationView to use typed setting (removed type assertion). Updated DataService test mock to include setDuration. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-011",

@@ -62,6 +62,7 @@ describe("DataService", () => {
       weightIncrement: 2.5,
       achievedTargets: {},
       customProtocols: [],
+      setDuration: 45,
     };
 
     // Create DataService instance

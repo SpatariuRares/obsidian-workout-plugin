@@ -81,6 +81,8 @@ export interface WorkoutChartsSettings {
   weightIncrement: number;
   achievedTargets: Record<string, number>;
   customProtocols: CustomProtocolConfig[];
+  /** Default duration per set in seconds for workout duration estimation */
+  setDuration: number;
 }
 
 /**
@@ -111,6 +113,7 @@ workout: {{workout}}
   weightIncrement: 2.5,
   achievedTargets: {},
   customProtocols: [],
+  setDuration: 45,
 };
 
 /**

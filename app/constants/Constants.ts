@@ -371,6 +371,7 @@ export const CONSTANTS = {
         PROTOCOL_NAME: "Protocol name",
         PROTOCOL_ABBREVIATION: "Abbreviation",
         PROTOCOL_COLOR: "Badge color",
+        SET_DURATION: "Default set duration (seconds)",
       },
       DESCRIPTIONS: {
         CSV_PATH: "Path to the CSV file containing all workout log data",
@@ -386,6 +387,7 @@ export const CONSTANTS = {
         NO_CUSTOM_PROTOCOLS: "No custom protocols configured. Click 'Add protocol' to create one.",
         PROTOCOL_ABBREVIATION: "Short abbreviation shown in badge (max 3 characters)",
         PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
+        SET_DURATION: "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
       },
       SECTIONS: {
         CSV_MANAGEMENT: "CSV file management",
@@ -394,6 +396,7 @@ export const CONSTANTS = {
         TEMPLATES: "Templates",
         PROGRESSIVE_OVERLOAD: "Progressive overload",
         CUSTOM_PROTOCOLS: "Custom protocols",
+        DURATION_ESTIMATION: "Duration estimation",
       },
       BUTTONS: {
         ADD_PRESET: "Add preset",

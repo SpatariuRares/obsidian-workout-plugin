@@ -93,6 +93,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Progressive Overload Section
     this.renderProgressiveOverloadSection(containerEl);
+
+    // Duration Estimation Section
+    this.renderDurationEstimationSection(containerEl);
   }
 
   private renderTimerPresetsSection(containerEl: HTMLElement): void {
@@ -732,6 +735,27 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
             const numValue = parseFloat(value);
             if (!isNaN(numValue) && numValue > 0) {
               this.plugin.settings.weightIncrement = numValue;
+              await this.plugin.saveSettings();
+            }
+          })
+      );
+  }
+
+  private renderDurationEstimationSection(containerEl: HTMLElement): void {
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.DURATION_ESTIMATION)
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SET_DURATION)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SET_DURATION)
+      .addText((text) =>
+        text
+          .setValue(String(this.plugin.settings.setDuration))
+          .onChange(async (value) => {
+            const numValue = parseInt(value, 10);
+            if (!isNaN(numValue) && numValue > 0) {
+              this.plugin.settings.setDuration = numValue;
               await this.plugin.saveSettings();
             }
           })

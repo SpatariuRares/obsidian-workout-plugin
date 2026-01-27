@@ -1978,3 +1978,44 @@ debug: true
 - Next task is US-010: Duration Estimator Settings (add setDuration to plugin settings)
 - The setDuration setting referenced in EmbeddedDurationView is not yet implemented (defaults to 45s)
 - Set count estimation uses rest period count as proxy (each timer = 1 set group)
+
+## 2026-01-27 - US-010: Duration Estimator Settings
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `setDuration: number` field to `WorkoutChartsSettings` interface with JSDoc comment
+   - Added `setDuration: 45` to `DEFAULT_SETTINGS` object
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `SET_DURATION: "Default set duration (seconds)"` to `SETTINGS.LABELS`
+   - Added `SET_DURATION: "Default time per set used in workout duration estimation (typical range: 30-60 seconds)"` to `SETTINGS.DESCRIPTIONS`
+   - Added `DURATION_ESTIMATION: "Duration estimation"` to `SETTINGS.SECTIONS`
+
+3. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added call to `renderDurationEstimationSection()` in `display()` method
+   - Added `renderDurationEstimationSection()` method that creates:
+     - Section heading "Duration estimation"
+     - Text input for "Default set duration (seconds)"
+     - Input validates for positive integers only (`parseInt` and `> 0` check)
+
+4. Updated `app/views/EmbeddedDurationView.ts`:
+   - Removed type assertion workaround `(this.plugin.settings as { setDuration?: number })`
+   - Now directly uses `this.plugin.settings.setDuration` (properly typed)
+
+5. Updated `app/services/__tests__/DataService.test.ts`:
+   - Added `setDuration: 45` to mock settings object
+
+**Features implemented:**
+- `setDuration` field added to plugin settings (number, default 45)
+- Settings tab includes "Duration estimation" section with "Default set duration (seconds)" input
+- EmbeddedDurationView uses typed setting for calculations (no more type assertion)
+- Input validates for positive numbers only (parseInt + > 0 check)
+- All acceptance criteria met
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-011: Duration Estimator Workout Parameter
+- The setDuration value is used in EmbeddedDurationView.analyzeWorkoutFile() to calculate totalSetTime

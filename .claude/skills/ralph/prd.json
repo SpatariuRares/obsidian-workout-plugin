@@ -151,8 +151,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Added DURATION constant to CODE_BLOCKS in Constants.ts. Created DurationTypes.ts with EmbeddedDurationParams and DurationAnalysisResult interfaces. Implemented EmbeddedDurationView extending BaseView with createDurationEstimator() method that scans workout files for workout-timer blocks, sums durations for rest time, and calculates set time (setCount * setDuration setting, default 45s). Registered workout-duration code block processor in CodeBlockProcessorService. Created _duration.scss with info card styling (distinct from timer countdown). Supports debug parameter for troubleshooting. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-010",

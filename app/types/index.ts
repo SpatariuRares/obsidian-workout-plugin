@@ -30,6 +30,12 @@ export type {
 } from "@app/types/TimerTypes";
 export { TIMER_TYPE } from "@app/types/TimerTypes";
 
+// Duration-related types
+export type {
+  EmbeddedDurationParams,
+  DurationAnalysisResult,
+} from "@app/types/DurationTypes";
+
 // Dashboard-related types
 export type { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types/DashboardTypes";
 

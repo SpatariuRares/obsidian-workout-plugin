@@ -4,11 +4,13 @@ import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
+import { EmbeddedDurationView } from "@app/views/EmbeddedDurationView";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   EmbeddedTimerParams,
   EmbeddedDashboardParams,
+  EmbeddedDurationParams,
 } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/DataService";
@@ -38,6 +40,8 @@ class TimerRenderChild extends MarkdownRenderChild {
 }
 
 export class CodeBlockProcessorService {
+  private embeddedDurationView: EmbeddedDurationView;
+
   constructor(
     private plugin: WorkoutChartsPlugin,
     private dataService: DataService,
@@ -45,7 +49,10 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>,
-  ) {}
+  ) {
+    // Initialize duration view internally (no external dependencies needed)
+    this.embeddedDurationView = new EmbeddedDurationView(plugin);
+  }
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
@@ -63,6 +70,10 @@ export class CodeBlockProcessorService {
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
       (source, el, ctx) => this.handleWorkoutDashboard(source, el, ctx),
+    );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+      (source, el, ctx) => this.handleWorkoutDuration(source, el, ctx),
     );
   }
 
@@ -241,6 +252,33 @@ export class CodeBlockProcessorService {
     params: EmbeddedDashboardParams,
   ) {
     await this.embeddedDashboardView.createDashboard(container, data, params);
+  }
+
+  // Handle workout duration code blocks
+  private async handleWorkoutDuration(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ) {
+    try {
+      const params = this.parseCodeBlockParams(source) as EmbeddedDurationParams;
+
+      // Get current file path from context
+      const currentFilePath = ctx.sourcePath;
+
+      await this.embeddedDurationView.createDurationEstimator(
+        el,
+        params,
+        currentFilePath,
+      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      el.createDiv({
+        cls: "workout-duration-error",
+        text: `Error loading duration estimator: ${errorMessage}`,
+      });
+    }
   }
 
   // Parse code block parameters

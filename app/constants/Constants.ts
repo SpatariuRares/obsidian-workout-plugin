@@ -857,6 +857,7 @@ export const CONSTANTS = {
         TABLE: "workout-log",
         TIMER: "workout-timer",
         DASHBOARD: "workout-dashboard",
+        DURATION: "workout-duration",
       },
       DEFAULTS: {
         CHART_DATE_RANGE: 180,

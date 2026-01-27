@@ -1906,3 +1906,75 @@ protocol: drop_set
 - The widget uses all workout data (not protocol-filtered) for accurate statistical analysis
 - Custom protocols from plugin.settings.customProtocols are supported
 - The MIN_ENTRIES_FOR_STATS constant (5) ensures only statistically relevant protocols are shown
+
+## 2026-01-27 - US-009: Workout Duration Estimator Code Block
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/Constants.ts`:
+   - Added `DURATION: "workout-duration"` to `CODE_BLOCKS` section
+
+2. Created `app/types/DurationTypes.ts`:
+   - Added `EmbeddedDurationParams` interface with optional `workout` path and `debug` flag
+   - Added `DurationAnalysisResult` interface with fields: totalRestTime, restPeriodCount, setCount, totalSetTime, totalDuration, workoutPath, success, error
+
+3. Updated `app/types/index.ts`:
+   - Exported `EmbeddedDurationParams` and `DurationAnalysisResult` from DurationTypes
+
+4. Created `app/views/EmbeddedDurationView.ts`:
+   - Extends BaseView pattern
+   - `createDurationEstimator()` method takes container, params, and currentFilePath
+   - `resolveFilePath()` handles relative/absolute path resolution
+   - `analyzeWorkoutFile()` scans for workout-timer blocks and extracts duration values
+   - Uses regex to parse workout-timer code blocks and extract duration parameter
+   - Calculates rest time (sum of timer durations) and set time (setCount * setDuration setting)
+   - `renderDurationCard()` creates info card UI with header, main display, and breakdown
+   - `formatDuration()` converts seconds to human-readable format (e.g., "5m 30s", "1h 15m")
+   - Debug mode shows additional analysis information
+
+5. Updated `app/services/CodeBlockProcessorService.ts`:
+   - Imported `EmbeddedDurationView` and `EmbeddedDurationParams`
+   - Added `embeddedDurationView` property initialized in constructor
+   - Registered `workout-duration` code block processor in `registerProcessors()`
+   - Added `handleWorkoutDuration()` method that passes sourcePath for file context
+
+6. Created `app/styles/_duration.scss`:
+   - `.workout-duration-card` - info card container (distinct from timer countdown)
+   - `.workout-duration-header` - icon and title row
+   - `.workout-duration-main` - large centered duration display
+   - `.workout-duration-breakdown` - rest/set time detail rows
+   - `.workout-duration-error` - error state styling
+   - `.workout-duration-debug` - debug info section (dashed border)
+
+7. Updated `styles.source.scss`:
+   - Added `@use "app/styles/duration"` import
+
+**Features implemented:**
+- `workout-duration` code block processor registered
+- EmbeddedDurationView extending BaseView with proper error handling
+- Calculates total rest time by summing workout-timer durations in file
+- Calculates total set time using setDuration setting (default 45 seconds)
+- Displays: total rest time, total set time, total estimated duration
+- Visual design uses info card style (not countdown timer style)
+- Supports `workout` parameter to analyze different files
+- Supports `debug` parameter for troubleshooting
+
+**Usage example:**
+```
+workout-duration
+```
+
+Or with options:
+```
+workout-duration
+workout: path/to/workout.md
+debug: true
+```
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-010: Duration Estimator Settings (add setDuration to plugin settings)
+- The setDuration setting referenced in EmbeddedDurationView is not yet implemented (defaults to 45s)
+- Set count estimation uses rest period count as proxy (each timer = 1 set group)

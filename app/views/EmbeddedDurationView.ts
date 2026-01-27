@@ -82,7 +82,7 @@ export class EmbeddedDurationView extends BaseView {
   /**
    * Analyzes a workout file to extract duration components.
    * Scans for workout-timer blocks to sum rest times and
-   * counts exercises to estimate set time.
+   * counts sets from workout-log blocks.
    */
   private async analyzeWorkoutFile(
     filePath: string
@@ -110,8 +110,7 @@ export class EmbeddedDurationView extends BaseView {
       const content = await this.plugin.app.vault.read(file);
 
       // Parse workout-timer blocks for rest durations
-      const timerBlockRegex =
-        /```workout-timer\s*([\s\S]*?)```/g;
+      const timerBlockRegex = /```workout-timer\s*([\s\S]*?)```/g;
       let timerMatch;
 
       while ((timerMatch = timerBlockRegex.exec(content)) !== null) {
@@ -128,14 +127,33 @@ export class EmbeddedDurationView extends BaseView {
       }
 
       // Count sets from workout-log blocks
-      // Each workout-log block represents at least one set location
-      // For simplicity, we count the number of timer blocks as a proxy for sets
-      // (since typically there's a timer between each exercise/set group)
-      // A more accurate count would require analyzing the actual log data
+      // Each workout-log block can have an optional 'limit' parameter indicating expected sets
+      // If no limit is specified, count as 1 set per block
+      const logBlockRegex = /```workout-log\s*([\s\S]*?)```/g;
+      let logMatch;
 
-      // For now, estimate sets as restPeriodCount (each rest period = 1 set group)
-      // If no timers found, default to 1 set
-      result.setCount = result.restPeriodCount > 0 ? result.restPeriodCount : 1;
+      while ((logMatch = logBlockRegex.exec(content)) !== null) {
+        const blockContent = logMatch[1];
+        const limitMatch = blockContent.match(/limit:\s*(\d+)/);
+
+        if (limitMatch) {
+          const limit = parseInt(limitMatch[1], 10);
+          if (!isNaN(limit) && limit > 0) {
+            result.setCount += limit;
+          } else {
+            // Invalid limit, count as 1 set
+            result.setCount += 1;
+          }
+        } else {
+          // No limit specified, count as 1 set per block
+          result.setCount += 1;
+        }
+      }
+
+      // If no workout-log blocks found, default to 1 set
+      if (result.setCount === 0) {
+        result.setCount = 1;
+      }
 
       // Calculate set time using settings or default
       const setDuration = this.plugin.settings.setDuration || DEFAULT_SET_DURATION;

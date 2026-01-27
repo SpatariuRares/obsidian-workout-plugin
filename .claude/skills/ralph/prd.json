@@ -182,8 +182,8 @@
         "Typecheck passes"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. The 'workout' parameter was already implemented in EmbeddedDurationParams and EmbeddedDurationView (supports relative and absolute paths). Fixed set counting to properly parse workout-log blocks and extract 'limit' parameter for set counts (instead of using timer count as proxy). File resolution handles both relative paths (resolved from current file's directory) and absolute paths. Error message displayed when file not found. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-012",

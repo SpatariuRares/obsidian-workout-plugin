@@ -2019,3 +2019,41 @@ debug: true
 - All tests pass (368 passed, 4 skipped, 372 total)
 - Next task is US-011: Duration Estimator Workout Parameter
 - The setDuration value is used in EmbeddedDurationView.analyzeWorkoutFile() to calculate totalSetTime
+
+## 2026-01-27 - US-011: Duration Estimator Workout Parameter
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/views/EmbeddedDurationView.ts`:
+   - Modified `analyzeWorkoutFile()` method to properly count sets from workout-log blocks
+   - Added regex pattern `/```workout-log\s*([\s\S]*?)```/g` to find all workout-log code blocks
+   - Parses `limit` parameter from each workout-log block to count expected sets
+   - If no limit specified, counts 1 set per block
+   - Falls back to 1 set if no workout-log blocks found in file
+
+**Features already implemented (found during review):**
+- `workout` parameter already defined in `EmbeddedDurationParams` (DurationTypes.ts)
+- File path resolution (relative/absolute) already implemented in `resolveFilePath()` method
+- Error handling for file not found already implemented in `analyzeWorkoutFile()`
+- Defaults to current file if workout parameter not specified
+
+**Key implementation details:**
+- `workout` parameter accepts relative paths (resolved from current file's directory) or absolute paths (leading `/` stripped for Obsidian)
+- Automatically adds `.md` extension if not present
+- Scans specified file for workout-timer blocks to sum rest durations
+- Now properly counts sets from workout-log blocks using `limit` parameter
+- Set time calculation: `setCount * setDuration` (from settings, default 45s)
+- Total duration: `totalRestTime + totalSetTime`
+
+**Usage example:**
+```
+workout-duration
+workout: Workouts/Push Day
+```
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-012: Actual Duration Tracking (dashboard "Duration Comparison" section)
+- The workout parameter was already functional; main fix was changing set counting from timer-based proxy to workout-log block parsing

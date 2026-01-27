@@ -31,7 +31,7 @@ export type {
 export { TIMER_TYPE } from "@app/types/TimerTypes";
 
 // Dashboard-related types
-export type { EmbeddedDashboardParams } from "@app/types/DashboardTypes";
+export type { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types/DashboardTypes";
 
 // Plugin-related types
 export type {

@@ -1763,3 +1763,79 @@ protocol: drop_set
 - The ProtocolDistribution widget has a cleanup() method for Chart.js memory management
 - Widget renders in the right column of the dashboard after VolumeAnalytics
 - Custom protocols from plugin.settings.customProtocols are supported with hexToRgba() conversion
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-007: Protocol Dashboard Click Filtering
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/DashboardTypes.ts`:
+   - Added `activeProtocolFilter?: string | null` parameter to `EmbeddedDashboardParams`
+   - Added `ProtocolFilterCallback` type for filter change callbacks
+   - Exported new type from `app/types/index.ts`
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `FILTER_ACTIVE`, `CLEAR_FILTER`, and `CLICK_TO_FILTER` labels to `PROTOCOL_DISTRIBUTION`
+
+3. Updated `app/features/dashboard/widgets/ProtocolDistribution.ts`:
+   - Added `onFilterChange` callback parameter to `render()` method
+   - Added `renderActiveFilterIndicator()` method that displays:
+     - Filter text showing "Filtering by:" with protocol badge
+     - Clear filter button to remove the filter
+   - Updated `renderPieChart()` to:
+     - Dim non-active slices when filter is active (0.3 opacity vs 0.7)
+     - Highlight active slice with thicker border
+     - Add Chart.js `onClick` handler to toggle filter
+     - Add tooltip hint "Click to filter"
+     - Add cursor pointer on hover
+   - Updated `renderLegend()` to:
+     - Make legend items clickable
+     - Add active/dimmed styling classes
+     - Toggle filter on click
+   - Added `handleFilterChange()` method to trigger callback
+
+4. Updated `app/views/EmbeddedDashboardView.ts`:
+   - Added state properties: `currentContainer`, `currentData`, `currentParams`
+   - Added `handleProtocolFilterChange()` callback method
+   - Added `filterByProtocol()` helper method
+   - Updated `renderDashboard()` to:
+     - Apply protocol filter to data before passing to widgets
+     - Pass callback to ProtocolDistribution widget
+     - Pass original unfiltered data to ProtocolDistribution (for pie chart display)
+   - Updated `cleanup()` to clear state and call ProtocolDistribution.cleanup()
+
+5. Updated `app/styles/dashboard/_protocol.scss`:
+   - Added `.workout-protocol-filter-indicator` styling for filter bar
+   - Added `.workout-protocol-filter-text` for "Filtering by:" text
+   - Added `.workout-protocol-filter-badge` for protocol badge in filter bar
+   - Added `.workout-protocol-clear-filter` button styling with hover effects
+   - Added `.workout-protocol-legend-item` cursor and user-select
+   - Added `.workout-protocol-legend-item-active` styling with accent border
+   - Added `.workout-protocol-legend-item-dimmed` with reduced opacity
+
+6. Rebuilt CSS using `node build-css.mjs`
+
+**Features implemented:**
+- Clicking pie chart slice updates dashboard to show only that protocol's entries
+- Filter state shown visually with active filter indicator bar
+- Protocol badge displays with protocol color in filter indicator
+- Clear filter button removes the filter
+- Click same slice/legend item again to toggle off filter
+- All dashboard widgets that support filtering update with filtered data:
+  - SummaryWidget
+  - QuickStatsCards
+  - VolumeAnalytics
+  - MuscleHeatMap
+  - RecentWorkouts
+- Protocol pie chart shows all protocols but dims non-active ones
+- Legend items are clickable with hover and active states
+- Tooltip shows "Click to filter" hint
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-008: Protocol Effectiveness Analysis
+- The filter state is stored in `EmbeddedDashboardParams.activeProtocolFilter`
+- Dashboard re-renders on filter change using stored state
+- ProtocolDistribution receives original data to always show full distribution
+- Other widgets receive filtered data when filter is active

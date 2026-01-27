@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants/Constants";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
 import {
@@ -19,8 +19,16 @@ import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**
  * Dashboard View for displaying comprehensive workout analytics
  * Phase 1: Core dashboard with summary widgets, volume analytics, and quick stats
+ * Supports protocol filtering via click interaction on pie chart
  */
 export class EmbeddedDashboardView extends BaseView {
+  /** Container element for re-rendering */
+  private currentContainer: HTMLElement | null = null;
+  /** Original unfiltered data for re-rendering */
+  private currentData: WorkoutLogData[] = [];
+  /** Current dashboard parameters */
+  private currentParams: EmbeddedDashboardParams = {};
+
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
   }
@@ -28,17 +36,18 @@ export class EmbeddedDashboardView extends BaseView {
   /**
    * Cleanup method to be called during plugin unload.
    * Clears any internal state and ensures proper resource cleanup to prevent memory leaks.
-   * Currently, the dashboard does not maintain long-lived resources (event listeners or timers),
-   * but this method provides a consistent interface for future extensions.
    */
   public cleanup(): void {
     try {
       this.logDebug("EmbeddedDashboardView", "Cleaning up dashboard view resources");
 
-      // Currently no internal state to clear, but method is here for:
-      // 1. Consistency with other view cleanup patterns
-      // 2. Future-proofing if dashboard adds stateful components
-      // 3. Plugin lifecycle compliance
+      // Clear stored state to prevent memory leaks
+      this.currentContainer = null;
+      this.currentData = [];
+      this.currentParams = {};
+
+      // Clean up protocol distribution chart
+      ProtocolDistribution.cleanup();
 
       this.logDebug("EmbeddedDashboardView", "Dashboard view cleanup completed");
     } catch (error) {
@@ -56,6 +65,11 @@ export class EmbeddedDashboardView extends BaseView {
   ): Promise<void> {
     const startTime = performance.now();
     this.logDebug("EmbeddedDashboardView", "Creating dashboard", { params });
+
+    // Store state for potential re-rendering (e.g., protocol filter changes)
+    this.currentContainer = container;
+    this.currentData = logData;
+    this.currentParams = params;
 
     try {
       // Clear container
@@ -106,6 +120,39 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
+   * Handles protocol filter change from pie chart click
+   * Re-renders the dashboard with the new filter applied
+   * @param protocol - Protocol to filter by, or null to clear filter
+   */
+  private handleProtocolFilterChange = (protocol: string | null): void => {
+    this.logDebug("EmbeddedDashboardView", "Protocol filter changed", { protocol });
+
+    // Update params with new filter
+    const newParams: EmbeddedDashboardParams = {
+      ...this.currentParams,
+      activeProtocolFilter: protocol,
+    };
+
+    // Re-render dashboard with updated filter
+    if (this.currentContainer && this.currentData.length > 0) {
+      this.createDashboard(this.currentContainer, this.currentData, newParams);
+    }
+  };
+
+  /**
+   * Filters data by protocol
+   * @param data - Workout data to filter
+   * @param protocol - Protocol to filter by
+   * @returns Filtered data
+   */
+  private filterByProtocol(data: WorkoutLogData[], protocol: string): WorkoutLogData[] {
+    return data.filter((entry) => {
+      const entryProtocol = entry.protocol || WorkoutProtocol.STANDARD;
+      return entryProtocol.toLowerCase() === protocol.toLowerCase();
+    });
+  }
+
+  /**
    * Renders the main dashboard layout with widgets and analytics
    */
   private async renderDashboard(
@@ -131,11 +178,17 @@ export class EmbeddedDashboardView extends BaseView {
       cls: "workout-dashboard-grid",
     });
 
-    // Summary Widget Section (Full Width)
-    SummaryWidget.render(gridEl, data, params);
+    // Apply protocol filter if set (for widgets that support it)
+    const activeProtocolFilter = params.activeProtocolFilter;
+    const displayData = activeProtocolFilter
+      ? this.filterByProtocol(data, activeProtocolFilter)
+      : data;
 
-    // Quick Stats Cards Section (Full Width)
-    QuickStatsCards.render(gridEl, data, params);
+    // Summary Widget Section (Full Width) - uses filtered data
+    SummaryWidget.render(gridEl, displayData, params);
+
+    // Quick Stats Cards Section (Full Width) - uses filtered data
+    QuickStatsCards.render(gridEl, displayData, params);
 
     // Create Main Columns Container
     const mainColumnsEl = gridEl.createEl("div", {
@@ -152,17 +205,24 @@ export class EmbeddedDashboardView extends BaseView {
       cls: "workout-dashboard-column-right",
     });
 
-    // Muscle Heat Map Section (Left Column)
-    await MuscleHeatMap.render(leftCol, data, params, this.plugin);
+    // Muscle Heat Map Section (Left Column) - uses filtered data
+    await MuscleHeatMap.render(leftCol, displayData, params, this.plugin);
 
-    // Volume Analytics Section (Right Column)
-    VolumeAnalytics.render(rightCol, data, params);
+    // Volume Analytics Section (Right Column) - uses filtered data
+    VolumeAnalytics.render(rightCol, displayData, params);
 
     // Protocol Distribution Section (Right Column)
-    ProtocolDistribution.render(rightCol, data, params, this.plugin);
+    // Uses original data for the pie chart, but passes the active filter for highlighting
+    ProtocolDistribution.render(
+      rightCol,
+      data,
+      params,
+      this.plugin,
+      this.handleProtocolFilterChange
+    );
 
-    // Recent Workouts Section (Right Column)
-    RecentWorkouts.render(rightCol, data, params);
+    // Recent Workouts Section (Right Column) - uses filtered data
+    RecentWorkouts.render(rightCol, displayData, params);
 
     // Quick Actions Panel (Right Column)
     QuickActions.render(rightCol, params, this.plugin);

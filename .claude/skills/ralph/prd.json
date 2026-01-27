@@ -116,8 +116,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Added click handlers to pie chart slices and legend items in ProtocolDistribution widget. Chart.js onClick callback triggers filter change. Filter state stored in EmbeddedDashboardParams.activeProtocolFilter. Visual feedback includes: dimmed non-active slices, highlighted active slice border, active legend item styling, filter indicator bar with protocol badge and clear button. Dashboard re-renders with filtered data for all widgets (SummaryWidget, QuickStatsCards, VolumeAnalytics, MuscleHeatMap, RecentWorkouts). Toggle behavior: clicking same protocol clears filter. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-008",

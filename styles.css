@@ -2083,6 +2083,71 @@
 }
 
 /* ============================================================================
+   PROTOCOL FILTER INDICATOR
+   ============================================================================ */
+.workout-protocol-filter-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border-left: 3px solid var(--interactive-accent);
+}
+
+.workout-protocol-filter-text {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+
+.workout-protocol-filter-badge {
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-on-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.workout-protocol-clear-filter {
+  margin-left: auto;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  font-size: var(--workout-font-xs);
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+.workout-protocol-clear-filter:hover {
+  background: var(--background-modifier-hover);
+  border-color: var(--text-normal);
+  color: var(--text-normal);
+}
+
+/* ============================================================================
+   CLICKABLE LEGEND ITEMS
+   ============================================================================ */
+.workout-protocol-legend-item {
+  cursor: pointer;
+  user-select: none;
+}
+.workout-protocol-legend-item-active {
+  background: var(--background-secondary);
+  border-left: 3px solid var(--interactive-accent);
+  padding-left: calc(var(--workout-space-sm) - 3px);
+}
+.workout-protocol-legend-item-dimmed {
+  opacity: 0.5;
+}
+.workout-protocol-legend-item-dimmed:hover {
+  opacity: 0.8;
+}
+
+/* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
 

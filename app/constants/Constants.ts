@@ -604,6 +604,9 @@ export const CONSTANTS = {
           NO_DATA: "No protocol data available",
           SETS_LABEL: "sets",
           PERCENT_LABEL: "%",
+          FILTER_ACTIVE: "Filtering by:",
+          CLEAR_FILTER: "Clear filter",
+          CLICK_TO_FILTER: "Click to filter",
         },
         MUSCLE_TAGS: {
           TITLE: "Available muscle tags",

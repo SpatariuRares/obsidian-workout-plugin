@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants/Constants";
 import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { Chart, ChartConfiguration, ArcElement, PieController, Tooltip, Legend } from "chart.js";
 import type WorkoutChartsPlugin from "main";
@@ -37,9 +37,12 @@ interface ProtocolStats {
 /**
  * Widget for displaying protocol usage distribution in the dashboard.
  * Shows a pie chart with protocol usage for the last 30 days.
+ * Supports click filtering to filter dashboard by protocol.
  */
 export class ProtocolDistribution {
   private static chartInstance: PieChart | null = null;
+  private static currentStats: ProtocolStats[] = [];
+  private static onFilterChange: ProtocolFilterCallback | null = null;
 
   /**
    * Renders the protocol distribution widget
@@ -47,13 +50,18 @@ export class ProtocolDistribution {
    * @param data - Workout log data
    * @param params - Dashboard parameters
    * @param plugin - Plugin instance for accessing custom protocols
+   * @param onFilterChange - Callback when protocol filter changes
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
-    plugin?: WorkoutChartsPlugin
+    params: EmbeddedDashboardParams,
+    plugin?: WorkoutChartsPlugin,
+    onFilterChange?: ProtocolFilterCallback
   ): void {
+    // Store callback for later use
+    this.onFilterChange = onFilterChange || null;
+
     const widgetEl = container.createEl("div", {
       cls: "workout-dashboard-widget workout-protocol-distribution",
     });
@@ -75,6 +83,7 @@ export class ProtocolDistribution {
 
     // Calculate protocol statistics
     const stats = this.calculateProtocolStats(filteredData, plugin);
+    this.currentStats = stats;
 
     // Check if there's any data
     if (stats.length === 0 || stats.every(s => s.count === 0)) {
@@ -85,16 +94,66 @@ export class ProtocolDistribution {
       return;
     }
 
+    // Render active filter indicator if filter is set
+    const activeFilter = params.activeProtocolFilter;
+    if (activeFilter) {
+      this.renderActiveFilterIndicator(widgetEl, activeFilter, stats);
+    }
+
     // Create chart container
     const chartContainer = widgetEl.createEl("div", {
       cls: "workout-protocol-chart-container",
     });
 
-    // Render pie chart
-    this.renderPieChart(chartContainer, stats);
+    // Render pie chart with click handling
+    this.renderPieChart(chartContainer, stats, activeFilter);
 
-    // Render legend with counts and percentages
-    this.renderLegend(widgetEl, stats);
+    // Render legend with counts and percentages (clickable)
+    this.renderLegend(widgetEl, stats, activeFilter);
+  }
+
+  /**
+   * Renders the active filter indicator with clear button
+   * @param container - Container element
+   * @param activeFilter - Currently active protocol filter
+   * @param stats - Protocol statistics for label lookup
+   */
+  private static renderActiveFilterIndicator(
+    container: HTMLElement,
+    activeFilter: string,
+    stats: ProtocolStats[]
+  ): void {
+    const filterIndicator = container.createEl("div", {
+      cls: "workout-protocol-filter-indicator",
+    });
+
+    // Find the label for the active filter
+    const activeStat = stats.find(s => s.protocol === activeFilter);
+    const filterLabel = activeStat?.label || activeFilter;
+
+    // Filter text
+    filterIndicator.createEl("span", {
+      text: `${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE} `,
+      cls: "workout-protocol-filter-text",
+    });
+
+    // Protocol badge
+    const badgeEl = filterIndicator.createEl("span", {
+      text: filterLabel,
+      cls: "workout-protocol-filter-badge",
+    });
+    if (activeStat) {
+      badgeEl.style.backgroundColor = activeStat.color;
+    }
+
+    // Clear button
+    const clearBtn = filterIndicator.createEl("button", {
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
+      cls: "workout-protocol-clear-filter",
+    });
+    clearBtn.addEventListener("click", () => {
+      this.handleFilterChange(null);
+    });
   }
 
   /**
@@ -167,11 +226,16 @@ export class ProtocolDistribution {
   }
 
   /**
-   * Renders the pie chart
+   * Renders the pie chart with click handling for filtering
    * @param container - Container element for the chart
    * @param stats - Protocol statistics
+   * @param activeFilter - Currently active filter (for visual highlighting)
    */
-  private static renderPieChart(container: HTMLElement, stats: ProtocolStats[]): void {
+  private static renderPieChart(
+    container: HTMLElement,
+    stats: ProtocolStats[],
+    activeFilter?: string | null
+  ): void {
     const canvas = container.createEl("canvas", {
       cls: "workout-protocol-chart-canvas",
     });
@@ -182,6 +246,27 @@ export class ProtocolDistribution {
       this.chartInstance = null;
     }
 
+    // Adjust colors based on active filter (dim non-active slices)
+    const backgroundColors = stats.map((s) => {
+      if (activeFilter && s.protocol !== activeFilter) {
+        // Dim non-active slices
+        return s.color.replace("0.7", "0.3");
+      }
+      return s.color;
+    });
+
+    const borderColors = stats.map((s) => {
+      if (activeFilter && s.protocol === activeFilter) {
+        // Highlight active slice border
+        return s.color.replace("0.7", "1");
+      }
+      return s.color.replace("0.7", "0.8");
+    });
+
+    const borderWidths = stats.map((s) => {
+      return activeFilter && s.protocol === activeFilter ? 4 : 2;
+    });
+
     const config: ChartConfiguration<"pie", number[], string> = {
       type: "pie",
       data: {
@@ -189,10 +274,9 @@ export class ProtocolDistribution {
         datasets: [
           {
             data: stats.map((s) => s.count),
-            backgroundColor: stats.map((s) => s.color),
-            borderColor: stats.map((s) => s.color.replace("0.7", "1")),
-            borderWidth: 2,
-            // Add patterns for accessibility
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: borderWidths,
             hoverOffset: 8,
           },
         ],
@@ -210,8 +294,30 @@ export class ProtocolDistribution {
                 const stat = stats[context.dataIndex];
                 return `${stat.label}: ${stat.count} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SETS_LABEL} (${stat.percentage.toFixed(1)}${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.PERCENT_LABEL})`;
               },
+              afterLabel: () => {
+                return CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER;
+              },
             },
           },
+        },
+        onClick: (_event, elements) => {
+          if (elements.length > 0) {
+            const index = elements[0].index;
+            const clickedProtocol = stats[index].protocol;
+
+            // Toggle filter: if clicking same protocol, clear filter
+            if (activeFilter === clickedProtocol) {
+              this.handleFilterChange(null);
+            } else {
+              this.handleFilterChange(clickedProtocol);
+            }
+          }
+        },
+        onHover: (event, elements) => {
+          const canvas = event.native?.target as HTMLCanvasElement | undefined;
+          if (canvas) {
+            canvas.style.cursor = elements.length > 0 ? "pointer" : "default";
+          }
         },
       },
     };
@@ -220,25 +326,58 @@ export class ProtocolDistribution {
   }
 
   /**
-   * Renders the legend with counts and percentages
+   * Handles filter change and triggers callback
+   * @param protocol - Protocol to filter by, or null to clear
+   */
+  private static handleFilterChange(protocol: string | null): void {
+    if (this.onFilterChange) {
+      this.onFilterChange(protocol);
+    }
+  }
+
+  /**
+   * Renders the legend with counts and percentages (clickable for filtering)
    * @param container - Container element
    * @param stats - Protocol statistics
+   * @param activeFilter - Currently active filter (for visual highlighting)
    */
-  private static renderLegend(container: HTMLElement, stats: ProtocolStats[]): void {
+  private static renderLegend(
+    container: HTMLElement,
+    stats: ProtocolStats[],
+    activeFilter?: string | null
+  ): void {
     const legendEl = container.createEl("div", {
       cls: "workout-protocol-legend",
     });
 
     stats.forEach((stat) => {
+      const isActive = activeFilter === stat.protocol;
+      const isDimmed = activeFilter && !isActive;
+
       const itemEl = legendEl.createEl("div", {
-        cls: "workout-protocol-legend-item",
+        cls: `workout-protocol-legend-item ${isActive ? "workout-protocol-legend-item-active" : ""} ${isDimmed ? "workout-protocol-legend-item-dimmed" : ""}`,
+        attr: {
+          title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER,
+        },
+      });
+
+      // Make legend items clickable
+      itemEl.addEventListener("click", () => {
+        // Toggle filter: if clicking same protocol, clear filter
+        if (isActive) {
+          this.handleFilterChange(null);
+        } else {
+          this.handleFilterChange(stat.protocol);
+        }
       });
 
       // Color indicator
       const colorEl = itemEl.createEl("span", {
         cls: "workout-protocol-legend-color",
       });
-      colorEl.style.backgroundColor = stat.color;
+      colorEl.style.backgroundColor = isDimmed
+        ? stat.color.replace("0.7", "0.3")
+        : stat.color;
 
       // Label
       itemEl.createEl("span", {

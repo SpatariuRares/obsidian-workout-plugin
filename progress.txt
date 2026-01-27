@@ -1596,3 +1596,58 @@ protocol: drop_set
 - Next task is US-004: Add Custom Protocol Settings
 - The protocol filter integrates seamlessly with existing filters
 - Array parsing in CodeBlockProcessorService can be reused for other array parameters
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-004: Add Custom Protocol Settings
+
+**Status:** Completed
+
+**Changes made:**
+1. Added `CustomProtocolConfig` interface to `app/types/WorkoutLogData.ts` with fields:
+   - `id: string` - Unique identifier (lowercase, no spaces, auto-generated from name)
+   - `name: string` - Display name for the protocol
+   - `abbreviation: string` - Short abbreviation for badge display (max 3 characters)
+   - `color: string` - CSS color for badge background (hex format)
+
+2. Exported `CustomProtocolConfig` from `app/types/index.ts`
+
+3. Updated `WorkoutChartsSettings` interface to include `customProtocols: CustomProtocolConfig[]`
+
+4. Updated `DEFAULT_SETTINGS` to include `customProtocols: []`
+
+5. Updated `app/constants/Constants.ts` with new labels, descriptions, buttons, and messages:
+   - Labels: CUSTOM_PROTOCOLS, PROTOCOL_NAME, PROTOCOL_ABBREVIATION, PROTOCOL_COLOR
+   - Descriptions: CUSTOM_PROTOCOLS, NO_CUSTOM_PROTOCOLS, PROTOCOL_ABBREVIATION, PROTOCOL_COLOR
+   - Sections: CUSTOM_PROTOCOLS
+   - Buttons: ADD_PROTOCOL, SAVE_PROTOCOL
+   - Messages: PROTOCOL_NAME_REQUIRED, PROTOCOL_ABBREVIATION_REQUIRED, PROTOCOL_COLOR_REQUIRED, PROTOCOL_NAME_EXISTS, PROTOCOL_DELETED, PROTOCOL_SAVED, CONFIRM_DELETE_PROTOCOL
+
+6. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added `protocolsContainer` property for protocol list container
+   - Added `renderCustomProtocolsSection()` method with section heading and "Add protocol" button
+   - Added `renderProtocolsList()` to display all configured protocols with edit/delete buttons
+   - Added `renderProtocolItem()` to display individual protocol with badge preview and ID info
+   - Added `formatProtocolDetails()` to create badge preview with proper contrast color
+   - Added `getContrastColor()` helper to calculate black/white text color based on background luminance
+   - Added `showProtocolEditor()` for inline protocol editing (supports both create and edit)
+   - Added `saveProtocol()` with validation for name, abbreviation (max 3 chars), and color (hex format)
+   - Added `deleteProtocol()` with confirmation dialog
+
+7. Updated `app/services/__tests__/DataService.test.ts` to include `customProtocols: []` in mock settings
+
+**Features implemented:**
+- Settings tab includes 'Custom Protocols' section
+- Can add new protocol with name, abbreviation (max 3 chars), color via color picker
+- Can edit existing custom protocols inline (clicking pencil icon)
+- Can delete custom protocols with confirmation dialog
+- Custom protocols persist via plugin.saveSettings()
+- Badge preview shows abbreviation with selected color and contrast text
+- Auto-generated ID from protocol name (lowercase, underscores for spaces)
+- Validation ensures abbreviation is max 3 characters and color is valid hex
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-005: Integrate Custom Protocols in Log Modal
+- Custom protocols are stored in `plugin.settings.customProtocols` array
+- The `CustomProtocolConfig` type is exported and ready for use in modals and table rendering
+- Color picker uses Obsidian's native `addColorPicker()` API for consistent UX

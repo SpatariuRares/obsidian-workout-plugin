@@ -44,6 +44,7 @@ export type {
   WorkoutLogData,
   CSVWorkoutLogEntry,
   WorkoutChartsSettings,
+  CustomProtocolConfig,
 } from "@app/types/WorkoutLogData";
 export { WorkoutProtocol } from "@app/types/WorkoutLogData";
 

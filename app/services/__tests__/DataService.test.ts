@@ -61,6 +61,7 @@ describe("DataService", () => {
       exerciseBlockTemplate: "",
       weightIncrement: 2.5,
       achievedTargets: {},
+      customProtocols: [],
     };
 
     // Create DataService instance

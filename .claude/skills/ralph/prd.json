@@ -67,8 +67,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Added CustomProtocolConfig interface to WorkoutLogData.ts with fields: id, name, abbreviation (max 3 chars), color. Added customProtocols array to WorkoutChartsSettings. Implemented Custom Protocols section in settings tab with add/edit/delete functionality. Protocol editor includes color picker, auto-generated ID from name, and badge preview. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-005",

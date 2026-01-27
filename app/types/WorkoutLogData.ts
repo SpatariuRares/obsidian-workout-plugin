@@ -16,6 +16,21 @@ export enum WorkoutProtocol {
 }
 
 /**
+ * Configuration for a custom workout protocol.
+ * Allows users to define their own training techniques beyond built-in protocols.
+ */
+export interface CustomProtocolConfig {
+  /** Unique identifier for the protocol (lowercase, no spaces) */
+  id: string;
+  /** Display name for the protocol */
+  name: string;
+  /** Short abbreviation for badge display (max 3 characters) */
+  abbreviation: string;
+  /** CSS color for badge background (hex format, e.g., #FF5733) */
+  color: string;
+}
+
+/**
  * Represents a single workout log entry.
  */
 export interface WorkoutLogData {
@@ -65,6 +80,7 @@ export interface WorkoutChartsSettings {
   exerciseBlockTemplate: string;
   weightIncrement: number;
   achievedTargets: Record<string, number>;
+  customProtocols: CustomProtocolConfig[];
 }
 
 /**
@@ -94,6 +110,7 @@ workout: {{workout}}
 \`\`\``,
   weightIncrement: 2.5,
   achievedTargets: {},
+  customProtocols: [],
 };
 
 /**

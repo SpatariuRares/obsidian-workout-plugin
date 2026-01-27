@@ -192,7 +192,7 @@ export class TableRenderer {
           } else if (cellIndex === protocolColumnIndex) {
             // Render protocol badge
             td.className = "workout-table-protocol-cell";
-            this.renderProtocolBadge(td, cell);
+            this.renderProtocolBadge(td, cell, plugin);
           } else {
             td.textContent = cell;
           }
@@ -206,22 +206,69 @@ export class TableRenderer {
   }
 
   /**
-   * Renders a protocol badge in the given cell
+   * Renders a protocol badge in the given cell.
+   * Supports both built-in protocols and custom protocols from settings.
    * @param cell - The table cell to render the badge in
    * @param protocol - The protocol value to display
+   * @param plugin - Plugin instance for accessing custom protocols
    */
-  private static renderProtocolBadge(cell: HTMLElement, protocol: string): void {
-    const displayConfig = PROTOCOL_DISPLAY[protocol];
+  private static renderProtocolBadge(cell: HTMLElement, protocol: string, plugin?: WorkoutChartsPlugin): void {
+    // First check built-in protocols
+    const builtInConfig = PROTOCOL_DISPLAY[protocol];
 
-    // If no display config found or it's standard (empty label), don't render a badge
-    if (!displayConfig || !displayConfig.label) {
+    if (builtInConfig) {
+      // If it's standard (empty label), don't render a badge
+      if (!builtInConfig.label) {
+        return;
+      }
+
+      const badge = cell.createEl("span", {
+        cls: `workout-protocol-badge ${builtInConfig.className}`,
+        text: builtInConfig.label,
+      });
+      badge.setAttribute("title", protocol.replace(/_/g, " "));
       return;
     }
 
-    const badge = cell.createEl("span", {
-      cls: `workout-protocol-badge ${displayConfig.className}`,
-      text: displayConfig.label,
-    });
-    badge.setAttribute("title", protocol.replace(/_/g, " "));
+    // Check custom protocols from settings
+    if (plugin?.settings?.customProtocols) {
+      const customProtocol = plugin.settings.customProtocols.find(
+        (p) => p.id === protocol
+      );
+
+      if (customProtocol) {
+        const badge = cell.createEl("span", {
+          cls: "workout-protocol-badge workout-protocol-badge-custom",
+          text: customProtocol.abbreviation,
+        });
+        badge.setAttribute("title", customProtocol.name);
+        // Apply custom color as inline style
+        badge.style.backgroundColor = customProtocol.color;
+        // Calculate contrast color for text
+        badge.style.color = this.getContrastColor(customProtocol.color);
+      }
+    }
+  }
+
+  /**
+   * Calculates whether black or white text should be used based on background color.
+   * Uses relative luminance formula for accessibility.
+   * @param hexColor - Hex color string (e.g., "#ff0000")
+   * @returns "black" or "white"
+   */
+  private static getContrastColor(hexColor: string): string {
+    // Remove # if present
+    const hex = hexColor.replace("#", "");
+
+    // Parse RGB values
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate relative luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    // Return black for light backgrounds, white for dark backgrounds
+    return luminance > 0.5 ? "black" : "white";
   }
 }

@@ -1651,3 +1651,45 @@ protocol: drop_set
 - Custom protocols are stored in `plugin.settings.customProtocols` array
 - The `CustomProtocolConfig` type is exported and ready for use in modals and table rendering
 - Color picker uses Obsidian's native `addColorPicker()` API for consistent UX
+
+## 2026-01-27 - Phase 3 Advanced Features PRD - US-005: Integrate Custom Protocols in Log Modal
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/base/BaseLogModal.ts`:
+   - Modified protocol dropdown creation to include custom protocols from `plugin.settings.customProtocols`
+   - Built-in protocols are shown first, followed by custom protocols
+   - Custom protocols are mapped to `{ text: name, value: id }` format for the dropdown
+
+2. Updated `app/features/tables/components/TableRenderer.ts`:
+   - Modified `renderProtocolBadge()` method to accept optional `plugin` parameter
+   - First checks built-in protocols in `PROTOCOL_DISPLAY` constant
+   - Then checks custom protocols from `plugin.settings.customProtocols`
+   - Custom protocol badges display with:
+     - User-configured abbreviation as text
+     - User-configured color as background
+     - Auto-calculated contrast color (black/white) for text accessibility
+     - Protocol name shown in tooltip
+   - Added `getContrastColor()` helper method using luminance formula
+
+3. Updated `app/styles/_table.scss`:
+   - Added `.workout-protocol-badge-custom` class for custom protocol badges
+   - Custom badges use inline styles for background color, base class provides structure
+
+4. Rebuilt CSS using `node build-css.mjs`
+
+**Features implemented:**
+- CreateLogModal and EditLogModal Protocol dropdown shows built-in protocols first, then custom protocols
+- Custom protocols display their configured name in dropdown
+- Custom protocol selection saves the protocol ID to CSV correctly
+- Custom protocols display correctly in log table with configured abbreviation and color
+- Text color automatically adjusts for accessibility (black on light backgrounds, white on dark)
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npx tsc --noEmit --skipLibCheck`)
+- All tests pass (368 passed, 4 skipped, 372 total)
+- Next task is US-006: Protocol Statistics Dashboard Card
+- Custom protocols integrate seamlessly with existing protocol system
+- The `getContrastColor()` helper in TableRenderer uses luminance formula for accessibility
+- Custom protocol badges use `.workout-protocol-badge-custom` class with inline styles for color

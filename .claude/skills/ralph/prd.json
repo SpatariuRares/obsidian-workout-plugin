@@ -83,8 +83,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-27. Modified BaseLogModal.ts to dynamically build protocol dropdown options from both built-in protocols (CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL) and custom protocols (plugin.settings.customProtocols). Updated TableRenderer.ts renderProtocolBadge() method to handle custom protocols by checking plugin.settings.customProtocols and rendering badges with custom colors and abbreviations. Added getContrastColor() helper for text accessibility. Added CSS class .workout-protocol-badge-custom for custom badge styling. All tests pass (368 passed, 4 skipped)."
     },
     {
       "id": "US-006",

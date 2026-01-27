@@ -1065,6 +1065,11 @@
   border: 1px solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
 }
 
+/* Custom Protocol Badge - uses inline styles for color, inherits base badge structure */
+.workout-protocol-badge-custom {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 /* ============================================================================
    CHART STYLES
    ============================================================================ */

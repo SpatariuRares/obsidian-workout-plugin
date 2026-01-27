@@ -176,11 +176,18 @@ export abstract class BaseLogModal extends ModalBase {
       weightInput.value = (currentValue + weightIncrement).toFixed(1);
     });
 
-    // Protocol dropdown
+    // Protocol dropdown - built-in protocols first, then custom protocols
+    const builtInProtocols = [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL];
+    const customProtocols = this.plugin.settings.customProtocols.map((p) => ({
+      text: p.name,
+      value: p.id,
+    }));
+    const allProtocols = [...builtInProtocols, ...customProtocols];
+
     const protocolSelect = this.createSelectField(
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.PROTOCOL,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL],
+      allProtocols,
     );
     protocolSelect.value = WorkoutProtocol.STANDARD;
 

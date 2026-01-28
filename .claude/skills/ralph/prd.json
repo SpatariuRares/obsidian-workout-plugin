@@ -170,8 +170,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Created CanvasExportModal with layout dropdown (horizontal/vertical/grouped by muscle), checkboxes for durations and performance stats, and superset edge connections. CanvasExporter extended with calculatePositions() for 3 layout types, createSupersetEdges() for connecting exercises marked as supersets, and formatExerciseText() enhanced to include duration and stats when enabled. Uses WorkoutPlannerAPI.getExerciseStats() for performance data. Constants added for CANVAS_EXPORT title, layout labels, and checkbox labels."
     }
   ]
 }

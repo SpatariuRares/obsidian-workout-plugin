@@ -6,7 +6,10 @@
  */
 import { App, TFile, Notice } from "obsidian";
 import { MuscleTagMapper } from "@app/features/dashboard/business/muscleHeatMap/MuscleTagMapper";
+import { WorkoutPlannerAPI, ExerciseStats } from "@app/api/WorkoutPlannerAPI";
+import { DataService } from "@app/services/DataService";
 import type WorkoutChartsPlugin from "main";
+import type { CanvasExportOptions, CanvasLayoutType } from "./CanvasExportModal";
 
 /**
  * Canvas node types as defined by JSON Canvas spec
@@ -53,6 +56,8 @@ interface CanvasData {
 interface ExerciseInfo {
   name: string;
   muscleGroups: string[];
+  duration?: number;
+  isSuperset?: boolean;
 }
 
 /**
@@ -88,25 +93,46 @@ const DEFAULT_NODE_COLOR = "5"; // cyan
  */
 const NODE_WIDTH = 250;
 const NODE_HEIGHT = 100;
+const NODE_HEIGHT_WITH_STATS = 150;
 const HORIZONTAL_SPACING = 50;
 const VERTICAL_SPACING = 30;
 const NODES_PER_ROW = 4;
+const GROUP_SPACING = 80;
+
+/**
+ * Default export options
+ */
+const DEFAULT_OPTIONS: CanvasExportOptions = {
+  layout: "horizontal",
+  includeDurations: false,
+  includeStats: false,
+  connectSupersets: true,
+};
 
 /**
  * CanvasExporter creates Obsidian Canvas files from workout files
  */
 export class CanvasExporter {
+  private api: WorkoutPlannerAPI;
+
   constructor(
     private app: App,
     private plugin: WorkoutChartsPlugin
-  ) {}
+  ) {
+    const dataService = new DataService(app, plugin.settings);
+    this.api = new WorkoutPlannerAPI(dataService, app, plugin.settings);
+  }
 
   /**
    * Export a workout file to canvas format
    * @param workoutFile - The workout markdown file to export
+   * @param options - Export options for layout and content
    * @returns Path to the created canvas file
    */
-  async exportToCanvas(workoutFile: TFile): Promise<string> {
+  async exportToCanvas(
+    workoutFile: TFile,
+    options: CanvasExportOptions = DEFAULT_OPTIONS
+  ): Promise<string> {
     // Extract exercises from the workout file
     const exercises = await this.extractExercises(workoutFile);
 
@@ -114,8 +140,21 @@ export class CanvasExporter {
       throw new Error("No exercises found in workout file");
     }
 
+    // Get stats for exercises if needed
+    const exerciseStats: Map<string, ExerciseStats> = new Map();
+    if (options.includeStats) {
+      for (const exercise of exercises) {
+        try {
+          const stats = await this.api.getExerciseStats(exercise.name);
+          exerciseStats.set(exercise.name, stats);
+        } catch {
+          // Skip if stats unavailable
+        }
+      }
+    }
+
     // Create canvas data
-    const canvasData = await this.createCanvasData(exercises);
+    const canvasData = await this.createCanvasData(exercises, options, exerciseStats);
 
     // Generate canvas file path (same folder as workout file)
     const canvasFileName = workoutFile.basename + ".canvas";
@@ -152,6 +191,9 @@ export class CanvasExporter {
     while ((match = timerBlockRegex.exec(content)) !== null) {
       const blockContent = match[1];
       const exerciseLine = blockContent.match(/exercise:\s*(.+)/i);
+      const durationLine = blockContent.match(/duration:\s*(\d+)/i);
+      const supersetLine = blockContent.match(/superset:\s*true/i);
+
       if (exerciseLine) {
         const exerciseName = exerciseLine[1].trim();
         if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
@@ -160,7 +202,12 @@ export class CanvasExporter {
             exerciseName,
             this.plugin
           );
-          exercises.push({ name: exerciseName, muscleGroups });
+          exercises.push({
+            name: exerciseName,
+            muscleGroups,
+            duration: durationLine ? parseInt(durationLine[1], 10) : undefined,
+            isSuperset: !!supersetLine,
+          });
         }
       }
     }
@@ -239,37 +286,189 @@ export class CanvasExporter {
   /**
    * Create canvas data structure from exercises
    */
-  private async createCanvasData(exercises: ExerciseInfo[]): Promise<CanvasData> {
+  private async createCanvasData(
+    exercises: ExerciseInfo[],
+    options: CanvasExportOptions,
+    exerciseStats: Map<string, ExerciseStats>
+  ): Promise<CanvasData> {
     const nodes: CanvasNode[] = [];
     const edges: CanvasEdge[] = [];
 
-    // Calculate node positions in a grid layout
+    // Determine node height based on whether stats are included
+    const nodeHeight = options.includeStats ? NODE_HEIGHT_WITH_STATS : NODE_HEIGHT;
+
+    // Calculate node positions based on layout type
+    const positions = this.calculatePositions(exercises, options.layout, nodeHeight);
+
+    // Create nodes for each exercise
     exercises.forEach((exercise, index) => {
-      const row = Math.floor(index / NODES_PER_ROW);
-      const col = index % NODES_PER_ROW;
-
-      const x = col * (NODE_WIDTH + HORIZONTAL_SPACING);
-      const y = row * (NODE_HEIGHT + VERTICAL_SPACING);
-
-      // Determine node color based on primary muscle group
+      const { x, y } = positions[index];
       const color = this.getColorForMuscleGroups(exercise.muscleGroups);
+      const stats = exerciseStats.get(exercise.name);
 
-      // Create text node for the exercise
       const node: CanvasNode = {
         id: this.generateNodeId(index),
         type: "text",
         x,
         y,
         width: NODE_WIDTH,
-        height: NODE_HEIGHT,
+        height: nodeHeight,
         color,
-        text: this.formatExerciseText(exercise),
+        text: this.formatExerciseText(exercise, options, stats),
       };
 
       nodes.push(node);
     });
 
+    // Create edges for supersets if enabled
+    if (options.connectSupersets) {
+      const supersetEdges = this.createSupersetEdges(exercises, nodes, options.layout);
+      edges.push(...supersetEdges);
+    }
+
     return { nodes, edges };
+  }
+
+  /**
+   * Calculate node positions based on layout type
+   */
+  private calculatePositions(
+    exercises: ExerciseInfo[],
+    layout: CanvasLayoutType,
+    nodeHeight: number
+  ): Array<{ x: number; y: number }> {
+    switch (layout) {
+      case "horizontal":
+        return this.calculateHorizontalLayout(exercises.length, nodeHeight);
+      case "vertical":
+        return this.calculateVerticalLayout(exercises.length, nodeHeight);
+      case "grouped":
+        return this.calculateGroupedLayout(exercises, nodeHeight);
+      default:
+        return this.calculateHorizontalLayout(exercises.length, nodeHeight);
+    }
+  }
+
+  /**
+   * Calculate horizontal flow layout (left to right, wrapping)
+   */
+  private calculateHorizontalLayout(
+    count: number,
+    nodeHeight: number
+  ): Array<{ x: number; y: number }> {
+    const positions: Array<{ x: number; y: number }> = [];
+
+    for (let i = 0; i < count; i++) {
+      const row = Math.floor(i / NODES_PER_ROW);
+      const col = i % NODES_PER_ROW;
+      positions.push({
+        x: col * (NODE_WIDTH + HORIZONTAL_SPACING),
+        y: row * (nodeHeight + VERTICAL_SPACING),
+      });
+    }
+
+    return positions;
+  }
+
+  /**
+   * Calculate vertical flow layout (top to bottom, single column)
+   */
+  private calculateVerticalLayout(
+    count: number,
+    nodeHeight: number
+  ): Array<{ x: number; y: number }> {
+    const positions: Array<{ x: number; y: number }> = [];
+
+    for (let i = 0; i < count; i++) {
+      positions.push({
+        x: 0,
+        y: i * (nodeHeight + VERTICAL_SPACING),
+      });
+    }
+
+    return positions;
+  }
+
+  /**
+   * Calculate grouped layout (exercises grouped by primary muscle group)
+   */
+  private calculateGroupedLayout(
+    exercises: ExerciseInfo[],
+    nodeHeight: number
+  ): Array<{ x: number; y: number }> {
+    const positions: Array<{ x: number; y: number }> = [];
+
+    // Group exercises by primary muscle group
+    const groups = new Map<string, number[]>();
+
+    exercises.forEach((exercise, index) => {
+      const primaryMuscle = exercise.muscleGroups[0] || "other";
+      if (!groups.has(primaryMuscle)) {
+        groups.set(primaryMuscle, []);
+      }
+      groups.get(primaryMuscle)!.push(index);
+    });
+
+    // Assign positions by group
+    let groupIndex = 0;
+    const groupedPositions: Array<{ index: number; x: number; y: number }> = [];
+
+    groups.forEach((indices) => {
+      const groupX = groupIndex * (NODE_WIDTH + GROUP_SPACING);
+
+      indices.forEach((exerciseIndex, posInGroup) => {
+        groupedPositions.push({
+          index: exerciseIndex,
+          x: groupX,
+          y: posInGroup * (nodeHeight + VERTICAL_SPACING),
+        });
+      });
+
+      groupIndex++;
+    });
+
+    // Sort by original index and extract positions
+    groupedPositions.sort((a, b) => a.index - b.index);
+    groupedPositions.forEach((pos) => {
+      positions.push({ x: pos.x, y: pos.y });
+    });
+
+    return positions;
+  }
+
+  /**
+   * Create edges connecting superset exercises
+   * Supersets are detected by:
+   * 1. Consecutive exercises marked with isSuperset flag
+   * 2. Exercises in the same workout-timer block
+   */
+  private createSupersetEdges(
+    exercises: ExerciseInfo[],
+    nodes: CanvasNode[],
+    layout: CanvasLayoutType
+  ): CanvasEdge[] {
+    const edges: CanvasEdge[] = [];
+
+    // Connect consecutive exercises that are marked as supersets
+    for (let i = 0; i < exercises.length - 1; i++) {
+      if (exercises[i].isSuperset && exercises[i + 1].isSuperset) {
+        const fromSide = layout === "vertical" ? "bottom" : "right";
+        const toSide = layout === "vertical" ? "top" : "left";
+
+        edges.push({
+          id: this.generateEdgeId(i),
+          fromNode: nodes[i].id,
+          toNode: nodes[i + 1].id,
+          fromSide: fromSide as "top" | "right" | "bottom" | "left",
+          toSide: toSide as "top" | "right" | "bottom" | "left",
+          toEnd: "arrow",
+          color: "6", // purple for superset connection
+          label: "superset",
+        });
+      }
+    }
+
+    return edges;
   }
 
   /**
@@ -289,14 +488,37 @@ export class CanvasExporter {
   /**
    * Format exercise information as markdown text for the node
    */
-  private formatExerciseText(exercise: ExerciseInfo): string {
+  private formatExerciseText(
+    exercise: ExerciseInfo,
+    options: CanvasExportOptions,
+    stats?: ExerciseStats
+  ): string {
     let text = `## ${exercise.name}`;
 
+    // Add muscle groups
     if (exercise.muscleGroups.length > 0) {
       const muscleText = exercise.muscleGroups
         .map((g) => g.charAt(0).toUpperCase() + g.slice(1))
         .join(", ");
       text += `\n\n*${muscleText}*`;
+    }
+
+    // Add duration if available and enabled
+    if (options.includeDurations && exercise.duration) {
+      const minutes = Math.floor(exercise.duration / 60);
+      const seconds = exercise.duration % 60;
+      const durationText =
+        minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+      text += `\n\n**Duration:** ${durationText}`;
+    }
+
+    // Add stats if available and enabled
+    if (options.includeStats && stats && stats.totalSets > 0) {
+      text += `\n\n**Last:** ${stats.prWeight}kg × ${stats.prReps} reps`;
+      if (stats.trend !== "stable") {
+        const trendEmoji = stats.trend === "up" ? "📈" : "📉";
+        text += ` ${trendEmoji}`;
+      }
     }
 
     return text;
@@ -310,5 +532,14 @@ export class CanvasExporter {
     const timestamp = Date.now().toString(36);
     const random = Math.random().toString(36).substring(2, 8);
     return `node-${index}-${timestamp}${random}`;
+  }
+
+  /**
+   * Generate a unique edge ID
+   */
+  private generateEdgeId(index: number): string {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 8);
+    return `edge-${index}-${timestamp}${random}`;
   }
 }

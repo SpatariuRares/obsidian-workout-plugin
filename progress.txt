@@ -2537,3 +2537,66 @@ workout: Workouts/Push Day
 - US-008 will add `getExerciseStats(exercise)` and `getExercises(filter)` methods
 - The WorkoutPlannerAPI is designed to be extensible - add new methods to the class
 - Date filtering uses ISO date format (YYYY-MM-DD) for consistency
+
+## 2026-01-28 - US-010: Add Canvas Export Layout Options
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/canvas/CanvasExportModal.ts`:
+   - Modal extending ModalBase for configuring canvas export options
+   - Layout type dropdown with 3 options: horizontal flow, vertical flow, grouped by muscle
+   - Checkbox: include timer durations on nodes
+   - Checkbox: include last performance stats on nodes
+   - Checkbox: connect superset exercises with edges (default: true)
+   - Export button passes selected options to CanvasExporter
+
+2. Updated `app/features/canvas/CanvasExporter.ts`:
+   - Added CanvasExportOptions parameter to exportToCanvas() method
+   - Added calculatePositions() method with 3 layout strategies:
+     - calculateHorizontalLayout(): left-to-right grid (4 nodes per row)
+     - calculateVerticalLayout(): single column, top-to-bottom
+     - calculateGroupedLayout(): columns grouped by primary muscle group
+   - Added createSupersetEdges() to connect consecutive superset-marked exercises
+   - Enhanced formatExerciseText() to include duration and performance stats
+   - Integrated WorkoutPlannerAPI.getExerciseStats() for performance data
+   - Added NODE_HEIGHT_WITH_STATS constant for taller nodes when stats enabled
+
+3. Updated `app/features/canvas/index.ts`:
+   - Added exports for CanvasExportModal, CanvasExportOptions, CanvasLayoutType
+
+4. Updated `app/services/CommandHandlerService.ts`:
+   - Modified export-workout-to-canvas command to open CanvasExportModal
+   - Passes user-selected options to CanvasExporter.exportToCanvas()
+
+5. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.TITLES.CANVAS_EXPORT`
+   - Added `MODAL.BUTTONS.EXPORT`
+   - Added `MODAL.LABELS.CANVAS_LAYOUT`, `CANVAS_OPTIONS`, `LAYOUT_TYPE`
+   - Added `MODAL.LABELS.LAYOUT_HORIZONTAL`, `LAYOUT_VERTICAL`, `LAYOUT_GROUPED`
+   - Added `MODAL.CHECKBOXES.INCLUDE_DURATIONS`, `INCLUDE_STATS`, `CONNECT_SUPERSETS`
+
+**Features implemented:**
+- CanvasExportModal with full layout customization options
+- 3 layout types: horizontal flow, vertical flow, grouped by muscle
+- Optional timer duration display on nodes (from workout-timer blocks)
+- Optional last performance stats on nodes (via WorkoutPlannerAPI)
+- Superset edge connections between consecutive superset-marked exercises
+- Trend indicator emoji (📈/📉) when stats are included
+
+**Layout behavior:**
+- Horizontal: 4 nodes per row, wraps to new row
+- Vertical: Single column, all nodes stacked vertically
+- Grouped: Columns for each muscle group, exercises in group stacked
+
+**Edge connections:**
+- Supersets detected via isSuperset flag in workout-timer blocks
+- Edges colored purple (6) with "superset" label
+- Direction adapts to layout (right→left for horizontal, bottom→top for vertical)
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain in `WorkoutLogData.test.ts` (console.warn expectations)
+- All user stories US-001 through US-010 are now complete
+- Phase 4 (Integrations) is now fully implemented
+

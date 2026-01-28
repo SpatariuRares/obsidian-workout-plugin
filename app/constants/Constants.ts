@@ -688,6 +688,7 @@ export const CONSTANTS = {
         AUDIT_EXERCISE_NAMES: "Audit exercise names",
         ADD_EXERCISE_BLOCK: "Add exercise block",
         QUICK_LOG: "Quick log",
+        CANVAS_EXPORT: "Export workout to canvas",
       },
       BUTTONS: {
         CREATE: "Create log",
@@ -706,6 +707,7 @@ export const CONSTANTS = {
         UPDATE_TARGET_WEIGHT: "Update target",
         ADJUST_PLUS: "+",
         ADJUST_MINUS: "-",
+        EXPORT: "Export",
       },
       NOTICES: {
         LOG_CREATED: "Workout log created successfully!",
@@ -790,6 +792,12 @@ export const CONSTANTS = {
         TARGET_REPS: "Target reps:",
         PROTOCOL: "Protocol:",
         RECENT_EXERCISES: "Recent:",
+        CANVAS_LAYOUT: "Layout",
+        CANVAS_OPTIONS: "Options",
+        LAYOUT_TYPE: "Layout type:",
+        LAYOUT_HORIZONTAL: "Horizontal flow",
+        LAYOUT_VERTICAL: "Vertical flow",
+        LAYOUT_GROUPED: "Grouped by muscle",
       },
       PLACEHOLDERS: {
         EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",
@@ -828,6 +836,9 @@ export const CONSTANTS = {
         TIMER_AUTO_START: "Timer auto start",
         TIMER_SOUND: "Timer sound",
         USE_PRESET_ONLY: "Use preset only (minimal code)",
+        INCLUDE_DURATIONS: "Include timer durations",
+        INCLUDE_STATS: "Include last performance stats",
+        CONNECT_SUPERSETS: "Connect superset exercises with edges",
       },
       EXERCISE_STATUS: {
         CREATE_PAGE: "📝 create exercise page",

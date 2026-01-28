@@ -1640,6 +1640,65 @@
   color: var(--text-error);
 }
 
+/* Quick Log Modal Styles - Mobile-friendly with large touch targets */
+.workout-quick-log-modal {
+  /* Ensure modal content is touch-friendly */
+}
+.workout-quick-log-modal .workout-charts-form {
+  gap: var(--workout-space-2xl);
+}
+.workout-quick-log-modal h2 {
+  text-align: center;
+  margin-bottom: var(--workout-space-xl);
+}
+
+.workout-quick-log-field {
+  /* Larger spacing for touch targets */
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-quick-log-input {
+  /* Minimum 44px height for touch accessibility */
+  min-height: 44px;
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  font-size: var(--workout-font-lg);
+  border-radius: var(--workout-radius-md);
+  /* Make input fields more prominent */
+  border: 2px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+.workout-quick-log-input:focus {
+  border-color: var(--interactive-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--interactive-accent-rgb), 0.2);
+}
+
+.workout-quick-log-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--workout-space-xl);
+  padding-top: var(--workout-space-lg);
+}
+
+.workout-quick-log-confirm-btn {
+  /* Large touch target - minimum 44x44px */
+  min-width: 200px;
+  min-height: 48px;
+  padding: var(--workout-space-lg) var(--workout-space-2xl);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-bold);
+  border-radius: var(--workout-radius-lg);
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  /* Visual feedback on touch */
+}
+.workout-quick-log-confirm-btn:active {
+  transform: scale(0.98);
+}
+.workout-quick-log-confirm-btn:hover {
+  transform: translateY(-2px);
+}
+
 /* ============================================================================
    DASHBOARD LAYOUT
    ============================================================================ */

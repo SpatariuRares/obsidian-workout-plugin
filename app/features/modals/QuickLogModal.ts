@@ -1,23 +1,26 @@
 // Quick Log Modal for fast workout logging (mobile-friendly)
 import { CONSTANTS } from "@app/constants/Constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { App, Notice } from "obsidian";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import { Button } from "@app/components/atoms";
+import { App, Notice, MarkdownView } from "obsidian";
 import WorkoutChartsPlugin from "main";
 
 /**
- * QuickLogModal - Placeholder for quick workout logging
+ * QuickLogModal - Fast, mobile-friendly workout logging
  *
- * This modal is designed for fast, mobile-friendly workout logging.
- * It will be expanded in US-002 to include:
+ * This modal is designed for quick set logging with minimal taps:
  * - Exercise autocomplete input
  * - Reps input
  * - Weight input
- * - Quick confirm button
- *
- * Currently displays a placeholder notice.
+ * - Large touch targets (44x44px minimum)
+ * - Quick confirm button that logs to CSV
  */
 export class QuickLogModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
+  private exerciseInput!: HTMLInputElement;
+  private repsInput!: HTMLInputElement;
+  private weightInput!: HTMLInputElement;
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app);
@@ -27,18 +30,163 @@ export class QuickLogModal extends ModalBase {
   onOpen(): void {
     const { contentEl } = this;
 
+    // Add quick-log specific class for styling
+    contentEl.addClass("workout-quick-log-modal");
+
     contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.TITLES.QUICK_LOG });
 
     const mainContainer = this.createStyledMainContainer(contentEl);
 
-    // Placeholder message
-    mainContainer.createEl("p", {
-      text: "Quick log feature coming soon! This will allow you to log sets with minimal taps.",
-      cls: "workout-quick-log-placeholder",
+    // Exercise input with autocomplete
+    this.createExerciseField(mainContainer);
+
+    // Reps input
+    this.createRepsField(mainContainer);
+
+    // Weight input
+    this.createWeightField(mainContainer);
+
+    // Confirm button (large touch target)
+    this.createConfirmButton(mainContainer);
+  }
+
+  /**
+   * Creates the exercise input field with autocomplete
+   */
+  private createExerciseField(container: HTMLElement): void {
+    const { elements } = ExerciseAutocomplete.create(
+      this,
+      container,
+      this.plugin
+    );
+    this.exerciseInput = elements.exerciseInput;
+    this.exerciseInput.addClass("workout-quick-log-input");
+  }
+
+  /**
+   * Creates the reps input field
+   */
+  private createRepsField(container: HTMLElement): void {
+    const formGroup = this.createFormGroup(container);
+    formGroup.addClass("workout-quick-log-field");
+
+    this.repsInput = this.createNumberInput(
+      formGroup,
+      CONSTANTS.WORKOUT.MODAL.LABELS.REPS,
+      "",
+      1,
+      undefined,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS
+    );
+    this.repsInput.addClass("workout-quick-log-input");
+    this.repsInput.inputMode = "numeric";
+  }
+
+  /**
+   * Creates the weight input field
+   */
+  private createWeightField(container: HTMLElement): void {
+    const formGroup = this.createFormGroup(container);
+    formGroup.addClass("workout-quick-log-field");
+
+    this.weightInput = this.createNumberInput(
+      formGroup,
+      CONSTANTS.WORKOUT.MODAL.LABELS.WEIGHT,
+      "",
+      0,
+      undefined,
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WEIGHT
+    );
+    this.weightInput.addClass("workout-quick-log-input");
+    this.weightInput.inputMode = "decimal";
+  }
+
+  /**
+   * Creates the confirm button with large touch target
+   */
+  private createConfirmButton(container: HTMLElement): void {
+    const buttonContainer = container.createEl("div", {
+      cls: "workout-quick-log-button-container",
     });
 
-    // Show notice that this is a placeholder
-    new Notice("Quick log modal opened - full implementation coming in US-002");
+    const confirmBtn = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
+      className: "workout-quick-log-confirm-btn workout-charts-btn workout-charts-btn-primary",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
+    });
+
+    Button.onClick(confirmBtn, () => this.handleConfirm());
+  }
+
+  /**
+   * Handles the confirm button click - validates and logs entry
+   */
+  private async handleConfirm(): Promise<void> {
+    const exercise = this.exerciseInput.value.trim();
+    const reps = parseInt(this.repsInput.value);
+    const weight = parseFloat(this.weightInput.value);
+
+    // Validation
+    if (!exercise) {
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_NAME_REQUIRED);
+      this.exerciseInput.focus();
+      return;
+    }
+
+    if (isNaN(reps) || reps <= 0) {
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_POSITIVE_VALUES);
+      this.repsInput.focus();
+      return;
+    }
+
+    if (isNaN(weight) || weight < 0) {
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_POSITIVE_VALUES);
+      this.weightInput.focus();
+      return;
+    }
+
+    // Calculate volume
+    const volume = reps * weight;
+
+    // Get current workout name from active file (if any)
+    const workout = this.getCurrentWorkoutName();
+
+    try {
+      // Log entry to CSV
+      await this.plugin.addWorkoutLogEntry({
+        date: new Date().toISOString(),
+        exercise: exercise,
+        reps: reps,
+        weight: weight,
+        volume: volume,
+        origine: workout,
+        workout: workout,
+        notes: "",
+      });
+
+      // Show success notice
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATED);
+
+      // Trigger refresh of workout log views
+      this.plugin.triggerWorkoutLogRefresh();
+
+      // Close modal
+      this.close();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATE_ERROR + errorMessage);
+    }
+  }
+
+  /**
+   * Gets the current workout name from the active file
+   */
+  private getCurrentWorkoutName(): string {
+    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (activeView?.file) {
+      return activeView.file.basename;
+    }
+    return "";
   }
 
   onClose(): void {

@@ -1,12 +1,27 @@
 import { CONSTANTS } from "@app/constants/Constants";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE, EmbeddedViewParams } from "@app/types";
+import {
+  ChartDataset,
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+  EmbeddedViewParams,
+} from "@app/types";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
 
 // ===================== UTILITY FUNCTIONS =====================
+
+/**
+ * Helper to set multiple CSS properties on an element
+ */
+export function setCssProps(
+  element: HTMLElement,
+  props: Partial<CSSStyleDeclaration> | Record<string, string>,
+) {
+  Object.assign(element.style, props);
+}
 
 export interface ExerciseMatch {
   file: TFile;
@@ -57,7 +72,7 @@ export function getMatchScore(str1: string, str2: string): number {
  */
 export function findExerciseMatches(
   logData: WorkoutLogData[],
-  exerciseName: string
+  exerciseName: string,
 ): MatchResult {
   const fileNameMatches: ExerciseMatch[] = [];
   const allExercisePathsAndScores = new Map<string, number>();
@@ -100,7 +115,7 @@ export function determineExerciseFilterStrategy(
   fileNameMatches: ExerciseMatch[],
   allExercisePathsAndScores: Map<string, number>,
   exactMatch: boolean = false,
-  exerciseName: string = ""
+  exerciseName: string = "",
 ): {
   bestStrategy: string;
   bestPathKey: string;
@@ -128,7 +143,7 @@ export function determineExerciseFilterStrategy(
     const exactFileMatches = fileNameMatches.filter(
       (m) =>
         m.exerciseName.trim().toLowerCase() ===
-        exerciseName.trim().toLowerCase()
+        exerciseName.trim().toLowerCase(),
     );
     if (exactFileMatches.length > 0) {
       return {
@@ -148,13 +163,13 @@ export function determineExerciseFilterStrategy(
   // Check filename strategy
   if (fileNameMatches.length > 0) {
     const bestFileNameMatch = fileNameMatches.reduce((best, current) =>
-      current.score > best.score ? current : best
+      current.score > best.score ? current : best,
     );
 
     if (bestFileNameMatch.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)) {
       bestStrategy = "filename";
       bestFileMatchesList = fileNameMatches.filter(
-        (match) => match.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)
+        (match) => match.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD),
       );
     }
   }
@@ -162,7 +177,7 @@ export function determineExerciseFilterStrategy(
   // Check exercise field strategy
   if (allExercisePathsAndScores.size > 0) {
     const bestExercisePath = Array.from(
-      allExercisePathsAndScores.entries()
+      allExercisePathsAndScores.entries(),
     ).reduce((best, [path, score]) => (score > best[1] ? [path, score] : best));
 
     if (bestExercisePath[1] >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)) {
@@ -186,27 +201,27 @@ export function filterLogDataByExercise(
   logData: WorkoutLogData[],
   strategy: string,
   pathKey: string,
-  fileMatches: ExerciseMatch[]
+  fileMatches: ExerciseMatch[],
 ): WorkoutLogData[] {
   if (strategy === "exercise_field_exact") {
     return logData.filter(
       (log) =>
         (log.exercise || "").trim().toLowerCase() ===
-        pathKey.trim().toLowerCase()
+        pathKey.trim().toLowerCase(),
     );
   }
   if (strategy === "filename_exact") {
     const fileNames = fileMatches.map((m) =>
-      m.exerciseName.trim().toLowerCase()
+      m.exerciseName.trim().toLowerCase(),
     );
     return logData.filter((log) =>
-      fileNames.includes((log.file?.basename || "").trim().toLowerCase())
+      fileNames.includes((log.file?.basename || "").trim().toLowerCase()),
     );
   }
   if (strategy === "filename") {
     const filePaths = fileMatches.map((match) => match.file.path);
     return logData.filter(
-      (log) => log.file && filePaths.includes(log.file.path)
+      (log) => log.file && filePaths.includes(log.file.path),
     );
   }
   if (strategy === "exercise_field") {
@@ -227,7 +242,7 @@ export function processChartData(
   dateRange: number = 30,
   dateFormat: string = "DD/MM/YYYY",
   // ✨ NUOVO PARAMETRO per distinguere tra workout totale e singolo esercizio
-  displayType: CHART_TYPE = CHART_TYPE.EXERCISE
+  displayType: CHART_TYPE = CHART_TYPE.EXERCISE,
 ): { labels: string[]; datasets: ChartDataset[] } {
   // Filter by date range
   const cutoffDate = new Date();
@@ -240,7 +255,7 @@ export function processChartData(
 
   // Sort by date
   filteredData.sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
   // Group by date and calculate values
@@ -365,15 +380,27 @@ export function validateUserParams(params: EmbeddedViewParams): string[] {
   if ("chartType" in params && params.chartType !== undefined) {
     const chartType = params.chartType;
     if (![CHART_TYPE.EXERCISE, CHART_TYPE.WORKOUT].includes(chartType)) {
-      errors.push("chartType must be either CHART_TYPE.EXERCISE or CHART_TYPE.WORKOUT");
+      errors.push(
+        "chartType must be either CHART_TYPE.EXERCISE or CHART_TYPE.WORKOUT",
+      );
     }
   }
 
   // Validate type for charts (exists only in chart params)
   if ("type" in params && params.type !== undefined) {
     const type = String(params.type);
-    if (!([CHART_DATA_TYPE.VOLUME, CHART_DATA_TYPE.WEIGHT, CHART_DATA_TYPE.REPS] as string[]).includes(type)) {
-      errors.push("type must be either CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME, CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT, or CONSTANTS.WORKOUT.CHARTS.TYPES.REPS");
+    if (
+      !(
+        [
+          CHART_DATA_TYPE.VOLUME,
+          CHART_DATA_TYPE.WEIGHT,
+          CHART_DATA_TYPE.REPS,
+        ] as string[]
+      ).includes(type)
+    ) {
+      errors.push(
+        "type must be either CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME, CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT, or CONSTANTS.WORKOUT.CHARTS.TYPES.REPS",
+      );
     }
   }
 
@@ -393,7 +420,7 @@ export function validateUserParams(params: EmbeddedViewParams): string[] {
  */
 export function formatDate(
   date: string | Date,
-  format: string = "DD/MM/YYYY"
+  format: string = "DD/MM/YYYY",
 ): string {
   const d = new Date(date);
   const day = String(d.getDate()).padStart(2, "0");

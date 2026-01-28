@@ -2,7 +2,7 @@
  * Mock for the obsidian module
  * Provides mock implementations of obsidian functions used in tests
  */
-
+import { jest } from "@jest/globals";
 /**
  * Simple YAML parser mock that handles basic YAML structures
  * Mimics Obsidian's parseYaml function

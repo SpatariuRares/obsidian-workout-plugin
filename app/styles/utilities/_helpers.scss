@@ -44,3 +44,16 @@
 .workout-button-container {
   margin-top: var(--workout-space-lg);
 }
+
+/* Flexbox Utilities */
+.workout-flex {
+  display: flex !important;
+}
+
+.workout-items-center {
+  align-items: center !important;
+}
+
+.workout-gap-2 {
+  gap: var(--workout-space-sm) !important;
+}

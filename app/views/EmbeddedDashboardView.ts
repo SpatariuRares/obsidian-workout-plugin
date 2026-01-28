@@ -41,7 +41,10 @@ export class EmbeddedDashboardView extends BaseView {
    */
   public cleanup(): void {
     try {
-      this.logDebug("EmbeddedDashboardView", "Cleaning up dashboard view resources");
+      this.logDebug(
+        "EmbeddedDashboardView",
+        "Cleaning up dashboard view resources",
+      );
 
       // Clear stored state to prevent memory leaks
       this.currentContainer = null;
@@ -51,9 +54,12 @@ export class EmbeddedDashboardView extends BaseView {
       // Clean up protocol distribution chart
       ProtocolDistribution.cleanup();
 
-      this.logDebug("EmbeddedDashboardView", "Dashboard view cleanup completed");
-    } catch (error) {
-      console.error("Error during EmbeddedDashboardView cleanup:", error);
+      this.logDebug(
+        "EmbeddedDashboardView",
+        "Dashboard view cleanup completed",
+      );
+    } catch {
+      return;
     }
   }
 
@@ -63,7 +69,7 @@ export class EmbeddedDashboardView extends BaseView {
   async createDashboard(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    params: EmbeddedDashboardParams,
   ): Promise<void> {
     const startTime = performance.now();
     this.logDebug("EmbeddedDashboardView", "Creating dashboard", { params });
@@ -86,10 +92,7 @@ export class EmbeddedDashboardView extends BaseView {
       }
 
       // Filter data based on parameters
-      const filterResult = this.filterData(
-        logData,
-        params,
-      );
+      const filterResult = this.filterData(logData, params);
       const filteredData = filterResult.filteredData;
 
       // Handle no filtered data
@@ -99,7 +102,7 @@ export class EmbeddedDashboardView extends BaseView {
           container,
           params,
           params.title || CONSTANTS.WORKOUT.UI.LABELS.DASHBOARD,
-          VIEW_TYPES.DASHBOARD
+          VIEW_TYPES.DASHBOARD,
         );
         return;
       }
@@ -114,7 +117,7 @@ export class EmbeddedDashboardView extends BaseView {
       const endTime = performance.now();
       this.logDebug(
         "EmbeddedDashboardView",
-        `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`
+        `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`,
       );
     } catch (error) {
       this.handleError(container, error as Error);
@@ -127,7 +130,9 @@ export class EmbeddedDashboardView extends BaseView {
    * @param protocol - Protocol to filter by, or null to clear filter
    */
   private handleProtocolFilterChange = (protocol: string | null): void => {
-    this.logDebug("EmbeddedDashboardView", "Protocol filter changed", { protocol });
+    this.logDebug("EmbeddedDashboardView", "Protocol filter changed", {
+      protocol,
+    });
 
     // Update params with new filter
     const newParams: EmbeddedDashboardParams = {
@@ -137,7 +142,11 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Re-render dashboard with updated filter
     if (this.currentContainer && this.currentData.length > 0) {
-      this.createDashboard(this.currentContainer, this.currentData, newParams);
+      await this.createDashboard(
+        this.currentContainer,
+        this.currentData,
+        newParams,
+      );
     }
   };
 
@@ -147,7 +156,10 @@ export class EmbeddedDashboardView extends BaseView {
    * @param protocol - Protocol to filter by
    * @returns Filtered data
    */
-  private filterByProtocol(data: WorkoutLogData[], protocol: string): WorkoutLogData[] {
+  private filterByProtocol(
+    data: WorkoutLogData[],
+    protocol: string,
+  ): WorkoutLogData[] {
     return data.filter((entry) => {
       const entryProtocol = entry.protocol || WorkoutProtocol.STANDARD;
       return entryProtocol.toLowerCase() === protocol.toLowerCase();
@@ -160,7 +172,7 @@ export class EmbeddedDashboardView extends BaseView {
   private async renderDashboard(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    params: EmbeddedDashboardParams,
   ): Promise<void> {
     // Create main dashboard container
     const dashboardEl = container.createEl("div", {
@@ -220,7 +232,7 @@ export class EmbeddedDashboardView extends BaseView {
       data,
       params,
       this.plugin,
-      this.handleProtocolFilterChange
+      this.handleProtocolFilterChange,
     );
 
     // Protocol Effectiveness Section (Right Column) - uses all data for statistical analysis
@@ -242,4 +254,3 @@ export class EmbeddedDashboardView extends BaseView {
     MuscleTagsWidget.render(rightCol, params);
   }
 }
-

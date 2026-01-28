@@ -39,15 +39,15 @@ export class EmbeddedChartView extends BaseView {
       ChartRenderer.destroyAllCharts();
 
       this.logDebug("EmbeddedChartView", "Cleanup completed successfully");
-    } catch (error) {
-      console.error("Error during EmbeddedChartView cleanup:", error);
+    } catch {
+      return;
     }
   }
 
   async createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): Promise<void> {
     try {
       this.logDebug("EmbeddedChartView", "createChart called", {
@@ -74,7 +74,7 @@ export class EmbeddedChartView extends BaseView {
           container,
           params,
           filterResult.titlePrefix,
-          VIEW_TYPES.CHART
+          VIEW_TYPES.CHART,
         );
         return;
       }
@@ -83,7 +83,7 @@ export class EmbeddedChartView extends BaseView {
 
       // Sort data by ascending date
       const sortedData = [...filterResult.filteredData].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
       const { labels, datasets } = processChartData(
@@ -91,14 +91,14 @@ export class EmbeddedChartView extends BaseView {
         params.type || CHART_DATA_TYPE.VOLUME,
         params.dateRange || 30,
         "DD/MM/YYYY",
-        params.chartType || CHART_TYPE.EXERCISE
+        params.chartType || CHART_TYPE.EXERCISE,
       );
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
       const { slope } = calculateTrendLine(volumeData);
       const trendIndicators = TrendCalculator.getTrendIndicators(
         slope,
-        volumeData
+        volumeData,
       );
 
       this.renderChartContent(container, {
@@ -118,7 +118,7 @@ export class EmbeddedChartView extends BaseView {
 
   private validateChartParams(
     container: HTMLElement,
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): boolean {
     const validationErrors = validateUserParams(params);
     return this.validateAndHandleErrors(container, validationErrors);
@@ -133,15 +133,9 @@ export class EmbeddedChartView extends BaseView {
       trendIndicators: TrendIndicators;
       filterResult: FilterResult;
       params: EmbeddedChartParams;
-    }
+    },
   ): void {
-    const {
-      labels,
-      datasets,
-      volumeData,
-      trendIndicators,
-      params,
-    } = data;
+    const { labels, datasets, volumeData, trendIndicators, params } = data;
 
     container.empty();
     const contentDiv = container.createEl("div");
@@ -156,7 +150,7 @@ export class EmbeddedChartView extends BaseView {
       labels,
       datasets,
       params.type || CHART_DATA_TYPE.VOLUME,
-      params
+      params,
     );
 
     const chartContainer = ChartRenderer.createChartContainer(contentDiv);
@@ -174,7 +168,7 @@ export class EmbeddedChartView extends BaseView {
       chartContainer,
       labels,
       datasets,
-      params
+      params,
     );
 
     if (!chartSuccess) {
@@ -186,7 +180,7 @@ export class EmbeddedChartView extends BaseView {
         contentDiv,
         labels,
         volumeData,
-        params.chartType || CHART_TYPE.EXERCISE
+        params.chartType || CHART_TYPE.EXERCISE,
       );
     }
   }

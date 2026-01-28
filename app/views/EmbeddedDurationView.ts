@@ -6,7 +6,6 @@ import { TFile, normalizePath } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
 import { EmbeddedDurationParams, DurationAnalysisResult } from "@app/types";
-import { CONSTANTS } from "@app/constants/Constants";
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 45;
@@ -25,7 +24,7 @@ export class EmbeddedDurationView extends BaseView {
   async createDurationEstimator(
     container: HTMLElement,
     params: EmbeddedDurationParams,
-    currentFilePath: string
+    currentFilePath: string,
   ): Promise<void> {
     this.logDebug("EmbeddedDurationView", "Creating duration estimator", {
       params,
@@ -70,7 +69,7 @@ export class EmbeddedDurationView extends BaseView {
     // Resolve relative to current file's directory
     const currentDir = currentFilePath.substring(
       0,
-      currentFilePath.lastIndexOf("/")
+      currentFilePath.lastIndexOf("/"),
     );
     if (currentDir) {
       return normalizePath(`${currentDir}/${pathWithExtension}`);
@@ -85,7 +84,7 @@ export class EmbeddedDurationView extends BaseView {
    * counts sets from workout-log blocks.
    */
   private async analyzeWorkoutFile(
-    filePath: string
+    filePath: string,
   ): Promise<DurationAnalysisResult> {
     const result: DurationAnalysisResult = {
       totalRestTime: 0,
@@ -156,7 +155,8 @@ export class EmbeddedDurationView extends BaseView {
       }
 
       // Calculate set time using settings or default
-      const setDuration = this.plugin.settings.setDuration || DEFAULT_SET_DURATION;
+      const setDuration =
+        this.plugin.settings.setDuration || DEFAULT_SET_DURATION;
       result.totalSetTime = result.setCount * setDuration;
 
       // Calculate total duration
@@ -179,7 +179,7 @@ export class EmbeddedDurationView extends BaseView {
   private renderDurationCard(
     container: HTMLElement,
     analysis: DurationAnalysisResult,
-    debug?: boolean
+    debug?: boolean,
   ): void {
     const card = container.createEl("div", {
       cls: "workout-duration-card",
@@ -272,7 +272,7 @@ export class EmbeddedDurationView extends BaseView {
           setDuration: this.plugin.settings.setDuration || DEFAULT_SET_DURATION,
         },
         null,
-        2
+        2,
       );
     }
   }

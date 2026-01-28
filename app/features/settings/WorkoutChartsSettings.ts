@@ -1,10 +1,15 @@
 // Settings tab for the Workout Charts plugin
 import { CONSTANTS } from "@app/constants/Constants";
-import { TIMER_TYPE, TimerPresetConfig, CustomProtocolConfig } from "@app/types";
+import {
+  TIMER_TYPE,
+  TimerPresetConfig,
+  CustomProtocolConfig,
+} from "@app/types";
 import WorkoutChartsPlugin from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { Notice } from "obsidian";
 import { FolderSuggest } from "@app/services/suggest/FolderSuggest";
+import { setCssProps } from "@app/utils/utils";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;
@@ -31,7 +36,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .onChange(async (value) => {
             this.plugin.settings.csvLogFilePath = normalizePath(value);
             await this.plugin.saveSettings();
-          })
+          }),
       );
 
     new Setting(containerEl)
@@ -40,7 +45,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addText((text) => {
         new FolderSuggest(this.app, text.inputEl);
         text
-          .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH)
+          .setPlaceholder(
+            CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH,
+          )
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
             this.plugin.settings.exerciseFolderPath = normalizePath(value);
@@ -49,7 +56,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       });
 
     // Filtering Section
-    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.FILTERING).setHeading();
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.FILTERING)
+      .setHeading();
 
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_EXACT_MATCH)
@@ -60,26 +69,30 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .onChange(async (value) => {
             this.plugin.settings.defaultExactMatch = value;
             await this.plugin.saveSettings();
-          })
+          }),
       );
 
     // CSV Management Section
-    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CSV_MANAGEMENT).setHeading();
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CSV_MANAGEMENT)
+      .setHeading();
 
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.COMMANDS.CREATE_CSV)
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CREATE_CSV)
       .addButton((button) =>
-        button.setButtonText(CONSTANTS.WORKOUT.UI.BUTTONS.CREATE_FILE).onClick(async () => {
-          try {
-            await this.plugin.createCSVLogFile();
-            new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
-          } catch (error) {
-            const errorMessage =
-              error instanceof Error ? error.message : String(error);
-            new Notice(`Error creating CSV file: ${errorMessage}`);
-          }
-        })
+        button
+          .setButtonText(CONSTANTS.WORKOUT.UI.BUTTONS.CREATE_FILE)
+          .onClick(async () => {
+            try {
+              await this.plugin.createCSVLogFile();
+              new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
+            } catch (error) {
+              const errorMessage =
+                error instanceof Error ? error.message : String(error);
+              new Notice(`Error creating CSV file: ${errorMessage}`);
+            }
+          }),
       );
 
     // Timer Presets Section
@@ -125,19 +138,20 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       });
 
     // Container for presets list
-    this.presetsContainer = containerEl.createDiv({ cls: "timer-presets-container" });
+    this.presetsContainer = containerEl.createDiv({
+      cls: "timer-presets-container",
+    });
     this.renderPresetsList();
 
     // Add preset button
-    new Setting(containerEl)
-      .addButton((button) =>
-        button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PRESET)
-          .setCta()
-          .onClick(() => {
-            this.showPresetEditor(null);
-          })
-      );
+    new Setting(containerEl).addButton((button) =>
+      button
+        .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PRESET)
+        .setCta()
+        .onClick(() => {
+          this.showPresetEditor(null);
+        }),
+    );
   }
 
   private renderPresetsList(): void {
@@ -179,17 +193,19 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .setTooltip("Edit preset")
           .onClick(() => {
             this.showPresetEditor(preset);
-          })
+          }),
       )
       .addButton((button) =>
         button
           .setIcon("trash")
           .setTooltip("Delete preset")
           .onClick(async () => {
-            if (confirm(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PRESET)) {
+            if (
+              confirm(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PRESET)
+            ) {
               await this.deletePreset(preset.name);
             }
-          })
+          }),
       );
   }
 
@@ -219,27 +235,33 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     if (!this.presetsContainer) return;
 
     // Remove any existing editor
-    const existingEditor = this.containerEl.querySelector(".preset-editor-container");
+    const existingEditor = this.containerEl.querySelector(
+      ".preset-editor-container",
+    );
     if (existingEditor) {
       existingEditor.remove();
     }
 
-    const editorContainer = this.containerEl.createDiv({ cls: "preset-editor-container" });
+    const editorContainer = this.containerEl.createDiv({
+      cls: "preset-editor-container",
+    });
 
     // Move editor right after presets container
     this.presetsContainer.after(editorContainer);
 
     // Create form state
-    const formState: TimerPresetConfig = existingPreset ? { ...existingPreset } : {
-      name: "",
-      type: TIMER_TYPE.COUNTDOWN,
-      duration: 90,
-      showControls: true,
-      autoStart: false,
-      sound: true,
-      intervalTime: 30,
-      rounds: 5,
-    };
+    const formState: TimerPresetConfig = existingPreset
+      ? { ...existingPreset }
+      : {
+          name: "",
+          type: TIMER_TYPE.COUNTDOWN,
+          duration: 90,
+          showControls: true,
+          autoStart: false,
+          sound: true,
+          intervalTime: 30,
+          rounds: 5,
+        };
 
     const originalName = existingPreset?.name || null;
 
@@ -252,7 +274,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .setPlaceholder("Enter preset name")
           .onChange((value) => {
             formState.name = value;
-          })
+          }),
       );
 
     // Timer type dropdown
@@ -274,14 +296,12 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     new Setting(editorContainer)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_DURATION)
       .addText((text) =>
-        text
-          .setValue(String(formState.duration))
-          .onChange((value) => {
-            const num = parseInt(value);
-            if (!isNaN(num) && num > 0) {
-              formState.duration = num;
-            }
-          })
+        text.setValue(String(formState.duration)).onChange((value) => {
+          const num = parseInt(value);
+          if (!isNaN(num) && num > 0) {
+            formState.duration = num;
+          }
+        }),
       );
 
     // Interval-specific options
@@ -296,20 +316,18 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
               if (!isNaN(num) && num > 0) {
                 formState.intervalTime = num;
               }
-            })
+            }),
         );
 
       new Setting(editorContainer)
         .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_ROUNDS)
         .addText((text) =>
-          text
-            .setValue(String(formState.rounds || 5))
-            .onChange((value) => {
-              const num = parseInt(value);
-              if (!isNaN(num) && num > 0) {
-                formState.rounds = num;
-              }
-            })
+          text.setValue(String(formState.rounds || 5)).onChange((value) => {
+            const num = parseInt(value);
+            if (!isNaN(num) && num > 0) {
+              formState.rounds = num;
+            }
+          }),
         );
     }
 
@@ -319,7 +337,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addToggle((toggle) =>
         toggle.setValue(formState.showControls).onChange((value) => {
           formState.showControls = value;
-        })
+        }),
       );
 
     new Setting(editorContainer)
@@ -327,7 +345,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addToggle((toggle) =>
         toggle.setValue(formState.autoStart).onChange((value) => {
           formState.autoStart = value;
-        })
+        }),
       );
 
     new Setting(editorContainer)
@@ -335,7 +353,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addToggle((toggle) =>
         toggle.setValue(formState.sound).onChange((value) => {
           formState.sound = value;
-        })
+        }),
       );
 
     // Save and Cancel buttons
@@ -347,18 +365,21 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .onClick(async () => {
             await this.savePreset(formState, originalName);
             editorContainer.remove();
-          })
+          }),
       )
       .addButton((button) =>
         button
           .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CANCEL)
           .onClick(() => {
             editorContainer.remove();
-          })
+          }),
       );
   }
 
-  private async savePreset(preset: TimerPresetConfig, originalName: string | null): Promise<void> {
+  private async savePreset(
+    preset: TimerPresetConfig,
+    originalName: string | null,
+  ): Promise<void> {
     // Validate name
     if (!preset.name.trim()) {
       new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PRESET_NAME_REQUIRED);
@@ -422,19 +443,20 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CUSTOM_PROTOCOLS);
 
     // Container for protocols list
-    this.protocolsContainer = containerEl.createDiv({ cls: "custom-protocols-container" });
+    this.protocolsContainer = containerEl.createDiv({
+      cls: "custom-protocols-container",
+    });
     this.renderProtocolsList();
 
     // Add protocol button
-    new Setting(containerEl)
-      .addButton((button) =>
-        button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PROTOCOL)
-          .setCta()
-          .onClick(() => {
-            this.showProtocolEditor(null);
-          })
-      );
+    new Setting(containerEl).addButton((button) =>
+      button
+        .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PROTOCOL)
+        .setCta()
+        .onClick(() => {
+          this.showProtocolEditor(null);
+        }),
+    );
   }
 
   private renderProtocolsList(): void {
@@ -474,21 +496,27 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .setTooltip("Edit protocol")
           .onClick(() => {
             this.showProtocolEditor(protocol);
-          })
+          }),
       )
       .addButton((button) =>
         button
           .setIcon("trash")
           .setTooltip("Delete protocol")
           .onClick(async () => {
-            if (confirm(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PROTOCOL)) {
+            if (
+              confirm(
+                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PROTOCOL,
+              )
+            ) {
               await this.deleteProtocol(protocol.id);
             }
-          })
+          }),
       );
   }
 
-  private formatProtocolDetails(protocol: CustomProtocolConfig): DocumentFragment {
+  private formatProtocolDetails(
+    protocol: CustomProtocolConfig,
+  ): DocumentFragment {
     const fragment = document.createDocumentFragment();
 
     // Create a container for the badge preview and details
@@ -496,15 +524,13 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Add abbreviation badge preview
     const badge = container.appendChild(document.createElement("span"));
-    badge.style.display = "inline-block";
-    badge.style.padding = "2px 6px";
-    badge.style.borderRadius = "3px";
-    badge.style.backgroundColor = protocol.color;
-    badge.style.color = this.getContrastColor(protocol.color);
-    badge.style.fontSize = "10px";
-    badge.style.fontWeight = "bold";
-    badge.style.textTransform = "uppercase";
-    badge.style.marginRight = "8px";
+
+    badge.classList.add("workout-protocol-badge");
+
+    setCssProps(badge, {
+      backgroundColor: protocol.color,
+      color: this.getContrastColor(protocol.color),
+    });
     badge.textContent = protocol.abbreviation;
 
     // Add ID info
@@ -528,27 +554,35 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     return luminance > 0.5 ? "#000000" : "#ffffff";
   }
 
-  private showProtocolEditor(existingProtocol: CustomProtocolConfig | null): void {
+  private showProtocolEditor(
+    existingProtocol: CustomProtocolConfig | null,
+  ): void {
     if (!this.protocolsContainer) return;
 
     // Remove any existing editor
-    const existingEditor = this.containerEl.querySelector(".protocol-editor-container");
+    const existingEditor = this.containerEl.querySelector(
+      ".protocol-editor-container",
+    );
     if (existingEditor) {
       existingEditor.remove();
     }
 
-    const editorContainer = this.containerEl.createDiv({ cls: "protocol-editor-container" });
+    const editorContainer = this.containerEl.createDiv({
+      cls: "protocol-editor-container",
+    });
 
     // Move editor right after protocols container
     this.protocolsContainer.after(editorContainer);
 
     // Create form state
-    const formState: CustomProtocolConfig = existingProtocol ? { ...existingProtocol } : {
-      id: "",
-      name: "",
-      abbreviation: "",
-      color: "#6366f1", // Default indigo color
-    };
+    const formState: CustomProtocolConfig = existingProtocol
+      ? { ...existingProtocol }
+      : {
+          id: "",
+          name: "",
+          abbreviation: "",
+          color: "#6366f1", // Default indigo color
+        };
 
     const originalId = existingProtocol?.id || null;
 
@@ -558,14 +592,17 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addText((text) =>
         text
           .setValue(formState.name)
-          .setPlaceholder("e.g., Giant Set")
+          .setPlaceholder("E.g., giant set")
           .onChange((value) => {
             formState.name = value;
             // Auto-generate ID from name if creating new protocol
             if (!originalId) {
-              formState.id = value.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+              formState.id = value
+                .toLowerCase()
+                .replace(/\s+/g, "_")
+                .replace(/[^a-z0-9_]/g, "");
             }
-          })
+          }),
       );
 
     // Protocol abbreviation input
@@ -575,12 +612,12 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .addText((text) =>
         text
           .setValue(formState.abbreviation)
-          .setPlaceholder("e.g., GS")
+          .setPlaceholder("E.g., gs")
           .onChange((value) => {
             // Limit to 3 characters
             formState.abbreviation = value.slice(0, 3).toUpperCase();
             text.setValue(formState.abbreviation);
-          })
+          }),
       );
 
     // Protocol color input
@@ -588,11 +625,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PROTOCOL_COLOR)
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.PROTOCOL_COLOR)
       .addColorPicker((colorPicker) =>
-        colorPicker
-          .setValue(formState.color)
-          .onChange((value) => {
-            formState.color = value;
-          })
+        colorPicker.setValue(formState.color).onChange((value) => {
+          formState.color = value;
+        }),
       );
 
     // Save and Cancel buttons
@@ -604,18 +639,21 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
           .onClick(async () => {
             await this.saveProtocol(formState, originalId);
             editorContainer.remove();
-          })
+          }),
       )
       .addButton((button) =>
         button
           .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CANCEL)
           .onClick(() => {
             editorContainer.remove();
-          })
+          }),
       );
   }
 
-  private async saveProtocol(protocol: CustomProtocolConfig, originalId: string | null): Promise<void> {
+  private async saveProtocol(
+    protocol: CustomProtocolConfig,
+    originalId: string | null,
+  ): Promise<void> {
     // Validate name
     if (!protocol.name.trim()) {
       new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_NAME_REQUIRED);
@@ -624,7 +662,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Validate abbreviation
     if (!protocol.abbreviation.trim() || protocol.abbreviation.length > 3) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_ABBREVIATION_REQUIRED);
+      new Notice(
+        CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_ABBREVIATION_REQUIRED,
+      );
       return;
     }
 
@@ -640,7 +680,10 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Ensure ID is valid
     if (!protocol.id) {
-      protocol.id = trimmedName.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+      protocol.id = trimmedName
+        .toLowerCase()
+        .replace(/\s+/g, "_")
+        .replace(/[^a-z0-9_]/g, "");
     }
 
     // Initialize customProtocols array if needed
@@ -650,10 +693,12 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Check for duplicate names (unless editing the same protocol)
     const existingIndex = this.plugin.settings.customProtocols.findIndex(
-      (p) => p.id === protocol.id
+      (p) => p.id === protocol.id,
     );
     const existingNameIndex = this.plugin.settings.customProtocols.findIndex(
-      (p) => p.name.toLowerCase() === trimmedName.toLowerCase() && p.id !== protocol.id
+      (p) =>
+        p.name.toLowerCase() === trimmedName.toLowerCase() &&
+        p.id !== protocol.id,
     );
 
     if (existingNameIndex !== -1) {
@@ -664,7 +709,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     if (originalId && originalId !== protocol.id) {
       // Renaming: remove old and add new
       const oldIndex = this.plugin.settings.customProtocols.findIndex(
-        (p) => p.id === originalId
+        (p) => p.id === originalId,
       );
       if (oldIndex !== -1) {
         this.plugin.settings.customProtocols.splice(oldIndex, 1);
@@ -690,7 +735,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
       return;
     }
 
-    const index = this.plugin.settings.customProtocols.findIndex((p) => p.id === id);
+    const index = this.plugin.settings.customProtocols.findIndex(
+      (p) => p.id === id,
+    );
     if (index !== -1) {
       this.plugin.settings.customProtocols.splice(index, 1);
     }
@@ -740,7 +787,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
               this.plugin.settings.weightIncrement = numValue;
               await this.plugin.saveSettings();
             }
-          })
+          }),
       );
   }
 
@@ -761,7 +808,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
               this.plugin.settings.setDuration = numValue;
               await this.plugin.saveSettings();
             }
-          })
+          }),
       );
   }
 
@@ -781,7 +828,7 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings();
             // Update ribbon visibility
             this.plugin.updateQuickLogRibbon();
-          })
+          }),
       );
   }
 }

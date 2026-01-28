@@ -148,9 +148,6 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
 
       const values = parseCSVLine(line);
       if (values.length < 6) {
-        console.warn(
-          `[WorkoutLogData] Skipping line ${i + 1}: insufficient columns (expected at least 6, got ${values.length}). Line: ${line}`
-        );
         continue;
       }
 
@@ -161,31 +158,24 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
 
       // Validate numeric fields for NaN
       if (isNaN(reps) || isNaN(weight) || isNaN(volume)) {
-        console.warn(
-          `[WorkoutLogData] Skipping line ${i + 1}: invalid numeric values (reps: ${values[2]}, weight: ${values[3]}, volume: ${values[4]}). Line: ${line}`
-        );
         continue;
       }
 
       // Reject entries where reps <= 0
       if (reps <= 0) {
-        console.warn(
-          `[WorkoutLogData] Skipping line ${i + 1}: reps must be > 0 (got ${reps}). Line: ${line}`
-        );
         continue;
       }
 
       // Reject entries where weight < 0
       if (weight < 0) {
-        console.warn(
-          `[WorkoutLogData] Skipping line ${i + 1}: weight must be >= 0 (got ${weight}). Line: ${line}`
-        );
         continue;
       }
 
       // Parse protocol field (column 9) - backward compatible, defaults to 'standard'
       const protocolValue = values[9]?.trim().toLowerCase() || "";
-      const protocol = Object.values(WorkoutProtocol).includes(protocolValue as WorkoutProtocol)
+      const protocol = Object.values(WorkoutProtocol).includes(
+        protocolValue as WorkoutProtocol,
+      )
         ? (protocolValue as WorkoutProtocol)
         : WorkoutProtocol.STANDARD;
 
@@ -205,16 +195,11 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
       // Validate required fields
       if (entry.exercise) {
         entries.push(entry);
-      } else {
-        console.warn(
-          `[WorkoutLogData] Skipping line ${i + 1}: missing exercise name. Line: ${line}`
-        );
       }
     }
 
     return entries;
-  } catch (error) {
-    console.error("[WorkoutLogData] Error parsing CSV:", error);
+  } catch {
     return [];
   }
 }
@@ -325,7 +310,7 @@ function parseCSVLine(line: string): string[] {
  */
 export function convertFromCSVEntry(
   entry: CSVWorkoutLogEntry,
-  file: TFile
+  file: TFile,
 ): WorkoutLogData {
   return {
     date: entry.date,

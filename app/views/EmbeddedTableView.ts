@@ -51,7 +51,7 @@ export class EmbeddedTableView extends BaseView {
     super(plugin);
 
     this.callbacks = {
-      onRefresh: async () => { }, // Default no-op
+      onRefresh: async () => {}, // Default no-op
       onError: (error, context) =>
         this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
       onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
@@ -61,7 +61,7 @@ export class EmbeddedTableView extends BaseView {
   async createTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    params: EmbeddedTableParams
+    params: EmbeddedTableParams,
   ): Promise<void> {
     // Create a bound refresh function for this specific table instance
     const onRefresh = async () => {
@@ -75,10 +75,9 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    onRefresh: () => Promise<void>
+    onRefresh: () => Promise<void>,
   ): Promise<void> {
     try {
-
       // Validate parameters using the new component
       const validationErrors = TableConfig.validateParams(params);
       if (!this.validateAndHandleErrors(container, validationErrors)) {
@@ -97,11 +96,7 @@ export class EmbeddedTableView extends BaseView {
         this.plugin,
       );
 
-
-      const filterResult = this.filterData(
-        dataToProcess,
-        params,
-      );
+      const filterResult = this.filterData(dataToProcess, params);
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
@@ -109,20 +104,21 @@ export class EmbeddedTableView extends BaseView {
           container,
           params,
           filterResult.titlePrefix,
-          VIEW_TYPES.TABLE
+          VIEW_TYPES.TABLE,
         );
         return;
       }
 
       loadingDiv.remove();
 
-
       const tableData = TableDataProcessor.processTableData(
         filterResult.filteredData,
-        params
+        params,
       );
 
-      this.renderTableContentOptimized(container, tableData, () => { void onRefresh(); });
+      this.renderTableContentOptimized(container, tableData, () => {
+        void onRefresh();
+      });
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -133,7 +129,7 @@ export class EmbeddedTableView extends BaseView {
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
-    onRefresh: () => void
+    onRefresh: () => void,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -152,14 +148,18 @@ export class EmbeddedTableView extends BaseView {
       const currentPageLink = activeView?.file
         ? `[[${activeView.file.basename}]]`
         : "";
-      const exerciseName = params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
+      const exerciseName =
+        params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
-      const buttonContainer = contentDiv.createDiv({ cls: "add-log-button-container" });
+      const buttonContainer = contentDiv.createDiv({
+        cls: "add-log-button-container",
+      });
 
       // Get latest entry to pre-fill the form if available
-      const latestEntry = filterResult.filteredData.length > 0
-        ? filterResult.filteredData[0]
-        : undefined;
+      const latestEntry =
+        filterResult.filteredData.length > 0
+          ? filterResult.filteredData[0]
+          : undefined;
 
       LogCallouts.renderAddLogButton(
         buttonContainer,
@@ -168,16 +168,30 @@ export class EmbeddedTableView extends BaseView {
         this.plugin,
         onRefresh,
         renderChild.getSignal(),
-        latestEntry
+        latestEntry,
       );
     }
 
     // Render target header if targetWeight or targetReps is set
-    this.renderTargetHeader(contentDiv, params, filterResult.filteredData, renderChild.getSignal());
+    this.renderTargetHeader(
+      contentDiv,
+      params,
+      filterResult.filteredData,
+      renderChild.getSignal(),
+    );
 
     // Render achievement badge if target is achieved
-    if (params.targetWeight !== undefined && params.targetReps !== undefined && params.exercise) {
-      this.renderAchievementBadge(contentDiv, params, filterResult.filteredData, renderChild.getSignal());
+    if (
+      params.targetWeight !== undefined &&
+      params.targetReps !== undefined &&
+      params.exercise
+    ) {
+      this.renderAchievementBadge(
+        contentDiv,
+        params,
+        filterResult.filteredData,
+        renderChild.getSignal(),
+      );
     }
 
     const tableContainer = TableRenderer.createTableContainer(contentDiv);
@@ -189,7 +203,7 @@ export class EmbeddedTableView extends BaseView {
       filterResult.filteredData,
       this.plugin,
       onRefresh,
-      renderChild.getSignal()
+      renderChild.getSignal(),
     );
 
     if (!tableSuccess) {
@@ -209,7 +223,7 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     filteredData: WorkoutLogData[],
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     const { targetWeight, targetReps } = params;
 
@@ -243,7 +257,7 @@ export class EmbeddedTableView extends BaseView {
   private renderProgressBar(
     container: HTMLElement,
     params: EmbeddedTableParams,
-    filteredData: WorkoutLogData[]
+    filteredData: WorkoutLogData[],
   ): void {
     const { targetWeight, targetReps } = params;
 
@@ -262,13 +276,19 @@ export class EmbeddedTableView extends BaseView {
     const progressPercent = Math.min((bestReps / targetReps) * 100, 100);
 
     // Create progress bar container
-    const progressContainer = container.createDiv({ cls: "workout-progress-container" });
+    const progressContainer = container.createDiv({
+      cls: "workout-progress-container",
+    });
 
     // Create progress bar background
-    const progressBar = progressContainer.createDiv({ cls: "workout-progress-bar" });
+    const progressBar = progressContainer.createDiv({
+      cls: "workout-progress-bar",
+    });
 
     // Create progress fill with color coding
-    const progressFill = progressBar.createDiv({ cls: "workout-progress-fill" });
+    const progressFill = progressBar.createDiv({
+      cls: "workout-progress-fill",
+    });
     progressFill.style.width = `${progressPercent}%`;
 
     // Apply color coding based on progress
@@ -290,12 +310,12 @@ export class EmbeddedTableView extends BaseView {
 
   private calculateBestRepsAtWeight(
     targetWeight: number,
-    filteredData: WorkoutLogData[]
+    filteredData: WorkoutLogData[],
   ): number {
     try {
       // Find all entries at target weight
       const entriesAtTargetWeight = filteredData.filter(
-        (entry) => entry.weight === targetWeight
+        (entry) => entry.weight === targetWeight,
       );
 
       if (entriesAtTargetWeight.length === 0) {
@@ -303,7 +323,9 @@ export class EmbeddedTableView extends BaseView {
       }
 
       // Find the best (maximum) reps at target weight
-      const bestReps = Math.max(...entriesAtTargetWeight.map((entry) => entry.reps));
+      const bestReps = Math.max(
+        ...entriesAtTargetWeight.map((entry) => entry.reps),
+      );
       return bestReps;
     } catch {
       return 0;
@@ -312,7 +334,7 @@ export class EmbeddedTableView extends BaseView {
 
   public async refreshTable(
     container: HTMLElement,
-    params: EmbeddedTableParams
+    params: EmbeddedTableParams,
   ): Promise<void> {
     try {
       this.plugin.clearLogDataCache();
@@ -324,9 +346,12 @@ export class EmbeddedTableView extends BaseView {
 
       await this.renderTable(container, freshLogData, params, onRefresh);
 
-      this.callbacks.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
+      this.callbacks.onSuccess?.(
+        CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS,
+      );
     } catch (error) {
-      const errorObj = error instanceof Error ? error : new Error(String(error));
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
       this.callbacks.onError?.(errorObj, "refreshing table");
     }
   }
@@ -335,7 +360,7 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     filteredData: WorkoutLogData[],
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
@@ -344,7 +369,11 @@ export class EmbeddedTableView extends BaseView {
     }
 
     // Check if target is achieved
-    const isAchieved = this.checkTargetAchieved(targetWeight, targetReps, filteredData);
+    const isAchieved = this.checkTargetAchieved(
+      targetWeight,
+      targetReps,
+      filteredData,
+    );
 
     if (!isAchieved) {
       return;
@@ -370,23 +399,29 @@ export class EmbeddedTableView extends BaseView {
     this.renderWeightSuggestion(badgeDiv, params, container, signal);
 
     // Add dismiss button
-    const dismissButton = badgeDiv.createEl("button", { cls: "workout-achievement-dismiss" });
+    const dismissButton = badgeDiv.createEl("button", {
+      cls: "workout-achievement-dismiss",
+    });
     dismissButton.textContent = "×";
     dismissButton.setAttribute("aria-label", "Dismiss achievement");
 
-    dismissButton.addEventListener("click", async () => {
-      // Store the target weight when dismissed
-      this.plugin.settings.achievedTargets[exercise] = targetWeight;
-      await this.plugin.saveSettings();
-      badgeDiv.remove();
-    }, signal ? { signal } : undefined);
+    dismissButton.addEventListener(
+      "click",
+      async () => {
+        // Store the target weight when dismissed
+        this.plugin.settings.achievedTargets[exercise] = targetWeight;
+        await this.plugin.saveSettings();
+        badgeDiv.remove();
+      },
+      signal ? { signal } : undefined,
+    );
   }
 
   private renderWeightSuggestion(
     badgeDiv: HTMLElement,
     params: EmbeddedTableParams,
     tableContainer: HTMLElement,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     const { targetWeight } = params;
 
@@ -398,34 +433,50 @@ export class EmbeddedTableView extends BaseView {
     const suggestedWeight = targetWeight + weightIncrement;
 
     // Create suggestion container
-    const suggestionDiv = badgeDiv.createDiv({ cls: "workout-weight-suggestion" });
+    const suggestionDiv = badgeDiv.createDiv({
+      cls: "workout-weight-suggestion",
+    });
 
-    const suggestionText = suggestionDiv.createSpan({ cls: "workout-suggestion-text" });
+    const suggestionText = suggestionDiv.createSpan({
+      cls: "workout-suggestion-text",
+    });
     suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}kg`;
 
     // Create update button
-    const updateButton = suggestionDiv.createEl("button", { cls: "workout-update-target-button" });
-    updateButton.textContent = CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT;
+    const updateButton = suggestionDiv.createEl("button", {
+      cls: "workout-update-target-button",
+    });
+    updateButton.textContent =
+      CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT;
 
-    updateButton.addEventListener("click", async () => {
-      const confirmed = confirm(
-        `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}kg?`
-      );
+    updateButton.addEventListener(
+      "click",
+      async () => {
+        const confirmed = confirm(
+          `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}kg?`,
+        );
 
-      if (confirmed) {
-        await this.updateTargetWeight(params, suggestedWeight, tableContainer);
-      }
-    }, signal ? { signal } : undefined);
+        if (confirmed) {
+          await this.updateTargetWeight(
+            params,
+            suggestedWeight,
+            tableContainer,
+          );
+        }
+      },
+      signal ? { signal } : undefined,
+    );
   }
 
   private async updateTargetWeight(
     params: EmbeddedTableParams,
     newWeight: number,
-    tableContainer: HTMLElement
+    tableContainer: HTMLElement,
   ): Promise<void> {
     try {
       // Get the active markdown view
-      const activeView = this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
+      const activeView =
+        this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
 
       if (!activeView) {
         return;
@@ -471,13 +522,21 @@ export class EmbeddedTableView extends BaseView {
             .findIndex((l) => l.trim().startsWith("exercise:"));
 
           if (exerciseLineIndex !== -1) {
-            const exerciseLine = lines[codeBlockStart + exerciseLineIndex].trim();
+            const exerciseLine =
+              lines[codeBlockStart + exerciseLineIndex].trim();
             const exerciseMatch = exerciseLine.match(/exercise:\s*(.+)/);
 
-            if (exerciseMatch && params.exercise && exerciseMatch[1].trim() === params.exercise) {
+            if (
+              exerciseMatch &&
+              params.exercise &&
+              exerciseMatch[1].trim() === params.exercise
+            ) {
               foundTargetWeight = true;
               // Update this line
-              lines[i] = lines[i].replace(/targetWeight:\s*\d+(\.\d+)?/, `targetWeight: ${newWeight}`);
+              lines[i] = lines[i].replace(
+                /targetWeight:\s*\d+(\.\d+)?/,
+                `targetWeight: ${newWeight}`,
+              );
             }
           }
         }
@@ -488,23 +547,26 @@ export class EmbeddedTableView extends BaseView {
         editor.setValue(lines.join("\n"));
 
         // Refresh the table to show updated target
-        await this.refreshTable(tableContainer, { ...params, targetWeight: newWeight });
+        await this.refreshTable(tableContainer, {
+          ...params,
+          targetWeight: newWeight,
+        });
       }
-    } catch (error) {
-      console.error("Error updating target weight:", error);
+    } catch {
+      return;
     }
   }
 
   private checkTargetAchieved(
     targetWeight: number,
     targetReps: number,
-    filteredData: WorkoutLogData[]
+    filteredData: WorkoutLogData[],
   ): boolean {
     try {
       // Get the latest entry (filteredData is sorted by date descending in most cases)
       // Find entries at target weight
       const entriesAtTargetWeight = filteredData.filter(
-        (entry) => entry.weight === targetWeight
+        (entry) => entry.weight === targetWeight,
       );
 
       if (entriesAtTargetWeight.length === 0) {
@@ -540,8 +602,8 @@ export class EmbeddedTableView extends BaseView {
       for (const renderChild of this.renderChildren) {
         try {
           renderChild.unload();
-        } catch (error) {
-          console.error("Error unloading TableRenderChild:", error);
+        } catch {
+          return;
         }
       }
 
@@ -549,9 +611,8 @@ export class EmbeddedTableView extends BaseView {
       this.renderChildren = [];
 
       this.logDebug("EmbeddedTableView", "Table view cleanup completed");
-    } catch (error) {
-      console.error("Error during EmbeddedTableView cleanup:", error);
+    } catch {
+      return;
     }
   }
 }
-

@@ -9,7 +9,7 @@ import { MuscleTagMapper } from "@app/features/dashboard/business/muscleHeatMap/
 import { WorkoutPlannerAPI, ExerciseStats } from "@app/api/WorkoutPlannerAPI";
 import { DataService } from "@app/services/DataService";
 import type WorkoutChartsPlugin from "main";
-import type { CanvasExportOptions, CanvasLayoutType } from "./CanvasExportModal";
+import type { CanvasExportOptions, CanvasLayoutType } from "@app/features/canvas/CanvasExportModal";
 
 /**
  * Canvas node types as defined by JSON Canvas spec

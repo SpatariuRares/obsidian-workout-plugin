@@ -1,7 +1,7 @@
-export { WorkoutPlannerAPI } from "./WorkoutPlannerAPI";
+export { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 export type {
   WorkoutLogsFilter,
   DataviewWorkoutLog,
   ExercisesFilter,
   ExerciseStats,
-} from "./WorkoutPlannerAPI";
+} from "@app/api/WorkoutPlannerAPI";

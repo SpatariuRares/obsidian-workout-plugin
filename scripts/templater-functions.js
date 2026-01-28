@@ -94,8 +94,7 @@ function workoutExerciseBlock(name, duration, workout) {
 async function workoutExercises(tp, filter) {
     // Validate tp object
     if (!tp || !tp.app) {
-        console.error('workoutExercises: tp object with app property is required');
-        return [];
+         return [];
     }
 
     const app = tp.app;
@@ -111,15 +110,14 @@ async function workoutExercises(tp, filter) {
         if (plugin && plugin.settings && plugin.settings.exerciseFolderPath) {
             exerciseFolderPath = plugin.settings.exerciseFolderPath;
         }
-    } catch (e) {
+    } catch {
         // Use default folder path
     }
 
     // Get the exercises folder
     const folder = app.vault.getAbstractFileByPath(exerciseFolderPath);
     if (!folder || folder.children === undefined) {
-        console.warn(`workoutExercises: Exercises folder not found: ${exerciseFolderPath}`);
-        return [];
+         return [];
     }
 
     // Get all markdown files in the folder
@@ -149,10 +147,9 @@ async function workoutExercises(tp, filter) {
             if (hasMatchingTag) {
                 filteredExercises.push(file.basename);
             }
-        } catch (e) {
+        } catch {
             // Skip files that can't be read
-            console.warn(`workoutExercises: Could not read file: ${file.path}`);
-        }
+         }
     }
 
     return filteredExercises.sort();
@@ -204,7 +201,7 @@ function parseFrontmatterTags(content) {
     return [];
 }
 
-module.exports = {
+export default {
     workoutExerciseBlock,
     workoutExercises
 };

@@ -1,4 +1,4 @@
-export { CanvasExporter } from "./CanvasExporter";
-export { WorkoutFileSuggestModal } from "./WorkoutFileSuggestModal";
-export { CanvasExportModal } from "./CanvasExportModal";
-export type { CanvasExportOptions, CanvasLayoutType } from "./CanvasExportModal";
+export { CanvasExporter } from "@app/features/canvas/CanvasExporter";
+export { WorkoutFileSuggestModal } from "@app/features/canvas/WorkoutFileSuggestModal";
+export { CanvasExportModal } from "@app/features/canvas/CanvasExportModal";
+export type { CanvasExportOptions, CanvasLayoutType } from "@app/features/canvas/CanvasExportModal";

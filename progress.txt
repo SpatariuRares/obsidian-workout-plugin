@@ -2600,3 +2600,40 @@ workout: Workouts/Push Day
 - All user stories US-001 through US-010 are now complete
 - Phase 4 (Integrations) is now fully implemented
 
+
+## 2026-01-28 - Phase 5 US-001: Split UI Constants into Dedicated File
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/constants/ui.constants.ts`:
+   - Header JSDoc explaining purpose (UI labels, icons, emoji)
+   - `ICONS` constant: Common, Table, Actions, Status, Dashboard, Exercise icons
+   - `EMOJI` constant: Actions, Status, Exercise, Trends, Time Periods emoji
+   - `MODAL_UI` constant: Titles, Buttons, Notices, Labels, Placeholders, Checkboxes, Exercise Status, Select Options, Sections, Code Blocks
+   - `SETTINGS_UI` constant: Labels, Descriptions, Sections, Buttons, Options, Messages
+   - `TABLE_UI` constant: Columns, Labels, Icons, Default Visible Columns, Messages
+   - `CHARTS_UI` constant: Labels (with functions), Types
+   - `TIMER_UI` constant: Types
+   - `DASHBOARD_UI` constant: Quick Actions, Quick Stats, Recent Workouts, Summary, Volume Analytics, Protocol Distribution, Protocol Effectiveness, Duration Comparison, Muscle Tags, File Errors
+   - `GENERAL_UI` constant: Labels, Actions, Logs (with functions)
+   - `UI_LABELS` aggregated export for backward compatibility
+
+**Exports created:**
+- `ICONS` - Icon symbols organized by category
+- `EMOJI` - Emoji-only constants for quick access
+- `MODAL_UI` - All modal-related UI strings
+- `SETTINGS_UI` - Settings tab UI strings
+- `TABLE_UI` - Table component UI strings
+- `CHARTS_UI` - Chart component UI strings
+- `TIMER_UI` - Timer component UI strings
+- `DASHBOARD_UI` - Dashboard component UI strings
+- `GENERAL_UI` - Common/shared UI strings
+- `UI_LABELS` - Aggregated export grouping all UI constants by domain
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run build` succeeds)
+- Pre-existing test failures remain in `WorkoutLogData.test.ts` (console.warn expectations)
+- The new file is a standalone extraction - Constants.ts is NOT modified yet
+- Next task: US-002 (Split Default Values into Dedicated File)
+- Final tasks will update imports and remove original Constants.ts

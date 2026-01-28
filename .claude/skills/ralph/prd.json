@@ -1,177 +1,136 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/phase4-integrations",
-  "description": "Phase 4 - Integrations: Mobile quick logging, Templater functions, Dataview API, and Canvas export",
+  "branchName": "ralph/phase5-refactoring",
+  "description": "Phase 5 - Refactoring: Split Constants.ts (817 lines) into focused single-responsibility modules",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Add Quick Log Ribbon Icon",
-      "description": "As a user, I want a ribbon icon for quick logging so that I can log sets with minimal taps during workouts.",
+      "title": "Split UI Constants into Dedicated File",
+      "description": "As a developer, I want UI-related constants in a dedicated file so that I can quickly find labels, icons, and emoji.",
       "acceptanceCriteria": [
-        "Dumbbell icon added to left ribbon using addRibbonIcon API",
-        "Icon visible on both desktop and mobile",
-        "Clicking opens QuickLogModal (placeholder for now, shows notice)",
-        "Add 'showQuickLogRibbon' boolean to settings (default: true)",
-        "Settings tab includes toggle to show/hide ribbon icon",
-        "Icon removed from ribbon when setting is disabled",
+        "Create app/constants/ui.constants.ts",
+        "Move all MODAL.*, SETTINGS.*, TABLE.*, CHARTS.*, TIMER.* label/title/button strings",
+        "Move all ICONS and EMOJI constants",
+        "Export named exports: UI_LABELS, ICONS, EMOJI (grouped by domain)",
+        "File has header JSDoc explaining its purpose",
         "Typecheck passes"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Implemented 2026-01-28: Ribbon icon with dumbbell added, QuickLogModal placeholder created, settings toggle added in Quick Log section"
+      "notes": "Completed 2026-01-28. Created ui.constants.ts with ICONS, EMOJI, MODAL_UI, SETTINGS_UI, TABLE_UI, CHARTS_UI, TIMER_UI, DASHBOARD_UI, GENERAL_UI exports and aggregated UI_LABELS export."
     },
     {
       "id": "US-002",
-      "title": "Create Quick Log Modal Base",
-      "description": "As a user, I want a simplified logging modal so that I can log a set in under 5 seconds.",
+      "title": "Split Default Values into Dedicated File",
+      "description": "As a developer, I want default configuration values in a dedicated file so that I can understand plugin defaults at a glance.",
       "acceptanceCriteria": [
-        "Create QuickLogModal extending ModalBase in app/features/modals/",
-        "Modal shows only: exercise input, reps input, weight input, confirm button",
-        "Exercise field uses ExerciseAutocomplete component",
-        "Large touch targets (minimum 44x44px) for all interactive elements",
-        "Confirm button logs entry to CSV using DataService",
-        "Modal closes after successful log with notice confirmation",
-        "Ribbon icon opens this modal instead of placeholder",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Create app/constants/defaults.constants.ts",
+        "Move all DEFAULT_* constants (DEFAULT_CHART_CONFIG, DEFAULT_DATE_RANGE, etc.)",
+        "Move default settings object (DEFAULT_SETTINGS or equivalent)",
+        "Add JSDoc comment to each default explaining its purpose",
+        "File has header JSDoc explaining its purpose",
+        "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: QuickLogModal with ExerciseAutocomplete, reps/weight inputs with 44px+ touch targets, CSS styles in _modal.scss, logs to CSV via plugin.addWorkoutLogEntry()"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Add Recent Exercises Quick Select",
-      "description": "As a user, I want to tap my recent exercises so that I don't need to search every time.",
+      "title": "Split Muscle Constants into Dedicated File",
+      "description": "As a developer, I want muscle-related constants in a dedicated file so that heatmap and body-part logic is contained.",
       "acceptanceCriteria": [
-        "Add 'recentExercises' array to settings (max 10 items)",
-        "QuickLogModal shows top 5 recent exercises as chip buttons above exercise input",
-        "Chips are horizontally scrollable, pill-shaped design",
-        "Tapping chip selects exercise and moves focus to reps input",
-        "Recent list updates after each successful log (most recent first)",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Create app/constants/muscles.constants.ts",
+        "Move MUSCLE_GROUPS array/object",
+        "Move MUSCLE_COLORS mapping",
+        "Move HEATMAP_CONFIG or any heatmap-related constants",
+        "Move muscle tag mappings (tag to display name, etc.)",
+        "File has header JSDoc explaining its purpose",
+        "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Added recentExercises array to settings (max 10), pill-shaped chips above exercise input, horizontally scrollable container, chip selection moves focus to reps, list updates after each log"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Add Weight Auto-fill and Quick Adjustment",
-      "description": "As a user, I want weight to default to my last set and have quick adjustment buttons.",
+      "title": "Split Validation Constants into Dedicated File",
+      "description": "As a developer, I want validation messages in a dedicated file so that error handling is consistent.",
       "acceptanceCriteria": [
-        "Weight field defaults to last weight for selected exercise (from CSV data)",
-        "'+2.5' and '-2.5' buttons flank weight input",
-        "Add 'quickWeightIncrement' to settings (number, default: 2.5)",
-        "Settings tab includes input for quick weight increment",
-        "Buttons use configured increment value",
-        "Visual feedback on button tap (brief highlight)",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Create app/constants/validation.constants.ts",
+        "Move all error messages and validation strings",
+        "Move validation patterns (regex patterns, numeric limits)",
+        "Move any ERRORS or MESSAGES objects",
+        "File has header JSDoc explaining its purpose",
+        "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Weight auto-fill from last exercise entry via CSV data, +/- buttons with configurable quickWeightIncrement setting (default 2.5), visual feedback with brief highlight on tap, settings UI in Quick Log section, CSS styles in _modal.scss"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Create Templater Exercise Block Function",
-      "description": "As a Templater user, I want a function to generate exercise blocks so that my templates can include workout structures.",
+      "title": "Create Constants Barrel Export Index",
+      "description": "As a developer, I want a single import point for constants so that existing code can migrate gradually.",
       "acceptanceCriteria": [
-        "Create scripts/templater-functions.js with workoutExerciseBlock function",
-        "Function signature: workoutExerciseBlock(name, duration, workout)",
-        "Returns formatted exercise block string with workout-timer code block",
-        "Add documentation in scripts/README.md explaining Templater setup",
-        "Document required Templater settings (user script folder)",
+        "Create app/constants/index.ts",
+        "Re-export all exports from ui.constants.ts",
+        "Re-export all exports from defaults.constants.ts",
+        "Re-export all exports from muscles.constants.ts",
+        "Re-export all exports from validation.constants.ts",
+        "Support both import { X } from '@app/constants' and import { X } from '@app/constants/ui.constants'",
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Created scripts/templater-functions.js with workoutExerciseBlock(name, duration, workout) function that generates exercise header + workout-timer code block, comprehensive README.md with setup instructions, usage examples, and troubleshooting guide"
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Create Templater Exercise List Function",
-      "description": "As a Templater user, I want a function to get exercise names so that I can build dynamic templates.",
+      "title": "Update All Imports to Use New Constants Structure",
+      "description": "As a developer, I want all existing imports updated so that the codebase uses the new modular structure.",
       "acceptanceCriteria": [
-        "Add workoutExercises function to scripts/templater-functions.js",
-        "Function returns array of exercise names from configured exercises folder",
-        "Supports filter parameter: workoutExercises({tag: 'glutes'})",
-        "Filter by tag reads exercise file frontmatter",
-        "Update scripts/README.md with usage examples",
-        "Typecheck passes"
+        "Find all files importing from Constants.ts (use grep)",
+        "Update each file to import from @app/constants barrel or specific module",
+        "Prefer specific imports (e.g., @app/constants/ui.constants) for better tree-shaking",
+        "No circular dependency warnings in build output",
+        "Typecheck passes",
+        "All tests pass"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Added async workoutExercises(tp, filter) function to scripts/templater-functions.js. Function requires tp object (Templater) for Obsidian API access, gets exercises from plugin's exerciseFolderPath setting, supports tag filtering via frontmatter parsing (array, list, and single tag YAML formats). README.md updated with comprehensive usage examples including loops, filtering, and combining with workoutExerciseBlock."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Expose Dataview Workout Logs API",
-      "description": "As a Dataview user, I want to query my workout logs so that I can create custom views.",
+      "title": "Remove Original Constants.ts File",
+      "description": "As a developer, I want the original monolithic file removed so that the refactoring is complete.",
       "acceptanceCriteria": [
-        "Expose window.WorkoutPlannerAPI object from plugin",
-        "API includes getWorkoutLogs(filter) method",
-        "Filter supports: exercise, workout, dateRange, protocol parameters",
-        "Returns array of log entries compatible with Dataview tables",
-        "Add documentation in docs/dataview-integration.md with example queries",
-        "Typecheck passes"
+        "Delete app/constants/Constants.ts",
+        "Verify no references to old file remain (grep for Constants.ts)",
+        "npm run build succeeds without errors",
+        "npm run lint passes",
+        "Typecheck passes",
+        "All tests pass"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Created app/api/WorkoutPlannerAPI.ts class with getWorkoutLogs(filter) method supporting exercise, workout, dateRange (start/end), protocol, and exactMatch filters. Returns DataviewWorkoutLog[] array without TFile references for Dataview compatibility. Exposed as window.WorkoutPlannerAPI from main.ts with proper cleanup on unload. Created comprehensive docs/dataview-integration.md with 10+ example queries including tables, filters, statistics, weekly summaries, and PRs."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Expose Dataview Exercise Stats API",
-      "description": "As a Dataview user, I want exercise statistics so that I can build custom dashboards.",
+      "title": "Update CLAUDE.md with Constants Structure Documentation",
+      "description": "As a developer, I want documentation for the constants structure so that future contributors understand the organization.",
       "acceptanceCriteria": [
-        "Add getExerciseStats(exercise) to WorkoutPlannerAPI",
-        "Returns object with: totalVolume, maxWeight, totalSets, trend",
-        "Add getExercises(filter) to list available exercises",
-        "Update docs/dataview-integration.md with stats examples",
-        "Include inline query examples (dv.span usage)",
+        "Update CLAUDE.md Constants section to reflect new file structure",
+        "Document purpose of each constants file (ui, defaults, muscles, validation)",
+        "Include example import statements for both barrel and direct imports",
+        "Mention tree-shaking benefit of direct imports",
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Added getExerciseStats(exercise) returning ExerciseStats object with totalVolume, maxWeight, totalSets, trend (up/down/stable), averageWeight, averageReps, lastWorkoutDate, prWeight, prReps, prDate. Added getExercises(filter) supporting tag filtering via frontmatter or fallback to unique exercises from logs. Updated docs/dataview-integration.md with 10+ examples including stats dashboard, trend indicators, inline queries with dv.span(), and Big Three total calculation."
-    },
-    {
-      "id": "US-009",
-      "title": "Create Canvas Export Command",
-      "description": "As a user, I want to visualize my workout as a Canvas so that I can see the structure visually.",
-      "acceptanceCriteria": [
-        "Add command 'Export Workout to Canvas' in CommandHandlerService",
-        "Command opens file suggester to select workout file",
-        "Create CanvasExporter class in app/features/canvas/",
-        "Generates .canvas file in same folder as workout file",
-        "Canvas includes nodes for each exercise found in workout file",
-        "Nodes colored by muscle group (use exercise frontmatter)",
-        "Canvas JSON follows Obsidian canvas schema",
-        "Typecheck passes"
-      ],
-      "priority": 9,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Created CanvasExporter class in app/features/canvas/ that extracts exercises from workout files (via workout-timer code blocks, H2 headers, and [[links]]), maps muscle groups to colors using MuscleTagMapper, and generates valid JSON Canvas files. WorkoutFileSuggestModal provides file selection via FuzzySuggestModal. Command 'Export Workout to Canvas' registered in CommandHandlerService. Canvas nodes arranged in grid layout with 6 color presets for muscle groups."
-    },
-    {
-      "id": "US-010",
-      "title": "Add Canvas Export Layout Options",
-      "description": "As a user, I want layout options for canvas export so that I can customize the visualization.",
-      "acceptanceCriteria": [
-        "Create CanvasExportModal for export options",
-        "Layout options: horizontal flow, vertical flow, grouped by muscle",
-        "Checkbox: include timer durations on nodes",
-        "Checkbox: include last performance stats on nodes",
-        "Connect superset exercises with edges",
-        "Selected options passed to CanvasExporter",
-        "Typecheck passes"
-      ],
-      "priority": 10,
-      "passes": true,
-      "notes": "Implemented 2026-01-28: Created CanvasExportModal with layout dropdown (horizontal/vertical/grouped by muscle), checkboxes for durations and performance stats, and superset edge connections. CanvasExporter extended with calculatePositions() for 3 layout types, createSupersetEdges() for connecting exercises marked as supersets, and formatExerciseText() enhanced to include duration and stats when enabled. Uses WorkoutPlannerAPI.getExerciseStats() for performance data. Constants added for CANVAS_EXPORT title, layout labels, and checkbox labels."
+      "passes": false,
+      "notes": ""
     }
   ]
 }

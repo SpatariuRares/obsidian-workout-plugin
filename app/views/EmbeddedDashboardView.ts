@@ -142,11 +142,7 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Re-render dashboard with updated filter
     if (this.currentContainer && this.currentData.length > 0) {
-      await this.createDashboard(
-        this.currentContainer,
-        this.currentData,
-        newParams,
-      );
+      void this.createDashboard(this.currentContainer, this.currentData, newParams);
     }
   };
 
@@ -225,6 +221,9 @@ export class EmbeddedDashboardView extends BaseView {
     // Volume Analytics Section (Right Column) - uses filtered data
     VolumeAnalytics.render(rightCol, displayData, params);
 
+    // Recent Workouts Section (Right Column) - uses filtered data
+    RecentWorkouts.render(rightCol, displayData, params);
+    
     // Protocol Distribution Section (Right Column)
     // Uses original data for the pie chart, but passes the active filter for highlighting
     ProtocolDistribution.render(
@@ -241,8 +240,6 @@ export class EmbeddedDashboardView extends BaseView {
     // Duration Comparison Section (Right Column) - uses all data for duration analysis
     DurationComparison.render(rightCol, data, params);
 
-    // Recent Workouts Section (Right Column) - uses filtered data
-    RecentWorkouts.render(rightCol, displayData, params);
 
     // Quick Actions Panel (Right Column)
     QuickActions.render(rightCol, params, this.plugin);

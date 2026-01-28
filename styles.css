@@ -2062,18 +2062,20 @@
   margin: 0;
   padding: 0;
 }
-.workout-recent-workout-item {
+.workout-recent-workouts-list .workout-recent-workout-item {
   display: flex;
   justify-content: space-between;
+  margin-inline-start: 0;
+  gap: var(--workout-space-sm);
   align-items: center;
   padding: var(--workout-space-md) 0;
   border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
   transition: var(--workout-transition);
 }
-.workout-recent-workout-item:last-child {
+.workout-recent-workouts-list .workout-recent-workout-item:last-child {
   border-bottom: none;
 }
-.workout-recent-workout-item:hover {
+.workout-recent-workouts-list .workout-recent-workout-item:hover {
   background: var(--background-modifier-hover);
   margin: 0 calc(-1 * var(--workout-space-lg));
   padding: var(--workout-space-md) var(--workout-space-lg);

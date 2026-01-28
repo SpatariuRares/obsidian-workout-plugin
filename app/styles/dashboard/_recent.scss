@@ -9,7 +9,7 @@
     padding: 0;
   }
 
-  &-workout-item {
+  &-workouts-list &-workout-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,25 +28,24 @@
       padding: var(--workout-space-md) var(--workout-space-lg);
       border-radius: var(--workout-radius-md);
     }
-  }
+    .workout-recent-date {
+      font-size: var(--workout-font-base);
+      color: var(--text-muted);
+      min-width: var(--workout-size-4xl);
+    }
 
-  &-date {
-    font-size: var(--workout-font-base);
-    color: var(--text-muted);
-    min-width: var(--workout-size-4xl);
-  }
+    .workout-recent-name {
+      flex: 1;
+      margin: 0 var(--workout-space-lg);
+      font-weight: var(--workout-font-weight-medium);
+      color: var(--text-normal);
+    }
 
-  &-name {
-    flex: 1;
-    margin: 0 var(--workout-space-lg);
-    font-weight: var(--workout-font-weight-medium);
-    color: var(--text-normal);
-  }
-
-  &-volume {
-    color: var(--interactive-accent);
-    font-weight: var(--workout-font-weight-semibold);
-    font-size: var(--workout-font-base);
+    .workout-recent-volume {
+      color: var(--interactive-accent);
+      font-weight: var(--workout-font-weight-semibold);
+      font-size: var(--workout-font-base);
+    }
   }
 }
 

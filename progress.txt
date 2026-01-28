@@ -2202,3 +2202,48 @@ workout: Workouts/Push Day
 - US-003 will add chip buttons for recently logged exercises above the exercise input
 - The QuickLogModal is fully functional for basic logging
 - Touch targets exceed the 44px minimum requirement (inputs: 44px, button: 48px height)
+
+## 2026-01-28 - US-003: Add Recent Exercises Quick Select (Phase 4)
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `recentExercises: string[]` to `WorkoutChartsSettings` interface
+   - Added `recentExercises: []` to `DEFAULT_SETTINGS`
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `MODAL.LABELS.RECENT_EXERCISES: "Recent:"` for chip section label
+
+3. Updated `app/features/modals/QuickLogModal.ts`:
+   - Added `MAX_RECENT_EXERCISES = 10` and `DISPLAY_RECENT_COUNT = 5` constants
+   - Added `createRecentExercisesChips()` method to render pill-shaped chip buttons
+   - Added `selectExercise()` method to handle chip selection (sets input, moves focus to reps)
+   - Added `updateRecentExercises()` method to update settings after successful log
+   - Chips only shown when there are recent exercises in settings
+   - Recent list updated on each successful log (most recent first, max 10 items)
+
+4. Updated `app/styles/_modal.scss`:
+   - Added `.workout-quick-log-recent-section` for chip section layout
+   - Added `.workout-quick-log-recent-label` for label styling
+   - Added `.workout-quick-log-chips-container` with horizontal scroll, hidden scrollbar
+   - Added `.workout-quick-log-chip` with pill-shaped design, hover/active states
+
+5. Updated `app/services/__tests__/DataService.test.ts`:
+   - Added `recentExercises: []` to mock settings
+
+**Features implemented:**
+- `recentExercises` array added to settings (max 10 items)
+- QuickLogModal shows top 5 recent exercises as chip buttons above exercise input
+- Chips are horizontally scrollable with hidden scrollbar
+- Pill-shaped design with hover and active states
+- Tapping chip selects exercise and moves focus to reps input
+- Recent list updates after each successful log (most recent first)
+- Case-insensitive duplicate prevention
+- TypeScript compilation passes (`npm run build`)
+- Tests pass (358 passed, 10 pre-existing failures unrelated to this change)
+
+**Notes for next developer:**
+- Next task is US-004: Add Weight Auto-fill and Quick Adjustment
+- US-004 will add weight auto-fill from last set and +/- adjustment buttons
+- The recent exercises feature integrates seamlessly with existing QuickLogModal

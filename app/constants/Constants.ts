@@ -783,6 +783,7 @@ export const CONSTANTS = {
         TARGET_WEIGHT: "Target weight (kg):",
         TARGET_REPS: "Target reps:",
         PROTOCOL: "Protocol:",
+        RECENT_EXERCISES: "Recent:",
       },
       PLACEHOLDERS: {
         EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",

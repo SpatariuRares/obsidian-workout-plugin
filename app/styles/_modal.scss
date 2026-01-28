@@ -449,3 +449,63 @@
     transform: translateY(-2px);
   }
 }
+
+/* Recent Exercises Chips Section */
+.workout-quick-log-recent-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-quick-log-recent-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-quick-log-chips-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--workout-space-sm);
+  overflow-x: auto;
+  padding: var(--workout-space-xs) 0;
+
+  /* Hide scrollbar but allow scrolling */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.workout-quick-log-chip {
+  /* Pill-shaped design */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border-radius: 9999px;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 36px;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--interactive-accent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+  }
+}

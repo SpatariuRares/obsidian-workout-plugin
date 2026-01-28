@@ -6,10 +6,16 @@ import { Button } from "@app/components/atoms";
 import { App, Notice, MarkdownView } from "obsidian";
 import WorkoutChartsPlugin from "main";
 
+/** Maximum number of recent exercises to store in settings */
+const MAX_RECENT_EXERCISES = 10;
+/** Number of recent exercises to display as chips */
+const DISPLAY_RECENT_COUNT = 5;
+
 /**
  * QuickLogModal - Fast, mobile-friendly workout logging
  *
  * This modal is designed for quick set logging with minimal taps:
+ * - Recent exercise chips for quick selection
  * - Exercise autocomplete input
  * - Reps input
  * - Weight input
@@ -37,6 +43,9 @@ export class QuickLogModal extends ModalBase {
 
     const mainContainer = this.createStyledMainContainer(contentEl);
 
+    // Recent exercises chips (above exercise input)
+    this.createRecentExercisesChips(mainContainer);
+
     // Exercise input with autocomplete
     this.createExerciseField(mainContainer);
 
@@ -48,6 +57,55 @@ export class QuickLogModal extends ModalBase {
 
     // Confirm button (large touch target)
     this.createConfirmButton(mainContainer);
+  }
+
+  /**
+   * Creates the recent exercises chip buttons
+   */
+  private createRecentExercisesChips(container: HTMLElement): void {
+    const recentExercises = this.plugin.settings.recentExercises || [];
+
+    // Only show if there are recent exercises
+    if (recentExercises.length === 0) {
+      return;
+    }
+
+    const chipSection = container.createEl("div", {
+      cls: "workout-quick-log-recent-section",
+    });
+
+    chipSection.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.RECENT_EXERCISES,
+      cls: "workout-quick-log-recent-label",
+    });
+
+    const chipContainer = chipSection.createEl("div", {
+      cls: "workout-quick-log-chips-container",
+    });
+
+    // Display top 5 recent exercises
+    const displayExercises = recentExercises.slice(0, DISPLAY_RECENT_COUNT);
+
+    displayExercises.forEach((exercise) => {
+      const chip = chipContainer.createEl("button", {
+        text: exercise,
+        cls: "workout-quick-log-chip",
+      });
+      chip.type = "button";
+
+      chip.addEventListener("click", () => {
+        this.selectExercise(exercise);
+      });
+    });
+  }
+
+  /**
+   * Handles selecting an exercise from the chips
+   */
+  private selectExercise(exercise: string): void {
+    this.exerciseInput.value = exercise;
+    // Move focus to reps input for quick entry
+    this.repsInput.focus();
   }
 
   /**
@@ -164,6 +222,9 @@ export class QuickLogModal extends ModalBase {
         notes: "",
       });
 
+      // Update recent exercises list
+      await this.updateRecentExercises(exercise);
+
       // Show success notice
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATED);
 
@@ -176,6 +237,30 @@ export class QuickLogModal extends ModalBase {
       const errorMessage = error instanceof Error ? error.message : String(error);
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATE_ERROR + errorMessage);
     }
+  }
+
+  /**
+   * Updates the recent exercises list in settings
+   * - Adds exercise to front of list (most recent first)
+   * - Removes duplicates
+   * - Limits to MAX_RECENT_EXERCISES items
+   */
+  private async updateRecentExercises(exercise: string): Promise<void> {
+    const currentRecent = this.plugin.settings.recentExercises || [];
+
+    // Remove exercise if it already exists (to move it to front)
+    const filteredRecent = currentRecent.filter(
+      (ex) => ex.toLowerCase() !== exercise.toLowerCase()
+    );
+
+    // Add to front
+    const updatedRecent = [exercise, ...filteredRecent];
+
+    // Limit to max items
+    this.plugin.settings.recentExercises = updatedRecent.slice(0, MAX_RECENT_EXERCISES);
+
+    // Save settings
+    await this.plugin.saveSettings();
   }
 
   /**

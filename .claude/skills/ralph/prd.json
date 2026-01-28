@@ -53,8 +53,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Added recentExercises array to settings (max 10), pill-shaped chips above exercise input, horizontally scrollable container, chip selection moves focus to reps, list updates after each log"
     },
     {
       "id": "US-004",

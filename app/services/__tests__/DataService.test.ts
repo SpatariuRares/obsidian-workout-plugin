@@ -64,6 +64,7 @@ describe("DataService", () => {
       customProtocols: [],
       setDuration: 45,
       showQuickLogRibbon: true,
+      recentExercises: [],
     };
 
     // Create DataService instance

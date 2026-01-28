@@ -85,6 +85,8 @@ export interface WorkoutChartsSettings {
   setDuration: number;
   /** Show quick log ribbon icon for mobile logging */
   showQuickLogRibbon: boolean;
+  /** Recent exercises for quick log modal (max 10 items, most recent first) */
+  recentExercises: string[];
 }
 
 /**
@@ -117,6 +119,7 @@ workout: {{workout}}
   customProtocols: [],
   setDuration: 45,
   showQuickLogRibbon: true,
+  recentExercises: [],
 };
 
 /**

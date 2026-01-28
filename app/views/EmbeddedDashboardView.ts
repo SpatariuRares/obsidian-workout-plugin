@@ -200,54 +200,38 @@ export class EmbeddedDashboardView extends BaseView {
     // Quick Stats Cards Section (Full Width) - uses filtered data
     QuickStatsCards.render(gridEl, displayData, params);
 
-    // Create Main Columns Container
-    const mainColumnsEl = gridEl.createEl("div", {
-      cls: "workout-dashboard-columns",
-    });
+    // Muscle Heat Map Section (Left Column previously) - uses filtered data
+    await MuscleHeatMap.render(gridEl, displayData, params, this.plugin);
 
-    // Left Column (Heatmap)
-    const leftCol = mainColumnsEl.createEl("div", {
-      cls: "workout-dashboard-column-left",
-    });
+    // Volume Analytics Section (Right Column previously) - uses filtered data
+    VolumeAnalytics.render(gridEl, displayData, params);
 
-    // Right Column (Analytics & Others)
-    const rightCol = mainColumnsEl.createEl("div", {
-      cls: "workout-dashboard-column-right",
-    });
-
-    // Muscle Heat Map Section (Left Column) - uses filtered data
-    await MuscleHeatMap.render(leftCol, displayData, params, this.plugin);
-
-    // Volume Analytics Section (Right Column) - uses filtered data
-    VolumeAnalytics.render(rightCol, displayData, params);
-
-    // Recent Workouts Section (Right Column) - uses filtered data
-    RecentWorkouts.render(rightCol, displayData, params);
+    // Recent Workouts Section (Right Column previously) - uses filtered data
+    RecentWorkouts.render(gridEl, displayData, params);
     
-    // Protocol Distribution Section (Right Column)
+    // Protocol Distribution Section (Right Column previously)
     // Uses original data for the pie chart, but passes the active filter for highlighting
     ProtocolDistribution.render(
-      rightCol,
+      gridEl,
       data,
       params,
       this.plugin,
       this.handleProtocolFilterChange,
     );
 
-    // Protocol Effectiveness Section (Right Column) - uses all data for statistical analysis
-    ProtocolEffectiveness.render(rightCol, data, params, this.plugin);
+    // Protocol Effectiveness Section (Right Column previously) - uses all data for statistical analysis
+    ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
 
-    // Duration Comparison Section (Right Column) - uses all data for duration analysis
-    DurationComparison.render(rightCol, data, params);
+    // Duration Comparison Section (Right Column previously) - uses all data for duration analysis
+    DurationComparison.render(gridEl, data, params);
 
+    // Quick Actions Panel (Right Column previously)
+    QuickActions.render(gridEl, params, this.plugin);
 
-    // Quick Actions Panel (Right Column)
-    QuickActions.render(rightCol, params, this.plugin);
+    // Exercise File Errors Widget (Right Column previously)
+    await WidgetsFileError.render(gridEl, this.plugin);
 
-    // Exercise File Errors Widget (Right Column)
-    await WidgetsFileError.render(rightCol, this.plugin);
-
-    // Muscle Tags Widget (Right Column)
-    MuscleTagsWidget.render(rightCol, params);
+    // Muscle Tags Widget (Right Column previously)
+    MuscleTagsWidget.render(gridEl, params);
   }
 }

@@ -77,7 +77,11 @@ export default class WorkoutChartsPlugin extends Plugin {
     );
 
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
-    this.workoutPlannerAPI = new WorkoutPlannerAPI(this.dataService);
+    this.workoutPlannerAPI = new WorkoutPlannerAPI(
+      this.dataService,
+      this.app,
+      this.settings
+    );
     window.WorkoutPlannerAPI = this.workoutPlannerAPI;
 
     this.codeBlockProcessorService.registerProcessors();

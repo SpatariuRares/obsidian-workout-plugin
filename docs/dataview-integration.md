@@ -298,3 +298,217 @@ For large datasets (1000+ entries):
 - Use specific filters to reduce data volume
 - Consider caching results in your Dataview queries
 - Avoid running multiple unfiltered queries on the same page
+
+---
+
+## Exercise Stats API
+
+### `getExerciseStats(exercise)`
+
+Retrieves statistics for a specific exercise.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `exercise` | `string` | Exercise name (exact match) |
+
+**Returns:** `Promise<ExerciseStats>`
+
+The stats object contains:
+- `totalVolume`: Total volume (sum of reps × weight)
+- `maxWeight`: Maximum weight ever used
+- `totalSets`: Total number of sets logged
+- `trend`: Performance trend (`"up"`, `"down"`, or `"stable"`)
+- `averageWeight`: Average weight per set
+- `averageReps`: Average reps per set
+- `lastWorkoutDate`: Date of most recent log (YYYY-MM-DD)
+- `prWeight`: Personal record weight
+- `prReps`: Reps achieved at PR weight
+- `prDate`: Date when PR was achieved (YYYY-MM-DD)
+
+### `getExercises(filter?)`
+
+Retrieves list of available exercises.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `filter.tag` | `string` | Filter by frontmatter tag (optional) |
+
+**Returns:** `Promise<string[]>`
+
+## Exercise Stats Examples
+
+### Display Stats for an Exercise
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const stats = await api.getExerciseStats("Squat");
+  dv.paragraph(`**Squat Statistics**`);
+  dv.paragraph(`Total Sets: ${stats.totalSets}`);
+  dv.paragraph(`Total Volume: ${stats.totalVolume.toLocaleString()} kg`);
+  dv.paragraph(`Max Weight (PR): ${stats.prWeight} kg`);
+  dv.paragraph(`Average Weight: ${stats.averageWeight} kg`);
+  dv.paragraph(`Trend: ${stats.trend}`);
+  dv.paragraph(`Last Workout: ${stats.lastWorkoutDate || "Never"}`);
+}
+```
+
+### Exercise Stats Dashboard
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const exercises = ["Squat", "Bench Press", "Deadlift"];
+  const rows = [];
+
+  for (const exercise of exercises) {
+    const stats = await api.getExerciseStats(exercise);
+    if (stats.totalSets > 0) {
+      const trendIcon = stats.trend === "up" ? "📈" : stats.trend === "down" ? "📉" : "➡️";
+      rows.push([
+        exercise,
+        stats.prWeight,
+        stats.totalSets,
+        stats.totalVolume.toLocaleString(),
+        trendIcon + " " + stats.trend
+      ]);
+    }
+  }
+
+  dv.table(
+    ["Exercise", "PR (kg)", "Total Sets", "Volume", "Trend"],
+    rows
+  );
+}
+```
+
+### Compare Exercise Progress
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const exercises = await api.getExercises();
+
+  // Get stats for all exercises and find ones with improvement
+  const improving = [];
+  for (const exercise of exercises.slice(0, 10)) { // Limit to first 10
+    const stats = await api.getExerciseStats(exercise);
+    if (stats.trend === "up" && stats.totalSets > 5) {
+      improving.push({
+        name: exercise,
+        pr: stats.prWeight,
+        trend: stats.trend
+      });
+    }
+  }
+
+  if (improving.length > 0) {
+    dv.paragraph("**Exercises with Upward Trend:**");
+    dv.list(improving.map(e => `${e.name}: PR ${e.pr} kg`));
+  } else {
+    dv.paragraph("No exercises showing improvement trend.");
+  }
+}
+```
+
+### List Exercises by Tag
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  // Get all compound exercises (requires exercises folder with tagged files)
+  const compoundExercises = await api.getExercises({ tag: "compound" });
+
+  dv.paragraph("**Compound Exercises:**");
+  dv.list(compoundExercises);
+}
+```
+
+### All Exercises with Recent Activity
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const exercises = await api.getExercises();
+  const rows = [];
+
+  for (const exercise of exercises) {
+    const stats = await api.getExerciseStats(exercise);
+    if (stats.lastWorkoutDate) {
+      rows.push([exercise, stats.lastWorkoutDate, stats.totalSets]);
+    }
+  }
+
+  // Sort by last workout date (most recent first)
+  rows.sort((a, b) => b[1].localeCompare(a[1]));
+
+  dv.table(
+    ["Exercise", "Last Workout", "Total Sets"],
+    rows.slice(0, 20) // Show top 20
+  );
+}
+```
+
+## Inline Queries with Stats
+
+Use `dv.span()` to embed exercise stats directly in your notes:
+
+### Single Stat Inline
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const stats = await api.getExerciseStats("Deadlift");
+  dv.span(`Deadlift PR: **${stats.prWeight} kg** (${stats.prDate || "N/A"})`);
+}
+```
+
+### Quick Stats Line
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const stats = await api.getExerciseStats("Bench Press");
+  const trendEmoji = stats.trend === "up" ? "📈" : stats.trend === "down" ? "📉" : "➡️";
+  dv.span(`Bench: ${stats.prWeight}kg PR | ${stats.totalSets} sets | ${trendEmoji}`);
+}
+```
+
+### Trend Indicator
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const exercises = ["Squat", "Bench Press", "Deadlift"];
+  const trends = [];
+
+  for (const ex of exercises) {
+    const stats = await api.getExerciseStats(ex);
+    const icon = stats.trend === "up" ? "🟢" : stats.trend === "down" ? "🔴" : "🟡";
+    trends.push(`${icon} ${ex}`);
+  }
+
+  dv.span(trends.join(" | "));
+}
+```
+
+### Personal Records Summary
+
+```dataviewjs
+const api = window.WorkoutPlannerAPI;
+if (api) {
+  const bigThree = ["Squat", "Bench Press", "Deadlift"];
+  let total = 0;
+
+  for (const ex of bigThree) {
+    const stats = await api.getExerciseStats(ex);
+    total += stats.prWeight;
+  }
+
+  dv.span(`**Big Three Total: ${total} kg**`);
+}
+```

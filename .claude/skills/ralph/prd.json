@@ -135,8 +135,8 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Added getExerciseStats(exercise) returning ExerciseStats object with totalVolume, maxWeight, totalSets, trend (up/down/stable), averageWeight, averageReps, lastWorkoutDate, prWeight, prReps, prDate. Added getExercises(filter) supporting tag filtering via frontmatter or fallback to unique exercises from logs. Updated docs/dataview-integration.md with 10+ examples including stats dashboard, trend indicators, inline queries with dv.span(), and Big Three total calculation."
     },
     {
       "id": "US-009",

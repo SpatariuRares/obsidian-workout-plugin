@@ -1,5 +1,48 @@
 # Ralph Progress Log
 
+## 2026-01-28 - US-008: Expose Dataview Exercise Stats API
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/api/WorkoutPlannerAPI.ts`:
+   - Added `ExercisesFilter` interface for tag-based filtering
+   - Added `ExerciseStats` interface with comprehensive stats fields
+   - Extended constructor to accept optional `app` and `settings` for folder access
+   - Added `getExerciseStats(exercise)` method:
+     - Returns totalVolume, maxWeight, totalSets, trend, averageWeight, averageReps
+     - Returns lastWorkoutDate, prWeight, prReps, prDate
+     - Calculates trend by comparing last 30 days vs older performance (5% threshold)
+   - Added `getExercises(filter)` method:
+     - Lists exercises from folder (if available) or falls back to unique names from logs
+     - Supports `{tag: "tagname"}` filter that reads frontmatter
+   - Added helper methods: `calculateTrend()`, `getExercisesFromFolder()`, `getExercisesFromLogs()`, `parseFrontmatterTags()`
+
+2. Updated `app/api/index.ts`:
+   - Added exports for `ExercisesFilter` and `ExerciseStats` types
+
+3. Updated `main.ts`:
+   - Modified WorkoutPlannerAPI instantiation to pass `app` and `settings`
+
+4. Updated `docs/dataview-integration.md`:
+   - Added Exercise Stats API section with full API reference
+   - Added 5 exercise stats examples (single exercise, dashboard, progress comparison, etc.)
+   - Added 4 inline query examples using `dv.span()` (single stat, quick stats line, trend indicator, Big Three total)
+   - Added getExercises filter by tag examples
+
+**Features implemented:**
+- `getExerciseStats(exercise)` returns comprehensive statistics object
+- `getExercises(filter)` lists available exercises with optional tag filtering
+- Trend calculation compares recent (30 days) vs older performance
+- Full Dataview documentation with 10+ working examples
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain in `WorkoutLogData.test.ts` (console.warn expectations)
+- The API is extensible - add new methods to WorkoutPlannerAPI class
+- Exercise folder filtering requires exercises folder with frontmatter tags
+- Next tasks: US-009 (Canvas Export Command) and US-010 (Canvas Export Layout Options)
+
 ## 2026-01-28 - US-005: Create Templater Exercise Block Function
 
 **Status:** Completed

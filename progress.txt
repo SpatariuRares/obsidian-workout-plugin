@@ -1,5 +1,41 @@
 # Ralph Progress Log
 
+## 2026-01-29 - US-003: Split Muscle Constants into Dedicated File
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/constants/muscles.constants.ts`:
+   - Header JSDoc explaining the file's purpose
+   - `MUSCLE_NAMES`: Display names for muscles used in heatmap visualization
+   - `MUSCLE_POSITIONS`: Vertical position labels (Alto, Medio, Basso)
+   - `MUSCLE_GROUPS`: High-level muscle group categories (Core)
+   - `BODY_PARTS`: Body part regions (Upper body)
+   - `MUSCLE_TAGS`: Array of all recognized muscle tags (English + Italian)
+   - `MUSCLE_TAG_MAP`: Maps individual tags to normalized muscle groups
+   - `MUSCLE_KEYWORDS`: Keywords for fuzzy matching and exercise identification
+   - `MUSCLES`: Aggregated export for convenient access to all muscle constants
+
+2. Updated `app/constants/index.ts`:
+   - Added re-export for `muscles.constants.ts`
+   - Muscle constants now available via barrel import
+
+**Exports created:**
+- `MUSCLE_NAMES` - Display names for 18 muscle types
+- `MUSCLE_POSITIONS` - Position labels for body visualization
+- `MUSCLE_GROUPS` - High-level muscle categories
+- `BODY_PARTS` - Body region categorization
+- `MUSCLE_TAGS` - Array of 54 recognized muscle tags
+- `MUSCLE_TAG_MAP` - Tag to normalized muscle group mapping
+- `MUSCLE_KEYWORDS` - Keywords for fuzzy matching (34 entries)
+- `MUSCLES` - Aggregated object for convenient access
+
+**Notes for next developer:**
+- The original `CONSTANTS.WORKOUT.MUSCLES` structure remains intact in `Constants.ts`
+- New exports provide alternative direct imports for better tree-shaking
+- Existing code using `CONSTANTS.WORKOUT.MUSCLES.TAG_MAP` continues to work
+- Next task: US-004 (Split Validation Constants into Dedicated File)
+
 ## 2026-01-28 - US-002: Split Default Values into Dedicated File
 
 **Status:** Completed

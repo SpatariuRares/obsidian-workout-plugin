@@ -49,8 +49,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29. Created muscles.constants.ts with MUSCLE_NAMES, MUSCLE_POSITIONS, MUSCLE_GROUPS, BODY_PARTS, MUSCLE_TAGS, MUSCLE_TAG_MAP, MUSCLE_KEYWORDS exports. Added aggregated MUSCLES export. Updated index.ts barrel to re-export from the new module."
     },
     {
       "id": "US-004",

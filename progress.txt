@@ -1,5 +1,42 @@
 # Ralph Progress Log
 
+## 2026-01-29 - US-004: Split Validation Constants into Dedicated File
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/constants/validation.constants.ts`:
+   - Header JSDoc explaining the file's purpose
+   - `ERROR_MESSAGES`: Error messages for data operations (CSV_NOT_FOUND, FILE_EMPTY, etc.)
+   - `ERROR_TYPES`: Error type classifications (VALIDATION, TABLE, GENERIC)
+   - `FORM_VALIDATION`: Form input validation messages
+   - `SETTINGS_VALIDATION`: Settings validation for presets and protocols
+   - `TABLE_VALIDATION`: Table configuration validation with function for LIMIT_RANGE
+   - `CHART_LIMITS`: Numeric limits for chart configuration (DATE_RANGE, LIMIT)
+   - `TABLE_LIMITS`: Numeric limits for table configuration
+   - `TIMER_LIMITS`: Numeric limits for timer configuration (DURATION, INTERVAL, ROUNDS)
+   - `VALIDATION`: Aggregated export for convenient access to all validation constants
+
+2. Updated `app/constants/index.ts`:
+   - Added re-export for `validation.constants.ts`
+   - Validation constants now available via barrel import
+
+**Exports created:**
+- `ERROR_MESSAGES` - Error messages for data operations
+- `ERROR_TYPES` - Error type classifications
+- `FORM_VALIDATION` - Form input validation messages
+- `SETTINGS_VALIDATION` - Settings validation (preset/protocol)
+- `TABLE_VALIDATION` - Table config validation with dynamic limit range message
+- `CHART_LIMITS` - Chart numeric limits with DATE_RANGE and LIMIT
+- `TABLE_LIMITS` - Table numeric limits
+- `TIMER_LIMITS` - Timer numeric limits (DURATION, INTERVAL, ROUNDS)
+- `VALIDATION` - Aggregated object for convenient access
+
+**Notes for next developer:**
+- The original validation constants remain in `Constants.ts` for backward compatibility
+- New exports provide alternative direct imports for better tree-shaking
+- Next task: US-005 (Create Constants Barrel Export Index) - this is already partially done via index.ts
+
 ## 2026-01-29 - US-003: Split Muscle Constants into Dedicated File
 
 **Status:** Completed

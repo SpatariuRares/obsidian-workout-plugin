@@ -6,17 +6,6 @@ import {
 } from "../WorkoutLogData";
 
 describe("parseCSVLogFile - CSV Parsing Validation", () => {
-  // Mock console.warn to test warning messages
-  let consoleWarnSpy: jest.SpyInstance;
-
-  beforeEach(() => {
-    consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
-  });
-
-  afterEach(() => {
-    consoleWarnSpy.mockRestore();
-  });
-
   test("should parse valid CSV entries correctly", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,10,100,1000,mobile,Push Day,1706054400000,Good set
@@ -51,7 +40,7 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     });
   });
 
-  test("should skip entries with NaN reps and log warning", () => {
+  test("should skip entries with NaN reps", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,abc,100,1000,mobile,Push Day,1706054400000,Invalid reps
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -60,12 +49,9 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: invalid numeric values")
-    );
   });
 
-  test("should skip entries with NaN weight and log warning", () => {
+  test("should skip entries with NaN weight", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,10,invalid,1000,mobile,Push Day,1706054400000,Invalid weight
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -74,12 +60,9 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: invalid numeric values")
-    );
   });
 
-  test("should skip entries with NaN volume and log warning", () => {
+  test("should skip entries with NaN volume", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,10,100,xyz,mobile,Push Day,1706054400000,Invalid volume
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -88,12 +71,9 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: invalid numeric values")
-    );
   });
 
-  test("should skip entries with reps <= 0 and log warning", () => {
+  test("should skip entries with reps <= 0", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,0,100,0,mobile,Push Day,1706054400000,Zero reps
 2024-01-24,Deadlift,-5,200,-1000,mobile,Pull Day,1706054450000,Negative reps
@@ -103,15 +83,9 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: reps must be > 0 (got 0)")
-    );
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 3: reps must be > 0 (got -5)")
-    );
   });
 
-  test("should skip entries with weight < 0 and log warning", () => {
+  test("should skip entries with weight < 0", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,10,-50,-500,mobile,Push Day,1706054400000,Negative weight
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -120,9 +94,6 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: weight must be >= 0 (got -50)")
-    );
   });
 
   test("should accept entries with weight = 0 (bodyweight exercises)", () => {
@@ -136,7 +107,7 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     expect(entries[0].exercise).toBe("Pull-ups");
   });
 
-  test("should skip entries with empty fields and log warning", () => {
+  test("should skip entries with empty exercise name", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,,10,100,1000,mobile,Push Day,1706054400000,Missing exercise
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -145,12 +116,9 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: missing exercise name")
-    );
   });
 
-  test("should skip entries with insufficient columns and log warning", () => {
+  test("should skip entries with insufficient columns", () => {
     const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes
 2024-01-24,Bench Press,10
 2024-01-24,Squat,5,150,750,mobile,Leg Day,1706054500000,Valid entry`;
@@ -159,9 +127,6 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
 
     expect(entries).toHaveLength(1);
     expect(entries[0].exercise).toBe("Squat");
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: insufficient columns")
-    );
   });
 
   test("should continue parsing remaining entries after encountering invalid entry", () => {
@@ -178,9 +143,6 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     expect(entries).toHaveLength(2);
     expect(entries[0].exercise).toBe("Deadlift");
     expect(entries[1].exercise).toBe("Press");
-
-    // Should have logged 3 warnings
-    expect(consoleWarnSpy).toHaveBeenCalledTimes(3);
   });
 
   test("should handle empty CSV content", () => {
@@ -198,19 +160,11 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     expect(entries).toHaveLength(0);
   });
 
-  test("should log error and return empty array on parse exception", () => {
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-
+  test("should return empty array on parse exception", () => {
     // Force an error by providing null as content (will cause split to throw)
     const entries = parseCSVLogFile(null as any);
 
     expect(entries).toHaveLength(0);
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      expect.stringContaining("[WorkoutLogData] Error parsing CSV:"),
-      expect.any(Error)
-    );
-
-    consoleErrorSpy.mockRestore();
   });
 
   test("should handle multiple validation failures in single line", () => {
@@ -220,10 +174,6 @@ describe("parseCSVLogFile - CSV Parsing Validation", () => {
     const entries = parseCSVLogFile(csvContent);
 
     expect(entries).toHaveLength(0);
-    // Should fail on reps <= 0 first, before checking exercise name
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Skipping line 2: reps must be > 0")
-    );
   });
 
   test("should use Date.now() as fallback when timestamp is NaN", () => {

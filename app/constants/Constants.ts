@@ -374,6 +374,7 @@ export const CONSTANTS = {
         PROTOCOL_COLOR: "Badge color",
         SET_DURATION: "Default set duration (seconds)",
         SHOW_QUICK_LOG_RIBBON: "Show quick log ribbon icon",
+        QUICK_WEIGHT_INCREMENT: "Quick weight increment (kg)",
       },
       DESCRIPTIONS: {
         CSV_PATH: "Path to the CSV file containing all workout log data",
@@ -391,6 +392,7 @@ export const CONSTANTS = {
         PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
         SET_DURATION: "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
         SHOW_QUICK_LOG_RIBBON: "Show a dumbbell icon in the left ribbon for quick logging on mobile and desktop",
+        QUICK_WEIGHT_INCREMENT: "Weight increment for quick adjustment buttons in quick log modal (e.g., 2.5 for +2.5 / -2.5)",
       },
       SECTIONS: {
         CSV_MANAGEMENT: "CSV file management",

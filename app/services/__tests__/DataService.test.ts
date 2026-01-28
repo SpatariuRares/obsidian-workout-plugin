@@ -65,6 +65,7 @@ describe("DataService", () => {
       setDuration: 45,
       showQuickLogRibbon: true,
       recentExercises: [],
+      quickWeightIncrement: 2.5,
     };
 
     // Create DataService instance

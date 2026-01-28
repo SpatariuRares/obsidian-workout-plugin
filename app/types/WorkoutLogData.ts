@@ -87,6 +87,8 @@ export interface WorkoutChartsSettings {
   showQuickLogRibbon: boolean;
   /** Recent exercises for quick log modal (max 10 items, most recent first) */
   recentExercises: string[];
+  /** Quick weight increment for quick log modal (e.g., 2.5 for +/- 2.5kg buttons) */
+  quickWeightIncrement: number;
 }
 
 /**
@@ -120,6 +122,7 @@ workout: {{workout}}
   setDuration: 45,
   showQuickLogRibbon: true,
   recentExercises: [],
+  quickWeightIncrement: 2.5,
 };
 
 /**

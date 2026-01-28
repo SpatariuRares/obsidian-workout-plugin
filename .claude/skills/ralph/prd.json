@@ -71,8 +71,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Weight auto-fill from last exercise entry via CSV data, +/- buttons with configurable quickWeightIncrement setting (default 2.5), visual feedback with brief highlight on tap, settings UI in Quick Log section, CSS styles in _modal.scss"
     },
     {
       "id": "US-005",

@@ -1,5 +1,57 @@
 # Ralph Progress Log
 
+## 2026-01-28 - US-004: Add Weight Auto-fill and Quick Adjustment
+
+**Status:** Completed
+
+**Changes made:**
+1. Added `quickWeightIncrement` setting to `WorkoutChartsSettings` in `app/types/WorkoutLogData.ts`:
+   - Type: `number`
+   - Default value: `2.5`
+
+2. Updated `DEFAULT_SETTINGS` with `quickWeightIncrement: 2.5`
+
+3. Added constants in `app/constants/Constants.ts`:
+   - `SETTINGS.LABELS.QUICK_WEIGHT_INCREMENT`: "Quick weight increment (kg)"
+   - `SETTINGS.DESCRIPTIONS.QUICK_WEIGHT_INCREMENT`: Description for the setting
+
+4. Updated `QuickLogModal` in `app/features/modals/QuickLogModal.ts`:
+   - Added `workoutLogData` property for weight auto-fill
+   - Pre-loads workout log data in `onOpen()` for weight lookups
+   - Added `autoFillWeight()` method to find last weight for selected exercise
+   - Added `adjustWeight()` method with visual feedback on button tap
+   - Replaced simple weight input with wrapper containing +/- buttons
+   - Added event listeners to auto-fill weight on exercise selection (chips, blur, change)
+
+5. Updated `WorkoutChartsSettingTab` in `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added `quickWeightIncrement` setting in Quick Log section with text input
+
+6. Added CSS styles in `app/styles/_modal.scss`:
+   - `.workout-quick-log-label` - Label styling
+   - `.workout-quick-log-weight-wrapper` - Flex container for buttons and input
+   - `.workout-quick-log-weight-btn` - Large touch target buttons (56x44px minimum)
+   - `.workout-quick-log-weight-btn-active` - Visual feedback on tap
+   - `.workout-quick-log-weight-btn-decrement` - Red color for minus button
+   - `.workout-quick-log-weight-btn-increment` - Green color for plus button
+   - `.workout-quick-log-weight-input` - Centered weight input
+
+7. Updated `DataService.test.ts` with new `quickWeightIncrement` setting in mock
+
+**Features implemented:**
+- Weight field auto-fills with last weight used for selected exercise
+- +/- buttons flank weight input (e.g., "-2.5" and "+2.5")
+- Buttons use configurable increment value from settings
+- Brief visual highlight on button tap (150ms)
+- Settings tab includes input for quick weight increment value
+- Weight auto-fill triggers on: chip selection, autocomplete blur, input change
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain (unrelated to this change):
+  - `WorkoutLogData.test.ts` - Expects console.warn calls that were removed from implementation
+- The weight auto-fill uses the most recent entry for the exercise based on timestamp
+- Next task is US-005: Create Templater Exercise Block Function
+
 ## 2026-01-24 - US-001: Add TimerPresetConfig type and settings field
 
 **Status:** Completed

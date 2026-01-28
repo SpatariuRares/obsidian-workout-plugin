@@ -830,5 +830,20 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
             this.plugin.updateQuickLogRibbon();
           }),
       );
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.QUICK_WEIGHT_INCREMENT)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.QUICK_WEIGHT_INCREMENT)
+      .addText((text) =>
+        text
+          .setValue(String(this.plugin.settings.quickWeightIncrement))
+          .onChange(async (value) => {
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue > 0) {
+              this.plugin.settings.quickWeightIncrement = numValue;
+              await this.plugin.saveSettings();
+            }
+          }),
+      );
   }
 }

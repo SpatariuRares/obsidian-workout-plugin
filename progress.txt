@@ -1,5 +1,39 @@
 # Ralph Progress Log
 
+## 2026-01-28 - US-005: Create Templater Exercise Block Function
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `scripts/` directory (new)
+
+2. Created `scripts/templater-functions.js`:
+   - `workoutExerciseBlock(name, duration, workout)` function
+   - Validates inputs (name required, duration defaults to 60)
+   - Returns formatted markdown with H2 header + workout-timer code block
+   - Includes exercise name, duration, workout name, and showControls in output
+   - Module exports the function for Templater consumption
+
+3. Created `scripts/README.md` with comprehensive documentation:
+   - Setup instructions for Templater plugin
+   - User scripts folder configuration steps
+   - Function API reference with parameter table
+   - Multiple usage examples (basic, full workout template, interactive prompts)
+   - Troubleshooting guide
+
+**Features implemented:**
+- `workoutExerciseBlock(name, duration, workout)` generates exercise blocks with timers
+- Output format: H2 header with exercise name + workout-timer code block
+- Graceful handling of missing/invalid inputs
+- Ready for use with Templater's `tp.user.workoutExerciseBlock()` syntax
+
+**Notes for next developer:**
+- TypeScript compilation passes (JavaScript file, no TypeScript types needed)
+- Pre-existing test failures remain (unrelated to this change):
+  - `WorkoutLogData.test.ts` - Expects console.warn calls that were removed from implementation
+- The scripts folder is meant to be copied to user's Templater user scripts folder
+- Next task is US-006: Create Templater Exercise List Function
+
 ## 2026-01-28 - US-004: Add Weight Auto-fill and Quick Adjustment
 
 **Status:** Completed

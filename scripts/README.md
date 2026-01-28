@@ -92,6 +92,108 @@ tR += tp.user.workoutExerciseBlock(exercise, parseInt(duration), workout);
 %>
 ```
 
+### workoutExercises(tp, filter)
+
+Gets exercise names from the configured exercises folder. Optionally filters exercises by frontmatter tag.
+
+**Important:** This function requires the Templater `tp` object to be passed as the first argument.
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `tp` | object | Yes | - | The Templater object (for Obsidian API access) |
+| `filter` | object | No | - | Filter options |
+| `filter.tag` | string | No | - | Filter exercises by frontmatter tag |
+
+#### Returns
+
+A Promise that resolves to an array of exercise names (file basenames without the .md extension), sorted alphabetically.
+
+#### Example Usage
+
+**Get all exercises:**
+
+```markdown
+<% tp.user.workoutExercises(tp) %>
+```
+
+**Filter exercises by tag:**
+
+```markdown
+<% tp.user.workoutExercises(tp, {tag: "glutes"}) %>
+```
+
+**List exercises as bullets:**
+
+```markdown
+<%*
+const exercises = await tp.user.workoutExercises(tp);
+for (const exercise of exercises) {
+  tR += `- [[${exercise}]]\n`;
+}
+%>
+```
+
+**Filter and display chest exercises:**
+
+```markdown
+# Chest Exercises
+
+<%*
+const chestExercises = await tp.user.workoutExercises(tp, {tag: "chest"});
+for (const exercise of chestExercises) {
+  tR += `- [[${exercise}]]\n`;
+}
+%>
+```
+
+**Build a workout from filtered exercises:**
+
+```markdown
+# <% tp.date.now("YYYY-MM-DD") %> - Glute Day
+
+<%*
+const gluteExercises = await tp.user.workoutExercises(tp, {tag: "glutes"});
+for (const exercise of gluteExercises) {
+  tR += tp.user.workoutExerciseBlock(exercise, 90, "Glute Day") + "\n\n";
+}
+%>
+```
+
+**Interactive exercise selection from filtered list:**
+
+```markdown
+<%*
+const exercises = await tp.user.workoutExercises(tp, {tag: "compound"});
+const selected = await tp.system.suggester(exercises, exercises, false, "Select exercise:");
+if (selected) {
+  tR += tp.user.workoutExerciseBlock(selected, 90, "Workout");
+}
+%>
+```
+
+#### Exercise File Frontmatter
+
+For tag filtering to work, your exercise files should have tags in their frontmatter:
+
+```yaml
+---
+tags:
+  - glutes
+  - compound
+  - lower-body
+---
+```
+
+Or using inline array format:
+
+```yaml
+---
+tags: [glutes, compound, lower-body]
+---
+```
+
 ## Troubleshooting
 
 ### Function not found

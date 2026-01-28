@@ -2333,3 +2333,47 @@ workout: Workouts/Push Day
 - Next task is US-004: Add Weight Auto-fill and Quick Adjustment
 - US-004 will add weight auto-fill from last set and +/- adjustment buttons
 - The recent exercises feature integrates seamlessly with existing QuickLogModal
+
+## 2026-01-28 - US-006: Create Templater Exercise List Function (Phase 4)
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `scripts/templater-functions.js`:
+   - Added `workoutExercises(tp, filter)` async function
+   - Function requires `tp` object (Templater) for Obsidian API access
+   - Reads exercises folder path from plugin settings (falls back to "Esercizi" default)
+   - Returns array of exercise names (file basenames without .md extension), sorted alphabetically
+   - Supports optional `filter` parameter with `tag` property for filtering
+   - Filter reads frontmatter tags from each exercise file
+   - Supports multiple YAML tag formats: array `[tag1, tag2]`, list format `- tag1`, single tag
+   - Case-insensitive tag matching
+   - Added helper function `parseFrontmatterTags()` for YAML parsing
+   - Changed module.exports to export both `workoutExerciseBlock` and `workoutExercises`
+
+2. Updated `scripts/README.md`:
+   - Added comprehensive documentation for `workoutExercises(tp, filter)` function
+   - Documented parameters table with tp (required), filter.tag (optional)
+   - Added 6 usage examples:
+     - Get all exercises
+     - Filter by tag
+     - List exercises as bullets with wiki links
+     - Filter and display exercises by category
+     - Build workout from filtered exercises (combining with workoutExerciseBlock)
+     - Interactive exercise selection using Templater suggester
+   - Added section on exercise file frontmatter format for tag filtering
+
+**Features implemented:**
+- `workoutExercises` function added to scripts/templater-functions.js
+- Function returns array of exercise names from configured exercises folder
+- Supports filter parameter: `workoutExercises(tp, {tag: 'glutes'})`
+- Filter by tag reads exercise file frontmatter (case-insensitive)
+- scripts/README.md updated with comprehensive usage examples
+- TypeScript compilation passes (`npm run build`)
+- Tests pass (358 passed, 10 pre-existing failures unrelated to this change)
+
+**Notes for next developer:**
+- Next task is US-007: Expose Dataview Workout Logs API
+- US-007 will expose `window.WorkoutPlannerAPI.getWorkoutLogs(filter)` for Dataview integration
+- The workoutExercises function requires the tp object from Templater for Obsidian API access
+- Exercise tag filtering reads frontmatter from each file, so performance may vary with large exercise libraries

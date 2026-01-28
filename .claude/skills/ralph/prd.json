@@ -103,8 +103,8 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Added async workoutExercises(tp, filter) function to scripts/templater-functions.js. Function requires tp object (Templater) for Obsidian API access, gets exercises from plugin's exerciseFolderPath setting, supports tag filtering via frontmatter parsing (array, list, and single tag YAML formats). README.md updated with comprehensive usage examples including loops, filtering, and combining with workoutExerciseBlock."
     },
     {
       "id": "US-007",

@@ -93,37 +93,9 @@ export interface WorkoutChartsSettings {
 
 /**
  * Default plugin settings.
+ * Re-exported from defaults.constants.ts for backward compatibility.
  */
-export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
-  csvLogFilePath: "theGYM/Log/workout_logs.csv",
-  exerciseFolderPath: "Esercizi",
-  defaultExercise: "",
-  chartType: CHART_DATA_TYPE.VOLUME,
-  dateRange: 30,
-  showTrendLine: true,
-  chartHeight: 400,
-  defaultExactMatch: true,
-  timerPresets: {},
-  defaultTimerPreset: null,
-  exerciseBlockTemplate: `## {{exercise}}
-
-\`\`\`workout-timer
-duration: {{duration}}
-preset: {{preset}}
-\`\`\`
-
-\`\`\`workout-log
-exercise: {{exercise}}
-workout: {{workout}}
-\`\`\``,
-  weightIncrement: 2.5,
-  achievedTargets: {},
-  customProtocols: [],
-  setDuration: 45,
-  showQuickLogRibbon: true,
-  recentExercises: [],
-  quickWeightIncrement: 2.5,
-};
+export { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 /**
  * Parses CSV content and returns an array of CSVWorkoutLogEntry objects

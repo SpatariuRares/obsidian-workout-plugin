@@ -1,5 +1,38 @@
 # Ralph Progress Log
 
+## 2026-01-28 - US-002: Split Default Values into Dedicated File
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/constants/defaults.constants.ts`:
+   - Header JSDoc explaining the file's purpose
+   - `DEFAULT_SETTINGS`: Plugin settings with comprehensive JSDoc for each property
+   - `DEFAULT_CHART_CONFIG`: Chart modal defaults (date range, limits with min/max)
+   - `DEFAULT_TABLE_CONFIG`: Table defaults (limits, visible columns, button text, exact match)
+   - `DEFAULT_TIMER_CONFIG`: Timer defaults (duration, interval, rounds with min/max)
+   - `DEFAULT_DATE_KEY`: Date key for invalid date handling
+   - `DEFAULTS`: Aggregated export grouping all defaults by domain
+
+2. Updated `app/types/WorkoutLogData.ts`:
+   - Removed inline `DEFAULT_SETTINGS` definition
+   - Re-exported `DEFAULT_SETTINGS` from `defaults.constants.ts` for backward compatibility
+   - All existing imports continue to work without modification
+
+**Exports created:**
+- `DEFAULT_SETTINGS` - Full plugin settings object with JSDoc
+- `DEFAULT_CHART_CONFIG` - Chart configuration with DATE_RANGE, LIMIT, and min/max values
+- `DEFAULT_TABLE_CONFIG` - Table configuration with LIMIT, VISIBLE_COLUMNS, BUTTON_TEXT, EXACT_MATCH
+- `DEFAULT_TIMER_CONFIG` - Timer configuration with DURATION, INTERVAL, ROUNDS and min/max values
+- `DEFAULT_DATE_KEY` - Invalid date key for table grouping
+- `DEFAULTS` - Aggregated object for convenient access to all defaults
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain in `WorkoutLogData.test.ts` (console.warn expectations)
+- Imports use `import type` for `WorkoutChartsSettings` to avoid circular dependencies
+- Next task: US-003 (Split Muscle Constants into Dedicated File)
+
 ## 2026-01-28 - US-009: Create Canvas Export Command
 
 **Status:** Completed

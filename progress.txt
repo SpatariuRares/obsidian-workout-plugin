@@ -1,5 +1,67 @@
 # Ralph Progress Log
 
+## 2026-01-28 - US-009: Create Canvas Export Command
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/features/canvas/CanvasExporter.ts`:
+   - Exports workout files to Obsidian Canvas format (.canvas)
+   - Extracts exercises from workout files via multiple patterns:
+     - workout-timer code blocks (exercise: field)
+     - H2 headers (## Exercise Name)
+     - Markdown links to exercise files ([[Exercise]])
+   - Uses MuscleTagMapper to get muscle groups for each exercise
+   - Colors nodes by muscle group using JSON Canvas preset colors (1-6)
+   - Generates grid layout with configurable dimensions
+   - Creates valid JSON Canvas format per jsoncanvas.org spec
+
+2. Created `app/features/canvas/WorkoutFileSuggestModal.ts`:
+   - FuzzySuggestModal extension for file selection
+   - Shows all markdown files sorted by modification time
+   - Fuzzy search for quick file selection
+
+3. Created `app/features/canvas/index.ts`:
+   - Barrel export for CanvasExporter and WorkoutFileSuggestModal
+
+4. Updated `app/services/CommandHandlerService.ts`:
+   - Added import for CanvasExporter and WorkoutFileSuggestModal
+   - Registered 'export-workout-to-canvas' command
+   - Command opens file suggester, then exports selected file to canvas
+
+5. Updated `app/constants/Constants.ts`:
+   - Added `COMMANDS.EXPORT_WORKOUT_TO_CANVAS`
+   - Added `MODAL.NOTICES.CANVAS_EXPORTED`
+   - Added `MODAL.NOTICES.CANVAS_EXPORT_ERROR`
+   - Added `MODAL.NOTICES.CANVAS_NO_EXERCISES`
+
+6. Updated `__mocks__/obsidian.ts`:
+   - Added FuzzySuggestModal mock class
+   - Added TFolder mock class
+
+**Features implemented:**
+- 'Export Workout to Canvas' command in command palette
+- File suggester modal for selecting workout file
+- Canvas export with nodes for each exercise
+- Muscle group color coding (6 colors for different muscle groups)
+- Grid layout arrangement (4 nodes per row)
+- Extracts exercises from workout-timer blocks, headers, and links
+
+**Canvas color scheme:**
+- Chest, Glutes: Red (1)
+- Back, Hamstrings, Traps: Orange (2)
+- Quads, Calves: Yellow (3)
+- Biceps, Abs, Core: Green (4)
+- Triceps, Forearms: Cyan (5)
+- Shoulders, Rear Delts: Purple (6)
+
+**Notes for next developer:**
+- TypeScript compilation passes
+- Pre-existing test failures remain in `WorkoutLogData.test.ts` (console.warn expectations)
+- Canvas files are created in same folder as source workout file
+- Uses JSON Canvas spec 1.0 from jsoncanvas.org
+- Next task: US-010 (Canvas Export Layout Options)
+
 ## 2026-01-28 - US-008: Expose Dataview Exercise Stats API
 
 **Status:** Completed

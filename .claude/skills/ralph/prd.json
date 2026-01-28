@@ -153,8 +153,8 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Created CanvasExporter class in app/features/canvas/ that extracts exercises from workout files (via workout-timer code blocks, H2 headers, and [[links]]), maps muscle groups to colors using MuscleTagMapper, and generates valid JSON Canvas files. WorkoutFileSuggestModal provides file selection via FuzzySuggestModal. Command 'Export Workout to Canvas' registered in CommandHandlerService. Canvas nodes arranged in grid layout with 6 color presets for muscle groups."
     },
     {
       "id": "US-010",

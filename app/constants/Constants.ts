@@ -346,6 +346,7 @@ export const CONSTANTS = {
       AUDIT_EXERCISE_NAMES: "Audit exercise names",
       ADD_EXERCISE_BLOCK: "Add exercise block",
       QUICK_LOG: "Quick log",
+      EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
     },
     DESCRIPTIONS: {
       INSERT_TABLE:
@@ -739,6 +740,9 @@ export const CONSTANTS = {
         AUDIT_RENAME_FILE_ERROR: "Error renaming file: ",
         AUDIT_CONFIRM_RENAME_FILE: "Are you sure you want to rename this file?",
         EXERCISE_BLOCK_INSERTED: "✅ Exercise block inserted successfully!",
+        CANVAS_EXPORTED: "Canvas exported successfully!",
+        CANVAS_EXPORT_ERROR: "Error exporting to canvas: ",
+        CANVAS_NO_EXERCISES: "No exercises found in workout file",
         TARGET_ACHIEVED: "Target Reached! Consider increasing weight",
         TARGET_DISMISSED: "Achievement badge dismissed",
         SUGGESTED_NEXT_WEIGHT: "Suggested next:",

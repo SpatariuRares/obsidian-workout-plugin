@@ -119,8 +119,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-28: Created app/api/WorkoutPlannerAPI.ts class with getWorkoutLogs(filter) method supporting exercise, workout, dateRange (start/end), protocol, and exactMatch filters. Returns DataviewWorkoutLog[] array without TFile references for Dataview compatibility. Exposed as window.WorkoutPlannerAPI from main.ts with proper cleanup on unload. Created comprehensive docs/dataview-integration.md with 10+ example queries including tables, filters, statistics, weekly summaries, and PRs."
     },
     {
       "id": "US-008",

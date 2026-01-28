@@ -2377,3 +2377,58 @@ workout: Workouts/Push Day
 - US-007 will expose `window.WorkoutPlannerAPI.getWorkoutLogs(filter)` for Dataview integration
 - The workoutExercises function requires the tp object from Templater for Obsidian API access
 - Exercise tag filtering reads frontmatter from each file, so performance may vary with large exercise libraries
+
+## 2026-01-28 - US-007: Expose Dataview Workout Logs API (Phase 4)
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/api/WorkoutPlannerAPI.ts`:
+   - New `WorkoutPlannerAPI` class for Dataview integration
+   - `getWorkoutLogs(filter?)` method with support for:
+     - `exercise`: Filter by exercise name (partial match, case-insensitive)
+     - `workout`: Filter by workout/origin name (partial match, case-insensitive)
+     - `dateRange`: Filter by start/end dates (YYYY-MM-DD format)
+     - `protocol`: Filter by workout protocol (e.g., "drop_set", "myo_reps")
+     - `exactMatch`: Use exact matching instead of partial matching
+   - Returns `DataviewWorkoutLog[]` array (plain objects without TFile references)
+   - Private helper methods for date range and protocol filtering
+
+2. Created `app/api/index.ts`:
+   - Barrel export for WorkoutPlannerAPI class
+   - Type exports for WorkoutLogsFilter and DataviewWorkoutLog interfaces
+
+3. Updated `main.ts`:
+   - Added import for WorkoutPlannerAPI
+   - Extended Window interface with `WorkoutPlannerAPI?` property
+   - Added `workoutPlannerAPI` private property to plugin class
+   - Initialize and expose API as `window.WorkoutPlannerAPI` in `onload()`
+   - Clean up API reference (`delete window.WorkoutPlannerAPI`) in `onunload()`
+
+4. Created `docs/dataview-integration.md`:
+   - Comprehensive documentation for Dataview integration
+   - API reference with parameter table
+   - 10+ example queries including:
+     - Basic table display of all logs
+     - Filter by exercise, workout, date range, protocol
+     - Combined filters
+     - Calculate total volume for an exercise
+     - Weekly volume summary
+     - Personal records per exercise
+   - Inline query examples using `dv.span()`
+   - Available protocols list
+   - Troubleshooting section
+
+**Features implemented:**
+- `window.WorkoutPlannerAPI` object exposed from plugin
+- `getWorkoutLogs(filter)` method with exercise, workout, dateRange, protocol parameters
+- Returns array of log entries compatible with Dataview tables
+- Documentation in docs/dataview-integration.md with example queries
+- TypeScript compilation passes (`npm run build`)
+- Tests pass (358 passed, 10 pre-existing failures unrelated to this change)
+
+**Notes for next developer:**
+- Next task is US-008: Expose Dataview Exercise Stats API
+- US-008 will add `getExerciseStats(exercise)` and `getExercises(filter)` methods
+- The WorkoutPlannerAPI is designed to be extensible - add new methods to the class
+- Date filtering uses ISO date format (YYYY-MM-DD) for consistency

@@ -18,6 +18,14 @@ import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { QuickLogModal } from "@app/features/modals/QuickLogModal";
 import { CONSTANTS } from "@app/constants/Constants";
+import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
+
+// Extend Window interface for WorkoutPlannerAPI
+declare global {
+  interface Window {
+    WorkoutPlannerAPI?: WorkoutPlannerAPI;
+  }
+}
 
 // ===================== MAIN PLUGIN =====================
 
@@ -33,6 +41,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   private commandHandlerService!: CommandHandlerService;
   private dataService!: DataService;
   private codeBlockProcessorService!: CodeBlockProcessorService;
+
+  // Public API for Dataview integration
+  private workoutPlannerAPI!: WorkoutPlannerAPI;
 
   // Expose createLogModalHandler for dashboard quick actions
   public get createLogModalHandler() {
@@ -64,6 +75,10 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedDashboardView,
       this.activeTimers,
     );
+
+    // Initialize and expose WorkoutPlannerAPI for Dataview integration
+    this.workoutPlannerAPI = new WorkoutPlannerAPI(this.dataService);
+    window.WorkoutPlannerAPI = this.workoutPlannerAPI;
 
     this.codeBlockProcessorService.registerProcessors();
 
@@ -142,6 +157,11 @@ export default class WorkoutChartsPlugin extends Plugin {
     if (this.quickLogRibbonIcon) {
       this.quickLogRibbonIcon.remove();
       this.quickLogRibbonIcon = null;
+    }
+
+    // 7. Remove WorkoutPlannerAPI from window
+    if (window.WorkoutPlannerAPI) {
+      delete window.WorkoutPlannerAPI;
     }
   }
 

@@ -83,6 +83,8 @@ export interface WorkoutChartsSettings {
   customProtocols: CustomProtocolConfig[];
   /** Default duration per set in seconds for workout duration estimation */
   setDuration: number;
+  /** Show quick log ribbon icon for mobile logging */
+  showQuickLogRibbon: boolean;
 }
 
 /**
@@ -114,6 +116,7 @@ workout: {{workout}}
   achievedTargets: {},
   customProtocols: [],
   setDuration: 45,
+  showQuickLogRibbon: true,
 };
 
 /**

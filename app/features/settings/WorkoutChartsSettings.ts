@@ -96,6 +96,9 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Duration Estimation Section
     this.renderDurationEstimationSection(containerEl);
+
+    // Quick Log Section
+    this.renderQuickLogSection(containerEl);
   }
 
   private renderTimerPresetsSection(containerEl: HTMLElement): void {
@@ -758,6 +761,26 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
               this.plugin.settings.setDuration = numValue;
               await this.plugin.saveSettings();
             }
+          })
+      );
+  }
+
+  private renderQuickLogSection(containerEl: HTMLElement): void {
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.QUICK_LOG)
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SHOW_QUICK_LOG_RIBBON)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SHOW_QUICK_LOG_RIBBON)
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.showQuickLogRibbon)
+          .onChange(async (value) => {
+            this.plugin.settings.showQuickLogRibbon = value;
+            await this.plugin.saveSettings();
+            // Update ribbon visibility
+            this.plugin.updateQuickLogRibbon();
           })
       );
   }

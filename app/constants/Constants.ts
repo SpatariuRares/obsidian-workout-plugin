@@ -345,6 +345,7 @@ export const CONSTANTS = {
       INSERT_TABLE: "Insert workout table",
       AUDIT_EXERCISE_NAMES: "Audit exercise names",
       ADD_EXERCISE_BLOCK: "Add exercise block",
+      QUICK_LOG: "Quick log",
     },
     DESCRIPTIONS: {
       INSERT_TABLE:
@@ -372,6 +373,7 @@ export const CONSTANTS = {
         PROTOCOL_ABBREVIATION: "Abbreviation",
         PROTOCOL_COLOR: "Badge color",
         SET_DURATION: "Default set duration (seconds)",
+        SHOW_QUICK_LOG_RIBBON: "Show quick log ribbon icon",
       },
       DESCRIPTIONS: {
         CSV_PATH: "Path to the CSV file containing all workout log data",
@@ -388,6 +390,7 @@ export const CONSTANTS = {
         PROTOCOL_ABBREVIATION: "Short abbreviation shown in badge (max 3 characters)",
         PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
         SET_DURATION: "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
+        SHOW_QUICK_LOG_RIBBON: "Show a dumbbell icon in the left ribbon for quick logging on mobile and desktop",
       },
       SECTIONS: {
         CSV_MANAGEMENT: "CSV file management",
@@ -397,6 +400,7 @@ export const CONSTANTS = {
         PROGRESSIVE_OVERLOAD: "Progressive overload",
         CUSTOM_PROTOCOLS: "Custom protocols",
         DURATION_ESTIMATION: "Duration estimation",
+        QUICK_LOG: "Quick log",
       },
       BUTTONS: {
         ADD_PRESET: "Add preset",
@@ -680,6 +684,7 @@ export const CONSTANTS = {
         CONFIRM_ACTION: "Confirm action",
         AUDIT_EXERCISE_NAMES: "Audit exercise names",
         ADD_EXERCISE_BLOCK: "Add exercise block",
+        QUICK_LOG: "Quick log",
       },
       BUTTONS: {
         CREATE: "Create log",

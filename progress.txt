@@ -2107,3 +2107,54 @@ workout: Workouts/Push Day
 - All tests pass (368 passed, 4 skipped, 372 total)
 - This completes US-012 and all user stories in Phase 3 (protocol tracking and duration estimation)
 - PRD is now complete with all 12 user stories passing
+
+## 2026-01-28 - US-001: Add Quick Log Ribbon Icon (Phase 4)
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `showQuickLogRibbon: boolean` to `WorkoutChartsSettings` interface
+   - Added `showQuickLogRibbon: true` to `DEFAULT_SETTINGS`
+
+2. Updated `app/constants/Constants.ts`:
+   - Added `COMMANDS.QUICK_LOG: "Quick log"`
+   - Added `SETTINGS.LABELS.SHOW_QUICK_LOG_RIBBON`
+   - Added `SETTINGS.DESCRIPTIONS.SHOW_QUICK_LOG_RIBBON`
+   - Added `SETTINGS.SECTIONS.QUICK_LOG`
+   - Added `MODAL.TITLES.QUICK_LOG`
+
+3. Created `app/features/modals/QuickLogModal.ts`:
+   - Placeholder modal extending ModalBase
+   - Shows placeholder message indicating full implementation coming in US-002
+   - Displays notice when opened
+
+4. Updated `app/features/settings/WorkoutChartsSettings.ts`:
+   - Added `renderQuickLogSection()` method
+   - Toggle for showing/hiding ribbon icon
+   - Calls `plugin.updateQuickLogRibbon()` on toggle change
+
+5. Updated `main.ts`:
+   - Added `quickLogRibbonIcon` private property
+   - Added `updateQuickLogRibbon()` public method
+   - Ribbon icon uses "dumbbell" icon name
+   - Icon is added/removed based on setting
+   - Cleanup in `onunload()` method
+
+6. Updated `app/services/__tests__/DataService.test.ts`:
+   - Added `showQuickLogRibbon: true` to mock settings
+
+**Features implemented:**
+- Dumbbell icon added to left ribbon using addRibbonIcon API
+- Icon visible on both desktop and mobile
+- Clicking opens QuickLogModal (placeholder that shows notice)
+- 'showQuickLogRibbon' boolean in settings (default: true)
+- Settings tab includes toggle in "Quick log" section to show/hide ribbon icon
+- Icon removed from ribbon when setting is disabled
+- TypeScript compilation passes
+- All tests pass (368 passed, 4 skipped)
+
+**Notes for next developer:**
+- This is the first user story of Phase 4 (Integrations)
+- Next task is US-002: Create Quick Log Modal Base
+- US-002 will implement the full QuickLogModal with exercise autocomplete, reps input, weight input, and confirm button

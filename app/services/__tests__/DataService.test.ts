@@ -63,6 +63,7 @@ describe("DataService", () => {
       achievedTargets: {},
       customProtocols: [],
       setDuration: 45,
+      showQuickLogRibbon: true,
     };
 
     // Create DataService instance

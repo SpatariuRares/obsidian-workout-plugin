@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";

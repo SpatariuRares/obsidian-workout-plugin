@@ -1,5 +1,5 @@
 // EditLogModal - extends BaseLogModal for editing existing workout logs
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import {

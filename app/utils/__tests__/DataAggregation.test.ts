@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { DataAggregation } from '@app/utils/DataAggregation';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
 

@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { FrontmatterParser } from '@app/utils/FrontmatterParser';
 
 describe('FrontmatterParser', () => {

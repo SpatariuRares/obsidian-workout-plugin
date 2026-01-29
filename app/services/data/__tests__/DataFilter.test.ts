@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams, EmbeddedTableParams } from "@app/types";

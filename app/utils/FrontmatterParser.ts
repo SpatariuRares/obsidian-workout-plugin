@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { parseYaml } from "obsidian";
 /**
  * Utility for parsing YAML frontmatter from markdown files

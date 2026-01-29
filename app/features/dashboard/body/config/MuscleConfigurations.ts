@@ -3,7 +3,7 @@
  * Single source of truth for all muscle structures, preventing index misalignment bugs.
  */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import type { MuscleGroupData } from "@app/features/dashboard/body/Muscle";
 import type { ArmsData } from "@app/features/dashboard/body/Arms";
 import type { BackData } from "@app/features/dashboard/body/Back";

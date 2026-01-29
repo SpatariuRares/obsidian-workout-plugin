@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { TrendIndicator } from "@app/components/molecules/TrendIndicator";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

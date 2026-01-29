@@ -6,7 +6,7 @@
  */
 import { App, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 
 /**

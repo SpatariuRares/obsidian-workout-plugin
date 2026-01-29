@@ -1,6 +1,6 @@
 // Base class for log modals (Create and Edit)
 // Extracts common form creation and validation logic
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";

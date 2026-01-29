@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App, Notice } from "obsidian";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { InsertChartModal } from "@app/features/modals/InsertChartModal";

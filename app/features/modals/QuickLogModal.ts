@@ -1,5 +1,5 @@
 // Quick Log Modal for fast workout logging (mobile-friendly)
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Button } from "@app/components/atoms";

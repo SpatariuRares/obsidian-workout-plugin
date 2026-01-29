@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 

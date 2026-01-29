@@ -4,7 +4,7 @@
  * Combines: Button + Container atoms
  */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { Button, Container } from "@app/components/atoms";
 
 export interface ActionButtonGroupProps {

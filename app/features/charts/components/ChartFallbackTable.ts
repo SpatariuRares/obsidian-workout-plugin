@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 
 /**
  * Fallback table shown when Chart.js rendering is unavailable.

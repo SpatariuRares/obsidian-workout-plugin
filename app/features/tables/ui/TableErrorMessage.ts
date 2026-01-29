@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 /**
  * UI component for rendering error messages.
  * Pure UI logic with no business dependencies.

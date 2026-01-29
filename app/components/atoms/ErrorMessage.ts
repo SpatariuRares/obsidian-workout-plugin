@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 /**
  * ErrorMessage Atom
  * Basic error message display - indivisible UI primitive

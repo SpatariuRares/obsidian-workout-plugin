@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { SearchBox } from "@app/components/molecules/SearchBox";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

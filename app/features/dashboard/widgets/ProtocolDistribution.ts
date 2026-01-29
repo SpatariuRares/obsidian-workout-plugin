@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";

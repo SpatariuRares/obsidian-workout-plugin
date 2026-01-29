@@ -1,5 +1,5 @@
 // Base modal class with common functionality
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { FormField } from "@app/components/molecules";
 import { INPUT_TYPE } from "@app/types";

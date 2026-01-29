@@ -2789,3 +2789,50 @@ import { DEFAULT_SETTINGS } from '@app/constants/defaults.constants';
 - Next task: US-006 (Update All Imports to Use New Constants Structure)
 - This will involve finding all imports from Constants.ts and migrating them
 - US-007 will then remove the original Constants.ts file
+
+## 2026-01-29 - Phase 5 US-006: Update All Imports to Use New Constants Structure
+
+**Status:** Completed
+
+**Changes made:**
+1. Found 82 files importing from `@app/constants/Constants`
+2. Updated all files to import from `@app/constants` barrel instead:
+   - Used Node.js script for bulk replacement
+   - Changed `import { CONSTANTS } from "@app/constants/Constants"` to `import { CONSTANTS } from "@app/constants"`
+3. Fixed index.ts barrel to maintain proper re-export (avoided circular dependency)
+
+**Files updated (82 total):**
+- Components: ErrorMessage, ActionButtonGroup, SearchBox, TrendIndicator
+- Component tests: ActionButtonGroup, Badge, ChartLegendItem, FormField, LoadingSpinner, SearchBox, TrendIndicator
+- Organism: LogCallouts
+- Constants: index.ts, MuscleTags.ts, MuscleTags.test.ts
+- Canvas: CanvasExportModal
+- Charts: ChartFallbackTable, TrendHeader
+- Dashboard: All widgets, MuscleConfigurations, business logic, UI components
+- Modals: All modal files and components (base, components, individual modals)
+- Settings: WorkoutChartsSettings
+- Tables: TableConfig, TableDataProcessor, TableRefresh, TableActions, TableRenderer, ActionButtons, MobileTable, TableErrorMessage
+- Timer: TimerCore, TimerDisplay
+- Services: DataService, CommandHandlerService, CodeBlockProcessorService, DataFilter, TrendCalculator
+- Utils: DataAggregation, DateUtils, FrontmatterParser, utils
+- Views: BaseView, EmbeddedDashboardView, EmbeddedTableView
+- Tests: Multiple test files updated
+
+**Verification:**
+- TypeScript compiles: `npx tsc -noEmit -skipLibCheck` passes
+- Build succeeds: `npm run build` passes without circular dependency warnings
+- All 368 tests pass: `npm test`
+
+**Import pattern after migration:**
+```typescript
+// Before (direct import from Constants.ts)
+import { CONSTANTS } from "@app/constants/Constants";
+
+// After (import from barrel)
+import { CONSTANTS } from "@app/constants";
+```
+
+**Notes for next developer:**
+- The barrel (index.ts) re-exports CONSTANTS from Constants.ts for backward compatibility
+- Future optimization: migrate individual usages to specific imports (e.g., MODAL_UI from ui.constants.ts) for better tree-shaking
+- Next task: US-007 (Remove Original Constants.ts File) - requires migrating all CONSTANTS usages to new modular exports first

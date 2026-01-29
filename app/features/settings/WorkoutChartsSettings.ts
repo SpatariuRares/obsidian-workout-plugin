@@ -1,5 +1,5 @@
 // Settings tab for the Workout Charts plugin
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import {
   TIMER_TYPE,
   TimerPresetConfig,

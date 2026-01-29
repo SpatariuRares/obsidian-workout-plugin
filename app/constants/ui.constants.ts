@@ -211,6 +211,10 @@ export const MODAL_UI = {
     TARGET_DISMISSED: "Achievement badge dismissed",
     SUGGESTED_NEXT_WEIGHT: "Suggested next:",
     CONFIRM_UPDATE_TARGET: "Update target weight to",
+    MIGRATION_COMPLETE: (count: number) =>
+      `✅ Migration complete. Updated ${count} exercise files.`,
+    MIGRATION_NO_UPDATES: "No exercise files needed updates.",
+    MIGRATION_ERROR: "Error migrating exercises: ",
   },
   LABELS: {
     EXERCISE: "Exercise:",
@@ -454,7 +458,8 @@ export const SETTINGS_UI = {
       "Create custom workout protocols to track specialized training techniques",
     NO_CUSTOM_PROTOCOLS:
       "No custom protocols configured. Click 'Add protocol' to create one.",
-    PROTOCOL_ABBREVIATION: "Short abbreviation shown in badge (max 3 characters)",
+    PROTOCOL_ABBREVIATION:
+      "Short abbreviation shown in badge (max 3 characters)",
     PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
     SET_DURATION:
       "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
@@ -786,6 +791,7 @@ export const COMMANDS_UI = {
   ADD_EXERCISE_BLOCK: "Add exercise block",
   QUICK_LOG: "Quick log",
   EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
+  MIGRATE_EXERCISE_TYPES: "Migrate exercise types",
 } as const;
 
 /**

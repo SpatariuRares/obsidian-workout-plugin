@@ -63,8 +63,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29: Added customFields to both WorkoutLogData and CSVWorkoutLogEntry interfaces. Added STANDARD_CSV_COLUMNS constant. Updated parseCSVLogFile() to detect custom columns from header and parse values as number/boolean/string. Updated entryToCSVLine() to accept custom columns and write them. Updated entriesToCSVContent() to build header dynamically. Added collectCustomColumns() helper. All 42 WorkoutLogData tests pass including 17 new custom fields tests."
     },
     {
       "id": "US-005",

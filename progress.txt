@@ -3032,3 +3032,67 @@ app/services/
 - Next task: US-004 (Extend CSV Schema for Dynamic Columns)
 - The service is accessed via `plugin.getExerciseDefinitionService()`
 - Default exercise type is 'strength' for backward compatibility with existing exercises
+
+## 2026-01-29 - US-004: Extend CSV Schema for Dynamic Columns
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/WorkoutLogData.ts`:
+   - Added `customFields?: Record<string, string | number | boolean>` to `WorkoutLogData` interface
+   - Added `customFields?: Record<string, string | number | boolean>` to `CSVWorkoutLogEntry` interface
+   - Added `STANDARD_CSV_COLUMNS` constant array with all 10 standard column names
+   - Added `StandardCSVColumn` type alias
+   - Updated `parseCSVLogFile()` to:
+     - Parse header row to identify column names
+     - Detect custom columns (any column not in STANDARD_CSV_COLUMNS)
+     - Map custom column values to `customFields` object
+     - Parse values as number, boolean, or string automatically
+   - Added `parseCustomFieldValue()` helper function for type coercion
+   - Extracted `sanitizeCSVValue()` helper function for CSV injection protection
+   - Updated `entryToCSVLine()` to accept optional `customColumns` parameter
+   - Updated `entriesToCSVContent()` to build header dynamically with custom columns
+   - Added `collectCustomColumns()` function to gather all unique custom column names
+   - Updated `convertFromCSVEntry()` to include `customFields`
+
+2. Updated `app/types/__tests__/WorkoutLogData.test.ts`:
+   - Added 17 new tests for custom fields functionality
+   - Tests cover: parsing custom columns, boolean/number/string values, empty values
+   - Tests cover: writing custom fields, collecting custom columns, round-trip parsing
+   - All backward compatibility tests continue to pass
+
+**File structure:**
+```
+app/types/
+├── WorkoutLogData.ts           # Updated with customFields support
+└── __tests__/
+    └── WorkoutLogData.test.ts  # Updated with 17 new tests
+```
+
+**Key features:**
+- Custom columns beyond standard 10 are automatically detected from CSV header
+- Values are automatically parsed as number (if numeric), boolean (true/false), or string
+- Empty custom field values result in `customFields` being `undefined` (not empty object)
+- When writing CSV, custom columns are sorted alphabetically for consistency
+- Existing custom column order can be preserved via `existingCustomColumns` parameter
+- Full backward compatibility: standard CSVs parse exactly as before
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 385 tests pass: `npm test` (up from 368, +17 new custom fields tests)
+
+**Acceptance criteria met:**
+- ✅ Update WorkoutLogData interface to include customFields
+- ✅ Update CSVWorkoutLogEntry interface similarly
+- ✅ Modify parseCSVLogFile() to read CSV header dynamically and map unknown columns to customFields
+- ✅ Modify entryToCSVLine() to write known columns first, then custom field columns
+- ✅ Ensure empty/null values written as empty string (nullable columns)
+- ✅ Backward compatible: existing CSVs with only standard columns still work
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-004 complete - CSV schema now supports dynamic columns
+- Next task: US-005 (Extend DataService for Dynamic Column Management)
+- The `customFields` property is optional on both interfaces
+- Custom columns are identified by exclusion from `STANDARD_CSV_COLUMNS`
+- Use `collectCustomColumns()` to get all custom column names from a set of entries

@@ -82,8 +82,8 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29. The index.ts barrel already existed with proper re-exports from all four new constant modules (ui, defaults, muscles, validation). Also re-exports from original Constants.ts and MuscleTags.ts for backward compatibility. Verified: TypeScript compiles, all 368 tests pass."
     },
     {
       "id": "US-006",

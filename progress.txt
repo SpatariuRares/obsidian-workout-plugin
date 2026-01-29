@@ -2743,3 +2743,49 @@ workout: Workouts/Push Day
 - The new file is a standalone extraction - Constants.ts is NOT modified yet
 - Next task: US-002 (Split Default Values into Dedicated File)
 - Final tasks will update imports and remove original Constants.ts
+
+
+## 2026-01-29 - Phase 5 US-005: Create Constants Barrel Export Index
+
+**Status:** Verified Complete
+
+**Verification performed:**
+1. Confirmed `app/constants/index.ts` already exists with proper structure
+2. Verified re-exports from all four new constant modules:
+   - `export * from "@app/constants/ui.constants";`
+   - `export * from "@app/constants/defaults.constants";`
+   - `export * from "@app/constants/muscles.constants";`
+   - `export * from "@app/constants/validation.constants";`
+3. Backward compatibility maintained via re-exports from:
+   - `export * from "@app/constants/Constants";`
+   - `export * from "@app/constants/MuscleTags";`
+4. TypeScript compilation passes (`npx tsc -noEmit -skipLibCheck`)
+5. All 368 tests pass (`npm test`)
+
+**File structure:**
+```
+app/constants/
+├── index.ts              # Barrel export (US-005)
+├── ui.constants.ts       # UI labels, icons, emoji (US-001)
+├── defaults.constants.ts # Default configurations (US-002)
+├── muscles.constants.ts  # Muscle tags, groups (US-003)
+├── validation.constants.ts # Error messages, limits (US-004)
+├── Constants.ts          # Original (to be removed in US-007)
+└── MuscleTags.ts         # Original (backward compat)
+```
+
+**Import patterns supported:**
+```typescript
+// Barrel import (convenient)
+import { ICONS, DEFAULT_SETTINGS, MUSCLE_TAGS } from '@app/constants';
+
+// Direct import (better tree-shaking)
+import { ICONS } from '@app/constants/ui.constants';
+import { DEFAULT_SETTINGS } from '@app/constants/defaults.constants';
+```
+
+**Notes for next developer:**
+- US-005 was already implemented but not marked as passing in PRD
+- Next task: US-006 (Update All Imports to Use New Constants Structure)
+- This will involve finding all imports from Constants.ts and migrating them
+- US-007 will then remove the original Constants.ts file

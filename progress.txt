@@ -3096,3 +3096,65 @@ app/types/
 - The `customFields` property is optional on both interfaces
 - Custom columns are identified by exclusion from `STANDARD_CSV_COLUMNS`
 - Use `collectCustomColumns()` to get all custom column names from a set of entries
+
+## 2026-01-29 - US-005: Extend DataService for Dynamic Column Management
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/services/DataService.ts`:
+   - Added import for `STANDARD_CSV_COLUMNS` from WorkoutLogData
+   - Added `getCSVColumns(): Promise<string[]>` method to read current CSV header columns
+   - Added `ensureColumnExists(columnName: string): Promise<void>` method to dynamically add new custom columns
+   - Added private `parseCSVLine()` helper for parsing CSV header row
+   - Updated `addWorkoutLogEntry()` to:
+     - Check entry customFields for new columns
+     - Call `ensureColumnExists()` for each custom field before writing
+     - Preserve existing custom column order when writing
+   - Updated `updateWorkoutLogEntry()` similarly:
+     - Check updatedEntry customFields for new columns
+     - Call `ensureColumnExists()` for each custom field before writing
+     - Preserve existing custom column order when writing
+   - Both methods clear cache after column structure changes
+
+2. Updated `app/services/__tests__/DataService.test.ts`:
+   - Added 12 new tests for Dynamic Column Management (US-005):
+     - getCSVColumns: returns standard columns when file doesn't exist, returns all columns from existing header, handles empty CSV
+     - ensureColumnExists: doesn't modify for standard columns, doesn't modify when column exists, adds new column, clears cache after adding, does nothing when file doesn't exist
+     - addWorkoutLogEntry with customFields: ensures columns exist before adding, writes custom field values
+     - updateWorkoutLogEntry with customFields: ensures columns exist before updating, preserves column order
+   - Fixed existing test to mock `read` for `addWorkoutLogEntry` test
+
+**File structure:**
+```
+app/services/
+├── DataService.ts              # Updated with dynamic column management
+└── __tests__/
+    └── DataService.test.ts     # Updated with 12 new tests
+```
+
+**Key features:**
+- `getCSVColumns()` returns all column names from CSV header (standard + custom)
+- `ensureColumnExists()` adds new custom columns dynamically without data loss
+- Standard columns (date, exercise, reps, weight, volume, etc.) are never added as custom columns
+- Custom column order is preserved when adding entries
+- Cache is properly invalidated after column structure changes
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 397 tests pass: `npm test` (up from 385, +12 new DataService tests)
+
+**Acceptance criteria met:**
+- ✅ Add method getCSVColumns(): Promise<string[]> to return current CSV header columns
+- ✅ Add method ensureColumnExists(columnName: string): Promise<void> to add column if missing
+- ✅ Modify addWorkoutLogEntry() to check entry customFields for new columns, call ensureColumnExists() before writing
+- ✅ Modify updateWorkoutLogEntry() similarly for new columns
+- ✅ Clear cache after column structure changes
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-005 complete - DataService now handles dynamic CSV columns
+- Next task: US-006 (Update CreateExercisePageModal for Exercise Types)
+- Use `getCSVColumns()` to inspect current CSV structure
+- Use `ensureColumnExists()` before writing entries with new custom fields (now done automatically)
+- Custom fields are automatically persisted when calling addWorkoutLogEntry() or updateWorkoutLogEntry()

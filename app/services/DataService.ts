@@ -6,6 +6,7 @@ import {
   entriesToCSVContent,
   convertFromCSVEntry,
   WorkoutChartsSettings,
+  STANDARD_CSV_COLUMNS,
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
 
@@ -258,6 +259,111 @@ export class DataService {
   }
 
   /**
+   * Get all column names from the current CSV file header
+   * @returns Array of column names (standard + custom columns)
+   */
+  public async getCSVColumns(): Promise<string[]> {
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath,
+    );
+
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      // Return standard columns if file doesn't exist
+      return [...STANDARD_CSV_COLUMNS];
+    }
+
+    const csvFile = abstractFile;
+    const content = await this.app.vault.read(csvFile);
+    const lines = content.split("\n").filter((line) => line.trim());
+
+    if (lines.length === 0) {
+      return [...STANDARD_CSV_COLUMNS];
+    }
+
+    // Parse header row
+    const header = this.parseCSVLine(lines[0]).map((h) => h.trim());
+    return header.filter((col) => col); // Filter out empty column names
+  }
+
+  /**
+   * Ensure a column exists in the CSV file header
+   * If the column doesn't exist, adds it to the header and all existing rows
+   * @param columnName The column name to ensure exists
+   */
+  public async ensureColumnExists(columnName: string): Promise<void> {
+    // Don't add standard columns as custom columns
+    if (STANDARD_CSV_COLUMNS.includes(columnName as any)) {
+      return;
+    }
+
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath,
+    );
+
+    if (!abstractFile || !(abstractFile instanceof TFile)) {
+      // File doesn't exist, will be created with proper columns on first write
+      return;
+    }
+
+    const csvFile = abstractFile;
+    const existingColumns = await this.getCSVColumns();
+
+    // Column already exists
+    if (existingColumns.includes(columnName)) {
+      return;
+    }
+
+    // Add the new column to the CSV file
+    await this.app.vault.process(csvFile, (content) => {
+      const entries = parseCSVLogFile(content);
+
+      // Get current custom columns from the file
+      const currentCustomColumns = existingColumns.filter(
+        (col) => !STANDARD_CSV_COLUMNS.includes(col as any),
+      );
+
+      // Add new column to the list
+      const newCustomColumns = [...currentCustomColumns, columnName];
+
+      // Rewrite CSV with new column structure
+      return entriesToCSVContent(entries, newCustomColumns);
+    });
+
+    // Clear cache after column structure changes
+    this.clearLogDataCache();
+  }
+
+  /**
+   * Parse a single CSV line, handling quoted values
+   */
+  private parseCSVLine(line: string): string[] {
+    const values: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === "," && !inQuotes) {
+        values.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    values.push(current);
+    return values;
+  }
+
+  /**
    * Create a new CSV log file with header
    */
   public async createCSVLogFile(): Promise<void> {
@@ -296,7 +402,20 @@ export class DataService {
       return this.addWorkoutLogEntry(entry, retryCount + 1); // Retry with incremented counter
     }
 
+    // Ensure any custom field columns exist before writing
+    if (entry.customFields) {
+      for (const columnName of Object.keys(entry.customFields)) {
+        await this.ensureColumnExists(columnName);
+      }
+    }
+
     const csvFile = abstractFile;
+
+    // Get existing custom columns to preserve column order
+    const existingColumns = await this.getCSVColumns();
+    const existingCustomColumns = existingColumns.filter(
+      (col) => !STANDARD_CSV_COLUMNS.includes(col as any),
+    );
 
     await this.app.vault.process(csvFile, (content) => {
       const csvEntries = parseCSVLogFile(content);
@@ -309,8 +428,8 @@ export class DataService {
 
       csvEntries.push(newEntry);
 
-      // Convert back to CSV content
-      return entriesToCSVContent(csvEntries);
+      // Convert back to CSV content, preserving existing column order
+      return entriesToCSVContent(csvEntries, existingCustomColumns);
     });
 
     // Clear cache
@@ -332,7 +451,20 @@ export class DataService {
       throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
     }
 
+    // Ensure any custom field columns exist before writing
+    if (updatedEntry.customFields) {
+      for (const columnName of Object.keys(updatedEntry.customFields)) {
+        await this.ensureColumnExists(columnName);
+      }
+    }
+
     const csvFile = abstractFile;
+
+    // Get existing custom columns to preserve column order
+    const existingColumns = await this.getCSVColumns();
+    const existingCustomColumns = existingColumns.filter(
+      (col) => !STANDARD_CSV_COLUMNS.includes(col as any),
+    );
 
     await this.app.vault.process(csvFile, (content) => {
       const csvEntries = parseCSVLogFile(content);
@@ -370,8 +502,8 @@ export class DataService {
 
       csvEntries[entryIndex] = updatedEntryWithTimestamp;
 
-      // Convert back to CSV content
-      return entriesToCSVContent(csvEntries);
+      // Convert back to CSV content, preserving existing column order
+      return entriesToCSVContent(csvEntries, existingCustomColumns);
     });
 
     // Clear cache

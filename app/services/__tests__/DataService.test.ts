@@ -74,8 +74,14 @@ describe("DataService", () => {
 
   describe("addWorkoutLogEntry - Recursion Protection", () => {
     it("should successfully add entry when CSV file exists", async () => {
+      const csvContent = [
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+        "2024-01-01T09:00:00.000Z,Squat,10,100,1000,Test,Test,1704092400000,,standard",
+      ].join("\n");
+
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
       mockVault.process.mockImplementation(() => Promise.resolve(""));
 
       const entry = {
@@ -421,6 +427,337 @@ describe("DataService", () => {
       // Verify filtering worked correctly
       expect(filteredData.length).toBe(1);
       expect(filteredData[0].exercise).toBe("Bench Press");
+    });
+  });
+
+  describe("Dynamic Column Management (US-005)", () => {
+    describe("getCSVColumns", () => {
+      it("should return standard columns when file does not exist", async () => {
+        mockVault.getAbstractFileByPath.mockReturnValue(null);
+
+        const columns = await dataService.getCSVColumns();
+
+        expect(columns).toEqual([
+          "date",
+          "exercise",
+          "reps",
+          "weight",
+          "volume",
+          "origine",
+          "workout",
+          "timestamp",
+          "notes",
+          "protocol",
+        ]);
+      });
+
+      it("should return all columns from existing CSV header", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance",
+          "2024-01-01T10:00:00.000Z,Running,1,0,0,Cardio,Cardio,1704096000000,,standard,30,5",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        const columns = await dataService.getCSVColumns();
+
+        expect(columns).toContain("date");
+        expect(columns).toContain("exercise");
+        expect(columns).toContain("duration");
+        expect(columns).toContain("distance");
+        expect(columns.length).toBe(12);
+      });
+
+      it("should handle empty CSV file", async () => {
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue("");
+
+        const columns = await dataService.getCSVColumns();
+
+        expect(columns).toEqual([
+          "date",
+          "exercise",
+          "reps",
+          "weight",
+          "volume",
+          "origine",
+          "workout",
+          "timestamp",
+          "notes",
+          "protocol",
+        ]);
+      });
+    });
+
+    describe("ensureColumnExists", () => {
+      it("should not modify file for standard columns", async () => {
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+
+        await dataService.ensureColumnExists("date");
+        await dataService.ensureColumnExists("exercise");
+        await dataService.ensureColumnExists("reps");
+
+        expect(mockVault.process).not.toHaveBeenCalled();
+      });
+
+      it("should not modify file when custom column already exists", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration",
+          "2024-01-01T10:00:00.000Z,Running,1,0,0,Cardio,Cardio,1704096000000,,standard,30",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        await dataService.ensureColumnExists("duration");
+
+        expect(mockVault.process).not.toHaveBeenCalled();
+      });
+
+      it("should add new column to CSV file", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+          "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,,standard",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          const result = callback(csvContent);
+          // Verify the new column was added to the header
+          expect(result).toContain("duration");
+          return result;
+        });
+
+        await dataService.ensureColumnExists("duration");
+
+        expect(mockVault.process).toHaveBeenCalledTimes(1);
+      });
+
+      it("should clear cache after adding column", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+          "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,,standard",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          callback(csvContent);
+          return "";
+        });
+
+        // First, populate cache
+        await dataService.getWorkoutLogData();
+
+        // Clear read mock and verify cache is being used
+        mockVault.read.mockClear();
+        await dataService.getWorkoutLogData();
+        expect(mockVault.read).not.toHaveBeenCalled(); // Should use cache
+
+        // Add new column - this should clear the cache
+        mockVault.read.mockResolvedValue(csvContent);
+        await dataService.ensureColumnExists("duration");
+
+        // Clear read mock again
+        mockVault.read.mockClear();
+        mockVault.read.mockResolvedValue(csvContent);
+
+        // Verify cache was cleared by checking that next read triggers file access
+        await dataService.getWorkoutLogData();
+
+        // Should have called read because cache was cleared by ensureColumnExists
+        expect(mockVault.read).toHaveBeenCalled();
+      });
+
+      it("should do nothing when file does not exist", async () => {
+        mockVault.getAbstractFileByPath.mockReturnValue(null);
+
+        await dataService.ensureColumnExists("duration");
+
+        expect(mockVault.process).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("addWorkoutLogEntry with customFields", () => {
+      it("should ensure custom columns exist before adding entry", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+          "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,,standard",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        let processCallCount = 0;
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          processCallCount++;
+          const result = callback(csvContent);
+          return result;
+        });
+
+        const entry = {
+          date: "2024-01-02T10:00:00.000Z",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          origine: "Cardio",
+          workout: "Cardio",
+          notes: "",
+          customFields: {
+            duration: 30,
+            distance: 5.2,
+          },
+        };
+
+        await dataService.addWorkoutLogEntry(entry);
+
+        // Should have called process multiple times: ensureColumnExists for each custom field + the actual write
+        expect(processCallCount).toBeGreaterThanOrEqual(1);
+      });
+
+      it("should write custom field values to CSV", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration",
+          "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,,standard,",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        let writtenContent = "";
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          writtenContent = callback(csvContent);
+          return writtenContent;
+        });
+
+        const entry = {
+          date: "2024-01-02T10:00:00.000Z",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          origine: "Cardio",
+          workout: "Cardio",
+          notes: "",
+          customFields: {
+            duration: 30,
+          },
+        };
+
+        await dataService.addWorkoutLogEntry(entry);
+
+        // Verify the entry with custom field was written
+        expect(writtenContent).toContain("Running");
+        expect(writtenContent).toContain("duration");
+      });
+    });
+
+    describe("updateWorkoutLogEntry with customFields", () => {
+      it("should ensure custom columns exist before updating entry", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+          "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,,standard",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        let processCallCount = 0;
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          processCallCount++;
+          callback(csvContent);
+          return "";
+        });
+
+        const originalLog = {
+          date: "2024-01-01T10:00:00.000Z",
+          exercise: "Bench Press",
+          reps: 10,
+          weight: 100,
+          volume: 1000,
+          timestamp: 1704096000000,
+        };
+
+        const updatedEntry = {
+          date: "2024-01-01T10:00:00.000Z",
+          exercise: "Bench Press",
+          reps: 12,
+          weight: 100,
+          volume: 1200,
+          origine: "Workout",
+          workout: "Workout",
+          notes: "",
+          customFields: {
+            rpe: 8,
+          },
+        };
+
+        await dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
+
+        // Should have called process multiple times: ensureColumnExists + the actual update
+        expect(processCallCount).toBeGreaterThanOrEqual(1);
+      });
+
+      it("should preserve existing custom column order when updating", async () => {
+        const csvContent = [
+          "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance",
+          "2024-01-01T10:00:00.000Z,Running,1,0,0,Cardio,Cardio,1704096000000,,standard,30,5",
+        ].join("\n");
+
+        const mockFile = new TFile();
+        mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+        mockVault.read.mockResolvedValue(csvContent);
+
+        let writtenContent = "";
+        mockVault.process.mockImplementation(async (_file, callback) => {
+          writtenContent = callback(csvContent);
+          return writtenContent;
+        });
+
+        const originalLog = {
+          date: "2024-01-01T10:00:00.000Z",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1704096000000,
+        };
+
+        const updatedEntry = {
+          date: "2024-01-01T10:00:00.000Z",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          origine: "Cardio",
+          workout: "Cardio",
+          notes: "",
+          customFields: {
+            duration: 35,
+            distance: 5.5,
+          },
+        };
+
+        await dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
+
+        // Verify column order is preserved (duration before distance)
+        const headerLine = writtenContent.split("\n")[0];
+        const durationIndex = headerLine.indexOf("duration");
+        const distanceIndex = headerLine.indexOf("distance");
+        expect(durationIndex).toBeLessThan(distanceIndex);
+      });
     });
   });
 

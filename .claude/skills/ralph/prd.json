@@ -46,8 +46,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29: Created ExerciseDefinitionService.ts with all required methods. Service parses exercise_type and parameters from frontmatter YAML. Uses 10-second cache TTL with race condition prevention. Added getExerciseType() and getParametersForExercise() helpers. Registered in main.ts with cleanup in onunload(). Exposed via getExerciseDefinitionService() getter."
     },
     {
       "id": "US-004",

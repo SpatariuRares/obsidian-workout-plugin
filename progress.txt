@@ -2975,3 +2975,60 @@ app/constants/
 - US-002 complete - Built-in exercise types are now available
 - Next task: US-003 (Create ExerciseDefinitionService)
 - The DEFAULT_EXERCISE_TYPE_ID is "strength" to maintain backward compatibility with existing exercises
+
+## 2026-01-29 - US-003: Create ExerciseDefinitionService
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/services/ExerciseDefinitionService.ts` with:
+   - `getExerciseDefinition(name)`: Get exercise definition by name (case-insensitive)
+   - `getAllExerciseDefinitions()`: Get all definitions from exercise folder
+   - `saveExerciseDefinition(definition)`: Save/update exercise definition to frontmatter
+   - `getParametersForExercise(name)`: Get combined type + custom parameters
+   - `getExerciseType(name)`: Helper to get the ExerciseTypeDefinition for an exercise
+   - 10-second cache TTL with race condition prevention (similar to DataService pattern)
+   - Parses `exercise_type` field from frontmatter (defaults to 'strength' for backward compatibility)
+   - Parses `parameters` field as YAML array for custom parameters
+
+2. Updated `main.ts`:
+   - Added import for ExerciseDefinitionService
+   - Added private `exerciseDefinitionService` property
+   - Initialize service after DataService in `onload()`
+   - Added cache clearing in `onunload()`
+   - Added `getExerciseDefinitionService()` getter for other components
+
+**File structure:**
+```
+app/services/
+├── CodeBlockProcessorService.ts
+├── CommandHandlerService.ts
+├── DataService.ts
+└── ExerciseDefinitionService.ts  # NEW
+```
+
+**Key features:**
+- Scans exercise folder for .md files
+- Parses frontmatter using FrontmatterParser utility and Obsidian's parseYaml
+- Supports both `exercise_type` and `type` frontmatter fields
+- Uses `nome_esercizio` field or filename as exercise name
+- Generates complete exercise file content for new exercises
+- Cache prevents repeated filesystem reads
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 368 tests pass: `npm test`
+
+**Acceptance criteria met:**
+- ✅ Create app/services/ExerciseDefinitionService.ts with required methods
+- ✅ Parse exercise_type field from frontmatter (default: 'strength')
+- ✅ Parse parameters field from frontmatter as YAML array
+- ✅ Cache definitions with 10-second TTL
+- ✅ Register service in main.ts plugin initialization
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-003 complete - ExerciseDefinitionService is now available
+- Next task: US-004 (Extend CSV Schema for Dynamic Columns)
+- The service is accessed via `plugin.getExerciseDefinitionService()`
+- Default exercise type is 'strength' for backward compatibility with existing exercises

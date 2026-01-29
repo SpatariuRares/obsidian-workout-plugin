@@ -14,6 +14,7 @@ import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
+import { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { QuickLogModal } from "@app/features/modals/QuickLogModal";
@@ -41,6 +42,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private commandHandlerService!: CommandHandlerService;
   private dataService!: DataService;
   private codeBlockProcessorService!: CodeBlockProcessorService;
+  private exerciseDefinitionService!: ExerciseDefinitionService;
 
   // Public API for Dataview integration
   private workoutPlannerAPI!: WorkoutPlannerAPI;
@@ -66,6 +68,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Initialize services
     this.dataService = new DataService(this.app, this.settings);
+    this.exerciseDefinitionService = new ExerciseDefinitionService(this.app, this.settings);
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
@@ -150,12 +153,16 @@ export default class WorkoutChartsPlugin extends Plugin {
     // 3. Clear data service cache to release memory
     this.dataService?.clearLogDataCache();
 
+    // 3b. Clear exercise definition service cache
+    this.exerciseDefinitionService?.clearCache();
+
     // 4. Destroy all Chart.js instances (additional safety net)
     ChartRenderer.destroyAllCharts();
 
     // 5. Nullify service references to allow garbage collection
     this.codeBlockProcessorService = null!;
     this.commandHandlerService = null!;
+    this.exerciseDefinitionService = null!;
 
     // 6. Remove ribbon icon if present
     if (this.quickLogRibbonIcon) {
@@ -187,6 +194,14 @@ export default class WorkoutChartsPlugin extends Plugin {
 
   public clearLogDataCache(): void {
     this.dataService.clearLogDataCache();
+  }
+
+  /**
+   * Get the ExerciseDefinitionService instance.
+   * Used by modals and views to access exercise type definitions.
+   */
+  public getExerciseDefinitionService(): ExerciseDefinitionService {
+    return this.exerciseDefinitionService;
   }
 
   /**

@@ -1429,6 +1429,88 @@
   background: var(--text-warning-hover);
   transform: translateY(-1px);
 }
+.workout-charts-btn-small {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  font-size: var(--workout-font-sm);
+}
+.workout-charts-btn-secondary {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+.workout-charts-btn-secondary:hover {
+  background: var(--background-modifier-hover);
+  transform: translateY(-1px);
+}
+
+/* Custom Parameters Section */
+.workout-charts-custom-parameters-section {
+  margin-top: var(--workout-space-md);
+  padding: var(--workout-space-lg);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+.workout-charts-custom-params-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--workout-space-lg);
+}
+.workout-charts-custom-params-header label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+}
+.workout-charts-param-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-lg);
+}
+.workout-charts-param-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px 80px 80px auto;
+  gap: var(--workout-space-md);
+  align-items: end;
+  padding: var(--workout-space-md);
+  background: var(--background-primary);
+  border-radius: var(--workout-radius-sm);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+.workout-charts-param-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+}
+.workout-charts-param-field label {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+}
+.workout-charts-param-field input,
+.workout-charts-param-field select {
+  padding: var(--workout-space-sm);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+}
+.workout-charts-param-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+.workout-charts-param-checkbox input {
+  width: auto;
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .workout-charts-param-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--workout-space-sm);
+  }
+}
+
 .workout-charts-mode-info {
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);

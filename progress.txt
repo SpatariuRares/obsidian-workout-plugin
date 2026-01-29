@@ -3158,3 +3158,99 @@ app/services/
 - Use `getCSVColumns()` to inspect current CSV structure
 - Use `ensureColumnExists()` before writing entries with new custom fields (now done automatically)
 - Custom fields are automatically persisted when calling addWorkoutLogEntry() or updateWorkoutLogEntry()
+
+## 2026-01-29 - US-006: Update CreateExercisePageModal for Exercise Types
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/constants/ui.constants.ts`:
+   - Added LABELS: EXERCISE_TYPE, CUSTOM_PARAMETERS, PARAMETER_KEY, PARAMETER_LABEL, PARAMETER_TYPE, PARAMETER_UNIT, PARAMETER_REQUIRED
+   - Added PLACEHOLDERS: PARAMETER_KEY, PARAMETER_LABEL, PARAMETER_UNIT
+   - Added BUTTONS: ADD_PARAMETER, REMOVE_PARAMETER
+   - Added SELECT_OPTIONS.EXERCISE_TYPE with 5 options (Strength, Timed, Distance, Cardio, Custom)
+   - Added SELECT_OPTIONS.PARAMETER_TYPE with 3 options (Number, Text, Yes/No)
+
+2. Updated `app/features/modals/CreateExercisePageModal.ts`:
+   - Added exercise type dropdown after exercise name input
+   - Added CustomParameterRow interface for managing parameter inputs
+   - Added custom parameters section that shows/hides when Custom type selected
+   - Implemented addParameterRow() method for dynamic parameter builder UI
+   - Implemented collectCustomParameters() to gather parameter definitions
+   - Updated createExercisePage() to include exercise_type in frontmatter
+   - Updated createExercisePage() to include parameters array for custom types
+   - Default selection is 'Strength' for backward compatibility
+
+3. Updated `styles.css`:
+   - Added .workout-charts-btn-small for smaller buttons
+   - Added .workout-charts-btn-secondary for secondary button style
+   - Added .workout-charts-custom-parameters-section container styles
+   - Added .workout-charts-custom-params-header layout
+   - Added .workout-charts-param-rows container
+   - Added .workout-charts-param-row with CSS grid layout (6 columns)
+   - Added .workout-charts-param-field for individual input fields
+   - Added .workout-charts-param-checkbox for checkbox alignment
+   - Added responsive media query for mobile (2-column grid)
+
+**File structure:**
+```
+app/constants/
+├── ui.constants.ts              # Updated with exercise type UI constants
+
+app/features/modals/
+├── CreateExercisePageModal.ts   # Updated with exercise type dropdown and custom params
+
+styles.css                       # Updated with custom parameters section styles
+```
+
+**Key features:**
+- Exercise type dropdown shows 5 built-in types (Strength, Timed, Distance, Cardio, Custom)
+- Custom type reveals dynamic parameter builder with Add/Remove functionality
+- Each parameter row has: key, label, type (number/string/boolean), unit, required checkbox
+- Frontmatter now includes `exercise_type` field for all exercises
+- Custom type exercises include `parameters` array in YAML frontmatter
+- Exercise page template includes type description section
+
+**Example frontmatter for custom type:**
+```yaml
+---
+nome_esercizio: My Custom Exercise
+exercise_type: custom
+tags:
+  - custom
+parameters:
+  - key: speed
+    label: Speed
+    type: number
+    required: true
+    unit: km/h
+  - key: incline
+    label: Incline
+    type: number
+    required: false
+    unit: %
+---
+```
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 397 tests pass: `npm test`
+
+**Acceptance criteria met:**
+- ✅ Add exercise type dropdown showing: Strength, Timed, Distance, Cardio, Custom
+- ✅ When 'Custom' selected, show UI to add custom parameters with key/label/type/unit/required
+- ✅ Update exercise page template to include exercise_type in frontmatter
+- ✅ Update exercise page template to include parameters in frontmatter for custom type
+- ✅ Default selection: 'Strength' for backward compatibility
+- ✅ Typecheck passes
+- ⏳ Browser verification pending (requires dev-browser skill)
+
+**Notes for next developer:**
+- US-006 complete - CreateExercisePageModal now supports exercise types
+- Next task: US-007 (Update CreateLogModal for Dynamic Fields)
+- The custom parameters UI uses a grid layout with responsive breakpoints
+- Parameter rows can be dynamically added/removed
+- Browser verification should test:
+  1. Creating a Strength exercise (default)
+  2. Creating a Custom exercise with multiple parameters
+  3. Verifying frontmatter is correctly formatted

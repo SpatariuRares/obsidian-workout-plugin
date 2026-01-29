@@ -1,13 +1,30 @@
 // Refactored CreateExercisePageModal using reusable components
 import { CONSTANTS } from "@app/constants";
+import {
+  BUILT_IN_EXERCISE_TYPES,
+  EXERCISE_TYPE_IDS,
+  DEFAULT_EXERCISE_TYPE_ID,
+} from "@app/constants/exerciseTypes.constants";
 import { App, normalizePath, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Button } from "@app/components/atoms";
+import type { ParameterDefinition, ParameterValueType } from "@app/types/ExerciseTypes";
+
+interface CustomParameterRow {
+  container: HTMLElement;
+  keyInput: HTMLInputElement;
+  labelInput: HTMLInputElement;
+  typeSelect: HTMLSelectElement;
+  unitInput: HTMLInputElement;
+  requiredCheckbox: HTMLInputElement;
+}
 
 export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;
+  private customParameterRows: CustomParameterRow[] = [];
+  private customParametersContainer?: HTMLElement;
 
   constructor(
     app: App,
@@ -39,6 +56,53 @@ export class CreateExercisePageModal extends ModalBase {
       this.plugin,
       this.exerciseName,
     );
+
+    // Exercise type dropdown
+    const exerciseTypeSelect = this.createSelectField(
+      formContainer,
+      CONSTANTS.WORKOUT.MODAL.LABELS.EXERCISE_TYPE,
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.EXERCISE_TYPE],
+    );
+    // Set default to strength
+    exerciseTypeSelect.value = DEFAULT_EXERCISE_TYPE_ID;
+
+    // Custom parameters section (initially hidden)
+    this.customParametersContainer = formContainer.createEl("div", {
+      cls: "workout-charts-custom-parameters-section",
+    });
+    this.customParametersContainer.style.display = "none";
+
+    // Custom parameters header with add button
+    const customParamsHeader = this.customParametersContainer.createEl("div", {
+      cls: "workout-charts-custom-params-header",
+    });
+    customParamsHeader.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.CUSTOM_PARAMETERS,
+    });
+
+    const addParamBtn = Button.create(customParamsHeader, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
+      className: "workout-charts-btn workout-charts-btn-secondary",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
+    });
+
+    // Container for parameter rows
+    const paramRowsContainer = this.customParametersContainer.createEl("div", {
+      cls: "workout-charts-param-rows",
+    });
+
+    // Handle exercise type change
+    exerciseTypeSelect.addEventListener("change", () => {
+      const isCustom = exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
+      if (this.customParametersContainer) {
+        this.customParametersContainer.style.display = isCustom ? "block" : "none";
+      }
+    });
+
+    // Handle add parameter button
+    Button.onClick(addParamBtn, () => {
+      this.addParameterRow(paramRowsContainer);
+    });
 
     // Tags input
     const tagsInput = this.createTextField(
@@ -78,6 +142,7 @@ export class CreateExercisePageModal extends ModalBase {
     Button.onClick(createBtn, () => {
       void (async () => {
         const exerciseName = exerciseElements.exerciseInput.value.trim();
+        const exerciseType = exerciseTypeSelect.value;
         const tags = tagsInput.value.trim();
         const folderPath = folderInput.value.trim();
 
@@ -88,8 +153,20 @@ export class CreateExercisePageModal extends ModalBase {
           return;
         }
 
+        // Collect custom parameters if custom type is selected
+        let customParameters: ParameterDefinition[] | undefined;
+        if (exerciseType === EXERCISE_TYPE_IDS.CUSTOM) {
+          customParameters = this.collectCustomParameters();
+        }
+
         try {
-          await this.createExercisePage(exerciseName, tags, folderPath);
+          await this.createExercisePage(
+            exerciseName,
+            exerciseType,
+            tags,
+            folderPath,
+            customParameters,
+          );
           this.close();
           new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
         } catch (error) {
@@ -109,12 +186,117 @@ export class CreateExercisePageModal extends ModalBase {
   onClose() {
     const { contentEl } = this;
     contentEl.empty();
+    this.customParameterRows = [];
+  }
+
+  private addParameterRow(container: HTMLElement): void {
+    const rowContainer = container.createEl("div", {
+      cls: "workout-charts-param-row",
+    });
+
+    // Key input
+    const keyGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
+    keyGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_KEY });
+    const keyInput = keyGroup.createEl("input", {
+      type: "text",
+      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_KEY,
+    });
+
+    // Label input
+    const labelGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
+    labelGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_LABEL });
+    const labelInput = labelGroup.createEl("input", {
+      type: "text",
+      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_LABEL,
+    });
+
+    // Type select
+    const typeGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
+    typeGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_TYPE });
+    const typeSelect = typeGroup.createEl("select");
+    [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE].forEach((option) => {
+      typeSelect.createEl("option", { text: option.text, value: option.value });
+    });
+
+    // Unit input
+    const unitGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
+    unitGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_UNIT });
+    const unitInput = unitGroup.createEl("input", {
+      type: "text",
+      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_UNIT,
+    });
+
+    // Required checkbox
+    const requiredGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field workout-charts-param-checkbox" });
+    const requiredCheckbox = requiredGroup.createEl("input", { type: "checkbox" });
+    requiredCheckbox.checked = true;
+    requiredGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_REQUIRED });
+
+    // Remove button
+    const removeBtn = Button.create(rowContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
+      className: "workout-charts-btn workout-charts-btn-warning workout-charts-btn-small",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
+    });
+
+    const row: CustomParameterRow = {
+      container: rowContainer,
+      keyInput,
+      labelInput,
+      typeSelect,
+      unitInput,
+      requiredCheckbox,
+    };
+
+    this.customParameterRows.push(row);
+
+    Button.onClick(removeBtn, () => {
+      rowContainer.remove();
+      const index = this.customParameterRows.indexOf(row);
+      if (index > -1) {
+        this.customParameterRows.splice(index, 1);
+      }
+    });
+  }
+
+  private collectCustomParameters(): ParameterDefinition[] {
+    const parameters: ParameterDefinition[] = [];
+
+    for (const row of this.customParameterRows) {
+      const key = row.keyInput.value.trim();
+      const label = row.labelInput.value.trim();
+      const type = row.typeSelect.value as ParameterValueType;
+      const unit = row.unitInput.value.trim();
+      const required = row.requiredCheckbox.checked;
+
+      // Skip empty rows
+      if (!key || !label) {
+        continue;
+      }
+
+      const param: ParameterDefinition = {
+        key,
+        label,
+        type,
+        required,
+      };
+
+      if (unit) {
+        param.unit = unit;
+      }
+
+      parameters.push(param);
+    }
+
+    return parameters;
   }
 
   private async createExercisePage(
     exerciseName: string,
+    exerciseType: string,
     tags: string,
     folderPath: string,
+    customParameters?: ParameterDefinition[],
   ) {
     // Parse tags
     const tagList = tags
@@ -122,18 +304,51 @@ export class CreateExercisePageModal extends ModalBase {
       .map((tag) => tag.trim())
       .filter((tag) => tag.length > 0);
 
-    // Create frontmatter
-    const frontmatter = `---
-nome_esercizio: ${exerciseName}
+    // Build frontmatter
+    let frontmatterContent = `nome_esercizio: ${exerciseName}
+exercise_type: ${exerciseType}`;
+
+    // Add tags if present
+    if (tagList.length > 0) {
+      frontmatterContent += `
 tags:
-${tagList.map((tag) => `  - ${tag}`).join("\n")}
+${tagList.map((tag) => `  - ${tag}`).join("\n")}`;
+    } else {
+      frontmatterContent += `
+tags: []`;
+    }
+
+    // Add custom parameters for custom type
+    if (exerciseType === EXERCISE_TYPE_IDS.CUSTOM && customParameters && customParameters.length > 0) {
+      frontmatterContent += `
+parameters:`;
+      for (const param of customParameters) {
+        frontmatterContent += `
+  - key: ${param.key}
+    label: ${param.label}
+    type: ${param.type}
+    required: ${param.required}`;
+        if (param.unit) {
+          frontmatterContent += `
+    unit: ${param.unit}`;
+        }
+      }
+    }
+
+    const frontmatter = `---
+${frontmatterContent}
 ---`;
+
+    // Get exercise type display name for description
+    const exerciseTypeDef = BUILT_IN_EXERCISE_TYPES.find((t) => t.id === exerciseType);
+    const exerciseTypeName = exerciseTypeDef?.name || exerciseType;
 
     // Create content
     const content = `${frontmatter}
 
 # Descrizione
 
+Tipo: ${exerciseTypeName}
 
 # Tecnica di Esecuzione
 

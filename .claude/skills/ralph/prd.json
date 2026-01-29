@@ -180,8 +180,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29: Updated InsertChartModal to listen for exercise changes. Added `updateDataTypeOptions` which fetches exercise definition via ExerciseDefinitionService, calculates available chart data types using ChartConstants, and dynamically updates the Data Type dropdown options. Handles custom parameters and units. Modified ExerciseAutocomplete to support change event distribution. All tests and typecheck pass."
     },
     {
       "id": "US-012",

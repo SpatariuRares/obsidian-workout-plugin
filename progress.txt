@@ -3316,3 +3316,28 @@ parameters:
 - Browser verification recommended: Edit a timed/distance exercise log entry and verify custom fields are pre-filled
 - Next task: US-009 (Update TableRenderer for Dynamic Columns)
 
+
+## 2026-01-29 - US-011: Update InsertChartModal for Dynamic Types
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated 'app/features/modals/components/ExerciseAutocomplete.ts':
+   - Added 'exerciseInput.dispatchEvent(new Event('change'))' when a suggestion is clicked to ensure listeners are notified.
+   
+2. Updated 'app/features/modals/InsertChartModal.ts':
+   - Imported helpers from 'ChartConstants'.
+   - Added 'updateDataTypeOptions(exerciseName)' method to dynamically fetch and rebuild data type options based on the exercise definition.
+   - Attached change listener to 'exerciseInput' to trigger option updates when exercise changes.
+   - Handled text formatting for various unit types (volume, weight, duration, distance, heartRate).
+   - Ensured default chart data type is selected if current selection is invalid for the new exercise.
+
+**Features implemented:**
+- Insert Chart Modal now dynamically updates the 'Data Type' dropdown based on the selected exercise.
+- Supports custom exercise types and custom parameters as data types.
+- Correctly formats labels with units (e.g., 'Weight (kg)', 'Duration (sec)').
+- Defaults to appropriate type (e.g. Duration for timed exercises) automatically.
+
+**Notes for next developer:**
+- Next task: US-012 (Add Exercise Type Migration Utility)
+

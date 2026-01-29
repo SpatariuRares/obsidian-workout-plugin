@@ -10,7 +10,11 @@ import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Button } from "@app/components/atoms";
-import type { ParameterDefinition, ParameterValueType } from "@app/types/ExerciseTypes";
+import type {
+  ParameterDefinition,
+  ParameterValueType,
+} from "@app/types/ExerciseTypes";
+import { setCssProps } from "@app/utils/utils";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -70,7 +74,7 @@ export class CreateExercisePageModal extends ModalBase {
     this.customParametersContainer = formContainer.createEl("div", {
       cls: "workout-charts-custom-parameters-section",
     });
-    this.customParametersContainer.style.display = "none";
+    setCssProps(this.customParametersContainer, { display: "none" });
 
     // Custom parameters header with add button
     const customParamsHeader = this.customParametersContainer.createEl("div", {
@@ -95,7 +99,9 @@ export class CreateExercisePageModal extends ModalBase {
     exerciseTypeSelect.addEventListener("change", () => {
       const isCustom = exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
       if (this.customParametersContainer) {
-        this.customParametersContainer.style.display = isCustom ? "block" : "none";
+        setCssProps(this.customParametersContainer, {
+          display: isCustom ? "block" : "none",
+        });
       }
     });
 
@@ -195,47 +201,75 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Key input
-    const keyGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
-    keyGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_KEY });
+    const keyGroup = rowContainer.createEl("div", {
+      cls: "workout-charts-param-field",
+    });
+    keyGroup.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_KEY,
+    });
     const keyInput = keyGroup.createEl("input", {
       type: "text",
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_KEY,
     });
 
     // Label input
-    const labelGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
-    labelGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_LABEL });
+    const labelGroup = rowContainer.createEl("div", {
+      cls: "workout-charts-param-field",
+    });
+    labelGroup.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_LABEL,
+    });
     const labelInput = labelGroup.createEl("input", {
       type: "text",
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_LABEL,
     });
 
     // Type select
-    const typeGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
-    typeGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_TYPE });
-    const typeSelect = typeGroup.createEl("select");
-    [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE].forEach((option) => {
-      typeSelect.createEl("option", { text: option.text, value: option.value });
+    const typeGroup = rowContainer.createEl("div", {
+      cls: "workout-charts-param-field",
     });
+    typeGroup.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_TYPE,
+    });
+    const typeSelect = typeGroup.createEl("select");
+    [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE].forEach(
+      (option) => {
+        typeSelect.createEl("option", {
+          text: option.text,
+          value: option.value,
+        });
+      },
+    );
 
     // Unit input
-    const unitGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field" });
-    unitGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_UNIT });
+    const unitGroup = rowContainer.createEl("div", {
+      cls: "workout-charts-param-field",
+    });
+    unitGroup.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_UNIT,
+    });
     const unitInput = unitGroup.createEl("input", {
       type: "text",
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_UNIT,
     });
 
     // Required checkbox
-    const requiredGroup = rowContainer.createEl("div", { cls: "workout-charts-param-field workout-charts-param-checkbox" });
-    const requiredCheckbox = requiredGroup.createEl("input", { type: "checkbox" });
+    const requiredGroup = rowContainer.createEl("div", {
+      cls: "workout-charts-param-field workout-charts-param-checkbox",
+    });
+    const requiredCheckbox = requiredGroup.createEl("input", {
+      type: "checkbox",
+    });
     requiredCheckbox.checked = true;
-    requiredGroup.createEl("label", { text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_REQUIRED });
+    requiredGroup.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_REQUIRED,
+    });
 
     // Remove button
     const removeBtn = Button.create(rowContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
-      className: "workout-charts-btn workout-charts-btn-warning workout-charts-btn-small",
+      className:
+        "workout-charts-btn workout-charts-btn-warning workout-charts-btn-small",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
     });
 
@@ -319,7 +353,11 @@ tags: []`;
     }
 
     // Add custom parameters for custom type
-    if (exerciseType === EXERCISE_TYPE_IDS.CUSTOM && customParameters && customParameters.length > 0) {
+    if (
+      exerciseType === EXERCISE_TYPE_IDS.CUSTOM &&
+      customParameters &&
+      customParameters.length > 0
+    ) {
       frontmatterContent += `
 parameters:`;
       for (const param of customParameters) {
@@ -340,7 +378,9 @@ ${frontmatterContent}
 ---`;
 
     // Get exercise type display name for description
-    const exerciseTypeDef = BUILT_IN_EXERCISE_TYPES.find((t) => t.id === exerciseType);
+    const exerciseTypeDef = BUILT_IN_EXERCISE_TYPES.find(
+      (t) => t.id === exerciseType,
+    );
     const exerciseTypeName = exerciseTypeDef?.name || exerciseType;
 
     // Create content

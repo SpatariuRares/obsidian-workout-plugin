@@ -17,7 +17,7 @@ import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorServi
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { QuickLogModal } from "@app/features/modals/QuickLogModal";
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 
 // Extend Window interface for WorkoutPlannerAPI

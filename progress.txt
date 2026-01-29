@@ -2836,3 +2836,61 @@ import { CONSTANTS } from "@app/constants";
 - The barrel (index.ts) re-exports CONSTANTS from Constants.ts for backward compatibility
 - Future optimization: migrate individual usages to specific imports (e.g., MODAL_UI from ui.constants.ts) for better tree-shaking
 - Next task: US-007 (Remove Original Constants.ts File) - requires migrating all CONSTANTS usages to new modular exports first
+
+## 2026-01-29 - Phase 5 US-007: Remove Original Constants.ts File
+
+**Status:** Completed
+
+**Changes made:**
+1. Added missing UI constants to ui.constants.ts:
+   - MESSAGES_UI: User notifications, warnings, errors, status messages
+   - FORMS_UI: Form labels and placeholders
+   - STATS_UI: Statistics display labels
+   - TRENDS_UI: Trend status and direction indicators
+   - TIME_PERIODS_UI: Week/Month/Year labels
+   - COMMON_UI: Shared units, types, defaults
+   - COMMANDS_UI: Command names/labels
+   - DESCRIPTIONS_UI: Command descriptions
+   - Added DEFAULTS to MODAL_UI for chart/table/timer default values
+
+2. Created composed CONSTANTS object in index.ts:
+   - Maintains exact same structure as original Constants.ts (CONSTANTS.WORKOUT.*)
+   - Sources all content from new modular files
+   - Ensures backward compatibility for all 744 usages across 91 files
+
+3. Updated main.ts import:
+   - Changed from `@app/constants/Constants` to `@app/constants`
+
+4. Deleted app/constants/Constants.ts (986 lines removed)
+
+**Verification:**
+- TypeScript compiles: `npx tsc -noEmit -skipLibCheck` passes
+- Build succeeds: `npm run build` passes
+- Lint: `npm run lint` passes (pre-existing warnings only)
+- All 368 tests pass: `npm test`
+- No references to Constants.ts remain in source code (grep verified)
+
+**File structure after deletion:**
+```
+app/constants/
+├── index.ts              # Barrel + composed CONSTANTS object
+├── ui.constants.ts       # All UI labels, icons, emoji, messages
+├── defaults.constants.ts # Default configurations
+├── muscles.constants.ts  # Muscle tags, groups
+├── validation.constants.ts # Error messages, limits
+└── MuscleTags.ts         # Original (backward compat)
+```
+
+**Architecture note:**
+The composed CONSTANTS object in index.ts maps the new modular exports to the legacy structure:
+- CONSTANTS.WORKOUT.UI -> GENERAL_UI + static values
+- CONSTANTS.WORKOUT.MESSAGES -> MESSAGES_UI
+- CONSTANTS.WORKOUT.MUSCLES -> MUSCLE_* exports from muscles.constants.ts
+- etc.
+
+This allows all existing code using `CONSTANTS.WORKOUT.*` to continue working while the actual content is maintained in focused, single-responsibility modules.
+
+**Notes for next developer:**
+- US-007 complete - Constants.ts deleted, refactoring of the 817-line monolith is finished
+- Next task: US-008 (Update CLAUDE.md with Constants Structure Documentation)
+- Future optimization: migrate from CONSTANTS.WORKOUT.* to direct modular imports for better tree-shaking

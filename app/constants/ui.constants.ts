@@ -362,6 +362,26 @@ export const MODAL_UI = {
     DASHBOARD: "workout-dashboard",
     DURATION: "workout-duration",
   },
+  DEFAULTS: {
+    CHART_DATE_RANGE: 180,
+    CHART_DATE_RANGE_MIN: 1,
+    CHART_DATE_RANGE_MAX: 365,
+    CHART_LIMIT: 100,
+    CHART_LIMIT_MIN: 1,
+    CHART_LIMIT_MAX: 1000,
+    TABLE_LIMIT: 12,
+    TABLE_LIMIT_MIN: 1,
+    TABLE_LIMIT_MAX: 1000,
+    TIMER_DURATION: 90,
+    TIMER_DURATION_MIN: 1,
+    TIMER_DURATION_MAX: 3600,
+    TIMER_INTERVAL: 30,
+    TIMER_INTERVAL_MIN: 1,
+    TIMER_INTERVAL_MAX: 3600,
+    TIMER_ROUNDS: 5,
+    TIMER_ROUNDS_MIN: 1,
+    TIMER_ROUNDS_MAX: 100,
+  },
 } as const;
 
 /**
@@ -633,6 +653,126 @@ export const DASHBOARD_UI = {
 } as const;
 
 /**
+ * Messages displayed to users - notifications, warnings, errors, and status messages
+ */
+export const MESSAGES_UI = {
+  NO_DATA: "No workout data available",
+  LOADING: "Loading workout data...",
+  NO_DATA_PERIOD: "No workout data found for the selected time period.",
+  TIMER_COMPLETED: "Timer completed!",
+  WARNINGS: {
+    IMBALANCE_ALERTS: "Imbalance alerts",
+  },
+  SUCCESS: {
+    NO_IMBALANCES: "No major muscle imbalances detected",
+    CSV_CREATED: "CSV log file created successfully!",
+    CODE_INSERTED: "Code inserted successfully!",
+  },
+  ERRORS: {
+    CSV_NOT_FOUND: "CSV log file not found",
+    FILE_EMPTY: "File is empty",
+    NO_FRONTMATTER: "No frontmatter found",
+    NO_TAGS: "No tags found",
+  },
+  STATUS: {
+    INSUFFICIENT_DATA: "Insufficient data",
+  },
+} as const;
+
+/**
+ * Form-related labels and placeholders
+ */
+export const FORMS_UI = {
+  LABELS: {
+    EXERCISE_NAME: "Exercise name",
+    WORKOUT_NAME: "Workout name:",
+  },
+  PLACEHOLDERS: {
+    ENTER_EXERCISE_NAME: "Enter exercise name",
+    ENTER_CSV_PATH: "Enter CSV file path",
+    ENTER_FOLDER_PATH: "Enter folder path",
+  },
+} as const;
+
+/**
+ * Statistics display labels
+ */
+export const STATS_UI = {
+  LABELS: {
+    SESSIONS: "Sessions: ",
+    RECENT_TREND: "Recent trend: ",
+    AVG_VOLUME: "Average volume: ",
+  },
+} as const;
+
+/**
+ * Trend-related labels and status indicators
+ */
+export const TRENDS_UI = {
+  STATUS: {
+    STABLE: "Stable",
+    INVARIANT: "Invariant",
+    INCREASING: "Increasing",
+    DECREASING: "Decreasing",
+    STABLE_LOWER: "Stable (lower)",
+    STABLE_HIGHER: "Stable (higher)",
+  },
+  DIRECTIONS: {
+    UP: "up",
+    DOWN: "down",
+    NEUTRAL: "neutral",
+  },
+} as const;
+
+/**
+ * Time period labels
+ */
+export const TIME_PERIODS_UI = {
+  WEEK: "Week",
+  MONTH: "Month",
+  YEAR: "Year",
+} as const;
+
+/**
+ * Common/shared UI labels and values
+ */
+export const COMMON_UI = {
+  UNITS: {
+    WEIGHT_KG: "Weight (kg)",
+  },
+  TYPES: {
+    EXERCISE: "exercise",
+    WORKOUT: "workout",
+  },
+  DEFAULTS: {
+    UNKNOWN: "Unknown",
+    EXERCISE_NAME: "exercise",
+    WORKOUT_NAME: "Workout",
+  },
+  NOT_AVAILABLE: "N/A",
+} as const;
+
+/**
+ * Command names/labels
+ */
+export const COMMANDS_UI = {
+  CREATE_CSV: "Create CSV log file",
+  INSERT_TABLE: "Insert workout table",
+  AUDIT_EXERCISE_NAMES: "Audit exercise names",
+  ADD_EXERCISE_BLOCK: "Add exercise block",
+  QUICK_LOG: "Quick log",
+  EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
+} as const;
+
+/**
+ * Command descriptions
+ */
+export const DESCRIPTIONS_UI = {
+  INSERT_TABLE:
+    "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions.",
+} as const;
+
+/**
  * General UI labels - common labels used across multiple features
  */
 export const GENERAL_UI = {
@@ -700,6 +840,14 @@ export const UI_LABELS = {
   TIMER: TIMER_UI,
   DASHBOARD: DASHBOARD_UI,
   GENERAL: GENERAL_UI,
+  MESSAGES: MESSAGES_UI,
+  FORMS: FORMS_UI,
+  STATS: STATS_UI,
+  TRENDS: TRENDS_UI,
+  TIME_PERIODS: TIME_PERIODS_UI,
+  COMMON: COMMON_UI,
+  COMMANDS: COMMANDS_UI,
+  DESCRIPTIONS: DESCRIPTIONS_UI,
   ICONS,
   EMOJI,
 } as const;

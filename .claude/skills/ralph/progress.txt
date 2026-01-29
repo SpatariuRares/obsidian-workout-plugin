@@ -1,0 +1,7 @@
+# Ralph Progress Log - Dynamic Exercise Types
+
+Branch: ralph/dynamic-exercise-types
+Started: 2026-01-29
+
+---
+

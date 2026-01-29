@@ -1,136 +1,201 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/phase5-refactoring",
-  "description": "Phase 5 - Refactoring: Split Constants.ts (817 lines) into focused single-responsibility modules",
+  "branchName": "ralph/dynamic-exercise-types",
+  "description": "Dynamic Exercise Types - Support different exercise types with custom parameters (time-based, distance, cardio, custom)",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Split UI Constants into Dedicated File",
-      "description": "As a developer, I want UI-related constants in a dedicated file so that I can quickly find labels, icons, and emoji.",
+      "title": "Define Exercise Type Schema Interface",
+      "description": "As a developer, I need TypeScript interfaces to represent exercise type definitions so the system can understand what parameters each exercise requires.",
       "acceptanceCriteria": [
-        "Create app/constants/ui.constants.ts",
-        "Move all MODAL.*, SETTINGS.*, TABLE.*, CHARTS.*, TIMER.* label/title/button strings",
-        "Move all ICONS and EMOJI constants",
-        "Export named exports: UI_LABELS, ICONS, EMOJI (grouped by domain)",
-        "File has header JSDoc explaining its purpose",
+        "Create ExerciseTypeDefinition interface in app/types/ExerciseTypes.ts with: id (string), name (string), parameters (ParameterDefinition[])",
+        "Create ParameterDefinition interface with: key, label, type ('number'|'string'|'boolean'), unit?, required, default?, min?, max?",
+        "Create ExerciseDefinition interface with: name, typeId, muscleGroups?, customParameters?",
+        "Export interfaces from barrel file app/types/index.ts",
         "Typecheck passes"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Completed 2026-01-28. Created ui.constants.ts with ICONS, EMOJI, MODAL_UI, SETTINGS_UI, TABLE_UI, CHARTS_UI, TIMER_UI, DASHBOARD_UI, GENERAL_UI exports and aggregated UI_LABELS export."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-002",
-      "title": "Split Default Values into Dedicated File",
-      "description": "As a developer, I want default configuration values in a dedicated file so that I can understand plugin defaults at a glance.",
+      "title": "Create Built-in Exercise Type Definitions",
+      "description": "As a user, I want predefined exercise types (Strength, Timed, Distance, Cardio, Custom) so I can quickly create common exercises without manual configuration.",
       "acceptanceCriteria": [
-        "Create app/constants/defaults.constants.ts",
-        "Move all DEFAULT_* constants (DEFAULT_CHART_CONFIG, DEFAULT_DATE_RANGE, etc.)",
-        "Move default settings object (DEFAULT_SETTINGS or equivalent)",
-        "Add JSDoc comment to each default explaining its purpose",
-        "File has header JSDoc explaining its purpose",
+        "Create app/constants/exerciseTypes.constants.ts with built-in types: Strength (reps+weight), Timed (duration), Distance (distance+optional duration), Cardio (duration+optional distance/heartRate), Custom (no predefined params)",
+        "Export BUILT_IN_EXERCISE_TYPES: ExerciseTypeDefinition[] array",
+        "Export getExerciseTypeById(id: string): ExerciseTypeDefinition | undefined helper function",
+        "Update app/constants/index.ts barrel to export new constants",
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Completed 2026-01-28. Created defaults.constants.ts with DEFAULT_SETTINGS, DEFAULT_CHART_CONFIG, DEFAULT_TABLE_CONFIG, DEFAULT_TIMER_CONFIG, DEFAULT_DATE_KEY. Re-exported DEFAULT_SETTINGS from WorkoutLogData.ts for backward compatibility. Aggregated DEFAULTS export for convenient access."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Split Muscle Constants into Dedicated File",
-      "description": "As a developer, I want muscle-related constants in a dedicated file so that heatmap and body-part logic is contained.",
+      "title": "Create ExerciseDefinitionService",
+      "description": "As a developer, I need a service to load, save, and manage exercise definitions from exercise folder .md frontmatter files.",
       "acceptanceCriteria": [
-        "Create app/constants/muscles.constants.ts",
-        "Move MUSCLE_GROUPS array/object",
-        "Move MUSCLE_COLORS mapping",
-        "Move HEATMAP_CONFIG or any heatmap-related constants",
-        "Move muscle tag mappings (tag to display name, etc.)",
-        "File has header JSDoc explaining its purpose",
+        "Create app/services/ExerciseDefinitionService.ts with: getExerciseDefinition(name), getAllExerciseDefinitions(), saveExerciseDefinition(definition), getParametersForExercise(name)",
+        "Parse exercise_type field from frontmatter (default: 'strength' for backward compatibility)",
+        "Parse parameters field from frontmatter as YAML array for custom parameters",
+        "Cache definitions with 10-second TTL (similar to DataService pattern)",
+        "Register service in main.ts plugin initialization",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Completed 2026-01-29. Created muscles.constants.ts with MUSCLE_NAMES, MUSCLE_POSITIONS, MUSCLE_GROUPS, BODY_PARTS, MUSCLE_TAGS, MUSCLE_TAG_MAP, MUSCLE_KEYWORDS exports. Added aggregated MUSCLES export. Updated index.ts barrel to re-export from the new module."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Split Validation Constants into Dedicated File",
-      "description": "As a developer, I want validation messages in a dedicated file so that error handling is consistent.",
+      "title": "Extend CSV Schema for Dynamic Columns",
+      "description": "As a developer, I need the CSV interfaces and parser to support dynamic columns so new exercise parameters can be stored.",
       "acceptanceCriteria": [
-        "Create app/constants/validation.constants.ts",
-        "Move all error messages and validation strings",
-        "Move validation patterns (regex patterns, numeric limits)",
-        "Move any ERRORS or MESSAGES objects",
-        "File has header JSDoc explaining its purpose",
+        "Update WorkoutLogData interface to include customFields?: Record<string, string | number | boolean>",
+        "Update CSVWorkoutLogEntry interface similarly",
+        "Modify parseCSVLogFile() in WorkoutLogData.ts to read CSV header dynamically and map unknown columns to customFields",
+        "Modify formatCSVLogEntry() to write known columns first, then custom field columns",
+        "Ensure empty/null values written as empty string (nullable columns)",
+        "Backward compatible: existing CSVs with only standard columns still work",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Completed 2026-01-29. Created validation.constants.ts with ERROR_MESSAGES, ERROR_TYPES, FORM_VALIDATION, SETTINGS_VALIDATION, TABLE_VALIDATION, CHART_LIMITS, TABLE_LIMITS, TIMER_LIMITS exports. Added aggregated VALIDATION export. Updated index.ts barrel to re-export from the new module."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Create Constants Barrel Export Index",
-      "description": "As a developer, I want a single import point for constants so that existing code can migrate gradually.",
+      "title": "Extend DataService for Dynamic Column Management",
+      "description": "As a developer, I need DataService to handle CSV files with varying columns and add new columns when needed.",
       "acceptanceCriteria": [
-        "Create app/constants/index.ts",
-        "Re-export all exports from ui.constants.ts",
-        "Re-export all exports from defaults.constants.ts",
-        "Re-export all exports from muscles.constants.ts",
-        "Re-export all exports from validation.constants.ts",
-        "Support both import { X } from '@app/constants' and import { X } from '@app/constants/ui.constants'",
+        "Add method getCSVColumns(): Promise<string[]> to return current CSV header columns",
+        "Add method ensureColumnExists(columnName: string): Promise<void> to add column if missing",
+        "Modify addWorkoutLogEntry() to check entry customFields for new columns, call ensureColumnExists() before writing",
+        "Modify updateWorkoutLogEntry() similarly for new columns",
+        "Clear cache after column structure changes",
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Completed 2026-01-29. The index.ts barrel already existed with proper re-exports from all four new constant modules (ui, defaults, muscles, validation). Also re-exports from original Constants.ts and MuscleTags.ts for backward compatibility. Verified: TypeScript compiles, all 368 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Update All Imports to Use New Constants Structure",
-      "description": "As a developer, I want all existing imports updated so that the codebase uses the new modular structure.",
+      "title": "Update CreateExercisePageModal for Exercise Types",
+      "description": "As a user, I want to select an exercise type when creating a new exercise so the system knows what parameters to track.",
       "acceptanceCriteria": [
-        "Find all files importing from Constants.ts (use grep)",
-        "Update each file to import from @app/constants barrel or specific module",
-        "Prefer specific imports (e.g., @app/constants/ui.constants) for better tree-shaking",
-        "No circular dependency warnings in build output",
+        "Add exercise type dropdown to CreateExercisePageModal after exercise name input showing: Strength, Timed, Distance, Cardio, Custom",
+        "When 'Custom' selected, show UI to add custom parameters: 'Add Parameter' button with key/label/type/unit/required inputs",
+        "Update exercise page template to include exercise_type in frontmatter",
+        "Update exercise page template to include parameters in frontmatter for custom type",
+        "Default selection: 'Strength' for backward compatibility",
         "Typecheck passes",
-        "All tests pass"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Completed 2026-01-29. Updated 82 files to import from @app/constants barrel instead of @app/constants/Constants. The index.ts barrel re-exports CONSTANTS from Constants.ts for backward compatibility. TypeScript compiles, npm run build passes without circular dependency warnings, all 368 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Remove Original Constants.ts File",
-      "description": "As a developer, I want the original monolithic file removed so that the refactoring is complete.",
+      "title": "Update CreateLogModal for Dynamic Fields",
+      "description": "As a user, I want the log entry form to show fields relevant to the selected exercise's type instead of hardcoded reps/weight.",
       "acceptanceCriteria": [
-        "Delete app/constants/Constants.ts",
-        "Verify no references to old file remain (grep for Constants.ts)",
-        "npm run build succeeds without errors",
-        "npm run lint passes",
+        "When exercise selected via autocomplete, fetch its ExerciseDefinition from service",
+        "Dynamically render input fields based on exercise type parameters: number fields with +/- buttons, string fields as text, unit labels",
+        "Remove hardcoded reps/weight fields; generate from parameter definitions instead",
+        "For exercises without definition (legacy), default to strength type (reps/weight)",
+        "Validate required fields before submission",
+        "Store parameter values in customFields for non-standard parameters",
         "Typecheck passes",
-        "All tests pass"
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Completed 2026-01-29. Deleted Constants.ts after creating composed CONSTANTS object in index.ts. Added missing UI constants (MESSAGES_UI, FORMS_UI, STATS_UI, TRENDS_UI, TIME_PERIODS_UI, COMMON_UI, COMMANDS_UI, DESCRIPTIONS_UI) to ui.constants.ts. Updated main.ts import. All 368 tests pass, TypeScript compiles, build succeeds."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Update CLAUDE.md with Constants Structure Documentation",
-      "description": "As a developer, I want documentation for the constants structure so that future contributors understand the organization.",
+      "title": "Update EditLogModal for Dynamic Fields",
+      "description": "As a user, I want to edit log entries and see the correct fields for that exercise's type.",
       "acceptanceCriteria": [
-        "Update CLAUDE.md Constants section to reflect new file structure",
-        "Document purpose of each constants file (ui, defaults, muscles, validation)",
-        "Include example import statements for both barrel and direct imports",
-        "Mention tree-shaking benefit of direct imports",
-        "Typecheck passes"
+        "Load exercise definition when modal opens using ExerciseDefinitionService",
+        "Populate form fields from both standard fields and customFields",
+        "Same dynamic field rendering as CreateLogModal (US-007)",
+        "Preserve all field values on save including customFields",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Completed 2026-01-29. Updated CLAUDE.md Constants section with new modular structure documentation. Includes file structure diagram, module purposes, import patterns (barrel and direct), tree-shaking note, and backward compatibility explanation. Also updated Testing section to reflect constant files exclusion. TypeScript compiles, all 368 tests pass."
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Update TableRenderer for Dynamic Columns",
+      "description": "As a user, I want tables to show columns relevant to each exercise type automatically.",
+      "acceptanceCriteria": [
+        "TableRenderer reads exercise definition for filtered exercise",
+        "If single exercise filter: show only that exercise's parameter columns",
+        "If multiple exercises: show union of all parameter columns with empty cells for missing params",
+        "Column headers use parameter labels with units in parentheses, e.g., 'Duration (sec)'",
+        "Support explicit columns config to override automatic detection",
+        "Default columns for no filter: Date, Exercise, Reps, Weight, Volume (backward compatible)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Update ChartRenderer for Dynamic Data Types",
+      "description": "As a user, I want charts to visualize the appropriate metric for each exercise type.",
+      "acceptanceCriteria": [
+        "ChartRenderer reads exercise definition for filtered exercise",
+        "Determine available chart data types from exercise parameters: strength->volume/weight/reps, timed->duration, distance->distance/duration/pace, custom->all numeric params",
+        "Update type parameter to accept any numeric parameter key not just volume/weight/reps",
+        "Default type based on exercise type: strength->volume, timed->duration, distance->distance",
+        "Show error message if requested type not available for exercise",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Update InsertChartModal for Dynamic Types",
+      "description": "As a user, I want the chart insert modal to show valid data type options based on the selected exercise.",
+      "acceptanceCriteria": [
+        "When exercise selected, fetch its ExerciseDefinition",
+        "Update 'Data Type' dropdown to show only valid options for that exercise type",
+        "Update preview to reflect selected exercise's available chart types",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Add Exercise Type Migration Utility",
+      "description": "As a user with existing data, I want my current exercises to work without modification, with optional migration command.",
+      "acceptanceCriteria": [
+        "Exercises without exercise_type frontmatter default to 'strength'",
+        "CSV entries without customFields work with standard reps/weight parsing",
+        "Add optional command 'Migrate Exercise Types' that scans exercise folder, adds exercise_type: strength to files missing it, reports count of updated files",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
     }
   ]
 }

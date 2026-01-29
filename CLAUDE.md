@@ -149,16 +149,45 @@ Timers support saved presets via settings:
 
 ### Constants
 
-All user-facing strings in `app/constants/Constants.ts` under `CONSTANTS.WORKOUT.*`:
+Constants are organized into focused single-responsibility modules in `app/constants/`:
 
-- `MODAL.TITLES`, `MODAL.BUTTONS`, `MODAL.LABELS`, `MODAL.CHECKBOXES`
-- `SETTINGS.*`, `TIMER.*`, `TABLE.*`, `CHARTS.*`
+```text
+app/constants/
+├── index.ts              # Barrel export + composed CONSTANTS object
+├── ui.constants.ts       # UI labels, icons, emoji, modal/settings/table/chart strings
+├── defaults.constants.ts # Default configurations (settings, chart, table, timer)
+├── muscles.constants.ts  # Muscle tags, groups, positions, heatmap data
+├── validation.constants.ts # Error messages, validation limits, patterns
+└── MuscleTags.ts         # Legacy muscle tag mappings (backward compatibility)
+```
+
+**Module purposes:**
+
+- **ui.constants.ts**: All user-facing strings (modal titles/buttons/labels, settings labels/descriptions, table columns, chart labels, timer types, icons, emoji)
+- **defaults.constants.ts**: Default values for plugin settings, chart config, table config, timer config
+- **muscles.constants.ts**: Muscle names, positions, groups, body parts, tag mappings for heatmaps
+- **validation.constants.ts**: Error messages, error types, form validation, numeric limits
+
+**Import patterns:**
+
+```typescript
+// Barrel import (convenient, works everywhere)
+import { CONSTANTS, ICONS, DEFAULT_SETTINGS } from "@app/constants";
+
+// Direct import (better tree-shaking for production builds)
+import { ICONS, MODAL_UI } from "@app/constants/ui.constants";
+import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
+import { MUSCLE_TAGS } from "@app/constants/muscles.constants";
+import { ERROR_MESSAGES } from "@app/constants/validation.constants";
+```
+
+**Backward compatibility:** The `CONSTANTS` object in `index.ts` maintains the legacy `CONSTANTS.WORKOUT.*` structure by composing values from the modular files. Existing code using `CONSTANTS.WORKOUT.MODAL`, `CONSTANTS.WORKOUT.SETTINGS`, etc. continues to work.
 
 ## Testing
 
 - **Location**: `__tests__/` directories alongside source files
 - **Coverage**: 70% threshold (statements, branches, functions, lines)
-- **Excluded**: Constants.ts, FrontmatterParser.ts (Obsidian API mocking)
+- **Excluded**: FrontmatterParser.ts (Obsidian API mocking), constant files (static data)
 
 ## Obsidian Plugin Guidelines
 

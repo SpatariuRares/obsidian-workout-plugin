@@ -2894,3 +2894,37 @@ This allows all existing code using `CONSTANTS.WORKOUT.*` to continue working wh
 - US-007 complete - Constants.ts deleted, refactoring of the 817-line monolith is finished
 - Next task: US-008 (Update CLAUDE.md with Constants Structure Documentation)
 - Future optimization: migrate from CONSTANTS.WORKOUT.* to direct modular imports for better tree-shaking
+
+## 2026-01-29 - Phase 5 US-008: Update CLAUDE.md with Constants Structure Documentation
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated CLAUDE.md Constants section (lines 150-180) with comprehensive documentation:
+   - Added file structure diagram showing all constant modules
+   - Documented purpose of each module (ui, defaults, muscles, validation)
+   - Added import pattern examples for both barrel and direct imports
+   - Noted tree-shaking benefits of direct imports
+   - Explained backward compatibility with CONSTANTS object
+
+2. Updated Testing section to reflect that constant files (not just Constants.ts) are excluded from coverage
+
+**Files modified:**
+- CLAUDE.md
+
+**Verification:**
+- TypeScript compiles: `npx tsc -noEmit -skipLibCheck` passes
+- All 368 tests pass: `npm test`
+
+**Acceptance criteria met:**
+- ✅ Update CLAUDE.md Constants section to reflect new file structure
+- ✅ Document purpose of each constants file (ui, defaults, muscles, validation)
+- ✅ Include example import statements for both barrel and direct imports
+- ✅ Mention tree-shaking benefit of direct imports
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- Phase 5 refactoring is now COMPLETE (all 8 user stories done)
+- The 817-line Constants.ts monolith has been successfully split into 4 focused modules
+- All imports use the barrel pattern (`@app/constants`) for convenience
+- Future optimization: migrate individual usages to direct imports for better tree-shaking

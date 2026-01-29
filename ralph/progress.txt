@@ -1,0 +1,24 @@
+# Ralph Progress Log
+# Feature: services-improvement
+# Started: 2026-01-29
+
+## 2026-01-29 - US-001: Create EventBus Type Definitions
+
+**Completed:** Created type definitions for the event bus system.
+
+**Files created:**
+- `app/services/events/types.ts` - Core type definitions
+- `app/services/events/index.ts` - Barrel export
+
+**Implementation details:**
+- Defined `WorkoutPluginEvents` interface with 4 event types:
+  - `data:changed` - For workout CSV data changes
+  - `settings:changed` - For plugin settings changes
+  - `cache:invalidate` - For cache invalidation requests
+  - `file:modified` - For exercise folder file changes
+- Defined `IEventBus` interface with `on()`, `emit()`, `off()`, `destroy()` methods
+- Added helper types: `WorkoutPluginEventName`, `WorkoutPluginEventPayload`, `EventHandler`
+- All types are exported via barrel file
+
+**Next steps:** US-002 - Implement the EventBus class using these types.
+

@@ -54,6 +54,7 @@ export class EditLogModal extends BaseLogModal {
       workout: this.originalLog.workout || "",
       date: this.originalLog.date,
       protocol: this.originalLog.protocol,
+      customFields: this.originalLog.customFields,
     };
   }
 
@@ -94,6 +95,7 @@ export class EditLogModal extends BaseLogModal {
       data.notes,
       finalDate,
       data.protocol,
+      data.customFields,
     );
 
     await this.plugin.updateWorkoutLogEntry(this.originalLog, updatedEntry);

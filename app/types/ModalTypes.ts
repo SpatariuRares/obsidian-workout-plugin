@@ -9,6 +9,7 @@ export interface LogFormData {
   notes: string;
   date?: string;
   protocol?: WorkoutProtocol;
+  customFields?: Record<string, string | number | boolean>;
 }
 
 export interface LogFormElements {
@@ -20,4 +21,6 @@ export interface LogFormElements {
   currentWorkoutToggle: HTMLInputElement;
   dateInput?: HTMLInputElement;
   protocolSelect?: HTMLSelectElement;
+  dynamicFieldInputs: Map<string, HTMLInputElement>;
+  dynamicFieldsContainer?: HTMLElement;
 }

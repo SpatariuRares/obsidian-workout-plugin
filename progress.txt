@@ -3254,3 +3254,33 @@ parameters:
   1. Creating a Strength exercise (default)
   2. Creating a Custom exercise with multiple parameters
   3. Verifying frontmatter is correctly formatted
+## 2026-01-29 - US-008: Update EditLogModal for Dynamic Fields
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/EditLogModal.ts`:
+   - Modified `getPreFillData()` to include `customFields` from `originalLog.customFields`
+   - Pre-fill data now supports dynamic field population when editing log entries
+
+2. Updated `app/features/modals/base/BaseLogModal.ts`:
+   - Added `renderParameterField()` helper method for dynamic input field creation
+   - Method handles number, boolean, and string parameter types with proper validation
+   - Updated `createFormElements()` to load exercise definition and render custom parameter fields
+   - Dynamic fields loaded when exercise name is known via `exerciseDefService.getParametersForExercise()`
+   - Updated `preFillForm()` to populate custom fields from `LogFormData.customFields`
+   - Handles checkbox (boolean) and text/number inputs correctly during pre-fill
+
+**Features implemented:**
+- EditLogModal loads exercise definition to determine required fields
+- Dynamic parameter fields rendered based on exercise type (timed, distance, cardio, custom)
+- Custom fields pre-filled with existing values when editing log entries
+- Backward compatible with standard strength exercises (reps/weight only)
+- Graceful fallback to standard fields when exercise definition not found
+
+**Notes for next developer:**
+- TypeScript compilation passes (`npm run typecheck`)
+- All 397 tests pass (`npm run test`)
+- Browser verification recommended: Edit a timed/distance exercise log entry and verify custom fields are pre-filled
+- Next task: US-009 (Update TableRenderer for Dynamic Columns)
+

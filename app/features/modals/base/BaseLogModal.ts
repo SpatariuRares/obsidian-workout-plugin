@@ -8,6 +8,8 @@ import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAu
 import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
+import type { ParameterDefinition } from "@app/types/ExerciseTypes";
+import type { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
 
 /**
  * Abstract base class for workout log modals.
@@ -18,6 +20,7 @@ export abstract class BaseLogModal extends ModalBase {
   protected exerciseName?: string;
   protected currentPageLink?: string;
   protected onComplete?: () => void;
+  protected exerciseDefService: ExerciseDefinitionService;
 
   constructor(
     app: App,
@@ -30,6 +33,7 @@ export abstract class BaseLogModal extends ModalBase {
     this.exerciseName = exerciseName;
     this.currentPageLink = currentPageLink;
     this.onComplete = onComplete;
+    this.exerciseDefService = this.plugin.getExerciseDefinitionService();
   }
 
   /**
@@ -51,7 +55,7 @@ export abstract class BaseLogModal extends ModalBase {
     return false;
   }
 
-  onOpen() {
+  async onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
@@ -63,8 +67,8 @@ export abstract class BaseLogModal extends ModalBase {
     // Create styled main container
     const formContainer = this.createStyledMainContainer(contentEl);
 
-    // Create form elements
-    const formElements = this.createFormElements(formContainer);
+    // Create form elements (async to load exercise parameters)
+    const formElements = await this.createFormElements(formContainer);
 
     // Pre-fill form if needed
     if (this.shouldPreFillForm()) {
@@ -87,7 +91,9 @@ export abstract class BaseLogModal extends ModalBase {
   /**
    * Creates all form elements
    */
-  protected createFormElements(formContainer: HTMLElement): LogFormElements {
+  protected async createFormElements(
+    formContainer: HTMLElement,
+  ): Promise<LogFormElements> {
     // Exercise autocomplete using reusable component
     const { elements: exerciseElements } = ExerciseAutocomplete.create(
       this,
@@ -97,11 +103,15 @@ export abstract class BaseLogModal extends ModalBase {
     );
 
     // Reps input with adjust buttons
-    const repsSection = formContainer.createDiv({ cls: "workout-field-with-adjust" });
+    const repsSection = formContainer.createDiv({
+      cls: "workout-field-with-adjust",
+    });
     const repsLabel = repsSection.createDiv({ cls: "workout-field-label" });
     repsLabel.textContent = CONSTANTS.WORKOUT.MODAL.LABELS.REPS;
 
-    const repsInputContainer = repsSection.createDiv({ cls: "workout-input-with-adjust" });
+    const repsInputContainer = repsSection.createDiv({
+      cls: "workout-input-with-adjust",
+    });
     const repsInput = repsInputContainer.createEl("input", {
       type: "number",
       cls: "workout-charts-input",
@@ -113,7 +123,9 @@ export abstract class BaseLogModal extends ModalBase {
     repsInput.value = ""; // Allow empty for user input
 
     // Quick adjust buttons for reps
-    const repsAdjustButtons = repsInputContainer.createDiv({ cls: "workout-adjust-buttons" });
+    const repsAdjustButtons = repsInputContainer.createDiv({
+      cls: "workout-adjust-buttons",
+    });
     const repsMinusBtn = repsAdjustButtons.createEl("button", {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + "1",
       cls: "workout-adjust-btn workout-adjust-minus",
@@ -136,11 +148,15 @@ export abstract class BaseLogModal extends ModalBase {
     });
 
     // Weight input with adjust buttons
-    const weightSection = formContainer.createDiv({ cls: "workout-field-with-adjust" });
+    const weightSection = formContainer.createDiv({
+      cls: "workout-field-with-adjust",
+    });
     const weightLabel = weightSection.createDiv({ cls: "workout-field-label" });
     weightLabel.textContent = CONSTANTS.WORKOUT.MODAL.LABELS.WEIGHT;
 
-    const weightInputContainer = weightSection.createDiv({ cls: "workout-input-with-adjust" });
+    const weightInputContainer = weightSection.createDiv({
+      cls: "workout-input-with-adjust",
+    });
     const weightInput = weightInputContainer.createEl("input", {
       type: "number",
       cls: "workout-charts-input",
@@ -154,21 +170,31 @@ export abstract class BaseLogModal extends ModalBase {
 
     // Quick adjust buttons for weight
     const weightIncrement = this.plugin.settings.weightIncrement;
-    const weightAdjustButtons = weightInputContainer.createDiv({ cls: "workout-adjust-buttons" });
+    const weightAdjustButtons = weightInputContainer.createDiv({
+      cls: "workout-adjust-buttons",
+    });
     const weightMinusBtn = weightAdjustButtons.createEl("button", {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + weightIncrement,
       cls: "workout-adjust-btn workout-adjust-minus",
-      attr: { type: "button", "aria-label": `Decrease weight by ${weightIncrement}kg` },
+      attr: {
+        type: "button",
+        "aria-label": `Decrease weight by ${weightIncrement}kg`,
+      },
     });
     const weightPlusBtn = weightAdjustButtons.createEl("button", {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + weightIncrement,
       cls: "workout-adjust-btn workout-adjust-plus",
-      attr: { type: "button", "aria-label": `Increase weight by ${weightIncrement}kg` },
+      attr: {
+        type: "button",
+        "aria-label": `Increase weight by ${weightIncrement}kg`,
+      },
     });
 
     weightMinusBtn.addEventListener("click", () => {
       const currentValue = parseFloat(weightInput.value) || 0;
-      weightInput.value = Math.max(0, currentValue - weightIncrement).toFixed(1);
+      weightInput.value = Math.max(0, currentValue - weightIncrement).toFixed(
+        1,
+      );
     });
 
     weightPlusBtn.addEventListener("click", () => {
@@ -177,7 +203,9 @@ export abstract class BaseLogModal extends ModalBase {
     });
 
     // Protocol dropdown - built-in protocols first, then custom protocols
-    const builtInProtocols = [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL];
+    const builtInProtocols = [
+      ...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL,
+    ];
     const customProtocols = this.plugin.settings.customProtocols.map((p) => ({
       text: p.name,
       value: p.id,
@@ -209,6 +237,36 @@ export abstract class BaseLogModal extends ModalBase {
         "",
       );
       dateInput.type = "date";
+    }
+
+    // Initialize dynamic fields map with reps/weight for backward compatibility
+    const dynamicFieldInputs = new Map<string, HTMLInputElement>();
+    dynamicFieldInputs.set("reps", repsInput);
+    dynamicFieldInputs.set("weight", weightInput);
+
+    // Load exercise definition and render dynamic fields if exercise is known
+    if (this.exerciseName) {
+      try {
+        const parameters =
+          await this.exerciseDefService.getParametersForExercise(
+            this.exerciseName,
+          );
+
+        // Render fields for each parameter (excluding 'reps' and 'weight' which are already rendered)
+        for (const param of parameters) {
+          if (param.key === "reps" || param.key === "weight") continue;
+
+          const input = this.renderParameterField(formContainer, param);
+          dynamicFieldInputs.set(param.key, input);
+        }
+      } catch (error) {
+        // If exercise definition not found, continue with standard fields only
+        // eslint-disable-next-line no-console
+        console.warn(
+          `Could not load exercise definition for ${this.exerciseName}:`,
+          error,
+        );
+      }
     }
 
     // Workout section
@@ -245,6 +303,7 @@ export abstract class BaseLogModal extends ModalBase {
       currentWorkoutToggle,
       dateInput,
       protocolSelect,
+      dynamicFieldInputs,
     };
   }
 
@@ -308,6 +367,20 @@ export abstract class BaseLogModal extends ModalBase {
     if (data.protocol && formElements.protocolSelect) {
       formElements.protocolSelect.value = data.protocol;
     }
+
+    // Pre-fill custom fields
+    if (data.customFields) {
+      for (const [key, value] of Object.entries(data.customFields)) {
+        const input = formElements.dynamicFieldInputs.get(key);
+        if (input) {
+          if (input.type === "checkbox") {
+            input.checked = Boolean(value);
+          } else {
+            input.value = String(value);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -350,17 +423,41 @@ export abstract class BaseLogModal extends ModalBase {
   ): Promise<void> {
     const currentFileName = this.getCurrentFileName();
 
-    // Extract form data
+    //Extract form data
     const exercise = formElements.exerciseElements.exerciseInput.value.trim();
     const reps = parseInt(formElements.repsInput.value);
     const weight = parseFloat(formElements.weightInput.value);
     const notes = formElements.notesInput.value.trim();
     let workout = formElements.workoutInput.value.trim();
-    const protocol = (formElements.protocolSelect?.value || WorkoutProtocol.STANDARD) as WorkoutProtocol;
+    const protocol = (formElements.protocolSelect?.value ||
+      WorkoutProtocol.STANDARD) as WorkoutProtocol;
 
     // Handle current workout toggle
     if (formElements.currentWorkoutToggle.checked) {
       workout = currentFileName;
+    }
+
+    // Build customFields from dynamicFieldInputs (excluding standard reps/weight)
+    const customFields: Record<string, string | number | boolean> = {};
+    for (const [key, input] of formElements.dynamicFieldInputs) {
+      if (key === "reps" || key === "weight") {
+        continue; // Skip standard fields, they're handled separately
+      }
+
+      const value = input.value.trim();
+      if (!value) continue; // Skip empty values
+
+      // Try to parse as number or boolean, otherwise keep as string
+      if (input.type === "checkbox") {
+        customFields[key] = (input as HTMLInputElement).checked;
+      } else if (input.type === "number") {
+        const parsed = parseFloat(value);
+        if (!isNaN(parsed)) {
+          customFields[key] = parsed;
+        }
+      } else {
+        customFields[key] = value;
+      }
     }
 
     // Validate form data
@@ -376,6 +473,8 @@ export abstract class BaseLogModal extends ModalBase {
       notes,
       date: formElements.dateInput?.value || undefined,
       protocol,
+      customFields:
+        Object.keys(customFields).length > 0 ? customFields : undefined,
     };
 
     // Submit data
@@ -419,6 +518,69 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
+   * Renders an input field for a parameter based on its definition
+   */
+  protected renderParameterField(
+    container: HTMLElement,
+    param: ParameterDefinition,
+  ): HTMLInputElement {
+    const fieldContainer = container.createDiv({
+      cls: "workout-field-with-adjust",
+    });
+    const label = fieldContainer.createDiv({ cls: "workout-field-label" });
+
+    // Build label with unit if available
+    const labelText = param.unit
+      ? `${param.label} (${param.unit})`
+      : param.label;
+    label.textContent = labelText;
+
+    let input: HTMLInputElement;
+
+    if (param.type === "boolean") {
+      // Checkbox for boolean parameters
+      input = fieldContainer.createEl("input", {
+        type: "checkbox",
+        cls: "workout-charts-checkbox",
+      });
+    } else if (param.type === "number") {
+      // Number input with min/max validation
+      input = fieldContainer.createEl("input", {
+        type: "number",
+        cls: "workout-charts-input",
+        attr: {
+          min: param.min?.toString() || "0",
+          max: param.max?.toString() || "",
+          step: "0.1",
+        },
+      });
+
+      // Set default value if provided
+      if (param.default !== undefined) {
+        input.value = param.default.toString();
+      }
+    } else {
+      // Text input for string parameters
+      input = fieldContainer.createEl("input", {
+        type: "text",
+        cls: "workout-charts-input",
+      });
+
+      // Set default value if provided
+      if (param.default !== undefined) {
+        input.value = param.default.toString();
+      }
+    }
+
+    // Mark required fields
+    if (param.required) {
+      input.required = true;
+    }
+
+    return input;
+  }
+
+  /**
    * Sets initial focus on appropriate input
    */
   protected setInitialFocus(formElements: LogFormElements): void {
@@ -440,6 +602,7 @@ export abstract class BaseLogModal extends ModalBase {
     notes: string,
     date?: string,
     protocol?: WorkoutProtocol,
+    customFields?: Record<string, string | number | boolean>,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
     return {
       date: date || new Date().toISOString(),
@@ -451,6 +614,7 @@ export abstract class BaseLogModal extends ModalBase {
       workout: workout || undefined,
       notes: notes || undefined,
       protocol: protocol || WorkoutProtocol.STANDARD,
+      customFields: customFields,
     };
   }
 }

@@ -16,7 +16,8 @@
       "Bash(git restore:*)",
       "Bash(git commit:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }

@@ -1,4 +1,3 @@
-
 import { TrendIndicators, FilterResult } from "@app/types/CommonTypes";
 export enum CHART_TYPE {
   EXERCISE = "exercise",
@@ -8,9 +7,15 @@ export enum CHART_TYPE {
 }
 
 export enum CHART_DATA_TYPE {
+  // Strength exercise types
   VOLUME = "volume",
   WEIGHT = "weight",
   REPS = "reps",
+  // Timed/Distance/Cardio exercise types
+  DURATION = "duration",
+  DISTANCE = "distance",
+  PACE = "pace",
+  HEART_RATE = "heartRate",
 }
 
 export interface EmbeddedChartParams {

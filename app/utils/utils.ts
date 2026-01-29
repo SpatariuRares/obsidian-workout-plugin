@@ -235,6 +235,7 @@ export function filterLogDataByExercise(
 
 /**
  * CORREZIONE 1: Modifica della funzione processChartData in app/utils/utils.ts
+ * Extended to support dynamic exercise types (timed, distance, cardio, custom)
  */
 export function processChartData(
   logData: WorkoutLogData[],
@@ -259,9 +260,18 @@ export function processChartData(
   );
 
   // Group by date and calculate values
+  // Extended to include duration, distance, heartRate from customFields
   const dateGroups = new Map<
     string,
-    { volume: number; weight: number; reps: number; count: number }
+    {
+      volume: number;
+      weight: number;
+      reps: number;
+      duration: number;
+      distance: number;
+      heartRate: number;
+      count: number;
+    }
   >();
 
   filteredData.forEach((log) => {
@@ -270,14 +280,35 @@ export function processChartData(
       volume: 0,
       weight: 0,
       reps: 0,
+      duration: 0,
+      distance: 0,
+      heartRate: 0,
       count: 0,
     };
 
+    // Standard fields
     existing.volume += log.volume || 0;
     existing.weight += log.weight || 0;
     existing.reps += log.reps || 0;
-    existing.count += 1;
 
+    // Extract from customFields for dynamic exercise types
+    if (log.customFields) {
+      // Duration from customFields (case-insensitive)
+      const durationValue = getCustomFieldNumber(log.customFields, "duration");
+      existing.duration += durationValue;
+
+      // Distance from customFields
+      const distanceValue = getCustomFieldNumber(log.customFields, "distance");
+      existing.distance += distanceValue;
+
+      // Heart rate from customFields
+      const heartRateValue =
+        getCustomFieldNumber(log.customFields, "heartRate") ||
+        getCustomFieldNumber(log.customFields, "heartrate");
+      existing.heartRate += heartRateValue;
+    }
+
+    existing.count += 1;
     dateGroups.set(dateKey, existing);
   });
 
@@ -286,6 +317,10 @@ export function processChartData(
   const volumeData: number[] = [];
   const weightData: number[] = [];
   const repsData: number[] = [];
+  const durationData: number[] = [];
+  const distanceData: number[] = [];
+  const paceData: number[] = [];
+  const heartRateData: number[] = [];
 
   dateGroups.forEach((values, date) => {
     labels.push(date);
@@ -296,49 +331,47 @@ export function processChartData(
       volumeData.push(values.volume);
       weightData.push(values.weight); // Somma totale dei pesi
       repsData.push(values.reps); // Somma totale delle reps
+      durationData.push(values.duration);
+      distanceData.push(values.distance);
+      // Pace = total time / total distance (min/km)
+      paceData.push(
+        values.distance > 0 ? values.duration / values.distance : 0,
+      );
+      heartRateData.push(
+        values.count > 0 ? values.heartRate / values.count : 0,
+      ); // Avg heart rate
     } else {
       // Per singolo esercizio: mantieni la media (comportamento attuale)
       volumeData.push(values.count > 0 ? values.volume / values.count : 0);
       weightData.push(values.count > 0 ? values.weight / values.count : 0);
       repsData.push(values.count > 0 ? values.reps / values.count : 0);
+      durationData.push(values.count > 0 ? values.duration / values.count : 0);
+      distanceData.push(values.count > 0 ? values.distance / values.count : 0);
+      // Pace = avg time / avg distance (min/km)
+      const avgDuration = values.count > 0 ? values.duration / values.count : 0;
+      const avgDistance = values.count > 0 ? values.distance / values.count : 0;
+      paceData.push(avgDistance > 0 ? avgDuration / avgDistance : 0);
+      heartRateData.push(
+        values.count > 0 ? values.heartRate / values.count : 0,
+      );
     }
   });
 
   // Create datasets based on chart type
   const datasets: ChartDataset[] = [];
 
-  if (
-    chartType === CHART_DATA_TYPE.VOLUME ||
-    chartType === CHART_DATA_TYPE.WEIGHT ||
-    chartType === CHART_DATA_TYPE.REPS
-  ) {
-    const data =
-      chartType === CHART_DATA_TYPE.VOLUME
-        ? volumeData
-        : chartType === CHART_DATA_TYPE.WEIGHT
-          ? weightData
-          : repsData;
+  // Build data array and label based on chart type
+  const { data, label, color } = getChartDataForType(chartType, displayType, {
+    volumeData,
+    weightData,
+    repsData,
+    durationData,
+    distanceData,
+    paceData,
+    heartRateData,
+  });
 
-    // 🔧 CORREZIONE: Aggiornare le etichette per chiarire cosa stiamo mostrando
-    const label =
-      chartType === CHART_DATA_TYPE.VOLUME
-        ? displayType === CHART_TYPE.WORKOUT
-          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
-          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME
-        : chartType === CHART_DATA_TYPE.WEIGHT
-          ? displayType === CHART_TYPE.WORKOUT
-            ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_WEIGHT
-            : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT
-          : displayType === CHART_TYPE.WORKOUT
-            ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_REPS
-            : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS;
-    const color =
-      chartType === CHART_DATA_TYPE.VOLUME
-        ? "#4CAF50"
-        : chartType === CHART_DATA_TYPE.WEIGHT
-          ? "#FF9800"
-          : "#FF9800";
-
+  if (data.length > 0) {
     datasets.push({
       label,
       data,
@@ -352,6 +385,122 @@ export function processChartData(
   }
 
   return { labels, datasets };
+}
+
+/**
+ * Helper to extract a number from customFields (case-insensitive key matching)
+ */
+function getCustomFieldNumber(
+  customFields: Record<string, string | number | boolean>,
+  key: string,
+): number {
+  // Try exact key first
+  if (key in customFields) {
+    const value = customFields[key];
+    if (typeof value === "number") return value;
+    if (typeof value === "string") {
+      const num = parseFloat(value);
+      return isNaN(num) ? 0 : num;
+    }
+  }
+  // Try case-insensitive match
+  const lowerKey = key.toLowerCase();
+  for (const [k, v] of Object.entries(customFields)) {
+    if (k.toLowerCase() === lowerKey) {
+      if (typeof v === "number") return v;
+      if (typeof v === "string") {
+        const num = parseFloat(v);
+        return isNaN(num) ? 0 : num;
+      }
+    }
+  }
+  return 0;
+}
+
+/**
+ * Get chart data array, label, and color based on chart type
+ */
+function getChartDataForType(
+  chartType: CHART_DATA_TYPE,
+  displayType: CHART_TYPE,
+  dataArrays: {
+    volumeData: number[];
+    weightData: number[];
+    repsData: number[];
+    durationData: number[];
+    distanceData: number[];
+    paceData: number[];
+    heartRateData: number[];
+  },
+): { data: number[]; label: string; color: string } {
+  const isWorkout = displayType === CHART_TYPE.WORKOUT;
+
+  switch (chartType) {
+    case CHART_DATA_TYPE.VOLUME:
+      return {
+        data: dataArrays.volumeData,
+        label: isWorkout
+          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
+          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
+        color: "#4CAF50",
+      };
+
+    case CHART_DATA_TYPE.WEIGHT:
+      return {
+        data: dataArrays.weightData,
+        label: isWorkout
+          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_WEIGHT
+          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT,
+        color: "#FF9800",
+      };
+
+    case CHART_DATA_TYPE.REPS:
+      return {
+        data: dataArrays.repsData,
+        label: isWorkout
+          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_REPS
+          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS,
+        color: "#FF9800",
+      };
+
+    case CHART_DATA_TYPE.DURATION:
+      return {
+        data: dataArrays.durationData,
+        label: isWorkout ? "Total duration" : "Avg duration",
+        color: "#2196F3",
+      };
+
+    case CHART_DATA_TYPE.DISTANCE:
+      return {
+        data: dataArrays.distanceData,
+        label: isWorkout ? "Total distance" : "Avg distance",
+        color: "#9C27B0",
+      };
+
+    case CHART_DATA_TYPE.PACE:
+      return {
+        data: dataArrays.paceData,
+        label: "Pace (min/km)",
+        color: "#E91E63",
+      };
+
+    case CHART_DATA_TYPE.HEART_RATE:
+      return {
+        data: dataArrays.heartRateData,
+        label: "Avg heart rate (bpm)",
+        color: "#F44336",
+      };
+
+    default:
+      // Fallback to volume for unknown types
+      return {
+        data: dataArrays.volumeData,
+        label: isWorkout
+          ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
+          : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
+        color: "#4CAF50",
+      };
+  }
 }
 
 /**
@@ -387,20 +536,20 @@ export function validateUserParams(params: EmbeddedViewParams): string[] {
   }
 
   // Validate type for charts (exists only in chart params)
+  // Accepts all valid CHART_DATA_TYPE values including dynamic types
   if ("type" in params && params.type !== undefined) {
     const type = String(params.type);
-    if (
-      !(
-        [
-          CHART_DATA_TYPE.VOLUME,
-          CHART_DATA_TYPE.WEIGHT,
-          CHART_DATA_TYPE.REPS,
-        ] as string[]
-      ).includes(type)
-    ) {
-      errors.push(
-        "type must be either CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME, CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT, or CONSTANTS.WORKOUT.CHARTS.TYPES.REPS",
-      );
+    const validTypes: string[] = [
+      CHART_DATA_TYPE.VOLUME,
+      CHART_DATA_TYPE.WEIGHT,
+      CHART_DATA_TYPE.REPS,
+      CHART_DATA_TYPE.DURATION,
+      CHART_DATA_TYPE.DISTANCE,
+      CHART_DATA_TYPE.PACE,
+      CHART_DATA_TYPE.HEART_RATE,
+    ];
+    if (!validTypes.includes(type)) {
+      errors.push(`type must be one of: ${validTypes.join(", ")}`);
     }
   }
 

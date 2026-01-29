@@ -1,5 +1,37 @@
 # Ralph Progress Log
 
+## 2026-01-29 - US-010: Update ChartRenderer for Dynamic Data Types
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/types/ChartTypes.ts`:
+   - Extended `CHART_DATA_TYPE` enum with DURATION, DISTANCE, PACE, HEART_RATE
+
+2. Updated `app/features/charts/config/ChartConstants.ts`:
+   - Added `EXERCISE_TYPE_CHART_DATA_TYPES` mapping exercise types to valid chart types
+   - Added `DEFAULT_CHART_DATA_TYPE_BY_EXERCISE` defaults
+   - Added helper functions `getAvailableChartDataTypes`, `getDefaultChartDataType`, `isValidChartDataType`
+
+3. Updated `app/utils/utils.ts`:
+   - Enhanced `processChartData` to extract duration/distance/heartRate from customFields
+   - Added logic to calculate Pace (duration/distance)
+   - Added aggregation logic for displayType (Workout Total vs Exercise Avg)
+
+4. Updated `app/views/EmbeddedChartView.ts`:
+   - Implemented `resolveChartDataType` to auto-detect default type from exercise definition
+   - Implemented `validateChartDataType` to ensure requested type is valid for exercise
+   - Added error rendering for invalid chart type requests
+
+**Features implemented:**
+- Charts now support Duration, Distance, Pace, and Heart Rate visualizations
+- Automatic chart type selection based on exercise type (e.g. Timed -> Duration)
+- Validation prevents showing invalid metrics (e.g. Weight for Cardio)
+- Backward compatibility maintained for existing charts
+
+**Notes for next developer:**
+- Next task: US-011 (Update InsertChartModal for Dynamic Types)
+
 ## 2026-01-29 - US-004: Split Validation Constants into Dedicated File
 
 **Status:** Completed

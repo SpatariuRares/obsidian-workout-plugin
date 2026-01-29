@@ -165,8 +165,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29: Extended CHART_DATA_TYPE with DURATION, DISTANCE, PACE, HEART_RATE. Added ChartConstants mapping exercise types to valid chart data types. Updated processChartData to extract custom fields and calculate pace/stats. Updated EmbeddedChartView with dynamic type resolution and validation against exercise definition. All tests pass."
     },
     {
       "id": "US-011",

@@ -5,6 +5,7 @@ import {
   ChartDataset,
   FilterResult,
   TrendIndicators,
+  ParameterDefinition,
 } from "@app/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
@@ -14,6 +15,11 @@ import {
   TrendHeader,
   ChartFallbackTable,
 } from "@app/features/charts";
+import {
+  getDefaultChartDataType,
+  isValidChartDataType,
+  getAvailableChartDataTypes,
+} from "@app/features/charts/config/ChartConstants";
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import {
@@ -79,6 +85,20 @@ export class EmbeddedChartView extends BaseView {
         return;
       }
 
+      // Determine chart data type based on exercise type
+      const resolvedType = await this.resolveChartDataType(params);
+
+      // Validate chart data type is available for the exercise type
+      const validationResult = await this.validateChartDataType(
+        params,
+        resolvedType,
+      );
+      if (!validationResult.isValid) {
+        loadingDiv.remove();
+        this.renderChartTypeError(container, validationResult.errorMessage);
+        return;
+      }
+
       loadingDiv.remove();
 
       // Sort data by ascending date
@@ -88,7 +108,7 @@ export class EmbeddedChartView extends BaseView {
 
       const { labels, datasets } = processChartData(
         sortedData,
-        params.type || CHART_DATA_TYPE.VOLUME,
+        resolvedType,
         params.dateRange || 30,
         "DD/MM/YYYY",
         params.chartType || CHART_TYPE.EXERCISE,
@@ -101,19 +121,128 @@ export class EmbeddedChartView extends BaseView {
         volumeData,
       );
 
+      // Update params with resolved type for downstream components
+      const resolvedParams = { ...params, type: resolvedType };
+
       this.renderChartContent(container, {
         labels,
         datasets,
         volumeData,
         trendIndicators,
         filterResult,
-        params,
+        params: resolvedParams,
       });
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
     }
+  }
+
+  /**
+   * Resolves the chart data type based on exercise definition.
+   * If a type is explicitly provided, uses that.
+   * Otherwise determines the default type based on the exercise's type definition.
+   */
+  private async resolveChartDataType(
+    params: EmbeddedChartParams,
+  ): Promise<CHART_DATA_TYPE> {
+    // If type is explicitly provided, use it
+    if (params.type) {
+      return params.type;
+    }
+
+    // Try to get exercise definition to determine default type
+    if (params.exercise) {
+      const exerciseDefService = this.plugin.getExerciseDefinitionService();
+      if (exerciseDefService) {
+        const exerciseType = await exerciseDefService.getExerciseType(
+          params.exercise,
+        );
+        const customNumericParams = this.getNumericParamKeys(
+          exerciseType.parameters,
+        );
+        const defaultType = getDefaultChartDataType(
+          exerciseType.id,
+          customNumericParams,
+        );
+        return defaultType as CHART_DATA_TYPE;
+      }
+    }
+
+    // Fallback to volume for backward compatibility
+    return CHART_DATA_TYPE.VOLUME;
+  }
+
+  /**
+   * Validates that the requested chart data type is available for the exercise type.
+   */
+  private async validateChartDataType(
+    params: EmbeddedChartParams,
+    chartDataType: CHART_DATA_TYPE,
+  ): Promise<{ isValid: boolean; errorMessage: string }> {
+    // If no exercise filter, allow any type (backward compatible)
+    if (!params.exercise) {
+      return { isValid: true, errorMessage: "" };
+    }
+
+    const exerciseDefService = this.plugin.getExerciseDefinitionService();
+    if (!exerciseDefService) {
+      // No service available, allow any type
+      return { isValid: true, errorMessage: "" };
+    }
+
+    const exerciseType = await exerciseDefService.getExerciseType(
+      params.exercise,
+    );
+    const customNumericParams = this.getNumericParamKeys(
+      exerciseType.parameters,
+    );
+
+    // Check if the requested type is valid for this exercise type
+    if (
+      !isValidChartDataType(exerciseType.id, chartDataType, customNumericParams)
+    ) {
+      const availableTypes = getAvailableChartDataTypes(
+        exerciseType.id,
+        customNumericParams,
+      );
+      const typeList =
+        availableTypes.length > 0
+          ? availableTypes.join(", ")
+          : "no chart types available";
+      return {
+        isValid: false,
+        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,
+      };
+    }
+
+    return { isValid: true, errorMessage: "" };
+  }
+
+  /**
+   * Extracts numeric parameter keys from parameter definitions.
+   */
+  private getNumericParamKeys(parameters: ParameterDefinition[]): string[] {
+    return parameters.filter((p) => p.type === "number").map((p) => p.key);
+  }
+
+  /**
+   * Renders an error message when the chart data type is not available.
+   */
+  private renderChartTypeError(container: HTMLElement, message: string): void {
+    container.empty();
+    const errorDiv = container.createEl("div", {
+      cls: "workout-chart-error",
+    });
+    errorDiv.createEl("span", {
+      cls: "workout-chart-error-icon",
+      text: "⚠️",
+    });
+    errorDiv.createEl("span", {
+      cls: "workout-chart-error-message",
+      text: message,
+    });
   }
 
   private validateChartParams(

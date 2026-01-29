@@ -1,0 +1,25 @@
+# Ralph Progress Log
+
+## 2026-01-29 - US-009: Update TableRenderer for Dynamic Columns
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/tables/business/TableDataProcessor.ts`:
+   - Added imports for `WorkoutChartsPlugin` and `ParameterDefinition` types
+   - Changed `processTableData()` method signature to async with optional `plugin` parameter
+   - Implemented 3-tier column detection priority: (1) Explicit columns, (2) Dynamic from exercise type, (3) Default columns
+   - Added `determineColumnsForExercise()` private method to fetch exercise definitions
+   - Added `formatParameterHeader()` method to format headers with units (e.g., "Duration (sec)")
+   - Updated `processRowsEfficiently()` to map customFields to dynamic column headers
+
+2. Updated `app/views/EmbeddedTableView.ts`:
+   - Changed `processTableData()` call to await the async method
+   - Added `this.plugin` parameter for dynamic column detection
+
+**Features:** Single exercise filter shows exercise-specific columns, no filter shows default columns (backward compatible), explicit columns parameter overrides all. Custom field values displayed correctly.
+
+**Testing:** TypeScript compilation passes, all 397 tests pass (4 skipped)
+
+**Notes for next developer:** Manual browser testing required (see PRD). Next task: US-010 (ChartRenderer for Dynamic Data Types)
+

@@ -111,9 +111,10 @@ export class EmbeddedTableView extends BaseView {
 
       loadingDiv.remove();
 
-      const tableData = TableDataProcessor.processTableData(
+      const tableData = await TableDataProcessor.processTableData(
         filterResult.filteredData,
         params,
+        this.plugin,
       );
 
       this.renderTableContentOptimized(container, tableData, () => {

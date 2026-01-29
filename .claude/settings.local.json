@@ -14,7 +14,9 @@
       "Bash(npm run test:coverage:*)",
       "Bash(git fetch:*)",
       "Bash(git restore:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

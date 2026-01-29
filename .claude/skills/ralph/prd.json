@@ -30,8 +30,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-01-29: Created exerciseTypes.constants.ts with 5 built-in types (Strength, Timed, Distance, Cardio, Custom), EXERCISE_TYPE_IDS enum, BUILT_IN_EXERCISE_TYPES array, getExerciseTypeById helper, and DEFAULT_EXERCISE_TYPE_ID. Exported from barrel."
     },
     {
       "id": "US-003",

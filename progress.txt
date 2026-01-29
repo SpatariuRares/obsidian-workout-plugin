@@ -2928,3 +2928,50 @@ This allows all existing code using `CONSTANTS.WORKOUT.*` to continue working wh
 - The 817-line Constants.ts monolith has been successfully split into 4 focused modules
 - All imports use the barrel pattern (`@app/constants`) for convenience
 - Future optimization: migrate individual usages to direct imports for better tree-shaking
+
+## 2026-01-29 - US-002: Create Built-in Exercise Type Definitions
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/constants/exerciseTypes.constants.ts` with:
+   - `EXERCISE_TYPE_IDS` constant object with type IDs: strength, timed, distance, cardio, custom
+   - `STRENGTH_TYPE`: reps (required) + weight (required, kg unit)
+   - `TIMED_TYPE`: duration (required, sec unit)
+   - `DISTANCE_TYPE`: distance (required, km unit) + duration (optional, min unit)
+   - `CARDIO_TYPE`: duration (required, min unit) + distance (optional, km unit) + heartRate (optional, bpm unit, max 250)
+   - `CUSTOM_TYPE`: no predefined parameters
+   - `BUILT_IN_EXERCISE_TYPES: ExerciseTypeDefinition[]` array with all 5 types
+   - `getExerciseTypeById(id: string): ExerciseTypeDefinition | undefined` helper function
+   - `DEFAULT_EXERCISE_TYPE_ID` constant set to "strength" for backward compatibility
+
+2. Updated `app/constants/index.ts` barrel:
+   - Added `export * from "@app/constants/exerciseTypes.constants"` to re-export all exercise type constants
+
+**File structure:**
+```
+app/constants/
+├── index.ts                    # Barrel (updated)
+├── exerciseTypes.constants.ts  # NEW - Built-in exercise types
+├── ui.constants.ts
+├── defaults.constants.ts
+├── muscles.constants.ts
+├── validation.constants.ts
+└── MuscleTags.ts
+```
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 368 tests pass: `npm test`
+
+**Acceptance criteria met:**
+- ✅ Create app/constants/exerciseTypes.constants.ts with built-in types
+- ✅ Export BUILT_IN_EXERCISE_TYPES: ExerciseTypeDefinition[] array
+- ✅ Export getExerciseTypeById(id: string): ExerciseTypeDefinition | undefined helper function
+- ✅ Update app/constants/index.ts barrel to export new constants
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-002 complete - Built-in exercise types are now available
+- Next task: US-003 (Create ExerciseDefinitionService)
+- The DEFAULT_EXERCISE_TYPE_ID is "strength" to maintain backward compatibility with existing exercises

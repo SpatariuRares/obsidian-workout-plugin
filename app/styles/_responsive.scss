@@ -131,8 +131,14 @@
     font-size: var(--workout-font-base);
   }
 
-  .workout-dashboard-chart-container {
+  .workout-dashboard-chart-container,
+  .workout-charts-container {
     display: none;
+  }
+
+  /* Show mobile table instead of chart */
+  .workout-chart-mobile-table {
+    display: block;
   }
 
   .workout-widget-title {

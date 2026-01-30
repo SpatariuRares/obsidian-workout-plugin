@@ -47,8 +47,8 @@ export class CreateLogModal extends BaseLogModal {
   protected async handleSubmit(data: LogFormData): Promise<void> {
     const entry = this.createLogEntryObject(
       data.exercise,
-      data.reps,
-      data.weight,
+      data.reps ?? 0,
+      data.weight ?? 0,
       data.workout,
       data.notes,
       undefined,

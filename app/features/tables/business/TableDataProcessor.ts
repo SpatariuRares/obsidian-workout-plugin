@@ -147,10 +147,27 @@ export class TableDataProcessor {
       // Start with Date column
       const columns: string[] = [CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE];
 
+      // Track if we have both reps and weight for volume calculation
+      let hasReps = false;
+      let hasWeight = false;
+
       // Add columns for each parameter in the exercise type definition
       for (const param of parameters) {
         const header = this.formatParameterHeader(param);
         columns.push(header);
+
+        // Check for reps and weight parameters
+        if (param.key.toLowerCase() === "reps") {
+          hasReps = true;
+        }
+        if (param.key.toLowerCase() === "weight") {
+          hasWeight = true;
+        }
+      }
+
+      // Add Volume column for strength exercises (when both reps and weight are present)
+      if (hasReps && hasWeight) {
+        columns.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
       }
 
       // Add Notes column at the end (before Protocol and Actions which are added separately)
@@ -223,45 +240,49 @@ export class TableDataProcessor {
         dateKeyCache.set(log.date, dateKey);
       }
 
-      const dataMap: Record<string, string> = {
-        Date: formattedDate,
-        Exercise: this.getExerciseDisplay(log.exercise),
-        Reps:
+      // Build base data map with simple keys
+      const baseDataMap: Record<string, string> = {
+        date: formattedDate,
+        exercise: this.getExerciseDisplay(log.exercise),
+        reps:
           log.reps?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
-        Weight:
+        weight:
           log.weight?.toString() ||
           CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
-        Volume:
+        volume:
           log.volume?.toString() ||
           CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
-        Notes: log.notes || "",
-        Protocol: log.protocol || WorkoutProtocol.STANDARD,
-        Actions: "", // Placeholder for actions
+        notes: log.notes || "",
+        protocol: log.protocol || WorkoutProtocol.STANDARD,
+        actions: "", // Placeholder for actions
       };
 
-      // Add custom fields to dataMap
-      // Headers may be formatted like "Duration (sec)", but customFields keys are "duration"
+      // Add custom fields to base data map
       if (log.customFields) {
         for (const [key, value] of Object.entries(log.customFields)) {
-          // Find matching header in headers array
-          // The header could be the key directly, or formatted with units like "Duration (sec)"
-          const matchingHeader = headers.find((h) => {
-            // Check exact match first (case-insensitive)
-            if (h.toLowerCase() === key.toLowerCase()) {
-              return true;
-            }
-            // Check if header starts with the key (for formatted headers like "Duration (sec)")
-            const headerBase = h.split(" (")[0].toLowerCase();
-            return headerBase === key.toLowerCase();
-          });
-
-          if (matchingHeader) {
-            dataMap[matchingHeader] = value?.toString() || "";
-          }
+          baseDataMap[key.toLowerCase()] = value?.toString() || "";
         }
       }
 
-      const displayRow = headers.map((header) => dataMap[header] ?? "");
+      // Build display row by matching headers to data
+      // Headers may be formatted like "Weight (kg)" or simple like "Reps"
+      const displayRow = headers.map((header) => {
+        // Extract the base key from the header (before any unit in parentheses)
+        const headerBase = header.split(" (")[0].toLowerCase();
+
+        // Try to find matching data
+        if (baseDataMap[headerBase] !== undefined) {
+          return baseDataMap[headerBase];
+        }
+
+        // Also check exact header match (case-insensitive) for backward compatibility
+        const exactMatch = baseDataMap[header.toLowerCase()];
+        if (exactMatch !== undefined) {
+          return exactMatch;
+        }
+
+        return "";
+      });
 
       const row = {
         displayRow,

@@ -89,8 +89,8 @@ export class EditLogModal extends BaseLogModal {
 
     const updatedEntry = this.createLogEntryObject(
       data.exercise,
-      data.reps,
-      data.weight,
+      data.reps ?? 0,
+      data.weight ?? 0,
       data.workout,
       data.notes,
       finalDate,

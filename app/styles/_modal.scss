@@ -1,11 +1,23 @@
 /* ============================================================================
    MODAL STYLES
+   Organizzato per sezioni logiche:
+   1. Base Modal Structure
+   2. Form Elements
+   3. Buttons
+   4. Info Boxes & Sections
+   5. Field Visibility States
+   6. Target Section Visibility
+   7. Quick Adjust Components
+   8. Audit Modal
+   9. Quick Log Modal
    ============================================================================ */
 
-/* Modal Styles */
+/* ============================================================================
+   1. BASE MODAL STRUCTURE
+   ============================================================================ */
 
 .workout-charts {
-  &-modal {
+  .workout-charts-modal {
     h2 {
       margin: 0 0 var(--workout-space-xl) 0;
       color: var(--text-normal);
@@ -17,171 +29,161 @@
       margin-top: var(--workout-space-xl);
       margin-bottom: var(--workout-space-lg);
       color: var(--text-normal);
-      border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
       padding-bottom: var(--workout-space-xs);
     }
 
-    &-main-container {
+    &.workout-charts-modal-main-container {
       max-width: var(--workout-size-11xl);
     }
   }
+}
 
-  &-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--workout-space-xl);
+.workout-modal-section {
+  padding: var(--workout-space-lg);
+  background-color: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
 
-    &-group {
-      display: flex;
-      flex-direction: column;
-      gap: var(--workout-space-md);
-      position: relative;
-
-      label {
-        font-weight: var(--workout-font-weight-semibold);
-        color: var(--text-normal);
-        font-size: var(--workout-font-base);
-      }
-
-      input[type="text"],
-      input[type="number"],
-      select {
-        border: var(--input-border-width, var(--workout-border-thin)) solid
-          var(--background-modifier-border);
-        border-radius: var(--input-radius, var(--workout-radius-md));
-        background: var(--background-primary);
-        color: var(--text-normal);
-        font-size: var(--workout-font-base);
-        transition: var(--workout-transition);
-        height: var(--input-height, auto);
-      }
-
-      input[type="checkbox"] {
-        padding: 0;
-        margin: 0;
-        width: var(--checkbox-size, 1em);
-        height: var(--checkbox-size, 1em);
-        border-radius: var(--checkbox-radius, var(--workout-radius-sm));
-      }
-
-      input:focus,
-      select:focus {
-        outline: none;
-        border-color: var(--interactive-accent);
-        box-shadow: 0 0 0 var(--workout-border-medium)
-          rgba(var(--interactive-accent-rgb), 0.2);
-      }
-
-      input::placeholder {
-        color: var(--text-muted);
-      }
-    }
-  }
-
-  &-checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: var(--workout-space-md);
-    flex-wrap: wrap;
-    flex-direction: row;
+  h3 {
+    margin: 0 0 var(--workout-space-lg) 0;
+    font-size: var(--workout-font-lg);
+    color: var(--text-normal);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
     padding-bottom: var(--workout-space-sm);
   }
+}
 
-  &-buttons {
-    display: flex;
-    gap: var(--workout-space-md);
-    justify-content: flex-end;
-  }
+/* ============================================================================
+   2. FORM ELEMENTS
+   ============================================================================ */
 
-  &-btn {
-    padding: var(--workout-space-md) var(--workout-space-xl);
-    border: none;
-    border-radius: var(--button-radius, var(--workout-radius-md));
+.workout-charts-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xl);
+}
+
+.workout-charts-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+  position: relative;
+
+  label {
     font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
     font-size: var(--workout-font-base);
-    cursor: pointer;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+    border-radius: var(--input-radius, var(--workout-radius-md));
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
     transition: var(--workout-transition);
-
-    &-primary {
-      background: var(--interactive-accent) !important;
-      color: var(--text-on-accent);
-
-      &:hover {
-        background: var(--interactive-accent-hover);
-        transform: translateY(-1px);
-      }
-    }
-
-    &-warning {
-      background: var(--text-warning);
-      color: var(--text-on-accent);
-
-      &:hover {
-        background: var(--text-warning-hover);
-        transform: translateY(-1px);
-      }
-    }
+    height: var(--input-height, auto);
   }
 
-  &-mode-info {
-    background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    border-radius: var(--workout-radius-md);
-    padding: var(--workout-space-md);
-    margin-bottom: var(--workout-space-xl);
+  input[type="checkbox"] {
+    padding: 0;
+    margin: 0;
+    width: var(--checkbox-size, 1em);
+    height: var(--checkbox-size, 1em);
+    border-radius: var(--checkbox-radius, var(--workout-radius-sm));
+  }
 
-    p {
-      margin: var(--workout-space-xs) 0;
-      font-size: var(--workout-space-lg);
-      color: var(--text-muted);
-    }
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+  }
 
-    strong {
-      color: var(--text-accent);
-    }
+  input::placeholder {
+    color: var(--text-muted);
   }
 }
 
-/* Modal field visibility states */
-.workout-modal {
-  &-field {
-    &-visible {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: auto !important;
-      overflow: visible !important;
-    }
+.workout-parameters-container {
+  display: flex;
+  gap: var(--workout-space-md);
+}
 
-    &-hidden {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      height: 0 !important;
-      overflow: hidden !important;
-    }
-  }
+.workout-charts-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-bottom: var(--workout-space-sm);
+}
 
-  /* Modal Section Styling */
-  &-section {
-    padding: var(--workout-space-lg);
-    background-color: var(--background-secondary);
-    border-radius: var(--workout-radius-lg);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+/* ============================================================================
+   3. BUTTONS
+   ============================================================================ */
 
-    h3 {
-      margin: 0 0 var(--workout-space-lg) 0;
-      font-size: var(--workout-font-lg);
-      color: var(--text-normal);
-      border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
-      padding-bottom: var(--workout-space-sm);
-    }
+.workout-charts-buttons {
+  display: flex;
+  gap: var(--workout-space-md);
+  justify-content: flex-end;
+}
+
+.workout-charts-btn {
+  padding: var(--workout-space-md) var(--workout-space-xl);
+  border: none;
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  font-weight: var(--workout-font-weight-semibold);
+  font-size: var(--workout-font-base);
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+.workout-charts-btn-primary {
+  background: var(--interactive-accent) !important;
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--interactive-accent-hover);
+    transform: translateY(-1px);
   }
 }
 
-/* Current File Info Styling */
+.workout-charts-btn-warning {
+  background: var(--text-warning);
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--text-warning-hover);
+    transform: translateY(-1px);
+  }
+}
+
+/* ============================================================================
+   4. INFO BOXES & SECTIONS
+   ============================================================================ */
+
+.workout-charts-mode-info {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-md);
+  margin-bottom: var(--workout-space-xl);
+
+  p {
+    margin: var(--workout-space-xs) 0;
+    font-size: var(--workout-space-lg);
+    color: var(--text-muted);
+  }
+
+  strong {
+    color: var(--text-accent);
+  }
+}
+
 .workout-current-file-info {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
@@ -211,7 +213,6 @@
   }
 }
 
-/* Migration Section */
 .workout-migration-section {
   background: var(--background-secondary-alt);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -242,96 +243,45 @@
   }
 }
 
-/* Target Section Visibility */
-.workout-target {
-  &-exercise {
-    display: block;
-  }
+/* ============================================================================
+   5. FIELD VISIBILITY STATES
+   ============================================================================ */
 
-  &-workout,
-  &-current-workout,
-  &-current-file-info {
-    display: none;
-  }
+.workout-modal-field-visible {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
-/* Audit Exercise Names Modal Styles */
-.workout-audit {
-  &-success {
-    color: var(--text-success);
-    font-weight: var(--workout-font-weight-semibold);
-    text-align: center;
-    padding: var(--workout-space-2xl);
-  }
-
-  &-table-container {
-    max-height: 500px;
-    overflow-y: auto;
-    margin-top: var(--workout-space-lg);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    border-radius: var(--workout-radius-md);
-  }
-
-  &-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--workout-font-sm);
-
-    thead {
-      position: sticky;
-      top: 0;
-      background: var(--background-secondary);
-      z-index: 1;
-    }
-
-    th {
-      padding: var(--workout-space-md);
-      text-align: left;
-      font-weight: var(--workout-font-weight-semibold);
-      color: var(--text-normal);
-      border-bottom: 2px solid var(--background-modifier-border);
-    }
-
-    td {
-      padding: var(--workout-space-md);
-      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
-      color: var(--text-normal);
-
-      a {
-        color: var(--link-color);
-        text-decoration: none;
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-
-    tbody tr:hover {
-      background: var(--background-modifier-hover);
-    }
-  }
-
-  &-status {
-    &-green {
-      color: var(--text-success);
-      font-weight: var(--workout-font-weight-medium);
-    }
-
-    &-yellow {
-      color: var(--text-warning);
-      font-weight: var(--workout-font-weight-medium);
-    }
-
-    &-red {
-      color: var(--text-error);
-      font-weight: var(--workout-font-weight-medium);
-    }
-  }
+.workout-modal-field-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
-/* Quick Adjust Buttons for Weight and Reps Fields */
+/* ============================================================================
+   6. TARGET SECTION VISIBILITY
+   ============================================================================ */
+
+.workout-target-exercise {
+  display: block;
+}
+
+.workout-target-workout,
+.workout-target-current-workout,
+.workout-target-current-file-info {
+  display: none;
+}
+
+/* ============================================================================
+   7. QUICK ADJUST COMPONENTS
+   Reusable +/- buttons for weight and reps fields
+   ============================================================================ */
+
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
@@ -347,7 +297,14 @@
 .workout-input-with-adjust {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--workout-space-sm);
+  width: fit-content;
+
+  input {
+    max-width: 10ch;
+    text-align: center;
+  }
 }
 
 .workout-adjust-buttons {
@@ -386,9 +343,89 @@
   }
 }
 
-/* Quick Log Modal Styles - Mobile-friendly with large touch targets */
+/* ============================================================================
+   8. AUDIT MODAL
+   AuditExerciseNamesModal specific styles
+   ============================================================================ */
+
+.workout-audit-success {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-semibold);
+  text-align: center;
+  padding: var(--workout-space-2xl);
+}
+
+.workout-audit-table-container {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: var(--workout-space-lg);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: var(--background-secondary);
+    z-index: 1;
+  }
+
+  th {
+    padding: var(--workout-space-md);
+    text-align: left;
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    border-bottom: 2px solid var(--background-modifier-border);
+  }
+
+  td {
+    padding: var(--workout-space-md);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    color: var(--text-normal);
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  tbody tr:hover {
+    background: var(--background-modifier-hover);
+  }
+}
+
+.workout-audit-status-green {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-audit-status-yellow {
+  color: var(--text-warning);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-audit-status-red {
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* ============================================================================
+   9. QUICK LOG MODAL
+   QuickLogModal specific styles - Mobile-friendly with large touch targets
+   ============================================================================ */
+
+/* --- Container & Layout --- */
 .workout-quick-log-modal {
-  /* Ensure modal content is touch-friendly */
   .workout-charts-form {
     gap: var(--workout-space-2xl);
   }
@@ -400,18 +437,36 @@
 }
 
 .workout-quick-log-field {
-  /* Larger spacing for touch targets */
   margin-bottom: var(--workout-space-lg);
 }
 
+.workout-quick-log-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--workout-space-xl);
+  padding-top: var(--workout-space-lg);
+}
+
+/* --- Labels --- */
+.workout-quick-log-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  margin-bottom: var(--workout-space-xs);
+}
+
+.workout-quick-log-recent-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+/* --- Input Fields --- */
 .workout-quick-log-input {
-  /* Minimum 44px height for touch accessibility */
   min-height: 44px;
   padding: var(--workout-space-md) var(--workout-space-lg);
   font-size: var(--workout-font-lg);
   border-radius: var(--workout-radius-md);
-
-  /* Make input fields more prominent */
   border: 2px solid var(--background-modifier-border);
   background: var(--background-primary);
 
@@ -422,15 +477,14 @@
   }
 }
 
-.workout-quick-log-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--workout-space-xl);
-  padding-top: var(--workout-space-lg);
+.workout-quick-log-weight-input {
+  flex: 1;
+  text-align: center;
+  font-weight: var(--workout-font-weight-semibold);
 }
 
+/* --- Confirm Button --- */
 .workout-quick-log-confirm-btn {
-  /* Large touch target - minimum 44x44px */
   min-width: 200px;
   min-height: 48px;
   padding: var(--workout-space-lg) var(--workout-space-2xl);
@@ -440,7 +494,6 @@
   cursor: pointer;
   transition: transform 0.1s ease, background-color 0.2s ease;
 
-  /* Visual feedback on touch */
   &:active {
     transform: scale(0.98);
   }
@@ -450,18 +503,12 @@
   }
 }
 
-/* Recent Exercises Chips Section */
+/* --- Recent Exercises Chips --- */
 .workout-quick-log-recent-section {
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-sm);
   margin-bottom: var(--workout-space-lg);
-}
-
-.workout-quick-log-recent-label {
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-muted);
-  font-size: var(--workout-font-sm);
 }
 
 .workout-quick-log-chips-container {
@@ -470,8 +517,6 @@
   gap: var(--workout-space-sm);
   overflow-x: auto;
   padding: var(--workout-space-xs) 0;
-
-  /* Hide scrollbar but allow scrolling */
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -481,7 +526,6 @@
 }
 
 .workout-quick-log-chip {
-  /* Pill-shaped design */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -510,14 +554,7 @@
   }
 }
 
-/* Weight Input with +/- Adjustment Buttons */
-.workout-quick-log-label {
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  font-size: var(--workout-font-base);
-  margin-bottom: var(--workout-space-xs);
-}
-
+/* --- Weight Adjustment Buttons --- */
 .workout-quick-log-weight-wrapper {
   display: flex;
   align-items: center;
@@ -525,7 +562,6 @@
 }
 
 .workout-quick-log-weight-btn {
-  /* Large touch target - minimum 44x44px */
   min-width: 56px;
   min-height: 44px;
   padding: var(--workout-space-sm) var(--workout-space-md);
@@ -544,35 +580,35 @@
     border-color: var(--interactive-accent);
   }
 
-  &:active,
-  &-active {
+  &:active {
     transform: scale(0.95);
     background: var(--interactive-accent);
     color: var(--text-on-accent);
     border-color: var(--interactive-accent);
   }
+}
 
-  &-decrement {
-    color: var(--text-error);
+.workout-quick-log-weight-btn-active {
+  transform: scale(0.95);
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
 
-    &:hover {
-      background: rgba(var(--color-red-rgb), 0.1);
-      border-color: var(--text-error);
-    }
-  }
+.workout-quick-log-weight-btn-decrement {
+  color: var(--text-error);
 
-  &-increment {
-    color: var(--text-success);
-
-    &:hover {
-      background: rgba(var(--color-green-rgb), 0.1);
-      border-color: var(--text-success);
-    }
+  &:hover {
+    background: rgba(var(--color-red-rgb), 0.1);
+    border-color: var(--text-error);
   }
 }
 
-.workout-quick-log-weight-input {
-  flex: 1;
-  text-align: center;
-  font-weight: var(--workout-font-weight-semibold);
+.workout-quick-log-weight-btn-increment {
+  color: var(--text-success);
+
+  &:hover {
+    background: rgba(var(--color-green-rgb), 0.1);
+    border-color: var(--text-success);
+  }
 }

@@ -31,8 +31,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-01-30. Created EventBus.ts with async event delivery using queueMicrotask(), type-safe handler management, graceful error handling, and destroy() cleanup. Exported via barrel file."
     },
     {
       "id": "US-003",

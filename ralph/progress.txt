@@ -22,3 +22,27 @@
 
 **Next steps:** US-002 - Implement the EventBus class using these types.
 
+## 2026-01-30 - US-002: Implement Asynchronous EventBus Class
+
+**Completed:** Implemented the EventBus class with async event delivery.
+
+**Files created:**
+- `app/services/events/EventBus.ts` - EventBus implementation
+
+**Files modified:**
+- `app/services/events/index.ts` - Added EventBus export
+
+**Implementation details:**
+- Created `EventBus` class implementing `IEventBus` interface
+- Uses `queueMicrotask()` for async event delivery (non-blocking)
+- Implemented type-safe handler management with Map<EventName, Set<Handler>>
+- `on()` returns unsubscribe function for easy cleanup
+- `emit()` copies handlers before iteration to avoid modification issues
+- `off()` removes handlers and cleans up empty sets
+- `destroy()` clears all handlers and marks bus as destroyed
+- Error handling: errors in handlers are logged but don't break other handlers
+- Handles both sync and async handlers (catches Promise rejections)
+- Warns when attempting to subscribe/emit after destroy
+
+**Next steps:** US-003 - Add EventBus unit tests.
+

@@ -8,4 +8,6 @@ export type {
   WorkoutPluginEventPayload,
   EventHandler,
   IEventBus,
-} from "./types";
+} from "@app/services/events/types";
+
+export { EventBus } from "@app/services/events/EventBus";

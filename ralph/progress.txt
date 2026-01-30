@@ -46,3 +46,27 @@
 
 **Next steps:** US-003 - Add EventBus unit tests.
 
+## 2026-01-30 - US-003: Add EventBus Unit Tests
+
+**Completed:** Created comprehensive unit tests for EventBus class.
+
+**Files created:**
+- `app/services/events/__tests__/EventBus.test.ts` - 24 unit tests
+
+**Test coverage:**
+- Statements: 100%
+- Branches: 100%
+- Lines: 100%
+- Functions: 90%
+
+**Tests implemented:**
+- `on()` - subscribe handler, return unsubscribe fn, multiple handlers, noop after destroy
+- `emit()` - async delivery, multiple handlers, different events, no handlers, after destroy, all event types
+- `off()` - remove handler, remove specific handler, non-existent handler, empty set cleanup
+- `unsubscribe function` - basic unsubscribe, safe to call multiple times
+- `destroy()` - clears all handlers, safe to call multiple times
+- `error handling` - sync errors don't break others, async errors handled gracefully, async success
+- `handler modification during emit` - self-unsubscribe, adding handlers during emit
+
+**Next steps:** US-004 - Create FileWatcherService.
+

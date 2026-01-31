@@ -1,7 +1,7 @@
 import { Setting, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 import { CustomProtocolConfig } from "@app/types";
-import { setCssProps } from "@app/utils/utils";
+import { DomUtils } from "@app/utils/DomUtils";
 import WorkoutChartsPlugin from "main";
 
 export class CustomProtocolsSettings {
@@ -108,7 +108,7 @@ export class CustomProtocolsSettings {
 
     badge.classList.add("workout-protocol-badge");
 
-    setCssProps(badge, {
+    DomUtils.setCssProps(badge, {
       backgroundColor: protocol.color,
       color: this.getContrastColor(protocol.color),
     });

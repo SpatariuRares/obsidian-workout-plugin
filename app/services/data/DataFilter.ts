@@ -5,7 +5,7 @@ import {
   filterLogDataByExercise,
   MatchResult,
   ExerciseMatch,
-} from "@app/utils/utils";
+} from "@app/utils/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   EmbeddedChartParams,

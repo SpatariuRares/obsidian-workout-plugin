@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { getMatchScore } from "@app/utils/utils";
+import { ExerciseMatchUtils } from "@app/utils/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
 
 interface MismatchEntry {
@@ -92,7 +92,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         let bestScore = 0;
 
         for (const csvExercise of csvExercises) {
-          const score = getMatchScore(fileNameLower, csvExercise);
+          const score = ExerciseMatchUtils.getMatchScore(fileNameLower, csvExercise);
           if (score > bestScore) {
             bestScore = score;
             bestMatch = csvExercise;

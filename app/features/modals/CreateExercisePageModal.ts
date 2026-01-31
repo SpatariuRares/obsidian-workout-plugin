@@ -14,7 +14,7 @@ import type {
   ParameterDefinition,
   ParameterValueType,
 } from "@app/types/ExerciseTypes";
-import { setCssProps } from "@app/utils/utils";
+import { setCssProps } from "@app/utils/DomUtils";
 
 interface CustomParameterRow {
   container: HTMLElement;

@@ -131,7 +131,7 @@ export class ExerciseAutocomplete {
       } else {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
-        exerciseStatusContainer.className = "workout-exercise-status-container";
+        exerciseStatusContainer.className = "workout-exercise-status-container workout-exercise-autocomplete-no-found";
         exerciseStatusText.textContent =
           CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =

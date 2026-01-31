@@ -5,7 +5,8 @@
  */
 
 import { CONSTANTS } from "@app/constants";
-import { Button, Container } from "@app/components/atoms";
+import { Button } from "@app/components/atoms";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 export interface ActionButtonGroupProps {
 	editTitle?: string;
@@ -54,9 +55,11 @@ export class ActionButtonGroup {
 		props?: ActionButtonGroupProps
 	): ActionButtonGroupResult {
 		// Create container
-		const container = Container.create(parent, {
-			className: `action-button-group ${props?.className || ""}`.trim(),
-		});
+		const container = createButtonsSection(parent);
+		container.addClass("action-button-group");
+		if (props?.className) {
+			container.addClass(props.className);
+		}
 
 		// Create edit button
 		const editBtn = Button.create(container, {

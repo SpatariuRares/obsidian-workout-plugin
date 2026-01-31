@@ -3,6 +3,7 @@ import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
+import { Button } from "@app/components/atoms";
 
 interface MismatchEntry {
   file: TFile;
@@ -216,18 +217,21 @@ export class AuditExerciseNamesModal extends ModalBase {
 
       // Only show rename buttons if there's a valid match to rename to
       if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
-        const renameInCSVButton = actionsCell.createEl("button", {
+        const renameInCSVButton = Button.create(actionsCell, {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
-          cls: "mod-cta",
+          className: "mod-cta",
+          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
         });
-        renameInCSVButton.addEventListener("click", async () => {
+        Button.onClick(renameInCSVButton, async () => {
           await this.handleRenameInCSV(mismatch);
         });
 
-        const renameFileButton = actionsCell.createEl("button", {
+        const renameFileButton = Button.create(actionsCell, {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
+          className: "workout-btn workout-btn-secondary",
+          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
         });
-        renameFileButton.addEventListener("click", async () => {
+        Button.onClick(renameFileButton, async () => {
           await this.handleRenameFile(mismatch);
         });
       }

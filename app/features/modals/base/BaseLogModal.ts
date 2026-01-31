@@ -15,6 +15,7 @@ import { LogDataService } from "@app/features/modals/base/services/LogDataServic
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * Abstract base class for workout log modals.
@@ -109,7 +110,7 @@ export abstract class BaseLogModal extends ModalBase {
     // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
     // Create buttons
-    const buttonsContainer = this.createButtonsSection(formContainer);
+    const buttonsContainer = createButtonsSection(formContainer);
     this.createButtons(buttonsContainer, this.formElements);
 
     // Set focus
@@ -209,13 +210,13 @@ export abstract class BaseLogModal extends ModalBase {
   ): void {
     const submitBtn = Button.create(container, {
       text: this.getButtonText(),
-      className: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-btn workout-btn-primary",
       ariaLabel: this.getButtonText(),
     });
 
     const cancelBtn = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-charts-btn workout-charts-btn-warning",
+      className: "workout-btn workout-btn-warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 

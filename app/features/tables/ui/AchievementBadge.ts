@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Button } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
@@ -78,19 +79,19 @@ export class AchievementBadge {
     );
 
     // Add dismiss button
-    const dismissButton = badgeDiv.createEl("button", {
-      cls: "workout-achievement-dismiss",
+    const dismissButton = Button.create(badgeDiv, {
+      text: "×",
+      className: "workout-achievement-dismiss",
+      ariaLabel: "Dismiss achievement",
     });
-    dismissButton.textContent = "×";
-    dismissButton.setAttribute("aria-label", "Dismiss achievement");
 
-    dismissButton.addEventListener(
-      "click",
+    Button.onClick(
+      dismissButton,
       async () => {
         await callbacks.onDismiss();
         badgeDiv.remove();
       },
-      signal ? { signal } : undefined,
+      signal,
     );
 
     return {
@@ -118,14 +119,14 @@ export class AchievementBadge {
     });
     suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}kg`;
 
-    const updateButton = suggestionDiv.createEl("button", {
-      cls: "workout-update-target-button",
+    const updateButton = Button.create(suggestionDiv, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
+      className: "workout-update-target-button",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
     });
-    updateButton.textContent =
-      CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT;
 
-    updateButton.addEventListener(
-      "click",
+    Button.onClick(
+      updateButton,
       async () => {
         const confirmed = confirm(
           `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}kg?`,
@@ -135,7 +136,7 @@ export class AchievementBadge {
           await onUpdateTarget(suggestedWeight);
         }
       },
-      signal ? { signal } : undefined,
+      signal,
     );
 
     return { suggestionDiv, updateButton };

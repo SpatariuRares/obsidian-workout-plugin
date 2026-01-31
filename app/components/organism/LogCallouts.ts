@@ -5,6 +5,7 @@ import { EmptyState } from "@app/components/molecules";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -28,9 +29,8 @@ export class LogCallouts {
     });
     noDataDiv.createEl("p");
 
-    const buttonDiv = noDataDiv.createEl("div", {
-      cls: "workout-charts-button-container",
-    });
+    const buttonDiv = createButtonsSection(noDataDiv);
+    buttonDiv.addClass("workout-charts-button-container");
 
     const createButton = Button.create(buttonDiv, {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(exerciseName),
@@ -70,14 +70,10 @@ export class LogCallouts {
       return;
     }
 
-    const buttonContainer = container.createEl("div", {
-      cls: "workout-add-log-button-container",
-    });
-
-    const button = Button.create(buttonContainer, {
+    const button = Button.create(container, {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
-      className: "add-log-button",
+      className: "workout-btn-primary",
       ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
     });
 
@@ -112,9 +108,8 @@ export class LogCallouts {
     exerciseName: string,
     plugin: WorkoutChartsPlugin
   ): void {
-    const buttonContainer = container.createEl("div", {
-      cls: "create-log-button-container",
-    });
+    const buttonContainer = createButtonsSection(container);
+    buttonContainer.addClass("create-log-button-container");
 
     const button = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),

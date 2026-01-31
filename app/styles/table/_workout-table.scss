@@ -60,36 +60,6 @@
     }
   }
 
-  &-action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--workout-space-sm) var(--workout-space-sm);
-    border-radius: var(--button-radius, var(--workout-radius-sm));
-    font-size: var(--workout-space-lg);
-    transition: var(--workout-transition);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--workout-size-2xl);
-    height: var(--workout-size-2xl);
-
-    &:active {
-      transform: scale(0.95);
-    }
-  }
-
-  &-edit-btn:hover {
-    background: var(--interactive-accent);
-    color: var(--text-on-accent);
-    transform: scale(1.1);
-  }
-
-  &-delete-btn:hover {
-    background: var(--text-error);
-    color: var(--text-on-accent);
-    transform: scale(1.1);
-  }
 
   &-spacer {
     &-date-cell {

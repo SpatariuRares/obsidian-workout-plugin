@@ -1,6 +1,7 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
+import { Button } from "@app/components/atoms";
 
 export class DynamicFieldsRenderer {
   constructor(private plugin: WorkoutChartsPlugin) {}
@@ -66,31 +67,27 @@ export class DynamicFieldsRenderer {
         cls: "workout-adjust-buttons",
       });
 
-      const minusBtn = adjustButtons.createEl("button", {
+      const minusBtn = Button.create(adjustButtons, {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
-        cls: "workout-adjust-btn workout-adjust-minus",
-        attr: {
-          type: "button",
-          "aria-label": `Decrease ${param.label} by ${increment}`,
-        },
+        className: "workout-adjust-btn workout-adjust-minus",
+        ariaLabel: `Decrease ${param.label} by ${increment}`,
       });
+      minusBtn.type = "button";
 
-      const plusBtn = adjustButtons.createEl("button", {
+      const plusBtn = Button.create(adjustButtons, {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
-        cls: "workout-adjust-btn workout-adjust-plus",
-        attr: {
-          type: "button",
-          "aria-label": `Increase ${param.label} by ${increment}`,
-        },
+        className: "workout-adjust-btn workout-adjust-plus",
+        ariaLabel: `Increase ${param.label} by ${increment}`,
       });
+      plusBtn.type = "button";
 
-      minusBtn.addEventListener("click", () => {
+      Button.onClick(minusBtn, () => {
         const current = parseFloat(input.value) || 0;
         const newValue = Math.max(param.min || 0, current - increment);
         input.value = this.formatNumericValue(newValue, param);
       });
 
-      plusBtn.addEventListener("click", () => {
+      Button.onClick(plusBtn, () => {
         const current = parseFloat(input.value) || 0;
         const newValue = current + increment;
         input.value =

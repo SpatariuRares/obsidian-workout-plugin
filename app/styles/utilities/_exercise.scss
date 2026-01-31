@@ -1,15 +1,6 @@
 /* Exercise styles */
 .workout-exercise {
   .workout-exercise-status {
-    .workout-exercise-status-container {
-      display: flex;
-      align-items: center;
-      gap: var(--workout-space-sm);
-      padding: var(--workout-space-sm);
-      background: var(--background-secondary);
-      border-radius: var(--workout-radius-md);
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
-    }
 
     .workout-exercise-status-text {
       font-size: var(--workout-font-base);

@@ -3,6 +3,7 @@ import {
 } from "@app/constants/exerciseTypes.constants";
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
+import { Button } from "@app/components/atoms";
 
 export class FieldMappingList {
   private container: HTMLElement;
@@ -63,11 +64,12 @@ export class FieldMappingList {
       this.renderMappingRow(listContainer, mapping, index);
     });
 
-    const addButton = this.container.createEl("button", {
+    const addButton = Button.create(this.container, {
       text: "Add field mapping",
-      cls: "mod-muted",
+      className: "mod-muted",
+      ariaLabel: "Add field mapping",
     });
-    addButton.addEventListener("click", () => {
+    Button.onClick(addButton, () => {
       this.addEmptyMapping();
     });
   }
@@ -108,8 +110,12 @@ export class FieldMappingList {
     });
 
     // Remove Button
-    const removeBtn = row.createEl("button", { text: "×" });
-    removeBtn.addEventListener("click", () => {
+    const removeBtn = Button.create(row, {
+      text: "×",
+      className: "workout-btn workout-btn-warning",
+      ariaLabel: "Remove mapping",
+    });
+    Button.onClick(removeBtn, () => {
       this.removeMapping(index);
     });
 

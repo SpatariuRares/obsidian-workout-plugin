@@ -7,6 +7,7 @@ import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { TableColumnType, TABLE_TYPE, TIMER_TYPE } from "@app/types";
 import { Button } from "@app/components/atoms";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -126,19 +127,19 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     // Buttons Section
-    const buttonsSection = this.createButtonsSection(mainContainer);
+    const buttonsSection = createButtonsSection(mainContainer);
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-charts-btn",
+      className: "workout-btn",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
-      className: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-btn workout-btn-primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
     });
 

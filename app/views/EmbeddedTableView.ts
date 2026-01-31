@@ -17,6 +17,7 @@ import WorkoutChartsPlugin from "main";
 import { EmbeddedTableParams, TableData } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CodeBlockEditorService } from "@app/services/CodeBlockEditorService";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
@@ -213,9 +214,8 @@ export class EmbeddedTableView extends BaseView {
     const exerciseName =
       params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
-    const buttonContainer = contentDiv.createDiv({
-      cls: "workout-add-log-button-container",
-    });
+    const buttonContainer = createButtonsSection(contentDiv);
+    buttonContainer.addClass("workout-add-log-button-container");
 
     const latestEntry =
       filterResult.filteredData.length > 0

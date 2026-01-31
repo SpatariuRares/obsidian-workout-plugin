@@ -14,6 +14,8 @@ import { ExerciseConversionService, FieldMapping } from "@app/features/exercise-
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { Button } from "@app/components/atoms";
 
 export class ConvertExerciseDataModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -118,17 +120,22 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private createButtons(parent: HTMLElement): void {
-    const buttonsSection = this.createButtonsSection(parent);
+    const buttonsSection = createButtonsSection(parent);
 
-    const cancelButton = buttonsSection.createEl("button", { text: "Cancel" });
-    cancelButton.addEventListener("click", () => this.close());
-
-    this.convertButton = buttonsSection.createEl("button", {
-      text: "Convert",
-      cls: "mod-cta",
+    const cancelButton = Button.create(buttonsSection, {
+      text: "Cancel",
+      className: "workout-btn workout-btn-secondary",
+      ariaLabel: "Cancel",
     });
-    this.convertButton.disabled = true;
-    this.convertButton.addEventListener("click", () => this.handleConvert());
+    Button.onClick(cancelButton, () => this.close());
+
+    this.convertButton = Button.create(buttonsSection, {
+      text: "Convert",
+      className: "mod-cta",
+      ariaLabel: "Convert",
+    });
+    Button.setDisabled(this.convertButton, true);
+    Button.onClick(this.convertButton, () => this.handleConvert());
   }
 
   private async handleExerciseChange(): Promise<void> {

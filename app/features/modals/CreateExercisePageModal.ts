@@ -15,6 +15,7 @@ import type {
   ParameterValueType,
 } from "@app/types/ExerciseTypes";
 import { DomUtils } from "@app/utils/DomUtils";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -86,7 +87,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     const addParamBtn = Button.create(customParamsHeader, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
-      className: "workout-charts-btn workout-charts-btn-secondary",
+      className: "workout-btn workout-btn-secondary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
     });
 
@@ -126,19 +127,19 @@ export class CreateExercisePageModal extends ModalBase {
     );
 
     // Buttons container
-    const buttonsContainer = this.createButtonsSection(formContainer);
+    const buttonsContainer = createButtonsSection(formContainer);
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
-      className: "workout-charts-btn workout-charts-btn-primary",
+      className: "workout-btn workout-btn-primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-charts-btn workout-charts-btn-warning",
+      className: "workout-btn workout-btn-warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
@@ -269,7 +270,7 @@ export class CreateExercisePageModal extends ModalBase {
     const removeBtn = Button.create(rowContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
       className:
-        "workout-charts-btn workout-charts-btn-warning workout-charts-btn-small",
+        "workout-btn workout-btn-warning workout-btn-small",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
     });
 

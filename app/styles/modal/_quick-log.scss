@@ -14,13 +14,6 @@
   margin-bottom: var(--workout-space-lg);
 }
 
-.workout-quick-log-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--workout-space-xl);
-  padding-top: var(--workout-space-lg);
-}
-
 .workout-quick-log-label {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
@@ -53,25 +46,6 @@
   flex: 1;
   text-align: center;
   font-weight: var(--workout-font-weight-semibold);
-}
-
-.workout-quick-log-confirm-btn {
-  min-width: 200px;
-  min-height: 48px;
-  padding: var(--workout-space-lg) var(--workout-space-2xl);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-bold);
-  border-radius: var(--workout-radius-lg);
-  cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
-
-  &:active {
-    transform: scale(0.98);
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-  }
 }
 
 .workout-quick-log-recent-section {
@@ -130,54 +104,4 @@
   gap: var(--workout-space-sm);
 }
 
-.workout-quick-log-weight-btn {
-  min-width: 56px;
-  min-height: 44px;
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  border-radius: var(--workout-radius-md);
-  border: 2px solid var(--background-modifier-border);
-  background: var(--background-secondary);
-  color: var(--text-normal);
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-bold);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  flex-shrink: 0;
-
-  &:hover {
-    background: var(--interactive-hover);
-    border-color: var(--interactive-accent);
-  }
-
-  &:active {
-    transform: scale(0.95);
-    background: var(--interactive-accent);
-    color: var(--text-on-accent);
-    border-color: var(--interactive-accent);
-  }
-}
-
-.workout-quick-log-weight-btn-active {
-  transform: scale(0.95);
-  background: var(--interactive-accent);
-  color: var(--text-on-accent);
-  border-color: var(--interactive-accent);
-}
-
-.workout-quick-log-weight-btn-decrement {
-  color: var(--text-error);
-
-  &:hover {
-    background: rgba(var(--color-red-rgb), 0.1);
-    border-color: var(--text-error);
-  }
-}
-
-.workout-quick-log-weight-btn-increment {
-  color: var(--text-success);
-
-  &:hover {
-    background: rgba(var(--color-green-rgb), 0.1);
-    border-color: var(--text-success);
-  }
-}
+/* button styles moved to modal/_buttons.scss */

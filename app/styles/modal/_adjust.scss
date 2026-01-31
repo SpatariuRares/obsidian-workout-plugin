@@ -24,38 +24,3 @@
   }
 }
 
-.workout-adjust-buttons {
-  display: flex;
-  gap: var(--workout-space-xs);
-}
-
-.workout-adjust-btn {
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  background: var(--interactive-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
-  color: var(--text-normal);
-  cursor: pointer;
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
-  transition: var(--workout-transition);
-  min-width: 2rem;
-  text-align: center;
-
-  &:hover {
-    background: var(--interactive-hover);
-    border-color: var(--interactive-accent);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  &.workout-adjust-plus {
-    color: var(--text-success);
-  }
-
-  &.workout-adjust-minus {
-    color: var(--text-error);
-  }
-}

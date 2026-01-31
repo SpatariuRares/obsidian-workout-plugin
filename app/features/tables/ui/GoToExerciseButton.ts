@@ -1,5 +1,6 @@
 import { App } from "obsidian";
 import { CONSTANTS } from "@app/constants";
+import { Button } from "@app/components/atoms";
 
 /**
  * GoToExerciseButton - UI component for exercise file navigation
@@ -27,21 +28,19 @@ export class GoToExerciseButton {
   ): HTMLButtonElement {
     const { exerciseName, app } = props;
 
-    const gotoBtn = container.createEl("button", {
-      cls: "workout-goto-exercise-btn",
+    const gotoBtn = Button.create(container, {
+      icon: CONSTANTS.WORKOUT.TABLE.ICONS.GOTO,
+      text: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
+      className: "workout-goto-exercise-btn",
+      ariaLabel: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
     });
-    gotoBtn.textContent = `${CONSTANTS.WORKOUT.TABLE.ICONS.GOTO} ${CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE}`;
-    gotoBtn.setAttribute(
-      "aria-label",
-      CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
-    );
 
-    gotoBtn.addEventListener(
-      "click",
+    Button.onClick(
+      gotoBtn,
       () => {
         this.navigateToExercise(app, exerciseName);
       },
-      signal ? { signal } : undefined,
+      signal,
     );
 
     return gotoBtn;

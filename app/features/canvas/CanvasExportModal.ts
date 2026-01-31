@@ -8,6 +8,8 @@ import { App, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { Button } from "@app/components/atoms";
 
 /**
  * Layout options for canvas export
@@ -147,21 +149,23 @@ export class CanvasExportModal extends ModalBase {
    * Create action buttons
    */
   private createButtons(container: HTMLElement): void {
-    const buttonsSection = this.createButtonsSection(container);
+    const buttonsSection = createButtonsSection(container);
 
     // Cancel button
-    const cancelButton = buttonsSection.createEl("button", {
+    const cancelButton = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      cls: "workout-charts-button",
+      className: "workout-charts-button",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
-    cancelButton.addEventListener("click", () => this.close());
+    Button.onClick(cancelButton, () => this.close());
 
     // Export button
-    const exportButton = buttonsSection.createEl("button", {
+    const exportButton = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
-      cls: "workout-charts-button mod-cta",
+      className: "workout-charts-button mod-cta",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
     });
-    exportButton.addEventListener("click", () => this.handleExport());
+    Button.onClick(exportButton, () => this.handleExport());
   }
 
   /**

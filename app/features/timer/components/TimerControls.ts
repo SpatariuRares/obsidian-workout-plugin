@@ -1,5 +1,6 @@
 import { TimerState } from "@app/types/TimerTypes";
 import { TIMER_TYPE } from "@app/types/TimerTypes";
+import { Button } from "@app/components/atoms";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -18,22 +19,25 @@ export class TimerControls {
     });
 
     // Start/Stop button
-    const startStopBtn = controlsDiv.createEl("button", {
-      cls: "workout-timer-btn workout-timer-start-stop",
+    const startStopBtn = Button.create(controlsDiv, {
+      className: "workout-timer-btn workout-timer-start-stop",
       text: "▶",
+      ariaLabel: "Start timer",
     });
 
     // Reset button
-    const resetBtn = controlsDiv.createEl("button", {
-      cls: "workout-timer-btn workout-timer-reset",
+    const resetBtn = Button.create(controlsDiv, {
+      className: "workout-timer-btn workout-timer-reset",
       text: "↺",
+      ariaLabel: "Reset timer",
     });
 
     // Add event listeners
-    startStopBtn.addEventListener("click", () => {
+    Button.onClick(startStopBtn, () => {
       if (state.isRunning) {
         callbacks.onStop();
         startStopBtn.textContent = "▶";
+        startStopBtn.setAttribute("aria-label", "Start timer");
       } else {
         if (
           state.timerType === TIMER_TYPE.COUNTDOWN &&
@@ -44,12 +48,14 @@ export class TimerControls {
         }
         callbacks.onStart();
         startStopBtn.textContent = "⏸";
+        startStopBtn.setAttribute("aria-label", "Pause timer");
       }
     });
 
-    resetBtn.addEventListener("click", () => {
+    Button.onClick(resetBtn, () => {
       callbacks.onReset();
       startStopBtn.textContent = "▶";
+      startStopBtn.setAttribute("aria-label", "Start timer");
     });
 
     return startStopBtn;

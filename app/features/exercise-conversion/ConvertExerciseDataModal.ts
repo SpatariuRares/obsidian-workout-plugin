@@ -65,6 +65,7 @@ export class ConvertExerciseDataModal extends ModalBase {
         this.updateFrontmatter = update;
       }
     );
+    this.typeSelectVal.render();
     this.typeSelectVal.setVisible(false);
 
     // Field Mapping Section

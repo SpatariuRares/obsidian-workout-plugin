@@ -103,9 +103,10 @@
   }
 }
 
-.workout-exercise-status-container {
+.workout-exercise-autocomplete-no-found {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--workout-space-sm);
   padding: var(--workout-space-sm);
   background: var(--background-secondary);

@@ -1,0 +1,77 @@
+/* Info boxes & sections */
+.workout-charts-mode-info {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-md);
+  margin-bottom: var(--workout-space-xl);
+
+  p {
+    margin: var(--workout-space-xs) 0;
+    font-size: var(--workout-space-lg);
+    color: var(--text-muted);
+  }
+
+  strong {
+    color: var(--text-accent);
+  }
+}
+
+.workout-current-file-info {
+  font-size: var(--workout-font-xs);
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--workout-space-xs);
+  padding: var(--workout-space-xs);
+  background-color: var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+}
+
+.workout-csv-mode-info {
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-md);
+  margin-bottom: var(--workout-space-xl);
+
+  p {
+    margin: var(--workout-space-xs) 0;
+    font-size: var(--workout-space-lg);
+    color: var(--text-muted);
+  }
+
+  h4 {
+    margin: 0 0 var(--workout-space-sm) 0;
+    color: var(--interactive-accent);
+  }
+}
+
+.workout-migration-section {
+  background: var(--background-secondary-alt);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  padding: var(--workout-space-lg);
+  margin-top: var(--workout-space-md);
+
+  p {
+    margin: 0 0 var(--workout-space-lg) 0;
+    color: var(--text-muted);
+    font-size: var(--workout-space-lg);
+  }
+
+  button {
+    background: var(--interactive-warning);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: var(--workout-radius-sm);
+    padding: var(--workout-space-sm) var(--workout-space-lg);
+    font-size: var(--workout-space-lg);
+    font-weight: var(--workout-font-weight-medium);
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--interactive-warning-hover);
+    }
+  }
+}

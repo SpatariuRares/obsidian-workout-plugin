@@ -37,16 +37,6 @@ export abstract class ModalBase extends Modal {
   }
 
   /**
-   * Creates a buttons section
-   */
-  protected createButtonsSection(parent: HTMLElement): HTMLElement {
-    const buttonsSection = parent.createEl("div", {
-      cls: "workout-charts-buttons",
-    });
-    return buttonsSection;
-  }
-
-  /**
    * Gets the current file name
    */
   protected getCurrentFileName(): string {

@@ -1,0 +1,26 @@
+/* Quick adjust components */
+.workout-field-with-adjust {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+}
+
+.workout-field-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+}
+
+.workout-input-with-adjust {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+  width: fit-content;
+
+  input {
+    max-width: 10ch;
+    text-align: center;
+  }
+}
+

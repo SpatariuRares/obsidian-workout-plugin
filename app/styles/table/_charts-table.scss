@@ -1,0 +1,37 @@
+/* Main workout charts table */
+.workout-charts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--workout-space-md);
+  font-size: var(--workout-font-base);
+  background: var(--background-primary);
+  border-radius: var(--workout-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--workout-shadow-md);
+
+  th {
+    background: var(--background-secondary);
+    padding: var(--workout-space-md) var(--workout-space-lg);
+    text-align: left;
+    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
+  }
+
+  td {
+    padding: var(--workout-space-md) var(--workout-space-lg);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    color: var(--text-normal);
+    transition: var(--workout-transition);
+  }
+
+  tr {
+    &:nth-child(even) {
+      background: var(--background-secondary);
+    }
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
+  }
+}

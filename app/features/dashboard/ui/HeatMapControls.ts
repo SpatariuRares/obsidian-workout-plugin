@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
 import { HeatMapExporter } from "@app/features/dashboard/business/muscleHeatMap";
+import { Button } from "@app/components/atoms";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,
@@ -36,19 +37,22 @@ export class HeatMapControls {
       cls: "workout-time-frame-toggle",
     });
 
-    const weekBtn = timeFrameEl.createEl("button", {
+    const weekBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
-      cls: "workout-toggle-btn active",
+      className: "workout-toggle-btn active",
+      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
     });
 
-    const monthBtn = timeFrameEl.createEl("button", {
+    const monthBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
-      cls: "workout-toggle-btn",
+      className: "workout-toggle-btn",
+      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
     });
 
-    const yearBtn = timeFrameEl.createEl("button", {
+    const yearBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
-      cls: "workout-toggle-btn",
+      className: "workout-toggle-btn",
+      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
     });
 
     // View toggle
@@ -56,20 +60,23 @@ export class HeatMapControls {
       cls: "workout-view-toggle",
     });
 
-    const frontBtn = viewToggleEl.createEl("button", {
+    const frontBtn = Button.create(viewToggleEl, {
       text: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
-      cls: "workout-toggle-btn active",
+      className: "workout-toggle-btn active",
+      ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
     });
 
-    const backBtn = viewToggleEl.createEl("button", {
+    const backBtn = Button.create(viewToggleEl, {
       text: CONSTANTS.WORKOUT.UI.LABELS.BACK,
-      cls: "workout-toggle-btn",
+      className: "workout-toggle-btn",
+      ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.BACK,
     });
 
     // Export button
-    const exportBtn = controlsEl.createEl("button", {
+    const exportBtn = Button.create(controlsEl, {
       text: CONSTANTS.WORKOUT.UI.ACTIONS.EXPORT,
-      cls: "workout-export-btn",
+      className: "workout-export-btn",
+      ariaLabel: CONSTANTS.WORKOUT.UI.ACTIONS.EXPORT,
     });
 
     // Current options state
@@ -80,7 +87,7 @@ export class HeatMapControls {
 
     // Setup time frame event listeners
     [weekBtn, monthBtn, yearBtn].forEach((btn, index) => {
-      btn.addEventListener("click", () => {
+      Button.onClick(btn, () => {
         [weekBtn, monthBtn, yearBtn].forEach((b) => b.removeClass("active"));
         btn.addClass("active");
         currentOptions.timeFrame = ["week", "month", "year"][index] as
@@ -99,7 +106,7 @@ export class HeatMapControls {
 
     // Setup view toggle event listeners
     [frontBtn, backBtn].forEach((btn, index) => {
-      btn.addEventListener("click", () => {
+      Button.onClick(btn, () => {
         [frontBtn, backBtn].forEach((b) => b.removeClass("active"));
         btn.addClass("active");
         currentOptions.view = ["front", "back"][index] as "front" | "back";
@@ -114,11 +121,10 @@ export class HeatMapControls {
     });
 
     // Setup export button
-    exportBtn.addEventListener("click", () => {
+    Button.onClick(exportBtn, () => {
       HeatMapExporter.export(canvasContainer);
     });
 
     return currentOptions;
   }
 }
-

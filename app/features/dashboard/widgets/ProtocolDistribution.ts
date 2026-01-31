@@ -4,6 +4,7 @@ import { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { Chart, ChartConfiguration, ArcElement, PieController, Tooltip, Legend } from "chart.js";
 import type WorkoutChartsPlugin from "main";
+import { Button } from "@app/components/atoms";
 
 // Register required Chart.js components for pie charts
 Chart.register(ArcElement, PieController, Tooltip, Legend);
@@ -147,11 +148,13 @@ export class ProtocolDistribution {
     }
 
     // Clear button
-    const clearBtn = filterIndicator.createEl("button", {
+    const clearBtn = Button.create(filterIndicator, {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
-      cls: "workout-protocol-clear-filter",
+      className: "workout-protocol-clear-filter",
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
     });
-    clearBtn.addEventListener("click", () => {
+    Button.onClick(clearBtn, () => {
       this.handleFilterChange(null);
     });
   }

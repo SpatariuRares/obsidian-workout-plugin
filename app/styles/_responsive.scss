@@ -60,19 +60,19 @@
   }
 
   /* Widgets take half width on tablet (span 6) or full width (span 12) */
-  .workout-muscle-heatmap,
-  .workout-volume-analytics,
-  .workout-recent-workouts,
-  .workout-protocol-distribution,
-  .workout-protocol-effectiveness,
-  .workout-duration-comparison,
-  .workout-quick-actions,
-  .workout-file-errors,
-  .workout-dashboard-widget {
-    grid-column: span 6;
-    grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
+  .workout-dashboard {
+    .workout-muscle-heatmap,
+    .workout-volume-analytics,
+    .workout-recent-workouts,
+    .workout-protocol-distribution,
+    .workout-protocol-effectiveness,
+    .workout-duration-comparison,
+    .workout-quick-actions,
+    .workout-file-errors {
+      grid-column: span 6;
+      grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
+    }
   }
-
   /* Larger widgets on tablet can go full width if needed */
   .workout-volume-analytics {
     grid-column: span 12;
@@ -131,8 +131,14 @@
     font-size: var(--workout-font-base);
   }
 
-  .workout-dashboard-chart-container {
+  .workout-dashboard-chart-container,
+  .workout-charts-container {
     display: none;
+  }
+
+  /* Show mobile table instead of chart */
+  .workout-chart-mobile-table {
+    display: block;
   }
 
   .workout-widget-title {
@@ -218,5 +224,45 @@
   .workout-toggle-btn {
     padding: var(--workout-space-sm) var(--workout-space-md);
     font-size: var(--workout-font-sm);
+  }
+
+  /* Mobile Table Optimizations */
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+
+    th {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+      font-size: var(--workout-font-xs);
+    }
+
+    td {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+    }
+  }
+
+  /* Compact spacer summary on mobile */
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+
+    .workout-spacer-stat {
+      margin-right: var(--workout-space-sm);
+      font-size: var(--workout-font-xs);
+    }
+  }
+
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+
+  /* Smaller protocol badges on mobile */
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
   }
 }

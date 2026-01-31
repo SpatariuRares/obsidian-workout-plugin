@@ -6,12 +6,12 @@ import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
   filterLogDataByExercise,
-} from "@app/utils/utils";
+} from "@app/utils/ExerciseMatchUtils";
 import { TFile } from "obsidian";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
-jest.mock("@app/utils/utils", () => ({
-  ...jest.requireActual("@app/utils/utils"),
+jest.mock("@app/utils/ExerciseMatchUtils", () => ({
+  ...jest.requireActual("@app/utils/ExerciseMatchUtils"),
   findExerciseMatches: jest.fn(),
   determineExerciseFilterStrategy: jest.fn(),
   filterLogDataByExercise: jest.fn(),

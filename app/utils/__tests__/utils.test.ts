@@ -1,15 +1,8 @@
 import { CONSTANTS } from "@app/constants";
-import {
-  getMatchScore,
-  findExerciseMatches,
-  determineExerciseFilterStrategy,
-  filterLogDataByExercise,
-  processChartData,
-  validateUserParams,
-  formatDate,
-  calculateTrendLine,
-  ExerciseMatch,
-} from "../utils";
+import { ExerciseMatchUtils, ExerciseMatch } from "@app/utils/ExerciseMatchUtils";
+import { ChartDataUtils } from "@app/utils/ChartDataUtils";
+import { ValidationUtils } from "@app/utils/ValidationUtils";
+import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
@@ -48,52 +41,52 @@ const createMockLog = (
   };
 };
 
-describe("utils.ts", () => {
-  describe("getMatchScore", () => {
+describe("Utility Classes", () => {
+  describe("ExerciseMatchUtils.getMatchScore", () => {
     it("should return 100 for exact match", () => {
-      expect(getMatchScore("Squat", "Squat")).toBe(100);
-      expect(getMatchScore("squat", "SQUAT")).toBe(100);
+      expect(ExerciseMatchUtils.getMatchScore("Squat", "Squat")).toBe(100);
+      expect(ExerciseMatchUtils.getMatchScore("squat", "SQUAT")).toBe(100);
     });
 
     it("should return 90 for starts with match", () => {
-      expect(getMatchScore("Squat", "Squat Barbell")).toBe(90);
-      expect(getMatchScore("Bench Press", "Bench")).toBe(90);
+      expect(ExerciseMatchUtils.getMatchScore("Squat", "Squat Barbell")).toBe(90);
+      expect(ExerciseMatchUtils.getMatchScore("Bench Press", "Bench")).toBe(90);
     });
 
     it("should return 80 for ends with match", () => {
-      expect(getMatchScore("Barbell Squat", "Squat")).toBe(80);
-      expect(getMatchScore("Press", "Bench Press")).toBe(80);
+      expect(ExerciseMatchUtils.getMatchScore("Barbell Squat", "Squat")).toBe(80);
+      expect(ExerciseMatchUtils.getMatchScore("Press", "Bench Press")).toBe(80);
     });
 
     it("should return 70 when all words from one string are in the other", () => {
-      expect(getMatchScore("Hip Thrust", "Hip Thrust Barbell")).toBe(90); // startsWith match
-      expect(getMatchScore("Barbell Hip Thrust", "Hip Thrust")).toBe(80); // endsWith match
+      expect(ExerciseMatchUtils.getMatchScore("Hip Thrust", "Hip Thrust Barbell")).toBe(90); // startsWith match
+      expect(ExerciseMatchUtils.getMatchScore("Barbell Hip Thrust", "Hip Thrust")).toBe(80); // endsWith match
     });
 
     it("should return 60 for partial word matches", () => {
-      expect(getMatchScore("Squat Jump", "Squat Barbell")).toBe(60);
+      expect(ExerciseMatchUtils.getMatchScore("Squat Jump", "Squat Barbell")).toBe(60);
     });
 
     it("should return 50 for substring match", () => {
-      expect(getMatchScore("Lat", "Lateral Raise")).toBe(90); // startsWith match
-      expect(getMatchScore("Lateral Raise", "Lat")).toBe(90); // startsWith match
+      expect(ExerciseMatchUtils.getMatchScore("Lat", "Lateral Raise")).toBe(90); // startsWith match
+      expect(ExerciseMatchUtils.getMatchScore("Lateral Raise", "Lat")).toBe(90); // startsWith match
     });
 
     it("should return 0 for no match", () => {
-      expect(getMatchScore("Squat", "Bench Press")).toBe(0);
+      expect(ExerciseMatchUtils.getMatchScore("Squat", "Bench Press")).toBe(0);
     });
 
     it("should handle empty strings", () => {
-      expect(getMatchScore("", "")).toBe(100);
-      expect(getMatchScore("", "Squat")).toBe(90); // empty string startsWith match
+      expect(ExerciseMatchUtils.getMatchScore("", "")).toBe(100);
+      expect(ExerciseMatchUtils.getMatchScore("", "Squat")).toBe(90); // empty string startsWith match
     });
 
     it("should trim whitespace", () => {
-      expect(getMatchScore("  Squat  ", "Squat")).toBe(100);
+      expect(ExerciseMatchUtils.getMatchScore("  Squat  ", "Squat")).toBe(100);
     });
   });
 
-  describe("findExerciseMatches", () => {
+  describe("ExerciseMatchUtils.findExerciseMatches", () => {
     const mockData: WorkoutLogData[] = [
       createMockLog("Squat", "2024-01-15T10:00:00", 1000, 100, 10, "Squat.md"),
       createMockLog(
@@ -115,36 +108,36 @@ describe("utils.ts", () => {
     ];
 
     it("should find filename matches", () => {
-      const result = findExerciseMatches(mockData, "Squat");
+      const result = ExerciseMatchUtils.findExerciseMatches(mockData, "Squat");
       expect(result.fileNameMatches.length).toBeGreaterThan(0);
       expect(result.fileNameMatches[0].strategy).toBe("filename");
     });
 
     it("should find exercise field matches", () => {
-      const result = findExerciseMatches(mockData, "Squat");
+      const result = ExerciseMatchUtils.findExerciseMatches(mockData, "Squat");
       expect(result.allExercisePathsAndScores.size).toBeGreaterThan(0);
       expect(result.allExercisePathsAndScores.has("Squat")).toBe(true);
     });
 
     it("should calculate scores for matches", () => {
-      const result = findExerciseMatches(mockData, "Squat");
+      const result = ExerciseMatchUtils.findExerciseMatches(mockData, "Squat");
       const squatScore = result.allExercisePathsAndScores.get("Squat");
       expect(squatScore).toBe(100); // Exact match
     });
 
     it("should handle no matches", () => {
-      const result = findExerciseMatches(mockData, "Deadlift");
+      const result = ExerciseMatchUtils.findExerciseMatches(mockData, "Deadlift");
       expect(result.fileNameMatches.length).toBe(0);
       expect(result.allExercisePathsAndScores.size).toBe(0);
     });
 
     it("should find partial matches", () => {
-      const result = findExerciseMatches(mockData, "Press");
+      const result = ExerciseMatchUtils.findExerciseMatches(mockData, "Press");
       expect(result.allExercisePathsAndScores.has("Bench Press")).toBe(true);
     });
   });
 
-  describe("determineExerciseFilterStrategy", () => {
+  describe("ExerciseMatchUtils.determineExerciseFilterStrategy", () => {
     const mockMatches: ExerciseMatch[] = [
       {
         file: new MockTFile("Squat.md") as TFile,
@@ -160,7 +153,7 @@ describe("utils.ts", () => {
     ]);
 
     it("should return exercise_field_exact for exact match on exercise field", () => {
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         mockMatches,
         mockScores,
         true,
@@ -172,7 +165,7 @@ describe("utils.ts", () => {
 
     it("should return filename_exact for exact match on filename", () => {
       const scoresNoExact = new Map<string, number>([["Barbell Squat", 90]]);
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         mockMatches,
         scoresNoExact,
         true,
@@ -183,7 +176,7 @@ describe("utils.ts", () => {
     });
 
     it("should return none when no exact match found in exact mode", () => {
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         [],
         new Map(),
         true,
@@ -201,7 +194,7 @@ describe("utils.ts", () => {
           strategy: "filename",
         },
       ];
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         highScoreMatches,
         new Map(),
         false,
@@ -220,7 +213,7 @@ describe("utils.ts", () => {
         },
       ];
       const highScores = new Map<string, number>([["Barbell Squat", 90]]);
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         lowScoreMatches,
         highScores,
         false,
@@ -239,7 +232,7 @@ describe("utils.ts", () => {
           strategy: "filename",
         },
       ];
-      const result = determineExerciseFilterStrategy(
+      const result = ExerciseMatchUtils.determineExerciseFilterStrategy(
         lowScoreMatches,
         new Map(),
         false,
@@ -249,7 +242,7 @@ describe("utils.ts", () => {
     });
   });
 
-  describe("filterLogDataByExercise", () => {
+  describe("ExerciseMatchUtils.filterLogDataByExercise", () => {
     const mockData: WorkoutLogData[] = [
       createMockLog("Squat", "2024-01-15T10:00:00", 1000, 100, 10, "Squat.md"),
       createMockLog(
@@ -271,7 +264,7 @@ describe("utils.ts", () => {
     ];
 
     it("should filter by exercise_field_exact strategy", () => {
-      const result = filterLogDataByExercise(
+      const result = ExerciseMatchUtils.filterLogDataByExercise(
         mockData,
         "exercise_field_exact",
         "Squat",
@@ -290,7 +283,7 @@ describe("utils.ts", () => {
           strategy: "filename",
         },
       ];
-      const result = filterLogDataByExercise(
+      const result = ExerciseMatchUtils.filterLogDataByExercise(
         mockData,
         "filename_exact",
         "",
@@ -309,12 +302,12 @@ describe("utils.ts", () => {
           strategy: "filename",
         },
       ];
-      const result = filterLogDataByExercise(mockData, "filename", "", matches);
+      const result = ExerciseMatchUtils.filterLogDataByExercise(mockData, "filename", "", matches);
       expect(result.length).toBe(1);
     });
 
     it("should filter by exercise_field strategy", () => {
-      const result = filterLogDataByExercise(
+      const result = ExerciseMatchUtils.filterLogDataByExercise(
         mockData,
         "exercise_field",
         "Squat",
@@ -324,12 +317,12 @@ describe("utils.ts", () => {
     });
 
     it("should return empty array for unknown strategy", () => {
-      const result = filterLogDataByExercise(mockData, "unknown", "Squat", []);
+      const result = ExerciseMatchUtils.filterLogDataByExercise(mockData, "unknown", "Squat", []);
       expect(result).toEqual([]);
     });
   });
 
-  describe("processChartData", () => {
+  describe("ChartDataUtils.processChartData", () => {
     // Use dates within the last 30 days
     const today = new Date();
     const date1 = new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000); // 5 days ago
@@ -342,7 +335,7 @@ describe("utils.ts", () => {
     ];
 
     it("should process volume chart data for exercise", () => {
-      const result = processChartData(
+      const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
         30,
@@ -355,7 +348,7 @@ describe("utils.ts", () => {
     });
 
     it("should process volume chart data for workout", () => {
-      const result = processChartData(
+      const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
         30,
@@ -366,12 +359,12 @@ describe("utils.ts", () => {
     });
 
     it("should process weight chart data", () => {
-      const result = processChartData(mockData, CHART_DATA_TYPE.WEIGHT, 30);
+      const result = ChartDataUtils.processChartData(mockData, CHART_DATA_TYPE.WEIGHT, 30);
       expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT);
     });
 
     it("should process reps chart data", () => {
-      const result = processChartData(mockData, CHART_DATA_TYPE.REPS, 30);
+      const result = ChartDataUtils.processChartData(mockData, CHART_DATA_TYPE.REPS, 30);
       expect(result.datasets[0].label).toContain(CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS);
     });
 
@@ -387,18 +380,18 @@ describe("utils.ts", () => {
           "Squat.md"
         ),
       ];
-      const result = processChartData(oldData, CHART_DATA_TYPE.VOLUME, 30);
+      const result = ChartDataUtils.processChartData(oldData, CHART_DATA_TYPE.VOLUME, 30);
       expect(result.labels.length).toBe(0);
     });
 
     it("should group data by date", () => {
-      const result = processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30);
+      const result = ChartDataUtils.processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30);
       // Two dates in mock data: date1 and date2
       expect(result.labels.length).toBe(2);
     });
 
     it("should calculate average for exercise display type", () => {
-      const result = processChartData(
+      const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME, 30,
         "DD/MM/YYYY",
@@ -412,7 +405,7 @@ describe("utils.ts", () => {
     });
 
     it("should calculate total for workout display type", () => {
-      const result = processChartData(
+      const result = ChartDataUtils.processChartData(
         mockData,
         CHART_DATA_TYPE.VOLUME,
         30,
@@ -427,69 +420,69 @@ describe("utils.ts", () => {
     });
 
     it("should handle different date formats", () => {
-      const result = processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30, "YYYY-MM-DD");
+      const result = ChartDataUtils.processChartData(mockData, CHART_DATA_TYPE.VOLUME, 30, "YYYY-MM-DD");
       expect(result.labels[0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     });
   });
 
-  describe("validateUserParams", () => {
+  describe("ValidationUtils.validateUserParams", () => {
     it("should validate dateRange parameter", () => {
-      const errors = validateUserParams({ dateRange: 400 });
+      const errors = ValidationUtils.validateUserParams({ dateRange: 400 });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("dateRange");
     });
 
     it("should accept valid dateRange", () => {
-      const errors = validateUserParams({ dateRange: 30 });
+      const errors = ValidationUtils.validateUserParams({ dateRange: 30 });
       expect(errors.length).toBe(0);
     });
 
     it("should validate limit parameter", () => {
-      const errors = validateUserParams({ limit: 2000 });
+      const errors = ValidationUtils.validateUserParams({ limit: 2000 });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("limit");
     });
 
     it("should accept valid limit", () => {
-      const errors = validateUserParams({ limit: 100 });
+      const errors = ValidationUtils.validateUserParams({ limit: 100 });
       expect(errors.length).toBe(0);
     });
 
     it("should validate chartType parameter", () => {
-      const errors = validateUserParams({ chartType: "invalid" as CHART_TYPE });
+      const errors = ValidationUtils.validateUserParams({ chartType: "invalid" as CHART_TYPE });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("chartType");
     });
 
     it("should accept valid chartType", () => {
-      const errors = validateUserParams({ chartType: CHART_TYPE.EXERCISE });
+      const errors = ValidationUtils.validateUserParams({ chartType: CHART_TYPE.EXERCISE });
       expect(errors.length).toBe(0);
     });
 
     it("should validate type parameter for charts", () => {
-      const errors = validateUserParams({ type: "invalid" as CHART_DATA_TYPE });
+      const errors = ValidationUtils.validateUserParams({ type: "invalid" as CHART_DATA_TYPE });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("type");
     });
 
     it("should accept valid type", () => {
-      const errors = validateUserParams({ type: CHART_DATA_TYPE.VOLUME });
+      const errors = ValidationUtils.validateUserParams({ type: CHART_DATA_TYPE.VOLUME });
       expect(errors.length).toBe(0);
     });
 
     it("should validate duration parameter for timers", () => {
-      const errors = validateUserParams({ duration: 5000 });
+      const errors = ValidationUtils.validateUserParams({ duration: 5000 });
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0]).toContain("duration");
     });
 
     it("should accept valid duration", () => {
-      const errors = validateUserParams({ duration: 120 });
+      const errors = ValidationUtils.validateUserParams({ duration: 120 });
       expect(errors.length).toBe(0);
     });
 
     it("should return multiple errors for multiple invalid params", () => {
-      const errors = validateUserParams({
+      const errors = ValidationUtils.validateUserParams({
         dateRange: 400,
         limit: 2000,
         type: "invalid" as CHART_DATA_TYPE,
@@ -498,92 +491,92 @@ describe("utils.ts", () => {
     });
 
     it("should handle NaN values", () => {
-      const errors = validateUserParams({
+      const errors = ValidationUtils.validateUserParams({
         dateRange: "abc" as unknown as number,
       });
       expect(errors.length).toBeGreaterThan(0);
     });
   });
 
-  describe("formatDate", () => {
+  describe("ChartDataUtils.formatDate", () => {
     const testDate = new Date("2024-01-15T10:30:00");
 
     it("should format as DD/MM/YYYY by default", () => {
-      expect(formatDate(testDate)).toBe("15/01/2024");
+      expect(ChartDataUtils.formatDate(testDate)).toBe("15/01/2024");
     });
 
     it("should format as YYYY-MM-DD", () => {
-      expect(formatDate(testDate, "YYYY-MM-DD")).toBe("2024-01-15");
+      expect(ChartDataUtils.formatDate(testDate, "YYYY-MM-DD")).toBe("2024-01-15");
     });
 
     it("should format as MM/DD/YYYY", () => {
-      expect(formatDate(testDate, "MM/DD/YYYY")).toBe("01/15/2024");
+      expect(ChartDataUtils.formatDate(testDate, "MM/DD/YYYY")).toBe("01/15/2024");
     });
 
     it("should format as DD/MM/YYYY when specified", () => {
-      expect(formatDate(testDate, "DD/MM/YYYY")).toBe("15/01/2024");
+      expect(ChartDataUtils.formatDate(testDate, "DD/MM/YYYY")).toBe("15/01/2024");
     });
 
     it("should handle string dates", () => {
-      expect(formatDate("2024-01-15T10:30:00", "YYYY-MM-DD")).toBe(
+      expect(ChartDataUtils.formatDate("2024-01-15T10:30:00", "YYYY-MM-DD")).toBe(
         "2024-01-15"
       );
     });
 
     it("should pad single digits with zero", () => {
       const date = new Date("2024-01-05T10:30:00");
-      expect(formatDate(date, "DD/MM/YYYY")).toBe("05/01/2024");
+      expect(ChartDataUtils.formatDate(date, "DD/MM/YYYY")).toBe("05/01/2024");
     });
 
     it("should handle invalid format by using default", () => {
-      expect(formatDate(testDate, "INVALID" as "DD/MM/YYYY")).toBe(
+      expect(ChartDataUtils.formatDate(testDate, "INVALID" as "DD/MM/YYYY")).toBe(
         "15/01/2024"
       );
     });
   });
 
-  describe("calculateTrendLine", () => {
+  describe("StatisticsUtils.calculateTrendLine", () => {
     it("should calculate trend line for increasing data", () => {
       const data = [1, 2, 3, 4, 5];
-      const result = calculateTrendLine(data);
+      const result = StatisticsUtils.calculateTrendLine(data);
       expect(result.slope).toBeCloseTo(1, 1);
       expect(result.intercept).toBeCloseTo(1, 1);
     });
 
     it("should calculate trend line for decreasing data", () => {
       const data = [5, 4, 3, 2, 1];
-      const result = calculateTrendLine(data);
+      const result = StatisticsUtils.calculateTrendLine(data);
       expect(result.slope).toBeCloseTo(-1, 1);
     });
 
     it("should return zero slope for flat data", () => {
       const data = [5, 5, 5, 5, 5];
-      const result = calculateTrendLine(data);
+      const result = StatisticsUtils.calculateTrendLine(data);
       expect(result.slope).toBeCloseTo(0, 1);
       expect(result.intercept).toBeCloseTo(5, 1);
     });
 
     it("should return zero for data with less than 2 points", () => {
-      const result = calculateTrendLine([1]);
+      const result = StatisticsUtils.calculateTrendLine([1]);
       expect(result.slope).toBe(0);
       expect(result.intercept).toBe(0);
     });
 
     it("should return zero for empty array", () => {
-      const result = calculateTrendLine([]);
+      const result = StatisticsUtils.calculateTrendLine([]);
       expect(result.slope).toBe(0);
       expect(result.intercept).toBe(0);
     });
 
     it("should calculate trend for real workout data", () => {
       const data = [1000, 1100, 1050, 1200, 1250];
-      const result = calculateTrendLine(data);
+      const result = StatisticsUtils.calculateTrendLine(data);
       expect(result.slope).toBeGreaterThan(0); // Positive trend
     });
 
     it("should handle negative values", () => {
       const data = [-5, -3, -1, 1, 3];
-      const result = calculateTrendLine(data);
+      const result = StatisticsUtils.calculateTrendLine(data);
       expect(result.slope).toBeCloseTo(2, 1);
     });
   });

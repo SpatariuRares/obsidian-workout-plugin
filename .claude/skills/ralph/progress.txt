@@ -5,3 +5,29 @@ Started: 2026-01-29
 
 ---
 
+## US-001: Define Exercise Type Schema Interface ✅
+**Completed: 2026-01-29**
+
+### What was done:
+- Created `app/types/ExerciseTypes.ts` with:
+  - `ParameterValueType` - Type alias for 'number' | 'string' | 'boolean'
+  - `ParameterDefinition` - Interface for exercise parameter schema (key, label, type, unit, required, default, min, max)
+  - `ExerciseTypeDefinition` - Interface for exercise type definitions (id, name, parameters)
+  - `ExerciseDefinition` - Interface for individual exercises (name, typeId, muscleGroups, customParameters)
+- Updated `app/types/index.ts` barrel to export all new types
+- All types include JSDoc documentation with examples
+
+### Files changed:
+- `app/types/ExerciseTypes.ts` (new)
+- `app/types/index.ts` (updated exports)
+
+### Verification:
+- `npm run typecheck` - PASS
+- `npm run test` - 368 tests pass (32 suites)
+
+### Next steps:
+- US-002: Create built-in exercise type definitions (Strength, Timed, Distance, Cardio, Custom)
+- The interfaces are now ready to be used in US-002 for defining the actual exercise types
+
+---
+

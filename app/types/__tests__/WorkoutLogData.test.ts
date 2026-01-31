@@ -2,6 +2,8 @@ import {
   parseCSVLogFile,
   CSVWorkoutLogEntry,
   entryToCSVLine,
+  entriesToCSVContent,
+  collectCustomColumns,
   WorkoutProtocol,
 } from "../WorkoutLogData";
 
@@ -325,5 +327,315 @@ describe("entryToCSVLine - CSV Injection Protection", () => {
     expect(csvLine).toContain("'=EVIL1");
     expect(csvLine).toContain("'+EVIL2");
     expect(csvLine).toContain("'@EVIL3");
+  });
+});
+
+describe("Custom Fields - Dynamic CSV Columns", () => {
+  describe("parseCSVLogFile with custom columns", () => {
+    test("should parse custom columns into customFields", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance
+2024-01-24,Running,1,0,0,mobile,Cardio,1706054400000,,standard,30,5.5`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toEqual({
+        duration: 30,
+        distance: 5.5,
+      });
+    });
+
+    test("should parse boolean custom field values", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,completed
+2024-01-24,Plank,1,0,0,mobile,Core,1706054400000,,standard,true`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toEqual({
+        completed: true,
+      });
+    });
+
+    test("should parse string custom field values", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,intensity
+2024-01-24,HIIT,1,0,0,mobile,Cardio,1706054400000,,standard,high`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toEqual({
+        intensity: "high",
+      });
+    });
+
+    test("should handle empty custom field values", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration
+2024-01-24,Running,1,0,0,mobile,Cardio,1706054400000,,standard,`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toBeUndefined();
+    });
+
+    test("should work with standard columns only (backward compatible)", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
+2024-01-24,Bench Press,10,100,1000,mobile,Push Day,1706054400000,Good set,standard`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toBeUndefined();
+      expect(entries[0].exercise).toBe("Bench Press");
+    });
+
+    test("should parse multiple custom columns", () => {
+      const csvContent = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,heartRate,calories
+2024-01-24,Running,1,0,0,mobile,Cardio,1706054400000,,standard,45,150,400`;
+
+      const entries = parseCSVLogFile(csvContent);
+
+      expect(entries).toHaveLength(1);
+      expect(entries[0].customFields).toEqual({
+        duration: 45,
+        heartRate: 150,
+        calories: 400,
+      });
+    });
+  });
+
+  describe("entryToCSVLine with custom columns", () => {
+    const baseEntry: CSVWorkoutLogEntry = {
+      date: "2024-01-24",
+      exercise: "Running",
+      reps: 1,
+      weight: 0,
+      volume: 0,
+      origine: "mobile",
+      workout: "Cardio",
+      timestamp: 1706054400000,
+    };
+
+    test("should include custom fields in CSV line", () => {
+      const entry: CSVWorkoutLogEntry = {
+        ...baseEntry,
+        customFields: {
+          duration: 30,
+          distance: 5.5,
+        },
+      };
+
+      const csvLine = entryToCSVLine(entry, ["distance", "duration"]);
+
+      expect(csvLine).toContain(",5.5,30");
+    });
+
+    test("should write empty string for missing custom fields", () => {
+      const entry: CSVWorkoutLogEntry = {
+        ...baseEntry,
+        customFields: {
+          duration: 30,
+        },
+      };
+
+      const csvLine = entryToCSVLine(entry, ["distance", "duration"]);
+
+      // distance is missing, should be empty
+      expect(csvLine).toContain(",,30");
+    });
+
+    test("should write boolean custom fields correctly", () => {
+      const entry: CSVWorkoutLogEntry = {
+        ...baseEntry,
+        customFields: {
+          completed: true,
+        },
+      };
+
+      const csvLine = entryToCSVLine(entry, ["completed"]);
+
+      expect(csvLine).toContain(",true");
+    });
+
+    test("should not add custom columns when none specified", () => {
+      const entry: CSVWorkoutLogEntry = {
+        ...baseEntry,
+        customFields: {
+          duration: 30,
+        },
+      };
+
+      const csvLine = entryToCSVLine(entry);
+      const fields = csvLine.split(",");
+
+      // Standard columns only (10 fields)
+      expect(fields).toHaveLength(10);
+    });
+  });
+
+  describe("collectCustomColumns", () => {
+    test("should collect unique custom column names from entries", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054400000,
+          customFields: { duration: 30, distance: 5 },
+        },
+        {
+          date: "2024-01-24",
+          exercise: "Cycling",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054500000,
+          customFields: { duration: 45, heartRate: 140 },
+        },
+      ];
+
+      const columns = collectCustomColumns(entries);
+
+      expect(columns).toEqual(["distance", "duration", "heartRate"]);
+    });
+
+    test("should return empty array when no custom fields", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Bench Press",
+          reps: 10,
+          weight: 100,
+          volume: 1000,
+          timestamp: 1706054400000,
+        },
+      ];
+
+      const columns = collectCustomColumns(entries);
+
+      expect(columns).toEqual([]);
+    });
+  });
+
+  describe("entriesToCSVContent with custom columns", () => {
+    test("should generate CSV with custom columns in header", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054400000,
+          customFields: { duration: 30, distance: 5 },
+        },
+      ];
+
+      const csv = entriesToCSVContent(entries);
+      const lines = csv.split("\n");
+
+      expect(lines[0]).toBe(
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,distance,duration",
+      );
+      expect(lines[1]).toContain(",5,30");
+    });
+
+    test("should preserve existing custom column order", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054400000,
+          customFields: { newField: 100 },
+        },
+      ];
+
+      const csv = entriesToCSVContent(entries, ["existingField", "duration"]);
+      const lines = csv.split("\n");
+
+      // Existing columns first, then new columns sorted
+      expect(lines[0]).toBe(
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,existingField,duration,newField",
+      );
+    });
+
+    test("should generate standard CSV when no custom fields", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Bench Press",
+          reps: 10,
+          weight: 100,
+          volume: 1000,
+          timestamp: 1706054400000,
+        },
+      ];
+
+      const csv = entriesToCSVContent(entries);
+      const lines = csv.split("\n");
+
+      expect(lines[0]).toBe(
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol",
+      );
+    });
+
+    test("should handle entries with different custom fields", () => {
+      const entries: CSVWorkoutLogEntry[] = [
+        {
+          date: "2024-01-24",
+          exercise: "Running",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054400000,
+          customFields: { duration: 30 },
+        },
+        {
+          date: "2024-01-24",
+          exercise: "Cycling",
+          reps: 1,
+          weight: 0,
+          volume: 0,
+          timestamp: 1706054500000,
+          customFields: { distance: 10 },
+        },
+      ];
+
+      const csv = entriesToCSVContent(entries);
+      const lines = csv.split("\n");
+
+      // Both custom columns should be in header
+      expect(lines[0]).toContain("distance");
+      expect(lines[0]).toContain("duration");
+
+      // First entry: duration=30, distance=empty
+      expect(lines[1]).toMatch(/,30,?$/);
+
+      // Second entry: distance=10, duration=empty
+      expect(lines[2]).toContain(",10,");
+    });
+  });
+
+  describe("Round-trip: parse and write", () => {
+    test("should preserve custom fields through parse and write cycle", () => {
+      const originalCSV = `date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance
+2024-01-24,Running,1,0,0,mobile,Cardio,1706054400000,,standard,30,5.5`;
+
+      const entries = parseCSVLogFile(originalCSV);
+      const regeneratedCSV = entriesToCSVContent(entries);
+
+      const reparsedEntries = parseCSVLogFile(regeneratedCSV);
+
+      expect(reparsedEntries[0].customFields).toEqual({
+        duration: 30,
+        distance: 5.5,
+      });
+    });
   });
 });

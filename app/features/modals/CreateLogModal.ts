@@ -40,6 +40,11 @@ export class CreateLogModal extends BaseLogModal {
     return !!this.initialValues; // Pre-fill if initialValues provided
   }
 
+  public shouldAutoFillFromLastEntry(): boolean {
+    // Enable auto-fill from last entry when no explicit initialValues provided
+    return !this.initialValues;
+  }
+
   protected getPreFillData(): Partial<LogFormData> | null {
     return this.initialValues || null;
   }
@@ -47,12 +52,13 @@ export class CreateLogModal extends BaseLogModal {
   protected async handleSubmit(data: LogFormData): Promise<void> {
     const entry = this.createLogEntryObject(
       data.exercise,
-      data.reps,
-      data.weight,
+      data.reps ?? 0,
+      data.weight ?? 0,
       data.workout,
       data.notes,
       undefined,
       data.protocol,
+      data.customFields,
     );
 
     await this.plugin.addWorkoutLogEntry(entry);

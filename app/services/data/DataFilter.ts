@@ -1,17 +1,34 @@
 import { CONSTANTS } from "@app/constants";
 import {
-  findExerciseMatches,
-  determineExerciseFilterStrategy,
-  filterLogDataByExercise,
+  ExerciseMatchUtils,
   MatchResult,
   ExerciseMatch,
-} from "@app/utils/utils";
+} from "@app/utils/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   FilterResult,
 } from "@app/types";
+
+/**
+ * Filter parameters for early filtering in DataService.
+ * Used to reduce data processing before more complex filtering operations.
+ */
+export interface EarlyFilterParams {
+  exercise?: string;
+  workout?: string;
+  exactMatch?: boolean;
+}
+
+/**
+ * Pre-computed normalized filter values for performance optimization.
+ * Avoids redundant string operations on every iteration.
+ */
+interface NormalizedFilters {
+  exerciseName?: string;
+  workoutName?: string;
+}
 
 /**
  * Handles filtering of workout log data based on various criteria.
@@ -215,17 +232,17 @@ export class DataFilter {
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = findExerciseMatches(logData, exerciseName);
-
+        const matchesResult = ExerciseMatchUtils.findExerciseMatches(logData, exerciseName);
+        
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
-          determineExerciseFilterStrategy(
+          ExerciseMatchUtils.determineExerciseFilterStrategy(
             matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
             params.exactMatch || false,
             exerciseName
           );
 
-        filteredData = filterLogDataByExercise(
+        filteredData = ExerciseMatchUtils.filterLogDataByExercise(
           logData,
           bestStrategy,
           bestPathKey,
@@ -266,5 +283,102 @@ export class DataFilter {
       return `file name (score: ${bestFileMatchesList[0]?.score || CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE})`;
     }
     return "No match found";
+  }
+
+  /**
+   * Apply early filtering to reduce data processing.
+   *
+   * Performance optimization: Pre-compute normalized filter values before the filter loop
+   * to avoid redundant string operations (toLowerCase, replace, trim) on every iteration.
+   * For large datasets (1000+ entries), this reduces O(n * m) operations to O(n),
+   * where n is the number of entries and m is the cost of string normalization.
+   *
+   * @param logData - Array of workout log data to filter
+   * @param filterParams - Filter parameters for exercise and workout
+   * @returns Filtered array of workout log data
+   */
+  static applyEarlyFiltering(
+    logData: WorkoutLogData[],
+    filterParams: EarlyFilterParams,
+  ): WorkoutLogData[] {
+    // Pre-compute normalized filter values outside the loop
+    const normalizedFilters: NormalizedFilters = {};
+
+    if (filterParams.exercise) {
+      normalizedFilters.exerciseName = filterParams.exercise
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    if (filterParams.workout) {
+      normalizedFilters.workoutName = filterParams.workout
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    return logData.filter((log) =>
+      this.matchesEarlyFilter(log, filterParams, normalizedFilters)
+    );
+  }
+
+  /**
+   * Check if a log entry matches early filtering criteria.
+   * @param log The workout log entry to check
+   * @param filterParams The filter parameters
+   * @param normalizedFilters Pre-computed normalized filter values for performance
+   */
+  private static matchesEarlyFilter(
+    log: WorkoutLogData,
+    filterParams: EarlyFilterParams,
+    normalizedFilters?: NormalizedFilters,
+  ): boolean {
+    // Check exercise filter
+    if (filterParams.exercise) {
+      const exerciseName =
+        normalizedFilters?.exerciseName ||
+        filterParams.exercise.toLowerCase().replace(/\s+/g, " ").trim();
+
+      const logExercise = (log.exercise || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (filterParams.exactMatch) {
+        if (logExercise !== exerciseName) {
+          return false;
+        }
+      } else {
+        if (!logExercise.includes(exerciseName)) {
+          return false;
+        }
+      }
+    }
+
+    // Check workout filter
+    if (filterParams.workout) {
+      const workoutName =
+        normalizedFilters?.workoutName ||
+        filterParams.workout.toLowerCase().replace(/\s+/g, " ").trim();
+
+      const logOrigine = (log.origine || log.workout || "")
+        .toLowerCase()
+        .replace(/\[\[|\]\]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (filterParams.exactMatch) {
+        if (logOrigine !== workoutName) {
+          return false;
+        }
+      } else {
+        if (!logOrigine.includes(workoutName)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }

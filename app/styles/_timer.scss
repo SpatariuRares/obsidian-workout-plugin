@@ -46,65 +46,6 @@
     align-items: center;
   }
 
-  &-btn {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    border: none;
-    border-radius: var(--button-radius, var(--workout-radius-md));
-    font-size: var(--workout-font-base);
-    cursor: pointer;
-    transition: var(--workout-transition);
-    background: var(--background-primary);
-    color: var(--text-normal);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    min-width: var(--workout-size-2xl);
-    height: var(--workout-size-2xl);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      background: var(--background-modifier-hover);
-    }
-
-    /* Timer Button Variants */
-    &-start {
-      background: var(--interactive-success);
-      color: var(--text-on-accent);
-
-      &:hover {
-        background: var(--interactive-success-hover);
-      }
-    }
-
-    &-stop {
-      background: var(--interactive-error);
-      color: var(--text-on-accent);
-
-      &:hover {
-        background: var(--interactive-error-hover);
-      }
-    }
-  }
-
-  &-start-stop {
-    background: var(--interactive-accent);
-    color: var(--text-on-accent);
-    border-color: var(--interactive-accent);
-
-    &:hover {
-      background: var(--interactive-accent-hover);
-    }
-  }
-
-  &-reset {
-    background: var(--background-modifier-border);
-    color: var(--text-normal);
-
-    &:hover {
-      background: var(--background-modifier-border-hover);
-    }
-  }
-
   &-complete {
     font-size: var(--workout-font-xl);
     font-weight: var(--workout-font-weight-bold);
@@ -124,15 +65,14 @@
 
 /* Timer Configuration Visibility */
 .timer-config {
-  &-countdown {
+  .timer-config-countdown {
     display: block;
   }
 
-  &-interval {
+  .timer-config-interval,
+  .timer-config-rounds {
     display: none;
   }
 
-  &-rounds {
-    display: none;
-  }
+
 }

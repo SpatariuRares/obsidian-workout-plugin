@@ -5,6 +5,7 @@ import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * Abstract base class for insert modals.
@@ -36,7 +37,7 @@ export abstract class BaseInsertModal extends ModalBase {
     this.createConfigurationSections(mainContainer);
 
     // Create buttons section (common to all insert modals)
-    const buttonsSection = this.createButtonsSection(mainContainer);
+    const buttonsSection = createButtonsSection(mainContainer);
     this.createButtons(buttonsSection);
   }
 

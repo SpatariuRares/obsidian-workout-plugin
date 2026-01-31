@@ -9,11 +9,20 @@ import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePage
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
 import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
-import { CanvasExporter, WorkoutFileSuggestModal, CanvasExportModal } from "@app/features/canvas";
+import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
+import {
+  CanvasExporter,
+  WorkoutFileSuggestModal,
+  CanvasExportModal,
+} from "@app/features/canvas";
+import { ExerciseTypeMigration } from "@app/features/migration";
 import type WorkoutChartsPlugin from "main";
 
 export class CommandHandlerService {
-  constructor(private app: App, private plugin: WorkoutChartsPlugin) { }
+  constructor(
+    private app: App,
+    private plugin: WorkoutChartsPlugin,
+  ) {}
 
   registerCommands(): void {
     this.plugin.addCommand({
@@ -111,18 +120,43 @@ export class CommandHandlerService {
       callback: () => {
         new WorkoutFileSuggestModal(this.app, async (file) => {
           // Open the canvas export options modal
-          new CanvasExportModal(this.app, this.plugin, file, async (options) => {
-            try {
-              const exporter = new CanvasExporter(this.app, this.plugin);
-              const canvasPath = await exporter.exportToCanvas(file, options);
-              new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORTED} (${canvasPath})`);
-            } catch (error) {
-              const errorMessage =
-                error instanceof Error ? error.message : String(error);
-              new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORT_ERROR}${errorMessage}`);
-            }
-          }).open();
+          new CanvasExportModal(
+            this.app,
+            this.plugin,
+            file,
+            async (options) => {
+              try {
+                const exporter = new CanvasExporter(this.app, this.plugin);
+                const canvasPath = await exporter.exportToCanvas(file, options);
+                new Notice(
+                  `${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORTED} (${canvasPath})`,
+                );
+              } catch (error) {
+                const errorMessage =
+                  error instanceof Error ? error.message : String(error);
+                new Notice(
+                  `${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORT_ERROR}${errorMessage}`,
+                );
+              }
+            },
+          ).open();
         }).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "migrate-exercise-types",
+      name: CONSTANTS.WORKOUT.COMMANDS.MIGRATE_EXERCISE_TYPES,
+      callback: async () => {
+        await new ExerciseTypeMigration(this.plugin).migrateExerciseTypes();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "convert-exercise-data",
+      name: CONSTANTS.WORKOUT.COMMANDS.CONVERT_EXERCISE,
+      callback: () => {
+        new ConvertExerciseDataModal(this.app, this.plugin).open();
       },
     });
   }

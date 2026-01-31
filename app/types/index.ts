@@ -56,3 +56,11 @@ export { WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 // Muscle heat map types
 export type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
+
+// Exercise type definitions
+export type {
+  ParameterValueType,
+  ParameterDefinition,
+  ExerciseTypeDefinition,
+  ExerciseDefinition,
+} from "@app/types/ExerciseTypes";

@@ -3,6 +3,7 @@ import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Button } from "@app/components/atoms";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { App, Notice, MarkdownView } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -98,13 +99,14 @@ export class QuickLogModal extends ModalBase {
     const displayExercises = recentExercises.slice(0, DISPLAY_RECENT_COUNT);
 
     displayExercises.forEach((exercise) => {
-      const chip = chipContainer.createEl("button", {
+      const chip = Button.create(chipContainer, {
         text: exercise,
-        cls: "workout-quick-log-chip",
+        className: "workout-quick-log-chip",
+        ariaLabel: exercise,
       });
       chip.type = "button";
 
-      chip.addEventListener("click", () => {
+      Button.onClick(chip, () => {
         this.selectExercise(exercise);
       });
     });
@@ -232,12 +234,14 @@ export class QuickLogModal extends ModalBase {
     const increment = this.plugin.settings.quickWeightIncrement;
 
     // Decrement button
-    this.decrementBtn = weightWrapper.createEl("button", {
+    this.decrementBtn = Button.create(weightWrapper, {
       text: `-${increment}`,
-      cls: "workout-quick-log-weight-btn workout-quick-log-weight-btn-decrement",
+      className:
+        "workout-quick-log-weight-btn workout-quick-log-weight-btn-decrement",
+      ariaLabel: `Decrease by ${increment}`,
     });
     this.decrementBtn.type = "button";
-    this.decrementBtn.addEventListener("click", () => this.adjustWeight(-increment));
+    Button.onClick(this.decrementBtn, () => this.adjustWeight(-increment));
 
     // Weight input
     this.weightInput = weightWrapper.createEl("input", {
@@ -250,12 +254,14 @@ export class QuickLogModal extends ModalBase {
     this.weightInput.inputMode = "decimal";
 
     // Increment button
-    this.incrementBtn = weightWrapper.createEl("button", {
+    this.incrementBtn = Button.create(weightWrapper, {
       text: `+${increment}`,
-      cls: "workout-quick-log-weight-btn workout-quick-log-weight-btn-increment",
+      className:
+        "workout-quick-log-weight-btn workout-quick-log-weight-btn-increment",
+      ariaLabel: `Increase by ${increment}`,
     });
     this.incrementBtn.type = "button";
-    this.incrementBtn.addEventListener("click", () => this.adjustWeight(increment));
+    Button.onClick(this.incrementBtn, () => this.adjustWeight(increment));
   }
 
   /**
@@ -280,13 +286,12 @@ export class QuickLogModal extends ModalBase {
    * Creates the confirm button with large touch target
    */
   private createConfirmButton(container: HTMLElement): void {
-    const buttonContainer = container.createEl("div", {
-      cls: "workout-quick-log-button-container",
-    });
+    const buttonContainer = createButtonsSection(container);
+    buttonContainer.addClass("workout-quick-log-button-container");
 
     const confirmBtn = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
-      className: "workout-quick-log-confirm-btn workout-charts-btn workout-charts-btn-primary",
+      className: "workout-quick-log-confirm-btn workout-btn workout-btn-primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
     });
 

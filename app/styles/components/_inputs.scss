@@ -92,35 +92,4 @@
   }
 }
 
-.workout-time-frame-toggle,
-.workout-view-toggle {
-  display: flex;
-  gap: var(--workout-space-xs);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-md);
-  padding: var(--workout-space-xs);
-  background: var(--background-secondary);
-
-  .workout-toggle-btn {
-    padding: var(--workout-space-sm) var(--workout-space-lg);
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    font-size: var(--workout-font-base);
-    border-radius: var(--button-radius, var(--workout-radius-sm));
-    cursor: pointer;
-    transition: var(--workout-transition);
-    font-weight: var(--workout-font-weight-medium);
-
-    &:hover {
-      background: var(--background-modifier-hover);
-      color: var(--text-normal);
-    }
-
-    &.active {
-      background: var(--interactive-accent);
-      color: var(--text-on-accent);
-      font-weight: var(--workout-font-weight-semibold);
-    }
-  }
-}
+/* button styles moved to modal/_buttons.scss */

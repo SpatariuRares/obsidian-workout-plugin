@@ -30,7 +30,7 @@ export class ExerciseAutocomplete {
     modal: ModalBase,
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
-    exerciseName?: string
+    exerciseName?: string,
   ): {
     elements: ExerciseAutocompleteElements;
     handlers: ExerciseAutocompleteHandlers;
@@ -45,7 +45,7 @@ export class ExerciseAutocomplete {
       exerciseContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.EXERCISE,
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.EXERCISE_AUTOCOMPLETE,
-      exerciseName || ""
+      exerciseName || "",
     );
 
     // Autocomplete container
@@ -87,7 +87,7 @@ export class ExerciseAutocomplete {
       }
 
       const matchingExercises = instance.availableExercises.filter((exercise) =>
-        exercise.toLowerCase().startsWith(query.toLowerCase())
+        exercise.toLowerCase().startsWith(query.toLowerCase()),
       );
 
       if (matchingExercises.length > 0) {
@@ -103,6 +103,7 @@ export class ExerciseAutocomplete {
 
           suggestion.addEventListener("click", () => {
             exerciseInput.value = exercise;
+            exerciseInput.dispatchEvent(new Event("change"));
             autocompleteContainer.className =
               "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
             createExercisePageBtn.className =
@@ -111,24 +112,28 @@ export class ExerciseAutocomplete {
           });
 
           suggestion.addEventListener("mouseenter", () => {
-            suggestion.classList.add("workout-exercise-autocomplete-suggestion-hover");
+            suggestion.classList.add(
+              "workout-exercise-autocomplete-suggestion-hover",
+            );
           });
 
           suggestion.addEventListener("mouseleave", () => {
             suggestion.classList.remove(
-              "workout-exercise-autocomplete-suggestion-hover"
+              "workout-exercise-autocomplete-suggestion-hover",
             );
           });
         });
-        exerciseStatusContainer.className = "workout-exercise-autocomplete-hidden";
+        exerciseStatusContainer.className =
+          "workout-exercise-autocomplete-hidden";
         createExercisePageBtn.className =
           "workout-create-exercise-page-btn workout-display-none";
         instance.exerciseExists = true;
       } else {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
-        exerciseStatusContainer.className = "workout-exercise-status-container";
-        exerciseStatusText.textContent = CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
+        exerciseStatusContainer.className = "workout-exercise-status-container workout-exercise-autocomplete-no-found";
+        exerciseStatusText.textContent =
+          CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
         createExercisePageBtn.className =

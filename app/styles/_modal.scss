@@ -612,3 +612,15 @@
     border-color: var(--text-success);
   }
 }
+
+/* ============================================================================
+   10. CONVERSION MODAL
+   ConvertExerciseDataModal specific styles
+   ============================================================================ */
+
+.workout-convert-mapping-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}

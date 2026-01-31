@@ -9,7 +9,7 @@ import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePage
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
 import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
-import { ConvertExerciseDataModal } from "@app/features/modals/ConvertExerciseDataModal";
+import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
 import {
   CanvasExporter,
   WorkoutFileSuggestModal,

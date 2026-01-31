@@ -25,8 +25,10 @@
 }
 
 /* File Errors */
-.workout-file {
-  &-errors-success {
+.workout-file-errors {
+  // Styles for the container if needed, currently seemingly handled by layout classes used with it (e.g. .workout-dashboard-widget)
+  
+  &-success {
     color: var(--text-success);
     font-weight: var(--workout-font-weight-medium);
     text-align: center;
@@ -36,52 +38,51 @@
     border: var(--workout-border-thin) solid var(--text-success);
   }
 
-  &-errors-list {
+  &-list {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  &-error-item {
+  .workout-file-error-item {
     padding: var(--workout-space-md) 0;
-    border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 
     &:last-child {
       border-bottom: none;
     }
-  }
 
-  &-error-name {
-    margin-bottom: var(--workout-space-sm);
-  }
-
-  &-error-link {
-    color: var(--text-accent);
-    font-weight: var(--workout-font-weight-semibold);
-    text-decoration: none;
-    cursor: pointer;
-    transition: var(--workout-transition);
-
-    &:hover {
-      color: var(--text-accent-hover);
-      text-decoration: underline;
+    .workout-file-error-name {
+      margin-bottom: var(--workout-space-sm);
     }
-  }
 
-  &-error-messages {
-    list-style: none;
-    margin: var(--workout-space-sm) 0 0 0;
-    padding: 0;
-  }
+    .workout-file-error-link {
+      color: var(--text-accent);
+      font-weight: var(--workout-font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--workout-transition);
 
-  &-error-message {
-    color: var(--text-warning);
-    font-size: var(--workout-font-sm);
-    padding: var(--workout-space-xs) 0;
-    display: flex;
-    align-items: center;
-    gap: var(--workout-space-sm);
+      &:hover {
+        color: var(--text-accent-hover);
+        text-decoration: underline;
+      }
+    }
+
+    .workout-file-error-messages {
+      list-style: none;
+      margin: var(--workout-space-sm) 0 0 0;
+      padding: 0;
+    }
+
+    .workout-file-error-message {
+      color: var(--text-warning);
+      font-size: var(--workout-font-sm);
+      padding: var(--workout-space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--workout-space-sm);
+    }
   }
 }
 
@@ -108,17 +109,15 @@
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-md);
   margin-top: var(--workout-space-md);
-}
 
-.workout-alert {
-  &-title {
+  .workout-alert-title {
     margin: 0 0 8px 0;
     color: var(--workout-color-warning-text);
     font-size: var(--workout-font-base);
     font-weight: var(--workout-font-weight-semibold);
   }
 
-  &-message {
+  .workout-alert-message {
     margin: var(--workout-space-xs) 0;
     color: var(--workout-color-warning-text);
     font-size: var(--workout-font-base);

@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
 
 export class MobileTable {

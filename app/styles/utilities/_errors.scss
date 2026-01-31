@@ -1,0 +1,11 @@
+/* Error messages */
+.workout-chart-error,
+.workout-table-error {
+  padding: var(--workout-space-xl);
+  margin: var(--workout-space-lg) 0;
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--text-error);
+  border-radius: var(--workout-radius-lg);
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}

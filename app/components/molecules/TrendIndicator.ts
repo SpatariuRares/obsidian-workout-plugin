@@ -4,7 +4,7 @@
  * Combines: Icon + Text + Container atoms
  */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { Icon, Text, Container } from "@app/components/atoms";
 
 export interface TrendIndicatorProps {

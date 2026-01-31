@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 
 /**
  * Get all unique normalized muscle groups

@@ -1,0 +1,42 @@
+/* ============================================================================
+   MODAL STYLES
+   ============================================================================ */
+
+/* Base modal structure */
+.workout-charts {
+  .workout-charts-modal {
+    h2 {
+      margin: 0 0 var(--workout-space-xl) 0;
+      color: var(--text-normal);
+      font-size: var(--workout-font-2xl);
+      font-weight: var(--workout-font-weight-bold);
+    }
+
+    h3 {
+      margin-top: var(--workout-space-xl);
+      margin-bottom: var(--workout-space-lg);
+      color: var(--text-normal);
+      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+      padding-bottom: var(--workout-space-xs);
+    }
+
+    &.workout-charts-modal-main-container {
+      max-width: var(--workout-size-11xl);
+    }
+  }
+}
+
+.workout-modal-section {
+  padding: var(--workout-space-lg);
+  background-color: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+
+  h3 {
+    margin: 0 0 var(--workout-space-lg) 0;
+    font-size: var(--workout-font-lg);
+    color: var(--text-normal);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    padding-bottom: var(--workout-space-sm);
+  }
+}

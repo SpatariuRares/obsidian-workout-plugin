@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { Badge } from "@app/components/molecules/Badge";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

@@ -4,150 +4,270 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- **Development build**: `npm run dev` - Builds CSS then runs esbuild in watch mode for live development
-- **Production build**: `npm run build` - TypeScript compilation check + CSS build + production build with minification
-- **Version bump**: `npm run version` - Updates manifest.json and versions.json, then stages the changes
-- **Linting**: `npm run lint` - Runs ESLint on the codebase
-- **Linting with fixes**: `npm run lint:fix` - Runs ESLint and auto-fixes issues
-- **Testing**: `npm test` - Runs Jest test suite
-- **Testing with watch**: `npm run test:watch` - Runs Jest in watch mode
-- **Testing with coverage**: `npm run test:coverage` - Runs Jest with coverage report
+```bash
+npm run dev          # Development build with CSS + esbuild watch mode
+npm run build        # Production build: tsc check + CSS + minified bundle
+npm run lint         # ESLint
+npm run lint:fix     # ESLint with auto-fix
+npm test             # Jest test suite
+npm run test:watch   # Jest watch mode
+npm run test:coverage # Jest with coverage report
+npm run version      # Bump version in manifest.json and versions.json
+```
+
+**Run single test file**: `npm test -- app/utils/__tests__/DateUtils.test.ts`
 
 ## Build Process
 
-1. **CSS Build** (`node build-css.mjs`): Uses PostCSS to bundle modular CSS files from `styles/` directory into a single `styles.css` file
-2. **TypeScript Compilation**: `tsc -noEmit -skipLibCheck` validates TypeScript without emitting files
-3. **esbuild Bundling**: Bundles `main.ts` into `main.js` with Obsidian-specific externals, minification in production mode
-
-## Testing
-
-- **Test framework**: Jest with ts-jest for TypeScript support
-- **Test files**: Located in `__tests__` directories alongside source files or with `.test.ts` suffix
-- **Coverage thresholds**: 70% minimum for statements, branches, functions, and lines (currently exceeding 80%)
-- **Coverage scope**: Utilities, constants (MuscleTags), data components, dashboard calculations, DataService, ChartRenderer
-- **Excluded from coverage**: Constants.ts (config data), FrontmatterParser.ts (Obsidian API mocking issues)
+1. **CSS**: `node build-css.mjs` - PostCSS bundles `styles/` → `styles.css`
+2. **TypeScript**: `tsc -noEmit -skipLibCheck` - validation only
+3. **Bundle**: esbuild bundles `main.ts` → `main.js` with Obsidian externals
 
 ## Project Architecture
 
-This is an Obsidian plugin that visualizes workout data through interactive charts, tables, and timers. The plugin follows a modular architecture with clear separation of concerns.
+Obsidian plugin for workout data visualization with charts, tables, timers, and dashboards.
 
 ### TypeScript Configuration
 
-- **Path aliases**: `@app/*` maps to `app/*` (configured in tsconfig.json and jest.config.js)
-- **Import example**: `import { WorkoutLogData } from "@app/types/WorkoutLogData"`
-- **Target**: ES2018 with ESNext modules
-- **Strict mode**: ENABLED (strict: true, strictNullChecks: true, noImplicitAny: true)
-  - All strict TypeScript checks are enforced at compile time
-  - Catches potential null/undefined errors before runtime
-  - Prevents implicit any types for better type safety
+- **Path alias**: `@app/*` → `app/*` (use instead of relative paths)
+- **Strict mode enabled**: strictNullChecks, noImplicitAny
 
-### Core Architecture
+### Service Layer Pattern
 
-- **[main.ts](main.ts)**: Central plugin class (WorkoutChartsPlugin) that handles initialization, command registration, and code block processing
-- **Service-based architecture**: Modular services for data handling (DataService), command handling (CommandHandlerService), and code block processing (CodeBlockProcessorService)
-- **CSV-based data storage**: Uses a single CSV file (`theGYM/Log/workout_logs.csv`) for workout data with 5-second caching for performance
-- **Embedded views**: Chart, Table, Timer, and Dashboard views that can be embedded in notes via code blocks
-- **Modal system**: Comprehensive modal system for creating logs, inserting code blocks, and managing exercises
-- **BaseView pattern**: All embedded views inherit from [BaseView](app/views/BaseView.ts) class for common functionality and error handling
+```text
+main.ts (WorkoutChartsPlugin)
+├── CommandHandlerService     # Registers Obsidian commands
+├── CodeBlockProcessorService # Processes workout-* code blocks
+└── DataService               # CSV operations with 5-second cache
+```
 
-### Key Directories
+### Embedded Views (BaseView Pattern)
 
-- **app/types/**: Type definitions and data models (`WorkoutLogData.ts` contains core interfaces: WorkoutLogData, CSVWorkoutLogEntry, WorkoutChartsSettings)
-- **app/views/**: Embedded view classes (all inherit from BaseView for common functionality):
-  - BaseView: Abstract base class with shared error handling and debug logging
-  - EmbeddedChartView, EmbeddedTableView, EmbeddedTimerView, EmbeddedDashboardView
-- **app/services/**: Service layer (DataService for CSV operations, CommandHandlerService for Obsidian commands, CodeBlockProcessorService for code block rendering)
-- **app/modals/**: Modal implementations with base classes (ModalBase) and reusable components (TargetSection, ExerciseAutocomplete, CodeGenerator)
-- **app/components/**: Organized by feature area:
-  - **chart/**: ChartRenderer for Chart.js integration
-  - **table/**: TableRenderer, TableDataProcessor, and mobile-responsive table components
-  - **timer/**: TimerCore, TimerControls, TimerDisplay, TimerAudio
-  - **dashboard/**: QuickStatsCards, VolumeAnalytics, MuscleHeatMap, RecentWorkouts, SummaryWidget
-  - **data/**: DataFilter (intelligent exercise matching), TrendCalculator
-  - **ui/**: Reusable UI components (StatsBox, TrendHeader, UIComponents)
-- **app/settings/**: Plugin settings management (WorkoutChartsSettingTab)
-- **app/utils/**: Utility functions for exercise matching and filtering
+All views extend `BaseView` for consistent error handling and debug logging:
+
+- `EmbeddedChartView` - Chart.js visualizations
+- `EmbeddedTableView` - Sortable data tables
+- `EmbeddedTimerView` - Countdown/interval timers with presets
+- `EmbeddedDashboardView` - Stats, analytics, heat maps
+
+### Modal System (ModalBase Pattern)
+
+Modals extend `ModalBase` or `BaseInsertModal`:
+
+- `app/features/modals/base/` - Base classes (ModalBase, BaseInsertModal)
+- `app/features/modals/components/` - Reusable components (ExerciseAutocomplete, TimerConfigurationSection, CodeGenerator)
+
+### Atomic Design Components
+
+```text
+app/components/
+├── atoms/      # Primitives: Button, Input, Text, Icon, Container, Canvas, ErrorMessage
+├── molecules/  # Composites: StatCard, FormField, SearchBox, Badge, TrendIndicator
+└── organism/   # Complex: larger composed components
+```
+
+Import from barrel exports: `import { Button, StatCard } from "@app/components/atoms"`
+
+### Feature Modules
+
+```text
+app/features/
+├── charts/     # ChartRenderer, chart config
+├── tables/     # TableRenderer, TableDataProcessor
+├── timer/      # TimerCore, TimerControls, TimerDisplay, TimerAudio
+├── dashboard/  # QuickStatsCards, VolumeAnalytics, MuscleHeatMap
+├── modals/     # All modal implementations
+└── settings/   # WorkoutChartsSettingTab
+```
 
 ### Data Flow
 
-1. **Data Source**: CSV file with columns: date, exercise, reps, weight, volume, origine, workout, timestamp
-2. **Caching**: 5-second cache for workout data to improve performance (DataService handles caching)
-3. **Code Block Processing**: Four types of code blocks (`workout-chart`, `workout-log`, `workout-timer`, `workout-dashboard`) processed by CodeBlockProcessorService
-4. **Filtering**: Advanced filtering system with exact/fuzzy matching and early filtering optimization in DataFilter component
-   - Early filtering applies at data retrieval level in DataService before processing
-   - DataFilter supports intelligent exercise matching with multiple search strategies (filename, exercise field, fuzzy matching)
-   - AND logic when both exercise and workout filters are provided
-5. **View Rendering**: Views use BaseView patterns for consistent error handling and data processing
+1. **Source**: CSV file (columns: date, exercise, reps, weight, volume, origin, workout, timestamp, notes)
+2. **Caching**: DataService caches for 5 seconds, clears on data changes
+3. **Filtering**: DataFilter uses multi-strategy matching (exact, fuzzy, filename, exercise field)
+4. **Processing**: Code blocks parsed from YAML-like syntax → Views render data
 
-### Code Block Integration
+### Code Blocks
 
-The plugin processes four code block types:
+```yaml
+# workout-chart
+exercise: Squat
+type: volume
+dateRange: 30
+showTrendLine: true
+```
 
-- `workout-chart`: Interactive Chart.js visualizations
-- `workout-log`: Data tables with sorting and filtering
-- `workout-timer`: Embedded workout timers
-- `workout-dashboard`: Comprehensive dashboard with stats, charts, and quick actions
+```yaml
+# workout-log
+exercise: Bench Press
+limit: 10
+```
 
-Parameters are parsed from YAML-like syntax within code blocks.
+```yaml
+# workout-timer
+preset: rest
+duration: 90
+```
+
+```yaml
+# workout-dashboard
+```
+
+### Timer Presets
+
+Timers support saved presets via settings:
+
+- `preset: presetName` - Use preset configuration
+- Presets stored in `settings.timerPresets`
+- Default preset configurable in settings
 
 ### CSS Organization
 
-- **Source file**: [styles.source.css](styles.source.css) - Entry point that imports modular CSS files
-- **Modular CSS**: Individual CSS files organized in `styles/` directory by feature
-- **Build output**: Bundled into single [styles.css](styles.css) file via PostCSS
-- **CSS variables**: Uses Obsidian's CSS variables for theme consistency (see [OBSIDIAN_GUIDELINES.md](OBSIDIAN_GUIDELINES.md))
+- **Entry**: `styles.source.css` imports modular files from `styles/`
+- **Output**: PostCSS bundles to `styles.css`
+- **Variables**: Use Obsidian CSS variables (e.g., `--background-primary`, `--text-normal`)
 
-### Dependencies
+## Key Patterns
 
-- **Chart.js v4.4.0**: For interactive chart rendering
-- **Obsidian API**: Core plugin functionality
-- **esbuild**: Build system with external module handling for Obsidian environment
-- **PostCSS**: CSS bundling with postcss-import plugin
+### Adding New Embedded Views
 
-### Development Notes
+1. Extend `BaseView` class
+2. Implement `render()` method
+3. Register code block processor in `CodeBlockProcessorService`
 
-- Plugin follows Obsidian's plugin architecture patterns (see [OBSIDIAN_GUIDELINES.md](OBSIDIAN_GUIDELINES.md))
-- esbuild externalizes Obsidian API, Electron, and CodeMirror modules (see [esbuild.config.mjs](esbuild.config.mjs))
-- Uses semantic versioning with GitHub Actions for releases
-- Includes comprehensive error handling and debug mode functionality
-- Source maps enabled in development mode, disabled in production
+### Adding New Modals
 
-### Important Implementation Details
+1. Extend `BaseInsertModal` for insert modals or `ModalBase` for others
+2. Implement abstract methods: `getModalTitle()`, `generateCode()`, etc.
+3. Register command in `CommandHandlerService`
 
-- **CSV Parsing**: Custom CSV parser in `WorkoutLogData.ts` handles quoted values and escaping
-- **Cache Management**: DataService implements 5-second cache with manual cache clearing on data changes
-- **Error Handling**: BaseView provides consistent error handling patterns across all embedded views
-- **Service Layer**: Main plugin delegates to specialized services for separation of concerns
-- **Modal System**: ModalBase provides consistent modal behavior with proper cleanup
-- **Early Filtering**: DataService applies filtering at data retrieval level to optimize performance
-- **Exercise Matching**: Multi-strategy search system (exact match, fuzzy match, filename match, exercise field match) with score-based filtering and confidence thresholds
-- **Dashboard Integration**: Comprehensive dashboard view with quick stats, volume analytics, muscle heat maps, recent workouts, and quick actions
-- **Debug Mode**: Extensive debug logging available (see [DEBUG_GUIDE.md](DEBUG_GUIDE.md) for details on troubleshooting search and filtering issues)
+### Adding New Components
 
-## Key Development Practices
+1. Create in appropriate atomic level (atoms/molecules/organism)
+2. Export from barrel file (e.g., `atoms/index.ts`)
+3. Add tests in `__tests__/` directory
 
-### When Adding New Features
+### Constants
 
-1. **Use path aliases**: Import with `@app/*` instead of relative paths
-2. **Follow BaseView pattern**: Extend BaseView for new embedded views
-3. **Use ModalBase**: Extend ModalBase for new modal implementations
-4. **Add tests**: Write unit tests for utilities and data processing logic in `__tests__` directories
-5. **Update CSS modularly**: Add feature-specific CSS in `styles/` directory, import in `styles.source.css`
-6. **Use Obsidian CSS variables**: Avoid hardcoded colors, use theme-compatible CSS variables
-7. **Handle errors consistently**: Use UIComponents.renderErrorMessage() for error display
+Constants are organized into focused single-responsibility modules in `app/constants/`:
 
-### Code Style
+```text
+app/constants/
+├── index.ts              # Barrel export + composed CONSTANTS object
+├── ui.constants.ts       # UI labels, icons, emoji, modal/settings/table/chart strings
+├── defaults.constants.ts # Default configurations (settings, chart, table, timer)
+├── muscles.constants.ts  # Muscle tags, groups, positions, heatmap data
+├── validation.constants.ts # Error messages, validation limits, patterns
+└── MuscleTags.ts         # Legacy muscle tag mappings (backward compatibility)
+```
 
-- Use async/await over Promise chains
-- Prefer const/let over var
-- Use sentence case for UI text (not Title Case)
-- Avoid `innerHTML` - use Obsidian's `createEl()`, `createDiv()`, `createSpan()` helpers
-- Clean up resources in `onunload()` using `registerEvent()` and `addCommand()`
+**Module purposes:**
 
-### Testing Changes
+- **ui.constants.ts**: All user-facing strings (modal titles/buttons/labels, settings labels/descriptions, table columns, chart labels, timer types, icons, emoji)
+- **defaults.constants.ts**: Default values for plugin settings, chart config, table config, timer config
+- **muscles.constants.ts**: Muscle names, positions, groups, body parts, tag mappings for heatmaps
+- **validation.constants.ts**: Error messages, error types, form validation, numeric limits
 
-1. Run `npm run build` to validate TypeScript and build
-2. Reload the plugin in Obsidian (Ctrl/Cmd + R)
-3. Test in both light and dark themes for CSS changes
-4. Test on mobile if making UI changes
-5. Run `npm test` if modifying utilities or data processing logic
+**Import patterns:**
+
+```typescript
+// Barrel import (convenient, works everywhere)
+import { CONSTANTS, ICONS, DEFAULT_SETTINGS } from "@app/constants";
+
+// Direct import (better tree-shaking for production builds)
+import { ICONS, MODAL_UI } from "@app/constants/ui.constants";
+import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
+import { MUSCLE_TAGS } from "@app/constants/muscles.constants";
+import { ERROR_MESSAGES } from "@app/constants/validation.constants";
+```
+
+**Backward compatibility:** The `CONSTANTS` object in `index.ts` maintains the legacy `CONSTANTS.WORKOUT.*` structure by composing values from the modular files. Existing code using `CONSTANTS.WORKOUT.MODAL`, `CONSTANTS.WORKOUT.SETTINGS`, etc. continues to work.
+
+## Testing
+
+- **Location**: `__tests__/` directories alongside source files
+- **Coverage**: 70% threshold (statements, branches, functions, lines)
+- **Excluded**: FrontmatterParser.ts (Obsidian API mocking), constant files (static data)
+
+## Obsidian Plugin Guidelines
+
+### Critical Rules
+
+- **Use `this.app`** - Never use global `app` or `window.app`
+- **No unnecessary logging** - Only log errors, not debug messages (unless debug mode enabled)
+- **Sentence case in UI** - "Template folder" not "Template Folder"
+- **Use `setHeading()`** - Not `<h1>` or `<h2>` for settings headings
+
+### Security (DOM)
+
+- **Never use `innerHTML`** - Use `createEl()`, `createDiv()`, `createSpan()` helpers
+- **Use `el.empty()`** - To clean up HTML element contents
+
+### Resource Management
+
+- **Clean up on unload** - Use `registerEvent()`, `addCommand()` for auto-cleanup
+- **Don't detach leaves** - In `onunload()` to preserve user's layout
+
+### Commands
+
+- **No default hotkeys** - Let users configure their own
+- **Use appropriate callback** - `callback` (unconditional), `checkCallback` (conditional), `editorCallback` (requires editor)
+
+### Workspace
+
+- **Use `getActiveViewOfType()`** - Not `workspace.activeLeaf` directly
+- **Don't manage view references** - Use `getActiveLeavesOfType()` to access views
+
+### Vault Operations
+
+- **Use Vault API** - Not Adapter API (better caching and safety)
+- **Use `getFileByPath()`** - Not `getFiles().find()` for lookups
+- **Use `normalizePath()`** - For user-defined paths
+- **Use `Vault.process()`** - For background file modifications (atomic)
+- **Use `FileManager.processFrontMatter()`** - For frontmatter modifications
+
+### Styling
+
+- **No hardcoded colors** - Use CSS classes and Obsidian CSS variables
+- **Use CSS variables** - `var(--text-normal)`, `var(--background-primary)`, etc.
+
+### Mobile Compatibility
+
+- **Avoid Node/Electron APIs** - Not available on mobile
+- **Avoid regex lookbehind** - Only supported iOS 16.4+
+
+## Debug Mode
+
+Enable via settings or per-block with `debug: true`. See `DEBUG_GUIDE.md` for detailed troubleshooting.
+
+---
+
+## Agent Workflow (SOP System)
+
+This project uses a 3-tier architecture for AI-assisted development to maximize reliability.
+
+### 1. Directive Level (What to do)
+
+- **Location**: `directives/` (Markdown files)
+- **Content**: SOPs (Standard Operating Procedures) in natural language
+- **Purpose**: Define objectives, inputs, required tools, and expected outputs
+- **Rule**: Before starting a complex task, search for or create a directive
+
+### 2. Orchestration Level (AI reasoning)
+
+- **Who**: The AI Agent (Claude)
+- **What**: Intelligent routing. Read directives → Call execution scripts → Handle errors
+- **Rule**: Don't do everything manually. If a task is repeatable, it should become a script
+
+### 3. Execution Level (Deterministic arm)
+
+- **Location**: `execution/` (Scripts)
+- **Content**: Atomic, robust, deterministic scripts
+- **Rule**: Use `execution/` for file operations, bulk API calls, or complex logic
+- **Storage**: Use `.tmp/` for intermediate files. Never commit `.tmp/`
+
+### Operational Rules
+
+1. **Safety First**: Never commit tokens or API keys. Use `.env`
+2. **Config Over Code**: If logic can reside in config/constants, put it there, don't hardcode
+3. **Determinism**: For repetitive maintenance tasks, create scripts in `execution/`

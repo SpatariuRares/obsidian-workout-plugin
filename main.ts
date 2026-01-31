@@ -14,8 +14,19 @@ import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
+import { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
+import { QuickLogModal } from "@app/features/modals/QuickLogModal";
+import { CONSTANTS } from "@app/constants";
+import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
+
+// Extend Window interface for WorkoutPlannerAPI
+declare global {
+  interface Window {
+    WorkoutPlannerAPI?: WorkoutPlannerAPI;
+  }
+}
 
 // ===================== MAIN PLUGIN =====================
 
@@ -25,11 +36,16 @@ export default class WorkoutChartsPlugin extends Plugin {
   public embeddedTableView!: EmbeddedTableView;
   public embeddedDashboardView!: EmbeddedDashboardView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
+  private quickLogRibbonIcon: HTMLElement | null = null;
 
   // Services
   private commandHandlerService!: CommandHandlerService;
   private dataService!: DataService;
   private codeBlockProcessorService!: CodeBlockProcessorService;
+  private exerciseDefinitionService!: ExerciseDefinitionService;
+
+  // Public API for Dataview integration
+  private workoutPlannerAPI!: WorkoutPlannerAPI;
 
   // Expose createLogModalHandler for dashboard quick actions
   public get createLogModalHandler() {
@@ -52,6 +68,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Initialize services
     this.dataService = new DataService(this.app, this.settings);
+    this.exerciseDefinitionService = new ExerciseDefinitionService(this.app, this.settings);
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
@@ -62,6 +79,14 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.activeTimers,
     );
 
+    // Initialize and expose WorkoutPlannerAPI for Dataview integration
+    this.workoutPlannerAPI = new WorkoutPlannerAPI(
+      this.dataService,
+      this.app,
+      this.settings
+    );
+    window.WorkoutPlannerAPI = this.workoutPlannerAPI;
+
     this.codeBlockProcessorService.registerProcessors();
 
     this.app.workspace.onLayoutReady(() => {
@@ -69,6 +94,31 @@ export default class WorkoutChartsPlugin extends Plugin {
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
+
+    // Add quick log ribbon icon if enabled
+    this.updateQuickLogRibbon();
+  }
+
+  /**
+   * Updates the quick log ribbon icon visibility based on settings
+   */
+  public updateQuickLogRibbon(): void {
+    // Remove existing ribbon icon if present
+    if (this.quickLogRibbonIcon) {
+      this.quickLogRibbonIcon.remove();
+      this.quickLogRibbonIcon = null;
+    }
+
+    // Add ribbon icon if setting is enabled
+    if (this.settings.showQuickLogRibbon) {
+      this.quickLogRibbonIcon = this.addRibbonIcon(
+        "dumbbell",
+        CONSTANTS.WORKOUT.COMMANDS.QUICK_LOG,
+        () => {
+          new QuickLogModal(this.app, this).open();
+        }
+      );
+    }
   }
 
   onunload() {
@@ -103,12 +153,27 @@ export default class WorkoutChartsPlugin extends Plugin {
     // 3. Clear data service cache to release memory
     this.dataService?.clearLogDataCache();
 
+    // 3b. Clear exercise definition service cache
+    this.exerciseDefinitionService?.clearCache();
+
     // 4. Destroy all Chart.js instances (additional safety net)
     ChartRenderer.destroyAllCharts();
 
     // 5. Nullify service references to allow garbage collection
     this.codeBlockProcessorService = null!;
     this.commandHandlerService = null!;
+    this.exerciseDefinitionService = null!;
+
+    // 6. Remove ribbon icon if present
+    if (this.quickLogRibbonIcon) {
+      this.quickLogRibbonIcon.remove();
+      this.quickLogRibbonIcon = null;
+    }
+
+    // 7. Remove WorkoutPlannerAPI from window
+    if (window.WorkoutPlannerAPI) {
+      delete window.WorkoutPlannerAPI;
+    }
   }
 
   async loadSettings() {
@@ -129,6 +194,14 @@ export default class WorkoutChartsPlugin extends Plugin {
 
   public clearLogDataCache(): void {
     this.dataService.clearLogDataCache();
+  }
+
+  /**
+   * Get the ExerciseDefinitionService instance.
+   * Used by modals and views to access exercise type definitions.
+   */
+  public getExerciseDefinitionService(): ExerciseDefinitionService {
+    return this.exerciseDefinitionService;
   }
 
   /**

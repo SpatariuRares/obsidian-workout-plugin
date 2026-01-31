@@ -6,50 +6,44 @@
 
 /* Print Styles */
 @media print {
-  .workout {
-    &-charts {
-      &-container {
-        .workout-charts-controls,
-        .workout-log-table th,
-        .workout-log-table td {
-          border: var(--workout-border-thin) solid
-            var(--background-modifier-border);
-          padding: var(--workout-space-sm);
-        }
-
-        .workout-charts-controls {
-          display: none !important;
-        }
-
-        .workout-log-table {
-          border-collapse: collapse;
-          width: 100%;
-          font-size: var(--workout-space-md);
-        }
-      }
-
-      &-table-fallback {
-        .workout-charts-stats,
-        .workout-charts-trend-header {
-          border: var(--workout-border-thin) solid
-            var(--background-modifier-border);
-          margin: var(--workout-space-md) 0;
-          padding: var(--workout-space-lg);
-        }
-      }
+  .workout-charts-container {
+    .workout-charts-controls,
+    .workout-log-table th,
+    .workout-log-table td {
+      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      padding: var(--workout-space-sm);
     }
 
-    &-add-log-button-container,
-    &-embedded-chart-debug {
+    .workout-charts-controls {
       display: none !important;
     }
 
-    &-embedded-chart-table-fallback {
-      .workout-log-table {
-        border-collapse: collapse;
-        width: 100%;
-        font-size: var(--workout-space-md);
-      }
+    .workout-log-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--workout-space-md);
+    }
+  }
+
+  .workout-charts-table-fallback {
+    .workout-charts-stats,
+    .workout-charts-trend-header {
+      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      margin: var(--workout-space-md) 0;
+      padding: var(--workout-space-lg);
+    }
+  }
+
+  .workout-add-log-button-container,
+  .workout-embedded-chart-debug {
+    display: none !important;
+  }
+
+  .workout-embedded-chart-table-fallback {
+    .workout-log-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--workout-space-md);
     }
   }
 }
@@ -58,185 +52,217 @@
 
 /* Tablet breakpoint - 4 columns */
 /* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
+/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
 @media (max-width: variables.$breakpoint-xl) {
-  .workout {
-    &-dashboard-grid {
-      /* Keep 12 columns, just adjust spans */
-      gap: var(--workout-space-md);
-    }
+  .workout-dashboard-grid {
+    /* Keep 12 columns, just adjust spans */
+    gap: var(--workout-space-md);
+  }
 
-    /* Widgets take half width on tablet */
-    &-muscle-heatmap,
-    &-volume-analytics,
-    &-recent-workouts,
-    &-quick-stats,
-    &-file-errors,
-    &-quick-actions {
+  /* Widgets take half width on tablet (span 6) or full width (span 12) */
+  .workout-dashboard {
+    .workout-muscle-heatmap,
+    .workout-volume-analytics,
+    .workout-recent-workouts,
+    .workout-protocol-distribution,
+    .workout-protocol-effectiveness,
+    .workout-duration-comparison,
+    .workout-quick-actions,
+    .workout-file-errors {
       grid-column: span 6;
+      grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
     }
+  }
+  /* Larger widgets on tablet can go full width if needed */
+  .workout-volume-analytics {
+    grid-column: span 12;
   }
 }
 
 /* Mobile breakpoint - single column, natural flow */
 @media (max-width: variables.$breakpoint-tablet) {
-  .workout {
-    &-dashboard-columns {
-      grid-template-columns: 1fr;
-    }
+  .workout-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 
-    &-dashboard-column-left,
-    &-dashboard-column-right {
-      grid-column: 1 / -1;
-      /* All widgets full width on mobile */
-      .workout-summary-widget,
-      .workout-stats-cards,
-      .workout-muscle-heatmap,
-      .workout-volume-analytics,
-      .workout-quick-stats,
-      .workout-recent-workouts,
-      .workout-quick-actions,
-      .workout-file-errors {
-        &.span-2,
-        &.span-4,
-        &.span-6,
-        &.span-8,
-        &.span-12 {
-          grid-column: 1 / -1;
-        }
-      }
-    }
+  /* Force all widgets to full width */
+  .workout-summary-widget,
+  .workout-stats-cards,
+  .workout-muscle-heatmap,
+  .workout-volume-analytics,
+  .workout-recent-workouts,
+  .workout-protocol-distribution,
+  .workout-protocol-effectiveness,
+  .workout-duration-comparison,
+  .workout-quick-actions,
+  .workout-file-errors,
+  .workout-dashboard-widget {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
 
-    &-summary-grid {
-      grid-template-columns: 1fr;
-      gap: var(--workout-space-md);
-    }
+  .workout-summary-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
 
-    &-stats {
-      &-grid {
-        grid-template-columns: 1fr;
-        gap: var(--workout-space-md);
-      }
+  .workout-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
 
-      &-card {
-        padding: var(--workout-space-lg);
-      }
-    }
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
+  }
 
-    &-card {
-      &-header {
-        margin-bottom: var(--workout-space-md);
-      }
+  .workout-card-header {
+    margin-bottom: var(--workout-space-md);
+  }
 
-      &-icon {
-        font-size: var(--workout-space-xl);
-      }
-    }
+  .workout-card-icon {
+    font-size: var(--workout-space-xl);
+  }
 
-    &-dashboard {
-      &-widget {
-        padding: var(--workout-space-lg);
-      }
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
 
-      &-title {
-        font-size: var(--workout-font-base);
-      }
+  .workout-dashboard-title {
+    font-size: var(--workout-font-base);
+  }
 
-      &-chart-container {
-        display: none;
-      }
-    }
+  .workout-dashboard-chart-container,
+  .workout-charts-container {
+    display: none;
+  }
 
-    &-widget-title {
-      font-size: var(--workout-font-base);
-    }
+  /* Show mobile table instead of chart */
+  .workout-chart-mobile-table {
+    display: block;
+  }
 
-    &-heatmap-controls {
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--workout-space-md);
-    }
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+  }
 
-    &-time-frame-toggle,
-    &-view-toggle {
-      justify-content: center;
-      width: 100%;
-    }
+  .workout-heatmap-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--workout-space-md);
+  }
 
-    &-toggle-btn {
-      flex: 1;
-      padding: var(--workout-space-md) var(--workout-space-md);
-    }
+  .workout-time-frame-toggle,
+  .workout-view-toggle {
+    justify-content: center;
+    width: 100%;
+  }
 
-    &-export-btn {
-      width: 100%;
-      justify-content: center;
-    }
+  .workout-toggle-btn {
+    flex: 1;
+    padding: var(--workout-space-md) var(--workout-space-md);
+  }
 
-    &-muscle-details {
-      position: static;
-      margin-top: var(--workout-space-lg);
-      width: 100%;
-      max-width: none;
-    }
+  .workout-export-btn {
+    width: 100%;
+    justify-content: center;
+  }
 
-    &-recent {
-      &-workout-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--workout-space-sm);
-      }
+  .workout-muscle-details {
+    position: static;
+    margin-top: var(--workout-space-lg);
+    width: 100%;
+    max-width: none;
+  }
 
-      &-date {
-        min-width: auto;
-      }
+  .workout-recent-workout-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--workout-space-sm);
+  }
 
-      &-name {
-        margin: 0;
-      }
-    }
+  .workout-recent-date {
+    min-width: auto;
+  }
 
-    &-action {
-      &-buttons {
-        gap: var(--workout-space-md);
-      }
+  .workout-recent-name {
+    margin: 0;
+  }
 
-      &-button {
-        padding: var(--workout-space-lg) var(--workout-space-lg);
-        font-size: var(--workout-font-base);
-      }
-    }
+  .workout-action-buttons {
+    gap: var(--workout-space-md);
+  }
+
+  .workout-action-button {
+    padding: var(--workout-space-lg) var(--workout-space-lg);
+    font-size: var(--workout-font-base);
   }
 }
 
 @media (max-width: variables.$breakpoint-mobile) {
-  .workout {
-    &-stats-card {
-      padding: var(--workout-space-lg);
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
+  }
+
+  .workout-card-stats {
+    gap: var(--workout-space-md);
+  }
+
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+
+  .workout-dashboard-title {
+    font-size: var(--workout-font-xl);
+    margin-bottom: var(--workout-space-lg);
+  }
+
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+    margin-bottom: var(--workout-space-md);
+  }
+
+  .workout-toggle-btn {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    font-size: var(--workout-font-sm);
+  }
+
+  /* Mobile Table Optimizations */
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+
+    th {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+      font-size: var(--workout-font-xs);
     }
 
-    &-card-stats {
-      gap: var(--workout-space-md);
+    td {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
     }
+  }
 
-    &-dashboard {
-      &-widget {
-        padding: var(--workout-space-lg);
-      }
+  /* Compact spacer summary on mobile */
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
 
-      &-title {
-        font-size: var(--workout-font-xl);
-        margin-bottom: var(--workout-space-lg);
-      }
+    .workout-spacer-stat {
+      margin-right: var(--workout-space-sm);
+      font-size: var(--workout-font-xs);
     }
+  }
 
-    &-widget-title {
-      font-size: var(--workout-font-base);
-      margin-bottom: var(--workout-space-md);
-    }
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
 
-    &-toggle-btn {
-      padding: var(--workout-space-sm) var(--workout-space-md);
-      font-size: var(--workout-font-sm);
-    }
+  /* Smaller protocol badges on mobile */
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
   }
 }

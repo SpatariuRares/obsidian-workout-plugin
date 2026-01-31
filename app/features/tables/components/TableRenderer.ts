@@ -1,10 +1,22 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { TableRow, EmbeddedTableParams } from "@app/types";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
 import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
+
+/**
+ * Protocol display configuration for badges
+ */
+const PROTOCOL_DISPLAY: Record<string, { label: string; className: string }> = {
+  [WorkoutProtocol.STANDARD]: { label: "", className: "" }, // No badge for standard
+  [WorkoutProtocol.DROP_SET]: { label: "Drop", className: "workout-protocol-badge-drop" },
+  [WorkoutProtocol.MYO_REPS]: { label: "Myo", className: "workout-protocol-badge-myo" },
+  [WorkoutProtocol.REST_PAUSE]: { label: "RP", className: "workout-protocol-badge-rp" },
+  [WorkoutProtocol.SUPERSET]: { label: "SS", className: "workout-protocol-badge-superset" },
+  [WorkoutProtocol.TWENTYONE]: { label: "21s", className: "workout-protocol-badge-21" },
+};
 
 export class TableRenderer {
   /**
@@ -54,7 +66,7 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(tbody, rows, plugin, onRefresh, signal);
+      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, onRefresh, signal);
 
       tableContainer.appendChild(fragment);
 
@@ -82,6 +94,7 @@ export class TableRenderer {
   private static applyRowGroupingOptimized(
     tbody: HTMLElement,
     rows: TableRow[],
+    headers: string[],
     plugin?: WorkoutChartsPlugin,
     onRefresh?: () => void,
     signal?: AbortSignal
@@ -106,17 +119,60 @@ export class TableRenderer {
         groupedRows[row.dateKey].push(row);
       });
 
-      // Helper function to create spacer row
+      // Helper function to create spacer row with dynamic summary based on exercise type
       const createSpacerRow = (dateKey: string) => {
         const groupRows = groupedRows[dateKey];
+
+        // Aggregate standard strength metrics
         let totalVolume = 0;
         let totalWeight = 0;
         let totalReps = 0;
 
+        // Aggregate custom field metrics
+        let totalDuration = 0;
+        let totalDistance = 0;
+        let totalHeartRate = 0;
+        let heartRateCount = 0;
+
+        // Track which metrics are present
+        let hasStrengthData = false;
+        let hasDuration = false;
+        let hasDistance = false;
+        let hasHeartRate = false;
+
         groupRows.forEach((r) => {
-          totalVolume += r.originalLog?.volume || 0;
-          totalWeight += r.originalLog?.weight || 0;
-          totalReps += r.originalLog?.reps || 0;
+          const log = r.originalLog;
+          if (!log) return;
+
+          // Check standard strength fields
+          if (log.reps > 0 || log.weight > 0) {
+            hasStrengthData = true;
+            totalVolume += log.volume || 0;
+            totalWeight += log.weight || 0;
+            totalReps += log.reps || 0;
+          }
+
+          // Check custom fields for other exercise types
+          if (log.customFields) {
+            const duration = log.customFields["duration"];
+            if (typeof duration === "number" && duration > 0) {
+              hasDuration = true;
+              totalDuration += duration;
+            }
+
+            const distance = log.customFields["distance"];
+            if (typeof distance === "number" && distance > 0) {
+              hasDistance = true;
+              totalDistance += distance;
+            }
+
+            const heartRate = log.customFields["heartrate"] || log.customFields["heartRate"];
+            if (typeof heartRate === "number" && heartRate > 0) {
+              hasHeartRate = true;
+              totalHeartRate += heartRate;
+              heartRateCount++;
+            }
+          }
         });
 
         const spacerRow = fragment.appendChild(document.createElement("tr"));
@@ -133,19 +189,61 @@ export class TableRenderer {
         summaryCell.className = "workout-table-spacer-summary-cell";
         summaryCell.setAttribute("colspan", (columnCount - 1).toString());
 
-        // Create stat spans using DOM methods
-        const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS + CONSTANTS.WORKOUT.TABLE.LABELS.REPETITIONS + ": ");
-        repsSpan.createEl("strong", { text: totalReps.toString() });
+        // Determine which summary to show based on available data
+        // Using compact format: icon + value (mobile-friendly)
+        // Priority: Strength > Cardio/Distance/Timed
 
-        const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT + CONSTANTS.WORKOUT.TABLE.LABELS.WEIGHT + ": ");
-        weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
+        if (hasStrengthData) {
+          // Strength exercise summary: Reps, Weight, Volume (compact)
+          const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS);
+          repsSpan.createEl("strong", { text: totalReps.toString() });
 
-        const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME + CONSTANTS.WORKOUT.TABLE.LABELS.VOLUME + ": ");
-        volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
+          const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT);
+          weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)}kg` });
+
+          const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME);
+          volumeSpan.createEl("strong", { text: totalVolume.toFixed(0) });
+        } else {
+          // Non-strength exercise summary: show available metrics (compact)
+
+          if (hasDuration) {
+            const durationSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            durationSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DURATION);
+            // Format duration based on magnitude
+            const durationDisplay = totalDuration >= 60
+              ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
+              : `${Math.round(totalDuration)}s`;
+            durationSpan.createEl("strong", { text: durationDisplay });
+          }
+
+          if (hasDistance) {
+            const distanceSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            distanceSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DISTANCE);
+            distanceSpan.createEl("strong", { text: `${totalDistance.toFixed(2)}km` });
+          }
+
+          if (hasHeartRate && heartRateCount > 0) {
+            const avgHeartRate = Math.round(totalHeartRate / heartRateCount);
+            const hrSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            hrSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.HEART_RATE);
+            hrSpan.createEl("strong", { text: `${avgHeartRate}bpm` });
+          }
+
+          // If no metrics found at all, show a generic count
+          if (!hasDuration && !hasDistance && !hasHeartRate) {
+            const countSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            countSpan.createEl("strong", { text: `${groupRows.length} sets` });
+          }
+        }
       };
+
+      // Find column indices dynamically based on headers
+      const protocolColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+      const volumeColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
+      const actionsColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
 
       rows.forEach((row) => {
         const dateKey = row.dateKey;
@@ -167,12 +265,16 @@ export class TableRenderer {
           if (cellIndex === 0) {
             td.className = "workout-table-date-cell";
             td.textContent = cell;
-          } else if (cellIndex === 4) {
-            td.className = "workout-table-volume-cell";
-            td.textContent = cell;
-          } else if (cellIndex === row.displayRow.length - 1) {
+          } else if (cellIndex === actionsColumnIndex) {
             td.className = "workout-table-actions-cell";
             TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh, signal);
+          } else if (cellIndex === volumeColumnIndex) {
+            td.className = "workout-table-volume-cell";
+            td.textContent = cell;
+          } else if (cellIndex === protocolColumnIndex) {
+            // Render protocol badge
+            td.className = "workout-table-protocol-cell";
+            this.renderProtocolBadge(td, cell, plugin);
           } else {
             td.textContent = cell;
           }
@@ -183,5 +285,72 @@ export class TableRenderer {
     } catch {
       // Silent error - grouping failed
     }
+  }
+
+  /**
+   * Renders a protocol badge in the given cell.
+   * Supports both built-in protocols and custom protocols from settings.
+   * @param cell - The table cell to render the badge in
+   * @param protocol - The protocol value to display
+   * @param plugin - Plugin instance for accessing custom protocols
+   */
+  private static renderProtocolBadge(cell: HTMLElement, protocol: string, plugin?: WorkoutChartsPlugin): void {
+    // First check built-in protocols
+    const builtInConfig = PROTOCOL_DISPLAY[protocol];
+
+    if (builtInConfig) {
+      // If it's standard (empty label), don't render a badge
+      if (!builtInConfig.label) {
+        return;
+      }
+
+      const badge = cell.createEl("span", {
+        cls: `workout-protocol-badge ${builtInConfig.className}`,
+        text: builtInConfig.label,
+      });
+      badge.setAttribute("title", protocol.replace(/_/g, " "));
+      return;
+    }
+
+    // Check custom protocols from settings
+    if (plugin?.settings?.customProtocols) {
+      const customProtocol = plugin.settings.customProtocols.find(
+        (p) => p.id === protocol
+      );
+
+      if (customProtocol) {
+        const badge = cell.createEl("span", {
+          cls: "workout-protocol-badge workout-protocol-badge-custom",
+          text: customProtocol.abbreviation,
+        });
+        badge.setAttribute("title", customProtocol.name);
+        // Apply custom color as inline style
+        badge.style.backgroundColor = customProtocol.color;
+        // Calculate contrast color for text
+        badge.style.color = this.getContrastColor(customProtocol.color);
+      }
+    }
+  }
+
+  /**
+   * Calculates whether black or white text should be used based on background color.
+   * Uses relative luminance formula for accessibility.
+   * @param hexColor - Hex color string (e.g., "#ff0000")
+   * @returns "black" or "white"
+   */
+  private static getContrastColor(hexColor: string): string {
+    // Remove # if present
+    const hex = hexColor.replace("#", "");
+
+    // Parse RGB values
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate relative luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    // Return black for light backgrounds, white for dark backgrounds
+    return luminance > 0.5 ? "black" : "white";
   }
 }

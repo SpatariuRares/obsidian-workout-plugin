@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { TimerState } from "@app/types/TimerTypes";
 import { TIMER_TYPE } from "@app/types/TimerTypes";
 

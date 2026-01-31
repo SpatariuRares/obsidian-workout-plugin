@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 
 describe("TrendCalculator", () => {

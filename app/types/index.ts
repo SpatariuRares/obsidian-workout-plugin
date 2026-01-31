@@ -30,8 +30,14 @@ export type {
 } from "@app/types/TimerTypes";
 export { TIMER_TYPE } from "@app/types/TimerTypes";
 
+// Duration-related types
+export type {
+  EmbeddedDurationParams,
+  DurationAnalysisResult,
+} from "@app/types/DurationTypes";
+
 // Dashboard-related types
-export type { EmbeddedDashboardParams } from "@app/types/DashboardTypes";
+export type { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types/DashboardTypes";
 
 // Plugin-related types
 export type {
@@ -44,7 +50,17 @@ export type {
   WorkoutLogData,
   CSVWorkoutLogEntry,
   WorkoutChartsSettings,
+  CustomProtocolConfig,
 } from "@app/types/WorkoutLogData";
+export { WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 // Muscle heat map types
 export type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
+
+// Exercise type definitions
+export type {
+  ParameterValueType,
+  ParameterDefinition,
+  ExerciseTypeDefinition,
+  ExerciseDefinition,
+} from "@app/types/ExerciseTypes";

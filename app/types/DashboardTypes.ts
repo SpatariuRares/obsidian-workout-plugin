@@ -8,4 +8,11 @@ export interface EmbeddedDashboardParams {
 	showQuickActions?: boolean;
 	recentWorkoutsLimit?: number;
 	volumeTrendDays?: number;
+	/** Active protocol filter for dashboard-wide filtering */
+	activeProtocolFilter?: string | null;
 }
+
+/**
+ * Callback type for protocol filter changes in dashboard
+ */
+export type ProtocolFilterCallback = (protocol: string | null) => void;

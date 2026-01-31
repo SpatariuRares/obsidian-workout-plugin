@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { LoadingSpinner } from "@app/components/molecules/LoadingSpinner";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

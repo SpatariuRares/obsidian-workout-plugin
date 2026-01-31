@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
@@ -183,6 +183,30 @@ export class DateUtils {
       return `${day}/${month}/${year}`;
     } catch {
       return CONSTANTS.WORKOUT.TABLE.LABELS.INVALID_DATE;
+    }
+  }
+
+  /**
+   * Format date with specified format string
+   * Supports: DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD
+   * Used primarily for chart labels and display formatting
+   */
+  static formatDateWithFormat(
+    date: string | Date,
+    format: string = "DD/MM/YYYY"
+  ): string {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    switch (format) {
+      case "YYYY-MM-DD":
+        return `${year}-${month}-${day}`;
+      case "MM/DD/YYYY":
+        return `${month}/${day}/${year}`;
+      case "DD/MM/YYYY":
+      default:
+        return `${day}/${month}/${year}`;
     }
   }
 }

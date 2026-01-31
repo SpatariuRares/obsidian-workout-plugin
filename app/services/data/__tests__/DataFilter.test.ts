@@ -1,17 +1,17 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { DataFilter } from "@app/services/data/DataFilter";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedChartParams } from "@app/types";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import { EmbeddedChartParams, EmbeddedTableParams } from "@app/types";
 import {
   findExerciseMatches,
   determineExerciseFilterStrategy,
   filterLogDataByExercise,
-} from "@app/utils/utils";
+} from "@app/utils/ExerciseMatchUtils";
 import { TFile } from "obsidian";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
-jest.mock("@app/utils/utils", () => ({
-  ...jest.requireActual("@app/utils/utils"),
+jest.mock("@app/utils/ExerciseMatchUtils", () => ({
+  ...jest.requireActual("@app/utils/ExerciseMatchUtils"),
   findExerciseMatches: jest.fn(),
   determineExerciseFilterStrategy: jest.fn(),
   filterLogDataByExercise: jest.fn(),
@@ -57,6 +57,64 @@ const mockLogData: WorkoutLogData[] = [
     weight: 105,
     volume: 1890,
     workout: "Leg Day",
+  },
+];
+
+// Mock data with protocol field for protocol filtering tests
+const mockLogDataWithProtocol: WorkoutLogData[] = [
+  {
+    date: "2024-01-01",
+    exercise: "Squat",
+    reps: 5,
+    weight: 100,
+    volume: 1500,
+    origine: "[[Strength Training]]",
+    protocol: WorkoutProtocol.STANDARD,
+  },
+  {
+    date: "2024-01-15",
+    exercise: "Bench Press",
+    reps: 5,
+    weight: 80,
+    volume: 1200,
+    origine: "[[Strength Training]]",
+    protocol: WorkoutProtocol.DROP_SET,
+  },
+  {
+    date: "2024-02-01",
+    exercise: "Deadlift",
+    reps: 5,
+    weight: 120,
+    volume: 600,
+    workout: "Full Body Workout",
+    protocol: WorkoutProtocol.MYO_REPS,
+  },
+  {
+    date: "2024-02-10",
+    exercise: "Squat",
+    reps: 6,
+    weight: 105,
+    volume: 1890,
+    workout: "Leg Day",
+    protocol: WorkoutProtocol.REST_PAUSE,
+  },
+  {
+    date: "2024-02-12",
+    exercise: "Squat",
+    reps: 8,
+    weight: 90,
+    volume: 720,
+    workout: "Leg Day",
+    protocol: WorkoutProtocol.DROP_SET,
+  },
+  {
+    date: "2024-02-15",
+    exercise: "Overhead Press",
+    reps: 10,
+    weight: 50,
+    volume: 500,
+    workout: "Upper Body",
+    // No protocol set - should default to STANDARD
   },
 ];
 
@@ -343,6 +401,128 @@ describe("DataFilter", () => {
 
         expect(result.filteredData).toHaveLength(0);
         expect(result.filterMethodUsed).toBe("No match found");
+      });
+    });
+
+    describe("Protocol Filtering", () => {
+      it("should filter by single protocol string", () => {
+        const params: EmbeddedTableParams = {
+          protocol: "drop_set",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(2);
+        expect(result.filteredData[0].protocol).toBe(WorkoutProtocol.DROP_SET);
+        expect(result.filteredData[1].protocol).toBe(WorkoutProtocol.DROP_SET);
+        expect(result.filterMethodUsed).toBe("protocol: [drop_set]");
+      });
+
+      it("should filter by array of protocols (OR logic)", () => {
+        const params: EmbeddedTableParams = {
+          protocol: ["drop_set", "myo_reps"],
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(3);
+        const protocols = result.filteredData.map((d) => d.protocol);
+        expect(protocols).toContain(WorkoutProtocol.DROP_SET);
+        expect(protocols).toContain(WorkoutProtocol.MYO_REPS);
+        expect(result.filterMethodUsed).toBe("protocol: [drop_set, myo_reps]");
+      });
+
+      it("should be case-insensitive for protocol filtering", () => {
+        const params: EmbeddedTableParams = {
+          protocol: "DROP_SET",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(2);
+        expect(result.filterMethodUsed).toBe("protocol: [drop_set]");
+      });
+
+      it("should filter entries without protocol as STANDARD", () => {
+        const params: EmbeddedTableParams = {
+          protocol: "standard",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        // Should include the entry with explicit STANDARD and the entry without protocol
+        expect(result.filteredData).toHaveLength(2);
+      });
+
+      it("should combine protocol filter with exercise filter (AND logic)", () => {
+        const params: EmbeddedTableParams = {
+          exercise: "Squat",
+          exactMatch: true,
+          protocol: "drop_set",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(1);
+        expect(result.filteredData[0].exercise).toBe("Squat");
+        expect(result.filteredData[0].protocol).toBe(WorkoutProtocol.DROP_SET);
+        expect(result.filterMethodUsed).toContain("exact match");
+        expect(result.filterMethodUsed).toContain("protocol");
+      });
+
+      it("should combine protocol filter with workout filter (AND logic)", () => {
+        const params: EmbeddedTableParams = {
+          workout: "Leg Day",
+          protocol: ["drop_set", "rest_pause"],
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(2);
+        expect(result.filteredData.every((d) => d.workout === "Leg Day")).toBe(true);
+        expect(result.filterMethodUsed).toContain("Leg Day");
+        expect(result.filterMethodUsed).toContain("protocol");
+      });
+
+      it("should return empty array when protocol filter matches nothing", () => {
+        const params: EmbeddedTableParams = {
+          protocol: "superset",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(0);
+      });
+
+      it("should ignore empty protocol filter", () => {
+        const params: EmbeddedTableParams = {
+          protocol: "",
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(mockLogDataWithProtocol.length);
+        expect(result.filterMethodUsed).toBe("none");
+      });
+
+      it("should ignore empty protocol array filter", () => {
+        const params: EmbeddedTableParams = {
+          protocol: [],
+        };
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
+        expect(result.filteredData).toHaveLength(mockLogDataWithProtocol.length);
+        expect(result.filterMethodUsed).toBe("none");
       });
     });
   });

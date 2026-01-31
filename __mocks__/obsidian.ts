@@ -2,7 +2,7 @@
  * Mock for the obsidian module
  * Provides mock implementations of obsidian functions used in tests
  */
-
+import { jest } from "@jest/globals";
 /**
  * Simple YAML parser mock that handles basic YAML structures
  * Mimics Obsidian's parseYaml function
@@ -95,5 +95,22 @@ export class App {
 export class Plugin {}
 export class PluginSettingTab {}
 export class Modal {}
+export class FuzzySuggestModal<T> {
+  app: App;
+  constructor(app: App) {
+    this.app = app;
+  }
+  setPlaceholder(_placeholder: string) {}
+  getItems(): T[] { return []; }
+  getItemText(_item: T): string { return ""; }
+  onChooseItem(_item: T): void {}
+  open() {}
+  close() {}
+}
 export class MarkdownView {}
 export class MarkdownRenderChild {}
+export class TFolder {
+  path: string = "";
+  name: string = "";
+  children: (TFile | TFolder)[] = [];
+}

@@ -1,6 +1,6 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
 import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
-import { calculateTrendLine } from "@app/utils/utils";
+import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import {
   ChartColors,
   ChartLabels,
@@ -46,7 +46,7 @@ export class ChartRenderer {
   static addTrendLineToDatasets(datasets: ChartDataset[]): void {
     const mainDataset = datasets[0];
     if (mainDataset.data && mainDataset.data.length > 1) {
-      const { slope, intercept } = calculateTrendLine(mainDataset.data);
+      const { slope, intercept } = StatisticsUtils.calculateTrendLine(mainDataset.data);
       const trendData = mainDataset.data.map(
         (_: number, index: number) => slope * index + intercept
       );

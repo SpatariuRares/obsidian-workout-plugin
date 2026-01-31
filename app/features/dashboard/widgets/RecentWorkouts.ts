@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
@@ -32,19 +32,19 @@ export class RecentWorkouts {
 
       itemEl.createEl("div", {
         text: workout.date,
-        cls: "workout-date-group-header",
+        cls: "workout-recent-date",
       });
 
       itemEl.createEl("div", {
         text:
           workout.workout ||
           CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
-        cls: "workout-recent-workout-name",
+        cls: "workout-recent-name",
       });
 
       itemEl.createEl("div", {
         text: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
-        cls: "workout-recent-workout-volume",
+        cls: "workout-recent-volume",
       });
     });
   }

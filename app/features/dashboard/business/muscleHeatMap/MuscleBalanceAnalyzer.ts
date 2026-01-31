@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import type { MuscleGroupData } from "@app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator";
 
 export interface ImbalanceAnalysis {

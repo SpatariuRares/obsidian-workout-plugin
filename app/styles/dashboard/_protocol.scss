@@ -1,0 +1,236 @@
+/* ============================================================================
+   PROTOCOL DISTRIBUTION WIDGET
+   ============================================================================ */
+
+.workout-protocol-distribution {
+  /* Ensure the widget takes appropriate space */
+  min-height: 280px;
+}
+
+.workout-widget-subtitle {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  margin-top: calc(-1 * var(--workout-space-md));
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-protocol-no-data {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--workout-space-xl);
+  font-style: italic;
+}
+
+.workout-protocol-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 220px;
+  max-height: 220px;
+  margin: 0 auto var(--workout-space-lg) auto;
+}
+
+.workout-protocol-chart-canvas {
+  max-width: 100%;
+  max-height: 200px;
+}
+
+/* Protocol Legend Styles */
+.workout-protocol-legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-protocol-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  transition: var(--workout-transition);
+
+  &:hover {
+    background: var(--background-secondary);
+  }
+}
+
+.workout-protocol-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--workout-radius-sm);
+  flex-shrink: 0;
+}
+
+.workout-protocol-legend-label {
+  flex: 1;
+  font-size: var(--workout-font-sm);
+  color: var(--text-normal);
+}
+
+.workout-protocol-legend-count {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* ============================================================================
+   PROTOCOL FILTER INDICATOR
+   ============================================================================ */
+
+.workout-protocol-filter-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border-left: 3px solid var(--interactive-accent);
+}
+
+.workout-protocol-filter-text {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+
+.workout-protocol-filter-badge {
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-on-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.workout-protocol-clear-filter {
+  margin-left: auto;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  font-size: var(--workout-font-xs);
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--workout-transition);
+
+  &:hover {
+    background: var(--background-modifier-hover);
+    border-color: var(--text-normal);
+    color: var(--text-normal);
+  }
+}
+
+/* ============================================================================
+   CLICKABLE LEGEND ITEMS
+   ============================================================================ */
+
+.workout-protocol-legend-item {
+  cursor: pointer;
+  user-select: none;
+
+  &-active {
+    background: var(--background-secondary);
+    border-left: 3px solid var(--interactive-accent);
+    padding-left: calc(var(--workout-space-sm) - 3px);
+  }
+
+  &-dimmed {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+/* ============================================================================
+   PROTOCOL EFFECTIVENESS WIDGET
+   ============================================================================ */
+
+.workout-protocol-effectiveness {
+  min-height: 200px;
+}
+
+.workout-protocol-effectiveness-no-data {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--workout-space-xl);
+  font-style: italic;
+}
+
+.workout-protocol-effectiveness-disclaimer {
+  margin-top: var(--workout-space-md);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-sm);
+  border-left: 3px solid var(--text-warning);
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.workout-protocol-effectiveness-table-container {
+  overflow-x: auto;
+}
+
+.workout-protocol-effectiveness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+
+  th,
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--background-modifier-border);
+  }
+
+  th {
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-muted);
+    font-size: var(--workout-font-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  tr:hover {
+    background: var(--background-secondary);
+  }
+}
+
+.workout-protocol-effectiveness-protocol-cell {
+  /* Contains the badge */
+}
+
+.workout-protocol-effectiveness-badge {
+  display: inline-block;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.workout-protocol-effectiveness-entries-cell,
+.workout-protocol-effectiveness-volume-cell,
+.workout-protocol-effectiveness-progression-cell {
+  text-align: center;
+}
+
+.workout-protocol-effectiveness-positive {
+  color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-protocol-effectiveness-negative {
+  color: var(--text-error);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-protocol-effectiveness-neutral {
+  color: var(--text-muted);
+  font-weight: var(--workout-font-weight-medium);
+}

@@ -14,6 +14,8 @@ export interface EmbeddedTableParams {
   columns?: string[] | string;
   targetWeight?: number;
   targetReps?: number;
+  showProtocol?: boolean; // Show protocol column (default: true)
+  protocol?: string | string[]; // Filter by protocol (single value or array)
 }
 
 export interface TableRow {
@@ -55,6 +57,9 @@ export interface TableCodeOptions {
   buttonText: string;
   searchByName: boolean;
   exactMatch: boolean;
+  dateRange?: number;
+  targetWeight?: number;
+  targetReps?: number;
 }
 export interface TableState {
   currentContainer?: HTMLElement;

@@ -1,5 +1,5 @@
 // Base modal class with common functionality
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { FormField } from "@app/components/molecules";
 import { INPUT_TYPE } from "@app/types";
@@ -34,16 +34,6 @@ export abstract class ModalBase extends Modal {
     return parent.createEl("div", {
       cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
-  }
-
-  /**
-   * Creates a buttons section
-   */
-  protected createButtonsSection(parent: HTMLElement): HTMLElement {
-    const buttonsSection = parent.createEl("div", {
-      cls: "workout-charts-buttons",
-    });
-    return buttonsSection;
   }
 
   /**

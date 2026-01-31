@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
 

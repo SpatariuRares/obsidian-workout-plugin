@@ -1,8 +1,9 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { getMatchScore } from "@app/utils/utils";
+import { ExerciseMatchUtils } from "@app/utils/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
+import { Button } from "@app/components/atoms";
 
 interface MismatchEntry {
   file: TFile;
@@ -31,7 +32,9 @@ export class AuditExerciseNamesModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Title
-    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.TITLES.AUDIT_EXERCISE_NAMES });
+    contentEl.createEl("h2", {
+      text: CONSTANTS.WORKOUT.MODAL.TITLES.AUDIT_EXERCISE_NAMES,
+    });
 
     // Main container
     this.contentContainer = contentEl.createEl("div", {
@@ -64,13 +67,15 @@ export class AuditExerciseNamesModal extends ModalBase {
     try {
       // Get all CSV exercise names
       const logData = await this.plugin.getWorkoutLogData();
-      const csvExercises = new Set(logData.map((log) => log.exercise.toLowerCase().trim()));
+      const csvExercises = new Set(
+        logData.map((log) => log.exercise.toLowerCase().trim()),
+      );
 
       // Get all exercise files from the exercise folder
       const exerciseFolder = this.plugin.settings.exerciseFolderPath;
       const files = this.app.vault.getMarkdownFiles();
       const exerciseFiles = files.filter((file) =>
-        file.path.startsWith(exerciseFolder)
+        file.path.startsWith(exerciseFolder),
       );
 
       // Check each file for mismatches
@@ -88,7 +93,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         let bestScore = 0;
 
         for (const csvExercise of csvExercises) {
-          const score = getMatchScore(fileNameLower, csvExercise);
+          const score = ExerciseMatchUtils.getMatchScore(fileNameLower, csvExercise);
           if (score > bestScore) {
             bestScore = score;
             bestMatch = csvExercise;
@@ -147,9 +152,15 @@ export class AuditExerciseNamesModal extends ModalBase {
     // Table header
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.FILE_NAME });
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.CSV_EXERCISE });
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILARITY });
+    headerRow.createEl("th", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.FILE_NAME,
+    });
+    headerRow.createEl("th", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.CSV_EXERCISE,
+    });
+    headerRow.createEl("th", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILARITY,
+    });
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.STATUS });
     headerRow.createEl("th", { text: "Actions" });
 
@@ -166,7 +177,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       });
       fileLink.addEventListener("click", (e) => {
         e.preventDefault();
-        this.app.workspace.openLinkText(mismatch.file.path, "", false);
+        void this.app.workspace.openLinkText(mismatch.file.path, "", false);
       });
 
       // Closest match
@@ -198,23 +209,29 @@ export class AuditExerciseNamesModal extends ModalBase {
 
       // Actions cell with Rename in CSV and Rename File buttons
       const actionsCell = row.createEl("td");
-      actionsCell.style.display = "flex";
-      actionsCell.style.gap = "8px";
+      actionsCell.addClasses([
+        "workout-flex",
+        "workout-items-center",
+        "workout-gap-2",
+      ]);
 
       // Only show rename buttons if there's a valid match to rename to
       if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
-        const renameInCSVButton = actionsCell.createEl("button", {
+        const renameInCSVButton = Button.create(actionsCell, {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
-          cls: "mod-cta",
+          className: "mod-cta",
+          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
         });
-        renameInCSVButton.addEventListener("click", async () => {
+        Button.onClick(renameInCSVButton, async () => {
           await this.handleRenameInCSV(mismatch);
         });
 
-        const renameFileButton = actionsCell.createEl("button", {
+        const renameFileButton = Button.create(actionsCell, {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
+          className: "workout-btn workout-btn-secondary",
+          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
         });
-        renameFileButton.addEventListener("click", async () => {
+        Button.onClick(renameFileButton, async () => {
           await this.handleRenameFile(mismatch);
         });
       }
@@ -243,14 +260,19 @@ export class AuditExerciseNamesModal extends ModalBase {
       const count = await this.plugin.renameExercise(oldName, newName);
 
       // Show success message with count
-      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_SUCCESS} (${count} ${count === 1 ? 'entry' : 'entries'} updated)`);
+      new Notice(
+        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_SUCCESS} (${count} ${count === 1 ? "entry" : "entries"} updated)`,
+      );
 
       // Refresh modal to show updated state
       await this.scanExerciseFiles();
       this.renderResults();
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(
+        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`,
+      );
     }
   }
 
@@ -274,10 +296,7 @@ export class AuditExerciseNamesModal extends ModalBase {
     try {
       // Calculate new file path
       const oldPath = mismatch.file.path;
-      const newPath = oldPath.replace(
-        `${oldFileName}.md`,
-        `${newFileName}.md`
-      );
+      const newPath = oldPath.replace(`${oldFileName}.md`, `${newFileName}.md`);
 
       // Rename file using Obsidian vault API
       await this.app.vault.rename(mismatch.file, newPath);
@@ -289,8 +308,11 @@ export class AuditExerciseNamesModal extends ModalBase {
       await this.scanExerciseFiles();
       this.renderResults();
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      new Notice(`${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR}${errorMessage}`);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(
+        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR}${errorMessage}`,
+      );
     }
   }
 }

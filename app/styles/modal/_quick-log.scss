@@ -1,0 +1,107 @@
+/* Quick log modal */
+.workout-quick-log-modal {
+  .workout-charts-form {
+    gap: var(--workout-space-2xl);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: var(--workout-space-xl);
+  }
+}
+
+.workout-quick-log-field {
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-quick-log-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  margin-bottom: var(--workout-space-xs);
+}
+
+.workout-quick-log-recent-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-quick-log-input {
+  min-height: 44px;
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  font-size: var(--workout-font-lg);
+  border-radius: var(--workout-radius-md);
+  border: 2px solid var(--background-modifier-border);
+  background: var(--background-primary);
+
+  &:focus {
+    border-color: var(--interactive-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--interactive-accent-rgb), 0.2);
+  }
+}
+
+.workout-quick-log-weight-input {
+  flex: 1;
+  text-align: center;
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-quick-log-recent-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-lg);
+}
+
+.workout-quick-log-chips-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--workout-space-sm);
+  overflow-x: auto;
+  padding: var(--workout-space-xs) 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.workout-quick-log-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border-radius: 9999px;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 36px;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--interactive-accent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+  }
+}
+
+.workout-quick-log-weight-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
+/* button styles moved to modal/_buttons.scss */

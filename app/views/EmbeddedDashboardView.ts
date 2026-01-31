@@ -1,5 +1,5 @@
-import { CONSTANTS } from "@app/constants/Constants";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { CONSTANTS } from "@app/constants";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
 import {
@@ -10,6 +10,9 @@ import {
   QuickActions,
   MuscleTagsWidget,
   WidgetsFileError,
+  ProtocolDistribution,
+  ProtocolEffectiveness,
+  DurationComparison,
 } from "@app/features/dashboard/widgets";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
@@ -18,8 +21,16 @@ import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**
  * Dashboard View for displaying comprehensive workout analytics
  * Phase 1: Core dashboard with summary widgets, volume analytics, and quick stats
+ * Supports protocol filtering via click interaction on pie chart
  */
 export class EmbeddedDashboardView extends BaseView {
+  /** Container element for re-rendering */
+  private currentContainer: HTMLElement | null = null;
+  /** Original unfiltered data for re-rendering */
+  private currentData: WorkoutLogData[] = [];
+  /** Current dashboard parameters */
+  private currentParams: EmbeddedDashboardParams = {};
+
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
   }
@@ -27,21 +38,28 @@ export class EmbeddedDashboardView extends BaseView {
   /**
    * Cleanup method to be called during plugin unload.
    * Clears any internal state and ensures proper resource cleanup to prevent memory leaks.
-   * Currently, the dashboard does not maintain long-lived resources (event listeners or timers),
-   * but this method provides a consistent interface for future extensions.
    */
   public cleanup(): void {
     try {
-      this.logDebug("EmbeddedDashboardView", "Cleaning up dashboard view resources");
+      this.logDebug(
+        "EmbeddedDashboardView",
+        "Cleaning up dashboard view resources",
+      );
 
-      // Currently no internal state to clear, but method is here for:
-      // 1. Consistency with other view cleanup patterns
-      // 2. Future-proofing if dashboard adds stateful components
-      // 3. Plugin lifecycle compliance
+      // Clear stored state to prevent memory leaks
+      this.currentContainer = null;
+      this.currentData = [];
+      this.currentParams = {};
 
-      this.logDebug("EmbeddedDashboardView", "Dashboard view cleanup completed");
-    } catch (error) {
-      console.error("Error during EmbeddedDashboardView cleanup:", error);
+      // Clean up protocol distribution chart
+      ProtocolDistribution.cleanup();
+
+      this.logDebug(
+        "EmbeddedDashboardView",
+        "Dashboard view cleanup completed",
+      );
+    } catch {
+      return;
     }
   }
 
@@ -51,10 +69,15 @@ export class EmbeddedDashboardView extends BaseView {
   async createDashboard(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    params: EmbeddedDashboardParams,
   ): Promise<void> {
     const startTime = performance.now();
     this.logDebug("EmbeddedDashboardView", "Creating dashboard", { params });
+
+    // Store state for potential re-rendering (e.g., protocol filter changes)
+    this.currentContainer = container;
+    this.currentData = logData;
+    this.currentParams = params;
 
     try {
       // Clear container
@@ -69,10 +92,7 @@ export class EmbeddedDashboardView extends BaseView {
       }
 
       // Filter data based on parameters
-      const filterResult = this.filterData(
-        logData,
-        params,
-      );
+      const filterResult = this.filterData(logData, params);
       const filteredData = filterResult.filteredData;
 
       // Handle no filtered data
@@ -82,7 +102,7 @@ export class EmbeddedDashboardView extends BaseView {
           container,
           params,
           params.title || CONSTANTS.WORKOUT.UI.LABELS.DASHBOARD,
-          VIEW_TYPES.DASHBOARD
+          VIEW_TYPES.DASHBOARD,
         );
         return;
       }
@@ -97,11 +117,49 @@ export class EmbeddedDashboardView extends BaseView {
       const endTime = performance.now();
       this.logDebug(
         "EmbeddedDashboardView",
-        `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`
+        `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`,
       );
     } catch (error) {
       this.handleError(container, error as Error);
     }
+  }
+
+  /**
+   * Handles protocol filter change from pie chart click
+   * Re-renders the dashboard with the new filter applied
+   * @param protocol - Protocol to filter by, or null to clear filter
+   */
+  private handleProtocolFilterChange = (protocol: string | null): void => {
+    this.logDebug("EmbeddedDashboardView", "Protocol filter changed", {
+      protocol,
+    });
+
+    // Update params with new filter
+    const newParams: EmbeddedDashboardParams = {
+      ...this.currentParams,
+      activeProtocolFilter: protocol,
+    };
+
+    // Re-render dashboard with updated filter
+    if (this.currentContainer && this.currentData.length > 0) {
+      void this.createDashboard(this.currentContainer, this.currentData, newParams);
+    }
+  };
+
+  /**
+   * Filters data by protocol
+   * @param data - Workout data to filter
+   * @param protocol - Protocol to filter by
+   * @returns Filtered data
+   */
+  private filterByProtocol(
+    data: WorkoutLogData[],
+    protocol: string,
+  ): WorkoutLogData[] {
+    return data.filter((entry) => {
+      const entryProtocol = entry.protocol || WorkoutProtocol.STANDARD;
+      return entryProtocol.toLowerCase() === protocol.toLowerCase();
+    });
   }
 
   /**
@@ -110,7 +168,7 @@ export class EmbeddedDashboardView extends BaseView {
   private async renderDashboard(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams
+    params: EmbeddedDashboardParams,
   ): Promise<void> {
     // Create main dashboard container
     const dashboardEl = container.createEl("div", {
@@ -130,44 +188,50 @@ export class EmbeddedDashboardView extends BaseView {
       cls: "workout-dashboard-grid",
     });
 
-    // Summary Widget Section (Full Width)
-    SummaryWidget.render(gridEl, data, params);
+    // Apply protocol filter if set (for widgets that support it)
+    const activeProtocolFilter = params.activeProtocolFilter;
+    const displayData = activeProtocolFilter
+      ? this.filterByProtocol(data, activeProtocolFilter)
+      : data;
 
-    // Quick Stats Cards Section (Full Width)
-    QuickStatsCards.render(gridEl, data, params);
+    // Summary Widget Section (Full Width) - uses filtered data
+    SummaryWidget.render(gridEl, displayData, params);
 
-    // Create Main Columns Container
-    const mainColumnsEl = gridEl.createEl("div", {
-      cls: "workout-dashboard-columns",
-    });
+    // Quick Stats Cards Section (Full Width) - uses filtered data
+    QuickStatsCards.render(gridEl, displayData, params);
 
-    // Left Column (Heatmap)
-    const leftCol = mainColumnsEl.createEl("div", {
-      cls: "workout-dashboard-column-left",
-    });
+    // Muscle Heat Map Section (Left Column previously) - uses filtered data
+    await MuscleHeatMap.render(gridEl, displayData, params, this.plugin);
 
-    // Right Column (Analytics & Others)
-    const rightCol = mainColumnsEl.createEl("div", {
-      cls: "workout-dashboard-column-right",
-    });
+    // Volume Analytics Section (Right Column previously) - uses filtered data
+    VolumeAnalytics.render(gridEl, displayData, params);
 
-    // Muscle Heat Map Section (Left Column)
-    await MuscleHeatMap.render(leftCol, data, params, this.plugin);
+    // Recent Workouts Section (Right Column previously) - uses filtered data
+    RecentWorkouts.render(gridEl, displayData, params);
+    
+    // Protocol Distribution Section (Right Column previously)
+    // Uses original data for the pie chart, but passes the active filter for highlighting
+    ProtocolDistribution.render(
+      gridEl,
+      data,
+      params,
+      this.plugin,
+      this.handleProtocolFilterChange,
+    );
 
-    // Volume Analytics Section (Right Column)
-    VolumeAnalytics.render(rightCol, data, params);
+    // Protocol Effectiveness Section (Right Column previously) - uses all data for statistical analysis
+    ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
 
-    // Recent Workouts Section (Right Column)
-    RecentWorkouts.render(rightCol, data, params);
+    // Duration Comparison Section (Right Column previously) - uses all data for duration analysis
+    DurationComparison.render(gridEl, data, params);
 
-    // Quick Actions Panel (Right Column)
-    QuickActions.render(rightCol, params, this.plugin);
+    // Quick Actions Panel (Right Column previously)
+    QuickActions.render(gridEl, params, this.plugin);
 
-    // Exercise File Errors Widget (Right Column)
-    await WidgetsFileError.render(rightCol, this.plugin);
+    // Exercise File Errors Widget (Right Column previously)
+    await WidgetsFileError.render(gridEl, this.plugin);
 
-    // Muscle Tags Widget (Right Column)
-    MuscleTagsWidget.render(rightCol, params);
+    // Muscle Tags Widget (Right Column previously)
+    MuscleTagsWidget.render(gridEl, params);
   }
 }
-

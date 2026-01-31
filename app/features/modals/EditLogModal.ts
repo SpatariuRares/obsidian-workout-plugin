@@ -1,5 +1,5 @@
 // EditLogModal - extends BaseLogModal for editing existing workout logs
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import {
@@ -53,6 +53,8 @@ export class EditLogModal extends BaseLogModal {
       notes: this.originalLog.notes || "",
       workout: this.originalLog.workout || "",
       date: this.originalLog.date,
+      protocol: this.originalLog.protocol,
+      customFields: this.originalLog.customFields,
     };
   }
 
@@ -87,11 +89,13 @@ export class EditLogModal extends BaseLogModal {
 
     const updatedEntry = this.createLogEntryObject(
       data.exercise,
-      data.reps,
-      data.weight,
+      data.reps ?? 0,
+      data.weight ?? 0,
       data.workout,
       data.notes,
       finalDate,
+      data.protocol,
+      data.customFields,
     );
 
     await this.plugin.updateWorkoutLogEntry(this.originalLog, updatedEntry);

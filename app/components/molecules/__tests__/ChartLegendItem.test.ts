@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { ChartLegendItem } from "@app/components/molecules/ChartLegendItem";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

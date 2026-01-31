@@ -1,14 +1,16 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
+import { EmbeddedDurationView } from "@app/views/EmbeddedDurationView";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   EmbeddedTimerParams,
   EmbeddedDashboardParams,
+  EmbeddedDurationParams,
 } from "@app/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/DataService";
@@ -38,6 +40,8 @@ class TimerRenderChild extends MarkdownRenderChild {
 }
 
 export class CodeBlockProcessorService {
+  private embeddedDurationView: EmbeddedDurationView;
+
   constructor(
     private plugin: WorkoutChartsPlugin,
     private dataService: DataService,
@@ -45,7 +49,10 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>,
-  ) {}
+  ) {
+    // Initialize duration view internally (no external dependencies needed)
+    this.embeddedDurationView = new EmbeddedDurationView(plugin);
+  }
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
@@ -63,6 +70,10 @@ export class CodeBlockProcessorService {
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
       (source, el, ctx) => this.handleWorkoutDashboard(source, el, ctx),
+    );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+      (source, el, ctx) => this.handleWorkoutDuration(source, el, ctx),
     );
   }
 
@@ -243,6 +254,33 @@ export class CodeBlockProcessorService {
     await this.embeddedDashboardView.createDashboard(container, data, params);
   }
 
+  // Handle workout duration code blocks
+  private async handleWorkoutDuration(
+    source: string,
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ) {
+    try {
+      const params = this.parseCodeBlockParams(source) as EmbeddedDurationParams;
+
+      // Get current file path from context
+      const currentFilePath = ctx.sourcePath;
+
+      await this.embeddedDurationView.createDurationEstimator(
+        el,
+        params,
+        currentFilePath,
+      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      el.createDiv({
+        cls: "workout-duration-error",
+        text: `Error loading duration estimator: ${errorMessage}`,
+      });
+    }
+  }
+
   // Parse code block parameters
   private parseCodeBlockParams(source: string): Record<string, unknown> {
     const params: Record<string, unknown> = {};
@@ -256,8 +294,15 @@ export class CodeBlockProcessorService {
           const key = trimmedLine.substring(0, colonIndex).trim();
           const value = trimmedLine.substring(colonIndex + 1).trim();
 
-          // Try to parse as number, boolean, or keep as string
-          if (value === "true" || value === "false") {
+          // Check for array syntax: [value1, value2, ...]
+          if (value.startsWith("[") && value.endsWith("]")) {
+            const arrayStr = value.slice(1, -1);
+            params[key] = arrayStr
+              .split(",")
+              .map((v) => v.trim())
+              .filter((v) => v.length > 0);
+          } else if (value === "true" || value === "false") {
+            // Try to parse as boolean
             params[key] = value === "true";
           } else if (value && !isNaN(Number(value))) {
             // Check for empty string before number conversion

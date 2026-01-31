@@ -4,7 +4,7 @@
  * Combines: Icon + Input + Container atoms
  */
 
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { Icon, Input, Container } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types";
 

@@ -1,5 +1,5 @@
 // Refactored InsertChartModal extending BaseInsertModal
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -13,6 +13,11 @@ import {
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
+import {
+  getAvailableChartDataTypes,
+  getDefaultChartDataType,
+  isValidChartDataType,
+} from "@app/features/charts/config/ChartConstants";
 
 export class InsertChartModal extends BaseInsertModal {
   private chartTypeSelect?: HTMLSelectElement;
@@ -47,21 +52,21 @@ export class InsertChartModal extends BaseInsertModal {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CHART_TYPE
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CHART_TYPE,
     );
 
     // Chart Type selector (exercise vs workout)
     this.chartTypeSelect = this.createSelectField(
       chartTypeSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.CHART_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE]
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE],
     );
 
     // Data Type selector (volume, weight, reps)
     this.dataTypeSelect = this.createSelectField(
       chartTypeSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.DATA_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE]
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE],
     );
 
     // Target Section using reusable component with autocomplete
@@ -75,10 +80,20 @@ export class InsertChartModal extends BaseInsertModal {
         container,
         this.chartTypeSelect,
         this.currentFileName,
-        this.plugin
+        this.plugin,
       );
 
     this.targetElements = targetElements;
+
+    // Listen for exercise changes to update data type options
+    this.targetElements.exerciseInput.addEventListener("change", () => {
+      void this.updateDataTypeOptions(this.targetElements!.exerciseInput.value);
+    });
+
+    // Initial update if exercise is already populated
+    if (this.targetElements.exerciseInput.value) {
+      void this.updateDataTypeOptions(this.targetElements.exerciseInput.value);
+    }
 
     // Ensure visibility is updated based on initial selection
     targetHandlers.updateVisibility();
@@ -86,7 +101,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
     );
 
     // Date range selector
@@ -97,7 +112,7 @@ export class InsertChartModal extends BaseInsertModal {
       {
         min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
         max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
-      }
+      },
     );
 
     // Limit selector
@@ -108,13 +123,13 @@ export class InsertChartModal extends BaseInsertModal {
       {
         min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
         max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
-      }
+      },
     );
 
     // Display Options Section
     const displaySection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
     );
 
     // Show trend line toggle
@@ -122,7 +137,7 @@ export class InsertChartModal extends BaseInsertModal {
       displaySection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_LINE,
       true,
-      "trendLine"
+      "trendLine",
     );
 
     // Show trend header toggle
@@ -130,7 +145,7 @@ export class InsertChartModal extends BaseInsertModal {
       displaySection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_HEADER,
       true,
-      "trendHeader"
+      "trendHeader",
     );
 
     // Show statistics toggle
@@ -138,7 +153,7 @@ export class InsertChartModal extends BaseInsertModal {
       displaySection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_STATISTICS,
       true,
-      "stats"
+      "stats",
     );
 
     // Advanced Options Section using reusable component
@@ -147,7 +162,8 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     // Set exact match default based on plugin settings
-    this.advancedElements.exactMatchToggle.checked = this.plugin.settings.defaultExactMatch;
+    this.advancedElements.exactMatchToggle.checked =
+      this.plugin.settings.defaultExactMatch;
   }
 
   protected generateCode(): string {
@@ -170,7 +186,7 @@ export class InsertChartModal extends BaseInsertModal {
     const target = TargetSectionWithAutocomplete.getTargetValue(
       this.targetElements,
       this.chartTypeSelect,
-      this.currentFileName
+      this.currentFileName,
     );
     const dateRange = parseInt(this.dateRangeInput.value) || 30;
     const limit = parseInt(this.limitInput.value) || 50;
@@ -178,7 +194,7 @@ export class InsertChartModal extends BaseInsertModal {
     const showTrend = this.trendHeaderToggle.checked;
     const showStats = this.statsToggle.checked;
     const advancedValues = AdvancedOptionsSection.getValues(
-      this.advancedElements
+      this.advancedElements,
     );
 
     return CodeGenerator.generateChartCode({
@@ -194,5 +210,82 @@ export class InsertChartModal extends BaseInsertModal {
       exactMatch: advancedValues.exactMatch,
       title: advancedValues.title || "",
     });
+  }
+
+  /**
+   * Updates the data type options based on the selected exercise
+   */
+  private async updateDataTypeOptions(exerciseName: string): Promise<void> {
+    if (!this.dataTypeSelect || !this.plugin) return;
+
+    // If no exercise selected, reset to default (or maybe standard types?)
+    if (!exerciseName) {
+      // Keep existing options or reset to standard?
+      // For now, let's just return to avoid clearing useful defaults if user is typing
+      // But if they clear the input, we might want to reset.
+      // Let's reload standard options if empty
+      this.dataTypeSelect.innerHTML = "";
+      CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt.value;
+        option.text = opt.text;
+        this.dataTypeSelect?.appendChild(option);
+      });
+      return;
+    }
+
+    const service = this.plugin.getExerciseDefinitionService();
+    const definition = await service.getExerciseDefinition(exerciseName);
+
+    // Default to strength if no definition found
+    const typeId = definition?.typeId || "strength";
+    const customParams = definition?.customParameters
+      ?.filter((p) => p.type === "number")
+      .map((p) => p.key);
+
+    const availableTypes = getAvailableChartDataTypes(typeId, customParams);
+
+    // Clear existing options
+    this.dataTypeSelect.innerHTML = "";
+
+    // Add new options
+    availableTypes.forEach((type) => {
+      const option = document.createElement("option");
+      option.value = type;
+
+      // Determine display text
+      let displayText = type.charAt(0).toUpperCase() + type.slice(1);
+
+      // Add units for known types or custom params
+      if (type === "volume" || type === "weight") {
+        displayText = `${displayText} (kg)`;
+      } else if (type === "duration") {
+        displayText = `${displayText} (sec)`;
+      } else if (type === "distance") {
+        displayText = `${displayText} (m)`;
+      } else if (type === "pace") {
+        displayText = `${displayText}`; // Pace unit depends on distance/time, maybe keep simple
+      } else if (type === "heartRate") {
+        displayText = "Heart Rate (bpm)";
+      } else {
+        // Try to find label/unit in definition parameters for custom types
+        const param = definition?.customParameters?.find((p) => p.key === type);
+        if (param) {
+          displayText = param.label;
+          if (param.unit) {
+            displayText += ` (${param.unit})`;
+          }
+        }
+      }
+
+      option.text = displayText;
+      this.dataTypeSelect?.appendChild(option);
+    });
+
+    // Update selected value to default if current is invalid
+    const currentVal = this.dataTypeSelect.value;
+    if (!isValidChartDataType(typeId, currentVal, customParams)) {
+      this.dataTypeSelect.value = getDefaultChartDataType(typeId, customParams);
+    }
   }
 }

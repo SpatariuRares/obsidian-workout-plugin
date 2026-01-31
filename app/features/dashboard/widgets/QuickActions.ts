@@ -1,6 +1,8 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
+import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { Button } from "@app/components/atoms";
 
 export class QuickActions {
   static render(
@@ -17,27 +19,30 @@ export class QuickActions {
       cls: "workout-widget-title",
     });
 
-    const buttonsEl = actionsEl.createEl("div", {
-      cls: "workout-action-buttons",
-    });
+    const buttonsEl = createButtonsSection(actionsEl);
+    buttonsEl.addClass("workout-action-buttons");
 
     // Add workout log button
-    const addLogBtn = buttonsEl.createEl("button", {
+    const addLogBtn = Button.create(buttonsEl, {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
-      cls: "workout-action-button primary",
+      className: "workout-action-button workout-btn-primary",
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
     });
 
-    addLogBtn.addEventListener("click", () => {
+    Button.onClick(addLogBtn, () => {
       plugin.createLogModalHandler.openModal();
     });
 
     // View all exercises button
-    const viewExercisesBtn = buttonsEl.createEl("button", {
+    const viewExercisesBtn = Button.create(buttonsEl, {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
-      cls: "workout-action-button secondary",
+      className: "workout-action-button workout-btn-secondary",
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
     });
 
-    viewExercisesBtn.addEventListener("click", () => {
+    Button.onClick(viewExercisesBtn, () => {
       // Navigate to exercises folder
       if (plugin.app.workspace.getActiveFile()) {
         plugin.app.workspace
@@ -49,4 +54,3 @@ export class QuickActions {
     });
   }
 }
-

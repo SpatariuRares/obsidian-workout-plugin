@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants/Constants";
+import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";

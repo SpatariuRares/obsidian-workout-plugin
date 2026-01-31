@@ -1,0 +1,64 @@
+/* Form elements */
+.workout-charts-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xl);
+}
+
+.workout-charts-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+  position: relative;
+
+  label {
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+    border-radius: var(--input-radius, var(--workout-radius-md));
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
+    transition: var(--workout-transition);
+    height: var(--input-height, auto);
+  }
+
+  input[type="checkbox"] {
+    padding: 0;
+    margin: 0;
+    width: var(--checkbox-size, 1em);
+    height: var(--checkbox-size, 1em);
+    border-radius: var(--checkbox-radius, var(--workout-radius-sm));
+  }
+
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+  }
+
+  input::placeholder {
+    color: var(--text-muted);
+  }
+}
+
+.workout-parameters-container {
+  display: flex;
+  gap: var(--workout-space-md);
+}
+
+.workout-charts-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-bottom: var(--workout-space-sm);
+}

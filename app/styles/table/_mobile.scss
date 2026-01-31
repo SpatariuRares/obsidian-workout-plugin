@@ -1,0 +1,59 @@
+/* Mobile table */
+.workout-chart-mobile-table {
+  display: none;
+  margin-top: var(--workout-space-lg);
+  border-radius: var(--workout-radius-lg);
+  background: var(--background-primary);
+  box-shadow: var(--workout-shadow-md);
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--workout-font-base);
+  }
+
+  th {
+    background: var(--background-secondary);
+    padding: var(--workout-space-md) var(--workout-space-sm);
+    text-align: left;
+    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    font-size: var(--workout-font-sm);
+  }
+
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-sm);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    color: var(--text-normal);
+    font-size: var(--workout-font-sm);
+  }
+
+  tr {
+    &:nth-child(even) {
+      background: var(--background-secondary);
+    }
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
+  }
+}
+
+.workout-mobile-table-title {
+  margin: 0;
+  padding: var(--workout-space-lg);
+  font-size: var(--workout-font-lg);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+
+.workout-date-group-header {
+  background: var(--background-secondary-alt);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-accent);
+  padding: var(--workout-space-sm) var(--workout-space-sm);
+  border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+}

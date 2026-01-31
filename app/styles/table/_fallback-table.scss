@@ -1,0 +1,28 @@
+/* Fallback table styles */
+.workout-charts-table-fallback {
+  overflow: auto;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  padding: var(--workout-space-lg);
+  background: var(--background-primary);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--workout-font-base);
+  }
+
+  th {
+    padding: var(--workout-space-md) var(--workout-space-lg);
+    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+    text-align: left;
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+  }
+
+  td {
+    padding: var(--workout-space-md) var(--workout-space-lg);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    color: var(--text-normal);
+  }
+}

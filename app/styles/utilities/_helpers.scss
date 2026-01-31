@@ -4,39 +4,39 @@
 
 /* Trend color classes */
 .workout-trend-color {
-  &-green {
+  .workout-trend-color-green {
     color: var(--color-green) !important;
   }
-  &-red {
+  .workout-trend-color-red {
     color: var(--color-red) !important;
   }
-  &-orange {
+  .workout-trend-color-orange {
     color: var(--color-orange) !important;
   }
-  &-accent {
+  .workout-trend-color-accent {
     color: var(--text-accent) !important;
   }
 }
 
 /* Display Control Classes */
 .workout-display {
-  &-none {
+  .workout-display-none {
     display: none !important;
   }
-  &-block {
+  .workout-display-block {
     display: block !important;
   }
-  &-inline-block {
+  .workout-display-inline-block {
     display: inline-block !important;
   }
 }
 
 /* Opacity Control Classes */
 .workout-opacity {
-  &-50 {
+  .workout-display-50 {
     opacity: 0.5;
   }
-  &-100 {
+  .workout-display-100 {
     opacity: 1;
   }
 }

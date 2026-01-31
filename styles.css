@@ -622,9 +622,7 @@
   color: var(--text-warning);
 }
 
-/* ============================================================================
-   TABLE STYLES
-   ============================================================================ */
+/* Table styles entrypoint (split into app/styles/table/*) */
 /* Main workout charts table */
 .workout-charts-table {
   width: 100%;
@@ -684,7 +682,7 @@
   color: var(--text-normal);
 }
 
-/* Workout Table (General) */
+/* Workout table (general) */
 .workout-table-container {
   width: 100%;
   overflow-x: auto;
@@ -789,7 +787,7 @@
   border-radius: var(--workout-radius-sm);
 }
 
-/* Log Table */
+/* Log table */
 .workout-log-table {
   width: 100%;
   border-collapse: collapse;
@@ -840,7 +838,7 @@
   background: transparent;
 }
 
-/* Target Header */
+/* Target header */
 .workout-target-header {
   padding: var(--workout-space-md) var(--workout-space-lg);
   margin-top: var(--workout-space-md);
@@ -859,7 +857,7 @@
   margin-bottom: var(--workout-space-sm);
 }
 
-/* Progress Bar */
+/* Progress bar */
 .workout-progress-container {
   margin-top: var(--workout-space-sm);
 }
@@ -880,7 +878,6 @@
   border-radius: var(--workout-radius-sm);
 }
 
-/* Progress Color Coding */
 .workout-progress-low {
   background: var(--text-error);
 }
@@ -897,7 +894,7 @@
   background: var(--interactive-accent);
 }
 
-/* Achievement Badge */
+/* Achievement badge */
 .workout-achievement-badge {
   display: flex;
   align-items: center;
@@ -935,7 +932,7 @@
   opacity: 1;
 }
 
-/* Weight Suggestion */
+/* Weight suggestion */
 .workout-weight-suggestion {
   display: flex;
   align-items: center;
@@ -980,7 +977,7 @@
     transform: translateY(0);
   }
 }
-/* Mobile Table */
+/* Mobile table */
 .workout-chart-mobile-table {
   display: none;
   margin-top: var(--workout-space-lg);
@@ -1034,13 +1031,13 @@
   border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
 }
 
-/* Protocol Column */
+/* Protocol column */
 .workout-table-protocol-cell {
   text-align: center;
   padding: var(--workout-space-xs) var(--workout-space-sm);
 }
 
-/* Protocol Badge Base */
+/* Protocol badge base */
 .workout-protocol-badge {
   display: inline-block;
   padding: 2px 8px;
@@ -1052,7 +1049,7 @@
   white-space: nowrap;
 }
 
-/* Protocol Badge Colors - using Obsidian CSS variables for theme compatibility */
+/* Protocol badge colors - using Obsidian CSS variables for theme compatibility */
 .workout-protocol-badge-drop {
   background: rgba(var(--color-red-rgb, 255, 82, 82), 0.15);
   color: var(--text-error);
@@ -1083,7 +1080,7 @@
   border: 1px solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
 }
 
-/* Custom Protocol Badge - uses inline styles for color, inherits base badge structure */
+/* Custom protocol badge - uses inline styles for color, inherits base badge structure */
 .workout-protocol-badge-custom {
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -1333,22 +1330,11 @@
   margin: 0;
 }
 
+/* Modal styles entrypoint (split into app/styles/modal/*) */
 /* ============================================================================
    MODAL STYLES
-   Organizzato per sezioni logiche:
-   1. Base Modal Structure
-   2. Form Elements
-   3. Buttons
-   4. Info Boxes & Sections
-   5. Field Visibility States
-   6. Target Section Visibility
-   7. Quick Adjust Components
-   8. Audit Modal
-   9. Quick Log Modal
    ============================================================================ */
-/* ============================================================================
-   1. BASE MODAL STRUCTURE
-   ============================================================================ */
+/* Base modal structure */
 .workout-charts .workout-charts-modal h2 {
   margin: 0 0 var(--workout-space-xl) 0;
   color: var(--text-normal);
@@ -1380,9 +1366,7 @@
   padding-bottom: var(--workout-space-sm);
 }
 
-/* ============================================================================
-   2. FORM ELEMENTS
-   ============================================================================ */
+/* Form elements */
 .workout-charts-form {
   display: flex;
   flex-direction: column;
@@ -1442,9 +1426,7 @@
   padding-bottom: var(--workout-space-sm);
 }
 
-/* ============================================================================
-   3. BUTTONS
-   ============================================================================ */
+/* Buttons */
 .workout-charts-buttons {
   display: flex;
   gap: var(--workout-space-md);
@@ -1479,9 +1461,7 @@
   transform: translateY(-1px);
 }
 
-/* ============================================================================
-   4. INFO BOXES & SECTIONS
-   ============================================================================ */
+/* Info boxes & sections */
 .workout-charts-mode-info {
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -1552,9 +1532,7 @@
   background: var(--interactive-warning-hover);
 }
 
-/* ============================================================================
-   5. FIELD VISIBILITY STATES
-   ============================================================================ */
+/* Field visibility states */
 .workout-modal-field-visible {
   display: block !important;
   visibility: visible !important;
@@ -1571,9 +1549,7 @@
   overflow: hidden !important;
 }
 
-/* ============================================================================
-   6. TARGET SECTION VISIBILITY
-   ============================================================================ */
+/* Target section visibility */
 .workout-target-exercise {
   display: block;
 }
@@ -1584,10 +1560,7 @@
   display: none;
 }
 
-/* ============================================================================
-   7. QUICK ADJUST COMPONENTS
-   Reusable +/- buttons for weight and reps fields
-   ============================================================================ */
+/* Quick adjust components */
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
@@ -1644,10 +1617,7 @@
   color: var(--text-error);
 }
 
-/* ============================================================================
-   8. AUDIT MODAL
-   AuditExerciseNamesModal specific styles
-   ============================================================================ */
+/* Audit modal */
 .workout-audit-success {
   color: var(--text-success);
   font-weight: var(--workout-font-weight-semibold);
@@ -1713,11 +1683,7 @@
   font-weight: var(--workout-font-weight-medium);
 }
 
-/* ============================================================================
-   9. QUICK LOG MODAL
-   QuickLogModal specific styles - Mobile-friendly with large touch targets
-   ============================================================================ */
-/* --- Container & Layout --- */
+/* Quick log modal */
 .workout-quick-log-modal .workout-charts-form {
   gap: var(--workout-space-2xl);
 }
@@ -1737,7 +1703,6 @@
   padding-top: var(--workout-space-lg);
 }
 
-/* --- Labels --- */
 .workout-quick-log-label {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
@@ -1751,7 +1716,6 @@
   font-size: var(--workout-font-sm);
 }
 
-/* --- Input Fields --- */
 .workout-quick-log-input {
   min-height: 44px;
   padding: var(--workout-space-md) var(--workout-space-lg);
@@ -1772,7 +1736,6 @@
   font-weight: var(--workout-font-weight-semibold);
 }
 
-/* --- Confirm Button --- */
 .workout-quick-log-confirm-btn {
   min-width: 200px;
   min-height: 48px;
@@ -1790,7 +1753,6 @@
   transform: translateY(-2px);
 }
 
-/* --- Recent Exercises Chips --- */
 .workout-quick-log-recent-section {
   display: flex;
   flex-direction: column;
@@ -1838,7 +1800,6 @@
   color: var(--text-on-accent);
 }
 
-/* --- Weight Adjustment Buttons --- */
 .workout-quick-log-weight-wrapper {
   display: flex;
   align-items: center;
@@ -1893,10 +1854,7 @@
   border-color: var(--text-success);
 }
 
-/* ============================================================================
-   10. CONVERSION MODAL
-   ConvertExerciseDataModal specific styles
-   ============================================================================ */
+/* Conversion modal */
 .workout-convert-mapping-row {
   display: flex;
   align-items: center;

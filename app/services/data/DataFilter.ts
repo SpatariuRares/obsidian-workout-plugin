@@ -1,8 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import {
-  findExerciseMatches,
-  determineExerciseFilterStrategy,
-  filterLogDataByExercise,
+  ExerciseMatchUtils,
   MatchResult,
   ExerciseMatch,
 } from "@app/utils/ExerciseMatchUtils";
@@ -234,17 +232,17 @@ export class DataFilter {
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = findExerciseMatches(logData, exerciseName);
-
+        const matchesResult = ExerciseMatchUtils.findExerciseMatches(logData, exerciseName);
+        
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
-          determineExerciseFilterStrategy(
+          ExerciseMatchUtils.determineExerciseFilterStrategy(
             matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
             params.exactMatch || false,
             exerciseName
           );
 
-        filteredData = filterLogDataByExercise(
+        filteredData = ExerciseMatchUtils.filterLogDataByExercise(
           logData,
           bestStrategy,
           bestPathKey,

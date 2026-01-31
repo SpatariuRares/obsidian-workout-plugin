@@ -1,0 +1,56 @@
+/* Log table */
+.workout-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--workout-font-sm);
+  background: var(--background-primary);
+  border-radius: var(--workout-radius-lg);
+  overflow: hidden;
+
+  thead tr {
+    background: var(--background-secondary);
+    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+  }
+
+  th {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    white-space: nowrap;
+    text-align: left;
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    font-size: var(--workout-font-base);
+  }
+
+  tbody tr {
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    transition: var(--workout-transition);
+
+    &:nth-child(even) {
+      background: var(--background-secondary);
+    }
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
+  }
+
+  td a {
+    color: var(--text-accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: var(--workout-font-weight-medium);
+
+    &:hover {
+      color: var(--text-accent-hover);
+      text-decoration: underline;
+    }
+  }
+}
+
+.workout-same-day-log {
+  background: var(--background-modifier-border-focus);
+}
+
+.workout-new-day-log {
+  background: transparent;
+}

@@ -23,9 +23,9 @@ import {
 import { BaseView } from "@app/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import {
-  processChartData,
-  calculateTrendLine,
-  validateUserParams,
+  ChartDataUtils,
+  StatisticsUtils,
+  ValidationUtils,
 } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
@@ -106,7 +106,7 @@ export class EmbeddedChartView extends BaseView {
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
-      const { labels, datasets } = processChartData(
+      const { labels, datasets } = ChartDataUtils.processChartData(
         sortedData,
         resolvedType,
         params.dateRange || 30,
@@ -115,7 +115,7 @@ export class EmbeddedChartView extends BaseView {
       );
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
-      const { slope } = calculateTrendLine(volumeData);
+      const { slope } = StatisticsUtils.calculateTrendLine(volumeData);
       const trendIndicators = TrendCalculator.getTrendIndicators(
         slope,
         volumeData,
@@ -249,7 +249,7 @@ export class EmbeddedChartView extends BaseView {
     container: HTMLElement,
     params: EmbeddedChartParams,
   ): boolean {
-    const validationErrors = validateUserParams(params);
+    const validationErrors = ValidationUtils.validateUserParams(params);
     return this.validateAndHandleErrors(container, validationErrors);
   }
 

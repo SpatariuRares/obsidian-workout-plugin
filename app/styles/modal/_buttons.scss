@@ -1,0 +1,36 @@
+/* Buttons */
+.workout-charts-buttons {
+  display: flex;
+  gap: var(--workout-space-md);
+  justify-content: flex-end;
+}
+
+.workout-charts-btn {
+  padding: var(--workout-space-md) var(--workout-space-xl);
+  border: none;
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  font-weight: var(--workout-font-weight-semibold);
+  font-size: var(--workout-font-base);
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+.workout-charts-btn-primary {
+  background: var(--interactive-accent) !important;
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--interactive-accent-hover);
+    transform: translateY(-1px);
+  }
+}
+
+.workout-charts-btn-warning {
+  background: var(--text-warning);
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--text-warning-hover);
+    transform: translateY(-1px);
+  }
+}

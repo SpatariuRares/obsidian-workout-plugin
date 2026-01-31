@@ -1,0 +1,53 @@
+/* Protocol column */
+.workout-table-protocol-cell {
+  text-align: center;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+}
+
+/* Protocol badge base */
+.workout-protocol-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--workout-radius-sm);
+  font-size: var(--workout-font-xs);
+  font-weight: var(--workout-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Protocol badge colors - using Obsidian CSS variables for theme compatibility */
+.workout-protocol-badge-drop {
+  background: rgba(var(--color-red-rgb, 255, 82, 82), 0.15);
+  color: var(--text-error);
+  border: 1px solid rgba(var(--color-red-rgb, 255, 82, 82), 0.3);
+}
+
+.workout-protocol-badge-myo {
+  background: rgba(var(--color-purple-rgb, 163, 102, 255), 0.15);
+  color: var(--text-accent);
+  border: 1px solid rgba(var(--color-purple-rgb, 163, 102, 255), 0.3);
+}
+
+.workout-protocol-badge-rp {
+  background: rgba(var(--color-orange-rgb, 255, 153, 0), 0.15);
+  color: var(--text-warning);
+  border: 1px solid rgba(var(--color-orange-rgb, 255, 153, 0), 0.3);
+}
+
+.workout-protocol-badge-superset {
+  background: rgba(var(--color-blue-rgb, 66, 165, 245), 0.15);
+  color: var(--interactive-accent);
+  border: 1px solid rgba(var(--color-blue-rgb, 66, 165, 245), 0.3);
+}
+
+.workout-protocol-badge-21 {
+  background: rgba(var(--color-green-rgb, 76, 175, 80), 0.15);
+  color: var(--text-success);
+  border: 1px solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
+}
+
+/* Custom protocol badge - uses inline styles for color, inherits base badge structure */
+.workout-protocol-badge-custom {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}

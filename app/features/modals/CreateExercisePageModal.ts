@@ -14,7 +14,7 @@ import type {
   ParameterDefinition,
   ParameterValueType,
 } from "@app/types/ExerciseTypes";
-import { setCssProps } from "@app/utils/DomUtils";
+import { DomUtils } from "@app/utils/DomUtils";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -74,7 +74,7 @@ export class CreateExercisePageModal extends ModalBase {
     this.customParametersContainer = formContainer.createEl("div", {
       cls: "workout-charts-custom-parameters-section",
     });
-    setCssProps(this.customParametersContainer, { display: "none" });
+    DomUtils.setCssProps(this.customParametersContainer, { display: "none" });
 
     // Custom parameters header with add button
     const customParamsHeader = this.customParametersContainer.createEl("div", {
@@ -99,9 +99,9 @@ export class CreateExercisePageModal extends ModalBase {
     exerciseTypeSelect.addEventListener("change", () => {
       const isCustom = exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
       if (this.customParametersContainer) {
-        setCssProps(this.customParametersContainer, {
-          display: isCustom ? "block" : "none",
-        });
+    DomUtils.setCssProps(this.customParametersContainer, {
+      display: isCustom ? "block" : "none",
+    });
       }
     });
 

@@ -60,19 +60,19 @@
   }
 
   /* Widgets take half width on tablet (span 6) or full width (span 12) */
-  .workout-muscle-heatmap,
-  .workout-volume-analytics,
-  .workout-recent-workouts,
-  .workout-protocol-distribution,
-  .workout-protocol-effectiveness,
-  .workout-duration-comparison,
-  .workout-quick-actions,
-  .workout-file-errors,
-  .workout-dashboard-widget {
-    grid-column: span 6;
-    grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
+  .workout-dashboard {
+    .workout-muscle-heatmap,
+    .workout-volume-analytics,
+    .workout-recent-workouts,
+    .workout-protocol-distribution,
+    .workout-protocol-effectiveness,
+    .workout-duration-comparison,
+    .workout-quick-actions,
+    .workout-file-errors {
+      grid-column: span 6;
+      grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
+    }
   }
-
   /* Larger widgets on tablet can go full width if needed */
   .workout-volume-analytics {
     grid-column: span 12;
@@ -261,8 +261,6 @@
     font-size: 9px;
     letter-spacing: 0;
   }
-
- 
 
   .workout-table-actions {
     gap: var(--workout-space-xs);

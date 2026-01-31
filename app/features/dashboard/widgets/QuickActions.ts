@@ -25,7 +25,7 @@ export class QuickActions {
     // Add workout log button
     const addLogBtn = Button.create(buttonsEl, {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
-      className: "workout-action-button primary",
+      className: "workout-action-button workout-btn-primary",
       ariaLabel:
         CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
     });
@@ -37,7 +37,7 @@ export class QuickActions {
     // View all exercises button
     const viewExercisesBtn = Button.create(buttonsEl, {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
-      className: "workout-action-button secondary",
+      className: "workout-action-button workout-btn-secondary",
       ariaLabel:
         CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
     });

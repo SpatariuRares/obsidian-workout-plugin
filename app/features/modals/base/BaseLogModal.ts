@@ -4,16 +4,17 @@ import { CONSTANTS } from "@app/constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import {
   CSVWorkoutLogEntry,
-  WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
-import type { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
+import { LogDataService } from "@app/features/modals/base/services/LogDataService";
+import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
+import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
+import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
 
 /**
  * Abstract base class for workout log modals.
@@ -24,14 +25,13 @@ export abstract class BaseLogModal extends ModalBase {
   protected exerciseName?: string;
   protected currentPageLink?: string;
   protected onComplete?: () => void;
-  protected exerciseDefService: ExerciseDefinitionService;
+  protected logDataService: LogDataService;
+  protected dynamicFieldsRenderer: DynamicFieldsRenderer;
+  protected logFormRenderer: LogFormRenderer;
 
   // Track current parameters for dynamic validation
   protected currentParameters: ParameterDefinition[] = [];
   protected formElements?: LogFormElements;
-
-  // Cached workout log data for auto-fill from last entry
-  protected workoutLogData: WorkoutLogData[] = [];
 
   constructor(
     app: App,
@@ -44,7 +44,13 @@ export abstract class BaseLogModal extends ModalBase {
     this.exerciseName = exerciseName;
     this.currentPageLink = currentPageLink;
     this.onComplete = onComplete;
-    this.exerciseDefService = this.plugin.getExerciseDefinitionService();
+    this.logDataService = new LogDataService(this.plugin);
+    this.dynamicFieldsRenderer = new DynamicFieldsRenderer(this.plugin);
+    this.logFormRenderer = new LogFormRenderer(
+      this.plugin,
+      this.dynamicFieldsRenderer,
+      this.logDataService,
+    );
   }
 
   /**
@@ -70,9 +76,9 @@ export abstract class BaseLogModal extends ModalBase {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
-    // Pre-load workout log data for auto-fill from last entry
+    // Pre-load workout log data
     if (this.shouldAutoFillFromLastEntry()) {
-      await this.loadWorkoutLogData();
+      await this.logDataService.loadWorkoutLogData();
     }
 
     // Add modal title
@@ -83,24 +89,31 @@ export abstract class BaseLogModal extends ModalBase {
     // Create styled main container
     const formContainer = this.createStyledMainContainer(contentEl);
 
-    // Create form elements (async to load exercise parameters)
-    const formElements = await this.createFormElements(formContainer);
+    // Create form elements via Renderer
+    this.formElements = await this.logFormRenderer.createFormElements(
+      this,
+      formContainer,
+      this.exerciseName,
+      this.currentPageLink,
+      this.shouldShowDateField(),
+      this.getInitialWorkoutToggleState(),
+      (newParams) => {
+        this.currentParameters = newParams;
+      },
+    );
 
-    // Pre-fill form if needed (from initialValues or originalLog)
+    // Pre-fill form if needed
     if (this.shouldPreFillForm()) {
-      this.preFillForm(formElements);
+      this.preFillForm(this.formElements);
     }
-    // Otherwise, auto-fill from last entry if enabled and exercise is set
-    else if (this.shouldAutoFillFromLastEntry() && this.exerciseName) {
-      this.autoFillFromLastEntry(this.exerciseName);
-    }
+    // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
     // Create buttons
     const buttonsContainer = this.createButtonsSection(formContainer);
-    this.createButtons(buttonsContainer, formElements);
+    this.createButtons(buttonsContainer, this.formElements);
 
     // Set focus
-    this.setInitialFocus(formElements);
+    this.setInitialFocus(this.formElements);
   }
 
   onClose() {
@@ -109,517 +122,31 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Creates all form elements with dynamic parameter fields based on exercise type
+   * Helper method to create log entry object.
+   * Preserved for backward compatibility with subclasses.
    */
-  protected async createFormElements(
-    formContainer: HTMLElement,
-  ): Promise<LogFormElements> {
-    // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      this,
-      formContainer,
-      this.plugin,
-      this.exerciseName,
+  protected createLogEntryObject(
+    exercise: string,
+    reps: number,
+    weight: number,
+    workout: string,
+    notes: string,
+    date?: string,
+    protocol?: WorkoutProtocol,
+    customFields?: Record<string, string | number | boolean>,
+  ): Omit<CSVWorkoutLogEntry, "timestamp"> {
+    return LogSubmissionHandler.createLogEntry(
+      { exercise, reps, weight, workout, notes, date, protocol, customFields },
+      this.currentPageLink,
     );
-
-    // Create container for dynamic parameter fields
-    const parametersContainer = formContainer.createDiv({
-      cls: "workout-parameters-container",
-    });
-
-    // Load and render parameters for initial exercise (or default to strength)
-    const parameters = await this.loadParametersForExercise(this.exerciseName);
-    this.currentParameters = parameters;
-    const dynamicFieldInputs = this.renderDynamicFields(
-      parametersContainer,
-      parameters,
-    );
-
-    // Protocol dropdown - built-in protocols first, then custom protocols
-    const builtInProtocols = [
-      ...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL,
-    ];
-    const customProtocols = this.plugin.settings.customProtocols.map((p) => ({
-      text: p.name,
-      value: p.id,
-    }));
-    const allProtocols = [...builtInProtocols, ...customProtocols];
-
-    const protocolSelect = this.createSelectField(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.PROTOCOL,
-      allProtocols,
-    );
-    protocolSelect.value = WorkoutProtocol.STANDARD;
-
-    // Notes input
-    const notesInput = this.createTextareaField(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
-      3,
-    );
-
-    // Optional Date input
-    let dateInput: HTMLInputElement | undefined;
-    if (this.shouldShowDateField()) {
-      dateInput = this.createTextField(
-        formContainer,
-        "Date",
-        "",
-        "",
-      );
-      dateInput.type = "date";
-    }
-
-    // Workout section
-    const workoutSection = this.createSection(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT,
-    );
-
-    // Current workout toggle
-    const currentWorkoutToggle = this.createCheckboxField(
-      workoutSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
-      this.getInitialWorkoutToggleState(),
-      "currentWorkout",
-    );
-
-    // Workout input (optional)
-    const workoutInput = this.createTextField(
-      workoutSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT,
-      "",
-      this.currentPageLink || "",
-    );
-
-    // Setup workout toggle behavior
-    this.setupWorkoutToggle(currentWorkoutToggle, workoutInput);
-
-    const formElements: LogFormElements = {
-      exerciseElements,
-      notesInput,
-      workoutInput,
-      currentWorkoutToggle,
-      dateInput,
-      protocolSelect,
-      dynamicFieldInputs,
-      parametersContainer,
-    };
-
-    // Store reference for updates
-    this.formElements = formElements;
-
-    // Setup exercise change listener to update fields dynamically
-    this.setupExerciseChangeListener(
-      exerciseElements.exerciseInput,
-      parametersContainer,
-    );
-
-    return formElements;
-  }
-
-  /**
-   * Loads parameters for an exercise, defaulting to strength type if not found.
-   */
-  protected async loadParametersForExercise(
-    exerciseName?: string,
-  ): Promise<ParameterDefinition[]> {
-    if (!exerciseName) {
-      // Default to strength type for empty exercise
-      return this.exerciseDefService.getParametersForExercise("");
-    }
-
-    try {
-      return await this.exerciseDefService.getParametersForExercise(
-        exerciseName,
-      );
-    } catch {
-      // Fallback to strength type if error
-      return this.exerciseDefService.getParametersForExercise("");
-    }
-  }
-
-  /**
-   * Loads workout log data for auto-fill functionality.
-   * Called once when modal opens.
-   */
-  protected async loadWorkoutLogData(): Promise<void> {
-    try {
-      this.workoutLogData = await this.plugin.getWorkoutLogData();
-    } catch {
-      this.workoutLogData = [];
-    }
-  }
-
-  /**
-   * Finds the most recent log entry for a given exercise.
-   * @param exerciseName The exercise name to search for
-   * @returns The most recent log entry or undefined if not found
-   */
-  protected findLastEntryForExercise(
-    exerciseName: string,
-  ): WorkoutLogData | undefined {
-    if (!exerciseName || this.workoutLogData.length === 0) {
-      return undefined;
-    }
-
-    // Normalize exercise name for comparison
-    const normalizedExercise = exerciseName.toLowerCase().trim();
-
-    // Sort by timestamp descending to get most recent first
-    const sortedData = [...this.workoutLogData].sort((a, b) => {
-      const timestampA = a.timestamp || 0;
-      const timestampB = b.timestamp || 0;
-      return timestampB - timestampA;
-    });
-
-    return sortedData.find(
-      (log) => log.exercise.toLowerCase().trim() === normalizedExercise,
-    );
-  }
-
-  /**
-   * Auto-fills form fields from the last log entry for the given exercise.
-   * Fills all dynamic parameters (reps, weight, duration, distance, etc.) and protocol.
-   * Does NOT fill notes (user typically wants fresh notes each time).
-   */
-  protected autoFillFromLastEntry(exerciseName: string): void {
-    if (!this.formElements) return;
-
-    const lastEntry = this.findLastEntryForExercise(exerciseName);
-    if (!lastEntry) return;
-
-    // Auto-fill reps and weight (standard strength fields)
-    const repsInput = this.formElements.dynamicFieldInputs.get("reps");
-    if (repsInput && lastEntry.reps > 0) {
-      repsInput.value = String(lastEntry.reps);
-    }
-
-    const weightInput = this.formElements.dynamicFieldInputs.get("weight");
-    if (weightInput && lastEntry.weight >= 0) {
-      weightInput.value = String(lastEntry.weight);
-    }
-
-    // Auto-fill custom fields (duration, distance, heartRate, etc.)
-    if (lastEntry.customFields) {
-      for (const [key, value] of Object.entries(lastEntry.customFields)) {
-        const input = this.formElements.dynamicFieldInputs.get(key);
-        if (input && value !== undefined && value !== null) {
-          if (input.type === "checkbox") {
-            input.checked = Boolean(value);
-          } else {
-            input.value = String(value);
-          }
-        }
-      }
-    }
-
-    // Auto-fill protocol
-    if (lastEntry.protocol && this.formElements.protocolSelect) {
-      this.formElements.protocolSelect.value = lastEntry.protocol;
-    }
   }
 
   /**
    * Whether to enable auto-fill from the last entry.
-   * Override in subclasses to disable (e.g., EditLogModal should not auto-fill).
+   * Override in subclasses to disable.
    */
-  protected shouldAutoFillFromLastEntry(): boolean {
+  public shouldAutoFillFromLastEntry(): boolean {
     return false;
-  }
-
-  /**
-   * Renders dynamic fields based on parameter definitions.
-   * Clears existing fields and creates new inputs for each parameter.
-   */
-  protected renderDynamicFields(
-    container: HTMLElement,
-    parameters: ParameterDefinition[],
-  ): Map<string, HTMLInputElement> {
-    // Clear existing fields
-    container.empty();
-
-    const fieldInputs = new Map<string, HTMLInputElement>();
-
-    for (const param of parameters) {
-      const input = this.renderParameterFieldWithAdjust(container, param);
-      fieldInputs.set(param.key, input);
-    }
-
-    return fieldInputs;
-  }
-
-  /**
-   * Renders a parameter field with optional quick-adjust buttons for numeric types.
-   */
-  protected renderParameterFieldWithAdjust(
-    container: HTMLElement,
-    param: ParameterDefinition,
-  ): HTMLInputElement {
-    const fieldContainer = container.createDiv({
-      cls: "workout-field-with-adjust",
-    });
-
-    const label = fieldContainer.createDiv({ cls: "workout-field-label" });
-    const labelText = param.unit
-      ? `${param.label} (${param.unit})`
-      : param.label;
-    label.textContent = labelText;
-
-    // For numeric fields, add adjust buttons
-    if (param.type === "number") {
-      const inputContainer = fieldContainer.createDiv({
-        cls: "workout-input-with-adjust",
-      });
-
-      const input = inputContainer.createEl("input", {
-        type: "number",
-        cls: "workout-charts-input",
-        attr: {
-          min: param.min?.toString() || "0",
-          max: param.max?.toString() || "",
-          step: this.getStepForParameter(param),
-          placeholder: param.default?.toString() || "",
-        },
-      });
-
-      // Quick adjust buttons
-      const increment = this.getIncrementForParameter(param);
-      const adjustButtons = inputContainer.createDiv({
-        cls: "workout-adjust-buttons",
-      });
-
-      const minusBtn = adjustButtons.createEl("button", {
-        text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
-        cls: "workout-adjust-btn workout-adjust-minus",
-        attr: { type: "button", "aria-label": `Decrease ${param.label} by ${increment}` },
-      });
-
-      const plusBtn = adjustButtons.createEl("button", {
-        text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
-        cls: "workout-adjust-btn workout-adjust-plus",
-        attr: { type: "button", "aria-label": `Increase ${param.label} by ${increment}` },
-      });
-
-      minusBtn.addEventListener("click", () => {
-        const current = parseFloat(input.value) || 0;
-        const newValue = Math.max(param.min || 0, current - increment);
-        input.value = this.formatNumericValue(newValue, param);
-      });
-
-      plusBtn.addEventListener("click", () => {
-        const current = parseFloat(input.value) || 0;
-        const newValue = current + increment;
-        input.value =
-          param.max !== undefined
-            ? this.formatNumericValue(Math.min(param.max, newValue), param)
-            : this.formatNumericValue(newValue, param);
-      });
-
-      if (param.required) {
-        input.required = true;
-      }
-
-      return input;
-    }
-
-    // Boolean checkbox
-    if (param.type === "boolean") {
-      const input = fieldContainer.createEl("input", {
-        type: "checkbox",
-        cls: "workout-charts-checkbox",
-      });
-      if (param.default === true) {
-        input.checked = true;
-      }
-      return input;
-    }
-
-    // String/text input (default)
-    const input = fieldContainer.createEl("input", {
-      type: "text",
-      cls: "workout-charts-input",
-    });
-    if (param.default !== undefined) {
-      input.value = param.default.toString();
-    }
-    if (param.required) {
-      input.required = true;
-    }
-    return input;
-  }
-
-  /**
-   * Formats a numeric value based on parameter type (integer vs decimal).
-   */
-  protected formatNumericValue(
-    value: number,
-    param: ParameterDefinition,
-  ): string {
-    // Use integer format for reps, duration in seconds
-    if (param.key === "reps" || param.key === "heartRate") {
-      return Math.round(value).toString();
-    }
-    if (param.key === "duration" && param.unit === "sec") {
-      return Math.round(value).toString();
-    }
-    // Use decimal for weight, distance
-    return value.toFixed(1);
-  }
-
-  /**
-   * Determines increment value for quick-adjust buttons based on parameter key.
-   */
-  protected getIncrementForParameter(param: ParameterDefinition): number {
-    if (param.key === "reps") return 1;
-    if (param.key === "weight") return this.plugin.settings.weightIncrement;
-    if (param.key === "duration" && param.unit === "sec") return 5;
-    if (param.key === "duration" && param.unit === "min") return 1;
-    if (param.key === "distance") return 0.5;
-    if (param.key === "heartRate") return 5;
-
-    // Default based on unit
-    if (param.unit?.includes("km")) return 0.5;
-    if (param.unit?.includes("min") || param.unit?.includes("sec")) return 1;
-    return 1;
-  }
-
-  /**
-   * Determines step value for numeric input based on parameter.
-   */
-  protected getStepForParameter(param: ParameterDefinition): string {
-    if (param.key === "weight") return "0.5";
-    if (param.key === "distance") return "0.1";
-    if (
-      param.key === "reps" ||
-      param.key === "duration" ||
-      param.key === "heartRate"
-    )
-      return "1";
-    return "0.1";
-  }
-
-  /**
-   * Sets up listener to update fields when exercise changes.
-   */
-  protected setupExerciseChangeListener(
-    exerciseInput: HTMLInputElement,
-    parametersContainer: HTMLElement,
-  ): void {
-    // Listen for change event (triggered by autocomplete selection)
-    exerciseInput.addEventListener("change", () => {
-      const exerciseName = exerciseInput.value.trim();
-      void this.handleExerciseChange(exerciseName, parametersContainer);
-    });
-
-    // Also listen for blur to catch manual typing
-    let blurTimeout: ReturnType<typeof setTimeout> | null = null;
-    exerciseInput.addEventListener("blur", () => {
-      // Debounce to avoid double-triggering with change event
-      if (blurTimeout) clearTimeout(blurTimeout);
-      blurTimeout = setTimeout(() => {
-        const exerciseName = exerciseInput.value.trim();
-        if (exerciseName && this.formElements) {
-          void this.handleExerciseChange(exerciseName, parametersContainer);
-        }
-      }, 250);
-    });
-  }
-
-  /**
-   * Handles exercise change: updates fields and auto-fills from last entry.
-   */
-  protected async handleExerciseChange(
-    exerciseName: string,
-    parametersContainer: HTMLElement,
-  ): Promise<void> {
-    // First update the dynamic fields for the new exercise type
-    await this.updateFieldsForExercise(exerciseName, parametersContainer);
-
-    // Then auto-fill from last entry if enabled
-    if (this.shouldAutoFillFromLastEntry()) {
-      this.autoFillFromLastEntry(exerciseName);
-    }
-  }
-
-  /**
-   * Updates dynamic fields when exercise selection changes.
-   * Preserves any values that match between old and new parameter sets.
-   */
-  protected async updateFieldsForExercise(
-    exerciseName: string,
-    parametersContainer: HTMLElement,
-  ): Promise<void> {
-    if (!this.formElements) return;
-
-    // Get new parameters
-    const newParameters = await this.loadParametersForExercise(exerciseName);
-
-    // Check if parameters actually changed
-    const paramKeys = newParameters.map((p) => p.key).sort().join(",");
-    const currentKeys = this.currentParameters.map((p) => p.key).sort().join(",");
-    if (paramKeys === currentKeys) {
-      return; // No change needed
-    }
-
-    // Preserve existing values where possible
-    const preservedValues = new Map<string, string>();
-    for (const [key, input] of this.formElements.dynamicFieldInputs) {
-      if (input.value) {
-        preservedValues.set(key, input.value);
-      }
-    }
-
-    // Update parameters and re-render fields
-    this.currentParameters = newParameters;
-    const newFieldInputs = this.renderDynamicFields(
-      parametersContainer,
-      newParameters,
-    );
-
-    // Restore preserved values for matching parameters
-    for (const [key, value] of preservedValues) {
-      const input = newFieldInputs.get(key);
-      if (input) {
-        input.value = value;
-      }
-    }
-
-    // Update form elements reference
-    this.formElements.dynamicFieldInputs = newFieldInputs;
-  }
-
-  /**
-   * Sets up the workout toggle behavior
-   */
-  protected setupWorkoutToggle(
-    toggle: HTMLInputElement,
-    workoutInput: HTMLInputElement,
-  ): void {
-    const currentFileName = this.getCurrentFileName();
-
-    toggle.addEventListener("change", () => {
-      if (toggle.checked) {
-        workoutInput.disabled = true;
-        workoutInput.value = currentFileName;
-        workoutInput.classList.add("opacity-50");
-        workoutInput.classList.remove("opacity-100");
-      } else {
-        workoutInput.disabled = false;
-        workoutInput.value = "";
-        workoutInput.classList.add("opacity-100");
-        workoutInput.classList.remove("opacity-50");
-      }
-    });
-
-    // Set initial state
-    if (toggle.checked) {
-      workoutInput.disabled = true;
-      workoutInput.value = currentFileName;
-      workoutInput.classList.add("opacity-50");
-    }
   }
 
   /**
@@ -631,28 +158,25 @@ export abstract class BaseLogModal extends ModalBase {
 
     if (data.exercise) {
       formElements.exerciseElements.exerciseInput.value = data.exercise;
+      // Trigger change event to load parameters?
+      // Actually LogFormRenderer handles initial load.
+      // But if we pre-fill a DIFFERENT exercise than initial, we might need to trigger update.
+      // For now assume initial exercise matches pre-fill or is empty.
     }
 
-    // Pre-fill reps/weight from dynamic inputs if they exist
+    // Pre-fill fields
     if (data.reps !== undefined) {
       const repsInput = formElements.dynamicFieldInputs.get("reps");
-      if (repsInput) {
-        repsInput.value = data.reps.toString();
-      }
+      if (repsInput) repsInput.value = data.reps.toString();
     }
     if (data.weight !== undefined) {
       const weightInput = formElements.dynamicFieldInputs.get("weight");
-      if (weightInput) {
-        weightInput.value = data.weight.toString();
-      }
+      if (weightInput) weightInput.value = data.weight.toString();
     }
 
-    if (data.notes) {
-      formElements.notesInput.value = data.notes;
-    }
-    if (data.workout) {
-      formElements.workoutInput.value = data.workout;
-    }
+    if (data.notes) formElements.notesInput.value = data.notes;
+    if (data.workout) formElements.workoutInput.value = data.workout;
+    
     if (data.date && formElements.dateInput && this.shouldShowDateField()) {
       const dateValue = data.date.split("T")[0];
       formElements.dateInput.value = dateValue;
@@ -661,7 +185,7 @@ export abstract class BaseLogModal extends ModalBase {
       formElements.protocolSelect.value = data.protocol;
     }
 
-    // Pre-fill custom fields (all dynamic fields including non-reps/weight)
+    // Pre-fill custom fields
     if (data.customFields) {
       for (const [key, value] of Object.entries(data.customFields)) {
         const input = formElements.dynamicFieldInputs.get(key);
@@ -678,29 +202,24 @@ export abstract class BaseLogModal extends ModalBase {
 
   /**
    * Creates submit and cancel buttons
-   * Uses Button atom for consistent button styling
    */
   protected createButtons(
     container: HTMLElement,
     formElements: LogFormElements,
   ): void {
-    // Submit button using Button atom
     const submitBtn = Button.create(container, {
       text: this.getButtonText(),
       className: "workout-charts-btn workout-charts-btn-primary",
       ariaLabel: this.getButtonText(),
     });
 
-    // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       className: "workout-charts-btn workout-charts-btn-warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
-    // Event listeners using Button helper
     Button.onClick(cancelBtn, () => this.close());
-
     Button.onClick(submitBtn, () => {
       void (async () => {
         await this.handleFormSubmit(formElements);
@@ -709,79 +228,26 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Handles form submission with validation
+   * Handles form submission via LogSubmissionHandler
    */
   protected async handleFormSubmit(
     formElements: LogFormElements,
   ): Promise<void> {
     const currentFileName = this.getCurrentFileName();
+    
+    const data = LogSubmissionHandler.extractAndValidateData(
+      formElements,
+      this.currentParameters,
+      currentFileName
+    );
 
-    // Extract form data
-    const exercise = formElements.exerciseElements.exerciseInput.value.trim();
+    if (!data) return;
 
-    // Use dynamic validation based on current parameters
-    if (!this.validateDynamicLogData(exercise, formElements.dynamicFieldInputs)) {
-      return;
-    }
-
-    // Extract reps/weight from dynamic inputs (if present, for CSV backward compatibility)
-    const repsInput = formElements.dynamicFieldInputs.get("reps");
-    const weightInput = formElements.dynamicFieldInputs.get("weight");
-    const reps = repsInput ? parseInt(repsInput.value) || 0 : 0;
-    const weight = weightInput ? parseFloat(weightInput.value) || 0 : 0;
-
-    const notes = formElements.notesInput.value.trim();
-    let workout = formElements.workoutInput.value.trim();
-    const protocol = (formElements.protocolSelect?.value ||
-      WorkoutProtocol.STANDARD) as WorkoutProtocol;
-
-    // Handle current workout toggle
-    if (formElements.currentWorkoutToggle.checked) {
-      workout = currentFileName;
-    }
-
-    // Build customFields from dynamicFieldInputs (excluding standard reps/weight for CSV)
-    const customFields: Record<string, string | number | boolean> = {};
-    for (const [key, input] of formElements.dynamicFieldInputs) {
-      if (key === "reps" || key === "weight") {
-        continue; // Skip standard fields, they go in CSV columns
-      }
-
-      const value = input.value.trim();
-      if (!value) continue; // Skip empty values
-
-      // Try to parse as number or boolean, otherwise keep as string
-      if (input.type === "checkbox") {
-        customFields[key] = (input as HTMLInputElement).checked;
-      } else if (input.type === "number") {
-        const parsed = parseFloat(value);
-        if (!isNaN(parsed)) {
-          customFields[key] = parsed;
-        }
-      } else {
-        customFields[key] = value;
-      }
-    }
-
-    const data: LogFormData = {
-      exercise,
-      reps,
-      weight,
-      workout,
-      notes,
-      date: formElements.dateInput?.value || undefined,
-      protocol,
-      customFields:
-        Object.keys(customFields).length > 0 ? customFields : undefined,
-    };
-
-    // Submit data
     try {
       await this.handleSubmit(data);
       this.close();
       new Notice(this.getSuccessMessage());
 
-      // Trigger refresh callback if provided
       if (this.onComplete) {
         this.onComplete();
       }
@@ -795,96 +261,17 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Validates form data based on current exercise parameters.
-   * @returns true if valid, false otherwise
-   */
-  protected validateDynamicLogData(
-    exercise: string,
-    dynamicFieldInputs: Map<string, HTMLInputElement>,
-  ): boolean {
-    // Exercise is always required
-    if (!exercise) {
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_FILL_ALL);
-      return false;
-    }
-
-    // Validate each required parameter
-    for (const param of this.currentParameters) {
-      if (!param.required) continue;
-
-      const input = dynamicFieldInputs.get(param.key);
-      if (!input) {
-        new Notice(`Missing required field: ${param.label}`);
-        return false;
-      }
-
-      const value = input.value.trim();
-
-      if (param.type === "number") {
-        const numValue = parseFloat(value);
-        if (isNaN(numValue)) {
-          new Notice(`${param.label} must be a valid number`);
-          return false;
-        }
-
-        // Check min/max
-        if (param.min !== undefined && numValue < param.min) {
-          new Notice(`${param.label} must be at least ${param.min}`);
-          return false;
-        }
-        if (param.max !== undefined && numValue > param.max) {
-          new Notice(`${param.label} must be at most ${param.max}`);
-          return false;
-        }
-      } else if (param.type === "string" && !value) {
-        new Notice(`${param.label} is required`);
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
    * Sets initial focus on appropriate input
    */
   protected setInitialFocus(formElements: LogFormElements): void {
     if (!this.exerciseName) {
       formElements.exerciseElements.exerciseInput.focus();
     } else {
-      // Focus on first dynamic field
       const firstInput = formElements.dynamicFieldInputs.values().next().value;
       if (firstInput) {
         firstInput.focus();
       }
     }
-  }
-
-  /**
-   * Helper method to create log entry object
-   */
-  protected createLogEntryObject(
-    exercise: string,
-    reps: number,
-    weight: number,
-    workout: string,
-    notes: string,
-    date?: string,
-    protocol?: WorkoutProtocol,
-    customFields?: Record<string, string | number | boolean>,
-  ): Omit<CSVWorkoutLogEntry, "timestamp"> {
-    return {
-      date: date || new Date().toISOString(),
-      exercise: exercise,
-      reps: reps,
-      weight: weight,
-      volume: reps * weight,
-      origine: this.currentPageLink || "[[Workout Charts Plugin]]",
-      workout: workout || undefined,
-      notes: notes || undefined,
-      protocol: protocol || WorkoutProtocol.STANDARD,
-      customFields: customFields,
-    };
   }
 }
 export type { LogFormData };

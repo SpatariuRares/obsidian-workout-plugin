@@ -813,6 +813,7 @@ export const COMMANDS_UI = {
   QUICK_LOG: "Quick log",
   EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
   MIGRATE_EXERCISE_TYPES: "Migrate exercise types",
+  CONVERT_EXERCISE: "Convert exercise data",
 } as const;
 
 /**

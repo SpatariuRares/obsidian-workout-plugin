@@ -9,6 +9,7 @@ import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePage
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
 import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
+import { ConvertExerciseDataModal } from "@app/features/modals/ConvertExerciseDataModal";
 import {
   CanvasExporter,
   WorkoutFileSuggestModal,
@@ -148,6 +149,14 @@ export class CommandHandlerService {
       name: CONSTANTS.WORKOUT.COMMANDS.MIGRATE_EXERCISE_TYPES,
       callback: async () => {
         await new ExerciseTypeMigration(this.plugin).migrateExerciseTypes();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "convert-exercise-data",
+      name: CONSTANTS.WORKOUT.COMMANDS.CONVERT_EXERCISE,
+      callback: () => {
+        new ConvertExerciseDataModal(this.app, this.plugin).open();
       },
     });
   }

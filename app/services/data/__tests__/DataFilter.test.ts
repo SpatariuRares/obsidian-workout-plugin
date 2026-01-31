@@ -2,19 +2,17 @@ import { CONSTANTS } from "@app/constants";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams, EmbeddedTableParams } from "@app/types";
-import {
-  findExerciseMatches,
-  determineExerciseFilterStrategy,
-  filterLogDataByExercise,
-} from "@app/utils/ExerciseMatchUtils";
+import { ExerciseMatchUtils } from "@app/utils/ExerciseMatchUtils";
+
 import { TFile } from "obsidian";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
 jest.mock("@app/utils/ExerciseMatchUtils", () => ({
-  ...jest.requireActual("@app/utils/ExerciseMatchUtils"),
-  findExerciseMatches: jest.fn(),
-  determineExerciseFilterStrategy: jest.fn(),
-  filterLogDataByExercise: jest.fn(),
+  ExerciseMatchUtils: {
+    findExerciseMatches: jest.fn(),
+    determineExerciseFilterStrategy: jest.fn(),
+    filterLogDataByExercise: jest.fn(),
+  },
 }));
 
 const mockLogData: WorkoutLogData[] = [
@@ -282,14 +280,14 @@ describe("DataFilter", () => {
 
     describe("Fuzzy Exercise Filtering (Mocked)", () => {
       const mockFindExerciseMatches =
-        findExerciseMatches as jest.MockedFunction<typeof findExerciseMatches>;
+        ExerciseMatchUtils.findExerciseMatches as jest.MockedFunction<typeof ExerciseMatchUtils.findExerciseMatches>;
       const mockDetermineExerciseFilterStrategy =
-        determineExerciseFilterStrategy as jest.MockedFunction<
-          typeof determineExerciseFilterStrategy
+      ExerciseMatchUtils.determineExerciseFilterStrategy as jest.MockedFunction<
+          typeof ExerciseMatchUtils.determineExerciseFilterStrategy
         >;
       const mockFilterLogDataByExercise =
-        filterLogDataByExercise as jest.MockedFunction<
-          typeof filterLogDataByExercise
+      ExerciseMatchUtils.filterLogDataByExercise as jest.MockedFunction<
+          typeof ExerciseMatchUtils.filterLogDataByExercise
         >;
 
       it("should call fuzzy matching utilities when exactMatch is false", () => {
@@ -343,7 +341,7 @@ describe("DataFilter", () => {
           bestStrategy: "",
           bestPathKey: "",
         };
-        const mockFileMatch = {
+        const mockFileMatch: any = {
           file: {} as TFile,
           score: 85,
           exerciseName: "log2.md",

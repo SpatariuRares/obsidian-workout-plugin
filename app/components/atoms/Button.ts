@@ -25,7 +25,7 @@ export class Button {
    */
   static create(parent: HTMLElement, props: ButtonProps): HTMLButtonElement {
     const btn = parent.createEl("button", {
-      cls: props.className || "btn",
+      cls: props.className || "workout-btn workout-btn-secondary",
       attr: {
         ...(props.title && { title: props.title }),
         ...(props.disabled && { disabled: "true" }),

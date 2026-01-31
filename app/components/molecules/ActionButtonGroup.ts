@@ -61,7 +61,7 @@ export class ActionButtonGroup {
 		// Create edit button
 		const editBtn = Button.create(container, {
 			icon: props?.editIcon || this.DEFAULT_EDIT_ICON,
-			className: "action-btn action-btn-edit",
+			className: "workout-table-action-btn action-btn-edit",
 			title: props?.editTitle || this.DEFAULT_EDIT_TITLE,
 			ariaLabel: props?.editTitle || this.DEFAULT_EDIT_TITLE,
 		});
@@ -69,7 +69,7 @@ export class ActionButtonGroup {
 		// Create delete button
 		const deleteBtn = Button.create(container, {
 			icon: props?.deleteIcon || this.DEFAULT_DELETE_ICON,
-			className: "action-btn action-btn-delete",
+			className: "workout-table-action-btn action-btn-delete",
 			title: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
 			ariaLabel: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
 		});

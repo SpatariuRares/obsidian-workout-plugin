@@ -282,6 +282,11 @@
   transform: none;
   box-shadow: none;
 }
+.workout-add-log-button-container .workout-goto-exercise-btn:hover {
+  background: var(--background-modifier-hover);
+  border-color: var(--interactive-accent);
+  color: var(--text-accent);
+}
 
 .workout-export-btn {
   padding: var(--workout-space-sm) var(--workout-space-lg);
@@ -2926,5 +2931,37 @@
   .workout-toggle-btn {
     padding: var(--workout-space-sm) var(--workout-space-md);
     font-size: var(--workout-font-sm);
+  }
+  /* Mobile Table Optimizations */
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+  }
+  .workout-log-table th {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+  .workout-log-table td {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+  }
+  /* Compact spacer summary on mobile */
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+  }
+  .workout-table-spacer-summary-cell .workout-spacer-stat {
+    margin-right: var(--workout-space-sm);
+    font-size: var(--workout-font-xs);
+  }
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+  /* Smaller protocol badges on mobile */
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
   }
 }

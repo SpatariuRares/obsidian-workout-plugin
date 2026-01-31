@@ -178,8 +178,16 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
         continue;
       }
 
-      // Reject entries where reps <= 0
-      if (reps <= 0) {
+      // Check if entry has valid custom field data (for non-strength exercises)
+      const hasValidCustomData = customColumnIndices.some((colIndex) => {
+        const value = values[colIndex]?.trim();
+        if (!value) return false;
+        const numValue = parseFloat(value);
+        return !isNaN(numValue) && numValue > 0;
+      });
+
+      // Reject entries where reps <= 0 AND no valid custom field data
+      if (reps <= 0 && !hasValidCustomData) {
         continue;
       }
 

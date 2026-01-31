@@ -225,4 +225,46 @@
     padding: var(--workout-space-sm) var(--workout-space-md);
     font-size: var(--workout-font-sm);
   }
+
+  /* Mobile Table Optimizations */
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+
+    th {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+      font-size: var(--workout-font-xs);
+    }
+
+    td {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+    }
+  }
+
+  /* Compact spacer summary on mobile */
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+
+    .workout-spacer-stat {
+      margin-right: var(--workout-space-sm);
+      font-size: var(--workout-font-xs);
+    }
+  }
+
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+
+  /* Smaller protocol badges on mobile */
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+ 
+
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
+  }
 }

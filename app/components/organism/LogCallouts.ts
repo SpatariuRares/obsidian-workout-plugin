@@ -71,7 +71,7 @@ export class LogCallouts {
     }
 
     const buttonContainer = container.createEl("div", {
-      cls: "add-log-button-container",
+      cls: "workout-add-log-button-container",
     });
 
     const button = Button.create(buttonContainer, {
@@ -83,6 +83,7 @@ export class LogCallouts {
 
     Button.onClick(button, () => {
       // If there's a latest entry, pre-fill the form with those values
+      // Include all fields: reps, weight, protocol, and customFields
       const prefillData = latestEntry
         ? {
             exercise: latestEntry.exercise,
@@ -90,6 +91,8 @@ export class LogCallouts {
             reps: latestEntry.reps,
             workout: latestEntry.workout || "",
             notes: latestEntry.notes || "",
+            protocol: latestEntry.protocol,
+            customFields: latestEntry.customFields,
           }
         : undefined;
 

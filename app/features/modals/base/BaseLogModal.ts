@@ -5,7 +5,11 @@ import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  CSVWorkoutLogEntry,
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -25,6 +29,9 @@ export abstract class BaseLogModal extends ModalBase {
   // Track current parameters for dynamic validation
   protected currentParameters: ParameterDefinition[] = [];
   protected formElements?: LogFormElements;
+
+  // Cached workout log data for auto-fill from last entry
+  protected workoutLogData: WorkoutLogData[] = [];
 
   constructor(
     app: App,
@@ -63,6 +70,11 @@ export abstract class BaseLogModal extends ModalBase {
     const { contentEl } = this;
     contentEl.addClass("workout-charts-modal");
 
+    // Pre-load workout log data for auto-fill from last entry
+    if (this.shouldAutoFillFromLastEntry()) {
+      await this.loadWorkoutLogData();
+    }
+
     // Add modal title
     contentEl.createEl("h2", {
       text: this.getModalTitle(),
@@ -74,9 +86,13 @@ export abstract class BaseLogModal extends ModalBase {
     // Create form elements (async to load exercise parameters)
     const formElements = await this.createFormElements(formContainer);
 
-    // Pre-fill form if needed
+    // Pre-fill form if needed (from initialValues or originalLog)
     if (this.shouldPreFillForm()) {
       this.preFillForm(formElements);
+    }
+    // Otherwise, auto-fill from last entry if enabled and exercise is set
+    else if (this.shouldAutoFillFromLastEntry() && this.exerciseName) {
+      this.autoFillFromLastEntry(this.exerciseName);
     }
 
     // Create buttons
@@ -223,6 +239,95 @@ export abstract class BaseLogModal extends ModalBase {
       // Fallback to strength type if error
       return this.exerciseDefService.getParametersForExercise("");
     }
+  }
+
+  /**
+   * Loads workout log data for auto-fill functionality.
+   * Called once when modal opens.
+   */
+  protected async loadWorkoutLogData(): Promise<void> {
+    try {
+      this.workoutLogData = await this.plugin.getWorkoutLogData();
+    } catch {
+      this.workoutLogData = [];
+    }
+  }
+
+  /**
+   * Finds the most recent log entry for a given exercise.
+   * @param exerciseName The exercise name to search for
+   * @returns The most recent log entry or undefined if not found
+   */
+  protected findLastEntryForExercise(
+    exerciseName: string,
+  ): WorkoutLogData | undefined {
+    if (!exerciseName || this.workoutLogData.length === 0) {
+      return undefined;
+    }
+
+    // Normalize exercise name for comparison
+    const normalizedExercise = exerciseName.toLowerCase().trim();
+
+    // Sort by timestamp descending to get most recent first
+    const sortedData = [...this.workoutLogData].sort((a, b) => {
+      const timestampA = a.timestamp || 0;
+      const timestampB = b.timestamp || 0;
+      return timestampB - timestampA;
+    });
+
+    return sortedData.find(
+      (log) => log.exercise.toLowerCase().trim() === normalizedExercise,
+    );
+  }
+
+  /**
+   * Auto-fills form fields from the last log entry for the given exercise.
+   * Fills all dynamic parameters (reps, weight, duration, distance, etc.) and protocol.
+   * Does NOT fill notes (user typically wants fresh notes each time).
+   */
+  protected autoFillFromLastEntry(exerciseName: string): void {
+    if (!this.formElements) return;
+
+    const lastEntry = this.findLastEntryForExercise(exerciseName);
+    if (!lastEntry) return;
+
+    // Auto-fill reps and weight (standard strength fields)
+    const repsInput = this.formElements.dynamicFieldInputs.get("reps");
+    if (repsInput && lastEntry.reps > 0) {
+      repsInput.value = String(lastEntry.reps);
+    }
+
+    const weightInput = this.formElements.dynamicFieldInputs.get("weight");
+    if (weightInput && lastEntry.weight >= 0) {
+      weightInput.value = String(lastEntry.weight);
+    }
+
+    // Auto-fill custom fields (duration, distance, heartRate, etc.)
+    if (lastEntry.customFields) {
+      for (const [key, value] of Object.entries(lastEntry.customFields)) {
+        const input = this.formElements.dynamicFieldInputs.get(key);
+        if (input && value !== undefined && value !== null) {
+          if (input.type === "checkbox") {
+            input.checked = Boolean(value);
+          } else {
+            input.value = String(value);
+          }
+        }
+      }
+    }
+
+    // Auto-fill protocol
+    if (lastEntry.protocol && this.formElements.protocolSelect) {
+      this.formElements.protocolSelect.value = lastEntry.protocol;
+    }
+  }
+
+  /**
+   * Whether to enable auto-fill from the last entry.
+   * Override in subclasses to disable (e.g., EditLogModal should not auto-fill).
+   */
+  protected shouldAutoFillFromLastEntry(): boolean {
+    return false;
   }
 
   /**
@@ -406,7 +511,7 @@ export abstract class BaseLogModal extends ModalBase {
     // Listen for change event (triggered by autocomplete selection)
     exerciseInput.addEventListener("change", () => {
       const exerciseName = exerciseInput.value.trim();
-      void this.updateFieldsForExercise(exerciseName, parametersContainer);
+      void this.handleExerciseChange(exerciseName, parametersContainer);
     });
 
     // Also listen for blur to catch manual typing
@@ -417,10 +522,26 @@ export abstract class BaseLogModal extends ModalBase {
       blurTimeout = setTimeout(() => {
         const exerciseName = exerciseInput.value.trim();
         if (exerciseName && this.formElements) {
-          void this.updateFieldsForExercise(exerciseName, parametersContainer);
+          void this.handleExerciseChange(exerciseName, parametersContainer);
         }
       }, 250);
     });
+  }
+
+  /**
+   * Handles exercise change: updates fields and auto-fills from last entry.
+   */
+  protected async handleExerciseChange(
+    exerciseName: string,
+    parametersContainer: HTMLElement,
+  ): Promise<void> {
+    // First update the dynamic fields for the new exercise type
+    await this.updateFieldsForExercise(exerciseName, parametersContainer);
+
+    // Then auto-fill from last entry if enabled
+    if (this.shouldAutoFillFromLastEntry()) {
+      this.autoFillFromLastEntry(exerciseName);
+    }
   }
 
   /**

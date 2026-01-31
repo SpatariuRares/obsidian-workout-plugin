@@ -56,6 +56,14 @@
       box-shadow: none;
     }
   }
+
+  .workout-goto-exercise-btn {
+    &:hover {
+      background: var(--background-modifier-hover);
+      border-color: var(--interactive-accent);
+      color: var(--text-accent);
+    }
+  }
 }
 
 .workout-export-btn {

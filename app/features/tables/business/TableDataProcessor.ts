@@ -18,56 +18,86 @@ export class TableDataProcessor {
    * @param plugin - Optional plugin instance for accessing exercise definitions
    * @returns Processed table data with headers, rows, and metadata
    */
+  /**
+   * Checks if any log entry has a non-standard protocol.
+   * @param logData - Array of workout log data
+   * @returns true if at least one entry has a protocol other than "standard" or empty
+   */
+  private static hasNonStandardProtocol(logData: WorkoutLogData[]): boolean {
+    return logData.some(
+      (log) =>
+        log.protocol &&
+        log.protocol !== WorkoutProtocol.STANDARD &&
+        log.protocol.trim() !== "",
+    );
+  }
+
+  /**
+   * Checks if any log entry has notes.
+   * @param logData - Array of workout log data
+   * @returns true if at least one entry has non-empty notes
+   */
+  private static hasNotes(logData: WorkoutLogData[]): boolean {
+    return logData.some((log) => log.notes && log.notes.trim() !== "");
+  }
+
   static async processTableData(
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
     plugin?: WorkoutChartsPlugin,
   ): Promise<TableData> {
-    // Use default visible columns if not specified
+    // Use default visible columns if not specified (Notes added conditionally below)
     const defaultVisibleColumns = [
       CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
       CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
       CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
       CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES,
     ];
 
-    // Check if protocol column should be shown (default: true)
-    const showProtocol = params.showProtocol !== false;
+    const limit = params.limit || 50;
+
+    // Sort and limit data FIRST, then check for optional columns in visible rows only
+    const sortedAndLimitedData = this.sortAndLimitData(logData, limit);
+
+    // Check if notes column should be shown:
+    // Only show if VISIBLE data contains non-empty notes
+    const showNotes = this.hasNotes(sortedAndLimitedData);
+
+    // Check if protocol column should be shown:
+    // Only show if showProtocol is not explicitly false AND VISIBLE data contains non-standard protocols
+    const showProtocol =
+      params.showProtocol !== false &&
+      this.hasNonStandardProtocol(sortedAndLimitedData);
+
+    // Helper to add optional columns (Notes, Protocol, Actions) at the end
+    const addOptionalColumns = (baseHeaders: string[]): string[] => {
+      const result = [...baseHeaders];
+      if (showNotes) {
+        result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES);
+      }
+      if (showProtocol) {
+        result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+      }
+      result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+      return result;
+    };
 
     let headers: string[];
 
     // Priority 1: Explicit columns parameter (highest priority - user override)
     if (params.columns) {
       if (Array.isArray(params.columns)) {
-        headers = [...params.columns];
-        // Add protocol column before actions if showProtocol is true
-        if (showProtocol) {
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-        }
-        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+        headers = addOptionalColumns(params.columns);
       } else if (typeof params.columns === "string") {
         try {
           const parsedColumns = JSON.parse(params.columns);
-          headers = [...parsedColumns];
-          if (showProtocol) {
-            headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-          }
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+          headers = addOptionalColumns(parsedColumns);
         } catch {
           // Invalid columns parameter, using default
-          headers = [...defaultVisibleColumns];
-          if (showProtocol) {
-            headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-          }
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+          headers = addOptionalColumns(defaultVisibleColumns);
         }
       } else {
-        headers = [...defaultVisibleColumns];
-        if (showProtocol) {
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-        }
-        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+        headers = addOptionalColumns(defaultVisibleColumns);
       }
     }
     // Priority 2: Dynamic columns from exercise type (if single exercise filter)
@@ -77,32 +107,16 @@ export class TableDataProcessor {
         plugin,
       );
       if (dynamicHeaders && dynamicHeaders.length > 0) {
-        headers = [...dynamicHeaders];
-        if (showProtocol) {
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-        }
-        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+        headers = addOptionalColumns(dynamicHeaders);
       } else {
         // Fallback to default if exercise definition not found
-        headers = [...defaultVisibleColumns];
-        if (showProtocol) {
-          headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-        }
-        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+        headers = addOptionalColumns(defaultVisibleColumns);
       }
     }
     // Priority 3: Default columns (backward compatible)
     else {
-      headers = [...defaultVisibleColumns];
-      if (showProtocol) {
-        headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-      }
-      headers.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+      headers = addOptionalColumns(defaultVisibleColumns);
     }
-
-    const limit = params.limit || 50;
-
-    const sortedAndLimitedData = this.sortAndLimitData(logData, limit);
 
     const rows = this.processRowsEfficiently(sortedAndLimitedData, headers);
 
@@ -170,26 +184,49 @@ export class TableDataProcessor {
         columns.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
       }
 
-      // Add Notes column at the end (before Protocol and Actions which are added separately)
-      columns.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES);
-
+      // Notes, Protocol, and Actions are added conditionally by addOptionalColumns()
       return columns;
     } catch {
       return null;
     }
   }
 
+  /** Map of labels to their abbreviated forms for compact display */
+  private static readonly LABEL_ABBREVIATIONS: Record<string, string> = {
+    Weight: "Wgt",
+    Reps: "Rep",
+    Duration: "Dur",
+    Distance: "Dist",
+    Volume: "Vol",
+    "Heart Rate": "HR",
+    Repetitions: "Rep",
+  };
+
+  /** Reverse map: abbreviated header to data key */
+  private static readonly HEADER_TO_DATA_KEY: Record<string, string> = {
+    wgt: "weight",
+    rep: "reps",
+    dur: "duration",
+    dist: "distance",
+    vol: "volume",
+    hr: "heartrate",
+    prot: "protocol",
+    act: "actions",
+  };
+
   /**
-   * Formats a parameter definition into a table header with label and unit.
+   * Formats a parameter definition into a compact table header with label and unit.
    *
    * @param param - Parameter definition
-   * @returns Formatted header string (e.g., "Duration (sec)", "Weight (kg)")
+   * @returns Formatted header string (e.g., "Dur (sec)", "Wgt (kg)")
    */
   private static formatParameterHeader(param: ParameterDefinition): string {
+    const abbreviatedLabel =
+      this.LABEL_ABBREVIATIONS[param.label] || param.label;
     if (param.unit) {
-      return `${param.label} (${param.unit})`;
+      return `${abbreviatedLabel} (${param.unit})`;
     }
-    return param.label;
+    return abbreviatedLabel;
   }
 
   /**
@@ -265,14 +302,20 @@ export class TableDataProcessor {
       }
 
       // Build display row by matching headers to data
-      // Headers may be formatted like "Weight (kg)" or simple like "Reps"
+      // Headers may be formatted like "Wgt (kg)" or simple like "Rep"
       const displayRow = headers.map((header) => {
         // Extract the base key from the header (before any unit in parentheses)
         const headerBase = header.split(" (")[0].toLowerCase();
 
-        // Try to find matching data
+        // Try direct match first
         if (baseDataMap[headerBase] !== undefined) {
           return baseDataMap[headerBase];
+        }
+
+        // Try reverse mapping for abbreviated headers (e.g., "wgt" -> "weight")
+        const mappedKey = this.HEADER_TO_DATA_KEY[headerBase];
+        if (mappedKey && baseDataMap[mappedKey] !== undefined) {
+          return baseDataMap[mappedKey];
         }
 
         // Also check exact header match (case-insensitive) for backward compatibility

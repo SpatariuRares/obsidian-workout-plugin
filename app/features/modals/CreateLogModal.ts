@@ -40,6 +40,11 @@ export class CreateLogModal extends BaseLogModal {
     return !!this.initialValues; // Pre-fill if initialValues provided
   }
 
+  protected shouldAutoFillFromLastEntry(): boolean {
+    // Enable auto-fill from last entry when no explicit initialValues provided
+    return !this.initialValues;
+  }
+
   protected getPreFillData(): Partial<LogFormData> | null {
     return this.initialValues || null;
   }

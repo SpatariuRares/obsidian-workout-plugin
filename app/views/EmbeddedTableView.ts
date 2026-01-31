@@ -153,7 +153,7 @@ export class EmbeddedTableView extends BaseView {
         params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
       const buttonContainer = contentDiv.createDiv({
-        cls: "add-log-button-container",
+        cls: "workout-add-log-button-container",
       });
 
       // Get latest entry to pre-fill the form if available
@@ -171,6 +171,15 @@ export class EmbeddedTableView extends BaseView {
         renderChild.getSignal(),
         latestEntry,
       );
+
+      // Add "Goto exercise" button if exercise is specified
+      if (params.exercise) {
+        this.renderGotoExerciseButton(
+          buttonContainer,
+          params.exercise,
+          renderChild.getSignal(),
+        );
+      }
     }
 
     // Render target header if targetWeight or targetReps is set
@@ -587,6 +596,47 @@ export class EmbeddedTableView extends BaseView {
       return latestEntry.reps >= targetReps;
     } catch {
       return false;
+    }
+  }
+
+  /**
+   * Renders a "Goto exercise" button that navigates to the exercise file
+   */
+  private renderGotoExerciseButton(
+    container: HTMLElement,
+    exerciseName: string,
+    signal?: AbortSignal,
+  ): void {
+    const gotoBtn = container.createEl("button", {
+      cls: "workout-goto-exercise-btn",
+    });
+    gotoBtn.textContent = `${CONSTANTS.WORKOUT.TABLE.ICONS.GOTO} ${CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE}`;
+    gotoBtn.setAttribute("aria-label", CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE);
+
+    gotoBtn.addEventListener(
+      "click",
+      () => {
+        this.navigateToExercise(exerciseName);
+      },
+      signal ? { signal } : undefined,
+    );
+  }
+
+  /**
+   * Navigates to the exercise file in the vault
+   */
+  private navigateToExercise(exerciseName: string): void {
+    const searchName = exerciseName.toLowerCase().replace(/\.md$/i, "");
+
+    const exerciseFile = this.plugin.app.vault.getFiles().find((file) => {
+      return file.basename.toLowerCase() === searchName;
+    });
+
+    if (exerciseFile) {
+      void this.plugin.app.workspace.getLeaf(false).openFile(exerciseFile);
+    } else {
+      // File not found - could show a notice
+      this.logDebug("EmbeddedTableView", `Exercise file not found: ${exerciseName}`);
     }
   }
 

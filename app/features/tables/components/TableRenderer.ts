@@ -119,17 +119,60 @@ export class TableRenderer {
         groupedRows[row.dateKey].push(row);
       });
 
-      // Helper function to create spacer row
+      // Helper function to create spacer row with dynamic summary based on exercise type
       const createSpacerRow = (dateKey: string) => {
         const groupRows = groupedRows[dateKey];
+
+        // Aggregate standard strength metrics
         let totalVolume = 0;
         let totalWeight = 0;
         let totalReps = 0;
 
+        // Aggregate custom field metrics
+        let totalDuration = 0;
+        let totalDistance = 0;
+        let totalHeartRate = 0;
+        let heartRateCount = 0;
+
+        // Track which metrics are present
+        let hasStrengthData = false;
+        let hasDuration = false;
+        let hasDistance = false;
+        let hasHeartRate = false;
+
         groupRows.forEach((r) => {
-          totalVolume += r.originalLog?.volume || 0;
-          totalWeight += r.originalLog?.weight || 0;
-          totalReps += r.originalLog?.reps || 0;
+          const log = r.originalLog;
+          if (!log) return;
+
+          // Check standard strength fields
+          if (log.reps > 0 || log.weight > 0) {
+            hasStrengthData = true;
+            totalVolume += log.volume || 0;
+            totalWeight += log.weight || 0;
+            totalReps += log.reps || 0;
+          }
+
+          // Check custom fields for other exercise types
+          if (log.customFields) {
+            const duration = log.customFields["duration"];
+            if (typeof duration === "number" && duration > 0) {
+              hasDuration = true;
+              totalDuration += duration;
+            }
+
+            const distance = log.customFields["distance"];
+            if (typeof distance === "number" && distance > 0) {
+              hasDistance = true;
+              totalDistance += distance;
+            }
+
+            const heartRate = log.customFields["heartrate"] || log.customFields["heartRate"];
+            if (typeof heartRate === "number" && heartRate > 0) {
+              hasHeartRate = true;
+              totalHeartRate += heartRate;
+              heartRateCount++;
+            }
+          }
         });
 
         const spacerRow = fragment.appendChild(document.createElement("tr"));
@@ -146,22 +189,61 @@ export class TableRenderer {
         summaryCell.className = "workout-table-spacer-summary-cell";
         summaryCell.setAttribute("colspan", (columnCount - 1).toString());
 
-        // Create stat spans using DOM methods
-        const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS + CONSTANTS.WORKOUT.TABLE.LABELS.REPETITIONS + ": ");
-        repsSpan.createEl("strong", { text: totalReps.toString() });
+        // Determine which summary to show based on available data
+        // Using compact format: icon + value (mobile-friendly)
+        // Priority: Strength > Cardio/Distance/Timed
 
-        const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT + CONSTANTS.WORKOUT.TABLE.LABELS.WEIGHT + ": ");
-        weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)} kg` });
+        if (hasStrengthData) {
+          // Strength exercise summary: Reps, Weight, Volume (compact)
+          const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS);
+          repsSpan.createEl("strong", { text: totalReps.toString() });
 
-        const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-        volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME + CONSTANTS.WORKOUT.TABLE.LABELS.VOLUME + ": ");
-        volumeSpan.createEl("strong", { text: totalVolume.toFixed(1) });
+          const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT);
+          weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)}kg` });
+
+          const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+          volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME);
+          volumeSpan.createEl("strong", { text: totalVolume.toFixed(0) });
+        } else {
+          // Non-strength exercise summary: show available metrics (compact)
+
+          if (hasDuration) {
+            const durationSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            durationSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DURATION);
+            // Format duration based on magnitude
+            const durationDisplay = totalDuration >= 60
+              ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
+              : `${Math.round(totalDuration)}s`;
+            durationSpan.createEl("strong", { text: durationDisplay });
+          }
+
+          if (hasDistance) {
+            const distanceSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            distanceSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DISTANCE);
+            distanceSpan.createEl("strong", { text: `${totalDistance.toFixed(2)}km` });
+          }
+
+          if (hasHeartRate && heartRateCount > 0) {
+            const avgHeartRate = Math.round(totalHeartRate / heartRateCount);
+            const hrSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            hrSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.HEART_RATE);
+            hrSpan.createEl("strong", { text: `${avgHeartRate}bpm` });
+          }
+
+          // If no metrics found at all, show a generic count
+          if (!hasDuration && !hasDistance && !hasHeartRate) {
+            const countSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
+            countSpan.createEl("strong", { text: `${groupRows.length} sets` });
+          }
+        }
       };
 
-      // Find the protocol column index
+      // Find column indices dynamically based on headers
       const protocolColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+      const volumeColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
+      const actionsColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
 
       rows.forEach((row) => {
         const dateKey = row.dateKey;
@@ -183,12 +265,12 @@ export class TableRenderer {
           if (cellIndex === 0) {
             td.className = "workout-table-date-cell";
             td.textContent = cell;
-          } else if (cellIndex === 4) {
-            td.className = "workout-table-volume-cell";
-            td.textContent = cell;
-          } else if (cellIndex === row.displayRow.length - 1) {
+          } else if (cellIndex === actionsColumnIndex) {
             td.className = "workout-table-actions-cell";
             TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh, signal);
+          } else if (cellIndex === volumeColumnIndex) {
+            td.className = "workout-table-volume-cell";
+            td.textContent = cell;
           } else if (cellIndex === protocolColumnIndex) {
             // Render protocol badge
             td.className = "workout-table-protocol-cell";

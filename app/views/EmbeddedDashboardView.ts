@@ -1,5 +1,4 @@
 import { CONSTANTS } from "@app/constants";
-import { Feedback } from "@app/components/atoms/Feedback";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
@@ -15,6 +14,7 @@ import {
   ProtocolEffectiveness,
   DurationComparison,
 } from "@app/features/dashboard/widgets";
+import { ListItem } from "@app/components/molecules";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
@@ -199,52 +199,114 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
-    // --- NON-ATOMIC FEEDBACK DEMO START ---
-    const demoContainer = gridEl.createEl("div", {
-      cls: "workout-dashboard-widget span-4",
-    });
-    demoContainer.createEl("h3", {
-      text: "Feedback Component Demo (All Classes)",
-    });
+    // --- LISTITEM COMPONENT DEMO START ---
+    // const demoContainer = gridEl.createEl("div", {
+    //   cls: "workout-dashboard-widget span-4",
+    // });
+    // demoContainer.createEl("h3", {
+    //   text: "List item component demo",
+    // });
 
-    // Errors
-    demoContainer.createEl("h4", { text: "Errors" });
-    Feedback.renderError(
-      demoContainer,
-      "Chart Error (.workout-feedback-error)",
-      { className: "workout-feedback-error", append: true },
-    );
+    // // createList() with items - auto-populate
+    // demoContainer.createEl("h4", { text: "List with items prop" });
+    // ListItem.createList(demoContainer, {
+    //   className: "workout-muscle-group-list",
+    //   items: [
+    //     { label: "Deadlift", value: "15,000 vol" },
+    //     { label: "Rows", value: "6,800 vol" },
+    //   ],
+    // });
 
-    // Success
-    demoContainer.createEl("h4", { text: "Success" });
+    // // create() - full options
+    // demoContainer.createEl("h4", { text: "Full options" });
+    // const list1 = ListItem.createList(demoContainer, {
+    //   className: "workout-muscle-group-list",
+    // });
+    // ListItem.create(list1, {
+    //   label: "Squat",
+    //   value: "12,500 vol",
+    //   className: "workout-muscle-group-item",
+    // });
+    // ListItem.create(list1, {
+    //   label: "Bench Press",
+    //   value: "8,200 vol",
+    //   secondary: "2024-01-15",
+    //   className: "workout-muscle-group-item",
+    // });
+    // ListItem.create(list1, {
+    //   icon: "🏋️",
+    //   label: "With icon",
+    //   value: "100 kg",
+    //   className: "workout-muscle-group-item",
+    // });
+    // ListItem.create(list1, {
+    //   label: "Clickable item",
+    //   value: "click me",
+    //   className: "workout-muscle-group-item",
+    //   onClick: () => {
+    //     // Demo click handler
+    //   },
+    // });
 
-    Feedback.renderSuccess(
-      demoContainer,
-      "File Success (.workout-feedback-success)",
-      { className: "workout-feedback-success", append: true },
-    );
+    // // createSimple() - shorthand
+    // demoContainer.createEl("h4", { text: "Simple shorthand" });
+    // const list1b = ListItem.createList(demoContainer, {
+    //   className: "workout-muscle-group-list",
+    // });
+    // ListItem.createSimple(list1b, "Lunges", "5,000 vol");
+    // ListItem.createSimple(
+    //   list1b,
+    //   "Leg Press",
+    //   "7,200 vol",
+    //   "workout-muscle-group-item",
+    // );
 
-    // Info / Warning
-    demoContainer.createEl("h4", { text: "Info & Warning" });
-    Feedback.renderInfo(
-      demoContainer,
-      "Info Message (.workout-feedback-info)",
-      {
-        className: "workout-feedback-info",
-        append: true,
-      },
-    );
-    Feedback.renderWarning(
-      demoContainer,
-      "Imbalance Alert (.workout-feedback-warning)",
-      {
-        className: "workout-feedback-warning",
-        title: "Imbalance",
-        append: true,
-      },
-    );
+    // // createStat() - bold values with suffix
+    // demoContainer.createEl("h4", { text: "Stat with bold value" });
+    // const list2 = ListItem.createList(demoContainer, {
+    //   className: "workout-charts-stats-list",
+    // });
+    // ListItem.createStat(list2, {
+    //   label: "Max: ",
+    //   value: "125.5 kg",
+    //   suffix: " (2024-01-10)",
+    // });
+    // ListItem.createStat(list2, {
+    //   label: "Avg volume: ",
+    //   value: "8,450 kg",
+    // });
+    // ListItem.createStat(list2, {
+    //   label: "Sessions: ",
+    //   value: 42,
+    // });
 
-    // --- NON-ATOMIC FEEDBACK DEMO END ---
+    // // createText() - text only
+    // demoContainer.createEl("h4", { text: "Text only" });
+    // const list3 = ListItem.createList(demoContainer, {
+    //   className: "workout-convert-preview-mappings",
+    // });
+    // ListItem.createText(list3, { text: "Weight → Peso" });
+    // ListItem.createText(list3, { text: "Reps → Reps" });
+    // ListItem.createText(list3, {
+    //   text: "Custom class item",
+    //   className: "workout-muscle-group-item",
+    // });
+
+    // // createEmpty() - custom content
+    // demoContainer.createEl("h4", { text: "Custom content" });
+    // const list4 = ListItem.createList(demoContainer);
+    // const customItem = ListItem.createEmpty(list4, "workout-file-error-item");
+    // customItem.createEl("a", {
+    //   text: "Exercise.md",
+    //   cls: "workout-file-error-link clickable",
+    // });
+    // const customItem2 = ListItem.createEmpty(list4);
+    // customItem2.createEl("span", { text: "Nested: " });
+    // const nestedList = ListItem.createList(customItem2);
+    // ListItem.createText(nestedList, { text: "Nested item 1" });
+    // ListItem.createText(nestedList, { text: "Nested item 2" });
+
+    // --- LISTITEM COMPONENT DEMO END ---
 
     // Summary Widget Section (Full Width) - uses filtered data
     SummaryWidget.render(gridEl, displayData, params);

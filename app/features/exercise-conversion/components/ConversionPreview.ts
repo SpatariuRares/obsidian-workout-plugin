@@ -1,4 +1,5 @@
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
+import { ListItem } from "@app/components/molecules";
 
 export class ConversionPreview {
   private container: HTMLElement;
@@ -43,12 +44,12 @@ export class ConversionPreview {
     }
 
     if (this.mappings.length > 0) {
-      const mappingList = this.container.createEl("ul", {
-        cls: "workout-convert-preview-mappings",
+      const mappingList = ListItem.createList(this.container, {
+        className: "workout-convert-preview-mappings",
       });
 
       for (const mapping of this.mappings) {
-        mappingList.createEl("li", {
+        ListItem.createText(mappingList, {
           text: `${mapping.fromLabel} → ${mapping.toLabel}`,
         });
       }

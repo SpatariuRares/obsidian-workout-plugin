@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, EmbeddedDashboardParams } from "@app/types";
 import { ChartRenderer } from "@app/features/charts";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
+import { ListItem } from "@app/components/molecules";
 
 export class VolumeAnalytics {
   static render(
@@ -64,19 +65,17 @@ export class VolumeAnalytics {
       text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.MUSCLE_BREAKDOWN_TITLE,
     });
 
-    const listEl = container.createEl("ul", { cls: "workout-muscle-group-list" });
+    const listEl = ListItem.createList(container, {
+      className: "workout-muscle-group-list",
+    });
 
     data.forEach(([exercise, volume]) => {
-      const itemEl = listEl.createEl("li", { cls: "workout-muscle-group-item" });
-
-      itemEl.createEl("span", {
-        text: exercise,
-        cls: "workout-exercise-name",
-      });
-
-      itemEl.createEl("span", {
-        text: `${volume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
-        cls: "workout-exercise-volume",
+      ListItem.create(listEl, {
+        label: exercise,
+        value: `${volume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
+        className: "workout-muscle-group-item",
+        labelClassName: "workout-exercise-name",
+        valueClassName: "workout-exercise-volume",
       });
     });
   }

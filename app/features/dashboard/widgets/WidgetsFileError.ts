@@ -4,6 +4,7 @@ import type WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/FrontmatterParser";
+import { ListItem } from "@app/components/molecules";
 
 interface ExerciseFileError {
   file: TFile;
@@ -37,14 +38,12 @@ export class WidgetsFileError {
       return;
     }
 
-    const listEl = errorEl.createEl("ul", {
-      cls: "workout-file-errors-list",
+    const listEl = ListItem.createList(errorEl, {
+      className: "workout-file-errors-list",
     });
 
     fileErrors.forEach((fileError) => {
-      const itemEl = listEl.createEl("li", {
-        cls: "workout-file-error-item",
-      });
+      const itemEl = ListItem.createEmpty(listEl, "workout-file-error-item");
 
       // File name as clickable link
       const fileNameEl = itemEl.createEl("div", {
@@ -64,15 +63,15 @@ export class WidgetsFileError {
           });
       });
 
-      // Error messages
-      const errorsEl = itemEl.createEl("ul", {
-        cls: "workout-file-error-messages",
+      // Error messages (nested list)
+      const errorsEl = ListItem.createList(itemEl, {
+        className: "workout-file-error-messages",
       });
 
       fileError.errors.forEach((error) => {
-        errorsEl.createEl("li", {
+        ListItem.createText(errorsEl, {
           text: error,
-          cls: "workout-file-error-message",
+          className: "workout-file-error-message",
         });
       });
     });

@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
+import { ListItem } from "@app/components/molecules";
 
 export class RecentWorkouts {
   static render(
@@ -21,30 +22,20 @@ export class RecentWorkouts {
     // Get recent workouts (last 5)
     const recentWorkouts = DashboardCalculations.getRecentWorkouts(data, 5);
 
-    const listEl = recentEl.createEl("ul", {
-      cls: "workout-recent-workouts-list",
+    const listEl = ListItem.createList(recentEl, {
+      className: "workout-recent-workouts-list",
     });
 
     recentWorkouts.forEach((workout) => {
-      const itemEl = listEl.createEl("li", {
-        cls: "workout-recent-workout-item",
-      });
-
-      itemEl.createEl("div", {
-        text: workout.date,
-        cls: "workout-recent-date",
-      });
-
-      itemEl.createEl("div", {
-        text:
+      ListItem.create(listEl, {
+        secondary: workout.date,
+        label:
           workout.workout ||
           CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.FALLBACK_NAME,
-        cls: "workout-recent-name",
-      });
-
-      itemEl.createEl("div", {
-        text: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
-        cls: "workout-recent-volume",
+        value: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
+        className: "workout-recent-workout-item",
+        labelClassName: "workout-recent-name",
+        valueClassName: "workout-recent-volume",
       });
     });
   }

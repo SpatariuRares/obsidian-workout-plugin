@@ -16,7 +16,8 @@
       margin-top: var(--workout-space-xl);
       margin-bottom: var(--workout-space-lg);
       color: var(--text-normal);
-      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+      border-bottom: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       padding-bottom: var(--workout-space-xs);
     }
 
@@ -31,12 +32,16 @@
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-lg);
 
   h3 {
-    margin: 0 0 var(--workout-space-lg) 0;
+    margin: 0;
     font-size: var(--workout-font-lg);
     color: var(--text-normal);
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     padding-bottom: var(--workout-space-sm);
   }
 }

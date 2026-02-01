@@ -5,6 +5,7 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
 ## Features
 
 - **Interactive Charts**: View your workout data in various chart types (Volume, Weight, Reps) using Chart.js
+  - **TODO**: Adapt charts for exercise types that don't use reps × weight (e.g., cardio with duration/distance, flexibility with hold time)
 - **Data Tables**: Display workout logs in organized, sortable tables
 - **Workout Timers**: Built-in timers for tracking rest periods and workout sessions
 - **Advanced Search**: Intelligent exercise matching with multiple search strategies
@@ -16,6 +17,37 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
 - **Trend Lines**: Visualize progress trends with automatic trend line calculation
 - **Responsive Design**: Works on desktop and mobile devices
 - **Code Block Integration**: Embed charts, tables, and timers directly in your notes
+
+### New Features (v1.0.27)
+
+- **Quick Log Modal**: Fast workout logging with touch-friendly UI for mobile devices
+  - Recent exercises quick select
+  - Weight auto-fill with quick adjustment buttons
+  - Ribbon icon for quick access
+- **Protocol Tracking**: Track advanced training techniques (drop sets, supersets, etc.)
+  - Custom protocol definitions in settings
+  - Protocol filtering and badges in tables
+  - Protocol distribution and effectiveness dashboard widgets
+- **Duration Estimation**: Estimate and compare workout durations
+  - Duration comparison widget showing actual vs. estimated time
+  - Set duration settings for accurate estimation
+  - `workout-duration` code block for embedding
+- **Canvas Export**: Visualize workout structure on Obsidian Canvas
+  - Export exercises and workout structure as canvas nodes
+  - Layout configuration options
+- **Dynamic Exercise Types**: Define custom exercise types with specific fields
+  - Built-in types: Strength, Cardio, Flexibility
+  - Custom field definitions per exercise type
+  - Automatic column management based on type
+- **Exercise Conversion**: Convert exercises between different types
+  - Field mapping for data preservation
+  - Preview changes before conversion
+- **Dataview Integration**: Query workout logs with Dataview
+  - Exercise statistics API
+  - Workout log queries
+- **Templater Integration**: Use workout data in templates
+  - `workoutExercises` function for exercise lists
+  - `workoutExerciseBlock` for template integration
 
 ## How it Works
 

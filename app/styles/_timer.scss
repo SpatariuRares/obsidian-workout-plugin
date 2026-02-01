@@ -3,34 +3,27 @@
    ============================================================================ */
 
 /* Timer Styles */
-.workout-timer {
-  &-embed {
-    width: 100%;
-    margin: var(--workout-space-sm) 0;
-  }
+.workout-timer-container {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-md);
+  font-size: var(--workout-font-xl);
 
-  &-container {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    background: var(--background-secondary);
-    border-radius: var(--workout-radius-md);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--workout-space-md);
-    font-size: var(--workout-font-base);
-  }
-
-  &-display {
+  .workout-timer-display {
     display: flex;
     align-items: center;
-    gap: var(--workout-space-sm);
+    gap: var(--workout-space-lg);
   }
 
-  &-time {
+  .workout-timer-time {
     display: flex;
     align-items: center;
 
-    &-display {
+    .workout-timer-time-display {
       font-size: var(--workout-font-xl);
       font-weight: var(--workout-font-weight-semibold);
       color: var(--text-accent);
@@ -38,21 +31,20 @@
       min-width: var(--workout-size-3xl);
       text-align: center;
     }
-  }
 
-  &-controls {
+    .workout-timer-complete {
+      font-size: var(--workout-font-xl);
+      font-weight: var(--workout-font-weight-bold);
+      color: var(--text-success);
+    }
+  }
+  .workout-timer-controls {
     display: flex;
     gap: var(--workout-space-xs);
     align-items: center;
   }
 
-  &-complete {
-    font-size: var(--workout-font-xl);
-    font-weight: var(--workout-font-weight-bold);
-    color: var(--text-success);
-  }
-
-  &-error {
+  .workout-timer-error {
     padding: var(--workout-space-sm) var(--workout-space-md);
     background: var(--background-modifier-error);
     color: var(--text-error);
@@ -61,18 +53,4 @@
     border: var(--workout-border-thin) solid var(--background-modifier-error);
     font-size: var(--workout-font-base);
   }
-}
-
-/* Timer Configuration Visibility */
-.timer-config {
-  .timer-config-countdown {
-    display: block;
-  }
-
-  .timer-config-interval,
-  .timer-config-rounds {
-    display: none;
-  }
-
-
 }

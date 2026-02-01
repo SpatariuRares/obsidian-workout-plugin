@@ -13,7 +13,7 @@ describe("ActionButtonGroup", () => {
 		const { container, editBtn, deleteBtn } = ActionButtonGroup.create(parent);
 
 		expect(parent.contains(container)).toBe(true);
-		expect(container.classList.contains("action-button-group")).toBe(true);
+		expect(container.classList.contains("workout-table-action-button-group")).toBe(true);
 
 		const renderedButtons = container.querySelectorAll("button");
 		expect(renderedButtons).toHaveLength(2);
@@ -45,7 +45,7 @@ describe("ActionButtonGroup", () => {
 			overrides
 		);
 
-		expect(container.classList.contains("action-button-group")).toBe(true);
+		expect(container.classList.contains("workout-table-action-button-group")).toBe(true);
 		expect(container.classList.contains("is-floating")).toBe(true);
 
 		expect(editBtn.textContent).toBe("E");

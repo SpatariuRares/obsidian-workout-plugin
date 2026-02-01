@@ -12,4 +12,4 @@ export {
   type ImbalanceAnalysis,
 } from "@app/features/dashboard/business/muscleHeatMap/MuscleBalanceAnalyzer";
 export { MuscleTagMapper } from "@app/features/dashboard/business/muscleHeatMap/MuscleTagMapper";
-export { HeatMapExporter } from "@app/features/dashboard/business/muscleHeatMap/HeatMapExporter";
+ 

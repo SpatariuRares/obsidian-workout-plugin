@@ -98,10 +98,13 @@
   }
 }
 
-.workout-quick-log-weight-wrapper {
+.workout-frame-toggle {
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 /* button styles moved to modal/_buttons.scss */

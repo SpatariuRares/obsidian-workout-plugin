@@ -2,8 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
-import { HeatMapExporter } from "@app/features/dashboard/business/muscleHeatMap";
-import { Button } from "@app/components/atoms";
+ import { Button } from "@app/components/atoms";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,
@@ -34,7 +33,7 @@ export class HeatMapControls {
 
     // Time frame toggle
     const timeFrameEl = controlsEl.createEl("div", {
-      cls: "workout-time-frame-toggle",
+      cls: "workout-frame-toggle",
     });
 
     const weekBtn = Button.create(timeFrameEl, {
@@ -57,7 +56,7 @@ export class HeatMapControls {
 
     // View toggle
     const viewToggleEl = controlsEl.createEl("div", {
-      cls: "workout-view-toggle",
+      cls: "workout-frame-toggle",
     });
 
     const frontBtn = Button.create(viewToggleEl, {
@@ -70,13 +69,6 @@ export class HeatMapControls {
       text: CONSTANTS.WORKOUT.UI.LABELS.BACK,
       className: "workout-toggle-btn",
       ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.BACK,
-    });
-
-    // Export button
-    const exportBtn = Button.create(controlsEl, {
-      text: CONSTANTS.WORKOUT.UI.ACTIONS.EXPORT,
-      className: "workout-export-btn",
-      ariaLabel: CONSTANTS.WORKOUT.UI.ACTIONS.EXPORT,
     });
 
     // Current options state
@@ -118,11 +110,6 @@ export class HeatMapControls {
           plugin
         );
       });
-    });
-
-    // Setup export button
-    Button.onClick(exportBtn, () => {
-      HeatMapExporter.export(canvasContainer);
     });
 
     return currentOptions;

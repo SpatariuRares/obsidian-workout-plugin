@@ -228,7 +228,7 @@ export class QuickLogModal extends ModalBase {
 
     // Create wrapper for buttons and input
     const weightWrapper = formGroup.createEl("div", {
-      cls: "workout-quick-log-weight-wrapper",
+      cls: "workout-frame-toggle",
     });
 
     const increment = this.plugin.settings.quickWeightIncrement;
@@ -274,28 +274,29 @@ export class QuickLogModal extends ModalBase {
     // Round to avoid floating point issues (e.g., 10.5 + 2.5 = 13.0)
     this.weightInput.value = String(Math.round(newWeight * 10) / 10);
 
-    // Brief visual feedback on button
-    const button = amount > 0 ? this.incrementBtn : this.decrementBtn;
-    button.addClass("workout-quick-log-weight-btn-active");
-    setTimeout(() => {
-      button.removeClass("workout-quick-log-weight-btn-active");
-    }, 150);
   }
 
   /**
-   * Creates the confirm button with large touch target
+   * Creates the confirm and cancel buttons
    */
   private createConfirmButton(container: HTMLElement): void {
     const buttonContainer = createButtonsSection(container);
     buttonContainer.addClass("workout-quick-log-button-container");
-
+    
     const confirmBtn = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
       className: "workout-quick-log-confirm-btn workout-btn workout-btn-primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
     });
-
+    
     Button.onClick(confirmBtn, () => this.handleConfirm());
+
+    const cancelBtn = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      className: "workout-quick-log-cancel-btn workout-btn workout-btn-secondary",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+    });
+    Button.onClick(cancelBtn, () => this.close());
   }
 
   /**

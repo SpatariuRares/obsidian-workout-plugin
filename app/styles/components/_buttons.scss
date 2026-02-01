@@ -1,9 +1,60 @@
-/* Buttons */
-/* Variant helpers */
+/* ============================================================================
+   BUTTON SYSTEM
+   ============================================================================
+   Organized for maintainability:
+   1. Base placeholders & mixins (shared behaviors)
+   2. Variant placeholders (colors/styles)
+   3. Size placeholders
+   4. Component implementations
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   1. BASE PLACEHOLDERS & MIXINS
+   ---------------------------------------------------------------------------- */
+
+// Core interactive behavior - use on all clickable buttons
+%workout-btn-interactive {
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+// Base button reset and common styles
+%workout-btn-base {
+  @extend %workout-btn-interactive;
+  border: none;
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+// Press effect - subtle scale down on click
+@mixin workout-btn-press($scale: 0.95) {
+  &:active {
+    transform: scale($scale);
+  }
+}
+
+// Lift effect - subtle rise on hover
+@mixin workout-btn-lift($distance: -2px) {
+  &:hover {
+    transform: translateY($distance);
+  }
+}
+
+// Color border variant - for outlined buttons (success/error)
+@mixin workout-btn-outlined($color) {
+  color: $color;
+  border: var(--workout-border-thin) solid $color;
+}
+
+/* ----------------------------------------------------------------------------
+   2. VARIANT PLACEHOLDERS (Colors)
+   ---------------------------------------------------------------------------- */
+
 %workout-btn-primary {
+  @extend %workout-btn-interactive;
   background: var(--interactive-accent);
   color: var(--text-on-accent);
-  cursor: pointer;
+
   &:hover {
     background: var(--interactive-accent-hover);
     color: var(--text-on-accent);
@@ -11,9 +62,24 @@
 }
 
 %workout-btn-secondary {
+  @extend %workout-btn-interactive;
   background: var(--interactive-normal);
   color: var(--text-on-normal);
-  cursor: pointer;
+}
+
+@mixin workout-btn-secondary-hover {
+  background: var(--interactive-normal-hover);
+}
+
+%workout-btn-tertiary {
+  @extend %workout-btn-interactive;
+  background: var(--interactive-tertiary);
+  color: var(--text-on-tertiary);
+
+  &:hover {
+    background: var(--interactive-tertiary-hover);
+    color: var(--text-on-tertiary);
+  }
 }
 
 %workout-btn-warning {
@@ -21,138 +87,138 @@
   color: var(--text-on-accent);
 }
 
-@mixin workout-btn-secondary-hover {
-  background: var(--interactive-normal-hover);
-}
-
 @mixin workout-btn-warning-hover {
   background: var(--text-warning-hover);
 }
+
+%workout-btn-success {
+  background: var(--interactive-success);
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--interactive-success-hover);
+  }
+}
+
+%workout-btn-danger {
+  background: var(--interactive-error);
+  color: var(--text-on-accent);
+
+  &:hover {
+    background: var(--interactive-error-hover);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   3. SIZE PLACEHOLDERS
+   ---------------------------------------------------------------------------- */
+
+%workout-btn-small {
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  font-size: var(--workout-font-xs);
+}
+
+%workout-btn-medium {
+  padding: var(--workout-space-md) var(--workout-space-xl);
+  font-size: var(--workout-font-base);
+}
+
+%workout-btn-big {
+  padding: var(--workout-space-lg) var(--workout-space-2xl);
+  font-size: var(--workout-font-lg);
+}
+
+%workout-btn-giant {
+  padding: var(--workout-space-xl) var(--workout-space-3xl);
+  font-size: var(--workout-font-xl);
+}
+
+/* ============================================================================
+   4. COMPONENT IMPLEMENTATIONS
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   Button Container
+   ---------------------------------------------------------------------------- */
 
 .workout-buttons-container {
   display: flex;
   gap: var(--workout-space-md);
   justify-content: flex-end;
 
-  & .workout-btn,
   .workout-btn {
-    padding: var(--workout-space-md) var(--workout-space-xl);
-    border: none;
-    border-radius: var(--button-radius, var(--workout-radius-md));
-    font-weight: var(--workout-font-weight-semibold);
-    font-size: var(--workout-font-base);
-    cursor: pointer;
-    transition: var(--workout-transition);
+    @extend %workout-btn-base;
   }
 
-  & .workout-btn-primary,
   .workout-btn-primary {
     @extend %workout-btn-primary;
   }
 
-  & .workout-btn-secondary,
   .workout-btn-secondary {
     @extend %workout-btn-secondary;
 
     &:hover {
       @include workout-btn-secondary-hover;
-      transform: translateY(-1px);
     }
   }
 
-  & .workout-btn-warning,
   .workout-btn-warning {
     @extend %workout-btn-warning;
 
     &:hover {
       @include workout-btn-warning-hover;
-      transform: translateY(-1px);
+      @include workout-btn-lift(-1px);
     }
   }
-}
 
-/* Common button containers */
-.workout-add-log-button-container {
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+  // Modifier: add log layout
+  &.workout-add-log-button-container {
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-.workout-button-container {
-  margin-top: var(--workout-space-lg);
-}
+    .workout-btn-primary {
+      @extend %workout-btn-big;
+    }
+  }
 
-.workout-action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: var(--workout-space-md);
-}
-
-/* Single buttons */
-.workout-create-exercise-page-btn {
-  background: var(--interactive-success);
-  color: var(--text-on-accent);
-  border: none;
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  border-radius: var(--button-radius, var(--workout-radius-sm));
-  cursor: pointer;
-  font-size: var(--workout-font-xs);
-  font-weight: var(--workout-font-weight-medium);
-  transition: var(--workout-transition);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--workout-space-xs);
-
-  &:hover {
-    background: var(--interactive-success-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--workout-shadow-sm);
+  // Modifier: vertical action buttons
+  &.workout-action-buttons {
+    flex-direction: column;
   }
 }
 
-.workout-export-btn {
-  padding: var(--workout-space-sm) var(--workout-space-lg);
-  border: var(--workout-border-thin) solid var(--interactive-accent);
+/* ----------------------------------------------------------------------------
+   Charts Modal Buttons
+   ---------------------------------------------------------------------------- */
+
+.workout-charts-modal-main-container {
+  .workout-btn-primary,
+  .workout-btn-warning {
+    @extend %workout-btn-giant;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Single Context Buttons
+   ---------------------------------------------------------------------------- */
+
+.workout-exercise-autocomplete-no-found .workout-create-exercise-page-btn {
+  @extend %workout-btn-secondary;
+
+  &:hover {
+    @include workout-btn-secondary-hover;
+  }
+}
+
+.workout-achievement-badge .workout-update-target-button {
   @extend %workout-btn-primary;
-  border-radius: var(--button-radius, var(--workout-radius-md));
-  cursor: pointer;
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-medium);
-  transition: var(--workout-transition);
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--workout-shadow-md);
-  }
 }
 
-.workout-achievement-badge .workout-update-target-button,
-.workout-update-target-button {
-  @extend %workout-btn-primary;
-  border: none;
-  padding: var(--workout-space-xs) var(--workout-space-md);
-  border-radius: var(--workout-radius-sm);
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-semibold);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+/* ----------------------------------------------------------------------------
+   Toggle Buttons
+   ---------------------------------------------------------------------------- */
 
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--workout-shadow-sm);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-/* Toggle buttons */
-.workout-time-frame-toggle,
-.workout-view-toggle {
+.workout-frame-toggle {
   display: flex;
   gap: var(--workout-space-xs);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -161,14 +227,11 @@
   background: var(--background-secondary);
 
   .workout-toggle-btn {
+    @extend %workout-btn-secondary;
     padding: var(--workout-space-sm) var(--workout-space-lg);
-    border: none;
-    background: transparent;
     color: var(--text-muted);
     font-size: var(--workout-font-base);
     border-radius: var(--button-radius, var(--workout-radius-sm));
-    cursor: pointer;
-    transition: var(--workout-transition);
     font-weight: var(--workout-font-weight-medium);
 
     &:hover {
@@ -183,88 +246,88 @@
   }
 }
 
-/* Quick adjust buttons */
+/* ----------------------------------------------------------------------------
+   Quick Adjust Buttons (+/-)
+   ---------------------------------------------------------------------------- */
+
 .workout-adjust-buttons {
   display: flex;
   gap: var(--workout-space-xs);
 }
 
-.workout-adjust-buttons .workout-adjust-btn,
 .workout-adjust-btn {
+  @extend %workout-btn-interactive;
+  @include workout-btn-press;
   padding: var(--workout-space-xs) var(--workout-space-sm);
-  background: var(--interactive-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
-  color: var(--text-normal);
-  cursor: pointer;
-  font-size: var(--workout-font-sm);
-  font-weight: var(--workout-font-weight-medium);
-  transition: var(--workout-transition);
   min-width: 2rem;
-  text-align: center;
 
   &:hover {
     background: var(--interactive-hover);
     border-color: var(--interactive-accent);
   }
 
-  &:active {
-    transform: scale(0.95);
-  }
-
   &.workout-adjust-plus {
-    color: var(--text-success);
+    @include workout-btn-outlined(var(--text-success));
   }
 
   &.workout-adjust-minus {
-    color: var(--text-error);
+    @include workout-btn-outlined(var(--text-error));
   }
 }
 
-/* Quick log buttons */
-.workout-quick-log-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--workout-space-xl);
-  padding-top: var(--workout-space-lg);
-}
+/* ----------------------------------------------------------------------------
+   Quick Log Buttons
+   ---------------------------------------------------------------------------- */
 
-.workout-quick-log-button-container .workout-quick-log-confirm-btn,
-.workout-quick-log-confirm-btn {
-  min-width: 200px;
-  min-height: 48px;
-  padding: var(--workout-space-lg) var(--workout-space-2xl);
-  font-size: var(--workout-font-lg);
-  font-weight: var(--workout-font-weight-bold);
-  border-radius: var(--workout-radius-lg);
-  cursor: pointer;
+// Shared transition for quick log buttons
+%workout-quick-log-btn-base {
+  @extend %workout-btn-giant;
+  @extend %workout-btn-interactive;
+  @include workout-btn-press(0.98);
   transition:
     transform 0.1s ease,
     background-color 0.2s ease;
+}
 
-  &:active {
-    transform: scale(0.98);
-  }
+.workout-quick-log-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.workout-quick-log-cancel-btn {
+  @extend %workout-quick-log-btn-base;
+  @extend %workout-btn-secondary;
 
   &:hover {
-    transform: translateY(-2px);
+    @include workout-btn-secondary-hover;
   }
 }
 
-.workout-quick-log-weight-wrapper .workout-quick-log-weight-btn,
+.workout-quick-log-confirm-btn {
+  @extend %workout-quick-log-btn-base;
+  @extend %workout-btn-primary;
+  @include workout-btn-lift;
+}
+
+/* ----------------------------------------------------------------------------
+   Quick Log Weight Buttons
+   ---------------------------------------------------------------------------- */
+
 .workout-quick-log-weight-btn {
+  @extend %workout-btn-interactive;
+  flex-shrink: 0;
   min-width: 56px;
   min-height: 44px;
   padding: var(--workout-space-sm) var(--workout-space-md);
-  border-radius: var(--workout-radius-md);
-  border: 2px solid var(--background-modifier-border);
+
   background: var(--background-secondary);
+  border: 2px solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+
   color: var(--text-normal);
   font-size: var(--workout-font-base);
   font-weight: var(--workout-font-weight-bold);
-  cursor: pointer;
   transition: all 0.15s ease;
-  flex-shrink: 0;
 
   &:hover {
     background: var(--interactive-hover);
@@ -277,125 +340,94 @@
     color: var(--text-on-accent);
     border-color: var(--interactive-accent);
   }
-}
 
-.workout-quick-log-weight-wrapper .workout-quick-log-weight-btn-active,
-.workout-quick-log-weight-btn-active {
-  transform: scale(0.95);
-  @extend %workout-btn-primary;
-  border-color: var(--interactive-accent);
-}
+  // Decrement variant (red)
+  &-decrement {
+    @include workout-btn-outlined(var(--text-error));
 
-.workout-quick-log-weight-wrapper .workout-quick-log-weight-btn-decrement,
-.workout-quick-log-weight-btn-decrement {
-  color: var(--text-error);
+    &:hover {
+      background: rgba(var(--color-red-rgb), 0.1);
+    }
+  }
 
-  &:hover {
-    background: rgba(var(--color-red-rgb), 0.1);
-    border-color: var(--text-error);
+  // Increment variant (green)
+  &-increment {
+    @include workout-btn-outlined(var(--text-success));
+
+    &:hover {
+      background: rgba(var(--color-green-rgb), 0.1);
+    }
   }
 }
 
-.workout-quick-log-weight-wrapper .workout-quick-log-weight-btn-increment,
-.workout-quick-log-weight-btn-increment {
-  color: var(--text-success);
+/* ----------------------------------------------------------------------------
+   Timer Buttons
+   ---------------------------------------------------------------------------- */
 
-  &:hover {
-    background: rgba(var(--color-green-rgb), 0.1);
-    border-color: var(--text-success);
-  }
-}
-
-/* Timer buttons */
-.workout-timer .workout-timer-btn,
 .workout-timer-btn {
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  border: none;
-  border-radius: var(--button-radius, var(--workout-radius-md));
-  font-size: var(--workout-font-base);
-  cursor: pointer;
-  transition: var(--workout-transition);
-  background: var(--background-primary);
-  color: var(--text-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-  min-width: var(--workout-size-2xl);
-  height: var(--workout-size-2xl);
+  @extend %workout-btn-interactive;
+  @extend %workout-btn-big;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: var(--workout-size-2xl);
+  font-size: var(--workout-size-xl);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--button-radius, var(--workout-radius-md));
+  color: var(--text-normal);
 
   &:hover {
     background: var(--background-modifier-hover);
   }
-}
 
-.workout-timer .workout-timer-btn-start,
-.workout-timer-btn-start {
-  background: var(--interactive-success);
-  color: var(--text-on-accent);
+  &-start {
+    @extend %workout-btn-success;
+  }
 
-  &:hover {
-    background: var(--interactive-success-hover);
+  &-stop {
+    @extend %workout-btn-danger;
+  }
+
+  &-start-stop {
+    @extend %workout-btn-primary;
+    border-color: var(--interactive-accent);
+  }
+
+  &-reset {
+    background: var(--background-modifier-border);
+    color: var(--text-normal);
+
+    &:hover {
+      background: var(--background-modifier-border-hover);
+    }
   }
 }
 
-.workout-timer .workout-timer-btn-stop,
-.workout-timer-btn-stop {
-  background: var(--interactive-error);
-  color: var(--text-on-accent);
+/* ----------------------------------------------------------------------------
+   Table Action Buttons
+   ---------------------------------------------------------------------------- */
 
+// Shared hover effect for table actions
+@mixin workout-table-action-hover($bg-color) {
   &:hover {
-    background: var(--interactive-error-hover);
+    background: $bg-color;
+    color: var(--text-on-accent);
+    transform: scale(1.1);
   }
 }
 
-.workout-timer .workout-timer-start-stop,
-.workout-timer-start-stop {
-  @extend %workout-btn-primary;
-  border-color: var(--interactive-accent);
-}
-
-.workout-timer .workout-timer-reset,
-.workout-timer-reset {
-  background: var(--background-modifier-border);
-  color: var(--text-normal);
-
-  &:hover {
-    background: var(--background-modifier-border-hover);
-  }
-}
-
-/* Table action buttons */
-.workout-table .workout-table-action-btn,
 .workout-table-action-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--workout-space-sm) var(--workout-space-sm);
-  border-radius: var(--button-radius, var(--workout-radius-sm));
-  font-size: var(--workout-space-lg);
-  transition: var(--workout-transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  @extend %workout-btn-interactive;
+  @include workout-btn-press;
   min-width: var(--workout-size-2xl);
   height: var(--workout-size-2xl);
-
-  &:active {
-    transform: scale(0.95);
-  }
 }
 
-.workout-table .workout-table-edit-btn:hover,
-.workout-table-edit-btn:hover {
-  background: var(--interactive-accent);
-  color: var(--text-on-accent);
-  transform: scale(1.1);
+.workout-table-action-btn-edit {
+  @include workout-table-action-hover(var(--interactive-accent));
 }
 
-.workout-table .workout-table-delete-btn:hover,
-.workout-table-delete-btn:hover {
-  background: var(--text-error);
-  color: var(--text-on-accent);
-  transform: scale(1.1);
+.workout-table-action-btn-delete {
+  @include workout-table-action-hover(var(--text-error));
 }

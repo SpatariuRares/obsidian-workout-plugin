@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { ExerciseMatchUtils, ExerciseMatch } from "@app/utils/ExerciseMatchUtils";
 import { ChartDataUtils } from "@app/utils/ChartDataUtils";
+import { DateUtils } from "@app/utils/DateUtils";
 import { ValidationUtils } from "@app/utils/ValidationUtils";
 import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { TFile } from "obsidian";
@@ -498,38 +499,38 @@ describe("Utility Classes", () => {
     });
   });
 
-  describe("ChartDataUtils.formatDate", () => {
+  describe("DateUtils.formatDateWithFormat", () => {
     const testDate = new Date("2024-01-15T10:30:00");
 
     it("should format as DD/MM/YYYY by default", () => {
-      expect(ChartDataUtils.formatDate(testDate)).toBe("15/01/2024");
+      expect(DateUtils.formatDateWithFormat(testDate)).toBe("15/01/2024");
     });
 
     it("should format as YYYY-MM-DD", () => {
-      expect(ChartDataUtils.formatDate(testDate, "YYYY-MM-DD")).toBe("2024-01-15");
+      expect(DateUtils.formatDateWithFormat(testDate, "YYYY-MM-DD")).toBe("2024-01-15");
     });
 
     it("should format as MM/DD/YYYY", () => {
-      expect(ChartDataUtils.formatDate(testDate, "MM/DD/YYYY")).toBe("01/15/2024");
+      expect(DateUtils.formatDateWithFormat(testDate, "MM/DD/YYYY")).toBe("01/15/2024");
     });
 
     it("should format as DD/MM/YYYY when specified", () => {
-      expect(ChartDataUtils.formatDate(testDate, "DD/MM/YYYY")).toBe("15/01/2024");
+      expect(DateUtils.formatDateWithFormat(testDate, "DD/MM/YYYY")).toBe("15/01/2024");
     });
 
     it("should handle string dates", () => {
-      expect(ChartDataUtils.formatDate("2024-01-15T10:30:00", "YYYY-MM-DD")).toBe(
+      expect(DateUtils.formatDateWithFormat("2024-01-15T10:30:00", "YYYY-MM-DD")).toBe(
         "2024-01-15"
       );
     });
 
     it("should pad single digits with zero", () => {
       const date = new Date("2024-01-05T10:30:00");
-      expect(ChartDataUtils.formatDate(date, "DD/MM/YYYY")).toBe("05/01/2024");
+      expect(DateUtils.formatDateWithFormat(date, "DD/MM/YYYY")).toBe("05/01/2024");
     });
 
     it("should handle invalid format by using default", () => {
-      expect(ChartDataUtils.formatDate(testDate, "INVALID" as "DD/MM/YYYY")).toBe(
+      expect(DateUtils.formatDateWithFormat(testDate, "INVALID" as "DD/MM/YYYY")).toBe(
         "15/01/2024"
       );
     });

@@ -5,34 +5,13 @@ import {
   CHART_DATA_TYPE,
   CHART_TYPE,
 } from "@app/types";
+import { DateUtils } from "@app/utils/DateUtils";
 
 /**
  * Utility class for chart data processing operations
  * Handles data transformation for Chart.js visualizations
  */
 export class ChartDataUtils {
-  /**
-   * Format date for display in charts
-   */
-  static formatDate(
-    date: string | Date,
-    format: string = "DD/MM/YYYY"
-  ): string {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
-    switch (format) {
-      case "YYYY-MM-DD":
-        return `${year}-${month}-${day}`;
-      case "MM/DD/YYYY":
-        return `${month}/${day}/${year}`;
-      case "DD/MM/YYYY":
-      default:
-        return `${day}/${month}/${year}`;
-    }
-  }
-
   /**
    * Helper to extract a number from customFields (case-insensitive key matching)
    */
@@ -190,7 +169,7 @@ export class ChartDataUtils {
     >();
 
     filteredData.forEach((log) => {
-      const dateKey = this.formatDate(log.date, dateFormat);
+      const dateKey = DateUtils.formatDateWithFormat(log.date, dateFormat);
       const existing = dateGroups.get(dateKey) || {
         volume: 0,
         weight: 0,

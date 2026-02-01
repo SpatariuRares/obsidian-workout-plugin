@@ -1,201 +1,209 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/dynamic-exercise-types",
-  "description": "Dynamic Exercise Types - Support different exercise types with custom parameters (time-based, distance, cardio, custom)",
+  "branchName": "ralph/duplicate-logic-refactor",
+  "description": "Eliminate duplicate code patterns to improve maintainability: consolidate formatDate, extract custom fields utility, refactor modal opening patterns, and standardize workout toggle handlers.",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Define Exercise Type Schema Interface",
-      "description": "As a developer, I need TypeScript interfaces to represent exercise type definitions so the system can understand what parameters each exercise requires.",
+      "title": "Consolidate formatDate into DateUtils",
+      "description": "As a developer, I want a single date formatting function so that date logic is consistent and bug fixes apply everywhere.",
       "acceptanceCriteria": [
-        "Create ExerciseTypeDefinition interface in app/types/ExerciseTypes.ts with: id (string), name (string), parameters (ParameterDefinition[])",
-        "Create ParameterDefinition interface with: key, label, type ('number'|'string'|'boolean'), unit?, required, default?, min?, max?",
-        "Create ExerciseDefinition interface with: name, typeId, muscleGroups?, customParameters?",
-        "Export interfaces from barrel file app/types/index.ts",
+        "Delete the `formatDate()` method from `app/utils/ChartDataUtils.ts` (lines 17-34)",
+        "Replace all internal usages of `this.formatDate()` in ChartDataUtils with `DateUtils.formatDateWithFormat()`",
+        "Add import for DateUtils at top of ChartDataUtils.ts",
+        "Chart labels still display dates correctly in formats: DD/MM/YYYY, YYYY-MM-DD, MM/DD/YYYY",
+        "npm run lint passes",
+        "npm test passes",
         "Typecheck passes"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Completed 2026-01-29: Created ExerciseTypes.ts with ParameterDefinition, ExerciseTypeDefinition, and ExerciseDefinition interfaces. Exported from barrel file."
+      "notes": "Completed 2026-02-01. Removed duplicate formatDate from ChartDataUtils, now uses DateUtils.formatDateWithFormat. Updated tests in utils.test.ts to test DateUtils.formatDateWithFormat instead."
     },
     {
       "id": "US-002",
-      "title": "Create Built-in Exercise Type Definitions",
-      "description": "As a user, I want predefined exercise types (Strength, Timed, Distance, Cardio, Custom) so I can quickly create common exercises without manual configuration.",
+      "title": "Create FormUtils with setupWorkoutToggle",
+      "description": "As a developer, I want a reusable workout toggle handler so the enable/disable logic is consistent across all modals.",
       "acceptanceCriteria": [
-        "Create app/constants/exerciseTypes.constants.ts with built-in types: Strength (reps+weight), Timed (duration), Distance (distance+optional duration), Cardio (duration+optional distance/heartRate), Custom (no predefined params)",
-        "Export BUILT_IN_EXERCISE_TYPES: ExerciseTypeDefinition[] array",
-        "Export getExerciseTypeById(id: string): ExerciseTypeDefinition | undefined helper function",
-        "Update app/constants/index.ts barrel to export new constants",
+        "Create new file `app/utils/FormUtils.ts`",
+        "Add function `setupWorkoutToggle(toggle: HTMLInputElement, workoutInput: HTMLInputElement, getFileName: () => string): void`",
+        "Function adds change event listener that: when checked, disables input, sets value to getFileName(), adds 'workout-opacity-50' class, removes 'workout-opacity-100' class; when unchecked, enables input, clears value, adds 'workout-opacity-100' class, removes 'workout-opacity-50' class",
+        "Function also sets initial state based on toggle.checked",
+        "Export function from FormUtils.ts",
+        "npm run lint passes",
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Created exerciseTypes.constants.ts with 5 built-in types (Strength, Timed, Distance, Cardio, Custom), EXERCISE_TYPE_IDS enum, BUILT_IN_EXERCISE_TYPES array, getExerciseTypeById helper, and DEFAULT_EXERCISE_TYPE_ID. Exported from barrel."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Create ExerciseDefinitionService",
-      "description": "As a developer, I need a service to load, save, and manage exercise definitions from exercise folder .md frontmatter files.",
+      "title": "Add fillDynamicInputsFromCustomFields to FormUtils",
+      "description": "As a developer, I want a shared utility for filling form inputs from custom fields so that the logic is consistent and null-handling is uniform.",
       "acceptanceCriteria": [
-        "Create app/services/ExerciseDefinitionService.ts with: getExerciseDefinition(name), getAllExerciseDefinitions(), saveExerciseDefinition(definition), getParametersForExercise(name)",
-        "Parse exercise_type field from frontmatter (default: 'strength' for backward compatibility)",
-        "Parse parameters field from frontmatter as YAML array for custom parameters",
-        "Cache definitions with 10-second TTL (similar to DataService pattern)",
-        "Register service in main.ts plugin initialization",
+        "Add function `fillDynamicInputsFromCustomFields(customFields: Record<string, string | number | boolean> | undefined, inputMap: Map<string, HTMLInputElement>): void` to FormUtils.ts",
+        "Function iterates Object.entries(customFields) when defined",
+        "For each [key, value]: skip if value is null or undefined, get input from inputMap.get(key)",
+        "If input exists and input.type === 'checkbox', set input.checked = Boolean(value)",
+        "Otherwise set input.value = String(value)",
+        "Export function from FormUtils.ts",
+        "npm run lint passes",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Created ExerciseDefinitionService.ts with all required methods. Service parses exercise_type and parameters from frontmatter YAML. Uses 10-second cache TTL with race condition prevention. Added getExerciseType() and getParametersForExercise() helpers. Registered in main.ts with cleanup in onunload(). Exposed via getExerciseDefinitionService() getter."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Extend CSV Schema for Dynamic Columns",
-      "description": "As a developer, I need the CSV interfaces and parser to support dynamic columns so new exercise parameters can be stored.",
+      "title": "Add unit tests for FormUtils",
+      "description": "As a developer, I want unit tests for the new FormUtils functions to ensure they work correctly.",
       "acceptanceCriteria": [
-        "Update WorkoutLogData interface to include customFields?: Record<string, string | number | boolean>",
-        "Update CSVWorkoutLogEntry interface similarly",
-        "Modify parseCSVLogFile() in WorkoutLogData.ts to read CSV header dynamically and map unknown columns to customFields",
-        "Modify formatCSVLogEntry() to write known columns first, then custom field columns",
-        "Ensure empty/null values written as empty string (nullable columns)",
-        "Backward compatible: existing CSVs with only standard columns still work",
+        "Create `app/utils/__tests__/FormUtils.test.ts`",
+        "Test setupWorkoutToggle: toggle checked state disables input and sets value",
+        "Test setupWorkoutToggle: toggle unchecked state enables input and clears value",
+        "Test setupWorkoutToggle: correct CSS classes applied (workout-opacity-50, workout-opacity-100)",
+        "Test fillDynamicInputsFromCustomFields: text input filling works",
+        "Test fillDynamicInputsFromCustomFields: checkbox input filling works (Boolean conversion)",
+        "Test fillDynamicInputsFromCustomFields: null/undefined values are skipped",
+        "Test fillDynamicInputsFromCustomFields: missing input keys are handled gracefully",
+        "npm test passes",
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Added customFields to both WorkoutLogData and CSVWorkoutLogEntry interfaces. Added STANDARD_CSV_COLUMNS constant. Updated parseCSVLogFile() to detect custom columns from header and parse values as number/boolean/string. Updated entryToCSVLine() to accept custom columns and write them. Updated entriesToCSVContent() to build header dynamically. Added collectCustomColumns() helper. All 42 WorkoutLogData tests pass including 17 new custom fields tests."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Extend DataService for Dynamic Column Management",
-      "description": "As a developer, I need DataService to handle CSV files with varying columns and add new columns when needed.",
+      "title": "Refactor CreateExerciseSectionModal to use FormUtils",
+      "description": "As a developer, I want CreateExerciseSectionModal to use the shared toggle utility.",
       "acceptanceCriteria": [
-        "Add method getCSVColumns(): Promise<string[]> to return current CSV header columns",
-        "Add method ensureColumnExists(columnName: string): Promise<void> to add column if missing",
-        "Modify addWorkoutLogEntry() to check entry customFields for new columns, call ensureColumnExists() before writing",
-        "Modify updateWorkoutLogEntry() similarly for new columns",
-        "Clear cache after column structure changes",
+        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
+        "Replace inline currentWorkoutToggle.addEventListener('change', ...) at lines 150-162 with call to setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => this.getCurrentFileName())",
+        "Remove the inline toggle handler code",
+        "Behavior remains identical: toggling enables/disables workout input",
+        "npm run lint passes",
+        "npm test passes",
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Added getCSVColumns() method to read CSV header columns, ensureColumnExists() method to add new custom columns dynamically. Updated addWorkoutLogEntry() and updateWorkoutLogEntry() to call ensureColumnExists() for each custom field before writing. Cache is cleared after column structure changes. Added 12 new tests covering all acceptance criteria. All 397 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Update CreateExercisePageModal for Exercise Types",
-      "description": "As a user, I want to select an exercise type when creating a new exercise so the system knows what parameters to track.",
+      "title": "Refactor TargetSectionWithAutocomplete to use FormUtils",
+      "description": "As a developer, I want TargetSectionWithAutocomplete to use the shared toggle utility.",
       "acceptanceCriteria": [
-        "Add exercise type dropdown to CreateExercisePageModal after exercise name input showing: Strength, Timed, Distance, Cardio, Custom",
-        "When 'Custom' selected, show UI to add custom parameters: 'Add Parameter' button with key/label/type/unit/required inputs",
-        "Update exercise page template to include exercise_type in frontmatter",
-        "Update exercise page template to include parameters in frontmatter for custom type",
-        "Default selection: 'Strength' for backward compatibility",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
+        "Replace handleCurrentWorkoutToggle function at lines 126-138 with call to setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => currentFileName)",
+        "Remove the handleCurrentWorkoutToggle function definition",
+        "Update handlers object to not include handleCurrentWorkoutToggle (or remove if unused)",
+        "Remove the currentWorkoutToggle.addEventListener('change', handleCurrentWorkoutToggle) at line 146",
+        "Behavior remains identical",
+        "npm run lint passes",
+        "npm test passes",
+        "Typecheck passes"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Added exercise type dropdown with 5 options (Strength, Timed, Distance, Cardio, Custom). Custom type shows dynamic parameter builder UI with Add/Remove buttons, key/label/type/unit/required inputs. Updated frontmatter template to include exercise_type field and parameters array for custom types. Added UI constants for labels, placeholders, and select options. Added CSS styles for custom parameters section. Default selection is 'Strength' for backward compatibility. All 397 tests pass. Browser verification pending."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Update CreateLogModal for Dynamic Fields",
-      "description": "As a user creating a log entry, I want the form to show fields based on the exercise type, so I can enter the correct data for that type of exercise.",
+      "title": "Refactor LogFormRenderer to use FormUtils",
+      "description": "As a developer, I want LogFormRenderer to use the shared toggle utility and standardized CSS classes.",
       "acceptanceCriteria": [
-        "CreateLogModal fetches exercise definition when exercise is selected or pre-populated",
-        "Modal renders input fields based on exercise type's parameter definitions",
-        "Fields use correct input type (number/text/checkbox) and validation (min/max/required)",
-        "For exercises without type definitions, default to strength type fields (reps, weight)",
-        "Custom parameter values are saved in WorkoutLogData.customFields",
-        "Form validation respects required parameters",
-        "Legacy logs without customFields continue to work",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
+        "Replace setupCurrentWorkoutToggle method (lines 153-179) with call to setupWorkoutToggle",
+        "Note: CSS classes change from 'opacity-50'/'opacity-100' to 'workout-opacity-50'/'workout-opacity-100' (standardization)",
+        "Remove the old setupCurrentWorkoutToggle method",
+        "Behavior remains identical",
+        "npm run lint passes",
+        "npm test passes",
+        "Typecheck passes"
       ],
       "priority": 7,
-      "passes": true
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Update EditLogModal for Dynamic Fields",
-      "description": "As a user, I want to edit log entries and see the correct fields for that exercise's type.",
+      "title": "Refactor BaseLogModal to use fillDynamicInputsFromCustomFields",
+      "description": "As a developer, I want BaseLogModal.preFillForm to use the shared custom fields utility.",
       "acceptanceCriteria": [
-        "Load exercise definition when modal opens using ExerciseDefinitionService",
-        "Populate form fields from both standard fields and customFields",
-        "Same dynamic field rendering as CreateLogModal (US-007)",
-        "Preserve all field values on save including customFields",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Import fillDynamicInputsFromCustomFields from '@app/utils/FormUtils'",
+        "In preFillForm method, replace lines 189-201 (the for loop for customFields) with: fillDynamicInputsFromCustomFields(data.customFields, formElements.dynamicFieldInputs)",
+        "Remove the inline for loop",
+        "Behavior remains identical: form pre-fills with custom field values",
+        "npm run lint passes",
+        "npm test passes",
+        "Typecheck passes"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Updated EditLogModal.getPreFillData() to include customFields from originalLog. Added renderParameterField() helper to BaseLogModal for creating dynamic input fields (number/boolean/string types). Updated createFormElements() to load exercise definition and render custom parameter fields when exercise name is known. Updated preFillForm() to populate custom fields from LogFormData. All 397 tests pass and typecheck passes."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-009",
-      "title": "Update TableRenderer for Dynamic Columns",
-      "description": "As a user, I want tables to show columns relevant to each exercise type automatically.",
+      "title": "Refactor LogFormRenderer to use fillDynamicInputsFromCustomFields",
+      "description": "As a developer, I want LogFormRenderer.autoFillFromLastEntry to use the shared custom fields utility.",
       "acceptanceCriteria": [
-        "TableRenderer reads exercise definition for filtered exercise",
-        "If single exercise filter: show only that exercise's parameter columns",
-        "If multiple exercises: show union of all parameter columns with empty cells for missing params",
-        "Column headers use parameter labels with units in parentheses, e.g., 'Duration (sec)'",
-        "Support explicit columns config to override automatic detection",
-        "Default columns for no filter: Date, Exercise, Reps, Weight, Volume (backward compatible)",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Import fillDynamicInputsFromCustomFields from '@app/utils/FormUtils' (may already be imported from US-007)",
+        "In autoFillFromLastEntry method, replace lines 281-293 (the for loop for customFields) with: fillDynamicInputsFromCustomFields(lastEntry.customFields, formElements.dynamicFieldInputs)",
+        "Remove the inline for loop",
+        "Behavior remains identical: form auto-fills with last entry's custom field values",
+        "npm run lint passes",
+        "npm test passes",
+        "Typecheck passes"
       ],
       "priority": 9,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Added dynamic column detection in TableDataProcessor.processTableData(). Created determineColumnsForExercise() method that fetches exercise definitions via ExerciseDefinitionService and returns formatted headers with units (e.g., 'Duration (sec)'). Updated processRowsEfficiently() to map customFields to dynamic columns with case-insensitive matching. Updated EmbeddedTableView to pass plugin parameter. Single exercise filter shows exercise-specific columns, no filter shows default columns (backward compatible), explicit columns parameter overrides all. All 397 tests pass. Ready for manual browser testing."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-010",
-      "title": "Update ChartRenderer for Dynamic Data Types",
-      "description": "As a user, I want charts to visualize the appropriate metric for each exercise type.",
+      "title": "Extract openCreateLogModal helper in LogCallouts",
+      "description": "As a developer, I want the modal opening logic in one place so changes to modal instantiation only need one update.",
       "acceptanceCriteria": [
-        "ChartRenderer reads exercise definition for filtered exercise",
-        "Determine available chart data types from exercise parameters: strength->volume/weight/reps, timed->duration, distance->distance/duration/pace, custom->all numeric params",
-        "Update type parameter to accept any numeric parameter key not just volume/weight/reps",
-        "Default type based on exercise type: strength->volume, timed->duration, distance->distance",
-        "Show error message if requested type not available for exercise",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
+        "Add private static method `openCreateLogModal(plugin: WorkoutChartsPlugin, exerciseName?: string, onComplete?: () => void): void` to LogCallouts class",
+        "Method gets activeView from plugin.app.workspace.getActiveViewOfType(MarkdownView)",
+        "Method computes currentPageLink as activeView?.file ? `[[${activeView.file.basename}]]` : ''",
+        "Method opens new CreateLogModal(plugin.app, plugin, exerciseName, currentPageLink, onComplete || (() => plugin.triggerWorkoutLogRefresh()))",
+        "Update renderCsvNoDataMessage (lines 42-57) to use: this.openCreateLogModal(plugin, exerciseName)",
+        "Update renderCreateLogButtonForExercise (lines 121-136) to use: this.openCreateLogModal(plugin, exerciseName)",
+        "Both buttons still open the modal correctly",
+        "Refresh still triggers after modal close",
+        "npm run lint passes",
+        "npm test passes",
+        "Typecheck passes"
       ],
       "priority": 10,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Extended CHART_DATA_TYPE with DURATION, DISTANCE, PACE, HEART_RATE. Added ChartConstants mapping exercise types to valid chart data types. Updated processChartData to extract custom fields and calculate pace/stats. Updated EmbeddedChartView with dynamic type resolution and validation against exercise definition. All tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-011",
-      "title": "Update InsertChartModal for Dynamic Types",
-      "description": "As a user, I want the chart insert modal to show valid data type options based on the selected exercise.",
+      "title": "Final validation and cleanup",
+      "description": "As a developer, I want to verify no dead code remains and all tests pass.",
       "acceptanceCriteria": [
-        "When exercise selected, fetch its ExerciseDefinition",
-        "Update 'Data Type' dropdown to show only valid options for that exercise type",
-        "Update preview to reflect selected exercise's available chart types",
-        "Typecheck passes",
-        "Verify in browser using dev-browser skill"
-      ],
-      "priority": 11,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Updated InsertChartModal to listen for exercise changes. Added `updateDataTypeOptions` which fetches exercise definition via ExerciseDefinitionService, calculates available chart data types using ChartConstants, and dynamically updates the Data Type dropdown options. Handles custom parameters and units. Modified ExerciseAutocomplete to support change event distribution. All tests and typecheck pass."
-    },
-    {
-      "id": "US-012",
-      "title": "Add Exercise Type Migration Utility",
-      "description": "As a user with existing data, I want my current exercises to work without modification, with optional migration command.",
-      "acceptanceCriteria": [
-        "Exercises without exercise_type frontmatter default to 'strength'",
-        "CSV entries without customFields work with standard reps/weight parsing",
-        "Add optional command 'Migrate Exercise Types' that scans exercise folder, adds exercise_type: strength to files missing it, reports count of updated files",
+        "No unused imports in any modified files",
+        "ChartDataUtils.ts no longer contains formatDate method",
+        "LogFormRenderer.ts no longer contains setupCurrentWorkoutToggle method",
+        "CreateExerciseSectionModal.ts no longer contains inline toggle handler",
+        "TargetSectionWithAutocomplete.ts no longer contains handleCurrentWorkoutToggle function",
+        "BaseLogModal.ts no longer contains inline customFields for loop",
+        "LogCallouts.ts no longer contains duplicate modal opening code",
+        "npm run lint passes with no warnings",
+        "npm test passes with no failures",
+        "npm run build succeeds",
         "Typecheck passes"
       ],
-      "priority": 12,
-      "passes": true,
-      "notes": "Completed 2026-01-29: Added 'Migrate Exercise Types' command. It scans the configured exercise folder and adds 'exercise_type: strength' to any markdown file missing the exercise_type field in frontmatter. Reports the number of updated files via Notice."
+      "priority": 11,
+      "passes": false,
+      "notes": ""
     }
   ]
 }

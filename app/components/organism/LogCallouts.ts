@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { MarkdownView } from "obsidian";
 import { Button, Text } from "@app/components/atoms";
-import { EmptyState } from "@app/components/molecules";
+import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -34,9 +34,12 @@ export class LogCallouts {
     plugin: WorkoutChartsPlugin,
     exerciseName?: string
   ): void {
-    const noDataDiv = container.createEl("div", {
-      cls: "workout-log-no-data",
-    });
+    Feedback.renderEmpty(
+      container,
+      "", 
+        { className: "workout-log-no-data" }
+    );
+    const noDataDiv = container.querySelector(".workout-log-no-data") as HTMLElement;
 
     noDataDiv.createEl("p");
     Text.create(noDataDiv, {
@@ -128,10 +131,9 @@ export class LogCallouts {
   }
 
   static renderNoMatchMessage(container: HTMLElement): void {
-    EmptyState.create(container, {
+    Feedback.renderInfo(container, CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE, {
       icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
-      message: CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE,
-      className: "workout-log-no-match",
+      className: "workout-log-no-match"
     });
   }
 

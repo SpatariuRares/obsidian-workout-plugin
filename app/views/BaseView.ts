@@ -3,7 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { LoadingSpinner, InfoBanner } from "@app/components/molecules";
-import { ErrorMessage } from "@app/components/atoms";
+import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import {
   CHART_TYPE,
@@ -24,18 +24,16 @@ export abstract class BaseView {
   protected logDebug(
     _className: string,
     _message: string,
-    _data?: unknown
+    _data?: unknown,
   ): void {}
 
   /**
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
-    ErrorMessage.render(
-      container,
-      error.message,
-      CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC
-    );
+    Feedback.renderError(container, error.message, {
+      title: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
+    });
   }
 
   /**
@@ -44,7 +42,7 @@ export abstract class BaseView {
   protected handleEmptyData(
     container: HTMLElement,
     logData: WorkoutLogData[],
-    exerciseName?: string
+    exerciseName?: string,
   ): boolean {
     if (logData.length === 0) {
       LogCallouts.renderCsvNoDataMessage(container, this.plugin, exerciseName);
@@ -61,23 +59,22 @@ export abstract class BaseView {
     container: HTMLElement,
     params: EmbeddedViewParams,
     titlePrefix: string,
-    viewType: VIEW_TYPES
+    viewType: VIEW_TYPES,
   ): void {
     // Check if this is a combined exercise + workout case
     if (titlePrefix && titlePrefix.includes(" + ")) {
       const [exercise, workout] = titlePrefix.split(" + ");
       const workoutFilename =
         workout.split("/").pop()?.replace(/\.md$/i, "") || workout;
-      InfoBanner.render(
+      Feedback.renderWarning(
         container,
         `No data found for exercise ${exercise} in workout ${workoutFilename}.`,
-        "warning"
       );
       if (exercise) {
         LogCallouts.renderCreateLogButtonForExercise(
           container,
           exercise,
-          this.plugin
+          this.plugin,
         );
       }
       return;
@@ -100,10 +97,9 @@ export abstract class BaseView {
           );
 
     if (isWorkoutView) {
-      InfoBanner.render(
+      Feedback.renderWarning(
         container,
         `No data found for workout ${titlePrefix}.`,
-        "warning"
       );
     } else {
       const exerciseName =
@@ -115,7 +111,7 @@ export abstract class BaseView {
         LogCallouts.renderCreateLogButtonForExercise(
           container,
           exerciseName,
-          this.plugin
+          this.plugin,
         );
       }
     }
@@ -128,7 +124,7 @@ export abstract class BaseView {
     return LoadingSpinner.create(container, {
       message: "Loading data...",
       icon: "⏳",
-      className: "workout-charts-loading",
+      className: "workout-feedback-info",
     });
   }
 
@@ -144,12 +140,12 @@ export abstract class BaseView {
    */
   protected validateAndHandleErrors(
     container: HTMLElement,
-    validationErrors: string[]
+    validationErrors: string[],
   ): boolean {
     if (validationErrors.length > 0) {
-      ErrorMessage.render(
+      Feedback.renderError(
         container,
-        `Invalid parameters:\n${validationErrors.join("\n")}`
+        `Invalid parameters:\n${validationErrors.join("\n")}`,
       );
       return false;
     }
@@ -160,6 +156,6 @@ export abstract class BaseView {
    * Common success message pattern
    */
   protected showSuccessMessage(container: HTMLElement, message: string): void {
-    InfoBanner.render(container, message, "success");
+    Feedback.renderSuccess(container, message);
   }
 }

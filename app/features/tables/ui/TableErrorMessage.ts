@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Feedback } from "@app/components/atoms/Feedback";
 /**
  * UI component for rendering error messages.
  * Pure UI logic with no business dependencies.
@@ -13,13 +14,9 @@ export class TableErrorMessage {
   static render(
     container: HTMLElement,
     message: string,
-    title = CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC
+    title = CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
   ): void {
-    const errorDiv = container.createEl("div", {
-      cls: "workout-table-error",
-    });
-    errorDiv.createEl("strong", { text: `${title}:` });
-    errorDiv.append(` ${message}`);
+    Feedback.renderError(container, message, { title });
   }
 
   /**
@@ -28,10 +25,7 @@ export class TableErrorMessage {
    * @param message - Error message to display
    */
   static renderSimple(container: HTMLElement, message: string): void {
-    container.createEl("div", {
-      cls: "workout-table-error",
-      text: message,
-    });
+    Feedback.renderError(container, message);
   }
 
   /**
@@ -39,7 +33,7 @@ export class TableErrorMessage {
    * @param container - The container element
    */
   static clear(container: HTMLElement): void {
-    const errorDivs = container.querySelectorAll(".workout-table-error");
+    const errorDivs = container.querySelectorAll(".workout-feedback-error");
     errorDivs.forEach((div) => div.remove());
   }
 }

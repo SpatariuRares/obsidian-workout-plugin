@@ -29,6 +29,7 @@ import {
 } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
+import { Feedback } from "@app/components/atoms/Feedback";
 
 export class EmbeddedChartView extends BaseView {
   constructor(plugin: WorkoutChartsPlugin) {
@@ -231,18 +232,7 @@ export class EmbeddedChartView extends BaseView {
    * Renders an error message when the chart data type is not available.
    */
   private renderChartTypeError(container: HTMLElement, message: string): void {
-    container.empty();
-    const errorDiv = container.createEl("div", {
-      cls: "workout-chart-error",
-    });
-    errorDiv.createEl("span", {
-      cls: "workout-chart-error-icon",
-      text: "⚠️",
-    });
-    errorDiv.createEl("span", {
-      cls: "workout-chart-error-message",
-      text: message,
-    });
+    Feedback.renderError(container, message);
   }
 
   private validateChartParams(

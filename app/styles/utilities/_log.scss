@@ -25,19 +25,4 @@
       margin-top: var(--workout-space-md);
     }
   }
-
-  .workout-log-error,
-  .workout-log-no-data {
-    padding: var(--workout-space-xl);
-    text-align: center;
-    color: var(--text-muted);
-    background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    border-radius: var(--workout-radius-md);
-    margin: var(--workout-space-lg) 0;
-  }
-  .workout-log-error {
-    color: var(--text-error);
-    border-color: var(--text-error);
-  }
 }

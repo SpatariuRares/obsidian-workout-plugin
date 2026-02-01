@@ -2,189 +2,77 @@
    FEEDBACK & ALERTS
    ============================================================================ */
 
-/* Error Messages */
-.workout-chart-error,
-.workout-table-error {
-  padding: var(--workout-space-xl);
-  margin: var(--workout-space-lg) 0;
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--text-error);
-  border-radius: var(--workout-radius-lg);
-  color: var(--text-error);
-  font-weight: var(--workout-font-weight-medium);
-}
+/* ------------------------------------------------------------------
+   Mixins & Placeholders
+   ------------------------------------------------------------------ */
 
-.workout-dashboard-error {
-  background: var(--background-modifier-error);
-  color: var(--text-on-accent);
+// Base container for feedback/alerts
+%feedback-container {
+  display: block; // Ensure block formatting context
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  margin: var(--workout-space-lg) 0;
   padding: var(--workout-space-lg);
-  border-radius: var(--workout-radius-md);
-  margin: var(--workout-space-lg) 0;
-  border: var(--workout-border-thin) solid var(--color-red);
-  font-weight: var(--workout-font-weight-medium);
+  border: var(--workout-border-thin) solid transparent;
 }
 
-/* File Errors */
-.workout-file-errors {
-  // Styles for the container if needed, currently seemingly handled by layout classes used with it (e.g. .workout-dashboard-widget)
-  
-  &-success {
-    color: var(--text-success);
-    font-weight: var(--workout-font-weight-medium);
-    text-align: center;
-    padding: var(--workout-space-lg);
-    background: var(--background-secondary);
-    border-radius: var(--workout-radius-md);
-    border: var(--workout-border-thin) solid var(--text-success);
-  }
-
-  &-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .workout-file-error-item {
-    padding: var(--workout-space-md) 0;
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .workout-file-error-name {
-      margin-bottom: var(--workout-space-sm);
-    }
-
-    .workout-file-error-link {
-      color: var(--text-accent);
-      font-weight: var(--workout-font-weight-semibold);
-      text-decoration: none;
-      cursor: pointer;
-      transition: var(--workout-transition);
-
-      &:hover {
-        color: var(--text-accent-hover);
-        text-decoration: underline;
-      }
-    }
-
-    .workout-file-error-messages {
-      list-style: none;
-      margin: var(--workout-space-sm) 0 0 0;
-      padding: 0;
-    }
-
-    .workout-file-error-message {
-      color: var(--text-warning);
-      font-size: var(--workout-font-sm);
-      padding: var(--workout-space-xs) 0;
-      display: flex;
-      align-items: center;
-      gap: var(--workout-space-sm);
-    }
-  }
-}
-
-.workout-csv-mode-indicator {
-  background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  margin-bottom: var(--workout-space-lg);
-  font-size: var(--workout-space-md);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-
-  &-icon {
-    color: var(--interactive-accent);
-  }
-}
-
-.workout-imbalance-alert {
-  background: var(--workout-color-warning-bg);
-  border: var(--workout-border-thin) solid var(--workout-color-warning-border);
-  border-radius: var(--workout-radius-md);
-  padding: var(--workout-space-md);
-  margin-top: var(--workout-space-md);
-
-  .workout-alert-title {
-    margin: 0 0 8px 0;
-    color: var(--workout-color-warning-text);
-    font-size: var(--workout-font-base);
-    font-weight: var(--workout-font-weight-semibold);
-  }
-
-  .workout-alert-message {
-    margin: var(--workout-space-xs) 0;
-    color: var(--workout-color-warning-text);
-    font-size: var(--workout-font-base);
-  }
-}
-
-.workout-success-message {
-  color: var(--workout-color-success);
-  font-weight: var(--workout-font-weight-medium);
-}
-
-.workout-info-message {
-  color: var(--text-muted);
-  font-style: italic;
-  text-align: center;
-  padding: var(--workout-space-xl);
-}
-
-/* Loading & Empty States */
-.workout-charts-loading,
-.workout-log-no-data,
-.workout-charts-no-data {
+// Centered empty/loading state
+%empty-state {
+  @extend %feedback-container;
   text-align: center;
   padding: var(--workout-space-4xl) var(--workout-space-xl);
   color: var(--text-muted);
   font-style: italic;
-  background: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
-  margin: var(--workout-space-lg) 0;
 }
 
-/* Log specific error/no-data */
-.workout-log {
-  &-error,
-  &-no-data {
-    padding: var(--workout-space-xl);
-    text-align: center;
-    color: var(--text-muted);
-    background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    border-radius: var(--workout-radius-md);
-    margin: var(--workout-space-lg) 0;
+/* ------------------------------------------------------------------
+   Error Messages
+   ------------------------------------------------------------------ */
+
+.workout-feedback-error {
+  @extend %feedback-container;
+  padding: var(--workout-space-xl);
+  border-color: var(--text-error);
+  border-radius: var(--workout-radius-lg);
+  color: var(--text-error);
+  gap: var(--workout-space-sm);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+.workout-feedback-success {
+  @extend %feedback-container;
+  color: var(--text-success);
+  border-color: var(--text-success);
+  font-weight: var(--workout-font-weight-medium);
+}
+
+/* ------------------------------------------------------------------
+   Loading & Empty States
+   ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------
+   Misc Indicators & Messages
+   ------------------------------------------------------------------ */
+
+.workout-feedback-warning {
+  @extend %feedback-container;
+  border-color: var(--workout-color-warning-border);
+  color: var(--workout-color-warning-text);
+
+  .workout-alert-title {
+    margin: 0 0 var(--workout-space-sm) 0;
   }
 
-  &-error {
-    color: var(--text-error);
-    border-color: var(--text-error);
+  .workout-alert-message {
+    margin: 0;
+    color: inherit;
   }
+}
 
-  &-no-data {
-    /* Inherits structure from above, specific inner content styling */
-    padding: var(--workout-space-4xl) var(--workout-space-xl);
-
-    p {
-      margin: var(--workout-space-sm) 0;
-    }
-
-    code {
-      background: var(--background-primary);
-      padding: var(--workout-space-xs) var(--workout-space-sm);
-      border-radius: var(--workout-radius-sm);
-      font-family: monospace;
-      color: var(--text-accent);
-    }
-
-    button {
-      margin-top: var(--workout-space-md);
-    }
-  }
+.workout-feedback-info {
+  @extend %feedback-container;
+  color: var(--text-muted);
+  font-style: italic;
+  border-color: var(--background-modifier-border);
 }

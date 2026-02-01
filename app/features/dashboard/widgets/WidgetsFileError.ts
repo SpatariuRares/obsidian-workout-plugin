@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
@@ -13,7 +14,7 @@ interface ExerciseFileError {
 export class WidgetsFileError {
   static async render(
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<void> {
     const errorEl = container.createEl("div", {
       cls: "workout-dashboard-widget  span-4  workout-file-errors",
@@ -28,10 +29,11 @@ export class WidgetsFileError {
     const fileErrors = await this.validateExerciseFiles(plugin);
 
     if (fileErrors.length === 0) {
-      errorEl.createEl("div", {
-        text: `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
-        cls: "workout-file-errors-success",
-      });
+      Feedback.renderSuccess(
+        errorEl,
+        `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
+        { className: "workout-feedback-success", append: true },
+      );
       return;
     }
 
@@ -77,7 +79,7 @@ export class WidgetsFileError {
   }
 
   private static async validateExerciseFiles(
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<ExerciseFileError[]> {
     const fileErrors: ExerciseFileError[] = [];
 
@@ -101,7 +103,7 @@ export class WidgetsFileError {
 
   private static async validateExerciseFile(
     file: TFile,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<string[]> {
     const errors: string[] = [];
 
@@ -112,7 +114,7 @@ export class WidgetsFileError {
       const validationErrors = FrontmatterParser.validateFrontmatter(content);
       if (validationErrors.length > 0) {
         return validationErrors.map(
-          (err) => `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${err}`
+          (err) => `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${err}`,
         );
       }
 
@@ -124,13 +126,13 @@ export class WidgetsFileError {
 
       if (muscleTags.length === 0) {
         errors.push(
-          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`
+          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`,
         );
       } else if (muscleTags.length > 3) {
         errors.push(
           `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TOO_MANY_TAGS(
-            muscleTags.length
-          )}`
+            muscleTags.length,
+          )}`,
         );
       }
     } catch (error) {
@@ -138,8 +140,8 @@ export class WidgetsFileError {
         error instanceof Error ? error.message : String(error);
       errors.push(
         `${CONSTANTS.WORKOUT.ICONS.STATUS.ERROR} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
-          errorMessage
-        )}`
+          errorMessage,
+        )}`,
       );
     }
 
@@ -149,7 +151,9 @@ export class WidgetsFileError {
   private static getMuscleTags(tags: string[]): string[] {
     return tags.filter((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      return CONSTANTS.WORKOUT.MUSCLES.KEYWORDS.some((keyword) => normalizedTag.includes(keyword));
+      return CONSTANTS.WORKOUT.MUSCLES.KEYWORDS.some((keyword) =>
+        normalizedTag.includes(keyword),
+      );
     });
   }
 }

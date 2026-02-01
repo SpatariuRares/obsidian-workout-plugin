@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Feedback } from "@app/components/atoms/Feedback";
 import type { MuscleGroupData } from "@app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator";
 
 export interface ImbalanceAnalysis {
@@ -80,10 +81,7 @@ export class MuscleBalanceAnalyzer {
     const analysis = this.analyze(muscleData);
 
     if (!analysis.hasData) {
-      infoPanel.createEl("p", {
-        text: CONSTANTS.WORKOUT.MESSAGES.NO_DATA_PERIOD,
-        cls: "workout-info-message",
-      });
+      Feedback.renderInfo(infoPanel, CONSTANTS.WORKOUT.MESSAGES.NO_DATA_PERIOD);
       return;
     }
 
@@ -96,26 +94,12 @@ export class MuscleBalanceAnalyzer {
 
     // Display imbalance alerts or success message
     if (analysis.imbalances.length > 0) {
-      const alertEl = infoPanel.createEl("div", {
-        cls: "workout-imbalance-alert",
-      });
-
-      alertEl.createEl("h5", {
-        text: CONSTANTS.WORKOUT.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
-        cls: "workout-alert-title",
-      });
-
-      analysis.imbalances.forEach((imbalance) => {
-        alertEl.createEl("p", {
-          text: imbalance,
-          cls: "workout-alert-message",
-        });
+      Feedback.renderWarning(infoPanel, analysis.imbalances, {
+        title: CONSTANTS.WORKOUT.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
+        append: true
       });
     } else {
-      infoPanel.createEl("p", {
-        text: CONSTANTS.WORKOUT.MESSAGES.SUCCESS.NO_IMBALANCES,
-        cls: "workout-success-message",
-      });
+      Feedback.renderSuccess(infoPanel, CONSTANTS.WORKOUT.MESSAGES.SUCCESS.NO_IMBALANCES, { append: true });
     }
   }
 }

@@ -17,6 +17,7 @@
     border-bottom: var(--workout-border-thin) solid
       var(--background-modifier-border);
     transition: var(--workout-transition);
+    margin: 0;
 
     &:last-child {
       border-bottom: none;

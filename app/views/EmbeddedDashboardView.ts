@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Feedback } from "@app/components/atoms/Feedback";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/views/BaseView";
@@ -142,7 +143,11 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Re-render dashboard with updated filter
     if (this.currentContainer && this.currentData.length > 0) {
-      void this.createDashboard(this.currentContainer, this.currentData, newParams);
+      void this.createDashboard(
+        this.currentContainer,
+        this.currentData,
+        newParams,
+      );
     }
   };
 
@@ -194,6 +199,53 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
+    // --- NON-ATOMIC FEEDBACK DEMO START ---
+    const demoContainer = gridEl.createEl("div", {
+      cls: "workout-dashboard-widget span-4",
+    });
+    demoContainer.createEl("h3", {
+      text: "Feedback Component Demo (All Classes)",
+    });
+
+    // Errors
+    demoContainer.createEl("h4", { text: "Errors" });
+    Feedback.renderError(
+      demoContainer,
+      "Chart Error (.workout-feedback-error)",
+      { className: "workout-feedback-error", append: true },
+    );
+
+    // Success
+    demoContainer.createEl("h4", { text: "Success" });
+
+    Feedback.renderSuccess(
+      demoContainer,
+      "File Success (.workout-feedback-success)",
+      { className: "workout-feedback-success", append: true },
+    );
+
+    // Info / Warning
+    demoContainer.createEl("h4", { text: "Info & Warning" });
+    Feedback.renderInfo(
+      demoContainer,
+      "Info Message (.workout-feedback-info)",
+      {
+        className: "workout-feedback-info",
+        append: true,
+      },
+    );
+    Feedback.renderWarning(
+      demoContainer,
+      "Imbalance Alert (.workout-feedback-warning)",
+      {
+        className: "workout-feedback-warning",
+        title: "Imbalance",
+        append: true,
+      },
+    );
+
+    // --- NON-ATOMIC FEEDBACK DEMO END ---
+
     // Summary Widget Section (Full Width) - uses filtered data
     SummaryWidget.render(gridEl, displayData, params);
 
@@ -208,7 +260,7 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Recent Workouts Section (Right Column previously) - uses filtered data
     RecentWorkouts.render(gridEl, displayData, params);
-    
+
     // Protocol Distribution Section (Right Column previously)
     // Uses original data for the pie chart, but passes the active filter for highlighting
     ProtocolDistribution.render(

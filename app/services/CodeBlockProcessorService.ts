@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { Feedback } from "@app/components/atoms/Feedback";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
@@ -109,10 +110,7 @@ export class CodeBlockProcessorService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      el.createDiv({
-        cls: "workout-chart-error",
-        text: `Error loading chart: ${errorMessage}`,
-      });
+      Feedback.renderError(el, `Error loading chart: ${errorMessage}`);
     }
   }
 
@@ -141,9 +139,8 @@ export class CodeBlockProcessorService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      el.createDiv({
-        cls: "workout-log-error",
-        text: `Error loading log: ${errorMessage}`,
+      Feedback.renderError(el, `Error loading log: ${errorMessage}`, {
+        className: "workout-feedback-error",
       });
     }
   }
@@ -160,9 +157,8 @@ export class CodeBlockProcessorService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      el.createDiv({
-        cls: "workout-timer-error",
-        text: `Error loading timer: ${errorMessage}`,
+      Feedback.renderError(el, `Error loading timer: ${errorMessage}`, {
+        className: "workout-timer-error",
       });
     }
   }
@@ -238,9 +234,8 @@ export class CodeBlockProcessorService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      el.createDiv({
-        cls: "workout-dashboard-error",
-        text: `Error loading dashboard: ${errorMessage}`,
+      Feedback.renderError(el, `Error loading dashboard: ${errorMessage}`, {
+        className: "workout-feedback-error",
       });
     }
   }
@@ -261,7 +256,9 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(source) as EmbeddedDurationParams;
+      const params = this.parseCodeBlockParams(
+        source,
+      ) as EmbeddedDurationParams;
 
       // Get current file path from context
       const currentFilePath = ctx.sourcePath;
@@ -274,10 +271,11 @@ export class CodeBlockProcessorService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      el.createDiv({
-        cls: "workout-duration-error",
-        text: `Error loading duration estimator: ${errorMessage}`,
-      });
+      Feedback.renderError(
+        el,
+        `Error loading duration estimator: ${errorMessage}`,
+        { className: "workout-duration-error" },
+      );
     }
   }
 

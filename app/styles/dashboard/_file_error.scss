@@ -1,0 +1,50 @@
+.workout-file-errors {
+  &-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .workout-file-error-item {
+    padding: var(--workout-space-md) 0;
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
+    margin: 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .workout-file-error-name {
+      margin-bottom: var(--workout-space-sm);
+    }
+
+    .workout-file-error-link {
+      color: var(--text-accent);
+      font-weight: var(--workout-font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--workout-transition);
+
+      &:hover {
+        color: var(--text-accent-hover);
+        text-decoration: underline;
+      }
+    }
+
+    .workout-file-error-messages {
+      list-style: none;
+      margin: var(--workout-space-sm) 0 0 0;
+      padding: 0;
+    }
+
+    .workout-file-error-message {
+      color: var(--text-warning);
+      font-size: var(--workout-font-sm);
+      padding: var(--workout-space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--workout-space-sm);
+    }
+  }
+}

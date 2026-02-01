@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/types";
+import { CopyableBadge } from "@app/components/molecules";
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -51,43 +52,14 @@ export class MuscleTagsWidget {
     container: HTMLElement,
     muscleName: string
   ): void {
-    const badgeEl = container.createEl("div", {
-      cls: "workout-muscle-tag-badge",
-      attr: {
-        "data-muscle": muscleName,
-      },
-    });
-
-    // Emoji
-    badgeEl.createEl("span", {
-      text: this.getMuscleEmoji(muscleName),
-      cls: "workout-muscle-tag-emoji",
-    });
-
-    // Name
-    badgeEl.createEl("span", {
+    CopyableBadge.create(container, {
+      icon: this.getMuscleEmoji(muscleName),
       text: this.formatMuscleName(muscleName),
-      cls: "workout-muscle-tag-name",
+      copyValue: muscleName,
+      tooltip: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName),
+      className: "workout-muscle-tag-badge",
+      dataAttributes: { muscle: muscleName },
     });
-
-    // Add click to copy functionality
-    badgeEl.addEventListener("click", () => {
-      navigator.clipboard.writeText(muscleName).catch(() => {
-        // Silent fail - clipboard copy failed
-      });
-
-      // Show visual feedback
-      badgeEl.addClass("workout-copied");
-      setTimeout(() => {
-        badgeEl.removeClass("workout-copied");
-      }, 1000);
-    });
-
-    // Add hover tooltip
-    badgeEl.setAttribute(
-      "title",
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName)
-    );
   }
 
   /**

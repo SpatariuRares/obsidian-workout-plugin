@@ -23,3 +23,58 @@
     border-radius: var(--workout-radius-lg);
   }
 }
+
+/* ============================================================================
+   CHART LEGEND ITEM (Generic molecule)
+   ============================================================================ */
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  transition: var(--workout-transition);
+
+  &:hover {
+    background: var(--background-secondary);
+  }
+}
+
+.chart-legend-item-clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.chart-legend-item-active {
+  background: var(--background-secondary);
+  border-left: 3px solid var(--interactive-accent);
+  padding-left: calc(var(--workout-space-sm) - 3px);
+}
+
+.chart-legend-item-dimmed {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.chart-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--workout-radius-sm);
+  flex-shrink: 0;
+}
+
+.chart-legend-label {
+  flex: 1;
+  font-size: var(--workout-font-sm);
+  color: var(--text-normal);
+}
+
+.chart-legend-value {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-weight: var(--workout-font-weight-medium);
+}

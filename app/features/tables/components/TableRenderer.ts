@@ -5,6 +5,7 @@ import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
 import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
+import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 
 /**
  * Protocol display configuration for badges
@@ -195,47 +196,54 @@ export class TableRenderer {
 
         if (hasStrengthData) {
           // Strength exercise summary: Reps, Weight, Volume (compact)
-          const repsSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-          repsSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.REPS);
-          repsSpan.createEl("strong", { text: totalReps.toString() });
+          SpacerStat.create(summaryCell, {
+            icon: CONSTANTS.WORKOUT.TABLE.ICONS.REPS,
+            value: totalReps.toString(),
+          });
 
-          const weightSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-          weightSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT);
-          weightSpan.createEl("strong", { text: `${totalWeight.toFixed(1)}kg` });
+          SpacerStat.create(summaryCell, {
+            icon: CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT,
+            value: `${totalWeight.toFixed(1)}kg`,
+          });
 
-          const volumeSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-          volumeSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME);
-          volumeSpan.createEl("strong", { text: totalVolume.toFixed(0) });
+          SpacerStat.create(summaryCell, {
+            icon: CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME,
+            value: totalVolume.toFixed(0),
+          });
         } else {
           // Non-strength exercise summary: show available metrics (compact)
 
           if (hasDuration) {
-            const durationSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-            durationSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DURATION);
             // Format duration based on magnitude
             const durationDisplay = totalDuration >= 60
               ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
               : `${Math.round(totalDuration)}s`;
-            durationSpan.createEl("strong", { text: durationDisplay });
+            SpacerStat.create(summaryCell, {
+              icon: CONSTANTS.WORKOUT.TABLE.ICONS.DURATION,
+              value: durationDisplay,
+            });
           }
 
           if (hasDistance) {
-            const distanceSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-            distanceSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.DISTANCE);
-            distanceSpan.createEl("strong", { text: `${totalDistance.toFixed(2)}km` });
+            SpacerStat.create(summaryCell, {
+              icon: CONSTANTS.WORKOUT.TABLE.ICONS.DISTANCE,
+              value: `${totalDistance.toFixed(2)}km`,
+            });
           }
 
           if (hasHeartRate && heartRateCount > 0) {
             const avgHeartRate = Math.round(totalHeartRate / heartRateCount);
-            const hrSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-            hrSpan.appendText(CONSTANTS.WORKOUT.TABLE.ICONS.HEART_RATE);
-            hrSpan.createEl("strong", { text: `${avgHeartRate}bpm` });
+            SpacerStat.create(summaryCell, {
+              icon: CONSTANTS.WORKOUT.TABLE.ICONS.HEART_RATE,
+              value: `${avgHeartRate}bpm`,
+            });
           }
 
           // If no metrics found at all, show a generic count
           if (!hasDuration && !hasDistance && !hasHeartRate) {
-            const countSpan = summaryCell.createEl("span", { cls: "workout-spacer-stat" });
-            countSpan.createEl("strong", { text: `${groupRows.length} sets` });
+            SpacerStat.create(summaryCell, {
+              value: `${groupRows.length} sets`,
+            });
           }
         }
       };
@@ -304,11 +312,11 @@ export class TableRenderer {
         return;
       }
 
-      const badge = cell.createEl("span", {
-        cls: `workout-protocol-badge ${builtInConfig.className}`,
+      ProtocolBadge.create(cell, {
         text: builtInConfig.label,
+        className: `workout-protocol-badge ${builtInConfig.className}`,
+        tooltip: protocol.replace(/_/g, " "),
       });
-      badge.setAttribute("title", protocol.replace(/_/g, " "));
       return;
     }
 
@@ -319,38 +327,13 @@ export class TableRenderer {
       );
 
       if (customProtocol) {
-        const badge = cell.createEl("span", {
-          cls: "workout-protocol-badge workout-protocol-badge-custom",
+        ProtocolBadge.create(cell, {
           text: customProtocol.abbreviation,
+          className: "workout-protocol-badge workout-protocol-badge-custom",
+          tooltip: customProtocol.name,
+          color: customProtocol.color,
         });
-        badge.setAttribute("title", customProtocol.name);
-        // Apply custom color as inline style
-        badge.style.backgroundColor = customProtocol.color;
-        // Calculate contrast color for text
-        badge.style.color = this.getContrastColor(customProtocol.color);
       }
     }
-  }
-
-  /**
-   * Calculates whether black or white text should be used based on background color.
-   * Uses relative luminance formula for accessibility.
-   * @param hexColor - Hex color string (e.g., "#ff0000")
-   * @returns "black" or "white"
-   */
-  private static getContrastColor(hexColor: string): string {
-    // Remove # if present
-    const hex = hexColor.replace("#", "");
-
-    // Parse RGB values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    // Calculate relative luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return black for light backgrounds, white for dark backgrounds
-    return luminance > 0.5 ? "black" : "white";
   }
 }

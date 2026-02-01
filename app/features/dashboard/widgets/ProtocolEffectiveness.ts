@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/types";
+import { ProtocolBadge } from "@app/components/atoms";
 import type WorkoutChartsPlugin from "main";
 
 /**
@@ -326,7 +327,7 @@ export class ProtocolEffectiveness {
         cls: "workout-protocol-effectiveness-badge",
       });
       badge.style.backgroundColor = stat.color;
-      badge.style.color = this.getContrastColor(stat.color);
+      badge.style.color = ProtocolBadge.getContrastColor(stat.color);
 
       // Entry count
       row.createEl("td", {
@@ -363,25 +364,5 @@ export class ProtocolEffectiveness {
         cls: progressionClass,
       });
     });
-  }
-
-  /**
-   * Gets contrast color (black or white) based on background luminance
-   * @param rgbaColor - RGBA color string
-   * @returns 'black' or 'white'
-   */
-  private static getContrastColor(rgbaColor: string): string {
-    // Extract RGB values from rgba string
-    const match = rgbaColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-    if (!match) return "white";
-
-    const r = parseInt(match[1], 10);
-    const g = parseInt(match[2], 10);
-    const b = parseInt(match[3], 10);
-
-    // Calculate luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    return luminance > 0.5 ? "black" : "white";
   }
 }

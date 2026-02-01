@@ -43,24 +43,25 @@
       box-shadow: var(--workout-shadow-sm);
     }
 
-    &.copied {
+    &.workout-copied {
       background: var(--interactive-accent);
       color: var(--text-on-accent);
       border-color: var(--interactive-accent);
       animation: pulse 0.3s ease;
     }
-  }
 
-  &-tag-emoji {
-    font-size: var(--workout-font-base);
-    line-height: 1;
-  }
+    /* CopyableBadge molecule child classes */
+    .workout-copyable-badge-icon {
+      font-size: var(--workout-font-base);
+      line-height: 1;
+    }
 
-  &-tag-name {
-    font-weight: var(--workout-font-weight-medium);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    .workout-copyable-badge-text {
+      font-weight: var(--workout-font-weight-medium);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &-tags-info {

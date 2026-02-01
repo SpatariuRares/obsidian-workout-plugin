@@ -60,4 +60,11 @@ export {
 	ProgressBar,
 	type ProgressBarProps,
 } from "@app/components/molecules/ProgressBar";
-
+export {
+	FilterIndicator,
+	type FilterIndicatorProps,
+} from "@app/components/molecules/FilterIndicator";
+export {
+	CopyableBadge,
+	type CopyableBadgeProps,
+} from "@app/components/molecules/CopyableBadge";

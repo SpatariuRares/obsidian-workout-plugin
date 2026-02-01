@@ -4,7 +4,7 @@ import { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { Chart, ChartConfiguration, ArcElement, PieController, Tooltip, Legend } from "chart.js";
 import type WorkoutChartsPlugin from "main";
-import { Button } from "@app/components/atoms";
+import { ChartLegendItem, FilterIndicator } from "@app/components/molecules";
 
 // Register required Chart.js components for pie charts
 Chart.register(ArcElement, PieController, Tooltip, Legend);
@@ -124,38 +124,16 @@ export class ProtocolDistribution {
     activeFilter: string,
     stats: ProtocolStats[]
   ): void {
-    const filterIndicator = container.createEl("div", {
-      cls: "workout-protocol-filter-indicator",
-    });
-
-    // Find the label for the active filter
     const activeStat = stats.find(s => s.protocol === activeFilter);
     const filterLabel = activeStat?.label || activeFilter;
 
-    // Filter text
-    filterIndicator.createEl("span", {
-      text: `${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE} `,
-      cls: "workout-protocol-filter-text",
-    });
-
-    // Protocol badge
-    const badgeEl = filterIndicator.createEl("span", {
-      text: filterLabel,
-      cls: "workout-protocol-filter-badge",
-    });
-    if (activeStat) {
-      badgeEl.style.backgroundColor = activeStat.color;
-    }
-
-    // Clear button
-    const clearBtn = Button.create(filterIndicator, {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
-      className: "workout-protocol-clear-filter",
-      ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
-    });
-    Button.onClick(clearBtn, () => {
-      this.handleFilterChange(null);
+    FilterIndicator.create(container, {
+      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE,
+      filterValue: filterLabel,
+      color: activeStat?.color,
+      clearText: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
+      className: "workout-protocol-filter-indicator",
+      onClear: () => this.handleFilterChange(null),
     });
   }
 
@@ -355,43 +333,24 @@ export class ProtocolDistribution {
 
     stats.forEach((stat) => {
       const isActive = activeFilter === stat.protocol;
-      const isDimmed = activeFilter && !isActive;
+      const isDimmed = !!(activeFilter && !isActive);
 
-      const itemEl = legendEl.createEl("div", {
-        cls: `workout-protocol-legend-item ${isActive ? "workout-protocol-legend-item-active" : ""} ${isDimmed ? "workout-protocol-legend-item-dimmed" : ""}`,
-        attr: {
-          title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER,
+      ChartLegendItem.create(legendEl, {
+        color: stat.color,
+        label: stat.label,
+        value: `${stat.count} (${stat.percentage.toFixed(1)}%)`,
+        className: "workout-protocol-legend-item",
+        tooltip: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER,
+        isActive,
+        isDimmed,
+        onClick: () => {
+          // Toggle filter: if clicking same protocol, clear filter
+          if (isActive) {
+            this.handleFilterChange(null);
+          } else {
+            this.handleFilterChange(stat.protocol);
+          }
         },
-      });
-
-      // Make legend items clickable
-      itemEl.addEventListener("click", () => {
-        // Toggle filter: if clicking same protocol, clear filter
-        if (isActive) {
-          this.handleFilterChange(null);
-        } else {
-          this.handleFilterChange(stat.protocol);
-        }
-      });
-
-      // Color indicator
-      const colorEl = itemEl.createEl("span", {
-        cls: "workout-protocol-legend-color",
-      });
-      colorEl.style.backgroundColor = isDimmed
-        ? stat.color.replace("0.7", "0.3")
-        : stat.color;
-
-      // Label
-      itemEl.createEl("span", {
-        text: stat.label,
-        cls: "workout-protocol-legend-label",
-      });
-
-      // Count and percentage
-      itemEl.createEl("span", {
-        text: `${stat.count} (${stat.percentage.toFixed(1)}%)`,
-        cls: "workout-protocol-legend-count",
       });
     });
   }

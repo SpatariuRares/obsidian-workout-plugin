@@ -2,7 +2,7 @@
 import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { Button } from "@app/components/atoms";
+import { Button, Chip } from "@app/components/atoms";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { App, Notice, MarkdownView } from "obsidian";
 import WorkoutChartsPlugin from "main";
@@ -99,15 +99,11 @@ export class QuickLogModal extends ModalBase {
     const displayExercises = recentExercises.slice(0, DISPLAY_RECENT_COUNT);
 
     displayExercises.forEach((exercise) => {
-      const chip = Button.create(chipContainer, {
+      Chip.create(chipContainer, {
         text: exercise,
         className: "workout-quick-log-chip",
         ariaLabel: exercise,
-      });
-      chip.type = "button";
-
-      Button.onClick(chip, () => {
-        this.selectExercise(exercise);
+        onClick: () => this.selectExercise(exercise),
       });
     });
   }

@@ -1,6 +1,7 @@
 /**
  * ChartLegendItem Molecule
  * Legend item for charts with color indicator and label
+ * Supports interactive states (active, dimmed) and click handling
  * Combines: Container + Text atoms
  */
 
@@ -11,22 +12,41 @@ export interface ChartLegendItemProps {
 	label: string;
 	value?: string | number;
 	className?: string;
+	onClick?: () => void;
+	isActive?: boolean;
+	isDimmed?: boolean;
+	tooltip?: string;
 }
 
 /**
  * Creates a chart legend item with color indicator
- * Used in: Chart legends, data visualizations
+ * Used in: Chart legends, data visualizations, protocol distribution
  *
  * @example
  * ```typescript
+ * // Basic usage
  * ChartLegendItem.create(legendContainer, {
  *   color: "#FF6384",
- *   label: CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY,
- *   value: CONSTANTS.WORKOUT.UI.DISPLAY.PERCENTAGE_45
+ *   label: "Upper Body",
+ *   value: "45%"
+ * });
+ *
+ * // Interactive with click handler
+ * ChartLegendItem.create(legendContainer, {
+ *   color: "rgba(255, 99, 132, 0.7)",
+ *   label: "Drop Set",
+ *   value: "12 (25.5%)",
+ *   onClick: () => handleFilter("drop_set"),
+ *   isActive: currentFilter === "drop_set",
+ *   isDimmed: currentFilter && currentFilter !== "drop_set",
+ *   tooltip: "Click to filter"
  * });
  * ```
  */
 export class ChartLegendItem {
+	private static readonly ACTIVE_CLASS = "chart-legend-item-active";
+	private static readonly DIMMED_CLASS = "chart-legend-item-dimmed";
+
 	/**
 	 * Create a chart legend item element
 	 * @param parent - Parent HTML element
@@ -37,16 +57,38 @@ export class ChartLegendItem {
 		parent: HTMLElement,
 		props: ChartLegendItemProps
 	): HTMLElement {
+		// Build class list with state classes
+		const classes = ["chart-legend-item"];
+		if (props.className) classes.push(props.className);
+		if (props.isActive) classes.push(this.ACTIVE_CLASS);
+		if (props.isDimmed) classes.push(this.DIMMED_CLASS);
+
 		// Create item container
 		const item = Container.create(parent, {
-			className: `chart-legend-item ${props.className || ""}`.trim(),
+			className: classes.join(" "),
 		});
+
+		// Add tooltip if provided
+		if (props.tooltip) {
+			item.setAttribute("title", props.tooltip);
+		}
+
+		// Add click handler if provided
+		if (props.onClick) {
+			item.addClass("chart-legend-item-clickable");
+			item.addEventListener("click", props.onClick);
+		}
 
 		// Create color indicator
 		const colorBox = item.createDiv({
 			cls: "chart-legend-color",
 		});
-		colorBox.style.backgroundColor = props.color;
+		// Reduce opacity for dimmed items
+		if (props.isDimmed && props.color.includes("rgba")) {
+			colorBox.style.backgroundColor = props.color.replace(/[\d.]+\)$/, "0.3)");
+		} else {
+			colorBox.style.backgroundColor = props.color;
+		}
 
 		// Create label
 		Text.create(item, {
@@ -65,5 +107,29 @@ export class ChartLegendItem {
 		}
 
 		return item;
+	}
+
+	/**
+	 * Update the active/dimmed state of a legend item
+	 * @param item - Legend item element
+	 * @param isActive - Whether the item is active
+	 * @param isDimmed - Whether the item is dimmed
+	 */
+	static setState(
+		item: HTMLElement,
+		isActive: boolean,
+		isDimmed: boolean
+	): void {
+		if (isActive) {
+			item.addClass(this.ACTIVE_CLASS);
+		} else {
+			item.removeClass(this.ACTIVE_CLASS);
+		}
+
+		if (isDimmed) {
+			item.addClass(this.DIMMED_CLASS);
+		} else {
+			item.removeClass(this.DIMMED_CLASS);
+		}
 	}
 }

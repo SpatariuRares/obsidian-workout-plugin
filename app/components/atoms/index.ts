@@ -13,3 +13,12 @@ export { Text, type TextProps } from "@app/components/atoms/Text";
 export { Icon, type IconProps } from "@app/components/atoms/Icon";
 export { ErrorMessage } from "@app/components/atoms/ErrorMessage";
 export { Input, type InputProps } from "@app/components/atoms/Input";
+export {
+	SpacerStat,
+	type SpacerStatProps,
+} from "@app/components/atoms/SpacerStat";
+export { Chip, type ChipProps } from "@app/components/atoms/Chip";
+export {
+	ProtocolBadge,
+	type ProtocolBadgeProps,
+} from "@app/components/atoms/ProtocolBadge";

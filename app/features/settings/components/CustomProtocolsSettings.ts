@@ -2,6 +2,7 @@ import { Setting, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 import { CustomProtocolConfig } from "@app/types";
 import { DomUtils } from "@app/utils/DomUtils";
+import { ProtocolBadge } from "@app/components/atoms";
 import WorkoutChartsPlugin from "main";
 
 export class CustomProtocolsSettings {
@@ -110,7 +111,7 @@ export class CustomProtocolsSettings {
 
     DomUtils.setCssProps(badge, {
       backgroundColor: protocol.color,
-      color: this.getContrastColor(protocol.color),
+      color: ProtocolBadge.getContrastColor(protocol.color),
     });
     badge.textContent = protocol.abbreviation;
 
@@ -119,20 +120,6 @@ export class CustomProtocolsSettings {
     idText.textContent = `ID: ${protocol.id}`;
 
     return fragment;
-  }
-
-  private getContrastColor(hexColor: string): string {
-    // Convert hex to RGB
-    const hex = hexColor.replace("#", "");
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    // Calculate luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return black or white based on luminance
-    return luminance > 0.5 ? "#000000" : "#ffffff";
   }
 
   private showProtocolEditor(

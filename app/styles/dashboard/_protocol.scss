@@ -76,6 +76,7 @@
 
 /* ============================================================================
    PROTOCOL FILTER INDICATOR
+   Uses FilterIndicator molecule with protocol-specific container class
    ============================================================================ */
 
 .workout-protocol-filter-indicator {
@@ -87,38 +88,39 @@
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
   border-left: 3px solid var(--interactive-accent);
-}
 
-.workout-protocol-filter-text {
-  font-size: var(--workout-font-sm);
-  color: var(--text-muted);
-}
+  /* FilterIndicator molecule child classes */
+  .workout-filter-indicator-text {
+    font-size: var(--workout-font-sm);
+    color: var(--text-muted);
+  }
 
-.workout-protocol-filter-badge {
-  font-size: var(--workout-font-xs);
-  font-weight: var(--workout-font-weight-semibold);
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  border-radius: var(--workout-radius-sm);
-  color: var(--text-on-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  .workout-filter-indicator-badge {
+    font-size: var(--workout-font-xs);
+    font-weight: var(--workout-font-weight-semibold);
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+    border-radius: var(--workout-radius-sm);
+    color: var(--text-on-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-.workout-protocol-clear-filter {
-  margin-left: auto;
-  padding: var(--workout-space-xs) var(--workout-space-sm);
-  font-size: var(--workout-font-xs);
-  background: transparent;
-  border: 1px solid var(--text-muted);
-  border-radius: var(--workout-radius-sm);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: var(--workout-transition);
+  .workout-filter-indicator-clear {
+    margin-left: auto;
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+    font-size: var(--workout-font-xs);
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    border-radius: var(--workout-radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--workout-transition);
 
-  &:hover {
-    background: var(--background-modifier-hover);
-    border-color: var(--text-normal);
-    color: var(--text-normal);
+    &:hover {
+      background: var(--background-modifier-hover);
+      border-color: var(--text-normal);
+      color: var(--text-normal);
+    }
   }
 }
 

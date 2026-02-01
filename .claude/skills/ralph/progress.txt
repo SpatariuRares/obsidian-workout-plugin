@@ -30,3 +30,39 @@ Started: 2026-02-01
 - Service is NOT yet integrated into the plugin (main.ts). This will be needed when integrating with DataFilter (US-004) and MuscleHeatMap (US-005).
 - The `destroy()` method should be called in `onunload()` of main.ts when the service is added there.
 - Next priority: US-002 (Add unit tests for MuscleTagService)
+
+---
+
+## 2026-02-01 - US-002: Add unit tests for MuscleTagService
+
+**Status:** COMPLETE
+
+**What was done:**
+- Created `app/services/__tests__/MuscleTagService.test.ts` with 35 comprehensive unit tests
+- Tests cover all acceptance criteria and additional edge cases:
+  - **Constructor tests:** file watcher registration, CSV path computation (including root-level paths)
+  - **loadTags tests:** valid CSV parsing, default fallback when CSV doesn't exist, empty CSV handling, malformed row handling (skip invalid, accept extra columns), header line detection, case normalization, quoted value parsing, read error handling, concurrent request deduplication
+  - **saveTags tests:** correct CSV format, existing file modification, parent folder creation, special character escaping, cache update, error propagation
+  - **getTagMap tests:** cache usage on subsequent calls, synchronous default return, background loading
+  - **getTagMapAsObject tests:** correct object conversion
+  - **Cache invalidation tests:** clearing on file modify event, ignoring unrelated files, manual cache clearing
+  - **csvExists tests:** file exists, doesn't exist, folder vs file
+  - **createDefaultCsv tests:** creation when missing, no-op when exists
+  - **destroy tests:** file watcher unregistration, cache clearing
+  - **getCsvPath tests:** path return
+
+**Test patterns used:**
+- Mocked Obsidian module (TFile, TAbstractFile, normalizePath, EventRef)
+- Mock vault interface with jest.fn() for all vault methods
+- File modify callback capture for testing cache invalidation
+- Console.warn spy for validating warning logs
+
+**Exported from:** Test file only
+
+**Typecheck:** PASS
+**Tests:** PASS (525 tests total, 35 new)
+
+**Notes for next developer:**
+- Test patterns follow the existing DataService.test.ts structure
+- Mock interface types defined inline (MockVault, MockApp, MockEventCallback)
+- Next priority: US-003 (Add Levenshtein distance utility for fuzzy matching)

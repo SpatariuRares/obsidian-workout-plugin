@@ -9,6 +9,10 @@ import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import type { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import type { LogDataService } from "@app/features/modals/base/services/LogDataService";
+import {
+  fillDynamicInputsFromCustomFields,
+  setupWorkoutToggle,
+} from "@app/utils/FormUtils";
 
 export class LogFormRenderer {
   constructor(
@@ -120,7 +124,11 @@ export class LogFormRenderer {
     );
 
     // Setup behaviors
-    this.setupWorkoutToggle(modal, currentWorkoutToggle, workoutInput, initialCurrentPageLink);
+    setupWorkoutToggle(
+      currentWorkoutToggle,
+      workoutInput,
+      () => initialCurrentPageLink || ""
+    );
 
     const formElements: LogFormElements = {
       exerciseElements,
@@ -143,39 +151,6 @@ export class LogFormRenderer {
     );
 
     return formElements;
-  }
-
-  /**
-   * Sets up the workout toggle behavior
-   */
-  private setupWorkoutToggle(
-    modal: BaseLogModal,
-    toggle: HTMLInputElement,
-    workoutInput: HTMLInputElement,
-    currentFileName: string | undefined
-  ): void {
-    const fileName = currentFileName || ""; // Fallback
-
-    toggle.addEventListener("change", () => {
-      if (toggle.checked) {
-        workoutInput.disabled = true;
-        workoutInput.value = fileName;
-        workoutInput.classList.add("opacity-50");
-        workoutInput.classList.remove("opacity-100");
-      } else {
-        workoutInput.disabled = false;
-        workoutInput.value = "";
-        workoutInput.classList.add("opacity-100");
-        workoutInput.classList.remove("opacity-50");
-      }
-    });
-
-    // Set initial state
-    if (toggle.checked) {
-      workoutInput.disabled = true;
-      workoutInput.value = fileName;
-      workoutInput.classList.add("opacity-50");
-    }
   }
 
   /**
@@ -279,18 +254,10 @@ export class LogFormRenderer {
     }
 
     // Auto-fill custom fields
-    if (lastEntry.customFields) {
-      for (const [key, value] of Object.entries(lastEntry.customFields)) {
-        const input = formElements.dynamicFieldInputs.get(key);
-        if (input && value !== undefined && value !== null) {
-          if (input.type === "checkbox") {
-            input.checked = Boolean(value);
-          } else {
-            input.value = String(value);
-          }
-        }
-      }
-    }
+    fillDynamicInputsFromCustomFields(
+      lastEntry.customFields,
+      formElements.dynamicFieldInputs,
+    );
 
     // Auto-fill protocol
     if (lastEntry.protocol && formElements.protocolSelect) {

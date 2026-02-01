@@ -12,6 +12,23 @@ import { createButtonsSection } from "@app/features/modals/base/utils/createButt
  * These organisms live in the logs feature because they trigger log creation flows.
  */
 export class LogCallouts {
+  private static openCreateLogModal(
+    plugin: WorkoutChartsPlugin,
+    exerciseName?: string,
+    onComplete?: () => void
+  ): void {
+    const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+    const currentPageLink = activeView?.file ? `[[${activeView.file.basename}]]` : "";
+
+    new CreateLogModal(
+      plugin.app,
+      plugin,
+      exerciseName,
+      currentPageLink,
+      onComplete || (() => plugin.triggerWorkoutLogRefresh())
+    ).open();
+  }
+
   static renderCsvNoDataMessage(
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
@@ -40,20 +57,7 @@ export class LogCallouts {
     });
 
     Button.onClick(createButton, () => {
-      const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-      const currentPageLink = activeView?.file
-        ? `[[${activeView.file.basename}]]`
-        : "";
-
-      new CreateLogModal(
-        plugin.app,
-        plugin,
-        exerciseName,
-        currentPageLink,
-        () => {
-          plugin.triggerWorkoutLogRefresh();
-        }
-      ).open();
+      LogCallouts.openCreateLogModal(plugin, exerciseName);
     });
   }
 
@@ -119,20 +123,7 @@ export class LogCallouts {
     });
 
     Button.onClick(button, () => {
-      const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-      const currentPageLink = activeView?.file
-        ? `[[${activeView.file.basename}]]`
-        : "";
-
-      new CreateLogModal(
-        plugin.app,
-        plugin,
-        exerciseName,
-        currentPageLink,
-        () => {
-          plugin.triggerWorkoutLogRefresh();
-        }
-      ).open();
+      LogCallouts.openCreateLogModal(plugin, exerciseName);
     });
   }
 

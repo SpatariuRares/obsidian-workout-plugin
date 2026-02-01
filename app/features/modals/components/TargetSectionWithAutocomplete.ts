@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/types";
+import { setupWorkoutToggle } from "@app/utils/FormUtils";
 import type WorkoutChartsPlugin from "main";
 
 export interface TargetSectionWithAutocompleteElements {
@@ -18,7 +19,6 @@ export interface TargetSectionWithAutocompleteElements {
 
 export interface TargetSectionWithAutocompleteHandlers {
   updateVisibility: () => void;
-  handleCurrentWorkoutToggle: () => void;
 }
 
 export class TargetSectionWithAutocomplete {
@@ -123,27 +123,12 @@ export class TargetSectionWithAutocomplete {
       }
     };
 
-    const handleCurrentWorkoutToggle = () => {
-      if (currentWorkoutToggle.checked) {
-        workoutInput.disabled = true;
-        workoutInput.value = currentFileName;
-        workoutInput.classList.add("workout-opacity-50");
-        workoutInput.classList.remove("workout-opacity-100");
-      } else {
-        workoutInput.disabled = false;
-        workoutInput.value = "";
-        workoutInput.classList.add("workout-opacity-100");
-        workoutInput.classList.remove("workout-opacity-50");
-      }
-    };
-
     const handlers: TargetSectionWithAutocompleteHandlers = {
       updateVisibility,
-      handleCurrentWorkoutToggle,
     };
 
     // Setup event listeners
-    currentWorkoutToggle.addEventListener("change", handleCurrentWorkoutToggle);
+    setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => currentFileName);
     typeSelect.addEventListener("change", updateVisibility);
     updateVisibility();
 

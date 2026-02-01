@@ -34,8 +34,8 @@
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Created FormUtils.ts with setupWorkoutToggle function. Uses internal applyToggleState helper for both initial state and change events. Exported via utils/index.ts barrel."
     },
     {
       "id": "US-003",
@@ -52,8 +52,8 @@
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Added fillDynamicInputsFromCustomFields to FormUtils.ts with null/undefined handling, checkbox support, and text/number input filling. Exported via utils/index.ts barrel."
     },
     {
       "id": "US-004",
@@ -72,8 +72,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Created FormUtils.test.ts with 31 tests covering: setupWorkoutToggle (initial states, change events, CSS class toggling), fillDynamicInputsFromCustomFields (text/number/checkbox inputs, null/undefined handling, missing keys). All 428 tests pass."
     },
     {
       "id": "US-005",
@@ -89,8 +89,8 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Added import for setupWorkoutToggle from @app/utils/FormUtils. Replaced 13-line inline toggle handler with single call to setupWorkoutToggle(). Bonus: now also sets initial state which the original code did not do. All 428 tests pass."
     },
     {
       "id": "US-006",
@@ -108,8 +108,8 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Added import for setupWorkoutToggle from @app/utils/FormUtils. Removed handleCurrentWorkoutToggle function (lines 126-138) and its interface declaration. Replaced 13-line inline handler with single call to setupWorkoutToggle(). Removed handleCurrentWorkoutToggle from handlers object. Bonus: now sets initial state which original code did not do. All 428 tests pass."
     },
     {
       "id": "US-007",
@@ -126,8 +126,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Replaced setupCurrentWorkoutToggle with setupWorkoutToggle from FormUtils. Standardized to workout-opacity-50/workout-opacity-100 via the shared utility. Typecheck and tests pass."
     },
     {
       "id": "US-008",
@@ -143,8 +143,8 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. BaseLogModal now calls fillDynamicInputsFromCustomFields for custom field prefill; removed inline loop. Typecheck and tests pass."
     },
     {
       "id": "US-009",
@@ -160,8 +160,8 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. LogFormRenderer now uses fillDynamicInputsFromCustomFields in autoFillFromLastEntry; removed inline loop. Typecheck and tests pass."
     },
     {
       "id": "US-010",
@@ -181,8 +181,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Completed 2026-02-01. Added LogCallouts.openCreateLogModal helper and refactored renderCsvNoDataMessage/renderCreateLogButtonForExercise to use it."
     },
     {
       "id": "US-011",

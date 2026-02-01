@@ -8,6 +8,7 @@ import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAu
 import { TableColumnType, TABLE_TYPE, TIMER_TYPE } from "@app/types";
 import { Button } from "@app/components/atoms";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { setupWorkoutToggle } from "@app/utils/FormUtils";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -147,19 +148,9 @@ export class CreateExerciseSectionModal extends ModalBase {
     Button.onClick(cancelBtn, () => this.close());
 
     // Handle current workout toggle
-    currentWorkoutToggle.addEventListener("change", () => {
-      if (currentWorkoutToggle.checked) {
-        workoutInput.disabled = true;
-        workoutInput.value = this.getCurrentFileName();
-        workoutInput.classList.add("workout-opacity-50");
-        workoutInput.classList.remove("workout-opacity-100");
-      } else {
-        workoutInput.disabled = false;
-        workoutInput.value = "";
-        workoutInput.classList.add("workout-opacity-100");
-        workoutInput.classList.remove("workout-opacity-50");
-      }
-    });
+    setupWorkoutToggle(currentWorkoutToggle, workoutInput, () =>
+      this.getCurrentFileName()
+    );
 
     Button.onClick(createBtn, () => {
       const exerciseName = exerciseElements.exerciseInput.value.trim();

@@ -16,6 +16,7 @@ import { DynamicFieldsRenderer } from "@app/features/modals/base/components/Dyna
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { fillDynamicInputsFromCustomFields } from "@app/utils/FormUtils";
 
 /**
  * Abstract base class for workout log modals.
@@ -187,18 +188,10 @@ export abstract class BaseLogModal extends ModalBase {
     }
 
     // Pre-fill custom fields
-    if (data.customFields) {
-      for (const [key, value] of Object.entries(data.customFields)) {
-        const input = formElements.dynamicFieldInputs.get(key);
-        if (input) {
-          if (input.type === "checkbox") {
-            input.checked = Boolean(value);
-          } else {
-            input.value = String(value);
-          }
-        }
-      }
-    }
+    fillDynamicInputsFromCustomFields(
+      data.customFields,
+      formElements.dynamicFieldInputs,
+    );
   }
 
   /**

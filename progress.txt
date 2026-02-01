@@ -3341,3 +3341,269 @@ parameters:
 **Notes for next developer:**
 - Next task: US-012 (Add Exercise Type Migration Utility)
 
+
+## 2026-02-01 - US-002: Create FormUtils with setupWorkoutToggle
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/utils/FormUtils.ts` with `setupWorkoutToggle` function
+2. Added export to `app/utils/index.ts` barrel file
+3. Fixed pre-existing test failure in `ActionButtonGroup.test.ts` (class name mismatch)
+
+**Implementation details:**
+- `setupWorkoutToggle(toggle, workoutInput, getFileName)` function:
+  - Uses internal `applyToggleState` helper for consistent behavior
+  - Sets initial state based on `toggle.checked`
+  - Adds change event listener for toggle state changes
+  - When checked: disables input, sets value from getFileName(), applies 'workout-opacity-50' class
+  - When unchecked: enables input, clears value, applies 'workout-opacity-100' class
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 397 tests pass: `npm test`
+- Lint passes for FormUtils.ts (pre-existing warnings in other files)
+
+**Acceptance criteria met:**
+- ✅ Create new file `app/utils/FormUtils.ts`
+- ✅ Add function `setupWorkoutToggle(toggle, workoutInput, getFileName): void`
+- ✅ Function adds change event listener with correct behavior
+- ✅ Function sets initial state based on toggle.checked
+- ✅ Export function from FormUtils.ts
+- ✅ npm run lint passes
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-002 complete - FormUtils.ts now available for import
+- Next tasks: US-003 (add fillDynamicInputsFromCustomFields), then US-004 (unit tests)
+- US-005, US-006, US-007 will refactor existing modals to use setupWorkoutToggle
+- The three modals with duplicate toggle logic:
+  1. CreateExerciseSectionModal.ts (lines 150-162)
+  2. TargetSectionWithAutocomplete.ts (lines 126-138)
+  3. LogFormRenderer.ts (setupCurrentWorkoutToggle method)
+
+
+## 2026-02-01 - US-003: Add fillDynamicInputsFromCustomFields to FormUtils
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/utils/FormUtils.ts`:
+   - Added `fillDynamicInputsFromCustomFields(customFields, inputMap)` function
+   - Handles undefined customFields (early return)
+   - Iterates Object.entries and skips null/undefined values
+   - For checkbox inputs: sets `input.checked = Boolean(value)`
+   - For other inputs: sets `input.value = String(value)`
+   - Gracefully handles missing keys in inputMap
+
+**Implementation details:**
+- Function signature: `fillDynamicInputsFromCustomFields(customFields: Record<string, string | number | boolean> | undefined, inputMap: Map<string, HTMLInputElement>): void`
+- Already exported via existing barrel export in `app/utils/index.ts`
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 397 tests pass: `npm test`
+- Lint passes for FormUtils.ts
+
+**Acceptance criteria met:**
+- ✅ Function added to FormUtils.ts with correct signature
+- ✅ Function iterates Object.entries(customFields) when defined
+- ✅ Skips null/undefined values
+- ✅ Checkbox inputs handled with Boolean(value)
+- ✅ Text/number inputs handled with String(value)
+- ✅ Exported from FormUtils.ts
+- ✅ npm run lint passes
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-003 complete - fillDynamicInputsFromCustomFields now available for import
+- Next task: US-004 (unit tests for FormUtils)
+- US-008 and US-009 will use fillDynamicInputsFromCustomFields to refactor BaseLogModal and LogFormRenderer
+
+
+## 2026-02-01 - US-004: Add unit tests for FormUtils
+
+**Status:** Completed
+
+**Changes made:**
+1. Created `app/utils/__tests__/FormUtils.test.ts` with 31 comprehensive tests
+
+**Test coverage for setupWorkoutToggle:**
+- Initial state when toggle is checked (disables input, sets value, applies opacity-50 class)
+- Initial state when toggle is unchecked (enables input, clears value, applies opacity-100 class)
+- Change event handling (toggle on/off behavior, getFileName calls, multiple toggles)
+- CSS class toggling (correct add/remove of workout-opacity-50 and workout-opacity-100)
+
+**Test coverage for fillDynamicInputsFromCustomFields:**
+- Text input filling (string, number-to-string, boolean-to-string)
+- Number input filling
+- Checkbox input filling (Boolean conversion for true/false/truthy/falsy values)
+- Null/undefined value handling (skipped gracefully)
+- Undefined customFields parameter (handled gracefully)
+- Missing input keys in inputMap (handled gracefully)
+- Multiple field types at once
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 428 tests pass: `npm test`
+- Lint ignores test files as expected
+
+**Acceptance criteria met:**
+- ✅ Create `app/utils/__tests__/FormUtils.test.ts`
+- ✅ Test setupWorkoutToggle: toggle checked state disables input and sets value
+- ✅ Test setupWorkoutToggle: toggle unchecked state enables input and clears value
+- ✅ Test setupWorkoutToggle: correct CSS classes applied (workout-opacity-50, workout-opacity-100)
+- ✅ Test fillDynamicInputsFromCustomFields: text input filling works
+- ✅ Test fillDynamicInputsFromCustomFields: checkbox input filling works (Boolean conversion)
+- ✅ Test fillDynamicInputsFromCustomFields: null/undefined values are skipped
+- ✅ Test fillDynamicInputsFromCustomFields: missing input keys are handled gracefully
+- ✅ npm test passes
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-004 complete - FormUtils functions are now fully tested
+- Next priority: US-005 (Refactor CreateExerciseSectionModal to use FormUtils.setupWorkoutToggle)
+- The tests use `@jest-environment jsdom` directive for DOM element access
+- Test patterns follow the existing project conventions (describe blocks, beforeEach setup)
+
+
+## 2026-02-01 - US-005: Refactor CreateExerciseSectionModal to use FormUtils
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/CreateExerciseSectionModal.ts`:
+   - Added import: `import { setupWorkoutToggle } from "@app/utils/FormUtils";`
+   - Replaced 13-line inline toggle handler (lines 150-162) with single call:
+     `setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => this.getCurrentFileName());`
+
+**Implementation details:**
+- The inline handler was doing the same logic as setupWorkoutToggle: toggling disabled state, setting/clearing value, and swapping CSS classes
+- Bonus improvement: setupWorkoutToggle also sets initial state based on toggle.checked, which the original code did not do
+- Code reduced from 13 lines to 3 lines (including import)
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 428 tests pass: `npm test`
+- Lint passes for CreateExerciseSectionModal.ts
+
+**Acceptance criteria met:**
+- ✅ Import setupWorkoutToggle from '@app/utils/FormUtils'
+- ✅ Replace inline toggle handler with call to setupWorkoutToggle
+- ✅ Remove the inline toggle handler code
+- ✅ Behavior remains identical
+- ✅ npm run lint passes (for this file; pre-existing issues in other files)
+- ✅ npm test passes (428 tests)
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-005 complete - CreateExerciseSectionModal now uses shared toggle utility
+- Next priority: US-006 (Refactor TargetSectionWithAutocomplete to use FormUtils)
+- Then US-007 (LogFormRenderer) to complete the toggle refactoring
+- Remaining modals with duplicate toggle logic:
+  1. TargetSectionWithAutocomplete.ts (handleCurrentWorkoutToggle function)
+  2. LogFormRenderer.ts (setupCurrentWorkoutToggle method)
+
+
+## 2026-02-01 - US-006: Refactor TargetSectionWithAutocomplete to use FormUtils
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/components/TargetSectionWithAutocomplete.ts`:
+   - Added import: `import { setupWorkoutToggle } from "@app/utils/FormUtils";`
+   - Removed `handleCurrentWorkoutToggle: () => void;` from `TargetSectionWithAutocompleteHandlers` interface
+   - Removed 13-line inline `handleCurrentWorkoutToggle` function (lines 126-138)
+   - Removed `handleCurrentWorkoutToggle` from handlers object
+   - Removed `currentWorkoutToggle.addEventListener("change", handleCurrentWorkoutToggle);`
+   - Added single call: `setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => currentFileName);`
+
+**Implementation details:**
+- The inline handler was doing the same toggle logic as setupWorkoutToggle
+- Confirmed `handlers.handleCurrentWorkoutToggle` was not used externally (grep search found no consumers)
+- Bonus improvement: setupWorkoutToggle sets initial state based on toggle.checked, which original code did not do
+- Code reduced from 13 lines to 1 line (plus simplified interface and handlers object)
+
+**Verification:**
+- TypeScript compiles: `npm run typecheck` passes
+- All 428 tests pass: `npm test`
+- Lint passes for TargetSectionWithAutocomplete.ts (pre-existing lint error in EmbeddedDurationView.ts unrelated to this change)
+
+**Acceptance criteria met:**
+- ✅ Import setupWorkoutToggle from '@app/utils/FormUtils'
+- ✅ Replace handleCurrentWorkoutToggle function at lines 126-138 with call to setupWorkoutToggle
+- ✅ Remove the handleCurrentWorkoutToggle function definition
+- ✅ Update handlers object to not include handleCurrentWorkoutToggle
+- ✅ Remove the currentWorkoutToggle.addEventListener('change', handleCurrentWorkoutToggle)
+- ✅ Behavior remains identical (plus initial state now set)
+- ✅ npm run lint passes (for this file)
+- ✅ npm test passes (428 tests)
+- ✅ Typecheck passes
+
+**Notes for next developer:**
+- US-006 complete - TargetSectionWithAutocomplete now uses shared toggle utility
+- Next priority: US-007 (Refactor LogFormRenderer to use FormUtils)
+- Remaining files with duplicate toggle logic:
+  1. LogFormRenderer.ts (setupCurrentWorkoutToggle method)
+- After US-007, proceed to US-008 and US-009 for fillDynamicInputsFromCustomFields refactoring
+
+## 2026-02-01
+
+**Work completed:**
+- Refactored LogFormRenderer to use `setupWorkoutToggle` from `@app/utils/FormUtils`, removing the inline toggle handler.
+- Standardized workout input classes via shared utility (workout-opacity-50/workout-opacity-100).
+
+**Verification:**
+- `npm run typecheck`
+- `npm test`
+
+**Notes for next developer:**
+- Next priority: US-008 (BaseLogModal preFillForm uses fillDynamicInputsFromCustomFields).
+
+## 2026-02-01 - US-008: Refactor BaseLogModal to use fillDynamicInputsFromCustomFields
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/base/BaseLogModal.ts`:
+   - Added import for `fillDynamicInputsFromCustomFields`
+   - Replaced inline custom fields loop in `preFillForm()` with shared utility call
+
+**Verification:**
+- `npm run typecheck`
+- `npm run test`
+
+**Notes for next developer:**
+- Next priority: US-009 (LogFormRenderer autoFillFromLastEntry uses fillDynamicInputsFromCustomFields)
+
+## 2026-02-01 - US-009: Refactor LogFormRenderer to use fillDynamicInputsFromCustomFields
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/features/modals/base/components/LogFormRenderer.ts`:
+   - Added import for `fillDynamicInputsFromCustomFields`
+   - Replaced inline custom fields loop in `autoFillFromLastEntry()` with shared utility call
+
+**Verification:**
+- `npm run typecheck`
+- `npm run test`
+
+**Notes for next developer:**
+- Next priority: US-010 (extract openCreateLogModal helper in LogCallouts)
+
+## 2026-02-01 - US-010: Extract openCreateLogModal helper in LogCallouts
+
+**Status:** Completed
+
+**Changes made:**
+1. Updated `app/components/organism/LogCallouts.ts`:
+   - Added `openCreateLogModal` helper to centralize modal creation logic
+   - Refactored `renderCsvNoDataMessage` and `renderCreateLogButtonForExercise` to use helper
+
+**Verification:**
+- `npm run typecheck`
+- `npm test`
+
+**Notes for next developer:**
+- Next priority: US-011 (final validation and cleanup)

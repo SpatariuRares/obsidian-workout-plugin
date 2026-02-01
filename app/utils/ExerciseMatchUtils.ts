@@ -1,5 +1,6 @@
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { StringUtils } from "@app/utils/StringUtils";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
@@ -27,32 +28,10 @@ export class ExerciseMatchUtils {
 
   /**
    * Calculate match score between two strings
+   * Delegates to StringUtils.getMatchScore for centralized string matching logic
    */
   static getMatchScore(str1: string, str2: string): number {
-    const s1 = str1.toLowerCase().trim();
-    const s2 = str2.toLowerCase().trim();
-
-    if (s1 === s2) return 100;
-    if (s1.startsWith(s2) || s2.startsWith(s1)) return 90;
-    if (s1.endsWith(s2) || s2.endsWith(s1)) return 80;
-
-    const words1 = s1.split(/\s+/);
-    const words2 = s2.split(/\s+/);
-
-    // Check if all words from one string are contained in the other
-    const allWords1In2 = words1.every((word) => s2.includes(word));
-    const allWords2In1 = words2.every((word) => s1.includes(word));
-
-    if (allWords1In2 || allWords2In1) return 70;
-
-    // Check for partial word matches
-    const commonWords = words1.filter((word) => words2.includes(word));
-    if (commonWords.length > 0) return 60;
-
-    // Check for substring match
-    if (s1.includes(s2) || s2.includes(s1)) return 50;
-
-    return 0;
+    return StringUtils.getMatchScore(str1, str2);
   }
 
   /**

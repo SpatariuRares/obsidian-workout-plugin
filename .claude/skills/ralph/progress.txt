@@ -66,3 +66,68 @@ Started: 2026-02-01
 - Test patterns follow the existing DataService.test.ts structure
 - Mock interface types defined inline (MockVault, MockApp, MockEventCallback)
 - Next priority: US-003 (Add Levenshtein distance utility for fuzzy matching)
+
+---
+
+## 2026-02-01 - US-003: Add Levenshtein distance utility for fuzzy matching
+
+**Status:** COMPLETE
+
+**What was done:**
+- Created `app/utils/StringUtils.ts` as a static utility class
+- Implemented `levenshteinDistance(a: string, b: string): number`:
+  - Standard dynamic programming algorithm using a 2D matrix
+  - Case-insensitive comparison (both strings lowercased)
+  - Returns number of single-character edits (insertions, deletions, substitutions)
+- Implemented `findSimilarStrings(needle: string, haystack: string[], maxDistance: number): string[]`:
+  - Returns all strings from haystack within maxDistance of needle
+  - Results sorted by distance (closest first), then alphabetically for ties
+  - Case-insensitive matching
+- Exported from `@app/utils/index.ts`
+- Created comprehensive test suite with 24 tests in `app/utils/__tests__/StringUtils.test.ts`
+
+**Test coverage includes:**
+- **levenshteinDistance tests (11):** identical strings, case insensitivity, classic 'kitten/sitting' = 3, empty strings, single-char edits, longer strings ('flaw/lawn'), muscle tag examples, unicode, completely different strings
+- **findSimilarStrings tests (13):** exact matches, case insensitivity, empty results, distance filtering, sorting by distance, alphabetical tie-breaking, empty needle/haystack, multiple matches, practical typo detection, duplicate detection for muscle tags
+
+**Exported from:** `@app/utils` (via barrel export)
+
+**Typecheck:** PASS
+**Tests:** PASS (549 tests total, 24 new)
+
+**Notes for next developer:**
+- StringUtils follows the same static class pattern as DateUtils
+- The levenshtein algorithm is O(m*n) where m and n are string lengths - efficient for typical tag names
+- These utilities will be used in US-009 for fuzzy matching suggestions when adding new muscle tags
+- Next priority: US-004 (Integrate MuscleTagService into DataFilter)
+
+---
+
+## 2026-02-01 - Refactor: Consolidate string matching utilities
+
+**Status:** COMPLETE
+
+**What was done:**
+- Moved `getMatchScore()` from `ExerciseMatchUtils` to `StringUtils` as the canonical location
+- `ExerciseMatchUtils.getMatchScore()` now delegates to `StringUtils.getMatchScore()` for backward compatibility
+- Added 9 new tests for `StringUtils.getMatchScore()` (existing tests in utils.test.ts still pass via delegation)
+- StringUtils now contains both matching approaches:
+  - `getMatchScore()` - Semantic/heuristic matching (100=exact, 90=starts-with, 80=ends-with, 70=all-words, 60=partial-words, 50=substring, 0=none)
+  - `levenshteinDistance()` - Edit distance for typo detection
+  - `findSimilarStrings()` - Fuzzy search helper using Levenshtein
+
+**Why two approaches:**
+| Use Case | getMatchScore | levenshtein |
+|----------|--------------|-------------|
+| "Bench Press" vs "Incline Bench" | 70 (words) | 7 (many edits) |
+| "peto" vs "petto" (typo) | 0 (no match) | 1 (caught!) |
+| "chest" vs "chests" | 50 (substring) | 1 (caught!) |
+
+**Typecheck:** PASS
+**Tests:** PASS (558 tests total, 33 in StringUtils)
+
+**Notes for next developer:**
+- All exercise matching still works via delegation - no breaking changes
+- Use `StringUtils.getMatchScore()` for semantic similarity (exercise matching)
+- Use `StringUtils.levenshteinDistance()` or `findSimilarStrings()` for typo detection (tag deduplication)
+- Next priority: US-004 (Integrate MuscleTagService into DataFilter)

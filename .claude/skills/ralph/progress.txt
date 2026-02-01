@@ -1,32 +1,32 @@
-# Ralph Progress Log - Duplicate Logic Refactor
+# Ralph Progress Log - Custom Muscle Tag Mapping
 
-Branch: ralph/duplicate-logic-refactor
+Branch: ralph/custom-muscle-tag-mapping
 Started: 2026-02-01
 
 ---
 
-## 2026-02-01 - US-001: Consolidate formatDate into DateUtils
+## 2026-02-01 - US-001: Create MuscleTagService with CSV read/write
 
 **Status:** COMPLETE
 
-**Changes made:**
-- Removed `formatDate()` method from `app/utils/ChartDataUtils.ts` (was duplicate of DateUtils.formatDateWithFormat)
-- Added import for DateUtils at top of ChartDataUtils.ts
-- Changed usage in `processChartData` from `this.formatDate()` to `DateUtils.formatDateWithFormat()`
-- Updated tests in `app/utils/__tests__/utils.test.ts`:
-  - Added DateUtils import
-  - Renamed test describe block from "ChartDataUtils.formatDate" to "DateUtils.formatDateWithFormat"
-  - Updated all test assertions to use DateUtils.formatDateWithFormat
+**What was done:**
+- Created `app/services/MuscleTagService.ts` with all required functionality
+- Implemented `loadTags(): Promise<Map<string, string>>` - reads CSV, returns tag->muscleGroup map
+- Implemented `saveTags(tags: Map<string, string>): Promise<void>` - writes CSV with proper escaping
+- Implemented `getTagMap(): Map<string, string>` - returns cached tags or defaults (sync with background refresh)
+- CSV path computed from `settings.csvLogFilePath` folder + `muscle-tags.csv`
+- Cache invalidation via `vault.on('modify')` file watcher
+- Fallback to `MUSCLE_TAG_MAP` from `muscles.constants.ts` when CSV doesn't exist
+- Graceful handling of malformed CSV rows (skip with warning)
+- Added helper methods: `csvExists()`, `createDefaultCsv()`, `getCsvPath()`, `getTagMapAsObject()`
+- Added `destroy()` method for cleanup on plugin unload
 
-**Verification:**
-- Typecheck passes (npm run typecheck)
-- Tests pass (npm test) - 396 passed, 1 unrelated pre-existing failure in ActionButtonGroup.test.ts
-- No remaining code references to ChartDataUtils.formatDate
+**Exported from:** `@app/services/index.ts`
+
+**Typecheck:** PASS
+**Tests:** PASS (490 tests)
 
 **Notes for next developer:**
-- Pre-existing test failure in `ActionButtonGroup.test.ts` (CSS class naming issue) - not related to this PRD
-- Pre-existing lint error in `EmbeddedDurationView.ts:233` (sentence case issue) - not related to this PRD
-- Next priority: US-002 (Create FormUtils with setupWorkoutToggle)
-
----
-
+- Service is NOT yet integrated into the plugin (main.ts). This will be needed when integrating with DataFilter (US-004) and MuscleHeatMap (US-005).
+- The `destroy()` method should be called in `onunload()` of main.ts when the service is added there.
+- Next priority: US-002 (Add unit tests for MuscleTagService)

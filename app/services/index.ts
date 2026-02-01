@@ -16,3 +16,4 @@ export { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorServi
 export { CommandHandlerService } from "@app/services/CommandHandlerService";
 export { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
 export { CodeBlockEditorService } from "@app/services/CodeBlockEditorService";
+export { MuscleTagService } from "@app/services/MuscleTagService";

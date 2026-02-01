@@ -1,207 +1,235 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/duplicate-logic-refactor",
-  "description": "Eliminate duplicate code patterns to improve maintainability: consolidate formatDate, extract custom fields utility, refactor modal opening patterns, and standardize workout toggle handlers.",
+  "branchName": "ralph/custom-muscle-tag-mapping",
+  "description": "Custom Muscle Tag Mapping System - Allow users to create custom muscle tags in any language and map them to canonical muscle groups via CSV file with fuzzy matching suggestions.",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Consolidate formatDate into DateUtils",
-      "description": "As a developer, I want a single date formatting function so that date logic is consistent and bug fixes apply everywhere.",
+      "title": "Create MuscleTagService with CSV read/write",
+      "description": "As a developer, I need a service to read and write the muscle tags CSV file with caching and fallback to defaults.",
       "acceptanceCriteria": [
-        "Delete the `formatDate()` method from `app/utils/ChartDataUtils.ts` (lines 17-34)",
-        "Replace all internal usages of `this.formatDate()` in ChartDataUtils with `DateUtils.formatDateWithFormat()`",
-        "Add import for DateUtils at top of ChartDataUtils.ts",
-        "Chart labels still display dates correctly in formats: DD/MM/YYYY, YYYY-MM-DD, MM/DD/YYYY",
-        "npm run lint passes",
-        "npm test passes",
+        "Create `app/services/MuscleTagService.ts` as singleton service",
+        "CSV structure: `tag,muscleGroup` (e.g., `petto,chest`)",
+        "Implement `loadTags(): Promise<Map<string, string>>` - reads CSV, returns tag->muscleGroup map",
+        "Implement `saveTags(tags: Map<string, string>): Promise<void>` - writes CSV",
+        "Implement `getTagMap(): Map<string, string>` - returns cached tags or default MUSCLE_TAG_MAP",
+        "CSV path: same folder as settings.dataFilePath with filename `muscle-tags.csv`",
+        "Cache tags with invalidation when file changes (use vault.on('modify'))",
+        "Fallback to MUSCLE_TAG_MAP from muscles.constants.ts if CSV doesn't exist",
+        "Handle malformed CSV gracefully (skip invalid rows, log warning)",
         "Typecheck passes"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Completed 2026-02-01. Removed duplicate formatDate from ChartDataUtils, now uses DateUtils.formatDateWithFormat. Updated tests in utils.test.ts to test DateUtils.formatDateWithFormat instead."
+      "notes": "Implemented MuscleTagService with all required methods. Uses vault.on('modify') for cache invalidation. Includes helper methods: csvExists(), createDefaultCsv(), getCsvPath(), getTagMapAsObject(). Service needs destroy() call on plugin unload."
     },
     {
       "id": "US-002",
-      "title": "Create FormUtils with setupWorkoutToggle",
-      "description": "As a developer, I want a reusable workout toggle handler so the enable/disable logic is consistent across all modals.",
+      "title": "Add unit tests for MuscleTagService",
+      "description": "As a developer, I want unit tests for MuscleTagService to ensure it works correctly.",
       "acceptanceCriteria": [
-        "Create new file `app/utils/FormUtils.ts`",
-        "Add function `setupWorkoutToggle(toggle: HTMLInputElement, workoutInput: HTMLInputElement, getFileName: () => string): void`",
-        "Function adds change event listener that: when checked, disables input, sets value to getFileName(), adds 'workout-opacity-50' class, removes 'workout-opacity-100' class; when unchecked, enables input, clears value, adds 'workout-opacity-100' class, removes 'workout-opacity-50' class",
-        "Function also sets initial state based on toggle.checked",
-        "Export function from FormUtils.ts",
-        "npm run lint passes",
+        "Create `app/services/__tests__/MuscleTagService.test.ts`",
+        "Test loadTags parses valid CSV correctly",
+        "Test loadTags returns default tags when CSV doesn't exist",
+        "Test loadTags handles malformed CSV rows gracefully",
+        "Test saveTags writes correct CSV format",
+        "Test getTagMap returns cached data on subsequent calls",
+        "Test cache invalidation when file path matches",
+        "npm test passes",
         "Typecheck passes"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Created FormUtils.ts with setupWorkoutToggle function. Uses internal applyToggleState helper for both initial state and change events. Exported via utils/index.ts barrel."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Add fillDynamicInputsFromCustomFields to FormUtils",
-      "description": "As a developer, I want a shared utility for filling form inputs from custom fields so that the logic is consistent and null-handling is uniform.",
+      "title": "Add Levenshtein distance utility for fuzzy matching",
+      "description": "As a developer, I need a Levenshtein distance function for fuzzy tag matching.",
       "acceptanceCriteria": [
-        "Add function `fillDynamicInputsFromCustomFields(customFields: Record<string, string | number | boolean> | undefined, inputMap: Map<string, HTMLInputElement>): void` to FormUtils.ts",
-        "Function iterates Object.entries(customFields) when defined",
-        "For each [key, value]: skip if value is null or undefined, get input from inputMap.get(key)",
-        "If input exists and input.type === 'checkbox', set input.checked = Boolean(value)",
-        "Otherwise set input.value = String(value)",
-        "Export function from FormUtils.ts",
-        "npm run lint passes",
+        "Add `levenshteinDistance(a: string, b: string): number` to `app/utils/StringUtils.ts`",
+        "Function computes edit distance between two strings",
+        "Add `findSimilarStrings(needle: string, haystack: string[], maxDistance: number): string[]` helper",
+        "Case-insensitive comparison (convert both to lowercase)",
+        "Export both functions from StringUtils.ts",
+        "Add unit tests in `app/utils/__tests__/StringUtils.test.ts`",
+        "Test Levenshtein: 'kitten' vs 'sitting' = 3",
+        "Test Levenshtein: 'chest' vs 'chest' = 0",
+        "Test findSimilarStrings returns matches within maxDistance",
+        "npm test passes",
         "Typecheck passes"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Added fillDynamicInputsFromCustomFields to FormUtils.ts with null/undefined handling, checkbox support, and text/number input filling. Exported via utils/index.ts barrel."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Add unit tests for FormUtils",
-      "description": "As a developer, I want unit tests for the new FormUtils functions to ensure they work correctly.",
+      "title": "Integrate MuscleTagService into DataFilter",
+      "description": "As a developer, I need DataFilter to use MuscleTagService instead of hardcoded MUSCLE_TAG_MAP.",
       "acceptanceCriteria": [
-        "Create `app/utils/__tests__/FormUtils.test.ts`",
-        "Test setupWorkoutToggle: toggle checked state disables input and sets value",
-        "Test setupWorkoutToggle: toggle unchecked state enables input and clears value",
-        "Test setupWorkoutToggle: correct CSS classes applied (workout-opacity-50, workout-opacity-100)",
-        "Test fillDynamicInputsFromCustomFields: text input filling works",
-        "Test fillDynamicInputsFromCustomFields: checkbox input filling works (Boolean conversion)",
-        "Test fillDynamicInputsFromCustomFields: null/undefined values are skipped",
-        "Test fillDynamicInputsFromCustomFields: missing input keys are handled gracefully",
-        "npm test passes",
-        "Typecheck passes"
+        "DataFilter constructor accepts MuscleTagService instance",
+        "Replace direct MUSCLE_TAG_MAP usage with service.getTagMap()",
+        "Update CodeBlockProcessorService to pass service to DataFilter",
+        "Existing tests continue to pass (may need mock service)",
+        "Typecheck passes",
+        "npm test passes"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Created FormUtils.test.ts with 31 tests covering: setupWorkoutToggle (initial states, change events, CSS class toggling), fillDynamicInputsFromCustomFields (text/number/checkbox inputs, null/undefined handling, missing keys). All 428 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Refactor CreateExerciseSectionModal to use FormUtils",
-      "description": "As a developer, I want CreateExerciseSectionModal to use the shared toggle utility.",
+      "title": "Integrate MuscleTagService into MuscleHeatMap",
+      "description": "As a developer, I need MuscleHeatMap to use MuscleTagService for muscle group lookups.",
       "acceptanceCriteria": [
-        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
-        "Replace inline currentWorkoutToggle.addEventListener('change', ...) at lines 150-162 with call to setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => this.getCurrentFileName())",
-        "Remove the inline toggle handler code",
-        "Behavior remains identical: toggling enables/disables workout input",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "MuscleHeatMap component accepts MuscleTagService or tag map",
+        "Replace direct MUSCLE_TAG_MAP usage with service.getTagMap()",
+        "Update EmbeddedDashboardView to pass service to MuscleHeatMap",
+        "Heatmap still renders correctly with custom tags",
+        "Typecheck passes",
+        "npm test passes"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Added import for setupWorkoutToggle from @app/utils/FormUtils. Replaced 13-line inline toggle handler with single call to setupWorkoutToggle(). Bonus: now also sets initial state which the original code did not do. All 428 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Refactor TargetSectionWithAutocomplete to use FormUtils",
-      "description": "As a developer, I want TargetSectionWithAutocomplete to use the shared toggle utility.",
+      "title": "Add settings button to create default tag CSV",
+      "description": "As a user, I want a button in settings to create the muscle tags CSV with default values.",
       "acceptanceCriteria": [
-        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
-        "Replace handleCurrentWorkoutToggle function at lines 126-138 with call to setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => currentFileName)",
-        "Remove the handleCurrentWorkoutToggle function definition",
-        "Update handlers object to not include handleCurrentWorkoutToggle (or remove if unused)",
-        "Remove the currentWorkoutToggle.addEventListener('change', handleCurrentWorkoutToggle) at line 146",
-        "Behavior remains identical",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "Add 'Create muscle tags CSV' button in WorkoutChartsSettingTab",
+        "Button calls MuscleTagService to create CSV with all MUSCLE_TAG_MAP defaults",
+        "If file exists, show confirmation modal before overwriting",
+        "Show success Notice on creation",
+        "Show error Notice if creation fails",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Added import for setupWorkoutToggle from @app/utils/FormUtils. Removed handleCurrentWorkoutToggle function (lines 126-138) and its interface declaration. Replaced 13-line inline handler with single call to setupWorkoutToggle(). Removed handleCurrentWorkoutToggle from handlers object. Bonus: now sets initial state which original code did not do. All 428 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Refactor LogFormRenderer to use FormUtils",
-      "description": "As a developer, I want LogFormRenderer to use the shared toggle utility and standardized CSS classes.",
+      "title": "Create MuscleTagManagerModal base structure",
+      "description": "As a user, I want a modal to view and search my muscle tags.",
       "acceptanceCriteria": [
-        "Import setupWorkoutToggle from '@app/utils/FormUtils'",
-        "Replace setupCurrentWorkoutToggle method (lines 153-179) with call to setupWorkoutToggle",
-        "Note: CSS classes change from 'opacity-50'/'opacity-100' to 'workout-opacity-50'/'workout-opacity-100' (standardization)",
-        "Remove the old setupCurrentWorkoutToggle method",
-        "Behavior remains identical",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "Create `app/features/modals/MuscleTagManagerModal.ts` extending ModalBase",
+        "Modal title: 'Manage Muscle Tags'",
+        "Display list of all tags from MuscleTagService",
+        "Each list item shows: tag name, mapped muscle group",
+        "Add SearchBox component to filter tags by name",
+        "Style consistent with other plugin modals",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Replaced setupCurrentWorkoutToggle with setupWorkoutToggle from FormUtils. Standardized to workout-opacity-50/workout-opacity-100 via the shared utility. Typecheck and tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Refactor BaseLogModal to use fillDynamicInputsFromCustomFields",
-      "description": "As a developer, I want BaseLogModal.preFillForm to use the shared custom fields utility.",
+      "title": "Add tag CRUD operations to modal",
+      "description": "As a user, I want to add, edit, and delete muscle tags in the modal.",
       "acceptanceCriteria": [
-        "Import fillDynamicInputsFromCustomFields from '@app/utils/FormUtils'",
-        "In preFillForm method, replace lines 189-201 (the for loop for customFields) with: fillDynamicInputsFromCustomFields(data.customFields, formElements.dynamicFieldInputs)",
-        "Remove the inline for loop",
-        "Behavior remains identical: form pre-fills with custom field values",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "Add Tag button opens inline form with: tag input, muscle group dropdown",
+        "Muscle group dropdown contains canonical groups: chest, back, shoulders, biceps, triceps, quads, hamstrings, glutes, calves, abs, core, forearms, traps, rear_delts",
+        "Click on existing tag opens edit form with current values",
+        "Delete button on each tag (with confirmation)",
+        "Save updates CSV via MuscleTagService",
+        "List refreshes after add/edit/delete",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Completed 2026-02-01. BaseLogModal now calls fillDynamicInputsFromCustomFields for custom field prefill; removed inline loop. Typecheck and tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-009",
-      "title": "Refactor LogFormRenderer to use fillDynamicInputsFromCustomFields",
-      "description": "As a developer, I want LogFormRenderer.autoFillFromLastEntry to use the shared custom fields utility.",
+      "title": "Add fuzzy matching suggestions when adding tags",
+      "description": "As a user, I want to see suggestions for similar existing tags when adding a new one.",
       "acceptanceCriteria": [
-        "Import fillDynamicInputsFromCustomFields from '@app/utils/FormUtils' (may already be imported from US-007)",
-        "In autoFillFromLastEntry method, replace lines 281-293 (the for loop for customFields) with: fillDynamicInputsFromCustomFields(lastEntry.customFields, formElements.dynamicFieldInputs)",
-        "Remove the inline for loop",
-        "Behavior remains identical: form auto-fills with last entry's custom field values",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "When typing new tag, show similar existing tags (Levenshtein distance <= 2)",
+        "Suggestions show: existing tag name + its muscle group",
+        "Click suggestion populates form with that tag for editing",
+        "Show warning icon if new tag is very similar to existing (possible duplicate)",
+        "Suggestions update as user types (debounced)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": true,
-      "notes": "Completed 2026-02-01. LogFormRenderer now uses fillDynamicInputsFromCustomFields in autoFillFromLastEntry; removed inline loop. Typecheck and tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-010",
-      "title": "Extract openCreateLogModal helper in LogCallouts",
-      "description": "As a developer, I want the modal opening logic in one place so changes to modal instantiation only need one update.",
+      "title": "Add export functionality to modal",
+      "description": "As a user, I want to export my muscle tags to a CSV file for backup.",
       "acceptanceCriteria": [
-        "Add private static method `openCreateLogModal(plugin: WorkoutChartsPlugin, exerciseName?: string, onComplete?: () => void): void` to LogCallouts class",
-        "Method gets activeView from plugin.app.workspace.getActiveViewOfType(MarkdownView)",
-        "Method computes currentPageLink as activeView?.file ? `[[${activeView.file.basename}]]` : ''",
-        "Method opens new CreateLogModal(plugin.app, plugin, exerciseName, currentPageLink, onComplete || (() => plugin.triggerWorkoutLogRefresh()))",
-        "Update renderCsvNoDataMessage (lines 42-57) to use: this.openCreateLogModal(plugin, exerciseName)",
-        "Update renderCreateLogButtonForExercise (lines 121-136) to use: this.openCreateLogModal(plugin, exerciseName)",
-        "Both buttons still open the modal correctly",
-        "Refresh still triggers after modal close",
-        "npm run lint passes",
-        "npm test passes",
-        "Typecheck passes"
+        "Add 'Export' button in modal header/footer",
+        "Button triggers download of current tags as CSV",
+        "CSV format matches the muscle-tags.csv structure",
+        "Filename: muscle-tags-export.csv",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 10,
-      "passes": true,
-      "notes": "Completed 2026-02-01. Added LogCallouts.openCreateLogModal helper and refactored renderCsvNoDataMessage/renderCreateLogButtonForExercise to use it."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-011",
-      "title": "Final validation and cleanup",
-      "description": "As a developer, I want to verify no dead code remains and all tests pass.",
+      "title": "Add import functionality to modal",
+      "description": "As a user, I want to import muscle tags from a CSV file.",
       "acceptanceCriteria": [
-        "No unused imports in any modified files",
-        "ChartDataUtils.ts no longer contains formatDate method",
-        "LogFormRenderer.ts no longer contains setupCurrentWorkoutToggle method",
-        "CreateExerciseSectionModal.ts no longer contains inline toggle handler",
-        "TargetSectionWithAutocomplete.ts no longer contains handleCurrentWorkoutToggle function",
-        "BaseLogModal.ts no longer contains inline customFields for loop",
-        "LogCallouts.ts no longer contains duplicate modal opening code",
-        "npm run lint passes with no warnings",
-        "npm test passes with no failures",
+        "Add 'Import' button in modal header/footer",
+        "Button opens file picker for CSV files",
+        "Validate CSV format: must have tag,muscleGroup columns",
+        "Validate muscleGroup values are canonical (show error for invalid)",
+        "Show preview of tags to import with count",
+        "Option buttons: 'Merge' (add new only) or 'Replace' (overwrite all)",
+        "Update CSV and refresh list after import",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Register command to open tag manager modal",
+      "description": "As a user, I want to access the tag manager from the command palette.",
+      "acceptanceCriteria": [
+        "Register command 'Workout: Manage muscle tags' in CommandHandlerService",
+        "Command opens MuscleTagManagerModal",
+        "Command appears in command palette",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Final validation and integration testing",
+      "description": "As a developer, I want to verify the complete feature works end-to-end.",
+      "acceptanceCriteria": [
+        "Adding custom tag in modal makes it available in heatmap filters",
+        "Tags persist after Obsidian restart",
+        "Default tags work when CSV doesn't exist",
+        "Fuzzy matching prevents obvious duplicates",
+        "Import/export roundtrip preserves all tags",
+        "npm run lint passes",
+        "npm test passes",
         "npm run build succeeds",
         "Typecheck passes"
       ],
-      "priority": 11,
+      "priority": 13,
       "passes": false,
       "notes": ""
     }

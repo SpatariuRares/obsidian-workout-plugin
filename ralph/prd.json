@@ -1,0 +1,180 @@
+{
+  "project": "obsidian-workout-plugin",
+  "branchName": "ralph/embedded-chart-data-type-support",
+  "description": "Fix trend calculations, units, and visual indicators for non-strength exercise types (pace, duration, distance, heart rate)",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Add UNITS_MAP and COLUMN_LABELS constants",
+      "description": "As a developer, I need centralized constants for data type units and column labels so all components use consistent values.",
+      "acceptanceCriteria": [
+        "Add UNITS_MAP to app/constants/ui.constants.ts mapping CHART_DATA_TYPE to unit strings",
+        "Units: volume='kg', weight='kg', reps='', duration='sec', distance='km', pace='min/km', heartRate='bpm'",
+        "Add COLUMN_LABELS map: 'Volume (kg)', 'Weight (kg)', 'Reps', 'Duration', 'Distance (km)', 'Pace (min/km)', 'Heart Rate (bpm)'",
+        "Export both from constants barrel",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented 2026-02-03. UNITS_MAP and COLUMN_LABELS added to ui.constants.ts with import from ChartTypes. Already exported via barrel."
+    },
+    {
+      "id": "US-002",
+      "title": "Create FormatUtils with duration and pace formatters",
+      "description": "As a developer, I need centralized formatting utilities so duration displays as '1h 30m' and pace as '5:30'.",
+      "acceptanceCriteria": [
+        "Create app/utils/FormatUtils.ts",
+        "formatDuration(seconds: number): string - returns '30s', '5m 30s', or '1h 30m' format",
+        "formatPace(minPerKm: number): string - returns '5:30' format (MM:SS)",
+        "formatValue(value: number, dataType: CHART_DATA_TYPE): string - dispatcher applying correct formatter",
+        "Export from utils barrel",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented 2026-02-03. FormatUtils class with formatDuration, formatPace, and formatValue methods. Exported via barrel at @app/utils."
+    },
+    {
+      "id": "US-003",
+      "title": "Add FormatUtils unit tests",
+      "description": "As a developer, I need tests for FormatUtils to ensure formatting edge cases are handled correctly.",
+      "acceptanceCriteria": [
+        "Create app/utils/__tests__/FormatUtils.test.ts",
+        "Test formatDuration: 0, 30, 90, 3600, 5400 seconds",
+        "Test formatPace: 5.0, 5.5, 4.25 min/km",
+        "Test formatValue dispatches correctly for each CHART_DATA_TYPE",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Created FormatUtils.test.ts with 28 tests covering: formatDuration (0, 30, 60, 90, 3600, 3661, 5400, negative), formatPace (0, 4.25, 5.0, 5.5, 10.75, negative), and formatValue for all CHART_DATA_TYPEs (DURATION, PACE, REPS, VOLUME, WEIGHT, DISTANCE, HEART_RATE)."
+    },
+    {
+      "id": "US-004",
+      "title": "Add isLowerBetter helper function",
+      "description": "As a developer, I need a helper to determine if a data type uses inverted logic (lower values = improvement).",
+      "acceptanceCriteria": [
+        "Add isLowerBetter(dataType: CHART_DATA_TYPE): boolean to FormatUtils.ts",
+        "Returns true for CHART_DATA_TYPE.PACE",
+        "Returns false for all other types",
+        "Add unit tests for isLowerBetter",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Fix TrendCalculator inverted logic for pace",
+      "description": "As a user tracking pace, I want green trend when pace decreases (faster) so indicators accurately reflect improvement.",
+      "acceptanceCriteria": [
+        "TrendCalculator.getTrendIndicators() accepts optional dataType: CHART_DATA_TYPE parameter",
+        "Import and use isLowerBetter helper",
+        "For pace: negative slope returns 'Improving' with green color",
+        "For pace: positive slope returns 'Declining' with red color",
+        "Other data types maintain current behavior",
+        "Existing tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Add TrendCalculator tests for pace inversion",
+      "description": "As a developer, I need tests confirming TrendCalculator handles pace correctly.",
+      "acceptanceCriteria": [
+        "Add test: pace with negative slope returns Improving/green",
+        "Add test: pace with positive slope returns Declining/red",
+        "Add test: volume with positive slope still returns Increasing/green",
+        "Add test: missing dataType uses default behavior",
+        "Tests pass",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Fix StatsBox dynamic units and title",
+      "description": "As a user viewing pace statistics, I want to see 'min/km' units and 'Pace Statistics' title instead of hardcoded 'kg' and 'Volume Statistics'.",
+      "acceptanceCriteria": [
+        "StatsBox.render() accepts dataType: CHART_DATA_TYPE parameter",
+        "Import UNITS_MAP from constants",
+        "Average, max, min values display unit from UNITS_MAP",
+        "Title changes dynamically: 'Volume Statistics', 'Pace Statistics', etc.",
+        "Duration values use formatDuration from FormatUtils",
+        "Pace values use formatPace from FormatUtils",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Fix StatsBox trend color inversion for pace",
+      "description": "As a user tracking pace, I want red trend when pace increases (slower) and green when it decreases (faster).",
+      "acceptanceCriteria": [
+        "StatsBox.calculateRecentTrend() accepts dataType parameter",
+        "Use isLowerBetter helper to determine color logic",
+        "For pace: positive change = red, negative change = green",
+        "Other types maintain current behavior",
+        "Recent trend displays correct unit from UNITS_MAP",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Fix TrendHeader direction logic for pace",
+      "description": "As a user, I want the trend arrow to show improvement correctly for pace (down arrow when pace increases = declining).",
+      "acceptanceCriteria": [
+        "TrendHeader.render() accepts optional dataType: CHART_DATA_TYPE parameter",
+        "Use isLowerBetter helper",
+        "For pace: negative percent = 'up' arrow (improving), positive = 'down' arrow (declining)",
+        "Arrow color matches trend direction (green=improving, red=declining)",
+        "Other types maintain current behavior",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Extend MobileTable column labels",
+      "description": "As a user on mobile, I want column headers to show correct labels for all data types, not just volume/weight/reps.",
+      "acceptanceCriteria": [
+        "Import COLUMN_LABELS from constants",
+        "Replace ternary chain with COLUMN_LABELS[chartType] lookup",
+        "Fallback to chartType string if not in map",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Propagate dataType through EmbeddedChartView",
+      "description": "As a developer, I need resolvedType passed to all downstream components so they apply type-specific logic.",
+      "acceptanceCriteria": [
+        "Pass resolvedType to TrendCalculator.getTrendIndicators() call",
+        "Pass resolvedType to TrendHeader.render() call",
+        "Pass resolvedType to StatsBox.render() call",
+        "All three components receive the correct dataType",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

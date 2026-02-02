@@ -1,0 +1,67 @@
+# Ralph Progress Log
+# Branch: ralph/embedded-chart-data-type-support
+# Started: 2026-02-03
+
+## 2026-02-03 - US-001 Completed: Add UNITS_MAP and COLUMN_LABELS constants
+
+**What was done:**
+- Added `UNITS_MAP` constant to `app/constants/ui.constants.ts` mapping each `CHART_DATA_TYPE` to its unit string:
+  - volume='kg', weight='kg', reps='', duration='sec', distance='km', pace='min/km', heartRate='bpm'
+- Added `COLUMN_LABELS` constant mapping each `CHART_DATA_TYPE` to a display label:
+  - 'Volume (kg)', 'Weight (kg)', 'Reps', 'Duration', 'Distance (km)', 'Pace (min/km)', 'Heart Rate (bpm)'
+- Both constants are typed as `Record<CHART_DATA_TYPE, string>` for type safety
+- Already exported via barrel at `@app/constants` (line 17: `export * from "@app/constants/ui.constants"`)
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (41 suites, 558 tests)
+
+**Next steps:**
+- US-003: Add FormatUtils unit tests
+- These new constants will be consumed by StatsBox, MobileTable, and other components in later stories
+
+## 2026-02-03 - US-002 Completed: Create FormatUtils with duration and pace formatters
+
+**What was done:**
+- Created `app/utils/FormatUtils.ts` with the following static methods:
+  - `formatDuration(seconds: number): string` - converts seconds to human-readable format ('30s', '5m 30s', '1h 30m')
+  - `formatPace(minPerKm: number): string` - converts pace to 'M:SS' format (e.g., 5.5 → '5:30')
+  - `formatValue(value: number, dataType: CHART_DATA_TYPE): string` - dispatcher that applies the correct formatter based on data type
+- Exported from utils barrel (`@app/utils`)
+- Handles edge cases: negative values are treated as 0
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (41 suites, 558 tests)
+
+**Next steps:**
+- US-004: Add isLowerBetter helper function
+
+## 2026-02-03 - US-003 Completed: Add FormatUtils unit tests
+
+**What was done:**
+- Created `app/utils/__tests__/FormatUtils.test.ts` with comprehensive test coverage (28 tests)
+- Tests for `formatDuration`:
+  - 0s → '0s', 30s → '30s', 60s → '1m', 90s → '1m 30s'
+  - 3600s → '1h', 3661s → '1h 1m', 5400s → '1h 30m'
+  - Negative values → '0s'
+- Tests for `formatPace`:
+  - 0 → '0:00', 5.0 → '5:00', 5.5 → '5:30', 4.25 → '4:15', 10.75 → '10:45'
+  - Negative values → '0:00'
+- Tests for `formatValue` across all CHART_DATA_TYPEs:
+  - DURATION dispatches to formatDuration
+  - PACE dispatches to formatPace
+  - REPS rounds to integer
+  - VOLUME/WEIGHT append 'kg' unit
+  - DISTANCE appends 'km' unit
+  - HEART_RATE appends 'bpm' unit
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 586 tests)
+
+**Next steps:**
+- US-004: Add isLowerBetter helper function to FormatUtils.ts
+- This helper will determine if a data type uses inverted logic (lower values = improvement)
+- Returns true for PACE type, false for all others
+

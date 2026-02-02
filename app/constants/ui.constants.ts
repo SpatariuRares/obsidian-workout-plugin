@@ -13,6 +13,34 @@
  * to enable easy discovery and consistent terminology across the plugin.
  */
 
+import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+
+/**
+ * Unit strings for each data type, used for displaying values with appropriate units
+ */
+export const UNITS_MAP: Record<CHART_DATA_TYPE, string> = {
+  [CHART_DATA_TYPE.VOLUME]: "kg",
+  [CHART_DATA_TYPE.WEIGHT]: "kg",
+  [CHART_DATA_TYPE.REPS]: "",
+  [CHART_DATA_TYPE.DURATION]: "sec",
+  [CHART_DATA_TYPE.DISTANCE]: "km",
+  [CHART_DATA_TYPE.PACE]: "min/km",
+  [CHART_DATA_TYPE.HEART_RATE]: "bpm",
+} as const;
+
+/**
+ * Column labels for each data type, used for table headers and statistics titles
+ */
+export const COLUMN_LABELS: Record<CHART_DATA_TYPE, string> = {
+  [CHART_DATA_TYPE.VOLUME]: "Volume (kg)",
+  [CHART_DATA_TYPE.WEIGHT]: "Weight (kg)",
+  [CHART_DATA_TYPE.REPS]: "Reps",
+  [CHART_DATA_TYPE.DURATION]: "Duration",
+  [CHART_DATA_TYPE.DISTANCE]: "Distance (km)",
+  [CHART_DATA_TYPE.PACE]: "Pace (min/km)",
+  [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate (bpm)",
+} as const;
+
 /**
  * Icon constants used throughout the UI
  */

@@ -22,7 +22,9 @@
       "Bash(npm run lint:*)",
       "Bash(find:*)",
       "Bash(npm ls:*)",
-      "Bash(OBSIDIANMD_DEBUG_SENTENCE_CASE=1 npx eslint:*)"
+      "Bash(OBSIDIANMD_DEBUG_SENTENCE_CASE=1 npx eslint:*)",
+      "Bash(npm run test:*)",
+      "Bash(node -e:*)"
     ],
     "deny": []
   }

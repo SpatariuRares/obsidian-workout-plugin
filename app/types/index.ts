@@ -21,7 +21,7 @@ export type {
   TableData,
   TableCodeOptions,
 } from "@app/types/TableTypes";
-export { TABLE_TYPE, TableColumnType } from "@app/types/TableTypes";
+export { TABLE_TYPE } from "@app/types/TableTypes";
 
 // Timer-related types
 export type {

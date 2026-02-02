@@ -262,7 +262,6 @@ export const MODAL_UI = {
     DAYS_RANGE: "Days range:",
     DATA_LIMIT: "Data limit:",
     MAX_LOG_COUNT: "Maximum log count:",
-    TABLE_COLUMNS: "Table columns:",
     BUTTON_TEXT: "Button text:",
     CUSTOM_TITLE: "Custom title:",
     TIMER_TYPE: "Timer type:",
@@ -384,13 +383,6 @@ export const MODAL_UI = {
       { text: "Specific exercise", value: "exercise" },
       { text: "Complete workout", value: "workout" },
       { text: "All logs", value: "all" },
-    ],
-    TABLE_COLUMNS: [
-      {
-        text: "Standard (Date, exercise, reps, weight, volume)",
-        value: "standard",
-      },
-      { text: "Minimal (Date, exercise, reps, weight)", value: "minimal" },
     ],
     TIMER_TYPE: [
       { text: "Countdown", value: "countdown" },
@@ -570,6 +562,9 @@ export const TABLE_UI = {
     REPS: "Rep",
     WEIGHT: "Wgt",
     VOLUME: "Vol",
+    DURATION: "Dur",
+    DISTANCE: "Dist",
+    HEART_RATE: "HR",
     NOTES: "Notes",
     PROTOCOL: "Prot",
     ACTIONS: "Act",

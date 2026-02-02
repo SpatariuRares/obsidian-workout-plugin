@@ -41,23 +41,66 @@ export class TableDataProcessor {
     return logData.some((log) => log.notes && log.notes.trim() !== "");
   }
 
+  /**
+   * Checks if any log entry has a specific custom field with a non-zero value.
+   * @param logData - Array of workout log data
+   * @param fieldName - Name of the custom field to check
+   * @returns true if at least one entry has this field with a non-zero value
+   */
+  private static hasCustomField(
+    logData: WorkoutLogData[],
+    fieldName: string,
+  ): boolean {
+    return logData.some((log) => {
+      const value = log.customFields?.[fieldName];
+      if (value === undefined || value === null || value === "") return false;
+      if (typeof value === "number") return value !== 0;
+      if (typeof value === "string") {
+        const num = parseFloat(value);
+        return !isNaN(num) && num !== 0;
+      }
+      return false;
+    });
+  }
+
   static async processTableData(
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
     plugin?: WorkoutChartsPlugin,
   ): Promise<TableData> {
-    // Use default visible columns if not specified (Notes added conditionally below)
-    const defaultVisibleColumns = [
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
-    ];
+    // Determine if we're showing all logs (no exercise filter)
+    const isShowingAllLogs = !params.exercise;
 
     const limit = params.limit || 50;
 
     // Sort and limit data FIRST, then check for optional columns in visible rows only
     const sortedAndLimitedData = this.sortAndLimitData(logData, limit);
+
+    // Check which optional data columns should be shown (based on visible data)
+    const showDuration = this.hasCustomField(sortedAndLimitedData, "duration");
+    const showDistance = this.hasCustomField(sortedAndLimitedData, "distance");
+    const showHeartRate = this.hasCustomField(sortedAndLimitedData, "heartRate");
+
+    // Use default visible columns if not specified (Notes added conditionally below)
+    // Include Exercise column when showing all logs (no exercise filter)
+    // Dynamically add duration/distance/heartRate columns if data exists
+    const defaultVisibleColumns = isShowingAllLogs
+      ? [
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+          ...(showDuration ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION] : []),
+          ...(showDistance ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE] : []),
+          ...(showHeartRate ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE] : []),
+        ]
+      : [
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
+          CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+        ];
 
     // Check if notes column should be shown:
     // Only show if VISIBLE data contains non-empty notes
@@ -289,15 +332,23 @@ export class TableDataProcessor {
         volume:
           log.volume?.toString() ||
           CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+        // Add custom fields for cardio/timed exercises
+        duration: this.formatCustomFieldValue(log.customFields?.duration),
+        distance: this.formatCustomFieldValue(log.customFields?.distance),
+        heartrate: this.formatCustomFieldValue(log.customFields?.heartRate),
         notes: log.notes || "",
         protocol: log.protocol || WorkoutProtocol.STANDARD,
         actions: "", // Placeholder for actions
       };
 
-      // Add custom fields to base data map
+      // Add any additional custom fields to base data map
       if (log.customFields) {
         for (const [key, value] of Object.entries(log.customFields)) {
-          baseDataMap[key.toLowerCase()] = value?.toString() || "";
+          const lowerKey = key.toLowerCase();
+          // Don't overwrite already mapped fields
+          if (!(lowerKey in baseDataMap)) {
+            baseDataMap[lowerKey] = value?.toString() || "";
+          }
         }
       }
 
@@ -350,5 +401,32 @@ export class TableDataProcessor {
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");
+  }
+
+  /**
+   * Formats a custom field value for display.
+   * Returns N/A for empty/zero values, otherwise returns the string value.
+   * @param value - Custom field value
+   * @returns Formatted string value
+   */
+  private static formatCustomFieldValue(
+    value: string | number | boolean | undefined,
+  ): string {
+    if (value === undefined || value === null || value === "") {
+      return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+    }
+    if (typeof value === "number") {
+      return value === 0
+        ? CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE
+        : value.toString();
+    }
+    if (typeof value === "string") {
+      const num = parseFloat(value);
+      if (!isNaN(num) && num === 0) {
+        return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+      }
+      return value;
+    }
+    return value.toString();
   }
 }

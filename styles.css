@@ -62,6 +62,224 @@
   --workout-color-success: #28a745;
 }
 
+/* Stats box styles */
+.workout-charts-stats {
+  margin-top: var(--workout-space-2xl);
+  padding: var(--workout-space-xl);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-xl);
+  font-size: var(--workout-font-base);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  color: var(--text-normal);
+  box-shadow: var(--workout-shadow-md);
+}
+.workout-charts-stats-title {
+  font-size: var(--workout-font-lg);
+}
+.workout-charts-stats-list {
+  margin-top: var(--workout-space-md);
+  margin-bottom: var(--workout-space-xs);
+  list-style-type: square;
+  padding-left: var(--workout-space-2xl);
+}
+.workout-charts-trend-header {
+  padding: var(--workout-space-xl);
+  margin-bottom: var(--workout-space-xl);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-xl);
+  text-align: center;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  box-shadow: var(--workout-shadow-md);
+  color: var(--text-normal);
+}
+.workout-charts-trend-header-h3 {
+  margin: 0;
+  font-size: var(--workout-font-xl);
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-normal);
+}
+.workout-charts-trend-header-p {
+  margin: var(--workout-space-sm) 0 0 0;
+  font-size: var(--workout-font-base);
+  color: var(--text-muted);
+}
+.workout-charts-trend-variation {
+  font-weight: var(--workout-font-weight-bold);
+  color: var(--text-accent);
+}
+.workout-charts-loading {
+  text-align: center;
+  padding: var(--workout-space-4xl) var(--workout-space-xl);
+  color: var(--text-muted);
+  font-style: italic;
+}
+.workout-charts-info {
+  padding: var(--workout-space-lg) var(--workout-space-xl);
+  margin: var(--workout-space-lg) 0;
+  border-radius: var(--workout-radius-lg);
+  border-left: var(--workout-space-xs) solid;
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-charts-info-info {
+  background: var(--background-secondary);
+  border-left-color: var(--text-accent);
+  color: var(--text-normal);
+}
+.workout-charts-info-warning {
+  background: var(--background-secondary);
+  border-left-color: var(--text-warning);
+  color: var(--text-normal);
+}
+.workout-charts-info-success {
+  background: var(--background-secondary);
+  border-left-color: var(--text-success);
+  color: var(--text-normal);
+}
+.workout-charts-no-data {
+  text-align: center;
+  padding: var(--workout-space-4xl) var(--workout-space-xl);
+  color: var(--text-muted);
+  font-style: italic;
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  margin: var(--workout-space-lg) 0;
+}
+.workout-charts-debug {
+  margin-top: var(--workout-space-xl);
+  padding: var(--workout-space-lg);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-lg);
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+}
+.workout-charts-footer {
+  margin-top: var(--workout-space-xl);
+  padding: var(--workout-space-md) var(--workout-space-lg);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  text-align: center;
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+.workout-charts-button-container {
+  margin-top: var(--workout-space-lg);
+}
+
+/* Log utility styles */
+.workout-log-no-data {
+  text-align: center;
+  padding: var(--workout-space-4xl) var(--workout-space-xl);
+  color: var(--text-muted);
+  font-style: italic;
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  margin: var(--workout-space-lg) 0;
+}
+.workout-log-no-data p {
+  margin: var(--workout-space-sm) 0;
+}
+.workout-log-no-data code {
+  background: var(--background-primary);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  font-family: monospace;
+  color: var(--text-accent);
+}
+.workout-log-no-data .workout-buttons-container {
+  justify-content: center;
+}
+
+/* Exercise styles */
+.workout-exercise .workout-exercise-status .workout-exercise-status-text {
+  font-size: var(--workout-font-base);
+  font-weight: var(--workout-font-weight-medium);
+}
+.workout-exercise .workout-exercise-status .workout-exercise-status-success {
+  color: var(--text-success);
+}
+.workout-exercise .workout-exercise-status .workout-exercise-status-accent {
+  color: var(--text-accent);
+}
+.workout-exercise .workout-exercise-status .workout-exercise-status-warning {
+  color: var(--text-warning);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  box-shadow: var(--workout-shadow-lg);
+  max-height: var(--workout-size-6xl);
+  overflow-y: auto;
+  z-index: 1000;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-suggestion {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  font-size: var(--workout-font-base);
+  transition: var(--workout-transition);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-suggestion:last-child {
+  border-bottom: none;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-suggestion:hover {
+  background: var(--background-modifier-hover);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-wrapper {
+  position: relative;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-input {
+  width: 100%;
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--workout-space-lg);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--dropdown-background, var(--background-primary));
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-top: none;
+  border-radius: 0 0 var(--workout-space-xs) var(--workout-space-xs);
+  max-height: var(--workout-size-6xl);
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: var(--workout-shadow-md);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-item {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-item:hover {
+  background: var(--background-modifier-hover);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-item:last-child {
+  border-bottom: none;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-item.selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-hidden {
+  display: none;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-visible {
+  display: block;
+}
+
 /* ============================================================================
    GENERAL HELPERS
    ============================================================================ */

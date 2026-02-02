@@ -1,28 +1,25 @@
 /* Log utility styles */
-.workout-log {
-  .workout-log-no-data {
-    text-align: center;
-    padding: var(--workout-space-4xl) var(--workout-space-xl);
-    color: var(--text-muted);
-    font-style: italic;
-    background: var(--background-secondary);
-    border-radius: var(--workout-radius-lg);
-    margin: var(--workout-space-lg) 0;
+.workout-log-no-data {
+  text-align: center;
+  padding: var(--workout-space-4xl) var(--workout-space-xl);
+  color: var(--text-muted);
+  font-style: italic;
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-lg);
+  margin: var(--workout-space-lg) 0;
 
-    p {
-      margin: var(--workout-space-sm) 0;
-    }
+  p {
+    margin: var(--workout-space-sm) 0;
+  }
 
-    code {
-      background: var(--background-primary);
-      padding: var(--workout-space-xs) var(--workout-space-sm);
-      border-radius: var(--workout-radius-sm);
-      font-family: monospace;
-      color: var(--text-accent);
-    }
-
-    button {
-      margin-top: var(--workout-space-md);
-    }
+  code {
+    background: var(--background-primary);
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+    border-radius: var(--workout-radius-sm);
+    font-family: monospace;
+    color: var(--text-accent);
+  }
+  .workout-buttons-container {
+    justify-content: center;
   }
 }

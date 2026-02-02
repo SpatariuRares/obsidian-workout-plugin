@@ -13,14 +13,13 @@ import {
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import { TableColumnType, TABLE_TYPE } from "@app/types/TableTypes";
+import { TABLE_TYPE } from "@app/types/TableTypes";
 
 export class InsertTableModal extends BaseInsertModal {
   private tableTypeSelect?: HTMLSelectElement;
   private targetElements?: TargetSectionWithAutocompleteElements;
   private limitInput?: HTMLInputElement;
   private dateRangeInput?: HTMLInputElement;
-  private columnsSelect?: HTMLSelectElement;
   private addButtonToggle?: HTMLInputElement;
   private buttonTextInput?: HTMLInputElement;
   private advancedElements?: AdvancedOptionsElements;
@@ -166,13 +165,6 @@ export class InsertTableModal extends BaseInsertModal {
       },
     );
 
-    // Columns selector
-    this.columnsSelect = this.createSelectField(
-      configSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_COLUMNS,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_COLUMNS],
-    );
-
     // Display Options Section
     const displaySection = this.createSection(
       container,
@@ -240,7 +232,6 @@ export class InsertTableModal extends BaseInsertModal {
       !this.tableTypeSelect ||
       !this.targetElements ||
       !this.limitInput ||
-      !this.columnsSelect ||
       !this.addButtonToggle ||
       !this.buttonTextInput ||
       !this.advancedElements
@@ -258,7 +249,6 @@ export class InsertTableModal extends BaseInsertModal {
     const dateRange = this.dateRangeInput
       ? parseInt(this.dateRangeInput.value) || 0
       : 0;
-    const columnsType = this.columnsSelect.value;
     const showAddButton = this.addButtonToggle.checked;
     const buttonText = this.buttonTextInput.value.trim();
     const advancedValues = AdvancedOptionsSection.getValues(
@@ -287,7 +277,6 @@ export class InsertTableModal extends BaseInsertModal {
       workout: target?.workout || "",
       limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
-      columnsType: columnsType as TableColumnType,
       showAddButton,
       buttonText,
       searchByName: advancedValues.searchByName || false,

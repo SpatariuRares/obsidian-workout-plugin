@@ -7,7 +7,7 @@
    ============================================================================ */
 
 @use "app/styles/variables";
-@use "app/styles/utilities/helpers";
+@use "app/styles/utilities/index" as utilities;
 @use "app/styles/components/index" as components;
 @use "app/styles/table";
 @use "app/styles/chart";

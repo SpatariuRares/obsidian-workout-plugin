@@ -5,7 +5,6 @@ import {
   EmbeddedChartParams,
   EmbeddedTimerParams,
   TableCodeOptions,
-  TableColumnType,
   TIMER_TYPE,
   TABLE_TYPE,
 } from "@app/types";
@@ -76,22 +75,6 @@ export class CodeGenerator {
     // Add configuration
     lines.push(`limit: ${params.limit}`);
     if (params.dateRange) lines.push(`dateRange: ${params.dateRange}`);
-
-    // Add columns configuration
-    if (params.columnsType !== TableColumnType.STANDARD) {
-      const columnsMap = {
-        minimal: [
-          CONSTANTS.WORKOUT.LABELS.TABLE.DATE,
-          CONSTANTS.WORKOUT.LABELS.TABLE.EXERCISE,
-          CONSTANTS.WORKOUT.CHARTS.LABELS.REPS,
-          CONSTANTS.WORKOUT.COMMON.UNITS.WEIGHT_KG,
-        ],
-      };
-      const columns = columnsMap[params.columnsType as keyof typeof columnsMap];
-      if (columns) {
-        lines.push(`columns: [${columns.map((c) => `"${c}"`).join(", ")}]`);
-      }
-    }
 
     // Add display options
     if (!params.showAddButton) lines.push(`showAddButton: false`);

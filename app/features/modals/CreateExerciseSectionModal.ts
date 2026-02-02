@@ -5,7 +5,7 @@ import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { TableColumnType, TABLE_TYPE, TIMER_TYPE } from "@app/types";
+import { TABLE_TYPE, TIMER_TYPE } from "@app/types";
 import { Button } from "@app/components/atoms";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { setupWorkoutToggle } from "@app/utils/FormUtils";
@@ -240,7 +240,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         exercise: params.exerciseName,
         workout: params.workoutName,
         limit: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
-        columnsType: TableColumnType.STANDARD,
         showAddButton: true,
         buttonText: CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
         searchByName: false,

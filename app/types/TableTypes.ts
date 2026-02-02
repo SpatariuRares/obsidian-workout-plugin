@@ -34,13 +34,8 @@ export interface TableData {
 }
 
 /**
- * Options for generating table code via CodeGenerator
- * Extends EmbeddedTableParams with additional metadata needed for code generation
+ * Table type for filtering
  */
-export enum TableColumnType {
-  STANDARD = "standard",
-  MINIMAL = "minimal",
-}
 export enum TABLE_TYPE {
   EXERCISE = "exercise",
   WORKOUT = "workout",
@@ -48,12 +43,14 @@ export enum TABLE_TYPE {
   ALL = "all",
 }
 
+/**
+ * Options for generating table code via CodeGenerator
+ */
 export interface TableCodeOptions {
   tableType: TABLE_TYPE;
   exercise: string;
   workout: string;
   limit: number;
-  columnsType: TableColumnType;
   showAddButton: boolean;
   buttonText: string;
   searchByName: boolean;

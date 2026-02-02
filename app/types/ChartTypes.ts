@@ -3,6 +3,7 @@ export enum CHART_TYPE {
   EXERCISE = "exercise",
   WORKOUT = "workout",
   COMBINED = "combined",
+  ALL = "all",
   NONE = "NONE",
 }
 

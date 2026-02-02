@@ -12,3 +12,4 @@ export * from "@app/utils/DateUtils";
 export * from "@app/utils/DataAggregation";
 export * from "@app/utils/FormUtils";
 export * from "@app/utils/StringUtils";
+export * from "@app/utils/ParameterUtils";

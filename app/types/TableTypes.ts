@@ -45,6 +45,7 @@ export enum TABLE_TYPE {
   EXERCISE = "exercise",
   WORKOUT = "workout",
   COMBINED = "combined",
+  ALL = "all",
 }
 
 export interface TableCodeOptions {
@@ -80,4 +81,3 @@ export interface TableRenderContext {
   tableData: TableData;
   callbacks: TableCallbacks;
 }
-

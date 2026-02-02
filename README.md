@@ -6,6 +6,9 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
 
 - **Interactive Charts**: View your workout data in various chart types (Volume, Weight, Reps) using Chart.js
   - **TODO**: Adapt charts for exercise types that don't use reps × weight (e.g., cardio with duration/distance, flexibility with hold time)
+
+![Volume Trend](assets/charts.png)
+
 - **Data Tables**: Display workout logs in organized, sortable tables
 - **Workout Timers**: Built-in timers for tracking rest periods and workout sessions
 - **Advanced Search**: Intelligent exercise matching with multiple search strategies
@@ -32,6 +35,9 @@ A comprehensive plugin for Obsidian that visualizes workout data with interactiv
   - Duration comparison widget showing actual vs. estimated time
   - Set duration settings for accurate estimation
   - `workout-duration` code block for embedding
+
+  ![Duration Estimation](assets/duration.png)
+
 - **Canvas Export**: Visualize workout structure on Obsidian Canvas
   - Export exercises and workout structure as canvas nodes
   - Layout configuration options
@@ -72,6 +78,8 @@ The plugin provides several commands accessible through the Command Palette (Ctr
 1. Use the command palette: "Create Workout Log"
 2. Fill in the exercise name, reps, weight, and other details
 3. The plugin will create a new log file in your specified folder
+
+![Workout Log](assets/tables.png)
 
 ### Using Code Blocks
 
@@ -138,6 +146,73 @@ The plugin includes an intelligent search system that can find exercises even wi
 - **Fuzzy Matching**: Finds exercises with similar names
 - **Score-based Filtering**: Uses confidence scores to determine best matches
 - **Debug Information**: Shows which search strategy was used
+
+## Custom Muscle Tags
+
+The plugin supports custom muscle tag mappings, allowing you to create tags in any language and map them to canonical muscle groups. This is useful for the muscle heatmap visualization and exercise categorization.
+
+### Managing Muscle Tags
+
+Use the command palette (Ctrl/Cmd + P) and search for:
+
+- **Workout: Manage muscle tags** - Opens the tag manager modal
+- **Workout: Generate tag reference note** - Creates a reference note listing all your tags
+
+### Tag Manager Modal
+
+The tag manager modal allows you to:
+
+- **View all tags**: See all muscle tags and their mapped muscle groups
+- **Search**: Filter tags by name or muscle group
+- **Add new tags**: Create custom tags mapped to canonical muscle groups
+- **Edit tags**: Modify the muscle group mapping for existing tags
+- **Delete tags**: Remove tags you no longer need
+- **Fuzzy matching**: When adding tags, similar existing tags are suggested to prevent duplicates
+
+### Import/Export
+
+- **Export**: Download your tags as a CSV file for backup
+- **Import**: Load tags from a CSV file with options to:
+  - **Merge**: Add only new tags, keeping existing ones
+  - **Replace**: Overwrite all existing tags with imported ones
+
+### CSV File Format
+
+Tags are stored in `muscle-tags.csv` in the same folder as your workout log CSV. The format is:
+
+```csv
+tag,muscleGroup
+petto,chest
+schiena,back
+spalle,shoulders
+```
+
+### Canonical Muscle Groups
+
+Tags must map to one of these canonical muscle groups:
+
+| Group        | Description                 |
+| ------------ | --------------------------- |
+| `chest`      | Pectorals                   |
+| `back`       | Latissimus dorsi, rhomboids |
+| `shoulders`  | Deltoids (front/side)       |
+| `biceps`     | Biceps brachii              |
+| `triceps`    | Triceps brachii             |
+| `quads`      | Quadriceps                  |
+| `hamstrings` | Hamstring muscles           |
+| `glutes`     | Gluteus muscles             |
+| `calves`     | Calf muscles                |
+| `abs`        | Abdominal muscles           |
+| `core`       | Core stabilizers            |
+| `forearms`   | Forearm muscles             |
+| `traps`      | Trapezius                   |
+| `rear_delts` | Posterior deltoids          |
+
+### Creating Default Tags
+
+In plugin settings under "CSV Management", use the **Create muscle tags** button to generate a CSV file with default tag mappings (English and Italian).
+
+![CSV Settings](assets/settings.png)
 
 ## Settings
 

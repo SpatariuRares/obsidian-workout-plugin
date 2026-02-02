@@ -1,5 +1,6 @@
 // Refactored InsertTableModal extending BaseInsertModal
 import { CONSTANTS } from "@app/constants";
+import { DomUtils } from "@app/utils/DomUtils";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -48,14 +49,14 @@ export class InsertTableModal extends BaseInsertModal {
     // Table Type Section
     const tableTypeSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.TABLE_TYPE
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.TABLE_TYPE,
     );
 
     // Table Type selector (exercise vs workout)
     this.tableTypeSelect = this.createSelectField(
       tableTypeSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE]
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE],
     );
 
     // Target Section using reusable component with autocomplete
@@ -69,7 +70,7 @@ export class InsertTableModal extends BaseInsertModal {
         container,
         this.tableTypeSelect,
         this.currentFileName,
-        this.plugin
+        this.plugin,
       );
 
     this.targetElements = targetElements;
@@ -77,17 +78,46 @@ export class InsertTableModal extends BaseInsertModal {
     // Ensure visibility is updated based on initial selection
     targetHandlers.updateVisibility();
 
+    // Event listener for display toggle
+    this.tableTypeSelect.addEventListener("change", () => {
+      if (this.tableTypeSelect && this.targetElements) {
+        const type = this.tableTypeSelect.value as TABLE_TYPE;
+        const targetContainer = this.targetElements.container;
+
+        // Hide target section for ALL type
+        if (type === TABLE_TYPE.ALL) {
+          DomUtils.setCssProps(targetContainer, { display: "none" });
+        } else {
+          DomUtils.setCssProps(targetContainer, { display: "block" });
+          // Let the original handler manage visibility of internal fields
+          targetHandlers.updateVisibility();
+        }
+      }
+    });
+
     // Additional check to ensure workout field is visible for combined mode
     setTimeout(() => {
-      if (this.tableTypeSelect && (this.tableTypeSelect.value as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
+      if (!this.tableTypeSelect || !this.targetElements) return;
+
+      const type = this.tableTypeSelect.value as TABLE_TYPE;
+
+      // Handle initial state
+      if (type === TABLE_TYPE.ALL) {
+        DomUtils.setCssProps(this.targetElements.container, {
+          display: "none",
+        });
+        return;
+      }
+
+      if (type === TABLE_TYPE.COMBINED) {
         const workoutField = container.querySelector(
-          '[data-field-type=CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT]'
+          "[data-field-type=CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT]",
         ) as HTMLElement;
         const currentWorkoutField = container.querySelector(
-          '[data-field-type="current-workout"]'
+          '[data-field-type="current-workout"]',
         ) as HTMLElement;
         const fileInfoField = container.querySelector(
-          '[data-field-type="file-info"]'
+          '[data-field-type="file-info"]',
         ) as HTMLElement;
 
         if (workoutField) {
@@ -110,7 +140,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
     );
 
     // Limit selector
@@ -121,7 +151,7 @@ export class InsertTableModal extends BaseInsertModal {
       {
         min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
         max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
-      }
+      },
     );
 
     // Date range selector
@@ -133,20 +163,20 @@ export class InsertTableModal extends BaseInsertModal {
         min: 0,
         max: 365,
         placeholder: "0 = all time",
-      }
+      },
     );
 
     // Columns selector
     this.columnsSelect = this.createSelectField(
       configSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_COLUMNS,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_COLUMNS]
+      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_COLUMNS],
     );
 
     // Display Options Section
     const displaySection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
     );
 
     // Show add button toggle
@@ -154,7 +184,7 @@ export class InsertTableModal extends BaseInsertModal {
       displaySection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_ADD_BUTTON,
       true,
-      "showAddButton"
+      "showAddButton",
     );
 
     // Custom button text
@@ -162,13 +192,13 @@ export class InsertTableModal extends BaseInsertModal {
       displaySection,
       CONSTANTS.WORKOUT.MODAL.LABELS.BUTTON_TEXT,
       CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
-      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT
+      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
     );
 
     // Progressive Overload Section
     const progressiveSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD,
     );
 
     // Target weight input
@@ -180,7 +210,7 @@ export class InsertTableModal extends BaseInsertModal {
         min: 0,
         max: 1000,
         placeholder: "0 = no target",
-      }
+      },
     );
 
     // Target reps input
@@ -192,7 +222,7 @@ export class InsertTableModal extends BaseInsertModal {
         min: 0,
         max: 100,
         placeholder: "0 = no target",
-      }
+      },
     );
 
     // Advanced Options Section using reusable component
@@ -201,7 +231,8 @@ export class InsertTableModal extends BaseInsertModal {
     });
 
     // Set default values based on plugin settings
-    this.advancedElements.exactMatchToggle.checked = this.plugin.settings.defaultExactMatch;
+    this.advancedElements.exactMatchToggle.checked =
+      this.plugin.settings.defaultExactMatch;
   }
 
   protected generateCode(): string {
@@ -221,33 +252,39 @@ export class InsertTableModal extends BaseInsertModal {
     const target = TargetSectionWithAutocomplete.getTargetValue(
       this.targetElements,
       this.tableTypeSelect,
-      this.currentFileName
+      this.currentFileName,
     );
     const limit = parseInt(this.limitInput.value) || 50;
-    const dateRange = this.dateRangeInput ? parseInt(this.dateRangeInput.value) || 0 : 0;
+    const dateRange = this.dateRangeInput
+      ? parseInt(this.dateRangeInput.value) || 0
+      : 0;
     const columnsType = this.columnsSelect.value;
     const showAddButton = this.addButtonToggle.checked;
     const buttonText = this.buttonTextInput.value.trim();
     const advancedValues = AdvancedOptionsSection.getValues(
-      this.advancedElements
+      this.advancedElements,
     );
-    const targetWeight = this.targetWeightInput ? parseFloat(this.targetWeightInput.value) || 0 : 0;
-    const targetReps = this.targetRepsInput ? parseInt(this.targetRepsInput.value) || 0 : 0;
+    const targetWeight = this.targetWeightInput
+      ? parseFloat(this.targetWeightInput.value) || 0
+      : 0;
+    const targetReps = this.targetRepsInput
+      ? parseInt(this.targetRepsInput.value) || 0
+      : 0;
 
     // Validation for combined mode
     if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
         new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_COMBINED_MODE);
         throw new Error(
-          "Both exercise and workout are required for combined mode"
+          "Both exercise and workout are required for combined mode",
         );
       }
     }
 
     return CodeGenerator.generateTableCode({
       tableType: tableType as TABLE_TYPE,
-      exercise: target.exercise || "",
-      workout: target.workout || "",
+      exercise: target?.exercise || "",
+      workout: target?.workout || "",
       limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
       columnsType: columnsType as TableColumnType,

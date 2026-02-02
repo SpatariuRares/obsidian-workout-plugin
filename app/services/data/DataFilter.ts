@@ -9,6 +9,7 @@ import {
   EmbeddedChartParams,
   EmbeddedTableParams,
   FilterResult,
+  CHART_TYPE,
 } from "@app/types";
 import { MuscleTagService } from "@app/services/MuscleTagService";
 
@@ -99,6 +100,16 @@ export class DataFilter {
       return {
         filteredData: [],
         filterMethodUsed: "none",
+        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
+      };
+    }
+
+    // When chartType is ALL, skip filtering and return all data
+    const chartParams = params as EmbeddedChartParams;
+    if (chartParams.chartType === CHART_TYPE.ALL) {
+      return {
+        filteredData: logData,
+        filterMethodUsed: "all data (no filter)",
         titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
       };
     }

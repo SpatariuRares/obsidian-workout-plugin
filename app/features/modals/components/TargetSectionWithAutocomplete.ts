@@ -8,6 +8,7 @@ import type WorkoutChartsPlugin from "main";
 export interface TargetSectionWithAutocompleteElements {
   exerciseContainer: HTMLElement;
   exerciseInput: HTMLInputElement;
+  container: HTMLElement;
   autocompleteContainer: HTMLElement;
   exerciseStatusText: HTMLElement;
   createExercisePageBtn: HTMLButtonElement;
@@ -30,28 +31,34 @@ export class TargetSectionWithAutocomplete {
     container: HTMLElement,
     typeSelect: HTMLSelectElement,
     currentFileName: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): {
     elements: TargetSectionWithAutocompleteElements;
     handlers: TargetSectionWithAutocompleteHandlers;
   } {
-    const targetSection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.TARGET);
+    const targetSection = modal.createSection(
+      container,
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.TARGET,
+    );
 
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
     const { elements: exerciseElements } = ExerciseAutocomplete.create(
       modal,
       exerciseContainer,
-      plugin
+      plugin,
     );
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
-    workoutContainer.setAttribute("data-field-type", CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT);
+    workoutContainer.setAttribute(
+      "data-field-type",
+      CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT,
+    );
     const workoutInput = modal.createTextInput(
       workoutContainer,
       CONSTANTS.WORKOUT.FORMS.LABELS.WORKOUT_NAME,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WORKOUT
+      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WORKOUT,
     );
 
     // Current Workout checkbox (for workout charts/tables)
@@ -61,17 +68,18 @@ export class TargetSectionWithAutocomplete {
       currentWorkoutContainer,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
       false,
-      "currentWorkout"
+      "currentWorkout",
     );
 
     // Add info text about current file
     const currentFileInfo = modal.createCurrentFileInfo(
       targetSection,
-      currentFileName
+      currentFileName,
     );
     currentFileInfo.setAttribute("data-field-type", "file-info");
 
     const elements: TargetSectionWithAutocompleteElements = {
+      container: targetSection,
       exerciseContainer,
       exerciseInput: exerciseElements.exerciseInput,
       autocompleteContainer: exerciseElements.autocompleteContainer,
@@ -116,7 +124,9 @@ export class TargetSectionWithAutocomplete {
           workoutContainer.classList.add("workout-modal-field-visible");
           workoutContainer.classList.remove("workout-modal-field-hidden");
           currentWorkoutContainer.classList.add("workout-modal-field-visible");
-          currentWorkoutContainer.classList.remove("workout-modal-field-hidden");
+          currentWorkoutContainer.classList.remove(
+            "workout-modal-field-hidden",
+          );
           currentFileInfo.classList.add("workout-modal-field-visible");
           currentFileInfo.classList.remove("workout-modal-field-hidden");
         }, 100);
@@ -128,7 +138,11 @@ export class TargetSectionWithAutocomplete {
     };
 
     // Setup event listeners
-    setupWorkoutToggle(currentWorkoutToggle, workoutInput, () => currentFileName);
+    setupWorkoutToggle(
+      currentWorkoutToggle,
+      workoutInput,
+      () => currentFileName,
+    );
     typeSelect.addEventListener("change", updateVisibility);
     updateVisibility();
 
@@ -141,7 +155,7 @@ export class TargetSectionWithAutocomplete {
   static getTargetValue(
     elements: TargetSectionWithAutocompleteElements,
     typeSelect: HTMLSelectElement,
-    currentFileName: string
+    currentFileName: string,
   ): { type: string; exercise?: string; workout?: string } {
     const selectedType = typeSelect.value;
     const useCurrentWorkout = elements.currentWorkoutToggle.checked;

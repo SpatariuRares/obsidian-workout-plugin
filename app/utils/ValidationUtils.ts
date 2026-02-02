@@ -32,11 +32,22 @@ export class ValidationUtils {
     }
 
     // Validate chartType (exists only in chart params)
+    // - exercise: filter by exercise name
+    // - workout: filter by workout name
+    // - combined: filter by both exercise AND workout
+    // - all: show all data from CSV without filtering
     if ("chartType" in params && params.chartType !== undefined) {
       const chartType = params.chartType;
-      if (![CHART_TYPE.EXERCISE, CHART_TYPE.WORKOUT].includes(chartType)) {
+      if (
+        ![
+          CHART_TYPE.EXERCISE,
+          CHART_TYPE.WORKOUT,
+          CHART_TYPE.COMBINED,
+          CHART_TYPE.ALL,
+        ].includes(chartType)
+      ) {
         errors.push(
-          "chartType must be either CHART_TYPE.EXERCISE or CHART_TYPE.WORKOUT"
+          "chartType must be 'exercise', 'workout', 'combined', or 'all'"
         );
       }
     }

@@ -6,6 +6,7 @@ import {
   CHART_TYPE,
 } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
+import { ParameterUtils } from "@app/utils/ParameterUtils";
 
 /**
  * Utility class for chart data processing operations
@@ -43,10 +44,11 @@ export class ChartDataUtils {
   }
 
   /**
-   * Get chart data array, label, and color based on chart type
+   * Get chart data array, label, and color based on chart type.
+   * Supports both standard CHART_DATA_TYPE values and custom parameter keys.
    */
   private static getChartDataForType(
-    chartType: CHART_DATA_TYPE,
+    chartType: CHART_DATA_TYPE | string,
     displayType: CHART_TYPE,
     dataArrays: {
       volumeData: number[];
@@ -56,60 +58,70 @@ export class ChartDataUtils {
       distanceData: number[];
       paceData: number[];
       heartRateData: number[];
-    }
+      customData?: number[];
+    },
+    customParamLabel?: string
   ): { data: number[]; label: string; color: string } {
-    const isWorkout = displayType === CHART_TYPE.WORKOUT;
+    // WORKOUT, COMBINED, and ALL show totals (aggregated data)
+    // EXERCISE shows averages per entry
+    const isAggregate =
+      displayType === CHART_TYPE.WORKOUT ||
+      displayType === CHART_TYPE.COMBINED ||
+      displayType === CHART_TYPE.ALL;
 
-    switch (chartType) {
-      case CHART_DATA_TYPE.VOLUME:
+    // Use string comparison to handle both CHART_DATA_TYPE enum and custom string keys
+    const chartTypeStr = chartType as string;
+
+    switch (chartTypeStr) {
+      case "volume":
         return {
           data: dataArrays.volumeData,
-          label: isWorkout
+          label: isAggregate
             ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
             : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
           color: "#4CAF50",
         };
 
-      case CHART_DATA_TYPE.WEIGHT:
+      case "weight":
         return {
           data: dataArrays.weightData,
-          label: isWorkout
+          label: isAggregate
             ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_WEIGHT
             : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_WEIGHT,
           color: "#FF9800",
         };
 
-      case CHART_DATA_TYPE.REPS:
+      case "reps":
         return {
           data: dataArrays.repsData,
-          label: isWorkout
+          label: isAggregate
             ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_REPS
             : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS,
           color: "#FF9800",
         };
 
-      case CHART_DATA_TYPE.DURATION:
+      case "duration":
         return {
           data: dataArrays.durationData,
-          label: isWorkout ? "Total duration" : "Avg duration",
+          label: isAggregate ? "Total duration (sec)" : "Avg duration (sec)",
           color: "#2196F3",
         };
 
-      case CHART_DATA_TYPE.DISTANCE:
+      case "distance":
         return {
           data: dataArrays.distanceData,
-          label: isWorkout ? "Total distance" : "Avg distance",
+          label: isAggregate ? "Total distance (km)" : "Avg distance (km)",
           color: "#9C27B0",
         };
 
-      case CHART_DATA_TYPE.PACE:
+      case "pace":
         return {
           data: dataArrays.paceData,
           label: "Pace (min/km)",
           color: "#E91E63",
         };
 
-      case CHART_DATA_TYPE.HEART_RATE:
+      case "heartRate":
         return {
           data: dataArrays.heartRateData,
           label: "Avg heart rate (bpm)",
@@ -117,10 +129,20 @@ export class ChartDataUtils {
         };
 
       default:
-        // Fallback to volume for unknown types
+        // Handle custom parameter keys
+        if (dataArrays.customData && dataArrays.customData.length > 0) {
+          const label = customParamLabel || ParameterUtils.keyToLabel(chartType);
+          return {
+            data: dataArrays.customData,
+            label: isAggregate ? `Total ${label}` : `Avg ${label}`,
+            color: ParameterUtils.getColorForDataType(chartType),
+          };
+        }
+
+        // Fallback to volume for unknown types with no custom data
         return {
           data: dataArrays.volumeData,
-          label: isWorkout
+          label: isAggregate
             ? CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME
             : CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
           color: "#4CAF50",
@@ -129,15 +151,31 @@ export class ChartDataUtils {
   }
 
   /**
-   * Process log data for chart visualization
-   * Extended to support dynamic exercise types (timed, distance, cardio, custom)
+   * Checks if a chartType is a standard CHART_DATA_TYPE or a custom parameter key.
+   */
+  private static isStandardChartType(chartType: string): boolean {
+    return Object.values(CHART_DATA_TYPE).includes(chartType as CHART_DATA_TYPE);
+  }
+
+  /**
+   * Process log data for chart visualization.
+   * Extended to support dynamic exercise types (timed, distance, cardio, custom).
+   * Custom parameter keys can be passed as chartType for custom exercise types.
+   *
+   * @param logData - Array of workout log data
+   * @param chartType - Standard CHART_DATA_TYPE or custom parameter key
+   * @param dateRange - Number of days to include
+   * @param dateFormat - Format for date labels
+   * @param displayType - Chart display type (EXERCISE, WORKOUT, COMBINED, ALL)
+   * @param customParamLabel - Optional label for custom parameter (uses keyToLabel if not provided)
    */
   static processChartData(
     logData: WorkoutLogData[],
-    chartType: CHART_DATA_TYPE,
+    chartType: CHART_DATA_TYPE | string,
     dateRange: number = 30,
     dateFormat: string = "DD/MM/YYYY",
-    displayType: CHART_TYPE = CHART_TYPE.EXERCISE
+    displayType: CHART_TYPE = CHART_TYPE.EXERCISE,
+    customParamLabel?: string
   ): { labels: string[]; datasets: ChartDataset[] } {
     // Filter by date range
     const cutoffDate = new Date();
@@ -153,8 +191,13 @@ export class ChartDataUtils {
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     );
 
+    // Check if chartType is a custom parameter key (not a standard type)
+    const isCustomParam = !this.isStandardChartType(chartType as string);
+    const customParamKey = isCustomParam ? (chartType as string) : null;
+
     // Group by date and calculate values
     // Extended to include duration, distance, heartRate from customFields
+    // Also supports custom parameter aggregation
     const dateGroups = new Map<
       string,
       {
@@ -164,6 +207,7 @@ export class ChartDataUtils {
         duration: number;
         distance: number;
         heartRate: number;
+        custom: number;
         count: number;
       }
     >();
@@ -177,6 +221,7 @@ export class ChartDataUtils {
         duration: 0,
         distance: 0,
         heartRate: 0,
+        custom: 0,
         count: 0,
       };
 
@@ -200,6 +245,12 @@ export class ChartDataUtils {
           this.getCustomFieldNumber(log.customFields, "heartRate") ||
           this.getCustomFieldNumber(log.customFields, "heartrate");
         existing.heartRate += heartRateValue;
+
+        // Custom parameter value (if chartType is a custom param key)
+        if (customParamKey) {
+          const customValue = this.getCustomFieldNumber(log.customFields, customParamKey);
+          existing.custom += customValue;
+        }
       }
 
       existing.count += 1;
@@ -215,17 +266,23 @@ export class ChartDataUtils {
     const distanceData: number[] = [];
     const paceData: number[] = [];
     const heartRateData: number[] = [];
+    const customData: number[] = [];
 
     dateGroups.forEach((values, date) => {
       labels.push(date);
 
-      if (displayType === CHART_TYPE.WORKOUT) {
-        // For total workout: show total values (sum)
+      if (
+        displayType === CHART_TYPE.WORKOUT ||
+        displayType === CHART_TYPE.COMBINED ||
+        displayType === CHART_TYPE.ALL
+      ) {
+        // For workout/combined/all: show total values (sum)
         volumeData.push(values.volume);
         weightData.push(values.weight);
         repsData.push(values.reps);
         durationData.push(values.duration);
         distanceData.push(values.distance);
+        customData.push(values.custom);
         // Pace = total time / total distance (min/km)
         paceData.push(
           values.distance > 0 ? values.duration / values.distance : 0
@@ -240,6 +297,7 @@ export class ChartDataUtils {
         repsData.push(values.count > 0 ? values.reps / values.count : 0);
         durationData.push(values.count > 0 ? values.duration / values.count : 0);
         distanceData.push(values.count > 0 ? values.distance / values.count : 0);
+        customData.push(values.count > 0 ? values.custom / values.count : 0);
         // Pace = avg time / avg distance (min/km)
         const avgDuration = values.count > 0 ? values.duration / values.count : 0;
         const avgDistance = values.count > 0 ? values.distance / values.count : 0;
@@ -254,15 +312,21 @@ export class ChartDataUtils {
     const datasets: ChartDataset[] = [];
 
     // Build data array and label based on chart type
-    const { data, label, color } = this.getChartDataForType(chartType, displayType, {
-      volumeData,
-      weightData,
-      repsData,
-      durationData,
-      distanceData,
-      paceData,
-      heartRateData,
-    });
+    const { data, label, color } = this.getChartDataForType(
+      chartType,
+      displayType,
+      {
+        volumeData,
+        weightData,
+        repsData,
+        durationData,
+        distanceData,
+        paceData,
+        heartRateData,
+        customData,
+      },
+      customParamLabel
+    );
 
     if (data.length > 0) {
       datasets.push({

@@ -383,6 +383,7 @@ export const MODAL_UI = {
       { text: "Exercise + workout", value: "combined" },
       { text: "Specific exercise", value: "exercise" },
       { text: "Complete workout", value: "workout" },
+      { text: "All logs", value: "all" },
     ],
     TABLE_COLUMNS: [
       {
@@ -768,6 +769,8 @@ export const MESSAGES_UI = {
     CSV_CREATED: "CSV log file created successfully!",
     CODE_INSERTED: "Code inserted successfully!",
     MUSCLE_TAGS_CSV_CREATED: "Muscle tags CSV file created successfully!",
+    TAG_REFERENCE_GENERATED:
+      "Muscle tags reference note generated successfully!",
   },
   ERRORS: {
     CSV_NOT_FOUND: "CSV log file not found",
@@ -776,6 +779,8 @@ export const MESSAGES_UI = {
     NO_TAGS: "No tags found",
     MUSCLE_TAGS_CSV_FAILED: (error: string) =>
       `Error creating muscle tags CSV: ${error}`,
+    TAG_REFERENCE_FAILED: (error: string) =>
+      `Error generating tag reference note: ${error}`,
   },
   STATUS: {
     INSUFFICIENT_DATA: "Insufficient data",
@@ -868,6 +873,7 @@ export const COMMANDS_UI = {
   MIGRATE_EXERCISE_TYPES: "Migrate exercise types",
   CONVERT_EXERCISE: "Convert exercise data",
   MANAGE_MUSCLE_TAGS: "Manage muscle tags",
+  GENERATE_TAG_REFERENCE: "Generate tag reference note",
 } as const;
 
 /**

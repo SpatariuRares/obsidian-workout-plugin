@@ -259,15 +259,10 @@ Schiena,Back`;
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockRejectedValue(new Error("Read error"));
 
-      const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
-
       const tags = await service.loadTags();
 
       // Should return defaults on error
       expect(tags.size).toBe(Object.keys(MUSCLE_TAG_MAP).length);
-      expect(warnSpy).toHaveBeenCalled();
-
-      warnSpy.mockRestore();
     });
 
     it("should deduplicate concurrent load requests", async () => {

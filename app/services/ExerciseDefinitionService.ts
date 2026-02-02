@@ -17,6 +17,7 @@ import {
   DEFAULT_EXERCISE_TYPE_ID,
 } from "@app/constants/exerciseTypes.constants";
 import { FrontmatterParser } from "@app/utils/FrontmatterParser";
+import { ParameterUtils } from "@app/utils/ParameterUtils";
 
 /**
  * Cache entry for exercise definitions with timestamp for TTL management.
@@ -331,6 +332,7 @@ export class ExerciseDefinitionService {
   /**
    * Parse custom parameters from frontmatter.
    * Expects a YAML array of parameter definitions.
+   * Validates parameters and skips reserved/invalid keys.
    *
    * @example
    * ```yaml
@@ -374,6 +376,17 @@ export class ExerciseDefinitionService {
         type: this.parseParameterType(paramObj.type),
         required: paramObj.required === true,
       };
+
+      // Validate the parameter using ParameterUtils
+      // Skip reserved keys and invalid parameters
+      const validation = ParameterUtils.validateParam(paramDef);
+      if (!validation.isValid) {
+        // Log warning but don't fail - just skip the invalid parameter
+        console.warn(
+          `[ExerciseDefinitionService] Skipping invalid custom parameter "${paramDef.key}": ${validation.error}`
+        );
+        continue;
+      }
 
       // Optional fields
       if (typeof paramObj.unit === "string" && paramObj.unit.trim()) {

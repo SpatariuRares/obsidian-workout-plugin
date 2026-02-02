@@ -26,6 +26,7 @@ import {
   ChartDataUtils,
   StatisticsUtils,
   ValidationUtils,
+  ParameterUtils,
 } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/types/ChartTypes";
@@ -177,19 +178,33 @@ export class EmbeddedChartView extends BaseView {
 
   /**
    * Validates that the requested chart data type is available for the exercise type.
+   * If the exercise has no explicit definition (defaults to strength), allow any type
+   * for backward compatibility.
    */
   private async validateChartDataType(
     params: EmbeddedChartParams,
     chartDataType: CHART_DATA_TYPE,
   ): Promise<{ isValid: boolean; errorMessage: string }> {
-    // If no exercise filter, allow any type (backward compatible)
-    if (!params.exercise) {
+    // If no exercise filter or chartType is ALL, allow any type
+    if (!params.exercise || params.chartType === CHART_TYPE.ALL) {
       return { isValid: true, errorMessage: "" };
     }
 
     const exerciseDefService = this.plugin.getExerciseDefinitionService();
     if (!exerciseDefService) {
       // No service available, allow any type
+      return { isValid: true, errorMessage: "" };
+    }
+
+    // Check if exercise has an explicit definition
+    const exerciseDefinition = await exerciseDefService.getExerciseDefinition(
+      params.exercise,
+    );
+
+    // If no explicit definition found, allow any chart type (backward compatible)
+    // This allows users to use duration/distance/heartRate charts without
+    // needing to define exercise_type in frontmatter
+    if (!exerciseDefinition) {
       return { isValid: true, errorMessage: "" };
     }
 
@@ -223,9 +238,10 @@ export class EmbeddedChartView extends BaseView {
 
   /**
    * Extracts numeric parameter keys from parameter definitions.
+   * Delegates to centralized ParameterUtils.
    */
   private getNumericParamKeys(parameters: ParameterDefinition[]): string[] {
-    return parameters.filter((p) => p.type === "number").map((p) => p.key);
+    return ParameterUtils.getNumericParamKeys(parameters);
   }
 
   /**

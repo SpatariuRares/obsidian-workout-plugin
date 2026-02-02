@@ -18,6 +18,7 @@ import {
   getDefaultChartDataType,
   isValidChartDataType,
 } from "@app/features/charts/config/ChartConstants";
+import { ParameterUtils } from "@app/utils";
 
 export class InsertChartModal extends BaseInsertModal {
   private chartTypeSelect?: HTMLSelectElement;
@@ -239,9 +240,10 @@ export class InsertChartModal extends BaseInsertModal {
 
     // Default to strength if no definition found
     const typeId = definition?.typeId || "strength";
+    // Use ParameterUtils to extract numeric parameter keys
     const customParams = definition?.customParameters
-      ?.filter((p) => p.type === "number")
-      .map((p) => p.key);
+      ? ParameterUtils.getNumericParamKeys(definition.customParameters)
+      : undefined;
 
     const availableTypes = getAvailableChartDataTypes(typeId, customParams);
 
@@ -253,29 +255,17 @@ export class InsertChartModal extends BaseInsertModal {
       const option = document.createElement("option");
       option.value = type;
 
-      // Determine display text
-      let displayText = type.charAt(0).toUpperCase() + type.slice(1);
+      // Determine display text using ParameterUtils
+      let displayText: string;
 
-      // Add units for known types or custom params
-      if (type === "volume" || type === "weight") {
-        displayText = `${displayText} (kg)`;
-      } else if (type === "duration") {
-        displayText = `${displayText} (sec)`;
-      } else if (type === "distance") {
-        displayText = `${displayText} (m)`;
-      } else if (type === "pace") {
-        displayText = `${displayText}`; // Pace unit depends on distance/time, maybe keep simple
-      } else if (type === "heartRate") {
-        displayText = "Heart Rate (bpm)";
+      // First check if it's a custom parameter from the exercise definition
+      const customParam = definition?.customParameters?.find((p) => p.key === type);
+      if (customParam) {
+        // Use ParameterUtils to format custom parameter with unit
+        displayText = ParameterUtils.formatParamWithUnit(customParam);
       } else {
-        // Try to find label/unit in definition parameters for custom types
-        const param = definition?.customParameters?.find((p) => p.key === type);
-        if (param) {
-          displayText = param.label;
-          if (param.unit) {
-            displayText += ` (${param.unit})`;
-          }
-        }
+        // Use ParameterUtils to format standard types with their default units
+        displayText = ParameterUtils.formatKeyWithUnit(type);
       }
 
       option.text = displayText;

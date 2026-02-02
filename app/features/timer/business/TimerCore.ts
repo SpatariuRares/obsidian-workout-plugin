@@ -26,9 +26,8 @@ export class TimerCore {
       isRunning: false,
       currentRound: 1,
       totalRounds: 1,
-      intervalTime: 30,
       timerType: TIMER_TYPE.COUNTDOWN,
-      duration: 90,
+      duration: 30,
       timerDisplay: undefined,
       startStopBtn: undefined,
     };
@@ -109,8 +108,9 @@ export class TimerCore {
         return;
       }
     } else if (this.state.timerType === TIMER_TYPE.INTERVAL) {
+      // Use duration for interval timing (same as countdown)
       const intervalElapsed =
-        this.state.elapsedTime % (this.state.intervalTime * 1000);
+        this.state.elapsedTime % (this.state.duration * 1000);
       if (intervalElapsed < 100 && this.state.elapsedTime > 0) {
         this.setState({ currentRound: this.state.currentRound + 1 });
         if (this.state.currentRound > this.state.totalRounds) {

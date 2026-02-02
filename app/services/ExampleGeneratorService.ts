@@ -759,7 +759,6 @@ For HIIT or circuit training:
 \`\`\`workout-timer
 type: interval
 duration: 30
-interval: 10
 rounds: 5
 title: HIIT Intervals
 showControls: true
@@ -860,12 +859,11 @@ sound: true
 
 ## Main Workout: Intervals
 
-30 seconds sprint / 10 seconds rest × 8 rounds
+30 seconds per round × 8 rounds
 
 \`\`\`workout-timer
 type: interval
 duration: 30
-interval: 10
 rounds: 8
 title: Sprint Intervals
 showControls: true

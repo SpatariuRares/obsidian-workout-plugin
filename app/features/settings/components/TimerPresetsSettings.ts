@@ -113,9 +113,8 @@ export class TimerPresetsSettings {
     parts.push(`Type: ${preset.type}`);
     parts.push(`Duration: ${preset.duration}s`);
 
-    if (preset.type === TIMER_TYPE.INTERVAL) {
-      if (preset.intervalTime) parts.push(`Interval: ${preset.intervalTime}s`);
-      if (preset.rounds) parts.push(`Rounds: ${preset.rounds}`);
+    if (preset.type === TIMER_TYPE.INTERVAL && preset.rounds) {
+      parts.push(`Rounds: ${preset.rounds}`);
     }
 
     const options: string[] = [];
@@ -154,11 +153,10 @@ export class TimerPresetsSettings {
       : {
           name: "",
           type: TIMER_TYPE.COUNTDOWN,
-          duration: 90,
+          duration: 30,
           showControls: true,
           autoStart: false,
           sound: true,
-          intervalTime: 30,
           rounds: 5,
         };
 
@@ -203,21 +201,8 @@ export class TimerPresetsSettings {
         }),
       );
 
-    // Interval-specific options
+    // Interval-specific options (rounds only)
     if (formState.type === TIMER_TYPE.INTERVAL) {
-      new Setting(editorContainer)
-        .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_INTERVAL)
-        .addText((text) =>
-          text
-            .setValue(String(formState.intervalTime || 30))
-            .onChange((value) => {
-              const num = parseInt(value);
-              if (!isNaN(num) && num > 0) {
-                formState.intervalTime = num;
-              }
-            }),
-        );
-
       new Setting(editorContainer)
         .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_ROUNDS)
         .addText((text) =>

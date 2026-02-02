@@ -99,9 +99,6 @@ export class InsertTimerModal extends BaseInsertModal {
     if (this.timerElements.durationInput) {
       this.timerElements.durationInput.value = preset.duration.toString();
     }
-    if (this.timerElements.intervalTimeInput && preset.intervalTime) {
-      this.timerElements.intervalTimeInput.value = preset.intervalTime.toString();
-    }
     if (this.timerElements.roundsInput && preset.rounds) {
       this.timerElements.roundsInput.value = preset.rounds.toString();
     }
@@ -129,7 +126,6 @@ export class InsertTimerModal extends BaseInsertModal {
     return CodeGenerator.generateTimerCode({
       type: timerValues.type as TIMER_TYPE,
       duration: timerValues.duration,
-      intervalTime: timerValues.intervalTime,
       rounds: timerValues.rounds,
       title: timerValues.title,
       showControls: timerValues.showControls,

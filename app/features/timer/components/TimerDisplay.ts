@@ -25,8 +25,9 @@ export class TimerDisplay {
     } else if (state.timerType === TIMER_TYPE.STOPWATCH) {
       displayTime = this.formatTime(state.elapsedTime);
     } else if (state.timerType === TIMER_TYPE.INTERVAL) {
-      const intervalElapsed = state.elapsedTime % (state.intervalTime * 1000);
-      const remaining = state.intervalTime * 1000 - intervalElapsed;
+      // Use duration for interval timing (same as countdown)
+      const intervalElapsed = state.elapsedTime % (state.duration * 1000);
+      const remaining = state.duration * 1000 - intervalElapsed;
       displayTime = this.formatTime(remaining);
     } else {
       displayTime = "00:00";

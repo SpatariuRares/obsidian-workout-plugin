@@ -65,11 +65,14 @@ export class EmbeddedTimerView extends BaseView {
 
       this.timerCore.stop();
 
+      const timerType = resolvedParams.type || TIMER_TYPE.COUNTDOWN;
+      const duration = resolvedParams.duration || 30;
+      const totalRounds = resolvedParams.rounds || 1;
+
       this.timerCore.setState({
-        timerType: resolvedParams.type || TIMER_TYPE.COUNTDOWN,
-        duration: resolvedParams.duration || 300,
-        intervalTime: resolvedParams.intervalTime || 30,
-        totalRounds: resolvedParams.rounds || 1,
+        timerType,
+        duration,
+        totalRounds,
         elapsedTime: 0,
         currentRound: 1,
         isRunning: false,
@@ -79,10 +82,9 @@ export class EmbeddedTimerView extends BaseView {
       // Log timer initialization
       this.logDebug("EmbeddedTimerView", "Timer initialized", {
         timerId: this.timerId,
-        timerType: resolvedParams.type || TIMER_TYPE.COUNTDOWN,
-        duration: resolvedParams.duration || 300,
-        intervalTime: resolvedParams.intervalTime || 30,
-        totalRounds: resolvedParams.rounds || 1,
+        timerType,
+        duration,
+        totalRounds,
       });
 
       this.renderTimerContent(container, resolvedParams);
@@ -180,7 +182,6 @@ export class EmbeddedTimerView extends BaseView {
       showControls: preset.showControls,
       autoStart: preset.autoStart,
       sound: preset.sound,
-      intervalTime: preset.intervalTime,
       rounds: preset.rounds,
     };
   }
@@ -217,10 +218,6 @@ export class EmbeddedTimerView extends BaseView {
 
     if (params.duration && params.duration <= 0) {
       validationErrors.push("Duration must be greater than 0");
-    }
-
-    if (params.intervalTime && params.intervalTime <= 0) {
-      validationErrors.push("Interval time must be greater than 0");
     }
 
     if (params.rounds && params.rounds <= 0) {

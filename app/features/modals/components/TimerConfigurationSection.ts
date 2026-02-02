@@ -5,7 +5,6 @@ import { EmbeddedTimerParams, TIMER_TYPE } from "@app/types";
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
   durationInput?: HTMLInputElement;
-  intervalTimeInput?: HTMLInputElement;
   roundsInput?: HTMLInputElement;
   titleInput: HTMLInputElement;
   showControlsToggle: HTMLInputElement;
@@ -41,7 +40,7 @@ export class TimerConfigurationSection {
       ]
     );
 
-    // Duration input (for countdown)
+    // Duration input (used for all timer types)
     const durationContainer = modal.createFormGroup(timerSection);
     const durationInput = modal.createNumberInput(
       durationContainer,
@@ -49,20 +48,10 @@ export class TimerConfigurationSection {
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REST_TIME,
       1,
       3600,
-      "300"
-    );
-
-    // Interval configuration (for interval timer)
-    const intervalTimeContainer = modal.createFormGroup(timerSection);
-    const intervalTimeInput = modal.createNumberInput(
-      intervalTimeContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.INTERVAL_TIME,
-      "30",
-      1,
-      3600,
       "30"
     );
 
+    // Rounds input (for interval timer only)
     const roundsContainer = modal.createFormGroup(timerSection);
     const roundsInput = modal.createNumberInput(
       roundsContainer,
@@ -115,7 +104,6 @@ export class TimerConfigurationSection {
     const elements: TimerConfigurationElements = {
       timerTypeSelect,
       durationInput,
-      intervalTimeInput,
       roundsInput,
       titleInput,
       showControlsToggle,
@@ -125,16 +113,13 @@ export class TimerConfigurationSection {
 
     // Create visibility handler
     const updateVisibility = () => {
-      const isCountdown = (timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.COUNTDOWN;
-      durationContainer.className = isCountdown
-        ? "workout-charts-form-group workout-timer-config-countdown"
-        : "workout-charts-form-group workout-timer-config-countdown workout-display-none";
-      intervalTimeContainer.className = isCountdown
-        ? "workout-charts-form-group workout-timer-config-interval workout-display-none"
-        : "workout-charts-form-group workout-timer-config-interval";
-      roundsContainer.className = isCountdown
-        ? "workout-charts-form-group workout-timer-config-rounds workout-display-none"
-        : "workout-charts-form-group workout-timer-config-rounds";
+      const isInterval = (timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.INTERVAL;
+      // Duration is always visible for all timer types
+      durationContainer.className = "workout-charts-form-group workout-timer-config-duration";
+      // Rounds only visible for interval timer
+      roundsContainer.className = isInterval
+        ? "workout-charts-form-group workout-timer-config-rounds"
+        : "workout-charts-form-group workout-timer-config-rounds workout-display-none";
     };
 
     const handlers: TimerConfigurationHandlers = {
@@ -152,26 +137,24 @@ export class TimerConfigurationSection {
    * Gets the timer configuration values
    */
   static getValues(elements: TimerConfigurationElements): EmbeddedTimerParams {
+    const timerType = elements.timerTypeSelect.value as TIMER_TYPE;
+
     const values: EmbeddedTimerParams = {
-      type: elements.timerTypeSelect.value as TIMER_TYPE,
+      type: timerType,
       title: elements.titleInput.value.trim(),
       showControls: elements.showControlsToggle.checked,
       autoStart: elements.autoStartToggle.checked,
       sound: elements.soundToggle.checked,
     };
 
-    if (
-      (elements.timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.COUNTDOWN &&
-      elements.durationInput
-    ) {
-      values.duration = parseInt(elements.durationInput.value) || 90;
-    } else if ((elements.timerTypeSelect.value as TIMER_TYPE) === TIMER_TYPE.INTERVAL) {
-      if (elements.intervalTimeInput) {
-        values.intervalTime = parseInt(elements.intervalTimeInput.value) || 30;
-      }
-      if (elements.roundsInput) {
-        values.rounds = parseInt(elements.roundsInput.value) || 5;
-      }
+    // Duration is used for all timer types
+    if (elements.durationInput) {
+      values.duration = parseInt(elements.durationInput.value) || 30;
+    }
+
+    // Rounds only applies to interval timer
+    if (timerType === TIMER_TYPE.INTERVAL && elements.roundsInput) {
+      values.rounds = parseInt(elements.roundsInput.value) || 5;
     }
 
     return values;

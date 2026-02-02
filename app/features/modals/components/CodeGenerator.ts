@@ -119,14 +119,12 @@ export class CodeGenerator {
       lines.push(`preset: ${params.preset}`);
     }
 
-    if (params.type === TIMER_TYPE.COUNTDOWN && params.duration) {
+    // Duration is used for all timer types
+    if (params.duration) {
       lines.push(`duration: ${params.duration}`);
-    } else if (
-      params.type === TIMER_TYPE.INTERVAL &&
-      params.intervalTime &&
-      params.rounds
-    ) {
-      lines.push(`intervalTime: ${params.intervalTime}`);
+    }
+    // Rounds only applies to interval timer
+    if (params.type === TIMER_TYPE.INTERVAL && params.rounds) {
       lines.push(`rounds: ${params.rounds}`);
     }
 

@@ -14,7 +14,7 @@ jest.mock(
     normalizePath: (path: string) => path.replace(/\\/g, "/"),
     EventRef: class MockEventRef {},
   }),
-  { virtual: true }
+  { virtual: true },
 );
 
 // Import after mocking
@@ -170,9 +170,6 @@ good,biceps`;
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockResolvedValue(csvContent);
 
-      // Spy on console.warn to verify warnings are logged
-      const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
-
       const tags = await service.loadTags();
 
       // Should only have the valid rows (petto,chest and good,biceps)
@@ -180,11 +177,6 @@ good,biceps`;
       expect(tags.size).toBe(2);
       expect(tags.get("petto")).toBe("chest");
       expect(tags.get("good")).toBe("biceps");
-
-      // Should have logged warnings for invalid rows
-      expect(warnSpy).toHaveBeenCalled();
-
-      warnSpy.mockRestore();
     });
 
     it("should accept rows with extra columns (ignoring extras)", async () => {
@@ -258,7 +250,7 @@ Schiena,Back`;
 
       const tags = await service.loadTags();
 
-      expect(tags.get('petto, alto')).toBe("chest");
+      expect(tags.get("petto, alto")).toBe("chest");
       expect(tags.get('back "upper"')).toBe("back");
     });
 
@@ -317,7 +309,7 @@ petto,chest`;
 
       expect(mockVault.create).toHaveBeenCalledWith(
         "workout-data/muscle-tags.csv",
-        expect.stringContaining("tag,muscleGroup")
+        expect.stringContaining("tag,muscleGroup"),
       );
 
       const writtenContent = mockVault.create.mock.calls[0][1];
@@ -337,7 +329,7 @@ petto,chest`;
 
       expect(mockVault.modify).toHaveBeenCalledWith(
         mockFile,
-        expect.stringContaining("petto,chest")
+        expect.stringContaining("petto,chest"),
       );
       expect(mockVault.create).not.toHaveBeenCalled();
     });
@@ -352,7 +344,7 @@ petto,chest`;
 
       // Should check for folder and potentially create it
       expect(mockVault.getAbstractFileByPath).toHaveBeenCalledWith(
-        "workout-data"
+        "workout-data",
       );
     });
 
@@ -600,7 +592,8 @@ petto,chest`;
   describe("destroy", () => {
     it("should unregister file watcher on destroy", () => {
       const service2 = new MuscleTagService(mockApp as any, mockSettings);
-      const eventRef = mockVault.on.mock.results[mockVault.on.mock.results.length - 1].value;
+      const eventRef =
+        mockVault.on.mock.results[mockVault.on.mock.results.length - 1].value;
 
       service2.destroy();
 

@@ -39,7 +39,9 @@ export class MuscleTagService {
     const logFilePath = this.settings.csvLogFilePath;
     const lastSlash = logFilePath.lastIndexOf("/");
     const folder = lastSlash > 0 ? logFilePath.substring(0, lastSlash) : "";
-    return normalizePath(folder ? `${folder}/muscle-tags.csv` : "muscle-tags.csv");
+    return normalizePath(
+      folder ? `${folder}/muscle-tags.csv` : "muscle-tags.csv",
+    );
   }
 
   /**
@@ -110,10 +112,10 @@ export class MuscleTagService {
           if (tag && muscleGroup) {
             tags.set(tag, muscleGroup);
           } else {
-            console.warn(`MuscleTagService: Skipping invalid row at line ${i + 1}: "${line}"`);
+            console.warn(`Skipping invalid CSV line (empty values): ${line}`);
           }
         } else {
-          console.warn(`MuscleTagService: Skipping malformed row at line ${i + 1}: "${line}"`);
+          console.warn(`Skipping invalid CSV line (format): ${line}`);
         }
       }
 
@@ -126,7 +128,7 @@ export class MuscleTagService {
       this.tagCache = tags;
       return tags;
     } catch (error) {
-      console.warn("MuscleTagService: Error loading CSV, using defaults", error);
+      console.warn("Failed to load muscle tags:", error);
       return this.getDefaultTags();
     }
   }
@@ -206,7 +208,7 @@ export class MuscleTagService {
       // Update cache
       this.tagCache = new Map(tags);
     } catch (error) {
-      console.error("MuscleTagService: Error saving CSV", error);
+      console.warn("Failed to save muscle tags:", error);
       throw error;
     }
   }

@@ -134,7 +134,6 @@ export class Body {
     // Check for parsing errors
     const parseError = doc.querySelector("parsererror");
     if (parseError) {
-      console.error("SVG parsing error:", parseError.textContent);
       return;
     }
 
@@ -186,7 +185,6 @@ export class Body {
     // Check for parsing errors
     const parseError = doc.querySelector("parsererror");
     if (parseError) {
-      console.error("SVG parsing error:", parseError.textContent);
       return;
     }
 

@@ -111,11 +111,7 @@ export class MuscleTagService {
 
           if (tag && muscleGroup) {
             tags.set(tag, muscleGroup);
-          } else {
-            console.warn(`Skipping invalid CSV line (empty values): ${line}`);
           }
-        } else {
-          console.warn(`Skipping invalid CSV line (format): ${line}`);
         }
       }
 
@@ -127,8 +123,7 @@ export class MuscleTagService {
       // Update cache
       this.tagCache = tags;
       return tags;
-    } catch (error) {
-      console.warn("Failed to load muscle tags:", error);
+    } catch {
       return this.getDefaultTags();
     }
   }
@@ -185,32 +180,27 @@ export class MuscleTagService {
 
     const content = lines.join("\n");
 
-    try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(this.csvPath);
+    const abstractFile = this.app.vault.getAbstractFileByPath(this.csvPath);
 
-      if (abstractFile && abstractFile instanceof TFile) {
-        // File exists, modify it
-        await this.app.vault.modify(abstractFile, content);
-      } else {
-        // File doesn't exist, create it
-        // Ensure parent folder exists
-        const lastSlash = this.csvPath.lastIndexOf("/");
-        if (lastSlash > 0) {
-          const folder = this.csvPath.substring(0, lastSlash);
-          const folderExists = this.app.vault.getAbstractFileByPath(folder);
-          if (!folderExists) {
-            await this.app.vault.createFolder(folder);
-          }
+    if (abstractFile && abstractFile instanceof TFile) {
+      // File exists, modify it
+      await this.app.vault.modify(abstractFile, content);
+    } else {
+      // File doesn't exist, create it
+      // Ensure parent folder exists
+      const lastSlash = this.csvPath.lastIndexOf("/");
+      if (lastSlash > 0) {
+        const folder = this.csvPath.substring(0, lastSlash);
+        const folderExists = this.app.vault.getAbstractFileByPath(folder);
+        if (!folderExists) {
+          await this.app.vault.createFolder(folder);
         }
-        await this.app.vault.create(this.csvPath, content);
       }
-
-      // Update cache
-      this.tagCache = new Map(tags);
-    } catch (error) {
-      console.warn("Failed to save muscle tags:", error);
-      throw error;
+      await this.app.vault.create(this.csvPath, content);
     }
+
+    // Update cache
+    this.tagCache = new Map(tags);
   }
 
   /**

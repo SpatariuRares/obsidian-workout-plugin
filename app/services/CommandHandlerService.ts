@@ -10,6 +10,7 @@ import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseS
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
 import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
 import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
+import { MuscleTagManagerModal } from "@app/features/modals/MuscleTagManagerModal";
 import {
   CanvasExporter,
   WorkoutFileSuggestModal,
@@ -157,6 +158,14 @@ export class CommandHandlerService {
       name: CONSTANTS.WORKOUT.COMMANDS.CONVERT_EXERCISE,
       callback: () => {
         new ConvertExerciseDataModal(this.app, this.plugin).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "manage-muscle-tags",
+      name: CONSTANTS.WORKOUT.COMMANDS.MANAGE_MUSCLE_TAGS,
+      callback: () => {
+        new MuscleTagManagerModal(this.app, this.plugin).open();
       },
     });
   }

@@ -116,20 +116,9 @@ export class ExampleGeneratorService {
 
 ## List of Exercises
 
-\`\`\`dataview
-TABLE exercise_type as Type, tags as Muscle
-FROM "The gym examples/Exercises"
-SORT file.name ASC
+\`\`\`workout-dashboard
 \`\`\`
 
-## Recent Workouts
-
-\`\`\`dataview
-TABLE without id file.link as "Workout", date as "Date"
-FROM "The gym examples/Workouts"
-SORT file.ctime DESC
-LIMIT 5
-\`\`\`
 `;
     if (existingFile && overwrite) {
       const file = existingFile as any; // Cast to TFile, essentially

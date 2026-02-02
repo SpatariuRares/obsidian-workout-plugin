@@ -197,8 +197,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented import functionality in MuscleTagManagerModal.ts: (1) Added Import button in header section next to Export; (2) Hidden file input with accept='.csv' triggered by button click; (3) CSV parsing with header detection (tag, muscleGroup columns) and quoted value handling; (4) Validation against CANONICAL_MUSCLE_GROUPS with error collection; (5) Import preview showing first 10 tags with error summary; (6) Merge button adds new tags only; Replace button overwrites all; (7) Saves via MuscleTagService.saveTags() and refreshes list. Added UI constants: IMPORT_TAGS, IMPORT_MERGE, IMPORT_REPLACE labels."
     },
     {
       "id": "US-012",
@@ -211,8 +211,8 @@
         "Typecheck passes"
       ],
       "priority": 12,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Registered 'Workout: Manage muscle tags' command in CommandHandlerService.ts. Added MANAGE_MUSCLE_TAGS constant to COMMANDS_UI in ui.constants.ts. Command opens MuscleTagManagerModal. All tests pass.\n"
     },
     {
       "id": "US-013",

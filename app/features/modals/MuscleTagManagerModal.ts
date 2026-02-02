@@ -39,6 +39,8 @@ export class MuscleTagManagerModal extends ModalBase {
   private searchValue = "";
   private suggestionsContainer: HTMLElement | null = null;
   private debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+  private importPreviewContainer: HTMLElement | null = null;
+  private pendingImportTags: Map<string, string> = new Map();
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app);
@@ -147,6 +149,29 @@ export class MuscleTagManagerModal extends ModalBase {
       ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.EXPORT_TAGS,
     });
     Button.onClick(exportButton, () => this.handleExport());
+
+    // Import button
+    const importButton = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
+      className: "workout-tag-import-btn",
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
+    });
+
+    // Hidden file input for import
+    const fileInput = buttonContainer.createEl("input", {
+      type: "file",
+      attr: { accept: ".csv" },
+    });
+    DomUtils.setCssProps(fileInput, { display: "none" });
+    fileInput.addEventListener("change", (e) => this.handleFileSelect(e));
+
+    Button.onClick(importButton, () => fileInput.click());
+
+    // Import preview container (hidden by default)
+    this.importPreviewContainer = this.contentContainer.createEl("div", {
+      cls: "workout-tag-import-preview workout-modal-section",
+    });
+    DomUtils.setCssProps(this.importPreviewContainer, { display: "none" });
 
     // Form container (hidden by default)
     this.formContainer = this.contentContainer.createEl("div", {
@@ -746,6 +771,319 @@ export class MuscleTagManagerModal extends ModalBase {
     if (this.countDisplay) {
       this.countDisplay.textContent =
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_COUNT(count);
+    }
+  }
+
+  /**
+   * Handles file selection from the import file input.
+   * @param event - The change event from the file input
+   */
+  private handleFileSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    // Reset input for next selection
+    input.value = "";
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      this.processImportFile(content);
+    };
+    reader.onerror = () => {
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(
+          "Failed to read file",
+        ),
+      );
+    };
+    reader.readAsText(file);
+  }
+
+  /**
+   * Processes and validates the imported CSV file content.
+   * @param content - The raw CSV file content
+   */
+  private processImportFile(content: string): void {
+    const lines = content.split(/\r?\n/).filter((line) => line.trim());
+    if (lines.length === 0) {
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_FORMAT,
+      );
+      return;
+    }
+
+    // Parse header row
+    const headerLine = lines[0].toLowerCase();
+    const hasTagColumn = headerLine.includes("tag");
+    const hasMuscleGroupColumn =
+      headerLine.includes("musclegroup") ||
+      headerLine.includes("muscle_group") ||
+      headerLine.includes("group");
+
+    if (!hasTagColumn || !hasMuscleGroupColumn) {
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_FORMAT,
+      );
+      return;
+    }
+
+    // Determine column positions from header
+    const headers = this.parseCsvLine(lines[0]);
+    const tagIndex = headers.findIndex((h) => h.toLowerCase() === "tag");
+    const groupIndex = headers.findIndex((h) =>
+      ["musclegroup", "muscle_group", "group"].includes(h.toLowerCase()),
+    );
+
+    if (tagIndex === -1 || groupIndex === -1) {
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_FORMAT,
+      );
+      return;
+    }
+
+    // Parse data rows
+    const validTags = new Map<string, string>();
+    const errors: string[] = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const columns = this.parseCsvLine(lines[i]);
+      if (columns.length <= Math.max(tagIndex, groupIndex)) continue;
+
+      const tag = columns[tagIndex].trim().toLowerCase();
+      const muscleGroup = columns[groupIndex].trim().toLowerCase();
+
+      if (!tag || !muscleGroup) continue;
+
+      // Validate muscle group is canonical
+      if (
+        !CANONICAL_MUSCLE_GROUPS.includes(
+          muscleGroup as (typeof CANONICAL_MUSCLE_GROUPS)[number],
+        )
+      ) {
+        errors.push(
+          CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_GROUP(
+            tag,
+            muscleGroup,
+          ),
+        );
+        continue;
+      }
+
+      validTags.set(tag, muscleGroup);
+    }
+
+    if (validTags.size === 0) {
+      if (errors.length > 0) {
+        new Notice(errors[0]);
+      } else {
+        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_NO_VALID);
+      }
+      return;
+    }
+
+    // Store pending tags and show preview
+    this.pendingImportTags = validTags;
+    this.showImportPreview(validTags, errors);
+  }
+
+  /**
+   * Parses a single CSV line handling quoted values.
+   * @param line - The CSV line to parse
+   * @returns Array of column values
+   */
+  private parseCsvLine(line: string): string[] {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++; // Skip next quote
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    result.push(current);
+
+    return result;
+  }
+
+  /**
+   * Shows the import preview with merge/replace options.
+   * @param tags - Valid tags to import
+   * @param errors - Validation errors encountered
+   */
+  private showImportPreview(tags: Map<string, string>, errors: string[]): void {
+    if (!this.importPreviewContainer) return;
+
+    this.importPreviewContainer.empty();
+    DomUtils.setCssProps(this.importPreviewContainer, { display: "block" });
+
+    // Preview header
+    this.importPreviewContainer.createEl("h4", {
+      text: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_PREVIEW(
+        tags.size,
+      ),
+    });
+
+    // Show errors if any
+    if (errors.length > 0) {
+      const errorContainer = this.importPreviewContainer.createEl("div", {
+        cls: "workout-tag-import-errors",
+      });
+      const errorHeader = errorContainer.createEl("p", {
+        text: `⚠️ ${errors.length} tag(s) skipped:`,
+        cls: "workout-tag-import-error-header",
+      });
+      DomUtils.setCssProps(errorHeader, { color: "var(--text-error)" });
+
+      // Show first 3 errors max
+      const errorsToShow = errors.slice(0, 3);
+      for (const error of errorsToShow) {
+        errorContainer.createEl("p", {
+          text: `• ${error}`,
+          cls: "workout-tag-import-error-item",
+        });
+      }
+      if (errors.length > 3) {
+        errorContainer.createEl("p", {
+          text: `...and ${errors.length - 3} more`,
+          cls: "workout-tag-import-error-more",
+        });
+      }
+    }
+
+    // Preview table (show first 10 tags)
+    const previewTable = this.importPreviewContainer.createEl("table", {
+      cls: "workout-tag-table workout-tag-import-table",
+    });
+    const thead = previewTable.createEl("thead");
+    const headerRow = thead.createEl("tr");
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.TAG });
+    headerRow.createEl("th", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.MUSCLE_GROUP,
+    });
+
+    const tbody = previewTable.createEl("tbody");
+    let count = 0;
+    for (const [tag, muscleGroup] of tags) {
+      if (count >= 10) break;
+      const row = tbody.createEl("tr");
+      row.createEl("td", { text: tag });
+      row.createEl("td", { text: muscleGroup });
+      count++;
+    }
+
+    if (tags.size > 10) {
+      const moreRow = tbody.createEl("tr");
+      const moreCell = moreRow.createEl("td", {
+        attr: { colspan: "2" },
+        text: `...and ${tags.size - 10} more tags`,
+        cls: "workout-tag-import-more",
+      });
+      DomUtils.setCssProps(moreCell, {
+        fontStyle: "italic",
+        textAlign: "center",
+      });
+    }
+
+    // Button container
+    const buttonContainer = this.importPreviewContainer.createEl("div", {
+      cls: "workout-tag-form-buttons",
+    });
+
+    // Cancel button
+    const cancelButton = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+    });
+    Button.onClick(cancelButton, () => this.hideImportPreview());
+
+    // Merge button (add new tags only)
+    const mergeButton = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_MERGE,
+      ariaLabel: "Merge: add new tags only, keep existing",
+    });
+    Button.onClick(mergeButton, () => this.executeImport("merge"));
+
+    // Replace button (overwrite all)
+    const replaceButton = Button.create(buttonContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_REPLACE,
+      className: "mod-warning",
+      ariaLabel: "Replace: overwrite all existing tags",
+    });
+    Button.onClick(replaceButton, () => this.executeImport("replace"));
+  }
+
+  /**
+   * Hides the import preview container.
+   */
+  private hideImportPreview(): void {
+    if (!this.importPreviewContainer) return;
+    DomUtils.setCssProps(this.importPreviewContainer, { display: "none" });
+    this.importPreviewContainer.empty();
+    this.pendingImportTags.clear();
+  }
+
+  /**
+   * Executes the import with the specified mode.
+   * @param mode - 'merge' to add new only, 'replace' to overwrite all
+   */
+  private async executeImport(mode: "merge" | "replace"): Promise<void> {
+    try {
+      let finalTags: Map<string, string>;
+
+      if (mode === "replace") {
+        // Replace all existing tags with imported ones
+        finalTags = new Map(this.pendingImportTags);
+      } else {
+        // Merge: keep existing, add new only
+        finalTags = new Map(this.allTags);
+        for (const [tag, group] of this.pendingImportTags) {
+          if (!finalTags.has(tag)) {
+            finalTags.set(tag, group);
+          }
+        }
+      }
+
+      // Save to CSV
+      const muscleTagService = this.plugin.getMuscleTagService();
+      await muscleTagService.saveTags(finalTags);
+
+      // Update local state
+      this.allTags = finalTags;
+
+      // Show success
+      const importedCount =
+        mode === "replace"
+          ? this.pendingImportTags.size
+          : this.pendingImportTags.size;
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORTED(importedCount),
+      );
+
+      // Hide preview and refresh table
+      this.hideImportPreview();
+      this.renderTagRows(this.getFilteredTags());
+      this.updateCountDisplay(this.allTags.size);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(errorMessage),
+      );
     }
   }
 }

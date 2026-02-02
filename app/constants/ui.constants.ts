@@ -212,22 +212,32 @@ export const MODAL_UI = {
     CANVAS_EXPORT_ERROR: "Error exporting to canvas: ",
     CANVAS_NO_EXERCISES: "No exercises found in workout file",
     MUSCLE_TAG_LOADING: "Loading muscle tags...",
-    MUSCLE_TAG_COUNT: (count: number) => `${count} tag${count !== 1 ? "s" : ""} found`,
+    MUSCLE_TAG_COUNT: (count: number) =>
+      `${count} tag${count !== 1 ? "s" : ""} found`,
     MUSCLE_TAG_NO_RESULTS: "No tags match your search",
     MUSCLE_TAG_SAVED: "Muscle tag saved successfully!",
     MUSCLE_TAG_DELETED: "Muscle tag deleted successfully!",
-    MUSCLE_TAG_DELETE_CONFIRM: (tag: string) => `Are you sure you want to delete the tag "${tag}"?`,
-    MUSCLE_TAG_SAVE_ERROR: (error: string) => `Error saving muscle tag: ${error}`,
+    MUSCLE_TAG_DELETE_CONFIRM: (tag: string) =>
+      `Are you sure you want to delete the tag "${tag}"?`,
+    MUSCLE_TAG_SAVE_ERROR: (error: string) =>
+      `Error saving muscle tag: ${error}`,
     MUSCLE_TAG_EXISTS: (tag: string) => `Tag "${tag}" already exists`,
     MUSCLE_TAG_SIMILAR_WARNING: "Similar tag exists - possible duplicate",
-    MUSCLE_TAG_SIMILAR_FOUND: (count: number) => `${count} similar tag${count !== 1 ? "s" : ""} found`,
+    MUSCLE_TAG_SIMILAR_FOUND: (count: number) =>
+      `${count} similar tag${count !== 1 ? "s" : ""} found`,
     MUSCLE_TAG_EXPORTED: "Muscle tags exported successfully!",
-    MUSCLE_TAG_EXPORT_ERROR: (error: string) => `Error exporting muscle tags: ${error}`,
-    MUSCLE_TAG_IMPORTED: (count: number) => `${count} muscle tag${count !== 1 ? "s" : ""} imported successfully!`,
-    MUSCLE_TAG_IMPORT_ERROR: (error: string) => `Error importing muscle tags: ${error}`,
-    MUSCLE_TAG_IMPORT_INVALID_FORMAT: "Invalid CSV format. File must have 'tag' and 'muscleGroup' columns.",
-    MUSCLE_TAG_IMPORT_INVALID_GROUP: (tag: string, group: string) => `Invalid muscle group "${group}" for tag "${tag}". Must be a canonical muscle group.`,
-    MUSCLE_TAG_IMPORT_PREVIEW: (count: number) => `${count} tag${count !== 1 ? "s" : ""} to import`,
+    MUSCLE_TAG_EXPORT_ERROR: (error: string) =>
+      `Error exporting muscle tags: ${error}`,
+    MUSCLE_TAG_IMPORTED: (count: number) =>
+      `${count} muscle tag${count !== 1 ? "s" : ""} imported successfully!`,
+    MUSCLE_TAG_IMPORT_ERROR: (error: string) =>
+      `Error importing muscle tags: ${error}`,
+    MUSCLE_TAG_IMPORT_INVALID_FORMAT:
+      "Invalid CSV format. File must have 'tag' and 'muscleGroup' columns.",
+    MUSCLE_TAG_IMPORT_INVALID_GROUP: (tag: string, group: string) =>
+      `Invalid muscle group "${group}" for tag "${tag}". Must be a canonical muscle group.`,
+    MUSCLE_TAG_IMPORT_PREVIEW: (count: number) =>
+      `${count} tag${count !== 1 ? "s" : ""} to import`,
     MUSCLE_TAG_IMPORT_NO_VALID: "No valid tags found in CSV file.",
     TARGET_ACHIEVED: "Target Reached! Consider increasing weight",
     TARGET_DISMISSED: "Achievement badge dismissed",
@@ -289,6 +299,9 @@ export const MODAL_UI = {
     DELETE: "Delete",
     SIMILAR_TAGS: "Similar tags:",
     EXPORT_TAGS: "Export tags",
+    IMPORT_TAGS: "Import tags",
+    IMPORT_MERGE: "Merge",
+    IMPORT_REPLACE: "Replace all",
     TIMER_DURATION: "Timer duration (seconds):",
     TIMER_PRESET: "Timer preset:",
     WORKOUT_FILE: "Workout file:",
@@ -854,6 +867,7 @@ export const COMMANDS_UI = {
   EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
   MIGRATE_EXERCISE_TYPES: "Migrate exercise types",
   CONVERT_EXERCISE: "Convert exercise data",
+  MANAGE_MUSCLE_TAGS: "Manage muscle tags",
 } as const;
 
 /**

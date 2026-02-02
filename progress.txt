@@ -246,3 +246,76 @@ For US-011, you need to add an "Import" button that opens a file picker for CSV 
 - Offer "Merge" (add new only) or "Replace" (overwrite all) options
 - Update CSV and refresh list after import
 Consider using an `<input type="file" accept=".csv">` hidden element triggered by button click.
+
+## 2026-02-02 - US-011: Add import functionality to modal
+
+**Status:** COMPLETE
+
+**Summary:**
+Added import functionality to MuscleTagManagerModal. Users can now import muscle tags from a CSV file with validation and preview.
+
+**Key changes:**
+1. `app/constants/ui.constants.ts`:
+   - Added `MODAL_UI.LABELS.IMPORT_TAGS` - button label
+   - Added `MODAL_UI.LABELS.IMPORT_MERGE` - merge button label
+   - Added `MODAL_UI.LABELS.IMPORT_REPLACE` - replace all button label
+   - (Import-related notices were already present from earlier planning)
+
+2. `app/features/modals/MuscleTagManagerModal.ts`:
+   - Added `importPreviewContainer` and `pendingImportTags` properties
+   - Added Import button in header section next to Export
+   - Added hidden file input (`<input type="file" accept=".csv">`) triggered by button click
+   - Added `handleFileSelect()` - reads file using FileReader
+   - Added `processImportFile()` - parses CSV, validates format and muscle groups
+   - Added `parseCsvLine()` - handles quoted CSV values properly
+   - Added `showImportPreview()` - displays preview table with first 10 tags, error summary, merge/replace buttons
+   - Added `hideImportPreview()` - clears preview state
+   - Added `executeImport()` - performs merge (add new only) or replace (overwrite all) operation
+
+**CSV validation:**
+- Checks for 'tag' and 'muscleGroup' columns in header
+- Accepts flexible header names: 'muscleGroup', 'muscle_group', 'group'
+- Validates each muscle group against CANONICAL_MUSCLE_GROUPS
+- Collects and displays errors for invalid muscle groups
+- Shows first 3 errors with "...and X more" for remaining
+
+**Import modes:**
+- Merge: Adds only new tags, keeps existing tags unchanged
+- Replace: Overwrites all existing tags with imported ones
+
+**Next priority:** US-012 (Register command to open tag manager modal)
+
+**Note for next developer:**
+For US-012, register a command 'Workout: Manage muscle tags' in CommandHandlerService that opens MuscleTagManagerModal. The modal is already complete with all CRUD operations, import/export functionality. Just need to add the command registration to make it accessible from the command palette.
+
+## 2026-02-02 - US-012: Register command to open tag manager modal
+
+**Status:** COMPLETE
+
+**Summary:**
+Registered a new command 'Workout: Manage muscle tags' that opens the MuscleTagManagerModal from the command palette.
+
+**Key changes:**
+1. `app/constants/ui.constants.ts`:
+   - Added `COMMANDS_UI.MANAGE_MUSCLE_TAGS` - "Manage muscle tags"
+
+2. `app/services/CommandHandlerService.ts`:
+   - Added import for `MuscleTagManagerModal`
+   - Registered command with id `manage-muscle-tags`
+   - Command opens `MuscleTagManagerModal(this.app, this.plugin).open()`
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (558 tests)
+
+**Next priority:** US-013 (Final validation and integration testing)
+
+**Note for next developer:**
+For US-013, run full integration testing:
+- Verify adding custom tag in modal makes it available in heatmap filters
+- Verify tags persist after Obsidian restart
+- Test default tags work when CSV doesn't exist
+- Test fuzzy matching prevents obvious duplicates
+- Test import/export roundtrip preserves all tags
+- Run npm run lint, npm test, npm run build
+

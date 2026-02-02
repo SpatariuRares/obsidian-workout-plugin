@@ -76,8 +76,8 @@
         "npm test passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented via static service pattern for backward compatibility. MuscleTagService initialized in main.ts and passed to CodeBlockProcessorService. DataFilter has static setMuscleTagService(), getMuscleTagService(), getTagMap(), and clearMuscleTagService() methods. Service set during CodeBlockProcessorService construction and cleared on plugin unload. Note: DataFilter didn't use MUSCLE_TAG_MAP directly - the integration prepares DataFilter to expose the custom tag map for components that need it (like MuscleTagMapper in US-005)."
     },
     {
       "id": "US-005",
@@ -92,8 +92,8 @@
         "npm test passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Updated MuscleTagMapper.ts to use DataFilter.getTagMap() instead of CONSTANTS.WORKOUT.MUSCLES.TAG_MAP. Added private getTagMap() helper that returns custom tags from MuscleTagService via DataFilter when available, falling back to default MUSCLE_TAG_MAP. No changes needed to EmbeddedDashboardView since MuscleTagMapper accesses the service via DataFilter's static methods (set in US-004)."
     },
     {
       "id": "US-006",
@@ -109,8 +109,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added 'Create muscle tags' button in GeneralSettings.ts under CSV Management section. Button uses MuscleTagService.createDefaultCsv() for new files and MuscleTagService.saveTags() with defaults for overwrites. Shows ConfirmModal before overwriting existing files. Displays success/error notices. Added UI constants: LABELS.CREATE_MUSCLE_TAGS_CSV, DESCRIPTIONS.CREATE_MUSCLE_TAGS_CSV, DESCRIPTIONS.CONFIRM_OVERWRITE_MUSCLE_TAGS, BUTTONS.CREATE_MUSCLE_TAGS, SUCCESS.MUSCLE_TAGS_CSV_CREATED, ERRORS.MUSCLE_TAGS_CSV_FAILED."
     },
     {
       "id": "US-007",
@@ -127,8 +127,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Created MuscleTagManagerModal.ts extending ModalBase. Features: (1) Displays all tags in a sortable table with Tag and Muscle Group columns; (2) SearchBox with real-time filtering by tag or muscle group; (3) Count display showing number of tags/matches; (4) Async tag loading from MuscleTagService with error handling. Added UI constants: MODAL_UI.TITLES.MUSCLE_TAG_MANAGER, MODAL_UI.LABELS.TAG/MUSCLE_GROUP/ACTIONS, MODAL_UI.PLACEHOLDERS.SEARCH_TAGS, MODAL_UI.NOTICES.MUSCLE_TAG_LOADING/COUNT/NO_RESULTS."
     },
     {
       "id": "US-008",
@@ -145,8 +145,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented full CRUD operations in MuscleTagManagerModal.ts: (1) Add Tag button shows inline form with tag input and muscle group dropdown; (2) CANONICAL_MUSCLE_GROUPS constant added to muscles.constants.ts with all 14 canonical groups; (3) Clicking tag/row opens edit form (tag input disabled since it's the key); (4) Delete button with ConfirmModal confirmation; (5) Save calls MuscleTagService.saveTags() and refreshes list; (6) Added UI constants for new labels, notices, and placeholders. Search is preserved across CRUD operations."
     },
     {
       "id": "US-009",
@@ -162,8 +162,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented fuzzy matching suggestions in MuscleTagManagerModal.ts: (1) Uses StringUtils.levenshteinDistance() with maxDistance=2 for suggestions; (2) Shows warning icon (⚠️) for very similar tags (distance<=1); (3) Suggestions display tag name + muscle group in a styled list; (4) Click on suggestion calls showEditForm() to edit that tag; (5) 150ms debounce on input for performance; (6) Added UI constants: MUSCLE_TAG_SIMILAR_WARNING, MUSCLE_TAG_SIMILAR_FOUND, SIMILAR_TAGS label; (7) Created _tag-manager.scss with styles for suggestions container and items; (8) Cleanup of debounce timeout in hideForm() and onClose()."
     },
     {
       "id": "US-010",
@@ -178,8 +178,8 @@
         "Verify in browser using dev-browser skill"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added Export button in modal header section next to Add tag button. Export functionality uses Blob + URL.createObjectURL for browser download. CSV format: tag,muscleGroup with proper escaping for special characters (commas, quotes, newlines). Tags are sorted alphabetically. Added UI constants: EXPORT_TAGS label, MUSCLE_TAG_EXPORTED success notice, MUSCLE_TAG_EXPORT_ERROR error notice. Added escapeCsvValue() helper method for proper CSV escaping."
     },
     {
       "id": "US-011",
@@ -230,6 +230,59 @@
         "Typecheck passes"
       ],
       "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Add command to generate read-only tag reference note",
+      "description": "As a user, I want a command to generate a reference note listing all muscle tags. The note should be considered read-only and fully regenerated by the command to ensure data consistency.",
+      "acceptanceCriteria": [
+        "Register command 'Workout: Generate tag reference note' in CommandHandlerService",
+        "Command fetches all tags from MuscleTagService",
+        "Create or Overwrite a file named `Muscle Tags Reference.md` (or configurable name)",
+        "Add a clear header warning: '%% ⚠️ DO NOT EDIT MANUALLY. This file is auto-generated by the Workout Plugin. %%'",
+        "Format output as a Markdown table with columns: Tag, Muscle Group",
+        "Ensure running the command completely replaces file content (discarding any manual user edits)",
+        "Show a notification (Notice) upon successful generation",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Remove legacy muscle tag constants",
+      "description": "As a developer, I want to remove the deprecated hardcoded muscle tag map to ensure the new Service is the sole source of truth and reduce technical debt.",
+      "acceptanceCriteria": [
+        "Remove `MUSCLE_TAG_MAP` export from `app/constants/muscles.constants.ts`",
+        "Verify no files are importing `MUSCLE_TAG_MAP` directly (grep check)",
+        "Remove any temporary legacy bridge code in DataFilter or HeatMap",
+        "Ensure default tags are now strictly handled by `MuscleTagService` internals only",
+        "Verify that `muscles.constants.ts` only contains the CANONICAL_MUSCLE_GROUPS list (the keys)",
+        "Typecheck passes",
+        "npm test passes"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Update README documentation",
+      "description": "As a developer, I want to update the README to explain the new custom muscle tag features, commands, and CSV structure.",
+      "acceptanceCriteria": [
+        "Add 'Custom Muscle Tags' section to README.md",
+        "Explain how to open and use the 'Manage Muscle Tags' modal",
+        "Document the CSV file location and valid format (`tag,muscleGroup`)",
+        "List the canonical muscle groups supported (chest, back, shoulders, etc.) so users know what to map to",
+        "Document the new commands: 'Manage muscle tags' and 'Generate tag reference note'",
+        "Explain Import/Export features",
+        "Mention the 'Create muscle tags CSV' button in settings",
+        "Typecheck passes"
+      ],
+      "priority": 16,
       "passes": false,
       "notes": ""
     }

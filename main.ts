@@ -15,6 +15,8 @@ import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";
 import { ExerciseDefinitionService } from "@app/services/ExerciseDefinitionService";
+import { MuscleTagService } from "@app/services/MuscleTagService";
+import { DataFilter } from "@app/services/data/DataFilter";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { QuickLogModal } from "@app/features/modals/QuickLogModal";
@@ -43,6 +45,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private dataService!: DataService;
   private codeBlockProcessorService!: CodeBlockProcessorService;
   private exerciseDefinitionService!: ExerciseDefinitionService;
+  private muscleTagService!: MuscleTagService;
 
   // Public API for Dataview integration
   private workoutPlannerAPI!: WorkoutPlannerAPI;
@@ -69,6 +72,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     // Initialize services
     this.dataService = new DataService(this.app, this.settings);
     this.exerciseDefinitionService = new ExerciseDefinitionService(this.app, this.settings);
+    this.muscleTagService = new MuscleTagService(this.app, this.settings);
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
@@ -77,6 +81,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedTableView,
       this.embeddedDashboardView,
       this.activeTimers,
+      this.muscleTagService,
     );
 
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
@@ -156,6 +161,12 @@ export default class WorkoutChartsPlugin extends Plugin {
     // 3b. Clear exercise definition service cache
     this.exerciseDefinitionService?.clearCache();
 
+    // 3c. Destroy muscle tag service (unregister file watcher, clear cache)
+    this.muscleTagService?.destroy();
+
+    // 3d. Clear DataFilter's reference to MuscleTagService
+    DataFilter.clearMuscleTagService();
+
     // 4. Destroy all Chart.js instances (additional safety net)
     ChartRenderer.destroyAllCharts();
 
@@ -202,6 +213,14 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public getExerciseDefinitionService(): ExerciseDefinitionService {
     return this.exerciseDefinitionService;
+  }
+
+  /**
+   * Get the MuscleTagService instance.
+   * Used by components to access custom muscle tag mappings.
+   */
+  public getMuscleTagService(): MuscleTagService {
+    return this.muscleTagService;
   }
 
   /**

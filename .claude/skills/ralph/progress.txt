@@ -131,3 +131,41 @@ Started: 2026-02-01
 - Use `StringUtils.getMatchScore()` for semantic similarity (exercise matching)
 - Use `StringUtils.levenshteinDistance()` or `findSimilarStrings()` for typo detection (tag deduplication)
 - Next priority: US-004 (Integrate MuscleTagService into DataFilter)
+
+---
+
+## 2026-02-02 - US-004: Integrate MuscleTagService into DataFilter
+
+**Status:** COMPLETE
+
+**What was done:**
+- Initialized `MuscleTagService` in `main.ts` during plugin load
+- Added `getMuscleTagService()` public accessor on plugin
+- Updated `CodeBlockProcessorService` to accept `MuscleTagService` in constructor
+- `DataFilter` now has static methods to access the service:
+  - `setMuscleTagService(service)` - Sets the service reference
+  - `getMuscleTagService()` - Gets the service reference
+  - `getTagMap()` - Returns the tag map from the service (or null if not set)
+  - `clearMuscleTagService()` - Clears the reference on plugin unload
+- Service lifecycle properly managed:
+  - Created in `main.ts` `onload()`
+  - Set on `DataFilter` in `CodeBlockProcessorService` constructor
+  - Destroyed in `main.ts` `onunload()` (calls `destroy()` and `clearMuscleTagService()`)
+- Updated `CodeBlockProcessorService.test.ts` to mock `MuscleTagService`
+
+**Architecture note:**
+DataFilter didn't actually use `MUSCLE_TAG_MAP` directly - the constant is used in `MuscleTagMapper.ts`. The integration prepares DataFilter to expose the custom tag map for components like `MuscleTagMapper` (see US-005). This is a static service pattern to maintain backward compatibility with DataFilter's existing static methods.
+
+**Files modified:**
+- `main.ts` - Added MuscleTagService initialization and cleanup
+- `app/services/CodeBlockProcessorService.ts` - Accept and set MuscleTagService
+- `app/services/data/DataFilter.ts` - Added static service accessor methods
+- `app/services/__tests__/CodeBlockProcessorService.test.ts` - Added mock service
+
+**Typecheck:** PASS
+**Tests:** PASS (558 tests total)
+
+**Notes for next developer:**
+- MuscleTagService is now accessible via `plugin.getMuscleTagService()` or `DataFilter.getMuscleTagService()`
+- For US-005 (MuscleHeatMap integration), update `MuscleTagMapper` to use `DataFilter.getTagMap()` instead of `CONSTANTS.WORKOUT.MUSCLES.TAG_MAP`
+- Next priority: US-005 (Integrate MuscleTagService into MuscleHeatMap)

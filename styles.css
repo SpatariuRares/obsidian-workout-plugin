@@ -1690,6 +1690,196 @@
   margin-bottom: 10px;
 }
 
+/* Tag Manager Modal styles */
+/* Tag form container */
+.workout-tag-form-container {
+  padding: var(--workout-space-md);
+  background: var(--background-secondary);
+  border-radius: var(--workout-radius-md);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-tag-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-tag-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+}
+
+.workout-tag-label {
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+}
+
+.workout-tag-input,
+.workout-tag-select {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-tag-input-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.workout-tag-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--workout-space-sm);
+}
+
+/* Suggestions container */
+.workout-tag-suggestions {
+  margin-top: var(--workout-space-sm);
+  padding: var(--workout-space-sm);
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-tag-suggestions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--workout-space-sm);
+  padding-bottom: var(--workout-space-xs);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.workout-tag-suggestions-label {
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-tag-suggestions-count {
+  color: var(--text-muted);
+  font-size: var(--workout-font-xs);
+}
+
+.workout-tag-suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-xs);
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.workout-tag-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border-radius: var(--workout-radius-sm);
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+.workout-tag-suggestion-item:hover {
+  background: var(--background-secondary);
+}
+
+.workout-tag-suggestion-warning {
+  background: rgba(var(--color-yellow-rgb), 0.1);
+  border: 1px solid rgba(var(--color-yellow-rgb), 0.3);
+}
+
+.workout-tag-suggestion-warning:hover {
+  background: rgba(var(--color-yellow-rgb), 0.2);
+}
+
+.workout-tag-suggestion-warning-icon {
+  flex-shrink: 0;
+  font-size: var(--workout-font-sm);
+}
+
+.workout-tag-suggestion-name {
+  font-weight: var(--workout-font-weight-medium);
+  color: var(--text-normal);
+}
+
+.workout-tag-suggestion-group {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  margin-left: auto;
+}
+
+/* Table styles for tag list */
+.workout-tag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--workout-space-md);
+  flex-wrap: wrap;
+}
+
+.workout-tag-add-btn {
+  flex-shrink: 0;
+}
+
+.workout-tag-count {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  margin: 0;
+}
+
+.workout-tag-table-container {
+  overflow-x: auto;
+}
+
+.workout-tag-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.workout-tag-table th,
+.workout-tag-table td {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.workout-tag-table th {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-tag-clickable {
+  cursor: pointer;
+  transition: var(--workout-transition);
+}
+
+.workout-tag-clickable:hover {
+  color: var(--interactive-accent);
+}
+
+.workout-tag-actions {
+  display: flex;
+  gap: var(--workout-space-xs);
+}
+
+.workout-tag-actions-header {
+  width: 120px;
+}
+
+.workout-tag-action-btn {
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  font-size: var(--workout-font-xs);
+}
+
+.workout-tag-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--workout-space-xl) !important;
+}
+
 /* ============================================================================
    DASHBOARD LAYOUT
    ============================================================================ */

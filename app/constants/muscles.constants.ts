@@ -53,6 +53,29 @@ export const MUSCLE_GROUPS = {
 } as const;
 
 /**
+ * Canonical muscle groups for tag mapping.
+ * These are the normalized muscle group names that tags can map to.
+ */
+export const CANONICAL_MUSCLE_GROUPS = [
+  "chest",
+  "back",
+  "shoulders",
+  "biceps",
+  "triceps",
+  "quads",
+  "hamstrings",
+  "glutes",
+  "calves",
+  "abs",
+  "core",
+  "forearms",
+  "traps",
+  "rear_delts",
+] as const;
+
+export type CanonicalMuscleGroup = (typeof CANONICAL_MUSCLE_GROUPS)[number];
+
+/**
  * Body part regions for exercise categorization.
  */
 export const BODY_PARTS = {
@@ -279,4 +302,5 @@ export const MUSCLES = {
   TAGS: MUSCLE_TAGS,
   TAG_MAP: MUSCLE_TAG_MAP,
   KEYWORDS: MUSCLE_KEYWORDS,
+  CANONICAL_GROUPS: CANONICAL_MUSCLE_GROUPS,
 } as const;

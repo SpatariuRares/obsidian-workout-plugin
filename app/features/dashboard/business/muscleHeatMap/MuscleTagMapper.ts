@@ -2,6 +2,7 @@ import type WorkoutChartsPlugin from "main";
 import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/FrontmatterParser";
 import { getAllMuscleGroups, CONSTANTS } from "@app/constants";
+import { DataFilter } from "@app/services/data/DataFilter";
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping
@@ -15,6 +16,21 @@ export class MuscleTagMapper {
    */
   static getAllMuscleGroups(): Set<string> {
     return getAllMuscleGroups();
+  }
+
+  /**
+   * Gets the current muscle tag map.
+   * Uses custom tags from MuscleTagService via DataFilter if available,
+   * otherwise falls back to default MUSCLE_TAG_MAP.
+   * @returns Map of tag to muscle group
+   */
+  private static getTagMap(): Map<string, string> {
+    const customTagMap = DataFilter.getTagMap();
+    if (customTagMap) {
+      return customTagMap;
+    }
+    // Fallback to default constants
+    return new Map(Object.entries(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP));
   }
 
   /**
@@ -65,11 +81,12 @@ export class MuscleTagMapper {
   ): Promise<string[]> {
     const tags = await this.loadExerciseTags(exerciseName, plugin);
     const muscleGroups = new Set<string>();
+    const tagMap = this.getTagMap();
 
     // Map tags to muscle groups
     tags.forEach((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      const mappedMuscle = CONSTANTS.WORKOUT.MUSCLES.TAG_MAP[normalizedTag];
+      const mappedMuscle = tagMap.get(normalizedTag);
 
       if (mappedMuscle) {
         muscleGroups.add(mappedMuscle);
@@ -81,7 +98,7 @@ export class MuscleTagMapper {
       const exerciseNameLower = exerciseName.toLowerCase();
 
       // Check exercise name against tag mappings
-      Object.entries(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP).forEach(([tag, muscle]) => {
+      tagMap.forEach((muscle, tag) => {
         if (
           exerciseNameLower.includes(tag) ||
           tag.includes(exerciseNameLower)

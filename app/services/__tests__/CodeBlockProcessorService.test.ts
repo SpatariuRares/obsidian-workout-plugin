@@ -1,30 +1,35 @@
 // Mock Obsidian module first
-jest.mock("obsidian", () => ({
-  Notice: jest.fn(),
-  TFile: class MockTFile {},
-  MarkdownPostProcessorContext: class MockMarkdownPostProcessorContext {},
-  MarkdownRenderChild: class MockMarkdownRenderChild {
-    constructor(public containerEl: HTMLElement) {}
-  },
-  Modal: class MockModal {
-    constructor(public app: any) {}
-    open() {}
-    close() {}
-  },
-  Setting: jest.fn().mockImplementation(() => ({
-    setName: jest.fn().mockReturnThis(),
-    setDesc: jest.fn().mockReturnThis(),
-    addText: jest.fn().mockReturnThis(),
-    addToggle: jest.fn().mockReturnThis(),
-    addButton: jest.fn().mockReturnThis(),
-  })),
-  App: class MockApp {},
-  Plugin: class MockPlugin {},
-}), { virtual: true });
+jest.mock(
+  "obsidian",
+  () => ({
+    Notice: jest.fn(),
+    TFile: class MockTFile {},
+    MarkdownPostProcessorContext: class MockMarkdownPostProcessorContext {},
+    MarkdownRenderChild: class MockMarkdownRenderChild {
+      constructor(public containerEl: HTMLElement) {}
+    },
+    Modal: class MockModal {
+      constructor(public app: any) {}
+      open() {}
+      close() {}
+    },
+    Setting: jest.fn().mockImplementation(() => ({
+      setName: jest.fn().mockReturnThis(),
+      setDesc: jest.fn().mockReturnThis(),
+      addText: jest.fn().mockReturnThis(),
+      addToggle: jest.fn().mockReturnThis(),
+      addButton: jest.fn().mockReturnThis(),
+    })),
+    App: class MockApp {},
+    Plugin: class MockPlugin {},
+  }),
+  { virtual: true },
+);
 
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "../DataService";
+import { MuscleTagService } from "@app/services/MuscleTagService";
 import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
 import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
@@ -38,6 +43,7 @@ describe("CodeBlockProcessorService - Parameter Parsing", () => {
   let mockTableView: EmbeddedTableView;
   let mockDashboardView: EmbeddedDashboardView;
   let activeTimers: Map<string, EmbeddedTimerView>;
+  let mockMuscleTagService: MuscleTagService;
 
   beforeEach(() => {
     // Create minimal mocks
@@ -47,6 +53,9 @@ describe("CodeBlockProcessorService - Parameter Parsing", () => {
     mockTableView = {} as EmbeddedTableView;
     mockDashboardView = {} as EmbeddedDashboardView;
     activeTimers = new Map();
+    mockMuscleTagService = {
+      getTagMap: jest.fn().mockReturnValue(new Map()),
+    } as unknown as MuscleTagService;
 
     service = new CodeBlockProcessorService(
       mockPlugin,
@@ -54,7 +63,8 @@ describe("CodeBlockProcessorService - Parameter Parsing", () => {
       mockChartView,
       mockTableView,
       mockDashboardView,
-      activeTimers
+      activeTimers,
+      mockMuscleTagService,
     );
   });
 
@@ -174,7 +184,8 @@ workout: `;
     });
 
     it("should handle values with multiple words after colon", () => {
-      const source = "exercise: Barbell Bench Press Heavy\nworkout: Monday Push Day";
+      const source =
+        "exercise: Barbell Bench Press Heavy\nworkout: Monday Push Day";
       const result = (service as any).parseCodeBlockParams(source);
 
       expect(result.exercise).toBe("Barbell Bench Press Heavy");

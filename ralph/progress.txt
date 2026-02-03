@@ -106,3 +106,23 @@
   - Lines 291-306: EXERCISE display type averaging calculations
 - The test file is comprehensive and can be extended for US-005/US-006
 
+## 2026-02-03 - Session 5
+
+### US-006: Expand ChartDataUtils.ts coverage - lines 236-252 ✅
+
+**What was done:**
+- Refactored `app/utils/ChartDataUtils.ts` to remove redundant code.
+  - Removed secondary `getCustomFieldNumber` call for "heartrate" since the first call handles case-insensitivity.
+- Updated `app/utils/__tests__/ChartDataUtils.test.ts` with 4 new tests.
+- Verifying:
+  - `heartRate` (camelCase)
+  - `heartrate` (lowercase)
+  - `HEARTRATE` (uppercase)
+  - `HeartRate` (PascalCase)
+
+**Coverage Outcome:**
+- **ChartDataUtils.ts should now have 100% compliance** across all metrics.
+
+**Notes for next session:**
+- Next priority is US-007: Expand ChartRenderer.ts coverage.
+

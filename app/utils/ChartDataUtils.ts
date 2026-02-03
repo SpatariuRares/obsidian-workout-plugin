@@ -1,10 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import {
-  ChartDataset,
-  CHART_DATA_TYPE,
-  CHART_TYPE,
-} from "@app/types";
+import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE } from "@app/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ParameterUtils } from "@app/utils/ParameterUtils";
 
@@ -18,7 +14,7 @@ export class ChartDataUtils {
    */
   private static getCustomFieldNumber(
     customFields: Record<string, string | number | boolean>,
-    key: string
+    key: string,
   ): number {
     // Try exact key first
     if (key in customFields) {
@@ -60,7 +56,7 @@ export class ChartDataUtils {
       heartRateData: number[];
       customData?: number[];
     },
-    customParamLabel?: string
+    customParamLabel?: string,
   ): { data: number[]; label: string; color: string } {
     // WORKOUT, COMBINED, and ALL show totals (aggregated data)
     // EXERCISE shows averages per entry
@@ -131,7 +127,8 @@ export class ChartDataUtils {
       default:
         // Handle custom parameter keys
         if (dataArrays.customData && dataArrays.customData.length > 0) {
-          const label = customParamLabel || ParameterUtils.keyToLabel(chartType);
+          const label =
+            customParamLabel || ParameterUtils.keyToLabel(chartType);
           return {
             data: dataArrays.customData,
             label: isAggregate ? `Total ${label}` : `Avg ${label}`,
@@ -154,7 +151,9 @@ export class ChartDataUtils {
    * Checks if a chartType is a standard CHART_DATA_TYPE or a custom parameter key.
    */
   private static isStandardChartType(chartType: string): boolean {
-    return Object.values(CHART_DATA_TYPE).includes(chartType as CHART_DATA_TYPE);
+    return Object.values(CHART_DATA_TYPE).includes(
+      chartType as CHART_DATA_TYPE,
+    );
   }
 
   /**
@@ -175,7 +174,7 @@ export class ChartDataUtils {
     dateRange: number = 30,
     dateFormat: string = "DD/MM/YYYY",
     displayType: CHART_TYPE = CHART_TYPE.EXERCISE,
-    customParamLabel?: string
+    customParamLabel?: string,
   ): { labels: string[]; datasets: ChartDataset[] } {
     // Filter by date range
     const cutoffDate = new Date();
@@ -188,7 +187,7 @@ export class ChartDataUtils {
 
     // Sort by date
     filteredData.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
     // Check if chartType is a custom parameter key (not a standard type)
@@ -233,22 +232,32 @@ export class ChartDataUtils {
       // Extract from customFields for dynamic exercise types
       if (log.customFields) {
         // Duration from customFields (case-insensitive)
-        const durationValue = this.getCustomFieldNumber(log.customFields, "duration");
+        const durationValue = this.getCustomFieldNumber(
+          log.customFields,
+          "duration",
+        );
         existing.duration += durationValue;
 
         // Distance from customFields
-        const distanceValue = this.getCustomFieldNumber(log.customFields, "distance");
+        const distanceValue = this.getCustomFieldNumber(
+          log.customFields,
+          "distance",
+        );
         existing.distance += distanceValue;
 
         // Heart rate from customFields
-        const heartRateValue =
-          this.getCustomFieldNumber(log.customFields, "heartRate") ||
-          this.getCustomFieldNumber(log.customFields, "heartrate");
+        const heartRateValue = this.getCustomFieldNumber(
+          log.customFields,
+          "heartRate",
+        );
         existing.heartRate += heartRateValue;
 
         // Custom parameter value (if chartType is a custom param key)
         if (customParamKey) {
-          const customValue = this.getCustomFieldNumber(log.customFields, customParamKey);
+          const customValue = this.getCustomFieldNumber(
+            log.customFields,
+            customParamKey,
+          );
           existing.custom += customValue;
         }
       }
@@ -285,25 +294,31 @@ export class ChartDataUtils {
         customData.push(values.custom);
         // Pace = total time / total distance (min/km)
         paceData.push(
-          values.distance > 0 ? values.duration / values.distance : 0
+          values.distance > 0 ? values.duration / values.distance : 0,
         );
         heartRateData.push(
-          values.count > 0 ? values.heartRate / values.count : 0
+          values.count > 0 ? values.heartRate / values.count : 0,
         ); // Avg heart rate
       } else {
         // For single exercise: show average (current behavior)
         volumeData.push(values.count > 0 ? values.volume / values.count : 0);
         weightData.push(values.count > 0 ? values.weight / values.count : 0);
         repsData.push(values.count > 0 ? values.reps / values.count : 0);
-        durationData.push(values.count > 0 ? values.duration / values.count : 0);
-        distanceData.push(values.count > 0 ? values.distance / values.count : 0);
+        durationData.push(
+          values.count > 0 ? values.duration / values.count : 0,
+        );
+        distanceData.push(
+          values.count > 0 ? values.distance / values.count : 0,
+        );
         customData.push(values.count > 0 ? values.custom / values.count : 0);
         // Pace = avg time / avg distance (min/km)
-        const avgDuration = values.count > 0 ? values.duration / values.count : 0;
-        const avgDistance = values.count > 0 ? values.distance / values.count : 0;
+        const avgDuration =
+          values.count > 0 ? values.duration / values.count : 0;
+        const avgDistance =
+          values.count > 0 ? values.distance / values.count : 0;
         paceData.push(avgDistance > 0 ? avgDuration / avgDistance : 0);
         heartRateData.push(
-          values.count > 0 ? values.heartRate / values.count : 0
+          values.count > 0 ? values.heartRate / values.count : 0,
         );
       }
     });
@@ -325,7 +340,7 @@ export class ChartDataUtils {
         heartRateData,
         customData,
       },
-      customParamLabel
+      customParamLabel,
     );
 
     if (data.length > 0) {
@@ -344,5 +359,3 @@ export class ChartDataUtils {
     return { labels, datasets };
   }
 }
-
- 

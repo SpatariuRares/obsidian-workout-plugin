@@ -1,6 +1,7 @@
 import { ChartRenderer } from "../ChartRenderer";
 import { Chart } from "chart.js/auto";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE, EmbeddedChartParams } from "@app/types";
+import { ChartLabels, ChartConfigBuilder } from "@app/features/charts/config";
 
 // Mock DOM createElement
 const createMockElement = (id?: string): HTMLElement => {
@@ -65,16 +66,27 @@ jest.mock("@app/features/charts/config", () => ({
   },
   getDefaultChartTitle: jest.fn(() => "Test Chart"),
   ChartConfigBuilder: {
-    createChartConfig: jest.fn((labels, datasets, title, colors, chartType) => ({
-      type: "line",
-      data: { labels, datasets },
-      options: {},
-    })),
+    createChartConfig: jest.fn(
+      (labels, datasets, title, colors, chartType) => ({
+        type: "line",
+        data: { labels, datasets },
+        options: {},
+      }),
+    ),
   },
   DatasetStyler: {
     styleDatasets: jest.fn(),
   },
 }));
+
+// Mock StatisticsUtils
+jest.mock("@app/utils/StatisticsUtils", () => ({
+  StatisticsUtils: {
+    calculateTrendLine: jest.fn(() => ({ slope: 1, intercept: 0 })),
+  },
+}));
+
+import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 
 describe("ChartRenderer", () => {
   let mockContainer: HTMLElement;
@@ -109,7 +121,7 @@ describe("ChartRenderer", () => {
         mockContainer,
         labels,
         datasets,
-        mockParams
+        mockParams,
       );
 
       expect(result).toBe(true);
@@ -226,11 +238,97 @@ describe("ChartRenderer", () => {
         containerNoId,
         labels,
         datasets,
-        mockParams
+        mockParams,
       );
 
       expect(result).toBe(true);
       expect(Chart).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe("Chart container and canvas creation", () => {
+    it("should create container via ChartContainer.create", () => {
+      const result = ChartRenderer.createChartContainer(mockContainer);
+      expect(result).toBeDefined();
+      // Since we mocked ChartContainer.create to return a mock element
+      expect(result.id).toBeDefined();
+    });
+
+    it("should create canvas via ChartContainer.createCanvas", () => {
+      const result = ChartRenderer.createCanvas(mockContainer);
+      expect(result).toBeDefined();
+      expect(result.getContext).toBeDefined();
+    });
+  });
+
+  describe("addTrendLineToDatasets", () => {
+    it("should not add trend line if only one data point", () => {
+      const datasets = [{ label: "Weight", data: [100] }];
+      ChartRenderer.addTrendLineToDatasets(datasets);
+      expect(datasets.length).toBe(1);
+    });
+
+    it("should add trend line if multiple data points exist", () => {
+      const datasets = [{ label: "Weight", data: [100, 110, 120] }];
+
+      // Setup mock return
+      (StatisticsUtils.calculateTrendLine as jest.Mock).mockReturnValue({
+        slope: 10,
+        intercept: 90,
+      });
+
+      ChartRenderer.addTrendLineToDatasets(datasets);
+
+      expect(datasets.length).toBe(2);
+      expect(datasets[1].label).toBe(ChartLabels.TREND_LINE);
+      // Data should be [90+0, 90+10, 90+20] = [90, 100, 110]
+      // Note: usage is slope * index + intercept
+      // Index 0: 10 * 0 + 90 = 90
+      // Index 1: 10 * 1 + 90 = 100
+      // Index 2: 10 * 2 + 90 = 110
+      expect(datasets[1].data).toEqual([90, 100, 110]);
+    });
+  });
+
+  describe("Error handling", () => {
+    it("should return false when Chart constructor throws error", () => {
+      const labels = ["2024-01-01"];
+      const datasets = [{ label: "Weight", data: [100] }];
+
+      // Mock Chart constructor to throw
+      (Chart as unknown as jest.Mock).mockImplementationOnce(() => {
+        throw new Error("Chart.js error");
+      });
+
+      const result = ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        mockParams,
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("should use default title and type when not provided", () => {
+      const minimalParams = {
+        exercise: "Bench Press",
+        workout: "Workout A",
+        // no title, no type
+      } as unknown as EmbeddedChartParams;
+
+      const labels = ["2024-01-01"];
+      const datasets = [{ label: "Weight", data: [100] }];
+
+      ChartRenderer.renderChart(mockContainer, labels, datasets, minimalParams);
+
+      // Verify defaults were used via ChartConfigBuilder call
+      expect(ChartConfigBuilder.createChartConfig).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        "Test Chart", // Default title from mock
+        expect.anything(),
+        CHART_DATA_TYPE.VOLUME, // Default type
+      );
     });
   });
 });

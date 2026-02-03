@@ -17,21 +17,21 @@ module.exports = {
   // Coverage configuration
   collectCoverageFrom: [
     "app/utils/**/*.ts",
-    "app/constants/**/*.ts", // Only include MuscleTags, exclude Constants.ts (config data)
+    "app/api/**/*.ts",
+    "app/constants/**/*.ts",
     "app/components/**/*.ts",
     "app/services/**/*.ts",
-    "app/features/charts/components/ChartRenderer.ts",
+    "app/features/charts/**/*.ts",
     "!app/**/*.d.ts",
     "!app/**/__tests__/**",
     "!app/**/index.ts",
-    "!app/utils/FrontmatterParser.ts", // Excluded due to Obsidian API mocking issues
   ],
   coverageThreshold: {
     global: {
-      statements: 70,
-      branches: 70,
-      functions: 70,
-      lines: 70,
+      statements: 90,
+      branches: 90,
+      functions: 90,
+      lines: 90,
     },
   },
 

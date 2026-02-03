@@ -19,8 +19,8 @@ export class ExampleGeneratorService {
       await this.createFolderIfNotExists(workoutsPath);
       await this.createFolderIfNotExists(logPath);
 
-      // Create Dataview Examples File
-      await this.createDataviewExampleFile(basePath, overwrite);
+      // Create Getting Started File
+      await this.createGettingStartedFile(basePath, overwrite);
 
       // Create Exercises
       await this.createExerciseFile(
@@ -105,34 +105,47 @@ export class ExampleGeneratorService {
     }
   }
 
-  private async createDataviewExampleFile(
+  /**
+   * Helper to create or update a file with content.
+   * Handles the common pattern: check exists, overwrite logic, create/modify.
+   */
+  private async createOrUpdateFile(
     folderPath: string,
+    fileName: string,
+    content: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "Dataview Examples.md";
     const filePath = normalizePath(`${folderPath}/${fileName}`);
-
     const existingFile = this.app.vault.getAbstractFileByPath(filePath);
+
     if (existingFile && !overwrite) {
       return;
     }
 
+    if (existingFile) {
+      await this.app.vault.modify(existingFile as any, content);
+    } else {
+      await this.app.vault.create(filePath, content);
+    }
+  }
+
+  private async createGettingStartedFile(
+    folderPath: string,
+    overwrite: boolean,
+  ): Promise<void> {
     const content = `# Getting Started with The Gym Plugin
 
 Welcome! This folder contains example files to help you learn all the features.
 
-## Quick Start
+## Folder Structure
 
-1. **Dashboard** - See your workout stats at a glance
-2. **Feature Showcase** - Learn all available code blocks
-3. **Exercises folder** - Example exercise pages with logs and charts
-4. **Workouts folder** - Example workout templates
-5. **Log folder** - Your CSV workout data
-
-## Your Dashboard
-
-\`\`\`workout-dashboard
-\`\`\`
+| File/Folder | Description |
+|-------------|-------------|
+| [[Dashboard]] | Your workout stats at a glance |
+| [[Feature Showcase]] | Complete reference of all code blocks |
+| **Exercises/** | Example exercise pages with logs and charts |
+| **Workouts/** | Example workout templates |
+| **Log/** | Your CSV workout data |
 
 ## Quick Actions
 
@@ -142,29 +155,15 @@ Use these commands (Ctrl/Cmd + P):
 - **Insert Workout Timer** - Add a rest timer
 - **Create Exercise Page** - Create a new exercise file
 
-## Sample Workout Table
+## Next Steps
 
-\`\`\`workout-log
-limit: 20
-\`\`\`
-
-## Volume Trend (All Exercises)
-
-\`\`\`workout-chart
-chartType: all
-type: volume
-dateRange: 30
-showTrendLine: true
-showStats: true
-\`\`\`
+1. Open [[Dashboard]] to see your stats
+2. Check [[Feature Showcase]] to learn all available features
+3. Try a workout from the **Workouts** folder
+4. Create your own exercises in **Exercises**
 
 `;
-    if (existingFile && overwrite) {
-      const file = existingFile as any; // Cast to TFile, essentially
-      await this.app.vault.modify(file, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "Getting Started.md", content, overwrite);
   }
 
   private async createExerciseFile(
@@ -174,37 +173,15 @@ showStats: true
     tags: string[] = [],
     overwrite: boolean = false,
   ): Promise<void> {
-    const fileName = `${name}.md`;
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
     const content = this.generateExerciseContent(name, type, tags);
-
-    if (existingFile && overwrite) {
-      // Safe cast as we checked existence
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, `${name}.md`, content, overwrite);
   }
 
   private async createWorkoutFile(
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "Giorno 1 LOWER BODY A 2.0.md";
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
-    const content = `### Durata
+    const content = `## Durata
 \`\`\`workout-duration
 \`\`\`
     ### grafico
@@ -322,25 +299,13 @@ limit: 12
 exactMatch: true
 \`\`\`
 `;
-    if (existingFile && overwrite) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "Giorno 1 LOWER BODY A 2.0.md", content, overwrite);
   }
 
   private async createLogFile(
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "workout_logs.csv";
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
     // Standard headers matching STANDARD_CSV_COLUMNS + common custom fields
     const header =
       "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance,heartRate";
@@ -534,71 +499,40 @@ exactMatch: true
     }
 
     const content = [header, ...rows].join("\n");
-    if (existingFile && overwrite) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "workout_logs.csv", content, overwrite);
   }
 
   private async createDashboardFile(
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "Dashboard.md";
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
     const content = `# Dashboard
 
-The dashboard provides a comprehensive overview of your workout data with multiple widgets.
+Your workout stats at a glance. See [[Feature Showcase]] for all available components.
 
 \`\`\`workout-dashboard
 \`\`\`
 `;
-    if (existingFile && overwrite) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "Dashboard.md", content, overwrite);
   }
 
   private async createFeatureShowcaseFile(
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "Feature Showcase.md";
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
     const content = `# Feature Showcase
 
-This file demonstrates all the code block types available in the Workout Plugin.
+Complete reference of all code block types available in the Workout Plugin.
+
+> **Tip**: For your personal dashboard, see [[Dashboard]]
 
 ---
 
-## 1. Workout Dashboard
+## 1. Charts
 
-The dashboard shows quick stats, recent workouts, volume analytics, protocol distribution, and more.
+Charts visualize your progress over time. Available types: \`volume\`, \`weight\`, \`reps\`, \`duration\`, \`distance\`, \`heartRate\`, \`pace\`.
 
-\`\`\`workout-dashboard
-\`\`\`
-
----
-
-## 2. Workout Charts
-
-### 2.1 Exercise Chart - Volume
-
-Track volume progression for a specific exercise:
+### Strength Exercise (Volume + Weight)
 
 \`\`\`workout-chart
 chartType: exercise
@@ -609,33 +543,15 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-### 2.2 Exercise Chart - Weight
-
-Track weight progression:
-
 \`\`\`workout-chart
 chartType: exercise
 exercise: Squat
 type: weight
 dateRange: 30
 showTrendLine: true
-showStats: true
 \`\`\`
 
-### 2.3 Exercise Chart - Reps
-
-Track rep progression:
-
-\`\`\`workout-chart
-chartType: exercise
-exercise: Bench Press
-type: reps
-dateRange: 30
-\`\`\`
-
-### 2.4 Cardio Chart - Distance
-
-Track distance for cardio exercises:
+### Cardio Exercise (Distance + Pace)
 
 \`\`\`workout-chart
 chartType: exercise
@@ -645,9 +561,16 @@ dateRange: 30
 showTrendLine: true
 \`\`\`
 
-### 2.5 Cardio Chart - Duration
+\`\`\`workout-chart
+chartType: exercise
+exercise: Running
+type: pace
+dateRange: 30
+showTrendLine: true
+showStats: true
+\`\`\`
 
-Track duration for timed exercises (displays as 1h 30m format):
+### Timed Exercise (Duration)
 
 \`\`\`workout-chart
 chartType: exercise
@@ -658,35 +581,7 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-### 2.6 Cardio Chart - Heart Rate
-
-Track heart rate during cardio (displays in bpm):
-
-\`\`\`workout-chart
-chartType: exercise
-exercise: Running
-type: heartRate
-dateRange: 30
-showTrendLine: true
-showStats: true
-\`\`\`
-
-### 2.7 Cardio Chart - Pace
-
-Track pace for running/cycling (displays as min/km, lower is better):
-
-\`\`\`workout-chart
-chartType: exercise
-exercise: Running
-type: pace
-dateRange: 30
-showTrendLine: true
-showStats: true
-\`\`\`
-
-### 2.8 Workout Chart
-
-Track total volume for an entire workout:
+### Workout Chart (All Exercises Combined)
 
 \`\`\`workout-chart
 chartType: workout
@@ -697,81 +592,59 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-### 2.9 Combined Chart
-
-Filter by BOTH exercise AND workout (intersection):
-
-\`\`\`workout-chart
-chartType: combined
-exercise: Squat
-workout: Upper Body Power
-type: volume
-dateRange: 30
-\`\`\`
-
-### 2.10 All Data Chart
-
-Show all workout data without any filtering:
+### All Data Chart
 
 \`\`\`workout-chart
 chartType: all
 type: volume
 dateRange: 30
 showTrendLine: true
-showStats: true
 \`\`\`
 
 ---
 
-## 3. Workout Tables
+## 2. Tables
 
-### 3.1 Exercise Table
+Tables display your workout logs with sorting and editing capabilities.
 
-View logs for a specific exercise in table format:
+### By Exercise
 
 \`\`\`workout-log
 exercise: Bench Press
 limit: 10
 \`\`\`
 
-### 3.2 Workout Table
-
-View all exercises from a workout session:
+### By Workout
 
 \`\`\`workout-log
 workout: Giorno 1 LOWER BODY A 2.0
-limit: 20
+limit: 15
 \`\`\`
 
-### 3.3 Combined Table with Exact Match
+### Combined (Exercise + Workout)
 
 \`\`\`workout-log
 exercise: Squat multi power
 workout: Giorno 1 LOWER BODY A 2.0
 exactMatch: true
-limit: 15
+limit: 10
 \`\`\`
 
 ---
 
-## 4. Timers
+## 3. Timers
 
-### 4.1 Countdown Timer
-
-Simple rest timer between sets:
+### Countdown Timer
 
 \`\`\`workout-timer
 type: countdown
 duration: 90
 title: Rest Timer
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
-### 4.2 Interval Timer
-
-For HIIT or circuit training:
+### Interval Timer
 
 \`\`\`workout-timer
 type: interval
@@ -779,104 +652,76 @@ duration: 30
 rounds: 5
 title: HIIT Intervals
 showControls: true
-autoStart: false
-sound: true
-\`\`\`
-
-### 4.3 Long Rest Timer
-
-For heavy compound movements:
-
-\`\`\`workout-timer
-type: countdown
-duration: 180
-title: Heavy Set Recovery
-showControls: true
 sound: true
 \`\`\`
 
 ---
 
-## 5. Workout Duration Estimator
+## 4. Duration Estimator
 
-Estimates workout duration based on exercises and rest times:
+Estimates total workout duration based on the current note's exercises.
 
 \`\`\`workout-duration
 \`\`\`
 
 ---
 
-## 6. Protocol Examples
+## 5. Training Protocols
 
-The plugin supports various training protocols. Here's what each badge means:
+The plugin supports these protocol badges in your logs:
 
-- **standard** - Normal sets
-- **dropset** - Drop sets (reduce weight, continue reps)
-- **myo-reps** - Myo-rep sets (activation + mini sets)
-- **rest-pause** - Rest-pause sets (brief rest, continue)
-- **superset** - Superset (paired exercises)
-- **21s** - 21s protocol (7+7+7 partial reps)
-
-Check your exercise logs to see protocol badges in action!
+| Protocol | Description |
+|----------|-------------|
+| standard | Normal sets |
+| dropset | Reduce weight, continue reps |
+| myo-reps | Activation set + mini sets |
+| rest-pause | Brief rest, continue to failure |
+| superset | Paired exercises |
+| 21s | 7+7+7 partial reps |
 
 ---
 
-## Tips
+## Quick Reference
 
-1. Use the **Insert** commands (Ctrl/Cmd + P) to easily add code blocks
-2. Timer presets can be saved in settings for quick access
-3. Charts support trend lines and statistics
-4. Tables are sortable and editable
-5. The dashboard updates automatically when you log workouts
+| Code Block | Purpose |
+|------------|---------|
+| \`workout-chart\` | Visualize progress over time |
+| \`workout-log\` | Display workout data table |
+| \`workout-timer\` | Countdown or interval timer |
+| \`workout-duration\` | Estimate workout length |
+| \`workout-dashboard\` | Full stats overview |
+
+**Commands** (Ctrl/Cmd + P): Create Workout Log, Insert Chart, Insert Timer, Create Exercise Page
 `;
-    if (existingFile && overwrite) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "Feature Showcase.md", content, overwrite);
   }
 
   private async createHIITWorkoutFile(
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const fileName = "HIIT Cardio Session.md";
-    const filePath = normalizePath(`${folderPath}/${fileName}`);
-
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
-    if (existingFile && !overwrite) {
-      return;
-    }
-
     const content = `# HIIT Cardio Session
 
-High-Intensity Interval Training workout demonstrating interval timers and cardio tracking.
-
-## Workout Duration
+High-Intensity Interval Training workout with interval timers and cardio tracking.
 
 \`\`\`workout-duration
 \`\`\`
 
 ---
 
-## Warm-up: Light Jog
-
-5 minutes easy pace
+## Warm-up (5 min)
 
 \`\`\`workout-timer
 type: countdown
 duration: 300
 title: Warm-up
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
 ---
 
-## Main Workout: Intervals
-
-30 seconds per round × 8 rounds
+## Sprint Intervals (30s × 8 rounds)
 
 \`\`\`workout-timer
 type: interval
@@ -884,20 +729,17 @@ duration: 30
 rounds: 8
 title: Sprint Intervals
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
 ---
 
-## Running Log
+## Running Progress
 
 \`\`\`workout-log
 exercise: Running
-limit: 10
+limit: 8
 \`\`\`
-
-## Running Progress - Distance
 
 \`\`\`workout-chart
 chartType: exercise
@@ -908,50 +750,14 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-## Running Progress - Pace
-
-Track your pace improvement (lower = faster, shown in min/km):
-
-\`\`\`workout-chart
-chartType: exercise
-exercise: Running
-type: pace
-dateRange: 30
-showTrendLine: true
-showStats: true
-\`\`\`
-
-## Running Progress - Heart Rate
-
-\`\`\`workout-chart
-chartType: exercise
-exercise: Running
-type: heartRate
-dateRange: 30
-showTrendLine: true
-showStats: true
-\`\`\`
-
 ---
 
-## Cool-down: Cycling
-
-15-20 minutes moderate pace
-
-\`\`\`workout-timer
-type: countdown
-duration: 60
-title: Rest before cycling
-showControls: true
-sound: true
-\`\`\`
+## Cycling Cool-down
 
 \`\`\`workout-log
 exercise: Cycling
-limit: 10
+limit: 8
 \`\`\`
-
-## Cycling Progress
 
 \`\`\`workout-chart
 chartType: exercise
@@ -959,14 +765,9 @@ exercise: Cycling
 type: distance
 dateRange: 30
 showTrendLine: true
-showStats: true
 \`\`\`
 `;
-    if (existingFile && overwrite) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
-      await this.app.vault.create(filePath, content);
-    }
+    await this.createOrUpdateFile(folderPath, "HIIT Cardio Session.md", content, overwrite);
   }
 
   private addLogEntry(

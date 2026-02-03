@@ -33,7 +33,8 @@ export class TrendHeader {
       lastValue,
       percentChange,
       trendIndicators.trendColor,
-      volumeData
+      volumeData,
+      dataType
     );
 
     const h3 = trendHeader.createEl("h3", {
@@ -51,7 +52,7 @@ export class TrendHeader {
       h3.classList.add("trend-color-accent");
     }
 
-    h3.textContent = `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE_PREFIX}`;
+    h3.textContent = `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)}`;
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 
     const p = trendHeader.createEl("p", {
@@ -68,15 +69,15 @@ export class TrendHeader {
 
       // For inverted types (pace), negative change = improvement (up arrow)
       // For normal types, positive change = improvement (up arrow)
-      let direction: typeof CONSTANTS.WORKOUT.LABELS.CHARTS.UP | typeof CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN | typeof CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
+      let direction: "up" | "down" | "neutral";
       if (percentValue === 0) {
-        direction = CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
+        direction = "neutral";
       } else if (isLowerBetter) {
         // Pace: negative % = improving (faster), positive % = declining (slower)
-        direction = percentValue < 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP : CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN;
+        direction = percentValue < 0 ? "up" : "down";
       } else {
         // Default: positive % = improving, negative % = declining
-        direction = percentValue > 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP : CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN;
+        direction = percentValue > 0 ? "up" : "down";
       }
 
       // Use TrendIndicator molecule for variation display
@@ -109,15 +110,24 @@ export class TrendHeader {
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
+      const formattedFirst = dataType
+        ? FormatUtils.formatValue(firstValue, dataType)
+        : firstValue.toFixed(1);
+      const formattedLast = dataType
+        ? FormatUtils.formatValue(lastValue, dataType)
+        : lastValue.toFixed(1);
       p.append(
-        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO(
-          firstValue.toFixed(1),
-          lastValue.toFixed(1)
+        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO_FORMATTED(
+          formattedFirst,
+          formattedLast
         )
       );
     } else if (firstValue !== undefined && volumeData.length === 1) {
+      const formattedFirst = dataType
+        ? FormatUtils.formatValue(firstValue, dataType)
+        : firstValue.toFixed(1);
       p.append(
-        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE(firstValue.toFixed(1))
+        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(formattedFirst, dataType)
       );
     }
   }
@@ -156,6 +166,7 @@ export class TrendHeader {
    * @param percentChange - The calculated percentage change as a string
    * @param trendColor - Color to use for the variation text
    * @param volumeData - Array of numerical data points for context
+   * @param dataType - Optional data type for proper value formatting
    * @returns Object with text and color for the variation
    */
   private static formatVariationData(
@@ -163,7 +174,8 @@ export class TrendHeader {
     lastValue: number | undefined,
     percentChange: string,
     trendColor: string,
-    volumeData: number[]
+    volumeData: number[],
+    dataType?: CHART_DATA_TYPE
   ): { text: string; color: string } {
     if (
       firstValue !== undefined &&
@@ -179,8 +191,11 @@ export class TrendHeader {
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {
+      const formattedValue = dataType
+        ? FormatUtils.formatValue(firstValue, dataType)
+        : firstValue.toFixed(1);
       return {
-        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL(firstValue.toFixed(1)),
+        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED(formattedValue, dataType),
         color: "",
       };
     }

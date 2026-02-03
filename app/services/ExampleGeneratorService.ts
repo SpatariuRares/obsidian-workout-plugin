@@ -311,190 +311,261 @@ exactMatch: true
       "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance,heartRate";
     const rows: string[] = [];
 
-    // Generate data for the last 2 weeks (14 days)
+    // Generate data for the last 6 weeks (42 days) for better trend visualization
     const now = new Date();
     const oneDay = 24 * 60 * 60 * 1000;
 
-    // Define workouts to cycle through
-    // We will simulate 3 workouts a week
     const workoutName = "Giorno 1 LOWER BODY A 2.0";
 
-    // Generate a few sessions
-    const sessionOffsets = [2, 5, 9, 12]; // Days ago
+    // Lower body sessions: ~2x per week for 6 weeks (oldest first for proper progression)
+    const lowerBodyOffsets = [40, 37, 33, 30, 26, 23, 19, 16, 12, 9, 5, 2];
 
-    for (const daysAgo of sessionOffsets) {
+    // Base weights for each exercise (starting point 6 weeks ago)
+    const baseWeights = {
+      squatMultiPower: 70,
+      rdl: 50,
+      legPress: 100,
+      legCurl: 30,
+      calfMachine: 35,
+    };
+
+    // Weekly progression rate (kg per week)
+    const weeklyProgression = {
+      squatMultiPower: 2.5,
+      rdl: 2.5,
+      legPress: 5,
+      legCurl: 1.25,
+      calfMachine: 2.5,
+    };
+
+    for (let sessionIdx = 0; sessionIdx < lowerBodyOffsets.length; sessionIdx++) {
+      const daysAgo = lowerBodyOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
-      const dateStr = date.toISOString().split("T")[0]; // YYYY-MM-DD
+      const dateStr = date.toISOString().split("T")[0];
 
-      // Exercises for Lower Body A
-      // Schema: Power Squat, RDL, Leg Press, Leg Curl, Calf Machine
+      // Calculate weeks of training (0-5)
+      const weeksTraining = Math.floor((42 - daysAgo) / 7);
 
-      // 1. Squat multi power: 4 sets (with myo-reps on last set)
+      // Simulate "good" and "bad" days (every 3rd session is slightly harder)
+      const isToughDay = sessionIdx % 4 === 2;
+      const dayModifier = isToughDay ? 0.95 : 1;
+
+      // Base timestamp for the session (morning workout between 7-10 AM)
+      const sessionStartHour = 7 + Math.floor(Math.random() * 3);
+      let exerciseTime = new Date(date);
+      exerciseTime.setHours(sessionStartHour, Math.floor(Math.random() * 60), 0, 0);
+
+      // 1. Squat multi power: 4 sets, same weight, decreasing reps due to fatigue
+      const squatWeight = Math.round(
+        (baseWeights.squatMultiPower + weeksTraining * weeklyProgression.squatMultiPower) * dayModifier / 2.5
+      ) * 2.5;
+      const squatBaseReps = [10, 9, 8, 8]; // Realistic fatigue pattern
       for (let set = 1; set <= 4; set++) {
-        const reps = 8 + Math.floor(Math.random() * 3); // 8-10
-        const weight = 80 + set * 5; // Progressive weight
-        // Demonstrate myo-reps protocol on last set
-        const protocol = set === 4 ? "myo-reps" : "standard";
+        const reps = squatBaseReps[set - 1] + (isToughDay ? -1 : 0) + (Math.random() > 0.7 ? 1 : 0);
+        const protocol = set === 4 && sessionIdx % 3 === 0 ? "myo-reps" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Squat multi power",
           reps,
-          weight,
-          volume: reps * weight,
+          weight: squatWeight,
+          volume: reps * squatWeight,
           workout: workoutName,
-          notes: set === 4 ? "Myo-rep set: 10+3+3+3" : "",
+          notes: protocol === "myo-reps" ? `Myo: ${reps}+3+3+2` : "",
           protocol,
+          timestamp: exerciseTime.getTime(),
         });
+        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000); // 3-4 min rest
       }
 
-      // 2. RDL: 4 sets (with rest-pause on final set)
+      // 2. RDL: 4 sets, consistent weight
+      const rdlWeight = Math.round(
+        (baseWeights.rdl + weeksTraining * weeklyProgression.rdl) * dayModifier / 2.5
+      ) * 2.5;
+      const rdlBaseReps = [12, 11, 10, 10];
       for (let set = 1; set <= 4; set++) {
-        const reps = 10;
-        const weight = 60 + set * 2.5;
-        const protocol = set === 4 ? "rest-pause" : "standard";
+        const reps = rdlBaseReps[set - 1] + (isToughDay ? -1 : 0);
+        const protocol = set === 4 && sessionIdx % 4 === 1 ? "rest-pause" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "RDL",
           reps,
-          weight,
-          volume: reps * weight,
+          weight: rdlWeight,
+          volume: reps * rdlWeight,
           workout: workoutName,
-          notes: set === 4 ? "Rest-pause: 10+5+3" : "",
+          notes: protocol === "rest-pause" ? `RP: ${reps}+4+3` : "",
           protocol,
+          timestamp: exerciseTime.getTime(),
         });
+        exerciseTime = new Date(exerciseTime.getTime() + 150000 + Math.random() * 60000);
       }
 
-      // 3. Leg press 45: 4 sets (with dropset on last set)
+      // 3. Leg press 45: 4 sets
+      const legPressWeight = Math.round(
+        (baseWeights.legPress + weeksTraining * weeklyProgression.legPress) * dayModifier / 5
+      ) * 5;
+      const legPressBaseReps = [15, 14, 12, 12];
       for (let set = 1; set <= 4; set++) {
-        const reps = 12;
-        const weight = 120 + set * 10;
-        const protocol = set === 4 ? "dropset" : "standard";
+        const reps = legPressBaseReps[set - 1] + (isToughDay ? -2 : 0);
+        const protocol = set === 4 && sessionIdx % 5 === 0 ? "dropset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Leg press 45",
           reps,
-          weight,
-          volume: reps * weight,
+          weight: legPressWeight,
+          volume: reps * legPressWeight,
           workout: workoutName,
-          notes: set === 4 ? "Drop: 160->120->80" : "",
+          notes: protocol === "dropset" ? `Drop: ${legPressWeight}->${legPressWeight - 20}->${legPressWeight - 40}` : "",
           protocol,
+          timestamp: exerciseTime.getTime(),
         });
+        exerciseTime = new Date(exerciseTime.getTime() + 120000 + Math.random() * 30000);
       }
 
-      // 4. Leg Curl seduto: 3 sets (with 21s on last set)
+      // 4. Leg Curl seduto: 3 sets
+      const legCurlWeight = Math.round(
+        (baseWeights.legCurl + weeksTraining * weeklyProgression.legCurl) * dayModifier / 1.25
+      ) * 1.25;
+      const legCurlBaseReps = [14, 12, 11];
       for (let set = 1; set <= 3; set++) {
-        const reps = set === 3 ? 21 : 12;
-        const weight = 35 + set * 2.5;
-        const protocol = set === 3 ? "21s" : "standard";
+        const reps = legCurlBaseReps[set - 1] + (isToughDay ? -1 : 0);
+        const protocol = set === 3 && sessionIdx % 6 === 0 ? "21s" : "standard";
+        const actualReps = protocol === "21s" ? 21 : reps;
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Leg Curl seduto",
-          reps,
-          weight,
-          volume: reps * weight,
+          reps: actualReps,
+          weight: legCurlWeight,
+          volume: actualReps * legCurlWeight,
           workout: workoutName,
-          notes: set === 3 ? "21s: 7+7+7" : "",
+          notes: protocol === "21s" ? "21s: 7+7+7" : "",
           protocol,
+          timestamp: exerciseTime.getTime(),
         });
+        exerciseTime = new Date(exerciseTime.getTime() + 90000 + Math.random() * 30000);
       }
 
-      // 5. Calf Machine: 4 sets (superset with bodyweight calf raises)
+      // 5. Calf Machine: 4 sets
+      const calfWeight = Math.round(
+        (baseWeights.calfMachine + weeksTraining * weeklyProgression.calfMachine) * dayModifier / 2.5
+      ) * 2.5;
+      const calfBaseReps = [18, 16, 15, 14];
       for (let set = 1; set <= 4; set++) {
-        const reps = 15;
-        const weight = 40;
-        // Alternate superset protocol
-        const protocol = set % 2 === 0 ? "superset" : "standard";
+        const reps = calfBaseReps[set - 1] + (isToughDay ? -2 : 0) + (Math.random() > 0.8 ? 2 : 0);
+        const protocol = set % 2 === 0 && sessionIdx > 6 ? "superset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Calf Machine",
           reps,
-          weight,
-          volume: reps * weight,
+          weight: calfWeight,
+          volume: reps * calfWeight,
           workout: workoutName,
-          notes: set % 2 === 0 ? "Superset with BW raises" : "",
+          notes: protocol === "superset" ? "SS con calf BW" : "",
           protocol,
+          timestamp: exerciseTime.getTime(),
         });
+        exerciseTime = new Date(exerciseTime.getTime() + 60000 + Math.random() * 30000);
       }
-      // 6. Plank: 3 sets (Timed)
+
+      // 6. Plank: 3 sets (Timed) - duration improves over time
+      const basePlankDuration = 45 + weeksTraining * 5;
       for (let set = 1; set <= 3; set++) {
-        const duration = 60 + set * 15; // 60s, 75s, 90s
-        const timestamp =
-          new Date(dateStr).getTime() +
-          Math.floor(Math.random() * 3600000) +
-          36000000;
-        // date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance,heartRate
+        const duration = basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
         rows.push(
-          `${dateStr},Plank,0,0,0,,${workoutName},${timestamp},,standard,${duration},,`,
+          `${dateStr},Plank,0,0,0,,${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
         );
+        exerciseTime = new Date(exerciseTime.getTime() + 90000);
       }
     }
 
-    // Generate Upper Body sessions (Bench Press, Squat - just to have logs)
-    const upperBodyOffsets = [3, 6, 10, 13];
-    const upperBodyProtocols = [
-      "standard",
-      "rest-pause",
-      "myo-reps",
-      "dropset",
-    ];
-    for (let i = 0; i < upperBodyOffsets.length; i++) {
-      const daysAgo = upperBodyOffsets[i];
+    // Upper Body sessions: ~2x per week for 6 weeks
+    const upperBodyOffsets = [39, 36, 32, 29, 25, 22, 18, 15, 11, 8, 4, 1];
+    const upperWorkoutName = "Upper Body Power";
+
+    const upperBaseWeights = {
+      benchPress: 60,
+      squat: 80,
+    };
+
+    for (let sessionIdx = 0; sessionIdx < upperBodyOffsets.length; sessionIdx++) {
+      const daysAgo = upperBodyOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
       const dateStr = date.toISOString().split("T")[0];
-      const workoutName = "Upper Body Power"; // Virtual workout name
 
-      // Bench Press - with varied protocols on final set
+      const weeksTraining = Math.floor((42 - daysAgo) / 7);
+      const isToughDay = sessionIdx % 5 === 3;
+      const dayModifier = isToughDay ? 0.95 : 1;
+
+      const sessionStartHour = 17 + Math.floor(Math.random() * 2); // Evening workouts
+      let exerciseTime = new Date(date);
+      exerciseTime.setHours(sessionStartHour, Math.floor(Math.random() * 60), 0, 0);
+
+      // Bench Press: progressive overload
+      const benchWeight = Math.round(
+        (upperBaseWeights.benchPress + weeksTraining * 2.5) * dayModifier / 2.5
+      ) * 2.5;
+      const benchBaseReps = [8, 7, 6, 6];
       for (let set = 1; set <= 4; set++) {
-        const reps = 5;
-        const weight = 80 + set * 2.5;
-        const timestamp = new Date(dateStr).getTime() + 36000000 + set * 300000;
-        // Use different protocol on last set based on session
-        const protocol =
-          set === 4
-            ? upperBodyProtocols[i % upperBodyProtocols.length]
-            : "standard";
-        const notes =
-          set === 4 && protocol !== "standard" ? `${protocol} set` : "";
+        const reps = benchBaseReps[set - 1] + (isToughDay ? -1 : 0);
+        const protocols = ["standard", "rest-pause", "myo-reps", "dropset"];
+        const protocol = set === 4 && sessionIdx % 4 === set - 1 ? protocols[sessionIdx % 4] : "standard";
+        const notes = protocol !== "standard" ? `${protocol}` : "";
         rows.push(
-          `${dateStr},Bench Press,${reps},${weight},${reps * weight},,${workoutName},${timestamp},${notes},${protocol},,,`,
+          `${dateStr},Bench Press,${reps},${benchWeight},${reps * benchWeight},,${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
         );
+        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000);
       }
 
-      // Squat - with superset on some sessions
+      // Squat: progressive overload
+      const squatWeight = Math.round(
+        (upperBaseWeights.squat + weeksTraining * 5) * dayModifier / 5
+      ) * 5;
+      const squatBaseReps = [6, 5, 5, 5];
       for (let set = 1; set <= 4; set++) {
-        const reps = 5;
-        const weight = 100 + set * 5;
-        const timestamp = new Date(dateStr).getTime() + 37200000 + set * 300000;
-        // Superset on even sessions
-        const protocol = i % 2 === 0 && set === 4 ? "superset" : "standard";
-        const notes = protocol === "superset" ? "Superset with lunges" : "";
+        const reps = squatBaseReps[set - 1] + (isToughDay ? -1 : 0);
+        const protocol = sessionIdx % 3 === 0 && set === 4 ? "superset" : "standard";
+        const notes = protocol === "superset" ? "SS con lunges" : "";
         rows.push(
-          `${dateStr},Squat,${reps},${weight},${reps * weight},,${workoutName},${timestamp},${notes},${protocol},,,`,
+          `${dateStr},Squat,${reps},${squatWeight},${reps * squatWeight},,${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
         );
+        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000);
       }
     }
 
-    // Generate Cardio sessions (Running, Cycling)
-    const cardioOffsets = [4, 7, 11];
-    for (const daysAgo of cardioOffsets) {
+    // Cardio sessions: ~2x per week for 6 weeks - with progressive improvement
+    const cardioOffsets = [38, 34, 31, 27, 24, 20, 17, 13, 10, 6, 3];
+    const cardioWorkoutName = "Cardio Day";
+
+    for (let sessionIdx = 0; sessionIdx < cardioOffsets.length; sessionIdx++) {
+      const daysAgo = cardioOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
       const dateStr = date.toISOString().split("T")[0];
-      const workoutName = "Cardio Day";
 
-      // Running
-      const runDuration = 30;
-      const runDistance = 5;
-      const runTimestamp = new Date(dateStr).getTime() + 36000000;
+      const weeksTraining = Math.floor((42 - daysAgo) / 7);
+
+      // Morning cardio
+      let exerciseTime = new Date(date);
+      exerciseTime.setHours(6 + Math.floor(Math.random() * 2), Math.floor(Math.random() * 60), 0, 0);
+
+      // Running: distance and pace improve over time
+      const baseRunDistance = 4;
+      const runDistance = Math.round((baseRunDistance + weeksTraining * 0.3) * 10) / 10;
+      const baseRunDuration = 28; // minutes
+      const runDuration = Math.round(baseRunDuration + runDistance * 5.5 - weeksTraining * 0.5);
+      const runHeartRate = 150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
       rows.push(
-        `${dateStr},Running,0,0,0,,${workoutName},${runTimestamp},,standard,${runDuration},${runDistance},145`,
+        `${dateStr},Running,0,0,0,,${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
       );
 
-      // Cycling
-      const cycleDuration = 45;
-      const cycleDistance = 20;
-      const cycleTimestamp = new Date(dateStr).getTime() + 38000000;
+      exerciseTime = new Date(exerciseTime.getTime() + runDuration * 60000 + 600000);
+
+      // Cycling: distance and duration improve
+      const baseCycleDistance = 15;
+      const cycleDistance = Math.round((baseCycleDistance + weeksTraining * 1.5) * 10) / 10;
+      const baseCycleDuration = 40;
+      const cycleDuration = Math.round(baseCycleDuration + cycleDistance * 1.8 - weeksTraining);
+      const cycleHeartRate = 135 - weeksTraining + Math.floor(Math.random() * 8);
       rows.push(
-        `${dateStr},Cycling,0,0,0,,${workoutName},${cycleTimestamp},,standard,${cycleDuration},${cycleDistance},130`,
+        `${dateStr},Cycling,0,0,0,,${cardioWorkoutName},${exerciseTime.getTime()},,standard,${cycleDuration},${cycleDistance},${cycleHeartRate}`,
       );
     }
 
@@ -781,14 +852,16 @@ showTrendLine: true
       workout: string;
       notes?: string;
       protocol?: string;
+      timestamp?: number;
     },
   ): void {
+    // Use provided timestamp or generate one
     const timestamp =
+      data.timestamp ??
       new Date(data.date).getTime() +
-      Math.floor(Math.random() * 3600000) +
-      36000000; // Add random time + 10h to be daytime
+        Math.floor(Math.random() * 3600000) +
+        36000000;
     // date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance,heartRate
-    // 0    1        2    3      4      5       6       7         8     9        10       11       12
     const protocol = data.protocol || "standard";
     const row = `${data.date},${data.exercise},${data.reps},${data.weight},${data.volume},,${data.workout},${timestamp},${data.notes || ""},${protocol},,,`;
     rows.push(row);

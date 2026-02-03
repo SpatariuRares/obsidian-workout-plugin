@@ -42,6 +42,19 @@ export const COLUMN_LABELS: Record<CHART_DATA_TYPE, string> = {
 } as const;
 
 /**
+ * Simple data type names without units, used for trend titles and labels
+ */
+export const DATA_TYPE_NAMES: Record<CHART_DATA_TYPE, string> = {
+  [CHART_DATA_TYPE.VOLUME]: "Volume",
+  [CHART_DATA_TYPE.WEIGHT]: "Weight",
+  [CHART_DATA_TYPE.REPS]: "Reps",
+  [CHART_DATA_TYPE.DURATION]: "Duration",
+  [CHART_DATA_TYPE.DISTANCE]: "Distance",
+  [CHART_DATA_TYPE.PACE]: "Pace",
+  [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate",
+} as const;
+
+/**
  * Icon constants used throughout the UI
  */
 export const ICONS = {
@@ -654,12 +667,34 @@ export const CHARTS_UI = {
     UP: "up",
     DOWN: "down",
     NEUTRAL: "neutral",
+    /** @deprecated Use TREND_TITLE instead for dynamic type support */
     TREND_TITLE_PREFIX: "Trend Volume: ",
+    /** Dynamic trend title based on data type */
+    TREND_TITLE: (dataType?: CHART_DATA_TYPE) => {
+      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
+      return `Trend ${typeName}: `;
+    },
     OVERALL_VARIATION_PREFIX: "Overall variation: ",
-    VARIATION_FROM_TO: (startKg: string, endKg: string) =>
-      ` (da ${startKg} kg a ${endKg} kg)`,
-    VARIATION_SINGLE_VALUE: (value: string) => ` (Volume: ${value} kg)`,
-    VARIATION_VALUE_LABEL: (value: string) => `Volume: ${value} kg`,
+    /** @deprecated Use VARIATION_FROM_TO_FORMATTED for dynamic unit support */
+    VARIATION_FROM_TO: (startValue: string, endValue: string) =>
+      ` (da ${startValue} a ${endValue})`,
+    /** Dynamic variation display with proper units */
+    VARIATION_FROM_TO_FORMATTED: (startValue: string, endValue: string) =>
+      ` (da ${startValue} a ${endValue})`,
+    /** @deprecated Use VARIATION_SINGLE_VALUE_FORMATTED for dynamic type support */
+    VARIATION_SINGLE_VALUE: (value: string) => ` (Volume: ${value})`,
+    /** Dynamic single value display */
+    VARIATION_SINGLE_VALUE_FORMATTED: (value: string, dataType?: CHART_DATA_TYPE) => {
+      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
+      return ` (${typeName}: ${value})`;
+    },
+    /** @deprecated Use VARIATION_VALUE_LABEL_FORMATTED for dynamic type support */
+    VARIATION_VALUE_LABEL: (value: string) => `Volume: ${value}`,
+    /** Dynamic value label */
+    VARIATION_VALUE_LABEL_FORMATTED: (value: string, dataType?: CHART_DATA_TYPE) => {
+      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
+      return `${typeName}: ${value}`;
+    },
     SIGNIFICANT_INCREASE: "Aumento signif.",
     FALLBACK_TABLE_MESSAGE:
       "fallback table (charts plugin not available or error)",
@@ -669,7 +704,7 @@ export const CHARTS_UI = {
     WEIGHT: "weight",
     REPS: "reps",
   },
-} as const;
+};
 
 /**
  * Timer UI labels - timer types and related display text

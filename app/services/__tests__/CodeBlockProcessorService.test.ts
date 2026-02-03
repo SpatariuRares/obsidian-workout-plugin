@@ -1,12 +1,20 @@
+/**
+ * @jest-environment jsdom
+ */
 // Mock Obsidian module first
 jest.mock(
   "obsidian",
   () => ({
     Notice: jest.fn(),
     TFile: class MockTFile {},
-    MarkdownPostProcessorContext: class MockMarkdownPostProcessorContext {},
+    MarkdownPostProcessorContext: class MockMarkdownPostProcessorContext {
+      addChild = jest.fn();
+      sourcePath = "test/path.md";
+    },
     MarkdownRenderChild: class MockMarkdownRenderChild {
       constructor(public containerEl: HTMLElement) {}
+      onload() {}
+      onunload() {}
     },
     Modal: class MockModal {
       constructor(public app: any) {}
@@ -26,6 +34,19 @@ jest.mock(
   { virtual: true },
 );
 
+// Mock dependent components
+jest.mock("@app/components/atoms/Feedback", () => ({
+  Feedback: {
+    renderError: jest.fn(),
+  },
+}));
+
+jest.mock("@app/components/organism/LogCallouts", () => ({
+  LogCallouts: {
+    renderCsvNoDataMessage: jest.fn(),
+  },
+}));
+
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "../DataService";
@@ -34,28 +55,42 @@ import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
 import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
 import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
+import { Feedback } from "@app/components/atoms/Feedback";
+import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { MarkdownPostProcessorContext } from "obsidian";
+import { CONSTANTS } from "@app/constants";
 
-describe("CodeBlockProcessorService - Parameter Parsing", () => {
+describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
-  let mockPlugin: WorkoutChartsPlugin;
-  let mockDataService: DataService;
-  let mockChartView: EmbeddedChartView;
-  let mockTableView: EmbeddedTableView;
-  let mockDashboardView: EmbeddedDashboardView;
+  let mockPlugin: any;
+  let mockDataService: any;
+  let mockChartView: any;
+  let mockTableView: any;
+  let mockDashboardView: any;
   let activeTimers: Map<string, EmbeddedTimerView>;
-  let mockMuscleTagService: MuscleTagService;
+  let mockMuscleTagService: any;
 
   beforeEach(() => {
-    // Create minimal mocks
-    mockPlugin = {} as WorkoutChartsPlugin;
-    mockDataService = {} as DataService;
-    mockChartView = {} as EmbeddedChartView;
-    mockTableView = {} as EmbeddedTableView;
-    mockDashboardView = {} as EmbeddedDashboardView;
+    // Create mocks
+    mockPlugin = {
+      registerMarkdownCodeBlockProcessor: jest.fn(),
+    };
+    mockDataService = {
+      getWorkoutLogData: jest.fn().mockResolvedValue([]),
+    };
+    mockChartView = {
+      createChart: jest.fn().mockResolvedValue(undefined),
+    };
+    mockTableView = {
+      createTable: jest.fn().mockResolvedValue(undefined),
+    };
+    mockDashboardView = {
+      createDashboard: jest.fn().mockResolvedValue(undefined),
+    };
     activeTimers = new Map();
     mockMuscleTagService = {
       getTagMap: jest.fn().mockReturnValue(new Map()),
-    } as unknown as MuscleTagService;
+    };
 
     service = new CodeBlockProcessorService(
       mockPlugin,
@@ -66,12 +101,299 @@ describe("CodeBlockProcessorService - Parameter Parsing", () => {
       activeTimers,
       mockMuscleTagService,
     );
+
+    jest.clearAllMocks();
+  });
+
+  describe("registerProcessors", () => {
+    it("should register all code block processors", () => {
+      service.registerProcessors();
+
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledTimes(5);
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledWith(
+        CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
+        expect.any(Function),
+      );
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledWith(
+        CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
+        expect.any(Function),
+      );
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledWith(
+        CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
+        expect.any(Function),
+      );
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledWith(
+        CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
+        expect.any(Function),
+      );
+      expect(
+        mockPlugin.registerMarkdownCodeBlockProcessor,
+      ).toHaveBeenCalledWith(
+        CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+        expect.any(Function),
+      );
+    });
+  });
+
+  describe("handleWorkoutChart", () => {
+    it("should render error if data loading fails", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue(
+        new Error("Data Error"),
+      );
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("Data Error"),
+      );
+    });
+
+    it("should render no data message if logs are empty", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("source", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalledWith(
+        el,
+        mockPlugin,
+      );
+    });
+
+    it("should create chart when data exists", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("type: volume", el, ctx);
+
+      expect(mockChartView.createChart).toHaveBeenCalled();
+    });
+
+    it("should pass filter params to data service", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart(
+        "exercise: Bench Press",
+        el,
+        ctx,
+      );
+
+      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          exercise: "Bench Press",
+        }),
+      );
+    });
+  });
+
+  describe("handleWorkoutLog", () => {
+    it("should render error if creation fails", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue(
+        new Error("Table Error"),
+      );
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("Table Error"),
+        expect.any(Object),
+      );
+    });
+
+    it("should create table with data", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
+
+      expect(mockTableView.createTable).toHaveBeenCalled();
+    });
+  });
+
+  describe("handleWorkoutDashboard", () => {
+    it("should filter data by date range if provided", async () => {
+      const today = new Date();
+      const oldDate = new Date();
+      oldDate.setDate(today.getDate() - 100);
+
+      const data = [
+        { date: today.toISOString().split("T")[0] },
+        { date: oldDate.toISOString().split("T")[0] },
+      ];
+      mockDataService.getWorkoutLogData.mockResolvedValue(data);
+
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      // dateRange: 30 should exclude the old date
+      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
+
+      expect(mockDashboardView.createDashboard).toHaveBeenCalledWith(
+        expect.any(HTMLElement),
+        expect.arrayContaining([data[0]]), // Should contain today
+        expect.any(Object),
+      );
+
+      // Verify we passed filtered data (length 1)
+      const callArgs = mockDashboardView.createDashboard.mock.calls[0];
+      expect(callArgs[1].length).toBe(1);
+    });
+
+    it("should show no data message if filtered data is empty", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
+      expect(mockDashboardView.createDashboard).not.toHaveBeenCalled();
+    });
+
+    it("should catch errors", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue(
+        new Error("Dashboard Fail"),
+      );
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutDashboard("", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalled();
+    });
+  });
+
+  describe("handleWorkoutTimer", () => {
+    it("should create timer and register child", () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      expect(ctx.addChild).toHaveBeenCalled();
+      expect(activeTimers.size).toBe(1);
+    });
+
+    it("should catch errors", () => {
+      // Mock parser to throw
+      const originalParse = (service as any).parseCodeBlockParams;
+      (service as any).parseCodeBlockParams = () => {
+        throw new Error("Timer Fail");
+      };
+
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalled();
+
+      // Restore
+      (service as any).parseCodeBlockParams = originalParse;
+    });
+  });
+
+  describe("handleWorkoutDuration", () => {
+    it("should create duration estimator", async () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      // Mock internal view
+      (service as any).embeddedDurationView = {
+        createDurationEstimator: jest.fn().mockResolvedValue(undefined),
+      };
+
+      await (service as any).handleWorkoutDuration("source", el, ctx);
+
+      expect(
+        (service as any).embeddedDurationView.createDurationEstimator,
+      ).toHaveBeenCalled();
+    });
+
+    it("should catch errors", async () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+      (service as any).embeddedDurationView = {
+        createDurationEstimator: jest
+          .fn()
+          .mockRejectedValue(new Error("Duration Fail")),
+      };
+
+      await (service as any).handleWorkoutDuration("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalled();
+    });
   });
 
   describe("parseCodeBlockParams", () => {
     it("should parse valid number parameters correctly", () => {
       const source = "duration: 60\nreps: 10";
-      // Use type assertion to access private method for testing
       const result = (service as any).parseCodeBlockParams(source);
 
       expect(result.duration).toBe(60);
@@ -108,7 +430,6 @@ describe("CodeBlockProcessorService - Parameter Parsing", () => {
       const source = "exercise:   \nworkout:  \t ";
       const result = (service as any).parseCodeBlockParams(source);
 
-      // After trim(), these should be empty strings
       expect(result.exercise).toBe("");
       expect(result.workout).toBe("");
     });

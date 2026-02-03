@@ -94,7 +94,7 @@ export class DataFilter {
    */
   static filterData(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams
+    params: EmbeddedChartParams | EmbeddedTableParams,
   ): FilterResult {
     if (!logData || logData.length === 0) {
       return {
@@ -129,8 +129,9 @@ export class DataFilter {
         return {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
-          titlePrefix: `${params.exercise} + ${params.workout || params.workoutPath
-            }`,
+          titlePrefix: `${params.exercise} + ${
+            params.workout || params.workoutPath
+          }`,
         };
       }
 
@@ -173,14 +174,17 @@ export class DataFilter {
    * Checks if the params contain a protocol filter
    */
   private static hasProtocolFilter(
-    params: EmbeddedChartParams | EmbeddedTableParams
+    params: EmbeddedChartParams | EmbeddedTableParams,
   ): boolean {
     const tableParams = params as EmbeddedTableParams;
     if (!tableParams.protocol) return false;
     if (Array.isArray(tableParams.protocol)) {
       return tableParams.protocol.length > 0;
     }
-    return typeof tableParams.protocol === "string" && tableParams.protocol.trim() !== "";
+    return (
+      typeof tableParams.protocol === "string" &&
+      tableParams.protocol.trim() !== ""
+    );
   }
 
   /**
@@ -188,7 +192,7 @@ export class DataFilter {
    */
   private static filterByWorkout(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams
+    params: EmbeddedChartParams | EmbeddedTableParams,
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
@@ -228,19 +232,12 @@ export class DataFilter {
    */
   private static filterByProtocol(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams
+    params: EmbeddedChartParams | EmbeddedTableParams,
   ): FilterResult {
     const tableParams = params as EmbeddedTableParams;
-    const protocolParam = tableParams.protocol;
+    const protocolParam = tableParams.protocol!;
 
-    if (!protocolParam) {
-      return {
-        filteredData: logData,
-        filterMethodUsed: "none",
-        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
-      };
-    }
-
+    // Protocol param is guaranteed to exist here due to hasProtocolFilter check
     // Normalize protocol values to lowercase array
     const protocols: string[] = Array.isArray(protocolParam)
       ? protocolParam.map((p) => p.toLowerCase().trim())
@@ -248,7 +245,9 @@ export class DataFilter {
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {
-      const logProtocol = (log.protocol || WorkoutProtocol.STANDARD).toLowerCase();
+      const logProtocol = (
+        log.protocol || WorkoutProtocol.STANDARD
+      ).toLowerCase();
       return protocols.includes(logProtocol);
     });
 
@@ -291,28 +290,31 @@ export class DataFilter {
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = ExerciseMatchUtils.findExerciseMatches(logData, exerciseName);
-        
+        const matchesResult = ExerciseMatchUtils.findExerciseMatches(
+          logData,
+          exerciseName,
+        );
+
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
             matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
             params.exactMatch || false,
-            exerciseName
+            exerciseName,
           );
 
         filteredData = ExerciseMatchUtils.filterLogDataByExercise(
           logData,
           bestStrategy,
           bestPathKey,
-          bestFileMatchesList
+          bestFileMatchesList,
         );
 
         filterMethodUsed = this.getFilterMethodDescription(
           bestStrategy,
           bestPathKey,
           matchesResult,
-          bestFileMatchesList
+          bestFileMatchesList,
         );
       }
     }
@@ -332,7 +334,7 @@ export class DataFilter {
     bestStrategy: string,
     bestPathKey: string,
     matchesResult: MatchResult,
-    bestFileMatchesList: ExerciseMatch[]
+    bestFileMatchesList: ExerciseMatch[],
   ): string {
     if (bestStrategy === "field") {
       const bestPathScore =
@@ -378,7 +380,7 @@ export class DataFilter {
     }
 
     return logData.filter((log) =>
-      this.matchesEarlyFilter(log, filterParams, normalizedFilters)
+      this.matchesEarlyFilter(log, filterParams, normalizedFilters),
     );
   }
 

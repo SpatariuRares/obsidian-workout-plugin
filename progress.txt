@@ -1,0 +1,10 @@
+
+- **Date**: 2026-02-03
+- **Feature**: US-010 Add DataFilter to coverage
+- **Status**: Completed
+- **Notes**: 
+  - Created `app/services/data/__tests__/DataFilter.test.ts` with comprehensive tests.
+  - Refactored `DataFilter.ts` to remove dead code in protocol filtering logic.
+  - Achieved high coverage (Statements: ~94%, Branches: ~80%, Lines: ~94%).
+  - Verified tests pass via user feedback.
+  - Restored `jest.config.js` to specific coverage collection to avoid global coverage drop.

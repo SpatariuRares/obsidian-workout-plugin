@@ -7,7 +7,15 @@ import { jest } from "@jest/globals";
  * Simple YAML parser mock that handles basic YAML structures
  * Mimics Obsidian's parseYaml function
  */
-export function parseYaml(yaml: string): Record<string, any> | null {
+/**
+ * Simple normalizePath mock
+ */
+export function normalizePath(path: string): string {
+  // Simple implementation: replace backslashes with slashes and remove multiple slashes
+  return path.replace(/\\/g, "/").replace(/\/+/g, "/");
+}
+
+export const parseYaml = jest.fn((yaml: string): Record<string, any> | null => {
   if (!yaml || !yaml.trim()) {
     return null;
   }
@@ -64,7 +72,7 @@ export function parseYaml(yaml: string): Record<string, any> | null {
   }
 
   return Object.keys(result).length > 0 ? result : null;
-}
+});
 
 // Mock other commonly used obsidian exports
 export class Notice {
@@ -86,6 +94,11 @@ export class App {
     read: jest.fn(),
     create: jest.fn(),
     process: jest.fn(),
+    createFolder: jest.fn(),
+    modify: jest.fn(),
+  };
+  fileManager = {
+    processFrontMatter: jest.fn(),
   };
   workspace = {
     getActiveViewOfType: jest.fn(),
@@ -101,8 +114,12 @@ export class FuzzySuggestModal<T> {
     this.app = app;
   }
   setPlaceholder(_placeholder: string) {}
-  getItems(): T[] { return []; }
-  getItemText(_item: T): string { return ""; }
+  getItems(): T[] {
+    return [];
+  }
+  getItemText(_item: T): string {
+    return "";
+  }
   onChooseItem(_item: T): void {}
   open() {}
   close() {}

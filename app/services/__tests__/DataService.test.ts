@@ -3,10 +3,14 @@ import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE } from "@app/types";
 
 // Mock Obsidian module
-jest.mock("obsidian", () => ({
-  Notice: jest.fn(),
-  TFile: class MockTFile {},
-}), { virtual: true });
+jest.mock(
+  "obsidian",
+  () => ({
+    Notice: jest.fn(),
+    TFile: class MockTFile {},
+  }),
+  { virtual: true },
+);
 
 // Import after mocking
 import { Notice, TFile } from "obsidian";
@@ -98,7 +102,7 @@ describe("DataService", () => {
       await dataService.addWorkoutLogEntry(entry);
 
       expect(mockVault.getAbstractFileByPath).toHaveBeenCalledWith(
-        "test/workout_logs.csv"
+        "test/workout_logs.csv",
       );
       expect(mockVault.process).toHaveBeenCalledTimes(1);
     });
@@ -131,7 +135,7 @@ describe("DataService", () => {
       expect(mockVault.create).toHaveBeenCalledTimes(1);
       expect(mockVault.create).toHaveBeenCalledWith(
         "test/workout_logs.csv",
-        expect.stringContaining("date,exercise,reps,weight,volume")
+        expect.stringContaining("date,exercise,reps,weight,volume"),
       );
 
       // Verify retry happened (process called after create)
@@ -157,12 +161,12 @@ describe("DataService", () => {
       };
 
       await expect(dataService.addWorkoutLogEntry(entry)).rejects.toThrow(
-        "Failed to create CSV file at path: test/workout_logs.csv"
+        "Failed to create CSV file at path: test/workout_logs.csv",
       );
 
       // Verify Notice was shown to user
       expect(Notice).toHaveBeenCalledWith(
-        expect.stringContaining("Failed to create CSV file at path")
+        expect.stringContaining("Failed to create CSV file at path"),
       );
 
       // Verify create was called once (MAX_RETRIES = 1 means 1 creation attempt)
@@ -210,7 +214,7 @@ describe("DataService", () => {
       };
 
       await expect(dataService.addWorkoutLogEntry(entry)).rejects.toThrow(
-        /test\/workout_logs\.csv/
+        /test\/workout_logs\.csv/,
       );
     });
   });
@@ -260,7 +264,9 @@ describe("DataService", () => {
 
       // Should match all exercises containing "bench" (case-insensitive)
       expect(result.length).toBe(3);
-      expect(result.every(log => log.exercise.toLowerCase().includes("bench"))).toBe(true);
+      expect(
+        result.every((log) => log.exercise.toLowerCase().includes("bench")),
+      ).toBe(true);
     });
 
     it("should correctly filter by workout name with exact match", async () => {
@@ -307,7 +313,9 @@ describe("DataService", () => {
 
       // Should match all workouts containing "push" (case-insensitive)
       expect(result.length).toBe(2);
-      expect(result.every(log => log.origine?.toLowerCase().includes("push"))).toBe(true);
+      expect(
+        result.every((log) => log.origine?.toLowerCase().includes("push")),
+      ).toBe(true);
     });
 
     it("should correctly filter with both exercise and workout filters (AND logic)", async () => {
@@ -766,9 +774,11 @@ describe("DataService", () => {
       // Create a large CSV content with 6000 entries (exceeds MAX_CACHE_SIZE of 5000)
       const largeCSVContent = [
         "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
-        ...Array.from({ length: 6000 }, (_, i) =>
-          `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`
-        )
+        ...Array.from(
+          { length: 6000 },
+          (_, i) =>
+            `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`,
+        ),
       ].join("\n");
 
       const mockFile = new TFile();
@@ -796,9 +806,11 @@ describe("DataService", () => {
       // Create a CSV content with 1000 entries (well within MAX_CACHE_SIZE of 5000)
       const smallCSVContent = [
         "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
-        ...Array.from({ length: 1000 }, (_, i) =>
-          `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`
-        )
+        ...Array.from(
+          { length: 1000 },
+          (_, i) =>
+            `2024-01-01T10:00:00.000Z,Exercise ${i},10,100,1000,Workout,Workout,${Date.now() + i},`,
+        ),
       ].join("\n");
 
       const mockFile = new TFile();
@@ -845,6 +857,89 @@ describe("DataService", () => {
       await dataService.getWorkoutLogData();
 
       expect(mockVault.read).toHaveBeenCalledTimes(1);
+    });
+
+    describe("Delegation Methods", () => {
+      describe("createCSVLogFile", () => {
+        it("should attempt to create CSV file via repository", async () => {
+          // Mock to return null initially so it tries to create
+          mockVault.getAbstractFileByPath.mockReturnValue(null);
+          mockVault.create.mockResolvedValue(new TFile());
+          mockVault.process.mockResolvedValue("");
+
+          await dataService.createCSVLogFile();
+
+          expect(mockVault.create).toHaveBeenCalledWith(
+            "test/workout_logs.csv",
+            expect.stringContaining("date,exercise,reps"),
+          );
+        });
+      });
+
+      describe("deleteWorkoutLogEntry", () => {
+        it("should update file content after deleting entry", async () => {
+          const csvContent = [
+            "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+            "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,",
+            "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Workout,Workout,1704182400000,",
+          ].join("\n");
+
+          const mockFile = new TFile();
+          mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+          mockVault.read.mockResolvedValue(csvContent);
+
+          let writtenContent = "";
+          mockVault.process.mockImplementation(async (_file, callback) => {
+            writtenContent = callback(csvContent);
+            return writtenContent;
+          });
+
+          const logToDelete = {
+            date: "2024-01-01T10:00:00.000Z",
+            exercise: "Bench Press",
+            reps: 10,
+            weight: 100,
+            volume: 1000,
+            timestamp: 1704096000000,
+          };
+
+          await dataService.deleteWorkoutLogEntry(logToDelete);
+
+          // Verify content updated (first entry removed)
+          expect(writtenContent).not.toContain("Bench Press");
+          expect(writtenContent).toContain("Squat");
+        });
+      });
+
+      describe("renameExercise", () => {
+        it("should update file content after renaming exercise", async () => {
+          const csvContent = [
+            "date,exercise,reps,weight,volume,origine,workout,timestamp,notes",
+            "2024-01-01T10:00:00.000Z,Bench Press,10,100,1000,Workout,Workout,1704096000000,",
+            "2024-01-02T10:00:00.000Z,Squat,10,150,1500,Workout,Workout,1704182400000,",
+          ].join("\n");
+
+          const mockFile = new TFile();
+          mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+          mockVault.read.mockResolvedValue(csvContent);
+
+          let writtenContent = "";
+          mockVault.process.mockImplementation(async (_file, callback) => {
+            writtenContent = callback(csvContent);
+            return writtenContent;
+          });
+
+          const count = await dataService.renameExercise(
+            "Bench Press",
+            "Chest Press",
+          );
+
+          expect(count).toBe(1);
+          expect(writtenContent).not.toContain("Bench Press");
+          expect(writtenContent).toContain("Chest Press");
+          expect(writtenContent).toContain("Squat");
+        });
+      });
     });
   });
 });

@@ -20,7 +20,7 @@ module.exports = {
     "app/constants/MuscleTags.ts", // Only include MuscleTags, exclude Constants.ts (config data)
     "app/components/data/**/*.ts",
     "app/components/dashboard/business/DashboardCalculations.ts",
-    "app/services/DataService.ts",
+    "app/services/**/*.ts",
     "app/features/charts/components/ChartRenderer.ts",
     "!app/**/*.d.ts",
     "!app/**/__tests__/**",

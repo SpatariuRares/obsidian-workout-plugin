@@ -1,5 +1,3 @@
-import { Feedback } from "@app/components/atoms/Feedback";
-
 /**
  * UI component for creating table containers.
  * Pure UI logic with no business dependencies.

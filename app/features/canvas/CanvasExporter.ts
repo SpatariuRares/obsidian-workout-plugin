@@ -4,12 +4,15 @@
  * Creates a visual representation of a workout file as a .canvas file,
  * with each exercise represented as a node colored by muscle group.
  */
-import { App, TFile, Notice } from "obsidian";
+import { App, TFile } from "obsidian";
 import { MuscleTagMapper } from "@app/features/dashboard/business/muscleHeatMap/MuscleTagMapper";
 import { WorkoutPlannerAPI, ExerciseStats } from "@app/api/WorkoutPlannerAPI";
 import { DataService } from "@app/services/DataService";
 import type WorkoutChartsPlugin from "main";
-import type { CanvasExportOptions, CanvasLayoutType } from "@app/features/canvas/CanvasExportModal";
+import type {
+  CanvasExportOptions,
+  CanvasLayoutType,
+} from "@app/features/canvas/CanvasExportModal";
 
 /**
  * Canvas node types as defined by JSON Canvas spec
@@ -117,7 +120,7 @@ export class CanvasExporter {
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin
+    private plugin: WorkoutChartsPlugin,
   ) {
     const dataService = new DataService(app, plugin.settings);
     this.api = new WorkoutPlannerAPI(dataService, app, plugin.settings);
@@ -131,7 +134,7 @@ export class CanvasExporter {
    */
   async exportToCanvas(
     workoutFile: TFile,
-    options: CanvasExportOptions = DEFAULT_OPTIONS
+    options: CanvasExportOptions = DEFAULT_OPTIONS,
   ): Promise<string> {
     // Extract exercises from the workout file
     const exercises = await this.extractExercises(workoutFile);
@@ -154,7 +157,11 @@ export class CanvasExporter {
     }
 
     // Create canvas data
-    const canvasData = await this.createCanvasData(exercises, options, exerciseStats);
+    const canvasData = await this.createCanvasData(
+      exercises,
+      options,
+      exerciseStats,
+    );
 
     // Generate canvas file path (same folder as workout file)
     const canvasFileName = workoutFile.basename + ".canvas";
@@ -166,10 +173,16 @@ export class CanvasExporter {
     const existingFile = this.app.vault.getAbstractFileByPath(canvasPath);
     if (existingFile instanceof TFile) {
       // Overwrite existing canvas file
-      await this.app.vault.modify(existingFile, JSON.stringify(canvasData, null, 2));
+      await this.app.vault.modify(
+        existingFile,
+        JSON.stringify(canvasData, null, 2),
+      );
     } else {
       // Create new canvas file
-      await this.app.vault.create(canvasPath, JSON.stringify(canvasData, null, 2));
+      await this.app.vault.create(
+        canvasPath,
+        JSON.stringify(canvasData, null, 2),
+      );
     }
 
     return canvasPath;
@@ -200,7 +213,7 @@ export class CanvasExporter {
           exerciseSet.add(exerciseName.toLowerCase());
           const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
             exerciseName,
-            this.plugin
+            this.plugin,
           );
           exercises.push({
             name: exerciseName,
@@ -217,11 +230,14 @@ export class CanvasExporter {
     while ((match = h2Regex.exec(content)) !== null) {
       const headerText = match[1].trim();
       // Skip common non-exercise headers
-      if (this.isLikelyExerciseName(headerText) && !exerciseSet.has(headerText.toLowerCase())) {
+      if (
+        this.isLikelyExerciseName(headerText) &&
+        !exerciseSet.has(headerText.toLowerCase())
+      ) {
         exerciseSet.add(headerText.toLowerCase());
         const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
           headerText,
-          this.plugin
+          this.plugin,
         );
         exercises.push({ name: headerText, muscleGroups });
       }
@@ -238,13 +254,13 @@ export class CanvasExporter {
         if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
           // Verify it's actually an exercise file
           const file = this.app.vault.getFileByPath(
-            linkPath.endsWith(".md") ? linkPath : linkPath + ".md"
+            linkPath.endsWith(".md") ? linkPath : linkPath + ".md",
           );
           if (file || !linkPath.includes("/")) {
             exerciseSet.add(exerciseName.toLowerCase());
             const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
               exerciseName,
-              this.plugin
+              this.plugin,
             );
             exercises.push({ name: exerciseName, muscleGroups });
           }
@@ -279,7 +295,7 @@ export class CanvasExporter {
     ];
     const lowerText = text.toLowerCase();
     return !nonExerciseHeaders.some(
-      (header) => lowerText === header || lowerText.startsWith(header + " ")
+      (header) => lowerText === header || lowerText.startsWith(header + " "),
     );
   }
 
@@ -289,16 +305,22 @@ export class CanvasExporter {
   private async createCanvasData(
     exercises: ExerciseInfo[],
     options: CanvasExportOptions,
-    exerciseStats: Map<string, ExerciseStats>
+    exerciseStats: Map<string, ExerciseStats>,
   ): Promise<CanvasData> {
     const nodes: CanvasNode[] = [];
     const edges: CanvasEdge[] = [];
 
     // Determine node height based on whether stats are included
-    const nodeHeight = options.includeStats ? NODE_HEIGHT_WITH_STATS : NODE_HEIGHT;
+    const nodeHeight = options.includeStats
+      ? NODE_HEIGHT_WITH_STATS
+      : NODE_HEIGHT;
 
     // Calculate node positions based on layout type
-    const positions = this.calculatePositions(exercises, options.layout, nodeHeight);
+    const positions = this.calculatePositions(
+      exercises,
+      options.layout,
+      nodeHeight,
+    );
 
     // Create nodes for each exercise
     exercises.forEach((exercise, index) => {
@@ -322,7 +344,11 @@ export class CanvasExporter {
 
     // Create edges for supersets if enabled
     if (options.connectSupersets) {
-      const supersetEdges = this.createSupersetEdges(exercises, nodes, options.layout);
+      const supersetEdges = this.createSupersetEdges(
+        exercises,
+        nodes,
+        options.layout,
+      );
       edges.push(...supersetEdges);
     }
 
@@ -335,7 +361,7 @@ export class CanvasExporter {
   private calculatePositions(
     exercises: ExerciseInfo[],
     layout: CanvasLayoutType,
-    nodeHeight: number
+    nodeHeight: number,
   ): Array<{ x: number; y: number }> {
     switch (layout) {
       case "horizontal":
@@ -354,7 +380,7 @@ export class CanvasExporter {
    */
   private calculateHorizontalLayout(
     count: number,
-    nodeHeight: number
+    nodeHeight: number,
   ): Array<{ x: number; y: number }> {
     const positions: Array<{ x: number; y: number }> = [];
 
@@ -375,7 +401,7 @@ export class CanvasExporter {
    */
   private calculateVerticalLayout(
     count: number,
-    nodeHeight: number
+    nodeHeight: number,
   ): Array<{ x: number; y: number }> {
     const positions: Array<{ x: number; y: number }> = [];
 
@@ -394,7 +420,7 @@ export class CanvasExporter {
    */
   private calculateGroupedLayout(
     exercises: ExerciseInfo[],
-    nodeHeight: number
+    nodeHeight: number,
   ): Array<{ x: number; y: number }> {
     const positions: Array<{ x: number; y: number }> = [];
 
@@ -445,7 +471,7 @@ export class CanvasExporter {
   private createSupersetEdges(
     exercises: ExerciseInfo[],
     nodes: CanvasNode[],
-    layout: CanvasLayoutType
+    layout: CanvasLayoutType,
   ): CanvasEdge[] {
     const edges: CanvasEdge[] = [];
 
@@ -491,7 +517,7 @@ export class CanvasExporter {
   private formatExerciseText(
     exercise: ExerciseInfo,
     options: CanvasExportOptions,
-    stats?: ExerciseStats
+    stats?: ExerciseStats,
   ): string {
     let text = `## ${exercise.name}`;
 

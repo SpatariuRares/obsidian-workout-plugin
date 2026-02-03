@@ -202,7 +202,7 @@ export class EmbeddedDurationView extends BaseView {
 
     // Handle error state
     if (!analysis.success) {
-      const errorDiv = card.createEl("div", {
+      card.createEl("div", {
         cls: "workout-duration-error",
         text: analysis.error || "Unable to analyze workout file",
       });

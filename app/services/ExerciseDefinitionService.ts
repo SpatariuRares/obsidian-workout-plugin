@@ -40,7 +40,7 @@ export class ExerciseDefinitionService {
 
   constructor(
     private app: App,
-    private settings: WorkoutChartsSettings
+    private settings: WorkoutChartsSettings,
   ) {}
 
   /**
@@ -54,7 +54,7 @@ export class ExerciseDefinitionService {
    * // Returns { name: "Bench Press", typeId: "strength", ... }
    */
   async getExerciseDefinition(
-    name: string
+    name: string,
   ): Promise<ExerciseDefinition | undefined> {
     const definitions = await this.loadDefinitions();
     // Normalize name for lookup (case-insensitive)
@@ -113,7 +113,7 @@ export class ExerciseDefinitionService {
           if (definition.muscleGroups && definition.muscleGroups.length > 0) {
             frontmatter.tags = definition.muscleGroups;
           }
-        }
+        },
       );
     } else {
       // Create new file with frontmatter
@@ -232,7 +232,7 @@ export class ExerciseDefinitionService {
 
     // Get all markdown files in the folder
     const files = abstractFolder.children.filter(
-      (file): file is TFile => file instanceof TFile && file.extension === "md"
+      (file): file is TFile => file instanceof TFile && file.extension === "md",
     );
 
     // Parse each file
@@ -255,7 +255,7 @@ export class ExerciseDefinitionService {
    * Parse an exercise definition from a markdown file's frontmatter.
    */
   private async parseExerciseFile(
-    file: TFile
+    file: TFile,
   ): Promise<ExerciseDefinition | null> {
     const content = await this.app.vault.read(file);
 
@@ -306,9 +306,7 @@ export class ExerciseDefinitionService {
    * Parse the exercise type ID from frontmatter.
    * Supports both `exercise_type` and `type` fields for flexibility.
    */
-  private parseTypeId(
-    frontmatter: Record<string, unknown>
-  ): string {
+  private parseTypeId(frontmatter: Record<string, unknown>): string {
     // Check for exercise_type field (primary)
     if (
       typeof frontmatter.exercise_type === "string" &&
@@ -318,10 +316,7 @@ export class ExerciseDefinitionService {
     }
 
     // Check for type field (alternative)
-    if (
-      typeof frontmatter.type === "string" &&
-      frontmatter.type.trim()
-    ) {
+    if (typeof frontmatter.type === "string" && frontmatter.type.trim()) {
       return frontmatter.type.trim().toLowerCase();
     }
 
@@ -345,7 +340,7 @@ export class ExerciseDefinitionService {
    * ```
    */
   private parseCustomParameters(
-    frontmatter: Record<string, unknown>
+    frontmatter: Record<string, unknown>,
   ): ParameterDefinition[] {
     const parametersField = frontmatter.parameters;
 
@@ -381,10 +376,6 @@ export class ExerciseDefinitionService {
       // Skip reserved keys and invalid parameters
       const validation = ParameterUtils.validateParam(paramDef);
       if (!validation.isValid) {
-        // Log warning but don't fail - just skip the invalid parameter
-        console.warn(
-          `[ExerciseDefinitionService] Skipping invalid custom parameter "${paramDef.key}": ${validation.error}`
-        );
         continue;
       }
 
@@ -414,9 +405,7 @@ export class ExerciseDefinitionService {
   /**
    * Parse parameter type, defaulting to 'number' for invalid values.
    */
-  private parseParameterType(
-    value: unknown
-  ): "number" | "string" | "boolean" {
+  private parseParameterType(value: unknown): "number" | "string" | "boolean" {
     if (value === "string") return "string";
     if (value === "boolean") return "boolean";
     return "number"; // Default
@@ -425,9 +414,7 @@ export class ExerciseDefinitionService {
   /**
    * Parse muscle groups from frontmatter tags.
    */
-  private parseMuscleGroups(
-    frontmatter: Record<string, unknown>
-  ): string[] {
+  private parseMuscleGroups(frontmatter: Record<string, unknown>): string[] {
     const tags = frontmatter.tags;
 
     if (!Array.isArray(tags)) {

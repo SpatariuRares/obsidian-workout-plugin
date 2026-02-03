@@ -14,7 +14,6 @@ import {
   ProtocolEffectiveness,
   DurationComparison,
 } from "@app/features/dashboard/widgets";
-import { ListItem } from "@app/components/molecules";
 import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";

@@ -2,7 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter } from "@app/services/data/DataFilter";
-import { LoadingSpinner, InfoBanner } from "@app/components/molecules";
+import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import {

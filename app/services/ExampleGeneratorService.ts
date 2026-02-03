@@ -647,27 +647,44 @@ showTrendLine: true
 
 ### 2.5 Cardio Chart - Duration
 
-Track duration for timed exercises:
+Track duration for timed exercises (displays as 1h 30m format):
 
 \`\`\`workout-chart
 chartType: exercise
 exercise: Plank
 type: duration
 dateRange: 30
+showTrendLine: true
+showStats: true
 \`\`\`
 
 ### 2.6 Cardio Chart - Heart Rate
 
-Track heart rate during cardio:
+Track heart rate during cardio (displays in bpm):
 
 \`\`\`workout-chart
 chartType: exercise
 exercise: Running
 type: heartRate
 dateRange: 30
+showTrendLine: true
+showStats: true
 \`\`\`
 
-### 2.7 Workout Chart
+### 2.7 Cardio Chart - Pace
+
+Track pace for running/cycling (displays as min/km, lower is better):
+
+\`\`\`workout-chart
+chartType: exercise
+exercise: Running
+type: pace
+dateRange: 30
+showTrendLine: true
+showStats: true
+\`\`\`
+
+### 2.8 Workout Chart
 
 Track total volume for an entire workout:
 
@@ -680,7 +697,7 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-### 2.8 Combined Chart
+### 2.9 Combined Chart
 
 Filter by BOTH exercise AND workout (intersection):
 
@@ -692,7 +709,7 @@ type: volume
 dateRange: 30
 \`\`\`
 
-### 2.9 All Data Chart
+### 2.10 All Data Chart
 
 Show all workout data without any filtering:
 
@@ -891,6 +908,19 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
+## Running Progress - Pace
+
+Track your pace improvement (lower = faster, shown in min/km):
+
+\`\`\`workout-chart
+chartType: exercise
+exercise: Running
+type: pace
+dateRange: 30
+showTrendLine: true
+showStats: true
+\`\`\`
+
 ## Running Progress - Heart Rate
 
 \`\`\`workout-chart
@@ -899,6 +929,7 @@ exercise: Running
 type: heartRate
 dateRange: 30
 showTrendLine: true
+showStats: true
 \`\`\`
 
 ---
@@ -928,6 +959,7 @@ exercise: Cycling
 type: distance
 dateRange: 30
 showTrendLine: true
+showStats: true
 \`\`\`
 `;
     if (existingFile && overwrite) {
@@ -1049,6 +1081,7 @@ exercise: ${name}
 type: duration
 dateRange: 30
 showTrendLine: true
+showStats: true
 \`\`\`
 
 ## Heart Rate
@@ -1059,6 +1092,7 @@ exercise: ${name}
 type: heartRate
 dateRange: 30
 showTrendLine: true
+showStats: true
 \`\`\``;
 
       case "distance":
@@ -1080,9 +1114,13 @@ chartType: exercise
 exercise: ${name}
 type: duration
 dateRange: 30
+showTrendLine: true
+showStats: true
 \`\`\`
 
 ## Pace Tracking
+
+Track your pace improvement (lower = faster):
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1090,6 +1128,7 @@ exercise: ${name}
 type: pace
 dateRange: 30
 showTrendLine: true
+showStats: true
 \`\`\``;
 
       default:

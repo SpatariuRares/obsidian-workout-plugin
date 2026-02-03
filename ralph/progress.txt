@@ -61,7 +61,259 @@
 - `npm run test` passes (42 suites, 586 tests)
 
 **Next steps:**
-- US-004: Add isLowerBetter helper function to FormatUtils.ts
-- This helper will determine if a data type uses inverted logic (lower values = improvement)
-- Returns true for PACE type, false for all others
+- US-005: Fix TrendCalculator inverted logic for pace
+
+## 2026-02-03 - US-004 Completed: Add isLowerBetter helper function
+
+**What was done:**
+- Added `isLowerBetter(dataType: CHART_DATA_TYPE): boolean` static method to `app/utils/FormatUtils.ts`
+- Returns `true` for `CHART_DATA_TYPE.PACE` (lower pace = faster = improvement)
+- Returns `false` for all other types (VOLUME, WEIGHT, REPS, DURATION, DISTANCE, HEART_RATE)
+- Added 7 unit tests to `app/utils/__tests__/FormatUtils.test.ts` testing all CHART_DATA_TYPE values
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 593 tests)
+
+**Next steps:**
+- US-005: Fix TrendCalculator inverted logic for pace
+- TrendCalculator.getTrendIndicators() needs to accept optional dataType parameter
+- Use isLowerBetter helper to invert trend direction for pace (negative slope = improving)
+
+## 2026-02-03 - US-005 Completed: Fix TrendCalculator inverted logic for pace
+
+**What was done:**
+- Added `IMPROVING` and `DECLINING` status constants to `TRENDS_UI.STATUS` in `app/constants/ui.constants.ts`
+- Modified `TrendCalculator.getTrendIndicators()` in `app/services/data/TrendCalculator.ts`:
+  - Added optional `dataType?: CHART_DATA_TYPE` parameter
+  - Imported `CHART_DATA_TYPE` from types and `FormatUtils` from utils
+  - Uses `isLowerBetter()` to determine if trend logic should be inverted
+  - For pace (lower is better):
+    - Positive slope (values increasing) returns "Declining" with red color
+    - Negative slope (values decreasing) returns "Improving" with green color
+  - All other data types maintain existing behavior (positive slope = green, negative = red)
+
+**Files changed:**
+- `app/constants/ui.constants.ts` - Added IMPROVING and DECLINING status constants
+- `app/services/data/TrendCalculator.ts` - Added dataType parameter and inverted logic for pace
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 593 tests)
+
+**Next steps:**
+- US-006: Add TrendCalculator tests for pace inversion
+- Tests should verify: pace negative slope = Improving/green, pace positive slope = Declining/red
+- Also verify volume still works with default behavior
+
+## 2026-02-03 - US-006 Completed: Add TrendCalculator tests for pace inversion
+
+**What was done:**
+- Added 7 new tests in `app/services/data/__tests__/TrendCalculator.test.ts` under "dataType parameter for inverted logic" describe block:
+  1. `should return Improving/green for pace with negative slope (getting faster)` - verifies pace type with negative slope (values decreasing = faster) returns IMPROVING status with green color
+  2. `should return Declining/red for pace with positive slope (getting slower)` - verifies pace type with positive slope (values increasing = slower) returns DECLINING status with red color
+  3. `should return Increasing/green for volume with positive slope (default behavior)` - ensures volume maintains standard behavior
+  4. `should use default behavior when dataType is not provided` - verifies backwards compatibility
+  5. `should return stable for pace when slope is within threshold` - tests edge case
+  6. `should maintain default behavior for weight data type` - confirms weight uses normal logic
+  7. `should maintain default behavior for heart rate data type` - confirms HR uses normal logic
+
+**Key insight:**
+- Tests initially failed because slopes were within the dynamic threshold (minimum 1). Fixed by using slopes >1 or <-1 to exceed the threshold and trigger non-stable responses.
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-008: Fix StatsBox trend color inversion for pace
+
+## 2026-02-03 - US-007 Completed: Fix StatsBox dynamic units and title
+
+**What was done:**
+- Modified `app/features/dashboard/ui/StatsBox.ts`:
+  - Added `dataType: CHART_DATA_TYPE = CHART_DATA_TYPE.VOLUME` parameter to `render()` method
+  - Added imports: `UNITS_MAP`, `COLUMN_LABELS` from constants, `CHART_DATA_TYPE` from types, `FormatUtils` from utils
+  - Updated `calculateStats()` to accept `dataType` and return formatted values (`avgFormatted`, `maxFormatted`, `minFormatted`)
+  - Added `formatStatValue()` method for formatting stats based on data type:
+    - DURATION: uses `FormatUtils.formatDuration()`
+    - PACE: uses `FormatUtils.formatPace()`
+    - REPS: rounds to integer
+    - Others: uses `UNITS_MAP[dataType]` unit
+  - Updated `calculateRecentTrend()` to accept `dataType`:
+    - Uses `FormatUtils.isLowerBetter()` for color logic inversion (pace: increase = red, decrease = green)
+    - Uses `UNITS_MAP[dataType]` for dynamic units
+  - Added `formatTrendValue()` method for formatting trend changes
+  - Dynamic title extracted from `COLUMN_LABELS[dataType]` (e.g., "Volume (kg)" → "Volume Statistics")
+
+**Files changed:**
+- `app/features/dashboard/ui/StatsBox.ts` - Added dataType parameter and dynamic formatting
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-008: Fix StatsBox trend color inversion for pace (ALREADY DONE in US-007 via `calculateRecentTrend` updates)
+- US-009: Fix TrendHeader direction logic for pace
+- US-010: Extend MobileTable column labels
+- US-011: Propagate dataType through EmbeddedChartView
+
+**Note for next person:**
+US-008's acceptance criteria (trend color inversion for pace) was actually implemented as part of US-007 since `calculateRecentTrend()` was already being modified. The method now uses `FormatUtils.isLowerBetter(dataType)` to determine color logic and applies the correct unit from UNITS_MAP. Consider marking US-008 as complete since all its criteria are met.
+
+## 2026-02-03 - US-009 Completed: Fix TrendHeader direction logic for pace
+
+**What was done:**
+- Modified `app/features/charts/components/TrendHeader.ts`:
+  - Added import for `CHART_DATA_TYPE` from types and `FormatUtils` from utils
+  - Added optional `dataType?: CHART_DATA_TYPE` parameter to `render()` method
+  - Updated direction calculation logic (lines 63-79) to use `FormatUtils.isLowerBetter()`
+  - For pace (lower is better):
+    - Negative percent change (getting faster) → UP arrow (improving)
+    - Positive percent change (getting slower) → DOWN arrow (declining)
+  - For all other types (volume, weight, reps, etc.):
+    - Positive percent change → UP arrow (improving)
+    - Negative percent change → DOWN arrow (declining)
+  - Zero percent change always shows NEUTRAL arrow
+  - CSS classes `trend-up`/`trend-down` applied by TrendIndicator component handle the coloring
+
+**Files changed:**
+- `app/features/charts/components/TrendHeader.ts` - Added dataType parameter and inverted direction logic for pace
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-010: Extend MobileTable column labels
+- US-011: Propagate dataType through EmbeddedChartView (will pass dataType to TrendHeader.render())
+- US-012: Add new examples to ExampleGeneratorService
+- US-013: Update README
+
+**Note for next person:**
+US-011 (Propagate dataType through EmbeddedChartView) should be done next to wire up the dataType parameter to TrendHeader, TrendCalculator, and StatsBox calls in EmbeddedChartView. Without this, the newly added dataType parameters won't be utilized at runtime.
+
+## 2026-02-03 - US-011 Completed: Propagate dataType through EmbeddedChartView
+
+**What was done:**
+- Modified `app/views/EmbeddedChartView.ts` to pass `resolvedType`/`dataType` to all downstream components:
+  1. `TrendCalculator.getTrendIndicators(slope, volumeData, resolvedType)` - line 123
+  2. `TrendHeader.render(contentDiv, trendIndicators, volumeData, params.type)` - line 280
+  3. `StatsBox.render(contentDiv, labels, volumeData, chartType, params.type || CHART_DATA_TYPE.VOLUME)` - line 318
+- This wiring enables all the type-specific logic implemented in US-005 through US-009 to actually function at runtime
+- For pace exercises, trend indicators now correctly show:
+  - "Improving" (green) when pace decreases (getting faster)
+  - "Declining" (red) when pace increases (getting slower)
+- StatsBox displays correct units (min/km for pace, sec for duration, bpm for heart rate)
+- TrendHeader arrows point in correct direction based on data type
+
+**Files changed:**
+- `app/views/EmbeddedChartView.ts` - Added dataType parameter to three component calls
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-010: Extend MobileTable column labels (import COLUMN_LABELS, replace ternary chain with lookup)
+- US-012: Add new examples to ExampleGeneratorService
+- US-013: Update README
+
+**Note for next person:**
+The core feature work is now complete. US-010 (MobileTable column labels) is an isolated UI fix for mobile display. US-012 and US-013 are documentation tasks.
+
+## 2026-02-03 - US-010 Completed: Extend MobileTable column labels
+
+**What was done:**
+- Modified `app/features/tables/ui/MobileTable.ts`:
+  - Added import for `COLUMN_LABELS` from `@app/constants`
+  - Replaced ternary chain (lines 42-48) that only handled VOLUME/WEIGHT/REPS
+  - Now uses `COLUMN_LABELS[chartType] || chartType` for all data types
+  - Mobile table now correctly displays column headers for all data types:
+    - "Duration" for duration
+    - "Distance (km)" for distance
+    - "Pace (min/km)" for pace
+    - "Heart Rate (bpm)" for heart rate
+    - Plus existing: "Volume (kg)", "Weight (kg)", "Reps"
+
+**Files changed:**
+- `app/features/tables/ui/MobileTable.ts` - Simplified column label logic using COLUMN_LABELS lookup
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-012: Add new examples to ExampleGeneratorService
+- US-013: Update README
+
+**Note for next person:**
+All core feature work for the embedded chart data type support is now complete (US-001 through US-011 done). The remaining items (US-012, US-013) are documentation tasks for adding examples and updating the README.
+
+## 2026-02-03 - US-012 Completed: Add new examples to ExampleGeneratorService
+
+**What was done:**
+- Updated `app/services/ExampleGeneratorService.ts` with new examples showcasing the data type features:
+
+1. **Feature Showcase file updates:**
+   - Added new section "2.7 Cardio Chart - Pace" demonstrating pace tracking (type: pace)
+   - Renumbered subsequent sections (2.8 Workout Chart → 2.9 Combined Chart → 2.10 All Data Chart)
+   - Added `showStats: true` to Duration chart (2.5) to demonstrate "1h 30m" formatting
+   - Added `showStats: true` to Heart Rate chart (2.6) to demonstrate "bpm" units
+   - Added descriptive text explaining pace is "lower is better"
+
+2. **HIIT Workout file updates:**
+   - Added "Running Progress - Pace" section with pace chart
+   - Added `showStats: true` to Running Heart Rate and Cycling Distance charts
+
+3. **getChartSectionsForType method updates:**
+   - Added `showStats: true` to cardio type duration and heartRate charts
+   - Added `showStats: true` to distance type duration and pace charts
+   - Added descriptive text "Track your pace improvement (lower = faster)" to pace charts
+
+**Files changed:**
+- `app/services/ExampleGeneratorService.ts` - Added pace examples and showStats to demonstrate new formatting
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**Next steps:**
+- US-013: Update README (final documentation task)
+
+**Note for next person:**
+US-012 is complete. The Feature Showcase now demonstrates all data types including pace with proper stats display. The only remaining task is US-013 (Update README) which is the final documentation item to complete the PRD.
+
+## 2026-02-03 - US-013 Completed: Update README
+
+**What was done:**
+- Updated `README.md` to document all the new data type support features:
+  1. **Removed TODO**: Deleted the outdated TODO note about adapting charts for non-strength exercise types (this work is now complete)
+  2. **Updated Interactive Charts section**: Added cardio/endurance types (Duration, Distance, Pace, Heart Rate) alongside strength types
+  3. **Added smart formatting note**: Mentioned duration displays as "1h 30m" and pace as "5:30 min/km"
+  4. **Added pace chart example**: New code block example showing pace chart configuration with `type: pace` and `showStats: true`
+  5. **Updated Chart Parameters**: Documented all data types under `type` parameter with strength and cardio categories
+  6. **Added showStats parameter**: Documented the new `showStats` option for displaying statistics box
+  7. **Added pace trend note**: Explained inverted trend logic for pace (lower = faster = improving)
+  8. **Updated Settings section**: Changed chart type setting to list all available types
+
+**Files changed:**
+- `README.md` - Updated documentation for data type support
+
+**Verification:**
+- `npm run typecheck` passes
+- `npm run test` passes (42 suites, 600 tests)
+
+**PRD STATUS: COMPLETE**
+All user stories (US-001 through US-013) are now implemented and passing. The embedded chart data type support feature is complete with:
+- UNITS_MAP and COLUMN_LABELS constants
+- FormatUtils with duration/pace formatters and isLowerBetter helper
+- TrendCalculator inverted logic for pace
+- StatsBox dynamic units and trend colors
+- TrendHeader direction logic for pace
+- MobileTable extended column labels
+- EmbeddedChartView dataType propagation
+- ExampleGeneratorService new examples
+- README documentation
 

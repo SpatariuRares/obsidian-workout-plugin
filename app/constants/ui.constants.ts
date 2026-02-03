@@ -845,6 +845,8 @@ export const TRENDS_UI = {
     INVARIANT: "Invariant",
     INCREASING: "Increasing",
     DECREASING: "Decreasing",
+    IMPROVING: "Improving",
+    DECLINING: "Declining",
     STABLE_LOWER: "Stable (lower)",
     STABLE_HIGHER: "Stable (higher)",
   },

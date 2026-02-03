@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, COLUMN_LABELS } from "@app/constants";
 import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
 
 export class MobileTable {
@@ -39,12 +39,7 @@ export class MobileTable {
 
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.LABELS.DATA });
     headerRow.createEl("th", {
-      text:
-        chartType === CHART_DATA_TYPE.VOLUME
-          ? CONSTANTS.WORKOUT.TABLE.LABELS.VOLUME
-          : chartType === CHART_DATA_TYPE.WEIGHT
-            ? CONSTANTS.WORKOUT.TABLE.LABELS.WEIGHT
-            : CONSTANTS.WORKOUT.TABLE.LABELS.REPETITIONS,
+      text: COLUMN_LABELS[chartType] || chartType,
     });
 
     // Create table body

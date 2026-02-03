@@ -121,6 +121,7 @@ export class EmbeddedChartView extends BaseView {
       const trendIndicators = TrendCalculator.getTrendIndicators(
         slope,
         volumeData,
+        resolvedType,
       );
 
       // Update params with resolved type for downstream components
@@ -276,7 +277,7 @@ export class EmbeddedChartView extends BaseView {
     const contentDiv = container.createEl("div");
 
     if (params.showTrend !== false && volumeData.length > 0) {
-      TrendHeader.render(contentDiv, trendIndicators, volumeData);
+      TrendHeader.render(contentDiv, trendIndicators, volumeData, params.type);
     }
 
     // Create mobile table (hidden on desktop, shown on mobile)
@@ -316,6 +317,7 @@ export class EmbeddedChartView extends BaseView {
         labels,
         volumeData,
         params.chartType || CHART_TYPE.EXERCISE,
+        params.type || CHART_DATA_TYPE.VOLUME,
       );
     }
   }

@@ -62,8 +62,8 @@
         "Typecheck passes"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Added isLowerBetter static method to FormatUtils class. Returns true for PACE type only, false for all others. Added 7 unit tests covering all CHART_DATA_TYPE values."
     },
     {
       "id": "US-005",
@@ -79,8 +79,8 @@
         "Typecheck passes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Added optional dataType parameter to getTrendIndicators(). Added IMPROVING and DECLINING status constants to TRENDS_UI. For pace, negative slope returns Improving (green), positive slope returns Declining (red). Existing behavior preserved for other types."
     },
     {
       "id": "US-006",
@@ -95,8 +95,8 @@
         "Typecheck passes"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Added 7 tests in dataType parameter for inverted logic describe block: pace negative slope = Improving/green, pace positive slope = Declining/red, volume positive slope = Increasing/green, default behavior without dataType, stable pace within threshold, weight maintains default, heart rate maintains default. All 600 tests pass."
     },
     {
       "id": "US-007",
@@ -112,8 +112,8 @@
         "Typecheck passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. StatsBox.render() now accepts optional dataType parameter (defaults to VOLUME). Title dynamically generated from COLUMN_LABELS (e.g., 'Pace Statistics'). Added formatStatValue() for avg/max/min using formatDuration/formatPace/units. Updated calculateRecentTrend() with dataType for inverted color logic and dynamic units."
     },
     {
       "id": "US-008",
@@ -128,8 +128,8 @@
         "Typecheck passes"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented as part of US-007 (2026-02-03). calculateRecentTrend() now accepts dataType, uses FormatUtils.isLowerBetter() for inverted color logic, and UNITS_MAP for dynamic units."
     },
     {
       "id": "US-009",
@@ -144,8 +144,8 @@
         "Typecheck passes"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Added optional dataType parameter to TrendHeader.render(). Uses FormatUtils.isLowerBetter() to determine if trend logic should be inverted. For pace: negative % shows UP arrow (improving/faster), positive % shows DOWN arrow (declining/slower). Non-pace types maintain original behavior. CSS classes trend-up/trend-down handle coloring."
     },
     {
       "id": "US-010",
@@ -158,8 +158,8 @@
         "Typecheck passes"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Replaced ternary chain with COLUMN_LABELS[chartType] lookup in MobileTable.ts. Fallback to chartType string if not in map. Now displays correct labels for all data types: 'Duration', 'Distance (km)', 'Pace (min/km)', 'Heart Rate (bpm)' in addition to existing volume/weight/reps."
     },
     {
       "id": "US-011",
@@ -173,8 +173,28 @@
         "Typecheck passes"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Modified EmbeddedChartView.ts to pass resolvedType/dataType to: TrendCalculator.getTrendIndicators() (line 123), TrendHeader.render() (line 280), and StatsBox.render() (line 318). All components now receive the correct dataType for type-specific logic (e.g., pace inversion)."
+    },
+    {
+      "id": "US-012",
+      "title": "Add new examples to ExampleGeneratorService",
+      "description": "Add new examples to app/services/ExampleGeneratorService.ts.",
+      "acceptanceCriteria": [
+        "Update ExampleGeneratorService.ts with new examples"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Added pace chart example (section 2.7) to Feature Showcase. Added showStats: true to duration, heartRate, and pace charts to demonstrate dynamic formatting. Updated HIIT Workout file with pace chart and showStats. Updated getChartSectionsForType for cardio/distance types to include showStats: true."
+    },
+    {
+      "id": "US-013",
+      "title": "Update README",
+      "description": "Update the README.md file to reflect recent changes and features.",
+      "acceptanceCriteria": ["Update README.md"],
+      "priority": 13,
+      "passes": true,
+      "notes": "Implemented 2026-02-03. Updated README.md: (1) Removed TODO about adapting charts for non-strength types, (2) Added chart types for cardio/endurance (duration, distance, pace, heartRate), (3) Added pace chart code block example, (4) Documented showStats parameter, (5) Added note about inverted trend logic for pace, (6) Updated Settings section with all chart types."
     }
   ]
 }

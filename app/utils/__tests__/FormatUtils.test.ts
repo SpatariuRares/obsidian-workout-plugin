@@ -63,6 +63,36 @@ describe("FormatUtils", () => {
     });
   });
 
+  describe("isLowerBetter", () => {
+    it("should return true for PACE type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.PACE)).toBe(true);
+    });
+
+    it("should return false for VOLUME type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.VOLUME)).toBe(false);
+    });
+
+    it("should return false for WEIGHT type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.WEIGHT)).toBe(false);
+    });
+
+    it("should return false for REPS type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.REPS)).toBe(false);
+    });
+
+    it("should return false for DURATION type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.DURATION)).toBe(false);
+    });
+
+    it("should return false for DISTANCE type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.DISTANCE)).toBe(false);
+    });
+
+    it("should return false for HEART_RATE type", () => {
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.HEART_RATE)).toBe(false);
+    });
+  });
+
   describe("formatValue", () => {
     describe("DURATION type", () => {
       it("should use formatDuration for duration values", () => {

@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
-import { TrendIndicators } from "@app/types";
+import { TrendIndicators, CHART_DATA_TYPE } from "@app/types";
 import { TrendIndicator } from "@app/components/molecules";
+import { FormatUtils } from "@app/utils";
 
 /**
  * Renders trend header information for workout charts.
@@ -13,11 +14,13 @@ export class TrendHeader {
    * @param container - The HTML element to render the trend header in
    * @param trendIndicators - Trend indicators containing direction, color, and icon
    * @param volumeData - Array of numerical data for calculating variation
+   * @param dataType - Optional data type for inverted logic (e.g., pace: lower is better)
    */
   static render(
     container: HTMLElement,
     trendIndicators: TrendIndicators,
-    volumeData: number[]
+    volumeData: number[],
+    dataType?: CHART_DATA_TYPE
   ): void {
     const trendHeader = container.createEl("div", {
       cls: "workout-charts-trend-header",
@@ -59,12 +62,22 @@ export class TrendHeader {
     });
 
     if (variationData.text !== undefined && percentChange !== CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE) {
-      // Determine trend direction based on percentage
+      // Determine trend direction based on percentage and data type
       const percentValue = parseFloat(percentChange);
-      const direction =
-        percentValue > 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP :
-          percentValue < 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN :
-            CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
+      const isLowerBetter = dataType ? FormatUtils.isLowerBetter(dataType) : false;
+
+      // For inverted types (pace), negative change = improvement (up arrow)
+      // For normal types, positive change = improvement (up arrow)
+      let direction: typeof CONSTANTS.WORKOUT.LABELS.CHARTS.UP | typeof CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN | typeof CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
+      if (percentValue === 0) {
+        direction = CONSTANTS.WORKOUT.LABELS.CHARTS.NEUTRAL;
+      } else if (isLowerBetter) {
+        // Pace: negative % = improving (faster), positive % = declining (slower)
+        direction = percentValue < 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP : CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN;
+      } else {
+        // Default: positive % = improving, negative % = declining
+        direction = percentValue > 0 ? CONSTANTS.WORKOUT.LABELS.CHARTS.UP : CONSTANTS.WORKOUT.LABELS.CHARTS.DOWN;
+      }
 
       // Use TrendIndicator molecule for variation display
       TrendIndicator.create(p, {

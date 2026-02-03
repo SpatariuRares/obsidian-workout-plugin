@@ -2,10 +2,17 @@
 
 A comprehensive plugin for Obsidian that visualizes workout data with interactive charts, tables, and timers. This plugin converts your workout log files into beautiful visualizations and provides tools to track your fitness progress over time.
 
+## Quick Start
+
+Want to see all features in action? Go to **Settings → Workout Planner** and click the **Create Example** button. This creates a demo folder with sample workout data and notes showcasing all plugin features including charts, tables, timers, and dashboards.
+
 ## Features
 
-- **Interactive Charts**: View your workout data in various chart types (Volume, Weight, Reps) using Chart.js
-  - **TODO**: Adapt charts for exercise types that don't use reps × weight (e.g., cardio with duration/distance, flexibility with hold time)
+- **Interactive Charts**: View your workout data in various chart types using Chart.js
+  - **Strength Training**: Volume, Weight, Reps
+  - **Cardio & Endurance**: Duration, Distance, Pace, Heart Rate
+  - Smart formatting: duration as "1h 30m", pace as "5:30 min/km"
+  - Intelligent trend indicators: pace improvements shown correctly (lower = faster = better)
 
 ![Volume Trend](assets/charts.png)
 
@@ -89,9 +96,20 @@ The plugin supports three types of code blocks that you can embed directly in yo
 
 ```workout-chart
 exercise: Squat
-chartType: Volume
+type: volume
 dateRange: 30
 showTrendLine: true
+showStats: true
+```
+
+For cardio exercises:
+
+```workout-chart
+exercise: Running
+type: pace
+dateRange: 30
+showTrendLine: true
+showStats: true
 ```
 
 #### Workout Tables
@@ -115,10 +133,15 @@ autoStart: false
 #### Chart Parameters
 
 - `exercise`: Exercise name to filter (optional)
-- `chartType`: Type of chart (Volume, Weight, Reps)
+- `type`: Type of data to display:
+  - **Strength**: `volume`, `weight`, `reps`
+  - **Cardio**: `duration`, `distance`, `pace`, `heartRate`
 - `dateRange`: Number of days to include (default: 30)
 - `showTrendLine`: Enable trend line (true/false)
+- `showStats`: Show statistics box with avg/max/min values (true/false)
 - `height`: Chart height in pixels
+
+> **Note**: For pace charts, trend indicators use inverted logic - a decreasing pace (getting faster) is shown as "Improving" with green coloring, while an increasing pace (getting slower) is shown as "Declining" with red coloring.
 
 #### Table Parameters
 
@@ -218,7 +241,7 @@ In plugin settings under "CSV Management", use the **Create muscle tags** button
 
 - **CSV Log File Path**: Path to your workout log CSV file (default: `theGYM/Log/workout_logs.csv`).
 - **Default Exercise**: Default exercise to show in charts.
-- **Chart Type**: Default chart type (Volume/Weight/Reps).
+- **Chart Type**: Default chart type (volume, weight, reps, duration, distance, pace, heartRate).
 - **Date Range**: Number of days to include in charts (default: 30).
 - **Show Trend Line**: Enable trend line visualization.
 - **Chart Height**: Height of charts in pixels (default: 400).

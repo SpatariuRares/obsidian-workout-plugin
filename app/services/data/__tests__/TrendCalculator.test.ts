@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
+import { CHART_DATA_TYPE } from "@app/types";
 
 describe("TrendCalculator", () => {
   describe("getTrendIndicators", () => {
@@ -149,6 +150,117 @@ describe("TrendCalculator", () => {
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       // The condition is slope > threshold, so 7.5 > 7.5 is false
       expect(result.trendDirection).toBe(CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER);
+    });
+
+    describe("dataType parameter for inverted logic", () => {
+      it("should return Improving/green for pace with negative slope (getting faster)", () => {
+        const paceData = [6.0, 5.5, 5.0, 4.5]; // Average = 5.25 min/km
+        // Threshold = Math.max(0.05 * 5.25, 1) = 1
+        const slope = -1.5; // Negative slope below -1 threshold (pace decreasing = faster)
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          paceData,
+          CHART_DATA_TYPE.PACE
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.IMPROVING
+        );
+        expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
+        expect(result.trendIcon).toBe("↗️");
+      });
+
+      it("should return Declining/red for pace with positive slope (getting slower)", () => {
+        const paceData = [4.5, 5.0, 5.5, 6.0]; // Average = 5.25 min/km
+        // Threshold = Math.max(0.05 * 5.25, 1) = 1
+        const slope = 1.5; // Positive slope above 1 threshold (pace increasing = slower)
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          paceData,
+          CHART_DATA_TYPE.PACE
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.DECLINING
+        );
+        expect(result.trendColor).toBe("var(--color-red, #F44336)");
+        expect(result.trendIcon).toBe("↘️");
+      });
+
+      it("should return Increasing/green for volume with positive slope (default behavior)", () => {
+        const volumeData = [100, 110, 120, 130];
+        const slope = 10;
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          volumeData,
+          CHART_DATA_TYPE.VOLUME
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING
+        );
+        expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
+        expect(result.trendIcon).toBe("↗️");
+      });
+
+      it("should use default behavior when dataType is not provided", () => {
+        const volumeData = [100, 110, 120, 130];
+        const slope = 10;
+
+        const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING
+        );
+        expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
+      });
+
+      it("should return stable for pace when slope is within threshold", () => {
+        const paceData = [5.0, 5.05, 4.95, 5.0]; // Average = 5.0 min/km
+        // Threshold = Math.max(0.05 * 5.0, 1) = 1
+        const slope = 0.01; // Very small slope, within threshold
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          paceData,
+          CHART_DATA_TYPE.PACE
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER
+        );
+        expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
+      });
+
+      it("should maintain default behavior for weight data type", () => {
+        const weightData = [80, 82.5, 85, 87.5]; // Average = 83.75 kg
+        // Threshold = Math.max(0.05 * 83.75, 1) = 4.1875
+        const slope = 5; // Above threshold
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          weightData,
+          CHART_DATA_TYPE.WEIGHT
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING
+        );
+        expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
+      });
+
+      it("should maintain default behavior for heart rate data type", () => {
+        const hrData = [150, 155, 160, 165]; // Average = 157.5 bpm
+        // Threshold = Math.max(0.05 * 157.5, 1) = 7.875
+        const slope = 10; // Above threshold
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          hrData,
+          CHART_DATA_TYPE.HEART_RATE
+        );
+        expect(result.trendDirection).toBe(
+          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING
+        );
+        expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
+      });
     });
   });
 });

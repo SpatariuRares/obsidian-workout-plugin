@@ -42,6 +42,15 @@ export class FormatUtils {
   }
 
   /**
+   * Determine if a lower value indicates improvement for this data type
+   * @param dataType The type of data being evaluated
+   * @returns true if lower values represent improvement (e.g., pace), false otherwise
+   */
+  static isLowerBetter(dataType: CHART_DATA_TYPE): boolean {
+    return dataType === CHART_DATA_TYPE.PACE;
+  }
+
+  /**
    * Format a numeric value based on data type with appropriate formatting
    * @param value The numeric value to format
    * @param dataType The type of data being formatted

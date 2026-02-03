@@ -33,6 +33,32 @@ describe("ProgressBar", () => {
 		expect(fill.style.width).toBe("100%");
 	});
 
+	it("renders with label but without showPercentage", () => {
+		const parent = createObsidianContainer();
+
+		const container = ProgressBar.create(parent, {
+			percentage: 50,
+			label: "Progress",
+		});
+
+		const label = container.querySelector(".progress-bar-label");
+		expect(label?.textContent).toBe("Progress");
+
+		const percentageText = container.querySelector(".progress-bar-percentage-text");
+		expect(percentageText).toBeNull();
+	});
+
+	it("uses default variant when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const container = ProgressBar.create(parent, {
+			percentage: 50,
+		});
+
+		const fill = container.querySelector(".progress-bar-fill") as HTMLElement;
+		expect(fill.className).toContain("progress-bar-default");
+	});
+
 	it("shows inline percentage when no label and updates via updatePercentage", () => {
 		const parent = createObsidianContainer();
 
@@ -58,5 +84,38 @@ describe("ProgressBar", () => {
 		ProgressBar.updatePercentage(container, 200);
 		expect(fill.style.width).toBe("100%");
 		expect(inlineText.textContent).toBe("100%");
+	});
+
+	it("handles updatePercentage when fill element is missing", () => {
+		const parent = createObsidianContainer();
+		const emptyContainer = parent.createEl("div");
+
+		// Should not throw
+		expect(() => ProgressBar.updatePercentage(emptyContainer, 50)).not.toThrow();
+	});
+
+	it("handles updatePercentage when percentage text is missing", () => {
+		const parent = createObsidianContainer();
+
+		const container = ProgressBar.create(parent, {
+			percentage: 30,
+			// No showPercentage, so no percentage text
+		});
+
+		// Should not throw
+		expect(() => ProgressBar.updatePercentage(container, 60)).not.toThrow();
+
+		const fill = container.querySelector(".progress-bar-fill") as HTMLElement;
+		expect(fill.style.width).toBe("60%");
+	});
+
+	it("renders without className when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const container = ProgressBar.create(parent, {
+			percentage: 40,
+		});
+
+		expect(container.classList.contains("progress-bar-container")).toBe(true);
 	});
 });

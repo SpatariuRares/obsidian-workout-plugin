@@ -124,10 +124,32 @@ describe("CommandHandlerService", () => {
     await csvCommand.callback();
   });
 
+  it("should handle non-Error in create-csv-log", async () => {
+    mockPlugin.createCSVLogFile.mockRejectedValue("string error");
+    service.registerCommands();
+    const csvCommand = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "create-csv-log",
+    )[0];
+    await csvCommand.callback();
+  });
+
   it("should handle error in generate-tag-reference", async () => {
     mockPlugin.getMuscleTagService.mockReturnValue({
       getTagMap: jest.fn().mockImplementation(() => {
         throw new Error("Tags failed");
+      }),
+    });
+    service.registerCommands();
+    const tagCommand = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "generate-tag-reference",
+    )[0];
+    await tagCommand.callback();
+  });
+
+  it("should handle non-Error in generate-tag-reference", async () => {
+    mockPlugin.getMuscleTagService.mockReturnValue({
+      getTagMap: jest.fn().mockImplementation(() => {
+        throw "string error";
       }),
     });
     service.registerCommands();
@@ -214,6 +236,11 @@ describe("CommandHandlerService", () => {
     );
   });
   it("should handle error in export-workout-to-canvas", async () => {
+    // Mock CanvasExporter to throw an error
+    (CanvasExporter as unknown as jest.Mock).mockImplementation(() => ({
+      exportToCanvas: jest.fn().mockRejectedValue(new Error("Export failed")),
+    }));
+
     service.registerCommands();
     const exportCmd = mockPlugin.addCommand.mock.calls.find(
       (c: any) => c[0].id === "export-workout-to-canvas",
@@ -233,7 +260,34 @@ describe("CommandHandlerService", () => {
     const exportModalCallback = (CanvasExportModal as unknown as jest.Mock).mock
       .calls[0][3];
 
-    // Execute export callback
+    // Execute export callback - this should trigger the catch block
+    await exportModalCallback({ someOption: true });
+
+    // The error is handled internally with a Notice, so no exception is thrown
+  });
+
+  it("should handle non-Error in export-workout-to-canvas", async () => {
+    // Mock CanvasExporter to throw a non-Error
+    (CanvasExporter as unknown as jest.Mock).mockImplementation(() => ({
+      exportToCanvas: jest.fn().mockRejectedValue("string error"),
+    }));
+
+    service.registerCommands();
+    const exportCmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "export-workout-to-canvas",
+    )[0];
+
+    exportCmd.callback();
+
+    const suggestCallback = (WorkoutFileSuggestModal as unknown as jest.Mock)
+      .mock.calls[0][1];
+
+    const mockFile = { path: "Workout.md" };
+    await suggestCallback(mockFile);
+
+    const exportModalCallback = (CanvasExportModal as unknown as jest.Mock).mock
+      .calls[0][3];
+
     await exportModalCallback({ someOption: true });
   });
 

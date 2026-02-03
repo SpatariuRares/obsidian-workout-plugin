@@ -18,6 +18,7 @@ export type ObsidianHTMLElement = HTMLElement & {
   addClass: (cls: string) => void;
   removeClass: (cls: string) => void;
   appendText: (text: string) => Text;
+  empty: () => void;
 };
 
 /**
@@ -27,7 +28,7 @@ export const createObsidianContainer = (): ObsidianHTMLElement => {
   return attachObsidianHelpers(document.createElement("div"));
 };
 
-const attachObsidianHelpers = <T extends HTMLElement>(
+export const attachObsidianHelpers = <T extends HTMLElement>(
   element: T
 ): T & ObsidianHTMLElement => {
   const obsidianElement = element as T & ObsidianHTMLElement;
@@ -81,6 +82,12 @@ const attachObsidianHelpers = <T extends HTMLElement>(
     const textNode = document.createTextNode(text);
     this.appendChild(textNode);
     return textNode;
+  };
+
+  obsidianElement.empty = function empty(): void {
+    while (this.firstChild) {
+      this.removeChild(this.firstChild);
+    }
   };
 
   return obsidianElement;

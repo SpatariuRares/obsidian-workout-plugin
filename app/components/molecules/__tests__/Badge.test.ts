@@ -23,11 +23,52 @@ describe("Badge molecule", () => {
 		expect(badge.querySelector(".badge-text")?.textContent).toBe(CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY);
 	});
 
+	it("uses default variant when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const badge = Badge.create(parent, {
+			text: "Default badge",
+		});
+
+		expect(badge.className).toContain("badge-default");
+	});
+
+	it("renders badge without icon when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const badge = Badge.create(parent, {
+			text: "No icon",
+			variant: "warning",
+		});
+
+		expect(badge.querySelector(".badge-icon")).toBeNull();
+		expect(badge.querySelector(".badge-text")?.textContent).toBe("No icon");
+	});
+
+	it("renders badge without className when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const badge = Badge.create(parent, {
+			text: "Minimal",
+		});
+
+		expect(badge.classList.contains("badge")).toBe(true);
+		expect(badge.classList.contains("badge-default")).toBe(true);
+	});
+
 	it("creates count badges via helper", () => {
 		const parent = createObsidianContainer();
 		const badge = Badge.createCount(parent, 5, "ml-2");
 
 		expect(badge.className).toContain("badge-count");
 		expect(badge.textContent).toBe("5");
+	});
+
+	it("creates count badges without className", () => {
+		const parent = createObsidianContainer();
+		const badge = Badge.createCount(parent, 10);
+
+		expect(badge.className).toContain("badge-count");
+		expect(badge.querySelector(".badge-text")?.textContent).toBe("10");
 	});
 });

@@ -188,6 +188,41 @@ type: cardio
       expect(app.vault.read).toHaveBeenCalledTimes(1);
     });
 
+    it("should handle concurrent calls (race condition prevention)", async () => {
+      const mockFolder = new TFolder();
+      const mockFile = new TFile();
+      mockFile.extension = "md";
+      mockFile.basename = "Concurrent";
+      mockFolder.children = [mockFile];
+
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFolder,
+      );
+
+      // Simulate slow read
+      let resolveRead: (value: string) => void;
+      (app.vault.read as jest.Mock).mockReturnValue(
+        new Promise((resolve) => {
+          resolveRead = resolve;
+        }),
+      );
+
+      // Start two concurrent calls
+      const promise1 = service.getExerciseDefinition("Concurrent");
+      const promise2 = service.getExerciseDefinition("Concurrent");
+
+      // Resolve the read
+      resolveRead!("---\nexercise_type: strength\n---");
+
+      const [result1, result2] = await Promise.all([promise1, promise2]);
+
+      // Both should succeed
+      expect(result1).toBeDefined();
+      expect(result2).toBeDefined();
+      // Only one read should have happened (race condition prevented)
+      expect(app.vault.read).toHaveBeenCalledTimes(1);
+    });
+
     it("should ignore files dependent on file read error", async () => {
       const mockFolder = new TFolder();
       const mockFile = new TFile();
@@ -290,6 +325,65 @@ type: cardio
       callback(frontmatter);
       expect(frontmatter.parameters).toBeUndefined();
     });
+
+    it("should update tags (muscleGroups) in existing file frontmatter", async () => {
+      const mockFile = new TFile();
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+
+      const def = {
+        name: "Existing Exercise",
+        typeId: "strength",
+        muscleGroups: ["chest", "triceps"],
+      };
+
+      await service.saveExerciseDefinition(def as any);
+
+      const callback = (app.fileManager.processFrontMatter as jest.Mock).mock
+        .calls[0][1];
+      const frontmatter: any = {};
+      callback(frontmatter);
+      expect(frontmatter.tags).toEqual(["chest", "triceps"]);
+    });
+
+    it("should create file with all parameter optional fields", async () => {
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+
+      const def = {
+        name: "Full Param Exercise",
+        typeId: "strength",
+        customParameters: [
+          {
+            key: "incline",
+            label: "Incline",
+            type: "number",
+            unit: "%",
+            required: true,
+            default: 5,
+            min: 0,
+            max: 15,
+          },
+        ],
+      };
+
+      await service.saveExerciseDefinition(def as any);
+
+      expect(app.vault.create).toHaveBeenCalledWith(
+        expect.stringContaining("Full Param Exercise.md"),
+        expect.stringContaining('unit: "%"'),
+      );
+      expect(app.vault.create).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringContaining("default: 5"),
+      );
+      expect(app.vault.create).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringContaining("min: 0"),
+      );
+      expect(app.vault.create).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.stringContaining("max: 15"),
+      );
+    });
   });
 
   describe("start to end parsing complex parameters", () => {
@@ -388,6 +482,82 @@ parameters:
       (ParameterUtils.validateParam as jest.Mock).mockReturnValue({
         isValid: true,
       });
+    });
+
+    it("should return default definition when parseYaml returns null", async () => {
+      const mockFolder = new TFolder();
+      const mockFile = new TFile();
+      mockFile.extension = "md";
+      mockFile.basename = "NullYaml";
+      mockFolder.children = [mockFile];
+
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFolder,
+      );
+      // Content with frontmatter that will be extracted but parseYaml will return null
+      (app.vault.read as jest.Mock).mockResolvedValue(
+        "---\ninvalid_yaml: [unclosed\n---",
+      );
+      (parseYaml as jest.Mock).mockReturnValue(null);
+
+      const result = await service.getExerciseDefinition("NullYaml");
+
+      expect(result).toBeDefined();
+      expect(result?.name).toBe("NullYaml");
+      expect(result?.typeId).toBe("strength");
+    });
+
+    it("should skip non-object parameters", async () => {
+      const mockFolder = new TFolder();
+      const mockFile = new TFile();
+      mockFile.extension = "md";
+      mockFile.basename = "NonObjectParams";
+      mockFolder.children = [mockFile];
+
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFolder,
+      );
+      (app.vault.read as jest.Mock).mockResolvedValue("---\nparameters:\n---");
+
+      (parseYaml as jest.Mock).mockReturnValue({
+        parameters: [
+          null, // null parameter
+          "string param", // string instead of object
+          { key: "valid", type: "number" }, // valid
+        ],
+      });
+
+      const result = await service.getExerciseDefinition("NonObjectParams");
+
+      expect(result?.customParameters).toHaveLength(1);
+      expect(result?.customParameters![0].key).toBe("valid");
+    });
+
+    it("should skip parameters without key or with empty key", async () => {
+      const mockFolder = new TFolder();
+      const mockFile = new TFile();
+      mockFile.extension = "md";
+      mockFile.basename = "NoKeyParams";
+      mockFolder.children = [mockFile];
+
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFolder,
+      );
+      (app.vault.read as jest.Mock).mockResolvedValue("---\nparameters:\n---");
+
+      (parseYaml as jest.Mock).mockReturnValue({
+        parameters: [
+          { type: "number" }, // no key
+          { key: "", type: "number" }, // empty key
+          { key: "   ", type: "number" }, // whitespace key
+          { key: "valid", type: "number" }, // valid
+        ],
+      });
+
+      const result = await service.getExerciseDefinition("NoKeyParams");
+
+      expect(result?.customParameters).toHaveLength(1);
+      expect(result?.customParameters![0].key).toBe("valid");
     });
   });
 

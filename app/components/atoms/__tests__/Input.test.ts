@@ -41,4 +41,33 @@ describe("Input atom", () => {
 		input.dispatchEvent(new Event("change"));
 		expect(handler).toHaveBeenCalledTimes(1);
 	});
+
+	it("creates input with disabled attribute", () => {
+		const parent = createObsidianContainer();
+		const input = Input.create(parent, {
+			disabled: true,
+		});
+
+		expect(input.getAttribute("disabled")).toBe("true");
+	});
+
+	it("creates input with required attribute", () => {
+		const parent = createObsidianContainer();
+		const input = Input.create(parent, {
+			required: true,
+		});
+
+		expect(input.getAttribute("required")).toBe("true");
+	});
+
+	it("creates input with both disabled and required", () => {
+		const parent = createObsidianContainer();
+		const input = Input.create(parent, {
+			disabled: true,
+			required: true,
+		});
+
+		expect(input.getAttribute("disabled")).toBe("true");
+		expect(input.getAttribute("required")).toBe("true");
+	});
 });

@@ -18,6 +18,17 @@ describe("Text atom", () => {
 		expect(paragraph.textContent).toBe("Workout summary");
 	});
 
+	it("uses span as default tag when none provided", () => {
+		const parent = createObsidianContainer();
+
+		const text = Text.create(parent, {
+			text: "Default span",
+		});
+
+		expect(text.tagName).toBe("SPAN");
+		expect(text.textContent).toBe("Default span");
+	});
+
 	it("provides shorthand helpers for span/strong/div", () => {
 		const parent = createObsidianContainer();
 

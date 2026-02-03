@@ -52,4 +52,25 @@ describe("TrendIndicator molecule", () => {
 			arrows.ARROW_NEUTRAL
 		);
 	});
+
+	it("renders up arrow for positive trends", () => {
+		const parent = createObsidianContainer();
+		const arrows = TrendIndicator as unknown as {
+			ARROW_UP: string;
+			ARROW_DOWN: string;
+			ARROW_NEUTRAL: string;
+		};
+		const indicator = TrendIndicator.create(parent, {
+			percentage: 25.5,
+			direction: CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.UP,
+		});
+
+		expect(indicator.className).toContain("trend-up");
+		expect(indicator.querySelector(".trend-arrow")?.textContent).toBe(
+			arrows.ARROW_UP
+		);
+		expect(indicator.querySelector(".trend-percentage")?.textContent).toBe(
+			"25.5%"
+		);
+	});
 });

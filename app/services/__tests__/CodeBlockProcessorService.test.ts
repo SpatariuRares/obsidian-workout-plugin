@@ -143,6 +143,94 @@ describe("CodeBlockProcessorService", () => {
         expect.any(Function),
       );
     });
+
+    it("should invoke chart callback when registered processor is called", async () => {
+      service.registerProcessors();
+
+      // Find the chart callback
+      const chartCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
+      );
+      const chartCallback = chartCall[1];
+
+      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      const el = document.createElement("div");
+      const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
+
+      await chartCallback("type: volume", el, ctx);
+
+      expect(mockChartView.createChart).toHaveBeenCalled();
+    });
+
+    it("should invoke table callback when registered processor is called", async () => {
+      service.registerProcessors();
+
+      const tableCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
+      );
+      const tableCallback = tableCall[1];
+
+      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      const el = document.createElement("div");
+      const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
+
+      await tableCallback("limit: 10", el, ctx);
+
+      expect(mockTableView.createTable).toHaveBeenCalled();
+    });
+
+    it("should invoke timer callback when registered processor is called", () => {
+      service.registerProcessors();
+
+      const timerCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
+      );
+      const timerCallback = timerCall[1];
+
+      const el = document.createElement("div");
+      const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
+
+      timerCallback("duration: 60", el, ctx);
+
+      expect(ctx.addChild).toHaveBeenCalled();
+    });
+
+    it("should invoke dashboard callback when registered processor is called", async () => {
+      service.registerProcessors();
+
+      const dashboardCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
+      );
+      const dashboardCallback = dashboardCall[1];
+
+      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      const el = document.createElement("div");
+      const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
+
+      await dashboardCallback("", el, ctx);
+
+      expect(mockDashboardView.createDashboard).toHaveBeenCalled();
+    });
+
+    it("should invoke duration callback when registered processor is called", async () => {
+      service.registerProcessors();
+
+      const durationCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+      );
+      const durationCallback = durationCall[1];
+
+      const el = document.createElement("div");
+      const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
+
+      (service as any).embeddedDurationView = {
+        createDurationEstimator: jest.fn().mockResolvedValue(undefined),
+      };
+
+      await durationCallback("", el, ctx);
+
+      expect((service as any).embeddedDurationView.createDurationEstimator).toHaveBeenCalled();
+    });
   });
 
   describe("handleWorkoutChart", () => {
@@ -162,6 +250,48 @@ describe("CodeBlockProcessorService", () => {
         el,
         expect.stringContaining("Data Error"),
       );
+    });
+
+    it("should handle non-Error exceptions", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("string error"),
+      );
+    });
+
+    it("should handle null return from getWorkoutLogData with filter", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("exercise: Squat", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
+    });
+
+    it("should handle null return from getWorkoutLogData without filter", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutChart("type: volume", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
     });
 
     it("should render no data message if logs are empty", async () => {
@@ -253,6 +383,114 @@ describe("CodeBlockProcessorService", () => {
 
       expect(mockTableView.createTable).toHaveBeenCalled();
     });
+
+    it("should call getWorkoutLogData without params when no exercise/workout filter", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      // No exercise or workout param - just limit
+      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
+
+      // Should be called without filter params
+      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith();
+      expect(mockTableView.createTable).toHaveBeenCalled();
+    });
+
+    it("should pass exercise filter to getWorkoutLogData", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("exercise: Squat", el, ctx);
+
+      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          exercise: "Squat",
+        }),
+      );
+    });
+
+    it("should pass workout filter to getWorkoutLogData", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("workout: Push Day", el, ctx);
+
+      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          workout: "Push Day",
+        }),
+      );
+    });
+
+    it("should handle non-Error exceptions", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("string error"),
+        expect.any(Object),
+      );
+    });
+
+    it("should handle null return from getWorkoutLogData with filter", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutLog("exercise: Squat", el, ctx);
+
+      expect(mockTableView.createTable).toHaveBeenCalledWith(
+        expect.any(HTMLElement),
+        [],
+        expect.any(Object),
+      );
+    });
+
+    it("should handle null return from getWorkoutLogData without filter", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      // No exercise or workout filter - just limit
+      await (service as any).handleWorkoutLog("limit: 10", el, ctx);
+
+      expect(mockTableView.createTable).toHaveBeenCalledWith(
+        expect.any(HTMLElement),
+        [],
+        expect.any(Object),
+      );
+    });
   });
 
   describe("handleWorkoutDashboard", () => {
@@ -315,6 +553,49 @@ describe("CodeBlockProcessorService", () => {
 
       expect(Feedback.renderError).toHaveBeenCalled();
     });
+
+    it("should handle non-Error exceptions", async () => {
+      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutDashboard("", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("string error"),
+        expect.any(Object),
+      );
+    });
+
+    it("should handle null return from getWorkoutLogData with dateRange", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
+    });
+
+    it("should handle null return from getWorkoutLogData without dateRange", async () => {
+      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutDashboard("", el, ctx);
+
+      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
+    });
   });
 
   describe("handleWorkoutTimer", () => {
@@ -350,6 +631,92 @@ describe("CodeBlockProcessorService", () => {
 
       // Restore
       (service as any).parseCodeBlockParams = originalParse;
+    });
+
+    it("should remove timer from activeTimers when child is unloaded", () => {
+      const el = document.createElement("div");
+      let registeredChild: any = null;
+      const ctx = {
+        addChild: jest.fn((child) => {
+          registeredChild = child;
+        }),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      expect(activeTimers.size).toBe(1);
+      const timerId = Array.from(activeTimers.keys())[0];
+
+      // Call onunload on the registered child
+      registeredChild.onunload();
+
+      expect(activeTimers.has(timerId)).toBe(false);
+      expect(activeTimers.size).toBe(0);
+    });
+
+    it("should call destroy on timerView when unloaded", () => {
+      const el = document.createElement("div");
+      let registeredChild: any = null;
+      const ctx = {
+        addChild: jest.fn((child) => {
+          registeredChild = child;
+        }),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      // Get the timer view from activeTimers
+      const timerId = Array.from(activeTimers.keys())[0];
+      const timerView = activeTimers.get(timerId);
+      const destroySpy = jest.spyOn(timerView as any, "destroy");
+
+      registeredChild.onunload();
+
+      expect(destroySpy).toHaveBeenCalled();
+    });
+
+    it("should handle non-Error exceptions", () => {
+      const originalParse = (service as any).parseCodeBlockParams;
+      (service as any).parseCodeBlockParams = () => {
+        throw "string error";
+      };
+
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("string error"),
+        expect.any(Object),
+      );
+
+      (service as any).parseCodeBlockParams = originalParse;
+    });
+
+    it("should handle unload when timer already removed from activeTimers", () => {
+      const el = document.createElement("div");
+      let registeredChild: any = null;
+      const ctx = {
+        addChild: jest.fn((child) => {
+          registeredChild = child;
+        }),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      // Manually clear activeTimers before unload
+      activeTimers.clear();
+
+      // Should not throw when timer is not in activeTimers
+      expect(() => registeredChild.onunload()).not.toThrow();
     });
   });
 
@@ -388,6 +755,25 @@ describe("CodeBlockProcessorService", () => {
       await (service as any).handleWorkoutDuration("source", el, ctx);
 
       expect(Feedback.renderError).toHaveBeenCalled();
+    });
+
+    it("should handle non-Error exceptions", async () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+      (service as any).embeddedDurationView = {
+        createDurationEstimator: jest.fn().mockRejectedValue("string error"),
+      };
+
+      await (service as any).handleWorkoutDuration("source", el, ctx);
+
+      expect(Feedback.renderError).toHaveBeenCalledWith(
+        el,
+        expect.stringContaining("string error"),
+        expect.any(Object),
+      );
     });
   });
 

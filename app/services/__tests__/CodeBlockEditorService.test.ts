@@ -66,6 +66,20 @@ targetWeight: 100
       );
       expect(result).toBe(false);
     });
+
+    it("should return false when an error is thrown", async () => {
+      mockEditor.getValue.mockImplementation(() => {
+        throw new Error("Test error");
+      });
+
+      const result = await CodeBlockEditorService.updateTargetWeight(
+        app,
+        "Bench Press",
+        100,
+      );
+
+      expect(result).toBe(false);
+    });
   });
 
   describe("setParameter", () => {
@@ -113,6 +127,128 @@ exercise: Running
       expect(mockEditor.setValue).toHaveBeenCalledWith(
         expect.stringContaining("type: distance"),
       );
+    });
+
+    it("should return false if no active view", async () => {
+      (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(null);
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "type",
+        "distance",
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("should return false if exercise not found", async () => {
+      const content = `
+\`\`\`workout-chart
+exercise: Swimming
+type: distance
+\`\`\`
+`;
+      mockEditor.getValue.mockReturnValue(content);
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "type",
+        "pace",
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("should skip non-matching code blocks and find the correct one", async () => {
+      const content = `
+\`\`\`workout-chart
+exercise: Swimming
+type: distance
+\`\`\`
+
+\`\`\`workout-chart
+exercise: Running
+type: distance
+\`\`\`
+`;
+      mockEditor.getValue.mockReturnValue(content);
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "type",
+        "pace",
+      );
+
+      expect(result).toBe(true);
+      expect(mockEditor.setValue).toHaveBeenCalledWith(
+        expect.stringContaining("type: pace"),
+      );
+    });
+
+    it("should return false when an error is thrown", async () => {
+      mockEditor.getValue.mockImplementation(() => {
+        throw new Error("Test error");
+      });
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "type",
+        "distance",
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("should handle boolean values", async () => {
+      const content = `
+\`\`\`workout-chart
+exercise: Running
+showTrendLine: false
+\`\`\`
+`;
+      mockEditor.getValue.mockReturnValue(content);
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "showTrendLine",
+        true,
+      );
+
+      expect(result).toBe(true);
+      expect(mockEditor.setValue).toHaveBeenCalledWith(
+        expect.stringContaining("showTrendLine: true"),
+      );
+    });
+
+    it("should return false when code block has no closing delimiter", async () => {
+      // Malformed markdown: code block never closes
+      const content = `
+\`\`\`workout-chart
+exercise: Running
+type: distance
+`;
+      mockEditor.getValue.mockReturnValue(content);
+
+      const result = await CodeBlockEditorService.setParameter(
+        app,
+        "workout-chart",
+        "Running",
+        "newParam",
+        "value",
+      );
+
+      // foundExercise is true but codeBlockEndIndex is -1
+      expect(result).toBe(false);
     });
   });
 });

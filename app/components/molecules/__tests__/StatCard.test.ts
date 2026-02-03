@@ -22,4 +22,17 @@ describe("StatCard molecule", () => {
 			"Workouts"
 		);
 	});
+
+	it("renders without className", () => {
+		const parent = createObsidianContainer();
+
+		const card = StatCard.create(parent, {
+			icon: "📊",
+			value: "100kg",
+			label: "Max Weight",
+		});
+
+		expect(card.classList.contains("stat-card")).toBe(true);
+		expect(card.querySelector(".stat-card-value")?.textContent).toBe("100kg");
+	});
 });

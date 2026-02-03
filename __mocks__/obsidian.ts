@@ -76,7 +76,7 @@ export const parseYaml = jest.fn((yaml: string): Record<string, any> | null => {
 
 // Mock other commonly used obsidian exports
 export class Notice {
-  constructor(message: string, timeout?: number) {
+  constructor(_message: string, _timeout?: number) {
     // Mock implementation - do nothing in tests
   }
 }
@@ -91,6 +91,7 @@ export class TFile {
 export class App {
   vault = {
     getAbstractFileByPath: jest.fn(),
+    getAllLoadedFiles: jest.fn(),
     read: jest.fn(),
     create: jest.fn(),
     process: jest.fn(),
@@ -130,4 +131,24 @@ export class TFolder {
   path: string = "";
   name: string = "";
   children: (TFile | TFolder)[] = [];
+}
+
+export class AbstractInputSuggest<T> {
+  app: App;
+  protected inputEl: HTMLInputElement;
+
+  constructor(app: App, textInputEl: HTMLInputElement) {
+    this.app = app;
+    this.inputEl = textInputEl;
+  }
+
+  getSuggestions(_query: string): T[] {
+    return [];
+  }
+
+  renderSuggestion(_item: T, _el: HTMLElement): void {}
+
+  selectSuggestion(_item: T): void {}
+
+  close(): void {}
 }

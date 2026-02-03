@@ -112,6 +112,13 @@ describe("ProtocolBadge atom", () => {
 			it("returns white as fallback for invalid format", () => {
 				expect(ProtocolBadge.getContrastColor("invalid")).toBe("white");
 			});
+
+			it("returns white as fallback for malformed rgba", () => {
+				// Starts with rgba but doesn't match the expected pattern
+				expect(ProtocolBadge.getContrastColor("rgba(invalid)")).toBe("white");
+				expect(ProtocolBadge.getContrastColor("rgb()")).toBe("white");
+				expect(ProtocolBadge.getContrastColor("rgba(abc, def, ghi, 1)")).toBe("white");
+			});
 		});
 	});
 });

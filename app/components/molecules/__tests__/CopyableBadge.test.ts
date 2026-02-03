@@ -154,4 +154,17 @@ describe("CopyableBadge molecule", () => {
 
 		expect(badge.classList.contains("workout-copyable-badge-clickable")).toBe(true);
 	});
+
+	it("handles clipboard write failure gracefully", () => {
+		const parent = createObsidianContainer();
+		mockWriteText.mockRejectedValueOnce(new Error("Clipboard access denied"));
+
+		const badge = CopyableBadge.create(parent, {
+			text: "Forearms",
+			copyValue: "forearms",
+		});
+
+		// Should not throw
+		expect(() => badge.click()).not.toThrow();
+	});
 });

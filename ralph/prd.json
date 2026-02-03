@@ -1,200 +1,325 @@
 {
   "project": "obsidian-workout-plugin",
-  "branchName": "ralph/embedded-chart-data-type-support",
-  "description": "Fix trend calculations, units, and visual indicators for non-strength exercise types (pace, duration, distance, heart rate)",
+  "branchName": "ralph/test-coverage-90",
+  "description": "Increase test coverage from ~79% to 90-95% across all metrics (statements, branches, functions, lines)",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Add UNITS_MAP and COLUMN_LABELS constants",
-      "description": "As a developer, I need centralized constants for data type units and column labels so all components use consistent values.",
+      "title": "Add comprehensive tests for ParameterUtils.ts",
+      "description": "As a developer, I need ParameterUtils fully tested so that parameter parsing is reliable. This file currently has 12% statement coverage and 0% branch coverage.",
       "acceptanceCriteria": [
-        "Add UNITS_MAP to app/constants/ui.constants.ts mapping CHART_DATA_TYPE to unit strings",
-        "Units: volume='kg', weight='kg', reps='', duration='sec', distance='km', pace='min/km', heartRate='bpm'",
-        "Add COLUMN_LABELS map: 'Volume (kg)', 'Weight (kg)', 'Reps', 'Duration', 'Distance (km)', 'Pace (min/km)', 'Heart Rate (bpm)'",
-        "Export both from constants barrel",
-        "Typecheck passes"
+        "Create app/utils/__tests__/ParameterUtils.test.ts",
+        "Test all exported functions in ParameterUtils.ts",
+        "Cover parseParameters function with various input formats",
+        "Cover edge cases: empty input, malformed input, missing values",
+        "Achieve 90%+ statement and branch coverage on ParameterUtils.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Implemented 2026-02-03. UNITS_MAP and COLUMN_LABELS added to ui.constants.ts with import from ChartTypes. Already exported via barrel."
+      "notes": "Completed 2026-02-03. Created 63 tests covering all exported functions and constants. Achieved 100% statement, branch, function, and line coverage."
     },
     {
       "id": "US-002",
-      "title": "Create FormatUtils with duration and pace formatters",
-      "description": "As a developer, I need centralized formatting utilities so duration displays as '1h 30m' and pace as '5:30'.",
+      "title": "Add tests for DomUtils.ts",
+      "description": "As a developer, I need DomUtils tested so that DOM manipulation helpers are reliable. This file currently has 50% statement coverage and 0% function coverage.",
       "acceptanceCriteria": [
-        "Create app/utils/FormatUtils.ts",
-        "formatDuration(seconds: number): string - returns '30s', '5m 30s', or '1h 30m' format",
-        "formatPace(minPerKm: number): string - returns '5:30' format (MM:SS)",
-        "formatValue(value: number, dataType: CHART_DATA_TYPE): string - dispatcher applying correct formatter",
-        "Export from utils barrel",
-        "Typecheck passes"
+        "Create app/utils/__tests__/DomUtils.test.ts",
+        "Test all exported functions in DomUtils.ts",
+        "Cover edge cases: null elements, missing attributes, empty strings",
+        "Achieve 90%+ coverage on DomUtils.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 2,
       "passes": true,
-      "notes": "Implemented 2026-02-03. FormatUtils class with formatDuration, formatPace, and formatValue methods. Exported via barrel at @app/utils."
+      "notes": "Completed 2026-02-03. Created 25 tests covering the setCssProps static method. Tested single/multiple properties, edge cases (empty props, overwriting, preserving existing styles), different element types (div, span, button, input, canvas), CSS transforms/transitions, and CSS variable handling. Achieved 100% statement, branch, function, and line coverage."
     },
     {
       "id": "US-003",
-      "title": "Add FormatUtils unit tests",
-      "description": "As a developer, I need tests for FormatUtils to ensure formatting edge cases are handled correctly.",
+      "title": "Expand DateUtils.ts coverage for lines 132-185",
+      "description": "As a developer, I need full DateUtils coverage. Lines 132-185 are currently uncovered (61.76% statements, 60% lines).",
       "acceptanceCriteria": [
-        "Create app/utils/__tests__/FormatUtils.test.ts",
-        "Test formatDuration: 0, 30, 90, 3600, 5400 seconds",
-        "Test formatPace: 5.0, 5.5, 4.25 min/km",
-        "Test formatValue dispatches correctly for each CHART_DATA_TYPE",
-        "Tests pass",
-        "Typecheck passes"
+        "Read DateUtils.ts to identify uncovered functions in lines 132-185",
+        "Add tests to app/utils/__tests__/DateUtils.test.ts for uncovered code",
+        "Cover date formatting and parsing edge cases",
+        "Achieve 90%+ coverage on DateUtils.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 3,
       "passes": true,
-      "notes": "Implemented 2026-02-03. Created FormatUtils.test.ts with 28 tests covering: formatDuration (0, 30, 60, 90, 3600, 3661, 5400, negative), formatPace (0, 4.25, 5.0, 5.5, 10.75, negative), and formatValue for all CHART_DATA_TYPEs (DURATION, PACE, REPS, VOLUME, WEIGHT, DISTANCE, HEART_RATE)."
+      "notes": "Completed 2026-02-03. Added 28 new tests covering toTime, toDateKey, toShortDate, toFullDate, and formatDateWithFormat. Achieved 94.11% statement, 100% branch, 100% function, and 93.84% line coverage. Uncovered lines (138, 154, 169, 185) are unreachable catch blocks since JavaScript's Date constructor doesn't throw exceptions for invalid inputs."
     },
     {
       "id": "US-004",
-      "title": "Add isLowerBetter helper function",
-      "description": "As a developer, I need a helper to determine if a data type uses inverted logic (lower values = improvement).",
+      "title": "Expand ChartDataUtils.ts coverage - lines 24-43",
+      "description": "As a developer, I need ChartDataUtils tested for lines 24-43. Current branch coverage is only 39.17%.",
       "acceptanceCriteria": [
-        "Add isLowerBetter(dataType: CHART_DATA_TYPE): boolean to FormatUtils.ts",
-        "Returns true for CHART_DATA_TYPE.PACE",
-        "Returns false for all other types",
-        "Add unit tests for isLowerBetter",
-        "Typecheck passes"
+        "Read ChartDataUtils.ts to understand logic in lines 24-43",
+        "Add tests to app/utils/__tests__/ChartDataUtils.test.ts",
+        "Cover all branches in the identified code section",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 4,
       "passes": true,
-      "notes": "Implemented 2026-02-03. Added isLowerBetter static method to FormatUtils class. Returns true for PACE type only, false for all others. Added 7 unit tests covering all CHART_DATA_TYPE values."
+      "notes": "Completed 2026-02-03. Created app/utils/__tests__/ChartDataUtils.test.ts with 39 tests covering the private getCustomFieldNumber method (lines 24-43) through the public processChartData interface. Tests cover: exact key matching with number/string values, case-insensitive matching, unparseable strings returning 0, key not found returning 0, and customFields undefined. Also covered standard chart types, display types (EXERCISE/WORKOUT/COMBINED/ALL), dynamic exercise types (duration/distance/heartRate), custom parameters, date formatting, and edge cases. Achieved 100% statement, 100% function, 100% line coverage. Branch coverage at 86.59% - remaining uncovered branches (lines 88-97, 145, 291-306) are covered by US-005/US-006."
     },
     {
       "id": "US-005",
-      "title": "Fix TrendCalculator inverted logic for pace",
-      "description": "As a user tracking pace, I want green trend when pace decreases (faster) so indicators accurately reflect improvement.",
+      "title": "Expand ChartDataUtils.ts coverage - lines 104-143",
+      "description": "As a developer, I need ChartDataUtils tested for lines 104-143.",
       "acceptanceCriteria": [
-        "TrendCalculator.getTrendIndicators() accepts optional dataType: CHART_DATA_TYPE parameter",
-        "Import and use isLowerBetter helper",
-        "For pace: negative slope returns 'Improving' with green color",
-        "For pace: positive slope returns 'Declining' with red color",
-        "Other data types maintain current behavior",
-        "Existing tests pass",
-        "Typecheck passes"
+        "Read ChartDataUtils.ts to understand logic in lines 104-143",
+        "Add tests to cover the identified code section",
+        "Cover all branches in this section",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Added optional dataType parameter to getTrendIndicators(). Added IMPROVING and DECLINING status constants to TRENDS_UI. For pace, negative slope returns Improving (green), positive slope returns Declining (red). Existing behavior preserved for other types."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Add TrendCalculator tests for pace inversion",
-      "description": "As a developer, I need tests confirming TrendCalculator handles pace correctly.",
+      "title": "Expand ChartDataUtils.ts coverage - lines 236-252",
+      "description": "As a developer, I need ChartDataUtils tested for lines 236-252. This completes the file coverage.",
       "acceptanceCriteria": [
-        "Add test: pace with negative slope returns Improving/green",
-        "Add test: pace with positive slope returns Declining/red",
-        "Add test: volume with positive slope still returns Increasing/green",
-        "Add test: missing dataType uses default behavior",
-        "Tests pass",
-        "Typecheck passes"
+        "Read ChartDataUtils.ts to understand logic in lines 236-252",
+        "Add tests to cover the identified code section",
+        "Achieve 90%+ overall coverage on ChartDataUtils.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Added 7 tests in dataType parameter for inverted logic describe block: pace negative slope = Improving/green, pace positive slope = Declining/red, volume positive slope = Increasing/green, default behavior without dataType, stable pace within threshold, weight maintains default, heart rate maintains default. All 600 tests pass."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-007",
-      "title": "Fix StatsBox dynamic units and title",
-      "description": "As a user viewing pace statistics, I want to see 'min/km' units and 'Pace Statistics' title instead of hardcoded 'kg' and 'Volume Statistics'.",
+      "title": "Expand ChartRenderer.ts coverage",
+      "description": "As a developer, I need ChartRenderer fully tested. Lines 30, 47-54, and 166 are uncovered (50% branch coverage).",
       "acceptanceCriteria": [
-        "StatsBox.render() accepts dataType: CHART_DATA_TYPE parameter",
-        "Import UNITS_MAP from constants",
-        "Average, max, min values display unit from UNITS_MAP",
-        "Title changes dynamically: 'Volume Statistics', 'Pace Statistics', etc.",
-        "Duration values use formatDuration from FormatUtils",
-        "Pace values use formatPace from FormatUtils",
-        "Typecheck passes"
+        "Read ChartRenderer.ts to understand uncovered lines 30, 47-54, 166",
+        "Add tests to app/features/charts/components/__tests__/ChartRenderer.test.ts",
+        "Cover error handling paths",
+        "Achieve 90%+ branch coverage on ChartRenderer.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 7,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. StatsBox.render() now accepts optional dataType parameter (defaults to VOLUME). Title dynamically generated from COLUMN_LABELS (e.g., 'Pace Statistics'). Added formatStatValue() for avg/max/min using formatDuration/formatPace/units. Updated calculateRecentTrend() with dataType for inverted color logic and dynamic units."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-008",
-      "title": "Fix StatsBox trend color inversion for pace",
-      "description": "As a user tracking pace, I want red trend when pace increases (slower) and green when it decreases (faster).",
+      "title": "Expand DataService.ts coverage",
+      "description": "As a developer, I need DataService fully tested. Lines 72 and 99-107 are uncovered (85.71% statements).",
       "acceptanceCriteria": [
-        "StatsBox.calculateRecentTrend() accepts dataType parameter",
-        "Use isLowerBetter helper to determine color logic",
-        "For pace: positive change = red, negative change = green",
-        "Other types maintain current behavior",
-        "Recent trend displays correct unit from UNITS_MAP",
-        "Typecheck passes"
+        "Read DataService.ts to understand uncovered lines 72, 99-107",
+        "Add tests covering cache invalidation and error scenarios",
+        "Achieve 90%+ coverage on DataService.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 8,
-      "passes": true,
-      "notes": "Implemented as part of US-007 (2026-02-03). calculateRecentTrend() now accepts dataType, uses FormatUtils.isLowerBetter() for inverted color logic, and UNITS_MAP for dynamic units."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-009",
-      "title": "Fix TrendHeader direction logic for pace",
-      "description": "As a user, I want the trend arrow to show improvement correctly for pace (down arrow when pace increases = declining).",
+      "title": "Add CSVCacheService and CSVColumnService to coverage",
+      "description": "As a developer, I need data services tested. Add these files to jest coverage scope and write tests.",
       "acceptanceCriteria": [
-        "TrendHeader.render() accepts optional dataType: CHART_DATA_TYPE parameter",
-        "Use isLowerBetter helper",
-        "For pace: negative percent = 'up' arrow (improving), positive = 'down' arrow (declining)",
-        "Arrow color matches trend direction (green=improving, red=declining)",
-        "Other types maintain current behavior",
-        "Typecheck passes"
+        "Add 'app/services/data/CSVCacheService.ts' to jest.config.js collectCoverageFrom",
+        "Add 'app/services/data/CSVColumnService.ts' to jest.config.js collectCoverageFrom",
+        "Create app/services/data/__tests__/CSVCacheService.test.ts",
+        "Create app/services/data/__tests__/CSVColumnService.test.ts",
+        "Achieve 90%+ coverage on both files",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 9,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Added optional dataType parameter to TrendHeader.render(). Uses FormatUtils.isLowerBetter() to determine if trend logic should be inverted. For pace: negative % shows UP arrow (improving/faster), positive % shows DOWN arrow (declining/slower). Non-pace types maintain original behavior. CSS classes trend-up/trend-down handle coloring."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-010",
-      "title": "Extend MobileTable column labels",
-      "description": "As a user on mobile, I want column headers to show correct labels for all data types, not just volume/weight/reps.",
+      "title": "Add DataFilter to coverage",
+      "description": "As a developer, I need DataFilter tested. Add to coverage scope and write tests.",
       "acceptanceCriteria": [
-        "Import COLUMN_LABELS from constants",
-        "Replace ternary chain with COLUMN_LABELS[chartType] lookup",
-        "Fallback to chartType string if not in map",
-        "Typecheck passes"
+        "Add 'app/services/data/DataFilter.ts' to jest.config.js collectCoverageFrom",
+        "Create app/services/data/__tests__/DataFilter.test.ts",
+        "Test multi-strategy matching: exact, fuzzy, filename, exercise field",
+        "Achieve 90%+ coverage on DataFilter.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 10,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Replaced ternary chain with COLUMN_LABELS[chartType] lookup in MobileTable.ts. Fallback to chartType string if not in map. Now displays correct labels for all data types: 'Duration', 'Distance (km)', 'Pace (min/km)', 'Heart Rate (bpm)' in addition to existing volume/weight/reps."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-011",
-      "title": "Propagate dataType through EmbeddedChartView",
-      "description": "As a developer, I need resolvedType passed to all downstream components so they apply type-specific logic.",
+      "title": "Add TrendCalculator to coverage scope",
+      "description": "As a developer, I need TrendCalculator in coverage scope. Tests already exist but file may not be tracked.",
       "acceptanceCriteria": [
-        "Pass resolvedType to TrendCalculator.getTrendIndicators() call",
-        "Pass resolvedType to TrendHeader.render() call",
-        "Pass resolvedType to StatsBox.render() call",
-        "All three components receive the correct dataType",
-        "Typecheck passes"
+        "Add 'app/services/data/TrendCalculator.ts' to jest.config.js collectCoverageFrom",
+        "Verify existing tests cover the file adequately",
+        "Add additional tests if coverage is below 90%",
+        "Achieve 90%+ coverage on TrendCalculator.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 11,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Modified EmbeddedChartView.ts to pass resolvedType/dataType to: TrendCalculator.getTrendIndicators() (line 123), TrendHeader.render() (line 280), and StatsBox.render() (line 318). All components now receive the correct dataType for type-specific logic (e.g., pace inversion)."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-012",
-      "title": "Add new examples to ExampleGeneratorService",
-      "description": "Add new examples to app/services/ExampleGeneratorService.ts.",
+      "title": "Add WorkoutLogRepository to coverage",
+      "description": "As a developer, I need WorkoutLogRepository tested.",
       "acceptanceCriteria": [
-        "Update ExampleGeneratorService.ts with new examples"
+        "Add 'app/services/data/WorkoutLogRepository.ts' to jest.config.js collectCoverageFrom",
+        "Create app/services/data/__tests__/WorkoutLogRepository.test.ts",
+        "Test CRUD operations and data retrieval methods",
+        "Achieve 90%+ coverage on WorkoutLogRepository.ts",
+        "Typecheck passes",
+        "Tests pass"
       ],
       "priority": 12,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Added pace chart example (section 2.7) to Feature Showcase. Added showStats: true to duration, heartRate, and pace charts to demonstrate dynamic formatting. Updated HIIT Workout file with pace chart and showStats. Updated getChartSectionsForType for cardio/distance types to include showStats: true."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-013",
-      "title": "Update README",
-      "description": "Update the README.md file to reflect recent changes and features.",
-      "acceptanceCriteria": ["Update README.md"],
+      "title": "Add TimerCore to coverage",
+      "description": "As a developer, I need TimerCore tested for timer business logic.",
+      "acceptanceCriteria": [
+        "Add 'app/features/timer/business/TimerCore.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/timer/business/__tests__/TimerCore.test.ts",
+        "Test start, pause, resume, reset, tick logic",
+        "Test interval timer functionality",
+        "Achieve 90%+ coverage on TimerCore.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
       "priority": 13,
-      "passes": true,
-      "notes": "Implemented 2026-02-03. Updated README.md: (1) Removed TODO about adapting charts for non-strength types, (2) Added chart types for cardio/endurance (duration, distance, pace, heartRate), (3) Added pace chart code block example, (4) Documented showStats parameter, (5) Added note about inverted trend logic for pace, (6) Updated Settings section with all chart types."
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Add table business logic to coverage - TableDataProcessor",
+      "description": "As a developer, I need TableDataProcessor tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/tables/business/TableDataProcessor.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/tables/business/__tests__/TableDataProcessor.test.ts",
+        "Test data transformation and processing logic",
+        "Achieve 90%+ coverage on TableDataProcessor.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Add table business logic to coverage - TargetCalculator",
+      "description": "As a developer, I need TargetCalculator tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/tables/business/TargetCalculator.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/tables/business/__tests__/TargetCalculator.test.ts",
+        "Test target calculation methods",
+        "Achieve 90%+ coverage on TargetCalculator.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Add dashboard muscle calculations to coverage",
+      "description": "As a developer, I need MuscleDataCalculator and MuscleTagMapper tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/dashboard/business/muscleHeatMap/MuscleDataCalculator.ts' to jest.config.js collectCoverageFrom",
+        "Add 'app/features/dashboard/business/muscleHeatMap/MuscleTagMapper.ts' to jest.config.js collectCoverageFrom",
+        "Create tests for both files in __tests__ directories",
+        "Achieve 90%+ coverage on both files",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Add chart config to coverage - ChartConfigBuilder",
+      "description": "As a developer, I need ChartConfigBuilder tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/charts/config/ChartConfigBuilder.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/charts/config/__tests__/ChartConfigBuilder.test.ts",
+        "Test config generation for different chart types",
+        "Achieve 90%+ coverage on ChartConfigBuilder.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Add DatasetStyler to coverage",
+      "description": "As a developer, I need DatasetStyler tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/charts/config/DatasetStyler.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/charts/config/__tests__/DatasetStyler.test.ts",
+        "Test styling generation for different dataset types",
+        "Achieve 90%+ coverage on DatasetStyler.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 18,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Add LogFormValidator to coverage",
+      "description": "As a developer, I need form validation logic tested.",
+      "acceptanceCriteria": [
+        "Add 'app/features/modals/base/logic/LogFormValidator.ts' to jest.config.js collectCoverageFrom",
+        "Create app/features/modals/base/logic/__tests__/LogFormValidator.test.ts",
+        "Test all validation scenarios",
+        "Achieve 90%+ coverage on LogFormValidator.ts",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 19,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Update Jest coverage threshold to 90%",
+      "description": "As a developer, I need the coverage threshold updated to enforce the new standard.",
+      "acceptanceCriteria": [
+        "Update jest.config.js coverageThreshold to 90 for statements, branches, functions, lines",
+        "Run npm run test:coverage and verify it passes",
+        "All metrics meet or exceed 90% threshold",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 20,
+      "passes": false,
+      "notes": ""
     }
   ]
 }

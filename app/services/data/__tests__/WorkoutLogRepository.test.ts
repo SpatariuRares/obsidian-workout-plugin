@@ -5,6 +5,7 @@ import { CSVColumnService } from "../CSVColumnService";
 import {
   WorkoutChartsSettings,
   CSVWorkoutLogEntry,
+  WorkoutProtocol,
 } from "../../../types/WorkoutLogData";
 import { CONSTANTS } from "../../../constants";
 import * as WorkoutLogDataUtils from "../../../types/WorkoutLogData";
@@ -80,7 +81,7 @@ describe("WorkoutLogRepository", () => {
       origine: "Log",
       workout: "Leg Day",
       notes: "Heavy",
-      protocol: "5x5",
+      protocol: WorkoutProtocol.REST_PAUSE,
     };
 
     it("should add an entry to an existing CSV file", async () => {
@@ -159,7 +160,7 @@ describe("WorkoutLogRepository", () => {
   });
 
   describe("updateWorkoutLogEntry", () => {
-    const originalLog = {
+    const originalLog: CSVWorkoutLogEntry = {
       timestamp: 123456789,
       date: "2024-01-01",
       exercise: "Squat",
@@ -169,7 +170,7 @@ describe("WorkoutLogRepository", () => {
       origine: "Log",
       workout: "Leg Day",
       notes: "Heavy",
-      protocol: "5x5",
+      protocol: WorkoutProtocol.STANDARD,
     };
 
     const updatedEntry = { ...originalLog, weight: 105 };
@@ -264,7 +265,7 @@ describe("WorkoutLogRepository", () => {
   });
 
   describe("deleteWorkoutLogEntry", () => {
-    const logToDelete = {
+    const logToDelete: CSVWorkoutLogEntry = {
       timestamp: 123456789,
       date: "2024-01-01",
       exercise: "Squat",
@@ -274,7 +275,7 @@ describe("WorkoutLogRepository", () => {
       origine: "Log",
       workout: "Leg Day",
       notes: "Heavy",
-      protocol: "5x5",
+      protocol: WorkoutProtocol.STANDARD,
     };
 
     it("should delete an entry matched by timestamp", async () => {

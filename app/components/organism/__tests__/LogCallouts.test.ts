@@ -1,9 +1,12 @@
 /** @jest-environment jsdom */
 
 import { LogCallouts } from "@app/components/organism/LogCallouts";
-import { createObsidianContainer, attachObsidianHelpers } from "@app/components/__tests__/obsidianDomMocks";
+import {
+  createObsidianContainer,
+  attachObsidianHelpers,
+} from "@app/components/__tests__/obsidianDomMocks";
 import type WorkoutChartsPlugin from "main";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 // Mock CreateLogModal
 jest.mock("@app/features/modals/CreateLogModal", () => ({
@@ -15,7 +18,9 @@ jest.mock("@app/features/modals/CreateLogModal", () => ({
 // Mock createButtonsSection - use attachObsidianHelpers to properly mock
 jest.mock("@app/features/modals/base/utils/createButtonsSection", () => {
   // Need to require inside factory to avoid hoisting issues
-  const { attachObsidianHelpers: attach } = jest.requireActual("@app/components/__tests__/obsidianDomMocks");
+  const { attachObsidianHelpers: attach } = jest.requireActual(
+    "@app/components/__tests__/obsidianDomMocks",
+  );
   return {
     createButtonsSection: jest.fn((parent: HTMLElement) => {
       const div = attach(document.createElement("div"));
@@ -28,13 +33,15 @@ jest.mock("@app/features/modals/base/utils/createButtonsSection", () => {
 // Import after mocking
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
 
-const createMockPlugin = (activeFile?: { basename: string }): WorkoutChartsPlugin => {
+const createMockPlugin = (activeFile?: {
+  basename: string;
+}): WorkoutChartsPlugin => {
   return {
     app: {
       workspace: {
-        getActiveViewOfType: jest.fn().mockReturnValue(
-          activeFile ? { file: activeFile } : null
-        ),
+        getActiveViewOfType: jest
+          .fn()
+          .mockReturnValue(activeFile ? { file: activeFile } : null),
       },
     },
     triggerWorkoutLogRefresh: jest.fn(),
@@ -54,7 +61,9 @@ describe("LogCallouts organism", () => {
       LogCallouts.renderCsvNoDataMessage(container, plugin, "Squat");
 
       expect(container.querySelector(".workout-log-no-data")).toBeTruthy();
-      expect(container.querySelector(".workout-log-no-data-title")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-log-no-data-title"),
+      ).toBeTruthy();
       expect(container.querySelector(".add-log-button")).toBeTruthy();
     });
 
@@ -74,7 +83,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderCsvNoDataMessage(container, plugin, "Deadlift");
 
-      const button = container.querySelector(".add-log-button") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".add-log-button",
+      ) as HTMLButtonElement;
       expect(button).toBeTruthy();
 
       button.click();
@@ -84,7 +95,7 @@ describe("LogCallouts organism", () => {
         plugin,
         "Deadlift",
         "[[TestPage]]",
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -94,7 +105,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderCsvNoDataMessage(container, plugin, "Bench");
 
-      const button = container.querySelector(".add-log-button") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".add-log-button",
+      ) as HTMLButtonElement;
       button.click();
 
       // Get the callback that was passed to CreateLogModal
@@ -125,7 +138,12 @@ describe("LogCallouts organism", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();
 
-      LogCallouts.renderAddLogButton(container, "Squat", "[[WorkoutPage]]", plugin);
+      LogCallouts.renderAddLogButton(
+        container,
+        "Squat",
+        "[[WorkoutPage]]",
+        plugin,
+      );
 
       const button = container.querySelector(".workout-btn-primary");
       expect(button).toBeTruthy();
@@ -137,7 +155,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderAddLogButton(container, "Squat", "[[Page]]", plugin);
 
-      const button = container.querySelector(".workout-btn-primary") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".workout-btn-primary",
+      ) as HTMLButtonElement;
       button.click();
 
       expect(CreateLogModal).toHaveBeenCalledWith(
@@ -146,7 +166,7 @@ describe("LogCallouts organism", () => {
         "Squat",
         "[[Page]]",
         undefined,
-        undefined
+        undefined,
       );
     });
 
@@ -159,11 +179,11 @@ describe("LogCallouts organism", () => {
         reps: 10,
         weight: 100,
         volume: 1000,
-        origin: "test",
+        origine: "test",
         workout: "Leg Day",
-        timestamp: "10:30:00",
+        timestamp: new Date("2024-01-15T10:30:00").getTime(),
         notes: "Felt good",
-        protocol: "3x10",
+        protocol: WorkoutProtocol.DROP_SET,
         customFields: { tempo: "2-1-2" },
       };
 
@@ -174,10 +194,12 @@ describe("LogCallouts organism", () => {
         plugin,
         undefined,
         undefined,
-        latestEntry
+        latestEntry,
       );
 
-      const button = container.querySelector(".workout-btn-primary") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".workout-btn-primary",
+      ) as HTMLButtonElement;
       button.click();
 
       expect(CreateLogModal).toHaveBeenCalledWith(
@@ -192,9 +214,9 @@ describe("LogCallouts organism", () => {
           reps: 10,
           workout: "Leg Day",
           notes: "Felt good",
-          protocol: "3x10",
+          protocol: WorkoutProtocol.DROP_SET,
           customFields: { tempo: "2-1-2" },
-        }
+        },
       );
     });
 
@@ -208,10 +230,12 @@ describe("LogCallouts organism", () => {
         "Squat",
         "[[Page]]",
         plugin,
-        onLogCreated
+        onLogCreated,
       );
 
-      const button = container.querySelector(".workout-btn-primary") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".workout-btn-primary",
+      ) as HTMLButtonElement;
       button.click();
 
       expect(CreateLogModal).toHaveBeenCalledWith(
@@ -220,7 +244,7 @@ describe("LogCallouts organism", () => {
         "Squat",
         "[[Page]]",
         onLogCreated,
-        undefined
+        undefined,
       );
     });
 
@@ -233,11 +257,11 @@ describe("LogCallouts organism", () => {
         reps: 10,
         weight: 100,
         volume: 1000,
-        origin: "test",
+        origine: "test",
         workout: undefined as unknown as string,
-        timestamp: "10:30:00",
+        timestamp: new Date("2024-01-15T10:30:00").getTime(),
         notes: undefined as unknown as string,
-        protocol: "3x10",
+        protocol: WorkoutProtocol.DROP_SET,
         customFields: undefined,
       };
 
@@ -248,10 +272,12 @@ describe("LogCallouts organism", () => {
         plugin,
         undefined,
         undefined,
-        latestEntry
+        latestEntry,
       );
 
-      const button = container.querySelector(".workout-btn-primary") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".workout-btn-primary",
+      ) as HTMLButtonElement;
       button.click();
 
       expect(CreateLogModal).toHaveBeenCalledWith(
@@ -266,9 +292,9 @@ describe("LogCallouts organism", () => {
           reps: 10,
           workout: "",
           notes: "",
-          protocol: "3x10",
+          protocol: WorkoutProtocol.DROP_SET,
           customFields: undefined,
-        }
+        },
       );
     });
   });
@@ -278,9 +304,15 @@ describe("LogCallouts organism", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin({ basename: "TestExercise" });
 
-      LogCallouts.renderCreateLogButtonForExercise(container, "Bench Press", plugin);
+      LogCallouts.renderCreateLogButtonForExercise(
+        container,
+        "Bench Press",
+        plugin,
+      );
 
-      expect(container.querySelector(".create-log-button-container")).toBeTruthy();
+      expect(
+        container.querySelector(".create-log-button-container"),
+      ).toBeTruthy();
       expect(container.querySelector(".create-log-button")).toBeTruthy();
     });
 
@@ -288,9 +320,15 @@ describe("LogCallouts organism", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin({ basename: "ExercisePage" });
 
-      LogCallouts.renderCreateLogButtonForExercise(container, "Deadlift", plugin);
+      LogCallouts.renderCreateLogButtonForExercise(
+        container,
+        "Deadlift",
+        plugin,
+      );
 
-      const button = container.querySelector(".create-log-button") as HTMLButtonElement;
+      const button = container.querySelector(
+        ".create-log-button",
+      ) as HTMLButtonElement;
       button.click();
 
       expect(CreateLogModal).toHaveBeenCalledWith(
@@ -298,7 +336,7 @@ describe("LogCallouts organism", () => {
         plugin,
         "Deadlift",
         "[[ExercisePage]]",
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });

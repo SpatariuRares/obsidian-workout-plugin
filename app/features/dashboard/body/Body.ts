@@ -1,6 +1,5 @@
 import { type BodyData } from "@app/features/dashboard/body/index";
 import { SVGBuilder } from "@app/features/dashboard/body/utils/SVGBuilder";
-import { HeatMapColors } from "@app/features/dashboard/body/utils/HeatMapColors";
 import { ViewDataPreparer } from "@app/features/dashboard/body/renderers/ViewDataPrepar";
 import { BODY_VIEWS_SVG } from "@app/features/dashboard/body/renderers/FrontView";
 
@@ -40,9 +39,6 @@ export class Body {
     // Create SVG
     const svg = this.createSVG(container);
 
-    // Draw body outline
-    this.drawBodyOutline(svg);
-
     // Render muscles based on view
     if (this.options.view === VIEW_TYPE.FRONT) {
       this.renderFrontView(svg);
@@ -60,38 +56,6 @@ export class Body {
     });
     container.appendChild(svg);
     return svg;
-  }
-
-  private drawBodyOutline(svg: SVGSVGElement): void {
-    if (this.options.view === VIEW_TYPE.FRONT) {
-      this.drawFemaleFrontOutline(svg);
-    } else {
-      this.drawFemaleBackOutline(svg);
-    }
-  }
-
-  private drawFemaleFrontOutline(_svg: SVGSVGElement): void {
-    // TODO: Implement new back outline rendering
-  }
-
-  private drawFemaleBackOutline(svg: SVGSVGElement): void {
-    // Create SVG defs using SVGBuilder
-    const defs = SVGBuilder.createDefs();
-
-    const gradient = SVGBuilder.createRadialGradient("jointradial", {
-      cx: "50%",
-      cy: "50%",
-      r: "50%",
-      fx: "50%",
-      fy: "50%",
-    });
-
-    const stop1 = SVGBuilder.createStop("0%", "rgb(254, 91, 127)", 1);
-    const stop2 = SVGBuilder.createStop("100%", "rgb(231, 236, 239)", 1);
-
-    SVGBuilder.appendChildren(gradient, [stop1, stop2]);
-    defs.appendChild(gradient);
-    svg.appendChild(defs);
   }
 
   private renderFrontView(svg: SVGSVGElement): void {
@@ -192,10 +156,6 @@ export class Body {
     while (doc.documentElement.firstChild) {
       svg.appendChild(doc.documentElement.firstChild);
     }
-  }
-
-  private getHeatMapColor(intensity: number): string {
-    return HeatMapColors.getColor(intensity);
   }
 
   updateBodyData(bodyData: Partial<BodyData>): void {

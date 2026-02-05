@@ -9,16 +9,19 @@ import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import type { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import type { LogDataService } from "@app/features/modals/base/services/LogDataService";
+import type { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 import {
   fillDynamicInputsFromCustomFields,
   setupWorkoutToggle,
 } from "@app/utils/form/FormUtils";
+import { Chip } from "@app/components/atoms";
 
 export class LogFormRenderer {
   constructor(
     private plugin: WorkoutChartsPlugin,
     private dynamicFieldsRenderer: DynamicFieldsRenderer,
-    private logDataService: LogDataService 
+    private logDataService: LogDataService,
+    private recentExercisesService: RecentExercisesService,
   ) {}
 
   /**
@@ -41,6 +44,8 @@ export class LogFormRenderer {
       this.plugin,
       initialExerciseName
     );
+
+    this.createRecentExercisesChips(formContainer, exerciseElements.exerciseInput);
 
     // Create container for dynamic parameter fields
     const parametersContainer = formContainer.createDiv({
@@ -151,6 +156,49 @@ export class LogFormRenderer {
     );
 
     return formElements;
+  }
+
+  /**
+   * Creates recent exercise chips for quick selection.
+   */
+  private createRecentExercisesChips(
+    container: HTMLElement,
+    exerciseInput: HTMLInputElement,
+  ): void {
+    const recentExercises = this.recentExercisesService.getDisplayRecentExercises();
+    if (recentExercises.length === 0) {
+      return;
+    }
+
+    const chipSection = container.createEl("div", {
+      cls: "workout-log-recent-section",
+    });
+    const exerciseFieldGroup = exerciseInput.closest(".workout-charts-form-group");
+    if (exerciseFieldGroup && exerciseFieldGroup.parentElement === container) {
+      container.insertBefore(chipSection, exerciseFieldGroup);
+    }
+
+    chipSection.createEl("label", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.RECENT_EXERCISES,
+      cls: "workout-log-recent-label",
+    });
+
+    const chipContainer = chipSection.createEl("div", {
+      cls: "workout-log-recent-chips",
+    });
+
+    recentExercises.forEach((exercise) => {
+      Chip.create(chipContainer, {
+        text: exercise,
+        className: "workout-log-recent-chip",
+        ariaLabel: exercise,
+        onClick: () => {
+          exerciseInput.value = exercise;
+          exerciseInput.dispatchEvent(new Event("change"));
+          exerciseInput.focus();
+        },
+      });
+    });
   }
 
   /**

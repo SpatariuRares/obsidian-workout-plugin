@@ -9,11 +9,12 @@ import { App, normalizePath, Notice, TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { Button } from "@app/components/atoms";
+import { Button, Input } from "@app/components/atoms";
 import type {
   ParameterDefinition,
   ParameterValueType,
 } from "@app/types/ExerciseTypes";
+import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
@@ -208,8 +209,8 @@ export class CreateExercisePageModal extends ModalBase {
     keyGroup.createEl("label", {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_KEY,
     });
-    const keyInput = keyGroup.createEl("input", {
-      type: "text",
+    const keyInput = Input.create(keyGroup, {
+      type: INPUT_TYPE.TEXT,
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_KEY,
     });
 
@@ -220,8 +221,8 @@ export class CreateExercisePageModal extends ModalBase {
     labelGroup.createEl("label", {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_LABEL,
     });
-    const labelInput = labelGroup.createEl("input", {
-      type: "text",
+    const labelInput = Input.create(labelGroup, {
+      type: INPUT_TYPE.TEXT,
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_LABEL,
     });
 
@@ -249,8 +250,8 @@ export class CreateExercisePageModal extends ModalBase {
     unitGroup.createEl("label", {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_UNIT,
     });
-    const unitInput = unitGroup.createEl("input", {
-      type: "text",
+    const unitInput = Input.create(unitGroup, {
+      type: INPUT_TYPE.TEXT,
       placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_UNIT,
     });
 
@@ -258,8 +259,8 @@ export class CreateExercisePageModal extends ModalBase {
     const requiredGroup = rowContainer.createEl("div", {
       cls: "workout-charts-param-field workout-charts-param-checkbox",
     });
-    const requiredCheckbox = requiredGroup.createEl("input", {
-      type: "checkbox",
+    const requiredCheckbox = Input.create(requiredGroup, {
+      type: INPUT_TYPE.CHECKBOX,
     });
     requiredCheckbox.checked = true;
     requiredGroup.createEl("label", {

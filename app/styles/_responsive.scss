@@ -166,6 +166,33 @@
     justify-content: center;
   }
 
+  /* Mobile-first log modals */
+  .workout-charts-modal {
+    .workout-parameters-container {
+      flex-direction: column;
+    }
+
+    .workout-charts-form-group {
+      input[type="text"],
+      input[type="number"],
+      select,
+      textarea {
+        min-height: 44px;
+        font-size: var(--workout-font-base);
+      }
+    }
+
+    .workout-adjust-btn {
+      min-width: 10ch;
+      min-height: 44px;
+    }
+  }
+
+  .workout-log-recent-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
+  }
+
   .workout-muscle-details {
     position: static;
     margin-top: var(--workout-space-lg);

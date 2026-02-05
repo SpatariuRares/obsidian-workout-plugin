@@ -17,6 +17,7 @@ import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRen
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
+import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 
 /**
  * Abstract base class for workout log modals.
@@ -30,6 +31,7 @@ export abstract class BaseLogModal extends ModalBase {
   protected logDataService: LogDataService;
   protected dynamicFieldsRenderer: DynamicFieldsRenderer;
   protected logFormRenderer: LogFormRenderer;
+  protected recentExercisesService: RecentExercisesService;
 
   // Track current parameters for dynamic validation
   protected currentParameters: ParameterDefinition[] = [];
@@ -48,10 +50,12 @@ export abstract class BaseLogModal extends ModalBase {
     this.onComplete = onComplete;
     this.logDataService = new LogDataService(this.plugin);
     this.dynamicFieldsRenderer = new DynamicFieldsRenderer(this.plugin);
+    this.recentExercisesService = new RecentExercisesService(this.plugin);
     this.logFormRenderer = new LogFormRenderer(
       this.plugin,
       this.dynamicFieldsRenderer,
       this.logDataService,
+      this.recentExercisesService,
     );
   }
 
@@ -239,6 +243,14 @@ export abstract class BaseLogModal extends ModalBase {
 
     try {
       await this.handleSubmit(data);
+
+      // Keep recent exercise chips in sync without blocking success flow.
+      try {
+        await this.recentExercisesService.trackExercise(data.exercise);
+      } catch {
+        // Non-critical failure: log entry is already saved.
+      }
+
       this.close();
       new Notice(this.getSuccessMessage());
 

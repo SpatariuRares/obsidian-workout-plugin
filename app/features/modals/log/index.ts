@@ -1,3 +1,2 @@
-export * from "./CreateLogModal";
-export * from "./EditLogModal";
-export * from "./QuickLogModal";
+export * from "@app/features/modals/log/CreateLogModal";
+export * from "@app/features/modals/log/EditLogModal";

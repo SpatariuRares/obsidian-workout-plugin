@@ -19,7 +19,6 @@ import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
-import { QuickLogModal } from "@app/features/modals/log/QuickLogModal";
 import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 
@@ -99,31 +98,32 @@ export default class WorkoutChartsPlugin extends Plugin {
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
-
-    // Add quick log ribbon icon if enabled
     this.updateQuickLogRibbon();
+
   }
 
   /**
-   * Updates the quick log ribbon icon visibility based on settings
+   * Updates the ribbon icon visibility. The ribbon opens CreateLogModal.
    */
   public updateQuickLogRibbon(): void {
-    // Remove existing ribbon icon if present
     if (this.quickLogRibbonIcon) {
       this.quickLogRibbonIcon.remove();
       this.quickLogRibbonIcon = null;
     }
 
-    // Add ribbon icon if setting is enabled
-    if (this.settings.showQuickLogRibbon) {
-      this.quickLogRibbonIcon = this.addRibbonIcon(
-        "dumbbell",
-        CONSTANTS.WORKOUT.COMMANDS.QUICK_LOG,
-        () => {
-          new QuickLogModal(this.app, this).open();
-        }
-      );
+    if (!this.settings.showQuickLogRibbon) {
+      return;
     }
+
+    this.quickLogRibbonIcon = this.addRibbonIcon(
+      "dumbbell",
+      CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
+      () => {
+        new CreateLogModal(this.app, this, undefined, undefined, () => {
+          this.triggerWorkoutLogRefresh();
+        }).open();
+      },
+    );
   }
 
   onunload() {

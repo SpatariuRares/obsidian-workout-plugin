@@ -518,8 +518,8 @@ export const SETTINGS_UI = {
     PROTOCOL_ABBREVIATION: "Abbreviation",
     PROTOCOL_COLOR: "Badge color",
     SET_DURATION: "Default set duration (seconds)",
-    SHOW_QUICK_LOG_RIBBON: "Show quick log ribbon icon",
-    QUICK_WEIGHT_INCREMENT: "Quick weight increment (kg)",
+    SHOW_QUICK_LOG_RIBBON: "Show create log ribbon icon",
+    QUICK_WEIGHT_INCREMENT: "Weight buttons increment (kg)",
     CREATE_MUSCLE_TAGS_CSV: "Muscle tags CSV file",
   },
   DESCRIPTIONS: {
@@ -546,9 +546,9 @@ export const SETTINGS_UI = {
     SET_DURATION:
       "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
     SHOW_QUICK_LOG_RIBBON:
-      "Show a dumbbell icon in the left ribbon for quick logging on mobile and desktop",
+      "Show a dumbbell icon in the left ribbon to open the create workout log modal",
     QUICK_WEIGHT_INCREMENT:
-      "Weight increment for quick adjustment buttons in quick log modal (e.g., 2.5 for +2.5 / -2.5)",
+      "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5)",
     CREATE_MUSCLE_TAGS_CSV:
       "Create a CSV file with default muscle tag mappings. Edit this file to add custom tags in any language.",
     CONFIRM_OVERWRITE_MUSCLE_TAGS:
@@ -562,7 +562,7 @@ export const SETTINGS_UI = {
     PROGRESSIVE_OVERLOAD: "Progressive overload",
     CUSTOM_PROTOCOLS: "Custom protocols",
     DURATION_ESTIMATION: "Duration estimation",
-    QUICK_LOG: "Quick log",
+    QUICK_LOG: "Mobile logging",
   },
   BUTTONS: {
     ADD_PRESET: "Add preset",

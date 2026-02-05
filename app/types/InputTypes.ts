@@ -4,5 +4,7 @@ export enum INPUT_TYPE {
     EMAIL = "email",
     PASSWORD = "password",
     DATE = "date",
-    TIME = "time"
+    TIME = "time",
+    CHECKBOX = "checkbox",
+    FILE = "file"
 };

@@ -62,11 +62,11 @@ workout: {{workout}}
   customProtocols: [],
   /** Default set duration for workout time estimation (45 seconds) */
   setDuration: 45,
-  /** Show quick log button in ribbon for easy mobile logging */
+  /** Legacy quick-log ribbon preference (deprecated, no longer used) */
   showQuickLogRibbon: true,
-  /** Recent exercises used in quick log modal */
+  /** Recent exercises shown as chips in create/edit modals */
   recentExercises: [],
-  /** Weight increment for quick adjustment buttons in quick log */
+  /** Weight increment for +/- buttons in create/edit log forms */
   quickWeightIncrement: 2.5,
 };
 

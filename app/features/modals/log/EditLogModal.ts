@@ -2,10 +2,8 @@
 import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
-import {
-  BaseLogModal,
-  LogFormData,
-} from "@app/features/modals/base/BaseLogModal";
+import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
+import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export class EditLogModal extends BaseLogModal {

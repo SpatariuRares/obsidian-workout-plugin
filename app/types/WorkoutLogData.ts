@@ -112,11 +112,11 @@ export interface WorkoutChartsSettings {
   customProtocols: CustomProtocolConfig[];
   /** Default duration per set in seconds for workout duration estimation */
   setDuration: number;
-  /** Show quick log ribbon icon for mobile logging */
+  /** Legacy quick-log ribbon preference (deprecated, no longer used) */
   showQuickLogRibbon: boolean;
-  /** Recent exercises for quick log modal (max 10 items, most recent first) */
+  /** Recent exercises for create/edit log chips (max 10 items, most recent first) */
   recentExercises: string[];
-  /** Quick weight increment for quick log modal (e.g., 2.5 for +/- 2.5kg buttons) */
+  /** Weight increment for +/- buttons in create/edit log forms */
   quickWeightIncrement: number;
 }
 

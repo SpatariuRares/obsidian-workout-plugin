@@ -1,5 +1,7 @@
 /** @jest-environment jsdom */
 
+import { INPUT_TYPE } from "@app/types";
+import { Input } from "../atoms";
 import { createObsidianContainer } from "./obsidianDomMocks";
 
 describe("obsidianDomMocks", () => {
@@ -41,7 +43,9 @@ describe("obsidianDomMocks", () => {
 
     it("creates element with multiple space-separated classes", () => {
       const container = createObsidianContainer();
-      const child = container.createEl("div", { cls: "class-a class-b class-c" });
+      const child = container.createEl("div", {
+        cls: "class-a class-b class-c",
+      });
 
       expect(child.classList.contains("class-a")).toBe(true);
       expect(child.classList.contains("class-b")).toBe(true);
@@ -58,8 +62,9 @@ describe("obsidianDomMocks", () => {
 
     it("creates element with attributes", () => {
       const container = createObsidianContainer();
-      const child = container.createEl("input", {
-        attr: { type: "text", placeholder: "Enter value" },
+      const child = Input.create(container, {
+        type: INPUT_TYPE.TEXT,
+        placeholder: "Enter value",
       });
 
       expect(child.getAttribute("type")).toBe("text");

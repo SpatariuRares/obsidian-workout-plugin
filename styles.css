@@ -1603,22 +1603,22 @@
   flex-direction: column;
   gap: var(--workout-space-md);
 }
-
-.workout-field-label {
+.workout-field-with-adjust .workout-field-label {
+  display: flex;
+  margin-bottom: var(--workout-space-sm);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
   font-size: var(--workout-font-base);
 }
-
-.workout-input-with-adjust {
+.workout-field-with-adjust .workout-input-with-adjust {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--workout-space-sm);
-  width: fit-content;
+  width: 100%;
 }
-.workout-input-with-adjust input {
-  max-width: 10ch;
+.workout-field-with-adjust .workout-input-with-adjust input {
+  flex: 1;
   text-align: center;
 }
 
@@ -1688,60 +1688,21 @@
   font-weight: var(--workout-font-weight-medium);
 }
 
-/* Quick log modal */
-.workout-quick-log-modal .workout-charts-form {
-  gap: var(--workout-space-2xl);
-}
-.workout-quick-log-modal h2 {
-  text-align: center;
-  margin-bottom: var(--workout-space-xl);
-}
-
-.workout-quick-log-field {
-  margin-bottom: var(--workout-space-lg);
-}
-
-.workout-quick-log-label {
-  font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-normal);
-  font-size: var(--workout-font-base);
-  margin-bottom: var(--workout-space-xs);
-}
-
-.workout-quick-log-recent-label {
+/* Shared mobile logging styles for create/edit modals */
+.workout-log-recent-label {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-muted);
   font-size: var(--workout-font-sm);
 }
 
-.workout-quick-log-input {
-  min-height: 44px;
-  padding: var(--workout-space-md) var(--workout-space-lg);
-  font-size: var(--workout-font-lg);
-  border-radius: var(--workout-radius-md);
-  border: 2px solid var(--background-modifier-border);
-  background: var(--background-primary);
-}
-.workout-quick-log-input:focus {
-  border-color: var(--interactive-accent);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--interactive-accent-rgb), 0.2);
-}
-
-.workout-quick-log-weight-input {
-  flex: 1;
-  text-align: center;
-  font-weight: var(--workout-font-weight-semibold);
-}
-
-.workout-quick-log-recent-section {
+.workout-log-recent-section {
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-sm);
   margin-bottom: var(--workout-space-lg);
 }
 
-.workout-quick-log-chips-container {
+.workout-log-recent-chips {
   display: flex;
   flex-wrap: nowrap;
   gap: var(--workout-space-sm);
@@ -1750,11 +1711,11 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.workout-quick-log-chips-container::-webkit-scrollbar {
+.workout-log-recent-chips::-webkit-scrollbar {
   display: none;
 }
 
-.workout-quick-log-chip {
+.workout-log-recent-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1771,26 +1732,16 @@
   min-height: 36px;
   transition: all 0.15s ease;
 }
-.workout-quick-log-chip:hover {
+.workout-log-recent-chip:hover {
   background: var(--interactive-hover);
   border-color: var(--interactive-accent);
 }
-.workout-quick-log-chip:active {
+.workout-log-recent-chip:active {
   transform: scale(0.95);
   background: var(--interactive-accent);
   color: var(--text-on-accent);
 }
 
-.workout-frame-toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--workout-space-sm);
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-
-/* button styles moved to modal/_buttons.scss */
 /* Conversion modal */
 .workout-convert-mapping-row {
   display: flex;
@@ -3022,6 +2973,25 @@
   .workout-export-btn {
     width: 100%;
     justify-content: center;
+  }
+  /* Mobile-first log modals */
+  .workout-charts-modal .workout-parameters-container {
+    flex-direction: column;
+  }
+  .workout-charts-modal .workout-charts-form-group input[type=text],
+  .workout-charts-modal .workout-charts-form-group input[type=number],
+  .workout-charts-modal .workout-charts-form-group select,
+  .workout-charts-modal .workout-charts-form-group textarea {
+    min-height: 44px;
+    font-size: var(--workout-font-base);
+  }
+  .workout-charts-modal .workout-adjust-btn {
+    min-width: 10ch;
+    min-height: 44px;
+  }
+  .workout-log-recent-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
   }
   .workout-muscle-details {
     position: static;

@@ -24,7 +24,6 @@ export class QuickLogSettings {
           .onChange(async (value) => {
             this.plugin.settings.showQuickLogRibbon = value;
             await this.plugin.saveSettings();
-            // Update ribbon visibility
             this.plugin.updateQuickLogRibbon();
           }),
       );

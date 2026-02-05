@@ -51,11 +51,13 @@ def analyze_file_lengths(root_dir, top_n=50):
     print(f"Total Lines of Code: {total_lines}")
     print(f"Average Lines per File: {avg_lines:.2f}")
     print("\nTop Largest Files:")
-    print(f"{'Lines':<10} | {'File Path'}")
+    print(f"{'Lines'} | {'File Path'}")
     print("-" * 60)
 
     for i, (path, count) in enumerate(file_stats[:top_n]):
-        print(f"{count:<10} | {path}")
+        if count < 150:
+            break
+        print(f"{count} | {path}")
 
 if __name__ == "__main__":
     # Assumes the script is run from the project root or scripts folder

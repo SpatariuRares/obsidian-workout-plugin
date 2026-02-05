@@ -1,6 +1,7 @@
 // Base modal class with common functionality
 import { CONSTANTS } from "@app/constants";
 import { App, Modal, Notice, MarkdownView } from "obsidian";
+import { Input } from "@app/components/atoms";
 import { FormField } from "@app/components/molecules";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 
@@ -136,7 +137,7 @@ export abstract class ModalBase extends Modal {
     checked: boolean = false,
     id?: string
   ): HTMLInputElement {
-    const checkbox = container.createEl("input", { type: "checkbox" });
+    const checkbox = Input.create(container, { type: INPUT_TYPE.CHECKBOX });
     if (checked) checkbox.checked = true;
     if (id) {
       checkbox.id = id;

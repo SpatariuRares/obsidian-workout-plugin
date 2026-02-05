@@ -1,7 +1,8 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
-import { Button } from "@app/components/atoms";
+import { Button, Input } from "@app/components/atoms";
+import { INPUT_TYPE } from "@app/types/InputTypes";
 
 export class DynamicFieldsRenderer {
   constructor(private plugin: WorkoutChartsPlugin) {}
@@ -12,7 +13,7 @@ export class DynamicFieldsRenderer {
    */
   renderDynamicFields(
     container: HTMLElement,
-    parameters: ParameterDefinition[]
+    parameters: ParameterDefinition[],
   ): Map<string, HTMLInputElement> {
     // Clear existing fields
     container.empty();
@@ -32,7 +33,7 @@ export class DynamicFieldsRenderer {
    */
   private renderParameterFieldWithAdjust(
     container: HTMLElement,
-    param: ParameterDefinition
+    param: ParameterDefinition,
   ): HTMLInputElement {
     const fieldContainer = container.createDiv({
       cls: "workout-field-with-adjust",
@@ -50,31 +51,26 @@ export class DynamicFieldsRenderer {
         cls: "workout-input-with-adjust",
       });
 
-      const input = inputContainer.createEl("input", {
-        type: "number",
-        cls: "workout-charts-input",
-        attr: {
-          min: param.min?.toString() || "0",
-          max: param.max?.toString() || "",
-          step: this.getStepForParameter(param),
-          placeholder: param.default?.toString() || "",
-        },
-      });
-
       // Quick adjust buttons
       const increment = this.getIncrementForParameter(param);
-      const adjustButtons = inputContainer.createDiv({
-        cls: "workout-adjust-buttons",
-      });
 
-      const minusBtn = Button.create(adjustButtons, {
+      const minusBtn = Button.create(inputContainer, {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
         className: "workout-adjust-btn workout-adjust-minus",
         ariaLabel: `Decrease ${param.label} by ${increment}`,
       });
       minusBtn.type = "button";
 
-      const plusBtn = Button.create(adjustButtons, {
+      const input = Input.create(inputContainer, {
+        type: INPUT_TYPE.NUMBER,
+        className: "workout-charts-input",
+        min: param.min ?? 0,
+        max: param.max,
+        step: this.getStepForParameter(param),
+        placeholder: param.default?.toString() || "",
+      });
+
+      const plusBtn = Button.create(inputContainer, {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
         className: "workout-adjust-btn workout-adjust-plus",
         ariaLabel: `Increase ${param.label} by ${increment}`,
@@ -105,9 +101,9 @@ export class DynamicFieldsRenderer {
 
     // Boolean checkbox
     if (param.type === "boolean") {
-      const input = fieldContainer.createEl("input", {
-        type: "checkbox",
-        cls: "workout-charts-checkbox",
+      const input = Input.create(fieldContainer, {
+        type: INPUT_TYPE.CHECKBOX,
+        className: "workout-charts-checkbox",
       });
       if (param.default === true) {
         input.checked = true;
@@ -116,13 +112,11 @@ export class DynamicFieldsRenderer {
     }
 
     // String/text input (default)
-    const input = fieldContainer.createEl("input", {
-      type: "text",
-      cls: "workout-charts-input",
+    const input = Input.create(fieldContainer, {
+      type: INPUT_TYPE.TEXT,
+      className: "workout-charts-input",
+      value: param.default !== undefined ? String(param.default) : undefined,
     });
-    if (param.default !== undefined) {
-      input.value = param.default.toString();
-    }
     if (param.required) {
       input.required = true;
     }
@@ -134,7 +128,7 @@ export class DynamicFieldsRenderer {
    */
   private formatNumericValue(
     value: number,
-    param: ParameterDefinition
+    param: ParameterDefinition,
   ): string {
     // Use integer format for reps, duration in seconds
     if (param.key === "reps" || param.key === "heartRate") {
@@ -152,7 +146,13 @@ export class DynamicFieldsRenderer {
    */
   private getIncrementForParameter(param: ParameterDefinition): number {
     if (param.key === "reps") return 1;
-    if (param.key === "weight") return this.plugin.settings.weightIncrement;
+    if (param.key === "weight") {
+      const quickIncrement = this.plugin.settings.quickWeightIncrement;
+      if (typeof quickIncrement === "number" && quickIncrement > 0) {
+        return quickIncrement;
+      }
+      return this.plugin.settings.weightIncrement;
+    }
     if (param.key === "duration" && param.unit === "sec") return 5;
     if (param.key === "duration" && param.unit === "min") return 1;
     if (param.key === "distance") return 0.5;
@@ -167,15 +167,15 @@ export class DynamicFieldsRenderer {
   /**
    * Determines step value for numeric input based on parameter.
    */
-  private getStepForParameter(param: ParameterDefinition): string {
-    if (param.key === "weight") return "0.5";
-    if (param.key === "distance") return "0.1";
+  private getStepForParameter(param: ParameterDefinition): number {
+    if (param.key === "weight") return 0.5;
+    if (param.key === "distance") return 0.1;
     if (
       param.key === "reps" ||
       param.key === "duration" ||
       param.key === "heartRate"
     )
-      return "1";
-    return "0.1";
+      return 1;
+    return 0.1;
   }
 }

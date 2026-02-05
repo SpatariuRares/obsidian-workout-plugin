@@ -88,7 +88,7 @@ export class CodeBlockProcessorService {
   private async handleWorkoutChart(
     source: string,
     el: HTMLElement,
-    _ctx: MarkdownPostProcessorContext,
+    ctx: MarkdownPostProcessorContext,
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
@@ -107,7 +107,17 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        LogCallouts.renderCsvNoDataMessage(el, this.plugin);
+        const sourcePath = ctx.sourcePath;
+        const basename =
+          sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+        const currentPageLink = basename ? `[[${basename}]]` : "";
+        LogCallouts.renderCsvNoDataMessage(
+          el,
+          this.plugin,
+          undefined,
+          undefined,
+          currentPageLink,
+        );
         return;
       }
 
@@ -124,7 +134,7 @@ export class CodeBlockProcessorService {
   private async handleWorkoutLog(
     source: string,
     el: HTMLElement,
-    _ctx: MarkdownPostProcessorContext,
+    ctx: MarkdownPostProcessorContext,
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
@@ -212,7 +222,7 @@ export class CodeBlockProcessorService {
   private async handleWorkoutDashboard(
     source: string,
     el: HTMLElement,
-    _ctx: MarkdownPostProcessorContext,
+    ctx: MarkdownPostProcessorContext,
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
@@ -231,7 +241,17 @@ export class CodeBlockProcessorService {
       }
 
       if (logData.length === 0) {
-        LogCallouts.renderCsvNoDataMessage(el, this.plugin);
+        const sourcePath = ctx.sourcePath;
+        const basename =
+          sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+        const currentPageLink = basename ? `[[${basename}]]` : "";
+        LogCallouts.renderCsvNoDataMessage(
+          el,
+          this.plugin,
+          undefined,
+          undefined,
+          currentPageLink,
+        );
         return;
       }
 

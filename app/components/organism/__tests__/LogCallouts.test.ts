@@ -96,6 +96,7 @@ describe("LogCallouts organism", () => {
         "Deadlift",
         "[[TestPage]]",
         expect.any(Function),
+        undefined,
       );
     });
 

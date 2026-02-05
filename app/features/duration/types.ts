@@ -10,8 +10,6 @@
 export interface EmbeddedDurationParams {
   /** Path to the workout file to analyze (relative or absolute). Defaults to current file. */
   workout?: string;
-  /** Debug mode - shows additional information */
-  debug?: boolean;
 }
 
 /**

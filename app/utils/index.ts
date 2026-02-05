@@ -15,3 +15,4 @@ export * from "@app/utils/form/FormUtils";
 export * from "@app/utils/StringUtils";
 export * from "@app/utils/parameter/ParameterUtils";
 export * from "@app/utils/FormatUtils";
+export * from "@app/utils/path-resolver";

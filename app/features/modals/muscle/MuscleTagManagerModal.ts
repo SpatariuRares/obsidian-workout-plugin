@@ -10,7 +10,7 @@ import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { SearchBox } from "@app/components/molecules";
 import { Button, Input } from "@app/components/atoms";
-import { ConfirmModal } from "@app/features/modals/ConfirmModal";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { StringUtils } from "@app/utils/StringUtils";
 import { DomUtils } from "@app/utils/DomUtils";
 import type WorkoutChartsPlugin from "main";

@@ -2,8 +2,8 @@ import { CONSTANTS } from "@app/constants";
 import { Notice } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { EditLogModal } from "@app/features/modals/EditLogModal";
-import { ConfirmModal } from "@app/features/modals/ConfirmModal";
+import { EditLogModal } from "@app/features/modals/log/EditLogModal";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { ActionButtons } from "@app/features/tables/ui";
 
 /**

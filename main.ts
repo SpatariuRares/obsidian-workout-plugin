@@ -17,9 +17,9 @@ import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessor
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { DataFilter } from "@app/services/data/DataFilter";
-import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
-import { QuickLogModal } from "@app/features/modals/QuickLogModal";
+import { QuickLogModal } from "@app/features/modals/log/QuickLogModal";
 import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 

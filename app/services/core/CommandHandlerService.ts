@@ -1,22 +1,22 @@
 import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
-import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import { InsertTimerModal } from "@app/features/timer";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
-import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
-import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
-import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";
-import { AddExerciseBlockModal } from "@app/features/modals/AddExerciseBlockModal";
+import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
+import { CreateExerciseSectionModal } from "@app/features/modals/exercise/CreateExerciseSectionModal";
+import { AuditExerciseNamesModal } from "@app/features/modals/exercise/AuditExerciseNamesModal";
+import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
-import { MuscleTagManagerModal } from "@app/features/modals/MuscleTagManagerModal";
+import { MuscleTagManagerModal } from "@app/features/modals/muscle/MuscleTagManagerModal";
 import {
   CanvasExporter,
   WorkoutFileSuggestModal,
   CanvasExportModal,
 } from "@app/features/canvas";
-import { ExerciseTypeMigration } from "@app/features/migration";
+import { ExerciseTypeMigration } from "@app/compatibility/migration";
 import type WorkoutChartsPlugin from "main";
 
 export class CommandHandlerService {

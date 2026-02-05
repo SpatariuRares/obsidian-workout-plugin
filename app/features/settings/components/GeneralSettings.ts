@@ -1,7 +1,7 @@
 import { App, Setting, normalizePath, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
-import { ConfirmModal } from "@app/features/modals/ConfirmModal";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
 
 export class GeneralSettings {

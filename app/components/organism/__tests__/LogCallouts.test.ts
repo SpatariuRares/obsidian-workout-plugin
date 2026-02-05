@@ -9,7 +9,7 @@ import type WorkoutChartsPlugin from "main";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 
 // Mock CreateLogModal
-jest.mock("@app/features/modals/CreateLogModal", () => ({
+jest.mock("@app/features/modals/log/CreateLogModal", () => ({
   CreateLogModal: jest.fn().mockImplementation(() => ({
     open: jest.fn(),
   })),
@@ -31,7 +31,7 @@ jest.mock("@app/features/modals/base/utils/createButtonsSection", () => {
 });
 
 // Import after mocking
-import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 
 const createMockPlugin = (activeFile?: {
   basename: string;

@@ -1,7 +1,7 @@
 import { CommandHandlerService } from "../CommandHandlerService";
 import { App, TFile } from "obsidian";
-import { ExerciseTypeMigration } from "@app/features/migration";
-import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { ExerciseTypeMigration } from "@app/compatibility/migration";
+import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import {
   WorkoutFileSuggestModal,
   CanvasExportModal,
@@ -9,7 +9,7 @@ import {
 } from "@app/features/canvas";
 
 // Mocks
-jest.mock("@app/features/modals/CreateLogModal", () => ({
+jest.mock("@app/features/modals/log/CreateLogModal", () => ({
   CreateLogModal: jest.fn().mockImplementation(() => ({ open: jest.fn() })),
 }));
 jest.mock("@app/features/charts/modals/InsertChartModal", () => ({
@@ -26,22 +26,22 @@ jest.mock("@app/features/dashboard/modals/InsertDashboardModal", () => ({
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/CreateExercisePageModal", () => ({
+jest.mock("@app/features/modals/exercise/CreateExercisePageModal", () => ({
   CreateExercisePageModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/CreateExerciseSectionModal", () => ({
+jest.mock("@app/features/modals/exercise/CreateExerciseSectionModal", () => ({
   CreateExerciseSectionModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/AuditExerciseNamesModal", () => ({
+jest.mock("@app/features/modals/exercise/AuditExerciseNamesModal", () => ({
   AuditExerciseNamesModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/AddExerciseBlockModal", () => ({
+jest.mock("@app/features/modals/exercise/AddExerciseBlockModal", () => ({
   AddExerciseBlockModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
@@ -51,7 +51,7 @@ jest.mock("@app/features/exercise-conversion/ConvertExerciseDataModal", () => ({
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/MuscleTagManagerModal", () => ({
+jest.mock("@app/features/modals/muscle/MuscleTagManagerModal", () => ({
   MuscleTagManagerModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),

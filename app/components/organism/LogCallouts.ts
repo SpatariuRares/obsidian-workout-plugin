@@ -3,7 +3,7 @@ import { MarkdownView } from "obsidian";
 import { Button, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
-import { CreateLogModal } from "@app/features/modals/CreateLogModal";
+import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 

@@ -148,12 +148,16 @@ describe("CodeBlockProcessorService", () => {
       service.registerProcessors();
 
       // Find the chart callback
-      const chartCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
-        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
-      );
+      const chartCall =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          (call: [string, Function]) =>
+            call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
+        );
       const chartCallback = chartCall[1];
 
-      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
@@ -165,12 +169,16 @@ describe("CodeBlockProcessorService", () => {
     it("should invoke table callback when registered processor is called", async () => {
       service.registerProcessors();
 
-      const tableCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
-        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
-      );
+      const tableCall =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          (call: [string, Function]) =>
+            call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
+        );
       const tableCallback = tableCall[1];
 
-      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
@@ -182,9 +190,11 @@ describe("CodeBlockProcessorService", () => {
     it("should invoke timer callback when registered processor is called", () => {
       service.registerProcessors();
 
-      const timerCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
-        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
-      );
+      const timerCall =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          (call: [string, Function]) =>
+            call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
+        );
       const timerCallback = timerCall[1];
 
       const el = document.createElement("div");
@@ -198,12 +208,16 @@ describe("CodeBlockProcessorService", () => {
     it("should invoke dashboard callback when registered processor is called", async () => {
       service.registerProcessors();
 
-      const dashboardCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
-        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
-      );
+      const dashboardCall =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          (call: [string, Function]) =>
+            call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
+        );
       const dashboardCallback = dashboardCall[1];
 
-      mockDataService.getWorkoutLogData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockDataService.getWorkoutLogData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
@@ -215,9 +229,11 @@ describe("CodeBlockProcessorService", () => {
     it("should invoke duration callback when registered processor is called", async () => {
       service.registerProcessors();
 
-      const durationCall = mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
-        (call: [string, Function]) => call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
-      );
+      const durationCall =
+        mockPlugin.registerMarkdownCodeBlockProcessor.mock.calls.find(
+          (call: [string, Function]) =>
+            call[0] === CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+        );
       const durationCallback = durationCall[1];
 
       const el = document.createElement("div");
@@ -229,7 +245,9 @@ describe("CodeBlockProcessorService", () => {
 
       await durationCallback("", el, ctx);
 
-      expect((service as any).embeddedDurationView.createDurationEstimator).toHaveBeenCalled();
+      expect(
+        (service as any).embeddedDurationView.createDurationEstimator,
+      ).toHaveBeenCalled();
     });
   });
 
@@ -307,6 +325,9 @@ describe("CodeBlockProcessorService", () => {
       expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalledWith(
         el,
         mockPlugin,
+        undefined,
+        undefined,
+        "[[path]]",
       );
     });
 

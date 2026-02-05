@@ -43,9 +43,15 @@ export abstract class BaseView {
     container: HTMLElement,
     logData: WorkoutLogData[],
     exerciseName?: string,
+    onRefresh?: () => void,
   ): boolean {
     if (logData.length === 0) {
-      LogCallouts.renderCsvNoDataMessage(container, this.plugin, exerciseName);
+      LogCallouts.renderCsvNoDataMessage(
+        container,
+        this.plugin,
+        exerciseName,
+        onRefresh,
+      );
       return true;
     }
     return false;
@@ -60,6 +66,7 @@ export abstract class BaseView {
     params: EmbeddedViewParams,
     titlePrefix: string,
     viewType: VIEW_TYPES,
+    onRefresh?: () => void,
   ): void {
     // Check if this is a combined exercise + workout case
     if (titlePrefix && titlePrefix.includes(" + ")) {
@@ -75,6 +82,7 @@ export abstract class BaseView {
           container,
           exercise,
           this.plugin,
+          onRefresh,
         );
       }
       return;
@@ -112,6 +120,7 @@ export abstract class BaseView {
           container,
           exerciseName,
           this.plugin,
+          onRefresh,
         );
       }
     }

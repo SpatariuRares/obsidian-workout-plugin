@@ -15,31 +15,32 @@ export class LogCallouts {
   private static openCreateLogModal(
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
-    onComplete?: () => void
+    onComplete?: () => void,
   ): void {
     const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
-    const currentPageLink = activeView?.file ? `[[${activeView.file.basename}]]` : "";
+    const currentPageLink = activeView?.file
+      ? `[[${activeView.file.basename}]]`
+      : "";
 
     new CreateLogModal(
       plugin.app,
       plugin,
       exerciseName,
       currentPageLink,
-      onComplete || (() => plugin.triggerWorkoutLogRefresh())
+      onComplete || (() => plugin.triggerWorkoutLogRefresh()),
     ).open();
   }
 
   static renderCsvNoDataMessage(
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
-    exerciseName?: string
+    exerciseName?: string,
+    onRefresh?: () => void,
   ): void {
-    Feedback.renderEmpty(
-      container,
-      "", 
-        { className: "workout-log-no-data" }
-    );
-    const noDataDiv = container.querySelector(".workout-log-no-data") as HTMLElement;
+    Feedback.renderEmpty(container, "", { className: "workout-log-no-data" });
+    const noDataDiv = container.querySelector(
+      ".workout-log-no-data",
+    ) as HTMLElement;
 
     noDataDiv.createEl("p");
     Text.create(noDataDiv, {
@@ -53,14 +54,19 @@ export class LogCallouts {
     buttonDiv.addClass("workout-charts-button-container");
 
     const createButton = Button.create(buttonDiv, {
-      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(exerciseName),
+      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(
+        exerciseName,
+      ),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "add-log-button",
-      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(
+          exerciseName,
+        ),
     });
 
     Button.onClick(createButton, () => {
-      LogCallouts.openCreateLogModal(plugin, exerciseName);
+      LogCallouts.openCreateLogModal(plugin, exerciseName, onRefresh);
     });
   }
 
@@ -71,7 +77,7 @@ export class LogCallouts {
     plugin: WorkoutChartsPlugin,
     onLogCreated?: () => void,
     signal?: AbortSignal,
-    latestEntry?: WorkoutLogData
+    latestEntry?: WorkoutLogData,
   ): void {
     if (!currentPageLink) {
       return;
@@ -81,39 +87,45 @@ export class LogCallouts {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "workout-btn-primary",
-      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
     });
 
-    Button.onClick(button, () => {
-      // If there's a latest entry, pre-fill the form with those values
-      // Include all fields: reps, weight, protocol, and customFields
-      const prefillData = latestEntry
-        ? {
-            exercise: latestEntry.exercise,
-            weight: latestEntry.weight,
-            reps: latestEntry.reps,
-            workout: latestEntry.workout || "",
-            notes: latestEntry.notes || "",
-            protocol: latestEntry.protocol,
-            customFields: latestEntry.customFields,
-          }
-        : undefined;
+    Button.onClick(
+      button,
+      () => {
+        // If there's a latest entry, pre-fill the form with those values
+        // Include all fields: reps, weight, protocol, and customFields
+        const prefillData = latestEntry
+          ? {
+              exercise: latestEntry.exercise,
+              weight: latestEntry.weight,
+              reps: latestEntry.reps,
+              workout: latestEntry.workout || "",
+              notes: latestEntry.notes || "",
+              protocol: latestEntry.protocol,
+              customFields: latestEntry.customFields,
+            }
+          : undefined;
 
-      new CreateLogModal(
-        plugin.app,
-        plugin,
-        exerciseName,
-        currentPageLink,
-        onLogCreated,
-        prefillData
-      ).open();
-    }, signal);
+        new CreateLogModal(
+          plugin.app,
+          plugin,
+          exerciseName,
+          currentPageLink,
+          onLogCreated,
+          prefillData,
+        ).open();
+      },
+      signal,
+    );
   }
 
   static renderCreateLogButtonForExercise(
     container: HTMLElement,
     exerciseName: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
+    onRefresh?: () => void,
   ): void {
     const buttonContainer = createButtonsSection(container);
     buttonContainer.addClass("create-log-button-container");
@@ -122,19 +134,23 @@ export class LogCallouts {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "create-log-button",
-      ariaLabel: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel:
+        CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
     });
 
     Button.onClick(button, () => {
-      LogCallouts.openCreateLogModal(plugin, exerciseName);
+      LogCallouts.openCreateLogModal(plugin, exerciseName, onRefresh);
     });
   }
 
   static renderNoMatchMessage(container: HTMLElement): void {
-    Feedback.renderInfo(container, CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE, {
-      icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
-      className: "workout-log-no-match"
-    });
+    Feedback.renderInfo(
+      container,
+      CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE,
+      {
+        icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
+        className: "workout-log-no-match",
+      },
+    );
   }
-
 }

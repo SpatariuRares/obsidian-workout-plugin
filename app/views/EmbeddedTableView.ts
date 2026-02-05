@@ -88,7 +88,9 @@ export class EmbeddedTableView extends BaseView {
       }
 
       const loadingDiv = this.showLoadingIndicator(container);
-      if (this.handleEmptyData(container, logData, params.exercise)) {
+      if (
+        this.handleEmptyData(container, logData, params.exercise, onRefresh)
+      ) {
         loadingDiv.remove();
         return;
       }
@@ -107,6 +109,7 @@ export class EmbeddedTableView extends BaseView {
           params,
           filterResult.titlePrefix,
           VIEW_TYPES.TABLE,
+          onRefresh,
         );
         return;
       }
@@ -147,7 +150,13 @@ export class EmbeddedTableView extends BaseView {
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
-      this.renderActionButtons(contentDiv, params, filterResult, onRefresh, signal);
+      this.renderActionButtons(
+        contentDiv,
+        params,
+        filterResult,
+        onRefresh,
+        signal,
+      );
     }
 
     // Render target header with progress bar
@@ -253,11 +262,7 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
-    if (
-      targetWeight === undefined ||
-      targetReps === undefined ||
-      !exercise
-    ) {
+    if (targetWeight === undefined || targetReps === undefined || !exercise) {
       return;
     }
 

@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
 import { Body, type BodyData, VIEW_TYPE } from "@app/features/dashboard/body";
 import {
@@ -8,7 +8,7 @@ import {
   MuscleBalanceAnalyzer,
 } from "@app/features/dashboard/business/muscleHeatMap";
 import { HeatMapControls } from "@app/features/dashboard/ui/HeatMapControls";
-import { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
+import { MuscleHeatMapOptions } from "@app/features/dashboard/types";
 
 /**
  * Main orchestrator for muscle heat map visualization
@@ -150,4 +150,3 @@ export class MuscleHeatMap {
     body.render(container);
   }
 }
-

@@ -1,11 +1,11 @@
 import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
-import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
-import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
-import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
-import { EmbeddedDurationView } from "@app/views/EmbeddedDurationView";
+import { EmbeddedChartView } from "@app/features/charts";
+import { EmbeddedTableView } from "@app/features/tables";
+import { EmbeddedTimerView } from "@app/features/timer";
+import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
+import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
 import {
   EmbeddedChartParams,
   EmbeddedTableParams,

@@ -1,7 +1,7 @@
 import { MuscleTagService } from "../MuscleTagService";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts";
 
 // Mock Obsidian module
 jest.mock(
@@ -13,6 +13,14 @@ jest.mock(
     TAbstractFile: class MockTAbstractFile {},
     normalizePath: (path: string) => path.replace(/\\/g, "/"),
     EventRef: class MockEventRef {},
+    Modal: class MockModal {
+      constructor(app: any) {}
+      open() {}
+      close() {}
+    },
+    MarkdownRenderChild: class MockMarkdownRenderChild {
+      constructor(containerEl: HTMLElement) {}
+    },
   }),
   { virtual: true },
 );

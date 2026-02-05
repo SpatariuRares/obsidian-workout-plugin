@@ -7,10 +7,10 @@ import {
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
-import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
-import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
-import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
-import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
+import { EmbeddedChartView } from "@app/features/charts";
+import { EmbeddedTableView } from "@app/features/tables";
+import { EmbeddedTimerView } from "@app/features/timer";
+import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/CommandHandlerService";
 import { DataService } from "@app/services/DataService";
 import { CodeBlockProcessorService } from "@app/services/CodeBlockProcessorService";

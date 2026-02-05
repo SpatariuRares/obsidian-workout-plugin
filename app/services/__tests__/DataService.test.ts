@@ -1,6 +1,6 @@
 import { DataService } from "../DataService";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts";
 
 // Mock Obsidian module
 jest.mock(
@@ -8,6 +8,14 @@ jest.mock(
   () => ({
     Notice: jest.fn(),
     TFile: class MockTFile {},
+    Modal: class MockModal {
+      constructor(app: any) {}
+      open() {}
+      close() {}
+    },
+    MarkdownRenderChild: class MockMarkdownRenderChild {
+      constructor(containerEl: HTMLElement) {}
+    },
   }),
   { virtual: true },
 );

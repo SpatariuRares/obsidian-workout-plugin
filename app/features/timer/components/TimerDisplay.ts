@@ -1,6 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { TimerState } from "@app/types/TimerTypes";
-import { TIMER_TYPE } from "@app/types/TimerTypes";
+import { TimerState, TIMER_TYPE } from "@app/features/timer";
 
 export class TimerDisplay {
   private static formatTime(milliseconds: number): string {

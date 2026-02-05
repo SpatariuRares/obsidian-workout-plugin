@@ -20,4 +20,3 @@ export {
 } from "@app/features/charts/config/ChartConstants";
 export { ChartConfigBuilder } from "@app/features/charts/config/ChartConfigBuilder";
 export { DatasetStyler } from "@app/features/charts/config/DatasetStyler";
-

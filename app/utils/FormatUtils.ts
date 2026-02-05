@@ -2,7 +2,7 @@
  * Utility class for formatting values based on data type
  * Handles duration, pace, and other workout-specific formatting
  */
-import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { UNITS_MAP } from "@app/constants/ui.constants";
 
 export class FormatUtils {

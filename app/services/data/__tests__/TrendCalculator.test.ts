@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts";
 
 describe("TrendCalculator", () => {
   describe("getTrendIndicators", () => {

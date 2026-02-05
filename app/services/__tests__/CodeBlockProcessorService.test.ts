@@ -48,13 +48,7 @@ jest.mock("@app/components/organism/LogCallouts", () => ({
 }));
 
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
-import type WorkoutChartsPlugin from "main";
-import { DataService } from "../DataService";
-import { MuscleTagService } from "@app/services/MuscleTagService";
-import { EmbeddedChartView } from "@app/views/EmbeddedChartView";
-import { EmbeddedTableView } from "@app/views/EmbeddedTableView";
-import { EmbeddedDashboardView } from "@app/views/EmbeddedDashboardView";
-import { EmbeddedTimerView } from "@app/views/EmbeddedTimerView";
+import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";

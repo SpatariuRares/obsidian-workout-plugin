@@ -1,8 +1,8 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import type { MuscleHeatMapOptions } from "@app/types/MuscleHeatMapOptions";
- import { Button } from "@app/components/atoms";
+import type { MuscleHeatMapOptions } from "@app/features/dashboard/types";
+import { Button } from "@app/components/atoms";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,

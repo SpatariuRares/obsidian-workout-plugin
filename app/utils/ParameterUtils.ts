@@ -12,7 +12,7 @@
 
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { STANDARD_CSV_COLUMNS } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 /**
  * Reserved parameter keys that cannot be used for custom parameters.

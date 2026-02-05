@@ -13,7 +13,7 @@
  * to enable easy discovery and consistent terminology across the plugin.
  */
 
-import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 /**
  * Unit strings for each data type, used for displaying values with appropriate units

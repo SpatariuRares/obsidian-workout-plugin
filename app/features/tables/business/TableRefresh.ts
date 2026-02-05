@@ -1,8 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedTableParams } from "@app/types";
 import type WorkoutChartsPlugin from "main";
-import { TableState, TableCallbacks } from "@app/types/TableTypes";
+import { TableState, TableCallbacks, EmbeddedTableParams } from "@app/features/tables/types";
 import { TableDataLoader } from "@app/features/tables/business/TableDataLoader";
 
 export class TableRefresh {

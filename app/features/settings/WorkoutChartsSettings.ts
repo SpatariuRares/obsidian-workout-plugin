@@ -2,11 +2,11 @@
 import { App, PluginSettingTab } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
-import { TimerPresetsSettings } from "@app/features/settings/components/TimerPresetsSettings";
+import { TimerPresetsSettings } from "@app/features/timer";
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
 import { TemplatesSettings } from "@app/features/settings/components/TemplatesSettings";
 import { ProgressiveOverloadSettings } from "@app/features/settings/components/ProgressiveOverloadSettings";
-import { DurationEstimationSettings } from "@app/features/settings/components/DurationEstimationSettings";
+import { DurationEstimationSettings } from "@app/features/duration";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {

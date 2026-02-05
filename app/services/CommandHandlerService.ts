@@ -1,10 +1,10 @@
 import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
 import { CreateLogModal } from "@app/features/modals/CreateLogModal";
-import { InsertChartModal } from "@app/features/modals/InsertChartModal";
-import { InsertTableModal } from "@app/features/modals/InsertTableModal";
-import { InsertTimerModal } from "@app/features/modals/InsertTimerModal";
-import { InsertDashboardModal } from "@app/features/modals/InsertDashboardModal";
+import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
+import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
+import { InsertTimerModal } from "@app/features/timer";
+import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/features/modals/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/AuditExerciseNamesModal";

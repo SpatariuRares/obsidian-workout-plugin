@@ -12,7 +12,8 @@
  * documentation explaining its purpose and typical use case.
  */
 
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
+
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 
 /**

@@ -55,9 +55,9 @@ Want to see all features in action? Go to **Settings → Workout Planner** and c
 - **Exercise Conversion**: Convert exercises between different types
   - Field mapping for data preservation
   - Preview changes before conversion
-- **Dataview Integration**: Query workout logs with Dataview
-  - Exercise statistics API
-  - Workout log queries
+- **Dataview Integration**: Query workout logs with Dataview via public API
+  - Exercise statistics, PR tracking, trend analysis
+  - See [Dataview Integration](#dataview-integration-public-api) section for examples
 - **Templater Integration**: Use workout data in templates
   - `workoutExercises` function for exercise lists
   - `workoutExerciseBlock` for template integration
@@ -236,6 +236,94 @@ Tags must map to one of these canonical muscle groups:
 In plugin settings under "CSV Management", use the **Create muscle tags** button to generate a CSV file with default tag mappings (English and Italian).
 
 ![CSV Settings](assets/settings.png)
+
+## Dataview Integration (Public API)
+
+The plugin exposes a public JavaScript API via `window.WorkoutPlannerAPI` that allows you to query workout data directly from Dataview queries or other plugins.
+
+### Available Methods
+
+#### `getWorkoutLogs(filter?)`
+
+Retrieves workout log entries with optional filtering.
+
+**Filter options:**
+- `exercise`: Filter by exercise name (partial match, case-insensitive)
+- `workout`: Filter by workout/origin name
+- `dateRange`: `{ start: "YYYY-MM-DD", end: "YYYY-MM-DD" }`
+- `protocol`: Filter by training protocol (e.g., "drop_set", "myo_reps")
+- `exactMatch`: Use exact matching instead of partial (default: false)
+
+**Returns:** Array of workout logs with fields: `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`
+
+#### `getExerciseStats(exercise)`
+
+Get statistics for a specific exercise.
+
+**Returns:**
+- `totalVolume`: Sum of all volume
+- `maxWeight` / `prWeight`: Personal record weight
+- `prReps`: Reps at PR weight
+- `prDate`: Date of PR
+- `totalSets`: Total number of logged sets
+- `averageWeight` / `averageReps`: Averages per set
+- `lastWorkoutDate`: Most recent workout date
+- `trend`: `"up"`, `"down"`, or `"stable"` (based on last 30 days vs. previous period)
+
+#### `getExercises(filter?)`
+
+Get list of available exercises.
+
+**Filter options:**
+- `tag`: Filter by frontmatter tag (e.g., "chest", "compound")
+
+### Usage Examples
+
+#### Dataview Table - Recent Squat Logs
+
+```dataviewjs
+const logs = await WorkoutPlannerAPI.getWorkoutLogs({
+  exercise: "Squat",
+  dateRange: { start: "2025-01-01" }
+});
+
+dv.table(
+  ["Date", "Reps", "Weight", "Volume"],
+  logs.map(l => [l.date.split("T")[0], l.reps, l.weight + " kg", l.volume])
+);
+```
+
+#### Dataview Inline - Exercise PR
+
+```dataviewjs
+const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
+dv.paragraph(`**Bench Press PR:** ${stats.prWeight} kg × ${stats.prReps} reps (${stats.prDate})`);
+```
+
+#### Dataview List - Exercises by Muscle Group
+
+```dataviewjs
+const exercises = await WorkoutPlannerAPI.getExercises({ tag: "chest" });
+dv.list(exercises);
+```
+
+#### Weekly Volume Summary
+
+```dataviewjs
+const logs = await WorkoutPlannerAPI.getWorkoutLogs({
+  dateRange: {
+    start: moment().subtract(7, 'days').format('YYYY-MM-DD'),
+    end: moment().format('YYYY-MM-DD')
+  }
+});
+
+const totalVolume = logs.reduce((sum, l) => sum + l.volume, 0);
+const uniqueExercises = [...new Set(logs.map(l => l.exercise))];
+
+dv.paragraph(`**This Week:** ${totalVolume.toLocaleString()} kg volume across ${uniqueExercises.length} exercises`);
+```
+
+> **Note:** The API is available after the plugin loads. In Dataview queries, it's accessible as `WorkoutPlannerAPI` or `window.WorkoutPlannerAPI`.
 
 ## Settings
 

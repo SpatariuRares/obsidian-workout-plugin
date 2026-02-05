@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
 import { ListItem } from "@app/components/molecules";
 
@@ -40,4 +40,3 @@ export class RecentWorkouts {
     });
   }
 }
-

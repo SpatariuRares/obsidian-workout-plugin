@@ -1,5 +1,4 @@
-import { TimerState } from "@app/types/TimerTypes";
-import { TIMER_TYPE } from "@app/types/TimerTypes";
+import { TimerState, TIMER_TYPE } from "@app/features/timer";
 import { Button } from "@app/components/atoms";
 
 export interface TimerControlCallbacks {
@@ -12,7 +11,7 @@ export class TimerControls {
   static createControls(
     container: HTMLElement,
     state: TimerState,
-    callbacks: TimerControlCallbacks
+    callbacks: TimerControlCallbacks,
   ): HTMLButtonElement | undefined {
     const controlsDiv = container.createEl("div", {
       cls: "workout-timer-controls",
@@ -63,7 +62,7 @@ export class TimerControls {
 
   static updateStartStopButton(
     button: HTMLButtonElement | undefined,
-    isRunning: boolean
+    isRunning: boolean,
   ): void {
     if (button) {
       button.textContent = isRunning ? "⏸" : "▶";

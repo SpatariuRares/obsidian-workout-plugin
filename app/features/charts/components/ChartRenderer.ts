@@ -1,5 +1,9 @@
 import { Chart, ChartConfiguration } from "chart.js/auto";
-import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
+import {
+  EmbeddedChartParams,
+  ChartDataset,
+  CHART_DATA_TYPE,
+} from "@app/features/charts/types";
 import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import {
   ChartColors,
@@ -46,9 +50,11 @@ export class ChartRenderer {
   static addTrendLineToDatasets(datasets: ChartDataset[]): void {
     const mainDataset = datasets[0];
     if (mainDataset.data && mainDataset.data.length > 1) {
-      const { slope, intercept } = StatisticsUtils.calculateTrendLine(mainDataset.data);
+      const { slope, intercept } = StatisticsUtils.calculateTrendLine(
+        mainDataset.data,
+      );
       const trendData = mainDataset.data.map(
-        (_: number, index: number) => slope * index + intercept
+        (_: number, index: number) => slope * index + intercept,
       );
 
       datasets.push({
@@ -70,7 +76,7 @@ export class ChartRenderer {
     labels: string[],
     datasets: ChartDataset[],
     chartType: CHART_DATA_TYPE,
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): ChartConfiguration {
     const title = params.title || getDefaultChartTitle(chartType);
     const colors = ChartColors.getChartColors();
@@ -85,7 +91,7 @@ export class ChartRenderer {
       datasets,
       title,
       colors,
-      chartType
+      chartType,
     );
   }
 
@@ -97,7 +103,7 @@ export class ChartRenderer {
    */
   private static generateChartId(
     chartContainer: HTMLElement,
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): string {
     // Use container element ID if available
     if (chartContainer.id) {
@@ -136,14 +142,14 @@ export class ChartRenderer {
     chartContainer: HTMLElement,
     labels: string[],
     datasets: ChartDataset[],
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): boolean {
     const canvas = this.createCanvas(chartContainer);
     const chartConfig = this.createChartConfig(
       labels,
       datasets,
       params.type || CHART_DATA_TYPE.VOLUME,
-      params
+      params,
     );
 
     // Generate unique chart ID for tracking
@@ -178,4 +184,3 @@ export class ChartRenderer {
     this.chartInstances.clear();
   }
 }
-

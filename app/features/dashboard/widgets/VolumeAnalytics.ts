@@ -1,6 +1,8 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE, EmbeddedDashboardParams } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts";
+
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ChartRenderer } from "@app/features/charts";
 import { DashboardCalculations } from "@app/features/dashboard/business/DashboardCalculations";
 import { ListItem } from "@app/components/molecules";
@@ -9,7 +11,7 @@ export class VolumeAnalytics {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams,
   ): void {
     const analyticsEl = container.createEl("div", {
       cls: "workout-dashboard-widget  span-4  workout-volume-analytics",
@@ -28,7 +30,7 @@ export class VolumeAnalytics {
     // Prepare volume trend data
     const volumeTrendData = DashboardCalculations.prepareVolumeTrendData(
       data,
-      30
+      30,
     ); // Last 30 days
 
     // Create volume trend chart
@@ -37,14 +39,15 @@ export class VolumeAnalytics {
       volumeTrendData.labels,
       [
         {
-          label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.DATASET_LABEL,
+          label:
+            CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.DATASET_LABEL,
           data: volumeTrendData.data,
         },
       ],
       {
         type: CHART_DATA_TYPE.VOLUME,
         title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.CHART_TITLE,
-      }
+      },
     );
 
     // Volume by muscle group breakdown
@@ -59,10 +62,11 @@ export class VolumeAnalytics {
 
   private static renderMuscleGroupBreakdown(
     container: HTMLElement,
-    data: [string, number][]
+    data: [string, number][],
   ): void {
     container.createEl("h4", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.MUSCLE_BREAKDOWN_TITLE,
+      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS
+        .MUSCLE_BREAKDOWN_TITLE,
     });
 
     const listEl = ListItem.createList(container, {
@@ -80,4 +84,3 @@ export class VolumeAnalytics {
     });
   }
 }
-

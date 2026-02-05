@@ -3,7 +3,8 @@
  */
 export * from "@app/utils/DomUtils";
 export * from "@app/utils/ExerciseMatchUtils";
-export * from "@app/utils/ChartDataUtils";
+// ChartDataUtils moved to @app/features/charts/business
+export { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 export * from "@app/utils/ValidationUtils";
 export * from "@app/utils/StatisticsUtils";
 export * from "@app/utils/ExercisePathResolver";

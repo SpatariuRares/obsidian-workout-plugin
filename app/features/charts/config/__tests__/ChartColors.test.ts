@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { ChartColors } from "../ChartColors";
-import { CHART_DATA_TYPE } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts";
 
 describe("ChartColors", () => {
   const cssVars: Record<string, string> = {
@@ -44,13 +44,13 @@ describe("ChartColors", () => {
     const colors = ChartColors.getChartColors();
 
     expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.VOLUME)).toEqual(
-      colors.primary
+      colors.primary,
     );
     expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.WEIGHT)).toEqual(
-      colors.secondary
+      colors.secondary,
     );
     expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.REPS)).toEqual(
-      colors.accent
+      colors.accent,
     );
   });
 });

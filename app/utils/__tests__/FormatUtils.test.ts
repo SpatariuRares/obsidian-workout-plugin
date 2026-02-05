@@ -1,5 +1,5 @@
 import { FormatUtils } from "@app/utils/FormatUtils";
-import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 describe("FormatUtils", () => {
   describe("formatDuration", () => {

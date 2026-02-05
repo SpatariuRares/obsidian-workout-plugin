@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { Button } from "@app/components/atoms";

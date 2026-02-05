@@ -47,15 +47,17 @@ export {
 } from "@app/components/molecules/InfoBanner";
 
 // Priority 3 Molecules
+// ChartLegendItem moved to @app/features/charts/ui
 export {
 	ChartLegendItem,
 	type ChartLegendItemProps,
-} from "@app/components/molecules/ChartLegendItem";
+} from "@app/features/charts/ui/ChartLegendItem";
+// TableHeaderCell moved to @app/features/tables/ui
 export {
 	TableHeaderCell,
 	type TableHeaderCellProps,
 	type TableHeaderCellResult,
-} from "@app/components/molecules/TableHeaderCell";
+} from "@app/features/tables/ui/TableHeaderCell";
 export {
 	ProgressBar,
 	type ProgressBarProps,

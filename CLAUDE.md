@@ -236,38 +236,10 @@ import { ERROR_MESSAGES } from "@app/constants/validation.constants";
 - **Avoid Node/Electron APIs** - Not available on mobile
 - **Avoid regex lookbehind** - Only supported iOS 16.4+
 
-## Debug Mode
+## Public API
 
-Enable via settings or per-block with `debug: true`. See `DEBUG_GUIDE.md` for detailed troubleshooting.
+The plugin exposes `window.WorkoutPlannerAPI` for Dataview integration:
 
----
-
-## Agent Workflow (SOP System)
-
-This project uses a 3-tier architecture for AI-assisted development to maximize reliability.
-
-### 1. Directive Level (What to do)
-
-- **Location**: `directives/` (Markdown files)
-- **Content**: SOPs (Standard Operating Procedures) in natural language
-- **Purpose**: Define objectives, inputs, required tools, and expected outputs
-- **Rule**: Before starting a complex task, search for or create a directive
-
-### 2. Orchestration Level (AI reasoning)
-
-- **Who**: The AI Agent (Claude)
-- **What**: Intelligent routing. Read directives → Call execution scripts → Handle errors
-- **Rule**: Don't do everything manually. If a task is repeatable, it should become a script
-
-### 3. Execution Level (Deterministic arm)
-
-- **Location**: `execution/` (Scripts)
-- **Content**: Atomic, robust, deterministic scripts
-- **Rule**: Use `execution/` for file operations, bulk API calls, or complex logic
-- **Storage**: Use `.tmp/` for intermediate files. Never commit `.tmp/`
-
-### Operational Rules
-
-1. **Safety First**: Never commit tokens or API keys. Use `.env`
-2. **Config Over Code**: If logic can reside in config/constants, put it there, don't hardcode
-3. **Determinism**: For repetitive maintenance tasks, create scripts in `execution/`
+- `getWorkoutLogs(filter?)` - Query workout entries with exercise/date/protocol filters
+- `getExerciseStats(exercise)` - Get PR, volume, trends for an exercise
+- `getExercises(filter?)` - List exercises, optionally filtered by tag

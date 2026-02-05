@@ -12,16 +12,16 @@ import {
 jest.mock("@app/features/modals/CreateLogModal", () => ({
   CreateLogModal: jest.fn().mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/InsertChartModal", () => ({
+jest.mock("@app/features/charts/modals/InsertChartModal", () => ({
   InsertChartModal: jest.fn().mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/InsertTableModal", () => ({
+jest.mock("@app/features/tables/modals/InsertTableModal", () => ({
   InsertTableModal: jest.fn().mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/InsertTimerModal", () => ({
+jest.mock("@app/features/timer/modals/InsertTimerModal", () => ({
   InsertTimerModal: jest.fn().mockImplementation(() => ({ open: jest.fn() })),
 }));
-jest.mock("@app/features/modals/InsertDashboardModal", () => ({
+jest.mock("@app/features/dashboard/modals/InsertDashboardModal", () => ({
   InsertDashboardModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),

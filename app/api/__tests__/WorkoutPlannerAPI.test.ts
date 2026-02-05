@@ -1,6 +1,9 @@
+import { CHART_DATA_TYPE } from "@app/features/charts";
 import { WorkoutPlannerAPI } from "../WorkoutPlannerAPI";
-import { WorkoutProtocol, WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/types";
+import {
+  WorkoutProtocol,
+  WorkoutChartsSettings,
+} from "@app/types/WorkoutLogData";
 import { TFolder } from "obsidian";
 
 const createSettings = (): WorkoutChartsSettings => ({
@@ -235,9 +238,7 @@ describe("WorkoutPlannerAPI", () => {
             return Promise.resolve("---\ntags: chest\n---");
           }
           if (file.path.includes("squat")) {
-            return Promise.resolve(
-              "---\ntags:\n  - legs\n  - compound\n---"
-            );
+            return Promise.resolve("---\ntags:\n  - legs\n  - compound\n---");
           }
           return Promise.resolve("");
         }),
@@ -247,7 +248,7 @@ describe("WorkoutPlannerAPI", () => {
     const api = new WorkoutPlannerAPI(
       dataService as any,
       app,
-      createSettings()
+      createSettings(),
     );
 
     const allExercises = await api.getExercises();
@@ -279,7 +280,7 @@ describe("WorkoutPlannerAPI", () => {
     const api = new WorkoutPlannerAPI(
       dataService as any,
       app,
-      createSettings()
+      createSettings(),
     );
 
     const exercises = await api.getExercises();

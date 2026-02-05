@@ -5,13 +5,10 @@ import {
   ExerciseMatch,
 } from "@app/utils/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
-import {
-  EmbeddedChartParams,
-  EmbeddedTableParams,
-  FilterResult,
-  CHART_TYPE,
-} from "@app/types";
+import { EmbeddedChartParams, CHART_TYPE } from "@app/features/charts/types";
 import { MuscleTagService } from "@app/services/MuscleTagService";
+import { EmbeddedTableParams } from "@app/features/tables";
+import { FilterResult } from "@app/types";
 
 /**
  * Filter parameters for early filtering in DataService.

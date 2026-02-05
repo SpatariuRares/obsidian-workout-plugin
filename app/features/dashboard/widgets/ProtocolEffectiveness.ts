@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type WorkoutChartsPlugin from "main";
 

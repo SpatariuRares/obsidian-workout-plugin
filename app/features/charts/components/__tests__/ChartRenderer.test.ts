@@ -1,6 +1,9 @@
 import { ChartRenderer } from "../ChartRenderer";
 import { Chart } from "chart.js/auto";
-import { CHART_DATA_TYPE, EmbeddedChartParams } from "@app/types";
+import {
+  CHART_DATA_TYPE,
+  EmbeddedChartParams,
+} from "@app/features/charts/types";
 import { ChartLabels, ChartConfigBuilder } from "@app/features/charts/config";
 
 // Mock DOM createElement

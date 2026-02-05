@@ -1,0 +1,51 @@
+export enum CHART_TYPE {
+  EXERCISE = "exercise",
+  WORKOUT = "workout",
+  COMBINED = "combined",
+  ALL = "all",
+  NONE = "NONE",
+}
+
+export enum CHART_DATA_TYPE {
+  // Strength exercise types
+  VOLUME = "volume",
+  WEIGHT = "weight",
+  REPS = "reps",
+  // Timed/Distance/Cardio exercise types
+  DURATION = "duration",
+  DISTANCE = "distance",
+  PACE = "pace",
+  HEART_RATE = "heartRate",
+}
+
+export interface EmbeddedChartParams {
+  type?: CHART_DATA_TYPE;
+  chartType?: CHART_TYPE;
+  exercise?: string;
+  exercisePath?: string;
+  workout?: string;
+  workoutPath?: string;
+  dateRange?: number;
+  showTrendLine?: boolean;
+  showTrend?: boolean;
+  showStats?: boolean;
+  title?: string;
+  height?: string;
+  limit?: number;
+  exactMatch?: boolean;
+}
+
+export interface ChartDataset {
+  label: string;
+  data: number[];
+  borderColor?: string;
+  backgroundColor?: string;
+  tension?: number;
+  fill?: boolean;
+  pointRadius?: number;
+  pointHoverRadius?: number;
+  borderDash?: number[];
+  borderWidth?: number;
+  pointBackgroundColor?: string;
+  pointBorderColor?: string;
+}

@@ -25,7 +25,8 @@
       "Bash(OBSIDIANMD_DEBUG_SENTENCE_CASE=1 npx eslint:*)",
       "Bash(npm run test:*)",
       "Bash(node -e:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

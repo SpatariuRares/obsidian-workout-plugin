@@ -8,7 +8,7 @@ import {
   getYAxisLabel,
 } from "../ChartConstants";
 import { ChartColorPalette } from "../ChartColors";
-import { ChartDataset } from "@app/types";
+import { ChartDataset } from "chart.js/auto";
 
 describe("ChartConfigBuilder", () => {
   const colors: ChartColorPalette = {
@@ -54,7 +54,7 @@ describe("ChartConfigBuilder", () => {
     const plugins = ChartConfigBuilder.createPluginsConfig(
       "My Chart",
       colors,
-      ChartType.VOLUME
+      ChartType.VOLUME,
     );
 
     expect(plugins.title.display).toBe(true);
@@ -66,9 +66,10 @@ describe("ChartConfigBuilder", () => {
     expect(plugins.legend.labels.color).toBe(colors.text);
     expect(plugins.legend.labels.boxWidth).toBe(ChartStyling.LEGEND_BOX_WIDTH);
 
-    const tooltipLabel = plugins.tooltip.callbacks.label as (
-      tooltipItem: { parsed: { y: number }; dataset: { label?: string } }
-    ) => string;
+    const tooltipLabel = plugins.tooltip.callbacks.label as (tooltipItem: {
+      parsed: { y: number };
+      dataset: { label?: string };
+    }) => string;
 
     const labelText = tooltipLabel({
       parsed: { y: 12.345 },
@@ -76,14 +77,14 @@ describe("ChartConfigBuilder", () => {
     });
 
     expect(labelText).toBe(
-      `Volume: 12.3 ${getUnitForChartType(ChartType.VOLUME)}`
+      `Volume: 12.3 ${getUnitForChartType(ChartType.VOLUME)}`,
     );
   });
 
   it("creates scales and interaction config using constants", () => {
     const scales = ChartConfigBuilder.createScalesConfig(
       colors,
-      ChartType.WEIGHT
+      ChartType.WEIGHT,
     );
 
     expect(scales.x.title.text).toBe(ChartLabels.X_AXIS);
@@ -96,16 +97,14 @@ describe("ChartConfigBuilder", () => {
 
   it("creates a complete chart config", () => {
     const labels = ["2024-01-01", "2024-01-02"];
-    const datasets: ChartDataset[] = [
-      { label: "Volume", data: [10, 20] },
-    ];
+    const datasets: ChartDataset[] = [{ label: "Volume", data: [10, 20] }];
 
     const config = ChartConfigBuilder.createChartConfig(
       labels,
       datasets,
       "Volume Chart",
       colors,
-      ChartType.VOLUME
+      ChartType.VOLUME,
     );
 
     expect(config.type).toBe("line");
@@ -113,7 +112,7 @@ describe("ChartConfigBuilder", () => {
     expect(config.data?.datasets).toBe(datasets);
     expect(config.options?.aspectRatio).toBe(ChartStyling.ASPECT_RATIO);
     expect(config.options?.interaction?.mode).toBe(
-      ChartInteraction.INTERACTION_MODE
+      ChartInteraction.INTERACTION_MODE,
     );
   });
 });

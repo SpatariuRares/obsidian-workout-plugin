@@ -1,6 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 
 /**
  * Number of recent workouts to display in the comparison

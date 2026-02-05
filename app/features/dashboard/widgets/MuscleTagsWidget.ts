@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { EmbeddedDashboardParams } from "@app/types";
+import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
 
 /**
@@ -149,4 +149,3 @@ export class MuscleTagsWidget {
     return CONSTANTS.WORKOUT.ICONS.EXERCISE.DEADLIFT;
   }
 }
-

@@ -3,11 +3,11 @@ import { Notice } from "obsidian";
 import {
   TimerState,
   TimerCallbacks,
-} from "@app/types/TimerTypes";
-import { TimerAudio } from "@app/features/timer/components/TimerAudio";
-import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
-import { TimerControls } from "@app/features/timer/components/TimerControls";
-import { TIMER_TYPE } from "@app/types";
+  TIMER_TYPE,
+  TimerAudio,
+  TimerDisplay,
+  TimerControls,
+} from "@app/features/timer";
 
 export class TimerCore {
   private state: TimerState;
@@ -101,7 +101,7 @@ export class TimerCore {
     if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
       const remaining = Math.max(
         0,
-        this.state.duration * 1000 - this.state.elapsedTime
+        this.state.duration * 1000 - this.state.elapsedTime,
       );
       if (remaining <= 0) {
         this.handleTimerComplete();

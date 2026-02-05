@@ -1,6 +1,9 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
-import { EmbeddedDashboardParams, ProtocolFilterCallback } from "@app/types";
+import {
+  EmbeddedDashboardParams,
+  ProtocolFilterCallback,
+} from "@app/features/dashboard/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { Chart, ChartConfiguration, ArcElement, PieController, Tooltip, Legend } from "chart.js";
 import type WorkoutChartsPlugin from "main";

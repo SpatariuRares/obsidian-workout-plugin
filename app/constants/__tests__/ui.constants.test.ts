@@ -4,7 +4,7 @@
  * Tests all dynamic functions in ui.constants.ts to ensure 100% coverage.
  */
 
-import { CHART_DATA_TYPE } from "@app/types/ChartTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import {
   MODAL_UI,
   CHARTS_UI,

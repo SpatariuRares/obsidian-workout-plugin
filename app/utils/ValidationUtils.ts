@@ -1,8 +1,5 @@
-import {
-  EmbeddedViewParams,
-  CHART_DATA_TYPE,
-  CHART_TYPE,
-} from "@app/types";
+import { EmbeddedViewParams } from "@app/types";
+import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
 
 /**
  * Utility class for parameter validation operations
@@ -47,7 +44,7 @@ export class ValidationUtils {
         ].includes(chartType)
       ) {
         errors.push(
-          "chartType must be 'exercise', 'workout', 'combined', or 'all'"
+          "chartType must be 'exercise', 'workout', 'combined', or 'all'",
         );
       }
     }
@@ -81,5 +78,3 @@ export class ValidationUtils {
     return errors;
   }
 }
-
- 

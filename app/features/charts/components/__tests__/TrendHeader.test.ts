@@ -1,10 +1,11 @@
 /** @jest-environment jsdom */
 
 import { TrendHeader } from "../TrendHeader";
-import { CHART_DATA_TYPE, TrendIndicators } from "@app/types";
+import { TrendIndicators } from "@app/types";
 import { CONSTANTS } from "@app/constants";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { TrendIndicator } from "@app/components/molecules";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 jest.mock("@app/components/molecules", () => ({
   TrendIndicator: {
@@ -29,13 +30,13 @@ describe("TrendHeader", () => {
     TrendHeader.render(container, baseIndicators, [10, 20]);
 
     const header = container.querySelector(
-      ".workout-charts-trend-header"
+      ".workout-charts-trend-header",
     ) as HTMLElement;
     const title = header.querySelector("h3") as HTMLElement;
 
     expect(title.classList.contains("trend-color-green")).toBe(true);
     expect(title.querySelector("strong")?.textContent).toBe(
-      baseIndicators.trendDirection
+      baseIndicators.trendDirection,
     );
 
     const indicatorCreate = TrendIndicator.create as jest.Mock;
@@ -45,7 +46,7 @@ describe("TrendHeader", () => {
         direction: "up",
         percentage: 100,
         className: "workout-charts-trend-variation",
-      })
+      }),
     );
   });
 
@@ -60,7 +61,7 @@ describe("TrendHeader", () => {
       expect.objectContaining({
         direction: "up",
         percentage: 20,
-      })
+      }),
     );
   });
 
@@ -77,11 +78,11 @@ describe("TrendHeader", () => {
       TrendHeader.render(
         container,
         { ...baseIndicators, trendColor: color },
-        [10, 20]
+        [10, 20],
       );
 
       const title = container.querySelector(
-        ".workout-charts-trend-header-h3"
+        ".workout-charts-trend-header-h3",
       ) as HTMLElement;
 
       expect(title.classList.contains(expectedClass)).toBe(true);
@@ -97,11 +98,11 @@ describe("TrendHeader", () => {
     expect(indicatorCreate).not.toHaveBeenCalled();
 
     const variation = container.querySelector(
-      ".workout-charts-trend-variation"
+      ".workout-charts-trend-variation",
     ) as HTMLElement;
     expect(variation).toBeTruthy();
     expect(variation.textContent).toBe(
-      CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE
+      CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE,
     );
   });
 
@@ -116,14 +117,14 @@ describe("TrendHeader", () => {
       expect.objectContaining({
         direction: "neutral",
         percentage: 0,
-      })
+      }),
     );
 
     const expectedVariation =
       CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED("12.3");
 
     const paragraph = container.querySelector(
-      ".workout-charts-trend-header-p"
+      ".workout-charts-trend-header-p",
     ) as HTMLElement;
     expect(paragraph.textContent).toContain(expectedVariation);
   });
@@ -131,11 +132,13 @@ describe("TrendHeader", () => {
   it("applies variation color classes in fallback mode", () => {
     const calculateSpy = jest.spyOn(
       TrendHeader as unknown as {
-        calculateVariation: (
-          volumeData: number[]
-        ) => { firstValue?: number; lastValue?: number; percentChange: string };
+        calculateVariation: (volumeData: number[]) => {
+          firstValue?: number;
+          lastValue?: number;
+          percentChange: string;
+        };
       },
-      "calculateVariation"
+      "calculateVariation",
     );
 
     calculateSpy.mockReturnValue({
@@ -157,14 +160,14 @@ describe("TrendHeader", () => {
       TrendHeader.render(
         container,
         { ...baseIndicators, trendColor: color },
-        [10, 20]
+        [10, 20],
       );
 
       const indicatorCreate = TrendIndicator.create as jest.Mock;
       expect(indicatorCreate).not.toHaveBeenCalled();
 
       const variation = container.querySelector(
-        ".workout-charts-trend-variation"
+        ".workout-charts-trend-variation",
       ) as HTMLElement;
       expect(variation).toBeTruthy();
       expect(variation.classList.contains(expectedClass)).toBe(true);

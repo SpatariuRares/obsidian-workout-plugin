@@ -4,26 +4,26 @@
  * Tests the CONSTANTS object composed in index.ts.
  */
 
-import { CONSTANTS } from "../index";
+import { CONSTANTS } from "@app/constants";
 
 describe("constants/index", () => {
   describe("CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS", () => {
     describe("LIMIT_RANGE", () => {
       it("should format limit range message with min, max, and received values", () => {
         expect(
-          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(1, 1000, "abc")
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(1, 1000, "abc"),
         ).toBe('limit must be a number between 1 and 1000, received: "abc"');
       });
 
       it("should handle numeric string as received value", () => {
         expect(
-          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(1, 100, "-5")
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(1, 100, "-5"),
         ).toBe('limit must be a number between 1 and 100, received: "-5"');
       });
 
       it("should handle empty string as received value", () => {
         expect(
-          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(10, 50, "")
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(10, 50, ""),
         ).toBe('limit must be a number between 10 and 50, received: ""');
       });
     });
@@ -43,7 +43,7 @@ describe("constants/index", () => {
     it("should have MESSAGES namespace", () => {
       expect(CONSTANTS.WORKOUT.MESSAGES).toBeDefined();
       expect(CONSTANTS.WORKOUT.MESSAGES.NO_DATA).toBe(
-        "No workout data available"
+        "No workout data available",
       );
     });
 

@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { setupWorkoutToggle, fillDynamicInputsFromCustomFields } from "@app/utils/FormUtils";
+import { setupWorkoutToggle, fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 
 describe("FormUtils", () => {
   describe("setupWorkoutToggle", () => {

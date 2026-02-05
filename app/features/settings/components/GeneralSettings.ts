@@ -1,6 +1,6 @@
 import { App, Setting, normalizePath, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
-import { FolderSuggest } from "@app/services/suggest/FolderSuggest";
+import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/ConfirmModal";
 import WorkoutChartsPlugin from "main";
 
@@ -105,7 +105,7 @@ export class GeneralSettings {
       .addButton((button) =>
         button.setButtonText("Create examples").onClick(async () => {
           const { ExampleGeneratorService } =
-            await import("@app/services/ExampleGeneratorService");
+            await import("@app/services/examples/ExampleGeneratorService");
           const generator = new ExampleGeneratorService(this.app);
 
           const folderExists = await this.app.vault.adapter.exists(

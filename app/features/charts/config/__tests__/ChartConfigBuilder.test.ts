@@ -8,7 +8,7 @@ import {
   getYAxisLabel,
 } from "../ChartConstants";
 import { ChartColorPalette } from "../ChartColors";
-import { ChartDataset } from "chart.js/auto";
+import { ChartDataset } from "@app/features/charts/types";
 
 describe("ChartConfigBuilder", () => {
   const colors: ChartColorPalette = {

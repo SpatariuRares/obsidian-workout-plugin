@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { DomUtils } from "../DomUtils";
+import { DomUtils } from "@app/utils/DomUtils";
 
 describe("DomUtils", () => {
   describe("setCssProps", () => {

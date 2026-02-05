@@ -4,7 +4,7 @@
  */
 
 import { ChartConfiguration } from "chart.js/auto";
-import { ChartDataset } from "@app/types";
+import { ChartDataset } from "@app/features/charts/types";
 import { ChartColorPalette } from "@app/features/charts/config/ChartColors";
 import {
   ChartLabels,
@@ -187,4 +187,3 @@ export class ChartConfigBuilder {
     };
   }
 }
-

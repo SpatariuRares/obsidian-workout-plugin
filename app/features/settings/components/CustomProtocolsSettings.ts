@@ -1,6 +1,6 @@
 import { Setting, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
-import { CustomProtocolConfig } from "@app/types";
+import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { DomUtils } from "@app/utils/DomUtils";
 import { ProtocolBadge } from "@app/components/atoms";
 import WorkoutChartsPlugin from "main";

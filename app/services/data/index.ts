@@ -1,3 +1,6 @@
+// Facade
+export { DataService } from "@app/services/data/DataService";
+
 // CSV services
 export { CSVCacheService } from "@app/services/data/CSVCacheService";
 export { CSVColumnService } from "@app/services/data/CSVColumnService";

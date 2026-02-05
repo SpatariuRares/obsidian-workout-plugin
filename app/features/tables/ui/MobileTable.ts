@@ -1,5 +1,9 @@
 import { CONSTANTS, COLUMN_LABELS } from "@app/constants";
-import { EmbeddedChartParams, ChartDataset, CHART_DATA_TYPE } from "@app/types";
+import {
+  EmbeddedChartParams,
+  ChartDataset,
+  CHART_DATA_TYPE,
+} from "@app/features/charts/types";
 
 export class MobileTable {
   /**
@@ -69,4 +73,3 @@ export class MobileTable {
     }
   }
 }
-

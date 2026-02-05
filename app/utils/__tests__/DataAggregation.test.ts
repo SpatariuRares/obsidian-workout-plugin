@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { DataAggregation } from '@app/utils/DataAggregation';
+import { DataAggregation } from '@app/utils/data/DataAggregation';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
 
 describe('DataAggregation', () => {

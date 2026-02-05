@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { EmbeddedTableParams } from "@app/types";
+import { EmbeddedTableParams } from "@app/features/tables/types";
 
 /**
  * Configuration and validation for table parameters.
@@ -90,4 +90,3 @@ export class TableConfig {
     };
   }
 }
-

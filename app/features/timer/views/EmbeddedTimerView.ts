@@ -12,7 +12,7 @@ import {
   EmbeddedTimerParams,
   TIMER_TYPE,
 } from "@app/features/timer";
-import { BaseView } from "@app/views/BaseView";
+import { BaseView } from "@app/features/common/views/BaseView";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;

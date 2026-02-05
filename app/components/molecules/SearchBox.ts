@@ -6,7 +6,7 @@
 
 import { CONSTANTS } from "@app/constants";
 import { Icon, Input, Container } from "@app/components/atoms";
-import { INPUT_TYPE } from "@app/types";
+import { INPUT_TYPE } from "@app/types/InputTypes";
 
 export interface SearchBoxProps {
 	placeholder?: string;

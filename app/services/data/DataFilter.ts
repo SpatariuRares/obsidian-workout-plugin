@@ -3,12 +3,12 @@ import {
   ExerciseMatchUtils,
   MatchResult,
   ExerciseMatch,
-} from "@app/utils/ExerciseMatchUtils";
+} from "@app/utils/exercise/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams, CHART_TYPE } from "@app/features/charts/types";
-import { MuscleTagService } from "@app/services/MuscleTagService";
-import { EmbeddedTableParams } from "@app/features/tables";
-import { FilterResult } from "@app/types";
+import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { EmbeddedTableParams } from "@app/features/tables/types";
+import { FilterResult } from "@app/types/CommonTypes";
 
 /**
  * Filter parameters for early filtering in DataService.

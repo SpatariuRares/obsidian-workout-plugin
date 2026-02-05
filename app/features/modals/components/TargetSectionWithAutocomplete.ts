@@ -1,8 +1,8 @@
 import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { CHART_TYPE } from "@app/types";
-import { setupWorkoutToggle } from "@app/utils/FormUtils";
+import { CHART_TYPE } from "@app/features/charts/types";
+import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import type WorkoutChartsPlugin from "main";
 
 export interface TargetSectionWithAutocompleteElements {

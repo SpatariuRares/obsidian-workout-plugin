@@ -1,4 +1,4 @@
-import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
+import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { TFile } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 

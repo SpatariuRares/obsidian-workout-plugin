@@ -5,7 +5,7 @@
  * Dataview users to query workout logs and create custom views.
  */
 import { WorkoutLogData, WorkoutProtocol, WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import { DataService } from "@app/services/DataService";
+import { DataService } from "@app/services/data/DataService";
 import { App, TFolder } from "obsidian";
 
 /**

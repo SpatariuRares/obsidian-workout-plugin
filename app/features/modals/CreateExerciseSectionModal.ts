@@ -9,7 +9,7 @@ import { TABLE_TYPE } from "@app/features/tables/types";
 import { TIMER_TYPE } from "@app/features/timer/types";
 import { Button } from "@app/components/atoms";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
-import { setupWorkoutToggle } from "@app/utils/FormUtils";
+import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;

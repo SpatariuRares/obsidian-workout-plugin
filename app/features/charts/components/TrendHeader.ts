@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
-import { TrendIndicators, CHART_DATA_TYPE } from "@app/types";
+import { TrendIndicators } from "@app/types/CommonTypes";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TrendIndicator } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
 
@@ -202,4 +203,3 @@ export class TrendHeader {
     return { text: CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, color: "" };
   }
 }
-

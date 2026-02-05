@@ -16,8 +16,4 @@ export interface EmbeddedDashboardParams {
  * Callback type for protocol filter changes in dashboard
  */
 export type ProtocolFilterCallback = (protocol: string | null) => void;
-
-export interface MuscleHeatMapOptions {
-	timeFrame: "week" | "month" | "year";
-	view: "front" | "back";
-}
+export type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";

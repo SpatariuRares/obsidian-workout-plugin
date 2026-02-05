@@ -2,7 +2,7 @@
 
 import { Input } from "@app/components/atoms/Input";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { INPUT_TYPE } from "@app/types";
+import { INPUT_TYPE } from "@app/types/InputTypes";
 
 describe("Input atom", () => {
 	it("creates an input with provided attributes", () => {

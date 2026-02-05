@@ -1,13 +1,14 @@
 import { CONSTANTS } from "@app/constants";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
-import { EmbeddedChartParams, EmbeddedTableParams } from "@app/types";
-import { ExerciseMatchUtils } from "@app/utils/ExerciseMatchUtils";
+import { EmbeddedChartParams } from "@app/features/charts/types";
+import { EmbeddedTableParams } from "@app/features/tables/types";
+import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 
 import { TFile } from "obsidian";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
-jest.mock("@app/utils/ExerciseMatchUtils", () => ({
+jest.mock("@app/utils/exercise/ExerciseMatchUtils", () => ({
   ExerciseMatchUtils: {
     findExerciseMatches: jest.fn(),
     determineExerciseFilterStrategy: jest.fn(),

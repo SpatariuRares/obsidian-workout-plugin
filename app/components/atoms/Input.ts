@@ -3,7 +3,7 @@
  * Basic input field - indivisible UI primitive
  */
 
-import { INPUT_TYPE } from "@app/types";;
+import { INPUT_TYPE } from "@app/types/InputTypes";
 export interface InputProps {
 	type?: INPUT_TYPE;
 	placeholder?: string;

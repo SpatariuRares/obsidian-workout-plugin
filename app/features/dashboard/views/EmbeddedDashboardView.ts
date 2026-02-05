@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { BaseView } from "@app/views/BaseView";
+import { BaseView } from "@app/features/common/views/BaseView";
 import {
   SummaryWidget,
   QuickStatsCards,
@@ -13,8 +13,8 @@ import {
   ProtocolDistribution,
   ProtocolEffectiveness,
   DurationComparison,
+  MuscleHeatMap,
 } from "@app/features/dashboard/widgets";
-import { MuscleHeatMap } from "@app/features/dashboard/ui";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 

@@ -16,7 +16,7 @@ import {
   RESERVED_PARAMETER_KEYS,
   DEFAULT_PARAMETER_UNITS,
   CHART_DATA_TYPE_COLORS,
-} from "@app/utils/ParameterUtils";
+} from "@app/utils/parameter/ParameterUtils";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 
 describe("ParameterUtils", () => {

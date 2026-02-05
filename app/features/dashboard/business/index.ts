@@ -4,4 +4,4 @@
  */
 
 export * from "@app/features/dashboard/business/DashboardCalculations";
-export * from "@app/features/dashboard/business/muscleHeatMap";
+export * from "@app/features/dashboard/widgets/muscle-heat-map/business";

@@ -1,6 +1,7 @@
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { FilterResult, TrendIndicators, ParameterDefinition } from "@app/types";
+import { FilterResult, TrendIndicators } from "@app/types/CommonTypes";
+import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import {
   EmbeddedChartParams,
   ChartDataset,
@@ -21,7 +22,7 @@ import {
   isValidChartDataType,
   getAvailableChartDataTypes,
 } from "@app/features/charts/config/ChartConstants";
-import { BaseView } from "@app/views/BaseView";
+import { BaseView } from "@app/features/common/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { StatisticsUtils, ValidationUtils, ParameterUtils } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";

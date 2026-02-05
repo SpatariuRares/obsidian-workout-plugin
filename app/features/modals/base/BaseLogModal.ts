@@ -16,7 +16,7 @@ import { DynamicFieldsRenderer } from "@app/features/modals/base/components/Dyna
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
-import { fillDynamicInputsFromCustomFields } from "@app/utils/FormUtils";
+import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 
 /**
  * Abstract base class for workout log modals.

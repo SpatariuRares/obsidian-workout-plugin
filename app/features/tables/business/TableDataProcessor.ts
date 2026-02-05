@@ -1,6 +1,10 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
-import { EmbeddedTableParams, TableData, TableRow } from "@app/types";
+import {
+  EmbeddedTableParams,
+  TableData,
+  TableRow,
+} from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import type WorkoutChartsPlugin from "main";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";

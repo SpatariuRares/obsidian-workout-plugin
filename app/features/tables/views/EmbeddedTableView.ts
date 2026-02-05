@@ -12,10 +12,10 @@ import {
 } from "@app/features/tables";
 import { TableCallbacks, EmbeddedTableParams, TableData } from "@app/features/tables/types";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
-import { BaseView } from "@app/views/BaseView";
+import { BaseView } from "@app/features/common/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
-import { CodeBlockEditorService } from "@app/services/CodeBlockEditorService";
+import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**

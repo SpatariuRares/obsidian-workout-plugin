@@ -29,7 +29,7 @@ export {
   Arms,
   Legs,
   Core,
-} from "@app/features/dashboard/body";
+} from "@app/features/dashboard/widgets/muscle-heat-map/body";
 
 export type {
   MusclePartData,
@@ -40,4 +40,4 @@ export type {
   LegsData,
   CoreData,
   BodyData,
-} from "@app/features/dashboard/body";
+} from "@app/features/dashboard/widgets/muscle-heat-map/body";

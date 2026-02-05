@@ -1,5 +1,5 @@
 import { CONSTANTS, UNITS_MAP, COLUMN_LABELS } from "@app/constants";
-import { CHART_TYPE, CHART_DATA_TYPE } from "@app/types";
+import { CHART_TYPE, CHART_DATA_TYPE } from "@app/features/charts/types";
 import { ListItem } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
 

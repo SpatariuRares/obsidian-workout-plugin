@@ -3,7 +3,7 @@ import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/features/modals/CreateExercisePageModal";
-import { ExercisePathResolver } from "@app/utils/ExercisePathResolver";
+import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 
 import { Button } from "@app/components/atoms";
 

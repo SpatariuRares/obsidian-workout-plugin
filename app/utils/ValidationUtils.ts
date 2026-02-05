@@ -1,4 +1,4 @@
-import { EmbeddedViewParams } from "@app/types";
+import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
 
 /**

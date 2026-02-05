@@ -3,7 +3,7 @@
  * Applies colors, line styles, and point configurations.
  */
 
-import { ChartDataset } from "@app/types";
+import { ChartDataset } from "@app/features/charts/types";
 import {
   ChartColorPalette,
   ColorScheme,
@@ -85,4 +85,3 @@ export class DatasetStyler {
     }
   }
 }
-

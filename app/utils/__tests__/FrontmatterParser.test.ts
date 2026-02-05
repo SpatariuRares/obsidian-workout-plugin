@@ -1,5 +1,5 @@
 import { CONSTANTS } from "@app/constants";
-import { FrontmatterParser } from '@app/utils/FrontmatterParser';
+import { FrontmatterParser } from '@app/utils/frontmatter/FrontmatterParser';
 
 describe('FrontmatterParser', () => {
   const validContent = `---

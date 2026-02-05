@@ -2,7 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import {
   ExerciseMatchUtils,
   ExerciseMatch,
-} from "@app/utils/ExerciseMatchUtils";
+} from "@app/utils/exercise/ExerciseMatchUtils";
 import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ValidationUtils } from "@app/utils/ValidationUtils";

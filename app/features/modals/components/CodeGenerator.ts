@@ -3,11 +3,15 @@ import { CONSTANTS } from "@app/constants";
 import {
   CHART_TYPE,
   EmbeddedChartParams,
+} from "@app/features/charts/types";
+import {
   EmbeddedTimerParams,
-  TableCodeOptions,
   TIMER_TYPE,
+} from "@app/features/timer/types";
+import {
+  TableCodeOptions,
   TABLE_TYPE,
-} from "@app/types";
+} from "@app/features/tables/types";
 
 export class CodeGenerator {
   /**

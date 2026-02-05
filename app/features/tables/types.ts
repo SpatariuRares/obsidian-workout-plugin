@@ -1,4 +1,5 @@
-import { WorkoutLogData, FilterResult } from "@app/types";
+import { FilterResult } from "@app/types/CommonTypes";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export interface EmbeddedTableParams {
   exercise?: string;

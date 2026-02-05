@@ -12,7 +12,7 @@ import type { LogDataService } from "@app/features/modals/base/services/LogDataS
 import {
   fillDynamicInputsFromCustomFields,
   setupWorkoutToggle,
-} from "@app/utils/FormUtils";
+} from "@app/utils/form/FormUtils";
 
 export class LogFormRenderer {
   constructor(

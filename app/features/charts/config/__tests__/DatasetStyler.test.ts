@@ -1,7 +1,7 @@
 import { DatasetStyler } from "../DatasetStyler";
 import { ChartLabels, ChartStyling } from "../ChartConstants";
 import { ChartColorPalette, ColorScheme } from "../ChartColors";
-import { ChartDataset } from "@app/types";
+import { ChartDataset } from "@app/features/charts/types";
 
 describe("DatasetStyler", () => {
   const scheme: ColorScheme = {

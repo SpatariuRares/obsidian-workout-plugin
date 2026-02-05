@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { TrendHeader } from "../TrendHeader";
-import { TrendIndicators } from "@app/types";
+import { TrendIndicators } from "@app/types/CommonTypes";
 import { CONSTANTS } from "@app/constants";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { TrendIndicator } from "@app/components/molecules";

@@ -4,7 +4,7 @@
  */
 import { TFile, normalizePath } from "obsidian";
 import WorkoutChartsPlugin from "main";
-import { BaseView } from "@app/views/BaseView";
+import { BaseView } from "@app/features/common/views/BaseView";
 import {
   EmbeddedDurationParams,
   DurationAnalysisResult,

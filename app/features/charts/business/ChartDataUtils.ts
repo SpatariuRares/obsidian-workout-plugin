@@ -2,7 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
 import { DateUtils } from "@app/utils/DateUtils";
-import { ParameterUtils } from "@app/utils/ParameterUtils";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Utility class for chart data processing operations

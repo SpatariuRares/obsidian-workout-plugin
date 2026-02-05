@@ -1,6 +1,7 @@
 // Types and utilities for workout log data
 import { TFile } from "obsidian";
-import { CHART_DATA_TYPE, TimerPresetConfig } from "@app/types";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { TimerPresetConfig } from "@app/features/timer/types";
 
 /**
  * Workout protocol enum for specialized training techniques.

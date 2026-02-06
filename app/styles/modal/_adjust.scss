@@ -1,8 +1,12 @@
+@use "../variables";
+
 /* Quick adjust components */
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-md);
+  width: 100%;
+
   .workout-field-label {
     display: flex;
     margin-bottom: var(--workout-space-sm);
@@ -11,14 +15,34 @@
     font-size: var(--workout-font-base);
   }
   .workout-input-with-adjust {
-    display: flex;
+    --workout-adjust-btn-width: clamp(4ch, 20%, 100px);
+    display: grid;
+    grid-template-columns: var(--workout-adjust-btn-width) minmax(0, 1fr) var(
+        --workout-adjust-btn-width
+      );
     align-items: center;
-    flex-wrap: nowrap;
     gap: var(--workout-space-sm);
     width: 100%;
-    input {
-      flex: 1;
+
+    .workout-adjust-btn {
+      width: 100%;
+      min-width: 4ch;
+      max-width: 100px;
+    }
+
+    .workout-charts-input {
+      width: 100%;
+      min-width: 5ch;
       text-align: center;
+    }
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-charts-modal {
+    .workout-adjust-btn {
+      min-width: 4ch;
+      min-height: 44px;
     }
   }
 }

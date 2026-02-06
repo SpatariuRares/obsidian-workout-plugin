@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* ============================================================================
    DASHBOARD WIDGETS
    ============================================================================ */
@@ -79,3 +81,28 @@
 }
 
 /* Other widgets are inside column containers, so they rely on the nested logic above */
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+
+  .workout-dashboard-chart-container {
+    display: none;
+  }
+
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+  }
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+    margin-bottom: var(--workout-space-md);
+  }
+}

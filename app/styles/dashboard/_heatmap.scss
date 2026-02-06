@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* ============================================================================
    DASHBOARD HEATMAP
    ============================================================================ */
@@ -143,5 +145,20 @@
       color: var(--text-muted);
       font-size: var(--workout-font-base);
     }
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-heatmap-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--workout-space-md);
+  }
+
+  .workout-muscle-details {
+    position: static;
+    margin-top: var(--workout-space-lg);
+    width: 100%;
+    max-width: none;
   }
 }

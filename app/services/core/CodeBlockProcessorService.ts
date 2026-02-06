@@ -6,9 +6,7 @@ import { EmbeddedTableView } from "@app/features/tables";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
-import {
-  EmbeddedChartParams,
-} from "@app/features/charts/types";
+import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
@@ -134,7 +132,7 @@ export class CodeBlockProcessorService {
   private async handleWorkoutLog(
     source: string,
     el: HTMLElement,
-    ctx: MarkdownPostProcessorContext,
+    _ctx: MarkdownPostProcessorContext,
   ) {
     try {
       const params = this.parseCodeBlockParams(source);

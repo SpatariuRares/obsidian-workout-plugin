@@ -1,3 +1,5 @@
+@use "variables";
+
 /* ============================================================================
    CHART STYLES
    ============================================================================ */
@@ -77,4 +79,43 @@
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
   font-weight: var(--workout-font-weight-medium);
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-charts-container {
+    display: none;
+  }
+}
+
+@media print {
+  .workout-charts-container {
+    .workout-charts-controls,
+    .workout-log-table th,
+    .workout-log-table td {
+      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      padding: var(--workout-space-sm);
+    }
+
+    .workout-charts-controls {
+      display: none !important;
+    }
+
+    .workout-log-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--workout-space-md);
+    }
+  }
+
+  .workout-embedded-chart-debug {
+    display: none !important;
+  }
+
+  .workout-embedded-chart-table-fallback {
+    .workout-log-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--workout-space-md);
+    }
+  }
 }

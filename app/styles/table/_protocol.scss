@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Protocol column */
 .workout-table-protocol-cell {
   text-align: center;
@@ -50,4 +52,12 @@
 /* Custom protocol badge - uses inline styles for color, inherits base badge structure */
 .workout-protocol-badge-custom {
   border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
 }

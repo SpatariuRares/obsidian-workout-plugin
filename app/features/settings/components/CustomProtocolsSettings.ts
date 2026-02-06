@@ -1,7 +1,6 @@
 import { Setting, Notice } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
-import { DomUtils } from "@app/utils/DomUtils";
 import { ProtocolBadge } from "@app/components/atoms";
 import WorkoutChartsPlugin from "main";
 
@@ -105,15 +104,10 @@ export class CustomProtocolsSettings {
     const container = fragment.appendChild(document.createElement("span"));
 
     // Add abbreviation badge preview
-    const badge = container.appendChild(document.createElement("span"));
-
-    badge.classList.add("workout-protocol-badge");
-
-    DomUtils.setCssProps(badge, {
-      backgroundColor: protocol.color,
-      color: ProtocolBadge.getContrastColor(protocol.color),
+    ProtocolBadge.create(container, {
+      text: protocol.abbreviation,
+      color: protocol.color,
     });
-    badge.textContent = protocol.abbreviation;
 
     // Add ID info
     const idText = container.appendChild(document.createElement("span"));

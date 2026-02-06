@@ -97,7 +97,6 @@ export class CodeBlockEditorService {
         }
         // Reset for next code block
         inCodeBlock = false;
-        codeBlockStart = -1;
         foundExercise = false;
         paramLineIndex = -1;
         continue;

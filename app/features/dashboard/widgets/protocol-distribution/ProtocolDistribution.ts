@@ -1,12 +1,24 @@
 import { CONSTANTS } from "@app/constants";
-import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+  CustomProtocolConfig,
+} from "@app/types/WorkoutLogData";
 import {
   EmbeddedDashboardParams,
   ProtocolFilterCallback,
 } from "@app/features/dashboard/types";
 import { DateUtils } from "@app/utils/DateUtils";
-import { Chart, ChartConfiguration, ArcElement, PieController, Tooltip, Legend } from "chart.js";
+import {
+  Chart,
+  ChartConfiguration,
+  ArcElement,
+  PieController,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import type WorkoutChartsPlugin from "main";
+import { Canvas } from "@app/components/atoms";
 import { ChartLegendItem, FilterIndicator } from "@app/components/molecules";
 
 // Register required Chart.js components for pie charts
@@ -19,12 +31,30 @@ type PieChart = Chart<"pie", number[], string>;
  * Protocol display configuration for badges and chart colors
  */
 const PROTOCOL_CONFIG: Record<string, { label: string; color: string }> = {
-  [WorkoutProtocol.STANDARD]: { label: "Standard", color: "rgba(128, 128, 128, 0.7)" },
-  [WorkoutProtocol.DROP_SET]: { label: "Drop Set", color: "rgba(239, 68, 68, 0.7)" },
-  [WorkoutProtocol.MYO_REPS]: { label: "Myo Reps", color: "rgba(168, 85, 247, 0.7)" },
-  [WorkoutProtocol.REST_PAUSE]: { label: "Rest Pause", color: "rgba(249, 115, 22, 0.7)" },
-  [WorkoutProtocol.SUPERSET]: { label: "Superset", color: "rgba(59, 130, 246, 0.7)" },
-  [WorkoutProtocol.TWENTYONE]: { label: "21s", color: "rgba(34, 197, 94, 0.7)" },
+  [WorkoutProtocol.STANDARD]: {
+    label: "Standard",
+    color: "rgba(128, 128, 128, 0.7)",
+  },
+  [WorkoutProtocol.DROP_SET]: {
+    label: "Drop Set",
+    color: "rgba(239, 68, 68, 0.7)",
+  },
+  [WorkoutProtocol.MYO_REPS]: {
+    label: "Myo Reps",
+    color: "rgba(168, 85, 247, 0.7)",
+  },
+  [WorkoutProtocol.REST_PAUSE]: {
+    label: "Rest Pause",
+    color: "rgba(249, 115, 22, 0.7)",
+  },
+  [WorkoutProtocol.SUPERSET]: {
+    label: "Superset",
+    color: "rgba(59, 130, 246, 0.7)",
+  },
+  [WorkoutProtocol.TWENTYONE]: {
+    label: "21s",
+    color: "rgba(34, 197, 94, 0.7)",
+  },
 };
 
 /**
@@ -61,7 +91,7 @@ export class ProtocolDistribution {
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
     plugin?: WorkoutChartsPlugin,
-    onFilterChange?: ProtocolFilterCallback
+    onFilterChange?: ProtocolFilterCallback,
   ): void {
     // Store callback for later use
     this.onFilterChange = onFilterChange || null;
@@ -90,7 +120,7 @@ export class ProtocolDistribution {
     this.currentStats = stats;
 
     // Check if there's any data
-    if (stats.length === 0 || stats.every(s => s.count === 0)) {
+    if (stats.length === 0 || stats.every((s) => s.count === 0)) {
       widgetEl.createEl("div", {
         text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.NO_DATA,
         cls: "workout-protocol-no-data",
@@ -125,16 +155,18 @@ export class ProtocolDistribution {
   private static renderActiveFilterIndicator(
     container: HTMLElement,
     activeFilter: string,
-    stats: ProtocolStats[]
+    stats: ProtocolStats[],
   ): void {
-    const activeStat = stats.find(s => s.protocol === activeFilter);
+    const activeStat = stats.find((s) => s.protocol === activeFilter);
     const filterLabel = activeStat?.label || activeFilter;
 
     FilterIndicator.create(container, {
-      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE,
+      label:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE,
       filterValue: filterLabel,
       color: activeStat?.color,
-      clearText: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
+      clearText:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
       className: "workout-protocol-filter-indicator",
       onClear: () => this.handleFilterChange(null),
     });
@@ -148,7 +180,7 @@ export class ProtocolDistribution {
    */
   private static calculateProtocolStats(
     data: WorkoutLogData[],
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
   ): ProtocolStats[] {
     // Count occurrences of each protocol
     const protocolCounts = new Map<string, number>();
@@ -177,18 +209,20 @@ export class ProtocolDistribution {
 
     // Process custom protocols
     if (plugin?.settings?.customProtocols) {
-      plugin.settings.customProtocols.forEach((customProtocol: CustomProtocolConfig) => {
-        const count = protocolCounts.get(customProtocol.id) || 0;
-        if (count > 0) {
-          stats.push({
-            protocol: customProtocol.id,
-            label: customProtocol.name,
-            count,
-            percentage: totalSets > 0 ? (count / totalSets) * 100 : 0,
-            color: this.hexToRgba(customProtocol.color, 0.7),
-          });
-        }
-      });
+      plugin.settings.customProtocols.forEach(
+        (customProtocol: CustomProtocolConfig) => {
+          const count = protocolCounts.get(customProtocol.id) || 0;
+          if (count > 0) {
+            stats.push({
+              protocol: customProtocol.id,
+              label: customProtocol.name,
+              count,
+              percentage: totalSets > 0 ? (count / totalSets) * 100 : 0,
+              color: this.hexToRgba(customProtocol.color, 0.7),
+            });
+          }
+        },
+      );
     }
 
     // Sort by count descending
@@ -218,10 +252,10 @@ export class ProtocolDistribution {
   private static renderPieChart(
     container: HTMLElement,
     stats: ProtocolStats[],
-    activeFilter?: string | null
+    activeFilter?: string | null,
   ): void {
-    const canvas = container.createEl("canvas", {
-      cls: "workout-protocol-chart-canvas",
+    const canvas = Canvas.create(container, {
+      className: "workout-protocol-chart-canvas",
     });
 
     // Destroy existing chart if present
@@ -279,7 +313,8 @@ export class ProtocolDistribution {
                 return `${stat.label}: ${stat.count} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SETS_LABEL} (${stat.percentage.toFixed(1)}${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.PERCENT_LABEL})`;
               },
               afterLabel: () => {
-                return CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER;
+                return CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION
+                  .CLICK_TO_FILTER;
               },
             },
           },
@@ -328,7 +363,7 @@ export class ProtocolDistribution {
   private static renderLegend(
     container: HTMLElement,
     stats: ProtocolStats[],
-    activeFilter?: string | null
+    activeFilter?: string | null,
   ): void {
     const legendEl = container.createEl("div", {
       cls: "workout-protocol-legend",
@@ -343,7 +378,9 @@ export class ProtocolDistribution {
         label: stat.label,
         value: `${stat.count} (${stat.percentage.toFixed(1)}%)`,
         className: "workout-protocol-legend-item",
-        tooltip: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLICK_TO_FILTER,
+        tooltip:
+          CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION
+            .CLICK_TO_FILTER,
         isActive,
         isDimmed,
         onClick: () => {

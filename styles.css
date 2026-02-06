@@ -303,6 +303,13 @@
 
 /* button styles moved to modal/_buttons.scss */
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
    BUTTON SYSTEM
    ============================================================================
    Organized for maintainability:
@@ -584,6 +591,38 @@
   transform: scale(1.1);
 }
 
+@media print {
+  .workout-add-log-button-container {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .workout-frame-toggle {
+    justify-content: center;
+    width: 100%;
+  }
+  .workout-toggle-btn {
+    flex: 1;
+    padding: var(--workout-space-md) var(--workout-space-md);
+  }
+  .workout-export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .workout-action-buttons {
+    gap: var(--workout-space-md);
+  }
+  .workout-action-button {
+    padding: var(--workout-space-lg) var(--workout-space-lg);
+    font-size: var(--workout-font-base);
+  }
+}
+@media (max-width: 484px) {
+  .workout-toggle-btn {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    font-size: var(--workout-font-sm);
+  }
+}
 /* ============================================================================
    FEEDBACK & ALERTS
    ============================================================================ */
@@ -812,6 +851,21 @@
   color: var(--text-normal);
 }
 
+@media print {
+  .workout-charts-table-fallback .workout-charts-stats,
+  .workout-charts-table-fallback .workout-charts-trend-header {
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    margin: var(--workout-space-md) 0;
+    padding: var(--workout-space-lg);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Workout table (general) */
 .workout-table-container {
   width: 100%;
@@ -890,6 +944,29 @@
   border-radius: var(--workout-radius-sm);
 }
 
+@media (max-width: 484px) {
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+  }
+  .workout-table-spacer-summary-cell .workout-spacer-stat {
+    margin-right: var(--workout-space-sm);
+    font-size: var(--workout-font-xs);
+  }
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Log table */
 .workout-log-table {
   width: 100%;
@@ -941,6 +1018,18 @@
   background: transparent;
 }
 
+@media (max-width: 484px) {
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+  }
+  .workout-log-table th {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+  .workout-log-table td {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+  }
+}
 /* Target header */
 .workout-target-header {
   padding: var(--workout-space-md) var(--workout-space-lg);
@@ -1060,6 +1149,13 @@
     transform: translateY(0);
   }
 }
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Mobile table */
 .workout-chart-mobile-table {
   display: none;
@@ -1114,6 +1210,18 @@
   border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
 }
 
+@media (max-width: 768px) {
+  .workout-chart-mobile-table {
+    display: block;
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Protocol column */
 .workout-table-protocol-cell {
   text-align: center;
@@ -1168,6 +1276,20 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 484px) {
+  .workout-protocol-badge {
+    padding: 1px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    CHART STYLES
    ============================================================================ */
@@ -1244,6 +1366,35 @@
   font-weight: var(--workout-font-weight-medium);
 }
 
+@media (max-width: 768px) {
+  .workout-charts-container {
+    display: none;
+  }
+}
+@media print {
+  .workout-charts-container .workout-charts-controls,
+  .workout-charts-container .workout-log-table th,
+  .workout-charts-container .workout-log-table td {
+    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    padding: var(--workout-space-sm);
+  }
+  .workout-charts-container .workout-charts-controls {
+    display: none !important;
+  }
+  .workout-charts-container .workout-log-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--workout-space-md);
+  }
+  .workout-embedded-chart-debug {
+    display: none !important;
+  }
+  .workout-embedded-chart-table-fallback .workout-log-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--workout-space-md);
+  }
+}
 /* ============================================================================
    TIMER STYLES
    ============================================================================ */
@@ -1438,6 +1589,13 @@
   padding-bottom: var(--workout-space-sm);
 }
 
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Form elements */
 .workout-charts-form {
   display: flex;
@@ -1485,8 +1643,11 @@
 }
 
 .workout-parameters-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--workout-space-md);
+  width: 100%;
+  align-items: start;
 }
 
 .workout-charts-checkbox-group {
@@ -1498,6 +1659,32 @@
   padding-bottom: var(--workout-space-sm);
 }
 
+@media (max-width: 768px) {
+  .workout-charts-modal .workout-parameters-container {
+    grid-template-columns: 1fr;
+  }
+  .workout-charts-modal .workout-charts-form-group input[type=text],
+  .workout-charts-modal .workout-charts-form-group input[type=number],
+  .workout-charts-modal .workout-charts-form-group select,
+  .workout-charts-modal .workout-charts-form-group textarea {
+    min-height: 44px;
+    font-size: var(--workout-font-base);
+  }
+  .workout-charts-modal .workout-charts-input {
+    min-width: 10ch;
+    min-height: 44px;
+  }
+}
+@media (min-width: 768px) {
+  .workout-charts-modal .workout-parameters-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1200px) {
+  .workout-charts-modal .workout-parameters-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 /* Info boxes & sections */
 .workout-charts-mode-info {
   background: var(--background-secondary);
@@ -1597,11 +1784,19 @@
   display: none;
 }
 
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Quick adjust components */
 .workout-field-with-adjust {
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-md);
+  width: 100%;
 }
 .workout-field-with-adjust .workout-field-label {
   display: flex;
@@ -1611,17 +1806,30 @@
   font-size: var(--workout-font-base);
 }
 .workout-field-with-adjust .workout-input-with-adjust {
-  display: flex;
+  --workout-adjust-btn-width: clamp(4ch, 20%, 100px);
+  display: grid;
+  grid-template-columns: var(--workout-adjust-btn-width) minmax(0, 1fr) var(--workout-adjust-btn-width);
   align-items: center;
-  flex-wrap: nowrap;
   gap: var(--workout-space-sm);
   width: 100%;
 }
-.workout-field-with-adjust .workout-input-with-adjust input {
-  flex: 1;
+.workout-field-with-adjust .workout-input-with-adjust .workout-adjust-btn {
+  width: 100%;
+  min-width: 4ch;
+  max-width: 100px;
+}
+.workout-field-with-adjust .workout-input-with-adjust .workout-charts-input {
+  width: 100%;
+  min-width: 5ch;
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .workout-charts-modal .workout-adjust-btn {
+    min-width: 4ch;
+    min-height: 44px;
+  }
+}
 /* Audit modal */
 .workout-audit-success {
   color: var(--text-success);
@@ -1688,6 +1896,13 @@
   font-weight: var(--workout-font-weight-medium);
 }
 
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* Shared mobile logging styles for create/edit modals */
 .workout-log-recent-label {
   font-weight: var(--workout-font-weight-semibold);
@@ -1742,6 +1957,12 @@
   color: var(--text-on-accent);
 }
 
+@media (max-width: 768px) {
+  .workout-log-recent-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
+  }
+}
 /* Conversion modal */
 .workout-convert-mapping-row {
   display: flex;
@@ -1941,6 +2162,13 @@
 }
 
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
    DASHBOARD LAYOUT
    ============================================================================ */
 .workout-dashboard {
@@ -2001,6 +2229,60 @@
   grid-row: span 1;
 }
 
+@media (max-width: 1200px) {
+  .workout-dashboard-grid {
+    gap: var(--workout-space-md);
+  }
+  .workout-dashboard .workout-muscle-heatmap,
+  .workout-dashboard .workout-volume-analytics,
+  .workout-dashboard .workout-recent-workouts,
+  .workout-dashboard .workout-protocol-distribution,
+  .workout-dashboard .workout-protocol-effectiveness,
+  .workout-dashboard .workout-duration-comparison,
+  .workout-dashboard .workout-quick-actions,
+  .workout-dashboard .workout-file-errors {
+    grid-column: span 6;
+    grid-row: auto;
+  }
+  .workout-volume-analytics {
+    grid-column: span 12;
+  }
+}
+@media (max-width: 768px) {
+  .workout-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .workout-summary-widget,
+  .workout-stats-cards,
+  .workout-muscle-heatmap,
+  .workout-volume-analytics,
+  .workout-recent-workouts,
+  .workout-protocol-distribution,
+  .workout-protocol-effectiveness,
+  .workout-duration-comparison,
+  .workout-quick-actions,
+  .workout-file-errors,
+  .workout-dashboard-widget {
+    grid-column: 1/-1 !important;
+    grid-row: auto !important;
+  }
+  .workout-dashboard-title {
+    font-size: var(--workout-font-base);
+  }
+}
+@media (max-width: 484px) {
+  .workout-dashboard-title {
+    font-size: var(--workout-font-xl);
+    margin-bottom: var(--workout-space-lg);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    DASHBOARD WIDGETS
    ============================================================================ */
@@ -2079,6 +2361,33 @@
 }
 
 /* Other widgets are inside column containers, so they rely on the nested logic above */
+@media (max-width: 768px) {
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+  .workout-dashboard-chart-container {
+    display: none;
+  }
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+  }
+}
+@media (max-width: 484px) {
+  .workout-dashboard-widget {
+    padding: var(--workout-space-lg);
+  }
+  .workout-widget-title {
+    font-size: var(--workout-font-base);
+    margin-bottom: var(--workout-space-md);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
@@ -2187,6 +2496,40 @@
   opacity: 1;
 }
 
+@media (max-width: 768px) {
+  .workout-summary-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+  .workout-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
+  }
+  .workout-card-header {
+    margin-bottom: var(--workout-space-md);
+  }
+  .workout-card-icon {
+    font-size: var(--workout-space-xl);
+  }
+}
+@media (max-width: 484px) {
+  .workout-card-stats {
+    gap: var(--workout-space-md);
+  }
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    DASHBOARD HEATMAP
    ============================================================================ */
@@ -2310,6 +2653,26 @@
   font-size: var(--workout-font-base);
 }
 
+@media (max-width: 768px) {
+  .workout-heatmap-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--workout-space-md);
+  }
+  .workout-muscle-details {
+    position: static;
+    margin-top: var(--workout-space-lg);
+    width: 100%;
+    max-width: none;
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    DASHBOARD RECENT WORKOUTS
    ============================================================================ */
@@ -2362,6 +2725,19 @@
   font-size: var(--workout-font-base);
 }
 
+@media (max-width: 768px) {
+  .workout-recent-workout-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--workout-space-sm);
+  }
+  .workout-recent-date {
+    min-width: auto;
+  }
+  .workout-recent-name {
+    margin: 0;
+  }
+}
 /* ============================================================================
    DASHBOARD TAGS
    ============================================================================ */
@@ -2833,243 +3209,4 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
-}
-
-/* ============================================================================
-   WORKOUT CHARTS PLUGIN - STYLES
-   Modern styles using Obsidian CSS Variables
-
-   This stylesheet uses a modular approach with component-based CSS files.
-   All components follow Obsidian's theming system for consistent appearance.
-   ============================================================================ */
-/* ============================================================================
-   RESPONSIVE DESIGN
-   ============================================================================ */
-/* Print Styles */
-@media print {
-  .workout-charts-container .workout-charts-controls,
-  .workout-charts-container .workout-log-table th,
-  .workout-charts-container .workout-log-table td {
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    padding: var(--workout-space-sm);
-  }
-  .workout-charts-container .workout-charts-controls {
-    display: none !important;
-  }
-  .workout-charts-container .workout-log-table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: var(--workout-space-md);
-  }
-  .workout-charts-table-fallback .workout-charts-stats,
-  .workout-charts-table-fallback .workout-charts-trend-header {
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
-    margin: var(--workout-space-md) 0;
-    padding: var(--workout-space-lg);
-  }
-  .workout-add-log-button-container,
-  .workout-embedded-chart-debug {
-    display: none !important;
-  }
-  .workout-embedded-chart-table-fallback .workout-log-table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: var(--workout-space-md);
-  }
-}
-/* Large Desktop - Removed 8-column override to maintain consistent 12-column grid */
-/* Tablet breakpoint - 4 columns */
-/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
-/* Tablet breakpoint - 2 columns equivalent (using 12-col grid) */
-@media (max-width: 1200px) {
-  .workout-dashboard-grid {
-    /* Keep 12 columns, just adjust spans */
-    gap: var(--workout-space-md);
-  }
-  /* Widgets take half width on tablet (span 6) or full width (span 12) */
-  .workout-dashboard .workout-muscle-heatmap,
-  .workout-dashboard .workout-volume-analytics,
-  .workout-dashboard .workout-recent-workouts,
-  .workout-dashboard .workout-protocol-distribution,
-  .workout-dashboard .workout-protocol-effectiveness,
-  .workout-dashboard .workout-duration-comparison,
-  .workout-dashboard .workout-quick-actions,
-  .workout-dashboard .workout-file-errors {
-    grid-column: span 6;
-    grid-row: auto; /* Reset fixed heights on tablet if needed, or keep specific ones */
-  }
-  /* Larger widgets on tablet can go full width if needed */
-  .workout-volume-analytics {
-    grid-column: span 12;
-  }
-}
-/* Mobile breakpoint - single column, natural flow */
-@media (max-width: 768px) {
-  .workout-dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-  /* Force all widgets to full width */
-  .workout-summary-widget,
-  .workout-stats-cards,
-  .workout-muscle-heatmap,
-  .workout-volume-analytics,
-  .workout-recent-workouts,
-  .workout-protocol-distribution,
-  .workout-protocol-effectiveness,
-  .workout-duration-comparison,
-  .workout-quick-actions,
-  .workout-file-errors,
-  .workout-dashboard-widget {
-    grid-column: 1/-1 !important;
-    grid-row: auto !important;
-  }
-  .workout-summary-grid {
-    grid-template-columns: 1fr;
-    gap: var(--workout-space-md);
-  }
-  .workout-stats-grid {
-    grid-template-columns: 1fr;
-    gap: var(--workout-space-md);
-  }
-  .workout-stats-card {
-    padding: var(--workout-space-lg);
-  }
-  .workout-card-header {
-    margin-bottom: var(--workout-space-md);
-  }
-  .workout-card-icon {
-    font-size: var(--workout-space-xl);
-  }
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-  .workout-dashboard-title {
-    font-size: var(--workout-font-base);
-  }
-  .workout-dashboard-chart-container,
-  .workout-charts-container {
-    display: none;
-  }
-  /* Show mobile table instead of chart */
-  .workout-chart-mobile-table {
-    display: block;
-  }
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-  }
-  .workout-heatmap-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--workout-space-md);
-  }
-  .workout-frame-toggle {
-    justify-content: center;
-    width: 100%;
-  }
-  .workout-toggle-btn {
-    flex: 1;
-    padding: var(--workout-space-md) var(--workout-space-md);
-  }
-  .workout-export-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  /* Mobile-first log modals */
-  .workout-charts-modal .workout-parameters-container {
-    flex-direction: column;
-  }
-  .workout-charts-modal .workout-charts-form-group input[type=text],
-  .workout-charts-modal .workout-charts-form-group input[type=number],
-  .workout-charts-modal .workout-charts-form-group select,
-  .workout-charts-modal .workout-charts-form-group textarea {
-    min-height: 44px;
-    font-size: var(--workout-font-base);
-  }
-  .workout-charts-modal .workout-adjust-btn {
-    min-width: 10ch;
-    min-height: 44px;
-  }
-  .workout-log-recent-chip {
-    min-height: 40px;
-    padding: var(--workout-space-sm) var(--workout-space-lg);
-  }
-  .workout-muscle-details {
-    position: static;
-    margin-top: var(--workout-space-lg);
-    width: 100%;
-    max-width: none;
-  }
-  .workout-recent-workout-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--workout-space-sm);
-  }
-  .workout-recent-date {
-    min-width: auto;
-  }
-  .workout-recent-name {
-    margin: 0;
-  }
-  .workout-action-buttons {
-    gap: var(--workout-space-md);
-  }
-  .workout-action-button {
-    padding: var(--workout-space-lg) var(--workout-space-lg);
-    font-size: var(--workout-font-base);
-  }
-}
-@media (max-width: 484px) {
-  .workout-stats-card {
-    padding: var(--workout-space-lg);
-  }
-  .workout-card-stats {
-    gap: var(--workout-space-md);
-  }
-  .workout-dashboard-widget {
-    padding: var(--workout-space-lg);
-  }
-  .workout-dashboard-title {
-    font-size: var(--workout-font-xl);
-    margin-bottom: var(--workout-space-lg);
-  }
-  .workout-widget-title {
-    font-size: var(--workout-font-base);
-    margin-bottom: var(--workout-space-md);
-  }
-  .workout-toggle-btn {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    font-size: var(--workout-font-sm);
-  }
-  /* Mobile Table Optimizations */
-  .workout-log-table {
-    font-size: var(--workout-font-xs);
-  }
-  .workout-log-table th {
-    padding: var(--workout-space-xs) var(--workout-space-xs);
-    font-size: var(--workout-font-xs);
-  }
-  .workout-log-table td {
-    padding: var(--workout-space-xs) var(--workout-space-xs);
-  }
-  /* Compact spacer summary on mobile */
-  .workout-table-spacer-summary-cell {
-    padding: var(--workout-space-xs) var(--workout-space-sm);
-  }
-  .workout-table-spacer-summary-cell .workout-spacer-stat {
-    margin-right: var(--workout-space-sm);
-    font-size: var(--workout-font-xs);
-  }
-  .workout-table-spacer-date-cell {
-    padding: var(--workout-space-xs) var(--workout-space-xs);
-    font-size: var(--workout-font-xs);
-  }
-  /* Smaller protocol badges on mobile */
-  .workout-protocol-badge {
-    padding: 1px 4px;
-    font-size: 9px;
-    letter-spacing: 0;
-  }
-  .workout-table-actions {
-    gap: var(--workout-space-xs);
-  }
 }

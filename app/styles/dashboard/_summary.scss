@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* ============================================================================
    DASHBOARD SUMMARY & STATS
    ============================================================================ */
@@ -136,5 +138,39 @@
       letter-spacing: normal;
       opacity: 1;
     }
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-summary-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+
+  .workout-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--workout-space-md);
+  }
+
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
+  }
+
+  .workout-card-header {
+    margin-bottom: var(--workout-space-md);
+  }
+
+  .workout-card-icon {
+    font-size: var(--workout-space-xl);
+  }
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-card-stats {
+    gap: var(--workout-space-md);
+  }
+
+  .workout-stats-card {
+    padding: var(--workout-space-lg);
   }
 }

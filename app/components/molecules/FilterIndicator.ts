@@ -4,7 +4,7 @@
  * Combines: Text + Button atoms
  */
 
-import { Button } from "@app/components/atoms";
+import { Button, Text } from "@app/components/atoms";
 
 export interface FilterIndicatorProps {
 	label: string;
@@ -46,15 +46,17 @@ export class FilterIndicator {
 		});
 
 		// Filter label text
-		container.createEl("span", {
+		Text.create(container, {
 			text: `${props.label} `,
-			cls: "workout-filter-indicator-text",
+			className: "workout-filter-indicator-text",
+			tag: "span",
 		});
 
 		// Filter value badge
-		const badge = container.createEl("span", {
+		const badge = Text.create(container, {
 			text: props.filterValue,
-			cls: "workout-filter-indicator-badge",
+			className: "workout-filter-indicator-badge",
+			tag: "span",
 		});
 
 		if (props.color) {

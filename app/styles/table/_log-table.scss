@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Log table */
 .workout-log-table {
   width: 100%;
@@ -53,4 +55,19 @@
 
 .workout-new-day-log {
   background: transparent;
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-log-table {
+    font-size: var(--workout-font-xs);
+
+    th {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+      font-size: var(--workout-font-xs);
+    }
+
+    td {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
+    }
+  }
 }

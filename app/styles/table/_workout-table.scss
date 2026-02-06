@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Workout table (general) */
 .workout-table {
   &-container {
@@ -94,5 +96,25 @@
     padding: var(--workout-space-sm);
     background-color: var(--background-secondary);
     border-radius: var(--workout-radius-sm);
+  }
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-table-spacer-summary-cell {
+    padding: var(--workout-space-xs) var(--workout-space-sm);
+
+    .workout-spacer-stat {
+      margin-right: var(--workout-space-sm);
+      font-size: var(--workout-font-xs);
+    }
+  }
+
+  .workout-table-spacer-date-cell {
+    padding: var(--workout-space-xs) var(--workout-space-xs);
+    font-size: var(--workout-font-xs);
+  }
+
+  .workout-table-actions {
+    gap: var(--workout-space-xs);
   }
 }

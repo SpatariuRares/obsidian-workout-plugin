@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Form elements */
 .workout-charts-form {
   display: flex;
@@ -50,8 +52,11 @@
 }
 
 .workout-parameters-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--workout-space-md);
+  width: 100%;
+  align-items: start;
 }
 
 .workout-charts-checkbox-group {
@@ -61,4 +66,43 @@
   flex-wrap: wrap;
   flex-direction: row;
   padding-bottom: var(--workout-space-sm);
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-charts-modal {
+    .workout-parameters-container {
+      grid-template-columns: 1fr;
+    }
+
+    .workout-charts-form-group {
+      input[type="text"],
+      input[type="number"],
+      select,
+      textarea {
+        min-height: 44px;
+        font-size: var(--workout-font-base);
+      }
+    }
+
+    .workout-charts-input {
+      min-width: 10ch;
+      min-height: 44px;
+    }
+  }
+}
+
+@media (min-width: variables.$breakpoint-tablet) {
+  .workout-charts-modal {
+    .workout-parameters-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (min-width: variables.$breakpoint-xl) {
+  .workout-charts-modal {
+    .workout-parameters-container {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
 }

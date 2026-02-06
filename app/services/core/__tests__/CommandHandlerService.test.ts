@@ -65,7 +65,7 @@ jest.mock("@app/features/canvas", () => ({
     .fn()
     .mockImplementation(() => ({ exportToCanvas: jest.fn() })),
 }));
-jest.mock("@app/features/migration", () => ({
+jest.mock("@app/compatibility/migration", () => ({
   ExerciseTypeMigration: jest
     .fn()
     .mockImplementation(() => ({ migrateExerciseTypes: jest.fn() })),

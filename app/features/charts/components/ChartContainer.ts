@@ -1,3 +1,5 @@
+import { Canvas } from "@app/components/atoms";
+
 /**
  * UI component for creating chart containers and canvas elements.
  * Pure UI logic with no business dependencies.
@@ -26,7 +28,7 @@ export class ChartContainer {
 		container: HTMLElement,
 		className = "workout-charts-canvas"
 	): HTMLCanvasElement {
-		return container.createEl("canvas", { cls: className });
+		return Canvas.create(container, { className });
 	}
 
 	/**
@@ -43,4 +45,3 @@ export class ChartContainer {
 		return { container, canvas };
 	}
 }
-

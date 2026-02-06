@@ -1,1 +1,1 @@
-export * from "./MuscleTagManagerModal";
+export * from "@app/features/modals/muscle/MuscleTagManagerModal";

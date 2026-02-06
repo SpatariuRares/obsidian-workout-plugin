@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* ============================================================================
    BUTTON SYSTEM
    ============================================================================
@@ -430,4 +432,43 @@
 
 .workout-table-action-btn-delete {
   @include workout-table-action-hover(var(--text-error));
+}
+
+@media print {
+  .workout-add-log-button-container {
+    display: none !important;
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-frame-toggle {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .workout-toggle-btn {
+    flex: 1;
+    padding: var(--workout-space-md) var(--workout-space-md);
+  }
+
+  .workout-export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .workout-action-buttons {
+    gap: var(--workout-space-md);
+  }
+
+  .workout-action-button {
+    padding: var(--workout-space-lg) var(--workout-space-lg);
+    font-size: var(--workout-font-base);
+  }
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-toggle-btn {
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    font-size: var(--workout-font-sm);
+  }
 }

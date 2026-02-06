@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Mobile table */
 .workout-chart-mobile-table {
   display: none;
@@ -56,4 +58,10 @@
   color: var(--text-accent);
   padding: var(--workout-space-sm) var(--workout-space-sm);
   border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-chart-mobile-table {
+    display: block;
+  }
 }

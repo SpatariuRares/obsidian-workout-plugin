@@ -322,12 +322,11 @@ export class ProtocolEffectiveness {
       const protocolCell = row.createEl("td", {
         cls: "workout-protocol-effectiveness-protocol-cell",
       });
-      const badge = protocolCell.createEl("span", {
+      ProtocolBadge.create(protocolCell, {
         text: stat.label,
-        cls: "workout-protocol-effectiveness-badge",
+        className: "workout-protocol-effectiveness-badge",
+        color: stat.color,
       });
-      badge.style.backgroundColor = stat.color;
-      badge.style.color = ProtocolBadge.getContrastColor(stat.color);
 
       // Entry count
       row.createEl("td", {

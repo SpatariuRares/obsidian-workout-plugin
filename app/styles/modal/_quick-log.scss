@@ -1,3 +1,5 @@
+@use "../variables";
+
 /* Shared mobile logging styles for create/edit modals */
 .workout-log-recent-label {
   font-weight: var(--workout-font-weight-semibold);
@@ -52,5 +54,12 @@
     transform: scale(0.95);
     background: var(--interactive-accent);
     color: var(--text-on-accent);
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-log-recent-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
   }
 }

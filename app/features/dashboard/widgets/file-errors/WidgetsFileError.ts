@@ -18,7 +18,7 @@ export class WidgetsFileError {
     plugin: WorkoutChartsPlugin,
   ): Promise<void> {
     const errorEl = container.createEl("div", {
-      cls: "workout-dashboard-widget  span-4  workout-file-errors",
+      cls: "workout-dashboard-widget workout-file-errors",
     });
 
     errorEl.createEl("h3", {

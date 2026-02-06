@@ -50,8 +50,7 @@ export class Body {
   private createSVG(container: HTMLElement): SVGSVGElement {
     const svg = SVGBuilder.createElementWithAttributes("svg", {
       viewBox: "0 0 660.46 1206.46",
-      width: "100%",
-      height: "100%",
+      preserveAspectRatio: "xMidYMid meet",
       class: "body-svg",
     });
     container.appendChild(svg);

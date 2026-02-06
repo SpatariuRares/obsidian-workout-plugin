@@ -6,7 +6,7 @@
 
 .workout-muscle {
   &-heatmap {
-    min-height: var(--workout-size-11xl);
+    min-height: 0;
   }
 
   &-group-breakdown {
@@ -107,7 +107,12 @@
     margin-bottom: var(--workout-space-xl);
     text-align: center;
     position: relative;
-    overflow: hidden;
+
+    .body-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
     canvas {
       max-width: 100%;
@@ -144,6 +149,20 @@
       margin: var(--workout-space-sm) 0;
       color: var(--text-muted);
       font-size: var(--workout-font-base);
+    }
+  }
+}
+
+@media (max-width: variables.$breakpoint-xl) and (min-width: variables.$breakpoint-tablet) {
+  .workout-heatmap-canvas-container {
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+
+    .body-svg {
+      width: auto;
+      height: 100%;
+      max-height: 500px;
     }
   }
 }

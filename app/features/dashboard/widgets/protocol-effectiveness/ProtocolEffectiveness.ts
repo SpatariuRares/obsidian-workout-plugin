@@ -53,7 +53,7 @@ export class ProtocolEffectiveness {
     plugin?: WorkoutChartsPlugin
   ): void {
     const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-protocol-effectiveness",
+      cls: "workout-dashboard-widget widget-wide workout-protocol-effectiveness",
     });
 
     // Widget title

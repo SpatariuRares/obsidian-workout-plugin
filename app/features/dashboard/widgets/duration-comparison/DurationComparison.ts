@@ -64,7 +64,7 @@ export class DurationComparison {
     _params: EmbeddedDashboardParams
   ): void {
     const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-duration-comparison",
+      cls: "workout-dashboard-widget widget-wide workout-duration-comparison",
     });
 
     // Widget title

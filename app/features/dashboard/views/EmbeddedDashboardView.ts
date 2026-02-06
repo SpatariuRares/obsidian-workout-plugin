@@ -17,6 +17,7 @@ import {
 } from "@app/features/dashboard/widgets";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
+import { DomUtils } from "@app/utils/DomUtils";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -346,5 +347,47 @@ export class EmbeddedDashboardView extends BaseView {
 
     // Muscle Tags Widget (Right Column previously)
     MuscleTagsWidget.render(gridEl, params);
+
+    // Apply bento layout - measure widgets and set row spans
+    this.applyBentoLayout(gridEl);
+  }
+
+  /**
+   * Measures each widget's natural content height and sets grid-row span
+   * to create a masonry-like bento grid with no wasted vertical space.
+   *
+   * Temporarily switches grid to auto rows so widgets render at natural
+   * height before measuring - prevents overflow containers from clipping
+   * content during measurement.
+   */
+  private applyBentoLayout(gridEl: HTMLElement): void {
+    const style = getComputedStyle(gridEl);
+    const rowHeight =
+      parseFloat(style.getPropertyValue("--workout-grid-row-height")) || 10;
+    const gap = parseFloat(style.rowGap) || 16;
+
+    // Temporarily use auto rows + align-items: start so each widget
+    // renders at its natural content height (not stretched to row height)
+    DomUtils.setCssProps(gridEl, { gridAutoRows: "auto", alignItems: "start" });
+    void gridEl.offsetHeight;
+
+    const widgets = Array.from(
+      gridEl.querySelectorAll<HTMLElement>(".workout-dashboard-widget"),
+    );
+
+    // Measure natural heights and compute row spans
+    const REFLOW_BUFFER = 4;
+    const spans: number[] = [];
+    for (let i = 0; i < widgets.length; i++) {
+      const contentHeight =
+        widgets[i].getBoundingClientRect().height + REFLOW_BUFFER;
+      spans.push(Math.ceil((contentHeight + gap) / (rowHeight + gap)));
+    }
+
+    // Restore grid settings and apply spans
+    DomUtils.setCssProps(gridEl, { gridAutoRows: "", alignItems: "" });
+    for (let i = 0; i < widgets.length; i++) {
+      DomUtils.setCssProps(widgets[i], { gridRowEnd: `span ${spans[i]}` });
+    }
   }
 }

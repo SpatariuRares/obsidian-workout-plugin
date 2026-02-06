@@ -22,7 +22,7 @@ export class MuscleHeatMap {
     plugin: WorkoutChartsPlugin
   ): Promise<void> {
     const heatMapEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-muscle-heatmap",
+      cls: "workout-dashboard-widget widget-wide workout-muscle-heatmap",
     });
 
     heatMapEl.createEl("h3", {

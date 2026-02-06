@@ -97,7 +97,7 @@ export class ProtocolDistribution {
     this.onFilterChange = onFilterChange || null;
 
     const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-protocol-distribution",
+      cls: "workout-dashboard-widget widget-wide workout-protocol-distribution",
     });
 
     // Widget title

@@ -22,6 +22,7 @@ module.exports = {
     "app/components/**/*.ts",
     "app/services/**/*.ts",
     "app/features/charts/**/*.ts",
+    "app/features/tables/**/*.ts",
     "!app/**/*.d.ts",
     "!app/**/__tests__/**",
     "!app/**/index.ts",

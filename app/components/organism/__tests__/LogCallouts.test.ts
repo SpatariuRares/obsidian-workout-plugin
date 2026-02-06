@@ -15,21 +15,6 @@ jest.mock("@app/features/modals/log/CreateLogModal", () => ({
   })),
 }));
 
-// Mock createButtonsSection - use attachObsidianHelpers to properly mock
-jest.mock("@app/features/modals/base/utils/createButtonsSection", () => {
-  // Need to require inside factory to avoid hoisting issues
-  const { attachObsidianHelpers: attach } = jest.requireActual(
-    "@app/components/__tests__/obsidianDomMocks",
-  );
-  return {
-    createButtonsSection: jest.fn((parent: HTMLElement) => {
-      const div = attach(document.createElement("div"));
-      parent.appendChild(div);
-      return div;
-    }),
-  };
-});
-
 // Import after mocking
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 

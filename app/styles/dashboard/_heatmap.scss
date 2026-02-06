@@ -153,20 +153,6 @@
   }
 }
 
-@media (max-width: variables.$breakpoint-xl) and (min-width: variables.$breakpoint-tablet) {
-  .workout-heatmap-canvas-container {
-    max-height: 500px;
-    display: flex;
-    justify-content: center;
-
-    .body-svg {
-      width: auto;
-      height: 100%;
-      max-height: 500px;
-    }
-  }
-}
-
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-heatmap-controls {
     flex-direction: column;

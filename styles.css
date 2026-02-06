@@ -2587,18 +2587,6 @@
   font-size: var(--workout-font-base);
 }
 
-@media (max-width: 1200px) and (min-width: 768px) {
-  .workout-heatmap-canvas-container {
-    max-height: 500px;
-    display: flex;
-    justify-content: center;
-  }
-  .workout-heatmap-canvas-container .body-svg {
-    width: auto;
-    height: 100%;
-    max-height: 500px;
-  }
-}
 @media (max-width: 768px) {
   .workout-heatmap-controls {
     flex-direction: column;

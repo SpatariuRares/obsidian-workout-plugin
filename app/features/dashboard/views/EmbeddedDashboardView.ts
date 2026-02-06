@@ -31,6 +31,10 @@ export class EmbeddedDashboardView extends BaseView {
   private currentData: WorkoutLogData[] = [];
   /** Current dashboard parameters */
   private currentParams: EmbeddedDashboardParams = {};
+  /** ResizeObserver for bento layout recalculation */
+  private resizeObserver: ResizeObserver | null = null;
+  /** Debounce timer for resize recalculation */
+  private resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
@@ -46,6 +50,9 @@ export class EmbeddedDashboardView extends BaseView {
         "EmbeddedDashboardView",
         "Cleaning up dashboard view resources",
       );
+
+      // Clean up resize observer
+      this.destroyResizeObserver();
 
       // Clear stored state to prevent memory leaks
       this.currentContainer = null;
@@ -348,8 +355,44 @@ export class EmbeddedDashboardView extends BaseView {
     // Muscle Tags Widget (Right Column previously)
     MuscleTagsWidget.render(gridEl, params);
 
-    // Apply bento layout - measure widgets and set row spans
+    // Apply bento layout and observe for resize
     this.applyBentoLayout(gridEl);
+    this.observeGridResize(gridEl);
+  }
+
+  /**
+   * Observes the grid element for size changes and recalculates bento layout.
+   * Debounced to avoid excessive recalculations during smooth resizing.
+   */
+  private observeGridResize(gridEl: HTMLElement): void {
+    this.destroyResizeObserver();
+
+    let lastWidth = gridEl.getBoundingClientRect().width;
+
+    this.resizeObserver = new ResizeObserver((entries) => {
+      const newWidth = entries[0]?.contentRect.width ?? 0;
+      // Only recalculate when width changes (height changes are from our own span updates)
+      if (Math.abs(newWidth - lastWidth) < 1) return;
+      lastWidth = newWidth;
+
+      if (this.resizeTimer) clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(() => {
+        this.applyBentoLayout(gridEl);
+      }, 150);
+    });
+
+    this.resizeObserver.observe(gridEl);
+  }
+
+  private destroyResizeObserver(): void {
+    if (this.resizeTimer) {
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = null;
+    }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
   }
 
   /**
@@ -376,11 +419,9 @@ export class EmbeddedDashboardView extends BaseView {
     );
 
     // Measure natural heights and compute row spans
-    const REFLOW_BUFFER = 4;
     const spans: number[] = [];
     for (let i = 0; i < widgets.length; i++) {
-      const contentHeight =
-        widgets[i].getBoundingClientRect().height + REFLOW_BUFFER;
+      const contentHeight = widgets[i].getBoundingClientRect().height;
       spans.push(Math.ceil((contentHeight + gap) / (rowHeight + gap)));
     }
 

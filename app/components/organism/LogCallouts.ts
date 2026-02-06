@@ -5,7 +5,6 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -51,7 +50,7 @@ export class LogCallouts {
     });
     noDataDiv.createEl("p");
 
-    const buttonDiv = createButtonsSection(noDataDiv);
+    const buttonDiv = Button.createContainer(noDataDiv);
     buttonDiv.addClass("workout-charts-button-container");
 
     const createButton = Button.create(buttonDiv, {
@@ -143,7 +142,7 @@ export class LogCallouts {
     plugin: WorkoutChartsPlugin,
     onRefresh?: () => void,
   ): void {
-    const buttonContainer = createButtonsSection(container);
+    const buttonContainer = Button.createContainer(container);
     buttonContainer.addClass("create-log-button-container");
 
     const button = Button.create(buttonContainer, {

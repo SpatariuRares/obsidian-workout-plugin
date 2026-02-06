@@ -16,7 +16,6 @@ import type {
 } from "@app/types/ExerciseTypes";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -101,9 +100,9 @@ export class CreateExercisePageModal extends ModalBase {
     exerciseTypeSelect.addEventListener("change", () => {
       const isCustom = exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
       if (this.customParametersContainer) {
-    DomUtils.setCssProps(this.customParametersContainer, {
-      display: isCustom ? "block" : "none",
-    });
+        DomUtils.setCssProps(this.customParametersContainer, {
+          display: isCustom ? "block" : "none",
+        });
       }
     });
 
@@ -128,7 +127,7 @@ export class CreateExercisePageModal extends ModalBase {
     );
 
     // Buttons container
-    const buttonsContainer = createButtonsSection(formContainer);
+    const buttonsContainer = Button.createContainer(formContainer);
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
@@ -270,8 +269,7 @@ export class CreateExercisePageModal extends ModalBase {
     // Remove button
     const removeBtn = Button.create(rowContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
-      className:
-        "workout-btn workout-btn-warning workout-btn-small",
+      className: "workout-btn workout-btn-warning workout-btn-small",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
     });
 

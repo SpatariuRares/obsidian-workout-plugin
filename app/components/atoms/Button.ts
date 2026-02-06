@@ -10,6 +10,7 @@ export interface ButtonProps {
   title?: string;
   disabled?: boolean;
   ariaLabel?: string;
+  extraContainerCls?: string;
 }
 
 /**
@@ -23,6 +24,15 @@ export class Button {
    * @param props - Button properties
    * @returns The created button element
    */
+  /**
+   * Create a button container with the workout-button-container class
+   */
+  static createContainer(parent: HTMLElement): HTMLElement {
+    return parent.createEl("div", {
+      cls: "workout-buttons-container",
+    });
+  }
+
   static create(parent: HTMLElement, props: ButtonProps): HTMLButtonElement {
     const btn = parent.createEl("button", {
       cls: props.className || "workout-btn workout-btn-secondary",
@@ -47,7 +57,7 @@ export class Button {
   static onClick(
     button: HTMLButtonElement,
     handler: (e: MouseEvent) => void,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     button.addEventListener("click", handler, signal ? { signal } : undefined);
   }

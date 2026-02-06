@@ -6,20 +6,19 @@
 
 import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 export interface ActionButtonGroupProps {
-	editTitle?: string;
-	deleteTitle?: string;
-	editIcon?: string;
-	deleteIcon?: string;
-	className?: string;
+  editTitle?: string;
+  deleteTitle?: string;
+  editIcon?: string;
+  deleteIcon?: string;
+  className?: string;
 }
 
 export interface ActionButtonGroupResult {
-	container: HTMLElement;
-	editBtn: HTMLButtonElement;
-	deleteBtn: HTMLButtonElement;
+  container: HTMLElement;
+  editBtn: HTMLButtonElement;
+  deleteBtn: HTMLButtonElement;
 }
 
 /**
@@ -38,49 +37,53 @@ export interface ActionButtonGroupResult {
  * ```
  */
 export class ActionButtonGroup {
-	// Default icons
-	private static readonly DEFAULT_EDIT_ICON = CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT;
-	private static readonly DEFAULT_DELETE_ICON = CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE;
-	private static readonly DEFAULT_EDIT_TITLE = CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT;
-	private static readonly DEFAULT_DELETE_TITLE = CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE;
+  // Default icons
+  private static readonly DEFAULT_EDIT_ICON =
+    CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT;
+  private static readonly DEFAULT_DELETE_ICON =
+    CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE;
+  private static readonly DEFAULT_EDIT_TITLE =
+    CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT;
+  private static readonly DEFAULT_DELETE_TITLE =
+    CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE;
 
-	/**
-	 * Create an action button group
-	 * @param parent - Parent HTML element
-	 * @param props - Button group properties
-	 * @returns Object with container and button elements
-	 */
-	static create(
-		parent: HTMLElement,
-		props?: ActionButtonGroupProps
-	): ActionButtonGroupResult {
-		// Create container
-		const container = createButtonsSection(parent);
-		container.addClass("workout-table-action-button-group");
-		if (props?.className) {
-			container.addClass(props.className);
-		}
+  /**
+   * Create an action button group
+   * @param parent - Parent HTML element
+   * @param props - Button group properties
+   * @returns Object with container and button elements
+   */
+  static create(
+    parent: HTMLElement,
+    props?: ActionButtonGroupProps,
+  ): ActionButtonGroupResult {
+    // Create container
+    const container = Button.createContainer(parent);
+    container.addClass("workout-table-action-button-group");
+    if (props?.className) {
+      container.addClass(props.className);
+    }
 
-		// Create edit button
-		const editBtn = Button.create(container, {
-			icon: props?.editIcon || this.DEFAULT_EDIT_ICON,
-			className: "workout-table-action-btn workout-table-action-btn-edit",
-			title: props?.editTitle || this.DEFAULT_EDIT_TITLE,
-			ariaLabel: props?.editTitle || this.DEFAULT_EDIT_TITLE,
-		});
+    // Create edit button
+    const editBtn = Button.create(container, {
+      icon: props?.editIcon || this.DEFAULT_EDIT_ICON,
+      className: "workout-table-action-btn workout-table-action-btn-edit",
+      title: props?.editTitle || this.DEFAULT_EDIT_TITLE,
+      ariaLabel: props?.editTitle || this.DEFAULT_EDIT_TITLE,
+    });
 
-		// Create delete button
-		const deleteBtn = Button.create(container, {
-			icon: props?.deleteIcon || this.DEFAULT_DELETE_ICON,
-			className: "workout-table-action-btn workout-table-action-btn-delete",
-			title: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
-			ariaLabel: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
-		});
+    // Create delete button
+    const deleteBtn = Button.create(container, {
+      icon: props?.deleteIcon || this.DEFAULT_DELETE_ICON,
+      className: "workout-table-action-btn workout-table-action-btn-delete",
+      title: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
+      ariaLabel: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
+    });
 
-		return {
-			container,
-			editBtn,
-			deleteBtn,
-		};
-	}
+    return {
+      container,
+      editBtn,
+      deleteBtn,
+    };
+  }
 }

@@ -184,6 +184,7 @@ export const MODAL_UI = {
     INSERT_TABLE: "Insert workout log table",
     INSERT_TIMER: "Insert workout timer",
     INSERT_DASHBOARD: "Insert workout dashboard",
+    INSERT_DURATION: "Insert workout duration",
     CREATE_EXERCISE_PAGE: "Create exercise page",
     CREATE_EXERCISE_SECTION: "Create exercise section",
     CONFIRM_ACTION: "Confirm action",
@@ -684,14 +685,20 @@ export const CHARTS_UI = {
     /** @deprecated Use VARIATION_SINGLE_VALUE_FORMATTED for dynamic type support */
     VARIATION_SINGLE_VALUE: (value: string) => ` (Volume: ${value})`,
     /** Dynamic single value display */
-    VARIATION_SINGLE_VALUE_FORMATTED: (value: string, dataType?: CHART_DATA_TYPE) => {
+    VARIATION_SINGLE_VALUE_FORMATTED: (
+      value: string,
+      dataType?: CHART_DATA_TYPE,
+    ) => {
       const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
       return ` (${typeName}: ${value})`;
     },
     /** @deprecated Use VARIATION_VALUE_LABEL_FORMATTED for dynamic type support */
     VARIATION_VALUE_LABEL: (value: string) => `Volume: ${value}`,
     /** Dynamic value label */
-    VARIATION_VALUE_LABEL_FORMATTED: (value: string, dataType?: CHART_DATA_TYPE) => {
+    VARIATION_VALUE_LABEL_FORMATTED: (
+      value: string,
+      dataType?: CHART_DATA_TYPE,
+    ) => {
       const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
       return `${typeName}: ${value}`;
     },

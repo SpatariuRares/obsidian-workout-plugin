@@ -1,33 +1,6 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(npm run build:*)",
-      "Bash(npm run dev:*)",
-      "mcp__sequential-thinking__sequentialthinking",
-      "Bash(awk:*)",
-      "Bash(for class in \".stats-card\" \".create-log-button\" \".add-log-button\" \".workout-timer-display\" \".workout-timer-controls\" \".workout-timer-container\" \".workout-timer-btn\" \".workout-log-table\" \".card-icon\" \".workout-card-title\" \".card-stats\" \".exercise-autocomplete-container\" \".csv-mode-info\")",
-      "Bash(do echo \"\")",
-      "Bash(echo \"Classe: $class\")",
-      "Bash(grep:*)",
-      "Bash(done)",
-      "Bash(npm test)",
-      "Bash(npm run test:coverage:*)",
-      "Bash(git fetch:*)",
-      "Bash(git restore:*)",
-      "Bash(git commit:*)",
-      "Bash(npm run typecheck:*)",
-      "Bash(git add:*)",
-      "Bash(npm test:*)",
-      "Bash(npm run lint)",
-      "Bash(npm run lint:*)",
-      "Bash(find:*)",
-      "Bash(npm ls:*)",
-      "Bash(OBSIDIANMD_DEBUG_SENTENCE_CASE=1 npx eslint:*)",
-      "Bash(npm run test:*)",
-      "Bash(node -e:*)",
-      "Bash(bash:*)",
-      "Bash(ls:*)"
-    ],
+    "allow": [],
     "deny": []
   }
 }

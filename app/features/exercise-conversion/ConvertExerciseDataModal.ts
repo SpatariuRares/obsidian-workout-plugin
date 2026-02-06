@@ -10,11 +10,13 @@ import {
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type WorkoutChartsPlugin from "main";
-import { ExerciseConversionService, FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
+import {
+  ExerciseConversionService,
+  FieldMapping,
+} from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 import { Button } from "@app/components/atoms";
 
 export class ConvertExerciseDataModal extends ModalBase {
@@ -63,7 +65,7 @@ export class ConvertExerciseDataModal extends ModalBase {
       async (typeId) => this.handleTargetTypeChange(typeId),
       (update) => {
         this.updateFrontmatter = update;
-      }
+      },
     );
     this.typeSelectVal.render();
     this.typeSelectVal.setVisible(false);
@@ -95,7 +97,7 @@ export class ConvertExerciseDataModal extends ModalBase {
       this,
       section,
       this.plugin,
-      this.selectedExercise
+      this.selectedExercise,
     );
     this.exerciseElements = elements;
 
@@ -121,7 +123,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private createButtons(parent: HTMLElement): void {
-    const buttonsSection = createButtonsSection(parent);
+    const buttonsSection = Button.createContainer(parent);
 
     const cancelButton = Button.create(buttonsSection, {
       text: "Cancel",
@@ -147,7 +149,7 @@ export class ConvertExerciseDataModal extends ModalBase {
 
     const exerciseDefService = this.plugin.getExerciseDefinitionService();
     const definition = await exerciseDefService.getExerciseDefinition(
-      this.selectedExercise
+      this.selectedExercise,
     );
     const typeId = definition?.typeId || EXERCISE_TYPE_IDS.STRENGTH;
     this.currentType =
@@ -167,48 +169,48 @@ export class ConvertExerciseDataModal extends ModalBase {
 
     // Show Type Select
     this.typeSelectVal?.setVisible(true);
-    
+
     // Auto-select a different target type
-    // This part is a bit tricky to sync with the component, 
+    // This part is a bit tricky to sync with the component,
     // but we can set an initial value if we wanted.
-    // For now, let's just trigger updates manually if needed 
+    // For now, let's just trigger updates manually if needed
     // or let the user select.
   }
 
   private async handleTargetTypeChange(typeId: string): Promise<void> {
     this.targetType = typeId;
-    
+
     const targetTypeDef = getExerciseTypeById(typeId);
     if (!this.currentType || !targetTypeDef) return;
 
     // Suggest mappings
     const suggested = this.conversionService.suggestInitialMappings(
-        this.currentType,
-        targetTypeDef
+      this.currentType,
+      targetTypeDef,
     );
     // Convert to full FieldMapping objects
-    
+
     // We need to fetch option lists to get labels, which is a bit roundabout.
-    // Actually, FieldMappingList handles option generation. 
+    // Actually, FieldMappingList handles option generation.
     // We should probably just pass the simple {from, to} pairs and let FieldMappingList resolve labels?
     // Or we rely on FieldMappingList to create valid mappings.
     // The previous implementation created full objects.
-    
-    // Let's pass the simple mappings to FieldMappingList? 
+
+    // Let's pass the simple mappings to FieldMappingList?
     // No, FieldMappingList expects full FieldMapping objects.
     // However, FieldMappingList is the one that knows the options.
-    // It might be better if FieldMappingList exposed a "suggestMappings" method 
+    // It might be better if FieldMappingList exposed a "suggestMappings" method
     // or if we constructed the objects here.
-    
+
     // Detailed construction:
     // It's hard to get labels without duplicating the getOptions logic.
     // Simplification: Let's pass empty labels and let FieldMappingList fix them?
-    // Or better, let's just instantiate FieldMappingList with the types 
+    // Or better, let's just instantiate FieldMappingList with the types
     // and let it handle initialization if we provide a "default" map.
-    
+
     this.fieldMappingList?.setTypes(this.currentType, targetTypeDef);
-    
-    // We'll manually construct mappings with empty labels for now, 
+
+    // We'll manually construct mappings with empty labels for now,
     // assuming FieldMappingList renders correctly or we fetch options here.
     // A cleaner way: Move getOptions to service?
     // For now, I'll let FieldMappingList handle the UI.
@@ -217,44 +219,44 @@ export class ConvertExerciseDataModal extends ModalBase {
     // Let's rely on the user or the component to defaults.
     // Actually, the Service's `suggestInitialMappings` returns simple objects.
     // Let's map them.
-    
-    const fullMappings: FieldMapping[] = suggested.map(s => ({
-        fromField: s.from,
-        toField: s.to,
-        fromLabel: s.from, // Temporary, UI will likely show values if labels missing?
-        toLabel: s.to
+
+    const fullMappings: FieldMapping[] = suggested.map((s) => ({
+      fromField: s.from,
+      toField: s.to,
+      fromLabel: s.from, // Temporary, UI will likely show values if labels missing?
+      toLabel: s.to,
     }));
-    
+
     // Since FieldMappingList re-renders selects, it will select the right values.
     // The labels in the object are mainly for the Preview.
     // The Preview needs correct labels.
     // This suggests `getOptions` should be in the Service or shared.
-    
+
     this.fieldMappingList?.setMappings(fullMappings);
     this.mappings = fullMappings;
-    
+
     this.fieldMappingList?.setVisible(true);
     this.conversionPreview?.setVisible(true);
-    
+
     this.updateState();
   }
 
   private updateState(): void {
     if (this.conversionPreview) {
-        // We need to update labels for the preview if they were raw values
-        // Ideally we resolve them properly.
-        this.conversionPreview.update(this.entryCount, this.mappings);
+      // We need to update labels for the preview if they were raw values
+      // Ideally we resolve them properly.
+      this.conversionPreview.update(this.entryCount, this.mappings);
     }
-    
+
     if (this.convertButton) {
-        const isValid = 
-            this.selectedExercise &&
-            this.targetType &&
-            this.currentType?.id !== this.targetType &&
-            this.mappings.length > 0 &&
-            this.entryCount > 0;
-            
-        this.convertButton.disabled = !isValid;
+      const isValid =
+        this.selectedExercise &&
+        this.targetType &&
+        this.currentType?.id !== this.targetType &&
+        this.mappings.length > 0 &&
+        this.entryCount > 0;
+
+      this.convertButton.disabled = !isValid;
     }
   }
 
@@ -272,13 +274,13 @@ export class ConvertExerciseDataModal extends ModalBase {
       const count = await this.conversionService.convertExerciseData(
         this.selectedExercise,
         this.targetType,
-        this.mappings
+        this.mappings,
       );
 
       if (this.updateFrontmatter) {
         await this.conversionService.updateExerciseFrontmatter(
           this.selectedExercise,
-          this.targetType
+          this.targetType,
         );
       }
 

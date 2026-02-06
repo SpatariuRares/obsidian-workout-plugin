@@ -8,7 +8,7 @@ import { App, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+
 import { Button } from "@app/components/atoms";
 import type {
   CanvasExportOptions,
@@ -33,7 +33,7 @@ export class CanvasExportModal extends ModalBase {
     app: App,
     plugin: WorkoutChartsPlugin,
     workoutFile: TFile,
-    onSubmit: (options: CanvasExportOptions) => void
+    onSubmit: (options: CanvasExportOptions) => void,
   ) {
     super(app);
     this.plugin = plugin;
@@ -60,14 +60,14 @@ export class CanvasExportModal extends ModalBase {
     // Layout section
     const layoutSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_LAYOUT
+      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_LAYOUT,
     );
     this.createLayoutOptions(layoutSection);
 
     // Options section
     const optionsSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_OPTIONS
+      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_OPTIONS,
     );
     this.createOptionCheckboxes(optionsSection);
 
@@ -97,7 +97,7 @@ export class CanvasExportModal extends ModalBase {
           text: CONSTANTS.WORKOUT.MODAL.LABELS.LAYOUT_GROUPED,
           value: "grouped",
         },
-      ]
+      ],
     );
   }
 
@@ -110,7 +110,7 @@ export class CanvasExportModal extends ModalBase {
       container,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_DURATIONS,
       false,
-      "include-durations"
+      "include-durations",
     );
 
     // Include stats checkbox
@@ -118,7 +118,7 @@ export class CanvasExportModal extends ModalBase {
       container,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_STATS,
       false,
-      "include-stats"
+      "include-stats",
     );
 
     // Connect supersets checkbox
@@ -126,7 +126,7 @@ export class CanvasExportModal extends ModalBase {
       container,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.CONNECT_SUPERSETS,
       true,
-      "connect-supersets"
+      "connect-supersets",
     );
   }
 
@@ -134,7 +134,7 @@ export class CanvasExportModal extends ModalBase {
    * Create action buttons
    */
   private createButtons(container: HTMLElement): void {
-    const buttonsSection = createButtonsSection(container);
+    const buttonsSection = Button.createContainer(container);
 
     // Cancel button
     const cancelButton = Button.create(buttonsSection, {

@@ -18,6 +18,7 @@ import {
 } from "@app/features/canvas";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
 import type WorkoutChartsPlugin from "main";
+import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 
 export class CommandHandlerService {
   constructor(
@@ -96,6 +97,14 @@ export class CommandHandlerService {
       name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DASHBOARD,
       callback: () => {
         new InsertDashboardModal(this.app).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "insert-workout-duration",
+      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DURATION,
+      callback: () => {
+        CodeGenerator.generateDurationCode();
       },
     });
 

@@ -1,14 +1,14 @@
 import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+
 import { Button } from "@app/components/atoms";
 
 export class QuickActions {
   static render(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): void {
     const actionsEl = container.createEl("div", {
       cls: "workout-dashboard-widget workout-quick-actions",
@@ -19,7 +19,7 @@ export class QuickActions {
       cls: "workout-widget-title",
     });
 
-    const buttonsEl = createButtonsSection(actionsEl);
+    const buttonsEl = Button.createContainer(actionsEl);
     buttonsEl.addClass("workout-action-buttons");
 
     // Add workout log button

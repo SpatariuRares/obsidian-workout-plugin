@@ -1,17 +1,8 @@
 // Utility class for generating code blocks
 import { CONSTANTS } from "@app/constants";
-import {
-  CHART_TYPE,
-  EmbeddedChartParams,
-} from "@app/features/charts/types";
-import {
-  EmbeddedTimerParams,
-  TIMER_TYPE,
-} from "@app/features/timer/types";
-import {
-  TableCodeOptions,
-  TABLE_TYPE,
-} from "@app/features/tables/types";
+import { CHART_TYPE, EmbeddedChartParams } from "@app/features/charts/types";
+import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer/types";
+import { TableCodeOptions, TABLE_TYPE } from "@app/features/tables/types";
 
 export class CodeGenerator {
   /**
@@ -148,6 +139,18 @@ export class CodeGenerator {
   static generateDashboardCode(): string {
     const lines: string[] = [
       `\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD}`,
+    ];
+    lines.push("```");
+
+    return lines.join("\n");
+  }
+
+  /**
+   * Generates Duration code
+   */
+  static generateDurationCode(): string {
+    const lines: string[] = [
+      `\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION}`,
     ];
     lines.push("```");
 

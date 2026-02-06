@@ -2,7 +2,6 @@ import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
 
 /**
  * Simple confirmation modal
@@ -16,7 +15,7 @@ export class ConfirmModal extends ModalBase {
     app: App,
     message: string,
     onConfirm: () => void,
-    onCancel?: () => void
+    onCancel?: () => void,
   ) {
     super(app);
     this.message = message;
@@ -31,13 +30,15 @@ export class ConfirmModal extends ModalBase {
     contentEl.addClass("workout-charts-modal");
 
     // Title
-    contentEl.createEl("h2", { text: CONSTANTS.WORKOUT.MODAL.LABELS.CONFIRM_ACTION });
+    contentEl.createEl("h2", {
+      text: CONSTANTS.WORKOUT.MODAL.LABELS.CONFIRM_ACTION,
+    });
 
     // Message
     contentEl.createEl("p", { text: this.message });
 
     // Button container
-    const buttonContainer = createButtonsSection(contentEl);
+    const buttonContainer = Button.createContainer(contentEl);
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonContainer, {

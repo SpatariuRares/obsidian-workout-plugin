@@ -4,10 +4,7 @@ import { CONSTANTS } from "@app/constants";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import {
-  CSVWorkoutLogEntry,
-  WorkoutProtocol,
-} from "@app/types/WorkoutLogData";
+import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -15,7 +12,7 @@ import { LogDataService } from "@app/features/modals/base/services/LogDataServic
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 
@@ -115,7 +112,7 @@ export abstract class BaseLogModal extends ModalBase {
     // Note: Auto-fill logic is now handled within LogFormRenderer's setup
 
     // Create buttons
-    const buttonsContainer = createButtonsSection(formContainer);
+    const buttonsContainer = Button.createContainer(formContainer);
     this.createButtons(buttonsContainer, this.formElements);
 
     // Set focus
@@ -182,7 +179,7 @@ export abstract class BaseLogModal extends ModalBase {
 
     if (data.notes) formElements.notesInput.value = data.notes;
     if (data.workout) formElements.workoutInput.value = data.workout;
-    
+
     if (data.date && formElements.dateInput && this.shouldShowDateField()) {
       const dateValue = data.date.split("T")[0];
       formElements.dateInput.value = dateValue;
@@ -232,11 +229,11 @@ export abstract class BaseLogModal extends ModalBase {
     formElements: LogFormElements,
   ): Promise<void> {
     const currentFileName = this.getCurrentFileName();
-    
+
     const data = LogSubmissionHandler.extractAndValidateData(
       formElements,
       this.currentParameters,
-      currentFileName
+      currentFileName,
     );
 
     if (!data) return;

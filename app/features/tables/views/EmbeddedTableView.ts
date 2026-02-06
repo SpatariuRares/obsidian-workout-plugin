@@ -10,13 +10,17 @@ import {
   TargetHeader,
   AchievementBadge,
 } from "@app/features/tables";
-import { TableCallbacks, EmbeddedTableParams, TableData } from "@app/features/tables/types";
+import {
+  TableCallbacks,
+  EmbeddedTableParams,
+  TableData,
+} from "@app/features/tables/types";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
-import { createButtonsSection } from "@app/features/modals/base/utils/createButtonsSection";
+import { Button } from "@app/components";
 
 /**
  * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
@@ -146,7 +150,13 @@ export class EmbeddedTableView extends BaseView {
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
-      this.renderActionButtons(contentDiv, params, filterResult, onRefresh, signal);
+      this.renderActionButtons(
+        contentDiv,
+        params,
+        filterResult,
+        onRefresh,
+        signal,
+      );
     }
 
     // Render target header with progress bar
@@ -213,7 +223,7 @@ export class EmbeddedTableView extends BaseView {
     const exerciseName =
       params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
 
-    const buttonContainer = createButtonsSection(contentDiv);
+    const buttonContainer = Button.createContainer(contentDiv);
     buttonContainer.addClass("workout-add-log-button-container");
 
     const latestEntry =
@@ -252,11 +262,7 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
-    if (
-      targetWeight === undefined ||
-      targetReps === undefined ||
-      !exercise
-    ) {
+    if (targetWeight === undefined || targetReps === undefined || !exercise) {
       return;
     }
 

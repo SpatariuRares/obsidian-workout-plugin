@@ -7,10 +7,12 @@ export interface ButtonProps {
   text?: string;
   icon?: string;
   className?: string;
+  variant: "primary" | "secondary" | "danger" | "warning";
   title?: string;
   disabled?: boolean;
   ariaLabel?: string;
   extraContainerCls?: string;
+  size?: "small" | "medium" | "big" | "giant";
 }
 
 /**
@@ -35,7 +37,7 @@ export class Button {
 
   static create(parent: HTMLElement, props: ButtonProps): HTMLButtonElement {
     const btn = parent.createEl("button", {
-      cls: props.className || "workout-btn workout-btn-secondary",
+      cls: `${props.className || ""} workout-btn workout-btn-${props.variant} workout-btn-${props.size}`,
       attr: {
         ...(props.title && { title: props.title }),
         ...(props.disabled && { disabled: "true" }),

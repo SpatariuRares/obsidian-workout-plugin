@@ -69,6 +69,7 @@ export class ActionButtonGroup {
       icon: props?.editIcon || this.DEFAULT_EDIT_ICON,
       className: "workout-table-action-btn workout-table-action-btn-edit",
       title: props?.editTitle || this.DEFAULT_EDIT_TITLE,
+      variant: "secondary",
       ariaLabel: props?.editTitle || this.DEFAULT_EDIT_TITLE,
     });
 
@@ -76,6 +77,7 @@ export class ActionButtonGroup {
     const deleteBtn = Button.create(container, {
       icon: props?.deleteIcon || this.DEFAULT_DELETE_ICON,
       className: "workout-table-action-btn workout-table-action-btn-delete",
+      variant: "secondary",
       title: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
       ariaLabel: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
     });

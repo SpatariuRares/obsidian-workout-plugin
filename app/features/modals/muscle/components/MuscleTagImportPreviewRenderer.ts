@@ -14,7 +14,7 @@ const PREVIEW_ROWS_LIMIT = 10;
 const PREVIEW_ERRORS_LIMIT = 3;
 
 export class MuscleTagImportPreviewRenderer {
-  constructor(private readonly container: HTMLElement) {}
+  constructor(private readonly container: HTMLElement) { }
 
   render(options: RenderImportPreviewOptions): void {
     this.container.empty();
@@ -110,19 +110,21 @@ export class MuscleTagImportPreviewRenderer {
 
     const cancelButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const mergeButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_MERGE,
+      variant: "secondary",
       ariaLabel: "Merge: add new tags only, keep existing",
     });
     Button.onClick(mergeButton, options.onMerge);
 
     const replaceButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_REPLACE,
-      className: "mod-warning",
+      variant: "warning",
       ariaLabel: "Replace: overwrite all existing tags",
     });
     Button.onClick(replaceButton, options.onReplace);

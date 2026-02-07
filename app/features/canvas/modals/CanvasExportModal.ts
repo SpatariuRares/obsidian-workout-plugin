@@ -139,6 +139,7 @@ export class CanvasExportModal extends ModalBase {
     // Cancel button
     const cancelButton = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "secondary",
       className: "workout-charts-button",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
@@ -147,6 +148,7 @@ export class CanvasExportModal extends ModalBase {
     // Export button
     const exportButton = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
+      variant: "secondary",
       className: "workout-charts-button mod-cta",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
     });

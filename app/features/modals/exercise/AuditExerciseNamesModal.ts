@@ -224,6 +224,7 @@ export class AuditExerciseNamesModal extends ModalBase {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
           className: "mod-cta",
           ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
+          variant: "secondary",
         });
         Button.onClick(renameInCSVButton, async () => {
           await this.handleRenameInCSV(mismatch);
@@ -231,7 +232,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
         const renameFileButton = Button.create(actionsCell, {
           text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
-          className: "workout-btn workout-btn-secondary",
+          variant: "secondary",
           ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
         });
         Button.onClick(renameFileButton, async () => {

@@ -82,6 +82,7 @@ export class AchievementBadge {
     const dismissButton = Button.create(badgeDiv, {
       text: "×",
       className: "workout-achievement-dismiss",
+      variant: "secondary",
       ariaLabel: "Dismiss achievement",
     });
 
@@ -121,8 +122,8 @@ export class AchievementBadge {
 
     const updateButton = Button.create(suggestionDiv, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
-      className: "workout-update-target-button",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
+      variant: "primary",
     });
 
     Button.onClick(

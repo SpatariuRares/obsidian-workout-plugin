@@ -39,18 +39,21 @@ export class HeatMapControls {
     const weekBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
       className: "workout-toggle-btn active",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
     });
 
     const monthBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
       className: "workout-toggle-btn",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
     });
 
     const yearBtn = Button.create(timeFrameEl, {
       text: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
       className: "workout-toggle-btn",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
     });
 
@@ -62,12 +65,14 @@ export class HeatMapControls {
     const frontBtn = Button.create(viewToggleEl, {
       text: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
       className: "workout-toggle-btn active",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
     });
 
     const backBtn = Button.create(viewToggleEl, {
       text: CONSTANTS.WORKOUT.UI.LABELS.BACK,
       className: "workout-toggle-btn",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.BACK,
     });
 

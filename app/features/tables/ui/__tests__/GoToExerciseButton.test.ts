@@ -42,7 +42,10 @@ describe("GoToExerciseButton", () => {
     expect(Button.create).toHaveBeenCalledWith(
       container,
       expect.objectContaining({
-        className: "workout-btn-secondary",
+        variant: "secondary",
+        text: "Go to exercise",
+        icon: "🔗",
+        ariaLabel: "Go to exercise",
       }),
     );
     expect(Button.onClick).toHaveBeenCalledWith(

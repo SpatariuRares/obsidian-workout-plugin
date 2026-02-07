@@ -5,6 +5,7 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -42,13 +43,11 @@ export class LogCallouts {
       ".workout-log-no-data",
     ) as HTMLElement;
 
-    noDataDiv.createEl("p");
     Text.create(noDataDiv, {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.NO_DATA_TITLE(exerciseName),
       className: "workout-log-no-data-title",
       tag: "strong",
     });
-    noDataDiv.createEl("p");
 
     const buttonDiv = Button.createContainer(noDataDiv);
     buttonDiv.addClass("workout-charts-button-container");
@@ -59,6 +58,7 @@ export class LogCallouts {
       ),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "add-log-button",
+      variant: "primary",
       ariaLabel:
         CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(
           exerciseName,
@@ -83,6 +83,12 @@ export class LogCallouts {
         undefined,
       ).open();
     });
+
+    GoToExerciseButton.render(buttonDiv, {
+      exerciseName: exerciseName || "",
+      app: plugin.app,
+    }); 
+ 
   }
 
   static renderAddLogButton(
@@ -101,7 +107,7 @@ export class LogCallouts {
     const button = Button.create(container, {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
-      className: "workout-btn-primary",
+      variant: "primary",
       ariaLabel:
         CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
     });
@@ -113,14 +119,14 @@ export class LogCallouts {
         // Include all fields: reps, weight, protocol, and customFields
         const prefillData = latestEntry
           ? {
-              exercise: latestEntry.exercise,
-              weight: latestEntry.weight,
-              reps: latestEntry.reps,
-              workout: latestEntry.workout || "",
-              notes: latestEntry.notes || "",
-              protocol: latestEntry.protocol,
-              customFields: latestEntry.customFields,
-            }
+            exercise: latestEntry.exercise,
+            weight: latestEntry.weight,
+            reps: latestEntry.reps,
+            workout: latestEntry.workout || "",
+            notes: latestEntry.notes || "",
+            protocol: latestEntry.protocol,
+            customFields: latestEntry.customFields,
+          }
           : undefined;
 
         new CreateLogModal(
@@ -149,6 +155,7 @@ export class LogCallouts {
       text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),
       icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
       className: "create-log-button",
+      variant: "primary",
       ariaLabel:
         CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
     });

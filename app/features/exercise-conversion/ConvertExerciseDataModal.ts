@@ -127,15 +127,15 @@ export class ConvertExerciseDataModal extends ModalBase {
 
     const cancelButton = Button.create(buttonsSection, {
       text: "Cancel",
-      className: "workout-btn workout-btn-secondary",
+      variant: "secondary",
       ariaLabel: "Cancel",
     });
     Button.onClick(cancelButton, () => this.close());
 
     this.convertButton = Button.create(buttonsSection, {
       text: "Convert",
-      className: "mod-cta",
       ariaLabel: "Convert",
+      variant: "primary",
     });
     Button.setDisabled(this.convertButton, true);
     Button.onClick(this.convertButton, () => this.handleConvert());

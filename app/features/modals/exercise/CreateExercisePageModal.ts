@@ -87,7 +87,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     const addParamBtn = Button.create(customParamsHeader, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
-      className: "workout-btn workout-btn-secondary",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
     });
 
@@ -132,14 +132,14 @@ export class CreateExercisePageModal extends ModalBase {
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
-      className: "workout-btn workout-btn-primary",
+      variant: "primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-btn workout-btn-warning",
+      variant: "warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 
@@ -269,8 +269,9 @@ export class CreateExercisePageModal extends ModalBase {
     // Remove button
     const removeBtn = Button.create(rowContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
-      className: "workout-btn workout-btn-warning workout-btn-small",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
+      variant: "warning",
+      size: "small",
     });
 
     const row: CustomParameterRow = {

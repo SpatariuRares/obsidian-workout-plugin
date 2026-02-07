@@ -85,22 +85,22 @@ export class MuscleTagLayoutRenderer {
 
     const addButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.ADD_TAG,
-      className: "mod-cta workout-tag-add-btn",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.ADD_TAG,
+      variant: "primary",
     });
     Button.onClick(addButton, callbacks.onAdd);
 
     const exportButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.EXPORT_TAGS,
-      className: "workout-tag-export-btn",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.EXPORT_TAGS,
+      variant: "secondary",
     });
     Button.onClick(exportButton, callbacks.onExport);
 
     const importButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
-      className: "workout-tag-import-btn",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
+      variant: "secondary",
     });
 
     const fileInput = Input.create(buttonContainer, {

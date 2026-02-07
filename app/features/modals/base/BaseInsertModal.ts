@@ -58,12 +58,14 @@ export abstract class BaseInsertModal extends ModalBase {
       text: this.getButtonText(),
       className: "mod-cta",
       ariaLabel: this.getButtonText(),
+      variant: "secondary",
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "mod-warning",
+      className: "btn-warning",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 

@@ -135,14 +135,14 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-btn",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "warning",
     });
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsSection, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
-      className: "workout-btn workout-btn-primary",
+      variant: "primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
     });
 

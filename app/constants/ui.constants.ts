@@ -991,17 +991,17 @@ export const GENERAL_UI = {
     NO_DATA_TITLE: (exerciseName?: string) =>
       `No workout logs found for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
     CREATE_FIRST_LOG_BUTTON_TEXT: (exerciseName?: string) =>
-      `Create first workout log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
+      `Create first log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
     CREATE_FIRST_LOG_BUTTON_ARIA: (exerciseName?: string) =>
-      `Create first workout log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
+      `Create first log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
     ADD_LOG_BUTTON_TEXT: (exerciseName?: string) =>
       `Add log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "Workout"}`,
     ADD_LOG_BUTTON_ARIA: (exerciseName?: string) =>
-      `Add workout log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "Workout"}`,
+      `Add log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "Workout"}`,
     CREATE_LOG_BUTTON_TEXT: (exerciseName: string) =>
       `Create log for: ${exerciseName}`,
     CREATE_LOG_BUTTON_ARIA: (exerciseName: string) =>
-      `Create workout log for ${exerciseName}`,
+      `Create log for ${exerciseName}`,
     NO_MATCH_MESSAGE: "No matching exercise data found",
   },
 } as const;

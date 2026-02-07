@@ -67,6 +67,7 @@ export class ExerciseAutocomplete {
       text: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
       className: "workout-create-exercise-page-btn workout-display-none",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
+      variant: "secondary",
     });
 
     const elements: ExerciseAutocompleteElements = {

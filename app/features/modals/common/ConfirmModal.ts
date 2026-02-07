@@ -44,6 +44,7 @@ export class ConfirmModal extends ModalBase {
     const cancelBtn = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "warning",
     });
     Button.onClick(cancelBtn, () => {
       if (this.onCancel) {
@@ -55,8 +56,8 @@ export class ConfirmModal extends ModalBase {
     // Confirm button using Button atom
     const confirmBtn = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
-      className: "mod-cta",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CONFIRM,
+      variant: "primary",
     });
     Button.onClick(confirmBtn, () => {
       this.onConfirm();

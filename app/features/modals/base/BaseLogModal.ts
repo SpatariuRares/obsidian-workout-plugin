@@ -204,14 +204,14 @@ export abstract class BaseLogModal extends ModalBase {
   ): void {
     const submitBtn = Button.create(container, {
       text: this.getButtonText(),
-      className: "workout-btn workout-btn-primary",
+      variant: "primary",
       ariaLabel: this.getButtonText(),
     });
 
     const cancelBtn = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "workout-btn workout-btn-warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "warning",
     });
 
     Button.onClick(cancelBtn, () => this.close());

@@ -52,13 +52,15 @@ export class MuscleTagTableRenderer {
       const editButton = Button.create(actionsCell, {
         text: CONSTANTS.WORKOUT.MODAL.LABELS.EDIT_TAG,
         className: "workout-tag-action-btn",
+        variant: "secondary",
         ariaLabel: `Edit ${tag}`,
       });
       Button.onClick(editButton, () => onEdit(tag, muscleGroup));
 
       const deleteButton = Button.create(actionsCell, {
         text: CONSTANTS.WORKOUT.MODAL.LABELS.DELETE,
-        className: "workout-tag-action-btn mod-warning",
+        className: "workout-tag-action-btn",
+        variant: "warning",
         ariaLabel: `Delete ${tag}`,
       });
       Button.onClick(deleteButton, () => onDelete(tag));

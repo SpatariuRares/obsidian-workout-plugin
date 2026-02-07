@@ -66,7 +66,7 @@ export class FieldMappingList {
 
     const addButton = Button.create(this.container, {
       text: "Add field mapping",
-      className: "mod-muted",
+      variant: "secondary",
       ariaLabel: "Add field mapping",
     });
     Button.onClick(addButton, () => {
@@ -112,7 +112,7 @@ export class FieldMappingList {
     // Remove Button
     const removeBtn = Button.create(row, {
       text: "×",
-      className: "workout-btn workout-btn-warning",
+      variant: "warning",
       ariaLabel: "Remove mapping",
     });
     Button.onClick(removeBtn, () => {
@@ -137,17 +137,17 @@ export class FieldMappingList {
 
   private addEmptyMapping(): void {
     if (!this.sourceType || !this.targetType) return;
-    
+
     const sourceOptions = this.getSourceFieldOptions(this.sourceType);
     const targetOptions = this.getTargetFieldOptions(this.targetType);
-    
+
     const newMapping: FieldMapping = {
-        fromField: sourceOptions[0]?.value || "",
-        toField: targetOptions[0]?.value || "",
-        fromLabel: sourceOptions[0]?.text || "",
-        toLabel: targetOptions[0]?.text || "",
+      fromField: sourceOptions[0]?.value || "",
+      toField: targetOptions[0]?.value || "",
+      fromLabel: sourceOptions[0]?.text || "",
+      toLabel: targetOptions[0]?.text || "",
     };
-    
+
     this.mappings.push(newMapping);
     this.render();
     this.onChange(this.mappings);

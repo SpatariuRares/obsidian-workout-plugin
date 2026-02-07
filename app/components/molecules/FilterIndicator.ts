@@ -68,6 +68,7 @@ export class FilterIndicator {
 			text: props.clearText || "Clear",
 			className: "workout-filter-indicator-clear",
 			ariaLabel: props.clearText || "Clear filter",
+			variant: "secondary",
 		});
 		Button.onClick(clearBtn, props.onClear);
 

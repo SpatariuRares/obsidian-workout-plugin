@@ -21,6 +21,8 @@ export class TimerControls {
     const startStopBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-start-stop",
       text: "▶",
+      variant: "secondary",
+      size: "small",
       ariaLabel: "Start timer",
     });
 
@@ -28,6 +30,8 @@ export class TimerControls {
     const resetBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-reset",
       text: "↺",
+      variant: "secondary",
+      size: "small",
       ariaLabel: "Reset timer",
     });
 

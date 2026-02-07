@@ -31,7 +31,7 @@ export class GoToExerciseButton {
     const gotoBtn = Button.create(container, {
       icon: CONSTANTS.WORKOUT.TABLE.ICONS.GOTO,
       text: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
-      className: "workout-btn-secondary",
+      variant: "secondary",
       ariaLabel: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
     });
 

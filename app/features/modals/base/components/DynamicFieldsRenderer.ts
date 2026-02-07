@@ -5,7 +5,7 @@ import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 
 export class DynamicFieldsRenderer {
-  constructor(private plugin: WorkoutChartsPlugin) {}
+  constructor(private plugin: WorkoutChartsPlugin) { }
 
   /**
    * Renders dynamic fields based on parameter definitions.
@@ -58,6 +58,8 @@ export class DynamicFieldsRenderer {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
         className: "workout-adjust-btn workout-adjust-minus",
         ariaLabel: `Decrease ${param.label} by ${increment}`,
+        variant: "secondary",
+        size: "small",
       });
       minusBtn.type = "button";
 
@@ -74,6 +76,8 @@ export class DynamicFieldsRenderer {
         text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
         className: "workout-adjust-btn workout-adjust-plus",
         ariaLabel: `Increase ${param.label} by ${increment}`,
+        variant: "secondary",
+        size: "small",
       });
       plusBtn.type = "button";
 

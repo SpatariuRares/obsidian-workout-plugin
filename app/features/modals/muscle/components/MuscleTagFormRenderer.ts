@@ -18,7 +18,7 @@ interface RenderMuscleTagFormOptions {
 export class MuscleTagFormRenderer {
   private suggestionsContainer: HTMLElement | null = null;
 
-  constructor(private readonly formContainer: HTMLElement) {}
+  constructor(private readonly formContainer: HTMLElement) { }
 
   render(options: RenderMuscleTagFormOptions): void {
     this.formContainer.empty();
@@ -98,12 +98,13 @@ export class MuscleTagFormRenderer {
     const cancelButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      variant: "warning",
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const saveButton = Button.create(buttonContainer, {
       text: CONSTANTS.WORKOUT.MODAL.LABELS.SAVE,
-      className: "mod-cta",
+      variant: "primary",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.SAVE,
     });
     Button.onClick(saveButton, () => options.onSave(tagInput, groupSelect));
@@ -168,9 +169,8 @@ export class MuscleTagFormRenderer {
 
     for (const suggestion of suggestions) {
       const item = list.createEl("div", {
-        cls: `workout-tag-suggestion-item${
-          suggestion.isVeryClose ? " workout-tag-suggestion-warning" : ""
-        }`,
+        cls: `workout-tag-suggestion-item${suggestion.isVeryClose ? " workout-tag-suggestion-warning" : ""
+          }`,
       });
 
       if (suggestion.isVeryClose) {

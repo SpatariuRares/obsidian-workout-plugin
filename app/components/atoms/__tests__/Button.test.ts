@@ -12,13 +12,13 @@ describe("Button atom", () => {
 		const button = Button.create(parent, {
 			text: "Save",
 			icon: "💾",
-			className: "btn-primary",
+			variant: "primary",
 			title: "Save workout",
 			ariaLabel: "Save workout log",
 		});
 
 		expect(parent.contains(button)).toBe(true);
-		expect(button.classList.contains("btn-primary")).toBe(true);
+		expect(button.classList.contains("workout-btn-primary")).toBe(true);
 		expect(button.textContent).toBe("💾 Save");
 		expect(button.getAttribute("title")).toBe("Save workout");
 		expect(button.getAttribute("aria-label")).toBe("Save workout log");
@@ -26,7 +26,7 @@ describe("Button atom", () => {
 
 	it("registers click handlers and toggles disabled state", () => {
 		const parent = createParent();
-		const button = Button.create(parent, { text: "Run" });
+		const button = Button.create(parent, { text: "Run", variant: "secondary" });
 		const handler = jest.fn();
 
 		Button.onClick(button, handler);
@@ -49,6 +49,7 @@ describe("Button atom", () => {
 		const button = Button.create(parent, {
 			text: "Submit",
 			disabled: true,
+			variant: "primary",
 		});
 
 		expect(button.getAttribute("disabled")).toBe("true");
@@ -59,6 +60,7 @@ describe("Button atom", () => {
 
 		const button = Button.create(parent, {
 			text: "Default",
+			variant: "secondary",
 		});
 
 		expect(button.classList.contains("workout-btn")).toBe(true);
@@ -67,7 +69,7 @@ describe("Button atom", () => {
 
 	it("handles onClick with AbortSignal", () => {
 		const parent = createParent();
-		const button = Button.create(parent, { text: "Abort" });
+		const button = Button.create(parent, { text: "Abort", variant: "secondary" });
 		const handler = jest.fn();
 		const controller = new AbortController();
 
@@ -89,6 +91,7 @@ describe("Button atom", () => {
 
 		const button = Button.create(parent, {
 			icon: "🔍",
+			variant: "secondary",
 		});
 
 		expect(button.textContent).toBe("🔍");
@@ -97,7 +100,9 @@ describe("Button atom", () => {
 	it("creates button with empty text and no icon", () => {
 		const parent = createParent();
 
-		const button = Button.create(parent, {});
+		const button = Button.create(parent, {
+			variant: "secondary",
+		});
 
 		expect(button.textContent).toBe("");
 	});

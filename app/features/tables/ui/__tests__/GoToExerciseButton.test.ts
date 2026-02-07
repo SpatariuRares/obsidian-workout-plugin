@@ -3,6 +3,7 @@
 import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { Button } from "@app/components/atoms";
+import { CONSTANTS } from "@app/constants";
 
 jest.mock("@app/components/atoms", () => ({
   Button: {
@@ -44,7 +45,7 @@ describe("GoToExerciseButton", () => {
       expect.objectContaining({
         variant: "secondary",
         text: "Go to exercise",
-        icon: "🔗",
+        icon: CONSTANTS.WORKOUT.TABLE.ICONS.GOTO,
         ariaLabel: "Go to exercise",
       }),
     );

@@ -343,25 +343,25 @@ describe("ui.constants", () => {
     describe("NO_DATA_TITLE", () => {
       it("should use default when no exercise name provided", () => {
         expect(GENERAL_UI.LOGS.NO_DATA_TITLE()).toBe(
-          "No workout logs found for exercise"
+          "No logs found for exercise"
         );
       });
 
       it("should use default for empty string", () => {
         expect(GENERAL_UI.LOGS.NO_DATA_TITLE("")).toBe(
-          "No workout logs found for exercise"
+          "No logs found for exercise"
         );
       });
 
       it("should use default for whitespace-only string", () => {
         expect(GENERAL_UI.LOGS.NO_DATA_TITLE("   ")).toBe(
-          "No workout logs found for exercise"
+          "No logs found for exercise"
         );
       });
 
       it("should include exercise name when provided", () => {
         expect(GENERAL_UI.LOGS.NO_DATA_TITLE("Squat")).toBe(
-          "No workout logs found for Squat"
+          "No logs found for Squat"
         );
       });
     });
@@ -369,19 +369,19 @@ describe("ui.constants", () => {
     describe("CREATE_FIRST_LOG_BUTTON_TEXT", () => {
       it("should use default when no exercise name provided", () => {
         expect(GENERAL_UI.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT()).toBe(
-          "Create first workout log for exercise"
+          "Create first log for exercise"
         );
       });
 
       it("should use default for empty string", () => {
         expect(GENERAL_UI.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT("")).toBe(
-          "Create first workout log for exercise"
+          "Create first log for exercise"
         );
       });
 
       it("should include exercise name when provided", () => {
         expect(GENERAL_UI.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT("Deadlift")).toBe(
-          "Create first workout log for Deadlift"
+          "Create first log for Deadlift"
         );
       });
     });
@@ -389,14 +389,14 @@ describe("ui.constants", () => {
     describe("CREATE_FIRST_LOG_BUTTON_ARIA", () => {
       it("should use default when no exercise name provided", () => {
         expect(GENERAL_UI.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA()).toBe(
-          "Create first workout log for exercise"
+          "Create first log for exercise"
         );
       });
 
       it("should include exercise name when provided", () => {
         expect(
           GENERAL_UI.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA("Bench Press")
-        ).toBe("Create first workout log for Bench Press");
+        ).toBe("Create first log for Bench Press");
       });
     });
 
@@ -423,13 +423,13 @@ describe("ui.constants", () => {
     describe("ADD_LOG_BUTTON_ARIA", () => {
       it("should use Workout when no exercise name provided", () => {
         expect(GENERAL_UI.LOGS.ADD_LOG_BUTTON_ARIA()).toBe(
-          "Add workout log for Workout"
+          "Add log for Workout"
         );
       });
 
       it("should include exercise name when provided", () => {
         expect(GENERAL_UI.LOGS.ADD_LOG_BUTTON_ARIA("Row")).toBe(
-          "Add workout log for Row"
+          "Add log for Row"
         );
       });
     });
@@ -445,7 +445,7 @@ describe("ui.constants", () => {
     describe("CREATE_LOG_BUTTON_ARIA", () => {
       it("should include exercise name", () => {
         expect(GENERAL_UI.LOGS.CREATE_LOG_BUTTON_ARIA("Tricep Extension")).toBe(
-          "Create workout log for Tricep Extension"
+          "Create log for Tricep Extension"
         );
       });
     });

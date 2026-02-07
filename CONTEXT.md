@@ -1,6 +1,6 @@
 # Workout Planner - Plugin Context Document
 
-> **Plugin**: Workout Planner v1.1.2
+> **Plugin**: Workout Planner v1.1.3
 > **Author**: Rares Spatariu
 > **License**: MIT
 > **Min Obsidian**: 0.15.0
@@ -65,11 +65,11 @@ Features: protocol badges (color-coded), progressive overload suggestions, targe
 Embedded directly in the workout note next to each exercise. User taps play, rests, gets notified when done.
 
 ```yaml
-preset: rest        # use a saved preset
+preset: rest # use a saved preset
 # or manual:
 duration: 90
-type: countdown     # countdown | interval
-rounds: 3           # for interval type
+type: countdown # countdown | interval
+rounds: 3 # for interval type
 autoStart: true
 sound: true
 showControls: true
@@ -81,11 +81,11 @@ Timer types: Countdown (single), Interval (work/rest rounds). Presets are saved 
 
 ```yaml
 exercise: Squat
-type: volume        # volume | weight | reps | duration | distance | pace | heartRate
+type: volume # volume | weight | reps | duration | distance | pace | heartRate
 dateRange: 30
 showTrendLine: true
-showTrend: true     # header with % variation
-showStats: true     # avg/max/min box
+showTrend: true # header with % variation
+showStats: true # avg/max/min box
 chartType: exercise # exercise | workout | combined | all
 height: 300px
 limit: 50
@@ -123,6 +123,7 @@ Estimates total workout duration based on exercises, sets, and configurable set 
 ### CSV File (Single Source of Truth)
 
 Standard columns:
+
 ```
 date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 ```
@@ -131,24 +132,24 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 
 ### Exercise Types
 
-| Type | Primary Fields | Optional Fields |
-|------|---------------|-----------------|
-| Strength | reps, weight | - |
-| Timed | duration | - |
-| Distance | distance | duration |
-| Cardio | duration | distance, heartRate |
-| Custom | user-defined | user-defined |
+| Type     | Primary Fields | Optional Fields     |
+| -------- | -------------- | ------------------- |
+| Strength | reps, weight   | -                   |
+| Timed    | duration       | -                   |
+| Distance | distance       | duration            |
+| Cardio   | duration       | distance, heartRate |
+| Custom   | user-defined   | user-defined        |
 
 ### Workout Protocols (Built-in)
 
-| Protocol | Abbreviation |
-|----------|-------------|
-| Standard | STD |
-| Drop Set | DS |
-| Myo-Reps | MYO |
-| Rest-Pause | RP |
-| Superset | SS |
-| 21s | 21 |
+| Protocol   | Abbreviation |
+| ---------- | ------------ |
+| Standard   | STD          |
+| Drop Set   | DS           |
+| Myo-Reps   | MYO          |
+| Rest-Pause | RP           |
+| Superset   | SS           |
+| 21s        | 21           |
 
 Users can define custom protocols with name, abbreviation (max 3 chars), and color.
 
@@ -207,39 +208,39 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 
 ## Settings Overview
 
-| Category | Key Settings |
-|----------|-------------|
-| **General** | CSV file path, exercise folder path, exact match mode |
-| **Timer** | Presets (create/save/delete), default preset |
-| **Protocols** | Custom protocol definitions (name, abbrev, color) |
-| **Templates** | Exercise block template with placeholders |
-| **Progressive Overload** | Weight increment for suggestions (default 2.5kg) |
-| **Duration** | Default set duration (45s) for estimation |
-| **Mobile** | Ribbon icon toggle, quick weight increment |
-| **Muscle Tags** | Custom tag CSV, import/export |
+| Category                 | Key Settings                                          |
+| ------------------------ | ----------------------------------------------------- |
+| **General**              | CSV file path, exercise folder path, exact match mode |
+| **Timer**                | Presets (create/save/delete), default preset          |
+| **Protocols**            | Custom protocol definitions (name, abbrev, color)     |
+| **Templates**            | Exercise block template with placeholders             |
+| **Progressive Overload** | Weight increment for suggestions (default 2.5kg)      |
+| **Duration**             | Default set duration (45s) for estimation             |
+| **Mobile**               | Ribbon icon toggle, quick weight increment            |
+| **Muscle Tags**          | Custom tag CSV, import/export                         |
 
 ---
 
 ## Commands (16 Total)
 
-| Command | What It Does |
-|---------|-------------|
-| Create workout log | Opens CreateLogModal |
-| Create CSV log file | Creates the CSV file if missing |
-| Insert workout chart | Opens InsertChartModal |
-| Insert workout table | Opens InsertTableModal |
-| Insert workout timer | Opens InsertTimerModal |
-| Insert workout dashboard | Opens InsertDashboardModal |
-| Insert workout duration | Opens InsertDurationModal |
-| Create exercise page | Creates a new exercise file |
-| Create exercise section | Adds exercise section to current note |
-| Audit exercise names | Finds mismatches between files and CSV |
-| Add exercise block | Inserts templated exercise block |
-| Export workout to canvas | Exports workout structure to Obsidian Canvas |
-| Migrate exercise types | Converts between exercise type formats |
-| Convert exercise data | Converts exercise data formats |
-| Manage muscle tags | Opens MuscleTagManagerModal |
-| Generate tag reference note | Creates a reference note for all tags |
+| Command                     | What It Does                                 |
+| --------------------------- | -------------------------------------------- |
+| Create workout log          | Opens CreateLogModal                         |
+| Create CSV log file         | Creates the CSV file if missing              |
+| Insert workout chart        | Opens InsertChartModal                       |
+| Insert workout table        | Opens InsertTableModal                       |
+| Insert workout timer        | Opens InsertTimerModal                       |
+| Insert workout dashboard    | Opens InsertDashboardModal                   |
+| Insert workout duration     | Opens InsertDurationModal                    |
+| Create exercise page        | Creates a new exercise file                  |
+| Create exercise section     | Adds exercise section to current note        |
+| Audit exercise names        | Finds mismatches between files and CSV       |
+| Add exercise block          | Inserts templated exercise block             |
+| Export workout to canvas    | Exports workout structure to Obsidian Canvas |
+| Migrate exercise types      | Converts between exercise type formats       |
+| Convert exercise data       | Converts exercise data formats               |
+| Manage muscle tags          | Opens MuscleTagManagerModal                  |
+| Generate tag reference note | Creates a reference note for all tags        |
 
 ---
 
@@ -253,7 +254,7 @@ const logs = await WorkoutPlannerAPI.getWorkoutLogs({
   exercise: "Squat",
   dateRange: 30,
   protocol: "drop_set",
-  exactMatch: true
+  exactMatch: true,
 });
 
 // Get stats for an exercise (PR, volume, trend)
@@ -337,6 +338,7 @@ A workout note looks something like this - the user scrolls through it during a 
 # Lower Body A
 
 ## Squat
+
 ```workout-log
 exercise: Squat
 limit: 5
@@ -347,6 +349,7 @@ preset: rest
 ```
 
 ## Leg Press
+
 ```workout-log
 exercise: Leg Press
 limit: 5
@@ -357,6 +360,7 @@ preset: rest
 ```
 
 ## Hip Thrust
+
 ```workout-log
 exercise: Hip Thrust
 limit: 5

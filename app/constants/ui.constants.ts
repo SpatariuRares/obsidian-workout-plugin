@@ -642,7 +642,7 @@ export const TABLE_UI = {
     HEART_RATE: "❤️ ",
     EDIT: "✏️",
     DELETE: "🗑️",
-    GOTO: "📄",
+    GOTO: "🔗",
   },
   DEFAULT_VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
   MESSAGES: {
@@ -989,7 +989,7 @@ export const GENERAL_UI = {
   },
   LOGS: {
     NO_DATA_TITLE: (exerciseName?: string) =>
-      `No workout logs found for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
+      `No logs found for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
     CREATE_FIRST_LOG_BUTTON_TEXT: (exerciseName?: string) =>
       `Create first log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
     CREATE_FIRST_LOG_BUTTON_ARIA: (exerciseName?: string) =>

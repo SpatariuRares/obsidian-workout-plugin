@@ -25,7 +25,6 @@ describe("components barrel export", () => {
     expect(Components.FormField).toBeDefined();
     expect(Components.SearchBox).toBeDefined();
     expect(Components.TrendIndicator).toBeDefined();
-    expect(Components.TableHeaderCell).toBeDefined();
     expect(Components.EmptyState).toBeDefined();
     expect(Components.InfoBanner).toBeDefined();
     expect(Components.LoadingSpinner).toBeDefined();

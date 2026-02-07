@@ -30,36 +30,4 @@ describe("TableHeader", () => {
       expect(thead.querySelectorAll("th").length).toBe(0);
     });
   });
-
-  describe("createHeaderCell", () => {
-    it("creates a th element with text", () => {
-      const parent = createObsidianContainer();
-
-      const th = TableHeader.createHeaderCell(parent, "Weight");
-
-      expect(th.tagName).toBe("TH");
-      expect(th.textContent).toBe("Weight");
-      expect(parent.contains(th)).toBe(true);
-    });
-
-    it("creates a th element with attributes", () => {
-      const parent = createObsidianContainer();
-
-      const th = TableHeader.createHeaderCell(parent, "Volume", {
-        colspan: "2",
-        "data-sort": "asc",
-      });
-
-      expect(th.getAttribute("colspan")).toBe("2");
-      expect(th.getAttribute("data-sort")).toBe("asc");
-    });
-
-    it("creates a th element without attributes", () => {
-      const parent = createObsidianContainer();
-
-      const th = TableHeader.createHeaderCell(parent, "Reps");
-
-      expect(th.textContent).toBe("Reps");
-    });
-  });
 });

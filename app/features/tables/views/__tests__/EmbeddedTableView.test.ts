@@ -200,16 +200,16 @@ describe("EmbeddedTableView", () => {
     view = new EmbeddedTableView(plugin);
 
     // Mock Obsidian-specific DOM methods
-    HTMLElement.prototype.empty = function() {
+    HTMLElement.prototype.empty = function () {
       while (this.firstChild) {
         this.removeChild(this.firstChild);
       }
     };
-    HTMLElement.prototype.addClass = function(className: string) {
+    HTMLElement.prototype.addClass = function (className: string) {
       this.classList.add(className);
       return this;
     };
-    HTMLElement.prototype.removeClass = function(className: string) {
+    HTMLElement.prototype.removeClass = function (className: string) {
       this.classList.remove(className);
       return this;
     };
@@ -243,9 +243,7 @@ describe("EmbeddedTableView", () => {
 
       // Need to override validateAndHandleErrors to return false
       const origValidate = (view as any).validateAndHandleErrors;
-      (view as any).validateAndHandleErrors = jest
-        .fn()
-        .mockReturnValue(false);
+      (view as any).validateAndHandleErrors = jest.fn().mockReturnValue(false);
 
       await view.createTable(container, [createLog()], { limit: -1 });
 
@@ -521,7 +519,9 @@ describe("EmbeddedTableView", () => {
       // Call onUpdateTarget
       await callbacks.onUpdateTarget(82.5);
 
-      const { CodeBlockEditorService } = require("@app/services/editor/CodeBlockEditorService");
+      const {
+        CodeBlockEditorService,
+      } = require("@app/services/editor/CodeBlockEditorService");
       expect(CodeBlockEditorService.updateTargetWeight).toHaveBeenCalledWith(
         plugin.app,
         "Bench Press",

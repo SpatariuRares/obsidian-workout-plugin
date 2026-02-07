@@ -22,6 +22,17 @@ jest.mock("@app/features/tables/ui", () => ({
       container.appendChild(div);
     }),
   },
+  TableHeader: {
+    render: jest.fn((table: HTMLElement, headers: string[]) => {
+      const thead = table.appendChild(document.createElement("thead"));
+      const headerRow = thead.appendChild(document.createElement("tr"));
+      headers.forEach((header: string) => {
+        const th = headerRow.appendChild(document.createElement("th"));
+        th.textContent = header;
+      });
+      return thead;
+    }),
+  },
 }));
 
 // Mock SpacerStat and ProtocolBadge
@@ -74,7 +85,7 @@ const createRow = (overrides: Partial<TableRow> = {}): TableRow => ({
 
 describe("TableRenderer", () => {
   describe("createTableContainer", () => {
-    it("delegates to TableContainer.create", () => {
+    it("creates a container with the correct class", () => {
       const parent = createObsidianContainer();
 
       const container = TableRenderer.createTableContainer(parent);

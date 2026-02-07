@@ -28,14 +28,11 @@ export {
 // UI components
 export {
   TableHeader,
-  TableHeaderCell,
   GoToExerciseButton,
   TargetHeader,
   AchievementBadge,
 } from "@app/features/tables/ui";
 export type {
-  TableHeaderCellProps,
-  TableHeaderCellResult,
   GoToExerciseButtonProps,
   TargetHeaderProps,
   AchievementBadgeProps,

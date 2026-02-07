@@ -96,7 +96,9 @@ describe("TableActions", () => {
     it("opens ConfirmModal", () => {
       const log = createLog();
       const plugin = createMockPlugin();
-      const { ConfirmModal } = require("@app/features/modals/common/ConfirmModal");
+      const {
+        ConfirmModal,
+      } = require("@app/features/modals/common/ConfirmModal");
 
       TableActions.handleDelete(log, plugin as any);
 
@@ -145,12 +147,7 @@ describe("TableActions", () => {
       const plugin = createMockPlugin();
       const onRefresh = jest.fn();
 
-      TableActions.renderActionButtons(
-        td,
-        log,
-        plugin as any,
-        onRefresh,
-      );
+      TableActions.renderActionButtons(td, log, plugin as any, onRefresh);
 
       const editBtn = td.querySelector(".edit-btn") as HTMLElement;
       const deleteBtn = td.querySelector(".delete-btn") as HTMLElement;
@@ -166,7 +163,9 @@ describe("TableActions", () => {
       const deleteEvent = new MouseEvent("click", { bubbles: true });
       deleteBtn.dispatchEvent(deleteEvent);
 
-      const { ConfirmModal } = require("@app/features/modals/common/ConfirmModal");
+      const {
+        ConfirmModal,
+      } = require("@app/features/modals/common/ConfirmModal");
       expect(ConfirmModal).toHaveBeenCalled();
     });
 

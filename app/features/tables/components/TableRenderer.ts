@@ -4,7 +4,7 @@ import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import { TableErrorMessage } from "@app/features/tables/ui";
+import { TableErrorMessage, TableHeader } from "@app/features/tables/ui";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 
 /**
@@ -72,13 +72,7 @@ export class TableRenderer {
       const table = fragment.appendChild(document.createElement("table"));
       table.className = "workout-log-table";
 
-      const thead = table.appendChild(document.createElement("thead"));
-      const headerRow = thead.appendChild(document.createElement("tr"));
-
-      headers.forEach((header) => {
-        const th = headerRow.appendChild(document.createElement("th"));
-        th.textContent = header;
-      });
+      TableHeader.render(table, headers);
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
@@ -119,8 +113,7 @@ export class TableRenderer {
     onRefresh?: () => void,
     signal?: AbortSignal,
   ): void {
-    try {
-      if (rows.length === 0) return;
+    if (rows.length === 0) return;
 
       let currentDateKey = "";
       let groupIndex = 0;
@@ -323,10 +316,7 @@ export class TableRenderer {
         });
       });
 
-      tbody.appendChild(fragment);
-    } catch {
-      // Silent error - grouping failed
-    }
+    tbody.appendChild(fragment);
   }
 
   /**

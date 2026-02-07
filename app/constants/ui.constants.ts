@@ -517,7 +517,9 @@ export const SETTINGS_UI = {
     PROTOCOL_NAME: "Protocol name",
     PROTOCOL_ABBREVIATION: "Abbreviation",
     PROTOCOL_COLOR: "Badge color",
-    SET_DURATION: "Default set duration (seconds)",
+    SET_DURATION: "Fallback set duration (seconds)",
+    REP_DURATION: "Duration per repetition (seconds)",
+    DEFAULT_REPS_PER_SET: "Default reps per set",
     SHOW_QUICK_LOG_RIBBON: "Show create log ribbon icon",
     QUICK_WEIGHT_INCREMENT: "Weight buttons increment (kg)",
     CREATE_MUSCLE_TAGS_CSV: "Muscle tags CSV file",
@@ -544,7 +546,9 @@ export const SETTINGS_UI = {
       "Short abbreviation shown in badge (max 3 characters)",
     PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
     SET_DURATION:
-      "Default time per set used in workout duration estimation (typical range: 30-60 seconds)",
+      "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
+    REP_DURATION: "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
+    DEFAULT_REPS_PER_SET: "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
     SHOW_QUICK_LOG_RIBBON:
       "Show a dumbbell icon in the left ribbon to open the create workout log modal",
     QUICK_WEIGHT_INCREMENT:

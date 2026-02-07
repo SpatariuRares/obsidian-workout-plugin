@@ -32,4 +32,8 @@ export interface DurationAnalysisResult {
   success: boolean;
   /** Error message if analysis failed */
   error?: string;
+  /** Duration calculated from historical logs (timestamps), if available */
+  historicalDuration?: number;
+  /** Date of the last session used for historical calculation */
+  lastSessionDate?: string;
 }

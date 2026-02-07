@@ -1453,6 +1453,13 @@
 }
 
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
    DURATION ESTIMATOR STYLES
    Info card style for workout duration estimation (distinct from timer countdown)
    ============================================================================ */
@@ -1462,7 +1469,7 @@
   border-radius: var(--workout-radius-xl);
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
-  max-width: 320px;
+  max-width: 484px;
 }
 
 .workout-duration-header {

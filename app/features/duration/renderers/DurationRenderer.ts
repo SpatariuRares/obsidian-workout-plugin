@@ -109,6 +109,17 @@ export class DurationRenderer {
       "Set time",
       `${FormatUtils.formatDuration(analysis.totalSetTime)} (${analysis.setCount} sets)`,
     );
+
+    // Historical duration row (if available)
+    if (analysis.historicalDuration) {
+        const dateLabel = analysis.lastSessionDate ? ` (${analysis.lastSessionDate})` : "";
+        this.renderBreakdownRow(
+            breakdown,
+            "Last session",
+            FormatUtils.formatDuration(analysis.historicalDuration) + dateLabel
+        );
+        
+    }
   }
 
   /**

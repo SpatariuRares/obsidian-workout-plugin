@@ -417,12 +417,5 @@ exercise: ${exerciseName}
     const fileName = normalizePath(folderPath + "/" + safeExerciseName + ".md");
     // Create the file
     await this.app.vault.create(fileName, content);
-
-    // Open the newly created file
-    const abstractFile = this.app.vault.getAbstractFileByPath(fileName);
-    if (abstractFile && abstractFile instanceof TFile) {
-      const leaf = this.app.workspace.getLeaf();
-      await leaf.openFile(abstractFile);
-    }
   }
 }

@@ -1,3 +1,5 @@
+@use "variables";
+
 /* ============================================================================
    DURATION ESTIMATOR STYLES
    Info card style for workout duration estimation (distinct from timer countdown)
@@ -101,4 +103,10 @@
   border-radius: var(--workout-radius-sm);
   overflow-x: auto;
   margin: 0;
+}
+
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-duration-card {
+    max-width: 100%;
+  }
 }

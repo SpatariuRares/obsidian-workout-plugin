@@ -60,8 +60,12 @@ workout: {{workout}}
   achievedTargets: {},
   /** User-defined custom protocols */
   customProtocols: [],
-  /** Default set duration for workout time estimation (45 seconds) */
+  /** Default set duration for fallback estimation (45 seconds) */
   setDuration: 45,
+  /** Default duration per repetition (5 seconds) */
+  repDuration: 5,
+  /** Default reps per set (0 means use setDuration fallback if not found) */
+  defaultRepsPerSet: 0,
   /** Legacy quick-log ribbon preference (deprecated, no longer used) */
   showQuickLogRibbon: true,
   /** Recent exercises shown as chips in create/edit modals */

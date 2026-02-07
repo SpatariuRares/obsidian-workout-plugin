@@ -112,6 +112,10 @@ export interface WorkoutChartsSettings {
   customProtocols: CustomProtocolConfig[];
   /** Default duration per set in seconds for workout duration estimation */
   setDuration: number;
+  /** Duration per repetition in seconds. Used when reps are detected. */
+  repDuration: number;
+  /** Default number of reps per set. Used when reps are not detected but rep-based calculation is preferred. */
+  defaultRepsPerSet: number;
   /** Legacy quick-log ribbon preference (deprecated, no longer used) */
   showQuickLogRibbon: boolean;
   /** Recent exercises for create/edit log chips (max 10 items, most recent first) */

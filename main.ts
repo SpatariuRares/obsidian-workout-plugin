@@ -70,7 +70,10 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Initialize services
     this.dataService = new DataService(this.app, this.settings);
-    this.exerciseDefinitionService = new ExerciseDefinitionService(this.app, this.settings);
+    this.exerciseDefinitionService = new ExerciseDefinitionService(
+      this.app,
+      this.settings,
+    );
     this.muscleTagService = new MuscleTagService(this.app, this.settings);
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
@@ -87,7 +90,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
       this.dataService,
       this.app,
-      this.settings
+      this.settings,
     );
     window.WorkoutPlannerAPI = this.workoutPlannerAPI;
 
@@ -99,7 +102,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
     this.updateQuickLogRibbon();
-
   }
 
   /**

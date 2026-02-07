@@ -80,6 +80,10 @@ export class CodeBlockProcessorService {
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
       (source, el, ctx) => this.handleWorkoutDuration(source, el, ctx),
     );
+    this.plugin.registerMarkdownCodeBlockProcessor(
+      "workout-test",
+      (source, el, ctx) => this.handleWorkoutTest(source, el, ctx),
+    );
   }
 
   // Handle workout chart code blocks

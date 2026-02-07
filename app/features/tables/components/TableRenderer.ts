@@ -4,7 +4,7 @@ import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import { TableContainer, TableErrorMessage } from "@app/features/tables/ui";
+import { TableErrorMessage } from "@app/features/tables/ui";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 
 /**
@@ -12,11 +12,26 @@ import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
  */
 const PROTOCOL_DISPLAY: Record<string, { label: string; className: string }> = {
   [WorkoutProtocol.STANDARD]: { label: "", className: "" }, // No badge for standard
-  [WorkoutProtocol.DROP_SET]: { label: "Drop", className: "workout-protocol-badge-drop" },
-  [WorkoutProtocol.MYO_REPS]: { label: "Myo", className: "workout-protocol-badge-myo" },
-  [WorkoutProtocol.REST_PAUSE]: { label: "RP", className: "workout-protocol-badge-rp" },
-  [WorkoutProtocol.SUPERSET]: { label: "SS", className: "workout-protocol-badge-superset" },
-  [WorkoutProtocol.TWENTYONE]: { label: "21s", className: "workout-protocol-badge-21" },
+  [WorkoutProtocol.DROP_SET]: {
+    label: "Drop",
+    className: "workout-protocol-badge-drop",
+  },
+  [WorkoutProtocol.MYO_REPS]: {
+    label: "Myo",
+    className: "workout-protocol-badge-myo",
+  },
+  [WorkoutProtocol.REST_PAUSE]: {
+    label: "RP",
+    className: "workout-protocol-badge-rp",
+  },
+  [WorkoutProtocol.SUPERSET]: {
+    label: "SS",
+    className: "workout-protocol-badge-superset",
+  },
+  [WorkoutProtocol.TWENTYONE]: {
+    label: "21s",
+    className: "workout-protocol-badge-21",
+  },
 };
 
 export class TableRenderer {
@@ -26,7 +41,7 @@ export class TableRenderer {
    * @returns The table container element
    */
   static createTableContainer(contentDiv: HTMLElement): HTMLElement {
-    return TableContainer.create(contentDiv);
+    return contentDiv.createEl("div", { cls: "workout-table-container" });
   }
 
   /**
@@ -49,7 +64,7 @@ export class TableRenderer {
     logs?: WorkoutLogData[], // pass the original log objects
     plugin?: WorkoutChartsPlugin, // pass the plugin for file opening
     onRefresh?: () => void,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): boolean {
     try {
       const fragment = document.createDocumentFragment();
@@ -67,7 +82,14 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, onRefresh, signal);
+      this.applyRowGroupingOptimized(
+        tbody,
+        rows,
+        headers,
+        plugin,
+        onRefresh,
+        signal,
+      );
 
       tableContainer.appendChild(fragment);
 
@@ -82,10 +104,7 @@ export class TableRenderer {
    * @param container - The container element to render the message in
    * @param message - Error message to display
    */
-  static renderFallbackMessage(
-    container: HTMLElement,
-    message: string,
-  ): void {
+  static renderFallbackMessage(container: HTMLElement, message: string): void {
     TableErrorMessage.render(container, message);
   }
 
@@ -98,7 +117,7 @@ export class TableRenderer {
     headers: string[],
     plugin?: WorkoutChartsPlugin,
     onRefresh?: () => void,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     try {
       if (rows.length === 0) return;
@@ -167,7 +186,8 @@ export class TableRenderer {
               totalDistance += distance;
             }
 
-            const heartRate = log.customFields["heartrate"] || log.customFields["heartRate"];
+            const heartRate =
+              log.customFields["heartrate"] || log.customFields["heartRate"];
             if (typeof heartRate === "number" && heartRate > 0) {
               hasHeartRate = true;
               totalHeartRate += heartRate;
@@ -215,9 +235,10 @@ export class TableRenderer {
 
           if (hasDuration) {
             // Format duration based on magnitude
-            const durationDisplay = totalDuration >= 60
-              ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
-              : `${Math.round(totalDuration)}s`;
+            const durationDisplay =
+              totalDuration >= 60
+                ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
+                : `${Math.round(totalDuration)}s`;
             SpacerStat.create(summaryCell, {
               icon: CONSTANTS.WORKOUT.TABLE.ICONS.DURATION,
               value: durationDisplay,
@@ -249,9 +270,15 @@ export class TableRenderer {
       };
 
       // Find column indices dynamically based on headers
-      const protocolColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
-      const volumeColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
-      const actionsColumnIndex = headers.indexOf(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+      const protocolColumnIndex = headers.indexOf(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+      );
+      const volumeColumnIndex = headers.indexOf(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+      );
+      const actionsColumnIndex = headers.indexOf(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS,
+      );
 
       rows.forEach((row) => {
         const dateKey = row.dateKey;
@@ -264,8 +291,9 @@ export class TableRenderer {
         }
 
         const tr = fragment.appendChild(document.createElement("tr"));
-        tr.className = `workout-same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"
-          }`;
+        tr.className = `workout-same-day-log ${
+          groupIndex % 2 === 0 ? "group-even" : "group-odd"
+        }`;
 
         row.displayRow.forEach((cell, cellIndex) => {
           const td = tr.appendChild(document.createElement("td"));
@@ -275,7 +303,13 @@ export class TableRenderer {
             td.textContent = cell;
           } else if (cellIndex === actionsColumnIndex) {
             td.className = "workout-table-actions-cell";
-            TableActions.renderActionButtons(td, row.originalLog, plugin, onRefresh, signal);
+            TableActions.renderActionButtons(
+              td,
+              row.originalLog,
+              plugin,
+              onRefresh,
+              signal,
+            );
           } else if (cellIndex === volumeColumnIndex) {
             td.className = "workout-table-volume-cell";
             td.textContent = cell;
@@ -302,7 +336,11 @@ export class TableRenderer {
    * @param protocol - The protocol value to display
    * @param plugin - Plugin instance for accessing custom protocols
    */
-  private static renderProtocolBadge(cell: HTMLElement, protocol: string, plugin?: WorkoutChartsPlugin): void {
+  private static renderProtocolBadge(
+    cell: HTMLElement,
+    protocol: string,
+    plugin?: WorkoutChartsPlugin,
+  ): void {
     // First check built-in protocols
     const builtInConfig = PROTOCOL_DISPLAY[protocol];
 
@@ -323,7 +361,7 @@ export class TableRenderer {
     // Check custom protocols from settings
     if (plugin?.settings?.customProtocols) {
       const customProtocol = plugin.settings.customProtocols.find(
-        (p) => p.id === protocol
+        (p) => p.id === protocol,
       );
 
       if (customProtocol) {

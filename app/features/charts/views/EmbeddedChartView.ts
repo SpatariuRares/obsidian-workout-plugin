@@ -10,7 +10,7 @@ import {
 } from "@app/features/charts/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
-import { MobileTable } from "@app/features/tables";
+import { MobileTable } from "@app/features/charts/components";
 import {
   ChartRenderer,
   TrendHeader,

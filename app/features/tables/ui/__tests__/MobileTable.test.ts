@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { MobileTable } from "@app/features/tables/ui/MobileTable";
+import { MobileTable } from "@app/features/charts/components/MobileTable";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { CONSTANTS } from "@app/constants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
@@ -18,13 +18,7 @@ describe("MobileTable", () => {
       },
     ];
 
-    MobileTable.render(
-      container,
-      labels,
-      datasets,
-      CHART_DATA_TYPE.VOLUME,
-      {},
-    );
+    MobileTable.render(container, labels, datasets, CHART_DATA_TYPE.VOLUME, {});
 
     const table = container.querySelector("table");
     expect(table).not.toBeNull();
@@ -122,13 +116,7 @@ describe("MobileTable", () => {
   it("shows no data message when no datasets", () => {
     const container = createObsidianContainer();
 
-    MobileTable.render(
-      container,
-      ["Jan 1"],
-      [],
-      CHART_DATA_TYPE.VOLUME,
-      {},
-    );
+    MobileTable.render(container, ["Jan 1"], [], CHART_DATA_TYPE.VOLUME, {});
 
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(1);

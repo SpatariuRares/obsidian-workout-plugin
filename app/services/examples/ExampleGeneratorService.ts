@@ -163,7 +163,12 @@ Use these commands (Ctrl/Cmd + P):
 4. Create your own exercises in **Exercises**
 
 `;
-    await this.createOrUpdateFile(folderPath, "Getting Started.md", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "Getting Started.md",
+      content,
+      overwrite,
+    );
   }
 
   private async createExerciseFile(
@@ -299,7 +304,12 @@ limit: 12
 exactMatch: true
 \`\`\`
 `;
-    await this.createOrUpdateFile(folderPath, "Giorno 1 LOWER BODY A 2.0.md", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "Giorno 1 LOWER BODY A 2.0.md",
+      content,
+      overwrite,
+    );
   }
 
   private async createLogFile(
@@ -338,10 +348,15 @@ exactMatch: true
       calfMachine: 2.5,
     };
 
-    for (let sessionIdx = 0; sessionIdx < lowerBodyOffsets.length; sessionIdx++) {
+    for (
+      let sessionIdx = 0;
+      sessionIdx < lowerBodyOffsets.length;
+      sessionIdx++
+    ) {
       const daysAgo = lowerBodyOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
-      const dateStr = date.toISOString().split("T")[0];
+      // Use full ISO string to match the requested format
+      const dateStr = date.toISOString();
 
       // Calculate weeks of training (0-5)
       const weeksTraining = Math.floor((42 - daysAgo) / 7);
@@ -353,16 +368,29 @@ exactMatch: true
       // Base timestamp for the session (morning workout between 7-10 AM)
       const sessionStartHour = 7 + Math.floor(Math.random() * 3);
       let exerciseTime = new Date(date);
-      exerciseTime.setHours(sessionStartHour, Math.floor(Math.random() * 60), 0, 0);
+      exerciseTime.setHours(
+        sessionStartHour,
+        Math.floor(Math.random() * 60),
+        0,
+        0,
+      );
 
       // 1. Squat multi power: 4 sets, same weight, decreasing reps due to fatigue
-      const squatWeight = Math.round(
-        (baseWeights.squatMultiPower + weeksTraining * weeklyProgression.squatMultiPower) * dayModifier / 2.5
-      ) * 2.5;
+      const squatWeight =
+        Math.round(
+          ((baseWeights.squatMultiPower +
+            weeksTraining * weeklyProgression.squatMultiPower) *
+            dayModifier) /
+            2.5,
+        ) * 2.5;
       const squatBaseReps = [10, 9, 8, 8]; // Realistic fatigue pattern
       for (let set = 1; set <= 4; set++) {
-        const reps = squatBaseReps[set - 1] + (isToughDay ? -1 : 0) + (Math.random() > 0.7 ? 1 : 0);
-        const protocol = set === 4 && sessionIdx % 3 === 0 ? "myo-reps" : "standard";
+        const reps =
+          squatBaseReps[set - 1] +
+          (isToughDay ? -1 : 0) +
+          (Math.random() > 0.7 ? 1 : 0);
+        const protocol =
+          set === 4 && sessionIdx % 3 === 0 ? "myo-reps" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Squat multi power",
@@ -373,18 +401,25 @@ exactMatch: true
           notes: protocol === "myo-reps" ? `Myo: ${reps}+3+3+2` : "",
           protocol,
           timestamp: exerciseTime.getTime(),
+          origine: `[[${workoutName}]]`,
         });
-        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000); // 3-4 min rest
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 180000 + Math.random() * 60000,
+        ); // 3-4 min rest
       }
 
       // 2. RDL: 4 sets, consistent weight
-      const rdlWeight = Math.round(
-        (baseWeights.rdl + weeksTraining * weeklyProgression.rdl) * dayModifier / 2.5
-      ) * 2.5;
+      const rdlWeight =
+        Math.round(
+          ((baseWeights.rdl + weeksTraining * weeklyProgression.rdl) *
+            dayModifier) /
+            2.5,
+        ) * 2.5;
       const rdlBaseReps = [12, 11, 10, 10];
       for (let set = 1; set <= 4; set++) {
         const reps = rdlBaseReps[set - 1] + (isToughDay ? -1 : 0);
-        const protocol = set === 4 && sessionIdx % 4 === 1 ? "rest-pause" : "standard";
+        const protocol =
+          set === 4 && sessionIdx % 4 === 1 ? "rest-pause" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "RDL",
@@ -395,18 +430,25 @@ exactMatch: true
           notes: protocol === "rest-pause" ? `RP: ${reps}+4+3` : "",
           protocol,
           timestamp: exerciseTime.getTime(),
+          origine: `[[${workoutName}]]`,
         });
-        exerciseTime = new Date(exerciseTime.getTime() + 150000 + Math.random() * 60000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 150000 + Math.random() * 60000,
+        );
       }
 
       // 3. Leg press 45: 4 sets
-      const legPressWeight = Math.round(
-        (baseWeights.legPress + weeksTraining * weeklyProgression.legPress) * dayModifier / 5
-      ) * 5;
+      const legPressWeight =
+        Math.round(
+          ((baseWeights.legPress + weeksTraining * weeklyProgression.legPress) *
+            dayModifier) /
+            5,
+        ) * 5;
       const legPressBaseReps = [15, 14, 12, 12];
       for (let set = 1; set <= 4; set++) {
         const reps = legPressBaseReps[set - 1] + (isToughDay ? -2 : 0);
-        const protocol = set === 4 && sessionIdx % 5 === 0 ? "dropset" : "standard";
+        const protocol =
+          set === 4 && sessionIdx % 5 === 0 ? "dropset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Leg press 45",
@@ -414,17 +456,26 @@ exactMatch: true
           weight: legPressWeight,
           volume: reps * legPressWeight,
           workout: workoutName,
-          notes: protocol === "dropset" ? `Drop: ${legPressWeight}->${legPressWeight - 20}->${legPressWeight - 40}` : "",
+          notes:
+            protocol === "dropset"
+              ? `Drop: ${legPressWeight}->${legPressWeight - 20}->${legPressWeight - 40}`
+              : "",
           protocol,
           timestamp: exerciseTime.getTime(),
+          origine: `[[${workoutName}]]`,
         });
-        exerciseTime = new Date(exerciseTime.getTime() + 120000 + Math.random() * 30000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 120000 + Math.random() * 30000,
+        );
       }
 
       // 4. Leg Curl seduto: 3 sets
-      const legCurlWeight = Math.round(
-        (baseWeights.legCurl + weeksTraining * weeklyProgression.legCurl) * dayModifier / 1.25
-      ) * 1.25;
+      const legCurlWeight =
+        Math.round(
+          ((baseWeights.legCurl + weeksTraining * weeklyProgression.legCurl) *
+            dayModifier) /
+            1.25,
+        ) * 1.25;
       const legCurlBaseReps = [14, 12, 11];
       for (let set = 1; set <= 3; set++) {
         const reps = legCurlBaseReps[set - 1] + (isToughDay ? -1 : 0);
@@ -440,18 +491,29 @@ exactMatch: true
           notes: protocol === "21s" ? "21s: 7+7+7" : "",
           protocol,
           timestamp: exerciseTime.getTime(),
+          origine: `[[${workoutName}]]`,
         });
-        exerciseTime = new Date(exerciseTime.getTime() + 90000 + Math.random() * 30000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 90000 + Math.random() * 30000,
+        );
       }
 
       // 5. Calf Machine: 4 sets
-      const calfWeight = Math.round(
-        (baseWeights.calfMachine + weeksTraining * weeklyProgression.calfMachine) * dayModifier / 2.5
-      ) * 2.5;
+      const calfWeight =
+        Math.round(
+          ((baseWeights.calfMachine +
+            weeksTraining * weeklyProgression.calfMachine) *
+            dayModifier) /
+            2.5,
+        ) * 2.5;
       const calfBaseReps = [18, 16, 15, 14];
       for (let set = 1; set <= 4; set++) {
-        const reps = calfBaseReps[set - 1] + (isToughDay ? -2 : 0) + (Math.random() > 0.8 ? 2 : 0);
-        const protocol = set % 2 === 0 && sessionIdx > 6 ? "superset" : "standard";
+        const reps =
+          calfBaseReps[set - 1] +
+          (isToughDay ? -2 : 0) +
+          (Math.random() > 0.8 ? 2 : 0);
+        const protocol =
+          set % 2 === 0 && sessionIdx > 6 ? "superset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
           exercise: "Calf Machine",
@@ -462,16 +524,20 @@ exactMatch: true
           notes: protocol === "superset" ? "SS con calf BW" : "",
           protocol,
           timestamp: exerciseTime.getTime(),
+          origine: `[[${workoutName}]]`,
         });
-        exerciseTime = new Date(exerciseTime.getTime() + 60000 + Math.random() * 30000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 60000 + Math.random() * 30000,
+        );
       }
 
       // 6. Plank: 3 sets (Timed) - duration improves over time
       const basePlankDuration = 45 + weeksTraining * 5;
       for (let set = 1; set <= 3; set++) {
-        const duration = basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
+        const duration =
+          basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
         rows.push(
-          `${dateStr},Plank,0,0,0,,${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
+          `${dateStr},Plank,0,0,0,[[${workoutName}]],${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
         );
         exerciseTime = new Date(exerciseTime.getTime() + 90000);
       }
@@ -486,10 +552,14 @@ exactMatch: true
       squat: 80,
     };
 
-    for (let sessionIdx = 0; sessionIdx < upperBodyOffsets.length; sessionIdx++) {
+    for (
+      let sessionIdx = 0;
+      sessionIdx < upperBodyOffsets.length;
+      sessionIdx++
+    ) {
       const daysAgo = upperBodyOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
-      const dateStr = date.toISOString().split("T")[0];
+      const dateStr = date.toISOString();
 
       const weeksTraining = Math.floor((42 - daysAgo) / 7);
       const isToughDay = sessionIdx % 5 === 3;
@@ -497,37 +567,53 @@ exactMatch: true
 
       const sessionStartHour = 17 + Math.floor(Math.random() * 2); // Evening workouts
       let exerciseTime = new Date(date);
-      exerciseTime.setHours(sessionStartHour, Math.floor(Math.random() * 60), 0, 0);
+      exerciseTime.setHours(
+        sessionStartHour,
+        Math.floor(Math.random() * 60),
+        0,
+        0,
+      );
 
       // Bench Press: progressive overload
-      const benchWeight = Math.round(
-        (upperBaseWeights.benchPress + weeksTraining * 2.5) * dayModifier / 2.5
-      ) * 2.5;
+      const benchWeight =
+        Math.round(
+          ((upperBaseWeights.benchPress + weeksTraining * 2.5) * dayModifier) /
+            2.5,
+        ) * 2.5;
       const benchBaseReps = [8, 7, 6, 6];
       for (let set = 1; set <= 4; set++) {
         const reps = benchBaseReps[set - 1] + (isToughDay ? -1 : 0);
         const protocols = ["standard", "rest-pause", "myo-reps", "dropset"];
-        const protocol = set === 4 && sessionIdx % 4 === set - 1 ? protocols[sessionIdx % 4] : "standard";
+        const protocol =
+          set === 4 && sessionIdx % 4 === set - 1
+            ? protocols[sessionIdx % 4]
+            : "standard";
         const notes = protocol !== "standard" ? `${protocol}` : "";
         rows.push(
-          `${dateStr},Bench Press,${reps},${benchWeight},${reps * benchWeight},,${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
+          `${dateStr},Bench Press,${reps},${benchWeight},${reps * benchWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
         );
-        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 180000 + Math.random() * 60000,
+        );
       }
 
       // Squat: progressive overload
-      const squatWeight = Math.round(
-        (upperBaseWeights.squat + weeksTraining * 5) * dayModifier / 5
-      ) * 5;
+      const squatWeight =
+        Math.round(
+          ((upperBaseWeights.squat + weeksTraining * 5) * dayModifier) / 5,
+        ) * 5;
       const squatBaseReps = [6, 5, 5, 5];
       for (let set = 1; set <= 4; set++) {
         const reps = squatBaseReps[set - 1] + (isToughDay ? -1 : 0);
-        const protocol = sessionIdx % 3 === 0 && set === 4 ? "superset" : "standard";
+        const protocol =
+          sessionIdx % 3 === 0 && set === 4 ? "superset" : "standard";
         const notes = protocol === "superset" ? "SS con lunges" : "";
         rows.push(
-          `${dateStr},Squat,${reps},${squatWeight},${reps * squatWeight},,${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
+          `${dateStr},Squat,${reps},${squatWeight},${reps * squatWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
         );
-        exerciseTime = new Date(exerciseTime.getTime() + 180000 + Math.random() * 60000);
+        exerciseTime = new Date(
+          exerciseTime.getTime() + 180000 + Math.random() * 60000,
+        );
       }
     }
 
@@ -538,39 +624,59 @@ exactMatch: true
     for (let sessionIdx = 0; sessionIdx < cardioOffsets.length; sessionIdx++) {
       const daysAgo = cardioOffsets[sessionIdx];
       const date = new Date(now.getTime() - daysAgo * oneDay);
-      const dateStr = date.toISOString().split("T")[0];
+      const dateStr = date.toISOString();
 
       const weeksTraining = Math.floor((42 - daysAgo) / 7);
 
       // Morning cardio
       let exerciseTime = new Date(date);
-      exerciseTime.setHours(6 + Math.floor(Math.random() * 2), Math.floor(Math.random() * 60), 0, 0);
+      exerciseTime.setHours(
+        6 + Math.floor(Math.random() * 2),
+        Math.floor(Math.random() * 60),
+        0,
+        0,
+      );
 
       // Running: distance and pace improve over time
       const baseRunDistance = 4;
-      const runDistance = Math.round((baseRunDistance + weeksTraining * 0.3) * 10) / 10;
+      const runDistance =
+        Math.round((baseRunDistance + weeksTraining * 0.3) * 10) / 10;
       const baseRunDuration = 28; // minutes
-      const runDuration = Math.round(baseRunDuration + runDistance * 5.5 - weeksTraining * 0.5);
-      const runHeartRate = 150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
+      const runDuration = Math.round(
+        baseRunDuration + runDistance * 5.5 - weeksTraining * 0.5,
+      );
+      const runHeartRate =
+        150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
       rows.push(
-        `${dateStr},Running,0,0,0,,${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
+        `${dateStr},Running,0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
       );
 
-      exerciseTime = new Date(exerciseTime.getTime() + runDuration * 60000 + 600000);
+      exerciseTime = new Date(
+        exerciseTime.getTime() + runDuration * 60000 + 600000,
+      );
 
       // Cycling: distance and duration improve
       const baseCycleDistance = 15;
-      const cycleDistance = Math.round((baseCycleDistance + weeksTraining * 1.5) * 10) / 10;
+      const cycleDistance =
+        Math.round((baseCycleDistance + weeksTraining * 1.5) * 10) / 10;
       const baseCycleDuration = 40;
-      const cycleDuration = Math.round(baseCycleDuration + cycleDistance * 1.8 - weeksTraining);
-      const cycleHeartRate = 135 - weeksTraining + Math.floor(Math.random() * 8);
+      const cycleDuration = Math.round(
+        baseCycleDuration + cycleDistance * 1.8 - weeksTraining,
+      );
+      const cycleHeartRate =
+        135 - weeksTraining + Math.floor(Math.random() * 8);
       rows.push(
-        `${dateStr},Cycling,0,0,0,,${cardioWorkoutName},${exerciseTime.getTime()},,standard,${cycleDuration},${cycleDistance},${cycleHeartRate}`,
+        `${dateStr},Cycling,0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${cycleDuration},${cycleDistance},${cycleHeartRate}`,
       );
     }
 
     const content = [header, ...rows].join("\n");
-    await this.createOrUpdateFile(folderPath, "workout_logs.csv", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "workout_logs.csv",
+      content,
+      overwrite,
+    );
   }
 
   private async createDashboardFile(
@@ -584,7 +690,12 @@ Your workout stats at a glance. See [[Feature Showcase]] for all available compo
 \`\`\`workout-dashboard
 \`\`\`
 `;
-    await this.createOrUpdateFile(folderPath, "Dashboard.md", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "Dashboard.md",
+      content,
+      overwrite,
+    );
   }
 
   private async createFeatureShowcaseFile(
@@ -764,7 +875,12 @@ The plugin supports these protocol badges in your logs:
 
 **Commands** (Ctrl/Cmd + P): Create Workout Log, Insert Chart, Insert Timer, Create Exercise Page
 `;
-    await this.createOrUpdateFile(folderPath, "Feature Showcase.md", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "Feature Showcase.md",
+      content,
+      overwrite,
+    );
   }
 
   private async createHIITWorkoutFile(
@@ -838,7 +954,12 @@ dateRange: 30
 showTrendLine: true
 \`\`\`
 `;
-    await this.createOrUpdateFile(folderPath, "HIIT Cardio Session.md", content, overwrite);
+    await this.createOrUpdateFile(
+      folderPath,
+      "HIIT Cardio Session.md",
+      content,
+      overwrite,
+    );
   }
 
   private addLogEntry(
@@ -853,6 +974,7 @@ showTrendLine: true
       notes?: string;
       protocol?: string;
       timestamp?: number;
+      origine?: string;
     },
   ): void {
     // Use provided timestamp or generate one
@@ -863,7 +985,8 @@ showTrendLine: true
         36000000;
     // date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol,duration,distance,heartRate
     const protocol = data.protocol || "standard";
-    const row = `${data.date},${data.exercise},${data.reps},${data.weight},${data.volume},,${data.workout},${timestamp},${data.notes || ""},${protocol},,,`;
+    const origine = data.origine || "";
+    const row = `${data.date},${data.exercise},${data.reps},${data.weight},${data.volume},${origine},${data.workout},${timestamp},${data.notes || ""},${protocol},,,`;
     rows.push(row);
   }
 

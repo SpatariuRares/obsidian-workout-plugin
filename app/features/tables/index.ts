@@ -27,8 +27,6 @@ export {
 
 // UI components
 export {
-  MobileTable,
-  TableContainer,
   TableHeader,
   TableHeaderCell,
   GoToExerciseButton,

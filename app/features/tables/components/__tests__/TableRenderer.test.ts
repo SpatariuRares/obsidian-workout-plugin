@@ -13,16 +13,7 @@ jest.mock("@app/features/tables/components/TableActions", () => ({
   },
 }));
 
-// Mock TableContainer
 jest.mock("@app/features/tables/ui", () => ({
-  TableContainer: {
-    create: jest.fn((parent: HTMLElement) => {
-      const div = document.createElement("div");
-      div.className = "workout-table-container";
-      parent.appendChild(div);
-      return div;
-    }),
-  },
   TableErrorMessage: {
     render: jest.fn((container: HTMLElement, message: string) => {
       const div = document.createElement("div");
@@ -36,13 +27,15 @@ jest.mock("@app/features/tables/ui", () => ({
 // Mock SpacerStat and ProtocolBadge
 jest.mock("@app/components/atoms", () => ({
   SpacerStat: {
-    create: jest.fn((parent: HTMLElement, props: { icon?: string; value: string }) => {
-      const span = document.createElement("span");
-      span.className = "spacer-stat";
-      span.textContent = `${props.icon || ""} ${props.value}`;
-      parent.appendChild(span);
-      return span;
-    }),
+    create: jest.fn(
+      (parent: HTMLElement, props: { icon?: string; value: string }) => {
+        const span = document.createElement("span");
+        span.className = "spacer-stat";
+        span.textContent = `${props.icon || ""} ${props.value}`;
+        parent.appendChild(span);
+        return span;
+      },
+    ),
   },
   ProtocolBadge: {
     create: jest.fn((parent: HTMLElement, props: { text: string }) => {
@@ -82,11 +75,13 @@ const createRow = (overrides: Partial<TableRow> = {}): TableRow => ({
 describe("TableRenderer", () => {
   describe("createTableContainer", () => {
     it("delegates to TableContainer.create", () => {
-      const parent = document.createElement("div");
+      const parent = createObsidianContainer();
 
       const container = TableRenderer.createTableContainer(parent);
 
-      expect(container.classList.contains("workout-table-container")).toBe(true);
+      expect(container.classList.contains("workout-table-container")).toBe(
+        true,
+      );
     });
   });
 
@@ -96,12 +91,7 @@ describe("TableRenderer", () => {
       const headers = ["Date", "Reps", "Weight", "Volume", "Actions"];
       const rows = [createRow()];
 
-      const result = TableRenderer.renderTable(
-        container,
-        headers,
-        rows,
-        {},
-      );
+      const result = TableRenderer.renderTable(container, headers, rows, {});
 
       expect(result).toBe(true);
 
@@ -198,12 +188,7 @@ describe("TableRenderer", () => {
     it("handles empty rows", () => {
       const container = document.createElement("div");
 
-      const result = TableRenderer.renderTable(
-        container,
-        ["Date"],
-        [],
-        {},
-      );
+      const result = TableRenderer.renderTable(container, ["Date"], [], {});
 
       expect(result).toBe(true);
     });
@@ -249,9 +234,7 @@ describe("TableRenderer", () => {
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const volumeCell = container.querySelector(
-        ".workout-table-volume-cell",
-      );
+      const volumeCell = container.querySelector(".workout-table-volume-cell");
       expect(volumeCell).not.toBeNull();
     });
 
@@ -304,7 +287,9 @@ describe("TableRenderer", () => {
         onRefresh,
       );
 
-      const { TableActions } = require("@app/features/tables/components/TableActions");
+      const {
+        TableActions,
+      } = require("@app/features/tables/components/TableActions");
       expect(TableActions.renderActionButtons).toHaveBeenCalled();
     });
   });

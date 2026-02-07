@@ -5,10 +5,23 @@ import {
   ExerciseMatch,
 } from "@app/utils/exercise/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
-import { EmbeddedChartParams, CHART_TYPE } from "@app/features/charts/types";
+import { CHART_TYPE } from "@app/features/charts/types";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 import { FilterResult } from "@app/types/CommonTypes";
+
+/**
+ * Common filter parameters used by DataFilter.
+ * Extends the union of chart/table params with filter-specific fields
+ * that may not exist on all param types.
+ */
+export interface DataFilterParams {
+  exercise?: string;
+  workout?: string;
+  exactMatch?: boolean;
+  dateRange?: number;
+  chartType?: CHART_TYPE;
+  protocol?: string | string[];
+}
 
 /**
  * Filter parameters for early filtering in DataService.
@@ -91,7 +104,7 @@ export class DataFilter {
    */
   static filterData(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams,
+    params: DataFilterParams,
   ): FilterResult {
     if (!logData || logData.length === 0) {
       return {
@@ -102,7 +115,7 @@ export class DataFilter {
     }
 
     // When chartType is ALL, skip filtering and return all data
-    const chartParams = params as EmbeddedChartParams;
+    const chartParams = params;
     if (chartParams.chartType === CHART_TYPE.ALL) {
       return {
         filteredData: logData,
@@ -116,7 +129,7 @@ export class DataFilter {
     let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
 
     const hasExercise = params.exercise && params.exercise.trim();
-    const hasWorkout = params.workout || params.workoutPath;
+    const hasWorkout = params.workout;
     const hasProtocol = this.hasProtocolFilter(params);
 
     if (hasExercise && hasWorkout) {
@@ -127,7 +140,7 @@ export class DataFilter {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
           titlePrefix: `${params.exercise} + ${
-            params.workout || params.workoutPath
+            params.workout
           }`,
         };
       }
@@ -171,9 +184,9 @@ export class DataFilter {
    * Checks if the params contain a protocol filter
    */
   private static hasProtocolFilter(
-    params: EmbeddedChartParams | EmbeddedTableParams,
+    params: DataFilterParams,
   ): boolean {
-    const tableParams = params as EmbeddedTableParams;
+    const tableParams = params;
     if (!tableParams.protocol) return false;
     if (Array.isArray(tableParams.protocol)) {
       return tableParams.protocol.length > 0;
@@ -189,14 +202,14 @@ export class DataFilter {
    */
   private static filterByWorkout(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams,
+    params: DataFilterParams,
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
     let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
 
-    if (params.workout || params.workoutPath) {
-      const workoutName = params.workout || params.workoutPath;
+    if (params.workout) {
+      const workoutName = params.workout;
       if (workoutName) {
         titlePrefix = workoutName;
 
@@ -229,9 +242,9 @@ export class DataFilter {
    */
   private static filterByProtocol(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams,
+    params: DataFilterParams,
   ): FilterResult {
-    const tableParams = params as EmbeddedTableParams;
+    const tableParams = params;
     const protocolParam = tableParams.protocol!;
 
     // Protocol param is guaranteed to exist here due to hasProtocolFilter check
@@ -263,7 +276,7 @@ export class DataFilter {
    */
   private static filterByExercise(
     logData: WorkoutLogData[],
-    params: EmbeddedChartParams | EmbeddedTableParams,
+    params: DataFilterParams,
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";

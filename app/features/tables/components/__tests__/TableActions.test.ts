@@ -21,22 +21,19 @@ jest.mock("@app/features/tables/ui", () => ({
 }));
 
 // Mock EditLogModal
+const mockEditModalOpen = jest.fn();
 jest.mock("@app/features/modals/log/EditLogModal", () => ({
   EditLogModal: jest.fn().mockImplementation(() => ({
-    open: jest.fn(),
+    open: mockEditModalOpen,
   })),
 }));
 
 // Mock ConfirmModal
+const mockConfirmModalOpen = jest.fn();
 jest.mock("@app/features/modals/common/ConfirmModal", () => ({
   ConfirmModal: jest.fn().mockImplementation(() => ({
-    open: jest.fn(),
+    open: mockConfirmModalOpen,
   })),
-}));
-
-// Mock obsidian Notice
-jest.mock("obsidian", () => ({
-  Notice: jest.fn(),
 }));
 
 const createLog = (): WorkoutLogData => ({
@@ -56,59 +53,6 @@ const createMockPlugin = () => ({
 describe("TableActions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  describe("handleEdit", () => {
-    it("opens EditLogModal", () => {
-      const log = createLog();
-      const plugin = createMockPlugin();
-      const { EditLogModal } = require("@app/features/modals/log/EditLogModal");
-
-      TableActions.handleEdit(log, plugin as any);
-
-      expect(EditLogModal).toHaveBeenCalledWith(
-        plugin.app,
-        plugin,
-        log,
-        expect.any(Function),
-      );
-      expect(EditLogModal.mock.results[0].value.open).toHaveBeenCalled();
-    });
-
-    it("calls onComplete and triggers refresh after edit", () => {
-      const log = createLog();
-      const plugin = createMockPlugin();
-      const onComplete = jest.fn();
-      const { EditLogModal } = require("@app/features/modals/log/EditLogModal");
-
-      TableActions.handleEdit(log, plugin as any, onComplete);
-
-      // Get the callback passed to EditLogModal
-      const editCallback = EditLogModal.mock.calls[0][3];
-      editCallback();
-
-      expect(plugin.triggerWorkoutLogRefresh).toHaveBeenCalled();
-      expect(onComplete).toHaveBeenCalled();
-    });
-  });
-
-  describe("handleDelete", () => {
-    it("opens ConfirmModal", () => {
-      const log = createLog();
-      const plugin = createMockPlugin();
-      const {
-        ConfirmModal,
-      } = require("@app/features/modals/common/ConfirmModal");
-
-      TableActions.handleDelete(log, plugin as any);
-
-      expect(ConfirmModal).toHaveBeenCalledWith(
-        plugin.app,
-        expect.any(String),
-        expect.any(Function),
-      );
-      expect(ConfirmModal.mock.results[0].value.open).toHaveBeenCalled();
-    });
   });
 
   describe("renderActionButtons", () => {
@@ -141,7 +85,7 @@ describe("TableActions", () => {
       expect(td.querySelector(".delete-btn")).not.toBeNull();
     });
 
-    it("attaches click handlers to buttons", () => {
+    it("opens EditLogModal on edit click", () => {
       const td = document.createElement("td");
       const log = createLog();
       const plugin = createMockPlugin();
@@ -150,23 +94,38 @@ describe("TableActions", () => {
       TableActions.renderActionButtons(td, log, plugin as any, onRefresh);
 
       const editBtn = td.querySelector(".edit-btn") as HTMLElement;
-      const deleteBtn = td.querySelector(".delete-btn") as HTMLElement;
-
-      // Simulate click on edit button
-      const editEvent = new MouseEvent("click", { bubbles: true });
-      editBtn.dispatchEvent(editEvent);
+      editBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
 
       const { EditLogModal } = require("@app/features/modals/log/EditLogModal");
-      expect(EditLogModal).toHaveBeenCalled();
+      expect(EditLogModal).toHaveBeenCalledWith(
+        plugin.app,
+        plugin,
+        log,
+        expect.any(Function),
+      );
+      expect(mockEditModalOpen).toHaveBeenCalled();
+    });
 
-      // Simulate click on delete button
-      const deleteEvent = new MouseEvent("click", { bubbles: true });
-      deleteBtn.dispatchEvent(deleteEvent);
+    it("opens ConfirmModal on delete click", () => {
+      const td = document.createElement("td");
+      const log = createLog();
+      const plugin = createMockPlugin();
+      const onRefresh = jest.fn();
+
+      TableActions.renderActionButtons(td, log, plugin as any, onRefresh);
+
+      const deleteBtn = td.querySelector(".delete-btn") as HTMLElement;
+      deleteBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
 
       const {
         ConfirmModal,
       } = require("@app/features/modals/common/ConfirmModal");
-      expect(ConfirmModal).toHaveBeenCalled();
+      expect(ConfirmModal).toHaveBeenCalledWith(
+        plugin.app,
+        expect.any(String),
+        expect.any(Function),
+      );
+      expect(mockConfirmModalOpen).toHaveBeenCalled();
     });
 
     it("uses AbortSignal for event listeners when provided", () => {
@@ -188,14 +147,10 @@ describe("TableActions", () => {
       // Abort should prevent further event handling
       controller.abort();
 
-      // After abort, clicks should not trigger handlers
-      const { EditLogModal } = require("@app/features/modals/log/EditLogModal");
-      EditLogModal.mockClear();
+      mockEditModalOpen.mockClear();
+      editBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
 
-      const event = new MouseEvent("click", { bubbles: true });
-      editBtn.dispatchEvent(event);
-
-      expect(EditLogModal).not.toHaveBeenCalled();
+      expect(mockEditModalOpen).not.toHaveBeenCalled();
     });
 
     it("prevents default and stops propagation on click", () => {

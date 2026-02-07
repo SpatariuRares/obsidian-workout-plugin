@@ -1,11 +1,11 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { DataFilter } from "@app/services/data/DataFilter";
+import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
 import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
-import { CHART_TYPE, EmbeddedChartParams } from "@app/features/charts/types";
+import { CHART_TYPE } from "@app/features/charts/types";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 /**
@@ -140,7 +140,7 @@ export abstract class BaseView {
    * Common data filtering pattern
    */
   protected filterData(logData: WorkoutLogData[], params: EmbeddedViewParams) {
-    return DataFilter.filterData(logData, params as EmbeddedChartParams);
+    return DataFilter.filterData(logData, params as DataFilterParams);
   }
 
   /**

@@ -22,9 +22,7 @@ export interface EmbeddedChartParams {
   type?: CHART_DATA_TYPE;
   chartType?: CHART_TYPE;
   exercise?: string;
-  exercisePath?: string;
   workout?: string;
-  workoutPath?: string;
   dateRange?: number;
   showTrendLine?: boolean;
   showTrend?: boolean;

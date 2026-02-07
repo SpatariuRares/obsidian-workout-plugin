@@ -1,10 +1,7 @@
-import { CONSTANTS } from "@app/constants";
-import { DataFilter } from "@app/services/data/DataFilter";
+import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams } from "@app/features/charts/types";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
-
 import { TFile } from "obsidian";
 
 // Mock utility functions to isolate DataFilter logic for more complex tests
@@ -406,7 +403,7 @@ describe("DataFilter", () => {
 
     describe("Protocol Filtering", () => {
       it("should filter by single protocol string", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: "drop_set",
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -417,7 +414,7 @@ describe("DataFilter", () => {
       });
 
       it("should filter by array of protocols (OR logic)", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: ["drop_set", "myo_reps"],
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -429,7 +426,7 @@ describe("DataFilter", () => {
       });
 
       it("should be case-insensitive for protocol filtering", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: "DROP_SET",
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -438,7 +435,7 @@ describe("DataFilter", () => {
       });
 
       it("should filter entries without protocol as STANDARD", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: "standard",
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -447,7 +444,7 @@ describe("DataFilter", () => {
       });
 
       it("should combine protocol filter with exercise filter (AND logic)", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           exercise: "Squat",
           exactMatch: true,
           protocol: "drop_set",
@@ -461,7 +458,7 @@ describe("DataFilter", () => {
       });
 
       it("should combine protocol filter with workout filter (AND logic)", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           workout: "Leg Day",
           protocol: ["drop_set", "rest_pause"],
         };
@@ -475,7 +472,7 @@ describe("DataFilter", () => {
       });
 
       it("should return empty array when protocol filter matches nothing", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: "superset",
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -483,7 +480,7 @@ describe("DataFilter", () => {
       });
 
       it("should ignore empty protocol filter", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: "",
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);
@@ -494,7 +491,7 @@ describe("DataFilter", () => {
       });
 
       it("should ignore empty protocol array filter", () => {
-        const params: EmbeddedTableParams = {
+        const params: DataFilterParams = {
           protocol: [],
         };
         const result = DataFilter.filterData(mockLogDataWithProtocol, params);

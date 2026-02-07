@@ -4,7 +4,6 @@ export type {
   TableRow,
   TableData,
   TableCodeOptions,
-  TableState,
   TableCallbacks,
 } from "@app/features/tables/types";
 export { TABLE_TYPE } from "@app/features/tables/types";

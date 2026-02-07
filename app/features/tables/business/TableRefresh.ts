@@ -1,51 +1,42 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { TableState, TableCallbacks, EmbeddedTableParams } from "@app/features/tables/types";
-import { TableDataLoader } from "@app/features/tables/business/TableDataLoader";
+import { TableCallbacks, EmbeddedTableParams } from "@app/features/tables/types";
 
 export class TableRefresh {
   /**
-   * Refresh table data and re-render if necessary
+   * Refresh table by clearing cache, loading fresh data, and re-rendering.
+   * @param plugin - Plugin instance for data access
+   * @param container - The HTML container to render into
+   * @param params - Current table parameters
+   * @param renderCallback - Function that renders the table with fresh data
+   * @param callbacks - Optional callbacks for success/error reporting
    */
   static async refreshTable(
-    state: TableState,
     plugin: WorkoutChartsPlugin,
-    renderCallback: (_container: HTMLElement, _logData: WorkoutLogData[], _params: EmbeddedTableParams) => Promise<void>,
-    callbacks?: TableCallbacks
+    container: HTMLElement,
+    params: EmbeddedTableParams,
+    renderCallback: (
+      _container: HTMLElement,
+      _logData: WorkoutLogData[],
+      _params: EmbeddedTableParams,
+    ) => Promise<void>,
+    callbacks?: TableCallbacks,
   ): Promise<void> {
-    if (!state.currentContainer || !state.currentParams) {
-      return;
-    }
-
     try {
+      plugin.clearLogDataCache();
 
-      const freshLogData = await TableDataLoader.loadFreshData(plugin, callbacks);
+      const freshLogData = await plugin.getWorkoutLogData();
 
-      if (TableDataLoader.hasDataChanged(state.currentLogData, freshLogData)) {
+      await renderCallback(container, freshLogData, params);
 
-        state.currentLogData = freshLogData;
-        await renderCallback(
-          state.currentContainer,
-          freshLogData,
-          state.currentParams
-        );
-
-        callbacks?.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
-      }
+      callbacks?.onSuccess?.(
+        CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS,
+      );
     } catch (error) {
-      const errorObj = error instanceof Error ? error : new Error(String(error));
-      // Silent error - table refresh failed
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
       callbacks?.onError?.(errorObj, "refreshing table");
-
-      // Fallback to current data if available
-      if (state.currentLogData && state.currentContainer && state.currentParams) {
-        await renderCallback(
-          state.currentContainer,
-          state.currentLogData,
-          state.currentParams
-        );
-      }
     }
   }
 }

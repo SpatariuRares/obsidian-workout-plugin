@@ -6,6 +6,7 @@ import {
   TableDataProcessor,
   TableDataLoader,
   TableConfig,
+  TableRefresh,
   GoToExerciseButton,
   TargetHeader,
   AchievementBadge,
@@ -306,24 +307,18 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
   ): Promise<void> {
-    try {
-      this.plugin.clearLogDataCache();
-
-      const freshLogData = await this.plugin.getWorkoutLogData();
-      const onRefresh = async () => {
-        await this.refreshTable(container, params);
-      };
-
-      await this.renderTable(container, freshLogData, params, onRefresh);
-
-      this.callbacks.onSuccess?.(
-        CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS,
-      );
-    } catch (error) {
-      const errorObj =
-        error instanceof Error ? error : new Error(String(error));
-      this.callbacks.onError?.(errorObj, "refreshing table");
-    }
+    await TableRefresh.refreshTable(
+      this.plugin,
+      container,
+      params,
+      async (c, logData, p) => {
+        const onRefresh = async () => {
+          await this.refreshTable(c, p);
+        };
+        await this.renderTable(c, logData, p, onRefresh);
+      },
+      this.callbacks,
+    );
   }
 
   /**

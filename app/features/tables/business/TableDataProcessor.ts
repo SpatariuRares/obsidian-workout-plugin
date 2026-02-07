@@ -16,13 +16,6 @@ import type { ParameterDefinition } from "@app/types/ExerciseTypes";
  */
 export class TableDataProcessor {
   /**
-   * Processes workout log data into a format suitable for table display.
-   * @param logData - Array of workout log data to process
-   * @param params - Table parameters including columns, limit, and display options
-   * @param plugin - Optional plugin instance for accessing exercise definitions
-   * @returns Processed table data with headers, rows, and metadata
-   */
-  /**
    * Checks if any log entry has a non-standard protocol.
    * @param logData - Array of workout log data
    * @returns true if at least one entry has a protocol other than "standard" or empty
@@ -67,6 +60,13 @@ export class TableDataProcessor {
     });
   }
 
+  /**
+   * Processes workout log data into a format suitable for table display.
+   * @param logData - Array of workout log data to process
+   * @param params - Table parameters including columns, limit, and display options
+   * @param plugin - Optional plugin instance for accessing exercise definitions
+   * @returns Processed table data with headers, rows, and metadata
+   */
   static async processTableData(
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
@@ -83,7 +83,10 @@ export class TableDataProcessor {
     // Check which optional data columns should be shown (based on visible data)
     const showDuration = this.hasCustomField(sortedAndLimitedData, "duration");
     const showDistance = this.hasCustomField(sortedAndLimitedData, "distance");
-    const showHeartRate = this.hasCustomField(sortedAndLimitedData, "heartRate");
+    const showHeartRate = this.hasCustomField(
+      sortedAndLimitedData,
+      "heartRate",
+    );
 
     // Use default visible columns if not specified (Notes added conditionally below)
     // Include Exercise column when showing all logs (no exercise filter)
@@ -97,7 +100,9 @@ export class TableDataProcessor {
           CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
           ...(showDuration ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION] : []),
           ...(showDistance ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE] : []),
-          ...(showHeartRate ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE] : []),
+          ...(showHeartRate
+            ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE]
+            : []),
         ]
       : [
           CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,

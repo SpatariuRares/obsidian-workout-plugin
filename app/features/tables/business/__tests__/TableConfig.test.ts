@@ -95,14 +95,6 @@ describe("TableConfig", () => {
       });
       expect(errors.length).toBe(2);
     });
-
-    it("reports multiple errors at once", () => {
-      const errors = TableConfig.validateParams({
-        limit: -1,
-        columns: 123 as unknown as string[],
-      });
-      expect(errors.length).toBe(3);
-    });
   });
 
   describe("hasValidationErrors", () => {

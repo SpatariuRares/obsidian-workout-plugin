@@ -3,10 +3,8 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export interface EmbeddedTableParams {
   exercise?: string;
-  exercisePath?: string;
   workout?: string;
-  workoutPath?: string;
-  dateRange?: number; // Days to look back for filtering
+  dateRange?: number; // Days to look back (handled by CodeBlockProcessorService before table render)
   limit?: number;
   exactMatch?: boolean;
   searchByName?: boolean;
@@ -15,7 +13,6 @@ export interface EmbeddedTableParams {
   targetWeight?: number;
   targetReps?: number;
   showProtocol?: boolean; // Show protocol column (default: true)
-  protocol?: string | string[]; // Filter by protocol (single value or array)
 }
 
 export interface TableRow {
@@ -44,26 +41,19 @@ export enum TABLE_TYPE {
 }
 
 /**
- * Options for generating table code via CodeGenerator
+ * Options for generating table code via CodeGenerator.
+ * Extends required fields from EmbeddedTableParams to avoid duplication.
  */
-export interface TableCodeOptions {
+export interface TableCodeOptions
+  extends Required<
+    Pick<
+      EmbeddedTableParams,
+      "exercise" | "workout" | "limit" | "showAddButton" | "searchByName" | "exactMatch"
+    >
+  >,
+  Pick<EmbeddedTableParams, "dateRange" | "targetWeight" | "targetReps"> {
   tableType: TABLE_TYPE;
-  exercise: string;
-  workout: string;
-  limit: number;
-  showAddButton: boolean;
-  searchByName: boolean;
-  exactMatch: boolean;
-  dateRange?: number;
-  targetWeight?: number;
-  targetReps?: number;
 }
-export interface TableState {
-  currentContainer?: HTMLElement;
-  currentLogData?: WorkoutLogData[];
-  currentParams?: EmbeddedTableParams;
-}
-
 export interface TableCallbacks {
   onRefresh?: () => Promise<void>;
   onError?: (_error: Error, _context: string) => void;

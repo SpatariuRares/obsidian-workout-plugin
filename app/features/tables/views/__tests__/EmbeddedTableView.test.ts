@@ -1,7 +1,6 @@
 /** @jest-environment jsdom */
 
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 
 // Mock obsidian
 jest.mock("obsidian", () => ({
@@ -50,10 +49,13 @@ jest.mock("@app/features/common/views/BaseView", () => ({
   },
 }));
 
-// Mock TableConfig
+// Mock tables barrel
 jest.mock("@app/features/tables", () => ({
   TableConfig: {
     validateParams: jest.fn().mockReturnValue([]),
+  },
+  TableRefresh: {
+    refreshTable: jest.fn().mockResolvedValue(undefined),
   },
   TableRenderer: {
     createTableContainer: jest.fn((parent: HTMLElement) => {
@@ -66,7 +68,7 @@ jest.mock("@app/features/tables", () => ({
     renderFallbackMessage: jest.fn(),
   },
   TableDataProcessor: {
-    processTableData: jest.fn().mockImplementation(async (data, params) => ({
+    processTableData: jest.fn().mockImplementation(async (_data, params) => ({
       headers: ["Date", "Reps", "Weight", "Volume", "Actions"],
       rows: [
         {
@@ -158,6 +160,7 @@ import {
   TableRenderer,
   TableDataProcessor,
   TableDataLoader,
+  TableRefresh,
   TargetHeader,
   AchievementBadge,
   GoToExerciseButton,
@@ -440,29 +443,19 @@ describe("EmbeddedTableView", () => {
   });
 
   describe("refreshTable", () => {
-    it("clears cache and reloads data", async () => {
+    it("delegates to TableRefresh.refreshTable", async () => {
       const container = document.createElement("div");
+      const params = { exercise: "Bench" };
 
-      // First create the table
-      await view.createTable(container, [createLog()], { exercise: "Bench" });
+      await view.refreshTable(container, params);
 
-      jest.clearAllMocks();
-
-      // Then refresh
-      await view.refreshTable(container, { exercise: "Bench" });
-
-      expect(plugin.clearLogDataCache).toHaveBeenCalled();
-      expect(plugin.getWorkoutLogData).toHaveBeenCalled();
-    });
-
-    it("handles errors during refresh", async () => {
-      plugin.getWorkoutLogData.mockRejectedValueOnce(
-        new Error("Refresh failed"),
+      expect(TableRefresh.refreshTable).toHaveBeenCalledWith(
+        plugin,
+        container,
+        params,
+        expect.any(Function),
+        expect.any(Object),
       );
-      const container = document.createElement("div");
-
-      // Should not throw
-      await view.refreshTable(container, { exercise: "Bench" });
     });
   });
 

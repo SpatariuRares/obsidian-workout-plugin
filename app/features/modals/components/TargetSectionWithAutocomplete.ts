@@ -22,6 +22,8 @@ export interface TargetSectionWithAutocompleteHandlers {
   updateVisibility: () => void;
 }
 
+const HIDDEN_CLASS = "workout-display-none";
+
 export class TargetSectionWithAutocomplete {
   /**
    * Creates the target section with exercise autocomplete and workout selection
@@ -43,6 +45,7 @@ export class TargetSectionWithAutocomplete {
 
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
+    exerciseContainer.classList.add("workout-target-exercise");
     const { elements: exerciseElements } = ExerciseAutocomplete.create(
       modal,
       exerciseContainer,
@@ -51,6 +54,7 @@ export class TargetSectionWithAutocomplete {
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
+    workoutContainer.classList.add("workout-target-workout");
     workoutContainer.setAttribute(
       "data-field-type",
       CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT,
@@ -63,6 +67,7 @@ export class TargetSectionWithAutocomplete {
 
     // Current Workout checkbox (for workout charts/tables)
     const currentWorkoutContainer = modal.createCheckboxGroup(targetSection);
+    currentWorkoutContainer.classList.add("workout-target-current-workout");
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
@@ -76,6 +81,7 @@ export class TargetSectionWithAutocomplete {
       targetSection,
       currentFileName,
     );
+    currentFileInfo.classList.add("workout-target-current-file-info");
     currentFileInfo.setAttribute("data-field-type", "file-info");
 
     const elements: TargetSectionWithAutocompleteElements = {
@@ -93,44 +99,15 @@ export class TargetSectionWithAutocomplete {
 
     // Create handlers
     const updateVisibility = () => {
-      const selectedType = typeSelect.value;
-      const isExercise = (selectedType as CHART_TYPE) === CHART_TYPE.EXERCISE;
-      const isWorkout = (selectedType as CHART_TYPE) === CHART_TYPE.WORKOUT;
-      const isCombined = (selectedType as CHART_TYPE) === CHART_TYPE.COMBINED;
+      const type = typeSelect.value as CHART_TYPE;
+      const isExercise = type === CHART_TYPE.EXERCISE;
+      const isWorkout = type === CHART_TYPE.WORKOUT;
+      const isCombined = type === CHART_TYPE.COMBINED;
 
-      const showExercise = isExercise || isCombined;
-      exerciseContainer.className = showExercise
-        ? "workout-charts-form-group workout-target-exercise"
-        : "workout-charts-form-group workout-target-exercise workout-display-none";
-
-      const showWorkout = isWorkout || isCombined;
-      workoutContainer.className = showWorkout
-        ? "workout-charts-form-group workout-target-workout"
-        : "workout-charts-form-group workout-target-workout workout-display-none";
-
-      const showCurrentWorkout = isWorkout || isCombined;
-      currentWorkoutContainer.className = showCurrentWorkout
-        ? "workout-charts-checkbox-group workout-target-current-workout"
-        : "workout-charts-checkbox-group workout-target-current-workout workout-display-none";
-
-      const showFileInfo = isWorkout || isCombined;
-      currentFileInfo.className = showFileInfo
-        ? "workout-current-file-info workout-target-current-file-info"
-        : "workout-current-file-info workout-target-current-file-info workout-display-none";
-
-      // Force visibility for combined mode - additional check
-      if (isCombined) {
-        setTimeout(() => {
-          workoutContainer.classList.add("workout-modal-field-visible");
-          workoutContainer.classList.remove("workout-modal-field-hidden");
-          currentWorkoutContainer.classList.add("workout-modal-field-visible");
-          currentWorkoutContainer.classList.remove(
-            "workout-modal-field-hidden",
-          );
-          currentFileInfo.classList.add("workout-modal-field-visible");
-          currentFileInfo.classList.remove("workout-modal-field-hidden");
-        }, 100);
-      }
+      exerciseContainer.classList.toggle(HIDDEN_CLASS, !(isExercise || isCombined));
+      workoutContainer.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
+      currentWorkoutContainer.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
+      currentFileInfo.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
     };
 
     const handlers: TargetSectionWithAutocompleteHandlers = {
@@ -157,31 +134,21 @@ export class TargetSectionWithAutocomplete {
     typeSelect: HTMLSelectElement,
     currentFileName: string,
   ): { type: string; exercise?: string; workout?: string } {
-    const selectedType = typeSelect.value;
+    const type = typeSelect.value as CHART_TYPE;
     const useCurrentWorkout = elements.currentWorkoutToggle.checked;
+    const workoutValue = useCurrentWorkout
+      ? currentFileName
+      : elements.workoutInput.value.trim();
 
-    if ((selectedType as CHART_TYPE) === CHART_TYPE.EXERCISE) {
-      return {
-        type: CHART_TYPE.EXERCISE,
-        exercise: elements.exerciseInput.value.trim(),
-      };
-    } else if ((selectedType as CHART_TYPE) === CHART_TYPE.WORKOUT) {
-      return {
-        type: CHART_TYPE.WORKOUT,
-        workout: useCurrentWorkout
-          ? currentFileName
-          : elements.workoutInput.value.trim(),
-      };
-    } else if ((selectedType as CHART_TYPE) === CHART_TYPE.COMBINED) {
-      return {
-        type: CHART_TYPE.COMBINED,
-        exercise: elements.exerciseInput.value.trim(),
-        workout: useCurrentWorkout
-          ? currentFileName
-          : elements.workoutInput.value.trim(),
-      };
+    switch (type) {
+      case CHART_TYPE.EXERCISE:
+        return { type, exercise: elements.exerciseInput.value.trim() };
+      case CHART_TYPE.WORKOUT:
+        return { type, workout: workoutValue };
+      case CHART_TYPE.COMBINED:
+        return { type, exercise: elements.exerciseInput.value.trim(), workout: workoutValue };
+      default:
+        return { type: CHART_TYPE.NONE };
     }
-
-    return { type: CHART_TYPE.NONE };
   }
 }

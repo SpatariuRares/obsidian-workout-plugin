@@ -195,21 +195,24 @@
 }
 
 /* Display Control Classes */
-.workout-display .workout-display-none {
+.workout-display-none {
   display: none !important;
 }
-.workout-display .workout-display-block {
+
+.workout-display-block {
   display: block !important;
 }
-.workout-display .workout-display-inline-block {
+
+.workout-display-inline-block {
   display: inline-block !important;
 }
 
 /* Opacity Control Classes */
-.workout-opacity .workout-display-50 {
+.workout-opacity-50 {
   opacity: 0.5;
 }
-.workout-opacity .workout-display-100 {
+
+.workout-opacity-100 {
   opacity: 1;
 }
 
@@ -381,8 +384,8 @@
   font-size: var(--workout-font-lg);
 }
 
-.workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-charts-modal-main-container .workout-btn-primary,
-.workout-charts-modal-main-container .workout-btn-warning {
+.workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-modal .workout-btn-primary,
+.workout-modal .workout-btn-warning {
   padding: var(--workout-space-xl) var(--workout-space-3xl);
   font-size: var(--workout-font-xl);
 }
@@ -1558,20 +1561,20 @@
    MODAL STYLES
    ============================================================================ */
 /* Base modal structure */
-.workout-charts .workout-charts-modal h2 {
+.workout-charts .workout-modal h2 {
   margin: 0 0 var(--workout-space-xl) 0;
   color: var(--text-normal);
   font-size: var(--workout-font-2xl);
   font-weight: var(--workout-font-weight-bold);
 }
-.workout-charts .workout-charts-modal h3 {
+.workout-charts .workout-modal h3 {
   margin-top: var(--workout-space-xl);
   margin-bottom: var(--workout-space-lg);
   color: var(--text-normal);
   border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
   padding-bottom: var(--workout-space-xs);
 }
-.workout-charts .workout-charts-modal.workout-charts-modal-main-container {
+.workout-charts .workout-modal.workout-modal-main-container {
   max-width: var(--workout-size-11xl);
 }
 
@@ -1663,28 +1666,50 @@
 }
 
 @media (max-width: 768px) {
-  .workout-charts-modal .workout-parameters-container {
+  .workout-modal .workout-parameters-container {
     grid-template-columns: 1fr;
   }
-  .workout-charts-modal .workout-charts-form-group input[type=text],
-  .workout-charts-modal .workout-charts-form-group input[type=number],
-  .workout-charts-modal .workout-charts-form-group select,
-  .workout-charts-modal .workout-charts-form-group textarea {
+  .workout-modal .workout-charts-form-group input[type=text],
+  .workout-modal .workout-charts-form-group input[type=number],
+  .workout-modal .workout-charts-form-group select,
+  .workout-modal .workout-charts-form-group textarea {
     min-height: 44px;
     font-size: var(--workout-font-base);
   }
-  .workout-charts-modal .workout-charts-input {
+  .workout-modal .workout-charts-input {
     min-width: 10ch;
     min-height: 44px;
   }
+  .workout-modal {
+    /* Target section mobile optimizations */
+  }
+  .workout-modal .workout-charts-checkbox-group {
+    min-height: 44px;
+    padding: var(--workout-space-sm) 0;
+  }
+  .workout-modal .workout-charts-checkbox-group input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+  }
+  .workout-modal .workout-charts-checkbox-group label {
+    font-size: var(--workout-font-base);
+    line-height: 1.4;
+  }
+  .workout-modal .workout-current-file-info {
+    font-size: var(--workout-font-sm);
+    padding: var(--workout-space-sm);
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
 }
 @media (min-width: 768px) {
-  .workout-charts-modal .workout-parameters-container {
+  .workout-modal .workout-parameters-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (min-width: 1200px) {
-  .workout-charts-modal .workout-parameters-container {
+  .workout-modal .workout-parameters-container {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -1759,34 +1784,6 @@
   background: var(--interactive-warning-hover);
 }
 
-/* Field visibility states */
-.workout-modal-field-visible {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.workout-modal-field-hidden {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Target section visibility */
-.workout-target-exercise {
-  display: block;
-}
-
-.workout-target-workout,
-.workout-target-current-workout,
-.workout-target-current-file-info {
-  display: none;
-}
-
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -1828,7 +1825,7 @@
 }
 
 @media (max-width: 768px) {
-  .workout-charts-modal .workout-adjust-btn {
+  .workout-modal .workout-adjust-btn {
     min-width: 4ch;
     min-height: 44px;
   }

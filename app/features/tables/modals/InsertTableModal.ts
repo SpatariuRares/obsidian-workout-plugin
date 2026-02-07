@@ -25,6 +25,7 @@ export class InsertTableModal extends BaseInsertModal {
   private advancedElements?: AdvancedOptionsElements;
   private targetWeightInput?: HTMLInputElement;
   private targetRepsInput?: HTMLInputElement;
+  private progressiveSection?: HTMLElement;
   private currentFileName: string;
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
@@ -79,62 +80,11 @@ export class InsertTableModal extends BaseInsertModal {
 
     // Event listener for display toggle
     this.tableTypeSelect.addEventListener("change", () => {
-      if (this.tableTypeSelect && this.targetElements) {
-        const type = this.tableTypeSelect.value as TABLE_TYPE;
-        const targetContainer = this.targetElements.container;
-
-        // Hide target section for ALL type
-        if (type === TABLE_TYPE.ALL) {
-          DomUtils.setCssProps(targetContainer, { display: "none" });
-        } else {
-          DomUtils.setCssProps(targetContainer, { display: "block" });
-          // Let the original handler manage visibility of internal fields
-          targetHandlers.updateVisibility();
-        }
-      }
+      this.updateSectionsVisibility(targetHandlers);
     });
 
-    // Additional check to ensure workout field is visible for combined mode
-    setTimeout(() => {
-      if (!this.tableTypeSelect || !this.targetElements) return;
-
-      const type = this.tableTypeSelect.value as TABLE_TYPE;
-
-      // Handle initial state
-      if (type === TABLE_TYPE.ALL) {
-        DomUtils.setCssProps(this.targetElements.container, {
-          display: "none",
-        });
-        return;
-      }
-
-      if (type === TABLE_TYPE.COMBINED) {
-        const workoutField = container.querySelector(
-          "[data-field-type=CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT]",
-        ) as HTMLElement;
-        const currentWorkoutField = container.querySelector(
-          '[data-field-type="current-workout"]',
-        ) as HTMLElement;
-        const fileInfoField = container.querySelector(
-          '[data-field-type="file-info"]',
-        ) as HTMLElement;
-
-        if (workoutField) {
-          workoutField.classList.add("workout-modal-field-visible");
-          workoutField.classList.remove("workout-modal-field-hidden");
-        }
-
-        if (currentWorkoutField) {
-          currentWorkoutField.classList.add("workout-modal-field-visible");
-          currentWorkoutField.classList.remove("workout-modal-field-hidden");
-        }
-
-        if (fileInfoField) {
-          fileInfoField.classList.add("workout-modal-field-visible");
-          fileInfoField.classList.remove("workout-modal-field-hidden");
-        }
-      }
-    }, 200);
+    // Apply visibility for initial state
+    this.updateSectionsVisibility(targetHandlers);
 
     // Configuration Section
     const configSection = this.createSection(
@@ -165,37 +115,15 @@ export class InsertTableModal extends BaseInsertModal {
       },
     );
 
-    // Display Options Section
-    const displaySection = this.createSection(
-      container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
-    );
-
-    // Show add button toggle
-    this.addButtonToggle = this.createCheckboxField(
-      displaySection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_ADD_BUTTON,
-      true,
-      "showAddButton",
-    );
-
-    // Custom button text
-    this.buttonTextInput = this.createTextField(
-      displaySection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.BUTTON_TEXT,
-      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
-      CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
-    );
-
     // Progressive Overload Section
-    const progressiveSection = this.createSection(
+    this.progressiveSection = this.createSection(
       container,
       CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD,
     );
 
     // Target weight input
     this.targetWeightInput = this.createNumberField(
-      progressiveSection,
+      this.progressiveSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_WEIGHT,
       0,
       {
@@ -207,7 +135,7 @@ export class InsertTableModal extends BaseInsertModal {
 
     // Target reps input
     this.targetRepsInput = this.createNumberField(
-      progressiveSection,
+      this.progressiveSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_REPS,
       0,
       {
@@ -220,11 +148,38 @@ export class InsertTableModal extends BaseInsertModal {
     // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(this, container, {
       showSearchByName: true,
+      showAddButton: true,
     });
 
     // Set default values based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
       this.plugin.settings.defaultExactMatch;
+  }
+
+  private updateSectionsVisibility(targetHandlers: {
+    updateVisibility: () => void;
+  }): void {
+    if (!this.tableTypeSelect || !this.targetElements) return;
+
+    const type = this.tableTypeSelect.value as TABLE_TYPE;
+    const targetContainer = this.targetElements.container;
+    const showTarget = type !== TABLE_TYPE.ALL;
+    const showProgressive =
+      type === TABLE_TYPE.EXERCISE || type === TABLE_TYPE.COMBINED;
+
+    DomUtils.setCssProps(targetContainer, {
+      display: showTarget ? "flex" : "none",
+    });
+
+    if (this.progressiveSection) {
+      DomUtils.setCssProps(this.progressiveSection, {
+        display: showProgressive ? "flex" : "none",
+      });
+    }
+
+    if (showTarget) {
+      targetHandlers.updateVisibility();
+    }
   }
 
   protected generateCode(): string {
@@ -250,7 +205,6 @@ export class InsertTableModal extends BaseInsertModal {
       ? parseInt(this.dateRangeInput.value) || 0
       : 0;
     const showAddButton = this.addButtonToggle.checked;
-    const buttonText = this.buttonTextInput.value.trim();
     const advancedValues = AdvancedOptionsSection.getValues(
       this.advancedElements,
     );
@@ -278,7 +232,6 @@ export class InsertTableModal extends BaseInsertModal {
       limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
       showAddButton,
-      buttonText,
       searchByName: advancedValues.searchByName || false,
       exactMatch: advancedValues.exactMatch,
       targetWeight: targetWeight > 0 ? targetWeight : undefined,

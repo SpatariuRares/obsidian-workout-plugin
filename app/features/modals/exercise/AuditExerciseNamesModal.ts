@@ -29,7 +29,7 @@ export class AuditExerciseNamesModal extends ModalBase {
   async onOpen() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     // Title
     contentEl.createEl("h2", {
@@ -93,7 +93,10 @@ export class AuditExerciseNamesModal extends ModalBase {
         let bestScore = 0;
 
         for (const csvExercise of csvExercises) {
-          const score = ExerciseMatchUtils.getMatchScore(fileNameLower, csvExercise);
+          const score = ExerciseMatchUtils.getMatchScore(
+            fileNameLower,
+            csvExercise,
+          );
           if (score > bestScore) {
             bestScore = score;
             bestMatch = csvExercise;

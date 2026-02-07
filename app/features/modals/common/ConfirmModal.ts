@@ -27,7 +27,7 @@ export class ConfirmModal extends ModalBase {
     const { contentEl } = this;
     contentEl.empty();
 
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     // Title
     contentEl.createEl("h2", {

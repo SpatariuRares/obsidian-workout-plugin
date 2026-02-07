@@ -42,7 +42,7 @@ export class CreateExercisePageModal extends ModalBase {
 
   onOpen() {
     const { contentEl } = this;
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     // Add modal title
     contentEl.createEl("h2", {

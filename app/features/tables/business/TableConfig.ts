@@ -13,7 +13,6 @@ export class TableConfig {
     return {
       limit: CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT,
       showAddButton: true,
-      buttonText: CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
       searchByName: false,
       exactMatch: CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH,
       columns: [...CONSTANTS.WORKOUT.TABLE.DEFAULT_VISIBLE_COLUMNS],
@@ -37,8 +36,8 @@ export class TableConfig {
           CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.LIMIT_RANGE(
             CONSTANTS.WORKOUT.TABLE.LIMITS.MIN,
             CONSTANTS.WORKOUT.TABLE.LIMITS.MAX,
-            params.limit.toString()
-          )
+            params.limit.toString(),
+          ),
         );
       }
     }
@@ -48,17 +47,17 @@ export class TableConfig {
         !Array.isArray(params.columns) &&
         typeof params.columns !== "string"
       ) {
-        errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_INVALID_TYPE);
+        errors.push(
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_INVALID_TYPE,
+        );
       } else if (
         Array.isArray(params.columns) &&
         !params.columns.every((c) => typeof c === "string")
       ) {
-        errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_NOT_STRINGS);
+        errors.push(
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_NOT_STRINGS,
+        );
       }
-    }
-
-    if (params.buttonText && typeof params.buttonText !== "string") {
-      errors.push(CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.BUTTON_TEXT_NOT_STRING);
     }
 
     return errors;
@@ -82,7 +81,7 @@ export class TableConfig {
    * Merge user params with defaults
    */
   static mergeWithDefaults(
-    params: Partial<EmbeddedTableParams>
+    params: Partial<EmbeddedTableParams>,
   ): EmbeddedTableParams {
     return {
       ...this.getDefaults(),

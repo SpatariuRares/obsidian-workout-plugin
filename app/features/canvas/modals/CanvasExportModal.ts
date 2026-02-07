@@ -44,7 +44,7 @@ export class CanvasExportModal extends ModalBase {
   onOpen(): void {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     // Title
     contentEl.createEl("h2", {

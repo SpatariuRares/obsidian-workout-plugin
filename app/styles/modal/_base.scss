@@ -4,7 +4,7 @@
 
 /* Base modal structure */
 .workout-charts {
-  .workout-charts-modal {
+  .workout-modal {
     h2 {
       margin: 0 0 var(--workout-space-xl) 0;
       color: var(--text-normal);
@@ -21,7 +21,7 @@
       padding-bottom: var(--workout-space-xs);
     }
 
-    &.workout-charts-modal-main-container {
+    &.workout-modal-main-container {
       max-width: var(--workout-size-11xl);
     }
   }

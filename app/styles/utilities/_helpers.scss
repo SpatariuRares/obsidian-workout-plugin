@@ -19,26 +19,22 @@
 }
 
 /* Display Control Classes */
-.workout-display {
-  .workout-display-none {
-    display: none !important;
-  }
-  .workout-display-block {
-    display: block !important;
-  }
-  .workout-display-inline-block {
-    display: inline-block !important;
-  }
+.workout-display-none {
+  display: none !important;
+}
+.workout-display-block {
+  display: block !important;
+}
+.workout-display-inline-block {
+  display: inline-block !important;
 }
 
 /* Opacity Control Classes */
-.workout-opacity {
-  .workout-display-50 {
-    opacity: 0.5;
-  }
-  .workout-display-100 {
-    opacity: 1;
-  }
+.workout-opacity-50 {
+  opacity: 0.5;
+}
+.workout-opacity-100 {
+  opacity: 1;
 }
 
 /* Flexbox Utilities */

@@ -304,7 +304,6 @@ export const MODAL_UI = {
     DAYS_RANGE: "Days range:",
     DATA_LIMIT: "Data limit:",
     MAX_LOG_COUNT: "Maximum log count:",
-    BUTTON_TEXT: "Button text:",
     CUSTOM_TITLE: "Custom title:",
     TIMER_TYPE: "Timer type:",
     DURATION: "Duration (seconds):",

@@ -3,7 +3,7 @@
  *
  * This file contains all default configuration values used throughout the plugin:
  * - Chart configuration defaults (date range, limits)
- * - Table configuration defaults (limits, visible columns, button text)
+ * - Table configuration defaults (limits, visible columns)
  * - Timer configuration defaults (duration, interval, rounds)
  * - Plugin settings defaults (paths, preferences)
  *

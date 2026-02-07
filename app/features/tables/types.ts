@@ -11,7 +11,6 @@ export interface EmbeddedTableParams {
   exactMatch?: boolean;
   searchByName?: boolean;
   showAddButton?: boolean;
-  buttonText?: string;
   columns?: string[] | string;
   targetWeight?: number;
   targetReps?: number;
@@ -53,7 +52,6 @@ export interface TableCodeOptions {
   workout: string;
   limit: number;
   showAddButton: boolean;
-  buttonText: string;
   searchByName: boolean;
   exactMatch: boolean;
   dateRange?: number;

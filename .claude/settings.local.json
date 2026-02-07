@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npx jest:*)",
       "Bash(wc:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(npm run build:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

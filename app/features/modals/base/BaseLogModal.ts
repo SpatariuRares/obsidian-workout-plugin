@@ -77,7 +77,7 @@ export abstract class BaseLogModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     // Pre-load workout log data
     if (this.shouldAutoFillFromLastEntry()) {

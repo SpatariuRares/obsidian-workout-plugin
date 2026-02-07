@@ -50,7 +50,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   async onOpen(): Promise<void> {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     contentEl.createEl("h2", { text: "Convert exercise data" });
 

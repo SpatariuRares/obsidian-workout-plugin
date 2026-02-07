@@ -42,7 +42,9 @@ export abstract class ModalBase extends Modal {
    */
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-    return activeView?.file?.basename || CONSTANTS.WORKOUT.UI.LABELS.CURRENT_FILE;
+    return (
+      activeView?.file?.basename || CONSTANTS.WORKOUT.UI.LABELS.CURRENT_FILE
+    );
   }
 
   /**
@@ -50,7 +52,7 @@ export abstract class ModalBase extends Modal {
    */
   protected insertIntoEditor(
     code: string,
-    successMessage: string = CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CODE_INSERTED
+    successMessage: string = CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CODE_INSERTED,
   ): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
@@ -71,7 +73,7 @@ export abstract class ModalBase extends Modal {
     container: HTMLElement,
     label: string,
     placeholder: string = "",
-    value: string = ""
+    value: string = "",
   ): HTMLInputElement {
     const { input } = FormField.create(container, {
       label: label,
@@ -94,7 +96,7 @@ export abstract class ModalBase extends Modal {
     value: string = "",
     min?: number,
     max?: number,
-    placeholder: string = ""
+    placeholder: string = "",
   ): HTMLInputElement {
     const { input } = FormField.create(container, {
       label: label,
@@ -115,7 +117,7 @@ export abstract class ModalBase extends Modal {
   public createSelect(
     container: HTMLElement,
     label: string,
-    options: Array<{ text: string; value: string }>
+    options: Array<{ text: string; value: string }>,
   ): HTMLSelectElement {
     container.createEl("label", { text: label });
     const select = container.createEl("select");
@@ -135,7 +137,7 @@ export abstract class ModalBase extends Modal {
     container: HTMLElement,
     label: string,
     checked: boolean = false,
-    id?: string
+    id?: string,
   ): HTMLInputElement {
     const checkbox = Input.create(container, { type: INPUT_TYPE.CHECKBOX });
     if (checked) checkbox.checked = true;
@@ -157,7 +159,7 @@ export abstract class ModalBase extends Modal {
     label: string,
     placeholder: string = "",
     rows: number = 3,
-    value: string = ""
+    value: string = "",
   ): HTMLTextAreaElement {
     container.createEl("label", { text: label });
     const textarea = container.createEl("textarea", {
@@ -173,7 +175,7 @@ export abstract class ModalBase extends Modal {
    */
   protected createStyledMainContainer(contentEl: HTMLElement): HTMLElement {
     const mainContainer = contentEl.createEl("div", {
-      cls: "workout-charts-form workout-charts-modal-main-container",
+      cls: "workout-charts-form workout-modal",
     });
     return mainContainer;
   }
@@ -183,7 +185,7 @@ export abstract class ModalBase extends Modal {
    */
   public createCurrentFileInfo(
     parent: HTMLElement,
-    currentFileName: string
+    currentFileName: string,
   ): HTMLElement {
     const currentFileInfo = parent.createEl("div", {
       cls: "workout-current-file-info",
@@ -204,7 +206,7 @@ export abstract class ModalBase extends Modal {
     parent: HTMLElement,
     label: string,
     placeholder: string = "",
-    value: string = ""
+    value: string = "",
   ): HTMLInputElement {
     const container = this.createFormGroup(parent);
     return this.createTextInput(container, label, placeholder, value);
@@ -221,7 +223,7 @@ export abstract class ModalBase extends Modal {
       min?: number;
       max?: number;
       placeholder?: string;
-    }
+    },
   ): HTMLInputElement {
     const container = this.createFormGroup(parent);
     return this.createNumberInput(
@@ -230,7 +232,7 @@ export abstract class ModalBase extends Modal {
       defaultValue.toString(),
       options?.min,
       options?.max,
-      options?.placeholder
+      options?.placeholder,
     );
   }
 
@@ -240,7 +242,7 @@ export abstract class ModalBase extends Modal {
   public createSelectField(
     parent: HTMLElement,
     label: string,
-    options: Array<{ text: string; value: string }>
+    options: Array<{ text: string; value: string }>,
   ): HTMLSelectElement {
     const container = this.createFormGroup(parent);
     return this.createSelect(container, label, options);
@@ -253,7 +255,7 @@ export abstract class ModalBase extends Modal {
     parent: HTMLElement,
     label: string,
     checked: boolean = false,
-    id?: string
+    id?: string,
   ): HTMLInputElement {
     const container = this.createCheckboxGroup(parent);
     return this.createCheckbox(container, label, checked, id);
@@ -267,7 +269,7 @@ export abstract class ModalBase extends Modal {
     label: string,
     placeholder: string = "",
     rows: number = 3,
-    value: string = ""
+    value: string = "",
   ): HTMLTextAreaElement {
     const container = this.createFormGroup(parent);
     return this.createTextarea(container, label, placeholder, rows, value);

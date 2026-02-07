@@ -94,12 +94,9 @@ export const TABLE_VALIDATION = {
   LIMIT_RANGE: (min: number, max: number, received: string): string =>
     `limit must be a number between ${min} and ${max}, received: "${received}"`,
   /** Columns must be array of strings or JSON */
-  COLUMNS_INVALID_TYPE:
-    "columns must be an array of strings or a JSON string",
+  COLUMNS_INVALID_TYPE: "columns must be an array of strings or a JSON string",
   /** Column values must be strings */
   COLUMNS_NOT_STRINGS: "columns must be an array of strings",
-  /** Button text must be a string */
-  BUTTON_TEXT_NOT_STRING: "buttonText must be a string",
 } as const;
 
 // ============================================================================

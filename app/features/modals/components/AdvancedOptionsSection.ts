@@ -5,6 +5,7 @@ export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;
   titleInput?: HTMLInputElement;
   searchByNameToggle?: HTMLInputElement;
+  addButtonToggle?: HTMLInputElement;
 }
 
 export class AdvancedOptionsSection {
@@ -17,9 +18,13 @@ export class AdvancedOptionsSection {
     options: {
       showTitle?: boolean;
       showSearchByName?: boolean;
-    } = {}
+      showAddButton?: boolean;
+    } = {},
   ): AdvancedOptionsElements {
-    const advancedSection = modal.createSection(container, CONSTANTS.WORKOUT.MODAL.SECTIONS.ADVANCED_OPTIONS);
+    const advancedSection = modal.createSection(
+      container,
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.ADVANCED_OPTIONS,
+    );
 
     // Exact match toggle
     const exactMatchContainer = modal.createCheckboxGroup(advancedSection);
@@ -27,7 +32,7 @@ export class AdvancedOptionsSection {
       exactMatchContainer,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.EXACT_MATCH,
       false,
-      "exactMatch"
+      "exactMatch",
     );
 
     const elements: AdvancedOptionsElements = {
@@ -40,7 +45,7 @@ export class AdvancedOptionsSection {
       const titleInput = modal.createTextInput(
         titleContainer,
         CONSTANTS.WORKOUT.MODAL.LABELS.CUSTOM_TITLE,
-        CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.CUSTOM_TITLE
+        CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.CUSTOM_TITLE,
       );
       elements.titleInput = titleInput;
     }
@@ -52,9 +57,21 @@ export class AdvancedOptionsSection {
         searchByNameContainer,
         CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SEARCH_BY_NAME,
         false,
-        "searchByName"
+        "searchByName",
       );
       elements.searchByNameToggle = searchByNameToggle;
+    }
+
+    // Optional add button toggle
+    if (options.showAddButton) {
+      const addButtonContainer = modal.createCheckboxGroup(advancedSection);
+      const addButtonToggle = modal.createCheckbox(
+        addButtonContainer,
+        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_ADD_BUTTON,
+        true,
+        "showAddButton",
+      );
+      elements.addButtonToggle = addButtonToggle;
     }
 
     return elements;

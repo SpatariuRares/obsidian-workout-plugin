@@ -53,9 +53,7 @@ import {
   MUSCLE_KEYWORDS,
 } from "@app/constants/muscles.constants";
 
-import {
-  DEFAULT_TABLE_CONFIG,
-} from "@app/constants/defaults.constants";
+import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
 import { ERROR_TYPES } from "@app/constants/validation.constants";
 
@@ -205,7 +203,6 @@ export const CONSTANTS = {
         COLUMNS_INVALID_TYPE:
           "columns must be an array of strings or a JSON string",
         COLUMNS_NOT_STRINGS: "columns must be an array of strings",
-        BUTTON_TEXT_NOT_STRING: "buttonText must be a string",
       },
     },
   },

@@ -8,9 +8,6 @@ describe("TableConfig", () => {
 
       expect(defaults.limit).toBe(CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT);
       expect(defaults.showAddButton).toBe(true);
-      expect(defaults.buttonText).toBe(
-        CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
-      );
       expect(defaults.searchByName).toBe(false);
       expect(defaults.exactMatch).toBe(
         CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH,
@@ -34,7 +31,6 @@ describe("TableConfig", () => {
       const errors = TableConfig.validateParams({
         limit: 10,
         columns: ["Date", "Reps"],
-        buttonText: "Add",
       });
 
       expect(errors).toEqual([]);
@@ -92,21 +88,18 @@ describe("TableConfig", () => {
       expect(errors).toEqual([]);
     });
 
-    it("validates buttonText non-string", () => {
+    it("reports multiple errors at once", () => {
       const errors = TableConfig.validateParams({
-        buttonText: 123 as unknown as string,
+        limit: -1,
+        columns: 123 as unknown as string[],
       });
-      expect(errors.length).toBe(1);
-      expect(errors[0]).toBe(
-        CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.BUTTON_TEXT_NOT_STRING,
-      );
+      expect(errors.length).toBe(2);
     });
 
     it("reports multiple errors at once", () => {
       const errors = TableConfig.validateParams({
         limit: -1,
         columns: 123 as unknown as string[],
-        buttonText: 456 as unknown as string,
       });
       expect(errors.length).toBe(3);
     });

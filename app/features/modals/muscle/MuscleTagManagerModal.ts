@@ -41,7 +41,7 @@ export class MuscleTagManagerModal extends ModalBase {
   async onOpen() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("workout-charts-modal");
+    contentEl.addClass("workout-modal");
 
     contentEl.createEl("h2", {
       text: CONSTANTS.WORKOUT.MODAL.TITLES.MUSCLE_TAG_MANAGER,
@@ -133,7 +133,11 @@ export class MuscleTagManagerModal extends ModalBase {
     this.renderForm(CONSTANTS.WORKOUT.MODAL.LABELS.EDIT_TAG, tag, muscleGroup);
   }
 
-  private renderForm(title: string, tagValue: string, muscleGroupValue: string): void {
+  private renderForm(
+    title: string,
+    tagValue: string,
+    muscleGroupValue: string,
+  ): void {
     if (!this.formRenderer) {
       return;
     }
@@ -148,7 +152,8 @@ export class MuscleTagManagerModal extends ModalBase {
         void this.handleSave(tagInput, groupSelect);
       },
       onTagInputChange: (value) => this.handleTagInputChange(value),
-      onSuggestionClick: (tag, muscleGroup) => this.showEditForm(tag, muscleGroup),
+      onSuggestionClick: (tag, muscleGroup) =>
+        this.showEditForm(tag, muscleGroup),
     });
   }
 
@@ -200,7 +205,9 @@ export class MuscleTagManagerModal extends ModalBase {
       this.renderTags();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message));
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
+      );
     }
   }
 
@@ -225,13 +232,17 @@ export class MuscleTagManagerModal extends ModalBase {
       this.renderTags();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message));
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
+      );
     }
   }
 
   private handleExport(): void {
     try {
-      const csvContent = MuscleTagCsvExportService.buildCsvContent(this.allTags);
+      const csvContent = MuscleTagCsvExportService.buildCsvContent(
+        this.allTags,
+      );
       MuscleTagFileService.downloadCsv(csvContent, "muscle-tags-export.csv");
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORTED);
     } catch (error) {
@@ -264,7 +275,10 @@ export class MuscleTagManagerModal extends ModalBase {
       return;
     }
 
-    const suggestions = MuscleTagSuggestionLogic.getSuggestions(needle, this.allTags);
+    const suggestions = MuscleTagSuggestionLogic.getSuggestions(
+      needle,
+      this.allTags,
+    );
     this.formRenderer.renderSuggestions(suggestions, (tag, muscleGroup) => {
       this.showEditForm(tag, muscleGroup);
     });
@@ -353,7 +367,9 @@ export class MuscleTagManagerModal extends ModalBase {
       this.renderTags();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(message));
+      new Notice(
+        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(message),
+      );
     }
   }
 

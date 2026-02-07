@@ -22,7 +22,8 @@
   input[type="text"],
   input[type="number"],
   select {
-    border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+    border: var(--input-border-width, var(--workout-border-thin)) solid
+      var(--background-modifier-border);
     border-radius: var(--input-radius, var(--workout-radius-md));
     background: var(--background-primary);
     color: var(--text-normal);
@@ -43,7 +44,8 @@
   select:focus {
     outline: none;
     border-color: var(--interactive-accent);
-    box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+    box-shadow: 0 0 0 var(--workout-border-medium)
+      rgba(var(--interactive-accent-rgb), 0.2);
   }
 
   input::placeholder {
@@ -69,7 +71,7 @@
 }
 
 @media (max-width: variables.$breakpoint-tablet) {
-  .workout-charts-modal {
+  .workout-modal {
     .workout-parameters-container {
       grid-template-columns: 1fr;
     }
@@ -88,11 +90,35 @@
       min-width: 10ch;
       min-height: 44px;
     }
+
+    /* Target section mobile optimizations */
+    .workout-charts-checkbox-group {
+      min-height: 44px;
+      padding: var(--workout-space-sm) 0;
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+      }
+
+      label {
+        font-size: var(--workout-font-base);
+        line-height: 1.4;
+      }
+    }
+
+    .workout-current-file-info {
+      font-size: var(--workout-font-sm);
+      padding: var(--workout-space-sm);
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
   }
 }
 
 @media (min-width: variables.$breakpoint-tablet) {
-  .workout-charts-modal {
+  .workout-modal {
     .workout-parameters-container {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -100,7 +126,7 @@
 }
 
 @media (min-width: variables.$breakpoint-xl) {
-  .workout-charts-modal {
+  .workout-modal {
     .workout-parameters-container {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }

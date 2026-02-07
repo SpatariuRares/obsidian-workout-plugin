@@ -246,7 +246,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         workout: params.workoutName,
         limit: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
         showAddButton: true,
-        buttonText: CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT,
         searchByName: false,
         exactMatch: true,
       });

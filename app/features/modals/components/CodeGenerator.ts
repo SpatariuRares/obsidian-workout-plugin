@@ -73,9 +73,6 @@ export class CodeGenerator {
 
     // Add display options
     if (!params.showAddButton) lines.push(`showAddButton: false`);
-    if (params.buttonText !== CONSTANTS.WORKOUT.TABLE.DEFAULTS.BUTTON_TEXT) {
-      lines.push(`buttonText: "${params.buttonText}"`);
-    }
 
     // Add advanced options
     if (params.searchByName) lines.push(`searchByName: true`);

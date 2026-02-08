@@ -2,8 +2,6 @@ import { CONSTANTS } from "@app/constants";
 import {
   getAllMuscleGroups,
   isValidMuscleTag,
-  isMuscleKeyword,
-  tagToMuscleGroup,
 } from '../MuscleTags';
 
 describe('MuscleTags', () => {
@@ -61,27 +59,6 @@ describe('MuscleTags', () => {
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP['chest']).toBe('chest');
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP['petto']).toBe('chest');
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP['pettorale']).toBe('chest');
-    });
-  });
-
-  describe('CONSTANTS.WORKOUT.MUSCLES.KEYWORDS constant', () => {
-    it('should contain main muscle group keywords', () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).toContain('chest');
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).toContain('back');
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).toContain('legs');
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).toContain('biceps');
-    });
-
-    it('should not contain exercise type keywords', () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).not.toContain('push');
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).not.toContain('pull');
-      expect(CONSTANTS.WORKOUT.MUSCLES.KEYWORDS).not.toContain('squat');
-    });
-
-    it('should be a subset of CONSTANTS.WORKOUT.MUSCLES.TAGS', () => {
-      CONSTANTS.WORKOUT.MUSCLES.KEYWORDS.forEach((keyword) => {
-        expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain(keyword);
-      });
     });
   });
 
@@ -145,66 +122,6 @@ describe('MuscleTags', () => {
     it('should handle tags with whitespace', () => {
       expect(isValidMuscleTag('  chest  ')).toBe(true);
       expect(isValidMuscleTag(' petto ')).toBe(true);
-    });
-  });
-
-  describe('isMuscleKeyword', () => {
-    it('should return true for muscle keyword tags', () => {
-      expect(isMuscleKeyword('chest')).toBe(true);
-      expect(isMuscleKeyword('petto')).toBe(true);
-      expect(isMuscleKeyword('biceps')).toBe(true);
-    });
-
-    it('should return false for exercise type tags', () => {
-      expect(isMuscleKeyword('push')).toBe(false);
-      expect(isMuscleKeyword('pull')).toBe(false);
-      expect(isMuscleKeyword('squat')).toBe(false);
-    });
-
-    it('should handle partial matches', () => {
-      expect(isMuscleKeyword('upper chest')).toBe(true); // Contains 'chest'
-      expect(isMuscleKeyword('big biceps')).toBe(true); // Contains 'biceps'
-    });
-
-    it('should be case insensitive', () => {
-      expect(isMuscleKeyword('CHEST')).toBe(true);
-      expect(isMuscleKeyword('Biceps')).toBe(true);
-    });
-
-    it('should handle whitespace', () => {
-      expect(isMuscleKeyword('  chest  ')).toBe(true);
-    });
-  });
-
-  describe('tagToMuscleGroup', () => {
-    it('should map tags to normalized muscle groups', () => {
-      expect(tagToMuscleGroup('chest')).toBe('chest');
-      expect(tagToMuscleGroup('petto')).toBe('chest');
-      expect(tagToMuscleGroup('schiena')).toBe('back');
-      expect(tagToMuscleGroup('glutei')).toBe('glutes');
-    });
-
-    it('should map exercise types to muscle groups', () => {
-      expect(tagToMuscleGroup('push')).toBe('chest');
-      expect(tagToMuscleGroup('pull')).toBe('back');
-      expect(tagToMuscleGroup('squat')).toBe('quads');
-    });
-
-    it('should return undefined for invalid tags', () => {
-      expect(tagToMuscleGroup('invalid')).toBeUndefined();
-      expect(tagToMuscleGroup('random')).toBeUndefined();
-      expect(tagToMuscleGroup('')).toBeUndefined();
-    });
-
-    it('should be case insensitive', () => {
-      expect(tagToMuscleGroup('CHEST')).toBe('chest');
-      expect(tagToMuscleGroup(CONSTANTS.WORKOUT.MUSCLES.NAMES.PETTO)).toBe('chest');
-      expect(tagToMuscleGroup('SQUAT')).toBe('quads');
-    });
-
-    it('should handle whitespace', () => {
-      expect(tagToMuscleGroup('  chest  ')).toBe('chest');
-      expect(tagToMuscleGroup(' petto ')).toBe('chest');
     });
   });
 

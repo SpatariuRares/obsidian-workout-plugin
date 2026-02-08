@@ -1,6 +1,28 @@
 import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
+import type WorkoutChartsPlugin from "main";
+
+const ICONS = CONSTANTS.WORKOUT.ICONS.EXERCISE;
+
+const MUSCLE_GROUP_EMOJI: Record<string, string> = {
+  chest: ICONS.CURL,
+  back: ICONS.BACK,
+  shoulders: ICONS.SHOULDERS,
+  biceps: ICONS.BICEPS,
+  triceps: ICONS.TRICEPS,
+  forearms: ICONS.FOREARM,
+  quads: ICONS.LEGS,
+  hamstrings: ICONS.LEGS,
+  glutes: ICONS.GLUTES,
+  calves: ICONS.CALVES,
+  abs: ICONS.CORE,
+  core: ICONS.CARDIO,
+  traps: ICONS.TRAPS,
+  rear_delts: ICONS.SHOULDERS,
+};
+
+const DEFAULT_EMOJI = ICONS.DEADLIFT;
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -10,6 +32,7 @@ export class MuscleTagsWidget {
   static render(
     container: HTMLElement,
     _params: EmbeddedDashboardParams,
+    plugin: WorkoutChartsPlugin,
   ): void {
     const widgetEl = container.createEl("div", {
       cls: "workout-dashboard-widget widget-wide workout-muscle-tags-widget",
@@ -30,11 +53,14 @@ export class MuscleTagsWidget {
       cls: "workout-muscle-tags-grid",
     });
 
-    // Sort tags for consistent display
-    const sortedTags = [...CONSTANTS.WORKOUT.MUSCLES.TAGS].sort();
+    // Get tags from MuscleTagService (includes custom user tags)
+    const tagMap = plugin.getMuscleTagService().getTagMap();
+    const sortedTags = Array.from(tagMap.entries()).sort(([a], [b]) =>
+      a.localeCompare(b),
+    );
 
-    sortedTags.forEach((tag) => {
-      this.createMuscleTagBadge(tagsGrid, tag);
+    sortedTags.forEach(([tag, muscleGroup]) => {
+      this.createMuscleTagBadge(tagsGrid, tag, muscleGroup);
     });
 
     // Add info section
@@ -55,16 +81,17 @@ export class MuscleTagsWidget {
    */
   private static createMuscleTagBadge(
     container: HTMLElement,
-    muscleName: string,
+    tag: string,
+    muscleGroup: string,
   ): void {
     CopyableBadge.create(container, {
-      icon: this.getMuscleEmoji(muscleName),
-      text: this.formatMuscleName(muscleName),
-      copyValue: muscleName,
+      icon: MUSCLE_GROUP_EMOJI[muscleGroup] ?? DEFAULT_EMOJI,
+      text: this.formatMuscleName(tag),
+      copyValue: tag,
       tooltip:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(muscleName),
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(tag),
       className: "workout-muscle-tag-badge",
-      dataAttributes: { muscle: muscleName },
+      dataAttributes: { muscle: tag },
     });
   }
 
@@ -77,106 +104,5 @@ export class MuscleTagsWidget {
     return words
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-  }
-
-  /**
-   * Get emoji for muscle group
-   */
-  private static getMuscleEmoji(muscleName: string): string {
-    const lowerName = muscleName.toLowerCase();
-
-    // Chest variations
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest) ||
-      lowerName.includes("petto") ||
-      lowerName.includes("pettorale")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CURL;
-    // Back variations
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.back) ||
-      lowerName.includes("schiena") ||
-      lowerName.includes("dorsale")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.BACK;
-    // Shoulders variations
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.shoulder) ||
-      lowerName.includes("spalle") ||
-      lowerName.includes("deltoidi") ||
-      lowerName.includes("delts")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.SHOULDERS;
-    // Arms
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.biceps) ||
-      lowerName.includes("bicipiti")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.BICEPS;
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.triceps) ||
-      lowerName.includes("tricipiti")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.TRICEPS;
-    if (lowerName.includes("forearm") || lowerName.includes("avambracci"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.FOREARM;
-    // Legs
-    if (lowerName.includes("legs") || lowerName.includes("gambe")) return "🦵";
-    if (lowerName.includes("quad") || lowerName.includes("quadricipiti"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.LEGS;
-    if (
-      lowerName.includes("hamstring") ||
-      lowerName.includes("ischiocrurali") ||
-      lowerName.includes("femorali")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.LEGS;
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.calves) ||
-      lowerName.includes("polpacci")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CALVES;
-    // Glutes
-    if (
-      lowerName.includes("glute") ||
-      lowerName.includes("abduttori") ||
-      lowerName.includes("adduttori")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.GLUTES;
-    // Core
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.abs) ||
-      lowerName.includes("addominali")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CORE;
-    // Cardio
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.core) ||
-      lowerName.includes("cardio")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CARDIO;
-    // Other
-    if (
-      lowerName.includes(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.traps) ||
-      lowerName.includes("trapezi")
-    )
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.TRAPS;
-    // Exercise types
-    if (lowerName.includes("push") || lowerName.includes("press"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.PUSH;
-    if (lowerName.includes("pull") || lowerName.includes("row"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.PULL;
-    if (lowerName.includes("squat"))
-      return CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS;
-    if (lowerName.includes("deadlift"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.DEADLIFT;
-    if (lowerName.includes("curl"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.CURL;
-    if (lowerName.includes("extension"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.EXTENSION;
-    if (lowerName.includes("fly")) return CONSTANTS.WORKOUT.ICONS.EXERCISE.FLY;
-    if (lowerName.includes("spintaanca"))
-      return CONSTANTS.WORKOUT.ICONS.EXERCISE.HIP_TRUST;
-
-    return CONSTANTS.WORKOUT.ICONS.EXERCISE.DEADLIFT;
   }
 }

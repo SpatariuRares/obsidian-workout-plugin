@@ -117,6 +117,7 @@ const DEFAULT_OPTIONS: CanvasExportOptions = {
  */
 export class CanvasExporter {
   private api: WorkoutPlannerAPI;
+  private tagMapper: MuscleTagMapper;
 
   constructor(
     private app: App,
@@ -124,6 +125,7 @@ export class CanvasExporter {
   ) {
     const dataService = new DataService(app, plugin.settings);
     this.api = new WorkoutPlannerAPI(dataService, app, plugin.settings);
+    this.tagMapper = new MuscleTagMapper(plugin.getMuscleTagService());
   }
 
   /**
@@ -211,7 +213,7 @@ export class CanvasExporter {
         const exerciseName = exerciseLine[1].trim();
         if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
           exerciseSet.add(exerciseName.toLowerCase());
-          const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
+          const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
             exerciseName,
             this.plugin,
           );
@@ -235,7 +237,7 @@ export class CanvasExporter {
         !exerciseSet.has(headerText.toLowerCase())
       ) {
         exerciseSet.add(headerText.toLowerCase());
-        const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
+        const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
           headerText,
           this.plugin,
         );
@@ -258,7 +260,7 @@ export class CanvasExporter {
           );
           if (file || !linkPath.includes("/")) {
             exerciseSet.add(exerciseName.toLowerCase());
-            const muscleGroups = await MuscleTagMapper.findMuscleGroupsFromTags(
+            const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
               exerciseName,
               this.plugin,
             );

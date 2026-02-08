@@ -1,7 +1,7 @@
 import { type BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body/index";
 import { SVGBuilder } from "@app/features/dashboard/widgets/muscle-heat-map/body/utils/SVGBuilder";
-import { ViewDataPreparer } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/ViewDataPrepar";
-import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/FrontView";
+import { ViewDataPreparer } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/ViewDataPreparer";
+import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/BodyViewSvg";
 
 export enum VIEW_TYPE {
   FRONT = "front",
@@ -58,102 +58,56 @@ export class Body {
   }
 
   private renderFrontView(svg: SVGSVGElement): void {
-    // Prepare muscle colors using ViewDataPreparer
     const colors = this.dataPreparer.prepareFrontViewData(this.bodyData);
 
-    // Destructure colors for easier access in template
-    const trapsColor = colors.traps;
-    const bicepsColor = colors.biceps;
-    const forearmsColor = colors.forearms;
-    const quadsColor = colors.quads;
-    const calvesColor = colors.calves;
-    const absColor = colors.abs;
-    const obliquesColor = colors.obliques;
-    const frontShouldersColor = colors.frontShoulders;
-    const upperChestColor = colors.upperChest;
-    const middleChestColor = colors.middleChest;
-
-    // Render SVG parts with colors
-
-    const bodyG = BODY_VIEWS_SVG.FRONT(
-      trapsColor,
-      bicepsColor,
-      forearmsColor,
-      quadsColor,
-      calvesColor,
-      absColor,
-      obliquesColor,
-      frontShouldersColor,
-      upperChestColor,
-      middleChestColor,
+    const svgContent = BODY_VIEWS_SVG.FRONT(
+      colors.traps,
+      colors.biceps,
+      colors.forearms,
+      colors.quads,
+      colors.calves,
+      colors.abs,
+      colors.obliques,
+      colors.frontShoulders,
+      colors.upperChest,
+      colors.middleChest,
     );
 
-    // Parse the SVG string into DOM nodes safely
-    // Wrap in SVG element for proper parsing since bodyG contains SVG fragments
-    const parser = new DOMParser();
-    const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${bodyG}</svg>`;
-    const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
-
-    // Check for parsing errors
-    const parseError = doc.querySelector("parsererror");
-    if (parseError) {
-      return;
-    }
-
-    // Move children from parsed document to the main SVG
-    while (doc.documentElement.firstChild) {
-      svg.appendChild(doc.documentElement.firstChild);
-    }
+    this.appendSvgContent(svgContent, svg);
   }
 
   private renderBackView(svg: SVGSVGElement): void {
-    // Prepare muscle colors using ViewDataPreparer
     const colors = this.dataPreparer.prepareBackViewData(this.bodyData);
 
-    // Destructure colors for easier access in template
-    const lowerBackColor = colors.lowerBack;
-    const trapsColor = colors.traps;
-    const trapsMiddleColor = colors.trapsMiddle;
-    const latsColor = colors.lats;
-    const tricepsColor = colors.triceps;
-    const forearmsColor = colors.forearms;
-    const glutesColor = colors.glutes;
-    const quadsColor = colors.quads;
-    const hamstringsColor = colors.hamstrings;
-    const calvesColor = colors.calves;
-    const rearShouldersColor = colors.rearShoulders;
-
-    // Render SVG parts with colors
-
-    const bodyG = BODY_VIEWS_SVG.BACK(
-      lowerBackColor,
-      trapsColor,
-      trapsMiddleColor,
-      latsColor,
-      tricepsColor,
-      forearmsColor,
-      glutesColor,
-      quadsColor,
-      hamstringsColor,
-      calvesColor,
-      rearShouldersColor,
+    const svgContent = BODY_VIEWS_SVG.BACK(
+      colors.lowerBack,
+      colors.traps,
+      colors.trapsMiddle,
+      colors.lats,
+      colors.triceps,
+      colors.forearms,
+      colors.glutes,
+      colors.quads,
+      colors.hamstrings,
+      colors.calves,
+      colors.rearShoulders,
     );
 
-    // Parse the SVG string into DOM nodes safely
-    // Wrap in SVG element for proper parsing since bodyG contains SVG fragments
+    this.appendSvgContent(svgContent, svg);
+  }
+
+  private appendSvgContent(svgString: string, targetSvg: SVGSVGElement): void {
     const parser = new DOMParser();
-    const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${bodyG}</svg>`;
+    const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${svgString}</svg>`;
     const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
 
-    // Check for parsing errors
     const parseError = doc.querySelector("parsererror");
     if (parseError) {
       return;
     }
 
-    // Move children from parsed document to the main SVG
     while (doc.documentElement.firstChild) {
-      svg.appendChild(doc.documentElement.firstChild);
+      targetSvg.appendChild(doc.documentElement.firstChild);
     }
   }
 
@@ -197,6 +151,13 @@ export class Body {
   }
 
   getBodyData(): BodyData {
-    return { ...this.bodyData };
+    return {
+      shoulders: { ...this.bodyData.shoulders },
+      chest: { ...this.bodyData.chest },
+      back: { ...this.bodyData.back },
+      arms: { ...this.bodyData.arms },
+      legs: { ...this.bodyData.legs },
+      core: { ...this.bodyData.core },
+    };
   }
 }

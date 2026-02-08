@@ -353,7 +353,7 @@ export class EmbeddedDashboardView extends BaseView {
     await WidgetsFileError.render(gridEl, this.plugin);
 
     // Muscle Tags Widget (Right Column previously)
-    MuscleTagsWidget.render(gridEl, params);
+    MuscleTagsWidget.render(gridEl, params, this.plugin);
 
     // Apply bento layout and observe for resize
     this.applyBentoLayout(gridEl);

@@ -6,6 +6,7 @@ import { Body, type BodyData, VIEW_TYPE } from "@app/features/dashboard/widgets/
 import {
   MuscleDataCalculator,
   MuscleBalanceAnalyzer,
+  MuscleTagMapper,
 } from "@app/features/dashboard/widgets/muscle-heat-map/business";
 import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
@@ -30,6 +31,9 @@ export class MuscleHeatMap {
       cls: "workout-widget-title",
     });
 
+    // Controls container (created in correct DOM order: title -> controls -> canvas -> info)
+    const controlsContainer = heatMapEl.createEl("div");
+
     // Heat map canvas container
     const canvasContainer = heatMapEl.createEl("div", {
       cls: "workout-heatmap-canvas-container",
@@ -40,32 +44,39 @@ export class MuscleHeatMap {
       cls: "workout-heatmap-info-panel",
     });
 
-    // Create controls and get initial options (placed before canvas)
+    // Create calculator with DI
+    const muscleTagService = plugin.getMuscleTagService();
+    const tagMapper = new MuscleTagMapper(muscleTagService);
+    const calculator = new MuscleDataCalculator(tagMapper);
+
+    const renderHeatMap = async (
+      cntr: HTMLElement,
+      d: WorkoutLogData[],
+      opts: MuscleHeatMapOptions,
+      info: HTMLElement,
+      plg: WorkoutChartsPlugin
+    ): Promise<void> => {
+      await MuscleHeatMap.renderHeatMap(cntr, d, opts, info, plg, calculator);
+    };
+
+    // Create controls inside the pre-positioned container
     const currentOptions = HeatMapControls.create(
-      heatMapEl,
+      controlsContainer,
       data,
       canvasContainer,
       infoPanel,
       plugin,
-      this.renderHeatMap.bind(this)
+      renderHeatMap
     );
 
-    // Move controls to be first child after title
-    const controlsEl = heatMapEl.querySelector(".workout-heatmap-controls");
-    if (controlsEl) {
-      heatMapEl.insertAfter(
-        controlsEl,
-        heatMapEl.querySelector(".workout-widget-title")
-      );
-    }
-
     // Render initial heat map
-    await this.renderHeatMap(
+    await MuscleHeatMap.renderHeatMap(
       canvasContainer,
       data,
       currentOptions,
       infoPanel,
-      plugin
+      plugin,
+      calculator
     );
   }
 
@@ -74,7 +85,8 @@ export class MuscleHeatMap {
     data: WorkoutLogData[],
     options: MuscleHeatMapOptions,
     infoPanel: HTMLElement,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
+    calculator: MuscleDataCalculator
   ): Promise<void> {
     container.empty();
 
@@ -85,7 +97,7 @@ export class MuscleHeatMap {
     );
 
     // Calculate muscle group volumes
-    const muscleData = await MuscleDataCalculator.calculateMuscleGroupVolumes(
+    const muscleData = await calculator.calculateMuscleGroupVolumes(
       filteredData,
       plugin
     );
@@ -106,40 +118,8 @@ export class MuscleHeatMap {
     bodyData: BodyData,
     options: MuscleHeatMapOptions
   ): void {
-    // Calculate max value dynamically from actual body data
-    const allValues = [
-      bodyData.shoulders.frontLeft,
-      bodyData.shoulders.frontRight,
-      bodyData.shoulders.rearLeft,
-      bodyData.shoulders.rearRight,
-      bodyData.chest.upper,
-      bodyData.chest.middle,
-      bodyData.chest.lower,
-      bodyData.back.traps,
-      bodyData.back.lats,
-      bodyData.back.lowerBack,
-      bodyData.back.trapsMiddle,
-      bodyData.arms.bicepsLeft,
-      bodyData.arms.bicepsRight,
-      bodyData.arms.tricepsLeft,
-      bodyData.arms.tricepsRight,
-      bodyData.arms.forearmsLeft,
-      bodyData.arms.forearmsRight,
-      bodyData.legs.quadsLeft,
-      bodyData.legs.quadsRight,
-      bodyData.legs.hamstringsLeft,
-      bodyData.legs.hamstringsRight,
-      bodyData.legs.glutesLeft,
-      bodyData.legs.glutesRight,
-      bodyData.legs.calvesLeft,
-      bodyData.legs.calvesRight,
-      bodyData.core.abs,
-      bodyData.core.obliques,
-    ];
+    const maxValue = MuscleDataCalculator.calculateMaxValue(bodyData);
 
-    const maxValue = Math.max(...allValues, 1); // Ensure at least 1 to avoid division by zero
-
-    // Create Body component with visualization options
     const body = new Body(bodyData, {
       view: options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
       showLabels: true,

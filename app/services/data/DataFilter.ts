@@ -6,7 +6,6 @@ import {
 } from "@app/utils/exercise/ExerciseMatchUtils";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/features/charts/types";
-import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { FilterResult } from "@app/types/CommonTypes";
 
 /**
@@ -48,54 +47,8 @@ interface NormalizedFilters {
  * Supports both exact and fuzzy matching with intelligent search strategies.
  * Now supports AND logic when multiple filters are provided.
  *
- * The MuscleTagService can be set via setMuscleTagService() to enable
- * custom muscle tag mappings for muscle-based filtering operations.
  */
 export class DataFilter {
-  /**
-   * Static reference to MuscleTagService for muscle tag lookups.
-   * Set via setMuscleTagService() during plugin initialization.
-   */
-  private static muscleTagService: MuscleTagService | null = null;
-
-  /**
-   * Sets the MuscleTagService instance for muscle tag lookups.
-   * Should be called during plugin initialization.
-   * @param service The MuscleTagService instance
-   */
-  static setMuscleTagService(service: MuscleTagService): void {
-    DataFilter.muscleTagService = service;
-  }
-
-  /**
-   * Gets the MuscleTagService instance.
-   * @returns The MuscleTagService instance or null if not set
-   */
-  static getMuscleTagService(): MuscleTagService | null {
-    return DataFilter.muscleTagService;
-  }
-
-  /**
-   * Gets the current muscle tag map.
-   * Returns the custom tag map from MuscleTagService if available,
-   * otherwise returns null (components should fall back to defaults).
-   * @returns Map of tag to muscle group, or null if service not set
-   */
-  static getTagMap(): Map<string, string> | null {
-    if (DataFilter.muscleTagService) {
-      return DataFilter.muscleTagService.getTagMap();
-    }
-    return null;
-  }
-
-  /**
-   * Clears the MuscleTagService reference.
-   * Should be called during plugin unload.
-   */
-  static clearMuscleTagService(): void {
-    DataFilter.muscleTagService = null;
-  }
-
   /**
    * Filters workout log data based on the provided parameters.
    * @param logData - Array of workout log data to filter

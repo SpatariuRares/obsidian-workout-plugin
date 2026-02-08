@@ -116,7 +116,7 @@ export class ViewDataPreparer {
 				shouldersData.frontRight
 			),
 			upperChest: this.intensityCalc.normalize(chestData.upper),
-			middleChest: this.intensityCalc.normalize(chestData.middle),
+			middleChest: this.intensityCalc.normalizeAverage([chestData.middle, chestData.lower]),
 		};
 
 		// Convert intensities to colors

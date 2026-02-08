@@ -14,7 +14,6 @@ import { EmbeddedDurationParams } from "@app/features/duration/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
-import { DataFilter } from "@app/services/data/DataFilter";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 
@@ -55,8 +54,6 @@ export class CodeBlockProcessorService {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);
 
-    // Set MuscleTagService on DataFilter for muscle tag lookups
-    DataFilter.setMuscleTagService(muscleTagService);
   }
 
   registerProcessors(): void {

@@ -120,8 +120,9 @@ export class WidgetsFileError {
       // Parse tags using FrontmatterParser
       const tags = FrontmatterParser.parseTags(content);
 
-      // Check for muscle tags
-      const muscleTags = this.getMuscleTags(tags);
+      // Check for muscle tags using MuscleTagService
+      const tagMap = plugin.getMuscleTagService().getTagMap();
+      const muscleTags = this.getMuscleTags(tags, tagMap);
 
       if (muscleTags.length === 0) {
         errors.push(
@@ -147,12 +148,13 @@ export class WidgetsFileError {
     return errors;
   }
 
-  private static getMuscleTags(tags: string[]): string[] {
+  private static getMuscleTags(
+    tags: string[],
+    tagMap: Map<string, string>,
+  ): string[] {
     return tags.filter((tag) => {
       const normalizedTag = tag.toLowerCase().trim();
-      return CONSTANTS.WORKOUT.MUSCLES.KEYWORDS.some((keyword) =>
-        normalizedTag.includes(keyword),
-      );
+      return tagMap.has(normalizedTag);
     });
   }
 }

@@ -1,32 +1,37 @@
 import type WorkoutChartsPlugin from "main";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
-import { getAllMuscleGroups, CONSTANTS } from "@app/constants";
-import { DataFilter } from "@app/services/data/DataFilter";
+import { CANONICAL_MUSCLE_GROUPS, CONSTANTS } from "@app/constants";
+import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping
  * and caches exercise tags for performance
  */
 export class MuscleTagMapper {
-  private static exerciseTagsCache = new Map<string, string[]>();
+  private exerciseTagsCache = new Map<string, string[]>();
+  private muscleTagService: MuscleTagService;
+
+  constructor(muscleTagService: MuscleTagService) {
+    this.muscleTagService = muscleTagService;
+  }
 
   /**
-   * Get all unique muscle groups from the mapping
+   * Get all unique muscle groups from the canonical list
    */
-  static getAllMuscleGroups(): Set<string> {
-    return getAllMuscleGroups();
+  getAllMuscleGroups(): Set<string> {
+    return new Set<string>(CANONICAL_MUSCLE_GROUPS);
   }
 
   /**
    * Gets the current muscle tag map.
-   * Uses custom tags from MuscleTagService via DataFilter if available,
+   * Uses custom tags from MuscleTagService if available,
    * otherwise falls back to default MUSCLE_TAG_MAP.
    * @returns Map of tag to muscle group
    */
-  private static getTagMap(): Map<string, string> {
-    const customTagMap = DataFilter.getTagMap();
-    if (customTagMap) {
+  private getTagMap(): Map<string, string> {
+    const customTagMap = this.muscleTagService.getTagMap();
+    if (customTagMap && customTagMap.size > 0) {
       return customTagMap;
     }
     // Fallback to default constants
@@ -36,7 +41,7 @@ export class MuscleTagMapper {
   /**
    * Loads exercise tags from the exercise file
    */
-  static async loadExerciseTags(
+  async loadExerciseTags(
     exerciseName: string,
     plugin: WorkoutChartsPlugin
   ): Promise<string[]> {
@@ -75,7 +80,7 @@ export class MuscleTagMapper {
   /**
    * Maps exercise tags to muscle groups
    */
-  static async findMuscleGroupsFromTags(
+  async findMuscleGroupsFromTags(
     exerciseName: string,
     plugin: WorkoutChartsPlugin
   ): Promise<string[]> {
@@ -114,8 +119,7 @@ export class MuscleTagMapper {
   /**
    * Clear the exercise tags cache
    */
-  static clearCache(): void {
+  clearCache(): void {
     this.exerciseTagsCache.clear();
   }
 }
-

@@ -1,29 +1,55 @@
-import type { ArmsData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Arms";
-import type { BackData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Back";
-import type { ChestData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Chest";
-import type { CoreData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Core";
-import type { LegsData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Legs";
-import type { ShoulderData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Shoulders";
-
-export {
-  Muscle,
-  type MusclePartData,
-  type MuscleGroupData,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body/Muscle";
-export {
-  Shoulders,
-  type ShoulderData,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body/Shoulders";
-export { Chest, type ChestData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Chest";
-export { Back, type BackData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Back";
-export { Arms, type ArmsData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Arms";
-export { Legs, type LegsData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Legs";
-export { Core, type CoreData } from "@app/features/dashboard/widgets/muscle-heat-map/body/Core";
 export {
   Body,
   type BodyVisualizationOptions,
   VIEW_TYPE,
 } from "@app/features/dashboard/widgets/muscle-heat-map/body/Body";
+
+export interface ArmsData {
+  bicepsLeft: number;
+  bicepsRight: number;
+  tricepsLeft: number;
+  tricepsRight: number;
+  forearmsLeft: number;
+  forearmsRight: number;
+}
+
+export interface BackData {
+  traps: number;
+  trapsMiddle: number;
+  lats: number;
+  lowerBack: number;
+}
+
+export interface ChestData {
+  upper: number;
+  middle: number;
+  lower: number;
+}
+
+export interface CoreData {
+  abs: number;
+  obliques: number;
+}
+
+export interface LegsData {
+  quadsLeft: number;
+  quadsRight: number;
+  hamstringsLeft: number;
+  hamstringsRight: number;
+  glutesLeft: number;
+  glutesRight: number;
+  calvesLeft: number;
+  calvesRight: number;
+}
+
+export interface ShoulderData {
+  frontLeft: number;
+  frontRight: number;
+  lateralLeft?: number;
+  lateralRight?: number;
+  rearLeft: number;
+  rearRight: number;
+}
 
 export interface BodyData {
   shoulders: ShoulderData;

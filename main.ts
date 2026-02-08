@@ -16,7 +16,6 @@ import { DataService } from "@app/services/data/DataService";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
-import { DataFilter } from "@app/services/data/DataFilter";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { CONSTANTS } from "@app/constants";
@@ -165,9 +164,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // 3c. Destroy muscle tag service (unregister file watcher, clear cache)
     this.muscleTagService?.destroy();
-
-    // 3d. Clear DataFilter's reference to MuscleTagService
-    DataFilter.clearMuscleTagService();
 
     // 4. Destroy all Chart.js instances (additional safety net)
     ChartRenderer.destroyAllCharts();

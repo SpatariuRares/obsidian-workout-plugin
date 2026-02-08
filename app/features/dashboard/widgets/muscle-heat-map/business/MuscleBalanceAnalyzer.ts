@@ -52,8 +52,10 @@ export class MuscleBalanceAnalyzer {
       0
     );
 
+    const maxVolume = Math.max(frontVolume, backVolume);
     if (
-      Math.abs(frontVolume - backVolume) / Math.max(frontVolume, backVolume) >
+      maxVolume > 0 &&
+      Math.abs(frontVolume - backVolume) / maxVolume >
       this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(

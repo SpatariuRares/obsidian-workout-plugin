@@ -1,7 +1,6 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business";
+import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import { DateUtils } from "@app/utils/DateUtils";
 import type { BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body";
 
@@ -12,10 +11,26 @@ export interface MuscleGroupData {
   intensity: number; // 0-1 scale for heat map coloring
 }
 
+const VOLUME_DISTRIBUTION = {
+  BILATERAL_SPLIT: 0.5,
+  CHEST_UPPER: 0.4,
+  CHEST_MIDDLE: 0.4,
+  CHEST_LOWER: 0.2,
+  BACK_LOWER_RATIO: 0.3,
+  TRAPS_MIDDLE_RATIO: 0.5,
+  OBLIQUES_RATIO: 0.5,
+} as const;
+
 /**
  * Handles data processing and calculations for muscle heat maps
  */
 export class MuscleDataCalculator {
+  private tagMapper: MuscleTagMapper;
+
+  constructor(tagMapper: MuscleTagMapper) {
+    this.tagMapper = tagMapper;
+  }
+
   /**
    * Filter workout data by time frame
    */
@@ -30,14 +45,14 @@ export class MuscleDataCalculator {
   /**
    * Calculate muscle group volumes from workout data
    */
-  static async calculateMuscleGroupVolumes(
+  async calculateMuscleGroupVolumes(
     data: WorkoutLogData[],
     plugin: WorkoutChartsPlugin
   ): Promise<Map<string, MuscleGroupData>> {
     const muscleData = new Map<string, MuscleGroupData>();
 
     // Initialize all muscle groups
-    const allMuscleGroups = MuscleTagMapper.getAllMuscleGroups();
+    const allMuscleGroups = this.tagMapper.getAllMuscleGroups();
     allMuscleGroups.forEach((muscle) => {
       muscleData.set(muscle, {
         name: muscle,
@@ -49,7 +64,7 @@ export class MuscleDataCalculator {
 
     // Calculate volumes
     for (const entry of data) {
-      const mappedMuscles = await MuscleTagMapper.findMuscleGroupsFromTags(
+      const mappedMuscles = await this.tagMapper.findMuscleGroupsFromTags(
         entry.exercise,
         plugin
       );
@@ -79,58 +94,97 @@ export class MuscleDataCalculator {
   }
 
   /**
+   * Calculate the maximum value across all body data fields.
+   * Returns at least 1 to avoid division by zero.
+   */
+  static calculateMaxValue(bodyData: BodyData): number {
+    const allValues = [
+      bodyData.shoulders.frontLeft,
+      bodyData.shoulders.frontRight,
+      bodyData.shoulders.rearLeft,
+      bodyData.shoulders.rearRight,
+      bodyData.chest.upper,
+      bodyData.chest.middle,
+      bodyData.chest.lower,
+      bodyData.back.traps,
+      bodyData.back.lats,
+      bodyData.back.lowerBack,
+      bodyData.back.trapsMiddle,
+      bodyData.arms.bicepsLeft,
+      bodyData.arms.bicepsRight,
+      bodyData.arms.tricepsLeft,
+      bodyData.arms.tricepsRight,
+      bodyData.arms.forearmsLeft,
+      bodyData.arms.forearmsRight,
+      bodyData.legs.quadsLeft,
+      bodyData.legs.quadsRight,
+      bodyData.legs.hamstringsLeft,
+      bodyData.legs.hamstringsRight,
+      bodyData.legs.glutesLeft,
+      bodyData.legs.glutesRight,
+      bodyData.legs.calvesLeft,
+      bodyData.legs.calvesRight,
+      bodyData.core.abs,
+      bodyData.core.obliques,
+    ];
+
+    return Math.max(...allValues, 1);
+  }
+
+  /**
    * Convert muscle group data to body visualization data structure
    */
   static createBodyDataFromMuscleData(
     muscleData: Map<string, MuscleGroupData>
   ): BodyData {
-    const getVolume = (muscleId: string): number => {
-      return muscleData.get(muscleId)?.volume || 0;
+    const getVolume = (muscleGroup: string): number => {
+      return muscleData.get(muscleGroup)?.volume || 0;
     };
+
+    const { BILATERAL_SPLIT, CHEST_UPPER, CHEST_MIDDLE, CHEST_LOWER, BACK_LOWER_RATIO, TRAPS_MIDDLE_RATIO, OBLIQUES_RATIO } = VOLUME_DISTRIBUTION;
 
     const bodyData = {
       shoulders: {
-        frontLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.shoulders) * 0.5,
-        frontRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.shoulders) * 0.5,
-        rearLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.rear_delts) * 0.5,
-        rearRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.rear_delts) * 0.5,
+        frontLeft: getVolume("shoulders") * BILATERAL_SPLIT,
+        frontRight: getVolume("shoulders") * BILATERAL_SPLIT,
+        rearLeft: getVolume("rear_delts") * BILATERAL_SPLIT,
+        rearRight: getVolume("rear_delts") * BILATERAL_SPLIT,
       },
       chest: {
-        upper: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest) * 0.4,
-        middle: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest) * 0.4,
-        lower: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.chest) * 0.2,
+        upper: getVolume("chest") * CHEST_UPPER,
+        middle: getVolume("chest") * CHEST_MIDDLE,
+        lower: getVolume("chest") * CHEST_LOWER,
       },
       back: {
-        traps: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.traps),
-        lats: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.back),
-        lowerBack: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.back) * 0.3,
-        trapsMiddle: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.traps) * 0.5,
+        traps: getVolume("traps"),
+        lats: getVolume("back"),
+        lowerBack: getVolume("back") * BACK_LOWER_RATIO,
+        trapsMiddle: getVolume("traps") * TRAPS_MIDDLE_RATIO,
       },
       arms: {
-        bicepsLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.biceps) * 0.5,
-        bicepsRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.biceps) * 0.5,
-        tricepsLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.triceps) * 0.5,
-        tricepsRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.triceps) * 0.5,
-        forearmsLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.forearms) * 0.5,
-        forearmsRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.forearms) * 0.5,
+        bicepsLeft: getVolume("biceps") * BILATERAL_SPLIT,
+        bicepsRight: getVolume("biceps") * BILATERAL_SPLIT,
+        tricepsLeft: getVolume("triceps") * BILATERAL_SPLIT,
+        tricepsRight: getVolume("triceps") * BILATERAL_SPLIT,
+        forearmsLeft: getVolume("forearms") * BILATERAL_SPLIT,
+        forearmsRight: getVolume("forearms") * BILATERAL_SPLIT,
       },
       legs: {
-        quadsLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.legs) * 0.5,
-        quadsRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.legs) * 0.5,
-        hamstringsLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.hamstrings) * 0.5,
-        hamstringsRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.hamstrings) * 0.5,
-        glutesLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.glutes) * 0.5,
-        glutesRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.glutes) * 0.5,
-        calvesLeft: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.calves) * 0.5,
-        calvesRight: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.calves) * 0.5,
+        quadsLeft: getVolume("quads") * BILATERAL_SPLIT,
+        quadsRight: getVolume("quads") * BILATERAL_SPLIT,
+        hamstringsLeft: getVolume("hamstrings") * BILATERAL_SPLIT,
+        hamstringsRight: getVolume("hamstrings") * BILATERAL_SPLIT,
+        glutesLeft: getVolume("glutes") * BILATERAL_SPLIT,
+        glutesRight: getVolume("glutes") * BILATERAL_SPLIT,
+        calvesLeft: getVolume("calves") * BILATERAL_SPLIT,
+        calvesRight: getVolume("calves") * BILATERAL_SPLIT,
       },
       core: {
-        abs: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.abs),
-        obliques: getVolume(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP.core) * 0.5,
+        abs: getVolume("abs"),
+        obliques: getVolume("core") * OBLIQUES_RATIO,
       },
     };
 
     return bodyData;
   }
 }
-

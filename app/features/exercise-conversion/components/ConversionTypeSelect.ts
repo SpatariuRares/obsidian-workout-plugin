@@ -16,7 +16,7 @@ export class ConversionTypeSelect {
     this.onUpdateFrontmatterChange = onUpdateFrontmatterChange;
   }
 
-  public render(initialType?: string): void {
+  public render(): void {
     this.container.empty();
 
     const options: Record<string, string> = {};
@@ -28,9 +28,6 @@ export class ConversionTypeSelect {
       .setName("Convert to:")
       .addDropdown((dropdown) => {
         dropdown.addOptions(options);
-        if (initialType) {
-          dropdown.setValue(initialType);
-        }
         dropdown.onChange((value) => {
           this.onTypeChange(value);
         });
@@ -52,11 +49,5 @@ export class ConversionTypeSelect {
     } else {
       this.container.hide();
     }
-  }
-
-  public setValue(typeId: string): void {
-    // We'd need to keep a ref to the dropdown to set it programmatically if needed
-    // For now, re-render is simple enough or we could improve this class
-    this.render(typeId);
   }
 }

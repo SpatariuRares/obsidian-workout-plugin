@@ -98,7 +98,7 @@ export class FieldMappingList {
 
     // Target Select
     const targetSelect = row.createEl("select");
-    const targetOptions = this.getTargetFieldOptions(this.targetType!);
+    const targetOptions = this.getFieldOptions(this.targetType!);
     targetOptions.forEach((opt) => {
       const option = targetSelect.createEl("option", {
         text: opt.text,
@@ -121,6 +121,7 @@ export class FieldMappingList {
 
     // Listeners
     const updateHandler = () => {
+      if (index < 0 || index >= this.mappings.length) return;
       const newMapping: FieldMapping = {
         fromField: sourceSelect.value,
         toField: targetSelect.value,
@@ -139,7 +140,7 @@ export class FieldMappingList {
     if (!this.sourceType || !this.targetType) return;
 
     const sourceOptions = this.getSourceFieldOptions(this.sourceType);
-    const targetOptions = this.getTargetFieldOptions(this.targetType);
+    const targetOptions = this.getFieldOptions(this.targetType);
 
     const newMapping: FieldMapping = {
       fromField: sourceOptions[0]?.value || "",
@@ -179,10 +180,9 @@ export class FieldMappingList {
     return options;
   }
 
-  private getTargetFieldOptions(
+  private getFieldOptions(
     type: ExerciseTypeDefinition
   ): Array<{ text: string; value: string }> {
-    // Same logic usually
     return this.getSourceFieldOptions(type);
   }
 }

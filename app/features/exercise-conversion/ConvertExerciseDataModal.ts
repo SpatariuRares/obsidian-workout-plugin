@@ -1,9 +1,6 @@
 import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import {
-  ExerciseAutocomplete,
-  ExerciseAutocompleteElements,
-} from "@app/features/modals/components/ExerciseAutocomplete";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import {
   getExerciseTypeById,
   EXERCISE_TYPE_IDS,
@@ -24,7 +21,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   private conversionService: ExerciseConversionService;
 
   // Components
-  private typeSelectVal: ConversionTypeSelect | null = null;
+  private typeSelect: ConversionTypeSelect | null = null;
   private fieldMappingList: FieldMappingList | null = null;
   private conversionPreview: ConversionPreview | null = null;
 
@@ -37,7 +34,6 @@ export class ConvertExerciseDataModal extends ModalBase {
   private mappings: FieldMapping[] = [];
 
   // UI Elements
-  private exerciseElements: ExerciseAutocompleteElements | null = null;
   private currentTypeDisplay: HTMLElement | null = null;
   private convertButton: HTMLButtonElement | null = null;
 
@@ -60,15 +56,15 @@ export class ConvertExerciseDataModal extends ModalBase {
     await this.createExerciseSection(mainContainer);
 
     // Conversion Type Section
-    this.typeSelectVal = new ConversionTypeSelect(
+    this.typeSelect = new ConversionTypeSelect(
       mainContainer,
       async (typeId) => this.handleTargetTypeChange(typeId),
       (update) => {
         this.updateFrontmatter = update;
       },
     );
-    this.typeSelectVal.render();
-    this.typeSelectVal.setVisible(false);
+    this.typeSelect.render();
+    this.typeSelect.setVisible(false);
 
     // Field Mapping Section
     this.fieldMappingList = new FieldMappingList(mainContainer, (mappings) => {
@@ -99,7 +95,6 @@ export class ConvertExerciseDataModal extends ModalBase {
       this.plugin,
       this.selectedExercise,
     );
-    this.exerciseElements = elements;
 
     elements.exerciseInput.addEventListener("change", async () => {
       this.selectedExercise = elements.exerciseInput.value.trim();
@@ -168,13 +163,7 @@ export class ConvertExerciseDataModal extends ModalBase {
     this.entryCount = logData.length;
 
     // Show Type Select
-    this.typeSelectVal?.setVisible(true);
-
-    // Auto-select a different target type
-    // This part is a bit tricky to sync with the component,
-    // but we can set an initial value if we wanted.
-    // For now, let's just trigger updates manually if needed
-    // or let the user select.
+    this.typeSelect?.setVisible(true);
   }
 
   private async handleTargetTypeChange(typeId: string): Promise<void> {
@@ -183,54 +172,19 @@ export class ConvertExerciseDataModal extends ModalBase {
     const targetTypeDef = getExerciseTypeById(typeId);
     if (!this.currentType || !targetTypeDef) return;
 
-    // Suggest mappings
     const suggested = this.conversionService.suggestInitialMappings(
       this.currentType,
       targetTypeDef,
     );
-    // Convert to full FieldMapping objects
-
-    // We need to fetch option lists to get labels, which is a bit roundabout.
-    // Actually, FieldMappingList handles option generation.
-    // We should probably just pass the simple {from, to} pairs and let FieldMappingList resolve labels?
-    // Or we rely on FieldMappingList to create valid mappings.
-    // The previous implementation created full objects.
-
-    // Let's pass the simple mappings to FieldMappingList?
-    // No, FieldMappingList expects full FieldMapping objects.
-    // However, FieldMappingList is the one that knows the options.
-    // It might be better if FieldMappingList exposed a "suggestMappings" method
-    // or if we constructed the objects here.
-
-    // Detailed construction:
-    // It's hard to get labels without duplicating the getOptions logic.
-    // Simplification: Let's pass empty labels and let FieldMappingList fix them?
-    // Or better, let's just instantiate FieldMappingList with the types
-    // and let it handle initialization if we provide a "default" map.
 
     this.fieldMappingList?.setTypes(this.currentType, targetTypeDef);
-
-    // We'll manually construct mappings with empty labels for now,
-    // assuming FieldMappingList renders correctly or we fetch options here.
-    // A cleaner way: Move getOptions to service?
-    // For now, I'll let FieldMappingList handle the UI.
-    // I will pass the suggestions to setMappings.
-    // To get labels, I would need access to the options logic.
-    // Let's rely on the user or the component to defaults.
-    // Actually, the Service's `suggestInitialMappings` returns simple objects.
-    // Let's map them.
 
     const fullMappings: FieldMapping[] = suggested.map((s) => ({
       fromField: s.from,
       toField: s.to,
-      fromLabel: s.from, // Temporary, UI will likely show values if labels missing?
+      fromLabel: s.from,
       toLabel: s.to,
     }));
-
-    // Since FieldMappingList re-renders selects, it will select the right values.
-    // The labels in the object are mainly for the Preview.
-    // The Preview needs correct labels.
-    // This suggests `getOptions` should be in the Service or shared.
 
     this.fieldMappingList?.setMappings(fullMappings);
     this.mappings = fullMappings;
@@ -243,8 +197,6 @@ export class ConvertExerciseDataModal extends ModalBase {
 
   private updateState(): void {
     if (this.conversionPreview) {
-      // We need to update labels for the preview if they were raw values
-      // Ideally we resolve them properly.
       this.conversionPreview.update(this.entryCount, this.mappings);
     }
 
@@ -261,10 +213,12 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private resetUI(): void {
-    this.typeSelectVal?.setVisible(false);
+    this.typeSelect?.setVisible(false);
     this.fieldMappingList?.setVisible(false);
     this.conversionPreview?.setVisible(false);
-    this.currentTypeDisplay!.textContent = "—";
+    if (this.currentTypeDisplay) {
+      this.currentTypeDisplay.textContent = "—";
+    }
     this.entryCount = 0;
     this.updateState();
   }

@@ -1469,7 +1469,7 @@
   border-radius: var(--workout-radius-xl);
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
-  max-width: 484px;
+  max-width: 320px;
 }
 
 .workout-duration-header {
@@ -1563,6 +1563,11 @@
   margin: 0;
 }
 
+@media (max-width: 484px) {
+  .workout-duration-card {
+    max-width: 100%;
+  }
+}
 /* Modal styles entrypoint (split into app/styles/modal/*) */
 /* ============================================================================
    MODAL STYLES

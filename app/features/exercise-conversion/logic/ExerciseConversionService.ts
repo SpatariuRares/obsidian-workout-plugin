@@ -1,5 +1,6 @@
 import {
   EXERCISE_TYPE_IDS,
+  getExerciseTypeById,
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
@@ -83,11 +84,32 @@ export class ExerciseConversionService {
         }
       }
 
+      // Clear fields that don't belong to the target type
+      const targetType = getExerciseTypeById(targetTypeId);
+      const targetFieldKeys = new Set(
+        targetType?.parameters.map((p) => p.key) ?? []
+      );
+
+      if (!targetFieldKeys.has("reps")) {
+        updatedEntry.reps = 0;
+      }
+      if (!targetFieldKeys.has("weight")) {
+        updatedEntry.weight = 0;
+      }
+
+      // Remove custom fields not defined in the target type
+      if (updatedEntry.customFields) {
+        for (const key of Object.keys(updatedEntry.customFields)) {
+          if (!targetFieldKeys.has(key)) {
+            delete updatedEntry.customFields[key];
+          }
+        }
+      }
+
       // Recalculate volume for strength type
       if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
         updatedEntry.volume = updatedEntry.reps * updatedEntry.weight;
       } else {
-        // For non-strength types, volume is typically 0
         updatedEntry.volume = 0;
       }
 

@@ -31,6 +31,7 @@ interface MockApp {
 interface MockVault {
   getAbstractFileByPath: jest.Mock;
   create: jest.Mock;
+  createFolder: jest.Mock;
   process: jest.Mock;
   read: jest.Mock;
 }
@@ -49,6 +50,7 @@ describe("DataService", () => {
     mockVault = {
       getAbstractFileByPath: jest.fn(),
       create: jest.fn(),
+      createFolder: jest.fn(),
       process: jest.fn(),
       read: jest.fn(),
     };
@@ -78,6 +80,8 @@ describe("DataService", () => {
       showQuickLogRibbon: true,
       recentExercises: [],
       quickWeightIncrement: 2.5,
+      repDuration: 5,
+      defaultRepsPerSet: 0,
     };
 
     // Create DataService instance
@@ -118,9 +122,12 @@ describe("DataService", () => {
     it("should create CSV file and retry when file does not exist", async () => {
       const mockFile = new TFile();
 
-      // First call returns null (file doesn't exist), second call returns file
+      // First call returns null (file doesn't exist)
+      // Second call returns mockFile (folder check)
+      // Third call returns mockFile (file check after creation)
       mockVault.getAbstractFileByPath
         .mockReturnValueOnce(null)
+        .mockReturnValueOnce(mockFile)
         .mockReturnValueOnce(mockFile);
 
       mockVault.create.mockResolvedValue(mockFile);
@@ -180,8 +187,8 @@ describe("DataService", () => {
       // Verify create was called once (MAX_RETRIES = 1 means 1 creation attempt)
       expect(mockVault.create).toHaveBeenCalledTimes(1);
 
-      // Verify getAbstractFileByPath was called twice (initial + 1 retry)
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(2);
+      // Verify getAbstractFileByPath was called 3 times (initial + folder check + 1 retry)
+      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(3);
     });
 
     it("should not call process when recursion limit is reached", async () => {

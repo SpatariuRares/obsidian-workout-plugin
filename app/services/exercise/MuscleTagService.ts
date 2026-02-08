@@ -19,7 +19,6 @@ import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
  */
 export class MuscleTagService {
   private tagCache: Map<string, string> | null = null;
-  private csvPath: string;
   private loadingPromise: Promise<Map<string, string>> | null = null;
   private fileModifyRef: EventRef | null = null;
 
@@ -27,13 +26,13 @@ export class MuscleTagService {
     private app: App,
     private settings: WorkoutChartsSettings,
   ) {
-    this.csvPath = this.computeCsvPath();
     this.registerFileWatcher();
   }
 
   /**
    * Computes the CSV path based on the settings csvLogFilePath.
    * The muscle-tags.csv is stored in the same folder as the workout log CSV.
+   * Now dynamic to always reflect current settings.
    */
   private computeCsvPath(): string {
     const logFilePath = this.settings.csvLogFilePath;
@@ -49,7 +48,7 @@ export class MuscleTagService {
    */
   private registerFileWatcher(): void {
     this.fileModifyRef = this.app.vault.on("modify", (file: TAbstractFile) => {
-      if (file instanceof TFile && file.path === this.csvPath) {
+      if (file instanceof TFile && file.path === this.computeCsvPath()) {
         this.clearCache();
       }
     });
@@ -81,9 +80,10 @@ export class MuscleTagService {
    */
   private async loadTagsInternal(): Promise<Map<string, string>> {
     const tags = new Map<string, string>();
+    const csvPath = this.computeCsvPath();
 
     try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(this.csvPath);
+      const abstractFile = this.app.vault.getAbstractFileByPath(csvPath);
 
       if (!abstractFile || !(abstractFile instanceof TFile)) {
         // CSV doesn't exist, return defaults
@@ -171,6 +171,7 @@ export class MuscleTagService {
    */
   async saveTags(tags: Map<string, string>): Promise<void> {
     const lines = ["tag,muscleGroup"];
+    const csvPath = this.computeCsvPath();
 
     for (const [tag, muscleGroup] of tags) {
       const escapedTag = this.escapeCSVValue(tag);
@@ -180,7 +181,7 @@ export class MuscleTagService {
 
     const content = lines.join("\n");
 
-    const abstractFile = this.app.vault.getAbstractFileByPath(this.csvPath);
+    const abstractFile = this.app.vault.getAbstractFileByPath(csvPath);
 
     if (abstractFile && abstractFile instanceof TFile) {
       // File exists, modify it
@@ -188,15 +189,15 @@ export class MuscleTagService {
     } else {
       // File doesn't exist, create it
       // Ensure parent folder exists
-      const lastSlash = this.csvPath.lastIndexOf("/");
+      const lastSlash = csvPath.lastIndexOf("/");
       if (lastSlash > 0) {
-        const folder = this.csvPath.substring(0, lastSlash);
+        const folder = csvPath.substring(0, lastSlash);
         const folderExists = this.app.vault.getAbstractFileByPath(folder);
         if (!folderExists) {
           await this.app.vault.createFolder(folder);
         }
       }
-      await this.app.vault.create(this.csvPath, content);
+      await this.app.vault.create(csvPath, content);
     }
 
     // Update cache
@@ -259,14 +260,14 @@ export class MuscleTagService {
    * Gets the path to the muscle tags CSV file.
    */
   getCsvPath(): string {
-    return this.csvPath;
+    return this.computeCsvPath();
   }
 
   /**
    * Checks if the CSV file exists.
    */
   async csvExists(): Promise<boolean> {
-    const abstractFile = this.app.vault.getAbstractFileByPath(this.csvPath);
+    const abstractFile = this.app.vault.getAbstractFileByPath(this.computeCsvPath());
     return abstractFile instanceof TFile;
   }
 

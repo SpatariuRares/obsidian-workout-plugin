@@ -14,6 +14,7 @@ import * as WorkoutLogDataUtils from "../../../types/WorkoutLogData";
 const mockVault = {
   getAbstractFileByPath: jest.fn(),
   create: jest.fn(),
+  createFolder: jest.fn(),
   process: jest.fn(),
 };
 
@@ -68,6 +69,30 @@ describe("WorkoutLogRepository", () => {
         expect.stringContaining("date,exercise,reps"),
       );
       expect(mockCacheService.clearCache).toHaveBeenCalled();
+    });
+
+    it("should create parent folder if it does not exist", async () => {
+      const settingsWithFolder = {
+        ...defaultSettings,
+        csvLogFilePath: "folder/workout-log.csv",
+      };
+      repository = new WorkoutLogRepository(
+        mockApp,
+        settingsWithFolder,
+        mockColumnService,
+        mockCacheService,
+      );
+
+      // Mock getAbstractFileByPath to return null (folder doesn't exist)
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+
+      await repository.createCSVLogFile();
+
+      expect(mockVault.createFolder).toHaveBeenCalledWith("folder");
+      expect(mockVault.create).toHaveBeenCalledWith(
+        "folder/workout-log.csv",
+        expect.any(String),
+      );
     });
   });
 

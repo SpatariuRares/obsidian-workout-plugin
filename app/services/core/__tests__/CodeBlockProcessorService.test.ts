@@ -93,7 +93,6 @@ describe("CodeBlockProcessorService", () => {
       mockTableView,
       mockDashboardView,
       activeTimers,
-      mockMuscleTagService,
     );
 
     jest.clearAllMocks();

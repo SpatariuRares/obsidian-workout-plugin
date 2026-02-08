@@ -18,12 +18,12 @@ describe("FormField molecule", () => {
 			},
 		});
 
-		expect(result.container.className).toContain("form-field");
+		expect(result.container.className).toContain("workout-form-field");
 		expect(result.container.className).toContain("mb-4");
 		expect(result.label.textContent).toBe("Exercise name *");
-		expect(result.label.classList.contains("form-field-label")).toBe(true);
+		expect(result.label.classList.contains("workout-form-field-label")).toBe(true);
 
-		expect(result.input.classList.contains("form-field-input")).toBe(true);
+		expect(result.input.classList.contains("workout-form-field-input")).toBe(true);
 		expect(result.input.classList.contains("exercise-input")).toBe(true);
 		expect(result.input.getAttribute("placeholder")).toBe("Enter exercise");
 	});

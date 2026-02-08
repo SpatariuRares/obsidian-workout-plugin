@@ -52,7 +52,7 @@ export class FormField {
 	): FormFieldResult {
 		// Create field container
 		const container = parent.createDiv({
-			cls: `form-field ${props.className || ""}`.trim(),
+			cls: `workout-form-field ${props.className || ""}`.trim(),
 		});
 
 		// Create label with required indicator if needed
@@ -62,14 +62,14 @@ export class FormField {
 
 		const label = Text.create(container, {
 			text: labelText,
-			className: "form-field-label",
+			className: "workout-form-field-label",
 			tag: "label",
 		});
 
 		// Create input
 		const input = Input.create(container, {
 			...props.inputProps,
-			className: `form-field-input ${props.inputProps.className || ""}`.trim(),
+			className: `workout-form-field-input ${props.inputProps.className || ""}`.trim(),
 		});
 
 		return {

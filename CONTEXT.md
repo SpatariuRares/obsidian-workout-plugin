@@ -1,6 +1,6 @@
 # Workout Planner - Plugin Context Document
 
-> **Plugin**: Workout Planner v1.1.3
+> **Plugin**: Workout Planner v1.1.4
 > **Author**: Rares Spatariu
 > **License**: MIT
 > **Min Obsidian**: 0.15.0

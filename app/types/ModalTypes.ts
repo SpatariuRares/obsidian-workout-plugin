@@ -14,7 +14,7 @@ export interface LogFormData {
 
 export interface LogFormElements {
   exerciseElements: ExerciseAutocompleteElements;
-  notesInput: HTMLTextAreaElement;
+  notesInput: HTMLInputElement;
   workoutInput: HTMLInputElement;
   currentWorkoutToggle: HTMLInputElement;
   dateInput?: HTMLInputElement;

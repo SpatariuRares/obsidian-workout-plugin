@@ -16,16 +16,22 @@ export class GeneralSettings {
 
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.CSV_PATH)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CSV_PATH)
-      .addText((text) =>
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CSV_FOLDER)
+      .addText((text) => {
+        new FolderSuggest(this.app, text.inputEl);
+        const currentPath = this.plugin.settings.csvLogFilePath;
+        const lastSlash = currentPath.lastIndexOf("/");
+        const folderPath = lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
+
         text
           .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
-          .setValue(this.plugin.settings.csvLogFilePath)
+          .setValue(folderPath)
           .onChange(async (value) => {
-            this.plugin.settings.csvLogFilePath = normalizePath(value);
-            await this.plugin.saveSettings();
-          }),
-      );
+             const folder = normalizePath(value);
+             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
+             await this.plugin.saveSettings();
+          });
+      });
 
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_FOLDER)
@@ -66,44 +72,36 @@ export class GeneralSettings {
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.COMMANDS.CREATE_CSV)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CREATE_CSV)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SETUP_CSV)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SETUP_CSV)
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.UI.BUTTONS.CREATE_FILE)
+          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_FILES)
           .onClick(async () => {
             try {
+              // Create workout log CSV
               await this.plugin.createCSVLogFile();
-              new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
+              
+              // Create muscle tags CSV
+              await this.handleCreateMuscleTagsCsv();
+
+              new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_CREATED);
             } catch (error) {
               const errorMessage =
                 error instanceof Error ? error.message : String(error);
-              new Notice(`Error creating CSV file: ${errorMessage}`);
+              new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_ERROR(errorMessage));
             }
           }),
       );
 
-    new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.CREATE_MUSCLE_TAGS_CSV)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CREATE_MUSCLE_TAGS_CSV)
-      .addButton((button) =>
-        button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_MUSCLE_TAGS)
-          .onClick(async () => {
-            await this.handleCreateMuscleTagsCsv();
-          }),
-      );
-
     // Initial Setup Section
-    new Setting(containerEl).setName("Example data").setHeading();
+    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.EXAMPLE_DATA).setHeading();
 
     new Setting(containerEl)
-      .setName("Generate example data")
-      .setDesc(
-        "Create a folder with example exercises and workouts to help you get started.",
-      )
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_EXAMPLES)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.GENERATE_EXAMPLES)
       .addButton((button) =>
-        button.setButtonText("Create examples").onClick(async () => {
+        button.setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_EXAMPLES).onClick(async () => {
           const { ExampleGeneratorService } =
             await import("@app/services/examples/ExampleGeneratorService");
           const generator = new ExampleGeneratorService(this.app);
@@ -115,7 +113,7 @@ export class GeneralSettings {
           if (folderExists) {
             new ConfirmModal(
               this.app,
-              "The 'The gym examples' folder already exists. Do you want to overwrite it?",
+              CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_OVERWRITE_EXAMPLES,
               async () => {
                 await generator.generateExampleFolder(true);
               },

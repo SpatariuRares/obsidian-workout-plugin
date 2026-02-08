@@ -96,6 +96,8 @@ describe("MuscleTagService", () => {
       showQuickLogRibbon: true,
       recentExercises: [],
       quickWeightIncrement: 2.5,
+      repDuration: 5,
+      defaultRepsPerSet: 0, 
     };
 
     service = new MuscleTagService(mockApp as any, mockSettings);

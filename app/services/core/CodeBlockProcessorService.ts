@@ -49,7 +49,6 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>,
-    private muscleTagService: MuscleTagService,
   ) {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);

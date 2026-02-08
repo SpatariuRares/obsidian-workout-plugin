@@ -82,7 +82,6 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedTableView,
       this.embeddedDashboardView,
       this.activeTimers,
-      this.muscleTagService,
     );
 
     // Initialize and expose WorkoutPlannerAPI for Dataview integration

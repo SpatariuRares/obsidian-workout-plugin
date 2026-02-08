@@ -523,9 +523,12 @@ export const SETTINGS_UI = {
     SHOW_QUICK_LOG_RIBBON: "Show create log ribbon icon",
     QUICK_WEIGHT_INCREMENT: "Weight buttons increment (kg)",
     CREATE_MUSCLE_TAGS_CSV: "Muscle tags CSV file",
+    SETUP_CSV: "Setup CSV files",
+    GENERATE_EXAMPLES: "Generate example data",
   },
   DESCRIPTIONS: {
-    CSV_PATH: "Path to the CSV file containing all workout log data",
+    CSV_PATH: "CSV log file path",
+    CSV_FOLDER: "Folder where the workout logs and muscle tags CSV files will be stored.",
     EXERCISE_FOLDER: "Path to the folder containing exercise pages",
     CREATE_CSV: "Create a new CSV log file with sample data",
     DEFAULT_EXACT_MATCH:
@@ -557,9 +560,14 @@ export const SETTINGS_UI = {
       "Create a CSV file with default muscle tag mappings. Edit this file to add custom tags in any language.",
     CONFIRM_OVERWRITE_MUSCLE_TAGS:
       "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
+    SETUP_CSV:
+      "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
+    GENERATE_EXAMPLES:
+      "Create a folder with example exercises and workouts to help you get started.",
   },
   SECTIONS: {
     CSV_MANAGEMENT: "CSV file management",
+    EXAMPLE_DATA: "Example data",
     FILTERING: "Filtering",
     TIMER_PRESETS: "Timer presets",
     TEMPLATES: "Templates",
@@ -576,6 +584,8 @@ export const SETTINGS_UI = {
     ADD_PROTOCOL: "Add protocol",
     SAVE_PROTOCOL: "Save",
     CREATE_MUSCLE_TAGS: "Create muscle tags",
+    CREATE_FILES: "Create files",
+    CREATE_EXAMPLES: "Create examples",
   },
   OPTIONS: {
     NONE: "None",
@@ -594,6 +604,10 @@ export const SETTINGS_UI = {
     PROTOCOL_DELETED: "Protocol deleted",
     PROTOCOL_SAVED: "Protocol saved",
     CONFIRM_DELETE_PROTOCOL: "Are you sure you want to delete this protocol?",
+    CSV_FILES_CREATED: "CSV files created successfully",
+    CSV_FILES_ERROR: (error: string) => `Error creating CSV files: ${error}`,
+    CONFIRM_OVERWRITE_EXAMPLES:
+      "The 'The gym examples' folder already exists. Do you want to overwrite it?",
   },
 } as const;
 

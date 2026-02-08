@@ -1,5 +1,6 @@
 import type WorkoutChartsPlugin from "main";
 import { CONSTANTS } from "@app/constants";
+import { Platform } from "obsidian";
 import {
   LogFormElements,
 } from "@app/types/ModalTypes";
@@ -45,7 +46,11 @@ export class LogFormRenderer {
       initialExerciseName
     );
 
-    this.createRecentExercisesChips(formContainer, exerciseElements.exerciseInput);
+    const isMobile = Platform.isMobile;
+
+    if (!isMobile) {
+      this.createRecentExercisesChips(formContainer, exerciseElements.exerciseInput);
+    }
 
     // Create container for dynamic parameter fields
     const parametersContainer = formContainer.createDiv({
@@ -87,11 +92,11 @@ export class LogFormRenderer {
     protocolSelect.value = WorkoutProtocol.STANDARD;
 
     // Notes input
-    const notesInput = modal.createTextareaField(
+    const notesInput = modal.createTextField(
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
-      3
+      ""
     );
 
     // Optional Date input
@@ -106,9 +111,30 @@ export class LogFormRenderer {
       dateInput.type = "date";
     }
 
+
+
+    // Mobile Accordion Section
+    let workoutSectionParent = formContainer;
+    if (isMobile) {
+        const details = formContainer.createEl("details", {
+            cls: "workout-log-mobile-accordion",
+        });
+        const summary = details.createEl("summary", {
+            text: "Recent & Workout Options",
+            cls: "workout-log-mobile-summary"
+        });
+        summary.style.cursor = "pointer";
+        summary.style.marginTop = "1rem";
+        summary.style.marginBottom = "0.5rem";
+        
+        workoutSectionParent = details;
+
+        this.createRecentExercisesChips(workoutSectionParent, exerciseElements.exerciseInput);
+    }
+
     // Workout section
     const workoutSection = modal.createSection(
-      formContainer,
+      workoutSectionParent,
       CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT
     );
 

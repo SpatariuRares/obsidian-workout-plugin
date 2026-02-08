@@ -33,6 +33,17 @@ export class WorkoutLogRepository {
     const sampleEntry = `2024-01-01T10:00:00.000Z,Sample Exercise,10,50,500,Sample Workout,Sample Workout,1704096000000,`;
     const content = `${header}\n${sampleEntry}`;
 
+    // Ensure parent folder exists
+    const path = this.settings.csvLogFilePath;
+    const lastSlash = path.lastIndexOf("/");
+    if (lastSlash > 0) {
+      const folder = path.substring(0, lastSlash);
+      const folderExists = this.app.vault.getAbstractFileByPath(folder);
+      if (!folderExists) {
+        await this.app.vault.createFolder(folder);
+      }
+    }
+
     await this.app.vault.create(this.settings.csvLogFilePath, content);
     this.cacheService.clearCache();
   }

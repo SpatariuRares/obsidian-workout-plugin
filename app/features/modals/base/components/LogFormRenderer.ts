@@ -108,7 +108,7 @@ export class LogFormRenderer {
     }
 
     // Mobile Accordion Section
-    let workoutSectionParent = formContainer;
+    const workoutSectionParent = formContainer;
     if (isMobile) {
       const workoutSectionParent = formContainer.createEl("details", {
         cls: "workout-log-mobile-accordion",

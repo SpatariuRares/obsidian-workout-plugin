@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business";
+import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 
 export class SummaryWidget {
   static render(

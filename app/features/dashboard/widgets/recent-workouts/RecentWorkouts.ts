@@ -1,7 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business";
+import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 import { ListItem } from "@app/components/molecules";
 
 export class RecentWorkouts {

@@ -1,2 +1,2 @@
-export * from "@app/features/common/views";
-export * from "@app/features/common/suggest";
+export * from "@app/features/common/views/BaseView";
+export * from "@app/features/common/suggest/FolderSuggest";

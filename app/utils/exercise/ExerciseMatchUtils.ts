@@ -39,7 +39,7 @@ export class ExerciseMatchUtils {
    */
   static findExerciseMatches(
     logData: WorkoutLogData[],
-    exerciseName: string
+    exerciseName: string,
   ): MatchResult {
     const fileNameMatches: ExerciseMatch[] = [];
     const allExercisePathsAndScores = new Map<string, number>();
@@ -82,7 +82,7 @@ export class ExerciseMatchUtils {
     fileNameMatches: ExerciseMatch[],
     allExercisePathsAndScores: Map<string, number>,
     exactMatch: boolean = false,
-    exerciseName: string = ""
+    exerciseName: string = "",
   ): {
     bestStrategy: string;
     bestPathKey: string;
@@ -97,7 +97,8 @@ export class ExerciseMatchUtils {
       // Prefer exact match on exercise field
       for (const [exerciseField] of allExercisePathsAndScores.entries()) {
         if (
-          exerciseField.trim().toLowerCase() === exerciseName.trim().toLowerCase()
+          StringUtils.normalize(exerciseField) ===
+          StringUtils.normalize(exerciseName)
         ) {
           return {
             bestStrategy: "exercise_field_exact",
@@ -109,8 +110,8 @@ export class ExerciseMatchUtils {
       // Fallback: exact match on filename
       const exactFileMatches = fileNameMatches.filter(
         (m) =>
-          m.exerciseName.trim().toLowerCase() ===
-          exerciseName.trim().toLowerCase()
+          StringUtils.normalize(m.exerciseName) ===
+          StringUtils.normalize(exerciseName),
       );
       if (exactFileMatches.length > 0) {
         return {
@@ -130,13 +131,13 @@ export class ExerciseMatchUtils {
     // Check filename strategy
     if (fileNameMatches.length > 0) {
       const bestFileNameMatch = fileNameMatches.reduce((best, current) =>
-        current.score > best.score ? current : best
+        current.score > best.score ? current : best,
       );
 
       if (bestFileNameMatch.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)) {
         bestStrategy = "filename";
         bestFileMatchesList = fileNameMatches.filter(
-          (match) => match.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)
+          (match) => match.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD),
         );
       }
     }
@@ -144,8 +145,10 @@ export class ExerciseMatchUtils {
     // Check exercise field strategy
     if (allExercisePathsAndScores.size > 0) {
       const bestExercisePath = Array.from(
-        allExercisePathsAndScores.entries()
-      ).reduce((best, [path, score]) => (score > best[1] ? [path, score] : best));
+        allExercisePathsAndScores.entries(),
+      ).reduce((best, [path, score]) =>
+        score > best[1] ? [path, score] : best,
+      );
 
       if (bestExercisePath[1] >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD)) {
         if (
@@ -168,37 +171,37 @@ export class ExerciseMatchUtils {
     logData: WorkoutLogData[],
     strategy: string,
     pathKey: string,
-    fileMatches: ExerciseMatch[]
+    fileMatches: ExerciseMatch[],
   ): WorkoutLogData[] {
     if (strategy === "exercise_field_exact") {
       return logData.filter(
         (log) =>
-          (log.exercise || "").trim().toLowerCase() ===
-          pathKey.trim().toLowerCase()
+          StringUtils.normalize(log.exercise || "") ===
+          StringUtils.normalize(pathKey),
       );
     }
     if (strategy === "filename_exact") {
       const fileNames = fileMatches.map((m) =>
-        m.exerciseName.trim().toLowerCase()
+        StringUtils.normalize(m.exerciseName),
       );
       return logData.filter((log) =>
-        fileNames.includes((log.file?.basename || "").trim().toLowerCase())
+        fileNames.includes(StringUtils.normalize(log.file?.basename || "")),
       );
     }
     if (strategy === "filename") {
       const filePaths = fileMatches.map((match) => match.file.path);
       return logData.filter(
-        (log) => log.file && filePaths.includes(log.file.path)
+        (log) => log.file && filePaths.includes(log.file.path),
       );
     }
     if (strategy === "exercise_field") {
       return logData.filter((log) => {
         const exerciseField = log.exercise || "";
-        return this.getMatchScore(exerciseField, pathKey) >= PATH_MATCH_THRESHOLD;
+        return (
+          this.getMatchScore(exerciseField, pathKey) >= PATH_MATCH_THRESHOLD
+        );
       });
     }
     return [];
   }
 }
-
- 

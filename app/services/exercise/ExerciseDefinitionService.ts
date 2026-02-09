@@ -18,6 +18,7 @@ import {
 } from "@app/constants/exerciseTypes.constants";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { StringUtils } from "@app/utils";
 
 /**
  * Cache entry for exercise definitions with timestamp for TTL management.
@@ -57,11 +58,9 @@ export class ExerciseDefinitionService {
     name: string,
   ): Promise<ExerciseDefinition | undefined> {
     const definitions = await this.loadDefinitions();
-    // Normalize name for lookup (case-insensitive)
-    const normalizedName = name.toLowerCase().trim();
 
     for (const [key, definition] of definitions) {
-      if (key.toLowerCase() === normalizedName) {
+      if (StringUtils.normalize(key) === StringUtils.normalize(name)) {
         return definition;
       }
     }
@@ -312,12 +311,12 @@ export class ExerciseDefinitionService {
       typeof frontmatter.exercise_type === "string" &&
       frontmatter.exercise_type.trim()
     ) {
-      return frontmatter.exercise_type.trim().toLowerCase();
+      return StringUtils.normalize(frontmatter.exercise_type);
     }
 
     // Check for type field (alternative)
     if (typeof frontmatter.type === "string" && frontmatter.type.trim()) {
-      return frontmatter.type.trim().toLowerCase();
+      return StringUtils.normalize(frontmatter.type);
     }
 
     // Default to strength for backward compatibility

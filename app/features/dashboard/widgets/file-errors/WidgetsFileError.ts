@@ -5,6 +5,7 @@ import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
+import { StringUtils } from "@app/utils";
 
 interface ExerciseFileError {
   file: TFile;
@@ -153,7 +154,7 @@ export class WidgetsFileError {
     tagMap: Map<string, string>,
   ): string[] {
     return tags.filter((tag) => {
-      const normalizedTag = tag.toLowerCase().trim();
+      const normalizedTag = StringUtils.normalize(tag);
       return tagMap.has(normalizedTag);
     });
   }

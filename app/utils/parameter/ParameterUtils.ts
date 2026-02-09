@@ -13,6 +13,7 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { STANDARD_CSV_COLUMNS } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /**
  * Reserved parameter keys that cannot be used for custom parameters.
@@ -86,7 +87,7 @@ export class ParameterUtils {
    * @returns true if the key is reserved
    */
   static isReservedParamKey(key: string): boolean {
-    const normalizedKey = key.toLowerCase().trim();
+    const normalizedKey = StringUtils.normalize(key);
     return RESERVED_PARAMETER_KEYS.some(
       (reserved) => reserved.toLowerCase() === normalizedKey
     );

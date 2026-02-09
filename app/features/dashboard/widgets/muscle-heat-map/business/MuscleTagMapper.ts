@@ -3,6 +3,7 @@ import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { CANONICAL_MUSCLE_GROUPS, CONSTANTS } from "@app/constants";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { StringUtils } from "@app/utils";
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping
@@ -43,7 +44,7 @@ export class MuscleTagMapper {
    */
   async loadExerciseTags(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<string[]> {
     // Check cache first
     if (this.exerciseTagsCache.has(exerciseName)) {
@@ -54,7 +55,7 @@ export class MuscleTagMapper {
       // Find the exercise file using the path resolver
       const exerciseFile = ExercisePathResolver.findExerciseFile(
         exerciseName,
-        plugin
+        plugin,
       );
 
       if (!exerciseFile) {
@@ -82,7 +83,7 @@ export class MuscleTagMapper {
    */
   async findMuscleGroupsFromTags(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<string[]> {
     const tags = await this.loadExerciseTags(exerciseName, plugin);
     const muscleGroups = new Set<string>();
@@ -90,7 +91,7 @@ export class MuscleTagMapper {
 
     // Map tags to muscle groups
     tags.forEach((tag) => {
-      const normalizedTag = tag.toLowerCase().trim();
+      const normalizedTag = StringUtils.normalize(tag);
       const mappedMuscle = tagMap.get(normalizedTag);
 
       if (mappedMuscle) {

@@ -14,6 +14,7 @@ import type { MuscleTagFormRenderer } from "@app/features/modals/muscle/componen
 import type { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
 import type { MuscleTagImportMode } from "@app/features/modals/muscle/types";
 import type WorkoutChartsPlugin from "main";
+import { StringUtils } from "@app/utils";
 
 const DEBOUNCE_DELAY = 150;
 
@@ -101,10 +102,7 @@ export class MuscleTagManagerModal extends ModalBase {
       return;
     }
 
-    const filteredTags = filterMuscleTags(
-      this.allTags,
-      this.searchValue,
-    );
+    const filteredTags = filterMuscleTags(this.allTags, this.searchValue);
 
     MuscleTagTableRenderer.render({
       tableBody: this.tableBody,
@@ -166,7 +164,7 @@ export class MuscleTagManagerModal extends ModalBase {
     tagInput: HTMLInputElement,
     groupSelect: HTMLSelectElement,
   ): Promise<void> {
-    const tag = tagInput.value.trim().toLowerCase();
+    const tag = StringUtils.normalize(tagInput.value);
     const muscleGroup = groupSelect.value;
 
     const validation = validateMuscleTagSave(
@@ -238,7 +236,9 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private handleExport(): void {
     try {
-      const csvContent = this.plugin.getMuscleTagService().exportToCsv(this.allTags);
+      const csvContent = this.plugin
+        .getMuscleTagService()
+        .exportToCsv(this.allTags);
       downloadCsv(csvContent, "muscle-tags-export.csv");
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORTED);
     } catch (error) {
@@ -257,7 +257,7 @@ export class MuscleTagManagerModal extends ModalBase {
   private handleTagInputChange(value: string): void {
     this.clearDebounce();
     this.debounceTimeout = setTimeout(() => {
-      this.updateSuggestions(value.trim().toLowerCase());
+      this.updateSuggestions(StringUtils.normalize(value));
     }, DEBOUNCE_DELAY);
   }
 

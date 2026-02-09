@@ -14,10 +14,6 @@ export {
   type ActionButtonGroupResult,
 } from "@app/components/molecules/ActionButtonGroup";
 export {
-  EmptyState,
-  type EmptyStateProps,
-} from "@app/components/molecules/EmptyState";
-export {
   TrendIndicator,
   type TrendIndicatorProps,
 } from "@app/components/molecules/TrendIndicator";
@@ -38,10 +34,6 @@ export {
   LoadingSpinner,
   type LoadingSpinnerProps,
 } from "@app/components/molecules/LoadingSpinner";
-export {
-  InfoBanner,
-  type InfoBannerType,
-} from "@app/components/molecules/InfoBanner";
 
 // Priority 3 Molecules
 // ChartLegendItem moved to @app/features/charts/ui
@@ -49,11 +41,6 @@ export {
   ChartLegendItem,
   type ChartLegendItemProps,
 } from "@app/features/charts/ui/ChartLegendItem";
-// TableHeaderCell moved to @app/features/tables/ui
-export {
-  ProgressBar,
-  type ProgressBarProps,
-} from "@app/components/molecules/ProgressBar";
 export {
   FilterIndicator,
   type FilterIndicatorProps,

@@ -13,7 +13,6 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
-import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { LogCallouts } from "@app/components/organism/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 
@@ -52,7 +51,6 @@ export class CodeBlockProcessorService {
   ) {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);
-
   }
 
   registerProcessors(): void {

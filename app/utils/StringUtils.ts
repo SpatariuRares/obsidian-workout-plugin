@@ -4,6 +4,21 @@
  */
 export class StringUtils {
   /**
+   * Normalize a string for case-insensitive comparison
+   * Trims whitespace and converts to lowercase
+   *
+   * @param str - String to normalize
+   * @returns Normalized string (trimmed and lowercase)
+   *
+   * @example
+   * StringUtils.normalize("  Hello World  ") // "hello world"
+   * StringUtils.normalize("CHEST") // "chest"
+   */
+  static normalize(str: string): string {
+    return str.trim().toLowerCase();
+  }
+
+  /**
    * Calculate semantic match score between two strings
    * Uses heuristics like prefix/suffix matching and word containment
    * Best for exercise name matching where semantic similarity matters
@@ -13,8 +28,8 @@ export class StringUtils {
    * @returns Score from 0-100 indicating similarity
    */
   static getMatchScore(str1: string, str2: string): number {
-    const s1 = str1.toLowerCase().trim();
-    const s2 = str2.toLowerCase().trim();
+    const s1 = this.normalize(str1);
+    const s2 = this.normalize(str2);
 
     if (s1 === s2) return 100;
     if (s1.startsWith(s2) || s2.startsWith(s1)) return 90;

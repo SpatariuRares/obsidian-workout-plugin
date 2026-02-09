@@ -9,6 +9,7 @@ import {
 import { App, TFile, Notice } from "obsidian";
 import type { CSVColumnService } from "@app/services/data/CSVColumnService";
 import type { CSVCacheService } from "@app/services/data/CSVCacheService";
+import { StringUtils } from "@app/utils";
 
 /**
  * Repository for workout log CRUD operations.
@@ -176,7 +177,9 @@ export class WorkoutLogRepository {
   /**
    * Delete a workout log entry from the CSV file
    */
-  public async deleteWorkoutLogEntry(logToDelete: WorkoutLogData): Promise<void> {
+  public async deleteWorkoutLogEntry(
+    logToDelete: WorkoutLogData,
+  ): Promise<void> {
     const abstractFile = this.app.vault.getAbstractFileByPath(
       this.settings.csvLogFilePath,
     );
@@ -225,7 +228,10 @@ export class WorkoutLogRepository {
    * @param newName The new exercise name
    * @returns The count of updated entries
    */
-  public async renameExercise(oldName: string, newName: string): Promise<number> {
+  public async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
     const abstractFile = this.app.vault.getAbstractFileByPath(
       this.settings.csvLogFilePath,
     );
@@ -241,10 +247,10 @@ export class WorkoutLogRepository {
       await this.app.vault.process(csvFile, (content) => {
         const csvEntries = parseCSVLogFile(content);
 
-        const normalizedOldName = oldName.trim().toLowerCase();
+        const normalizedOldName = StringUtils.normalize(oldName);
 
         csvEntries.forEach((entry) => {
-          const normalizedEntryName = entry.exercise.trim().toLowerCase();
+          const normalizedEntryName = StringUtils.normalize(entry.exercise);
           if (normalizedEntryName === normalizedOldName) {
             entry.exercise = newName.trim();
             updateCount++;

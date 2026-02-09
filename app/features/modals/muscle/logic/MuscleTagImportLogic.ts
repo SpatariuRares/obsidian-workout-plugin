@@ -4,6 +4,7 @@ import {
   type CanonicalMuscleGroup,
 } from "@app/constants/muscles.constants";
 import type { ParsedMuscleTagImportResult } from "@app/features/modals/muscle/types";
+import { StringUtils } from "@app/utils";
 
 export class MuscleTagImportLogic {
   static parseImportFileContent(content: string): ParsedMuscleTagImportResult {
@@ -54,8 +55,8 @@ export class MuscleTagImportLogic {
         continue;
       }
 
-      const tag = columns[tagIndex].trim().toLowerCase();
-      const muscleGroup = columns[groupIndex].trim().toLowerCase();
+      const tag = StringUtils.normalize(columns[tagIndex]);
+      const muscleGroup = StringUtils.normalize(columns[groupIndex]);
 
       if (!tag || !muscleGroup) {
         continue;

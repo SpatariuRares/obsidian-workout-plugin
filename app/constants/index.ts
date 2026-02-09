@@ -20,9 +20,6 @@ export * from "@app/constants/muscles.constants";
 export * from "@app/constants/validation.constants";
 export * from "@app/constants/exerciseTypes.constants";
 
-// Re-export from MuscleTags (for backward compatibility)
-export * from "@app/constants/MuscleTags";
-
 // Import from modular files for composing CONSTANTS
 import {
   ICONS,

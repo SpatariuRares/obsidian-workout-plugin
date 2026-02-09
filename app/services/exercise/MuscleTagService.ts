@@ -12,6 +12,7 @@
 import { App, TFile, TAbstractFile, normalizePath, EventRef } from "obsidian";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
+import { StringUtils } from "@app/utils";
 
 /**
  * Service for managing custom muscle tag mappings via CSV file.
@@ -106,8 +107,8 @@ export class MuscleTagService {
 
         const parsed = this.parseCSVLine(line);
         if (parsed.length >= 2) {
-          const tag = parsed[0].trim().toLowerCase();
-          const muscleGroup = parsed[1].trim().toLowerCase();
+          const tag = StringUtils.normalize(parsed[0]);
+          const muscleGroup = StringUtils.normalize(parsed[1]);
 
           if (tag && muscleGroup) {
             tags.set(tag, muscleGroup);
@@ -267,7 +268,9 @@ export class MuscleTagService {
    * Checks if the CSV file exists.
    */
   async csvExists(): Promise<boolean> {
-    const abstractFile = this.app.vault.getAbstractFileByPath(this.computeCsvPath());
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.computeCsvPath(),
+    );
     return abstractFile instanceof TFile;
   }
 

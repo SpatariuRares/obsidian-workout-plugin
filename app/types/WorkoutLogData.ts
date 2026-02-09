@@ -2,6 +2,7 @@
 import { TFile } from "obsidian";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TimerPresetConfig } from "@app/features/timer/types";
+import { StringUtils } from "@app/utils";
 
 /**
  * Workout protocol enum for specialized training techniques.
@@ -202,7 +203,7 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
       }
 
       // Parse protocol field (column 9) - backward compatible, defaults to 'standard'
-      const protocolValue = values[9]?.trim().toLowerCase() || "";
+      const protocolValue = StringUtils.normalize(values[9]);
       const protocol = Object.values(WorkoutProtocol).includes(
         protocolValue as WorkoutProtocol,
       )

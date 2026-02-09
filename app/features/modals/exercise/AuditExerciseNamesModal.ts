@@ -4,6 +4,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
 import { Button } from "@app/components/atoms";
+import { StringUtils } from "@app/utils";
 
 interface MismatchEntry {
   file: TFile;
@@ -68,7 +69,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       // Get all CSV exercise names
       const logData = await this.plugin.getWorkoutLogData();
       const csvExercises = new Set(
-        logData.map((log) => log.exercise.toLowerCase().trim()),
+        logData.map((log) => StringUtils.normalize(log.exercise)),
       );
 
       // Get all exercise files from the exercise folder
@@ -81,7 +82,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       // Check each file for mismatches
       for (const file of exerciseFiles) {
         const fileName = file.basename;
-        const fileNameLower = fileName.toLowerCase().trim();
+        const fileNameLower = StringUtils.normalize(fileName);
 
         // Check for exact match
         if (csvExercises.has(fileNameLower)) {

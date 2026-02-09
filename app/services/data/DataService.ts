@@ -8,6 +8,7 @@ import { CSVCacheService } from "@app/services/data/CSVCacheService";
 import { CSVColumnService } from "@app/services/data/CSVColumnService";
 import { WorkoutLogRepository } from "@app/services/data/WorkoutLogRepository";
 import { DataFilter, EarlyFilterParams } from "@app/services/data/DataFilter";
+import { StringUtils } from "@app/utils";
 
 /**
  * Facade service for workout data operations.
@@ -32,7 +33,9 @@ export class DataService {
   /**
    * Get workout log data, optionally filtered by exercise/workout.
    */
-  async getWorkoutLogData(filterParams?: EarlyFilterParams): Promise<WorkoutLogData[]> {
+  async getWorkoutLogData(
+    filterParams?: EarlyFilterParams,
+  ): Promise<WorkoutLogData[]> {
     const rawData = await this.cacheService.getRawData();
 
     if (filterParams) {
@@ -95,7 +98,9 @@ export class DataService {
   /**
    * Delete a workout log entry.
    */
-  public async deleteWorkoutLogEntry(logToDelete: WorkoutLogData): Promise<void> {
+  public async deleteWorkoutLogEntry(
+    logToDelete: WorkoutLogData,
+  ): Promise<void> {
     return this.repository.deleteWorkoutLogEntry(logToDelete);
   }
 
@@ -103,7 +108,10 @@ export class DataService {
    * Rename an exercise in the CSV file.
    * @returns The count of updated entries
    */
-  public async renameExercise(oldName: string, newName: string): Promise<number> {
+  public async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
     return this.repository.renameExercise(oldName, newName);
   }
 
@@ -112,7 +120,9 @@ export class DataService {
    * @param exerciseName The exercise name to search for
    * @returns The most recent log entry or undefined if not found
    */
-  public async findLastEntryForExercise(exerciseName: string): Promise<WorkoutLogData | undefined> {
+  public async findLastEntryForExercise(
+    exerciseName: string,
+  ): Promise<WorkoutLogData | undefined> {
     if (!exerciseName) {
       return undefined;
     }
@@ -123,9 +133,6 @@ export class DataService {
       return undefined;
     }
 
-    // Normalize exercise name for comparison
-    const normalizedExercise = exerciseName.toLowerCase().trim();
-
     // Sort by timestamp descending to get most recent first
     const sortedData = [...workoutLogData].sort((a, b) => {
       const timestampA = a.timestamp || 0;
@@ -134,7 +141,9 @@ export class DataService {
     });
 
     return sortedData.find(
-      (log) => log.exercise.toLowerCase().trim() === normalizedExercise
+      (log) =>
+        StringUtils.normalize(log.exercise) ===
+        StringUtils.normalize(exerciseName),
     );
   }
 }

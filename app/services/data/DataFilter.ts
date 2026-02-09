@@ -7,6 +7,7 @@ import {
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { FilterResult } from "@app/types/CommonTypes";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /**
  * Common filter parameters used by DataFilter.
@@ -203,8 +204,8 @@ export class DataFilter {
     // Protocol param is guaranteed to exist here due to hasProtocolFilter check
     // Normalize protocol values to lowercase array
     const protocols: string[] = Array.isArray(protocolParam)
-      ? protocolParam.map((p) => p.toLowerCase().trim())
-      : [protocolParam.toLowerCase().trim()];
+      ? protocolParam.map((p) => StringUtils.normalize(p))
+      : [StringUtils.normalize(protocolParam)];
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {

@@ -5,6 +5,7 @@
 import { TFile } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { DurationAnalysisResult } from "@app/features/duration/types";
+import { StringUtils } from "@app/utils";
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 60;
@@ -61,20 +62,20 @@ export class WorkoutFileAnalyzer {
       // If no sets found but we analyzed something, ensure consistency
       if (result.setCount === 0 && result.totalDuration === 0) {
         // If absolutely nothing found, success might be false or true with 0?
-        // Let's assume minimum 1 set if we didn't error out, 
+        // Let's assume minimum 1 set if we didn't error out,
         // similar to previous logic, but only if we failed to find specific sets
         // Actually, if sections were empty, result is 0.
         // Let's keep 0 if 0.
       } else if (result.setCount === 0) {
-         result.setCount = 1; 
+        result.setCount = 1;
       }
 
       // Calculate total duration (SetTime is already accumulated in analyzeSection)
       result.totalDuration = result.totalRestTime + result.totalSetTime;
-      
+
       // Attempt to calculate historical duration from logs
       await this.calculateHistoricalDuration(filePath, result);
-      
+
       result.success = true;
     } catch (error) {
       result.error =
@@ -89,21 +90,22 @@ export class WorkoutFileAnalyzer {
    */
   private async calculateHistoricalDuration(
     filePath: string,
-    result: DurationAnalysisResult
+    result: DurationAnalysisResult,
   ): Promise<void> {
     try {
       // Use the configured CSV log file path from settings
-      const logsPath = this.plugin.settings.csvLogFilePath || "context/workout_logs.csv";
+      const logsPath =
+        this.plugin.settings.csvLogFilePath || "context/workout_logs.csv";
       const logsFile = this.plugin.app.vault.getAbstractFileByPath(logsPath);
-      
+
       if (!logsFile || !(logsFile instanceof TFile)) return;
 
       const content = await this.plugin.app.vault.read(logsFile);
       const lines = content.split("\n");
-      
+
       // Extract workout name from file path (basename without extension)
       const workoutName = filePath.split("/").pop()?.replace(".md", "") || "";
-      
+
       // Map to store timestamps by date
       const sessionTimestamps: Record<string, number[]> = {};
 
@@ -120,27 +122,27 @@ export class WorkoutFileAnalyzer {
         const logWorkout = cols[6]?.trim();
         // Remove quotes if present
         const cleanedWorkout = logWorkout?.replace(/^["']|["']$/g, "") || "";
-        
+
         if (cleanedWorkout === workoutName) {
-           const timestampStr = cols[7]?.trim();
-           const timestamp = parseInt(timestampStr, 10);
-           
-           if (!isNaN(timestamp) && timestamp > 0) {
-             // Date is col 0
-             const dateStr = cols[0]?.split("T")[0]; // ISO format YYYY-MM-DD
-             if (dateStr) {
-               if (!sessionTimestamps[dateStr]) {
-                 sessionTimestamps[dateStr] = [];
-               }
-               sessionTimestamps[dateStr].push(timestamp);
-             }
-           }
+          const timestampStr = cols[7]?.trim();
+          const timestamp = parseInt(timestampStr, 10);
+
+          if (!isNaN(timestamp) && timestamp > 0) {
+            // Date is col 0
+            const dateStr = cols[0]?.split("T")[0]; // ISO format YYYY-MM-DD
+            if (dateStr) {
+              if (!sessionTimestamps[dateStr]) {
+                sessionTimestamps[dateStr] = [];
+              }
+              sessionTimestamps[dateStr].push(timestamp);
+            }
+          }
         }
       }
 
       // Find the most recent session with valid duration
       const dates = Object.keys(sessionTimestamps).sort().reverse();
-      
+
       for (const date of dates) {
         const stamps = sessionTimestamps[date];
         if (stamps.length < 2) continue; // Need at least start and end
@@ -153,11 +155,11 @@ export class WorkoutFileAnalyzer {
         if (duration > 300 && duration < 18000) {
           result.historicalDuration = duration;
           result.lastSessionDate = date;
-          break; 
+          break;
         }
       }
-    } catch (e) {
-      console.warn("Failed to calculate historical duration", e);
+    } catch {
+      return;
     }
   }
 
@@ -175,31 +177,36 @@ export class WorkoutFileAnalyzer {
     if (!hasTimer && !hasLog) return;
 
     let sets = 0;
-    
+
     // 1. Try to find "### X serie" or "### X sets" in headers
     // Also look for reps pattern: "x 10 reps" or "x 8-12 reps"
     const headerMatch = sectionContent.match(
       /###\s*(\d+)\s*(?:serie|sets|series)/i,
     );
-    
+
     // Reps parsing: look for "x N" or "x N-M"
     // We capture the suffix to check if it's a time unit (s, sec, min) to avoid false positives
     const repsMatch = sectionContent.match(
-      /[xX]\s*(\d+)(?:-(\d+))?\s*([a-zA-Z\/]+)?/i
+      /[xX]\s*(\d+)(?:-(\d+))?\s*([a-zA-Z/]+)?/i,
     );
 
     let reps = 0;
     if (repsMatch) {
-        const suffix = repsMatch[3] ? repsMatch[3].toLowerCase().trim() : "";
-        // If suffix looks like time (s, sec, min), ignore it
-        // Note: 'reps', 'series', etc. are fine.
-        const isTime = ["s", "sec", "min", "m", "seconds", "secondi"].some(u => suffix.startsWith(u) && !suffix.startsWith("series") && !suffix.startsWith("sets"));
-        
-        if (!isTime) {
-            const minReps = parseInt(repsMatch[1], 10);
-            const maxReps = repsMatch[2] ? parseInt(repsMatch[2], 10) : minReps;
-            reps = (minReps + maxReps) / 2;
-        }
+      const suffix = repsMatch[3] ? StringUtils.normalize(repsMatch[3]) : "";
+      // If suffix looks like time (s, sec, min), ignore it
+      // Note: 'reps', 'series', etc. are fine.
+      const isTime = ["s", "sec", "min", "m", "seconds", "secondi"].some(
+        (u) =>
+          suffix.startsWith(u) &&
+          !suffix.startsWith("series") &&
+          !suffix.startsWith("sets"),
+      );
+
+      if (!isTime) {
+        const minReps = parseInt(repsMatch[1], 10);
+        const maxReps = repsMatch[2] ? parseInt(repsMatch[2], 10) : minReps;
+        reps = (minReps + maxReps) / 2;
+      }
     }
 
     if (headerMatch) {
@@ -218,7 +225,7 @@ export class WorkoutFileAnalyzer {
     if (sets === 0) sets = 1;
 
     // Add checks to prevent unreasonable set counts (e.g. year 2023)
-    if (sets > 100) sets = 1; 
+    if (sets > 100) sets = 1;
 
     result.setCount += sets;
 
@@ -244,18 +251,18 @@ export class WorkoutFileAnalyzer {
     if (sectionTimerSum > 0) {
       // Multiply total section rest by number of sets
       result.totalRestTime += sectionTimerSum * sets;
-      // If we found multiple timers in a section (e.g. superset), 
-      // we might count them as 1 "rest period" per set logically, 
+      // If we found multiple timers in a section (e.g. superset),
+      // we might count them as 1 "rest period" per set logically,
       // or just sum them up. Current logic sums them.
       result.restPeriodCount += timersFound * sets;
     }
 
     // 5. Calculate execution time
-    // Logic: 
+    // Logic:
     // - If reps known: Sets * Reps * RepDuration
     // - If reps unknown but defaultReps > 0: Sets * DefaultReps * RepDuration
     // - Fallback: Sets * SetDuration
-    
+
     let timePerSet = 0;
     const settings = this.plugin.settings;
     const repDuration = settings.repDuration || 5;
@@ -264,15 +271,15 @@ export class WorkoutFileAnalyzer {
 
     // Prioritize specific reps found in text
     if (reps > 0) {
-        timePerSet = reps * repDuration;
-    } 
+      timePerSet = reps * repDuration;
+    }
     // Then use default reps if configured (and not 0)
     else if (defaultReps > 0) {
-        timePerSet = defaultReps * repDuration;
+      timePerSet = defaultReps * repDuration;
     }
     // Finally fallback to fixed set duration
     else {
-        timePerSet = fallbackSetDuration;
+      timePerSet = fallbackSetDuration;
     }
 
     result.totalSetTime += sets * timePerSet;

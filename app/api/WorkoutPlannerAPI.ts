@@ -4,9 +4,14 @@
  * This API is exposed globally as window.WorkoutPlannerAPI to enable
  * Dataview users to query workout logs and create custom views.
  */
-import { WorkoutLogData, WorkoutProtocol, WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+  WorkoutChartsSettings,
+} from "@app/types/WorkoutLogData";
 import { DataService } from "@app/services/data/DataService";
 import { App, TFolder } from "obsidian";
+import { StringUtils } from "@app/utils";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -85,7 +90,7 @@ export class WorkoutPlannerAPI {
   constructor(
     private dataService: DataService,
     private app?: App,
-    private settings?: WorkoutChartsSettings
+    private settings?: WorkoutChartsSettings,
   ) {}
 
   /**
@@ -112,7 +117,9 @@ export class WorkoutPlannerAPI {
    * // Filter by protocol
    * const dropSets = await WorkoutPlannerAPI.getWorkoutLogs({ protocol: "drop_set" });
    */
-  async getWorkoutLogs(filter?: WorkoutLogsFilter): Promise<DataviewWorkoutLog[]> {
+  async getWorkoutLogs(
+    filter?: WorkoutLogsFilter,
+  ): Promise<DataviewWorkoutLog[]> {
     // Get logs from DataService with exercise/workout filter
     const logs = await this.dataService.getWorkoutLogData({
       exercise: filter?.exercise,
@@ -140,7 +147,9 @@ export class WorkoutPlannerAPI {
    * Convert WorkoutLogData to Dataview-compatible format.
    * Removes TFile references and ensures all fields have values.
    */
-  private convertToDataviewFormat(logs: WorkoutLogData[]): DataviewWorkoutLog[] {
+  private convertToDataviewFormat(
+    logs: WorkoutLogData[],
+  ): DataviewWorkoutLog[] {
     return logs.map((log) => ({
       date: log.date,
       exercise: log.exercise,
@@ -159,7 +168,7 @@ export class WorkoutPlannerAPI {
    */
   private applyDateRangeFilter(
     logs: DataviewWorkoutLog[],
-    dateRange: { start?: string; end?: string }
+    dateRange: { start?: string; end?: string },
   ): DataviewWorkoutLog[] {
     return logs.filter((log) => {
       // Parse the log date (expecting ISO format or YYYY-MM-DD)
@@ -195,11 +204,13 @@ export class WorkoutPlannerAPI {
    */
   private applyProtocolFilter(
     logs: DataviewWorkoutLog[],
-    protocol: string
+    protocol: string,
   ): DataviewWorkoutLog[] {
-    const normalizedProtocol = protocol.toLowerCase().trim();
+    const normalizedProtocol = StringUtils.normalize(protocol);
     return logs.filter((log) => {
-      const logProtocol = (log.protocol || WorkoutProtocol.STANDARD).toLowerCase();
+      const logProtocol = (
+        log.protocol || WorkoutProtocol.STANDARD
+      ).toLowerCase();
       return logProtocol === normalizedProtocol;
     });
   }
@@ -292,7 +303,9 @@ export class WorkoutPlannerAPI {
    * Calculate performance trend based on recent vs older logs.
    * Compares average weight from the last 30 days to the previous period.
    */
-  private calculateTrend(sortedLogs: DataviewWorkoutLog[]): "up" | "down" | "stable" {
+  private calculateTrend(
+    sortedLogs: DataviewWorkoutLog[],
+  ): "up" | "down" | "stable" {
     if (sortedLogs.length < 2) {
       return "stable";
     }
@@ -319,11 +332,14 @@ export class WorkoutPlannerAPI {
     }
 
     // Compare average weight between periods
-    const recentAvgWeight = recentLogs.reduce((sum, l) => sum + l.weight, 0) / recentLogs.length;
-    const olderAvgWeight = olderLogs.reduce((sum, l) => sum + l.weight, 0) / olderLogs.length;
+    const recentAvgWeight =
+      recentLogs.reduce((sum, l) => sum + l.weight, 0) / recentLogs.length;
+    const olderAvgWeight =
+      olderLogs.reduce((sum, l) => sum + l.weight, 0) / olderLogs.length;
 
     // 5% threshold for trend detection
-    const percentChange = ((recentAvgWeight - olderAvgWeight) / olderAvgWeight) * 100;
+    const percentChange =
+      ((recentAvgWeight - olderAvgWeight) / olderAvgWeight) * 100;
 
     if (percentChange > 5) {
       return "up";
@@ -365,12 +381,16 @@ export class WorkoutPlannerAPI {
   /**
    * Get exercises from the configured exercises folder.
    */
-  private async getExercisesFromFolder(filter?: ExercisesFilter): Promise<string[]> {
+  private async getExercisesFromFolder(
+    filter?: ExercisesFilter,
+  ): Promise<string[]> {
     if (!this.app || !this.settings) {
       return [];
     }
 
-    const folder = this.app.vault.getAbstractFileByPath(this.settings.exerciseFolderPath);
+    const folder = this.app.vault.getAbstractFileByPath(
+      this.settings.exerciseFolderPath,
+    );
     if (!folder || !(folder instanceof TFolder)) {
       // Fallback to logs if folder doesn't exist
       return this.getExercisesFromLogs();
@@ -378,14 +398,18 @@ export class WorkoutPlannerAPI {
 
     // Get all markdown files in the folder
     const exerciseFiles = folder.children.filter(
-      (file) => "extension" in file && file.extension === "md"
+      (file) => "extension" in file && file.extension === "md",
     );
 
     // If no tag filter, return all exercise names
     if (!filter?.tag) {
       return exerciseFiles
-        .map((file) => ("basename" in file ? (file as import("obsidian").TFile).basename : ""))
-        .filter((name): name is string => typeof name === "string" && name.length > 0)
+        .map((file) =>
+          "basename" in file ? (file as import("obsidian").TFile).basename : "",
+        )
+        .filter(
+          (name): name is string => typeof name === "string" && name.length > 0,
+        )
         .sort();
     }
 
@@ -401,7 +425,9 @@ export class WorkoutPlannerAPI {
         const tags = this.parseFrontmatterTags(content);
 
         // Check if any tag matches (case-insensitive)
-        const hasMatchingTag = tags.some((tag) => tag.toLowerCase() === tagFilter);
+        const hasMatchingTag = tags.some(
+          (tag) => tag.toLowerCase() === tagFilter,
+        );
 
         if (hasMatchingTag) {
           filteredExercises.push(tFile.basename);

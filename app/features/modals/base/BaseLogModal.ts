@@ -8,7 +8,6 @@ import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { LogDataService } from "@app/features/modals/base/services/LogDataService";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
@@ -25,7 +24,6 @@ export abstract class BaseLogModal extends ModalBase {
   protected exerciseName?: string;
   protected currentPageLink?: string;
   protected onComplete?: () => void;
-  protected logDataService: LogDataService;
   protected dynamicFieldsRenderer: DynamicFieldsRenderer;
   protected logFormRenderer: LogFormRenderer;
   protected recentExercisesService: RecentExercisesService;
@@ -45,13 +43,11 @@ export abstract class BaseLogModal extends ModalBase {
     this.exerciseName = exerciseName;
     this.currentPageLink = currentPageLink;
     this.onComplete = onComplete;
-    this.logDataService = new LogDataService(this.plugin);
     this.dynamicFieldsRenderer = new DynamicFieldsRenderer(this.plugin);
     this.recentExercisesService = new RecentExercisesService(this.plugin);
     this.logFormRenderer = new LogFormRenderer(
       this.plugin,
       this.dynamicFieldsRenderer,
-      this.logDataService,
       this.recentExercisesService,
     );
   }
@@ -78,11 +74,6 @@ export abstract class BaseLogModal extends ModalBase {
   async onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-modal");
-
-    // Pre-load workout log data
-    if (this.shouldAutoFillFromLastEntry()) {
-      await this.logDataService.loadWorkoutLogData();
-    }
 
     // Add modal title
     contentEl.createEl("h2", {
@@ -125,8 +116,15 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Helper method to create log entry object.
+   * Helper method to create log entry object from LogFormData.
+   * Simpler overload - recommended for new code.
+   */
+  protected createLogEntryObject(data: LogFormData): Omit<CSVWorkoutLogEntry, "timestamp">;
+
+  /**
+   * Helper method to create log entry object from individual parameters.
    * Preserved for backward compatibility with subclasses.
+   * @deprecated Use the LogFormData overload instead
    */
   protected createLogEntryObject(
     exercise: string,
@@ -137,11 +135,37 @@ export abstract class BaseLogModal extends ModalBase {
     date?: string,
     protocol?: WorkoutProtocol,
     customFields?: Record<string, string | number | boolean>,
+  ): Omit<CSVWorkoutLogEntry, "timestamp">;
+
+  protected createLogEntryObject(
+    dataOrExercise: LogFormData | string,
+    reps?: number,
+    weight?: number,
+    workout?: string,
+    notes?: string,
+    date?: string,
+    protocol?: WorkoutProtocol,
+    customFields?: Record<string, string | number | boolean>,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
-    return LogSubmissionHandler.createLogEntry(
-      { exercise, reps, weight, workout, notes, date, protocol, customFields },
-      this.currentPageLink,
-    );
+    if (typeof dataOrExercise === 'string') {
+      // Old signature: individual parameters
+      return LogSubmissionHandler.createLogEntry(
+        {
+          exercise: dataOrExercise,
+          reps: reps!,
+          weight: weight!,
+          workout: workout!,
+          notes: notes!,
+          date,
+          protocol,
+          customFields
+        },
+        this.currentPageLink,
+      );
+    } else {
+      // New signature: LogFormData object
+      return LogSubmissionHandler.createLogEntry(dataOrExercise, this.currentPageLink);
+    }
   }
 
   /**

@@ -6,12 +6,10 @@ import { MuscleTagLayoutRenderer } from "@app/features/modals/muscle/components/
 import { MuscleTagTableRenderer } from "@app/features/modals/muscle/components/MuscleTagTableRenderer";
 import { MuscleTagSuggestionLogic } from "@app/features/modals/muscle/logic/MuscleTagSuggestionLogic";
 import { MuscleTagImportLogic } from "@app/features/modals/muscle/logic/MuscleTagImportLogic";
-import { MuscleTagFilterLogic } from "@app/features/modals/muscle/logic/MuscleTagFilterLogic";
-import { MuscleTagSaveValidationLogic } from "@app/features/modals/muscle/logic/MuscleTagSaveValidationLogic";
-import { MuscleTagImportMergeLogic } from "@app/features/modals/muscle/logic/MuscleTagImportMergeLogic";
-import { MuscleTagCsvExportService } from "@app/features/modals/muscle/services/MuscleTagCsvExportService";
-import { MuscleTagFileService } from "@app/features/modals/muscle/services/MuscleTagFileService";
-import { MuscleTagStorageService } from "@app/features/modals/muscle/services/MuscleTagStorageService";
+import { filterMuscleTags } from "@app/features/modals/muscle/logic/MuscleTagFilterLogic";
+import { validateMuscleTagSave } from "@app/features/modals/muscle/logic/MuscleTagSaveValidationLogic";
+import { mergeMuscleTagImport } from "@app/features/modals/muscle/logic/MuscleTagImportMergeLogic";
+import { readTextFile, downloadCsv } from "@app/utils/FileUtils";
 import type { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
 import type { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
 import type { MuscleTagImportMode } from "@app/features/modals/muscle/types";
@@ -20,7 +18,7 @@ import type WorkoutChartsPlugin from "main";
 const DEBOUNCE_DELAY = 150;
 
 export class MuscleTagManagerModal extends ModalBase {
-  private readonly storageService: MuscleTagStorageService;
+  private readonly plugin: WorkoutChartsPlugin;
   private contentContainer: HTMLElement | null = null;
   private tableBody: HTMLElement | null = null;
   private countDisplay: HTMLElement | null = null;
@@ -35,7 +33,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app);
-    this.storageService = new MuscleTagStorageService(plugin);
+    this.plugin = plugin;
   }
 
   async onOpen() {
@@ -66,7 +64,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private async loadTags(): Promise<void> {
     try {
-      this.allTags = await this.storageService.loadTags();
+      this.allTags = await this.plugin.getMuscleTagService().loadTags();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       new Notice(`Error loading muscle tags: ${message}`);
@@ -103,7 +101,7 @@ export class MuscleTagManagerModal extends ModalBase {
       return;
     }
 
-    const filteredTags = MuscleTagFilterLogic.filterTags(
+    const filteredTags = filterMuscleTags(
       this.allTags,
       this.searchValue,
     );
@@ -171,7 +169,7 @@ export class MuscleTagManagerModal extends ModalBase {
     const tag = tagInput.value.trim().toLowerCase();
     const muscleGroup = groupSelect.value;
 
-    const validation = MuscleTagSaveValidationLogic.validate(
+    const validation = validateMuscleTagSave(
       tag,
       muscleGroup,
       this.isEditing,
@@ -198,7 +196,7 @@ export class MuscleTagManagerModal extends ModalBase {
     nextTags.set(tag, muscleGroup);
 
     try {
-      await this.storageService.saveTags(nextTags);
+      await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVED);
       this.hideForm();
@@ -226,7 +224,7 @@ export class MuscleTagManagerModal extends ModalBase {
     nextTags.delete(tag);
 
     try {
-      await this.storageService.saveTags(nextTags);
+      await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_DELETED);
       this.renderTags();
@@ -240,10 +238,8 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private handleExport(): void {
     try {
-      const csvContent = MuscleTagCsvExportService.buildCsvContent(
-        this.allTags,
-      );
-      MuscleTagFileService.downloadCsv(csvContent, "muscle-tags-export.csv");
+      const csvContent = this.plugin.getMuscleTagService().exportToCsv(this.allTags);
+      downloadCsv(csvContent, "muscle-tags-export.csv");
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORTED);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -294,7 +290,7 @@ export class MuscleTagManagerModal extends ModalBase {
     input.value = "";
 
     try {
-      const content = await MuscleTagFileService.readTextFile(file);
+      const content = await readTextFile(file);
       this.processImportFile(content);
     } catch {
       new Notice(
@@ -351,14 +347,14 @@ export class MuscleTagManagerModal extends ModalBase {
   }
 
   private async executeImport(mode: MuscleTagImportMode): Promise<void> {
-    const { finalTags, importedCount } = MuscleTagImportMergeLogic.merge(
+    const { finalTags, importedCount } = mergeMuscleTagImport(
       mode,
       this.allTags,
       this.pendingImportTags,
     );
 
     try {
-      await this.storageService.saveTags(finalTags);
+      await this.plugin.getMuscleTagService().saveTags(finalTags);
       this.allTags = finalTags;
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORTED(importedCount),

@@ -2,20 +2,20 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   calculateSummaryMetrics,
   SummaryMetrics,
-} from "@app/features/dashboard/widgets/summary/business";
+} from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import {
   calculatePeriodStats,
   PeriodStats,
-} from "@app/features/dashboard/widgets/quick-stats/business";
+} from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
 import {
   prepareVolumeTrendData,
   calculateMuscleGroupVolume,
   VolumeTrendData,
-} from "@app/features/dashboard/widgets/volume-analytics/business";
+} from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import {
   getRecentWorkouts,
   RecentWorkout,
-} from "@app/features/dashboard/widgets/recent-workouts/business";
+} from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 
 export type { SummaryMetrics, PeriodStats, VolumeTrendData, RecentWorkout };
 

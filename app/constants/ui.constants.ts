@@ -463,6 +463,7 @@ export const MODAL_UI = {
     OPTIONS: "Options",
     PRESET: "Preset",
     PROGRESSIVE_OVERLOAD: "Progressive overload",
+    MOBILE_OPTIONS: "Recent & workout options",
   },
   CODE_BLOCKS: {
     CHART: "workout-chart",
@@ -528,7 +529,8 @@ export const SETTINGS_UI = {
   },
   DESCRIPTIONS: {
     CSV_PATH: "CSV log file path",
-    CSV_FOLDER: "Folder where the workout logs and muscle tags CSV files will be stored.",
+    CSV_FOLDER:
+      "Folder where the workout logs and muscle tags CSV files will be stored.",
     EXERCISE_FOLDER: "Path to the folder containing exercise pages",
     CREATE_CSV: "Create a new CSV log file with sample data",
     DEFAULT_EXACT_MATCH:
@@ -550,8 +552,10 @@ export const SETTINGS_UI = {
     PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
     SET_DURATION:
       "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
-    REP_DURATION: "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
-    DEFAULT_REPS_PER_SET: "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
+    REP_DURATION:
+      "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
+    DEFAULT_REPS_PER_SET:
+      "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
     SHOW_QUICK_LOG_RIBBON:
       "Show a dumbbell icon in the left ribbon to open the create workout log modal",
     QUICK_WEIGHT_INCREMENT:

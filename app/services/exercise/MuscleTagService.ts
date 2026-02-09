@@ -285,6 +285,28 @@ export class MuscleTagService {
   }
 
   /**
+   * Builds CSV content from muscle tags map for export.
+   * Sorted alphabetically by tag name.
+   * @param tags Map of tag names to muscle groups
+   * @returns CSV content string with header and sorted rows
+   */
+  exportToCsv(tags: Map<string, string>): string {
+    const csvLines: string[] = ["tag,muscleGroup"];
+
+    const sortedTags = Array.from(tags.entries()).sort((a, b) =>
+      a[0].localeCompare(b[0]),
+    );
+
+    for (const [tag, muscleGroup] of sortedTags) {
+      csvLines.push(
+        `${this.escapeCSVValue(tag)},${this.escapeCSVValue(muscleGroup)}`,
+      );
+    }
+
+    return csvLines.join("\n");
+  }
+
+  /**
    * Cleanup method to unregister file watcher.
    * Should be called when the plugin is unloaded.
    */

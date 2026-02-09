@@ -1,15 +1,12 @@
 import type WorkoutChartsPlugin from "main";
 import { CONSTANTS } from "@app/constants";
 import { Platform } from "obsidian";
-import {
-  LogFormElements,
-} from "@app/types/ModalTypes";
+import { LogFormElements } from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import type { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
-import type { LogDataService } from "@app/features/modals/base/services/LogDataService";
 import type { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 import {
   fillDynamicInputsFromCustomFields,
@@ -21,7 +18,6 @@ export class LogFormRenderer {
   constructor(
     private plugin: WorkoutChartsPlugin,
     private dynamicFieldsRenderer: DynamicFieldsRenderer,
-    private logDataService: LogDataService,
     private recentExercisesService: RecentExercisesService,
   ) {}
 
@@ -35,7 +31,7 @@ export class LogFormRenderer {
     initialCurrentPageLink: string | undefined,
     shouldShowDateField: boolean,
     initialWorkoutToggleState: boolean,
-    onExerciseChange: (newParams: ParameterDefinition[]) => void
+    onExerciseChange: (newParams: ParameterDefinition[]) => void,
   ): Promise<LogFormElements> {
     // Exercise autocomplete using reusable component
     // We pass 'modal' as it requires the ModalBase instance context for suggestions
@@ -43,13 +39,16 @@ export class LogFormRenderer {
       modal,
       formContainer,
       this.plugin,
-      initialExerciseName
+      initialExerciseName,
     );
 
     const isMobile = Platform.isMobile;
 
     if (!isMobile) {
-      this.createRecentExercisesChips(formContainer, exerciseElements.exerciseInput);
+      this.createRecentExercisesChips(
+        formContainer,
+        exerciseElements.exerciseInput,
+      );
     }
 
     // Create container for dynamic parameter fields
@@ -61,17 +60,19 @@ export class LogFormRenderer {
     const exerciseDefService = this.plugin.getExerciseDefinitionService();
     let parameters: ParameterDefinition[] = [];
     try {
-        parameters = await exerciseDefService.getParametersForExercise(initialExerciseName || "");
+      parameters = await exerciseDefService.getParametersForExercise(
+        initialExerciseName || "",
+      );
     } catch {
-        parameters = await exerciseDefService.getParametersForExercise("");
+      parameters = await exerciseDefService.getParametersForExercise("");
     }
-    
+
     // Notify parent about initial parameters
     onExerciseChange(parameters);
 
     const dynamicFieldInputs = this.dynamicFieldsRenderer.renderDynamicFields(
       parametersContainer,
-      parameters
+      parameters,
     );
 
     // Protocol dropdown
@@ -87,7 +88,7 @@ export class LogFormRenderer {
     const protocolSelect = modal.createSelectField(
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.PROTOCOL,
-      allProtocols
+      allProtocols,
     );
     protocolSelect.value = WorkoutProtocol.STANDARD;
 
@@ -96,46 +97,37 @@ export class LogFormRenderer {
       formContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
       CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
-      ""
+      "",
     );
 
     // Optional Date input
     let dateInput: HTMLInputElement | undefined;
     if (shouldShowDateField) {
-      dateInput = modal.createTextField(
-        formContainer,
-        "Date",
-        "",
-        ""
-      );
+      dateInput = modal.createTextField(formContainer, "Date", "", "");
       dateInput.type = "date";
     }
 
-
-
     // Mobile Accordion Section
-    let workoutSectionParent = formContainer;
+    const workoutSectionParent = formContainer;
     if (isMobile) {
-        const details = formContainer.createEl("details", {
-            cls: "workout-log-mobile-accordion",
-        });
-        const summary = details.createEl("summary", {
-            text: "Recent & Workout Options",
-            cls: "workout-log-mobile-summary"
-        });
-        summary.style.cursor = "pointer";
-        summary.style.marginTop = "1rem";
-        summary.style.marginBottom = "0.5rem";
-        
-        workoutSectionParent = details;
+      const workoutSectionParent = formContainer.createEl("details", {
+        cls: "workout-log-mobile-accordion",
+      });
+      workoutSectionParent.createEl("summary", {
+        text: CONSTANTS.WORKOUT.MODAL.SECTIONS.MOBILE_OPTIONS,
+        cls: "workout-log-mobile-summary",
+      });
 
-        this.createRecentExercisesChips(workoutSectionParent, exerciseElements.exerciseInput);
+      this.createRecentExercisesChips(
+        workoutSectionParent,
+        exerciseElements.exerciseInput,
+      );
     }
 
     // Workout section
     const workoutSection = modal.createSection(
       workoutSectionParent,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT
+      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT,
     );
 
     // Current workout toggle
@@ -143,7 +135,7 @@ export class LogFormRenderer {
       workoutSection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
       initialWorkoutToggleState,
-      "currentWorkout"
+      "currentWorkout",
     );
 
     // Workout input
@@ -151,14 +143,14 @@ export class LogFormRenderer {
       workoutSection,
       CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT,
       "",
-      initialCurrentPageLink || ""
+      initialCurrentPageLink || "",
     );
 
     // Setup behaviors
     setupWorkoutToggle(
       currentWorkoutToggle,
       workoutInput,
-      () => initialCurrentPageLink || ""
+      () => initialCurrentPageLink || "",
     );
 
     const formElements: LogFormElements = {
@@ -178,7 +170,7 @@ export class LogFormRenderer {
       parametersContainer,
       formElements,
       onExerciseChange,
-      modal.shouldAutoFillFromLastEntry()
+      modal.shouldAutoFillFromLastEntry(),
     );
 
     return formElements;
@@ -191,7 +183,8 @@ export class LogFormRenderer {
     container: HTMLElement,
     exerciseInput: HTMLInputElement,
   ): void {
-    const recentExercises = this.recentExercisesService.getDisplayRecentExercises();
+    const recentExercises =
+      this.recentExercisesService.getDisplayRecentExercises();
     if (recentExercises.length === 0) {
       return;
     }
@@ -199,7 +192,9 @@ export class LogFormRenderer {
     const chipSection = container.createEl("div", {
       cls: "workout-log-recent-section",
     });
-    const exerciseFieldGroup = exerciseInput.closest(".workout-charts-form-group");
+    const exerciseFieldGroup = exerciseInput.closest(
+      ".workout-charts-form-group",
+    );
     if (exerciseFieldGroup && exerciseFieldGroup.parentElement === container) {
       container.insertBefore(chipSection, exerciseFieldGroup);
     }
@@ -235,17 +230,17 @@ export class LogFormRenderer {
     parametersContainer: HTMLElement,
     formElements: LogFormElements,
     onExerciseChange: (newParams: ParameterDefinition[]) => void,
-    shouldAutoFill: boolean
+    shouldAutoFill: boolean,
   ): void {
     const handler = async () => {
-        const exerciseName = exerciseInput.value.trim();
-        await this.handleExerciseChange(
-            exerciseName,
-            parametersContainer,
-            formElements,
-            onExerciseChange,
-            shouldAutoFill
-        );
+      const exerciseName = exerciseInput.value.trim();
+      await this.handleExerciseChange(
+        exerciseName,
+        parametersContainer,
+        formElements,
+        onExerciseChange,
+        shouldAutoFill,
+      );
     };
 
     // Listen for change event (triggered by autocomplete selection)
@@ -267,14 +262,15 @@ export class LogFormRenderer {
     parametersContainer: HTMLElement,
     formElements: LogFormElements,
     onExerciseChange: (newParams: ParameterDefinition[]) => void,
-    shouldAutoFill: boolean
+    shouldAutoFill: boolean,
   ): Promise<void> {
     const exerciseDefService = this.plugin.getExerciseDefinitionService();
     let newParameters: ParameterDefinition[];
     try {
-         newParameters = await exerciseDefService.getParametersForExercise(exerciseName);
+      newParameters =
+        await exerciseDefService.getParametersForExercise(exerciseName);
     } catch {
-         newParameters = await exerciseDefService.getParametersForExercise("");
+      newParameters = await exerciseDefService.getParametersForExercise("");
     }
 
     // Preserve existing values
@@ -287,33 +283,33 @@ export class LogFormRenderer {
 
     // Render new fields
     const newFieldInputs = this.dynamicFieldsRenderer.renderDynamicFields(
-        parametersContainer,
-        newParameters
+      parametersContainer,
+      newParameters,
     );
     formElements.dynamicFieldInputs = newFieldInputs;
-    
+
     // Notify parent
     onExerciseChange(newParameters);
 
     // Restore preserved values
     for (const [key, value] of preservedValues) {
-        // Only if not forcing auto-fill? Actually logic in BaseLogModal was:
-        // Update fields (preserving matches) -> THEN auto-fill if enabled.
-        // So we restore here first.
-        const input = newFieldInputs.get(key);
-        if (input) {
-            input.value = value;
-        }
+      const input = newFieldInputs.get(key);
+      if (input) {
+        input.value = value;
+      }
     }
 
     // Auto-fill from last entry if enabled
     if (shouldAutoFill) {
-        this.autoFillFromLastEntry(exerciseName, formElements);
+      await this.autoFillFromLastEntry(exerciseName, formElements);
     }
   }
 
-  private autoFillFromLastEntry(exerciseName: string, formElements: LogFormElements): void {
-    const lastEntry = this.logDataService.findLastEntryForExercise(exerciseName);
+  private async autoFillFromLastEntry(
+    exerciseName: string,
+    formElements: LogFormElements,
+  ): Promise<void> {
+    const lastEntry = await this.plugin.findLastEntryForExercise(exerciseName);
     if (!lastEntry) return;
 
     // Auto-fill reps and weight
@@ -335,7 +331,7 @@ export class LogFormRenderer {
 
     // Auto-fill protocol
     if (lastEntry.protocol && formElements.protocolSelect) {
-        formElements.protocolSelect.value = lastEntry.protocol;
+      formElements.protocolSelect.value = lastEntry.protocol;
     }
   }
 }

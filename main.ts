@@ -266,6 +266,15 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   /**
+   * Find the most recent log entry for a given exercise
+   */
+  public async findLastEntryForExercise(
+    exerciseName: string,
+  ): Promise<WorkoutLogData | undefined> {
+    return this.dataService.findLastEntryForExercise(exerciseName);
+  }
+
+  /**
    * Trigger refresh of workout log views using proper Obsidian APIs
    *
    * This method refreshes all markdown views to update workout-log code blocks

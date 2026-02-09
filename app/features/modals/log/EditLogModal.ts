@@ -85,16 +85,9 @@ export class EditLogModal extends BaseLogModal {
       }
     }
 
-    const updatedEntry = this.createLogEntryObject(
-      data.exercise,
-      data.reps ?? 0,
-      data.weight ?? 0,
-      data.workout,
-      data.notes,
-      finalDate,
-      data.protocol,
-      data.customFields,
-    );
+    // Update the date in data with the preserved time
+    const updatedData = { ...data, date: finalDate };
+    const updatedEntry = this.createLogEntryObject(updatedData);
 
     await this.plugin.updateWorkoutLogEntry(this.originalLog, updatedEntry);
   }

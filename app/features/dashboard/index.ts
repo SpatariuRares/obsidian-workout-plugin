@@ -18,7 +18,7 @@ export * from "@app/features/dashboard/widgets";
 export * from "@app/features/dashboard/business";
 
 // UI components
-export * from "@app/features/dashboard/ui";
+export * from "@app/features/dashboard/ui/StatsBox";
 
 export type {
   ShoulderData,

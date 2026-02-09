@@ -5,6 +5,21 @@ import { WorkoutProtocol, CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 
 export class LogSubmissionHandler {
   /**
+   * Extracts, validates, and creates a complete log entry in one step.
+   * Returns null if validation fails.
+   */
+  static extractValidateAndCreateEntry(
+    formElements: LogFormElements,
+    currentParameters: ParameterDefinition[],
+    currentFileName: string | undefined,
+    currentPageLink: string | undefined
+  ): Omit<CSVWorkoutLogEntry, "timestamp"> | null {
+    const data = this.extractAndValidateData(formElements, currentParameters, currentFileName);
+    if (!data) return null;
+    return this.createLogEntry(data, currentPageLink);
+  }
+
+  /**
    * Extracts data from the form, validates it, and returns the structured LogFormData.
    * Returns null if validation fails.
    */

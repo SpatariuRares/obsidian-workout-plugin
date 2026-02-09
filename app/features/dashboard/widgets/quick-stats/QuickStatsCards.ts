@@ -4,7 +4,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import {
   calculatePeriodStats,
   PeriodStats,
-} from "@app/features/dashboard/widgets/quick-stats/business";
+} from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
 import { StatCard } from "@app/components/molecules";
 
 export class QuickStatsCards {

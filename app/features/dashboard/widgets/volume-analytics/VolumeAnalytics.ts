@@ -7,7 +7,7 @@ import { ChartRenderer } from "@app/features/charts";
 import {
   prepareVolumeTrendData,
   calculateMuscleGroupVolume,
-} from "@app/features/dashboard/widgets/volume-analytics/business";
+} from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import { ListItem } from "@app/components/molecules";
 
 export class VolumeAnalytics {

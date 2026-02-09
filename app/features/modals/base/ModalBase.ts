@@ -152,25 +152,6 @@ export abstract class ModalBase extends Modal {
   }
 
   /**
-   * Creates a textarea field
-   */
-  public createTextarea(
-    container: HTMLElement,
-    label: string,
-    placeholder: string = "",
-    rows: number = 3,
-    value: string = "",
-  ): HTMLTextAreaElement {
-    container.createEl("label", { text: label });
-    const textarea = container.createEl("textarea", {
-      placeholder: placeholder,
-    });
-    textarea.rows = rows;
-    if (value) textarea.value = value;
-    return textarea;
-  }
-
-  /**
    * Creates a styled main container for modals
    */
   protected createStyledMainContainer(contentEl: HTMLElement): HTMLElement {
@@ -259,19 +240,5 @@ export abstract class ModalBase extends Modal {
   ): HTMLInputElement {
     const container = this.createCheckboxGroup(parent);
     return this.createCheckbox(container, label, checked, id);
-  }
-
-  /**
-   * Creates a textarea field with form group wrapper
-   */
-  public createTextareaField(
-    parent: HTMLElement,
-    label: string,
-    placeholder: string = "",
-    rows: number = 3,
-    value: string = "",
-  ): HTMLTextAreaElement {
-    const container = this.createFormGroup(parent);
-    return this.createTextarea(container, label, placeholder, rows, value);
   }
 }

@@ -70,6 +70,14 @@
   padding-bottom: var(--workout-space-sm);
 }
 
+.workout-log-mobile-summary {
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+}
+
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-modal {
     .workout-parameters-container {
@@ -132,3 +140,5 @@
     }
   }
 }
+
+

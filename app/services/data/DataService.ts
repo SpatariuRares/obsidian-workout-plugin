@@ -106,4 +106,35 @@ export class DataService {
   public async renameExercise(oldName: string, newName: string): Promise<number> {
     return this.repository.renameExercise(oldName, newName);
   }
+
+  /**
+   * Finds the most recent log entry for a given exercise.
+   * @param exerciseName The exercise name to search for
+   * @returns The most recent log entry or undefined if not found
+   */
+  public async findLastEntryForExercise(exerciseName: string): Promise<WorkoutLogData | undefined> {
+    if (!exerciseName) {
+      return undefined;
+    }
+
+    const workoutLogData = await this.getWorkoutLogData();
+
+    if (workoutLogData.length === 0) {
+      return undefined;
+    }
+
+    // Normalize exercise name for comparison
+    const normalizedExercise = exerciseName.toLowerCase().trim();
+
+    // Sort by timestamp descending to get most recent first
+    const sortedData = [...workoutLogData].sort((a, b) => {
+      const timestampA = a.timestamp || 0;
+      const timestampB = b.timestamp || 0;
+      return timestampB - timestampA;
+    });
+
+    return sortedData.find(
+      (log) => log.exercise.toLowerCase().trim() === normalizedExercise
+    );
+  }
 }

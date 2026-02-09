@@ -1,5 +1,4 @@
 export { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 export { ChartContainer } from "@app/features/charts/components/ChartContainer";
 export { TrendHeader } from "@app/features/charts/components/TrendHeader";
-export { ChartFallbackTable } from "@app/features/charts/components/ChartFallbackTable";
-export { MobileTable } from "@app/features/charts/components/MobileTable";
+export { ChartTableViews, ChartFallbackTable, MobileTable } from "@app/features/charts/components/ChartTableViews";

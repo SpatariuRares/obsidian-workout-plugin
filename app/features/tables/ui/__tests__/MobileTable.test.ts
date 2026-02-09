@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { MobileTable } from "@app/features/charts/components/MobileTable";
+import { MobileTable } from "@app/features/charts/components/ChartTableViews";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { CONSTANTS } from "@app/constants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";

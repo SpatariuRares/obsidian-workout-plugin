@@ -34,12 +34,4 @@ describe("ChartContainer", () => {
 
     expect(canvas.classList.contains("custom-canvas")).toBe(true);
   });
-
-  it("creates container and canvas together", () => {
-    const parent = createObsidianContainer();
-    const { container, canvas } = ChartContainer.createWithCanvas(parent);
-
-    expect(parent.contains(container)).toBe(true);
-    expect(container.contains(canvas)).toBe(true);
-  });
 });

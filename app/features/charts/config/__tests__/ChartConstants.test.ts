@@ -1,8 +1,5 @@
 import {
   ChartLabels,
-  ChartType,
-  DEFAULT_CHART_DATA_TYPE_BY_EXERCISE,
-  EXERCISE_TYPE_CHART_DATA_TYPES,
   getAvailableChartDataTypes,
   getDefaultChartDataType,
   getDefaultChartTitle,
@@ -18,16 +15,16 @@ describe("ChartConstants", () => {
   });
 
   it("returns correct units and axis labels", () => {
-    expect(getUnitForChartType(ChartType.VOLUME)).toBe(ChartLabels.UNITS.WEIGHT);
-    expect(getUnitForChartType(ChartType.REPS)).toBe(ChartLabels.UNITS.REPS);
+    expect(getUnitForChartType("volume")).toBe(ChartLabels.UNITS.WEIGHT);
+    expect(getUnitForChartType("reps")).toBe(ChartLabels.UNITS.REPS);
 
-    expect(getYAxisLabel(ChartType.WEIGHT)).toBe(ChartLabels.Y_AXIS.WEIGHT);
+    expect(getYAxisLabel("weight")).toBe(ChartLabels.Y_AXIS.WEIGHT);
     expect(getYAxisLabel("unknown")).toBe(ChartLabels.Y_AXIS.VOLUME);
   });
 
   it("returns available chart data types for exercise type", () => {
     expect(getAvailableChartDataTypes("strength")).toEqual(
-      EXERCISE_TYPE_CHART_DATA_TYPES.strength
+      ["volume", "weight", "reps"]
     );
 
     expect(getAvailableChartDataTypes("custom", ["speed", "power"]))
@@ -35,9 +32,7 @@ describe("ChartConstants", () => {
   });
 
   it("returns default chart data type for exercise type", () => {
-    expect(getDefaultChartDataType("strength")).toBe(
-      DEFAULT_CHART_DATA_TYPE_BY_EXERCISE.strength
-    );
+    expect(getDefaultChartDataType("strength")).toBe("volume");
 
     expect(getDefaultChartDataType("custom", ["cadence", "pace"]))
       .toBe("cadence");

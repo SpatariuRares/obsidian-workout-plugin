@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { ChartColors } from "../ChartColors";
+import { ChartColors } from "@app/features/charts/config/ChartTheme";
 import { CHART_DATA_TYPE } from "@app/features/charts";
 
 describe("ChartColors", () => {

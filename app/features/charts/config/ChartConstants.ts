@@ -6,17 +6,6 @@
 import { CONSTANTS } from "@app/constants";
 
 /**
- * Chart type identifiers
- */
-export const ChartType = {
-  VOLUME: CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME,
-  WEIGHT: CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT,
-  REPS: CONSTANTS.WORKOUT.CHARTS.TYPES.REPS,
-} as const;
-
-export type ChartTypeValue = (typeof ChartType)[keyof typeof ChartType];
-
-/**
  * Default chart labels and text
  */
 export const ChartLabels = {
@@ -87,7 +76,7 @@ export function getDefaultChartTitle(chartType: string): string {
  * @returns Unit label string
  */
 export function getUnitForChartType(chartType: string): string {
-  if (chartType === ChartType.VOLUME || chartType === ChartType.WEIGHT) {
+  if (chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME || chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT) {
     return ChartLabels.UNITS.WEIGHT;
   }
   return ChartLabels.UNITS.REPS;
@@ -100,11 +89,11 @@ export function getUnitForChartType(chartType: string): string {
  */
 export function getYAxisLabel(chartType: string): string {
   switch (chartType) {
-    case ChartType.VOLUME:
+    case CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME:
       return ChartLabels.Y_AXIS.VOLUME;
-    case ChartType.WEIGHT:
+    case CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT:
       return ChartLabels.Y_AXIS.WEIGHT;
-    case ChartType.REPS:
+    case CONSTANTS.WORKOUT.CHARTS.TYPES.REPS:
       return ChartLabels.Y_AXIS.REPS;
     default:
       return ChartLabels.Y_AXIS.VOLUME;
@@ -115,7 +104,7 @@ export function getYAxisLabel(chartType: string): string {
  * Mapping of exercise type IDs to available chart data types.
  * Determines what data types can be visualized for each exercise type.
  */
-export const EXERCISE_TYPE_CHART_DATA_TYPES: Record<string, string[]> = {
+const EXERCISE_TYPE_CHART_DATA_TYPES: Record<string, string[]> = {
   strength: ["volume", "weight", "reps"],
   timed: ["duration"],
   distance: ["distance", "duration", "pace"],
@@ -127,7 +116,7 @@ export const EXERCISE_TYPE_CHART_DATA_TYPES: Record<string, string[]> = {
  * Default chart data type for each exercise type.
  * Used when no explicit type parameter is specified in the chart code block.
  */
-export const DEFAULT_CHART_DATA_TYPE_BY_EXERCISE: Record<string, string> = {
+const DEFAULT_CHART_DATA_TYPE_BY_EXERCISE: Record<string, string> = {
   strength: "volume",
   timed: "duration",
   distance: "distance",

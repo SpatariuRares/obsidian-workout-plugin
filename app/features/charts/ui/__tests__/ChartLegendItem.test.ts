@@ -96,21 +96,4 @@ describe("ChartLegendItem", () => {
 		});
 	});
 
-	describe("setState", () => {
-		it("toggles active class", () => {
-			const parent = createObsidianContainer();
-			const item = ChartLegendItem.create(parent, {
-				color: "#FF6384",
-				label: "Test",
-			});
-
-			ChartLegendItem.setState(item, true, false);
-			expect(item.classList.contains("chart-legend-item-active")).toBe(true);
-			expect(item.classList.contains("chart-legend-item-dimmed")).toBe(false);
-
-			ChartLegendItem.setState(item, false, true);
-			expect(item.classList.contains("chart-legend-item-active")).toBe(false);
-			expect(item.classList.contains("chart-legend-item-dimmed")).toBe(true);
-		});
-	});
 });

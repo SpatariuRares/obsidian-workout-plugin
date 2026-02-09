@@ -109,27 +109,4 @@ export class ChartLegendItem {
 		return item;
 	}
 
-	/**
-	 * Update the active/dimmed state of a legend item
-	 * @param item - Legend item element
-	 * @param isActive - Whether the item is active
-	 * @param isDimmed - Whether the item is dimmed
-	 */
-	static setState(
-		item: HTMLElement,
-		isActive: boolean,
-		isDimmed: boolean
-	): void {
-		if (isActive) {
-			item.addClass(this.ACTIVE_CLASS);
-		} else {
-			item.removeClass(this.ACTIVE_CLASS);
-		}
-
-		if (isDimmed) {
-			item.addClass(this.DIMMED_CLASS);
-		} else {
-			item.removeClass(this.DIMMED_CLASS);
-		}
-	}
 }

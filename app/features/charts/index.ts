@@ -12,13 +12,15 @@ export { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView"
 export { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 export { ChartContainer } from "@app/features/charts/components/ChartContainer";
 export { TrendHeader } from "@app/features/charts/components/TrendHeader";
-export { ChartFallbackTable } from "@app/features/charts/components/ChartFallbackTable";
+export { ChartTableViews, ChartFallbackTable, MobileTable } from "@app/features/charts/components/ChartTableViews";
 
 // Config
 export * from "@app/features/charts/config";
 
 // Business logic
 export { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
+export { ChartDataExtractor } from "@app/features/charts/business/ChartDataExtractor";
+export { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 
 // UI components
 export {

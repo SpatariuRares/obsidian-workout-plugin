@@ -31,17 +31,4 @@ export class ChartContainer {
 		return Canvas.create(container, { className });
 	}
 
-	/**
-	 * Creates both container and canvas in one call
-	 * @param parent - The parent HTML element
-	 * @returns Object with container and canvas elements
-	 */
-	static createWithCanvas(parent: HTMLElement): {
-		container: HTMLElement;
-		canvas: HTMLCanvasElement;
-	} {
-		const container = this.create(parent);
-		const canvas = this.createCanvas(container);
-		return { container, canvas };
-	}
 }

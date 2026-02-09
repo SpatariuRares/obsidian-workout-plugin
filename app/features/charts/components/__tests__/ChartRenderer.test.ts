@@ -248,18 +248,12 @@ describe("ChartRenderer", () => {
       expect(Chart).toHaveBeenCalledTimes(1);
     });
   });
-  describe("Chart container and canvas creation", () => {
+  describe("Chart container creation", () => {
     it("should create container via ChartContainer.create", () => {
       const result = ChartRenderer.createChartContainer(mockContainer);
       expect(result).toBeDefined();
       // Since we mocked ChartContainer.create to return a mock element
       expect(result.id).toBeDefined();
-    });
-
-    it("should create canvas via ChartContainer.createCanvas", () => {
-      const result = ChartRenderer.createCanvas(mockContainer);
-      expect(result).toBeDefined();
-      expect(result.getContext).toBeDefined();
     });
   });
 

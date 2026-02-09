@@ -5,21 +5,61 @@ import {
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
 
-export class MobileTable {
+/**
+ * Table-based representations of chart data.
+ * Provides a fallback table when Chart.js is unavailable
+ * and a mobile-optimized table view.
+ */
+export class ChartTableViews {
+  /**
+   * Renders a simple fallback table when Chart.js rendering is unavailable.
+   */
+  static renderFallback(
+    container: HTMLElement,
+    labels: string[],
+    volumeData: number[],
+  ): void {
+    const tableDiv = container.createEl("div", {
+      cls: "workout-charts-table-fallback",
+    });
+
+    const table = tableDiv.createEl("table", {
+      cls: "workout-charts-table",
+    });
+
+    const thead = table.createEl("thead");
+    const headerRow = thead.createEl("tr");
+    [
+      CONSTANTS.WORKOUT.LABELS.TABLE.DATE,
+      CONSTANTS.WORKOUT.LABELS.TABLE.VOLUME_WITH_UNIT,
+    ].forEach((label) => {
+      headerRow.createEl("th", { text: label });
+    });
+
+    const tbody = table.createEl("tbody");
+    volumeData.forEach((value, index) => {
+      const row = tbody.createEl("tr");
+      row.createEl("td", { text: labels[index] });
+      row.createEl("td", { text: value.toFixed(1) });
+    });
+
+    tableDiv
+      .createEl("div", { cls: "workout-charts-footer" })
+      .appendText(
+        `${CONSTANTS.WORKOUT.ICONS.STATUS.INFO} ${CONSTANTS.WORKOUT.LABELS.CHARTS.FALLBACK_TABLE_MESSAGE}`,
+      );
+  }
+
   /**
    * Creates a mobile-friendly table for displaying chart data.
-   * @param container - The HTML element to render the mobile table in
-   * @param labels - Array of labels for the x-axis (dates)
-   * @param datasets - Array of datasets to display in the table
-   * @param chartType - Type of chart data (volume, weight, reps)
-   * @param params - Chart parameters including title
+   * Hidden on desktop, shown on mobile via CSS.
    */
-  static render(
+  static renderMobile(
     container: HTMLElement,
     labels: string[],
     datasets: ChartDataset[],
     chartType: CHART_DATA_TYPE,
-    params: EmbeddedChartParams
+    params: EmbeddedChartParams,
   ): void {
     const mobileTableContainer = container.createEl("div", {
       cls: "workout-chart-mobile-table",
@@ -29,7 +69,6 @@ export class MobileTable {
       params.title ||
       `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
 
-    // Create table header
     mobileTableContainer.createEl("h3", {
       text: title,
       cls: "workout-mobile-table-title",
@@ -37,16 +76,13 @@ export class MobileTable {
 
     const table = mobileTableContainer.createEl("table");
 
-    // Create table header row
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
-
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.LABELS.DATA });
     headerRow.createEl("th", {
       text: COLUMN_LABELS[chartType] || chartType,
     });
 
-    // Create table body
     const tbody = table.createEl("tbody");
 
     // Get the main dataset (first dataset, excluding trend line)
@@ -64,7 +100,6 @@ export class MobileTable {
         }
       });
     } else {
-      // Fallback: create empty table with message
       const row = tbody.createEl("tr");
       row.createEl("td", {
         text: CONSTANTS.WORKOUT.TABLE.LABELS.NO_DATA,
@@ -73,3 +108,12 @@ export class MobileTable {
     }
   }
 }
+
+// Backward-compatible aliases
+export const ChartFallbackTable = {
+  render: ChartTableViews.renderFallback.bind(ChartTableViews),
+};
+
+export const MobileTable = {
+  render: ChartTableViews.renderMobile.bind(ChartTableViews),
+};

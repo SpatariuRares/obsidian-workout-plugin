@@ -1,11 +1,14 @@
 /**
- * Builder for Chart.js configurations.
+ * Builder for Chart.js configurations and dataset styling.
  * Provides modular methods for creating chart options with proper typing.
  */
 
 import { ChartConfiguration } from "chart.js/auto";
 import { ChartDataset } from "@app/features/charts/types";
-import { ChartColorPalette } from "@app/features/charts/config/ChartColors";
+import {
+  ChartColorPalette,
+  ColorScheme,
+} from "@app/features/charts/config/ChartTheme";
 import {
   ChartLabels,
   ChartStyling,
@@ -14,16 +17,14 @@ import {
   getUnitForChartType,
 } from "@app/features/charts/config/ChartConstants";
 import { ChartTypeRegistry, TooltipItem } from 'chart.js';
+
 /**
- * Builds Chart.js configuration objects with modular, reusable methods
+ * Builds Chart.js configuration objects with modular, reusable methods.
+ * Also handles dataset styling (main data + trend lines).
  */
 export class ChartConfigBuilder {
   /**
    * Creates the plugins configuration for the chart
-   * @param title - Chart title
-   * @param colors - Color palette
-   * @param chartType - Type of chart (for tooltip unit formatting)
-   * @returns Plugins configuration object
    */
   static createPluginsConfig(
     title: string,
@@ -63,12 +64,6 @@ export class ChartConfigBuilder {
     };
   }
 
-  /**
-   * Creates the tooltip configuration
-   * @param colors - Color palette
-   * @param chartType - Type of chart (for unit formatting)
-   * @returns Tooltip configuration object
-   */
   private static createTooltipConfig(
     colors: ChartColorPalette,
     chartType: string
@@ -98,9 +93,6 @@ export class ChartConfigBuilder {
 
   /**
    * Creates the scales configuration for the chart
-   * @param colors - Color palette
-   * @param chartType - Type of chart (for Y-axis label)
-   * @returns Scales configuration object
    */
   static createScalesConfig(colors: ChartColorPalette, chartType: string) {
     return {
@@ -109,13 +101,6 @@ export class ChartConfigBuilder {
     };
   }
 
-  /**
-   * Creates a single axis configuration
-   * @param colors - Color palette
-   * @param titleText - Axis title text
-   * @param display - Whether to display the axis
-   * @returns Axis configuration object
-   */
   private static createAxisConfig(
     colors: ChartColorPalette,
     titleText: string,
@@ -147,7 +132,6 @@ export class ChartConfigBuilder {
 
   /**
    * Creates the interaction configuration for the chart
-   * @returns Interaction configuration object
    */
   static createInteractionConfig() {
     return {
@@ -159,12 +143,6 @@ export class ChartConfigBuilder {
 
   /**
    * Creates a complete Chart.js configuration object
-   * @param labels - Array of labels for the x-axis
-   * @param datasets - Array of datasets to display
-   * @param title - Chart title
-   * @param colors - Color palette
-   * @param chartType - Type of chart
-   * @returns Complete Chart.js configuration
    */
   static createChartConfig(
     labels: string[],
@@ -186,4 +164,71 @@ export class ChartConfigBuilder {
       },
     };
   }
+
+  // --- Dataset Styling ---
+
+  /**
+   * Applies styling to the main data dataset
+   */
+  static styleMainDataset(
+    dataset: ChartDataset,
+    colorScheme: ColorScheme
+  ): void {
+    dataset.borderColor = colorScheme.main;
+    dataset.pointBackgroundColor = colorScheme.point;
+    dataset.pointBorderColor = colorScheme.pointBorder;
+    dataset.pointRadius = ChartStyling.POINT_RADIUS;
+    dataset.pointHoverRadius = ChartStyling.POINT_HOVER_RADIUS;
+    dataset.borderWidth = ChartStyling.BORDER_WIDTH;
+    dataset.tension = ChartStyling.TENSION;
+    dataset.fill = true;
+  }
+
+  /**
+   * Applies styling to the trend line dataset
+   */
+  static styleTrendDataset(
+    dataset: ChartDataset,
+    colors: ChartColorPalette
+  ): void {
+    dataset.borderColor = colors.trend.main;
+    dataset.backgroundColor = colors.trend.light;
+    dataset.borderDash = ChartStyling.TREND_LINE_DASH;
+    dataset.borderWidth = ChartStyling.BORDER_WIDTH;
+    dataset.pointRadius = ChartStyling.TREND_POINT_RADIUS;
+    dataset.pointHoverRadius = ChartStyling.TREND_POINT_RADIUS;
+  }
+
+  /**
+   * Finds the trend line dataset in an array of datasets
+   */
+  static findTrendDataset(datasets: ChartDataset[]): ChartDataset | undefined {
+    return datasets.find((ds) => ds.label === ChartLabels.TREND_LINE);
+  }
+
+  /**
+   * Applies appropriate styling to all datasets
+   */
+  static styleDatasets(
+    datasets: ChartDataset[],
+    colorScheme: ColorScheme,
+    colors: ChartColorPalette
+  ): void {
+    if (datasets[0]) {
+      this.styleMainDataset(datasets[0], colorScheme);
+    }
+
+    const trendDataset = this.findTrendDataset(datasets);
+    if (trendDataset) {
+      this.styleTrendDataset(trendDataset, colors);
+    }
+  }
 }
+
+// Backward-compatible alias
+export const DatasetStyler = {
+  styleMainDataset: ChartConfigBuilder.styleMainDataset.bind(ChartConfigBuilder),
+  styleTrendDataset: ChartConfigBuilder.styleTrendDataset.bind(ChartConfigBuilder),
+  findTrendDataset: ChartConfigBuilder.findTrendDataset.bind(ChartConfigBuilder),
+  styleDatasets: ChartConfigBuilder.styleDatasets.bind(ChartConfigBuilder),
+};

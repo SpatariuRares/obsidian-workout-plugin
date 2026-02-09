@@ -3,11 +3,10 @@ import {
   ChartInteraction,
   ChartLabels,
   ChartStyling,
-  ChartType,
   getUnitForChartType,
   getYAxisLabel,
 } from "../ChartConstants";
-import { ChartColorPalette } from "../ChartColors";
+import { ChartColorPalette } from "@app/features/charts/config/ChartTheme";
 import { ChartDataset } from "@app/features/charts/types";
 
 describe("ChartConfigBuilder", () => {
@@ -54,7 +53,7 @@ describe("ChartConfigBuilder", () => {
     const plugins = ChartConfigBuilder.createPluginsConfig(
       "My Chart",
       colors,
-      ChartType.VOLUME,
+      "volume",
     );
 
     expect(plugins.title.display).toBe(true);
@@ -77,18 +76,18 @@ describe("ChartConfigBuilder", () => {
     });
 
     expect(labelText).toBe(
-      `Volume: 12.3 ${getUnitForChartType(ChartType.VOLUME)}`,
+      `Volume: 12.3 ${getUnitForChartType("volume")}`,
     );
   });
 
   it("creates scales and interaction config using constants", () => {
     const scales = ChartConfigBuilder.createScalesConfig(
       colors,
-      ChartType.WEIGHT,
+      "weight",
     );
 
     expect(scales.x.title.text).toBe(ChartLabels.X_AXIS);
-    expect(scales.y.title.text).toBe(getYAxisLabel(ChartType.WEIGHT));
+    expect(scales.y.title.text).toBe(getYAxisLabel("weight"));
 
     const interaction = ChartConfigBuilder.createInteractionConfig();
     expect(interaction.mode).toBe(ChartInteraction.INTERACTION_MODE);
@@ -104,7 +103,7 @@ describe("ChartConfigBuilder", () => {
       datasets,
       "Volume Chart",
       colors,
-      ChartType.VOLUME,
+      "volume",
     );
 
     expect(config.type).toBe("line");

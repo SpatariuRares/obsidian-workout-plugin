@@ -1,7 +1,6 @@
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { FilterResult, TrendIndicators } from "@app/types/CommonTypes";
-import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import {
   EmbeddedChartParams,
   ChartDataset,
@@ -17,14 +16,10 @@ import {
   ChartFallbackTable,
   ChartDataUtils,
 } from "@app/features/charts";
-import {
-  getDefaultChartDataType,
-  isValidChartDataType,
-  getAvailableChartDataTypes,
-} from "@app/features/charts/config/ChartConstants";
+import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 import { BaseView } from "@app/features/common/views/BaseView";
 import WorkoutChartsPlugin from "main";
-import { StatisticsUtils, ValidationUtils, ParameterUtils } from "@app/utils";
+import { StatisticsUtils, ValidationUtils } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 
@@ -39,9 +34,7 @@ export class EmbeddedChartView extends BaseView {
    */
   public cleanup(): void {
     try {
-      // Destroy all Chart.js instances managed by ChartRenderer
       ChartRenderer.destroyAllCharts();
-
       this.logDebug("EmbeddedChartView", "Cleanup completed successfully");
     } catch {
       return;
@@ -84,16 +77,17 @@ export class EmbeddedChartView extends BaseView {
       }
 
       // Determine chart data type based on exercise type
-      const resolvedType = await this.resolveChartDataType(params);
+      const resolvedType = await ChartTypeResolver.resolve(this.plugin, params);
 
       // Validate chart data type is available for the exercise type
-      const validationResult = await this.validateChartDataType(
+      const validationResult = await ChartTypeResolver.validate(
+        this.plugin,
         params,
         resolvedType,
       );
       if (!validationResult.isValid) {
         loadingDiv.remove();
-        this.renderChartTypeError(container, validationResult.errorMessage);
+        Feedback.renderError(container, validationResult.errorMessage);
         return;
       }
 
@@ -136,116 +130,6 @@ export class EmbeddedChartView extends BaseView {
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
     }
-  }
-
-  /**
-   * Resolves the chart data type based on exercise definition.
-   * If a type is explicitly provided, uses that.
-   * Otherwise determines the default type based on the exercise's type definition.
-   */
-  private async resolveChartDataType(
-    params: EmbeddedChartParams,
-  ): Promise<CHART_DATA_TYPE> {
-    // If type is explicitly provided, use it
-    if (params.type) {
-      return params.type;
-    }
-
-    // Try to get exercise definition to determine default type
-    if (params.exercise) {
-      const exerciseDefService = this.plugin.getExerciseDefinitionService();
-      if (exerciseDefService) {
-        const exerciseType = await exerciseDefService.getExerciseType(
-          params.exercise,
-        );
-        const customNumericParams = this.getNumericParamKeys(
-          exerciseType.parameters,
-        );
-        const defaultType = getDefaultChartDataType(
-          exerciseType.id,
-          customNumericParams,
-        );
-        return defaultType as CHART_DATA_TYPE;
-      }
-    }
-
-    // Fallback to volume for backward compatibility
-    return CHART_DATA_TYPE.VOLUME;
-  }
-
-  /**
-   * Validates that the requested chart data type is available for the exercise type.
-   * If the exercise has no explicit definition (defaults to strength), allow any type
-   * for backward compatibility.
-   */
-  private async validateChartDataType(
-    params: EmbeddedChartParams,
-    chartDataType: CHART_DATA_TYPE,
-  ): Promise<{ isValid: boolean; errorMessage: string }> {
-    // If no exercise filter or chartType is ALL, allow any type
-    if (!params.exercise || params.chartType === CHART_TYPE.ALL) {
-      return { isValid: true, errorMessage: "" };
-    }
-
-    const exerciseDefService = this.plugin.getExerciseDefinitionService();
-    if (!exerciseDefService) {
-      // No service available, allow any type
-      return { isValid: true, errorMessage: "" };
-    }
-
-    // Check if exercise has an explicit definition
-    const exerciseDefinition = await exerciseDefService.getExerciseDefinition(
-      params.exercise,
-    );
-
-    // If no explicit definition found, allow any chart type (backward compatible)
-    // This allows users to use duration/distance/heartRate charts without
-    // needing to define exercise_type in frontmatter
-    if (!exerciseDefinition) {
-      return { isValid: true, errorMessage: "" };
-    }
-
-    const exerciseType = await exerciseDefService.getExerciseType(
-      params.exercise,
-    );
-    const customNumericParams = this.getNumericParamKeys(
-      exerciseType.parameters,
-    );
-
-    // Check if the requested type is valid for this exercise type
-    if (
-      !isValidChartDataType(exerciseType.id, chartDataType, customNumericParams)
-    ) {
-      const availableTypes = getAvailableChartDataTypes(
-        exerciseType.id,
-        customNumericParams,
-      );
-      const typeList =
-        availableTypes.length > 0
-          ? availableTypes.join(", ")
-          : "no chart types available";
-      return {
-        isValid: false,
-        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,
-      };
-    }
-
-    return { isValid: true, errorMessage: "" };
-  }
-
-  /**
-   * Extracts numeric parameter keys from parameter definitions.
-   * Delegates to centralized ParameterUtils.
-   */
-  private getNumericParamKeys(parameters: ParameterDefinition[]): string[] {
-    return ParameterUtils.getNumericParamKeys(parameters);
-  }
-
-  /**
-   * Renders an error message when the chart data type is not available.
-   */
-  private renderChartTypeError(container: HTMLElement, message: string): void {
-    Feedback.renderError(container, message);
   }
 
   private validateChartParams(

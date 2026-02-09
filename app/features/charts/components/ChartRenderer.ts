@@ -35,15 +35,6 @@ export class ChartRenderer {
   }
 
   /**
-   * Creates a canvas element for the chart rendering.
-   * @param chartContainer - The container element to append the canvas to
-   * @returns The created canvas element
-   */
-  static createCanvas(chartContainer: HTMLElement): HTMLCanvasElement {
-    return ChartContainer.createCanvas(chartContainer);
-  }
-
-  /**
    * Adds a trend line to the datasets
    * @param datasets - Array of chart datasets
    */
@@ -72,7 +63,7 @@ export class ChartRenderer {
    * @param params - Chart parameters including title and display options
    * @returns Chart.js configuration object
    */
-  static createChartConfig(
+  private static createChartConfig(
     labels: string[],
     datasets: ChartDataset[],
     chartType: CHART_DATA_TYPE,
@@ -144,7 +135,7 @@ export class ChartRenderer {
     datasets: ChartDataset[],
     params: EmbeddedChartParams,
   ): boolean {
-    const canvas = this.createCanvas(chartContainer);
+    const canvas = ChartContainer.createCanvas(chartContainer);
     const chartConfig = this.createChartConfig(
       labels,
       datasets,

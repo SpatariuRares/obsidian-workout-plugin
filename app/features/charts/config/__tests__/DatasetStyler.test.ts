@@ -1,9 +1,9 @@
-import { DatasetStyler } from "../DatasetStyler";
-import { ChartLabels, ChartStyling } from "../ChartConstants";
-import { ChartColorPalette, ColorScheme } from "../ChartColors";
+import { ChartConfigBuilder } from "@app/features/charts/config/ChartConfigBuilder";
+import { ChartLabels, ChartStyling } from "@app/features/charts/config/ChartConstants";
+import { ChartColorPalette, ColorScheme } from "@app/features/charts/config/ChartTheme";
 import { ChartDataset } from "@app/features/charts/types";
 
-describe("DatasetStyler", () => {
+describe("ChartConfigBuilder dataset styling", () => {
   const scheme: ColorScheme = {
     main: "#111111",
     light: "#222222",
@@ -36,7 +36,7 @@ describe("DatasetStyler", () => {
   it("styles the main dataset", () => {
     const dataset: ChartDataset = { label: "Main", data: [1, 2] };
 
-    DatasetStyler.styleMainDataset(dataset, scheme);
+    ChartConfigBuilder.styleMainDataset(dataset, scheme);
 
     expect(dataset.borderColor).toBe(scheme.main);
     expect(dataset.pointBackgroundColor).toBe(scheme.point);
@@ -54,7 +54,7 @@ describe("DatasetStyler", () => {
       data: [1, 2],
     };
 
-    DatasetStyler.styleTrendDataset(dataset, palette);
+    ChartConfigBuilder.styleTrendDataset(dataset, palette);
 
     expect(dataset.borderColor).toBe(palette.trend.main);
     expect(dataset.backgroundColor).toBe(palette.trend.light);
@@ -70,7 +70,7 @@ describe("DatasetStyler", () => {
       { label: ChartLabels.TREND_LINE, data: [2] },
     ];
 
-    expect(DatasetStyler.findTrendDataset(datasets)).toBe(datasets[1]);
+    expect(ChartConfigBuilder.findTrendDataset(datasets)).toBe(datasets[1]);
   });
 
   it("styles datasets through the combined helper", () => {
@@ -79,15 +79,14 @@ describe("DatasetStyler", () => {
       { label: ChartLabels.TREND_LINE, data: [2] },
     ];
 
-    const mainSpy = jest.spyOn(DatasetStyler, "styleMainDataset");
-    const trendSpy = jest.spyOn(DatasetStyler, "styleTrendDataset");
+    ChartConfigBuilder.styleDatasets(datasets, scheme, palette);
 
-    DatasetStyler.styleDatasets(datasets, scheme, palette);
+    // Main dataset should be styled
+    expect(datasets[0].borderColor).toBe(scheme.main);
+    expect(datasets[0].fill).toBe(true);
 
-    expect(mainSpy).toHaveBeenCalledWith(datasets[0], scheme);
-    expect(trendSpy).toHaveBeenCalledWith(datasets[1], palette);
-
-    mainSpy.mockRestore();
-    trendSpy.mockRestore();
+    // Trend dataset should be styled
+    expect(datasets[1].borderColor).toBe(palette.trend.main);
+    expect(datasets[1].borderDash).toBe(ChartStyling.TREND_LINE_DASH);
   });
 });

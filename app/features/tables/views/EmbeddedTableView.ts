@@ -60,7 +60,6 @@ export class EmbeddedTableView extends BaseView {
     super(plugin);
 
     this.callbacks = {
-      onRefresh: async () => {}, // Default no-op
       onError: (error, context) =>
         this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
       onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
@@ -72,18 +71,13 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
   ): Promise<void> {
-    const onRefresh = async () => {
-      await this.refreshTable(container, params);
-    };
-
-    await this.renderTable(container, logData, params, onRefresh);
+    await this.renderTable(container, logData, params);
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    onRefresh: () => Promise<void>,
   ): Promise<void> {
     try {
       const validationErrors = TableConfig.validateParams(params);
@@ -92,7 +86,8 @@ export class EmbeddedTableView extends BaseView {
       }
 
       const loadingDiv = this.showLoadingIndicator(container);
-      if (this.handleEmptyData(container, logData, params.exercise, onRefresh)) {
+      // Use global refresh for the "create first log" button so all views update
+      if (this.handleEmptyData(container, logData, params.exercise)) {
         loadingDiv.remove();
         return;
       }
@@ -123,9 +118,7 @@ export class EmbeddedTableView extends BaseView {
         this.plugin,
       );
 
-      this.renderTableContentOptimized(container, tableData, () => {
-        void onRefresh();
-      });
+      this.renderTableContentOptimized(container, tableData);
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -136,7 +129,6 @@ export class EmbeddedTableView extends BaseView {
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
-    onRefresh: () => void,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -155,7 +147,6 @@ export class EmbeddedTableView extends BaseView {
         contentDiv,
         params,
         filterResult,
-        onRefresh,
         signal,
       );
     }
@@ -191,7 +182,6 @@ export class EmbeddedTableView extends BaseView {
       params,
       filterResult.filteredData,
       this.plugin,
-      onRefresh,
       signal,
     );
 
@@ -213,7 +203,6 @@ export class EmbeddedTableView extends BaseView {
     contentDiv: HTMLElement,
     params: EmbeddedTableParams,
     filterResult: { filteredData: WorkoutLogData[] },
-    onRefresh: () => void,
     signal: AbortSignal,
   ): void {
     const activeView =
@@ -237,7 +226,7 @@ export class EmbeddedTableView extends BaseView {
       exerciseName,
       currentPageLink,
       this.plugin,
-      onRefresh,
+      (ctx) => this.plugin.triggerWorkoutLogRefresh(ctx),
       signal,
       latestEntry,
     );
@@ -312,10 +301,7 @@ export class EmbeddedTableView extends BaseView {
       container,
       params,
       async (c, logData, p) => {
-        const onRefresh = async () => {
-          await this.refreshTable(c, p);
-        };
-        await this.renderTable(c, logData, p, onRefresh);
+        await this.renderTable(c, logData, p);
       },
       this.callbacks,
     );

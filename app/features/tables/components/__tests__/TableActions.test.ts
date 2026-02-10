@@ -89,9 +89,8 @@ describe("TableActions", () => {
       const td = document.createElement("td");
       const log = createLog();
       const plugin = createMockPlugin();
-      const onRefresh = jest.fn();
 
-      TableActions.renderActionButtons(td, log, plugin as any, onRefresh);
+      TableActions.renderActionButtons(td, log, plugin as any);
 
       const editBtn = td.querySelector(".edit-btn") as HTMLElement;
       editBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -110,9 +109,8 @@ describe("TableActions", () => {
       const td = document.createElement("td");
       const log = createLog();
       const plugin = createMockPlugin();
-      const onRefresh = jest.fn();
 
-      TableActions.renderActionButtons(td, log, plugin as any, onRefresh);
+      TableActions.renderActionButtons(td, log, plugin as any);
 
       const deleteBtn = td.querySelector(".delete-btn") as HTMLElement;
       deleteBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -138,7 +136,6 @@ describe("TableActions", () => {
         td,
         log,
         plugin as any,
-        undefined,
         controller.signal,
       );
 

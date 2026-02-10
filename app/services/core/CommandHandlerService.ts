@@ -31,8 +31,8 @@ export class CommandHandlerService {
       id: "create-workout-log",
       name: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
       callback: () => {
-        new CreateLogModal(this.app, this.plugin, undefined, undefined, () => {
-          this.plugin.triggerWorkoutLogRefresh();
+        new CreateLogModal(this.app, this.plugin, undefined, undefined, (ctx) => {
+          this.plugin.triggerWorkoutLogRefresh(ctx);
         }).open();
       },
     });

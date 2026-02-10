@@ -2,7 +2,7 @@
 import { CONSTANTS } from "@app/constants";
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { Input } from "@app/components/atoms";
-import { FormField } from "@app/components/molecules";
+import { FormField } from "@app/components/molecules/FormField";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 
 export abstract class ModalBase extends Modal {

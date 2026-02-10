@@ -41,6 +41,38 @@ export class EmbeddedChartView extends BaseView {
     }
   }
 
+  /**
+   * Load chart data from the plugin, applying exercise/workout filters.
+   */
+  async loadChartData(params: EmbeddedChartParams): Promise<WorkoutLogData[]> {
+    if (params.exercise || params.workout) {
+      return (
+        (await this.plugin.getWorkoutLogData({
+          exercise: params.exercise as string,
+          workout: params.workout as string,
+          exactMatch: params.exactMatch as boolean,
+        })) || []
+      );
+    }
+    return (await this.plugin.getWorkoutLogData()) || [];
+  }
+
+  /**
+   * Refresh a chart by clearing cache, reloading data, and re-rendering.
+   * Symmetric with EmbeddedTableView.refreshTable().
+   */
+  async refreshChart(
+    container: HTMLElement,
+    params: EmbeddedChartParams,
+  ): Promise<void> {
+    this.plugin.clearLogDataCache();
+    const freshData = await this.loadChartData(params);
+    container.empty();
+    if (freshData.length > 0) {
+      await this.createChart(container, freshData, params);
+    }
+  }
+
   async createChart(
     container: HTMLElement,
     logData: WorkoutLogData[],

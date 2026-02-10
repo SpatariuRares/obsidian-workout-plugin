@@ -52,7 +52,6 @@ export abstract class BaseView {
     container: HTMLElement,
     logData: WorkoutLogData[],
     exerciseName?: string,
-    onRefresh?: () => void,
     currentPageLink?: string,
   ): boolean {
     if (logData.length === 0) {
@@ -60,7 +59,7 @@ export abstract class BaseView {
         container,
         this.plugin,
         exerciseName,
-        onRefresh,
+        undefined,
         currentPageLink,
       );
       return true;
@@ -77,7 +76,6 @@ export abstract class BaseView {
     params: EmbeddedViewParams,
     titlePrefix: string,
     viewType: VIEW_TYPES,
-    onRefresh?: () => void,
   ): void {
     // Check if this is a combined exercise + workout case
     if (titlePrefix && titlePrefix.includes(" + ")) {
@@ -93,7 +91,6 @@ export abstract class BaseView {
           container,
           exercise,
           this.plugin,
-          onRefresh,
         );
       }
       return;
@@ -131,7 +128,6 @@ export abstract class BaseView {
           container,
           exerciseName,
           this.plugin,
-          onRefresh,
         );
       }
     }

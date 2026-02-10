@@ -1,6 +1,5 @@
 import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedChartView } from "@app/features/charts";
 import { EmbeddedTableView } from "@app/features/tables";
 import { EmbeddedTimerView } from "@app/features/timer";
@@ -13,6 +12,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
+import { DataAwareRenderChild } from "@app/services/core/DataAwareRenderChild";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 
@@ -84,37 +84,22 @@ export class CodeBlockProcessorService {
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
-
-      // Use early filtering if we have specific parameters
-      let logData: WorkoutLogData[];
-      if (params.exercise || params.workout) {
-        logData =
-          (await this.dataService.getWorkoutLogData({
-            exercise: params.exercise as string,
-            workout: params.workout as string,
-            exactMatch: params.exactMatch as boolean,
-          })) || [];
-      } else {
-        logData = (await this.dataService.getWorkoutLogData()) || [];
-      }
+      const logData = await this.embeddedChartView.loadChartData(
+        params as EmbeddedChartParams,
+      );
 
       if (logData.length === 0) {
-        const sourcePath = ctx.sourcePath;
-        const basename =
-          sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
-        const currentPageLink = basename ? `[[${basename}]]` : "";
-        LogCallouts.renderCsvNoDataMessage(
-          el,
-          this.plugin,
-          undefined,
-          undefined,
-          currentPageLink,
-        );
+        this.renderNoDataMessage(el, ctx);
         return;
       }
 
-      // Create chart - filtering is now handled by the DataFilter class
-      await this.createEmbeddedChart(el, logData, params);
+      await this.embeddedChartView.createChart(el, logData, params as EmbeddedChartParams);
+
+      ctx.addChild(
+        new DataAwareRenderChild(el, this.plugin, params, () =>
+          this.embeddedChartView.refreshChart(el, params as EmbeddedChartParams),
+        ),
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
@@ -126,24 +111,20 @@ export class CodeBlockProcessorService {
   private async handleWorkoutLog(
     source: string,
     el: HTMLElement,
-    _ctx: MarkdownPostProcessorContext,
+    ctx: MarkdownPostProcessorContext,
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
 
       // Use early filtering if we have specific parameters
-      let logData: WorkoutLogData[];
-      if (params.exercise || params.workout) {
-        logData =
-          (await this.dataService.getWorkoutLogData({
-            exercise: params.exercise as string,
-            workout: params.workout as string,
-            exactMatch: params.exactMatch as boolean,
-          })) || [];
-      } else {
-        logData = (await this.dataService.getWorkoutLogData()) || [];
-      }
-      await this.createEmbeddedTable(el, logData, params);
+      const logData = await this.loadFilteredLogData(params);
+      await this.embeddedTableView.createTable(el, logData, params as EmbeddedTableParams);
+
+      ctx.addChild(
+        new DataAwareRenderChild(el, this.plugin, params, () =>
+          this.embeddedTableView.refreshTable(el, params as EmbeddedTableParams),
+        ),
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
@@ -169,24 +150,6 @@ export class CodeBlockProcessorService {
         className: "workout-timer-error",
       });
     }
-  }
-
-  // Create embedded chart using the dedicated view
-  private async createEmbeddedChart(
-    container: HTMLElement,
-    data: WorkoutLogData[],
-    params: EmbeddedChartParams,
-  ): Promise<void> {
-    await this.embeddedChartView.createChart(container, data, params);
-  }
-
-  // Create embedded table using the dedicated view
-  private async createEmbeddedTable(
-    container: HTMLElement,
-    data: WorkoutLogData[],
-    params: EmbeddedTableParams,
-  ) {
-    await this.embeddedTableView.createTable(container, data, params);
   }
 
   // Create embedded timer using the dedicated view
@@ -218,37 +181,30 @@ export class CodeBlockProcessorService {
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
-
-      // Use early filtering if we have specific parameters
-      let logData: WorkoutLogData[];
-      if (params.dateRange) {
-        // Filter data based on date range for better performance
-        const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - (params.dateRange as number));
-
-        logData = (await this.dataService.getWorkoutLogData()) || [];
-        logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
-      } else {
-        logData = (await this.dataService.getWorkoutLogData()) || [];
-      }
+      const logData = await this.embeddedDashboardView.loadDashboardData(
+        params as EmbeddedDashboardParams,
+      );
 
       if (logData.length === 0) {
-        const sourcePath = ctx.sourcePath;
-        const basename =
-          sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
-        const currentPageLink = basename ? `[[${basename}]]` : "";
-        LogCallouts.renderCsvNoDataMessage(
-          el,
-          this.plugin,
-          undefined,
-          undefined,
-          currentPageLink,
-        );
+        this.renderNoDataMessage(el, ctx);
         return;
       }
 
-      // Create dashboard
-      await this.createEmbeddedDashboard(el, logData, params);
+      await this.embeddedDashboardView.createDashboard(
+        el,
+        logData,
+        params as EmbeddedDashboardParams,
+      );
+
+      // Dashboard has no exercise/workout filters → pass {} so it always refreshes
+      ctx.addChild(
+        new DataAwareRenderChild(el, this.plugin, {}, () =>
+          this.embeddedDashboardView.refreshDashboard(
+            el,
+            params as EmbeddedDashboardParams,
+          ),
+        ),
+      );
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
@@ -256,15 +212,6 @@ export class CodeBlockProcessorService {
         className: "workout-feedback-error",
       });
     }
-  }
-
-  // Create embedded dashboard using the dedicated view
-  private async createEmbeddedDashboard(
-    container: HTMLElement,
-    data: WorkoutLogData[],
-    params: EmbeddedDashboardParams,
-  ) {
-    await this.embeddedDashboardView.createDashboard(container, data, params);
   }
 
   // Handle workout duration code blocks
@@ -295,6 +242,40 @@ export class CodeBlockProcessorService {
         { className: "workout-duration-error" },
       );
     }
+  }
+
+  // Load workout log data with optional exercise/workout filtering
+  private async loadFilteredLogData(
+    params: Record<string, unknown>,
+  ): Promise<import("@app/types/WorkoutLogData").WorkoutLogData[]> {
+    if (params.exercise || params.workout) {
+      return (
+        (await this.dataService.getWorkoutLogData({
+          exercise: params.exercise as string,
+          workout: params.workout as string,
+          exactMatch: params.exactMatch as boolean,
+        })) || []
+      );
+    }
+    return (await this.dataService.getWorkoutLogData()) || [];
+  }
+
+  // Render "no data" callout with page link from context
+  private renderNoDataMessage(
+    el: HTMLElement,
+    ctx: MarkdownPostProcessorContext,
+  ): void {
+    const sourcePath = ctx.sourcePath;
+    const basename =
+      sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+    const currentPageLink = basename ? `[[${basename}]]` : "";
+    LogCallouts.renderCsvNoDataMessage(
+      el,
+      this.plugin,
+      undefined,
+      undefined,
+      currentPageLink,
+    );
   }
 
   // Parse code block parameters

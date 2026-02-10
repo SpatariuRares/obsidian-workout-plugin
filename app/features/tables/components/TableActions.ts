@@ -17,11 +17,9 @@ export class TableActions {
   static handleEdit(
     log: WorkoutLogData,
     plugin: WorkoutChartsPlugin,
-    onComplete?: () => void,
   ): void {
-    const modal = new EditLogModal(plugin.app, plugin, log, () => {
-      plugin.triggerWorkoutLogRefresh();
-      onComplete?.();
+    const modal = new EditLogModal(plugin.app, plugin, log, (ctx) => {
+      plugin.triggerWorkoutLogRefresh(ctx);
     });
     modal.open();
   }
@@ -32,7 +30,6 @@ export class TableActions {
   static handleDelete(
     log: WorkoutLogData,
     plugin: WorkoutChartsPlugin,
-    onComplete?: () => void,
   ): void {
     const modal = new ConfirmModal(
       plugin.app,
@@ -42,8 +39,10 @@ export class TableActions {
           try {
             await plugin.deleteWorkoutLogEntry(log);
             new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
-            plugin.triggerWorkoutLogRefresh();
-            onComplete?.();
+            plugin.triggerWorkoutLogRefresh({
+              exercise: log.exercise,
+              workout: log.workout,
+            });
           } catch (error) {
             const errorMessage =
               error instanceof Error ? error.message : String(error);
@@ -65,7 +64,6 @@ export class TableActions {
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
     plugin?: WorkoutChartsPlugin,
-    onRefresh?: () => void,
     signal?: AbortSignal
   ): void {
     if (!originalLog || !plugin) {
@@ -80,13 +78,13 @@ export class TableActions {
     editBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.handleEdit(originalLog, plugin, onRefresh);
+      this.handleEdit(originalLog, plugin);
     }, signal ? { signal } : undefined);
 
     deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.handleDelete(originalLog, plugin, onRefresh);
+      this.handleDelete(originalLog, plugin);
     }, signal ? { signal } : undefined);
   }
 }

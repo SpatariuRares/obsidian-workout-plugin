@@ -148,6 +148,7 @@ export class GeneralSettings {
       } else {
         // File doesn't exist, create it directly
         await muscleTagService.createDefaultCsv();
+        this.plugin.triggerMuscleTagRefresh();
         new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.MUSCLE_TAGS_CSV_CREATED);
       }
     } catch (error) {
@@ -169,6 +170,7 @@ export class GeneralSettings {
 
     try {
       await muscleTagService.saveTags(defaultTags);
+      this.plugin.triggerMuscleTagRefresh();
       new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.MUSCLE_TAGS_CSV_CREATED);
     } catch (error) {
       const errorMessage =

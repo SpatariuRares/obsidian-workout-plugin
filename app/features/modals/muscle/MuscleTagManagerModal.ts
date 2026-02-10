@@ -197,6 +197,7 @@ export class MuscleTagManagerModal extends ModalBase {
       await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVED);
+      this.plugin.triggerMuscleTagRefresh();
       this.hideForm();
       this.renderTags();
     } catch (error) {
@@ -225,6 +226,7 @@ export class MuscleTagManagerModal extends ModalBase {
       await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_DELETED);
+      this.plugin.triggerMuscleTagRefresh();
       this.renderTags();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -359,6 +361,7 @@ export class MuscleTagManagerModal extends ModalBase {
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORTED(importedCount),
       );
+      this.plugin.triggerMuscleTagRefresh();
       this.hideImportPreview();
       this.renderTags();
     } catch (error) {

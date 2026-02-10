@@ -240,7 +240,9 @@ export class ConvertExerciseDataModal extends ModalBase {
 
       new Notice(`Successfully converted ${count} log entries`);
       this.close();
-      this.plugin.triggerWorkoutLogRefresh();
+      this.plugin.triggerWorkoutLogRefresh({
+        exercise: this.selectedExercise,
+      });
     } catch (error) {
       new Notice("Error converting exercise data: " + error);
     }

@@ -55,7 +55,6 @@ export interface TableCodeOptions
   tableType: TABLE_TYPE;
 }
 export interface TableCallbacks {
-  onRefresh?: () => Promise<void>;
   onError?: (_error: Error, _context: string) => void;
   onSuccess?: (_message: string) => void;
 }

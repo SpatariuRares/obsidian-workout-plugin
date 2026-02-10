@@ -27,7 +27,6 @@ export class TableRenderer {
    * @param params - Table parameters
    * @param logs - Original log data objects
    * @param plugin - Plugin instance for operations
-   * @param onRefresh - Callback to refresh table
    * @param signal - AbortSignal for event listener cleanup
    * @returns True if rendering was successful, false otherwise
    */
@@ -38,7 +37,6 @@ export class TableRenderer {
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
     plugin?: WorkoutChartsPlugin, // pass the plugin for file opening
-    onRefresh?: () => void,
     signal?: AbortSignal,
   ): boolean {
     try {
@@ -56,7 +54,6 @@ export class TableRenderer {
         rows,
         headers,
         plugin,
-        onRefresh,
         signal,
       );
 
@@ -85,7 +82,6 @@ export class TableRenderer {
     rows: TableRow[],
     headers: string[],
     plugin?: WorkoutChartsPlugin,
-    onRefresh?: () => void,
     signal?: AbortSignal,
   ): void {
     if (rows.length === 0) return;
@@ -169,7 +165,6 @@ export class TableRenderer {
             td,
             row.originalLog,
             plugin,
-            onRefresh,
             signal,
           );
         } else if (cellIndex === volumeColumnIndex) {

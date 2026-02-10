@@ -286,7 +286,6 @@ describe("TableRenderer", () => {
       ];
 
       const mockPlugin = {} as any;
-      const onRefresh = jest.fn();
 
       TableRenderer.renderTable(
         container,
@@ -295,7 +294,6 @@ describe("TableRenderer", () => {
         {},
         [log],
         mockPlugin,
-        onRefresh,
       );
 
       const {

@@ -9,26 +9,23 @@
  * @module MuscleTagService
  */
 
-import { App, TFile, TAbstractFile, normalizePath, EventRef } from "obsidian";
+import { App, TFile, normalizePath } from "obsidian";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
 import { StringUtils } from "@app/utils";
 
 /**
  * Service for managing custom muscle tag mappings via CSV file.
- * Provides caching, file watching, and fallback to default tags.
+ * Provides caching and fallback to default tags.
  */
 export class MuscleTagService {
   private tagCache: Map<string, string> | null = null;
   private loadingPromise: Promise<Map<string, string>> | null = null;
-  private fileModifyRef: EventRef | null = null;
 
   constructor(
     private app: App,
     private settings: WorkoutChartsSettings,
-  ) {
-    this.registerFileWatcher();
-  }
+  ) {}
 
   /**
    * Computes the CSV path based on the settings csvLogFilePath.
@@ -44,16 +41,6 @@ export class MuscleTagService {
     );
   }
 
-  /**
-   * Registers a file watcher to invalidate cache when the CSV file changes.
-   */
-  private registerFileWatcher(): void {
-    this.fileModifyRef = this.app.vault.on("modify", (file: TAbstractFile) => {
-      if (file instanceof TFile && file.path === this.computeCsvPath()) {
-        this.clearCache();
-      }
-    });
-  }
 
   /**
    * Loads tags from the CSV file.
@@ -310,14 +297,10 @@ export class MuscleTagService {
   }
 
   /**
-   * Cleanup method to unregister file watcher.
+   * Cleanup method to clear cache.
    * Should be called when the plugin is unloaded.
    */
   destroy(): void {
-    if (this.fileModifyRef) {
-      this.app.vault.offref(this.fileModifyRef);
-      this.fileModifyRef = null;
-    }
     this.clearCache();
   }
 }

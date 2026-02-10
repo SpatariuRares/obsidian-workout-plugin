@@ -74,12 +74,17 @@ describe("CodeBlockProcessorService", () => {
     };
     mockChartView = {
       createChart: jest.fn().mockResolvedValue(undefined),
+      loadChartData: jest.fn().mockResolvedValue([]),
+      refreshChart: jest.fn().mockResolvedValue(undefined),
     };
     mockTableView = {
       createTable: jest.fn().mockResolvedValue(undefined),
+      refreshTable: jest.fn().mockResolvedValue(undefined),
     };
     mockDashboardView = {
       createDashboard: jest.fn().mockResolvedValue(undefined),
+      loadDashboardData: jest.fn().mockResolvedValue([]),
+      refreshDashboard: jest.fn().mockResolvedValue(undefined),
     };
     activeTimers = new Map();
     mockMuscleTagService = {
@@ -148,7 +153,7 @@ describe("CodeBlockProcessorService", () => {
         );
       const chartCallback = chartCall[1];
 
-      mockDataService.getWorkoutLogData.mockResolvedValue([
+      mockChartView.loadChartData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
       const el = document.createElement("div");
@@ -208,7 +213,7 @@ describe("CodeBlockProcessorService", () => {
         );
       const dashboardCallback = dashboardCall[1];
 
-      mockDataService.getWorkoutLogData.mockResolvedValue([
+      mockDashboardView.loadDashboardData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
       const el = document.createElement("div");
@@ -246,7 +251,7 @@ describe("CodeBlockProcessorService", () => {
 
   describe("handleWorkoutChart", () => {
     it("should render error if data loading fails", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue(
+      mockChartView.loadChartData.mockRejectedValue(
         new Error("Data Error"),
       );
       const el = document.createElement("div");
@@ -264,7 +269,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      mockChartView.loadChartData.mockRejectedValue("string error");
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -279,34 +284,8 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("should handle null return from getWorkoutLogData with filter", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
-      const el = document.createElement("div");
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutChart("exercise: Squat", el, ctx);
-
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
-    });
-
-    it("should handle null return from getWorkoutLogData without filter", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
-      const el = document.createElement("div");
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutChart("type: volume", el, ctx);
-
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
-    });
-
-    it("should render no data message if logs are empty", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([]);
+    it("should render no data message if loadChartData returns empty", async () => {
+      mockChartView.loadChartData.mockResolvedValue([]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -325,7 +304,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should create chart when data exists", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
+      mockChartView.loadChartData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
       const el = document.createElement("div");
@@ -339,8 +318,8 @@ describe("CodeBlockProcessorService", () => {
       expect(mockChartView.createChart).toHaveBeenCalled();
     });
 
-    it("should pass filter params to data service", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([
+    it("should pass params to loadChartData", async () => {
+      mockChartView.loadChartData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
       const el = document.createElement("div");
@@ -355,7 +334,7 @@ describe("CodeBlockProcessorService", () => {
         ctx,
       );
 
-      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+      expect(mockChartView.loadChartData).toHaveBeenCalledWith(
         expect.objectContaining({
           exercise: "Bench Press",
         }),
@@ -508,39 +487,26 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("handleWorkoutDashboard", () => {
-    it("should filter data by date range if provided", async () => {
-      const today = new Date();
-      const oldDate = new Date();
-      oldDate.setDate(today.getDate() - 100);
-
-      const data = [
-        { date: today.toISOString().split("T")[0] },
-        { date: oldDate.toISOString().split("T")[0] },
-      ];
-      mockDataService.getWorkoutLogData.mockResolvedValue(data);
-
+    it("should pass params to loadDashboardData", async () => {
+      mockDashboardView.loadDashboardData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      // dateRange: 30 should exclude the old date
       await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
 
-      expect(mockDashboardView.createDashboard).toHaveBeenCalledWith(
-        expect.any(HTMLElement),
-        expect.arrayContaining([data[0]]), // Should contain today
-        expect.any(Object),
+      expect(mockDashboardView.loadDashboardData).toHaveBeenCalledWith(
+        expect.objectContaining({ dateRange: 30 }),
       );
-
-      // Verify we passed filtered data (length 1)
-      const callArgs = mockDashboardView.createDashboard.mock.calls[0];
-      expect(callArgs[1].length).toBe(1);
+      expect(mockDashboardView.createDashboard).toHaveBeenCalled();
     });
 
-    it("should show no data message if filtered data is empty", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue([]);
+    it("should show no data message if loadDashboardData returns empty", async () => {
+      mockDashboardView.loadDashboardData.mockResolvedValue([]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -554,7 +520,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should catch errors", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue(
+      mockDashboardView.loadDashboardData.mockRejectedValue(
         new Error("Dashboard Fail"),
       );
       const el = document.createElement("div");
@@ -569,7 +535,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      mockDashboardView.loadDashboardData.mockRejectedValue("string error");
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -585,21 +551,10 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("should handle null return from getWorkoutLogData with dateRange", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
-      const el = document.createElement("div");
-      const ctx = {
-        addChild: jest.fn(),
-        sourcePath: "test/path.md",
-      } as unknown as MarkdownPostProcessorContext;
-
-      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
-
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
-    });
-
-    it("should handle null return from getWorkoutLogData without dateRange", async () => {
-      mockDataService.getWorkoutLogData.mockResolvedValue(null);
+    it("should use DataAwareRenderChild with empty params for dashboard", async () => {
+      mockDashboardView.loadDashboardData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -608,7 +563,7 @@ describe("CodeBlockProcessorService", () => {
 
       await (service as any).handleWorkoutDashboard("", el, ctx);
 
-      expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
+      expect(ctx.addChild).toHaveBeenCalled();
     });
   });
 

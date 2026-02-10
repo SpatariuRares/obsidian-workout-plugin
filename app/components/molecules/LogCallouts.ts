@@ -5,6 +5,7 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
 
 /**
@@ -15,7 +16,7 @@ export class LogCallouts {
   private static openCreateLogModal(
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
-    onComplete?: () => void,
+    onComplete?: (context?: WorkoutDataChangedEvent) => void,
   ): void {
     const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
     const currentPageLink = activeView?.file
@@ -27,7 +28,7 @@ export class LogCallouts {
       plugin,
       exerciseName,
       currentPageLink,
-      onComplete || (() => plugin.triggerWorkoutLogRefresh()),
+      onComplete || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
     ).open();
   }
 
@@ -35,7 +36,7 @@ export class LogCallouts {
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
-    onRefresh?: () => void,
+    onRefresh?: (context?: WorkoutDataChangedEvent) => void,
     currentPageLink?: string,
   ): void {
     Feedback.renderEmpty(container, "", { className: "workout-log-no-data" });
@@ -79,7 +80,7 @@ export class LogCallouts {
         plugin,
         exerciseName,
         link,
-        onRefresh || (() => plugin.triggerWorkoutLogRefresh()),
+        onRefresh || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
         undefined,
       ).open();
     });
@@ -96,7 +97,7 @@ export class LogCallouts {
     exerciseName: string,
     currentPageLink: string,
     plugin: WorkoutChartsPlugin,
-    onLogCreated?: () => void,
+    onLogCreated?: (context?: WorkoutDataChangedEvent) => void,
     signal?: AbortSignal,
     latestEntry?: WorkoutLogData,
   ): void {
@@ -146,7 +147,7 @@ export class LogCallouts {
     container: HTMLElement,
     exerciseName: string,
     plugin: WorkoutChartsPlugin,
-    onRefresh?: () => void,
+    onRefresh?: (context?: WorkoutDataChangedEvent) => void,
   ): void {
     const buttonContainer = Button.createContainer(container);
     buttonContainer.addClass("create-log-button-container");

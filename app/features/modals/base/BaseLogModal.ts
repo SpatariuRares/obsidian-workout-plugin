@@ -5,6 +5,7 @@ import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -23,7 +24,7 @@ import { RecentExercisesService } from "@app/features/modals/base/services/Recen
 export abstract class BaseLogModal extends ModalBase {
   protected exerciseName?: string;
   protected currentPageLink?: string;
-  protected onComplete?: () => void;
+  protected onComplete?: (context?: WorkoutDataChangedEvent) => void;
   protected dynamicFieldsRenderer: DynamicFieldsRenderer;
   protected logFormRenderer: LogFormRenderer;
   protected recentExercisesService: RecentExercisesService;
@@ -37,7 +38,7 @@ export abstract class BaseLogModal extends ModalBase {
     protected plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
-    onComplete?: () => void,
+    onComplete?: (context?: WorkoutDataChangedEvent) => void,
   ) {
     super(app);
     this.exerciseName = exerciseName;
@@ -276,7 +277,10 @@ export abstract class BaseLogModal extends ModalBase {
       new Notice(this.getSuccessMessage());
 
       if (this.onComplete) {
-        this.onComplete();
+        this.onComplete({
+          exercise: data.exercise,
+          workout: data.workout,
+        });
       }
     } catch (error) {
       const errorMessage =

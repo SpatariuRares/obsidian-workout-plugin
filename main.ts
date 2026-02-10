@@ -1,11 +1,12 @@
 // Main plugin file - Workout Charts for Obsidian
-import { Plugin, MarkdownView } from "obsidian";
+import { Plugin } from "obsidian";
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
   WorkoutLogData,
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
+import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "@app/features/charts";
 import { EmbeddedTableView } from "@app/features/tables";
@@ -52,8 +53,8 @@ export default class WorkoutChartsPlugin extends Plugin {
   public get createLogModalHandler() {
     return {
       openModal: () => {
-        new CreateLogModal(this.app, this, undefined, undefined, () => {
-          this.triggerWorkoutLogRefresh();
+        new CreateLogModal(this.app, this, undefined, undefined, (ctx) => {
+          this.triggerWorkoutLogRefresh(ctx);
         }).open();
       },
     };
@@ -119,8 +120,8 @@ export default class WorkoutChartsPlugin extends Plugin {
       "dumbbell",
       CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
       () => {
-        new CreateLogModal(this.app, this, undefined, undefined, () => {
-          this.triggerWorkoutLogRefresh();
+        new CreateLogModal(this.app, this, undefined, undefined, (ctx) => {
+          this.triggerWorkoutLogRefresh(ctx);
         }).open();
       },
     );
@@ -275,39 +276,37 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   /**
-   * Trigger refresh of workout log views using proper Obsidian APIs
+   * Trigger targeted refresh of workout log views via custom workspace events.
    *
-   * This method refreshes all markdown views to update workout-log code blocks
-   * after data changes. It uses Obsidian's public APIs instead of undocumented
-   * or plugin-specific triggers.
+   * Each rendered code block (table, chart, dashboard) registers a
+   * MarkdownRenderChild that listens for "workout-planner:data-changed".
+   * The RenderChild compares the event context (exercise/workout) with its
+   * own params and only re-renders when there is a match.
    *
-   * Process:
-   * 1. Clear data cache to force fresh data load
-   * 2. Iterate through all markdown views
-   * 3. Trigger editor refresh to re-render code blocks
-   * 4. Trigger metadata cache update to notify other plugins
+   * Passing no context (or empty object) triggers a global refresh of all views.
    */
-  public triggerWorkoutLogRefresh(): void {
+  public triggerWorkoutLogRefresh(context?: WorkoutDataChangedEvent): void {
     // Clear cache first to ensure fresh data on next render
     this.clearLogDataCache();
 
-    // Iterate through all markdown leaves using Obsidian's workspace API
-    this.app.workspace.iterateRootLeaves((leaf) => {
-      // Only process markdown views
-      if (leaf.view instanceof MarkdownView) {
-        const view = leaf.view;
+    // Fire custom event - each DataAwareRenderChild decides whether to refresh
+    this.app.workspace.trigger("workout-planner:data-changed", context ?? {});
+  }
 
-        // Refresh the editor to re-render code blocks
-        if (view?.editor) {
-          view.editor.refresh();
-        }
+  /**
+   * Trigger refresh after muscle tag mappings change.
+   *
+   * Clears the MuscleTagService cache, fires a dedicated
+   * "workout-planner:muscle-tags-changed" event, and also triggers a global
+   * data-changed event so dashboards (which already listen for it) re-render
+   * their MuscleHeatMap widget with updated tag mappings.
+   */
+  public triggerMuscleTagRefresh(): void {
+    this.muscleTagService.clearCache();
 
-        // Trigger metadata cache update to notify other components
-        // This is the proper Obsidian API for signaling content changes
-        if (view.file) {
-          this.app.metadataCache.trigger("changed", view.file);
-        }
-      }
-    });
+    this.app.workspace.trigger("workout-planner:muscle-tags-changed", {});
+
+    // Dashboards already refresh on global data-changed events
+    this.triggerWorkoutLogRefresh();
   }
 }

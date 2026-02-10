@@ -72,6 +72,39 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
+   * Load dashboard data from the plugin, applying dateRange filter if present.
+   */
+  async loadDashboardData(
+    params: EmbeddedDashboardParams,
+  ): Promise<WorkoutLogData[]> {
+    let logData = (await this.plugin.getWorkoutLogData()) || [];
+    if (params.dateRange) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(
+        cutoffDate.getDate() - (params.dateRange as number),
+      );
+      logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
+    }
+    return logData;
+  }
+
+  /**
+   * Refresh a dashboard by clearing cache, reloading data, and re-rendering.
+   * Symmetric with EmbeddedTableView.refreshTable() and EmbeddedChartView.refreshChart().
+   */
+  async refreshDashboard(
+    container: HTMLElement,
+    params: EmbeddedDashboardParams,
+  ): Promise<void> {
+    this.plugin.clearLogDataCache();
+    const freshData = await this.loadDashboardData(params);
+    container.empty();
+    if (freshData.length > 0) {
+      await this.createDashboard(container, freshData, params);
+    }
+  }
+
+  /**
    * Creates a workout dashboard with summary widgets and analytics
    */
   async createDashboard(

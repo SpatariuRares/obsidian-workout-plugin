@@ -13,6 +13,7 @@ This project follows the **DOE Framework** (Directive, Orchestration, Execution)
 **What**: Documentation files (Markdown SOPs - Standard Operating Procedures) written in natural language.
 
 **Function**: Defines **what** needs to be done:
+
 - Objectives and strategies
 - Required inputs and outputs
 - Which scripts/tools to use
@@ -28,6 +29,7 @@ This project follows the **DOE Framework** (Directive, Orchestration, Execution)
 **What**: The LLM itself (Claude Code) working within the development environment.
 
 **Function**: Acts as the **bridge** between directives and execution:
+
 - Reads and interprets directives (D)
 - Decides which execution tools (E) to activate
 - Follows established procedures rather than inventing solutions
@@ -42,6 +44,7 @@ This project follows the **DOE Framework** (Directive, Orchestration, Execution)
 **What**: Deterministic scripts, build tools, tests, and automation.
 
 **Function**: Executes the **"dirty work"**:
+
 - Build system (esbuild, PostCSS, TypeScript compiler)
 - Test suite (Jest)
 - Linting and formatting (ESLint)
@@ -79,6 +82,7 @@ When working on this codebase:
 5. **Prefer Code Over Instructions**: For complex logic, create deterministic utilities/services rather than relying on AI reasoning each time
 
 **Example**:
+
 - ❌ **Wrong**: Manually parsing CSV data in a modal each time
 - ✅ **Right**: Use `DataService` (E layer) which has deterministic parsing logic
 
@@ -110,6 +114,7 @@ The build process is sequential and must complete in order. Development mode (`n
 **Plugin Type**: Obsidian plugin for workout tracking with CSV data storage, visualizations (charts, tables, dashboards), timers, and exercise management.
 
 **Core Principles:**
+
 - **Service Layer Pattern**: Main plugin delegates to specialized services
 - **Facade Pattern**: Services expose clean APIs while delegating to internal components
 - **Atomic Design**: UI components organized by complexity (atoms → molecules → features)
@@ -138,7 +143,7 @@ WorkoutChartsPlugin
 ├── Services
 │   ├── DataService              # Facade for CSV operations (cache, columns, repository)
 │   ├── ExerciseDefinitionService # Exercise type definitions and field management
-│   ├── MuscleTagService          # Custom muscle tag mappings (with file watcher)
+│   ├── MuscleTagService          # Custom muscle tag mappings (CSV-backed, cached)
 │   ├── CommandHandlerService     # Registers Obsidian commands
 │   └── CodeBlockProcessorService # Registers code block processors
 │
@@ -153,6 +158,7 @@ WorkoutChartsPlugin
 ```
 
 **Key Lifecycle:**
+
 1. `onload()`: Initialize services, register processors, expose API, add ribbon icon
 2. `onunload()`: Clean up timers, views, charts, services, clear caches, nullify references
 3. Service cleanup order: timers → views → cache → Chart.js → service references → ribbon → API
@@ -162,6 +168,7 @@ WorkoutChartsPlugin
 #### DataService (Facade)
 
 Facade over specialized data services:
+
 - **CSVCacheService**: 5-second cache for raw CSV data
 - **CSVColumnService**: CSV header management (read, ensure columns exist)
 - **WorkoutLogRepository**: CRUD operations on CSV file
@@ -180,7 +187,7 @@ Manages exercise type definitions (Strength, Cardio, Flexibility, custom types) 
 
 #### MuscleTagService
 
-Manages custom muscle tag mappings (e.g., `petto` → `chest`) from CSV file. File watcher auto-reloads on changes. Call `destroy()` to unregister watcher.
+Manages custom muscle tag mappings (e.g., `petto` → `chest`) from CSV file. Cache is invalidated via `triggerMuscleTagRefresh()`. Call `destroy()` to clean up.
 
 ### Embedded Views (BaseView Pattern)
 
@@ -188,13 +195,14 @@ All embedded views extend `BaseView` for consistent error handling, loading stat
 
 ```typescript
 abstract class BaseView {
-  protected handleError(container, error): void
-  protected handleEmptyData(container, data, exercise?, onRefresh?, pageLink?): boolean
-  protected renderLoadingSpinner(container): HTMLElement
+  protected handleError(container, error): void;
+  protected handleEmptyData(container, data, exercise?, pageLink?): boolean;
+  protected renderLoadingSpinner(container): HTMLElement;
 }
 ```
 
 **Views:**
+
 - `EmbeddedChartView` - Chart.js visualizations (volume, weight, reps, pace, distance, duration, heart rate)
 - `EmbeddedTableView` - Sortable tables with edit/delete actions, protocol badges, target calculations
 - `EmbeddedTimerView` - Countdown/interval timers with presets and audio notifications
@@ -213,6 +221,7 @@ app/components/
 ```
 
 **Import patterns:**
+
 ```typescript
 // Preferred: barrel import
 import { Button, Icon, Text } from "@app/components/atoms";
@@ -223,11 +232,13 @@ import { Button } from "@app/components/atoms/Button";
 ```
 
 **Component Principles:**
+
 - **Atoms**: No dependencies on other UI components, single responsibility
 - **Molecules**: Composed from atoms, reusable across features
 - **Organism**: Minimal use - prefer feature-specific UI components instead
 
 **Feature-Specific UI Components** (NOT in shared components):
+
 ```
 app/features/
 ├── dashboard/ui/DashboardCard.ts      # Dashboard-specific card component
@@ -288,6 +299,7 @@ app/features/
 ```
 
 **Feature Organization Rules:**
+
 - `components/` - Core feature components
 - `business/` - Business logic, calculations (no UI)
 - `ui/` - Feature-specific UI components (not in shared components)
@@ -307,9 +319,15 @@ app/constants/
 ```
 
 **Import patterns:**
+
 ```typescript
 // Barrel import (convenient)
-import { ICONS, DEFAULT_SETTINGS, MUSCLE_TAGS, ERROR_MESSAGES } from "@app/constants";
+import {
+  ICONS,
+  DEFAULT_SETTINGS,
+  MUSCLE_TAGS,
+  ERROR_MESSAGES,
+} from "@app/constants";
 
 // Direct import (better tree-shaking for production)
 import { ICONS, MODAL_UI } from "@app/constants/ui.constants";
@@ -317,12 +335,46 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 ```
 
 **When adding constants:**
+
 - User-facing strings → `ui.constants.ts`
 - Default configurations → `defaults.constants.ts`
 - Validation/errors → `validation.constants.ts`
 - Muscle/exercise data → `muscles.constants.ts` or `exerciseTypes.constants.ts`
 
 **NEVER hardcode user-facing strings in components!**
+
+### Refresh Architecture (Event-Driven)
+
+All data mutations trigger a centralized refresh via workspace events. Views subscribe through `DataAwareRenderChild` and selectively re-render based on event context.
+
+**Workout log data** (`workout_logs.csv`):
+
+```
+Mutation → plugin.triggerWorkoutLogRefresh({exercise?, workout?})
+  → clearLogDataCache()
+  → workspace.trigger("workout-planner:data-changed", context)
+  → DataAwareRenderChild instances decide whether to refresh
+```
+
+**Muscle tag data** (`muscle-tags.csv`):
+
+```
+Mutation → plugin.triggerMuscleTagRefresh()
+  → muscleTagService.clearCache()
+  → workspace.trigger("workout-planner:muscle-tags-changed", {})
+  → triggerWorkoutLogRefresh() (dashboard refresh)
+```
+
+**Key components:**
+
+- `DataAwareRenderChild` — Listens for `data-changed`, calls `shouldRefresh(ctx)` to filter by exercise/workout
+- `CodeBlockProcessorService` — Wires each code block to a `DataAwareRenderChild` with its specific refresh function
+- `triggerWorkoutLogRefresh(ctx?)` — Entry point for workout log changes (tables, charts, dashboards)
+- `triggerMuscleTagRefresh()` — Entry point for muscle tag changes (dashboards)
+
+**Selective refresh:** When context includes exercise/workout, only matching views re-render. Empty context `{}` triggers global refresh of all views.
+
+**Important:** Do NOT pass local `onRefresh` callbacks through table components. The global event system handles all refresh logic. Table actions (edit/delete) call `triggerWorkoutLogRefresh()` directly.
 
 ### Data Flow
 
@@ -339,10 +391,12 @@ Views (Chart, Table, Dashboard) or Public API
 ```
 
 **CSV Columns (standard):**
+
 - `date`, `exercise`, `reps`, `weight`, `volume`, `origine`, `workout`, `timestamp`, `notes`, `protocol`
 - Custom fields for exercise type-specific parameters (duration, distance, pace, etc.)
 
 **Filtering strategies:**
+
 1. Filename matching
 2. Exercise field matching (exact, fuzzy, partial)
 3. Automatic strategy selection based on confidence scores
@@ -350,9 +404,10 @@ Views (Chart, Table, Dashboard) or Public API
 ### Code Block Syntax
 
 #### workout-chart
+
 ```yaml
 exercise: Squat
-type: volume              # volume, weight, reps, duration, distance, pace, heartRate
+type: volume # volume, weight, reps, duration, distance, pace, heartRate
 dateRange: 30
 showTrendLine: true
 showStats: true
@@ -360,26 +415,29 @@ height: 400
 ```
 
 #### workout-log
+
 ```yaml
 exercise: Bench Press
 exactMatch: false
 dateRange: 14
-sortBy: date             # date, exercise, weight, reps, volume
-sortOrder: desc          # asc, desc
+sortBy: date # date, exercise, weight, reps, volume
+sortOrder: desc # asc, desc
 limit: 50
 columns: ["date", "reps", "weight", "volume"]
 ```
 
 #### workout-timer
+
 ```yaml
 duration: 90
 label: Rest Period
 autoStart: false
 sound: true
-preset: rest             # Use saved preset
+preset: rest # Use saved preset
 ```
 
 #### workout-dashboard
+
 ```yaml
 # No parameters - shows full dashboard with all widgets
 ```
@@ -446,11 +504,13 @@ npm test -- path/to/file.test.ts  # Single file
 ```
 
 **Test Organization:**
+
 - Tests in `__tests__/` directories co-located with source files
 - Use `obsidianDomMocks.ts` for DOM API mocks (`createEl`, `createDiv`, etc.)
 - Mock Obsidian API: `__mocks__/obsidian.ts`
 
 **Coverage Configuration:**
+
 ```javascript
 collectCoverageFrom: [
   "app/utils/**/*.ts",
@@ -461,11 +521,12 @@ collectCoverageFrom: [
   "app/features/charts/**/*.ts",
   "app/features/tables/**/*.ts",
   "!app/**/__tests__/**",
-  "!app/**/index.ts",  // Barrel files excluded
-]
+  "!app/**/index.ts", // Barrel files excluded
+];
 ```
 
 **Test Patterns:**
+
 - Group tests by feature/behavior using `describe()`
 - Use descriptive test names: `it("should render error message when data is invalid")`
 - Test both rendering and interaction (click handlers, state changes)
@@ -474,10 +535,12 @@ collectCoverageFrom: [
 ## Barrel Files Strategy
 
 **✅ DO use barrel files for:**
+
 - Components: `components/atoms/index.ts`, `components/molecules/index.ts`
 - Constants: `constants/index.ts`
 
 **❌ DO NOT use barrel files for:**
+
 - Services (import directly from `@app/services/data/DataService`)
 - Features (import directly from specific files)
 - Utils (import directly from `@app/utils/DateUtils`)
@@ -546,11 +609,11 @@ The plugin exposes `window.WorkoutPlannerAPI` for Dataview and other plugins:
 ```typescript
 // Get workout logs with optional filtering
 const logs = await WorkoutPlannerAPI.getWorkoutLogs({
-  exercise: "Squat",          // Partial match, case-insensitive
+  exercise: "Squat", // Partial match, case-insensitive
   workout: "Push Day",
   dateRange: { start: "2025-01-01", end: "2025-01-31" },
   protocol: "drop_set",
-  exactMatch: false
+  exactMatch: false,
 });
 
 // Get exercise statistics
@@ -563,6 +626,7 @@ const exercises = await WorkoutPlannerAPI.getExercises({ tag: "chest" });
 ```
 
 **Example Dataview Query:**
+
 ```dataviewjs
 const logs = await WorkoutPlannerAPI.getWorkoutLogs({
   exercise: "Squat",
@@ -577,13 +641,14 @@ dv.table(
 
 ## Common Gotchas
 
-1. **Cache Invalidation**: Always call `plugin.clearLogDataCache()` after modifying CSV data
-2. **Chart.js Memory Leaks**: Ensure `ChartRenderer.destroyChart(chartId)` is called before creating new chart with same ID
-3. **Modal Cleanup**: Always call `modal.close()` after success, avoid leaving modals open
-4. **Timer Cleanup**: Active timers stored in `plugin.activeTimers` Map must be destroyed in `onunload()`
-5. **Service Dependencies**: Services initialized in order - DataService must exist before ExerciseDefinitionService
-6. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
-7. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
+1. **Cache Invalidation**: Use `plugin.triggerWorkoutLogRefresh(ctx)` after modifying workout CSV data, or `plugin.triggerMuscleTagRefresh()` after modifying muscle tags. Do NOT call `clearLogDataCache()` directly — the trigger methods handle it.
+2. **Double Refresh**: Never pass local `onRefresh` callbacks through table components. The global event system handles refresh. Adding local callbacks causes double-rendering.
+3. **Chart.js Memory Leaks**: Ensure `ChartRenderer.destroyChart(chartId)` is called before creating new chart with same ID
+4. **Modal Cleanup**: Always call `modal.close()` after success, avoid leaving modals open
+5. **Timer Cleanup**: Active timers stored in `plugin.activeTimers` Map must be destroyed in `onunload()`
+6. **Service Dependencies**: Services initialized in order - DataService must exist before ExerciseDefinitionService
+7. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
+8. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
 
 ## CSS Organization
 

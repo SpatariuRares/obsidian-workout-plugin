@@ -1,6 +1,6 @@
 # Obsidian Workout Plugin - Architecture Documentation
 
-> Last Updated: 2026-02-04
+> Last Updated: 2026-02-11
 
 ## Overview
 
@@ -42,7 +42,7 @@ app/
 │   ├── CodeBlockProcessorService.ts
 │   ├── CommandHandlerService.ts
 │   ├── ExerciseDefinitionService.ts
-│   ├── MuscleTagService.ts
+│   ├── MuscleTagService.ts        # Muscle tag mappings (CSV-backed, cached)
 │   ├── CodeBlockEditorService.ts
 │   ├── ExampleGeneratorService.ts
 │   ├── data/                   # Data layer
@@ -116,34 +116,34 @@ Components are organized as:
 - **Molecules**: Combinations of atoms (StatCard, SearchBox)
 - **Organisms**: Complex components (LogCallouts)
 
+### 5. Event-Driven Refresh
+
+All data mutations trigger centralized refresh via Obsidian workspace events:
+
+```
+Workout log mutation
+  → plugin.triggerWorkoutLogRefresh({exercise?, workout?})
+    → clearLogDataCache()
+    → workspace.trigger("workout-planner:data-changed", ctx)
+    → DataAwareRenderChild instances selectively re-render
+
+Muscle tag mutation
+  → plugin.triggerMuscleTagRefresh()
+    → muscleTagService.clearCache()
+    → workspace.trigger("workout-planner:muscle-tags-changed", {})
+    → triggerWorkoutLogRefresh() (refreshes dashboards)
+```
+
+**Key components:**
+
+- `DataAwareRenderChild` — extends `MarkdownRenderChild`, listens for `data-changed`, filters by exercise/workout context
+- `CodeBlockProcessorService` — wires each code block to its `DataAwareRenderChild`
+- `triggerWorkoutLogRefresh(ctx?)` — entry point for workout log changes
+- `triggerMuscleTagRefresh()` — entry point for muscle tag changes
+
+**Design principle:** No local `onRefresh` callbacks are passed through view components. All refresh flows through the global event system to prevent double-rendering.
+
 ---
-
-## Known Technical Debt
-
-### High Priority
-
-1. **Service Locator Antipattern** in `DataFilter.ts`
-   - Static `muscleTagService` reference
-   - Makes testing difficult
-
-2. **God Object**: `MuscleTagManagerModal.ts` (1090 lines)
-   - Handles UI, validation, import/export, fuzzy matching
-   - Should be split into components
-
-3. **SRP Violation**: `WorkoutLogData.ts` (454 lines)
-   - Mixes type definitions with CSV parsing logic
-
-### Medium Priority
-
-- `ExerciseDefinitionService.ts` (500 lines) - candidate for splitting
-- Static chart registry in `ChartRenderer.ts`
-- Hardcoded retry logic in `WorkoutLogRepository.ts`
-
-### Low Priority
-
-- Empty `logDebug()` method in `BaseView.ts`
-- Misplaced exports in `components/index.ts`
-- Large `ui.constants.ts` file (33KB)
 
 ---
 

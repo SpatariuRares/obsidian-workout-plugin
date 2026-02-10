@@ -1,3 +1,5 @@
+import type { EventRef } from "obsidian";
+
 export interface WorkoutDataChangedEvent {
   exercise?: string;
   workout?: string;

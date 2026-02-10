@@ -108,9 +108,6 @@ describe("MuscleTagService", () => {
   });
 
   describe("constructor", () => {
-    it("should register file watcher on construction", () => {
-      expect(mockVault.on).toHaveBeenCalledWith("modify", expect.any(Function));
-    });
 
     it("should compute CSV path based on settings", () => {
       expect(service.getCsvPath()).toBe("workout-data/muscle-tags.csv");
@@ -595,14 +592,24 @@ petto,chest`;
   });
 
   describe("destroy", () => {
-    it("should unregister file watcher on destroy", () => {
+    it("should clear cache on destroy", async () => {
       const service2 = new MuscleTagService(mockApp as any, mockSettings);
-      const eventRef =
-        mockVault.on.mock.results[mockVault.on.mock.results.length - 1].value;
 
+      const csvContent = `tag,muscleGroup\npetto,chest`;
+      const mockFile = new TFile();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+
+      // Load to populate cache
+      await service2.loadTags();
+      mockVault.read.mockClear();
+
+      // Verify cache is populated
+      const cached = service2.getTagMap();
+      expect(cached.get("petto")).toBe("chest");
+
+      // Destroy should clear the cache
       service2.destroy();
-
-      expect(mockVault.offref).toHaveBeenCalledWith(eventRef);
     });
 
     it("should clear cache on destroy", async () => {

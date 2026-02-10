@@ -1,5 +1,6 @@
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { FilterResult, TrendIndicators } from "@app/types/CommonTypes";
 import {
   EmbeddedChartParams,
@@ -35,7 +36,6 @@ export class EmbeddedChartView extends BaseView {
   public cleanup(): void {
     try {
       ChartRenderer.destroyAllCharts();
-      this.logDebug("EmbeddedChartView", "Cleanup completed successfully");
     } catch {
       return;
     }
@@ -65,12 +65,14 @@ export class EmbeddedChartView extends BaseView {
     container: HTMLElement,
     params: EmbeddedChartParams,
   ): Promise<void> {
+    PerformanceMonitor.start("chart:refreshChart");
     this.plugin.clearLogDataCache();
     const freshData = await this.loadChartData(params);
     container.empty();
     if (freshData.length > 0) {
       await this.createChart(container, freshData, params);
     }
+    PerformanceMonitor.end("chart:refreshChart");
   }
 
   async createChart(
@@ -79,11 +81,6 @@ export class EmbeddedChartView extends BaseView {
     params: EmbeddedChartParams,
   ): Promise<void> {
     try {
-      this.logDebug("EmbeddedChartView", "createChart called", {
-        dataLength: logData.length,
-        params,
-      });
-
       if (!this.validateChartParams(container, params)) {
         return;
       }
@@ -206,11 +203,6 @@ export class EmbeddedChartView extends BaseView {
     if (params.showTrendLine && datasets.length > 0) {
       ChartRenderer.addTrendLineToDatasets(datasets);
     }
-
-    this.logDebug("EmbeddedChartView", "Creating Chart.js with config", {
-      labels,
-      datasets,
-    });
 
     const chartSuccess = ChartRenderer.renderChart(
       chartContainer,

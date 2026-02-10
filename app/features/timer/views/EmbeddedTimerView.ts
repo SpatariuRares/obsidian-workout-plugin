@@ -26,32 +26,14 @@ export class EmbeddedTimerView extends BaseView {
 
     // Initialize timer core with callbacks
     this.timerCore = new TimerCore(this.timerId, {
-      onTimerComplete: () => {
-        this.logDebug("EmbeddedTimerView", "Timer completed callback", {
-          timerId: this.timerId,
-        });
-      },
-      onSoundPlay: () => {
-        this.logDebug("EmbeddedTimerView", "Sound played callback", {
-          timerId: this.timerId,
-        });
-      },
-      onStateChange: (state: TimerState) => {
-        this.logDebug("EmbeddedTimerView", "Timer state changed", {
-          timerId: this.timerId,
-          state,
-        });
-      },
+      onTimerComplete: () => {},
+      onSoundPlay: () => {},
+      onStateChange: (_state: TimerState) => {},
     });
   }
 
   createTimer(container: HTMLElement, params: EmbeddedTimerParams): void {
     try {
-      this.logDebug("EmbeddedTimerView", "createTimer called", {
-        params,
-        timerId: this.timerId,
-      });
-
       // Resolve parameters from preset and defaults
       const resolveResult = this.resolveTimerParams(params);
       if (resolveResult.error) {
@@ -80,26 +62,11 @@ export class EmbeddedTimerView extends BaseView {
         startTime: undefined,
       });
 
-      // Log timer initialization
-      this.logDebug("EmbeddedTimerView", "Timer initialized", {
-        timerId: this.timerId,
-        timerType,
-        duration,
-        totalRounds,
-      });
-
       this.renderTimerContent(container, resolvedParams);
 
       // Verify timer display was created
       const currentState = this.timerCore.getState();
       if (!currentState.timerDisplay) {
-        this.logDebug(
-          "EmbeddedTimerView",
-          "Timer display not created after rendering",
-          {
-            timerId: this.timerId,
-          },
-        );
         return;
       }
 
@@ -138,20 +105,12 @@ export class EmbeddedTimerView extends BaseView {
         };
       }
       baseParams = this.presetToParams(preset);
-      this.logDebug("EmbeddedTimerView", "Using specified preset", {
-        presetName: params.preset,
-        preset,
-      });
     }
     // Check for default preset if no explicit preset specified
     else if (settings.defaultTimerPreset) {
       const defaultPreset = settings.timerPresets[settings.defaultTimerPreset];
       if (defaultPreset) {
         baseParams = this.presetToParams(defaultPreset);
-        this.logDebug("EmbeddedTimerView", "Using default preset", {
-          presetName: settings.defaultTimerPreset,
-          preset: defaultPreset,
-        });
       }
     }
 
@@ -163,12 +122,6 @@ export class EmbeddedTimerView extends BaseView {
 
     // Remove the preset key from resolved params (it's not needed for timer operation)
     delete resolvedParams.preset;
-
-    this.logDebug("EmbeddedTimerView", "Resolved parameters", {
-      originalParams: params,
-      baseParams,
-      resolvedParams,
-    });
 
     return { params: resolvedParams };
   }

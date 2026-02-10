@@ -18,6 +18,7 @@ import {
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
+import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -46,11 +47,6 @@ export class EmbeddedDashboardView extends BaseView {
    */
   public cleanup(): void {
     try {
-      this.logDebug(
-        "EmbeddedDashboardView",
-        "Cleaning up dashboard view resources",
-      );
-
       // Clean up resize observer
       this.destroyResizeObserver();
 
@@ -61,11 +57,6 @@ export class EmbeddedDashboardView extends BaseView {
 
       // Clean up protocol distribution chart
       ProtocolDistribution.cleanup();
-
-      this.logDebug(
-        "EmbeddedDashboardView",
-        "Dashboard view cleanup completed",
-      );
     } catch {
       return;
     }
@@ -112,8 +103,7 @@ export class EmbeddedDashboardView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
   ): Promise<void> {
-    const startTime = performance.now();
-    this.logDebug("EmbeddedDashboardView", "Creating dashboard", { params });
+    PerformanceMonitor.start("dashboard:createDashboard");
 
     // Store state for potential re-rendering (e.g., protocol filter changes)
     this.currentContainer = container;
@@ -154,13 +144,9 @@ export class EmbeddedDashboardView extends BaseView {
       // Create dashboard layout
       await this.renderDashboard(container, filteredData, params);
 
-      // Debug information
-      const endTime = performance.now();
-      this.logDebug(
-        "EmbeddedDashboardView",
-        `Dashboard created in ${(endTime - startTime).toFixed(2)}ms`,
-      );
+      PerformanceMonitor.end("dashboard:createDashboard");
     } catch (error) {
+      PerformanceMonitor.end("dashboard:createDashboard");
       this.handleError(container, error as Error);
     }
   }
@@ -171,10 +157,6 @@ export class EmbeddedDashboardView extends BaseView {
    * @param protocol - Protocol to filter by, or null to clear filter
    */
   private handleProtocolFilterChange = (protocol: string | null): void => {
-    this.logDebug("EmbeddedDashboardView", "Protocol filter changed", {
-      protocol,
-    });
-
     // Update params with new filter
     const newParams: EmbeddedDashboardParams = {
       ...this.currentParams,
@@ -239,132 +221,27 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
-    // --- LISTITEM COMPONENT DEMO START ---
-    // const demoContainer = gridEl.createEl("div", {
-    //   cls: "workout-dashboard-widget span-4",
-    // });
-    // demoContainer.createEl("h3", {
-    //   text: "List item component demo",
-    // });
-
-    // // createList() with items - auto-populate
-    // demoContainer.createEl("h4", { text: "List with items prop" });
-    // ListItem.createList(demoContainer, {
-    //   className: "workout-muscle-group-list",
-    //   items: [
-    //     { label: "Deadlift", value: "15,000 vol" },
-    //     { label: "Rows", value: "6,800 vol" },
-    //   ],
-    // });
-
-    // // create() - full options
-    // demoContainer.createEl("h4", { text: "Full options" });
-    // const list1 = ListItem.createList(demoContainer, {
-    //   className: "workout-muscle-group-list",
-    // });
-    // ListItem.create(list1, {
-    //   label: "Squat",
-    //   value: "12,500 vol",
-    //   className: "workout-muscle-group-item",
-    // });
-    // ListItem.create(list1, {
-    //   label: "Bench Press",
-    //   value: "8,200 vol",
-    //   secondary: "2024-01-15",
-    //   className: "workout-muscle-group-item",
-    // });
-    // ListItem.create(list1, {
-    //   icon: "🏋️",
-    //   label: "With icon",
-    //   value: "100 kg",
-    //   className: "workout-muscle-group-item",
-    // });
-    // ListItem.create(list1, {
-    //   label: "Clickable item",
-    //   value: "click me",
-    //   className: "workout-muscle-group-item",
-    //   onClick: () => {
-    //     // Demo click handler
-    //   },
-    // });
-
-    // // createSimple() - shorthand
-    // demoContainer.createEl("h4", { text: "Simple shorthand" });
-    // const list1b = ListItem.createList(demoContainer, {
-    //   className: "workout-muscle-group-list",
-    // });
-    // ListItem.createSimple(list1b, "Lunges", "5,000 vol");
-    // ListItem.createSimple(
-    //   list1b,
-    //   "Leg Press",
-    //   "7,200 vol",
-    //   "workout-muscle-group-item",
-    // );
-
-    // // createStat() - bold values with suffix
-    // demoContainer.createEl("h4", { text: "Stat with bold value" });
-    // const list2 = ListItem.createList(demoContainer, {
-    //   className: "workout-charts-stats-list",
-    // });
-    // ListItem.createStat(list2, {
-    //   label: "Max: ",
-    //   value: "125.5 kg",
-    //   suffix: " (2024-01-10)",
-    // });
-    // ListItem.createStat(list2, {
-    //   label: "Avg volume: ",
-    //   value: "8,450 kg",
-    // });
-    // ListItem.createStat(list2, {
-    //   label: "Sessions: ",
-    //   value: 42,
-    // });
-
-    // // createText() - text only
-    // demoContainer.createEl("h4", { text: "Text only" });
-    // const list3 = ListItem.createList(demoContainer, {
-    //   className: "workout-convert-preview-mappings",
-    // });
-    // ListItem.createText(list3, { text: "Weight → Peso" });
-    // ListItem.createText(list3, { text: "Reps → Reps" });
-    // ListItem.createText(list3, {
-    //   text: "Custom class item",
-    //   className: "workout-muscle-group-item",
-    // });
-
-    // // createEmpty() - custom content
-    // demoContainer.createEl("h4", { text: "Custom content" });
-    // const list4 = ListItem.createList(demoContainer);
-    // const customItem = ListItem.createEmpty(list4, "workout-file-error-item");
-    // customItem.createEl("a", {
-    //   text: "Exercise.md",
-    //   cls: "workout-file-error-link clickable",
-    // });
-    // const customItem2 = ListItem.createEmpty(list4);
-    // customItem2.createEl("span", { text: "Nested: " });
-    // const nestedList = ListItem.createList(customItem2);
-    // ListItem.createText(nestedList, { text: "Nested item 1" });
-    // ListItem.createText(nestedList, { text: "Nested item 2" });
-
-    // --- LISTITEM COMPONENT DEMO END ---
-
-    // Summary Widget Section (Full Width) - uses filtered data
+    PerformanceMonitor.start("dashboard:widget:summary");
     SummaryWidget.render(gridEl, displayData, params);
+    PerformanceMonitor.end("dashboard:widget:summary");
 
-    // Quick Stats Cards Section (Full Width) - uses filtered data
+    PerformanceMonitor.start("dashboard:widget:quickStats");
     QuickStatsCards.render(gridEl, displayData, params);
+    PerformanceMonitor.end("dashboard:widget:quickStats");
 
-    // Muscle Heat Map Section (Left Column previously) - uses filtered data
+    PerformanceMonitor.start("dashboard:widget:muscleHeatMap");
     await MuscleHeatMap.render(gridEl, displayData, params, this.plugin);
+    PerformanceMonitor.end("dashboard:widget:muscleHeatMap");
 
-    // Volume Analytics Section (Right Column previously) - uses filtered data
+    PerformanceMonitor.start("dashboard:widget:volumeAnalytics");
     VolumeAnalytics.render(gridEl, displayData, params);
+    PerformanceMonitor.end("dashboard:widget:volumeAnalytics");
 
-    // Recent Workouts Section (Right Column previously) - uses filtered data
+    PerformanceMonitor.start("dashboard:widget:recentWorkouts");
     RecentWorkouts.render(gridEl, displayData, params);
+    PerformanceMonitor.end("dashboard:widget:recentWorkouts");
 
-    // Protocol Distribution Section (Right Column previously)
-    // Uses original data for the pie chart, but passes the active filter for highlighting
+    PerformanceMonitor.start("dashboard:widget:protocolDistribution");
     ProtocolDistribution.render(
       gridEl,
       data,
@@ -372,21 +249,27 @@ export class EmbeddedDashboardView extends BaseView {
       this.plugin,
       this.handleProtocolFilterChange,
     );
+    PerformanceMonitor.end("dashboard:widget:protocolDistribution");
 
-    // Protocol Effectiveness Section (Right Column previously) - uses all data for statistical analysis
+    PerformanceMonitor.start("dashboard:widget:protocolEffectiveness");
     ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
+    PerformanceMonitor.end("dashboard:widget:protocolEffectiveness");
 
-    // Duration Comparison Section (Right Column previously) - uses all data for duration analysis
+    PerformanceMonitor.start("dashboard:widget:durationComparison");
     DurationComparison.render(gridEl, data, params);
+    PerformanceMonitor.end("dashboard:widget:durationComparison");
 
-    // Quick Actions Panel (Right Column previously)
+    PerformanceMonitor.start("dashboard:widget:quickActions");
     QuickActions.render(gridEl, params, this.plugin);
+    PerformanceMonitor.end("dashboard:widget:quickActions");
 
-    // Exercise File Errors Widget (Right Column previously)
+    PerformanceMonitor.start("dashboard:widget:fileErrors");
     await WidgetsFileError.render(gridEl, this.plugin);
+    PerformanceMonitor.end("dashboard:widget:fileErrors");
 
-    // Muscle Tags Widget (Right Column previously)
+    PerformanceMonitor.start("dashboard:widget:muscleTags");
     MuscleTagsWidget.render(gridEl, params, this.plugin);
+    PerformanceMonitor.end("dashboard:widget:muscleTags");
 
     // Apply bento layout and observe for resize
     this.applyBentoLayout(gridEl);

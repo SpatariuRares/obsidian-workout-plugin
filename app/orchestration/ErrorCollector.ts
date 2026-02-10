@@ -81,6 +81,7 @@ export class ErrorCollector {
 
 		// In development mode, also log to console
 		if (instance.isDevelopmentMode()) {
+			// eslint-disable-next-line no-console
 			console.error(`[ErrorCollector] ${normalized.type}:`, {
 				component: normalized.component,
 				message:
@@ -116,6 +117,7 @@ export class ErrorCollector {
 	private isDevelopmentMode(): boolean {
 		// In Obsidian plugin context, we don't have process.env
 		// Check if console.debug is available (desktop app)
+		// eslint-disable-next-line no-console
 		return typeof console.debug === "function";
 	}
 

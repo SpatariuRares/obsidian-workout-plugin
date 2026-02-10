@@ -22,7 +22,6 @@ jest.mock("@app/features/common/views/BaseView", () => ({
     constructor(plugin: any) {
       this.plugin = plugin;
     }
-    logDebug() {}
     handleError(container: HTMLElement, error: Error) {
       container.textContent = error.message;
     }

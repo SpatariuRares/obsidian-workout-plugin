@@ -5,7 +5,7 @@ import {
   EXERCISE_TYPE_IDS,
   DEFAULT_EXERCISE_TYPE_ID,
 } from "@app/constants/exerciseTypes.constants";
-import { App, normalizePath, Notice, TFile } from "obsidian";
+import { App, normalizePath, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";

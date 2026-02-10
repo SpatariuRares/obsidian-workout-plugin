@@ -17,15 +17,6 @@ export abstract class BaseView {
   constructor(protected plugin: WorkoutChartsPlugin) {}
 
   /**
-   * Common debug logging method used across all views
-   */
-  protected logDebug(
-    _className: string,
-    _message: string,
-    _data?: unknown,
-  ): void {}
-
-  /**
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {

@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import {
@@ -60,9 +61,8 @@ export class EmbeddedTableView extends BaseView {
     super(plugin);
 
     this.callbacks = {
-      onError: (error, context) =>
-        this.logDebug("EmbeddedTableView", `Error in ${context}`, { error }),
-      onSuccess: (message) => this.logDebug("EmbeddedTableView", message),
+      onError: (_error, _context) => {},
+      onSuccess: (_message) => {},
     };
   }
 
@@ -79,6 +79,7 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
   ): Promise<void> {
+    PerformanceMonitor.start("table:renderTable");
     try {
       const validationErrors = TableConfig.validateParams(params);
       if (!this.validateAndHandleErrors(container, validationErrors)) {
@@ -119,7 +120,9 @@ export class EmbeddedTableView extends BaseView {
       );
 
       this.renderTableContentOptimized(container, tableData);
+      PerformanceMonitor.end("table:renderTable");
     } catch (error) {
+      PerformanceMonitor.end("table:renderTable");
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
@@ -312,8 +315,6 @@ export class EmbeddedTableView extends BaseView {
    */
   public cleanup(): void {
     try {
-      this.logDebug("EmbeddedTableView", "Cleaning up table view resources");
-
       for (const renderChild of this.renderChildren) {
         try {
           renderChild.unload();
@@ -323,8 +324,6 @@ export class EmbeddedTableView extends BaseView {
       }
 
       this.renderChildren = [];
-
-      this.logDebug("EmbeddedTableView", "Table view cleanup completed");
     } catch {
       // Silently fail cleanup
     }

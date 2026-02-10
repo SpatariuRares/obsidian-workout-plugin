@@ -14,6 +14,7 @@ export default [
       "node_modules/**",
       "dist/**",
       "build/**",
+      "scripts/**",
       "*.config.js",
       "*.config.mjs",
       "build-css.mjs",

@@ -69,7 +69,7 @@ export class CodeBlockEditorService {
   ): { content: string; updated: boolean } {
     const lines = content.split("\n");
     let inCodeBlock = false;
-    let codeBlockStart = -1;
+    let _codeBlockStart = -1;
     let foundExercise = false;
     let paramLineIndex = -1;
 
@@ -79,7 +79,7 @@ export class CodeBlockEditorService {
       // Start of target code block
       if (line.startsWith(`\`\`\`${blockType}`)) {
         inCodeBlock = true;
-        codeBlockStart = i;
+        _codeBlockStart = i;
         foundExercise = false;
         paramLineIndex = -1;
         continue;

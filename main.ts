@@ -21,6 +21,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
+import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -61,6 +62,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async onload() {
+    PerformanceMonitor.start("plugin:onload");
     await this.loadSettings();
 
     // Initialize embedded views
@@ -69,6 +71,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
+    PerformanceMonitor.start("plugin:initServices");
     this.dataService = new DataService(this.app, this.settings);
     this.exerciseDefinitionService = new ExerciseDefinitionService(
       this.app,
@@ -84,6 +87,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedDashboardView,
       this.activeTimers,
     );
+    PerformanceMonitor.end("plugin:initServices");
 
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
@@ -101,6 +105,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
     this.updateQuickLogRibbon();
+    PerformanceMonitor.end("plugin:onload");
   }
 
   /**
@@ -286,11 +291,13 @@ export default class WorkoutChartsPlugin extends Plugin {
    * Passing no context (or empty object) triggers a global refresh of all views.
    */
   public triggerWorkoutLogRefresh(context?: WorkoutDataChangedEvent): void {
+    PerformanceMonitor.start("refresh:workoutLog");
     // Clear cache first to ensure fresh data on next render
     this.clearLogDataCache();
 
     // Fire custom event - each DataAwareRenderChild decides whether to refresh
     this.app.workspace.trigger("workout-planner:data-changed", context ?? {});
+    PerformanceMonitor.end("refresh:workoutLog");
   }
 
   /**

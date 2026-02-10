@@ -34,11 +34,6 @@ export class EmbeddedDurationView extends BaseView {
     params: EmbeddedDurationParams,
     currentFilePath: string,
   ): Promise<void> {
-    this.logDebug("EmbeddedDurationView", "Creating duration estimator", {
-      params,
-      currentFilePath,
-    });
-
     try {
       // Clear container
       container.empty();

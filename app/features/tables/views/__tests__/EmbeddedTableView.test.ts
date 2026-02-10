@@ -124,7 +124,7 @@ jest.mock("@app/features/tables", () => ({
 }));
 
 // Mock LogCallouts
-jest.mock("@app/components/organism/LogCallouts", () => ({
+jest.mock("@app/components/molecules/LogCallouts", () => ({
   LogCallouts: {
     renderAddLogButton: jest.fn(),
   },
@@ -165,7 +165,7 @@ import {
   AchievementBadge,
   GoToExerciseButton,
 } from "@app/features/tables";
-import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { LogCallouts } from "@app/components/molecules/LogCallouts";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},

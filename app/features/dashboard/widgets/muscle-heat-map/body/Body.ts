@@ -1,7 +1,7 @@
 import { type BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body/index";
-import { SVGBuilder } from "@app/features/dashboard/widgets/muscle-heat-map/body/utils/SVGBuilder";
-import { ViewDataPreparer } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/ViewDataPreparer";
-import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/renderers/BodyViewSvg";
+import { SVGBuilder } from "@app/features/dashboard/widgets/muscle-heat-map/body/SVGBuilder";
+import { ViewDataPreparer } from "@app/features/dashboard/widgets/muscle-heat-map/body/ViewDataPreparer";
+import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/BodyViewSvg";
 
 export enum VIEW_TYPE {
   FRONT = "front",

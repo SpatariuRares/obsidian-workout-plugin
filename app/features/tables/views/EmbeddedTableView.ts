@@ -16,7 +16,7 @@ import {
   EmbeddedTableParams,
   TableData,
 } from "@app/features/tables/types";
-import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import WorkoutChartsPlugin from "main";
 import { VIEW_TYPES } from "@app/types/ViewTypes";

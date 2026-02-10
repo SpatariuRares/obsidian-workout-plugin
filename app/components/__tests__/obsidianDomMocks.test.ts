@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { INPUT_TYPE } from "@app/types";
+import { INPUT_TYPE } from "@app/types/InputTypes";
 import { Input } from "../atoms";
 import { createObsidianContainer } from "./obsidianDomMocks";
 

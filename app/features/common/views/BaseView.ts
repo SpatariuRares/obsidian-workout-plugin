@@ -4,7 +4,7 @@ import type WorkoutChartsPlugin from "main";
 import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
 import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";

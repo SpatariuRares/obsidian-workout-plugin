@@ -2,7 +2,7 @@
 import { TFile } from "obsidian";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TimerPresetConfig } from "@app/features/timer/types";
-import { StringUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /**
  * Workout protocol enum for specialized training techniques.

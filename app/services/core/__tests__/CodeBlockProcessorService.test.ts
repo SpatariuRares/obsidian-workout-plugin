@@ -41,7 +41,7 @@ jest.mock("@app/components/atoms/Feedback", () => ({
   },
 }));
 
-jest.mock("@app/components/organism/LogCallouts", () => ({
+jest.mock("@app/components/molecules/LogCallouts", () => ({
   LogCallouts: {
     renderCsvNoDataMessage: jest.fn(),
   },
@@ -50,7 +50,7 @@ jest.mock("@app/components/organism/LogCallouts", () => ({
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 

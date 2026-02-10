@@ -19,6 +19,7 @@ export type ObsidianHTMLElement = HTMLElement & {
   removeClass: (cls: string) => void;
   appendText: (text: string) => Text;
   empty: () => void;
+  setText: (text: string) => ObsidianHTMLElement;
 };
 
 /**
@@ -88,6 +89,11 @@ export const attachObsidianHelpers = <T extends HTMLElement>(
     while (this.firstChild) {
       this.removeChild(this.firstChild);
     }
+  };
+
+  obsidianElement.setText = function setText(text: string): ObsidianHTMLElement {
+    this.textContent = text;
+    return this as unknown as ObsidianHTMLElement;
   };
 
   return obsidianElement;

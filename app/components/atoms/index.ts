@@ -11,7 +11,6 @@ export {
 export { Canvas, type CanvasProps } from "@app/components/atoms/Canvas";
 export { Text, type TextProps } from "@app/components/atoms/Text";
 export { Icon, type IconProps } from "@app/components/atoms/Icon";
-export { ErrorMessage } from "@app/components/atoms/ErrorMessage";
 export { Input, type InputProps } from "@app/components/atoms/Input";
 export {
 	SpacerStat,

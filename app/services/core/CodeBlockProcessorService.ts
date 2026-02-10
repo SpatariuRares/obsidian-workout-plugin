@@ -13,7 +13,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
-import { LogCallouts } from "@app/components/organism/LogCallouts";
+import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 
 class TimerRenderChild extends MarkdownRenderChild {

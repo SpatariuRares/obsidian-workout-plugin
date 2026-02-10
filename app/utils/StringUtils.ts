@@ -14,7 +14,8 @@ export class StringUtils {
    * StringUtils.normalize("  Hello World  ") // "hello world"
    * StringUtils.normalize("CHEST") // "chest"
    */
-  static normalize(str: string): string {
+  static normalize(str: string | undefined | null): string {
+    if (!str) return "";
     return str.trim().toLowerCase();
   }
 

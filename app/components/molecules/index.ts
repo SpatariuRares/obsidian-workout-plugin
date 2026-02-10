@@ -36,11 +36,6 @@ export {
 } from "@app/components/molecules/LoadingSpinner";
 
 // Priority 3 Molecules
-// ChartLegendItem moved to @app/features/charts/ui
-export {
-  ChartLegendItem,
-  type ChartLegendItemProps,
-} from "@app/features/charts/ui/ChartLegendItem";
 export {
   FilterIndicator,
   type FilterIndicatorProps,
@@ -56,3 +51,7 @@ export {
   type TextItemProps,
   type StatItemProps,
 } from "@app/components/molecules/ListItem";
+export {
+  DashboardCard,
+  type DashboardCardProps,
+} from "@app/features/dashboard/ui/DashboardCard";

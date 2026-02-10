@@ -5,13 +5,13 @@ import {
   calculatePeriodStats,
   PeriodStats,
 } from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
-import { StatCard } from "@app/components/molecules";
+import { StatCard, DashboardCard } from "@app/components/molecules";
 
 export class QuickStatsCards {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams,
   ): void {
     const cardsEl = container.createEl("div", {
       cls: "workout-dashboard-widget workout-stats-cards",
@@ -36,19 +36,19 @@ export class QuickStatsCards {
       statsGrid,
       CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
       weekStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
     );
     this.createStatsCard(
       statsGrid,
       CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
       monthStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
     );
     this.createStatsCard(
       statsGrid,
       CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
       yearStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR
+      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
     );
   }
 
@@ -56,22 +56,13 @@ export class QuickStatsCards {
     container: HTMLElement,
     title: string,
     stats: PeriodStats,
-    icon: string
+    icon: string,
   ): void {
-    // Create period card container
-    const cardEl = container.createEl("div", { cls: "workout-stats-card" });
-
-    // Header with icon and title
-    const headerEl = cardEl.createEl("div", { cls: "workout-card-header" });
-
-    headerEl.createEl("div", {
-      text: icon,
-      cls: "workout-card-icon",
-    });
-
-    headerEl.createEl("h4", {
-      text: title,
-      cls: "workout-card-title",
+    const cardEl = DashboardCard.create(container, {
+      icon,
+      title,
+      variant: "stats",
+      className: "workout-stats-card",
     });
 
     // Stats grid using StatCard molecules
@@ -89,7 +80,8 @@ export class QuickStatsCards {
     StatCard.create(statsEl, {
       icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       value: stats.volume.toLocaleString(),
-      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
+      label:
+        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
       className: "workout-stat-item",
     });
 

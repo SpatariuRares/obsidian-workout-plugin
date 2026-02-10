@@ -4,10 +4,8 @@
  */
 
 import type { BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body/index";
-import {
-	IntensityCalculator,
-	HeatMapColors,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body/utils";
+import { IntensityCalculator } from "@app/features/dashboard/widgets/muscle-heat-map/body/IntensityCalculator";
+import { HeatMapColors } from "@app/features/dashboard/widgets/muscle-heat-map/body/HeatMapColors";
 
 /**
  * Muscle colors for visualization

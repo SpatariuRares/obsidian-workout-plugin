@@ -19,7 +19,8 @@ import {
 } from "chart.js";
 import type WorkoutChartsPlugin from "main";
 import { Canvas } from "@app/components/atoms";
-import { ChartLegendItem, FilterIndicator } from "@app/components/molecules";
+import { FilterIndicator } from "@app/components/molecules";
+import { ChartLegendItem } from "@app/features/charts/ui";
 
 // Register required Chart.js components for pie charts
 Chart.register(ArcElement, PieController, Tooltip, Legend);

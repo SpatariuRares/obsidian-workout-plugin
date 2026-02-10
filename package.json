@@ -13,7 +13,13 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "doe:validate": "node scripts/validation/check-imports.mjs",
+    "doe:analyze-errors": "node scripts/learning/error-analyzer.mjs",
+    "doe:generate-component": "node scripts/automation/generate-component.mjs",
+    "doe:error-stats": "node scripts/learning/error-logger.mjs stats",
+    "doe:prune-errors": "node scripts/learning/error-logger.mjs prune",
+    "doe:init-errors": "node scripts/learning/error-logger.mjs init"
   },
   "keywords": [
     "obsidian",
@@ -42,6 +48,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-obsidianmd": "^0.1.9",
+    "glob": "^11.0.0",
     "jest": "^30.2.0",
     "jest-environment-obsidian": "^0.0.1",
     "obsidian": "latest",

@@ -8,6 +8,7 @@ import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
+import { ErrorCollector } from "@app/orchestration/ErrorCollector";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -28,6 +29,17 @@ export abstract class BaseView {
    * Common error handling pattern for all views
    */
   protected handleError(container: HTMLElement, error: Error): void {
+    // Log error for DOE learning system
+    ErrorCollector.logError({
+      type: "view_error",
+      view: this.constructor.name,
+      error: error,
+      context: {
+        timestamp: Date.now(),
+      },
+    });
+
+    // Render user-friendly error message
     Feedback.renderError(container, error.message, {
       title: CONSTANTS.WORKOUT.ERRORS.TYPES.GENERIC,
     });

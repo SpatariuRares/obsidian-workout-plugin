@@ -2,6 +2,7 @@ import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
 import postcss from "esbuild-postcss";
+import { logBuildError } from "./scripts/learning/error-logger.mjs";
 
 const banner =
 `/*
@@ -43,8 +44,28 @@ const context = await esbuild.context({
 });
 
 if (prod) {
-	await context.rebuild();
-	process.exit(0);
+	try {
+		await context.rebuild();
+		process.exit(0);
+	} catch (error) {
+		console.error('✗ esbuild failed:', error.message);
+		await logBuildError({
+			script: 'esbuild.config.mjs',
+			error: error,
+			context: { mode: 'production' }
+		});
+		process.exit(1);
+	}
 } else {
-	await context.watch();
+	try {
+		await context.watch();
+	} catch (error) {
+		console.error('✗ esbuild watch failed:', error.message);
+		await logBuildError({
+			script: 'esbuild.config.mjs',
+			error: error,
+			context: { mode: 'development' }
+		});
+		process.exit(1);
+	}
 }

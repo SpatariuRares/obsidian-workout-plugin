@@ -1,5 +1,6 @@
 import * as sass from 'sass';
 import fs from 'fs';
+import { logBuildError } from './scripts/learning/error-logger.mjs';
 
 const inputFile = 'styles.source.scss';
 const outputFile = 'styles.css';
@@ -14,5 +15,13 @@ try {
     console.log('✓ SCSS bundled successfully');
 } catch (error) {
     console.error('✗ SCSS build failed:', error.message);
+
+    // Log error for DOE learning system
+    await logBuildError({
+        script: 'build-css.mjs',
+        error: error,
+        context: { inputFile, outputFile }
+    });
+
     process.exit(1);
 }

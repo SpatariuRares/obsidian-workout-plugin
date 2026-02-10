@@ -217,3 +217,86 @@ If changes to the script aren't reflected:
 - These scripts are plain JavaScript and run in Obsidian's context
 - The functions are accessed via `tp.user.functionName()` in templates
 - See [Templater documentation](https://silentvoid13.github.io/Templater/user-functions/script-user-functions.html) for more details on user scripts
+
+---
+
+# DOE Framework - E Layer (Execution)
+
+This directory also contains deterministic scripts for the **DOE Framework's Execution Layer**. These scripts perform complex, repeatable operations for development and maintenance.
+
+## DOE Framework Overview
+
+- **D (Directive)**: `directives/` - What needs to be done (SOPs)
+- **O (Orchestration)**: Claude Code - Reads directives, coordinates execution
+- **E (Execution)**: `scripts/` - Performs deterministic operations (you are here)
+
+## DOE Scripts Directory Structure
+
+```
+scripts/
+├── automation/          # Code generation and automation
+│   └── generate-component.mjs    # Generate atomic component boilerplate
+├── validation/          # Code quality validation
+│   └── check-imports.mjs         # Validate import paths
+├── learning/            # DOE learning system
+│   ├── error-logger.mjs          # Log errors for pattern analysis
+│   ├── error-analyzer.mjs        # Analyze error patterns
+│   └── error-log.json            # Error database
+└── data/                # Data operations (future)
+```
+
+## Available DOE Scripts
+
+### Automation
+
+#### Generate Component
+```bash
+npm run doe:generate-component -- --name=MyComponent --type=atom
+```
+Generates component file, test file, and updates barrel exports.
+
+### Validation
+
+#### Check Imports
+```bash
+npm run doe:validate
+```
+Validates import paths follow project conventions (@app/* aliases, no bad barrel imports).
+
+### Learning System
+
+#### Initialize Error Log
+```bash
+npm run doe:init-errors
+```
+
+#### Analyze Errors
+```bash
+npm run doe:analyze-errors
+```
+Analyzes error patterns and generates recommendations for directive updates.
+
+#### Error Statistics
+```bash
+npm run doe:error-stats
+```
+
+#### Prune Old Errors
+```bash
+npm run doe:prune-errors
+```
+Removes resolved errors older than 30 days.
+
+## How DOE Scripts Work
+
+1. **Directives reference scripts** - SOPs specify which scripts to run
+2. **Claude Code executes scripts** - Orchestrator follows directives
+3. **Scripts log errors** - Errors feed into learning system
+4. **Analysis improves directives** - Error patterns update SOPs
+5. **System becomes more reliable** - Repeated errors prevented
+
+## See Also
+
+- `directives/README.md` - Directive system overview
+- `CLAUDE.md` - DOE Framework documentation
+- `app/orchestration/` - Orchestration layer code

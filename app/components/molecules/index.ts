@@ -55,3 +55,4 @@ export {
   DashboardCard,
   type DashboardCardProps,
 } from "@app/features/dashboard/ui/DashboardCard";
+export { LogCallouts } from "@app/components/molecules/LogCallouts";

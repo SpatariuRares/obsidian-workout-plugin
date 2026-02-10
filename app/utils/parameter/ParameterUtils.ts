@@ -19,7 +19,7 @@ import { StringUtils } from "@app/utils/StringUtils";
  * Reserved parameter keys that cannot be used for custom parameters.
  * These conflict with standard CSV columns or internal computed values.
  */
-export const RESERVED_PARAMETER_KEYS: readonly string[] = [
+const RESERVED_PARAMETER_KEYS: readonly string[] = [
   // Standard CSV columns
   ...STANDARD_CSV_COLUMNS,
   // Computed/internal values
@@ -33,7 +33,7 @@ export const RESERVED_PARAMETER_KEYS: readonly string[] = [
  * Default units for built-in parameter types.
  * Used when ParameterDefinition doesn't specify a unit.
  */
-export const DEFAULT_PARAMETER_UNITS: Record<string, string> = {
+const DEFAULT_PARAMETER_UNITS: Record<string, string> = {
   weight: "kg",
   reps: "",
   volume: "kg",
@@ -48,7 +48,7 @@ export const DEFAULT_PARAMETER_UNITS: Record<string, string> = {
  * Default colors for chart data types.
  * Used when displaying custom parameters in charts.
  */
-export const CHART_DATA_TYPE_COLORS: Record<string, string> = {
+const CHART_DATA_TYPE_COLORS: Record<string, string> = {
   volume: "#4CAF50",
   weight: "#FF9800",
   reps: "#FF9800",

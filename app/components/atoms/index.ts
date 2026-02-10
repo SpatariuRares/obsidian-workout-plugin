@@ -21,3 +21,4 @@ export {
 	ProtocolBadge,
 	type ProtocolBadgeProps,
 } from "@app/components/atoms/ProtocolBadge";
+export { Feedback } from "@app/components/atoms/Feedback";

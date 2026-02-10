@@ -11,12 +11,7 @@
  * - Parameter lookup by key
  */
 
-import {
-  ParameterUtils,
-  RESERVED_PARAMETER_KEYS,
-  DEFAULT_PARAMETER_UNITS,
-  CHART_DATA_TYPE_COLORS,
-} from "@app/utils/parameter/ParameterUtils";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 
 describe("ParameterUtils", () => {
@@ -148,20 +143,21 @@ describe("ParameterUtils", () => {
   });
 
   describe("getReservedKeys", () => {
-    it("should return the RESERVED_PARAMETER_KEYS array", () => {
+    it("should return reserved parameter keys", () => {
       const result = ParameterUtils.getReservedKeys();
 
-      expect(result).toBe(RESERVED_PARAMETER_KEYS);
       expect(result).toContain("date");
       expect(result).toContain("volume");
       expect(result).toContain("pace");
+      expect(Array.isArray(result)).toBe(true);
     });
 
-    it("should return a readonly array", () => {
-      const result = ParameterUtils.getReservedKeys();
+    it("should return a consistent array", () => {
+      const result1 = ParameterUtils.getReservedKeys();
+      const result2 = ParameterUtils.getReservedKeys();
 
-      // Verify it's the same reference (readonly)
-      expect(result).toBe(RESERVED_PARAMETER_KEYS);
+      // Verify it returns the same reference (readonly)
+      expect(result1).toBe(result2);
     });
   });
 
@@ -318,9 +314,7 @@ describe("ParameterUtils", () => {
       expect(ParameterUtils.getColorForDataType("duration")).toBe("#2196F3");
       expect(ParameterUtils.getColorForDataType("distance")).toBe("#9C27B0");
       expect(ParameterUtils.getColorForDataType("pace")).toBe("#E91E63");
-      // Note: heartRate key in CHART_DATA_TYPE_COLORS is camelCase but lookup
-      // lowercases input, so "heartRate" -> "heartrate" doesn't match "heartRate"
-      // This returns default color - see heartrate (lowercase) test below
+      // Note: heartRate lookup is case-insensitive and returns default for mismatches
       expect(ParameterUtils.getColorForDataType("heartrate")).toBe("#607D8B");
     });
 
@@ -613,54 +607,4 @@ describe("ParameterUtils", () => {
     });
   });
 
-  describe("Exported constants", () => {
-    describe("RESERVED_PARAMETER_KEYS", () => {
-      it("should include standard CSV columns", () => {
-        expect(RESERVED_PARAMETER_KEYS).toContain("date");
-        expect(RESERVED_PARAMETER_KEYS).toContain("exercise");
-        expect(RESERVED_PARAMETER_KEYS).toContain("reps");
-        expect(RESERVED_PARAMETER_KEYS).toContain("weight");
-      });
-
-      it("should include computed values", () => {
-        expect(RESERVED_PARAMETER_KEYS).toContain("volume");
-        expect(RESERVED_PARAMETER_KEYS).toContain("pace");
-      });
-
-      it("should include chart data types", () => {
-        expect(RESERVED_PARAMETER_KEYS).toContain("duration");
-        expect(RESERVED_PARAMETER_KEYS).toContain("distance");
-        expect(RESERVED_PARAMETER_KEYS).toContain("heartRate");
-      });
-    });
-
-    describe("DEFAULT_PARAMETER_UNITS", () => {
-      it("should have correct default units", () => {
-        expect(DEFAULT_PARAMETER_UNITS.weight).toBe("kg");
-        expect(DEFAULT_PARAMETER_UNITS.reps).toBe("");
-        expect(DEFAULT_PARAMETER_UNITS.volume).toBe("kg");
-        expect(DEFAULT_PARAMETER_UNITS.duration).toBe("sec");
-        expect(DEFAULT_PARAMETER_UNITS.distance).toBe("km");
-        expect(DEFAULT_PARAMETER_UNITS.pace).toBe("min/km");
-        expect(DEFAULT_PARAMETER_UNITS.heartRate).toBe("bpm");
-        expect(DEFAULT_PARAMETER_UNITS.heartrate).toBe("bpm");
-      });
-    });
-
-    describe("CHART_DATA_TYPE_COLORS", () => {
-      it("should have colors for all data types", () => {
-        expect(CHART_DATA_TYPE_COLORS.volume).toBe("#4CAF50");
-        expect(CHART_DATA_TYPE_COLORS.weight).toBe("#FF9800");
-        expect(CHART_DATA_TYPE_COLORS.reps).toBe("#FF9800");
-        expect(CHART_DATA_TYPE_COLORS.duration).toBe("#2196F3");
-        expect(CHART_DATA_TYPE_COLORS.distance).toBe("#9C27B0");
-        expect(CHART_DATA_TYPE_COLORS.pace).toBe("#E91E63");
-        expect(CHART_DATA_TYPE_COLORS.heartRate).toBe("#F44336");
-      });
-
-      it("should have a default color", () => {
-        expect(CHART_DATA_TYPE_COLORS.default).toBe("#607D8B");
-      });
-    });
-  });
 });

@@ -4,26 +4,7 @@ import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
 import { CHART_DATA_TYPE } from "@app/features/charts";
 
 // Mock Obsidian module
-jest.mock(
-  "obsidian",
-  () => ({
-    TFile: class MockTFile {
-      path: string = "";
-    },
-    TAbstractFile: class MockTAbstractFile {},
-    normalizePath: (path: string) => path.replace(/\\/g, "/"),
-    EventRef: class MockEventRef {},
-    Modal: class MockModal {
-      constructor(app: any) {}
-      open() {}
-      close() {}
-    },
-    MarkdownRenderChild: class MockMarkdownRenderChild {
-      constructor(containerEl: HTMLElement) {}
-    },
-  }),
-  { virtual: true },
-);
+
 
 // Import after mocking
 import { TFile, TAbstractFile } from "obsidian";

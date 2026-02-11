@@ -15,6 +15,26 @@ export function normalizePath(path: string): string {
   return path.replace(/\\/g, "/").replace(/\/+/g, "/");
 }
 
+export class AbstractInputSuggest<T> {
+  app: App;
+  protected inputEl: HTMLInputElement;
+
+  constructor(app: App, textInputEl: HTMLInputElement) {
+    this.app = app;
+    this.inputEl = textInputEl;
+  }
+
+  getSuggestions(_query: string): T[] {
+    return [];
+  }
+
+  renderSuggestion(_item: T, _el: HTMLElement): void {}
+
+  selectSuggestion(_item: T): void {}
+
+  close(): void {}
+}
+
 export const parseYaml = jest.fn((yaml: string): Record<string, any> | null => {
   if (!yaml || !yaml.trim()) {
     return null;
@@ -75,11 +95,7 @@ export const parseYaml = jest.fn((yaml: string): Record<string, any> | null => {
 });
 
 // Mock other commonly used obsidian exports
-export class Notice {
-  constructor(_message: string, _timeout?: number) {
-    // Mock implementation - do nothing in tests
-  }
-}
+export const Notice = jest.fn();
 
 export class TFile {
   path: string = "";
@@ -87,6 +103,14 @@ export class TFile {
   extension: string = "";
   name: string = "";
 }
+
+export class TAbstractFile {
+  path: string = "";
+  name: string = "";
+  parent: TFolder | null = null;
+}
+
+export class EventRef {}
 
 export class App {
   vault = {
@@ -97,6 +121,7 @@ export class App {
     process: jest.fn(),
     createFolder: jest.fn(),
     modify: jest.fn(),
+    getMarkdownFiles: jest.fn().mockReturnValue([]),
   };
   fileManager = {
     processFrontMatter: jest.fn(),
@@ -108,7 +133,11 @@ export class App {
 
 export class Plugin {}
 export class PluginSettingTab {}
-export class Modal {}
+export class Modal {
+  constructor(app: App) {}
+  open() {}
+  close() {}
+}
 export class FuzzySuggestModal<T> {
   app: App;
   constructor(app: App) {
@@ -133,22 +162,4 @@ export class TFolder {
   children: (TFile | TFolder)[] = [];
 }
 
-export class AbstractInputSuggest<T> {
-  app: App;
-  protected inputEl: HTMLInputElement;
 
-  constructor(app: App, textInputEl: HTMLInputElement) {
-    this.app = app;
-    this.inputEl = textInputEl;
-  }
-
-  getSuggestions(_query: string): T[] {
-    return [];
-  }
-
-  renderSuggestion(_item: T, _el: HTMLElement): void {}
-
-  selectSuggestion(_item: T): void {}
-
-  close(): void {}
-}

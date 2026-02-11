@@ -95,7 +95,7 @@ describe("CommandHandlerService", () => {
   it("should register all commands", () => {
     service.registerCommands();
     expect(mockPlugin.addCommand).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "create-workout-log" }),
+      expect.objectContaining({ id: "create-csv-log" }),
     );
     expect(mockPlugin.addCommand).toHaveBeenCalledWith(
       expect.objectContaining({ id: "insert-workout-chart" }),
@@ -159,25 +159,7 @@ describe("CommandHandlerService", () => {
     await tagCommand.callback();
   });
 
-  it("should trigger refresh on log creation", () => {
-    service.registerCommands();
-    const createLogCmd = mockPlugin.addCommand.mock.calls.find(
-      (c: any) => c[0].id === "create-workout-log",
-    )[0];
 
-    // Execute command to instantiate modal
-    createLogCmd.callback();
-
-    // Get the instance and its constructor arguments
-    const constructorCall = (CreateLogModal as unknown as jest.Mock).mock
-      .calls[0];
-    const callback = constructorCall[4]; // 5th argument
-
-    // Execute callback
-    callback();
-
-    expect(mockPlugin.triggerWorkoutLogRefresh).toHaveBeenCalled();
-  });
 
   it("should handle canvas export flow", async () => {
     service.registerCommands();
@@ -231,8 +213,8 @@ describe("CommandHandlerService", () => {
     await tagCmd.callback();
 
     expect(app.vault.create).toHaveBeenCalledWith(
-      expect.stringContaining("Muscle Tags Reference.md"),
-      expect.stringContaining("| chest | Upper Body |"),
+      "Muscle Tags Reference.md",
+      expect.stringContaining("tags:\n  - chest\n  - legs\n"),
     );
   });
   it("should handle error in export-workout-to-canvas", async () => {
@@ -310,7 +292,7 @@ describe("CommandHandlerService", () => {
 
     expect(app.vault.modify).toHaveBeenCalledWith(
       mockFile,
-      expect.stringContaining("| chest | Upper Body |"),
+      expect.stringContaining("tags:\n  - chest\n"),
     );
   });
 

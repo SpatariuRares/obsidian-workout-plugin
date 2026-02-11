@@ -13,6 +13,7 @@ import {
   setupWorkoutToggle,
 } from "@app/utils/form/FormUtils";
 import { Chip } from "@app/components/atoms";
+import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
 
 export class LogFormRenderer {
   constructor(
@@ -145,6 +146,8 @@ export class LogFormRenderer {
       "",
       initialCurrentPageLink || "",
     );
+
+    new FileSuggest(this.plugin.app, workoutInput);
 
     // Setup behaviors
     setupWorkoutToggle(

@@ -172,12 +172,12 @@ export class DataFilter {
           .replace(/\s+/g, " ")
           .trim();
         filteredData = logData.filter((log) => {
-          const origine = (log.origine || log.workout || "")
+          const source = (log.workout || log.origine || "")
             .toLowerCase()
             .replace(/\[\[|\]\]/g, "")
             .replace(/\s+/g, " ")
             .trim();
-          return origine.includes(workoutNameLower);
+          return source.includes(workoutNameLower);
         });
 
         filterMethodUsed = `campo Origine:: "${workoutName}"`;
@@ -387,18 +387,18 @@ export class DataFilter {
         normalizedFilters?.workoutName ||
         filterParams.workout.toLowerCase().replace(/\s+/g, " ").trim();
 
-      const logOrigine = (log.origine || log.workout || "")
+      const logSource = (log.workout || log.origine || "")
         .toLowerCase()
         .replace(/\[\[|\]\]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
       if (filterParams.exactMatch) {
-        if (logOrigine !== workoutName) {
+        if (logSource !== workoutName) {
           return false;
         }
       } else {
-        if (!logOrigine.includes(workoutName)) {
+        if (!logSource.includes(workoutName)) {
           return false;
         }
       }

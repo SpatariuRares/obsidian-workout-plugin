@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "\"{chartDataType}\" 유형의 차트는 {exerciseType} 운동에 사용할 수 없습니다. 사용 가능한 유형: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Rep Tracking",
       "durationChartTitle": "Duration Chart",
       "heartRateTitle": "Heart Rate"
+    },
+    "fileNames": {
+      "gettingStarted": "시작하기",
+      "dashboard": "대시보드",
+      "featureShowcase": "주요 기능 소개",
+      "hiitCardioSession": "고강도 인터벌 트레이닝 (HIIT) 심혈관 운동 세션"
     }
   }
 }

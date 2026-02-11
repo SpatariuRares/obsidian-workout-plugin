@@ -648,7 +648,8 @@
     "up": "Up",
     "date": "Date",
     "down": "Down",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Тип діаграми \"{chartDataType}\" недоступний для вправ типу {exerciseType}. Доступні типи: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Rep Tracking",
       "durationChartTitle": "Duration Chart",
       "heartRateTitle": "Heart Rate"
+    },
+    "fileNames": {
+      "gettingStarted": "Як почати",
+      "dashboard": "Панель керування",
+      "featureShowcase": "Демонстрація ключових функцій",
+      "hiitCardioSession": "Тренування HIIT (високоінтенсивні інтервальні тренування) з акцентом на кардіо."
     }
   }
 }

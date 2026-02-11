@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Jenis grafik \"{chartDataType}\" tidak tersedia untuk latihan {exerciseType}. Jenis yang tersedia: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Rep Tracking",
       "durationChartTitle": "Duration Chart",
       "heartRateTitle": "Heart Rate"
+    },
+    "fileNames": {
+      "gettingStarted": "Memulai",
+      "dashboard": "Dasbor",
+      "featureShowcase": "Sorotan Fitur",
+      "hiitCardioSession": "Sesi Kardio HIIT"
     }
   }
 }

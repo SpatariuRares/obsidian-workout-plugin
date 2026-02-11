@@ -648,7 +648,8 @@
     "trendLine": "Trendová linka",
     "trendTitlePrefix": "Předpona titulu trendu",
     "up": "Nahoru",
-    "volume": "Objem"
+    "volume": "Objem",
+    "typeNotAvailable": "Typ grafu \"{chartDataType}\" není pro cvičení typu {exerciseType} dostupný. Dostupné typy: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "paceTrackingTitle": "Sledování rychlosti",
       "paceTrackingNote": "Sledujte zlepšení své rychlosti (nižší = rychlejší):",
       "chartTitle": "Graf"
+    },
+    "fileNames": {
+      "gettingStarted": "Jak začít",
+      "dashboard": "Přehled",
+      "featureShowcase": "Prezentace klíčových funkcí",
+      "hiitCardioSession": "HIIT kardio trénink"
     }
   }
 }

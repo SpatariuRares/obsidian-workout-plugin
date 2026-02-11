@@ -648,7 +648,8 @@
     "up": "Up",
     "date": "Date",
     "down": "Down",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "O tipo de gráfico \"{chartDataType}\" não está disponível para exercícios do tipo {exerciseType}. Tipos disponíveis: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "paceTrackingTitle": "Pace Tracking",
       "paceTrackingNote": "Track your pace improvement (lower = faster):",
       "chartTitle": "Chart"
+    },
+    "fileNames": {
+      "gettingStarted": "Como começar",
+      "dashboard": "Painel de controle",
+      "featureShowcase": "Destaque de recursos",
+      "hiitCardioSession": "Sessão de Cardio HIIT"
     }
   }
 }

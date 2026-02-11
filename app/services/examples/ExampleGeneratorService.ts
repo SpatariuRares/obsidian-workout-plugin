@@ -162,8 +162,8 @@ ${t("examples.gettingStarted.welcome")}
 
 | ${t("examples.gettingStarted.tableHeaderFileFolder")} | ${t("examples.gettingStarted.tableHeaderDescription")} |
 |-------------|-------------|
-| [[Dashboard]] | ${t("examples.gettingStarted.dashboardDesc")} |
-| [[Feature Showcase]] | ${t("examples.gettingStarted.featureShowcaseDesc")} |
+| [[${t("examples.fileNames.dashboard")}]] | ${t("examples.gettingStarted.dashboardDesc")} |
+| [[${t("examples.fileNames.featureShowcase")}]] | ${t("examples.gettingStarted.featureShowcaseDesc")} |
 | ${t("examples.gettingStarted.exercisesFolder", { folder: t("examples.folderNames.exercises") })} | ${t("examples.gettingStarted.exercisesDesc")} |
 | ${t("examples.gettingStarted.workoutsFolder", { folder: t("examples.folderNames.workouts") })} | ${t("examples.gettingStarted.workoutsDesc")} |
 | ${t("examples.gettingStarted.logFolder", { folder: t("examples.folderNames.log") })} | ${t("examples.gettingStarted.logDesc")} |
@@ -178,15 +178,15 @@ ${t("examples.gettingStarted.quickActionsIntro")}
 
 ## ${t("examples.gettingStarted.nextStepsTitle")}
 
-1. ${t("examples.gettingStarted.step1")}
-2. ${t("examples.gettingStarted.step2")}
+1. ${t("examples.gettingStarted.step1", { dashboard: t("examples.fileNames.dashboard") })}
+2. ${t("examples.gettingStarted.step2", { featureShowcase: t("examples.fileNames.featureShowcase") })}
 3. ${t("examples.gettingStarted.step3", { workouts: t("examples.folderNames.workouts") })}
 4. ${t("examples.gettingStarted.step4", { exercises: t("examples.folderNames.exercises") })}
 
 `;
     await this.createOrUpdateFile(
       folderPath,
-      "Getting Started.md",
+      `${t("examples.fileNames.gettingStarted")}.md`,
       content,
       overwrite,
     );
@@ -707,14 +707,14 @@ exactMatch: true
   ): Promise<void> {
     const content = `# ${t("examples.dashboard.title")}
 
-${t("examples.dashboard.description")}
+${t("examples.dashboard.description", { featureShowcase: t("examples.fileNames.featureShowcase") })}
 
 \`\`\`workout-dashboard
 \`\`\`
 `;
     await this.createOrUpdateFile(
       folderPath,
-      "Dashboard.md",
+      `${t("examples.fileNames.dashboard")}.md`,
       content,
       overwrite,
     );
@@ -728,7 +728,7 @@ ${t("examples.dashboard.description")}
 
 ${t("examples.featureShowcase.intro")}
 
-> ${t("examples.featureShowcase.tip")}
+> ${t("examples.featureShowcase.tip", { dashboard: t("examples.fileNames.dashboard") })}
 
 ---
 
@@ -899,7 +899,7 @@ ${t("examples.featureShowcase.commandsNote")}
 `;
     await this.createOrUpdateFile(
       folderPath,
-      "Feature Showcase.md",
+      `${t("examples.fileNames.featureShowcase")}.md`,
       content,
       overwrite,
     );
@@ -978,7 +978,7 @@ showTrendLine: true
 `;
     await this.createOrUpdateFile(
       folderPath,
-      "HIIT Cardio Session.md",
+      `${t("examples.fileNames.hiitCardioSession")}.md`,
       content,
       overwrite,
     );

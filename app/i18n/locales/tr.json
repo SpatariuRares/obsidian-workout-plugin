@@ -648,7 +648,8 @@
     "up": "Up",
     "date": "Date",
     "down": "Down",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılabilir değildir. Kullanılabilir türler: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "Başlangıç",
+      "dashboard": "Kontrol paneli",
+      "featureShowcase": "Özelliklerin Tanıtımı",
+      "hiitCardioSession": "Yüksek Yoğunluklu Kardiyo Antrenmanı"
     }
   }
 }

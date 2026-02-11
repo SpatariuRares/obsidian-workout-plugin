@@ -648,7 +648,8 @@
     "trendLine": "Línea de tendencia.",
     "trendTitlePrefix": "Título de la tendencia: prefijo.",
     "up": "Arriba.",
-    "volume": "Volumen."
+    "volume": "Volumen.",
+    "typeNotAvailable": "El tipo de gráfico \"{chartDataType}\" no está disponible para los ejercicios de tipo {exerciseType}. Tipos disponibles: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Seguimiento de solicitudes de reparación.",
       "durationChartTitle": "Gráfico de duración.",
       "heartRateTitle": "Frecuencia cardíaca."
+    },
+    "fileNames": {
+      "gettingStarted": "Cómo empezar",
+      "dashboard": "Panel de control",
+      "featureShowcase": "Presentación de características",
+      "hiitCardioSession": "Sesión de cardio HIIT"
     }
   }
 }

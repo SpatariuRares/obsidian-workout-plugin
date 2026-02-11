@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Lloj shart: \"{chartDataType}\" nuk është i disponueshëm për veprimtjet {exerciseType}. Llojet e disponueshme: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "Fillimi",
+      "dashboard": "Panel i kontrollit",
+      "featureShowcase": "Paraqitja e veçorëve",
+      "hiitCardioSession": "Sesion stërdhues kardio (HIIT)"
     }
   }
 }

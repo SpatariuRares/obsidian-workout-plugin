@@ -648,7 +648,8 @@
     "up": "Up",
     "date": "Date",
     "down": "Down",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Тип диаграммы \"{chartDataType}\" недоступен для упражнений типа {exerciseType}. Доступные типы: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "Начало работы",
+      "dashboard": "Панель управления",
+      "featureShowcase": "Демонстрация возможностей",
+      "hiitCardioSession": "Тренировка HIIT (высокоинтенсивные интервальные тренировки) для кардио."
     }
   }
 }

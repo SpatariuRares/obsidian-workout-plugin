@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Il tipo di grafico \"{chartDataType}\" non è disponibile per gli esercizi {exerciseType}. Tipi disponibili: {typeList}"
   },
   "general": {
     "labels": {
@@ -771,14 +772,14 @@
       "commandCreateExercise": "Crea Pagina Esercizio",
       "commandCreateExerciseDesc": "Crea un nuovo file esercizio",
       "nextStepsTitle": "Prossimi Passi",
-      "step1": "Apri [[Dashboard]] per vedere le tue statistiche",
-      "step2": "Controlla [[Feature Showcase]] per imparare tutte le funzionalità disponibili",
+      "step1": "Apri [[{dashboard}]] per vedere le tue statistiche",
+      "step2": "Controlla [[{featureShowcase}]] per imparare tutte le funzionalità disponibili",
       "step3": "Prova un allenamento dalla cartella **{workouts}**",
       "step4": "Crea i tuoi esercizi in **{exercises}**"
     },
     "dashboard": {
       "title": "Dashboard",
-      "description": "Le tue statistiche di allenamento a colpo d'occhio. Vedi [[Feature Showcase]] per tutti i componenti disponibili."
+      "description": "Le tue statistiche di allenamento a colpo d'occhio. Vedi [[{featureShowcase}]] per tutti i componenti disponibili."
     },
     "workout": {
       "duration": "Durata",
@@ -792,6 +793,12 @@
       "exercises": "Esercizi",
       "workouts": "Allenamenti",
       "log": "Registro"
+    },
+    "fileNames": {
+      "gettingStarted": "Per Iniziare",
+      "dashboard": "Dashboard",
+      "featureShowcase": "Showcase Funzionalità",
+      "hiitCardioSession": "Sessione Cardio HIIT"
     },
     "exercises": {
       "benchPress": {
@@ -839,7 +846,7 @@
     "featureShowcase": {
       "title": "Showcase Funzionalità",
       "intro": "Riferimento completo di tutti i tipi di blocchi di codice disponibili nel Plugin Allenamento.",
-      "tip": "**Suggerimento**: Per la tua dashboard personale, vedi [[Dashboard]]",
+      "tip": "**Suggerimento**: Per la tua dashboard personale, vedi [[{dashboard}]]",
       "chartsTitle": "1. Grafici",
       "chartsIntro": "I grafici visualizzano i tuoi progressi nel tempo. Tipi disponibili: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "strengthExerciseTitle": "Esercizio Forza (Volume + Peso)",

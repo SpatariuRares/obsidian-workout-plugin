@@ -648,7 +648,8 @@
     "trendLine": "خط الاتجاه",
     "trendTitlePrefix": "مقدمة عنوان الاتجاه",
     "up": "أعلى",
-    "volume": "الحجم"
+    "volume": "الحجم",
+    "typeNotAvailable": "نوع الرسم \"{chartDataType}\" غير متاح لتمارين {exerciseType}. الأنواع المتاحة: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "paceTrackingTitle": "تتبع الإيقاع",
       "paceTrackingNote": "تتبع تحسن إيقاعك (أقل = أسرع):",
       "chartTitle": "رسم بياني"
+    },
+    "fileNames": {
+      "gettingStarted": "كيف تبدأ",
+      "dashboard": "لوحة التحكم",
+      "featureShowcase": "عرض الميزات",
+      "hiitCardioSession": "جلسة تمارين الكارديو عالية الكثافة (HIIT)"
     }
   }
 }

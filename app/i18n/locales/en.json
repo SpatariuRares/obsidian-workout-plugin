@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Chart type \"{chartDataType}\" is not available for {exerciseType} exercises. Available types: {typeList}"
   },
   "general": {
     "labels": {
@@ -828,14 +829,14 @@
       "commandCreateExercise": "Create Exercise Page",
       "commandCreateExerciseDesc": "Create a new exercise file",
       "nextStepsTitle": "Next Steps",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "Open [[{dashboard}]] to see your stats",
+      "step2": "Check [[{featureShowcase}]] to learn all available features",
       "step3": "Try a workout from the **{workouts}** folder",
       "step4": "Create your own exercises in **{exercises}**"
     },
     "dashboard": {
       "title": "Dashboard",
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components."
+      "description": "Your workout stats at a glance. See [[{featureShowcase}]] for all available components."
     },
     "workout": {
       "duration": "Duration",
@@ -849,6 +850,12 @@
       "exercises": "Exercises",
       "workouts": "Workouts",
       "log": "Log"
+    },
+    "fileNames": {
+      "gettingStarted": "Getting Started",
+      "dashboard": "Dashboard",
+      "featureShowcase": "Feature Showcase",
+      "hiitCardioSession": "HIIT Cardio Session"
     },
     "exercises": {
       "benchPress": {
@@ -896,7 +903,7 @@
     "featureShowcase": {
       "title": "Feature Showcase",
       "intro": "Complete reference of all code block types available in the Workout Plugin.",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Tip**: For your personal dashboard, see [[{dashboard}]]",
       "chartsTitle": "1. Charts",
       "chartsIntro": "Charts visualize your progress over time. Available types: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
       "strengthExerciseTitle": "Strength Exercise (Volume + Weight)",

@@ -1,5 +1,9 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { CHART_DATA_TYPE, CHART_TYPE, EmbeddedChartParams } from "@app/features/charts/types";
+import {
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+  EmbeddedChartParams,
+} from "@app/features/charts/types";
 import {
   getDefaultChartDataType,
   isValidChartDataType,
@@ -7,6 +11,7 @@ import {
 } from "@app/features/charts/config/ChartConstants";
 import WorkoutChartsPlugin from "main";
 import { ParameterUtils } from "@app/utils";
+import { t } from "@app/i18n/LocalizationService";
 
 /**
  * Resolves and validates chart data types based on exercise definitions.
@@ -100,7 +105,12 @@ export class ChartTypeResolver {
           : "no chart types available";
       return {
         isValid: false,
-        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,
+        //        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,
+        errorMessage: t("charts.typeNotAvailable", {
+          chartDataType,
+          exerciseType: exerciseType.name,
+          typeList,
+        }),
       };
     }
 
@@ -110,7 +120,9 @@ export class ChartTypeResolver {
   /**
    * Extracts numeric parameter keys from parameter definitions.
    */
-  private static getNumericParamKeys(parameters: ParameterDefinition[]): string[] {
+  private static getNumericParamKeys(
+    parameters: ParameterDefinition[],
+  ): string[] {
     return ParameterUtils.getNumericParamKeys(parameters);
   }
 }

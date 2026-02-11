@@ -648,7 +648,8 @@
     "trendLine": "Trendlinie",
     "trendTitlePrefix": "Trendtitelvorsatz",
     "up": "Hoch",
-    "volume": "Volumen"
+    "volume": "Volumen",
+    "typeNotAvailable": "Der Diagrammtyp \"{chartDataType}\" ist für Übungen vom Typ {exerciseType} nicht verfügbar. Verfügbare Typen: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "paceTrackingTitle": "Schrittgeschwindigkeitsverfolgung",
       "paceTrackingNote": "Verfolge deine Schrittgeschwindigkeitserhöhung (niedriger = schneller):",
       "chartTitle": "Diagramm"
+    },
+    "fileNames": {
+      "gettingStarted": "Wie man anfängt",
+      "dashboard": "Dashboard",
+      "featureShowcase": "Vorstellung der Funktionen",
+      "hiitCardioSession": "HIIT-Cardio-Training"
     }
   }
 }

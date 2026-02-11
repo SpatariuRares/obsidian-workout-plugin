@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "グラフの種類「{chartDataType}」は、{exerciseType}のトレーニングには使用できません。利用可能なグラフの種類: {typeList}"
   },
   "general": {
     "actions": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "始める",
+      "dashboard": "ダッシュボード",
+      "featureShowcase": "主要機能紹介",
+      "hiitCardioSession": "HIIT（高強度インターバルトレーニング）のカーディオセッション"
     }
   }
 }

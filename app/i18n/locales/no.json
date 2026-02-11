@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Diagramtype \"{chartDataType}\" er ikke tilgjengelig for {exerciseType} øvelser. Tilgjengelige typer: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "paceTrackingTitle": "Pace Tracking",
       "paceTrackingNote": "Track your pace improvement (lower = faster):",
       "chartTitle": "Chart"
+    },
+    "fileNames": {
+      "gettingStarted": "Hvordan komme i gang",
+      "dashboard": "Dashboard",
+      "featureShowcase": "Presentasjon av funksjoner",
+      "hiitCardioSession": "HIIT-trening for kondisjon"
     }
   }
 }

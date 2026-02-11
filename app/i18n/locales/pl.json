@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Rodzaj wykresu \"{chartDataType}\" nie jest dostępny dla ćwiczeń typu {exerciseType}. Dostępne rodzaje: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Rep Tracking",
       "durationChartTitle": "Duration Chart",
       "heartRateTitle": "Heart Rate"
+    },
+    "fileNames": {
+      "gettingStarted": "Jak zacząć",
+      "dashboard": "Panel kontrolny",
+      "featureShowcase": "Prezentacja funkcji",
+      "hiitCardioSession": "Sesja treningowa HIIT (High-Intensity Interval Training) – cardio"
     }
   }
 }

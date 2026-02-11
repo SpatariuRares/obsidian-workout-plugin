@@ -648,7 +648,8 @@
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
     "up": "Up",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "repTrackingTitle": "Rep Tracking",
       "durationChartTitle": "Duration Chart",
       "heartRateTitle": "Heart Rate"
+    },
+    "fileNames": {
+      "gettingStarted": "शुरू करना",
+      "dashboard": "डैशबोर्ड",
+      "featureShowcase": "विशेषताओं का प्रदर्शन",
+      "hiitCardioSession": "हाई इंटेंसिटी इंटरवल ट्रेनिंग (HIIT) कार्डियो सत्र"
     }
   }
 }

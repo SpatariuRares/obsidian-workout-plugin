@@ -648,7 +648,8 @@
     "up": "Up",
     "date": "Date",
     "down": "Down",
-    "volume": "Volume"
+    "volume": "Volume",
+    "typeNotAvailable": "Tipul de grafic \"{chartDataType}\" nu este disponibil pentru exercițiile de tip {exerciseType}. Tipuri disponibile: {typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "Cum să începi",
+      "dashboard": "Panou de control",
+      "featureShowcase": "Prezentarea caracteristicilor",
+      "hiitCardioSession": "Sesiune de cardio HIIT"
     }
   }
 }

@@ -648,7 +648,8 @@
     "significantIncrease": "Significant Increase",
     "trendLine": "Trend Line",
     "trendTitlePrefix": "Trend Title Prefix",
-    "up": "Up"
+    "up": "Up",
+    "typeNotAvailable": "图表类型 \"{chartDataType}\" 不适用于 {exerciseType} 类型的练习。 可用的图表类型：{typeList}"
   },
   "general": {
     "labels": {
@@ -952,6 +953,12 @@
       "sprintIntervalsTitle": "Sprint Intervals (30s × 8 rounds)",
       "runningProgressTitle": "Running Progress",
       "cyclingCooldownTitle": "Cycling Cool-down"
+    },
+    "fileNames": {
+      "gettingStarted": "开始使用",
+      "dashboard": "仪表盘",
+      "featureShowcase": "功能展示",
+      "hiitCardioSession": "高强度间歇训练（HIIT）心血管训练"
     }
   }
 }

@@ -10,6 +10,7 @@ const createSettings = (): WorkoutChartsSettings => ({
   csvLogFilePath: "logs.csv",
   exerciseFolderPath: "exercises",
   defaultExercise: "",
+  weightUnit: "kg",
   chartType: CHART_DATA_TYPE.VOLUME,
   dateRange: 30,
   showTrendLine: false,

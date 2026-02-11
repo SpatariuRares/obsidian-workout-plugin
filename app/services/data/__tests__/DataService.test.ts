@@ -4,7 +4,6 @@ import { CHART_DATA_TYPE } from "@app/features/charts";
 
 // Mock Obsidian module
 
-
 // Import after mocking
 import { Notice, TFile } from "obsidian";
 
@@ -50,6 +49,7 @@ describe("DataService", () => {
       csvLogFilePath: "test/workout_logs.csv",
       exerciseFolderPath: "test/exercises",
       defaultExercise: "",
+      weightUnit: "kg",
       chartType: CHART_DATA_TYPE.VOLUME,
       dateRange: 30,
       showTrendLine: false,

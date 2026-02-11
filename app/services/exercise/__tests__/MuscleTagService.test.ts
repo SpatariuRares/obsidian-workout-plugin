@@ -5,7 +5,6 @@ import { CHART_DATA_TYPE } from "@app/features/charts";
 
 // Mock Obsidian module
 
-
 // Import after mocking
 import { TFile, TAbstractFile } from "obsidian";
 
@@ -89,6 +88,7 @@ describe("MuscleTagService", () => {
       defaultExercise: "",
       chartType: CHART_DATA_TYPE.VOLUME,
       dateRange: 30,
+      weightUnit: "kg",
       showTrendLine: false,
       chartHeight: 400,
       defaultExactMatch: true,
@@ -103,7 +103,7 @@ describe("MuscleTagService", () => {
       recentExercises: [],
       quickWeightIncrement: 2.5,
       repDuration: 5,
-      defaultRepsPerSet: 0, 
+      defaultRepsPerSet: 0,
     };
 
     service = new MuscleTagService(mockApp as any, mockSettings);
@@ -122,7 +122,6 @@ describe("MuscleTagService", () => {
   });
 
   describe("constructor", () => {
-
     it("should compute CSV path based on settings", () => {
       expect(service.getCsvPath()).toBe("workout-data/muscle-tags.csv");
     });
@@ -232,7 +231,9 @@ spalle,shoulders,it`;
       const tags = await service.loadTags();
 
       // Should return filtered defaults (only English since mock language is 'en')
-      const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(e => e.language === "en");
+      const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(
+        (e) => e.language === "en",
+      );
       expect(tags.size).toBe(expectedEnglishTags.length);
     });
 
@@ -395,7 +396,9 @@ Schiena,Back,EN`;
       const tags = await service.loadTags();
 
       // Should return filtered defaults on error (only English since mock language is 'en')
-      const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(e => e.language === "en");
+      const expectedEnglishTags = MUSCLE_TAG_ENTRIES.filter(
+        (e) => e.language === "en",
+      );
       expect(tags.size).toBe(expectedEnglishTags.length);
     });
 

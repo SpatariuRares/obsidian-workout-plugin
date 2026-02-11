@@ -31,6 +31,7 @@ export class ExerciseAutocomplete {
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
+    options?: { showCreateButton?: boolean },
   ): {
     elements: ExerciseAutocompleteElements;
     handlers: ExerciseAutocompleteHandlers;
@@ -38,6 +39,7 @@ export class ExerciseAutocomplete {
   } {
     const instance = new ExerciseAutocomplete();
     instance.loadAvailableExercises(plugin);
+    const showCreateButton = options?.showCreateButton ?? true;
 
     // Exercise input with autocomplete
     const exerciseContainer = modal.createFormGroup(container);
@@ -137,8 +139,16 @@ export class ExerciseAutocomplete {
           CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
-        createExercisePageBtn.className =
-          "workout-create-exercise-page-btn workout-display-inline-block";
+        
+        // Only show the create button if allowed
+        if (showCreateButton) {
+          createExercisePageBtn.className =
+            "workout-create-exercise-page-btn workout-display-inline-block";
+        } else {
+          createExercisePageBtn.className =
+            "workout-create-exercise-page-btn workout-display-none";
+        }
+        
         instance.exerciseExists = false;
       }
     };

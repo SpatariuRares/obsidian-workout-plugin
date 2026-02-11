@@ -60,6 +60,7 @@ export class CreateExercisePageModal extends ModalBase {
       formContainer,
       this.plugin,
       this.exerciseName,
+      { showCreateButton: false },
     );
 
     // Exercise type dropdown

@@ -6,6 +6,7 @@ import {
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 /**
  * Service responsible for CSV data caching and loading.
@@ -114,7 +115,7 @@ export class CSVCacheService {
       this.lastCacheTime = Date.now();
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(`Error loading CSV workout data: ${errorMessage}`);
     }
 

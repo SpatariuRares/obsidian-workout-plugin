@@ -8,6 +8,7 @@ import {
 import { App, normalizePath, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { MuscleTagSelector } from "@app/features/modals/components/MuscleTagSelector";
 import { Button, Input } from "@app/components/atoms";
@@ -178,7 +179,7 @@ export class CreateExercisePageModal extends ModalBase {
           new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
         } catch (error) {
           const errorMessage =
-            error instanceof Error ? error.message : String(error);
+            ErrorUtils.getErrorMessage(error);
           new Notice(
             `${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`,
           );

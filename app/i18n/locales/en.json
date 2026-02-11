@@ -275,6 +275,16 @@
       "notFound": "Not Found",
       "selected": "Selected"
     },
+    "autocomplete": {
+      "fuzzyBadge": "~",
+      "fuzzyTooltip": "Fuzzy match (typo correction) - Score: {score}",
+      "exactBadge": "\u2605",
+      "exactTooltip": "Exact/Prefix match - Score: {score}",
+      "wordBadge": "\u25c6",
+      "wordTooltip": "Word match - Score: {score}",
+      "partialBadge": "\u2022",
+      "partialTooltip": "Partial match - Score: {score}"
+    },
     "sections": {
       "advancedOptions": "Advanced Options",
       "chartType": "Chart Type",
@@ -506,6 +516,11 @@
       "invalidDate": "Invalid date",
       "notAvailable": "N/A",
       "trendLine": "Trend Line"
+    },
+    "target": {
+      "repsSuffix": "reps",
+      "separator": " \u00d7 ",
+      "progressTooltip": "Best: {best} reps / Target: {target} reps"
     },
     "messages": {
       "deleteConfirm": "Are you sure you want to delete this log entry?",

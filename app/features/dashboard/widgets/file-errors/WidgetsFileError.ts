@@ -1,11 +1,12 @@
 import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
-import { StringUtils } from "@app/utils";
+import { StringUtils, ErrorUtils } from "@app/utils";
 
 interface ExerciseFileError {
   file: TFile;
@@ -18,13 +19,9 @@ export class WidgetsFileError {
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
   ): Promise<void> {
-    const errorEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-file-errors",
-    });
-
-    errorEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TITLE,
-      cls: "workout-widget-title",
+    const errorEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TITLE,
+      className: "workout-file-errors",
     });
 
     // Get exercise files with errors
@@ -138,7 +135,7 @@ export class WidgetsFileError {
       }
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       errors.push(
         `${CONSTANTS.WORKOUT.ICONS.STATUS.ERROR} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
           errorMessage,

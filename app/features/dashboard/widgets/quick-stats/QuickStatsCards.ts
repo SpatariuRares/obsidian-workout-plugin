@@ -6,6 +6,7 @@ import {
   PeriodStats,
 } from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
 import { StatCard, DashboardCard } from "@app/components/molecules";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 export class QuickStatsCards {
   static render(
@@ -13,13 +14,9 @@ export class QuickStatsCards {
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
   ): void {
-    const cardsEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-stats-cards",
-    });
-
-    cardsEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.TITLE,
-      cls: "workout-widget-title",
+    const cardsEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.TITLE,
+      className: "workout-stats-cards",
     });
 
     const statsGrid = cardsEl.createEl("div", {

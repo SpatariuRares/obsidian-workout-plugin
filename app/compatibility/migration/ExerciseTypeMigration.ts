@@ -1,6 +1,7 @@
 import { Notice, TFolder, TFile } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { CONSTANTS } from "@app/constants";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 export class ExerciseTypeMigration {
   private plugin: WorkoutChartsPlugin;
@@ -48,7 +49,7 @@ export class ExerciseTypeMigration {
       }
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MIGRATION_ERROR + errorMessage,
       );

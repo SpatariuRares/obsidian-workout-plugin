@@ -8,6 +8,7 @@ import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashb
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/features/modals/exercise/CreateExerciseSectionModal";
 import { AuditExerciseNamesModal } from "@app/features/modals/exercise/AuditExerciseNamesModal";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
 import { MuscleTagManagerModal } from "@app/features/modals/muscle/MuscleTagManagerModal";
@@ -37,7 +38,7 @@ export class CommandHandlerService {
           new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
         } catch (error) {
           const errorMessage =
-            error instanceof Error ? error.message : String(error);
+            ErrorUtils.getErrorMessage(error);
           new Notice(`Error creating CSV file: ${errorMessage}`);
         }
       },
@@ -134,7 +135,7 @@ export class CommandHandlerService {
                 );
               } catch (error) {
                 const errorMessage =
-                  error instanceof Error ? error.message : String(error);
+                  ErrorUtils.getErrorMessage(error);
                 new Notice(
                   `${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORT_ERROR}${errorMessage}`,
                 );
@@ -193,7 +194,7 @@ export class CommandHandlerService {
           );
         } catch (error) {
           const errorMessage =
-            error instanceof Error ? error.message : String(error);
+            ErrorUtils.getErrorMessage(error);
           new Notice(
             CONSTANTS.WORKOUT.MESSAGES.ERRORS.TAG_REFERENCE_FAILED(
               errorMessage,

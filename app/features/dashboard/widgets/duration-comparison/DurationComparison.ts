@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 /**
  * Number of recent workouts to display in the comparison
@@ -63,20 +64,11 @@ export class DurationComparison {
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams
   ): void {
-    const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-duration-comparison",
-    });
-
-    // Widget title
-    widgetEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.TITLE,
-      cls: "workout-widget-title",
-    });
-
-    // Widget subtitle
-    widgetEl.createEl("div", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.SUBTITLE,
-      cls: "workout-widget-subtitle",
+    const widgetEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.TITLE,
+      subtitle: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.SUBTITLE,
+      className: "workout-duration-comparison",
+      isWide: true,
     });
 
     // Calculate workout sessions with duration data

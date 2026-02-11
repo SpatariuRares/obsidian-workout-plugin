@@ -9,7 +9,7 @@ import {
 import { App, TFile, Notice } from "obsidian";
 import type { CSVColumnService } from "@app/services/data/CSVColumnService";
 import type { CSVCacheService } from "@app/services/data/CSVCacheService";
-import { StringUtils } from "@app/utils";
+import { StringUtils, ErrorUtils, PathUtils } from "@app/utils";
 
 /**
  * Repository for workout log CRUD operations.
@@ -35,15 +35,7 @@ export class WorkoutLogRepository {
     const content = `${header}\n${sampleEntry}`;
 
     // Ensure parent folder exists
-    const path = this.settings.csvLogFilePath;
-    const lastSlash = path.lastIndexOf("/");
-    if (lastSlash > 0) {
-      const folder = path.substring(0, lastSlash);
-      const folderExists = this.app.vault.getAbstractFileByPath(folder);
-      if (!folderExists) {
-        await this.app.vault.createFolder(folder);
-      }
-    }
+    await PathUtils.ensureFolderExists(this.app, this.settings.csvLogFilePath);
 
     await this.app.vault.create(this.settings.csvLogFilePath, content);
     this.cacheService.clearCache();
@@ -265,7 +257,7 @@ export class WorkoutLogRepository {
       return updateCount;
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       throw new Error(`Failed to rename exercise: ${errorMessage}`);
     }
   }

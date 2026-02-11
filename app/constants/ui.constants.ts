@@ -849,6 +849,28 @@ export const MODAL_UI = {
     },
     FOUND: (count: number) => `📋 ${count} exercises found`,
   },
+  AUTOCOMPLETE: {
+    get FUZZY_BADGE() {
+      return t("modal.autocomplete.fuzzyBadge");
+    },
+    FUZZY_TOOLTIP: (score: number) =>
+      t("modal.autocomplete.fuzzyTooltip").replace("{score}", String(score)),
+    get EXACT_BADGE() {
+      return t("modal.autocomplete.exactBadge");
+    },
+    EXACT_TOOLTIP: (score: number) =>
+      t("modal.autocomplete.exactTooltip").replace("{score}", String(score)),
+    get WORD_BADGE() {
+      return t("modal.autocomplete.wordBadge");
+    },
+    WORD_TOOLTIP: (score: number) =>
+      t("modal.autocomplete.wordTooltip").replace("{score}", String(score)),
+    get PARTIAL_BADGE() {
+      return t("modal.autocomplete.partialBadge");
+    },
+    PARTIAL_TOOLTIP: (score: number) =>
+      t("modal.autocomplete.partialTooltip").replace("{score}", String(score)),
+  },
   SELECT_OPTIONS: {
     CHART_TYPE: [
       {
@@ -1521,6 +1543,18 @@ export const TABLE_UI = {
     get TREND_LINE() {
       return t("table.trendLine");
     },
+  },
+  TARGET: {
+    get REPS_SUFFIX() {
+      return t("table.target.repsSuffix");
+    },
+    get SEPARATOR() {
+      return t("table.target.separator");
+    },
+    PROGRESS_TOOLTIP: (best: number, target: number) =>
+      t("table.target.progressTooltip")
+        .replace("{best}", String(best))
+        .replace("{target}", String(target)),
   },
   /** Abbreviated labels for mobile/compact display */
   LABELS_SHORT: {

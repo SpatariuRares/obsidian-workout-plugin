@@ -9,6 +9,7 @@ import {
   calculateMuscleGroupVolume,
 } from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import { ListItem } from "@app/components/molecules";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 export class VolumeAnalytics {
   static render(
@@ -16,13 +17,10 @@ export class VolumeAnalytics {
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
   ): void {
-    const analyticsEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-volume-analytics",
-    });
-
-    analyticsEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
-      cls: "workout-widget-title",
+    const analyticsEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
+      className: "workout-volume-analytics",
+      isWide: true,
     });
 
     // Create chart container

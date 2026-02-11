@@ -5,6 +5,7 @@ import type WorkoutChartsPlugin from "main";
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { ActionButtons } from "@app/features/tables/ui";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 /**
  * Handles actions for table rows (edit, delete)
@@ -45,7 +46,7 @@ export class TableActions {
             });
           } catch (error) {
             const errorMessage =
-              error instanceof Error ? error.message : String(error);
+              ErrorUtils.getErrorMessage(error);
             new Notice(
               CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage,
             );

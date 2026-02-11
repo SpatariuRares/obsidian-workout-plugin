@@ -10,6 +10,7 @@ import {
 } from "@app/features/dashboard/widgets/muscle-heat-map/business";
 import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 /**
  * Main orchestrator for muscle heat map visualization
@@ -22,13 +23,10 @@ export class MuscleHeatMap {
     params: EmbeddedDashboardParams,
     plugin: WorkoutChartsPlugin
   ): Promise<void> {
-    const heatMapEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-muscle-heatmap",
-    });
-
-    heatMapEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.UI.LABELS.MUSCLE_HEAT_MAP,
-      cls: "workout-widget-title",
+    const heatMapEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.UI.LABELS.MUSCLE_HEAT_MAP,
+      className: "workout-muscle-heatmap",
+      isWide: true,
     });
 
     // Controls container (created in correct DOM order: title -> controls -> canvas -> info)

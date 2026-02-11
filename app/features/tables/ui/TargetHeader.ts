@@ -36,13 +36,14 @@ export class TargetHeader {
     const targetDiv = container.createDiv({ cls: "workout-target-header" });
 
     // Build the target text
+    const tableTarget = CONSTANTS.WORKOUT.TABLE.TARGET;
     const parts: string[] = [];
     if (targetWeight !== undefined) {
       parts.push(`${targetWeight}${weightUnit}`);
     }
     if (targetReps !== undefined) {
-      const separator = targetWeight !== undefined ? " × " : "";
-      parts.push(`${separator}${targetReps} reps`);
+      const separator = targetWeight !== undefined ? tableTarget.SEPARATOR : "";
+      parts.push(`${separator}${targetReps} ${tableTarget.REPS_SUFFIX}`);
     }
 
     const targetText = `${CONSTANTS.WORKOUT.LABELS.TABLE.TARGET_PREFIX} ${parts.join("")}`;
@@ -102,7 +103,7 @@ export class TargetHeader {
     progressFill.addClass(`workout-progress-${progressLevel}`);
 
     // Add tooltip
-    const tooltip = `Best: ${bestReps} reps / Target: ${targetReps} reps`;
+    const tooltip = CONSTANTS.WORKOUT.TABLE.TARGET.PROGRESS_TOOLTIP(bestReps, targetReps);
     progressBar.setAttribute("title", tooltip);
     progressBar.setAttribute("aria-label", tooltip);
   }

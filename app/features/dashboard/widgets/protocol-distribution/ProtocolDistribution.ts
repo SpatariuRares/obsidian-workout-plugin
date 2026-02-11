@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import {
   WorkoutLogData,
   WorkoutProtocol,
@@ -97,20 +98,11 @@ export class ProtocolDistribution {
     // Store callback for later use
     this.onFilterChange = onFilterChange || null;
 
-    const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-protocol-distribution",
-    });
-
-    // Widget title
-    widgetEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.TITLE,
-      cls: "workout-widget-title",
-    });
-
-    // Subtitle showing time period
-    widgetEl.createEl("div", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SUBTITLE,
-      cls: "workout-widget-subtitle",
+    const widgetEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.TITLE,
+      subtitle: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SUBTITLE,
+      className: "workout-protocol-distribution",
+      isWide: true,
     });
 
     // Filter data for last 30 days

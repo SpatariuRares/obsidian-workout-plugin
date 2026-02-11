@@ -3,6 +3,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
 
 import { Button } from "@app/components/atoms";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 export class QuickActions {
   static render(
@@ -10,13 +11,9 @@ export class QuickActions {
     params: EmbeddedDashboardParams,
     plugin: WorkoutChartsPlugin,
   ): void {
-    const actionsEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-quick-actions",
-    });
-
-    actionsEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.TITLE,
-      cls: "workout-widget-title",
+    const actionsEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.TITLE,
+      className: "workout-quick-actions",
     });
 
     const buttonsEl = Button.createContainer(actionsEl);

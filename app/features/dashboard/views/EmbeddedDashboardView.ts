@@ -71,9 +71,7 @@ export class EmbeddedDashboardView extends BaseView {
     let logData = (await this.plugin.getWorkoutLogData()) || [];
     if (params.dateRange) {
       const cutoffDate = new Date();
-      cutoffDate.setDate(
-        cutoffDate.getDate() - (params.dateRange as number),
-      );
+      cutoffDate.setDate(cutoffDate.getDate() - (params.dateRange as number));
       logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
     }
     return logData;
@@ -87,7 +85,6 @@ export class EmbeddedDashboardView extends BaseView {
     container: HTMLElement,
     params: EmbeddedDashboardParams,
   ): Promise<void> {
-    this.plugin.clearLogDataCache();
     const freshData = await this.loadDashboardData(params);
     container.empty();
     if (freshData.length > 0) {

@@ -16,7 +16,7 @@ import {
   MUSCLE_TAG_ENTRIES,
   type MuscleTagEntry,
 } from "@app/constants/muscles.constants";
-import { StringUtils } from "@app/utils";
+import { StringUtils, PathUtils, LanguageUtils } from "@app/utils";
 
 /**
  * Service for managing custom muscle tag mappings via CSV file.
@@ -34,14 +34,10 @@ export class MuscleTagService {
 
   /**
    * Gets the user's language from Obsidian settings.
-   * Defaults to 'en' if not available.
+   * Delegates to LanguageUtils.
    */
   private getUserLanguage(): string {
-    try {
-      return window.localStorage.getItem("language") || "en";
-    } catch {
-      return "en";
-    }
+    return LanguageUtils.getUserLanguage();
   }
 
   /**
@@ -50,11 +46,8 @@ export class MuscleTagService {
    * Now dynamic to always reflect current settings.
    */
   private computeCsvPath(): string {
-    const logFilePath = this.settings.csvLogFilePath;
-    const lastSlash = logFilePath.lastIndexOf("/");
-    const folder = lastSlash > 0 ? logFilePath.substring(0, lastSlash) : "";
     return normalizePath(
-      folder ? `${folder}/muscle-tags.csv` : "muscle-tags.csv",
+      PathUtils.getSiblingPath(this.settings.csvLogFilePath, "muscle-tags.csv"),
     );
   }
 
@@ -289,15 +282,7 @@ export class MuscleTagService {
       await this.app.vault.modify(abstractFile, content);
     } else {
       // File doesn't exist, create it
-      // Ensure parent folder exists
-      const lastSlash = csvPath.lastIndexOf("/");
-      if (lastSlash > 0) {
-        const folder = csvPath.substring(0, lastSlash);
-        const folderExists = this.app.vault.getAbstractFileByPath(folder);
-        if (!folderExists) {
-          await this.app.vault.createFolder(folder);
-        }
-      }
+      await PathUtils.ensureFolderExists(this.app, csvPath);
       await this.app.vault.create(csvPath, content);
     }
 
@@ -403,14 +388,7 @@ export class MuscleTagService {
     const content = lines.join("\n");
 
     // Create file (with parent folder if needed)
-    const lastSlash = csvPath.lastIndexOf("/");
-    if (lastSlash > 0) {
-      const folder = csvPath.substring(0, lastSlash);
-      const folderExists = this.app.vault.getAbstractFileByPath(folder);
-      if (!folderExists) {
-        await this.app.vault.createFolder(folder);
-      }
-    }
+    await PathUtils.ensureFolderExists(this.app, csvPath);
 
     await this.app.vault.create(csvPath, content);
 

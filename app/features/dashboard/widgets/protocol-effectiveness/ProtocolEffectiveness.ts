@@ -3,6 +3,7 @@ import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/type
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type WorkoutChartsPlugin from "main";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 /**
  * Minimum number of entries required to show statistics for a protocol.
@@ -52,14 +53,10 @@ export class ProtocolEffectiveness {
     _params: EmbeddedDashboardParams,
     plugin?: WorkoutChartsPlugin
   ): void {
-    const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-protocol-effectiveness",
-    });
-
-    // Widget title
-    widgetEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.TITLE,
-      cls: "workout-widget-title",
+    const widgetEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.TITLE,
+      className: "workout-protocol-effectiveness",
+      isWide: true,
     });
 
     // Calculate effectiveness statistics

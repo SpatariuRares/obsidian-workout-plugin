@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 import { ListItem } from "@app/components/molecules";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 export class RecentWorkouts {
   static render(
@@ -10,13 +11,9 @@ export class RecentWorkouts {
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams
   ): void {
-    const recentEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-recent-workouts",
-    });
-
-    recentEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
-      cls: "workout-widget-title",
+    const recentEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.TITLE,
+      className: "workout-recent-workouts",
     });
 
     // Get recent workouts (last 5)

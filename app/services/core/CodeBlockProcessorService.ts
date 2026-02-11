@@ -5,6 +5,7 @@ import { EmbeddedTableView } from "@app/features/tables";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
@@ -102,7 +103,7 @@ export class CodeBlockProcessorService {
       );
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       Feedback.renderError(el, `Error loading chart: ${errorMessage}`);
     }
   }
@@ -127,7 +128,7 @@ export class CodeBlockProcessorService {
       );
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       Feedback.renderError(el, `Error loading log: ${errorMessage}`, {
         className: "workout-feedback-error",
       });
@@ -145,7 +146,7 @@ export class CodeBlockProcessorService {
       this.createEmbeddedTimer(el, params, ctx);
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       Feedback.renderError(el, `Error loading timer: ${errorMessage}`, {
         className: "workout-timer-error",
       });
@@ -207,7 +208,7 @@ export class CodeBlockProcessorService {
       );
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       Feedback.renderError(el, `Error loading dashboard: ${errorMessage}`, {
         className: "workout-feedback-error",
       });
@@ -235,7 +236,7 @@ export class CodeBlockProcessorService {
       );
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       Feedback.renderError(
         el,
         `Error loading duration estimator: ${errorMessage}`,

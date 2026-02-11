@@ -66,7 +66,6 @@ export class EmbeddedChartView extends BaseView {
     params: EmbeddedChartParams,
   ): Promise<void> {
     PerformanceMonitor.start("chart:refreshChart");
-    this.plugin.clearLogDataCache();
     const freshData = await this.loadChartData(params);
     container.empty();
     if (freshData.length > 0) {

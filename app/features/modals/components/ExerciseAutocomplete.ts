@@ -32,13 +32,21 @@ export class ExerciseAutocomplete {
   private selectedIndex: number = -1;
 
   /**
-   * Highlights the matched portion of text in the exercise name
+   * Renders the exercise name into a parent element with highlighted matches.
+   * Uses safe DOM methods instead of innerHTML to prevent XSS.
+   * @param parent - The parent element to render into
    * @param text - The exercise name
    * @param query - The search query
-   * @returns HTML string with highlighted matches
    */
-  private static highlightMatch(text: string, query: string): string {
-    if (!query || query.length === 0) return text;
+  private static renderHighlightedMatch(
+    parent: HTMLElement,
+    text: string,
+    query: string,
+  ): void {
+    if (!query || query.length === 0) {
+      parent.textContent = text;
+      return;
+    }
 
     // Escape special regex characters in query
     const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -46,11 +54,27 @@ export class ExerciseAutocomplete {
     // Create regex to match query (case-insensitive, global)
     const regex = new RegExp(`(${escapedQuery})`, "gi");
 
-    // Replace matches with highlighted version
-    return text.replace(
-      regex,
-      '<mark class="workout-autocomplete-highlight">$1</mark>',
-    );
+    // Split text by matches and render each segment safely
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(text)) !== null) {
+      // Add text before the match
+      if (match.index > lastIndex) {
+        parent.appendText(text.slice(lastIndex, match.index));
+      }
+      // Add highlighted match
+      parent.createEl("mark", {
+        text: match[1],
+        cls: "workout-autocomplete-highlight",
+      });
+      lastIndex = regex.lastIndex;
+    }
+
+    // Add remaining text after last match
+    if (lastIndex < text.length) {
+      parent.appendText(text.slice(lastIndex));
+    }
   }
 
   /**
@@ -68,20 +92,21 @@ export class ExerciseAutocomplete {
       cls: `workout-autocomplete-badge workout-autocomplete-badge-${matchType}`,
     });
 
+    const autocomplete = CONSTANTS.WORKOUT.MODAL.AUTOCOMPLETE;
     if (matchType === "fuzzy") {
-      badge.textContent = "~";
-      badge.title = `Fuzzy match (typo correction) - Score: ${score}`;
+      badge.textContent = autocomplete.FUZZY_BADGE;
+      badge.title = autocomplete.FUZZY_TOOLTIP(score);
     } else {
       // Show score indicator for semantic matches
       if (score >= 90) {
-        badge.textContent = "★";
-        badge.title = `Exact/Prefix match - Score: ${score}`;
+        badge.textContent = autocomplete.EXACT_BADGE;
+        badge.title = autocomplete.EXACT_TOOLTIP(score);
       } else if (score >= 70) {
-        badge.textContent = "◆";
-        badge.title = `Word match - Score: ${score}`;
+        badge.textContent = autocomplete.WORD_BADGE;
+        badge.title = autocomplete.WORD_TOOLTIP(score);
       } else {
-        badge.textContent = "•";
-        badge.title = `Partial match - Score: ${score}`;
+        badge.textContent = autocomplete.PARTIAL_BADGE;
+        badge.title = autocomplete.PARTIAL_TOOLTIP(score);
       }
     }
 
@@ -214,7 +239,8 @@ export class ExerciseAutocomplete {
           const textSpan = suggestion.createEl("span", {
             cls: "workout-autocomplete-text",
           });
-          textSpan.innerHTML = ExerciseAutocomplete.highlightMatch(
+          ExerciseAutocomplete.renderHighlightedMatch(
+            textSpan,
             match.name,
             query,
           );
@@ -416,11 +442,6 @@ export class ExerciseAutocomplete {
         new CreateExercisePageModal(modal.app, plugin, exerciseName).open();
       }
     });
-
-    // Initial check if exercise name is pre-filled
-    if (exerciseName) {
-      showAutocomplete(exerciseName);
-    }
 
     return {
       elements,

@@ -3,6 +3,7 @@
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { CONSTANTS } from "@app/constants";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},
@@ -50,8 +51,9 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
+    const repsSuffix = CONSTANTS.WORKOUT.TABLE.TARGET.REPS_SUFFIX;
     expect(result).not.toBeNull();
-    expect(result!.textContent).toContain("10 reps");
+    expect(result!.textContent).toContain(`10 ${repsSuffix}`);
   });
 
   it("renders target text with both weight and reps", () => {
@@ -64,9 +66,10 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
+    const repsSuffix = CONSTANTS.WORKOUT.TABLE.TARGET.REPS_SUFFIX;
     expect(result).not.toBeNull();
     expect(result!.textContent).toContain("100kg");
-    expect(result!.textContent).toContain("10 reps");
+    expect(result!.textContent).toContain(`10 ${repsSuffix}`);
   });
 
   it("renders progress bar when both targets and matching data exist", () => {
@@ -165,9 +168,9 @@ describe("TargetHeader", () => {
 
     const progressBar = result!.querySelector(".workout-progress-bar");
     expect(progressBar).not.toBeNull();
-    expect(progressBar!.getAttribute("title")).toContain("8 reps");
-    expect(progressBar!.getAttribute("title")).toContain("10 reps");
-    expect(progressBar!.getAttribute("aria-label")).toBeTruthy();
+    const expectedTooltip = CONSTANTS.WORKOUT.TABLE.TARGET.PROGRESS_TOOLTIP(8, 10);
+    expect(progressBar!.getAttribute("title")).toBe(expectedTooltip);
+    expect(progressBar!.getAttribute("aria-label")).toBe(expectedTooltip);
   });
 
   it("renders target text with lb unit", () => {

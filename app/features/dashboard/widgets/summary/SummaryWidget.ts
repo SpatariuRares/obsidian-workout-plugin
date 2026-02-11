@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import { DashboardCard } from "@app/components/molecules";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 export class SummaryWidget {
   static render(
@@ -10,13 +11,9 @@ export class SummaryWidget {
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
   ): void {
-    const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget workout-summary-widget",
-    });
-
-    widgetEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TITLE,
-      cls: "workout-widget-title",
+    const widgetEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TITLE,
+      className: "workout-summary-widget",
     });
 
     const summaryEl = widgetEl.createEl("div", {

@@ -4,6 +4,7 @@ import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 export class GeneralSettings {
   constructor(
@@ -108,7 +109,7 @@ export class GeneralSettings {
               new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_CREATED);
             } catch (error) {
               const errorMessage =
-                error instanceof Error ? error.message : String(error);
+                ErrorUtils.getErrorMessage(error);
               new Notice(
                 CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_ERROR(
                   errorMessage,
@@ -181,7 +182,7 @@ export class GeneralSettings {
       }
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MESSAGES.ERRORS.MUSCLE_TAGS_CSV_FAILED(errorMessage),
       );
@@ -202,7 +203,7 @@ export class GeneralSettings {
       new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.MUSCLE_TAGS_CSV_CREATED);
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MESSAGES.ERRORS.MUSCLE_TAGS_CSV_FAILED(errorMessage),
       );

@@ -27,7 +27,7 @@ describe("TableRefresh", () => {
     jest.clearAllMocks();
   });
 
-  it("clears cache and loads fresh data", async () => {
+  it("loads fresh data and renders without clearing cache directly", async () => {
     const freshData = [createLog(), createLog({ exercise: "Squat" })];
     const mockPlugin = createMockPlugin(freshData);
     const container = document.createElement("div");
@@ -41,7 +41,7 @@ describe("TableRefresh", () => {
       renderCallback,
     );
 
-    expect(mockPlugin.clearLogDataCache).toHaveBeenCalled();
+    expect(mockPlugin.clearLogDataCache).not.toHaveBeenCalled();
     expect(mockPlugin.getWorkoutLogData).toHaveBeenCalled();
     expect(renderCallback).toHaveBeenCalledWith(container, freshData, params);
   });
@@ -126,12 +126,7 @@ describe("TableRefresh", () => {
     const container = document.createElement("div");
     const renderCallback = jest.fn().mockResolvedValue(undefined);
 
-    await TableRefresh.refreshTable(
-      mockPlugin,
-      container,
-      {},
-      renderCallback,
-    );
+    await TableRefresh.refreshTable(mockPlugin, container, {}, renderCallback);
 
     expect(renderCallback).toHaveBeenCalled();
   });

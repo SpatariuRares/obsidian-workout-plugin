@@ -225,7 +225,7 @@ export class InsertChartModal extends BaseInsertModal {
       // For now, let's just return to avoid clearing useful defaults if user is typing
       // But if they clear the input, we might want to reset.
       // Let's reload standard options if empty
-      this.dataTypeSelect.innerHTML = "";
+      this.dataTypeSelect.empty();
       CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.forEach((opt) => {
         const option = document.createElement("option");
         option.value = opt.value;
@@ -248,7 +248,7 @@ export class InsertChartModal extends BaseInsertModal {
     const availableTypes = getAvailableChartDataTypes(typeId, customParams);
 
     // Clear existing options
-    this.dataTypeSelect.innerHTML = "";
+    this.dataTypeSelect.empty();
 
     // Add new options
     availableTypes.forEach((type) => {

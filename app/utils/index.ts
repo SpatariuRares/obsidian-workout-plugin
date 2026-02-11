@@ -16,3 +16,6 @@ export * from "@app/utils/StringUtils";
 export * from "@app/utils/parameter/ParameterUtils";
 export * from "@app/utils/FormatUtils";
 export * from "@app/utils/path-resolver";
+export * from "@app/utils/ErrorUtils";
+export * from "@app/utils/PathUtils";
+export * from "@app/utils/LanguageUtils";

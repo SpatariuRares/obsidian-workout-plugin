@@ -4,7 +4,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
 import { Button } from "@app/components/atoms";
-import { StringUtils } from "@app/utils";
+import { StringUtils, ErrorUtils } from "@app/utils";
 
 interface MismatchEntry {
   file: TFile;
@@ -117,7 +117,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       this.mismatches.sort((a, b) => a.score - b.score);
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(`Error scanning exercise files: ${errorMessage}`);
     }
   }
@@ -274,7 +274,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       this.renderResults();
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`,
       );
@@ -314,7 +314,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       this.renderResults();
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR}${errorMessage}`,
       );

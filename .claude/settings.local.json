@@ -10,7 +10,8 @@
       "Bash(npx eslint:*)",
       "Bash(cd:*)",
       "Bash(dir:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

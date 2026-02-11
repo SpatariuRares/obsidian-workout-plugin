@@ -1,7 +1,10 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { TableCallbacks, EmbeddedTableParams } from "@app/features/tables/types";
+import {
+  TableCallbacks,
+  EmbeddedTableParams,
+} from "@app/features/tables/types";
 
 export class TableRefresh {
   /**
@@ -24,15 +27,11 @@ export class TableRefresh {
     callbacks?: TableCallbacks,
   ): Promise<void> {
     try {
-      plugin.clearLogDataCache();
-
       const freshLogData = await plugin.getWorkoutLogData();
 
       await renderCallback(container, freshLogData, params);
 
-      callbacks?.onSuccess?.(
-        CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS,
-      );
+      callbacks?.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -40,4 +39,3 @@ export class TableRefresh {
     }
   }
 }
-

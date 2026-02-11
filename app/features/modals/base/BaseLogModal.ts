@@ -8,6 +8,7 @@ import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
@@ -293,7 +294,7 @@ export abstract class BaseLogModal extends ModalBase {
       }
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : String(error);
+        ErrorUtils.getErrorMessage(error);
       new Notice(
         `${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`,
       );

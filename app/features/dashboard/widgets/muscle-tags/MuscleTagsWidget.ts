@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
 import type WorkoutChartsPlugin from "main";
+import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 
 const ICONS = CONSTANTS.WORKOUT.ICONS.EXERCISE;
 
@@ -34,13 +35,10 @@ export class MuscleTagsWidget {
     _params: EmbeddedDashboardParams,
     plugin: WorkoutChartsPlugin,
   ): void {
-    const widgetEl = container.createEl("div", {
-      cls: "workout-dashboard-widget widget-wide workout-muscle-tags-widget",
-    });
-
-    widgetEl.createEl("h3", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
-      cls: "workout-widget-title",
+    const widgetEl = WidgetContainer.create(container, {
+      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
+      className: "workout-muscle-tags-widget",
+      isWide: true,
     });
 
     widgetEl.createEl("p", {

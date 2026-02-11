@@ -8,6 +8,7 @@ import { MuscleTagSuggestionLogic } from "@app/features/modals/muscle/logic/Musc
 import { MuscleTagImportLogic } from "@app/features/modals/muscle/logic/MuscleTagImportLogic";
 import { filterMuscleTags } from "@app/features/modals/muscle/logic/MuscleTagFilterLogic";
 import { validateMuscleTagSave } from "@app/features/modals/muscle/logic/MuscleTagSaveValidationLogic";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { mergeMuscleTagImport } from "@app/features/modals/muscle/logic/MuscleTagImportMergeLogic";
 import { readTextFile, downloadCsv } from "@app/utils/FileUtils";
 import type { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
@@ -67,7 +68,7 @@ export class MuscleTagManagerModal extends ModalBase {
     try {
       this.allTags = await this.plugin.getMuscleTagService().loadTags();
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
+      const message = ErrorUtils.getErrorMessage(error);
       new Notice(`Error loading muscle tags: ${message}`);
       this.allTags = new Map();
     }
@@ -201,7 +202,7 @@ export class MuscleTagManagerModal extends ModalBase {
       this.hideForm();
       this.renderTags();
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
+      const message = ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
       );
@@ -229,7 +230,7 @@ export class MuscleTagManagerModal extends ModalBase {
       this.plugin.triggerMuscleTagRefresh();
       this.renderTags();
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
+      const message = ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
       );
@@ -244,7 +245,7 @@ export class MuscleTagManagerModal extends ModalBase {
       downloadCsv(csvContent, "muscle-tags-export.csv");
       new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORTED);
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
+      const message = ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORT_ERROR(message),
       );
@@ -365,7 +366,7 @@ export class MuscleTagManagerModal extends ModalBase {
       this.hideImportPreview();
       this.renderTags();
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
+      const message = ErrorUtils.getErrorMessage(error);
       new Notice(
         CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(message),
       );

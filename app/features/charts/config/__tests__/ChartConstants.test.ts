@@ -8,6 +8,8 @@ import {
   isValidChartDataType,
 } from "../ChartConstants";
 
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+
 describe("ChartConstants", () => {
   it("creates a default chart title", () => {
     expect(getDefaultChartTitle("volume")).toBe("Trend Volume");
@@ -15,27 +17,38 @@ describe("ChartConstants", () => {
   });
 
   it("returns correct units and axis labels", () => {
-    expect(getUnitForChartType("volume")).toBe(ChartLabels.UNITS.WEIGHT);
-    expect(getUnitForChartType("reps")).toBe(ChartLabels.UNITS.REPS);
+    const weightUnit = ParameterUtils.getWeightUnit();
 
-    expect(getYAxisLabel("weight")).toBe(ChartLabels.Y_AXIS.WEIGHT);
-    expect(getYAxisLabel("unknown")).toBe(ChartLabels.Y_AXIS.VOLUME);
+    expect(getUnitForChartType("volume")).toBe(weightUnit);
+    expect(getUnitForChartType("reps")).toBe("");
+
+    expect(getYAxisLabel("weight")).toBe(
+      `${ChartLabels.Y_AXIS.WEIGHT} (${weightUnit})`,
+    );
+    expect(getYAxisLabel("unknown")).toBe(
+      `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`,
+    );
   });
 
   it("returns available chart data types for exercise type", () => {
-    expect(getAvailableChartDataTypes("strength")).toEqual(
-      ["volume", "weight", "reps"]
-    );
+    expect(getAvailableChartDataTypes("strength")).toEqual([
+      "volume",
+      "weight",
+      "reps",
+    ]);
 
-    expect(getAvailableChartDataTypes("custom", ["speed", "power"]))
-      .toEqual(["speed", "power"]);
+    expect(getAvailableChartDataTypes("custom", ["speed", "power"])).toEqual([
+      "speed",
+      "power",
+    ]);
   });
 
   it("returns default chart data type for exercise type", () => {
     expect(getDefaultChartDataType("strength")).toBe("volume");
 
-    expect(getDefaultChartDataType("custom", ["cadence", "pace"]))
-      .toBe("cadence");
+    expect(getDefaultChartDataType("custom", ["cadence", "pace"])).toBe(
+      "cadence",
+    );
 
     expect(getDefaultChartDataType("unknown")).toBe("volume");
   });
@@ -43,8 +56,8 @@ describe("ChartConstants", () => {
   it("validates chart data types", () => {
     expect(isValidChartDataType("strength", "volume")).toBe(true);
     expect(isValidChartDataType("strength", "pace")).toBe(false);
-    expect(
-      isValidChartDataType("custom", "power", ["power", "speed"])
-    ).toBe(true);
+    expect(isValidChartDataType("custom", "power", ["power", "speed"])).toBe(
+      true,
+    );
   });
 });

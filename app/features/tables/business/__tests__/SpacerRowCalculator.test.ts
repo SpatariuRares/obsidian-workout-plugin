@@ -2,9 +2,7 @@ import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalc
 import { TableRow } from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
-const createRow = (
-  logOverrides: Partial<WorkoutLogData> = {},
-): TableRow => ({
+const createRow = (logOverrides: Partial<WorkoutLogData> = {}): TableRow => ({
   displayRow: [],
   originalDate: "2024-01-15",
   dateKey: "2024-01-15",
@@ -30,8 +28,12 @@ describe("SpacerRowCalculator", () => {
 
       expect(result.stats).toHaveLength(3);
       expect(result.stats[0]).toEqual(expect.objectContaining({ value: "18" }));
-      expect(result.stats[1]).toEqual(expect.objectContaining({ value: "160.0kg" }));
-      expect(result.stats[2]).toEqual(expect.objectContaining({ value: "1440" }));
+      expect(result.stats[1]).toEqual(
+        expect.objectContaining({ value: "160.0kg" }),
+      );
+      expect(result.stats[2]).toEqual(
+        expect.objectContaining({ value: "1440kg" }),
+      );
     });
 
     it("includes icon references for strength stats", () => {

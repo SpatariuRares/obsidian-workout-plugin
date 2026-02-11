@@ -16,7 +16,7 @@ export interface LogFormElements {
   exerciseElements: ExerciseAutocompleteElements;
   notesInput: HTMLInputElement;
   workoutInput: HTMLInputElement;
-  currentWorkoutToggle: HTMLInputElement;
+  currentWorkoutToggle?: HTMLInputElement;
   dateInput?: HTMLInputElement;
   protocolSelect?: HTMLSelectElement;
   dynamicFieldInputs: Map<string, HTMLInputElement>;

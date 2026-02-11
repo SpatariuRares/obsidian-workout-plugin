@@ -29,6 +29,8 @@ export class LogCallouts {
       exerciseName,
       currentPageLink,
       onComplete || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
+      undefined,
+      !currentPageLink,
     ).open();
   }
 
@@ -82,6 +84,7 @@ export class LogCallouts {
         link,
         onRefresh || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
         undefined,
+        !link,
       ).open();
     });
 
@@ -137,6 +140,7 @@ export class LogCallouts {
           currentPageLink,
           onLogCreated,
           prefillData,
+          false,
         ).open();
       },
       signal,

@@ -8,6 +8,7 @@ import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 
 export class CreateLogModal extends BaseLogModal {
   private initialValues?: Partial<LogFormData>;
+  private currentWorkoutDoesntExist: boolean;
 
   constructor(
     app: App,
@@ -16,9 +17,11 @@ export class CreateLogModal extends BaseLogModal {
     currentPageLink?: string,
     onLogCreated?: (context?: WorkoutDataChangedEvent) => void,
     initialValues?: Partial<LogFormData>,
+    currentWorkoutDoesntExist = false,
   ) {
     super(app, plugin, exerciseName, currentPageLink, onLogCreated);
     this.initialValues = initialValues;
+    this.currentWorkoutDoesntExist = currentWorkoutDoesntExist;
   }
 
   protected getModalTitle(): string {
@@ -34,7 +37,11 @@ export class CreateLogModal extends BaseLogModal {
   }
 
   protected getInitialWorkoutToggleState(): boolean {
-    return true; // Default to checked for create modal
+    return !this.currentWorkoutDoesntExist;
+  }
+
+  protected shouldShowWorkoutToggle(): boolean {
+    return !this.currentWorkoutDoesntExist;
   }
 
   protected shouldPreFillForm(): boolean {

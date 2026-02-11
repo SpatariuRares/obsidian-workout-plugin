@@ -33,6 +33,7 @@ export class LogFormRenderer {
     shouldShowDateField: boolean,
     initialWorkoutToggleState: boolean,
     onExerciseChange: (newParams: ParameterDefinition[]) => void,
+    shouldShowWorkoutToggle = true,
   ): Promise<LogFormElements> {
     // Exercise autocomplete using reusable component
     // We pass 'modal' as it requires the ModalBase instance context for suggestions
@@ -132,12 +133,15 @@ export class LogFormRenderer {
     );
 
     // Current workout toggle
-    const currentWorkoutToggle = modal.createCheckboxField(
-      workoutSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
-      initialWorkoutToggleState,
-      "currentWorkout",
-    );
+    let currentWorkoutToggle: HTMLInputElement | undefined;
+    if (shouldShowWorkoutToggle) {
+      currentWorkoutToggle = modal.createCheckboxField(
+        workoutSection,
+        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
+        initialWorkoutToggleState,
+        "currentWorkout",
+      );
+    }
 
     // Workout input
     const workoutInput = modal.createTextField(
@@ -150,11 +154,13 @@ export class LogFormRenderer {
     new FileSuggest(this.plugin.app, workoutInput);
 
     // Setup behaviors
-    setupWorkoutToggle(
-      currentWorkoutToggle,
-      workoutInput,
-      () => initialCurrentPageLink || "",
-    );
+    if (currentWorkoutToggle) {
+      setupWorkoutToggle(
+        currentWorkoutToggle,
+        workoutInput,
+        () => initialCurrentPageLink || "",
+      );
+    }
 
     const formElements: LogFormElements = {
       exerciseElements,

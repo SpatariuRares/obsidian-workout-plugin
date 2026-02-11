@@ -82,6 +82,7 @@ describe("LogCallouts organism", () => {
         "[[TestPage]]",
         expect.any(Function),
         undefined,
+        false,
       );
     });
 
@@ -153,6 +154,7 @@ describe("LogCallouts organism", () => {
         "[[Page]]",
         undefined,
         undefined,
+        false,
       );
     });
 
@@ -203,6 +205,7 @@ describe("LogCallouts organism", () => {
           protocol: WorkoutProtocol.DROP_SET,
           customFields: { tempo: "2-1-2" },
         },
+        false,
       );
     });
 
@@ -231,6 +234,7 @@ describe("LogCallouts organism", () => {
         "[[Page]]",
         onLogCreated,
         undefined,
+        false,
       );
     });
 
@@ -281,6 +285,7 @@ describe("LogCallouts organism", () => {
           protocol: WorkoutProtocol.DROP_SET,
           customFields: undefined,
         },
+        false,
       );
     });
   });
@@ -323,6 +328,8 @@ describe("LogCallouts organism", () => {
         "Deadlift",
         "[[ExercisePage]]",
         expect.any(Function),
+        undefined,
+        false,
       );
     });
   });

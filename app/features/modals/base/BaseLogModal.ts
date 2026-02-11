@@ -72,6 +72,14 @@ export abstract class BaseLogModal extends ModalBase {
     return false;
   }
 
+  /**
+   * Determines if the workout toggle should be shown.
+   * Defaults to true. Override in subclasses if needed.
+   */
+  protected shouldShowWorkoutToggle(): boolean {
+    return true;
+  }
+
   async onOpen() {
     const { contentEl } = this;
     contentEl.addClass("workout-modal");
@@ -95,6 +103,7 @@ export abstract class BaseLogModal extends ModalBase {
       (newParams) => {
         this.currentParameters = newParams;
       },
+      this.shouldShowWorkoutToggle(),
     );
 
     // Pre-fill form if needed

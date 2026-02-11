@@ -54,9 +54,17 @@ export default class WorkoutChartsPlugin extends Plugin {
   public get createLogModalHandler() {
     return {
       openModal: () => {
-        new CreateLogModal(this.app, this, undefined, undefined, (ctx) => {
-          this.triggerWorkoutLogRefresh(ctx);
-        }).open();
+        new CreateLogModal(
+          this.app,
+          this,
+          undefined,
+          undefined,
+          (ctx) => {
+            this.triggerWorkoutLogRefresh(ctx);
+          },
+          undefined,
+          true,
+        ).open();
       },
     };
   }
@@ -125,9 +133,17 @@ export default class WorkoutChartsPlugin extends Plugin {
       "dumbbell",
       CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
       () => {
-        new CreateLogModal(this.app, this, undefined, undefined, (ctx) => {
-          this.triggerWorkoutLogRefresh(ctx);
-        }).open();
+        new CreateLogModal(
+          this.app,
+          this,
+          undefined,
+          undefined,
+          (ctx) => {
+            this.triggerWorkoutLogRefresh(ctx);
+          },
+          undefined,
+          true,
+        ).open();
       },
     );
   }

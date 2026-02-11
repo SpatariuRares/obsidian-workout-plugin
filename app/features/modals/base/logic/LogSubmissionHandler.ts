@@ -54,7 +54,7 @@ export class LogSubmissionHandler {
       WorkoutProtocol.STANDARD) as WorkoutProtocol;
 
     // Handle current workout toggle
-    if (formElements.currentWorkoutToggle.checked && currentFileName) {
+    if (formElements.currentWorkoutToggle?.checked && currentFileName) {
       workout = currentFileName;
     }
 

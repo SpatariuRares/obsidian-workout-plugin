@@ -15,6 +15,66 @@ export class TemplatesSettings {
       .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.TEMPLATES)
       .setHeading();
 
+    // Generate Templates button
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_DEFAULT_TEMPLATES)
+      .setDesc(
+        CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.GENERATE_DEFAULT_TEMPLATES,
+      )
+      .addButton((button) => {
+        button
+          .setButtonText(
+            CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_DEFAULT_TEMPLATES,
+          )
+          .setCta()
+          .onClick(async () => {
+            button.setDisabled(true);
+            button.setButtonText("Generating...");
+            try {
+              await this.plugin.templateGeneratorService.generateDefaultTemplates(
+                false,
+              );
+              button.setButtonText("Generated!");
+              setTimeout(() => {
+                button.setButtonText("Generate templates");
+                button.setDisabled(false);
+              }, 2000);
+            } catch (error) {
+              button.setButtonText("Failed");
+              setTimeout(() => {
+                button.setButtonText("Generate templates");
+                button.setDisabled(false);
+              }, 2000);
+            }
+          });
+      })
+      .addButton((button) => {
+        button
+          .setButtonText("Regenerate (overwrite)")
+          .setWarning()
+          .onClick(async () => {
+            button.setDisabled(true);
+            button.setButtonText("Overwriting...");
+            try {
+              await this.plugin.templateGeneratorService.generateDefaultTemplates(
+                true,
+              );
+              button.setButtonText("Done!");
+              setTimeout(() => {
+                button.setButtonText("Regenerate (overwrite)");
+                button.setDisabled(false);
+              }, 2000);
+            } catch (error) {
+              console.error("Failed to regenerate templates:", error);
+              button.setButtonText("Failed");
+              setTimeout(() => {
+                button.setButtonText("Regenerate (overwrite)");
+                button.setDisabled(false);
+              }, 2000);
+            }
+          });
+      });
+
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_BLOCK_TEMPLATE)
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.EXERCISE_BLOCK_TEMPLATE)

@@ -286,11 +286,14 @@ export class ExerciseDefinitionService {
     // Extract muscle groups from tags
     const muscleGroups = this.parseMuscleGroups(frontmatter);
 
-    // Use filename as exercise name (or nome_esercizio if present)
+    // Use filename as exercise name (with backward compatibility)
+    // Priority: exercise_name (new) -> nome_esercizio (legacy Italian) -> filename
     const name =
-      typeof frontmatter.nome_esercizio === "string"
-        ? frontmatter.nome_esercizio
-        : file.basename;
+      typeof frontmatter.exercise_name === "string"
+        ? frontmatter.exercise_name
+        : typeof frontmatter.nome_esercizio === "string"
+          ? frontmatter.nome_esercizio
+          : file.basename;
 
     return {
       name,
@@ -433,7 +436,7 @@ export class ExerciseDefinitionService {
     const frontmatterLines: string[] = ["---"];
 
     // Exercise name
-    frontmatterLines.push(`nome_esercizio: ${definition.name}`);
+    frontmatterLines.push(`exercise_name: ${definition.name}`);
 
     // Exercise type
     frontmatterLines.push(`exercise_type: ${definition.typeId}`);

@@ -17,6 +17,7 @@ import { DataService } from "@app/services/data/DataService";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { CONSTANTS } from "@app/constants";
@@ -47,6 +48,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private codeBlockProcessorService!: CodeBlockProcessorService;
   private exerciseDefinitionService!: ExerciseDefinitionService;
   private muscleTagService!: MuscleTagService;
+  public templateGeneratorService!: TemplateGeneratorService;
 
   // Public API for Dataview integration
   private workoutPlannerAPI!: WorkoutPlannerAPI;
@@ -90,6 +92,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.settings,
     );
     this.muscleTagService = new MuscleTagService(this.app, this.settings);
+    this.templateGeneratorService = new TemplateGeneratorService(this.app, this);
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,

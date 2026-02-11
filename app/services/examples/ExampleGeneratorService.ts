@@ -1002,7 +1002,7 @@ showTrendLine: true
     const chartSections = this.getChartSectionsForType(name, type);
 
     return `---
-nome_esercizio: ${name}
+exercise_name: ${name}
 exercise_type: ${type}
 ${tagsYaml}
 ---

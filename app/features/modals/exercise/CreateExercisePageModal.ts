@@ -333,86 +333,63 @@ export class CreateExercisePageModal extends ModalBase {
     folderPath: string,
     customParameters?: ParameterDefinition[],
   ) {
-    // Tags are already an array, no need to parse
-    const tagList = tags;
+    const template =
+      await this.plugin.templateGeneratorService.getExercisePageTemplate();
 
-    // Build frontmatter
-    let frontmatterContent = `nome_esercizio: ${exerciseName}
-exercise_type: ${exerciseType}`;
-
-    // Add tags if present
-    if (tagList.length > 0) {
-      frontmatterContent += `
-tags:
-${tagList.map((tag) => `  - ${tag}`).join("\n")}`;
-    } else {
-      frontmatterContent += `
-tags: []`;
-    }
-
-    // Add custom parameters for custom type
-    if (
-      exerciseType === EXERCISE_TYPE_IDS.CUSTOM &&
-      customParameters &&
-      customParameters.length > 0
-    ) {
-      frontmatterContent += `
-parameters:`;
-      for (const param of customParameters) {
-        frontmatterContent += `
-  - key: ${param.key}
-    label: ${param.label}
-    type: ${param.type}
-    required: ${param.required}`;
-        if (param.unit) {
-          frontmatterContent += `
-    unit: ${param.unit}`;
-        }
-      }
-    }
-
-    const frontmatter = `---
-${frontmatterContent}
----`;
-
-    // Get exercise type display name for description
     const exerciseTypeDef = BUILT_IN_EXERCISE_TYPES.find(
       (t) => t.id === exerciseType,
     );
     const exerciseTypeName = exerciseTypeDef?.name || exerciseType;
 
-    // Create content
-    const content = `${frontmatter}
+    // Build tags YAML
+    let tagsYaml = "";
+    if (tags.length > 0) {
+      tagsYaml = tags.map((tag) => `  - ${tag}`).join("\n");
+    }
 
-# Descrizione
+    // Build custom parameters YAML
+    let customParametersYaml = "";
+    if (
+      exerciseType === EXERCISE_TYPE_IDS.CUSTOM &&
+      customParameters &&
+      customParameters.length > 0
+    ) {
+      customParametersYaml = "\nparameters:";
+      for (const param of customParameters) {
+        customParametersYaml += `
+  - key: ${param.key}
+    label: ${param.label}
+    type: ${param.type}
+    required: ${param.required}`;
+        if (param.unit) {
+          customParametersYaml += `
+    unit: ${param.unit}`;
+        }
+      }
+    }
 
-Tipo: ${exerciseTypeName}
+    // Fill in the blank template with actual values
+    let content = template;
 
-# Tecnica di Esecuzione
+    // Replace frontmatter fields
+    content = content
+      .replace(/^exercise_name:\s*$/m, `exercise_name: ${exerciseName}`)
+      .replace(/^exercise_type:\s*$/m, `exercise_type: ${exerciseType}`)
+      .replace(/^tags:\s*$/m, tagsYaml ? `tags:\n${tagsYaml}` : "tags: []");
 
+    // Add custom parameters if present (insert after tags in frontmatter)
+    if (customParametersYaml) {
+      content = content.replace(/(tags:.*?\n)/s, `$1${customParametersYaml}\n`);
+    }
 
+    // Replace "Type:" placeholder
+    content = content.replace(/^Type:\s*$/m, `Type: ${exerciseTypeName}`);
 
-# Note di Sicurezza
+    // Replace "name" placeholder in code blocks with actual exercise name
+    content = content.replace(/exercise: name/g, `exercise: ${exerciseName}`);
 
--
-
-# Log delle Performance
-
-\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE}
-exercise: ${exerciseName}
-\`\`\`
-
-### grafico
-
-\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART}
-exercise: ${exerciseName}
-\`\`\`
-`;
-
-    // Create file path
     const safeExerciseName = exerciseName.replace(/[\\/:"*?<>|]/g, "_");
     const fileName = normalizePath(folderPath + "/" + safeExerciseName + ".md");
-    // Create the file
     await this.app.vault.create(fileName, content);
   }
 }

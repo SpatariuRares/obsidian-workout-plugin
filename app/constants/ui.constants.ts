@@ -565,6 +565,7 @@ export function getDynamicSettingsLabels() {
  */
 export const SETTINGS_UI = {
   LABELS: {
+    GENERATE_DEFAULT_TEMPLATES: "Generate default templates",
     CSV_PATH: "CSV log file path",
     EXERCISE_FOLDER: "Exercise folder path",
     DEFAULT_EXACT_MATCH: "Default exact match",
@@ -599,6 +600,8 @@ export const SETTINGS_UI = {
     WEIGHT_UNIT: "Weight unit",
   },
   DESCRIPTIONS: {
+    GENERATE_DEFAULT_TEMPLATES:
+      "Generate default exercise page template and tag reference in the 'Workout Templates' folder. You can customize these files to change the language and structure.",
     CSV_PATH: "CSV log file path",
     CSV_FOLDER:
       "Folder where the workout logs and muscle tags CSV files will be stored.",

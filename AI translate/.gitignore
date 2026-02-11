@@ -1,0 +1,5 @@
+# AI Translate - Virtual Environment
+venv/
+__pycache__/
+*.pyc
+.env

@@ -248,6 +248,7 @@ The plugin exposes a public JavaScript API via `window.WorkoutPlannerAPI` that a
 Retrieves workout log entries with optional filtering.
 
 **Filter options:**
+
 - `exercise`: Filter by exercise name (partial match, case-insensitive)
 - `workout`: Filter by workout/origin name
 - `dateRange`: `{ start: "YYYY-MM-DD", end: "YYYY-MM-DD" }`
@@ -261,6 +262,7 @@ Retrieves workout log entries with optional filtering.
 Get statistics for a specific exercise.
 
 **Returns:**
+
 - `totalVolume`: Sum of all volume
 - `maxWeight` / `prWeight`: Personal record weight
 - `prReps`: Reps at PR weight
@@ -275,6 +277,7 @@ Get statistics for a specific exercise.
 Get list of available exercises.
 
 **Filter options:**
+
 - `tag`: Filter by frontmatter tag (e.g., "chest", "compound")
 
 ### Usage Examples
@@ -369,6 +372,10 @@ This plugin uses the following third-party libraries:
 - **Chart.js** (v4.4.0) - For interactive chart rendering
   - License: MIT
   - Repository: https://github.com/chartjs/Chart.js
+
+## Translations
+
+> ⚠️ **Note:** All translations (except English) are generated using AI (LLM-based machine translation). While we strive for accuracy, some translations may contain errors or unnatural phrasing. If you notice any issues, feel free to open an issue or submit a pull request with corrections.
 
 ## License
 

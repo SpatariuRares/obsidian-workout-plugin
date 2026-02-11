@@ -79,8 +79,16 @@ export class LocalizationService {
     try {
       const lang =
         window.localStorage.getItem("language") || this.DEFAULT_LOCALE;
-      // Normalize language code (handle variants like "en-US" -> "en")
-      return lang.split("-")[0].toLowerCase();
+
+      // Handle regional locales (e.g. "pt-br" -> "pt-BR", "zh-tw" -> "zh-TW")
+      if (lang.includes("-")) {
+        const parts = lang.split("-");
+        // Ensure first part is lowercase and second part is uppercase
+        return `${parts[0].toLowerCase()}-${parts[1].toUpperCase()}`;
+      }
+
+      // Normal case (e.g. "Just "en", "fr", "es")
+      return lang.toLowerCase();
     } catch {
       return this.DEFAULT_LOCALE;
     }

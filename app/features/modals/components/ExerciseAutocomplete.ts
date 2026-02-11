@@ -4,6 +4,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
+import { StringUtils } from "@app/utils/StringUtils";
 
 import { Button } from "@app/components/atoms";
 
@@ -19,9 +20,73 @@ export interface ExerciseAutocompleteHandlers {
   hideAutocomplete: () => void;
 }
 
+interface ExerciseMatch {
+  name: string;
+  score: number;
+  matchType: "semantic" | "fuzzy";
+}
+
 export class ExerciseAutocomplete {
   private availableExercises: string[] = [];
   private exerciseExists: boolean = false;
+  private selectedIndex: number = -1;
+
+  /**
+   * Highlights the matched portion of text in the exercise name
+   * @param text - The exercise name
+   * @param query - The search query
+   * @returns HTML string with highlighted matches
+   */
+  private static highlightMatch(text: string, query: string): string {
+    if (!query || query.length === 0) return text;
+
+    // Escape special regex characters in query
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    // Create regex to match query (case-insensitive, global)
+    const regex = new RegExp(`(${escapedQuery})`, "gi");
+
+    // Replace matches with highlighted version
+    return text.replace(
+      regex,
+      '<mark class="workout-autocomplete-highlight">$1</mark>',
+    );
+  }
+
+  /**
+   * Creates a badge element to show match type
+   * @param matchType - Type of match (semantic or fuzzy)
+   * @param score - Match score
+   * @returns Badge element
+   */
+  private static createMatchBadge(
+    parent: HTMLElement,
+    matchType: "semantic" | "fuzzy",
+    score: number,
+  ): HTMLElement {
+    const badge = parent.createEl("span", {
+      cls: `workout-autocomplete-badge workout-autocomplete-badge-${matchType}`,
+    });
+
+    if (matchType === "fuzzy") {
+      badge.textContent = "~";
+      badge.title = `Fuzzy match (typo correction) - Score: ${score}`;
+    } else {
+      // Show score indicator for semantic matches
+      if (score >= 90) {
+        badge.textContent = "★";
+        badge.title = `Exact/Prefix match - Score: ${score}`;
+      } else if (score >= 70) {
+        badge.textContent = "◆";
+        badge.title = `Word match - Score: ${score}`;
+      } else {
+        badge.textContent = "•";
+        badge.title = `Partial match - Score: ${score}`;
+      }
+    }
+
+    return badge;
+  }
 
   /**
    * Creates the exercise autocomplete component
@@ -89,23 +154,74 @@ export class ExerciseAutocomplete {
         return;
       }
 
-      const matchingExercises = instance.availableExercises.filter((exercise) =>
-        exercise.toLowerCase().startsWith(query.toLowerCase()),
+      // Smart ranking: Use semantic matching with scoring
+      const semanticMatches: ExerciseMatch[] = instance.availableExercises
+        .map((exercise) => ({
+          name: exercise,
+          score: StringUtils.getMatchScore(exercise, query),
+          matchType: "semantic" as const,
+        }))
+        .filter((match) => match.score > 0); // Only include matches
+
+      // Fuzzy matching: Handle typos using Levenshtein distance
+      // Max distance of 3 allows for reasonable typos (e.g., "squatt" -> "squat")
+      const fuzzyMatches: ExerciseMatch[] = StringUtils.findSimilarStrings(
+        query,
+        instance.availableExercises,
+        3,
+      )
+        .filter((name) => {
+          // Exclude if already found in semantic matches
+          return !semanticMatches.some((sm) => sm.name === name);
+        })
+        .map((name) => ({
+          name,
+          score: 40, // Lower score than semantic matches
+          matchType: "fuzzy" as const,
+        }));
+
+      // Combine and sort by score (highest first)
+      const allMatches = [...semanticMatches, ...fuzzyMatches].sort(
+        (a, b) => b.score - a.score,
       );
+
+      const matchingExercises = allMatches.map((match) => match.name);
 
       if (matchingExercises.length > 0) {
         autocompleteContainer.empty();
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-visible";
 
-        matchingExercises.slice(0, 8).forEach((exercise) => {
+        // Reset selected index when results change
+        instance.selectedIndex = -1;
+
+        allMatches.slice(0, 8).forEach((match, index) => {
           const suggestion = autocompleteContainer.createEl("div", {
             cls: "workout-exercise-autocomplete-suggestion",
-            text: exercise,
           });
 
+          // Add data attribute for keyboard navigation
+          suggestion.setAttribute("data-index", index.toString());
+
+          // Create badge for match type
+          ExerciseAutocomplete.createMatchBadge(
+            suggestion,
+            match.matchType,
+            match.score,
+          );
+
+          // Add highlighted text
+          const textSpan = suggestion.createEl("span", {
+            cls: "workout-autocomplete-text",
+          });
+          textSpan.innerHTML = ExerciseAutocomplete.highlightMatch(
+            match.name,
+            query,
+          );
+
+          // Click handler
           suggestion.addEventListener("click", () => {
-            exerciseInput.value = exercise;
+            exerciseInput.value = match.name;
             exerciseInput.dispatchEvent(new Event("change"));
             autocompleteContainer.className =
               "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
@@ -114,10 +230,24 @@ export class ExerciseAutocomplete {
             instance.exerciseExists = true;
           });
 
+          // Mouse hover handlers
           suggestion.addEventListener("mouseenter", () => {
+            // Remove selected class from all suggestions
+            autocompleteContainer
+              .querySelectorAll(".workout-exercise-autocomplete-suggestion")
+              .forEach((s) =>
+                s.classList.remove(
+                  "workout-exercise-autocomplete-suggestion-selected",
+                ),
+              );
+
+            // Add hover class
             suggestion.classList.add(
               "workout-exercise-autocomplete-suggestion-hover",
             );
+
+            // Update selected index
+            instance.selectedIndex = index;
           });
 
           suggestion.addEventListener("mouseleave", () => {
@@ -134,12 +264,13 @@ export class ExerciseAutocomplete {
       } else {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
-        exerciseStatusContainer.className = "workout-exercise-status-container workout-exercise-autocomplete-no-found";
+        exerciseStatusContainer.className =
+          "workout-exercise-status-container workout-exercise-autocomplete-no-found";
         exerciseStatusText.textContent =
           CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
-        
+
         // Only show the create button if allowed
         if (showCreateButton) {
           createExercisePageBtn.className =
@@ -148,7 +279,7 @@ export class ExerciseAutocomplete {
           createExercisePageBtn.className =
             "workout-create-exercise-page-btn workout-display-none";
         }
-        
+
         instance.exerciseExists = false;
       }
     };
@@ -157,7 +288,49 @@ export class ExerciseAutocomplete {
       setTimeout(() => {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
+        instance.selectedIndex = -1;
       }, 200);
+    };
+
+    /**
+     * Updates the visual selection state of autocomplete suggestions
+     * @param index - Index of the suggestion to select (-1 for none)
+     */
+    const updateSelection = (index: number) => {
+      const suggestions = autocompleteContainer.querySelectorAll(
+        ".workout-exercise-autocomplete-suggestion",
+      );
+
+      suggestions.forEach((suggestion, i) => {
+        if (i === index) {
+          suggestion.classList.add(
+            "workout-exercise-autocomplete-suggestion-selected",
+          );
+          // Scroll into view if needed
+          suggestion.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        } else {
+          suggestion.classList.remove(
+            "workout-exercise-autocomplete-suggestion-selected",
+          );
+        }
+      });
+
+      instance.selectedIndex = index;
+    };
+
+    /**
+     * Selects the currently highlighted suggestion
+     */
+    const selectCurrentSuggestion = () => {
+      if (instance.selectedIndex >= 0) {
+        const suggestions = autocompleteContainer.querySelectorAll(
+          ".workout-exercise-autocomplete-suggestion",
+        );
+
+        if (suggestions[instance.selectedIndex]) {
+          (suggestions[instance.selectedIndex] as HTMLElement).click();
+        }
+      }
     };
 
     const handlers: ExerciseAutocompleteHandlers = {
@@ -169,6 +342,69 @@ export class ExerciseAutocomplete {
     exerciseInput.addEventListener("input", (e) => {
       const exerciseName = (e.target as HTMLInputElement).value;
       showAutocomplete(exerciseName);
+    });
+
+    // Keyboard navigation for autocomplete
+    exerciseInput.addEventListener("keydown", (e) => {
+      const suggestions = autocompleteContainer.querySelectorAll(
+        ".workout-exercise-autocomplete-suggestion",
+      );
+
+      // Only handle keyboard if autocomplete is visible
+      const isVisible = autocompleteContainer.classList.contains(
+        "workout-exercise-autocomplete-visible",
+      );
+
+      if (!isVisible || suggestions.length === 0) return;
+
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          // Move selection down
+          if (instance.selectedIndex < suggestions.length - 1) {
+            updateSelection(instance.selectedIndex + 1);
+          } else {
+            // Wrap to top
+            updateSelection(0);
+          }
+          break;
+
+        case "ArrowUp":
+          e.preventDefault();
+          // Move selection up
+          if (instance.selectedIndex > 0) {
+            updateSelection(instance.selectedIndex - 1);
+          } else {
+            // Wrap to bottom
+            updateSelection(suggestions.length - 1);
+          }
+          break;
+
+        case "Enter":
+          // Select current suggestion if one is highlighted
+          if (instance.selectedIndex >= 0) {
+            e.preventDefault();
+            selectCurrentSuggestion();
+          }
+          // If no selection, let the form submit naturally
+          break;
+
+        case "Escape":
+          e.preventDefault();
+          // Hide autocomplete
+          autocompleteContainer.className =
+            "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
+          instance.selectedIndex = -1;
+          break;
+
+        case "Tab":
+          // Tab selects current suggestion if highlighted
+          if (instance.selectedIndex >= 0) {
+            e.preventDefault();
+            selectCurrentSuggestion();
+          }
+          break;
+      }
     });
 
     exerciseInput.addEventListener("blur", hideAutocomplete);

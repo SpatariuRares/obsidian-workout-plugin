@@ -356,9 +356,13 @@ export const MODAL_UI = {
     LAYOUT_HORIZONTAL: "Horizontal flow",
     LAYOUT_VERTICAL: "Vertical flow",
     LAYOUT_GROUPED: "Grouped by muscle",
+    TAGS_SELECTOR: "Muscle tags:",
+    NO_TAGS_FOUND: "No tags match your search",
+    NO_TAGS_SELECTED: "No tags selected. Click on tags below to add them.",
   },
   PLACEHOLDERS: {
     SEARCH_TAGS: "Search by tag or muscle group...",
+    SEARCH_MUSCLE_TAGS: "Search muscle tags...",
     ENTER_TAG_NAME: "Enter tag name (e.g., petto, chest)",
     EXERCISE_AUTOCOMPLETE: "Start typing to see available exercises...",
     REPS: "e.g., 10",

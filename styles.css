@@ -630,6 +630,59 @@
   }
 }
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
+   CHIP COMPONENT
+   ============================================================================
+   Touch-friendly selection chips used for quick selection
+   ============================================================================ */
+.workout-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border-radius: var(--workout-radius-full, 9999px);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 36px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.workout-chip:hover {
+  background: var(--interactive-hover);
+  border-color: var(--interactive-accent);
+}
+.workout-chip:active {
+  transform: scale(0.95);
+}
+.workout-chip-selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+.workout-chip-selected:hover {
+  background: var(--interactive-accent-hover);
+  border-color: var(--interactive-accent-hover);
+}
+
+@media (max-width: 768px) {
+  .workout-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
+  }
+}
+/* ============================================================================
    FEEDBACK & ALERTS
    ============================================================================ */
 /* ------------------------------------------------------------------
@@ -1733,6 +1786,85 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+/* Muscle Tag Selector */
+.workout-muscle-tag-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
+}
+.workout-muscle-tag-selector .workout-form-label {
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+}
+.workout-muscle-tag-selector .workout-muscle-tag-search {
+  width: 100%;
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  border: var(--input-border-width, var(--workout-border-thin)) solid var(--background-modifier-border);
+  border-radius: var(--input-radius, var(--workout-radius-md));
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  transition: var(--workout-transition);
+}
+.workout-muscle-tag-selector .workout-muscle-tag-search:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 var(--workout-border-medium) rgba(var(--interactive-accent-rgb), 0.2);
+}
+.workout-muscle-tag-selector .workout-muscle-tag-search::placeholder {
+  color: var(--text-muted);
+}
+
+/* Selected tags display */
+.workout-selected-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  background: var(--background-secondary);
+  min-height: 60px;
+  align-items: center;
+}
+
+.workout-selected-tags-empty {
+  width: 100%;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-style: italic;
+  text-align: center;
+}
+
+.workout-selected-tag-chip {
+  cursor: pointer;
+}
+
+/* Tag list - chip-based display */
+.workout-muscle-tag-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  background: var(--background-primary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+  align-content: flex-start;
+}
+
+.workout-muscle-tag-list-empty {
+  width: 100%;
+  padding: var(--workout-space-lg);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-style: italic;
+}
+
 /* Info boxes & sections */
 .workout-charts-mode-info {
   background: var(--background-secondary);

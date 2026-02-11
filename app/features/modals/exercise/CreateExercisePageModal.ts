@@ -9,6 +9,7 @@ import { App, normalizePath, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import { MuscleTagSelector } from "@app/features/modals/components/MuscleTagSelector";
 import { Button, Input } from "@app/components/atoms";
 import type {
   ParameterDefinition,
@@ -30,6 +31,7 @@ export class CreateExercisePageModal extends ModalBase {
   private exerciseName?: string;
   private customParameterRows: CustomParameterRow[] = [];
   private customParametersContainer?: HTMLElement;
+  private getSelectedTags?: () => string[];
 
   constructor(
     app: App,
@@ -112,12 +114,9 @@ export class CreateExercisePageModal extends ModalBase {
       this.addParameterRow(paramRowsContainer);
     });
 
-    // Tags input
-    const tagsInput = this.createTextField(
-      formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TAGS,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TAGS,
-    );
+    // Muscle tag selector (replaces plain text input)
+    const tagSelector = MuscleTagSelector.create(formContainer, this.plugin);
+    this.getSelectedTags = tagSelector.getSelectedTags;
 
     // Folder path input
     const folderInput = this.createTextField(
@@ -151,7 +150,7 @@ export class CreateExercisePageModal extends ModalBase {
       void (async () => {
         const exerciseName = exerciseElements.exerciseInput.value.trim();
         const exerciseType = exerciseTypeSelect.value;
-        const tags = tagsInput.value.trim();
+        const selectedTags = this.getSelectedTags ? this.getSelectedTags() : [];
         const folderPath = folderInput.value.trim();
 
         if (!exerciseName) {
@@ -171,7 +170,7 @@ export class CreateExercisePageModal extends ModalBase {
           await this.createExercisePage(
             exerciseName,
             exerciseType,
-            tags,
+            selectedTags,
             folderPath,
             customParameters,
           );
@@ -330,15 +329,12 @@ export class CreateExercisePageModal extends ModalBase {
   private async createExercisePage(
     exerciseName: string,
     exerciseType: string,
-    tags: string,
+    tags: string[],
     folderPath: string,
     customParameters?: ParameterDefinition[],
   ) {
-    // Parse tags
-    const tagList = tags
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
+    // Tags are already an array, no need to parse
+    const tagList = tags;
 
     // Build frontmatter
     let frontmatterContent = `nome_esercizio: ${exerciseName}

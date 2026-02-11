@@ -141,4 +141,91 @@
   }
 }
 
+/* Muscle Tag Selector */
+.workout-muscle-tag-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-lg);
+
+  .workout-form-label {
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
+  }
+
+  .workout-muscle-tag-search {
+    width: 100%;
+    padding: var(--workout-space-sm) var(--workout-space-md);
+    border: var(--input-border-width, var(--workout-border-thin)) solid
+      var(--background-modifier-border);
+    border-radius: var(--input-radius, var(--workout-radius-md));
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: var(--workout-font-base);
+    transition: var(--workout-transition);
+
+    &:focus {
+      outline: none;
+      border-color: var(--interactive-accent);
+      box-shadow: 0 0 0 var(--workout-border-medium)
+        rgba(var(--interactive-accent-rgb), 0.2);
+    }
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+  }
+}
+
+/* Selected tags display */
+.workout-selected-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  background: var(--background-secondary);
+  min-height: 60px;
+  align-items: center;
+}
+
+.workout-selected-tags-empty {
+  width: 100%;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-style: italic;
+  text-align: center;
+}
+
+// Selected tag chips use standard chip component styles
+// Additional cursor styling for removal action
+.workout-selected-tag-chip {
+  cursor: pointer;
+}
+
+/* Tag list - chip-based display */
+.workout-muscle-tag-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: var(--workout-space-md);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  background: var(--background-primary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-sm);
+  align-content: flex-start;
+}
+
+.workout-muscle-tag-list-empty {
+  width: 100%;
+  padding: var(--workout-space-lg);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+  font-style: italic;
+}
+
 

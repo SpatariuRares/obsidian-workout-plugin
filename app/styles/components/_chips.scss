@@ -1,0 +1,54 @@
+@use "../variables";
+
+/* ============================================================================
+   CHIP COMPONENT
+   ============================================================================
+   Touch-friendly selection chips used for quick selection
+   ============================================================================ */
+
+.workout-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  border-radius: var(--workout-radius-full, 9999px);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 36px;
+  transition: all 0.15s ease;
+  user-select: none;
+
+  &:hover {
+    background: var(--interactive-hover);
+    border-color: var(--interactive-accent);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  // Selected state - uses primary button colors
+  &-selected {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-color: var(--interactive-accent);
+
+    &:hover {
+      background: var(--interactive-accent-hover);
+      border-color: var(--interactive-accent-hover);
+    }
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-chip {
+    min-height: 40px;
+    padding: var(--workout-space-sm) var(--workout-space-lg);
+  }
+}

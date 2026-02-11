@@ -4,19 +4,24 @@
  * This service handles reading and writing the muscle tags CSV file,
  * providing caching and fallback to default MUSCLE_TAG_MAP.
  *
- * CSV structure: tag,muscleGroup (e.g., petto,chest)
+ * CSV structure: tag,muscleGroup,language (e.g., petto,chest,it)
+ * Language filtering: Returns tags matching user's Obsidian language + English (en) as fallback
  *
  * @module MuscleTagService
  */
 
 import { App, TFile, normalizePath } from "obsidian";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
+import {
+  MUSCLE_TAG_ENTRIES,
+  type MuscleTagEntry,
+} from "@app/constants/muscles.constants";
 import { StringUtils } from "@app/utils";
 
 /**
  * Service for managing custom muscle tag mappings via CSV file.
  * Provides caching and fallback to default tags.
+ * Filters tags by user's Obsidian language + English as fallback.
  */
 export class MuscleTagService {
   private tagCache: Map<string, string> | null = null;
@@ -26,6 +31,18 @@ export class MuscleTagService {
     private app: App,
     private settings: WorkoutChartsSettings,
   ) {}
+
+  /**
+   * Gets the user's language from Obsidian settings.
+   * Defaults to 'en' if not available.
+   */
+  private getUserLanguage(): string {
+    try {
+      return window.localStorage.getItem("language") || "en";
+    } catch {
+      return "en";
+    }
+  }
 
   /**
    * Computes the CSV path based on the settings csvLogFilePath.
@@ -40,7 +57,6 @@ export class MuscleTagService {
       folder ? `${folder}/muscle-tags.csv` : "muscle-tags.csv",
     );
   }
-
 
   /**
    * Loads tags from the CSV file.
@@ -65,10 +81,13 @@ export class MuscleTagService {
 
   /**
    * Internal method to load tags from CSV file.
+   * Filters tags by user's language + English as fallback.
+   * Automatically migrates old CSV format (without language column) to new format.
    */
   private async loadTagsInternal(): Promise<Map<string, string>> {
     const tags = new Map<string, string>();
     const csvPath = this.computeCsvPath();
+    const userLanguage = this.getUserLanguage();
 
     try {
       const abstractFile = this.app.vault.getAbstractFileByPath(csvPath);
@@ -85,8 +104,45 @@ export class MuscleTagService {
         return this.getDefaultTags();
       }
 
-      // Skip header line if present
-      const startIndex = lines[0].toLowerCase().startsWith("tag,") ? 1 : 0;
+      // Check if CSV needs migration (old format without language column)
+      const hasLanguageColumn = lines[0]
+        .toLowerCase()
+        .includes("language");
+
+      if (!hasLanguageColumn && lines.length > 0) {
+        // Migrate old CSV to new format
+        await this.migrateCsvToNewFormat(abstractFile, content);
+        // Reload after migration
+        const newContent = await this.app.vault.read(abstractFile);
+        const tags = this.parseTagsFromContent(newContent, userLanguage);
+        this.tagCache = tags;
+        return tags;
+      }
+
+      const tags = this.parseTagsFromContent(content, userLanguage);
+      this.tagCache = tags;
+      return tags;
+    } catch {
+      return this.getDefaultTags();
+    }
+  }
+
+  /**
+   * Parses tags from CSV content and filters by language.
+   */
+  private parseTagsFromContent(
+    content: string,
+    userLanguage: string,
+  ): Map<string, string> {
+    const tags = new Map<string, string>();
+    const lines = content.split("\n").filter((line) => line.trim());
+
+    if (lines.length === 0) {
+      return tags;
+    }
+
+    // Skip header line if present
+    const startIndex = lines[0].toLowerCase().startsWith("tag,") ? 1 : 0;
 
       for (let i = startIndex; i < lines.length; i++) {
         const line = lines[i].trim();
@@ -96,24 +152,68 @@ export class MuscleTagService {
         if (parsed.length >= 2) {
           const tag = StringUtils.normalize(parsed[0]);
           const muscleGroup = StringUtils.normalize(parsed[1]);
+          const language =
+            parsed.length >= 3 ? StringUtils.normalize(parsed[2]) : "en";
 
-          if (tag && muscleGroup) {
+          if (
+            tag &&
+            muscleGroup &&
+            (language === userLanguage || language === "en")
+          ) {
             tags.set(tag, muscleGroup);
           }
         }
       }
 
-      // If no valid tags were parsed, return defaults
-      if (tags.size === 0) {
-        return this.getDefaultTags();
-      }
-
-      // Update cache
-      this.tagCache = tags;
-      return tags;
-    } catch {
+    // If no valid tags were parsed, return defaults
+    if (tags.size === 0) {
       return this.getDefaultTags();
     }
+
+    return tags;
+  }
+
+  /**
+   * Migrates old CSV format (tag,muscleGroup) to new format (tag,muscleGroup,language).
+   * All existing tags are assigned language "en" by default.
+   */
+  private async migrateCsvToNewFormat(
+    file: TFile,
+    oldContent: string,
+  ): Promise<void> {
+    const lines = oldContent.split("\n").filter((line) => line.trim());
+    if (lines.length === 0) return;
+
+    const newLines: string[] = [];
+    const hasHeader = lines[0].toLowerCase().startsWith("tag,");
+
+    // Add new header with language column
+    newLines.push("tag,muscleGroup,language");
+
+    // Start from index 1 if header exists, 0 otherwise
+    const startIndex = hasHeader ? 1 : 0;
+
+    for (let i = startIndex; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const parsed = this.parseCSVLine(line);
+      if (parsed.length >= 2) {
+        const tag = parsed[0];
+        const muscleGroup = parsed[1];
+
+        // Add language column with default "en"
+        const escapedTag = this.escapeCSVValue(tag);
+        const escapedGroup = this.escapeCSVValue(muscleGroup);
+        const escapedLang = this.escapeCSVValue("en");
+
+        newLines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
+      }
+    }
+
+    // Write migrated content
+    const newContent = newLines.join("\n");
+    await this.app.vault.modify(file, newContent);
   }
 
   /**
@@ -147,24 +247,37 @@ export class MuscleTagService {
   }
 
   /**
-   * Returns the default tag map as a Map.
+   * Returns the default tag map as a Map, filtered by user's language + English.
    */
   private getDefaultTags(): Map<string, string> {
-    return new Map(Object.entries(MUSCLE_TAG_MAP));
+    const userLanguage = this.getUserLanguage();
+    const tags = new Map<string, string>();
+
+    // Filter default entries by user's language or English
+    for (const entry of MUSCLE_TAG_ENTRIES) {
+      if (entry.language === userLanguage || entry.language === "en") {
+        tags.set(entry.tag, entry.muscleGroup);
+      }
+    }
+
+    return tags;
   }
 
   /**
    * Saves tags to the CSV file.
    * @param tags Map of tag -> muscleGroup
+   * @param language Optional language code. If not provided, uses user's current language.
    */
-  async saveTags(tags: Map<string, string>): Promise<void> {
-    const lines = ["tag,muscleGroup"];
+  async saveTags(tags: Map<string, string>, language?: string): Promise<void> {
+    const lines = ["tag,muscleGroup,language"];
     const csvPath = this.computeCsvPath();
+    const lang = language || this.getUserLanguage();
 
     for (const [tag, muscleGroup] of tags) {
       const escapedTag = this.escapeCSVValue(tag);
       const escapedGroup = this.escapeCSVValue(muscleGroup);
-      lines.push(`${escapedTag},${escapedGroup}`);
+      const escapedLang = this.escapeCSVValue(lang);
+      lines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
     }
 
     const content = lines.join("\n");
@@ -263,6 +376,7 @@ export class MuscleTagService {
 
   /**
    * Creates the CSV file with default tags.
+   * Saves ALL default tags with their language information (en, it, etc.)
    * @returns true if created, false if already exists
    */
   async createDefaultCsv(): Promise<boolean> {
@@ -270,7 +384,39 @@ export class MuscleTagService {
       return false;
     }
 
-    await this.saveTags(this.getDefaultTags());
+    // Build CSV content with all default tags and their languages
+    const csvPath = this.computeCsvPath();
+    const lines = ["tag,muscleGroup,language"];
+
+    // Sort entries by tag name for consistent ordering
+    const sortedEntries = [...MUSCLE_TAG_ENTRIES].sort((a, b) =>
+      a.tag.localeCompare(b.tag),
+    );
+
+    for (const entry of sortedEntries) {
+      const escapedTag = this.escapeCSVValue(entry.tag);
+      const escapedGroup = this.escapeCSVValue(entry.muscleGroup);
+      const escapedLang = this.escapeCSVValue(entry.language);
+      lines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
+    }
+
+    const content = lines.join("\n");
+
+    // Create file (with parent folder if needed)
+    const lastSlash = csvPath.lastIndexOf("/");
+    if (lastSlash > 0) {
+      const folder = csvPath.substring(0, lastSlash);
+      const folderExists = this.app.vault.getAbstractFileByPath(folder);
+      if (!folderExists) {
+        await this.app.vault.createFolder(folder);
+      }
+    }
+
+    await this.app.vault.create(csvPath, content);
+
+    // Load tags to populate cache
+    await this.loadTags();
+
     return true;
   }
 
@@ -278,10 +424,12 @@ export class MuscleTagService {
    * Builds CSV content from muscle tags map for export.
    * Sorted alphabetically by tag name.
    * @param tags Map of tag names to muscle groups
+   * @param language Optional language code. If not provided, uses user's current language.
    * @returns CSV content string with header and sorted rows
    */
-  exportToCsv(tags: Map<string, string>): string {
-    const csvLines: string[] = ["tag,muscleGroup"];
+  exportToCsv(tags: Map<string, string>, language?: string): string {
+    const csvLines: string[] = ["tag,muscleGroup,language"];
+    const lang = language || this.getUserLanguage();
 
     const sortedTags = Array.from(tags.entries()).sort((a, b) =>
       a[0].localeCompare(b[0]),
@@ -289,7 +437,7 @@ export class MuscleTagService {
 
     for (const [tag, muscleGroup] of sortedTags) {
       csvLines.push(
-        `${this.escapeCSVValue(tag)},${this.escapeCSVValue(muscleGroup)}`,
+        `${this.escapeCSVValue(tag)},${this.escapeCSVValue(muscleGroup)},${this.escapeCSVValue(lang)}`,
       );
     }
 

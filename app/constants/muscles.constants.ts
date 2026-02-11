@@ -164,9 +164,111 @@ export const MUSCLE_TAGS = [
 ] as const;
 
 /**
+ * Extended muscle tag entry with language information
+ */
+export interface MuscleTagEntry {
+  tag: string;
+  muscleGroup: string;
+  language: string;
+}
+
+/**
+ * Default muscle tag entries with language information.
+ * Used as fallback when CSV doesn't exist.
+ * Includes both English (en) and Italian (it) tags.
+ */
+export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
+  // Main muscle groups - Chest (English)
+  { tag: "chest", muscleGroup: "chest", language: "en" },
+  // Main muscle groups - Chest (Italian)
+  { tag: "petto", muscleGroup: "chest", language: "it" },
+  { tag: "pettorale", muscleGroup: "chest", language: "it" },
+  { tag: "pettoralesuperior", muscleGroup: "chest", language: "it" },
+  { tag: "pettoraleinferior", muscleGroup: "chest", language: "it" },
+  { tag: "pettoralemedio", muscleGroup: "chest", language: "it" },
+
+  // Main muscle groups - Back (English)
+  { tag: "back", muscleGroup: "back", language: "en" },
+  // Main muscle groups - Back (Italian)
+  { tag: "schiena", muscleGroup: "back", language: "it" },
+  { tag: "dorsale", muscleGroup: "back", language: "it" },
+
+  // Main muscle groups - Shoulders (English)
+  { tag: "shoulders", muscleGroup: "shoulders", language: "en" },
+  // Main muscle groups - Shoulders (Italian)
+  { tag: "spalle", muscleGroup: "shoulders", language: "it" },
+  { tag: "deltoidi", muscleGroup: "shoulders", language: "it" },
+  { tag: "deltoideanteriore", muscleGroup: "shoulders", language: "it" },
+  { tag: "deltoidilaterale", muscleGroup: "shoulders", language: "it" },
+
+  // Main muscle groups - Arms (English)
+  { tag: "biceps", muscleGroup: "biceps", language: "en" },
+  { tag: "triceps", muscleGroup: "triceps", language: "en" },
+  // Main muscle groups - Arms (Italian)
+  { tag: "bicipiti", muscleGroup: "biceps", language: "it" },
+  { tag: "tricipiti", muscleGroup: "triceps", language: "it" },
+
+  // Main muscle groups - Legs (English)
+  { tag: "legs", muscleGroup: "quads", language: "en" },
+  { tag: "quads", muscleGroup: "quads", language: "en" },
+  { tag: "hamstrings", muscleGroup: "hamstrings", language: "en" },
+  // Main muscle groups - Legs (Italian)
+  { tag: "gambe", muscleGroup: "quads", language: "it" },
+  { tag: "quadricipiti", muscleGroup: "quads", language: "it" },
+  { tag: "ischiocrurali", muscleGroup: "hamstrings", language: "it" },
+  { tag: "femorali", muscleGroup: "hamstrings", language: "it" },
+
+  // Main muscle groups - Glutes (English)
+  { tag: "glutes", muscleGroup: "glutes", language: "en" },
+  // Main muscle groups - Glutes (Italian)
+  { tag: "glutei", muscleGroup: "glutes", language: "it" },
+  { tag: "gluteo", muscleGroup: "glutes", language: "it" },
+  { tag: "grandegluteo", muscleGroup: "glutes", language: "it" },
+  { tag: "abduttori", muscleGroup: "glutes", language: "it" },
+  { tag: "adduttori", muscleGroup: "glutes", language: "it" },
+
+  // Main muscle groups - Calves (English)
+  { tag: "calves", muscleGroup: "calves", language: "en" },
+  // Main muscle groups - Calves (Italian)
+  { tag: "polpacci", muscleGroup: "calves", language: "it" },
+
+  // Main muscle groups - Core (English)
+  { tag: "abs", muscleGroup: "abs", language: "en" },
+  { tag: "core", muscleGroup: "core", language: "en" },
+  { tag: "cardio", muscleGroup: "core", language: "en" },
+  // Main muscle groups - Core (Italian)
+  { tag: "addominali", muscleGroup: "abs", language: "it" },
+
+  // Secondary muscle groups (English)
+  { tag: "forearms", muscleGroup: "forearms", language: "en" },
+  { tag: "traps", muscleGroup: "traps", language: "en" },
+  { tag: "rear_delts", muscleGroup: "rear_delts", language: "en" },
+  // Secondary muscle groups (Italian)
+  { tag: "avambracci", muscleGroup: "forearms", language: "it" },
+  { tag: "trapezi", muscleGroup: "traps", language: "it" },
+  { tag: "deltoidi_posteriori", muscleGroup: "rear_delts", language: "it" },
+  { tag: "deltoidiposteriori", muscleGroup: "rear_delts", language: "it" },
+
+  // Exercise types that help determine muscle groups (English)
+  { tag: "push", muscleGroup: "chest", language: "en" },
+  { tag: "pull", muscleGroup: "back", language: "en" },
+  { tag: "squat", muscleGroup: "quads", language: "en" },
+  { tag: "deadlift", muscleGroup: "back", language: "en" },
+  { tag: "press", muscleGroup: "shoulders", language: "en" },
+  { tag: "curl", muscleGroup: "biceps", language: "en" },
+  { tag: "extension", muscleGroup: "triceps", language: "en" },
+  { tag: "fly", muscleGroup: "chest", language: "en" },
+  { tag: "row", muscleGroup: "back", language: "en" },
+  // Exercise types (Italian)
+  { tag: "spintaanca", muscleGroup: "glutes", language: "it" },
+];
+
+/**
  * Maps individual muscle tags to their normalized muscle group.
  * Used to categorize exercises consistently regardless of the
  * specific tag variant used. Supports both English and Italian tags.
+ *
+ * @deprecated Use MUSCLE_TAG_ENTRIES for language-aware tag handling
  */
 export const MUSCLE_TAG_MAP: Record<string, string> = {
   // Main muscle groups - Chest
@@ -292,7 +394,7 @@ export const MUSCLE_KEYWORDS = [
  *
  * @example
  * import { MUSCLES } from '@app/constants/muscles.constants';
- * const { NAMES, TAGS, TAG_MAP } = MUSCLES;
+ * const { NAMES, TAGS, TAG_MAP, TAG_ENTRIES } = MUSCLES;
  */
 export const MUSCLES = {
   NAMES: MUSCLE_NAMES,
@@ -301,6 +403,7 @@ export const MUSCLES = {
   BODY_PARTS: BODY_PARTS,
   TAGS: MUSCLE_TAGS,
   TAG_MAP: MUSCLE_TAG_MAP,
+  TAG_ENTRIES: MUSCLE_TAG_ENTRIES,
   KEYWORDS: MUSCLE_KEYWORDS,
   CANONICAL_GROUPS: CANONICAL_MUSCLE_GROUPS,
 } as const;

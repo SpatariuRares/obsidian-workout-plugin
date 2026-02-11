@@ -38,7 +38,10 @@ import {
   COMMON_UI,
   COMMANDS_UI,
   DESCRIPTIONS_UI,
+  getColumnLabels,
 } from "@app/constants/ui.constants";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 import {
   MUSCLE_NAMES,
@@ -53,6 +56,18 @@ import {
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
 import { ERROR_TYPES } from "@app/constants/validation.constants";
+
+/**
+ * Gets dynamic table labels with proper weight unit.
+ * @returns Object with dynamic weight-related table labels
+ */
+function getDynamicTableLabels() {
+  const weightUnit = ParameterUtils.getWeightUnit();
+  return {
+    WEIGHT_WITH_UNIT: `Weight (${weightUnit})`,
+    VOLUME_WITH_UNIT: `Volume (${weightUnit})`,
+  };
+}
 
 /**
  * Composed CONSTANTS object for backward compatibility.
@@ -154,10 +169,14 @@ export const CONSTANTS = {
         EXERCISE: TABLE_UI.COLUMNS.EXERCISE,
         REPS: TABLE_UI.COLUMNS.REPS,
         REPETITIONS: TABLE_UI.LABELS.REPETITIONS,
-        WEIGHT_WITH_UNIT: "Weight (kg)",
+        get WEIGHT_WITH_UNIT() {
+          return getDynamicTableLabels().WEIGHT_WITH_UNIT;
+        },
         VOLUME: TABLE_UI.COLUMNS.VOLUME,
         WEIGHT: TABLE_UI.COLUMNS.WEIGHT,
-        VOLUME_WITH_UNIT: "Volume (kg)",
+        get VOLUME_WITH_UNIT() {
+          return getDynamicTableLabels().VOLUME_WITH_UNIT;
+        },
         NOTES: TABLE_UI.COLUMNS.NOTES,
         ACTIONS: TABLE_UI.COLUMNS.ACTIONS,
         NO_DATA: TABLE_UI.LABELS.NO_DATA,

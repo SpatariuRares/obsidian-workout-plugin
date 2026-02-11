@@ -13,6 +13,7 @@ import type {
   CanvasExportOptions,
   CanvasLayoutType,
 } from "@app/features/canvas/types";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Canvas node types as defined by JSON Canvas spec
@@ -542,7 +543,8 @@ export class CanvasExporter {
 
     // Add stats if available and enabled
     if (options.includeStats && stats && stats.totalSets > 0) {
-      text += `\n\n**Last:** ${stats.prWeight}kg × ${stats.prReps} reps`;
+      const weightUnit = ParameterUtils.getWeightUnit();
+      text += `\n\n**Last:** ${stats.prWeight}${weightUnit} × ${stats.prReps} reps`;
       if (stats.trend !== "stable") {
         const trendEmoji = stats.trend === "up" ? "📈" : "📉";
         text += ` ${trendEmoji}`;

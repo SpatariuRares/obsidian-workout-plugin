@@ -123,6 +123,8 @@ export interface WorkoutChartsSettings {
   recentExercises: string[];
   /** Weight increment for +/- buttons in create/edit log forms */
   quickWeightIncrement: number;
+  /** Weight unit for the application (kg or lb) */
+  weightUnit: "kg" | "lb";
 }
 
 /**

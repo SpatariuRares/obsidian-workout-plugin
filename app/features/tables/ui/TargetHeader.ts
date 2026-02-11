@@ -12,6 +12,7 @@ export interface TargetHeaderProps {
   targetWeight?: number;
   targetReps?: number;
   filteredData: WorkoutLogData[];
+  weightUnit: string;
 }
 
 export class TargetHeader {
@@ -25,7 +26,7 @@ export class TargetHeader {
     container: HTMLElement,
     props: TargetHeaderProps,
   ): HTMLElement | null {
-    const { targetWeight, targetReps, filteredData } = props;
+    const { targetWeight, targetReps, filteredData, weightUnit } = props;
 
     // Only render if at least one target is set
     if (targetWeight === undefined && targetReps === undefined) {
@@ -37,7 +38,7 @@ export class TargetHeader {
     // Build the target text
     const parts: string[] = [];
     if (targetWeight !== undefined) {
-      parts.push(`${targetWeight}kg`);
+      parts.push(`${targetWeight}${weightUnit}`);
     }
     if (targetReps !== undefined) {
       const separator = targetWeight !== undefined ? " × " : "";

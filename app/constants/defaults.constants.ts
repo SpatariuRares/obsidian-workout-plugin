@@ -72,6 +72,8 @@ workout: {{workout}}
   recentExercises: [],
   /** Weight increment for +/- buttons in create/edit log forms */
   quickWeightIncrement: 2.5,
+  /** Default weight unit */
+  weightUnit: "kg",
 };
 
 /**

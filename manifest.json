@@ -1,7 +1,7 @@
 {
   "id": "workout-planner",
   "name": "Workout Planner",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "minAppVersion": "0.15.0",
   "description": "Visualize workout data with interactive charts and advanced search capabilities.",
   "author": "Rares Spatariu",

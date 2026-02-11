@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Resolves and formats table column headers based on exercise definitions.
@@ -90,15 +91,23 @@ export class TableColumnResolver {
 
   /**
    * Formats a parameter definition into a compact table header with label and unit.
+   * Uses dynamic unit from ParameterUtils if not explicitly defined in parameter.
    *
    * @param param - Parameter definition
-   * @returns Formatted header string (e.g., "Dur (sec)", "Wgt (kg)")
+   * @returns Formatted header string (e.g., "Dur (sec)", "Wgt (kg)" or "Wgt (lb)")
    */
   static formatParameterHeader(param: ParameterDefinition): string {
     const abbreviatedLabel =
       this.LABEL_ABBREVIATIONS[param.label] || param.label;
-    if (param.unit) {
-      return `${abbreviatedLabel} (${param.unit})`;
+
+    // Use param.unit if explicitly defined, otherwise get from ParameterUtils
+    let unit = param.unit;
+    if (!unit && param.key.toLowerCase() === "weight") {
+      unit = ParameterUtils.getWeightUnit();
+    }
+
+    if (unit) {
+      return `${abbreviatedLabel} (${unit})`;
     }
     return abbreviatedLabel;
   }

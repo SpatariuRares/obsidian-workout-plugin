@@ -14,9 +14,15 @@ jest.mock("@app/components/atoms", () => ({
       parent.appendChild(btn);
       return btn;
     }),
-    onClick: jest.fn((btn: HTMLElement, handler: Function, signal?: AbortSignal) => {
-      btn.addEventListener("click", handler as EventListener, signal ? { signal } : undefined);
-    }),
+    onClick: jest.fn(
+      (btn: HTMLElement, handler: Function, signal?: AbortSignal) => {
+        btn.addEventListener(
+          "click",
+          handler as EventListener,
+          signal ? { signal } : undefined,
+        );
+      },
+    ),
   },
 }));
 
@@ -55,6 +61,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
@@ -75,6 +82,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: true,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
@@ -95,14 +103,15 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
 
     expect(result).not.toBeNull();
-    expect(result!.container.classList.contains("workout-achievement-badge")).toBe(
-      true,
-    );
+    expect(
+      result!.container.classList.contains("workout-achievement-badge"),
+    ).toBe(true);
   });
 
   it("shows suggested next weight", () => {
@@ -118,6 +127,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
@@ -142,6 +152,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
@@ -163,6 +174,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
     );
@@ -185,6 +197,7 @@ describe("AchievementBadge", () => {
         filteredData: data,
         weightIncrement: 2.5,
         isDismissedForWeight: false,
+        weightUnit: "kg",
       },
       defaultCallbacks,
       controller.signal,
@@ -195,5 +208,30 @@ describe("AchievementBadge", () => {
     expect(
       onClickCalls.some((call: any[]) => call[2] === controller.signal),
     ).toBe(true);
+  });
+
+  it("shows suggested weight with lb unit", () => {
+    const container = createObsidianContainer();
+    const data = [createLog({ weight: 80, reps: 10 })];
+
+    const result = AchievementBadge.render(
+      container,
+      {
+        exercise: "Bench Press",
+        targetWeight: 80,
+        targetReps: 10,
+        filteredData: data,
+        weightIncrement: 2.5,
+        isDismissedForWeight: false,
+        weightUnit: "lb",
+      },
+      defaultCallbacks,
+    );
+
+    expect(result).not.toBeNull();
+    const suggestionText = result!.container.querySelector(
+      ".workout-suggestion-text",
+    );
+    expect(suggestionText?.textContent).toContain("82.5lb");
   });
 });

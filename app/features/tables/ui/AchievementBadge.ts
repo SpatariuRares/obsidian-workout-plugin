@@ -16,6 +16,7 @@ export interface AchievementBadgeProps {
   filteredData: WorkoutLogData[];
   weightIncrement: number;
   isDismissedForWeight: boolean;
+  weightUnit: string;
 }
 
 export interface AchievementBadgeCallbacks {
@@ -50,6 +51,7 @@ export class AchievementBadge {
       filteredData,
       weightIncrement,
       isDismissedForWeight,
+      weightUnit,
     } = props;
 
     // Check if target is achieved
@@ -74,6 +76,7 @@ export class AchievementBadge {
     const { updateButton } = this.renderWeightSuggestion(
       badgeDiv,
       suggestedWeight,
+      weightUnit,
       callbacks.onUpdateTarget,
       signal,
     );
@@ -108,6 +111,7 @@ export class AchievementBadge {
   private static renderWeightSuggestion(
     badgeDiv: HTMLElement,
     suggestedWeight: number,
+    weightUnit: string,
     onUpdateTarget: (newWeight: number) => Promise<void>,
     signal?: AbortSignal,
   ): { suggestionDiv: HTMLElement; updateButton: HTMLButtonElement } {
@@ -118,7 +122,7 @@ export class AchievementBadge {
     const suggestionText = suggestionDiv.createSpan({
       cls: "workout-suggestion-text",
     });
-    suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}kg`;
+    suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}${weightUnit}`;
 
     const updateButton = Button.create(suggestionDiv, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
@@ -130,7 +134,7 @@ export class AchievementBadge {
       updateButton,
       async () => {
         const confirmed = confirm(
-          `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}kg?`,
+          `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}${weightUnit}?`,
         );
 
         if (confirmed) {

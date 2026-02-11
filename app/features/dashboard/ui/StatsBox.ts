@@ -1,4 +1,4 @@
-import { CONSTANTS, UNITS_MAP, COLUMN_LABELS } from "@app/constants";
+import { CONSTANTS, getUnitsMap, getColumnLabels } from "@app/constants";
 import { CHART_TYPE, CHART_DATA_TYPE } from "@app/features/charts/types";
 import { ListItem } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
@@ -30,7 +30,8 @@ export class StatsBox {
     const recentTrendData = this.calculateRecentTrend(volumeData, dataType);
 
     // Get dynamic title from data type (e.g., "Volume (kg)" -> "Volume Statistics")
-    const dataTypeLabel = COLUMN_LABELS[dataType].split(" (")[0];
+    const columnLabels = getColumnLabels();
+    const dataTypeLabel = columnLabels[dataType].split(" (")[0];
     const contextLabel =
       chartType === CHART_TYPE.WORKOUT
         ? CONSTANTS.WORKOUT.UI.LABELS.TOTAL_WORKOUT
@@ -143,7 +144,8 @@ export class StatsBox {
       case CHART_DATA_TYPE.REPS:
         return Math.round(value).toString();
       default: {
-        const unit = UNITS_MAP[dataType];
+        const unitsMap = getUnitsMap();
+        const unit = unitsMap[dataType];
         return unit ? `${value.toFixed(1)} ${unit}` : value.toFixed(1);
       }
     }
@@ -165,7 +167,8 @@ export class StatsBox {
     suffix?: string;
   } {
     const isLowerBetter = FormatUtils.isLowerBetter(dataType);
-    const unit = UNITS_MAP[dataType];
+    const unitsMap = getUnitsMap();
+    const unit = unitsMap[dataType];
 
     if (volumeData.length >= 3) {
       const recent = volumeData.slice(-3);

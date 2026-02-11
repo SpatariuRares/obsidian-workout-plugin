@@ -4,6 +4,7 @@ import {
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import { Button } from "@app/components/atoms";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 export class FieldMappingList {
   private container: HTMLElement;
@@ -168,7 +169,8 @@ export class FieldMappingList {
     // Standard fields usage based on type
     if (type.id === EXERCISE_TYPE_IDS.STRENGTH) {
       options.push({ text: "Reps", value: "reps" });
-      options.push({ text: "Weight (kg)", value: "weight" });
+      const weightUnit = ParameterUtils.getWeightUnit();
+      options.push({ text: `Weight (${weightUnit})`, value: "weight" });
     }
 
     for (const param of type.parameters) {

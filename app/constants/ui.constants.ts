@@ -14,32 +14,52 @@
  */
 
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
- * Unit strings for each data type, used for displaying values with appropriate units
+ * Gets the current weight unit from settings (kg or lb)
+ * @returns The current weight unit string
  */
-export const UNITS_MAP: Record<CHART_DATA_TYPE, string> = {
-  [CHART_DATA_TYPE.VOLUME]: "kg",
-  [CHART_DATA_TYPE.WEIGHT]: "kg",
-  [CHART_DATA_TYPE.REPS]: "",
-  [CHART_DATA_TYPE.DURATION]: "sec",
-  [CHART_DATA_TYPE.DISTANCE]: "km",
-  [CHART_DATA_TYPE.PACE]: "min/km",
-  [CHART_DATA_TYPE.HEART_RATE]: "bpm",
-} as const;
+function getWeightUnit(): string {
+  // ParameterUtils stores the current weight unit set from plugin settings
+  return ParameterUtils.getWeightUnit();
+}
 
 /**
- * Column labels for each data type, used for table headers and statistics titles
+ * Gets dynamic unit map based on current settings.
+ * Returns units for each data type, with weight/volume units respecting user settings.
+ * @returns Record mapping data types to their display units
  */
-export const COLUMN_LABELS: Record<CHART_DATA_TYPE, string> = {
-  [CHART_DATA_TYPE.VOLUME]: "Volume (kg)",
-  [CHART_DATA_TYPE.WEIGHT]: "Weight (kg)",
-  [CHART_DATA_TYPE.REPS]: "Reps",
-  [CHART_DATA_TYPE.DURATION]: "Duration",
-  [CHART_DATA_TYPE.DISTANCE]: "Distance (km)",
-  [CHART_DATA_TYPE.PACE]: "Pace (min/km)",
-  [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate (bpm)",
-} as const;
+export function getUnitsMap(): Record<CHART_DATA_TYPE, string> {
+  const weightUnit = getWeightUnit();
+  return {
+    [CHART_DATA_TYPE.VOLUME]: weightUnit,
+    [CHART_DATA_TYPE.WEIGHT]: weightUnit,
+    [CHART_DATA_TYPE.REPS]: "",
+    [CHART_DATA_TYPE.DURATION]: "sec",
+    [CHART_DATA_TYPE.DISTANCE]: "km",
+    [CHART_DATA_TYPE.PACE]: "min/km",
+    [CHART_DATA_TYPE.HEART_RATE]: "bpm",
+  };
+}
+
+/**
+ * Gets dynamic column labels based on current settings.
+ * Returns labels with proper units for table headers and statistics titles.
+ * @returns Record mapping data types to their display labels with units
+ */
+export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
+  const weightUnit = getWeightUnit();
+  return {
+    [CHART_DATA_TYPE.VOLUME]: `Volume (${weightUnit})`,
+    [CHART_DATA_TYPE.WEIGHT]: `Weight (${weightUnit})`,
+    [CHART_DATA_TYPE.REPS]: "Reps",
+    [CHART_DATA_TYPE.DURATION]: "Duration",
+    [CHART_DATA_TYPE.DISTANCE]: "Distance (km)",
+    [CHART_DATA_TYPE.PACE]: "Pace (min/km)",
+    [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate (bpm)",
+  };
+}
 
 /**
  * Simple data type names without units, used for trend titles and labels
@@ -174,6 +194,33 @@ export const EMOJI = {
 } as const;
 
 /**
+ * Gets dynamic modal labels with proper weight unit.
+ * Returns label strings that include weight units, adjusted based on settings.
+ * @returns Object with dynamic weight-related labels
+ */
+export function getDynamicModalLabels() {
+  const weightUnit = getWeightUnit();
+  return {
+    WEIGHT: `Weight (${weightUnit}):`,
+    TARGET_WEIGHT: `Target weight (${weightUnit}):`,
+  };
+}
+
+/**
+ * Gets dynamic select options with proper weight unit.
+ * Returns select dropdown options with correct units in display text.
+ * @returns Array of select options for data type dropdown
+ */
+export function getDynamicDataTypeOptions() {
+  const weightUnit = getWeightUnit();
+  return [
+    { text: `Volume (${weightUnit})`, value: "volume" },
+    { text: `Weight (${weightUnit})`, value: "weight" },
+    { text: "Reps", value: "reps" },
+  ];
+}
+
+/**
  * Modal UI labels - titles, buttons, labels, placeholders, and checkboxes
  */
 export const MODAL_UI = {
@@ -293,7 +340,9 @@ export const MODAL_UI = {
   LABELS: {
     EXERCISE: "Exercise:",
     REPS: "Reps:",
-    WEIGHT: "Weight (kg):",
+    get WEIGHT() {
+      return getDynamicModalLabels().WEIGHT;
+    },
     NOTES: "Notes (optional):",
     WORKOUT: "Workout (optional):",
     WORKOUT_NAME: "Workout name:",
@@ -346,7 +395,9 @@ export const MODAL_UI = {
     TIMER_PRESET: "Timer preset:",
     WORKOUT_FILE: "Workout file:",
     DATE_RANGE: "Date range (days):",
-    TARGET_WEIGHT: "Target weight (kg):",
+    get TARGET_WEIGHT() {
+      return getDynamicModalLabels().TARGET_WEIGHT;
+    },
     TARGET_REPS: "Target reps:",
     PROTOCOL: "Protocol:",
     RECENT_EXERCISES: "Recent:",
@@ -418,11 +469,9 @@ export const MODAL_UI = {
       { text: "Complete workout", value: "workout" },
       { text: "Specific exercise", value: "exercise" },
     ],
-    DATA_TYPE: [
-      { text: "Volume (kg)", value: "volume" },
-      { text: "Weight (kg)", value: "weight" },
-      { text: "Reps", value: "reps" },
-    ],
+    get DATA_TYPE() {
+      return getDynamicDataTypeOptions();
+    },
     TABLE_TYPE: [
       { text: "Exercise + workout", value: "combined" },
       { text: "Specific exercise", value: "exercise" },
@@ -499,6 +548,19 @@ export const MODAL_UI = {
 } as const;
 
 /**
+ * Gets dynamic settings labels with proper weight unit.
+ * Returns label strings that include weight units, adjusted based on settings.
+ * @returns Object with dynamic weight-related settings labels
+ */
+export function getDynamicSettingsLabels() {
+  const weightUnit = getWeightUnit();
+  return {
+    WEIGHT_INCREMENT: `Weight increment (${weightUnit})`,
+    QUICK_WEIGHT_INCREMENT: `Weight buttons increment (${weightUnit})`,
+  };
+}
+
+/**
  * Settings UI labels - section headers, field labels, descriptions, and messages
  */
 export const SETTINGS_UI = {
@@ -517,7 +579,9 @@ export const SETTINGS_UI = {
     PRESET_AUTO_START: "Auto start",
     PRESET_SOUND: "Sound",
     EXERCISE_BLOCK_TEMPLATE: "Exercise block template",
-    WEIGHT_INCREMENT: "Weight increment (kg)",
+    get WEIGHT_INCREMENT() {
+      return getDynamicSettingsLabels().WEIGHT_INCREMENT;
+    },
     CUSTOM_PROTOCOLS: "Custom protocols",
     PROTOCOL_NAME: "Protocol name",
     PROTOCOL_ABBREVIATION: "Abbreviation",
@@ -526,10 +590,13 @@ export const SETTINGS_UI = {
     REP_DURATION: "Duration per repetition (seconds)",
     DEFAULT_REPS_PER_SET: "Default reps per set",
     SHOW_QUICK_LOG_RIBBON: "Show create log ribbon icon",
-    QUICK_WEIGHT_INCREMENT: "Weight buttons increment (kg)",
+    get QUICK_WEIGHT_INCREMENT() {
+      return getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT;
+    },
     CREATE_MUSCLE_TAGS_CSV: "Muscle tags CSV file",
     SETUP_CSV: "Setup CSV files",
     GENERATE_EXAMPLES: "Generate example data",
+    WEIGHT_UNIT: "Weight unit",
   },
   DESCRIPTIONS: {
     CSV_PATH: "CSV log file path",
@@ -546,7 +613,7 @@ export const SETTINGS_UI = {
     EXERCISE_BLOCK_TEMPLATE:
       "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
     WEIGHT_INCREMENT:
-      "Default weight increment for progressive overload (e.g., 2.5 for 2.5kg increments)",
+      "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
     CUSTOM_PROTOCOLS:
       "Create custom workout protocols to track specialized training techniques",
     NO_CUSTOM_PROTOCOLS:
@@ -563,7 +630,7 @@ export const SETTINGS_UI = {
     SHOW_QUICK_LOG_RIBBON:
       "Show a dumbbell icon in the left ribbon to open the create workout log modal",
     QUICK_WEIGHT_INCREMENT:
-      "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5)",
+      "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
     CREATE_MUSCLE_TAGS_CSV:
       "Create a CSV file with default muscle tag mappings. Edit this file to add custom tags in any language.",
     CONFIRM_OVERWRITE_MUSCLE_TAGS:
@@ -572,6 +639,8 @@ export const SETTINGS_UI = {
       "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
     GENERATE_EXAMPLES:
       "Create a folder with example exercises and workouts to help you get started.",
+    WEIGHT_UNIT:
+      "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs.",
   },
   SECTIONS: {
     CSV_MANAGEMENT: "CSV file management",
@@ -597,6 +666,10 @@ export const SETTINGS_UI = {
   },
   OPTIONS: {
     NONE: "None",
+    WEIGHT_UNIT: {
+      KG: "Kilograms (kg)",
+      LB: "Pounds (lb)",
+    },
   },
   MESSAGES: {
     PRESET_NAME_REQUIRED: "Preset name is required",
@@ -749,6 +822,33 @@ export const TIMER_UI = {
 } as const;
 
 /**
+ * Gets dynamic dashboard labels with proper weight unit.
+ * Returns label strings that include weight units, adjusted based on settings.
+ * @returns Object with dynamic dashboard labels organized by section
+ */
+export function getDynamicDashboardLabels() {
+  const weightUnit = getWeightUnit();
+  return {
+    QUICK_STATS: {
+      METRICS: {
+        TOTAL_VOLUME: `Total volume (${weightUnit})`,
+        AVG_VOLUME: `Avg volume (${weightUnit})`,
+      },
+    },
+    RECENT_WORKOUTS: {
+      VOLUME_SUFFIX: weightUnit,
+    },
+    SUMMARY: {
+      TOTAL_VOLUME_SUFFIX: weightUnit,
+    },
+    VOLUME_ANALYTICS: {
+      DATASET_LABEL: `Daily volume (${weightUnit})`,
+      VOLUME_SUFFIX: weightUnit,
+    },
+  };
+}
+
+/**
  * Dashboard UI labels - section titles, metrics, and display text
  */
 export const DASHBOARD_UI = {
@@ -766,14 +866,20 @@ export const DASHBOARD_UI = {
     },
     METRICS: {
       WORKOUTS: "Workouts",
-      TOTAL_VOLUME: "Total volume (kg)",
-      AVG_VOLUME: "Avg volume (kg)",
+      get TOTAL_VOLUME() {
+        return getDynamicDashboardLabels().QUICK_STATS.METRICS.TOTAL_VOLUME;
+      },
+      get AVG_VOLUME() {
+        return getDynamicDashboardLabels().QUICK_STATS.METRICS.AVG_VOLUME;
+      },
     },
   },
   RECENT_WORKOUTS: {
     TITLE: "Recent workouts",
     FALLBACK_NAME: "Workout",
-    VOLUME_SUFFIX: "kg",
+    get VOLUME_SUFFIX() {
+      return getDynamicDashboardLabels().RECENT_WORKOUTS.VOLUME_SUFFIX;
+    },
   },
   SUMMARY: {
     TITLE: "Summary",
@@ -781,15 +887,21 @@ export const DASHBOARD_UI = {
     CURRENT_STREAK: "Current streak",
     CURRENT_STREAK_SUFFIX: "weeks",
     TOTAL_VOLUME: "Total volume",
-    TOTAL_VOLUME_SUFFIX: "kg",
+    get TOTAL_VOLUME_SUFFIX() {
+      return getDynamicDashboardLabels().SUMMARY.TOTAL_VOLUME_SUFFIX;
+    },
     PERSONAL_RECORDS: "Personal records",
   },
   VOLUME_ANALYTICS: {
     TITLE: "Volume analytics",
-    DATASET_LABEL: "Daily volume (kg)",
+    get DATASET_LABEL() {
+      return getDynamicDashboardLabels().VOLUME_ANALYTICS.DATASET_LABEL;
+    },
     CHART_TITLE: "Volume trend (last 30 days)",
     MUSCLE_BREAKDOWN_TITLE: "Top exercises by volume",
-    VOLUME_SUFFIX: "kg",
+    get VOLUME_SUFFIX() {
+      return getDynamicDashboardLabels().VOLUME_ANALYTICS.VOLUME_SUFFIX;
+    },
   },
   PROTOCOL_DISTRIBUTION: {
     TITLE: "Protocol distribution",
@@ -934,11 +1046,26 @@ export const TIME_PERIODS_UI = {
 } as const;
 
 /**
+ * Gets dynamic common UI labels with proper weight unit.
+ * @returns Object with dynamic weight unit label
+ */
+export function getDynamicCommonLabels() {
+  const weightUnit = getWeightUnit();
+  return {
+    UNITS: {
+      WEIGHT: `Weight (${weightUnit})`,
+    },
+  };
+}
+
+/**
  * Common/shared UI labels and values
  */
 export const COMMON_UI = {
   UNITS: {
-    WEIGHT_KG: "Weight (kg)",
+    get WEIGHT_KG() {
+      return getDynamicCommonLabels().UNITS.WEIGHT;
+    },
   },
   TYPES: {
     EXERCISE: "exercise",
@@ -977,14 +1104,38 @@ export const DESCRIPTIONS_UI = {
 } as const;
 
 /**
+ * Gets dynamic general UI labels with proper weight unit.
+ * @returns Object with dynamic weight-related general labels
+ */
+export function getDynamicGeneralLabels() {
+  const weightUnit = getWeightUnit();
+  return {
+    LABELS: {
+      TOTAL_VOLUME: `Total volume (${weightUnit})`,
+      AVG_VOLUME: `Average volume (${weightUnit})`,
+      TOTAL_WEIGHT: `Total weight (${weightUnit})`,
+      AVG_WEIGHT: `Average weight (${weightUnit})`,
+    },
+  };
+}
+
+/**
  * General UI labels - common labels used across multiple features
  */
 export const GENERAL_UI = {
   LABELS: {
-    TOTAL_VOLUME: "Total volume (kg)",
-    AVG_VOLUME: "Average volume (kg)",
-    TOTAL_WEIGHT: "Total weight (kg)",
-    AVG_WEIGHT: "Average weight (kg)",
+    get TOTAL_VOLUME() {
+      return getDynamicGeneralLabels().LABELS.TOTAL_VOLUME;
+    },
+    get AVG_VOLUME() {
+      return getDynamicGeneralLabels().LABELS.AVG_VOLUME;
+    },
+    get TOTAL_WEIGHT() {
+      return getDynamicGeneralLabels().LABELS.TOTAL_WEIGHT;
+    },
+    get AVG_WEIGHT() {
+      return getDynamicGeneralLabels().LABELS.AVG_WEIGHT;
+    },
     TOTAL_REPS: "Total reps",
     AVG_REPS: "Average reps",
     WORKOUTS: "Workouts",

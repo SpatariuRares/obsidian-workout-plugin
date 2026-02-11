@@ -22,6 +22,7 @@ import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -72,6 +73,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   async onload() {
     PerformanceMonitor.start("plugin:onload");
     await this.loadSettings();
+
+    // Initialize ParameterUtils with weight unit
+    ParameterUtils.setWeightUnit(this.settings.weightUnit);
 
     // Initialize embedded views
     this.embeddedChartView = new EmbeddedChartView(this);

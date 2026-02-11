@@ -1,4 +1,4 @@
-import { CONSTANTS, COLUMN_LABELS } from "@app/constants";
+import { CONSTANTS, getColumnLabels } from "@app/constants";
 import {
   EmbeddedChartParams,
   ChartDataset,
@@ -79,8 +79,9 @@ export class ChartTableViews {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
     headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.LABELS.DATA });
+    const columnLabels = getColumnLabels();
     headerRow.createEl("th", {
-      text: COLUMN_LABELS[chartType] || chartType,
+      text: columnLabels[chartType] || chartType,
     });
 
     const tbody = table.createEl("tbody");

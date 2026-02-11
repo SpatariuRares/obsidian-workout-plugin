@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TableRow } from "@app/features/tables/types";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 export interface SpacerStatData {
   icon?: string;
@@ -77,11 +78,11 @@ export class SpacerRowCalculator {
       });
       stats.push({
         icon: CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT,
-        value: `${totalWeight.toFixed(1)}kg`,
+        value: `${totalWeight.toFixed(1)}${ParameterUtils.getWeightUnit()}`,
       });
       stats.push({
         icon: CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME,
-        value: totalVolume.toFixed(0),
+        value: `${totalVolume.toFixed(0)}${ParameterUtils.getWeightUnit()}`,
       });
     } else {
       if (hasDuration) {

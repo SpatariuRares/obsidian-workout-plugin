@@ -269,20 +269,22 @@ describe("ParameterUtils", () => {
   describe("keyToLabel", () => {
     it("should convert camelCase to spaced title case", () => {
       expect(ParameterUtils.keyToLabel("heartRate")).toBe("Heart Rate");
-      expect(ParameterUtils.keyToLabel("myCustomParam")).toBe("My Custom Param");
+      expect(ParameterUtils.keyToLabel("myCustomParam")).toBe(
+        "My Custom Param",
+      );
     });
 
     it("should convert snake_case to spaced title case", () => {
       expect(ParameterUtils.keyToLabel("heart_rate")).toBe("Heart Rate");
       expect(ParameterUtils.keyToLabel("my_custom_param")).toBe(
-        "My Custom Param"
+        "My Custom Param",
       );
     });
 
     it("should convert kebab-case to spaced title case", () => {
       expect(ParameterUtils.keyToLabel("heart-rate")).toBe("Heart Rate");
       expect(ParameterUtils.keyToLabel("my-custom-param")).toBe(
-        "My Custom Param"
+        "My Custom Param",
       );
     });
 
@@ -297,7 +299,7 @@ describe("ParameterUtils", () => {
 
     it("should handle mixed formats", () => {
       expect(ParameterUtils.keyToLabel("my_heartRate-value")).toBe(
-        "My Heart Rate Value"
+        "My Heart Rate Value",
       );
     });
 
@@ -416,7 +418,7 @@ describe("ParameterUtils", () => {
 
       expect(result.isValid).toBe(false);
       expect(result.error).toContain(
-        "contain only letters, numbers, and underscores"
+        "contain only letters, numbers, and underscores",
       );
     });
 
@@ -607,4 +609,48 @@ describe("ParameterUtils", () => {
     });
   });
 
+  describe("setWeightUnit", () => {
+    it("should update default weight unit", () => {
+      ParameterUtils.setWeightUnit("lb");
+
+      const param: ParameterDefinition = {
+        key: "weight",
+        label: "Weight",
+        type: "number",
+        required: true,
+      };
+
+      const result = ParameterUtils.formatParamWithUnit(param);
+      expect(result).toBe("Weight (lb)");
+    });
+
+    it("should update default volume unit", () => {
+      ParameterUtils.setWeightUnit("lb");
+
+      const param: ParameterDefinition = {
+        key: "volume",
+        label: "Volume",
+        type: "number",
+        required: true,
+      };
+
+      const result = ParameterUtils.formatParamWithUnit(param);
+      expect(result).toBe("Volume (lb)");
+    });
+
+    it("should allow switching back to kg", () => {
+      ParameterUtils.setWeightUnit("lb");
+      ParameterUtils.setWeightUnit("kg");
+
+      const param: ParameterDefinition = {
+        key: "weight",
+        label: "Weight",
+        type: "number",
+        required: true,
+      };
+
+      const result = ParameterUtils.formatParamWithUnit(param);
+      expect(result).toBe("Weight (kg)");
+    });
+  });
 });

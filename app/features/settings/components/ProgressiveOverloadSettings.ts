@@ -1,5 +1,5 @@
 import { Setting } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, getDynamicSettingsLabels } from "@app/constants";
 import WorkoutChartsPlugin from "main";
 
 export class ProgressiveOverloadSettings {
@@ -16,7 +16,7 @@ export class ProgressiveOverloadSettings {
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.WEIGHT_INCREMENT)
+      .setName(getDynamicSettingsLabels().WEIGHT_INCREMENT)
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.WEIGHT_INCREMENT)
       .addText((text) =>
         text

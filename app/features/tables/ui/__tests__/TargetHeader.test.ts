@@ -21,6 +21,7 @@ describe("TargetHeader", () => {
 
     const result = TargetHeader.render(container, {
       filteredData: [],
+      weightUnit: "kg",
     });
 
     expect(result).toBeNull();
@@ -32,6 +33,7 @@ describe("TargetHeader", () => {
     const result = TargetHeader.render(container, {
       targetWeight: 100,
       filteredData: [],
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -45,6 +47,7 @@ describe("TargetHeader", () => {
     const result = TargetHeader.render(container, {
       targetReps: 10,
       filteredData: [],
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -58,6 +61,7 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: [],
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -73,6 +77,7 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -88,6 +93,7 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -102,6 +108,7 @@ describe("TargetHeader", () => {
     const result = TargetHeader.render(container, {
       targetWeight: 100,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     expect(result).not.toBeNull();
@@ -117,13 +124,14 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     const progressFill = result!.querySelector(".workout-progress-fill");
     expect(progressFill).not.toBeNull();
-    expect(
-      progressFill!.classList.contains("workout-progress-complete"),
-    ).toBe(true);
+    expect(progressFill!.classList.contains("workout-progress-complete")).toBe(
+      true,
+    );
   });
 
   it("sets progress bar width as percentage", () => {
@@ -134,6 +142,7 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     const progressFill = result!.querySelector(
@@ -151,6 +160,7 @@ describe("TargetHeader", () => {
       targetWeight: 100,
       targetReps: 10,
       filteredData: data,
+      weightUnit: "kg",
     });
 
     const progressBar = result!.querySelector(".workout-progress-bar");
@@ -158,5 +168,18 @@ describe("TargetHeader", () => {
     expect(progressBar!.getAttribute("title")).toContain("8 reps");
     expect(progressBar!.getAttribute("title")).toContain("10 reps");
     expect(progressBar!.getAttribute("aria-label")).toBeTruthy();
+  });
+
+  it("renders target text with lb unit", () => {
+    const container = createObsidianContainer();
+
+    const result = TargetHeader.render(container, {
+      targetWeight: 100,
+      filteredData: [],
+      weightUnit: "lb",
+    });
+
+    expect(result).not.toBeNull();
+    expect(result!.textContent).toContain("100lb");
   });
 });

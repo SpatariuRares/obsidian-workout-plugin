@@ -146,12 +146,7 @@ export class EmbeddedTableView extends BaseView {
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
-      this.renderActionButtons(
-        contentDiv,
-        params,
-        filterResult,
-        signal,
-      );
+      this.renderActionButtons(contentDiv, params, filterResult, signal);
     }
 
     // Render target header with progress bar
@@ -159,6 +154,7 @@ export class EmbeddedTableView extends BaseView {
       targetWeight: params.targetWeight,
       targetReps: params.targetReps,
       filteredData: filterResult.filteredData,
+      weightUnit: this.plugin.settings.weightUnit,
     });
 
     // Render achievement badge if applicable
@@ -173,6 +169,7 @@ export class EmbeddedTableView extends BaseView {
         filterResult.filteredData,
         container,
         signal,
+        this.plugin.settings.weightUnit,
       );
     }
 
@@ -252,6 +249,7 @@ export class EmbeddedTableView extends BaseView {
     filteredData: WorkoutLogData[],
     tableContainer: HTMLElement,
     signal: AbortSignal,
+    weightUnit: string,
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
@@ -271,6 +269,7 @@ export class EmbeddedTableView extends BaseView {
         filteredData,
         weightIncrement: this.plugin.settings.weightIncrement,
         isDismissedForWeight,
+        weightUnit,
       },
       {
         onDismiss: async () => {

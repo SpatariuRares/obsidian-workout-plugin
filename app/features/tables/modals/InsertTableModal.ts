@@ -1,5 +1,5 @@
 // Refactored InsertTableModal extending BaseInsertModal
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, getDynamicModalLabels } from "@app/constants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
@@ -124,7 +124,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Target weight input
     this.targetWeightInput = this.createNumberField(
       this.progressiveSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_WEIGHT,
+      getDynamicModalLabels().TARGET_WEIGHT,
       0,
       {
         min: 0,

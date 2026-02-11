@@ -38,7 +38,7 @@ const STRENGTH_TYPE: ExerciseTypeDefinition = {
       key: "weight",
       label: "Weight",
       type: "number",
-      unit: "kg",
+      // Unit is dynamically determined by ParameterUtils based on user settings
       required: true,
       default: 0,
       min: 0,

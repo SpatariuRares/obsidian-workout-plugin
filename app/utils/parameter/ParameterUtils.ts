@@ -30,21 +30,6 @@ const RESERVED_PARAMETER_KEYS: readonly string[] = [
 ] as const;
 
 /**
- * Default units for built-in parameter types.
- * Used when ParameterDefinition doesn't specify a unit.
- */
-const DEFAULT_PARAMETER_UNITS: Record<string, string> = {
-  weight: "kg",
-  reps: "",
-  volume: "kg",
-  duration: "sec",
-  distance: "km",
-  pace: "min/km",
-  heartRate: "bpm",
-  heartrate: "bpm",
-} as const;
-
-/**
  * Default colors for chart data types.
  * Used when displaying custom parameters in charts.
  */
@@ -62,12 +47,44 @@ const CHART_DATA_TYPE_COLORS: Record<string, string> = {
 
 export class ParameterUtils {
   /**
+   * Default units for built-in parameter types.
+   * Can be updated at runtime based on settings.
+   */
+  private static defaultUnits: Record<string, string> = {
+    weight: "kg",
+    reps: "",
+    volume: "kg",
+    duration: "sec",
+    distance: "km",
+    pace: "min/km",
+    heartRate: "bpm",
+    heartrate: "bpm",
+  };
+
+  /**
+   * Updates the default weight unit (kg or lb)
+   * @param unit The new weight unit
+   */
+  static setWeightUnit(unit: string): void {
+    this.defaultUnits.weight = unit;
+    this.defaultUnits.volume = unit;
+  }
+
+  /**
+   * Gets the current weight unit (kg or lb)
+   * @returns The current weight unit string
+   */
+  static getWeightUnit(): string {
+    return this.defaultUnits.weight;
+  }
+
+  /**
    * Filters parameters to only include numeric types.
    * @param parameters Array of parameter definitions
    * @returns Array of numeric parameter definitions
    */
   static getNumericParams(
-    parameters: ParameterDefinition[]
+    parameters: ParameterDefinition[],
   ): ParameterDefinition[] {
     return parameters.filter((p) => p.type === "number");
   }
@@ -89,7 +106,7 @@ export class ParameterUtils {
   static isReservedParamKey(key: string): boolean {
     const normalizedKey = StringUtils.normalize(key);
     return RESERVED_PARAMETER_KEYS.some(
-      (reserved) => reserved.toLowerCase() === normalizedKey
+      (reserved) => reserved.toLowerCase() === normalizedKey,
     );
   }
 
@@ -107,7 +124,7 @@ export class ParameterUtils {
    * @returns Formatted string like "Weight (kg)" or "Duration (sec)"
    */
   static formatParamWithUnit(param: ParameterDefinition): string {
-    const unit = param.unit || DEFAULT_PARAMETER_UNITS[param.key.toLowerCase()];
+    const unit = param.unit || this.defaultUnits[param.key.toLowerCase()];
     if (unit) {
       return `${param.label} (${unit})`;
     }
@@ -122,7 +139,7 @@ export class ParameterUtils {
    * @returns Formatted string like "Duration (sec)" or "Custom Param"
    */
   static formatKeyWithUnit(key: string, customUnit?: string): string {
-    const unit = customUnit || DEFAULT_PARAMETER_UNITS[key.toLowerCase()];
+    const unit = customUnit || this.defaultUnits[key.toLowerCase()];
     const label = this.keyToLabel(key);
     if (unit) {
       return `${label} (${unit})`;
@@ -238,7 +255,7 @@ export class ParameterUtils {
    */
   static findParamByKey(
     parameters: ParameterDefinition[],
-    key: string
+    key: string,
   ): ParameterDefinition | undefined {
     const normalizedKey = key.toLowerCase();
     return parameters.find((p) => p.key.toLowerCase() === normalizedKey);

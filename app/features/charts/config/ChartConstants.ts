@@ -4,6 +4,7 @@
  */
 
 import { CONSTANTS } from "@app/constants";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Default chart labels and text
@@ -71,32 +72,43 @@ export function getDefaultChartTitle(chartType: string): string {
 }
 
 /**
- * Gets the unit label for a chart type
- * @param chartType - Type of chart (volume, weight, reps)
- * @returns Unit label string
+ * Gets the unit label for a chart type.
+ * Returns the actual unit (e.g., "kg", "lb") based on user settings.
+ * @param chartType - Type of chart (volume, weight, reps, duration, distance, pace, heartRate)
+ * @returns Unit string (e.g., "kg", "lb", "", "sec", "km", "min/km", "bpm")
  */
 export function getUnitForChartType(chartType: string): string {
-  if (chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME || chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT) {
-    return ChartLabels.UNITS.WEIGHT;
+  // For volume and weight charts, use the dynamic weight unit from settings
+  if (
+    chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME ||
+    chartType === CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT
+  ) {
+    return ParameterUtils.getWeightUnit();
   }
-  return ChartLabels.UNITS.REPS;
+
+  // For other chart types, return empty string (reps don't have units)
+  // Duration, distance, pace, and heart rate are handled by their respective formatters
+  return "";
 }
 
 /**
- * Gets the Y-axis label for a chart type
- * @param chartType - Type of chart (volume, weight, reps)
- * @returns Y-axis label string
+ * Gets the Y-axis label for a chart type with dynamic unit.
+ * Returns label with unit (e.g., "Volume (kg)", "Weight (lb)") based on settings.
+ * @param chartType - Type of chart (volume, weight, reps, duration, distance, pace, heartRate)
+ * @returns Y-axis label string with unit
  */
 export function getYAxisLabel(chartType: string): string {
+  const weightUnit = ParameterUtils.getWeightUnit();
+
   switch (chartType) {
     case CONSTANTS.WORKOUT.CHARTS.TYPES.VOLUME:
-      return ChartLabels.Y_AXIS.VOLUME;
+      return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;
     case CONSTANTS.WORKOUT.CHARTS.TYPES.WEIGHT:
-      return ChartLabels.Y_AXIS.WEIGHT;
+      return `${ChartLabels.Y_AXIS.WEIGHT} (${weightUnit})`;
     case CONSTANTS.WORKOUT.CHARTS.TYPES.REPS:
       return ChartLabels.Y_AXIS.REPS;
     default:
-      return ChartLabels.Y_AXIS.VOLUME;
+      return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;
   }
 }
 

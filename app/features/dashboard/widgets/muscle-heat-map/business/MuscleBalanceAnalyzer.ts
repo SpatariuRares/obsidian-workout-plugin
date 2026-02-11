@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { MuscleGroupData } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -90,8 +91,9 @@ export class MuscleBalanceAnalyzer {
     // Display analysis header
     infoPanel.createEl("h4", { text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS });
 
+    const weightUnit = ParameterUtils.getWeightUnit();
     infoPanel.createEl("p", {
-      text: `Average volume: ${analysis.avgVolume.toFixed(0)} kg`,
+      text: `Average volume: ${analysis.avgVolume.toFixed(0)} ${weightUnit}`,
     });
 
     // Display imbalance alerts or success message

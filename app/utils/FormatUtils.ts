@@ -3,7 +3,7 @@
  * Handles duration, pace, and other workout-specific formatting
  */
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
-import { UNITS_MAP } from "@app/constants/ui.constants";
+import { getUnitsMap } from "@app/constants/ui.constants";
 
 export class FormatUtils {
   /**
@@ -69,7 +69,8 @@ export class FormatUtils {
       case CHART_DATA_TYPE.DISTANCE:
       case CHART_DATA_TYPE.HEART_RATE:
       default: {
-        const unit = UNITS_MAP[dataType] || "";
+        const unitsMap = getUnitsMap();
+        const unit = unitsMap[dataType] || "";
         const formattedNumber = Number.isInteger(value)
           ? value.toString()
           : value.toFixed(2);

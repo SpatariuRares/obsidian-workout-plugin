@@ -3,6 +3,7 @@ import { CONSTANTS } from "@app/constants";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 export class GeneralSettings {
   constructor(
@@ -21,15 +22,16 @@ export class GeneralSettings {
         new FolderSuggest(this.app, text.inputEl);
         const currentPath = this.plugin.settings.csvLogFilePath;
         const lastSlash = currentPath.lastIndexOf("/");
-        const folderPath = lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
+        const folderPath =
+          lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
 
         text
           .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
           .setValue(folderPath)
           .onChange(async (value) => {
-             const folder = normalizePath(value);
-             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
-             await this.plugin.saveSettings();
+            const folder = normalizePath(value);
+            this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
+            await this.plugin.saveSettings();
           });
       });
 
@@ -48,6 +50,24 @@ export class GeneralSettings {
             await this.plugin.saveSettings();
           });
       });
+
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.WEIGHT_UNIT)
+      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.WEIGHT_UNIT)
+      .addDropdown((dropdown) =>
+        dropdown
+          .addOption("kg", CONSTANTS.WORKOUT.SETTINGS.OPTIONS.WEIGHT_UNIT.KG)
+          .addOption("lb", CONSTANTS.WORKOUT.SETTINGS.OPTIONS.WEIGHT_UNIT.LB)
+          .setValue(this.plugin.settings.weightUnit)
+          .onChange(async (value) => {
+            this.plugin.settings.weightUnit = value as "kg" | "lb";
+            // Update ParameterUtils with new weight unit
+            ParameterUtils.setWeightUnit(value);
+            await this.plugin.saveSettings();
+            // Trigger global refresh to update all views with new unit
+            this.plugin.triggerWorkoutLogRefresh({});
+          }),
+      );
 
     // Filtering Section
     new Setting(containerEl)
@@ -81,7 +101,7 @@ export class GeneralSettings {
             try {
               // Create workout log CSV
               await this.plugin.createCSVLogFile();
-              
+
               // Create muscle tags CSV
               await this.handleCreateMuscleTagsCsv();
 
@@ -89,39 +109,47 @@ export class GeneralSettings {
             } catch (error) {
               const errorMessage =
                 error instanceof Error ? error.message : String(error);
-              new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_ERROR(errorMessage));
+              new Notice(
+                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_ERROR(
+                  errorMessage,
+                ),
+              );
             }
           }),
       );
 
     // Initial Setup Section
-    new Setting(containerEl).setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.EXAMPLE_DATA).setHeading();
+    new Setting(containerEl)
+      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.EXAMPLE_DATA)
+      .setHeading();
 
     new Setting(containerEl)
       .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_EXAMPLES)
       .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.GENERATE_EXAMPLES)
       .addButton((button) =>
-        button.setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_EXAMPLES).onClick(async () => {
-          const { ExampleGeneratorService } =
-            await import("@app/services/examples/ExampleGeneratorService");
-          const generator = new ExampleGeneratorService(this.app);
+        button
+          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_EXAMPLES)
+          .onClick(async () => {
+            const { ExampleGeneratorService } =
+              await import("@app/services/examples/ExampleGeneratorService");
+            const generator = new ExampleGeneratorService(this.app);
 
-          const folderExists = await this.app.vault.adapter.exists(
-            normalizePath("The gym examples"),
-          );
+            const folderExists = await this.app.vault.adapter.exists(
+              normalizePath("The gym examples"),
+            );
 
-          if (folderExists) {
-            new ConfirmModal(
-              this.app,
-              CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_OVERWRITE_EXAMPLES,
-              async () => {
-                await generator.generateExampleFolder(true);
-              },
-            ).open();
-          } else {
-            await generator.generateExampleFolder(false);
-          }
-        }),
+            if (folderExists) {
+              new ConfirmModal(
+                this.app,
+                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_OVERWRITE_EXAMPLES,
+                async () => {
+                  await generator.generateExampleFolder(true);
+                },
+              ).open();
+            } else {
+              await generator.generateExampleFolder(false);
+            }
+          }),
       );
   }
 

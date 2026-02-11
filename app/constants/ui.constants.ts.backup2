@@ -510,199 +510,73 @@ export const MODAL_UI = {
     get WEIGHT() {
       return getDynamicModalLabels().WEIGHT;
     },
-    get NOTES() {
-      return t("modal.notes");
-    },
-    get WORKOUT() {
-      return t("modal.workout");
-    },
-    get WORKOUT_NAME() {
-      return t("modal.workoutName");
-    },
-    get WORKOUT_NAME_OPTIONAL() {
-      return t("modal.workoutNameOptional");
-    },
-    get CHART_TYPE() {
-      return t("modal.chartType");
-    },
-    get DATA_TYPE() {
-      return t("modal.dataType");
-    },
-    get TABLE_TYPE() {
-      return t("modal.tableType");
-    },
-    get DAYS_RANGE() {
-      return t("modal.daysRange");
-    },
-    get DATA_LIMIT() {
-      return t("modal.dataLimit");
-    },
-    get MAX_LOG_COUNT() {
-      return t("modal.maxLogCount");
-    },
-    get CUSTOM_TITLE() {
-      return t("modal.customTitle");
-    },
-    get TIMER_TYPE() {
-      return t("modal.timerType");
-    },
-    get DURATION() {
-      return t("modal.duration");
-    },
-    get INTERVAL_TIME() {
-      return t("modal.intervalTime");
-    },
-    get ROUNDS() {
-      return t("modal.rounds");
-    },
-    get TITLE() {
-      return t("modal.title");
-    },
-    get EXERCISE_NAME() {
-      return t("modal.exerciseName");
-    },
-    get EXERCISE_PATH() {
-      return t("modal.exercisePath");
-    },
-    get SETS() {
-      return t("modal.sets");
-    },
-    get REST_TIME() {
-      return t("modal.restTime");
-    },
-    get NOTE() {
-      return t("modal.note");
-    },
-    get TAGS() {
-      return t("modal.tags");
-    },
-    get FOLDER_PATH() {
-      return t("modal.folderPath");
-    },
-    get EXERCISE_TYPE() {
-      return t("modal.exerciseType");
-    },
-    get CUSTOM_PARAMETERS() {
-      return t("modal.customParameters");
-    },
-    get PARAMETER_KEY() {
-      return t("modal.parameterKey");
-    },
-    get PARAMETER_LABEL() {
-      return t("modal.parameterLabel");
-    },
-    get PARAMETER_TYPE() {
-      return t("modal.parameterType");
-    },
-    get PARAMETER_UNIT() {
-      return t("modal.parameterUnit");
-    },
-    get PARAMETER_REQUIRED() {
-      return t("modal.parameterRequired");
-    },
-    get CONFIRM_ACTION() {
-      return t("modal.confirmAction");
-    },
-    get FILE_NAME() {
-      return t("modal.fileName");
-    },
-    get CSV_EXERCISE() {
-      return t("modal.csvExercise");
-    },
-    get SIMILARITY() {
-      return t("modal.similarity");
-    },
-    get STATUS() {
-      return t("modal.status");
-    },
-    get TAG() {
-      return t("modal.tag");
-    },
-    get MUSCLE_GROUP() {
-      return t("modal.muscleGroup");
-    },
-    get ACTIONS() {
-      return t("modal.actions");
-    },
-    get ADD_TAG() {
-      return t("modal.addTag");
-    },
-    get EDIT_TAG() {
-      return t("modal.editTag");
-    },
-    get NEW_TAG() {
-      return t("modal.newTag");
-    },
-    get SAVE() {
-      return t("modal.save");
-    },
-    get DELETE() {
-      return t("modal.delete");
-    },
-    get SIMILAR_TAGS() {
-      return t("modal.similarTags");
-    },
-    get EXPORT_TAGS() {
-      return t("modal.exportTags");
-    },
-    get IMPORT_TAGS() {
-      return t("modal.importTags");
-    },
-    get IMPORT_MERGE() {
-      return t("modal.importMerge");
-    },
-    get IMPORT_REPLACE() {
-      return t("modal.importReplace");
-    },
-    get TIMER_DURATION() {
-      return t("modal.timerDuration");
-    },
-    get TIMER_PRESET() {
-      return t("modal.timerPreset");
-    },
-    get WORKOUT_FILE() {
-      return t("modal.workoutFile");
-    },
-    get DATE_RANGE() {
-      return t("modal.dateRange");
-    },
+    NOTES: "Notes (optional):",
+    WORKOUT: "Workout (optional):",
+    WORKOUT_NAME: "Workout name:",
+    WORKOUT_NAME_OPTIONAL: "Workout name (optional):",
+    CHART_TYPE: "Chart type:",
+    DATA_TYPE: "Data type:",
+    TABLE_TYPE: "Table type:",
+    DAYS_RANGE: "Days range:",
+    DATA_LIMIT: "Data limit:",
+    MAX_LOG_COUNT: "Maximum log count:",
+    CUSTOM_TITLE: "Custom title:",
+    TIMER_TYPE: "Timer type:",
+    DURATION: "Duration (seconds):",
+    INTERVAL_TIME: "Interval time (seconds):",
+    ROUNDS: "Rounds:",
+    TITLE: "Title:",
+    EXERCISE_NAME: "Exercise name:",
+    EXERCISE_PATH: "Exercise path:",
+    SETS: "Sets:",
+    REST_TIME: "Rest time (seconds):",
+    NOTE: "Note:",
+    TAGS: "Tags (comma separated):",
+    FOLDER_PATH: "Folder path (optional):",
+    EXERCISE_TYPE: "Exercise type:",
+    CUSTOM_PARAMETERS: "Custom parameters:",
+    PARAMETER_KEY: "Key:",
+    PARAMETER_LABEL: "Label:",
+    PARAMETER_TYPE: "Type:",
+    PARAMETER_UNIT: "Unit (optional):",
+    PARAMETER_REQUIRED: "Required",
+    CONFIRM_ACTION: "Confirm action",
+    FILE_NAME: "File name",
+    CSV_EXERCISE: "CSV exercise",
+    SIMILARITY: "Similarity",
+    STATUS: "Status",
+    TAG: "Tag",
+    MUSCLE_GROUP: "Muscle group",
+    ACTIONS: "Actions",
+    ADD_TAG: "Add tag",
+    EDIT_TAG: "Edit tag",
+    NEW_TAG: "New tag",
+    SAVE: "Save",
+    DELETE: "Delete",
+    SIMILAR_TAGS: "Similar tags:",
+    EXPORT_TAGS: "Export tags",
+    IMPORT_TAGS: "Import tags",
+    IMPORT_MERGE: "Merge",
+    IMPORT_REPLACE: "Replace all",
+    TIMER_DURATION: "Timer duration (seconds):",
+    TIMER_PRESET: "Timer preset:",
+    WORKOUT_FILE: "Workout file:",
+    DATE_RANGE: "Date range (days):",
     get TARGET_WEIGHT() {
       return getDynamicModalLabels().TARGET_WEIGHT;
     },
     TARGET_REPS: "Target reps:",
-    get PROTOCOL() {
-      return t("modal.protocol");
-    },
-    get RECENT_EXERCISES() {
-      return t("modal.recentExercises");
-    },
-    get CANVAS_LAYOUT() {
-      return t("modal.canvasLayout");
-    },
-    get CANVAS_OPTIONS() {
-      return t("modal.canvasOptions");
-    },
-    get LAYOUT_TYPE() {
-      return t("modal.layoutType");
-    },
-    get LAYOUT_HORIZONTAL() {
-      return t("modal.layoutHorizontal");
-    },
-    get LAYOUT_VERTICAL() {
-      return t("modal.layoutVertical");
-    },
-    get LAYOUT_GROUPED() {
-      return t("modal.layoutGrouped");
-    },
-    get TAGS_SELECTOR() {
-      return t("modal.tagsSelector");
-    },
-    get NO_TAGS_FOUND() {
-      return t("modal.noTagsFound");
-    },
-    get NO_TAGS_SELECTED() {
-      return t("modal.noTagsSelected");
-    },
+    PROTOCOL: "Protocol:",
+    RECENT_EXERCISES: "Recent:",
+    CANVAS_LAYOUT: "Layout",
+    CANVAS_OPTIONS: "Options",
+    LAYOUT_TYPE: "Layout type:",
+    LAYOUT_HORIZONTAL: "Horizontal flow",
+    LAYOUT_VERTICAL: "Vertical flow",
+    LAYOUT_GROUPED: "Grouped by muscle",
+    TAGS_SELECTOR: "Muscle tags:",
+    NO_TAGS_FOUND: "No tags match your search",
+    NO_TAGS_SELECTED: "No tags selected. Click on tags below to add them.",
   },
   PLACEHOLDERS: {
     get SEARCH_TAGS() {
@@ -851,151 +725,41 @@ export const MODAL_UI = {
   },
   SELECT_OPTIONS: {
     CHART_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.completeWorkout");
-        },
-        value: "workout",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.specificExercise");
-        },
-        value: "exercise",
-      },
+      { text: "Complete workout", value: "workout" },
+      { text: "Specific exercise", value: "exercise" },
     ],
     get DATA_TYPE() {
       return getDynamicDataTypeOptions();
     },
     TABLE_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.exerciseWorkout");
-        },
-        value: "combined",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.specificExercise");
-        },
-        value: "exercise",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.completeWorkout");
-        },
-        value: "workout",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.allLogs");
-        },
-        value: "all",
-      },
+      { text: "Exercise + workout", value: "combined" },
+      { text: "Specific exercise", value: "exercise" },
+      { text: "Complete workout", value: "workout" },
+      { text: "All logs", value: "all" },
     ],
     TIMER_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.countdown");
-        },
-        value: "countdown",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.interval");
-        },
-        value: "interval",
-      },
+      { text: "Countdown", value: "countdown" },
+      { text: "Interval", value: "interval" },
     ],
     PROTOCOL: [
-      {
-        get text() {
-          return t("modal.selectOptions.standard");
-        },
-        value: "standard",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.dropSet");
-        },
-        value: "drop_set",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.myoReps");
-        },
-        value: "myo_reps",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.restPause");
-        },
-        value: "rest_pause",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.superset");
-        },
-        value: "superset",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.twentyones");
-        },
-        value: "twentyone",
-      },
+      { text: "Standard", value: "standard" },
+      { text: "Drop set", value: "drop_set" },
+      { text: "Myo-reps", value: "myo_reps" },
+      { text: "Rest-pause", value: "rest_pause" },
+      { text: "Superset", value: "superset" },
+      { text: "21s", value: "twentyone" },
     ],
     EXERCISE_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.strength");
-        },
-        value: "strength",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.timed");
-        },
-        value: "timed",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.distance");
-        },
-        value: "distance",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.cardio");
-        },
-        value: "cardio",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.custom");
-        },
-        value: "custom",
-      },
+      { text: "Strength", value: "strength" },
+      { text: "Timed", value: "timed" },
+      { text: "Distance", value: "distance" },
+      { text: "Cardio", value: "cardio" },
+      { text: "Custom", value: "custom" },
     ],
     PARAMETER_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.number");
-        },
-        value: "number",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.text");
-        },
-        value: "string",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.yesNo");
-        },
-        value: "boolean",
-      },
+      { text: "Number", value: "number" },
+      { text: "Text", value: "string" },
+      { text: "Yes/No", value: "boolean" },
     ],
   },
   SECTIONS: {
@@ -1086,283 +850,133 @@ export function getDynamicSettingsLabels() {
  */
 export const SETTINGS_UI = {
   LABELS: {
-    get GENERATE_DEFAULT_TEMPLATES() {
-      return t("settings.generateDefaultTemplates");
-    },
-    get CSV_PATH() {
-      return t("settings.csvPath");
-    },
-    get EXERCISE_FOLDER() {
-      return t("settings.exerciseFolder");
-    },
-    get DEFAULT_EXACT_MATCH() {
-      return t("settings.defaultExactMatch");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get DEFAULT_TIMER_PRESET() {
-      return t("settings.defaultTimerPreset");
-    },
-    get PRESET_NAME() {
-      return t("settings.presetName");
-    },
-    get PRESET_TYPE() {
-      return t("settings.presetType");
-    },
-    get PRESET_DURATION() {
-      return t("settings.presetDuration");
-    },
-    get PRESET_INTERVAL() {
-      return t("settings.presetInterval");
-    },
-    get PRESET_ROUNDS() {
-      return t("settings.presetRounds");
-    },
-    get PRESET_SHOW_CONTROLS() {
-      return t("settings.presetShowControls");
-    },
-    get PRESET_AUTO_START() {
-      return t("settings.presetAutoStart");
-    },
-    get PRESET_SOUND() {
-      return t("settings.presetSound");
-    },
-    get EXERCISE_BLOCK_TEMPLATE() {
-      return t("settings.exerciseBlockTemplate");
-    },
+    GENERATE_DEFAULT_TEMPLATES: "Generate default templates",
+    CSV_PATH: "CSV log file path",
+    EXERCISE_FOLDER: "Exercise folder path",
+    DEFAULT_EXACT_MATCH: "Default exact match",
+    TIMER_PRESETS: "Timer presets",
+    DEFAULT_TIMER_PRESET: "Default timer preset",
+    PRESET_NAME: "Preset name",
+    PRESET_TYPE: "Timer type",
+    PRESET_DURATION: "Duration (seconds)",
+    PRESET_INTERVAL: "Interval time (seconds)",
+    PRESET_ROUNDS: "Rounds",
+    PRESET_SHOW_CONTROLS: "Show controls",
+    PRESET_AUTO_START: "Auto start",
+    PRESET_SOUND: "Sound",
+    EXERCISE_BLOCK_TEMPLATE: "Exercise block template",
     get WEIGHT_INCREMENT() {
       return getDynamicSettingsLabels().WEIGHT_INCREMENT;
     },
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get PROTOCOL_NAME() {
-      return t("settings.protocolName");
-    },
-    get PROTOCOL_ABBREVIATION() {
-      return t("settings.protocolAbbreviation");
-    },
-    get PROTOCOL_COLOR() {
-      return t("settings.protocolColor");
-    },
-    get SET_DURATION() {
-      return t("settings.setDuration");
-    },
-    get REP_DURATION() {
-      return t("settings.repDuration");
-    },
-    get DEFAULT_REPS_PER_SET() {
-      return t("settings.defaultRepsPerSet");
-    },
-    get SHOW_QUICK_LOG_RIBBON() {
-      return t("settings.showQuickLogRibbon");
-    },
+    CUSTOM_PROTOCOLS: "Custom protocols",
+    PROTOCOL_NAME: "Protocol name",
+    PROTOCOL_ABBREVIATION: "Abbreviation",
+    PROTOCOL_COLOR: "Badge color",
+    SET_DURATION: "Fallback set duration (seconds)",
+    REP_DURATION: "Duration per repetition (seconds)",
+    DEFAULT_REPS_PER_SET: "Default reps per set",
+    SHOW_QUICK_LOG_RIBBON: "Show create log ribbon icon",
     get QUICK_WEIGHT_INCREMENT() {
       return getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT;
     },
-    get CREATE_MUSCLE_TAGS_CSV() {
-      return t("settings.createMuscleTagsCsv");
-    },
-    get SETUP_CSV() {
-      return t("settings.setupCsv");
-    },
-    get GENERATE_EXAMPLES() {
-      return t("settings.generateExamples");
-    },
-    get WEIGHT_UNIT() {
-      return t("settings.weightUnit");
-    },
+    CREATE_MUSCLE_TAGS_CSV: "Muscle tags CSV file",
+    SETUP_CSV: "Setup CSV files",
+    GENERATE_EXAMPLES: "Generate example data",
+    WEIGHT_UNIT: "Weight unit",
   },
   DESCRIPTIONS: {
-    get GENERATE_DEFAULT_TEMPLATES() {
-      return t("settings.generateDefaultTemplates");
-    },
-    get CSV_PATH() {
-      return t("settings.csvPath");
-    },
-    get CSV_FOLDER() {
-      return t("settings.csvFolder");
-    },
-    get EXERCISE_FOLDER() {
-      return t("settings.exerciseFolder");
-    },
-    get CREATE_CSV() {
-      return t("settings.createCsv");
-    },
-    get DEFAULT_EXACT_MATCH() {
-      return t("settings.defaultExactMatch");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get DEFAULT_TIMER_PRESET() {
-      return t("settings.defaultTimerPreset");
-    },
-    get NO_PRESETS() {
-      return t("settings.noPresets");
-    },
-    get EXERCISE_BLOCK_TEMPLATE() {
-      return t("settings.exerciseBlockTemplate");
-    },
+    GENERATE_DEFAULT_TEMPLATES:
+      "Generate default exercise page template and tag reference in the 'Workout Templates' folder. You can customize these files to change the language and structure.",
+    CSV_PATH: "CSV log file path",
+    CSV_FOLDER:
+      "Folder where the workout logs and muscle tags CSV files will be stored.",
+    EXERCISE_FOLDER: "Path to the folder containing exercise pages",
+    CREATE_CSV: "Create a new CSV log file with sample data",
+    DEFAULT_EXACT_MATCH:
+      "When enabled, exercise filtering uses exact name matching by default. Disable for fuzzy matching.",
+    TIMER_PRESETS: "Create and manage reusable timer presets",
+    DEFAULT_TIMER_PRESET: "Select a default preset for new timers",
+    NO_PRESETS:
+      "No timer presets configured. Click 'Add preset' to create one.",
+    EXERCISE_BLOCK_TEMPLATE:
+      "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
     WEIGHT_INCREMENT:
       "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get NO_CUSTOM_PROTOCOLS() {
-      return t("settings.noCustomProtocols");
-    },
-    get PROTOCOL_ABBREVIATION() {
-      return t("settings.protocolAbbreviation");
-    },
-    get PROTOCOL_COLOR() {
-      return t("settings.protocolColor");
-    },
-    get SET_DURATION() {
-      return t("settings.setDuration");
-    },
-    get REP_DURATION() {
-      return t("settings.repDuration");
-    },
-    get DEFAULT_REPS_PER_SET() {
-      return t("settings.defaultRepsPerSet");
-    },
-    get SHOW_QUICK_LOG_RIBBON() {
-      return t("settings.showQuickLogRibbon");
-    },
+    CUSTOM_PROTOCOLS:
+      "Create custom workout protocols to track specialized training techniques",
+    NO_CUSTOM_PROTOCOLS:
+      "No custom protocols configured. Click 'Add protocol' to create one.",
+    PROTOCOL_ABBREVIATION:
+      "Short abbreviation shown in badge (max 3 characters)",
+    PROTOCOL_COLOR: "Badge background color (hex format, e.g., #FF5733)",
+    SET_DURATION:
+      "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
+    REP_DURATION:
+      "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
+    DEFAULT_REPS_PER_SET:
+      "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
+    SHOW_QUICK_LOG_RIBBON:
+      "Show a dumbbell icon in the left ribbon to open the create workout log modal",
     QUICK_WEIGHT_INCREMENT:
       "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
-    get CREATE_MUSCLE_TAGS_CSV() {
-      return t("settings.createMuscleTagsCsv");
-    },
-    get CONFIRM_OVERWRITE_MUSCLE_TAGS() {
-      return t("settings.confirmOverwriteMuscleTags");
-    },
-    get SETUP_CSV() {
-      return t("settings.setupCsv");
-    },
+    CREATE_MUSCLE_TAGS_CSV:
+      "Create a CSV file with default muscle tag mappings. Edit this file to add custom tags in any language.",
+    CONFIRM_OVERWRITE_MUSCLE_TAGS:
+      "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
+    SETUP_CSV:
+      "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
     GENERATE_EXAMPLES:
       "Create a folder with example exercises and workouts to help you get started.",
-    get WEIGHT_UNIT() {
-      return t("settings.weightUnit");
-    },
+    WEIGHT_UNIT:
+      "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs.",
   },
   SECTIONS: {
-    get CSV_MANAGEMENT() {
-      return t("settings.csvManagement");
-    },
-    get EXAMPLE_DATA() {
-      return t("settings.exampleData");
-    },
-    get FILTERING() {
-      return t("settings.filtering");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get TEMPLATES() {
-      return t("settings.templates");
-    },
-    get PROGRESSIVE_OVERLOAD() {
-      return t("settings.progressiveOverload");
-    },
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get DURATION_ESTIMATION() {
-      return t("settings.durationEstimation");
-    },
-    get QUICK_LOG() {
-      return t("settings.quickLog");
-    },
+    CSV_MANAGEMENT: "CSV file management",
+    EXAMPLE_DATA: "Example data",
+    FILTERING: "Filtering",
+    TIMER_PRESETS: "Timer presets",
+    TEMPLATES: "Templates",
+    PROGRESSIVE_OVERLOAD: "Progressive overload",
+    CUSTOM_PROTOCOLS: "Custom protocols",
+    DURATION_ESTIMATION: "Duration estimation",
+    QUICK_LOG: "Mobile logging",
   },
   BUTTONS: {
-    get ADD_PRESET() {
-      return t("settings.addPreset");
-    },
-    get DELETE_PRESET() {
-      return t("settings.deletePreset");
-    },
-    get SAVE_PRESET() {
-      return t("settings.savePreset");
-    },
-    get CANCEL() {
-      return t("settings.cancel");
-    },
-    get ADD_PROTOCOL() {
-      return t("settings.addProtocol");
-    },
-    get SAVE_PROTOCOL() {
-      return t("settings.saveProtocol");
-    },
-    get CREATE_MUSCLE_TAGS() {
-      return t("settings.createMuscleTags");
-    },
-    get CREATE_FILES() {
-      return t("settings.createFiles");
-    },
-    get CREATE_EXAMPLES() {
-      return t("settings.createExamples");
-    },
+    ADD_PRESET: "Add preset",
+    DELETE_PRESET: "Delete",
+    SAVE_PRESET: "Save",
+    CANCEL: "Cancel",
+    ADD_PROTOCOL: "Add protocol",
+    SAVE_PROTOCOL: "Save",
+    CREATE_MUSCLE_TAGS: "Create muscle tags",
+    CREATE_FILES: "Create files",
+    CREATE_EXAMPLES: "Create examples",
   },
   OPTIONS: {
-    get NONE() {
-      return t("settings.none");
-    },
+    NONE: "None",
     WEIGHT_UNIT: {
-      get KG() {
-        return t("settings.kg");
-      },
-      get LB() {
-        return t("settings.lb");
-      },
+      KG: "Kilograms (kg)",
+      LB: "Pounds (lb)",
     },
   },
   MESSAGES: {
-    get PRESET_NAME_REQUIRED() {
-      return t("settings.presetNameRequired");
-    },
-    get PRESET_NAME_EXISTS() {
-      return t("settings.presetNameExists");
-    },
-    get PRESET_DELETED() {
-      return t("settings.presetDeleted");
-    },
-    get PRESET_SAVED() {
-      return t("settings.presetSaved");
-    },
-    get CONFIRM_DELETE_PRESET() {
-      return t("settings.confirmDeletePreset");
-    },
-    get PROTOCOL_NAME_REQUIRED() {
-      return t("settings.protocolNameRequired");
-    },
-    get PROTOCOL_ABBREVIATION_REQUIRED() {
-      return t("settings.protocolAbbreviationRequired");
-    },
-    get PROTOCOL_COLOR_REQUIRED() {
-      return t("settings.protocolColorRequired");
-    },
-    get PROTOCOL_NAME_EXISTS() {
-      return t("settings.protocolNameExists");
-    },
-    get PROTOCOL_DELETED() {
-      return t("settings.protocolDeleted");
-    },
-    get PROTOCOL_SAVED() {
-      return t("settings.protocolSaved");
-    },
-    get CONFIRM_DELETE_PROTOCOL() {
-      return t("settings.confirmDeleteProtocol");
-    },
-    get CSV_FILES_CREATED() {
-      return t("settings.csvFilesCreated");
-    },
+    PRESET_NAME_REQUIRED: "Preset name is required",
+    PRESET_NAME_EXISTS: "A preset with this name already exists",
+    PRESET_DELETED: "Preset deleted",
+    PRESET_SAVED: "Preset saved",
+    CONFIRM_DELETE_PRESET: "Are you sure you want to delete this preset?",
+    PROTOCOL_NAME_REQUIRED: "Protocol name is required",
+    PROTOCOL_ABBREVIATION_REQUIRED:
+      "Abbreviation is required (max 3 characters)",
+    PROTOCOL_COLOR_REQUIRED: "Badge color is required",
+    PROTOCOL_NAME_EXISTS: "A protocol with this name already exists",
+    PROTOCOL_DELETED: "Protocol deleted",
+    PROTOCOL_SAVED: "Protocol saved",
+    CONFIRM_DELETE_PROTOCOL: "Are you sure you want to delete this protocol?",
+    CSV_FILES_CREATED: "CSV files created successfully",
     CSV_FILES_ERROR: (error: string) => `Error creating CSV files: ${error}`,
-    get CONFIRM_OVERWRITE_EXAMPLES() {
-      return t("settings.confirmOverwriteExamples");
-    },
+    CONFIRM_OVERWRITE_EXAMPLES:
+      "The 'The gym examples' folder already exists. Do you want to overwrite it?",
   },
 } as const;
 
@@ -1370,76 +984,6 @@ export const SETTINGS_UI = {
  * Table UI labels - column headers, labels, messages, and icons
  */
 export const TABLE_UI = {
-  /** Column definitions with translated labels and technical identifiers */
-  COLUMN_DEFS: {
-    DATE: {
-      get label() {
-        return t("table.columnLabels.date");
-      },
-      value: "Date",
-    },
-    EXERCISE: {
-      get label() {
-        return t("table.columnLabels.exercise");
-      },
-      value: "Exercise",
-    },
-    REPS: {
-      get label() {
-        return t("table.columnLabels.reps");
-      },
-      value: "Rep",
-    },
-    WEIGHT: {
-      get label() {
-        return t("table.columnLabels.weight");
-      },
-      value: "Wgt",
-    },
-    VOLUME: {
-      get label() {
-        return t("table.columnLabels.volume");
-      },
-      value: "Vol",
-    },
-    DURATION: {
-      get label() {
-        return t("table.columnLabels.duration");
-      },
-      value: "Dur",
-    },
-    DISTANCE: {
-      get label() {
-        return t("table.columnLabels.distance");
-      },
-      value: "Dist",
-    },
-    HEART_RATE: {
-      get label() {
-        return t("table.columnLabels.heartRate");
-      },
-      value: "HR",
-    },
-    NOTES: {
-      get label() {
-        return t("table.columnLabels.notes");
-      },
-      value: "Notes",
-    },
-    PROTOCOL: {
-      get label() {
-        return t("table.columnLabels.protocol");
-      },
-      value: "Prot",
-    },
-    ACTIONS: {
-      get label() {
-        return t("table.columnLabels.actions");
-      },
-      value: "Act",
-    },
-  },
-  /** Technical identifiers used in code (DO NOT TRANSLATE) - @deprecated Use COLUMN_DEFS.*.value instead */
   COLUMNS: {
     DATE: "Date",
     EXERCISE: "Exercise",
@@ -1453,96 +997,28 @@ export const TABLE_UI = {
     PROTOCOL: "Prot",
     ACTIONS: "Act",
   },
-  /** Translated labels for column headers - @deprecated Use COLUMN_DEFS.*.label instead */
-  COLUMN_LABELS: {
-    get DATE() {
-      return t("table.columnLabels.date");
-    },
-    get EXERCISE() {
-      return t("table.columnLabels.exercise");
-    },
-    get REPS() {
-      return t("table.columnLabels.reps");
-    },
-    get WEIGHT() {
-      return t("table.columnLabels.weight");
-    },
-    get VOLUME() {
-      return t("table.columnLabels.volume");
-    },
-    get DURATION() {
-      return t("table.columnLabels.duration");
-    },
-    get DISTANCE() {
-      return t("table.columnLabels.distance");
-    },
-    get HEART_RATE() {
-      return t("table.columnLabels.heartRate");
-    },
-    get NOTES() {
-      return t("table.columnLabels.notes");
-    },
-    get PROTOCOL() {
-      return t("table.columnLabels.protocol");
-    },
-    get ACTIONS() {
-      return t("table.columnLabels.actions");
-    },
-  },
   LABELS: {
-    get DATA() {
-      return t("table.data");
-    },
-    get VOLUME() {
-      return t("table.volume");
-    },
+    DATA: "Date",
+    VOLUME: "Volume",
     WEIGHT: "Weight",
-    get REPETITIONS() {
-      return t("table.repetitions");
-    },
-    get DURATION() {
-      return t("table.duration");
-    },
-    get DISTANCE() {
-      return t("table.distance");
-    },
-    get HEART_RATE() {
-      return t("table.heartRate");
-    },
-    get NO_DATA() {
-      return t("table.noData");
-    },
-    get INVALID_DATE() {
-      return t("table.invalidDate");
-    },
-    get NOT_AVAILABLE() {
-      return t("table.notAvailable");
-    },
-    get TREND_LINE() {
-      return t("table.trendLine");
-    },
+    REPETITIONS: "Repetitions",
+    DURATION: "Duration",
+    DISTANCE: "Distance",
+    HEART_RATE: "Heart rate",
+    NO_DATA: "No data available",
+    INVALID_DATE: "Invalid date",
+    NOT_AVAILABLE: "N/A",
+    TREND_LINE: "Trend Line",
   },
   /** Abbreviated labels for mobile/compact display */
   LABELS_SHORT: {
-    get VOLUME() {
-      return t("table.volume");
-    },
+    VOLUME: "Vol",
     WEIGHT: "Wgt",
-    get REPETITIONS() {
-      return t("table.repetitions");
-    },
-    get DURATION() {
-      return t("table.duration");
-    },
-    get DISTANCE() {
-      return t("table.distance");
-    },
-    get HEART_RATE() {
-      return t("table.heartRate");
-    },
-    get SETS() {
-      return t("table.sets");
-    },
+    REPETITIONS: "Rep",
+    DURATION: "Dur",
+    DISTANCE: "Dist",
+    HEART_RATE: "HR",
+    SETS: "Sets",
   },
   ICONS: {
     REPS: "🔁 ",
@@ -1557,99 +1033,35 @@ export const TABLE_UI = {
   },
   DEFAULT_VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
   MESSAGES: {
-    get DELETE_CONFIRM() {
-      return t("table.deleteConfirm");
-    },
-    get DELETE_SUCCESS() {
-      return t("table.deleteSuccess");
-    },
-    get DELETE_ERROR() {
-      return t("table.deleteError");
-    },
-    get REFRESH_SUCCESS() {
-      return t("table.refreshSuccess");
-    },
-    get GOTO_EXERCISE() {
-      return t("table.gotoExercise");
-    },
-    get EDIT_TITLE() {
-      return t("table.editTitle");
-    },
-    get DELETE_TITLE() {
-      return t("table.deleteTitle");
-    },
+    DELETE_CONFIRM: "Are you sure you want to delete this log entry?",
+    DELETE_SUCCESS: "Log entry deleted successfully!",
+    DELETE_ERROR: "Error deleting log entry: ",
+    REFRESH_SUCCESS: "Table refreshed successfully",
+    GOTO_EXERCISE: "Go to exercise",
+    EDIT_TITLE: "Edit log entry",
+    DELETE_TITLE: "Delete log entry",
   },
 } as const;
-
-/**
- * Maps technical column identifiers to their translated labels
- * Handles identifiers with units (e.g., "Wgt (kg)" → "Weight (kg)" or "Peso (kg)")
- * @param identifiers - Array of technical column identifiers (e.g., ["Rep", "Wgt (kg)"])
- * @returns Array of translated column labels
- */
-export function mapColumnIdentifiersToLabels(identifiers: string[]): string[] {
-  const columnDefsMap = new Map<string, string>();
-
-  // Build reverse map from value to label
-  Object.values(TABLE_UI.COLUMN_DEFS).forEach((def) => {
-    columnDefsMap.set(def.value, def.label);
-  });
-
-  // Map identifiers to labels, preserving units in parentheses
-  return identifiers.map((id) => {
-    // Check if identifier has a unit in parentheses (e.g., "Wgt (kg)")
-    const unitMatch = id.match(/^(.+?)\s+(\(.+\))$/);
-
-    if (unitMatch) {
-      // Extract base identifier and unit
-      const baseId = unitMatch[1];
-      const unit = unitMatch[2];
-
-      // Map base identifier to label and append unit
-      const label = columnDefsMap.get(baseId);
-      return label ? `${label} ${unit}` : id;
-    }
-
-    // No unit, direct mapping
-    return columnDefsMap.get(id) || id;
-  });
-}
 
 /**
  * Chart UI labels - axis labels, legend entries, and display text
  */
 export const CHARTS_UI = {
   LABELS: {
-    get REPS() {
-      return t("charts.reps");
-    },
-    get DATE() {
-      return t("charts.date");
-    },
-    get TREND_LINE() {
-      return t("charts.trendLine");
-    },
-    get UP() {
-      return t("charts.up");
-    },
-    get DOWN() {
-      return t("charts.down");
-    },
-    get NEUTRAL() {
-      return t("charts.neutral");
-    },
+    REPS: "Reps",
+    DATE: "Date",
+    TREND_LINE: "Trend line",
+    UP: "up",
+    DOWN: "down",
+    NEUTRAL: "neutral",
     /** @deprecated Use TREND_TITLE instead for dynamic type support */
-    get TREND_TITLE_PREFIX() {
-      return t("charts.trendTitlePrefix");
-    },
+    TREND_TITLE_PREFIX: "Trend Volume: ",
     /** Dynamic trend title based on data type */
     TREND_TITLE: (dataType?: CHART_DATA_TYPE) => {
       const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
       return `Trend ${typeName}: `;
     },
-    get OVERALL_VARIATION_PREFIX() {
-      return t("charts.overallVariationPrefix");
-    },
+    OVERALL_VARIATION_PREFIX: "Overall variation: ",
     /** @deprecated Use VARIATION_FROM_TO_FORMATTED for dynamic unit support */
     VARIATION_FROM_TO: (startValue: string, endValue: string) =>
       ` (da ${startValue} a ${endValue})`,
@@ -1676,21 +1088,14 @@ export const CHARTS_UI = {
       const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
       return `${typeName}: ${value}`;
     },
-    get SIGNIFICANT_INCREASE() {
-      return t("charts.significantIncrease");
-    },
-    get FALLBACK_TABLE_MESSAGE() {
-      return t("charts.fallbackTableMessage");
-    },
+    SIGNIFICANT_INCREASE: "Aumento signif.",
+    FALLBACK_TABLE_MESSAGE:
+      "fallback table (charts plugin not available or error)",
   },
   TYPES: {
-    get VOLUME() {
-      return t("charts.volume");
-    },
+    VOLUME: "volume",
     WEIGHT: "weight",
-    get REPS() {
-      return t("charts.reps");
-    },
+    REPS: "reps",
   },
 };
 
@@ -1699,12 +1104,8 @@ export const CHARTS_UI = {
  */
 export const TIMER_UI = {
   TYPES: {
-    get COUNTDOWN() {
-      return t("timer.countdown");
-    },
-    get INTERVAL() {
-      return t("timer.interval");
-    },
+    COUNTDOWN: "Countdown",
+    INTERVAL: "Interval",
   },
 } as const;
 
@@ -1740,35 +1141,19 @@ export function getDynamicDashboardLabels() {
  */
 export const DASHBOARD_UI = {
   QUICK_ACTIONS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get ADD_WORKOUT_LOG() {
-      return t("dashboard.addWorkoutLog");
-    },
-    get VIEW_EXERCISES() {
-      return t("dashboard.viewExercises");
-    },
+    TITLE: "Quick actions",
+    ADD_WORKOUT_LOG: "Add workout log",
+    VIEW_EXERCISES: "View exercises",
   },
   QUICK_STATS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
+    TITLE: "Quick stats",
     PERIODS: {
-      get WEEK() {
-        return t("dashboard.week");
-      },
-      get MONTH() {
-        return t("dashboard.month");
-      },
-      get YEAR() {
-        return t("dashboard.year");
-      },
+      WEEK: "This week",
+      MONTH: "This month",
+      YEAR: "This year",
     },
     METRICS: {
-      get WORKOUTS() {
-        return t("dashboard.workouts");
-      },
+      WORKOUTS: "Workouts",
       get TOTAL_VOLUME() {
         return getDynamicDashboardLabels().QUICK_STATS.METRICS.TOTAL_VOLUME;
       },
@@ -1778,172 +1163,81 @@ export const DASHBOARD_UI = {
     },
   },
   RECENT_WORKOUTS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get FALLBACK_NAME() {
-      return t("dashboard.fallbackName");
-    },
+    TITLE: "Recent workouts",
+    FALLBACK_NAME: "Workout",
     get VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().RECENT_WORKOUTS.VOLUME_SUFFIX;
     },
   },
   SUMMARY: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get TOTAL_WORKOUTS() {
-      return t("dashboard.totalWorkouts");
-    },
-    get CURRENT_STREAK() {
-      return t("dashboard.currentStreak");
-    },
-    get CURRENT_STREAK_SUFFIX() {
-      return t("dashboard.currentStreakSuffix");
-    },
-    get TOTAL_VOLUME() {
-      return t("dashboard.totalVolume");
-    },
+    TITLE: "Summary",
+    TOTAL_WORKOUTS: "Total workouts",
+    CURRENT_STREAK: "Current streak",
+    CURRENT_STREAK_SUFFIX: "weeks",
+    TOTAL_VOLUME: "Total volume",
     get TOTAL_VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().SUMMARY.TOTAL_VOLUME_SUFFIX;
     },
-    get PERSONAL_RECORDS() {
-      return t("dashboard.personalRecords");
-    },
+    PERSONAL_RECORDS: "Personal records",
   },
   VOLUME_ANALYTICS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
+    TITLE: "Volume analytics",
     get DATASET_LABEL() {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS.DATASET_LABEL;
     },
-    get CHART_TITLE() {
-      return t("dashboard.chartTitle");
-    },
-    get MUSCLE_BREAKDOWN_TITLE() {
-      return t("dashboard.muscleBreakdownTitle");
-    },
+    CHART_TITLE: "Volume trend (last 30 days)",
+    MUSCLE_BREAKDOWN_TITLE: "Top exercises by volume",
     get VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS.VOLUME_SUFFIX;
     },
   },
   PROTOCOL_DISTRIBUTION: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get SUBTITLE() {
-      return t("dashboard.subtitle");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get SETS_LABEL() {
-      return t("dashboard.setsLabel");
-    },
-    get PERCENT_LABEL() {
-      return t("dashboard.percentLabel");
-    },
-    get FILTER_ACTIVE() {
-      return t("dashboard.filterActive");
-    },
-    get CLEAR_FILTER() {
-      return t("dashboard.clearFilter");
-    },
-    get CLICK_TO_FILTER() {
-      return t("dashboard.clickToFilter");
-    },
+    TITLE: "Protocol distribution",
+    SUBTITLE: "Last 30 days",
+    NO_DATA: "No protocol data available",
+    SETS_LABEL: "sets",
+    PERCENT_LABEL: "%",
+    FILTER_ACTIVE: "Filtering by:",
+    CLEAR_FILTER: "Clear filter",
+    CLICK_TO_FILTER: "Click to filter",
   },
   PROTOCOL_EFFECTIVENESS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get DISCLAIMER() {
-      return t("dashboard.disclaimer");
-    },
-    get COLUMN_PROTOCOL() {
-      return t("dashboard.columnProtocol");
-    },
-    get COLUMN_ENTRIES() {
-      return t("dashboard.columnEntries");
-    },
-    get COLUMN_VOLUME_CHANGE() {
-      return t("dashboard.columnVolumeChange");
-    },
-    get COLUMN_PROGRESSION() {
-      return t("dashboard.columnProgression");
-    },
+    TITLE: "Protocol effectiveness",
+    NO_DATA: "Not enough data (minimum 5 entries per protocol)",
+    DISCLAIMER: "Note: Correlation does not imply causation",
+    COLUMN_PROTOCOL: "Protocol",
+    COLUMN_ENTRIES: "Entries",
+    COLUMN_VOLUME_CHANGE: "Avg volume change",
+    COLUMN_PROGRESSION: "Progression rate",
   },
   DURATION_COMPARISON: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get SUBTITLE() {
-      return t("dashboard.subtitle");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get COLUMN_WORKOUT() {
-      return t("dashboard.columnWorkout");
-    },
-    get COLUMN_DATE() {
-      return t("dashboard.columnDate");
-    },
-    get COLUMN_ESTIMATED() {
-      return t("dashboard.columnEstimated");
-    },
-    get COLUMN_ACTUAL() {
-      return t("dashboard.columnActual");
-    },
-    get COLUMN_VARIANCE() {
-      return t("dashboard.columnVariance");
-    },
-    get VARIANCE_TREND_TITLE() {
-      return t("dashboard.varianceTrendTitle");
-    },
-    get VARIANCE_TREND_IMPROVING() {
-      return t("dashboard.varianceTrendImproving");
-    },
-    get VARIANCE_TREND_DECLINING() {
-      return t("dashboard.varianceTrendDeclining");
-    },
-    get VARIANCE_TREND_STABLE() {
-      return t("dashboard.varianceTrendStable");
-    },
-    get MINUTES_SUFFIX() {
-      return t("dashboard.minutesSuffix");
-    },
-    get OVER_ESTIMATED() {
-      return t("dashboard.overEstimated");
-    },
-    get UNDER_ESTIMATED() {
-      return t("dashboard.underEstimated");
-    },
+    TITLE: "Actual vs estimated duration",
+    SUBTITLE: "Last 5 workouts",
+    NO_DATA: "Not enough workout data to compare durations",
+    COLUMN_WORKOUT: "Workout",
+    COLUMN_DATE: "Date",
+    COLUMN_ESTIMATED: "Estimated",
+    COLUMN_ACTUAL: "Actual",
+    COLUMN_VARIANCE: "Variance",
+    VARIANCE_TREND_TITLE: "Accuracy trend",
+    VARIANCE_TREND_IMPROVING: "Estimates are getting more accurate",
+    VARIANCE_TREND_DECLINING: "Estimates are getting less accurate",
+    VARIANCE_TREND_STABLE: "Estimate accuracy is stable",
+    MINUTES_SUFFIX: "m",
+    OVER_ESTIMATED: "Over",
+    UNDER_ESTIMATED: "Under",
   },
   MUSCLE_TAGS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get DESCRIPTION() {
-      return t("dashboard.description");
-    },
+    TITLE: "Available muscle tags",
+    DESCRIPTION:
+      "Click on any tag to copy it. Use these tags in exercise files for proper categorization and tracking.",
     TOTAL_COUNT: (count: number) => `Total: ${count} tags available`,
     TOOLTIP: (tag: string) => `Click to copy: ${tag}`,
   },
   FILE_ERRORS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get ALL_VALID() {
-      return t("dashboard.allValid");
-    },
-    get NO_TAGS() {
-      return t("dashboard.noTags");
-    },
+    TITLE: "Exercise file errors",
+    ALL_VALID: "All exercise files are valid",
+    NO_TAGS: "No muscle tags found",
     TOO_MANY_TAGS: (count: number) => `Too many muscle tags (${count})`,
     READ_ERROR: (message: string) => `Error reading file: ${message}`,
   },
@@ -1953,62 +1247,33 @@ export const DASHBOARD_UI = {
  * Messages displayed to users - notifications, warnings, errors, and status messages
  */
 export const MESSAGES_UI = {
-  get NO_DATA() {
-    return t("messages.noData");
-  },
-  get LOADING() {
-    return t("messages.loading");
-  },
-  get NO_DATA_PERIOD() {
-    return t("messages.noDataPeriod");
-  },
-  get TIMER_COMPLETED() {
-    return t("messages.timerCompleted");
-  },
+  NO_DATA: "No workout data available",
+  LOADING: "Loading workout data...",
+  NO_DATA_PERIOD: "No workout data found for the selected time period.",
+  TIMER_COMPLETED: "Timer completed!",
   WARNINGS: {
-    get IMBALANCE_ALERTS() {
-      return t("messages.imbalanceAlerts");
-    },
+    IMBALANCE_ALERTS: "Imbalance alerts",
   },
   SUCCESS: {
-    get NO_IMBALANCES() {
-      return t("messages.noImbalances");
-    },
-    get CSV_CREATED() {
-      return t("messages.csvCreated");
-    },
-    get CODE_INSERTED() {
-      return t("messages.codeInserted");
-    },
-    get MUSCLE_TAGS_CSV_CREATED() {
-      return t("messages.muscleTagsCsvCreated");
-    },
-    get TAG_REFERENCE_GENERATED() {
-      return t("messages.tagReferenceGenerated");
-    },
+    NO_IMBALANCES: "No major muscle imbalances detected",
+    CSV_CREATED: "CSV log file created successfully!",
+    CODE_INSERTED: "Code inserted successfully!",
+    MUSCLE_TAGS_CSV_CREATED: "Muscle tags CSV file created successfully!",
+    TAG_REFERENCE_GENERATED:
+      "Muscle tags reference note generated successfully!",
   },
   ERRORS: {
-    get CSV_NOT_FOUND() {
-      return t("messages.csvNotFound");
-    },
-    get FILE_EMPTY() {
-      return t("messages.fileEmpty");
-    },
-    get NO_FRONTMATTER() {
-      return t("messages.noFrontmatter");
-    },
-    get NO_TAGS() {
-      return t("messages.noTags");
-    },
+    CSV_NOT_FOUND: "CSV log file not found",
+    FILE_EMPTY: "File is empty",
+    NO_FRONTMATTER: "No frontmatter found",
+    NO_TAGS: "No tags found",
     MUSCLE_TAGS_CSV_FAILED: (error: string) =>
       `Error creating muscle tags CSV: ${error}`,
     TAG_REFERENCE_FAILED: (error: string) =>
       `Error generating tag reference note: ${error}`,
   },
   STATUS: {
-    get INSUFFICIENT_DATA() {
-      return t("messages.insufficientData");
-    },
+    INSUFFICIENT_DATA: "Insufficient data",
   },
 } as const;
 
@@ -2017,23 +1282,13 @@ export const MESSAGES_UI = {
  */
 export const FORMS_UI = {
   LABELS: {
-    get EXERCISE_NAME() {
-      return t("forms.exerciseName");
-    },
-    get WORKOUT_NAME() {
-      return t("forms.workoutName");
-    },
+    EXERCISE_NAME: "Exercise name",
+    WORKOUT_NAME: "Workout name:",
   },
   PLACEHOLDERS: {
-    get ENTER_EXERCISE_NAME() {
-      return t("forms.enterExerciseName");
-    },
-    get ENTER_CSV_PATH() {
-      return t("forms.enterCsvPath");
-    },
-    get ENTER_FOLDER_PATH() {
-      return t("forms.enterFolderPath");
-    },
+    ENTER_EXERCISE_NAME: "Enter exercise name",
+    ENTER_CSV_PATH: "Enter CSV file path",
+    ENTER_FOLDER_PATH: "Enter folder path",
   },
 } as const;
 
@@ -2042,15 +1297,9 @@ export const FORMS_UI = {
  */
 export const STATS_UI = {
   LABELS: {
-    get SESSIONS() {
-      return t("stats.sessions");
-    },
-    get RECENT_TREND() {
-      return t("stats.recentTrend");
-    },
-    get AVG_VOLUME() {
-      return t("stats.avgVolume");
-    },
+    SESSIONS: "Sessions: ",
+    RECENT_TREND: "Recent trend: ",
+    AVG_VOLUME: "Average volume: ",
   },
 } as const;
 
@@ -2059,41 +1308,19 @@ export const STATS_UI = {
  */
 export const TRENDS_UI = {
   STATUS: {
-    get STABLE() {
-      return t("trends.stable");
-    },
-    get INVARIANT() {
-      return t("trends.invariant");
-    },
-    get INCREASING() {
-      return t("trends.increasing");
-    },
-    get DECREASING() {
-      return t("trends.decreasing");
-    },
-    get IMPROVING() {
-      return t("trends.improving");
-    },
-    get DECLINING() {
-      return t("trends.declining");
-    },
-    get STABLE_LOWER() {
-      return t("trends.stableLower");
-    },
-    get STABLE_HIGHER() {
-      return t("trends.stableHigher");
-    },
+    STABLE: "Stable",
+    INVARIANT: "Invariant",
+    INCREASING: "Increasing",
+    DECREASING: "Decreasing",
+    IMPROVING: "Improving",
+    DECLINING: "Declining",
+    STABLE_LOWER: "Stable (lower)",
+    STABLE_HIGHER: "Stable (higher)",
   },
   DIRECTIONS: {
-    get UP() {
-      return t("trends.up");
-    },
-    get DOWN() {
-      return t("trends.down");
-    },
-    get NEUTRAL() {
-      return t("trends.neutral");
-    },
+    UP: "up",
+    DOWN: "down",
+    NEUTRAL: "neutral",
   },
 } as const;
 
@@ -2101,15 +1328,9 @@ export const TRENDS_UI = {
  * Time period labels
  */
 export const TIME_PERIODS_UI = {
-  get WEEK() {
-    return t("timeperiods.week");
-  },
-  get MONTH() {
-    return t("timeperiods.month");
-  },
-  get YEAR() {
-    return t("timeperiods.year");
-  },
+  WEEK: "Week",
+  MONTH: "Month",
+  YEAR: "Year",
 } as const;
 
 /**
@@ -2135,72 +1356,39 @@ export const COMMON_UI = {
     },
   },
   TYPES: {
-    get EXERCISE() {
-      return t("common.exercise");
-    },
-    get WORKOUT() {
-      return t("common.workout");
-    },
+    EXERCISE: "exercise",
+    WORKOUT: "workout",
   },
   DEFAULTS: {
-    get UNKNOWN() {
-      return t("common.unknown");
-    },
-    get EXERCISE_NAME() {
-      return t("common.exerciseName");
-    },
-    get WORKOUT_NAME() {
-      return t("common.workoutName");
-    },
+    UNKNOWN: "Unknown",
+    EXERCISE_NAME: "exercise",
+    WORKOUT_NAME: "Workout",
   },
-  get NOT_AVAILABLE() {
-    return t("common.notAvailable");
-  },
+  NOT_AVAILABLE: "N/A",
 } as const;
 
 /**
  * Command names/labels
  */
 export const COMMANDS_UI = {
-  get CREATE_CSV() {
-    return t("commands.createCsv");
-  },
-  get INSERT_TABLE() {
-    return t("commands.insertTable");
-  },
-  get AUDIT_EXERCISE_NAMES() {
-    return t("commands.auditExerciseNames");
-  },
-  get ADD_EXERCISE_BLOCK() {
-    return t("commands.addExerciseBlock");
-  },
-  get QUICK_LOG() {
-    return t("commands.quickLog");
-  },
-  get EXPORT_WORKOUT_TO_CANVAS() {
-    return t("commands.exportWorkoutToCanvas");
-  },
-  get MIGRATE_EXERCISE_TYPES() {
-    return t("commands.migrateExerciseTypes");
-  },
-  get CONVERT_EXERCISE() {
-    return t("commands.convertExercise");
-  },
-  get MANAGE_MUSCLE_TAGS() {
-    return t("commands.manageMuscleTags");
-  },
-  get GENERATE_TAG_REFERENCE() {
-    return t("commands.generateTagReference");
-  },
+  CREATE_CSV: "Create CSV log file",
+  INSERT_TABLE: "Insert workout table",
+  AUDIT_EXERCISE_NAMES: "Audit exercise names",
+  ADD_EXERCISE_BLOCK: "Add exercise block",
+  QUICK_LOG: "Quick log",
+  EXPORT_WORKOUT_TO_CANVAS: "Export workout to canvas",
+  MIGRATE_EXERCISE_TYPES: "Migrate exercise types",
+  CONVERT_EXERCISE: "Convert exercise data",
+  MANAGE_MUSCLE_TAGS: "Manage muscle tags",
+  GENERATE_TAG_REFERENCE: "Generate tag reference note",
 } as const;
 
 /**
  * Command descriptions
  */
 export const DESCRIPTIONS_UI = {
-  get INSERT_TABLE() {
-    return t("descriptions.insertTable");
-  },
+  INSERT_TABLE:
+    "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions.",
 } as const;
 
 /**
@@ -2236,83 +1424,33 @@ export const GENERAL_UI = {
     get AVG_WEIGHT() {
       return getDynamicGeneralLabels().LABELS.AVG_WEIGHT;
     },
-    get TOTAL_REPS() {
-      return t("general.totalReps");
-    },
-    get AVG_REPS() {
-      return t("general.avgReps");
-    },
-    get WORKOUTS() {
-      return t("general.workouts");
-    },
-    get SEARCH() {
-      return t("general.search");
-    },
-    get FRONT() {
-      return t("general.front");
-    },
-    get BACK() {
-      return t("general.back");
-    },
-    get MUSCLE_HEAT_MAP() {
-      return t("general.muscleHeatMap");
-    },
-    get WORKOUT_DATA() {
-      return t("general.workoutData");
-    },
-    get WORKOUT_LOG() {
-      return t("general.workoutLog");
-    },
-    get CURRENT_FILE() {
-      return t("general.currentFile");
-    },
-    get DASHBOARD() {
-      return t("general.dashboard");
-    },
+    TOTAL_REPS: "Total reps",
+    AVG_REPS: "Average reps",
+    WORKOUTS: "Workouts",
+    SEARCH: "Search",
+    FRONT: "Front",
+    BACK: "Back",
+    MUSCLE_HEAT_MAP: "Muscle heat map",
+    WORKOUT_DATA: "Workout data",
+    WORKOUT_LOG: "Workout log",
+    CURRENT_FILE: "Current file",
+    DASHBOARD: "Dashboard",
   },
   ACTIONS: {
-    get EDIT_WORKOUT() {
-      return t("general.editWorkout");
-    },
-    get DELETE_WORKOUT() {
-      return t("general.deleteWorkout");
-    },
-    get EXPORT() {
-      return t("general.export");
-    },
-    get ADD() {
-      return t("general.add");
-    },
-    get ADD_LOG() {
-      return t("general.addLog");
-    },
-    get EDIT() {
-      return t("general.edit");
-    },
-    get EDIT_LOG_ENTRY() {
-      return t("general.editLogEntry");
-    },
-    get DELETE() {
-      return t("general.delete");
-    },
-    get DELETE_LOG_ENTRY() {
-      return t("general.deleteLogEntry");
-    },
-    get DELETE_CONFIRM() {
-      return t("general.deleteConfirm");
-    },
-    get DELETE_SUCCESS() {
-      return t("general.deleteSuccess");
-    },
-    get DELETE_ERROR() {
-      return t("general.deleteError");
-    },
-    get REFRESH_SUCCESS() {
-      return t("general.refreshSuccess");
-    },
-    get CREATE_FILE() {
-      return t("general.createFile");
-    },
+    EDIT_WORKOUT: "Edit workout",
+    DELETE_WORKOUT: "Delete workout",
+    EXPORT: "📸 Export",
+    ADD: "Add",
+    ADD_LOG: "Add log",
+    EDIT: "Edit",
+    EDIT_LOG_ENTRY: "Edit log entry",
+    DELETE: "Delete",
+    DELETE_LOG_ENTRY: "Delete log entry",
+    DELETE_CONFIRM: "Are you sure you want to delete this log entry?",
+    DELETE_SUCCESS: "Log entry deleted successfully!",
+    DELETE_ERROR: "Error deleting log entry: ",
+    REFRESH_SUCCESS: "Table refreshed successfully",
+    CREATE_FILE: "Create file",
   },
   LOGS: {
     NO_DATA_TITLE: (exerciseName?: string) =>
@@ -2329,9 +1467,7 @@ export const GENERAL_UI = {
       `Create log for: ${exerciseName}`,
     CREATE_LOG_BUTTON_ARIA: (exerciseName: string) =>
       `Create log for ${exerciseName}`,
-    get NO_MATCH_MESSAGE() {
-      return t("general.noMatchMessage");
-    },
+    NO_MATCH_MESSAGE: "No matching exercise data found",
   },
 } as const;
 

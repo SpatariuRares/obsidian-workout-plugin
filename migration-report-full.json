@@ -1,0 +1,611 @@
+{
+  "timestamp": "2026-02-11T13:59:00.395Z",
+  "statistics": {
+    "totalStrings": 385,
+    "migratedStrings": 385,
+    "skippedStrings": 0,
+    "successRate": "100.00%"
+  },
+  "transformations": [
+    {
+      "constant": "MODAL_UI",
+      "key": "NOTES",
+      "oldValue": "Notes (optional):",
+      "i18nKey": "modal.notes"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "WORKOUT",
+      "oldValue": "Workout (optional):",
+      "i18nKey": "modal.workout"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "WORKOUT_NAME",
+      "oldValue": "Workout name:",
+      "i18nKey": "modal.workoutName"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "WORKOUT_NAME_OPTIONAL",
+      "oldValue": "Workout name (optional):",
+      "i18nKey": "modal.workoutNameOptional"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CHART_TYPE",
+      "oldValue": "Chart type:",
+      "i18nKey": "modal.chartType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DATA_TYPE",
+      "oldValue": "Data type:",
+      "i18nKey": "modal.dataType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TABLE_TYPE",
+      "oldValue": "Table type:",
+      "i18nKey": "modal.tableType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DAYS_RANGE",
+      "oldValue": "Days range:",
+      "i18nKey": "modal.daysRange"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DATA_LIMIT",
+      "oldValue": "Data limit:",
+      "i18nKey": "modal.dataLimit"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "MAX_LOG_COUNT",
+      "oldValue": "Maximum log count:",
+      "i18nKey": "modal.maxLogCount"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CUSTOM_TITLE",
+      "oldValue": "Custom title:",
+      "i18nKey": "modal.customTitle"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TIMER_TYPE",
+      "oldValue": "Timer type:",
+      "i18nKey": "modal.timerType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DURATION",
+      "oldValue": "Duration (seconds):",
+      "i18nKey": "modal.duration"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "INTERVAL_TIME",
+      "oldValue": "Interval time (seconds):",
+      "i18nKey": "modal.intervalTime"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "ROUNDS",
+      "oldValue": "Rounds:",
+      "i18nKey": "modal.rounds"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TITLE",
+      "oldValue": "Title:",
+      "i18nKey": "modal.title"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "EXERCISE_NAME",
+      "oldValue": "Exercise name:",
+      "i18nKey": "modal.exerciseName"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "EXERCISE_PATH",
+      "oldValue": "Exercise path:",
+      "i18nKey": "modal.exercisePath"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "SETS",
+      "oldValue": "Sets:",
+      "i18nKey": "modal.sets"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "REST_TIME",
+      "oldValue": "Rest time (seconds):",
+      "i18nKey": "modal.restTime"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "NOTE",
+      "oldValue": "Note:",
+      "i18nKey": "modal.note"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TAGS",
+      "oldValue": "Tags (comma separated):",
+      "i18nKey": "modal.tags"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "FOLDER_PATH",
+      "oldValue": "Folder path (optional):",
+      "i18nKey": "modal.folderPath"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "EXERCISE_TYPE",
+      "oldValue": "Exercise type:",
+      "i18nKey": "modal.exerciseType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CUSTOM_PARAMETERS",
+      "oldValue": "Custom parameters:",
+      "i18nKey": "modal.customParameters"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PARAMETER_KEY",
+      "oldValue": "Key:",
+      "i18nKey": "modal.parameterKey"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PARAMETER_LABEL",
+      "oldValue": "Label:",
+      "i18nKey": "modal.parameterLabel"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PARAMETER_TYPE",
+      "oldValue": "Type:",
+      "i18nKey": "modal.parameterType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PARAMETER_UNIT",
+      "oldValue": "Unit (optional):",
+      "i18nKey": "modal.parameterUnit"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PARAMETER_REQUIRED",
+      "oldValue": "Required",
+      "i18nKey": "modal.parameterRequired"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CONFIRM_ACTION",
+      "oldValue": "Confirm action",
+      "i18nKey": "modal.confirmAction"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "FILE_NAME",
+      "oldValue": "File name",
+      "i18nKey": "modal.fileName"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CSV_EXERCISE",
+      "oldValue": "CSV exercise",
+      "i18nKey": "modal.csvExercise"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "SIMILARITY",
+      "oldValue": "Similarity",
+      "i18nKey": "modal.similarity"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "STATUS",
+      "oldValue": "Status",
+      "i18nKey": "modal.status"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TAG",
+      "oldValue": "Tag",
+      "i18nKey": "modal.tag"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "MUSCLE_GROUP",
+      "oldValue": "Muscle group",
+      "i18nKey": "modal.muscleGroup"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "ACTIONS",
+      "oldValue": "Actions",
+      "i18nKey": "modal.actions"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "ADD_TAG",
+      "oldValue": "Add tag",
+      "i18nKey": "modal.addTag"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "EDIT_TAG",
+      "oldValue": "Edit tag",
+      "i18nKey": "modal.editTag"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "NEW_TAG",
+      "oldValue": "New tag",
+      "i18nKey": "modal.newTag"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "SAVE",
+      "oldValue": "Save",
+      "i18nKey": "modal.save"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DELETE",
+      "oldValue": "Delete",
+      "i18nKey": "modal.delete"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "SIMILAR_TAGS",
+      "oldValue": "Similar tags:",
+      "i18nKey": "modal.similarTags"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "EXPORT_TAGS",
+      "oldValue": "Export tags",
+      "i18nKey": "modal.exportTags"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "IMPORT_TAGS",
+      "oldValue": "Import tags",
+      "i18nKey": "modal.importTags"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "IMPORT_MERGE",
+      "oldValue": "Merge",
+      "i18nKey": "modal.importMerge"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "IMPORT_REPLACE",
+      "oldValue": "Replace all",
+      "i18nKey": "modal.importReplace"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TIMER_DURATION",
+      "oldValue": "Timer duration (seconds):",
+      "i18nKey": "modal.timerDuration"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TIMER_PRESET",
+      "oldValue": "Timer preset:",
+      "i18nKey": "modal.timerPreset"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "WORKOUT_FILE",
+      "oldValue": "Workout file:",
+      "i18nKey": "modal.workoutFile"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "DATE_RANGE",
+      "oldValue": "Date range (days):",
+      "i18nKey": "modal.dateRange"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "PROTOCOL",
+      "oldValue": "Protocol:",
+      "i18nKey": "modal.protocol"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "RECENT_EXERCISES",
+      "oldValue": "Recent:",
+      "i18nKey": "modal.recentExercises"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CANVAS_LAYOUT",
+      "oldValue": "Layout",
+      "i18nKey": "modal.canvasLayout"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "CANVAS_OPTIONS",
+      "oldValue": "Options",
+      "i18nKey": "modal.canvasOptions"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "LAYOUT_TYPE",
+      "oldValue": "Layout type:",
+      "i18nKey": "modal.layoutType"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "LAYOUT_HORIZONTAL",
+      "oldValue": "Horizontal flow",
+      "i18nKey": "modal.layoutHorizontal"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "LAYOUT_VERTICAL",
+      "oldValue": "Vertical flow",
+      "i18nKey": "modal.layoutVertical"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "LAYOUT_GROUPED",
+      "oldValue": "Grouped by muscle",
+      "i18nKey": "modal.layoutGrouped"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "TAGS_SELECTOR",
+      "oldValue": "Muscle tags:",
+      "i18nKey": "modal.tagsSelector"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "NO_TAGS_FOUND",
+      "oldValue": "No tags match your search",
+      "i18nKey": "modal.noTagsFound"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "NO_TAGS_SELECTED",
+      "oldValue": "No tags selected. Click on tags below to add them.",
+      "i18nKey": "modal.noTagsSelected"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Complete workout",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "workout",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Specific exercise",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "exercise",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Exercise + workout",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "combined",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Specific exercise",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "exercise",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Complete workout",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "workout",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "All logs",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "all",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Countdown",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "countdown",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Interval",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "interval",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Standard",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "standard",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Drop set",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "drop_set",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Myo-reps",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "myo_reps",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Rest-pause",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "rest_pause",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Superset",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "superset",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "21s",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "twentyone",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Strength",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "strength",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Timed",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "timed",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Distance",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "distance",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Cardio",
+      "i18nKey": "modal.text"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "value",
+      "oldValue": "cardio",
+      "i18nKey": "modal.value"
+    },
+    {
+      "constant": "MODAL_UI",
+      "key": "text",
+      "oldValue": "Custom",
+      "i18nKey": "modal.text"
+    }
+  ]
+}

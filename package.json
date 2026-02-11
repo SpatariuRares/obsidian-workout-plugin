@@ -19,7 +19,8 @@
     "doe:generate-component": "node scripts/automation/generate-component.mjs",
     "doe:error-stats": "node scripts/learning/error-logger.mjs stats",
     "doe:prune-errors": "node scripts/learning/error-logger.mjs prune",
-    "doe:init-errors": "node scripts/learning/error-logger.mjs init"
+    "doe:init-errors": "node scripts/learning/error-logger.mjs init",
+    "migrate:i18n": "node scripts/migrate-i18n-constants.mjs"
   },
   "keywords": [
     "obsidian",

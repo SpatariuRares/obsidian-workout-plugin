@@ -100,7 +100,8 @@ export abstract class BaseView {
             return effectiveChartCategory === CHART_TYPE.WORKOUT;
           })()
         : !(
-            CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params && params.exercise
+            CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params &&
+            (params as { exercise?: string }).exercise
           );
 
     if (isWorkoutView) {
@@ -111,7 +112,7 @@ export abstract class BaseView {
     } else {
       const exerciseName =
         CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params
-          ? params.exercise || ""
+          ? (params as { exercise?: string }).exercise || ""
           : "";
       LogCallouts.renderNoMatchMessage(container);
       if (exerciseName) {

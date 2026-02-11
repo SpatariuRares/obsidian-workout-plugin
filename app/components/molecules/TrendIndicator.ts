@@ -45,6 +45,8 @@ export class TrendIndicator {
 				return this.ARROW_DOWN;
 			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.NEUTRAL:
 				return this.ARROW_NEUTRAL;
+			default:
+				return this.ARROW_NEUTRAL;
 		}
 	}
 

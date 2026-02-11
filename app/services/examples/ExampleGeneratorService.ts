@@ -1,4 +1,5 @@
 import { App, normalizePath, Notice, TFolder } from "obsidian";
+import { t } from "@app/i18n";
 
 export class ExampleGeneratorService {
   constructor(private app: App) {}
@@ -6,11 +7,17 @@ export class ExampleGeneratorService {
   public async generateExampleFolder(
     overwrite: boolean = false,
   ): Promise<void> {
-    const baseFolderName = "The gym examples";
+    const baseFolderName = t("examples.folderNames.base");
     const basePath = normalizePath(baseFolderName);
-    const exercisesPath = normalizePath(`${baseFolderName}/Exercises`);
-    const workoutsPath = normalizePath(`${baseFolderName}/Workouts`);
-    const logPath = normalizePath(`${baseFolderName}/Log`);
+    const exercisesPath = normalizePath(
+      `${baseFolderName}/${t("examples.folderNames.exercises")}`,
+    );
+    const workoutsPath = normalizePath(
+      `${baseFolderName}/${t("examples.folderNames.workouts")}`,
+    );
+    const logPath = normalizePath(
+      `${baseFolderName}/${t("examples.folderNames.log")}`,
+    );
 
     try {
       // Create directories
@@ -25,55 +32,67 @@ export class ExampleGeneratorService {
       // Create Exercises
       await this.createExerciseFile(
         exercisesPath,
-        "Bench Press",
+        t("examples.exercises.benchPress.name"),
         "strength",
         ["chest", "triceps", "shoulders"],
         overwrite,
       );
-      await this.createExerciseFile(exercisesPath, "Squat", "strength", [
-        "legs",
-        "quads",
-        "glutes",
-      ]);
-      await this.createExerciseFile(exercisesPath, "Running", "cardio", [
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.squat.name"),
+        "strength",
+        ["legs", "quads", "glutes"],
+      );
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.running.name"),
         "cardio",
-        "legs",
-      ]);
-      await this.createExerciseFile(exercisesPath, "Plank", "timed", [
-        "core",
-        "abs",
-      ]);
-      await this.createExerciseFile(exercisesPath, "Cycling", "distance", [
-        "cardio",
-        "legs",
-      ]);
+        ["cardio", "legs"],
+      );
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.plank.name"),
+        "timed",
+        ["core", "abs"],
+      );
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.cycling.name"),
+        "distance",
+        ["cardio", "legs"],
+      );
 
       // New exercises for the specific workout
       await this.createExerciseFile(
         exercisesPath,
-        "Squat multi power",
+        t("examples.exercises.squatMultiPower.name"),
         "strength",
         ["legs", "quads"],
       );
-      await this.createExerciseFile(exercisesPath, "RDL", "strength", [
-        "legs",
-        "hamstrings",
-        "glutes",
-      ]);
-      await this.createExerciseFile(exercisesPath, "Leg press 45", "strength", [
-        "legs",
-        "quads",
-      ]);
       await this.createExerciseFile(
         exercisesPath,
-        "Leg Curl seduto",
+        t("examples.exercises.rdl.name"),
+        "strength",
+        ["legs", "hamstrings", "glutes"],
+      );
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.legPress45.name"),
+        "strength",
+        ["legs", "quads"],
+      );
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.legCurlSeated.name"),
         "strength",
         ["legs", "hamstrings"],
       );
-      await this.createExerciseFile(exercisesPath, "Calf Machine", "strength", [
-        "legs",
-        "calves",
-      ]);
+      await this.createExerciseFile(
+        exercisesPath,
+        t("examples.exercises.calfMachine.name"),
+        "strength",
+        ["legs", "calves"],
+      );
 
       // Create Workout
       await this.createWorkoutFile(workoutsPath, overwrite);
@@ -90,9 +109,11 @@ export class ExampleGeneratorService {
       // Create HIIT Workout (demonstrates interval timer)
       await this.createHIITWorkoutFile(workoutsPath, overwrite);
 
-      new Notice(`Example folder '${baseFolderName}' created successfully!`);
+      new Notice(
+        t("examples.folderCreatedSuccess", { folder: baseFolderName }),
+      );
     } catch {
-      new Notice("Failed to create example folder.");
+      new Notice(t("examples.folderCreatedError"));
     }
   }
 
@@ -133,34 +154,34 @@ export class ExampleGeneratorService {
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const content = `# Getting Started with The Gym Plugin
+    const content = `# ${t("examples.gettingStarted.title")}
 
-Welcome! This folder contains example files to help you learn all the features.
+${t("examples.gettingStarted.welcome")}
 
-## Folder Structure
+## ${t("examples.gettingStarted.folderStructureTitle")}
 
-| File/Folder | Description |
+| ${t("examples.gettingStarted.tableHeaderFileFolder")} | ${t("examples.gettingStarted.tableHeaderDescription")} |
 |-------------|-------------|
-| [[Dashboard]] | Your workout stats at a glance |
-| [[Feature Showcase]] | Complete reference of all code blocks |
-| **Exercises/** | Example exercise pages with logs and charts |
-| **Workouts/** | Example workout templates |
-| **Log/** | Your CSV workout data |
+| [[Dashboard]] | ${t("examples.gettingStarted.dashboardDesc")} |
+| [[Feature Showcase]] | ${t("examples.gettingStarted.featureShowcaseDesc")} |
+| ${t("examples.gettingStarted.exercisesFolder", { folder: t("examples.folderNames.exercises") })} | ${t("examples.gettingStarted.exercisesDesc")} |
+| ${t("examples.gettingStarted.workoutsFolder", { folder: t("examples.folderNames.workouts") })} | ${t("examples.gettingStarted.workoutsDesc")} |
+| ${t("examples.gettingStarted.logFolder", { folder: t("examples.folderNames.log") })} | ${t("examples.gettingStarted.logDesc")} |
 
-## Quick Actions
+## ${t("examples.gettingStarted.quickActionsTitle")}
 
-Use these commands (Ctrl/Cmd + P):
-- **Create Workout Log** - Add a new workout entry
-- **Insert Workout Chart** - Add a chart to any note
-- **Insert Workout Timer** - Add a rest timer
-- **Create Exercise Page** - Create a new exercise file
+${t("examples.gettingStarted.quickActionsIntro")}
+- **${t("examples.gettingStarted.commandCreateLog")}** - ${t("examples.gettingStarted.commandCreateLogDesc")}
+- **${t("examples.gettingStarted.commandInsertChart")}** - ${t("examples.gettingStarted.commandInsertChartDesc")}
+- **${t("examples.gettingStarted.commandInsertTimer")}** - ${t("examples.gettingStarted.commandInsertTimerDesc")}
+- **${t("examples.gettingStarted.commandCreateExercise")}** - ${t("examples.gettingStarted.commandCreateExerciseDesc")}
 
-## Next Steps
+## ${t("examples.gettingStarted.nextStepsTitle")}
 
-1. Open [[Dashboard]] to see your stats
-2. Check [[Feature Showcase]] to learn all available features
-3. Try a workout from the **Workouts** folder
-4. Create your own exercises in **Exercises**
+1. ${t("examples.gettingStarted.step1")}
+2. ${t("examples.gettingStarted.step2")}
+3. ${t("examples.gettingStarted.step3", { workouts: t("examples.folderNames.workouts") })}
+4. ${t("examples.gettingStarted.step4", { exercises: t("examples.folderNames.exercises") })}
 
 `;
     await this.createOrUpdateFile(
@@ -186,15 +207,16 @@ Use these commands (Ctrl/Cmd + P):
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const content = `## Durata
+    const workoutName = t("examples.workouts.lowerBodyA.name");
+    const content = `## ${t("examples.workout.duration")}
 \`\`\`workout-duration
 \`\`\`
-    ### grafico
+    ### ${t("examples.workout.chart")}
 
 \`\`\`workout-chart
 chartType: workout
 type: volume
-workout: Giorno 1 LOWER BODY A 2.0
+workout: ${workoutName}
 dateRange: 89
 limit: 50
 showTrendLine: true
@@ -202,11 +224,11 @@ showTrend: true
 showStats: true
 \`\`\`
 
-## Squat multi power:
+## ${t("examples.exercises.squatMultiPower.name")}:
 
-### 4 serie x 8-10 ripetizioni (Recupero: 180s)
+### ${t("examples.workout.setsReps", { sets: "4", reps: "8-10" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
 
-**Nota: spingi forte**
+**${t("examples.workout.note")}**
 
 \`\`\`workout-timer
 duration: 180
@@ -218,15 +240,15 @@ sound: true
 \`\`\`
 
 \`\`\`workout-log
-exercise: Squat multi power
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.squatMultiPower.name")}
+workout: ${workoutName}
 limit: 12
 exactMatch: true
 \`\`\`
 
-## RDL:
+## ${t("examples.exercises.rdl.name")}:
 
-### 4 serie x 8-12 ripetizioni (Recupero: 180s)
+### ${t("examples.workout.setsReps", { sets: "4", reps: "8-12" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
 
 \`\`\`workout-timer
 duration: 180
@@ -238,15 +260,15 @@ sound: true
 \`\`\`
 
 \`\`\`workout-log
-exercise: RDL
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.rdl.name")}
+workout: ${workoutName}
 limit: 12
 exactMatch: true
 \`\`\`
 
-## pressa 45 Technogym 
+## ${t("examples.exercises.legPress45.name")}:
 
-### 4 serie x 10-15 ripetizioni (Recupero: 120s)
+### ${t("examples.workout.setsReps", { sets: "4", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "120" })}
 
 \`\`\`workout-timer
 duration: 120
@@ -258,15 +280,15 @@ sound: true
 \`\`\`
 
 \`\`\`workout-log
-exercise: Leg press 45
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.legPress45.name")}
+workout: ${workoutName}
 limit: 12
 exactMatch: true
 \`\`\`
 
-## Leg Curl Seduto:
+## ${t("examples.exercises.legCurlSeated.name")}:
 
-### 3 serie x 10-15 ripetizioni (Recupero: 90s)
+### ${t("examples.workout.setsReps", { sets: "3", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "90" })}
 
 \`\`\`workout-timer
 duration: 90
@@ -278,15 +300,15 @@ sound: true
 \`\`\`
 
 \`\`\`workout-log
-exercise: Leg Curl seduto
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.legCurlSeated.name")}
+workout: ${workoutName}
 limit: 12
 exactMatch: true
 \`\`\`
 
-## Calf Machine:
+## ${t("examples.exercises.calfMachine.name")}:
 
-### 4 serie x 15-20 ripetizioni (Recupero: 60s)
+### ${t("examples.workout.setsReps", { sets: "4", reps: "15-20" })} ${t("examples.workout.recoverySuffix", { seconds: "60" })}
 
 \`\`\`workout-timer
 duration: 60
@@ -298,15 +320,15 @@ sound: true
 \`\`\`
 
 \`\`\`workout-log
-exercise: Calf Machine
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.calfMachine.name")}
+workout: ${workoutName}
 limit: 12
 exactMatch: true
 \`\`\`
 `;
     await this.createOrUpdateFile(
       folderPath,
-      "Giorno 1 LOWER BODY A 2.0.md",
+      `${workoutName}.md`,
       content,
       overwrite,
     );
@@ -325,7 +347,7 @@ exactMatch: true
     const now = new Date();
     const oneDay = 24 * 60 * 60 * 1000;
 
-    const workoutName = "Giorno 1 LOWER BODY A 2.0";
+    const workoutName = t("examples.workouts.lowerBodyA.name");
 
     // Lower body sessions: ~2x per week for 6 weeks (oldest first for proper progression)
     const lowerBodyOffsets = [40, 37, 33, 30, 26, 23, 19, 16, 12, 9, 5, 2];
@@ -393,7 +415,7 @@ exactMatch: true
           set === 4 && sessionIdx % 3 === 0 ? "myo-reps" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
-          exercise: "Squat multi power",
+          exercise: t("examples.exercises.squatMultiPower.name"),
           reps,
           weight: squatWeight,
           volume: reps * squatWeight,
@@ -422,7 +444,7 @@ exactMatch: true
           set === 4 && sessionIdx % 4 === 1 ? "rest-pause" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
-          exercise: "RDL",
+          exercise: t("examples.exercises.rdl.name"),
           reps,
           weight: rdlWeight,
           volume: reps * rdlWeight,
@@ -451,7 +473,7 @@ exactMatch: true
           set === 4 && sessionIdx % 5 === 0 ? "dropset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
-          exercise: "Leg press 45",
+          exercise: t("examples.exercises.legPress45.name"),
           reps,
           weight: legPressWeight,
           volume: reps * legPressWeight,
@@ -483,7 +505,7 @@ exactMatch: true
         const actualReps = protocol === "21s" ? 21 : reps;
         this.addLogEntry(rows, {
           date: dateStr,
-          exercise: "Leg Curl seduto",
+          exercise: t("examples.exercises.legCurlSeated.name"),
           reps: actualReps,
           weight: legCurlWeight,
           volume: actualReps * legCurlWeight,
@@ -516,7 +538,7 @@ exactMatch: true
           set % 2 === 0 && sessionIdx > 6 ? "superset" : "standard";
         this.addLogEntry(rows, {
           date: dateStr,
-          exercise: "Calf Machine",
+          exercise: t("examples.exercises.calfMachine.name"),
           reps,
           weight: calfWeight,
           volume: reps * calfWeight,
@@ -537,7 +559,7 @@ exactMatch: true
         const duration =
           basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
         rows.push(
-          `${dateStr},Plank,0,0,0,[[${workoutName}]],${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
+          `${dateStr},${t("examples.exercises.plank.name")},0,0,0,[[${workoutName}]],${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
         );
         exerciseTime = new Date(exerciseTime.getTime() + 90000);
       }
@@ -545,7 +567,7 @@ exactMatch: true
 
     // Upper Body sessions: ~2x per week for 6 weeks
     const upperBodyOffsets = [39, 36, 32, 29, 25, 22, 18, 15, 11, 8, 4, 1];
-    const upperWorkoutName = "Upper Body Power";
+    const upperWorkoutName = t("examples.workouts.upperBodyPower.name");
 
     const upperBaseWeights = {
       benchPress: 60,
@@ -590,7 +612,7 @@ exactMatch: true
             : "standard";
         const notes = protocol !== "standard" ? `${protocol}` : "";
         rows.push(
-          `${dateStr},Bench Press,${reps},${benchWeight},${reps * benchWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
+          `${dateStr},${t("examples.exercises.benchPress.name")},${reps},${benchWeight},${reps * benchWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
         );
         exerciseTime = new Date(
           exerciseTime.getTime() + 180000 + Math.random() * 60000,
@@ -619,7 +641,7 @@ exactMatch: true
 
     // Cardio sessions: ~2x per week for 6 weeks - with progressive improvement
     const cardioOffsets = [38, 34, 31, 27, 24, 20, 17, 13, 10, 6, 3];
-    const cardioWorkoutName = "Cardio Day";
+    const cardioWorkoutName = t("examples.workouts.cardioDay.name");
 
     for (let sessionIdx = 0; sessionIdx < cardioOffsets.length; sessionIdx++) {
       const daysAgo = cardioOffsets[sessionIdx];
@@ -648,7 +670,7 @@ exactMatch: true
       const runHeartRate =
         150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
       rows.push(
-        `${dateStr},Running,0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
+        `${dateStr},${t("examples.exercises.running.name")},0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
       );
 
       exerciseTime = new Date(
@@ -683,9 +705,9 @@ exactMatch: true
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const content = `# Dashboard
+    const content = `# ${t("examples.dashboard.title")}
 
-Your workout stats at a glance. See [[Feature Showcase]] for all available components.
+${t("examples.dashboard.description")}
 
 \`\`\`workout-dashboard
 \`\`\`
@@ -702,23 +724,23 @@ Your workout stats at a glance. See [[Feature Showcase]] for all available compo
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const content = `# Feature Showcase
+    const content = `# ${t("examples.featureShowcase.title")}
 
-Complete reference of all code block types available in the Workout Plugin.
+${t("examples.featureShowcase.intro")}
 
-> **Tip**: For your personal dashboard, see [[Dashboard]]
+> ${t("examples.featureShowcase.tip")}
 
 ---
 
-## 1. Charts
+## ${t("examples.featureShowcase.chartsTitle")}
 
-Charts visualize your progress over time. Available types: \`volume\`, \`weight\`, \`reps\`, \`duration\`, \`distance\`, \`heartRate\`, \`pace\`.
+${t("examples.featureShowcase.chartsIntro")}
 
-### Strength Exercise (Volume + Weight)
+### ${t("examples.featureShowcase.strengthExerciseTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Bench Press
+exercise: ${t("examples.exercises.benchPress.name")}
 type: volume
 dateRange: 30
 showTrendLine: true
@@ -727,17 +749,17 @@ showStats: true
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Squat
+exercise: ${t("examples.exercises.squat.name")}
 type: weight
 dateRange: 30
 showTrendLine: true
 \`\`\`
 
-### Cardio Exercise (Distance + Pace)
+### ${t("examples.featureShowcase.cardioExerciseTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Running
+exercise: ${t("examples.exercises.running.name")}
 type: distance
 dateRange: 30
 showTrendLine: true
@@ -745,36 +767,36 @@ showTrendLine: true
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Running
+exercise: ${t("examples.exercises.running.name")}
 type: pace
 dateRange: 30
 showTrendLine: true
 showStats: true
 \`\`\`
 
-### Timed Exercise (Duration)
+### ${t("examples.featureShowcase.timedExerciseTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Plank
+exercise: ${t("examples.exercises.plank.name")}
 type: duration
 dateRange: 30
 showTrendLine: true
 showStats: true
 \`\`\`
 
-### Workout Chart (All Exercises Combined)
+### ${t("examples.featureShowcase.workoutChartTitle")}
 
 \`\`\`workout-chart
 chartType: workout
-workout: Giorno 1 LOWER BODY A 2.0
+workout: ${t("examples.workouts.lowerBodyA.name")}
 type: volume
 dateRange: 60
 showTrendLine: true
 showStats: true
 \`\`\`
 
-### All Data Chart
+### ${t("examples.featureShowcase.allDataChartTitle")}
 
 \`\`\`workout-chart
 chartType: all
@@ -785,38 +807,38 @@ showTrendLine: true
 
 ---
 
-## 2. Tables
+## ${t("examples.featureShowcase.tablesTitle")}
 
-Tables display your workout logs with sorting and editing capabilities.
+${t("examples.featureShowcase.tablesIntro")}
 
-### By Exercise
+### ${t("examples.featureShowcase.byExerciseTitle")}
 
 \`\`\`workout-log
-exercise: Bench Press
+exercise: ${t("examples.exercises.benchPress.name")}
 limit: 10
 \`\`\`
 
-### By Workout
+### ${t("examples.featureShowcase.byWorkoutTitle")}
 
 \`\`\`workout-log
-workout: Giorno 1 LOWER BODY A 2.0
+workout: ${t("examples.workouts.lowerBodyA.name")}
 limit: 15
 \`\`\`
 
-### Combined (Exercise + Workout)
+### ${t("examples.featureShowcase.combinedTitle")}
 
 \`\`\`workout-log
-exercise: Squat multi power
-workout: Giorno 1 LOWER BODY A 2.0
+exercise: ${t("examples.exercises.squat.name")} multi power
+workout: ${t("examples.workouts.lowerBodyA.name")}
 exactMatch: true
 limit: 10
 \`\`\`
 
 ---
 
-## 3. Timers
+## ${t("examples.featureShowcase.timersTitle")}
 
-### Countdown Timer
+### ${t("examples.featureShowcase.countdownTimerTitle")}
 
 \`\`\`workout-timer
 type: countdown
@@ -826,7 +848,7 @@ showControls: true
 sound: true
 \`\`\`
 
-### Interval Timer
+### ${t("examples.featureShowcase.intervalTimerTitle")}
 
 \`\`\`workout-timer
 type: interval
@@ -839,41 +861,41 @@ sound: true
 
 ---
 
-## 4. Duration Estimator
+## ${t("examples.featureShowcase.durationEstimatorTitle")}
 
-Estimates total workout duration based on the current note's exercises.
+${t("examples.featureShowcase.durationEstimatorIntro")}
 
 \`\`\`workout-duration
 \`\`\`
 
 ---
 
-## 5. Training Protocols
+## ${t("examples.featureShowcase.trainingProtocolsTitle")}
 
-The plugin supports these protocol badges in your logs:
+${t("examples.featureShowcase.trainingProtocolsIntro")}
 
 | Protocol | Description |
 |----------|-------------|
-| standard | Normal sets |
-| dropset | Reduce weight, continue reps |
-| myo-reps | Activation set + mini sets |
-| rest-pause | Brief rest, continue to failure |
-| superset | Paired exercises |
-| 21s | 7+7+7 partial reps |
+| standard | ${t("examples.featureShowcase.protocolStandard")} |
+| dropset | ${t("examples.featureShowcase.protocolDropset")} |
+| myo-reps | ${t("examples.featureShowcase.protocolMyoReps")} |
+| rest-pause | ${t("examples.featureShowcase.protocolRestPause")} |
+| superset | ${t("examples.featureShowcase.protocolSuperset")} |
+| 21s | ${t("examples.featureShowcase.protocol21s")} |
 
 ---
 
-## Quick Reference
+## ${t("examples.featureShowcase.quickReferenceTitle")}
 
 | Code Block | Purpose |
 |------------|---------|
-| \`workout-chart\` | Visualize progress over time |
-| \`workout-log\` | Display workout data table |
-| \`workout-timer\` | Countdown or interval timer |
-| \`workout-duration\` | Estimate workout length |
-| \`workout-dashboard\` | Full stats overview |
+| \`workout-chart\` | ${t("examples.featureShowcase.codeBlockWorkoutChart")} |
+| \`workout-log\` | ${t("examples.featureShowcase.codeBlockWorkoutLog")} |
+| \`workout-timer\` | ${t("examples.featureShowcase.codeBlockWorkoutTimer")} |
+| \`workout-duration\` | ${t("examples.featureShowcase.codeBlockWorkoutDuration")} |
+| \`workout-dashboard\` | ${t("examples.featureShowcase.codeBlockWorkoutDashboard")} |
 
-**Commands** (Ctrl/Cmd + P): Create Workout Log, Insert Chart, Insert Timer, Create Exercise Page
+${t("examples.featureShowcase.commandsNote")}
 `;
     await this.createOrUpdateFile(
       folderPath,
@@ -887,16 +909,16 @@ The plugin supports these protocol badges in your logs:
     folderPath: string,
     overwrite: boolean,
   ): Promise<void> {
-    const content = `# HIIT Cardio Session
+    const content = `# ${t("examples.hiit.title")}
 
-High-Intensity Interval Training workout with interval timers and cardio tracking.
+${t("examples.hiit.intro")}
 
 \`\`\`workout-duration
 \`\`\`
 
 ---
 
-## Warm-up (5 min)
+## ${t("examples.hiit.warmupTitle")}
 
 \`\`\`workout-timer
 type: countdown
@@ -908,7 +930,7 @@ sound: true
 
 ---
 
-## Sprint Intervals (30s × 8 rounds)
+## ${t("examples.hiit.sprintIntervalsTitle")}
 
 \`\`\`workout-timer
 type: interval
@@ -921,16 +943,16 @@ sound: true
 
 ---
 
-## Running Progress
+## ${t("examples.hiit.runningProgressTitle")}
 
 \`\`\`workout-log
-exercise: Running
+exercise: ${t("examples.exercises.running.name")}
 limit: 8
 \`\`\`
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Running
+exercise: ${t("examples.exercises.running.name")}
 type: distance
 dateRange: 30
 showTrendLine: true
@@ -939,16 +961,16 @@ showStats: true
 
 ---
 
-## Cycling Cool-down
+## ${t("examples.hiit.cyclingCooldownTitle")}
 
 \`\`\`workout-log
-exercise: Cycling
+exercise: ${t("examples.exercises.cycling.name")}
 limit: 8
 \`\`\`
 
 \`\`\`workout-chart
 chartType: exercise
-exercise: Cycling
+exercise: ${t("examples.exercises.cycling.name")}
 type: distance
 dateRange: 30
 showTrendLine: true
@@ -1009,11 +1031,11 @@ ${tagsYaml}
 
 # ${name}
 
-## Description
+## ${t("examples.exercise.descriptionTitle")}
 
-Example description for ${name}.
+${t("examples.exercise.descriptionTemplate", { name })}
 
-## Log
+## ${t("examples.exercise.logTitle")}
 
 \`\`\`workout-log
 exercise: ${name}
@@ -1027,7 +1049,7 @@ ${chartSections}
   private getChartSectionsForType(name: string, type: string): string {
     switch (type) {
       case "strength":
-        return `## Volume Chart
+        return `## ${t("examples.exercise.volumeChartTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1038,7 +1060,7 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-## Weight Progression
+## ${t("examples.exercise.weightProgressionTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1048,7 +1070,7 @@ dateRange: 30
 showTrendLine: true
 \`\`\`
 
-## Rep Tracking
+## ${t("examples.exercise.repTrackingTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1058,7 +1080,7 @@ dateRange: 30
 \`\`\``;
 
       case "timed":
-        return `## Duration Chart
+        return `## ${t("examples.exercise.durationChartTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1070,7 +1092,7 @@ showStats: true
 \`\`\``;
 
       case "cardio":
-        return `## Duration Chart
+        return `## ${t("examples.exercise.durationChartTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1081,7 +1103,7 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-## Heart Rate
+## ${t("examples.exercise.heartRateTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1093,7 +1115,7 @@ showStats: true
 \`\`\``;
 
       case "distance":
-        return `## Distance Chart
+        return `## ${t("examples.exercise.distanceChartTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1104,7 +1126,7 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-## Duration
+## ${t("examples.exercise.durationTitle")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1115,9 +1137,9 @@ showTrendLine: true
 showStats: true
 \`\`\`
 
-## Pace Tracking
+## ${t("examples.exercise.paceTrackingTitle")}
 
-Track your pace improvement (lower = faster):
+${t("examples.exercise.paceTrackingNote")}
 
 \`\`\`workout-chart
 chartType: exercise
@@ -1129,7 +1151,7 @@ showStats: true
 \`\`\``;
 
       default:
-        return `## Chart
+        return `## ${t("examples.exercise.chartTitle")}
 
 \`\`\`workout-chart
 chartType: exercise

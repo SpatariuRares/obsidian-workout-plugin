@@ -24,6 +24,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { LocalizationService } from "@app/i18n";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -75,6 +76,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   async onload() {
     PerformanceMonitor.start("plugin:onload");
     await this.loadSettings();
+
+    // Initialize LocalizationService (must be first - other services may use translations)
+    LocalizationService.initialize(this.app);
 
     // Initialize ParameterUtils with weight unit
     ParameterUtils.setWeightUnit(this.settings.weightUnit);
@@ -192,6 +196,9 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // 3c. Destroy muscle tag service (unregister file watcher, clear cache)
     this.muscleTagService?.destroy();
+
+    // 3d. Cleanup LocalizationService
+    LocalizationService.getInstance()?.destroy();
 
     // 4. Destroy all Chart.js instances (additional safety net)
     ChartRenderer.destroyAllCharts();

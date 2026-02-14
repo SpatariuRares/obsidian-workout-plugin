@@ -10,7 +10,7 @@ export interface TimerControlCallbacks {
 export class TimerControls {
   static createControls(
     container: HTMLElement,
-    state: TimerState,
+    getState: () => TimerState,
     callbacks: TimerControlCallbacks,
   ): HTMLButtonElement | undefined {
     const controlsDiv = container.createEl("div", {
@@ -37,18 +37,12 @@ export class TimerControls {
 
     // Add event listeners
     Button.onClick(startStopBtn, () => {
+      const state = getState();
       if (state.isRunning) {
         callbacks.onStop();
         startStopBtn.textContent = "▶";
         startStopBtn.setAttribute("aria-label", "Start timer");
       } else {
-        if (
-          state.timerType === TIMER_TYPE.COUNTDOWN &&
-          state.elapsedTime >= state.duration * 1000
-        ) {
-          state.elapsedTime = 0;
-          state.currentRound = 1;
-        }
         callbacks.onStart();
         startStopBtn.textContent = "⏸";
         startStopBtn.setAttribute("aria-label", "Pause timer");

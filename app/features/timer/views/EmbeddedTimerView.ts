@@ -218,7 +218,7 @@ export class EmbeddedTimerView extends BaseView {
 
       const startStopBtn = TimerControls.createControls(
         timerDisplay,
-        this.timerCore.getState(),
+        () => this.timerCore.getState(),
         callbacks,
       );
 

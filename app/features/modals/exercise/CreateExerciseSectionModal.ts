@@ -106,14 +106,6 @@ export class CreateExerciseSectionModal extends ModalBase {
       "showTimer",
     );
 
-    // Timer options (conditional)
-    const timerAutoStartToggle = this.createCheckboxField(
-      optionsSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.TIMER_AUTO_START,
-      false,
-      "timerAutoStart",
-    );
-
     const timerSoundToggle = this.createCheckboxField(
       optionsSection,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.TIMER_SOUND,
@@ -166,7 +158,6 @@ export class CreateExerciseSectionModal extends ModalBase {
       const restTime = parseInt(restTimeInput.value) || 180;
       const note = noteInput.value.trim();
       const showTimer = showTimerToggle.checked;
-      const timerAutoStart = timerAutoStartToggle.checked;
       const timerSound = timerSoundToggle.checked;
       const showLog = showLogToggle.checked;
 
@@ -186,7 +177,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         restTime,
         note,
         showTimer,
-        timerAutoStart,
         timerSound,
         showLog,
       });
@@ -212,7 +202,6 @@ export class CreateExerciseSectionModal extends ModalBase {
     restTime: number;
     note: string;
     showTimer: boolean;
-    timerAutoStart: boolean;
     timerSound: boolean;
     showLog: boolean;
   }): string {
@@ -229,7 +218,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         duration: params.restTime,
         exercise: params.exerciseName,
         showControls: true,
-        autoStart: params.timerAutoStart,
         sound: params.timerSound,
       });
       sectionCode += `${timerCode}\n\n`;

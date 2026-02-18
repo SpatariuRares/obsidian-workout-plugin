@@ -10,7 +10,6 @@ export interface TimerConfigurationElements {
   roundsInput?: HTMLInputElement;
   exerciseInput: HTMLInputElement;
   showControlsToggle: HTMLInputElement;
-  autoStartToggle: HTMLInputElement;
   soundToggle: HTMLInputElement;
 }
 
@@ -98,15 +97,6 @@ export class TimerConfigurationSection {
       "showControls",
     );
 
-    // Auto start toggle
-    const autoStartContainer = modal.createCheckboxGroup(displaySection);
-    const autoStartToggle = modal.createCheckbox(
-      autoStartContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.AUTO_START,
-      false,
-      "autoStart",
-    );
-
     // Sound toggle
     const soundContainer = modal.createCheckboxGroup(displaySection);
     const soundToggle = modal.createCheckbox(
@@ -122,7 +112,6 @@ export class TimerConfigurationSection {
       roundsInput,
       exerciseInput: exerciseElements.exerciseInput,
       showControlsToggle,
-      autoStartToggle,
       soundToggle,
     };
 
@@ -160,7 +149,6 @@ export class TimerConfigurationSection {
       type: timerType,
       exercise: elements.exerciseInput.value.trim(),
       showControls: elements.showControlsToggle.checked,
-      autoStart: elements.autoStartToggle.checked,
       sound: elements.soundToggle.checked,
     };
 

@@ -13,7 +13,6 @@ export interface TimerPresetConfig {
   type: TIMER_TYPE;
   duration: number; // Duration in seconds (used for all timer types)
   showControls: boolean;
-  autoStart: boolean;
   sound: boolean;
   rounds?: number; // Number of rounds (for interval timer)
 }
@@ -21,7 +20,6 @@ export interface TimerPresetConfig {
 export interface EmbeddedTimerParams {
   duration?: number; // Duration in seconds (used for all timer types)
   type?: TIMER_TYPE;
-  autoStart?: boolean;
   showControls?: boolean;
   exercise?: string;
   workout?: string;

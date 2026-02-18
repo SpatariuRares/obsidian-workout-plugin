@@ -108,7 +108,6 @@ export class InsertTimerModal extends BaseInsertModal {
     }
     this.timerElements.exerciseInput.value = preset.name;
     this.timerElements.showControlsToggle.checked = preset.showControls;
-    this.timerElements.autoStartToggle.checked = preset.autoStart;
     this.timerElements.soundToggle.checked = preset.sound;
   }
 
@@ -135,7 +134,6 @@ export class InsertTimerModal extends BaseInsertModal {
       rounds: timerValues.rounds,
       exercise: timerValues.exercise,
       showControls: timerValues.showControls,
-      autoStart: timerValues.autoStart,
       sound: timerValues.sound,
       preset: presetName || undefined,
     });

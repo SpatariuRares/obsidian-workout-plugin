@@ -119,7 +119,6 @@ export class TimerPresetsSettings {
 
     const options: string[] = [];
     if (preset.showControls) options.push("Controls");
-    if (preset.autoStart) options.push("Auto-start");
     if (preset.sound) options.push("Sound");
 
     if (options.length > 0) {
@@ -155,7 +154,6 @@ export class TimerPresetsSettings {
           type: TIMER_TYPE.COUNTDOWN,
           duration: 30,
           showControls: true,
-          autoStart: false,
           sound: true,
           rounds: 5,
         };
@@ -221,14 +219,6 @@ export class TimerPresetsSettings {
       .addToggle((toggle) =>
         toggle.setValue(formState.showControls).onChange((value) => {
           formState.showControls = value;
-        }),
-      );
-
-    new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_AUTO_START)
-      .addToggle((toggle) =>
-        toggle.setValue(formState.autoStart).onChange((value) => {
-          formState.autoStart = value;
         }),
       );
 

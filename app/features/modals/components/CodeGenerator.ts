@@ -123,7 +123,6 @@ export class CodeGenerator {
     lines.push(`type: ${params.type}`);
     if (params.exercise) lines.push(`exercise: ${params.exercise}`);
     lines.push(`showControls: ${params.showControls}`);
-    lines.push(`autoStart: ${params.autoStart}`);
     lines.push(`sound: ${params.sound}`);
     lines.push("```");
 

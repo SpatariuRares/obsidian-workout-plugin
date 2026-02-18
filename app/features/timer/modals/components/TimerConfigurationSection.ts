@@ -1,12 +1,14 @@
 import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import type WorkoutChartsPlugin from "main";
 
 export interface TimerConfigurationElements {
   timerTypeSelect: HTMLSelectElement;
   durationInput?: HTMLInputElement;
   roundsInput?: HTMLInputElement;
-  titleInput: HTMLInputElement;
+  exerciseInput: HTMLInputElement;
   showControlsToggle: HTMLInputElement;
   autoStartToggle: HTMLInputElement;
   soundToggle: HTMLInputElement;
@@ -23,6 +25,7 @@ export class TimerConfigurationSection {
   static create(
     modal: ModalBase,
     container: HTMLElement,
+    plugin: WorkoutChartsPlugin,
   ): {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
@@ -71,13 +74,13 @@ export class TimerConfigurationSection {
       "5",
     );
 
-    // Title input
-    const titleContainer = modal.createFormGroup(timerSection);
-    const titleInput = modal.createTextInput(
-      titleContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TITLE,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TIMER_TITLE,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.TIMER_TITLE,
+    // Exercise autocomplete (replaces old title input)
+    const { elements: exerciseElements } = ExerciseAutocomplete.create(
+      modal,
+      timerSection,
+      plugin,
+      undefined,
+      { showCreateButton: false },
     );
 
     // Display options
@@ -117,7 +120,7 @@ export class TimerConfigurationSection {
       timerTypeSelect,
       durationInput,
       roundsInput,
-      titleInput,
+      exerciseInput: exerciseElements.exerciseInput,
       showControlsToggle,
       autoStartToggle,
       soundToggle,
@@ -155,7 +158,7 @@ export class TimerConfigurationSection {
 
     const values: EmbeddedTimerParams = {
       type: timerType,
-      title: elements.titleInput.value.trim(),
+      exercise: elements.exerciseInput.value.trim(),
       showControls: elements.showControlsToggle.checked,
       autoStart: elements.autoStartToggle.checked,
       sound: elements.soundToggle.checked,

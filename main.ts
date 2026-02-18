@@ -96,7 +96,10 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.settings,
     );
     this.muscleTagService = new MuscleTagService(this.app, this.settings);
-    this.templateGeneratorService = new TemplateGeneratorService(this.app, this);
+    this.templateGeneratorService = new TemplateGeneratorService(
+      this.app,
+      this,
+    );
     this.commandHandlerService = new CommandHandlerService(this.app, this);
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
@@ -326,6 +329,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.clearLogDataCache();
 
     // Fire custom event - each DataAwareRenderChild decides whether to refresh
+    // Timers also listen on this event and auto-start when exercise+workout match
     this.app.workspace.trigger("workout-planner:data-changed", context ?? {});
     PerformanceMonitor.end("refresh:workoutLog");
   }

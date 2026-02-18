@@ -77,6 +77,7 @@ export class InsertTimerModal extends BaseInsertModal {
     const { elements: timerElements } = TimerConfigurationSection.create(
       this,
       container,
+      this.plugin,
     );
     this.timerElements = timerElements;
 
@@ -105,7 +106,7 @@ export class InsertTimerModal extends BaseInsertModal {
     if (this.timerElements.roundsInput && preset.rounds) {
       this.timerElements.roundsInput.value = preset.rounds.toString();
     }
-    this.timerElements.titleInput.value = preset.name;
+    this.timerElements.exerciseInput.value = preset.name;
     this.timerElements.showControlsToggle.checked = preset.showControls;
     this.timerElements.autoStartToggle.checked = preset.autoStart;
     this.timerElements.soundToggle.checked = preset.sound;
@@ -132,7 +133,7 @@ export class InsertTimerModal extends BaseInsertModal {
       type: timerValues.type as TIMER_TYPE,
       duration: timerValues.duration,
       rounds: timerValues.rounds,
-      title: timerValues.title,
+      exercise: timerValues.exercise,
       showControls: timerValues.showControls,
       autoStart: timerValues.autoStart,
       sound: timerValues.sound,

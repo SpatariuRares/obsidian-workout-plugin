@@ -227,7 +227,7 @@ export class CreateExerciseSectionModal extends ModalBase {
       const timerCode = CodeGenerator.generateTimerCode({
         type: TIMER_TYPE.COUNTDOWN,
         duration: params.restTime,
-        title: params.exerciseName,
+        exercise: params.exerciseName,
         showControls: true,
         autoStart: params.timerAutoStart,
         sound: params.timerSound,

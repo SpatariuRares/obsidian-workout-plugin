@@ -23,7 +23,8 @@ export interface EmbeddedTimerParams {
   type?: TIMER_TYPE;
   autoStart?: boolean;
   showControls?: boolean;
-  title?: string;
+  exercise?: string;
+  workout?: string;
   rounds?: number; // Number of rounds (for interval timer)
   sound?: boolean;
   preset?: string; // Name of a saved timer preset to use as base configuration

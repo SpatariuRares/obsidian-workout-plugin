@@ -130,7 +130,9 @@ export abstract class BaseLogModal extends ModalBase {
    * Helper method to create log entry object from LogFormData.
    * Simpler overload - recommended for new code.
    */
-  protected createLogEntryObject(data: LogFormData): Omit<CSVWorkoutLogEntry, "timestamp">;
+  protected createLogEntryObject(
+    data: LogFormData,
+  ): Omit<CSVWorkoutLogEntry, "timestamp">;
 
   /**
    * Helper method to create log entry object from individual parameters.
@@ -158,7 +160,7 @@ export abstract class BaseLogModal extends ModalBase {
     protocol?: WorkoutProtocol,
     customFields?: Record<string, string | number | boolean>,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
-    if (typeof dataOrExercise === 'string') {
+    if (typeof dataOrExercise === "string") {
       // Old signature: individual parameters
       return LogSubmissionHandler.createLogEntry(
         {
@@ -169,13 +171,16 @@ export abstract class BaseLogModal extends ModalBase {
           notes: notes!,
           date,
           protocol,
-          customFields
+          customFields,
         },
         this.currentPageLink,
       );
     } else {
       // New signature: LogFormData object
-      return LogSubmissionHandler.createLogEntry(dataOrExercise, this.currentPageLink);
+      return LogSubmissionHandler.createLogEntry(
+        dataOrExercise,
+        this.currentPageLink,
+      );
     }
   }
 
@@ -286,6 +291,12 @@ export abstract class BaseLogModal extends ModalBase {
       this.close();
       new Notice(this.getSuccessMessage());
 
+      // Fire log-added event so timers can auto-start
+      this.plugin.app.workspace.trigger("workout-planner:log-added", {
+        exercise: data.exercise,
+        workout: data.workout,
+      });
+
       if (this.onComplete) {
         this.onComplete({
           exercise: data.exercise,
@@ -293,8 +304,7 @@ export abstract class BaseLogModal extends ModalBase {
         });
       }
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(
         `${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`,
       );

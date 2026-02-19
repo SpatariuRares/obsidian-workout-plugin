@@ -15,6 +15,7 @@ export default [
       "dist/**",
       "build/**",
       "scripts/**",
+      "AI translate/**",
       "*.config.js",
       "*.config.mjs",
       "build-css.mjs",

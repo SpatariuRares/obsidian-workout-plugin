@@ -1,5 +1,6 @@
 // Refactored InsertChartModal extending BaseInsertModal
 import { CONSTANTS } from "@app/constants";
+import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -19,10 +20,20 @@ import {
   isValidChartDataType,
 } from "@app/features/charts/config/ChartConstants";
 import { ParameterUtils } from "@app/utils";
+import { Chip } from "@app/components/atoms/Chip";
+import { Button } from "@app/components/atoms/Button";
+import { Input } from "@app/components/atoms/Input";
+import { INPUT_TYPE } from "@app/types/InputTypes";
+
+const DATE_RANGE_INCREMENT = 7;
+const LIMIT_INCREMENT = 10;
 
 export class InsertChartModal extends BaseInsertModal {
   private chartTypeSelect?: HTMLSelectElement;
+  private chartTypeChips: Map<string, HTMLButtonElement> = new Map();
   private dataTypeSelect?: HTMLSelectElement;
+  private dataTypeChips: Map<string, HTMLButtonElement> = new Map();
+  private dataTypeChipContainer?: HTMLElement;
   private targetElements?: TargetSectionWithAutocompleteElements;
   private dateRangeInput?: HTMLInputElement;
   private limitInput?: HTMLInputElement;
@@ -56,18 +67,66 @@ export class InsertChartModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.SECTIONS.CHART_TYPE,
     );
 
-    // Chart Type selector (exercise vs workout)
-    this.chartTypeSelect = this.createSelectField(
-      chartTypeSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.CHART_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE],
+    // Hidden select as backing store for TargetSectionWithAutocomplete
+    this.chartTypeSelect = chartTypeSection.createEl("select", {
+      cls: "workout-charts-select",
+    });
+    DomUtils.setCssProps(this.chartTypeSelect, { display: "none" });
+
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
+      this.chartTypeSelect.createEl("option", {
+        text: option.text,
+        value: option.value,
+      });
+    }
+
+    // Chips for chart type selection (workout vs exercise)
+    const chartTypeChipContainer = chartTypeSection.createDiv({
+      cls: "workout-table-type-chips",
+    });
+
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
+      const isDefault = option.value === "workout";
+      const chip = Chip.create(chartTypeChipContainer, {
+        text: option.text,
+        selected: isDefault,
+        onClick: () => this.onChartTypeChipClick(option.value),
+      });
+      this.chartTypeChips.set(option.value, chip);
+    }
+
+    // Set initial select value
+    this.chartTypeSelect.value = "workout";
+
+    // Data Type chips section
+    const dataTypeSection = this.createSection(
+      container,
+      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_TYPE,
     );
 
-    // Data Type selector (volume, weight, reps)
-    this.dataTypeSelect = this.createSelectField(
-      chartTypeSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE],
+    // Hidden select as backing store for data type
+    this.dataTypeSelect = dataTypeSection.createEl("select", {
+      cls: "workout-charts-select",
+    });
+    DomUtils.setCssProps(this.dataTypeSelect, { display: "none" });
+
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE) {
+      this.dataTypeSelect.createEl("option", {
+        text: option.text,
+        value: option.value,
+      });
+    }
+
+    // Chips for data type selection
+    this.dataTypeChipContainer = dataTypeSection.createDiv({
+      cls: "workout-table-type-chips",
+    });
+
+    this.buildDataTypeChips(
+      CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map((o) => ({
+        text: o.text,
+        value: o.value,
+      })),
     );
 
     // Target Section using reusable component with autocomplete
@@ -99,32 +158,41 @@ export class InsertChartModal extends BaseInsertModal {
     // Ensure visibility is updated based on initial selection
     targetHandlers.updateVisibility();
 
+    // Event listener for chart type change
+    this.chartTypeSelect.addEventListener("change", () => {
+      targetHandlers.updateVisibility();
+    });
+
     // Configuration Section
     const configSection = this.createSection(
       container,
       CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
     );
 
-    // Date range selector
-    this.dateRangeInput = this.createNumberField(
-      configSection,
+    // Parameters container (grid layout)
+    const parametersContainer = configSection.createDiv({
+      cls: "workout-parameters-container",
+    });
+
+    // Date range with +/- adjust
+    this.dateRangeInput = this.createAdjustField(
+      parametersContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.DAYS_RANGE,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE,
-      {
-        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
-        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
-      },
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
+      DATE_RANGE_INCREMENT,
+      "d",
     );
 
-    // Limit selector
-    this.limitInput = this.createNumberField(
-      configSection,
+    // Limit with +/- adjust
+    this.limitInput = this.createAdjustField(
+      parametersContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.DATA_LIMIT,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT,
-      {
-        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
-        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
-      },
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
+      LIMIT_INCREMENT,
     );
 
     // Display Options Section
@@ -133,25 +201,33 @@ export class InsertChartModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
     );
 
+    // Compact toggle row for display options
+    const toggleRow = displaySection.createDiv({
+      cls: "workout-table-options-row",
+    });
+
     // Show trend line toggle
-    this.trendLineToggle = this.createCheckboxField(
-      displaySection,
+    const trendLineContainer = this.createCheckboxGroup(toggleRow);
+    this.trendLineToggle = this.createCheckbox(
+      trendLineContainer,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_LINE,
       true,
       "trendLine",
     );
 
     // Show trend header toggle
-    this.trendHeaderToggle = this.createCheckboxField(
-      displaySection,
+    const trendHeaderContainer = this.createCheckboxGroup(toggleRow);
+    this.trendHeaderToggle = this.createCheckbox(
+      trendHeaderContainer,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_HEADER,
       true,
       "trendHeader",
     );
 
     // Show statistics toggle
-    this.statsToggle = this.createCheckboxField(
-      displaySection,
+    const statsContainer = this.createCheckboxGroup(toggleRow);
+    this.statsToggle = this.createCheckbox(
+      statsContainer,
       CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_STATISTICS,
       true,
       "stats",
@@ -165,6 +241,130 @@ export class InsertChartModal extends BaseInsertModal {
     // Set exact match default based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
       this.plugin.settings.defaultExactMatch;
+  }
+
+  private onChartTypeChipClick(value: string): void {
+    if (!this.chartTypeSelect) return;
+
+    // Update chips
+    for (const [chipValue, chip] of this.chartTypeChips) {
+      Chip.setSelected(chip, chipValue === value);
+    }
+
+    // Update hidden select and dispatch change event
+    this.chartTypeSelect.value = value;
+    this.chartTypeSelect.dispatchEvent(new Event("change"));
+  }
+
+  private onDataTypeChipClick(value: string): void {
+    if (!this.dataTypeSelect) return;
+
+    // Update chips
+    for (const [chipValue, chip] of this.dataTypeChips) {
+      Chip.setSelected(chip, chipValue === value);
+    }
+
+    // Update hidden select
+    this.dataTypeSelect.value = value;
+  }
+
+  /**
+   * Builds data type chips from a list of options
+   */
+  private buildDataTypeChips(
+    options: Array<{ text: string; value: string }>,
+  ): void {
+    if (!this.dataTypeChipContainer || !this.dataTypeSelect) return;
+
+    // Clear existing chips
+    this.dataTypeChipContainer.empty();
+    this.dataTypeChips.clear();
+
+    // Determine default selected value
+    const currentValue = this.dataTypeSelect.value;
+    const hasCurrentValue = options.some((o) => o.value === currentValue);
+    const defaultValue = hasCurrentValue
+      ? currentValue
+      : options[0]?.value || "";
+
+    for (const option of options) {
+      const isSelected = option.value === defaultValue;
+      const chip = Chip.create(this.dataTypeChipContainer, {
+        text: option.text,
+        selected: isSelected,
+        onClick: () => this.onDataTypeChipClick(option.value),
+      });
+      this.dataTypeChips.set(option.value, chip);
+    }
+
+    // Update hidden select value
+    if (defaultValue) {
+      this.dataTypeSelect.value = defaultValue;
+    }
+  }
+
+  /**
+   * Creates a field with +/- adjust buttons (same pattern as InsertTableModal)
+   */
+  private createAdjustField(
+    parent: HTMLElement,
+    label: string,
+    defaultValue: number,
+    min: number,
+    max: number,
+    increment: number,
+    unit?: string,
+  ): HTMLInputElement {
+    const fieldContainer = parent.createDiv({
+      cls: "workout-field-with-adjust",
+    });
+
+    const labelText = unit ? `${label} (${unit})` : label;
+    const labelEl = fieldContainer.createDiv({ cls: "workout-field-label" });
+    labelEl.textContent = labelText;
+
+    const inputContainer = fieldContainer.createDiv({
+      cls: "workout-input-with-adjust",
+    });
+
+    const minusBtn = Button.create(inputContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+      className: "workout-adjust-btn workout-adjust-minus",
+      ariaLabel: `Decrease ${label} by ${increment}`,
+      variant: "secondary",
+      size: "small",
+    });
+    minusBtn.type = "button";
+
+    const input = Input.create(inputContainer, {
+      type: INPUT_TYPE.NUMBER,
+      className: "workout-charts-input",
+      min,
+      max,
+      step: 1,
+      value: defaultValue,
+    });
+
+    const plusBtn = Button.create(inputContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+      className: "workout-adjust-btn workout-adjust-plus",
+      ariaLabel: `Increase ${label} by ${increment}`,
+      variant: "secondary",
+      size: "small",
+    });
+    plusBtn.type = "button";
+
+    Button.onClick(minusBtn, () => {
+      const current = parseInt(input.value) || 0;
+      input.value = Math.max(min, current - increment).toString();
+    });
+
+    Button.onClick(plusBtn, () => {
+      const current = parseInt(input.value) || 0;
+      input.value = Math.min(max, current + increment).toString();
+    });
+
+    return input;
   }
 
   protected generateCode(): string {
@@ -219,19 +419,22 @@ export class InsertChartModal extends BaseInsertModal {
   private async updateDataTypeOptions(exerciseName: string): Promise<void> {
     if (!this.dataTypeSelect || !this.plugin) return;
 
-    // If no exercise selected, reset to default (or maybe standard types?)
+    // If no exercise selected, reset to standard options
     if (!exerciseName) {
-      // Keep existing options or reset to standard?
-      // For now, let's just return to avoid clearing useful defaults if user is typing
-      // But if they clear the input, we might want to reset.
-      // Let's reload standard options if empty
+      // Rebuild standard options
       this.dataTypeSelect.empty();
-      CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.forEach((opt) => {
+      const standardOptions =
+        CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map((opt) => ({
+          text: opt.text,
+          value: opt.value,
+        }));
+      standardOptions.forEach((opt) => {
         const option = document.createElement("option");
         option.value = opt.value;
         option.text = opt.text;
         this.dataTypeSelect?.appendChild(option);
       });
+      this.buildDataTypeChips(standardOptions);
       return;
     }
 
@@ -250,26 +453,27 @@ export class InsertChartModal extends BaseInsertModal {
     // Clear existing options
     this.dataTypeSelect.empty();
 
-    // Add new options
+    // Build new options
+    const newOptions: Array<{ text: string; value: string }> = [];
+
     availableTypes.forEach((type) => {
       const option = document.createElement("option");
       option.value = type;
 
       // Determine display text using ParameterUtils
       let displayText: string;
-
-      // First check if it's a custom parameter from the exercise definition
-      const customParam = definition?.customParameters?.find((p) => p.key === type);
+      const customParam = definition?.customParameters?.find(
+        (p) => p.key === type,
+      );
       if (customParam) {
-        // Use ParameterUtils to format custom parameter with unit
         displayText = ParameterUtils.formatParamWithUnit(customParam);
       } else {
-        // Use ParameterUtils to format standard types with their default units
         displayText = ParameterUtils.formatKeyWithUnit(type);
       }
 
       option.text = displayText;
       this.dataTypeSelect?.appendChild(option);
+      newOptions.push({ text: displayText, value: type });
     });
 
     // Update selected value to default if current is invalid
@@ -277,5 +481,8 @@ export class InsertChartModal extends BaseInsertModal {
     if (!isValidChartDataType(typeId, currentVal, customParams)) {
       this.dataTypeSelect.value = getDefaultChartDataType(typeId, customParams);
     }
+
+    // Rebuild data type chips
+    this.buildDataTypeChips(newOptions);
   }
 }

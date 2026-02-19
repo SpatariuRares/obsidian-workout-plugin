@@ -47,6 +47,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
 
 \`\`\`workout-timer
 duration: {{duration}}
+exercise: {{exercise}}
+workout: {{workout}}
 preset: {{preset}}
 \`\`\`
 

@@ -30,5 +30,13 @@ declare module "obsidian" {
       name: "workout-planner:muscle-tags-changed",
       evt: MuscleTagsChangedEvent,
     ): void;
+    on(
+      name: "workout-planner:log-added",
+      callback: (evt: WorkoutDataChangedEvent) => void,
+    ): EventRef;
+    trigger(
+      name: "workout-planner:log-added",
+      evt: WorkoutDataChangedEvent,
+    ): void;
   }
 }

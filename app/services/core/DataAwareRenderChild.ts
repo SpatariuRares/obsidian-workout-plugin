@@ -14,7 +14,7 @@ export class DataAwareRenderChild extends MarkdownRenderChild {
     containerEl: HTMLElement,
     private plugin: WorkoutChartsPlugin,
     private params: Record<string, unknown>,
-    private refreshFn: () => Promise<void>,
+    private refreshFn: (evt?: WorkoutDataChangedEvent) => Promise<void>,
   ) {
     super(containerEl);
   }
@@ -24,8 +24,9 @@ export class DataAwareRenderChild extends MarkdownRenderChild {
       this.plugin.app.workspace.on(
         "workout-planner:data-changed",
         (evt: WorkoutDataChangedEvent) => {
-          if (this.shouldRefresh(evt)) {
-            void this.refreshFn();
+          const should = this.shouldRefresh(evt);
+          if (should) {
+            void this.refreshFn(evt);
           }
         },
       ),

@@ -1,0 +1,26 @@
+@use "../variables";
+
+/* Table modal type chips */
+.workout-table-type-chips {
+  display: flex;
+  gap: var(--workout-space-sm);
+  flex-wrap: wrap;
+}
+
+/* Table advanced options row - compact flex layout */
+.workout-table-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-lg);
+
+  .workout-charts-checkbox-group {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-table-options-row {
+    flex-direction: column;
+    gap: var(--workout-space-md);
+  }
+}

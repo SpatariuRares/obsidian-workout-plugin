@@ -14,14 +14,22 @@ import {
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { TABLE_TYPE } from "@app/features/tables/types";
+import { Chip } from "@app/components/atoms/Chip";
+import { Button } from "@app/components/atoms/Button";
+import { Input } from "@app/components/atoms/Input";
+import { INPUT_TYPE } from "@app/types/InputTypes";
+
+const LIMIT_INCREMENT = 5;
+const DATE_RANGE_INCREMENT = 7;
+const TARGET_WEIGHT_INCREMENT = 5;
+const TARGET_REPS_INCREMENT = 1;
 
 export class InsertTableModal extends BaseInsertModal {
   private tableTypeSelect?: HTMLSelectElement;
+  private tableTypeChips: Map<string, HTMLButtonElement> = new Map();
   private targetElements?: TargetSectionWithAutocompleteElements;
   private limitInput?: HTMLInputElement;
   private dateRangeInput?: HTMLInputElement;
-  private addButtonToggle?: HTMLInputElement;
-  private buttonTextInput?: HTMLInputElement;
   private advancedElements?: AdvancedOptionsElements;
   private targetWeightInput?: HTMLInputElement;
   private targetRepsInput?: HTMLInputElement;
@@ -52,12 +60,36 @@ export class InsertTableModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.SECTIONS.TABLE_TYPE,
     );
 
-    // Table Type selector (exercise vs workout)
-    this.tableTypeSelect = this.createSelectField(
-      tableTypeSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TABLE_TYPE,
-      [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE],
-    );
+    // Hidden select as backing store for TargetSectionWithAutocomplete
+    this.tableTypeSelect = tableTypeSection.createEl("select", {
+      cls: "workout-charts-select",
+    });
+    DomUtils.setCssProps(this.tableTypeSelect, { display: "none" });
+
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
+      this.tableTypeSelect.createEl("option", {
+        text: option.text,
+        value: option.value,
+      });
+    }
+
+    // Chips for table type selection
+    const chipContainer = tableTypeSection.createDiv({
+      cls: "workout-table-type-chips",
+    });
+
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
+      const isDefault = (option.value as TABLE_TYPE) === TABLE_TYPE.COMBINED;
+      const chip = Chip.create(chipContainer, {
+        text: option.text,
+        selected: isDefault,
+        onClick: () => this.onTableTypeChipClick(option.value),
+      });
+      this.tableTypeChips.set(option.value, chip);
+    }
+
+    // Set initial select value
+    this.tableTypeSelect.value = TABLE_TYPE.COMBINED;
 
     // Target Section using reusable component with autocomplete
     if (!this.plugin) {
@@ -92,27 +124,30 @@ export class InsertTableModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
     );
 
-    // Limit selector
-    this.limitInput = this.createNumberField(
-      configSection,
+    // Parameters container (grid layout)
+    const parametersContainer = configSection.createDiv({
+      cls: "workout-parameters-container",
+    });
+
+    // Limit with +/- adjust
+    this.limitInput = this.createAdjustField(
+      parametersContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.MAX_LOG_COUNT,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
-      {
-        min: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
-        max: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
-      },
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
+      LIMIT_INCREMENT,
     );
 
-    // Date range selector
-    this.dateRangeInput = this.createNumberField(
-      configSection,
+    // Date range with +/- adjust
+    this.dateRangeInput = this.createAdjustField(
+      parametersContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.DATE_RANGE,
       0,
-      {
-        min: 0,
-        max: 365,
-        placeholder: "0 = all time",
-      },
+      0,
+      365,
+      DATE_RANGE_INCREMENT,
+      "d",
     );
 
     // Progressive Overload Section
@@ -121,39 +156,118 @@ export class InsertTableModal extends BaseInsertModal {
       CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD,
     );
 
-    // Target weight input
-    this.targetWeightInput = this.createNumberField(
-      this.progressiveSection,
+    // Target parameters container (grid layout)
+    const targetParametersContainer = this.progressiveSection.createDiv({
+      cls: "workout-parameters-container",
+    });
+
+    // Target weight with +/- adjust
+    this.targetWeightInput = this.createAdjustField(
+      targetParametersContainer,
       getDynamicModalLabels().TARGET_WEIGHT,
       0,
-      {
-        min: 0,
-        max: 1000,
-        placeholder: "0 = no target",
-      },
+      0,
+      1000,
+      TARGET_WEIGHT_INCREMENT,
     );
 
-    // Target reps input
-    this.targetRepsInput = this.createNumberField(
-      this.progressiveSection,
+    // Target reps with +/- adjust
+    this.targetRepsInput = this.createAdjustField(
+      targetParametersContainer,
       CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_REPS,
       0,
-      {
-        min: 0,
-        max: 100,
-        placeholder: "0 = no target",
-      },
+      0,
+      100,
+      TARGET_REPS_INCREMENT,
     );
 
     // Advanced Options Section using reusable component
     this.advancedElements = AdvancedOptionsSection.create(this, container, {
       showSearchByName: true,
       showAddButton: true,
+      compact: true,
     });
 
     // Set default values based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
       this.plugin.settings.defaultExactMatch;
+  }
+
+  private onTableTypeChipClick(value: string): void {
+    if (!this.tableTypeSelect) return;
+
+    // Update chips
+    for (const [chipValue, chip] of this.tableTypeChips) {
+      Chip.setSelected(chip, chipValue === value);
+    }
+
+    // Update hidden select and dispatch change event
+    this.tableTypeSelect.value = value;
+    this.tableTypeSelect.dispatchEvent(new Event("change"));
+  }
+
+  /**
+   * Creates a field with +/- adjust buttons (same pattern as TimerConfigurationSection)
+   */
+  private createAdjustField(
+    parent: HTMLElement,
+    label: string,
+    defaultValue: number,
+    min: number,
+    max: number,
+    increment: number,
+    unit?: string,
+  ): HTMLInputElement {
+    const fieldContainer = parent.createDiv({
+      cls: "workout-field-with-adjust",
+    });
+
+    const labelText = unit ? `${label} (${unit})` : label;
+    const labelEl = fieldContainer.createDiv({ cls: "workout-field-label" });
+    labelEl.textContent = labelText;
+
+    const inputContainer = fieldContainer.createDiv({
+      cls: "workout-input-with-adjust",
+    });
+
+    const minusBtn = Button.create(inputContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+      className: "workout-adjust-btn workout-adjust-minus",
+      ariaLabel: `Decrease ${label} by ${increment}`,
+      variant: "secondary",
+      size: "small",
+    });
+    minusBtn.type = "button";
+
+    const input = Input.create(inputContainer, {
+      type: INPUT_TYPE.NUMBER,
+      className: "workout-charts-input",
+      min,
+      max,
+      step: 1,
+      value: defaultValue,
+    });
+
+    const plusBtn = Button.create(inputContainer, {
+      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+      className: "workout-adjust-btn workout-adjust-plus",
+      ariaLabel: `Increase ${label} by ${increment}`,
+      variant: "secondary",
+      size: "small",
+    });
+    plusBtn.type = "button";
+
+    Button.onClick(minusBtn, () => {
+      const current = parseInt(input.value) || 0;
+      input.value = Math.max(min, current - increment).toString();
+    });
+
+    Button.onClick(plusBtn, () => {
+      const current = parseInt(input.value) || 0;
+      input.value = Math.min(max, current + increment).toString();
+    });
+
+    return input;
   }
 
   private updateSectionsVisibility(targetHandlers: {
@@ -187,8 +301,6 @@ export class InsertTableModal extends BaseInsertModal {
       !this.tableTypeSelect ||
       !this.targetElements ||
       !this.limitInput ||
-      !this.addButtonToggle ||
-      !this.buttonTextInput ||
       !this.advancedElements
     ) {
       throw new Error("Table elements not initialized");
@@ -204,7 +316,8 @@ export class InsertTableModal extends BaseInsertModal {
     const dateRange = this.dateRangeInput
       ? parseInt(this.dateRangeInput.value) || 0
       : 0;
-    const showAddButton = this.addButtonToggle.checked;
+    const showAddButton =
+      this.advancedElements.addButtonToggle?.checked ?? true;
     const advancedValues = AdvancedOptionsSection.getValues(
       this.advancedElements,
     );

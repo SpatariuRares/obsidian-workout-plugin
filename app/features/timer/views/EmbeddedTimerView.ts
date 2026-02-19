@@ -70,10 +70,6 @@ export class EmbeddedTimerView extends BaseView {
         return;
       }
 
-      // Auto-start if requested
-      if (resolvedParams.autoStart) {
-        this.timerCore.start();
-      }
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -136,7 +132,6 @@ export class EmbeddedTimerView extends BaseView {
       type: preset.type,
       duration: preset.duration,
       showControls: preset.showControls,
-      autoStart: preset.autoStart,
       sound: preset.sound,
       rounds: preset.rounds,
     };

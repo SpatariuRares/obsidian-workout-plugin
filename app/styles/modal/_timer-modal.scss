@@ -1,0 +1,41 @@
+@use "../variables";
+
+/* Timer modal type chips */
+.workout-timer-type-chips {
+  display: flex;
+  gap: var(--workout-space-sm);
+  flex-wrap: wrap;
+}
+
+/* Timer preset chips - horizontal scrollable */
+.workout-timer-preset-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--workout-space-sm);
+  overflow-x: auto;
+  padding: var(--workout-space-xs) 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Display options row - compact flex layout */
+.workout-timer-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-lg);
+
+  .workout-charts-checkbox-group {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-timer-options-row {
+    flex-direction: column;
+    gap: var(--workout-space-md);
+  }
+}

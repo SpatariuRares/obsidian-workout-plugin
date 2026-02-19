@@ -233,9 +233,8 @@ showStats: true
 \`\`\`workout-timer
 duration: 180
 type: countdown
-title: Hip Thrust
+exercise: Hip Thrust
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
@@ -253,9 +252,8 @@ exactMatch: true
 \`\`\`workout-timer
 duration: 180
 type: countdown
-title: RDL
+exercise: RDL
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
@@ -273,9 +271,8 @@ exactMatch: true
 \`\`\`workout-timer
 duration: 120
 type: countdown
-title: Hack squat
+exercise: Hack squat
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
@@ -293,9 +290,8 @@ exactMatch: true
 \`\`\`workout-timer
 duration: 90
 type: countdown
-title: Leg Curl Sdraiato
+exercise: Leg Curl Sdraiato
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
@@ -313,9 +309,8 @@ exactMatch: true
 \`\`\`workout-timer
 duration: 60
 type: countdown
-title: Calf Machine
+exercise: Calf Machine
 showControls: true
-autoStart: false
 sound: true
 \`\`\`
 
@@ -843,7 +838,7 @@ limit: 10
 \`\`\`workout-timer
 type: countdown
 duration: 90
-title: Rest Timer
+exercise: Rest Timer
 showControls: true
 sound: true
 \`\`\`
@@ -854,7 +849,7 @@ sound: true
 type: interval
 duration: 30
 rounds: 5
-title: HIIT Intervals
+exercise: HIIT Intervals
 showControls: true
 sound: true
 \`\`\`
@@ -923,7 +918,7 @@ ${t("examples.hiit.intro")}
 \`\`\`workout-timer
 type: countdown
 duration: 300
-title: Warm-up
+exercise: Warm-up
 showControls: true
 sound: true
 \`\`\`
@@ -936,7 +931,7 @@ sound: true
 type: interval
 duration: 30
 rounds: 8
-title: Sprint Intervals
+exercise: Sprint Intervals
 showControls: true
 sound: true
 \`\`\`

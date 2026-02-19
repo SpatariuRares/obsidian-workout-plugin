@@ -5,15 +5,18 @@ import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
   TimerConfigurationSection,
   TimerConfigurationElements,
+  TimerConfigurationHandlers,
   TIMER_TYPE,
 } from "@app/features/timer";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { Chip } from "@app/components/atoms/Chip";
 import type WorkoutChartsPlugin from "main";
 
 export class InsertTimerModal extends BaseInsertModal {
   private timerElements?: TimerConfigurationElements;
-  private presetSelect?: HTMLSelectElement;
-  private usePresetOnlyCheckbox?: HTMLInputElement;
+  private timerHandlers?: TimerConfigurationHandlers;
+  private selectedPreset?: string;
+  private presetChips: Map<string, HTMLButtonElement> = new Map();
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app, plugin);
@@ -36,7 +39,7 @@ export class InsertTimerModal extends BaseInsertModal {
       throw new Error("Plugin is required for InsertTimerModal");
     }
 
-    // Preset Section (if presets exist)
+    // Preset Section (if presets exist) - chips instead of dropdown
     const presetNames = Object.keys(this.plugin.settings.timerPresets);
     if (presetNames.length > 0) {
       const presetSection = this.createSection(
@@ -44,70 +47,71 @@ export class InsertTimerModal extends BaseInsertModal {
         CONSTANTS.WORKOUT.MODAL.SECTIONS.PRESET,
       );
 
-      // Preset dropdown
-      const presetOptions = [
-        { text: CONSTANTS.WORKOUT.SETTINGS.OPTIONS.NONE, value: "" },
-        ...presetNames.map((name) => ({ text: name, value: name })),
-      ];
-      this.presetSelect = this.createSelectField(
-        presetSection,
-        CONSTANTS.WORKOUT.MODAL.LABELS.TIMER_PRESET,
-        presetOptions,
-      );
+      const chipsContainer = presetSection.createDiv({
+        cls: "workout-timer-preset-chips",
+      });
 
-      // Set default preset if configured
-      if (this.plugin.settings.defaultTimerPreset) {
-        this.presetSelect.value = this.plugin.settings.defaultTimerPreset;
+      for (const name of presetNames) {
+        const isDefault = name === this.plugin.settings.defaultTimerPreset;
+        const chip = Chip.create(chipsContainer, {
+          text: name,
+          selected: isDefault,
+          className: "workout-log-recent-chip",
+          onClick: () => this.onPresetChipClick(name),
+        });
+        this.presetChips.set(name, chip);
+        if (isDefault) {
+          this.selectedPreset = name;
+        }
       }
-
-      // Use preset only checkbox
-      const usePresetOnlyContainer = this.createCheckboxGroup(presetSection);
-      this.usePresetOnlyCheckbox = this.createCheckbox(
-        usePresetOnlyContainer,
-        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_PRESET_ONLY,
-        false,
-        "usePresetOnly",
-      );
-
-      // When preset is selected, populate form fields with preset values
-      this.presetSelect.addEventListener("change", () => this.onPresetChange());
     }
 
     // Timer Configuration Section using reusable component
-    const { elements: timerElements } = TimerConfigurationSection.create(
-      this,
-      container,
-    );
+    const { elements: timerElements, handlers: timerHandlers } =
+      TimerConfigurationSection.create(this, container, this.plugin);
     this.timerElements = timerElements;
+    this.timerHandlers = timerHandlers;
 
     // Apply preset values if a default preset is selected
-    if (this.presetSelect?.value) {
-      this.onPresetChange();
+    if (this.selectedPreset) {
+      this.applyPresetValues(this.selectedPreset);
     }
   }
 
-  private onPresetChange(): void {
-    if (!this.presetSelect || !this.timerElements || !this.plugin) return;
+  private onPresetChipClick(name: string): void {
+    if (this.selectedPreset === name) {
+      // Deselect
+      this.selectedPreset = undefined;
+      for (const [, chip] of this.presetChips) {
+        Chip.setSelected(chip, false);
+      }
+      return;
+    }
 
-    const presetName = this.presetSelect.value;
-    if (!presetName) return;
+    // Select new preset
+    this.selectedPreset = name;
+    for (const [presetName, chip] of this.presetChips) {
+      Chip.setSelected(chip, presetName === name);
+    }
+    this.applyPresetValues(name);
+  }
+
+  private applyPresetValues(presetName: string): void {
+    if (!this.timerElements || !this.timerHandlers || !this.plugin) return;
 
     const preset = this.plugin.settings.timerPresets[presetName];
     if (!preset) return;
 
-    // Populate form fields with preset values
-    this.timerElements.timerTypeSelect.value = preset.type;
-    this.timerElements.timerTypeSelect.dispatchEvent(new Event("change")); // Trigger visibility update
+    // Set timer type via handler (updates chips + visibility)
+    this.timerHandlers.setTimerType(preset.type);
 
-    if (this.timerElements.durationInput) {
-      this.timerElements.durationInput.value = preset.duration.toString();
-    }
-    if (this.timerElements.roundsInput && preset.rounds) {
+    this.timerElements.durationInput.value = preset.duration.toString();
+
+    if (preset.rounds) {
       this.timerElements.roundsInput.value = preset.rounds.toString();
     }
-    this.timerElements.titleInput.value = preset.name;
+    this.timerElements.exerciseInput.value = preset.name;
     this.timerElements.showControlsToggle.checked = preset.showControls;
-    this.timerElements.autoStartToggle.checked = preset.autoStart;
     this.timerElements.soundToggle.checked = preset.sound;
   }
 
@@ -118,23 +122,16 @@ export class InsertTimerModal extends BaseInsertModal {
       );
     }
 
-    // If using preset only, generate minimal code with just preset reference
-    const presetName = this.presetSelect?.value;
-    if (presetName && this.usePresetOnlyCheckbox?.checked) {
-      return CodeGenerator.generateTimerCode({
-        preset: presetName,
-      });
-    }
-
+    // If a preset is selected, include preset reference in generated code
+    const presetName = this.selectedPreset;
     const timerValues = TimerConfigurationSection.getValues(this.timerElements);
 
     return CodeGenerator.generateTimerCode({
       type: timerValues.type as TIMER_TYPE,
       duration: timerValues.duration,
       rounds: timerValues.rounds,
-      title: timerValues.title,
+      exercise: timerValues.exercise,
       showControls: timerValues.showControls,
-      autoStart: timerValues.autoStart,
       sound: timerValues.sound,
       preset: presetName || undefined,
     });

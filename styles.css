@@ -2373,6 +2373,50 @@
    This stylesheet uses a modular approach with component-based CSS files.
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
+/* Timer modal type chips */
+.workout-timer-type-chips {
+  display: flex;
+  gap: var(--workout-space-sm);
+  flex-wrap: wrap;
+}
+
+/* Timer preset chips - horizontal scrollable */
+.workout-timer-preset-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--workout-space-sm);
+  overflow-x: auto;
+  padding: var(--workout-space-xs) 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.workout-timer-preset-chips::-webkit-scrollbar {
+  display: none;
+}
+
+/* Display options row - compact flex layout */
+.workout-timer-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--workout-space-lg);
+}
+.workout-timer-options-row .workout-charts-checkbox-group {
+  padding-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .workout-timer-options-row {
+    flex-direction: column;
+    gap: var(--workout-space-md);
+  }
+}
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
 /* ============================================================================
    DASHBOARD LAYOUT - Bento Grid
    Uses small fixed row tracks + JS auto-sizing for masonry-like dense packing

@@ -30,6 +30,8 @@ export abstract class BaseInsertModal extends ModalBase {
 
   onOpen() {
     const { contentEl } = this;
+    contentEl.addClass("workout-modal");
+
     contentEl.createEl("h2", { text: this.getModalTitle() });
 
     // Create main container with better styling
@@ -56,16 +58,14 @@ export abstract class BaseInsertModal extends ModalBase {
     // Insert button using Button atom
     const insertBtn = Button.create(container, {
       text: this.getButtonText(),
-      className: "mod-cta",
+      variant: "primary",
       ariaLabel: this.getButtonText(),
-      variant: "secondary",
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
       text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      className: "btn-warning",
-      variant: "secondary",
+      variant: "warning",
       ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
     });
 

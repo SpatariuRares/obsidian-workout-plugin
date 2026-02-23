@@ -65,6 +65,11 @@ export class TimerCore {
       startTime: Date.now() - this.state.elapsedTime,
     });
 
+    // Update start/stop button icon (needed for programmatic start, e.g. auto-start)
+    if (this.state.startStopBtn) {
+      TimerControls.updateStartStopButton(this.state.startStopBtn, true);
+    }
+
     this.state.timerInterval = window.setInterval(() => {
       this.updateTimer();
     }, 100);

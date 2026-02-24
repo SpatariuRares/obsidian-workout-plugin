@@ -5,7 +5,6 @@ import { GeneralSettings } from "@app/features/settings/components/GeneralSettin
 import { TimerPresetsSettings } from "@app/features/timer";
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
 import { TemplatesSettings } from "@app/features/settings/components/TemplatesSettings";
-import { ProgressiveOverloadSettings } from "@app/features/settings/components/ProgressiveOverloadSettings";
 import { DurationEstimationSettings } from "@app/features/duration";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 
@@ -21,22 +20,19 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    // General Settings
+    // General Settings (paths + weight unit, filtering, CSV management, example data)
     new GeneralSettings(this.app, this.plugin, containerEl).render();
 
     // Timer Presets Section
-    new TimerPresetsSettings(this.plugin, containerEl).render();
+    new TimerPresetsSettings(this.app, this.plugin, containerEl).render();
 
     // Custom Protocols Section
-    new CustomProtocolsSettings(this.plugin, containerEl).render();
+    new CustomProtocolsSettings(this.app, this.plugin, containerEl).render();
 
     // Templates Section
     new TemplatesSettings(this.plugin, containerEl).render();
 
-    // Progressive Overload Section
-    new ProgressiveOverloadSettings(this.plugin, containerEl).render();
-
-    // Duration Estimation Section
+    // Training Parameters Section (weight increment + duration estimation — replaces separate Progressive Overload section)
     new DurationEstimationSettings(this.plugin, containerEl).render();
 
     // Quick Log Section

@@ -24,6 +24,7 @@ import { Chip } from "@app/components/atoms/Chip";
 import { Button } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { t } from "@app/i18n";
 
 const DATE_RANGE_INCREMENT = 7;
 const LIMIT_INCREMENT = 10;
@@ -49,11 +50,11 @@ export class InsertChartModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_CHART;
+    return t("modal.titles.insertChart");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_CHART;
+    return t("modal.buttons.insertChart");
   }
 
   protected getSuccessMessage(): string {

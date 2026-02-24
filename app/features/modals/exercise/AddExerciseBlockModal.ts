@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
@@ -18,8 +19,8 @@ export class AddExerciseBlockModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.ADD_EXERCISE_BLOCK;
-  }
+    return t("modal.titles.addExerciseBlock")
+    }
 
   protected getButtonText(): string {
     return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_EXERCISE_BLOCK;
@@ -50,7 +51,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     const presetNames = Object.keys(this.plugin.settings.timerPresets);
     if (presetNames.length > 0) {
       const presetOptions = [
-        { text: CONSTANTS.WORKOUT.SETTINGS.OPTIONS.NONE, value: "" },
+        { text: t("settings.options.none"), value: "" },
         ...presetNames.map((name) => ({ text: name, value: name })),
       ];
       this.presetSelect = this.createSelectField(

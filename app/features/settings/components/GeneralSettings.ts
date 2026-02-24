@@ -1,5 +1,5 @@
 import { App, Setting, normalizePath, Notice } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
@@ -16,9 +16,14 @@ export class GeneralSettings {
   render(): void {
     const { containerEl } = this;
 
+    // Top-level "Setup & data" heading for the path/unit fields
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.CSV_PATH)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CSV_FOLDER)
+      .setName(t("settings.sections.setupAndData"))
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName(t("settings.labels.csvPath"))
+      .setDesc(t("settings.descriptions.csvFolder"))
       .addText((text) => {
         new FolderSuggest(this.app, text.inputEl);
         const currentPath = this.plugin.settings.csvLogFilePath;
@@ -27,7 +32,7 @@ export class GeneralSettings {
           lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
 
         text
-          .setPlaceholder(CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_CSV_PATH)
+          .setPlaceholder(t("forms.enterCsvPath"))
           .setValue(folderPath)
           .onChange(async (value) => {
             const folder = normalizePath(value);
@@ -37,14 +42,12 @@ export class GeneralSettings {
       });
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_FOLDER)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.EXERCISE_FOLDER)
+      .setName(t("settings.labels.exerciseFolder"))
+      .setDesc(t("settings.descriptions.exerciseFolder"))
       .addText((text) => {
         new FolderSuggest(this.app, text.inputEl);
         text
-          .setPlaceholder(
-            CONSTANTS.WORKOUT.FORMS.PLACEHOLDERS.ENTER_FOLDER_PATH,
-          )
+          .setPlaceholder(t("forms.enterFolderPath"))
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
             this.plugin.settings.exerciseFolderPath = normalizePath(value);
@@ -53,12 +56,12 @@ export class GeneralSettings {
       });
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.WEIGHT_UNIT)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.WEIGHT_UNIT)
+      .setName(t("settings.labels.weightUnit"))
+      .setDesc(t("settings.descriptions.weightUnit"))
       .addDropdown((dropdown) =>
         dropdown
-          .addOption("kg", CONSTANTS.WORKOUT.SETTINGS.OPTIONS.WEIGHT_UNIT.KG)
-          .addOption("lb", CONSTANTS.WORKOUT.SETTINGS.OPTIONS.WEIGHT_UNIT.LB)
+          .addOption("kg", t("settings.options.weightUnit.kg"))
+          .addOption("lb", t("settings.options.weightUnit.lb"))
           .setValue(this.plugin.settings.weightUnit)
           .onChange(async (value) => {
             this.plugin.settings.weightUnit = value as "kg" | "lb";
@@ -72,12 +75,12 @@ export class GeneralSettings {
 
     // Filtering Section
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.FILTERING)
+      .setName(t("settings.sections.filtering"))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_EXACT_MATCH)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.DEFAULT_EXACT_MATCH)
+      .setName(t("settings.labels.defaultExactMatch"))
+      .setDesc(t("settings.descriptions.defaultExactMatch"))
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.defaultExactMatch)
@@ -89,15 +92,15 @@ export class GeneralSettings {
 
     // CSV Management Section
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CSV_MANAGEMENT)
+      .setName(t("settings.sections.csvManagement"))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SETUP_CSV)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SETUP_CSV)
+      .setName(t("settings.labels.setupCSV"))
+      .setDesc(t("settings.descriptions.setupCSV"))
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_FILES)
+          .setButtonText(t("settings.buttons.createFiles"))
           .onClick(async () => {
             try {
               // Create workout log CSV
@@ -106,30 +109,25 @@ export class GeneralSettings {
               // Create muscle tags CSV
               await this.handleCreateMuscleTagsCsv();
 
-              new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_CREATED);
+              new Notice(t("settings.messages.csvFilesCreated"));
             } catch (error) {
-              const errorMessage =
-                ErrorUtils.getErrorMessage(error);
-              new Notice(
-                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CSV_FILES_ERROR(
-                  errorMessage,
-                ),
-              );
+              const errorMessage = ErrorUtils.getErrorMessage(error);
+              new Notice(`Error creating CSV files: ${errorMessage}`);
             }
           }),
       );
 
     // Initial Setup Section
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.EXAMPLE_DATA)
+      .setName(t("settings.sections.exampleData"))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_EXAMPLES)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.GENERATE_EXAMPLES)
+      .setName(t("settings.labels.generateExamples"))
+      .setDesc(t("settings.descriptions.generateExamples"))
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CREATE_EXAMPLES)
+          .setButtonText(t("settings.buttons.createExamples"))
           .onClick(async () => {
             const { ExampleGeneratorService } =
               await import("@app/services/examples/ExampleGeneratorService");
@@ -142,7 +140,7 @@ export class GeneralSettings {
             if (folderExists) {
               new ConfirmModal(
                 this.app,
-                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_OVERWRITE_EXAMPLES,
+                t("settings.messages.confirmOverwriteExamples"),
                 async () => {
                   await generator.generateExampleFolder(true);
                 },
@@ -168,7 +166,7 @@ export class GeneralSettings {
         // File exists, show confirmation modal
         new ConfirmModal(
           this.app,
-          CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CONFIRM_OVERWRITE_MUSCLE_TAGS,
+          t("settings.descriptions.confirmOverwriteMuscleTags"),
           async () => {
             // User confirmed, overwrite by saving default tags
             await this.createMuscleTagsCsvWithDefaults();
@@ -178,14 +176,11 @@ export class GeneralSettings {
         // File doesn't exist, create it directly
         await muscleTagService.createDefaultCsv();
         this.plugin.triggerMuscleTagRefresh();
-        new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.MUSCLE_TAGS_CSV_CREATED);
+        new Notice(t("settings.messages.csvFilesCreated"));
       }
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
-      new Notice(
-        CONSTANTS.WORKOUT.MESSAGES.ERRORS.MUSCLE_TAGS_CSV_FAILED(errorMessage),
-      );
+      const errorMessage = ErrorUtils.getErrorMessage(error);
+      new Notice(`Error creating muscle tags CSV: ${errorMessage}`);
     }
   }
 
@@ -200,13 +195,10 @@ export class GeneralSettings {
     try {
       await muscleTagService.saveTags(defaultTags);
       this.plugin.triggerMuscleTagRefresh();
-      new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.MUSCLE_TAGS_CSV_CREATED);
+      new Notice(t("settings.messages.csvFilesCreated"));
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
-      new Notice(
-        CONSTANTS.WORKOUT.MESSAGES.ERRORS.MUSCLE_TAGS_CSV_FAILED(errorMessage),
-      );
+      const errorMessage = ErrorUtils.getErrorMessage(error);
+      new Notice(`Error creating muscle tags CSV: ${errorMessage}`);
     }
   }
 }

@@ -1,12 +1,14 @@
-import { Setting, Notice } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { Setting, Notice, App } from "obsidian";
+import { t } from "@app/i18n";
 import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
 
 export class TimerPresetsSettings {
   private presetsContainer: HTMLElement | null = null;
 
   constructor(
+    private app: App,
     private plugin: WorkoutChartsPlugin,
     private containerEl: HTMLElement,
   ) {}
@@ -15,17 +17,17 @@ export class TimerPresetsSettings {
     const { containerEl } = this;
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.TIMER_PRESETS)
+      .setName(t("settings.sections.timerPresets"))
       .setHeading();
 
     // Default timer preset dropdown
     const presetNames = Object.keys(this.plugin.settings.timerPresets);
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_TIMER_PRESET)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.DEFAULT_TIMER_PRESET)
+      .setName(t("settings.labels.defaultTimerPreset"))
+      .setDesc(t("settings.descriptions.defaultTimerPreset"))
       .addDropdown((dropdown) => {
-        dropdown.addOption("", CONSTANTS.WORKOUT.SETTINGS.OPTIONS.NONE);
+        dropdown.addOption("", t("settings.options.none"));
         presetNames.forEach((name) => {
           dropdown.addOption(name, name);
         });
@@ -45,7 +47,7 @@ export class TimerPresetsSettings {
     // Add preset button
     new Setting(containerEl).addButton((button) =>
       button
-        .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PRESET)
+        .setButtonText(t("settings.buttons.addPreset"))
         .setCta()
         .onClick(() => {
           this.showPresetEditor(null);
@@ -63,7 +65,7 @@ export class TimerPresetsSettings {
 
     if (presetNames.length === 0) {
       this.presetsContainer.createEl("p", {
-        text: CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.NO_PRESETS,
+        text: t("settings.descriptions.noPresets"),
         cls: "workout-setting-item-description",
       });
       return;
@@ -98,12 +100,14 @@ export class TimerPresetsSettings {
         button
           .setIcon("trash")
           .setTooltip("Delete preset")
-          .onClick(async () => {
-            if (
-              confirm(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PRESET)
-            ) {
-              await this.deletePreset(preset.name);
-            }
+          .onClick(() => {
+            new ConfirmModal(
+              this.app,
+              t("settings.messages.confirmDeletePreset"),
+              async () => {
+                await this.deletePreset(preset.name);
+              },
+            ).open();
           }),
       );
   }
@@ -162,7 +166,8 @@ export class TimerPresetsSettings {
 
     // Preset name input
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_NAME)
+      .setName(t("settings.labels.presetName"))
+      .setDesc(t("settings.descriptions.presetNameDesc"))
       .addText((text) =>
         text
           .setValue(formState.name)
@@ -174,7 +179,7 @@ export class TimerPresetsSettings {
 
     // Timer type dropdown
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_TYPE)
+      .setName(t("settings.labels.presetType"))
       .addDropdown((dropdown) => {
         dropdown.addOption(TIMER_TYPE.COUNTDOWN, "Countdown");
         dropdown.addOption(TIMER_TYPE.INTERVAL, "Interval");
@@ -189,7 +194,8 @@ export class TimerPresetsSettings {
 
     // Duration input
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_DURATION)
+      .setName(t("settings.labels.presetDuration"))
+      .setDesc(t("settings.descriptions.presetDurationDesc"))
       .addText((text) =>
         text.setValue(String(formState.duration)).onChange((value) => {
           const num = parseInt(value);
@@ -202,7 +208,8 @@ export class TimerPresetsSettings {
     // Interval-specific options (rounds only)
     if (formState.type === TIMER_TYPE.INTERVAL) {
       new Setting(editorContainer)
-        .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_ROUNDS)
+        .setName(t("settings.labels.presetRounds"))
+        .setDesc(t("settings.descriptions.presetRoundsDesc"))
         .addText((text) =>
           text.setValue(String(formState.rounds || 5)).onChange((value) => {
             const num = parseInt(value);
@@ -215,7 +222,7 @@ export class TimerPresetsSettings {
 
     // Boolean toggles
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_SHOW_CONTROLS)
+      .setName(t("settings.labels.presetShowControls"))
       .addToggle((toggle) =>
         toggle.setValue(formState.showControls).onChange((value) => {
           formState.showControls = value;
@@ -223,7 +230,7 @@ export class TimerPresetsSettings {
       );
 
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PRESET_SOUND)
+      .setName(t("settings.labels.presetSound"))
       .addToggle((toggle) =>
         toggle.setValue(formState.sound).onChange((value) => {
           formState.sound = value;
@@ -234,7 +241,7 @@ export class TimerPresetsSettings {
     new Setting(editorContainer)
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.SAVE_PRESET)
+          .setButtonText(t("settings.buttons.savePreset"))
           .setCta()
           .onClick(async () => {
             await this.savePreset(formState, originalName);
@@ -243,7 +250,7 @@ export class TimerPresetsSettings {
       )
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CANCEL)
+          .setButtonText(t("settings.buttons.cancel"))
           .onClick(() => {
             editorContainer.remove();
           }),
@@ -256,7 +263,7 @@ export class TimerPresetsSettings {
   ): Promise<void> {
     // Validate name
     if (!preset.name.trim()) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PRESET_NAME_REQUIRED);
+      new Notice(t("settings.messages.presetNameRequired"));
       return;
     }
 
@@ -268,7 +275,7 @@ export class TimerPresetsSettings {
       originalName !== trimmedName &&
       this.plugin.settings.timerPresets[trimmedName]
     ) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PRESET_NAME_EXISTS);
+      new Notice(t("settings.messages.presetNameExists"));
       return;
     }
 
@@ -286,51 +293,8 @@ export class TimerPresetsSettings {
     this.plugin.settings.timerPresets[trimmedName] = preset;
     await this.plugin.saveSettings();
 
-    new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PRESET_SAVED);
-
-    // Re-render the section
-    // Instead of re-rendering the entire settings page, we can just re-render this section if we're careful.
-    // However, the original code called this.display() which re-renders EVERYTHING.
-    // Ideally we'd like to just re-render the list and dropdown.
-    // Re-rendering the list is easy: this.renderPresetsList();
-    // But the dropdown needs to be updated too.
-    // For now, re-render the whole component might be tricky if we don't have a way to clear just this component's elements.
-    // But since display() clears containerEl, we can simulate that or just rely on the plugin to reload the tab.
-    // Actually, we can just clear our containerEl and call render() again?
-    // But render() appends to containerEl, it doesn't clear it.
-    // The caller (WorkoutChartsSettings) clears containerEl.
-    // Maybe we should expose a refresh method or callback?
-    // Let's try to just update what we can.
-
-    // We need to refresh the dropdown in the parent settings.
-    // The simplest way is to force a refresh of the settings tab.
-    // But we don't have easy access to the tab instance directly here, only the plugin and container.
-    // Actually, we can just rebuild the whole view if we want, but we don't control the whole view.
-
-    // Let's just update the list for now. The dropdown might be stale until next reload.
-    // To update the dropdown, we'd need to keep a reference to it.
-
-    // Better approach:
-    // Clear and redraw the whole section? We appended elements to containerEl. Removing them carefully is hard.
-
-    // Let's stick to what the original code did: this.display() on the tab.
-    // But we are in a separate class.
-    // We can rely on a callback passed in constructor? `onUpdate: () => void`?
-    // Or we can just try to update UI in place.
-
+    new Notice(t("settings.messages.presetSaved"));
     this.renderPresetsList();
-
-    // To update the dropdowns (which are created in render()), we would need to re-run render().
-    // But render() appends new Settings. We'd get duplicates.
-
-    // Let's modify the constructor to take a callback for easy full refresh if needed.
-    // For now, I'll just update the list. The dropdown will be outdated until user reopens settings or we implement a refresh.
-    // Actually, let's implement a rudimentary refresh by clearing the internal parts if we were managing our own container div.
-    // But we are appending to the main containerEl.
-
-    // Strategy: We can wrap our whole section in a div provided by us, or create a div inside the provided containerEl.
-    // The original code passed `containerEl`.
-    // I will wrap everything in a div so I can clear it and re-render.
   }
 
   private async deletePreset(name: string): Promise<void> {
@@ -342,7 +306,7 @@ export class TimerPresetsSettings {
     }
 
     await this.plugin.saveSettings();
-    new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PRESET_DELETED);
+    new Notice(t("settings.messages.presetDeleted"));
 
     this.renderPresetsList();
   }

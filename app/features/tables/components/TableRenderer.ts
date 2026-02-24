@@ -129,13 +129,13 @@ export class TableRenderer {
 
     // Find column indices dynamically based on headers
     const protocolColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
     );
     const volumeColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
     );
     const actionsColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
     );
 
     rows.forEach((row) => {

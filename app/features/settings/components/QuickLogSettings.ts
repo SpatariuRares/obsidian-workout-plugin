@@ -1,5 +1,6 @@
 import { Setting } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
+import { getDynamicSettingsLabels } from "@app/constants";
 import WorkoutChartsPlugin from "main";
 
 export class QuickLogSettings {
@@ -12,25 +13,13 @@ export class QuickLogSettings {
     const { containerEl } = this;
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.QUICK_LOG)
+      .setName(t("settings.sections.quickLog"))
       .setHeading();
 
+    // TODO: this will be default in future — add a system to control data from csv to decide what to show
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SHOW_QUICK_LOG_RIBBON)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SHOW_QUICK_LOG_RIBBON)
-      .addToggle((toggle) =>
-        toggle
-          .setValue(this.plugin.settings.showQuickLogRibbon)
-          .onChange(async (value) => {
-            this.plugin.settings.showQuickLogRibbon = value;
-            await this.plugin.saveSettings();
-            this.plugin.updateQuickLogRibbon();
-          }),
-      );
-
-    new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.QUICK_WEIGHT_INCREMENT)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.QUICK_WEIGHT_INCREMENT)
+      .setName(getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT)
+      .setDesc(t("settings.descriptions.quickWeightIncrement"))
       .addText((text) =>
         text
           .setValue(String(this.plugin.settings.quickWeightIncrement))

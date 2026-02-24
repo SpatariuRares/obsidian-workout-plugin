@@ -71,13 +71,13 @@ export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
  * Simple data type names without units, used for trend titles and labels
  */
 export const DATA_TYPE_NAMES: Record<CHART_DATA_TYPE, string> = {
-  [CHART_DATA_TYPE.VOLUME]: "Volume",
-  [CHART_DATA_TYPE.WEIGHT]: "Weight",
-  [CHART_DATA_TYPE.REPS]: "Reps",
-  [CHART_DATA_TYPE.DURATION]: "Duration",
-  [CHART_DATA_TYPE.DISTANCE]: "Distance",
-  [CHART_DATA_TYPE.PACE]: "Pace",
-  [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate",
+  [CHART_DATA_TYPE.VOLUME]: t("charts.types.volume"),
+  [CHART_DATA_TYPE.WEIGHT]: t("charts.types.weight"),
+  [CHART_DATA_TYPE.REPS]: t("charts.types.reps"),
+  [CHART_DATA_TYPE.DURATION]: t("charts.types.duration"),
+  [CHART_DATA_TYPE.DISTANCE]: t("charts.types.distance"),
+  [CHART_DATA_TYPE.PACE]: t("charts.types.pace"),
+  [CHART_DATA_TYPE.HEART_RATE]: t("charts.types.heartRate"),
 } as const;
 
 /**
@@ -92,16 +92,6 @@ export const ICONS = {
     ARROW_DOWN: "⬇️",
     ARROW_NEUTRAL: "↔️",
     EMPTY: "",
-  },
-  TABLE: {
-    REPS: "🔁 ",
-    WEIGHT: "🏋️ ",
-    VOLUME: "📊 ",
-    DURATION: "⏱️ ",
-    DISTANCE: "📍 ",
-    HEART_RATE: "❤️ ",
-    EDIT: "✏️",
-    DELETE: "🗑️",
   },
   ACTIONS: {
     ADD: "➕",
@@ -155,47 +145,6 @@ export const ICONS = {
     CARDIO: "⭐",
     PUSH: "🔼",
     PULL: "⬇️",
-  },
-} as const;
-
-/**
- * Emoji constants (subset of icons that are purely emoji-based)
- */
-export const EMOJI = {
-  ACTIONS: {
-    ADD: "➕",
-    EDIT: "✏️",
-    DELETE: "🗑️",
-    REFRESH: "🔄",
-    EXPORT: "📸",
-  },
-  STATUS: {
-    SUCCESS: "✅",
-    ERROR: "❌",
-    WARNING: "⚠️",
-    INFO: "ℹ️",
-  },
-  EXERCISE: {
-    DEADLIFT: "💀",
-    CURL: "💪",
-    BICEPS: "💪",
-    TRICEPS: "💪",
-    CORE: "🎯",
-    BACK: "🦾",
-    FLY: "🦅",
-    GLUTES: "🍑",
-    TRAPS: "🔺",
-    CARDIO: "⭐",
-  },
-  TRENDS: {
-    UP: "⬆️",
-    DOWN: "⬇️",
-    NEUTRAL: "↔️",
-  },
-  TIME_PERIODS: {
-    WEEK: "🗓️",
-    MONTH: "📆",
-    YEAR: "📈",
   },
 } as const;
 
@@ -263,9 +212,6 @@ export const MODAL_UI = {
     },
     get AUDIT_EXERCISE_NAMES() {
       return t("modal.titles.auditExerciseNames");
-    },
-    get ADD_EXERCISE_BLOCK() {
-      return t("modal.titles.addExerciseBlock");
     },
     get QUICK_LOG() {
       return t("modal.titles.quickLog");
@@ -1098,295 +1044,10 @@ export const MODAL_UI = {
 export function getDynamicSettingsLabels() {
   const weightUnit = getWeightUnit();
   return {
-    WEIGHT_INCREMENT: `Weight increment (${weightUnit})`,
-    QUICK_WEIGHT_INCREMENT: `Weight buttons increment (${weightUnit})`,
+    WEIGHT_INCREMENT: t("charts.labels.weightIncrementUnit", { weightUnit }),
+    QUICK_WEIGHT_INCREMENT: t("charts.labels.quickWeightIncrementUnit", { weightUnit }),
   };
 }
-
-/**
- * Settings UI labels - section headers, field labels, descriptions, and messages
- */
-export const SETTINGS_UI = {
-  LABELS: {
-    get GENERATE_DEFAULT_TEMPLATES() {
-      return t("settings.generateDefaultTemplates");
-    },
-    get CSV_PATH() {
-      return t("settings.csvPath");
-    },
-    get EXERCISE_FOLDER() {
-      return t("settings.exerciseFolder");
-    },
-    get DEFAULT_EXACT_MATCH() {
-      return t("settings.defaultExactMatch");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get DEFAULT_TIMER_PRESET() {
-      return t("settings.defaultTimerPreset");
-    },
-    get PRESET_NAME() {
-      return t("settings.presetName");
-    },
-    get PRESET_TYPE() {
-      return t("settings.presetType");
-    },
-    get PRESET_DURATION() {
-      return t("settings.presetDuration");
-    },
-    get PRESET_INTERVAL() {
-      return t("settings.presetInterval");
-    },
-    get PRESET_ROUNDS() {
-      return t("settings.presetRounds");
-    },
-    get PRESET_SHOW_CONTROLS() {
-      return t("settings.presetShowControls");
-    },
-    get PRESET_AUTO_START() {
-      return t("settings.presetAutoStart");
-    },
-    get PRESET_SOUND() {
-      return t("settings.presetSound");
-    },
-    get EXERCISE_BLOCK_TEMPLATE() {
-      return t("settings.exerciseBlockTemplate");
-    },
-    get WEIGHT_INCREMENT() {
-      return getDynamicSettingsLabels().WEIGHT_INCREMENT;
-    },
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get PROTOCOL_NAME() {
-      return t("settings.protocolName");
-    },
-    get PROTOCOL_ABBREVIATION() {
-      return t("settings.protocolAbbreviation");
-    },
-    get PROTOCOL_COLOR() {
-      return t("settings.protocolColor");
-    },
-    get SET_DURATION() {
-      return t("settings.setDuration");
-    },
-    get REP_DURATION() {
-      return t("settings.repDuration");
-    },
-    get DEFAULT_REPS_PER_SET() {
-      return t("settings.defaultRepsPerSet");
-    },
-    get SHOW_QUICK_LOG_RIBBON() {
-      return t("settings.showQuickLogRibbon");
-    },
-    get QUICK_WEIGHT_INCREMENT() {
-      return getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT;
-    },
-    get CREATE_MUSCLE_TAGS_CSV() {
-      return t("settings.createMuscleTagsCsv");
-    },
-    get SETUP_CSV() {
-      return t("settings.setupCsv");
-    },
-    get GENERATE_EXAMPLES() {
-      return t("settings.generateExamples");
-    },
-    get WEIGHT_UNIT() {
-      return t("settings.weightUnit");
-    },
-  },
-  DESCRIPTIONS: {
-    get GENERATE_DEFAULT_TEMPLATES() {
-      return t("settings.generateDefaultTemplates");
-    },
-    get CSV_PATH() {
-      return t("settings.csvPath");
-    },
-    get CSV_FOLDER() {
-      return t("settings.csvFolder");
-    },
-    get EXERCISE_FOLDER() {
-      return t("settings.exerciseFolder");
-    },
-    get CREATE_CSV() {
-      return t("settings.createCsv");
-    },
-    get DEFAULT_EXACT_MATCH() {
-      return t("settings.defaultExactMatch");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get DEFAULT_TIMER_PRESET() {
-      return t("settings.defaultTimerPreset");
-    },
-    get NO_PRESETS() {
-      return t("settings.noPresets");
-    },
-    get EXERCISE_BLOCK_TEMPLATE() {
-      return t("settings.exerciseBlockTemplate");
-    },
-    WEIGHT_INCREMENT:
-      "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get NO_CUSTOM_PROTOCOLS() {
-      return t("settings.noCustomProtocols");
-    },
-    get PROTOCOL_ABBREVIATION() {
-      return t("settings.protocolAbbreviation");
-    },
-    get PROTOCOL_COLOR() {
-      return t("settings.protocolColor");
-    },
-    get SET_DURATION() {
-      return t("settings.setDuration");
-    },
-    get REP_DURATION() {
-      return t("settings.repDuration");
-    },
-    get DEFAULT_REPS_PER_SET() {
-      return t("settings.defaultRepsPerSet");
-    },
-    get SHOW_QUICK_LOG_RIBBON() {
-      return t("settings.showQuickLogRibbon");
-    },
-    QUICK_WEIGHT_INCREMENT:
-      "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
-    get CREATE_MUSCLE_TAGS_CSV() {
-      return t("settings.createMuscleTagsCsv");
-    },
-    get CONFIRM_OVERWRITE_MUSCLE_TAGS() {
-      return t("settings.confirmOverwriteMuscleTags");
-    },
-    get SETUP_CSV() {
-      return t("settings.setupCsv");
-    },
-    GENERATE_EXAMPLES:
-      "Create a folder with example exercises and workouts to help you get started.",
-    get WEIGHT_UNIT() {
-      return t("settings.weightUnit");
-    },
-  },
-  SECTIONS: {
-    get CSV_MANAGEMENT() {
-      return t("settings.csvManagement");
-    },
-    get EXAMPLE_DATA() {
-      return t("settings.exampleData");
-    },
-    get FILTERING() {
-      return t("settings.filtering");
-    },
-    get TIMER_PRESETS() {
-      return t("settings.timerPresets");
-    },
-    get TEMPLATES() {
-      return t("settings.templates");
-    },
-    get PROGRESSIVE_OVERLOAD() {
-      return t("settings.progressiveOverload");
-    },
-    get CUSTOM_PROTOCOLS() {
-      return t("settings.customProtocols");
-    },
-    get DURATION_ESTIMATION() {
-      return t("settings.durationEstimation");
-    },
-    get QUICK_LOG() {
-      return t("settings.quickLog");
-    },
-  },
-  BUTTONS: {
-    get ADD_PRESET() {
-      return t("settings.addPreset");
-    },
-    get DELETE_PRESET() {
-      return t("settings.deletePreset");
-    },
-    get SAVE_PRESET() {
-      return t("settings.savePreset");
-    },
-    get CANCEL() {
-      return t("settings.cancel");
-    },
-    get ADD_PROTOCOL() {
-      return t("settings.addProtocol");
-    },
-    get SAVE_PROTOCOL() {
-      return t("settings.saveProtocol");
-    },
-    get CREATE_MUSCLE_TAGS() {
-      return t("settings.createMuscleTags");
-    },
-    get CREATE_FILES() {
-      return t("settings.createFiles");
-    },
-    get CREATE_EXAMPLES() {
-      return t("settings.createExamples");
-    },
-  },
-  OPTIONS: {
-    get NONE() {
-      return t("settings.none");
-    },
-    WEIGHT_UNIT: {
-      get KG() {
-        return t("settings.kg");
-      },
-      get LB() {
-        return t("settings.lb");
-      },
-    },
-  },
-  MESSAGES: {
-    get PRESET_NAME_REQUIRED() {
-      return t("settings.presetNameRequired");
-    },
-    get PRESET_NAME_EXISTS() {
-      return t("settings.presetNameExists");
-    },
-    get PRESET_DELETED() {
-      return t("settings.presetDeleted");
-    },
-    get PRESET_SAVED() {
-      return t("settings.presetSaved");
-    },
-    get CONFIRM_DELETE_PRESET() {
-      return t("settings.confirmDeletePreset");
-    },
-    get PROTOCOL_NAME_REQUIRED() {
-      return t("settings.protocolNameRequired");
-    },
-    get PROTOCOL_ABBREVIATION_REQUIRED() {
-      return t("settings.protocolAbbreviationRequired");
-    },
-    get PROTOCOL_COLOR_REQUIRED() {
-      return t("settings.protocolColorRequired");
-    },
-    get PROTOCOL_NAME_EXISTS() {
-      return t("settings.protocolNameExists");
-    },
-    get PROTOCOL_DELETED() {
-      return t("settings.protocolDeleted");
-    },
-    get PROTOCOL_SAVED() {
-      return t("settings.protocolSaved");
-    },
-    get CONFIRM_DELETE_PROTOCOL() {
-      return t("settings.confirmDeleteProtocol");
-    },
-    get CSV_FILES_CREATED() {
-      return t("settings.csvFilesCreated");
-    },
-    CSV_FILES_ERROR: (error: string) => `Error creating CSV files: ${error}`,
-    get CONFIRM_OVERWRITE_EXAMPLES() {
-      return t("settings.confirmOverwriteExamples");
-    },
-  },
-} as const;
 
 /**
  * Table UI labels - column headers, labels, messages, and icons
@@ -1461,89 +1122,7 @@ export const TABLE_UI = {
       value: "Act",
     },
   },
-  /** Technical identifiers used in code (DO NOT TRANSLATE) - @deprecated Use COLUMN_DEFS.*.value instead */
-  COLUMNS: {
-    DATE: "Date",
-    EXERCISE: "Exercise",
-    REPS: "Rep",
-    WEIGHT: "Wgt",
-    VOLUME: "Vol",
-    DURATION: "Dur",
-    DISTANCE: "Dist",
-    HEART_RATE: "HR",
-    NOTES: "Notes",
-    PROTOCOL: "Prot",
-    ACTIONS: "Act",
-  },
-  /** Translated labels for column headers - @deprecated Use COLUMN_DEFS.*.label instead */
-  COLUMN_LABELS: {
-    get DATE() {
-      return t("table.columnLabels.date");
-    },
-    get EXERCISE() {
-      return t("table.columnLabels.exercise");
-    },
-    get REPS() {
-      return t("table.columnLabels.reps");
-    },
-    get WEIGHT() {
-      return t("table.columnLabels.weight");
-    },
-    get VOLUME() {
-      return t("table.columnLabels.volume");
-    },
-    get DURATION() {
-      return t("table.columnLabels.duration");
-    },
-    get DISTANCE() {
-      return t("table.columnLabels.distance");
-    },
-    get HEART_RATE() {
-      return t("table.columnLabels.heartRate");
-    },
-    get NOTES() {
-      return t("table.columnLabels.notes");
-    },
-    get PROTOCOL() {
-      return t("table.columnLabels.protocol");
-    },
-    get ACTIONS() {
-      return t("table.columnLabels.actions");
-    },
-  },
-  LABELS: {
-    get DATA() {
-      return t("table.data");
-    },
-    get VOLUME() {
-      return t("table.volume");
-    },
-    WEIGHT: "Weight",
-    get REPETITIONS() {
-      return t("table.repetitions");
-    },
-    get DURATION() {
-      return t("table.duration");
-    },
-    get DISTANCE() {
-      return t("table.distance");
-    },
-    get HEART_RATE() {
-      return t("table.heartRate");
-    },
-    get NO_DATA() {
-      return t("table.noData");
-    },
-    get INVALID_DATE() {
-      return t("table.invalidDate");
-    },
-    get NOT_AVAILABLE() {
-      return t("table.notAvailable");
-    },
-    get TREND_LINE() {
-      return t("table.trendLine");
-    },
-  },
+
   TARGET: {
     get REPS_SUFFIX() {
       return t("table.target.repsSuffix");
@@ -1552,9 +1131,10 @@ export const TABLE_UI = {
       return t("table.target.separator");
     },
     PROGRESS_TOOLTIP: (best: number, target: number) =>
-      t("table.target.progressTooltip")
-        .replace("{best}", String(best))
-        .replace("{target}", String(target)),
+      t("table.target.progressTooltip", {
+        best: String(best),
+        target: String(target),
+      }),
   },
   /** Abbreviated labels for mobile/compact display */
   LABELS_SHORT: {
@@ -1678,36 +1258,36 @@ export const CHARTS_UI = {
     },
     /** Dynamic trend title based on data type */
     TREND_TITLE: (dataType?: CHART_DATA_TYPE) => {
-      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
-      return `Trend ${typeName}: `;
+      const typeName = dataType
+        ? DATA_TYPE_NAMES[dataType]
+        : t("charts.types.volume");
+      return t("charts.trendType", { typeName });
     },
     get OVERALL_VARIATION_PREFIX() {
       return t("charts.overallVariationPrefix");
     },
-    /** @deprecated Use VARIATION_FROM_TO_FORMATTED for dynamic unit support */
-    VARIATION_FROM_TO: (startValue: string, endValue: string) =>
-      ` (da ${startValue} a ${endValue})`,
+
     /** Dynamic variation display with proper units */
     VARIATION_FROM_TO_FORMATTED: (startValue: string, endValue: string) =>
-      ` (da ${startValue} a ${endValue})`,
-    /** @deprecated Use VARIATION_SINGLE_VALUE_FORMATTED for dynamic type support */
-    VARIATION_SINGLE_VALUE: (value: string) => ` (Volume: ${value})`,
+      t("charts.variationFromTo", { startValue, endValue }),
     /** Dynamic single value display */
     VARIATION_SINGLE_VALUE_FORMATTED: (
       value: string,
       dataType?: CHART_DATA_TYPE,
     ) => {
-      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
+      const typeName = dataType
+        ? DATA_TYPE_NAMES[dataType]
+        : t("charts.types.volume");
       return ` (${typeName}: ${value})`;
     },
-    /** @deprecated Use VARIATION_VALUE_LABEL_FORMATTED for dynamic type support */
-    VARIATION_VALUE_LABEL: (value: string) => `Volume: ${value}`,
     /** Dynamic value label */
     VARIATION_VALUE_LABEL_FORMATTED: (
       value: string,
       dataType?: CHART_DATA_TYPE,
     ) => {
-      const typeName = dataType ? DATA_TYPE_NAMES[dataType] : "Volume";
+      const typeName = dataType
+        ? DATA_TYPE_NAMES[dataType]
+        : t("charts.types.volume");
       return `${typeName}: ${value}`;
     },
     get SIGNIFICANT_INCREASE() {
@@ -1721,7 +1301,9 @@ export const CHARTS_UI = {
     get VOLUME() {
       return t("charts.volume");
     },
-    WEIGHT: "weight",
+    get WEIGHT() {
+      return t("charts.weight");
+    },
     get REPS() {
       return t("charts.reps");
     },
@@ -2008,9 +1590,6 @@ export const MESSAGES_UI = {
     get NO_IMBALANCES() {
       return t("messages.noImbalances");
     },
-    get CSV_CREATED() {
-      return t("messages.csvCreated");
-    },
     get CODE_INSERTED() {
       return t("messages.codeInserted");
     },
@@ -2193,51 +1772,6 @@ export const COMMON_UI = {
 } as const;
 
 /**
- * Command names/labels
- */
-export const COMMANDS_UI = {
-  get CREATE_CSV() {
-    return t("commands.createCsv");
-  },
-  get INSERT_TABLE() {
-    return t("commands.insertTable");
-  },
-  get AUDIT_EXERCISE_NAMES() {
-    return t("commands.auditExerciseNames");
-  },
-  get ADD_EXERCISE_BLOCK() {
-    return t("commands.addExerciseBlock");
-  },
-  get QUICK_LOG() {
-    return t("commands.quickLog");
-  },
-  get EXPORT_WORKOUT_TO_CANVAS() {
-    return t("commands.exportWorkoutToCanvas");
-  },
-  get MIGRATE_EXERCISE_TYPES() {
-    return t("commands.migrateExerciseTypes");
-  },
-  get CONVERT_EXERCISE() {
-    return t("commands.convertExercise");
-  },
-  get MANAGE_MUSCLE_TAGS() {
-    return t("commands.manageMuscleTags");
-  },
-  get GENERATE_TAG_REFERENCE() {
-    return t("commands.generateTagReference");
-  },
-} as const;
-
-/**
- * Command descriptions
- */
-export const DESCRIPTIONS_UI = {
-  get INSERT_TABLE() {
-    return t("descriptions.insertTable");
-  },
-} as const;
-
-/**
  * Gets dynamic general UI labels with proper weight unit.
  * @returns Object with dynamic weight-related general labels
  */
@@ -2367,28 +1901,4 @@ export const GENERAL_UI = {
       return t("general.noMatchMessage");
     },
   },
-} as const;
-
-/**
- * Aggregated UI_LABELS export for backward compatibility
- * Groups all UI labels by domain
- */
-export const UI_LABELS = {
-  MODAL: MODAL_UI,
-  SETTINGS: SETTINGS_UI,
-  TABLE: TABLE_UI,
-  CHARTS: CHARTS_UI,
-  TIMER: TIMER_UI,
-  DASHBOARD: DASHBOARD_UI,
-  GENERAL: GENERAL_UI,
-  MESSAGES: MESSAGES_UI,
-  FORMS: FORMS_UI,
-  STATS: STATS_UI,
-  TRENDS: TRENDS_UI,
-  TIME_PERIODS: TIME_PERIODS_UI,
-  COMMON: COMMON_UI,
-  COMMANDS: COMMANDS_UI,
-  DESCRIPTIONS: DESCRIPTIONS_UI,
-  ICONS,
-  EMOJI,
 } as const;

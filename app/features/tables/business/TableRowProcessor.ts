@@ -3,6 +3,7 @@ import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
+import { t } from "@app/i18n";
 
 /**
  * Processes workout log data into table rows.
@@ -65,13 +66,13 @@ export class TableRowProcessor {
         date: formattedDate,
         exercise: this.getExerciseDisplay(log.exercise),
         reps:
-          log.reps?.toString() || CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          log.reps?.toString() || t("table.notAvailable"),
         weight:
           log.weight?.toString() ||
-          CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          t("table.notAvailable"),
         volume:
           log.volume?.toString() ||
-          CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          t("table.notAvailable"),
         // Add custom fields for cardio/timed exercises
         duration: this.formatCustomFieldValue(log.customFields?.duration),
         distance: this.formatCustomFieldValue(log.customFields?.distance),
@@ -137,7 +138,7 @@ export class TableRowProcessor {
    * @returns Formatted exercise name without file extensions
    */
   static getExerciseDisplay(exercise: string): string {
-    if (!exercise) return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+    if (!exercise) return t("table.notAvailable");
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");
@@ -153,17 +154,17 @@ export class TableRowProcessor {
     value: string | number | boolean | undefined,
   ): string {
     if (value === undefined || value === null || value === "") {
-      return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+      return t("table.notAvailable");
     }
     if (typeof value === "number") {
       return value === 0
-        ? CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE
+        ? t("table.notAvailable")
         : value.toString();
     }
     if (typeof value === "string") {
       const num = parseFloat(value);
       if (!isNaN(num) && num === 0) {
-        return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+        return t("table.notAvailable");
       }
       return value;
     }

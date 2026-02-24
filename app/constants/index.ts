@@ -24,7 +24,6 @@ export * from "@app/constants/exerciseTypes.constants";
 import {
   ICONS,
   MODAL_UI,
-  SETTINGS_UI,
   TABLE_UI,
   CHARTS_UI,
   TIMER_UI,
@@ -36,26 +35,20 @@ import {
   TRENDS_UI,
   TIME_PERIODS_UI,
   COMMON_UI,
-  COMMANDS_UI,
-  DESCRIPTIONS_UI,
   getColumnLabels,
 } from "@app/constants/ui.constants";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 import {
-  MUSCLE_NAMES,
-  MUSCLE_POSITIONS,
-  MUSCLE_GROUPS,
   BODY_PARTS,
   MUSCLE_TAGS,
   MUSCLE_TAG_MAP,
-  MUSCLE_KEYWORDS,
 } from "@app/constants/muscles.constants";
 
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
 import { ERROR_TYPES } from "@app/constants/validation.constants";
+import { t } from "@app/i18n";
 
 /**
  * Gets dynamic table labels with proper weight unit.
@@ -80,14 +73,7 @@ function getDynamicTableLabels() {
 export const CONSTANTS = {
   WORKOUT: {
     UI: {
-      ACTIONS: {
-        EDIT_WORKOUT: GENERAL_UI.ACTIONS.EDIT_WORKOUT,
-        DELETE_WORKOUT: GENERAL_UI.ACTIONS.DELETE_WORKOUT,
-        EXPORT: GENERAL_UI.ACTIONS.EXPORT,
-      },
       LABELS: {
-        EXERCISES_COUNT: "3 exercises",
-        WORKOUT_PROGRESS: "Workout progress",
         TRAINING_ANALYSIS: "Training analysis",
         FRONT: GENERAL_UI.LABELS.FRONT,
         BACK: GENERAL_UI.LABELS.BACK,
@@ -98,16 +84,8 @@ export const CONSTANTS = {
         CURRENT_FILE: GENERAL_UI.LABELS.CURRENT_FILE,
         DASHBOARD: GENERAL_UI.LABELS.DASHBOARD,
       },
-      DISPLAY: {
-        PERCENTAGE_45: "45%",
-      },
-      BUTTONS: {
-        CREATE_FILE: GENERAL_UI.ACTIONS.CREATE_FILE,
-      },
     },
     MESSAGES: {
-      NO_DATA: MESSAGES_UI.NO_DATA,
-      LOADING: MESSAGES_UI.LOADING,
       NO_DATA_PERIOD: MESSAGES_UI.NO_DATA_PERIOD,
       TIMER_COMPLETED: MESSAGES_UI.TIMER_COMPLETED,
       WARNINGS: MESSAGES_UI.WARNINGS,
@@ -128,13 +106,7 @@ export const CONSTANTS = {
       TYPES: CHARTS_UI.TYPES,
     },
     MUSCLES: {
-      NAMES: MUSCLE_NAMES,
-      POSITIONS: MUSCLE_POSITIONS,
-      GROUPS: MUSCLE_GROUPS,
-      BODY_PARTS: BODY_PARTS,
-      TAGS: MUSCLE_TAGS,
       TAG_MAP: MUSCLE_TAG_MAP,
-      KEYWORDS: MUSCLE_KEYWORDS,
     },
     STATS: {
       LABELS: STATS_UI.LABELS,
@@ -148,16 +120,6 @@ export const CONSTANTS = {
     TIMER: {
       TYPES: TIMER_UI.TYPES,
     },
-    COMMANDS: COMMANDS_UI,
-    DESCRIPTIONS: DESCRIPTIONS_UI,
-    SETTINGS: {
-      LABELS: SETTINGS_UI.LABELS,
-      DESCRIPTIONS: SETTINGS_UI.DESCRIPTIONS,
-      SECTIONS: SETTINGS_UI.SECTIONS,
-      BUTTONS: SETTINGS_UI.BUTTONS,
-      OPTIONS: SETTINGS_UI.OPTIONS,
-      MESSAGES: SETTINGS_UI.MESSAGES,
-    },
     ERRORS: {
       TYPES: ERROR_TYPES,
     },
@@ -165,28 +127,18 @@ export const CONSTANTS = {
     LABELS: {
       GENERAL: GENERAL_UI.LABELS,
       TABLE: {
-        DATE: TABLE_UI.COLUMNS.DATE,
-        EXERCISE: TABLE_UI.COLUMNS.EXERCISE,
-        REPS: TABLE_UI.COLUMNS.REPS,
-        REPETITIONS: TABLE_UI.LABELS.REPETITIONS,
+        DATE: TABLE_UI.COLUMN_DEFS.DATE.value,
+        EXERCISE: TABLE_UI.COLUMN_DEFS.EXERCISE.value,
+        REPS: TABLE_UI.COLUMN_DEFS.REPS.value,
+        REPETITIONS: TABLE_UI.COLUMN_DEFS.REPS.label,
         get WEIGHT_WITH_UNIT() {
           return getDynamicTableLabels().WEIGHT_WITH_UNIT;
         },
-        VOLUME: TABLE_UI.COLUMNS.VOLUME,
-        WEIGHT: TABLE_UI.COLUMNS.WEIGHT,
+        VOLUME: TABLE_UI.COLUMN_DEFS.VOLUME.value,
+        WEIGHT: TABLE_UI.COLUMN_DEFS.WEIGHT.value,
         get VOLUME_WITH_UNIT() {
           return getDynamicTableLabels().VOLUME_WITH_UNIT;
         },
-        NOTES: TABLE_UI.COLUMNS.NOTES,
-        ACTIONS: TABLE_UI.COLUMNS.ACTIONS,
-        NO_DATA: TABLE_UI.LABELS.NO_DATA,
-        INVALID_DATE: TABLE_UI.LABELS.INVALID_DATE,
-        NOT_AVAILABLE: TABLE_UI.LABELS.NOT_AVAILABLE,
-        TREND_LINE: TABLE_UI.LABELS.TREND_LINE,
-        ADD_LOG_BUTTON: "Add log",
-        UP: "up",
-        DOWN: "down",
-        NEUTRAL: "neutral",
         TARGET_PREFIX: "Target:",
       },
       ACTIONS: GENERAL_UI.ACTIONS,
@@ -196,8 +148,7 @@ export const CONSTANTS = {
     },
     MODAL: MODAL_UI,
     TABLE: {
-      COLUMNS: TABLE_UI.COLUMNS,
-      LABELS: TABLE_UI.LABELS,
+      COLUMNS: TABLE_UI.COLUMN_DEFS,
       LIMITS: {
         DEFAULT: DEFAULT_TABLE_CONFIG.LIMIT,
         MIN: DEFAULT_TABLE_CONFIG.LIMIT_MIN,

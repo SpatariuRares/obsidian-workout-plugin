@@ -1,5 +1,6 @@
 import { Setting } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
+import { getDynamicSettingsLabels } from "@app/constants";
 import WorkoutChartsPlugin from "main";
 
 export class DurationEstimationSettings {
@@ -11,14 +12,31 @@ export class DurationEstimationSettings {
   render(): void {
     const { containerEl } = this;
 
+    // "Training parameters" absorbs what used to be the separate "Progressive Overload" section
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.DURATION_ESTIMATION)
+      .setName(t("settings.sections.trainingParameters"))
       .setHeading();
 
-    // 1. Duration per Rep
+    // Weight increment (was in ProgressiveOverloadSettings)
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.REP_DURATION)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.REP_DURATION)
+      .setName(getDynamicSettingsLabels().WEIGHT_INCREMENT)
+      .setDesc(t("settings.descriptions.weightIncrement"))
+      .addText((text) =>
+        text
+          .setValue(String(this.plugin.settings.weightIncrement))
+          .onChange(async (value) => {
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue) && numValue > 0) {
+              this.plugin.settings.weightIncrement = numValue;
+              await this.plugin.saveSettings();
+            }
+          }),
+      );
+
+    // Duration per Rep
+    new Setting(containerEl)
+      .setName(t("settings.labels.repDuration"))
+      .setDesc(t("settings.descriptions.repDuration"))
       .addText((text) =>
         text
           .setValue(String(this.plugin.settings.repDuration))
@@ -31,10 +49,10 @@ export class DurationEstimationSettings {
           }),
       );
 
-    // 2. Default Reps per Set
+    // Default Reps per Set
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.DEFAULT_REPS_PER_SET)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.DEFAULT_REPS_PER_SET)
+      .setName(t("settings.labels.defaultRepsPerSet"))
+      .setDesc(t("settings.descriptions.defaultRepsPerSet"))
       .addText((text) =>
         text
           .setValue(String(this.plugin.settings.defaultRepsPerSet))
@@ -48,8 +66,8 @@ export class DurationEstimationSettings {
       );
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.SET_DURATION)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.SET_DURATION)
+      .setName(t("settings.labels.setDuration"))
+      .setDesc(t("settings.descriptions.setDuration"))
       .addText((text) =>
         text
           .setValue(String(this.plugin.settings.setDuration))

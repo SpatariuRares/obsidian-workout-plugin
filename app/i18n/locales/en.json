@@ -365,6 +365,9 @@
       "timerPresets": "Create and manage reusable timer presets",
       "defaultTimerPreset": "Select a default preset for new timers",
       "noPresets": "No timer presets configured. Click 'Add preset' to create one.",
+      "presetNameDesc": "Unique name for this timer preset (e.g., 'Rest 90s', 'HIIT 30/10').",
+      "presetDurationDesc": "Duration in seconds (e.g., 90 for a 90-second timer).",
+      "presetRoundsDesc": "Number of interval rounds to cycle through before stopping.",
       "exerciseBlockTemplate": "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "customProtocols": "Create custom workout protocols to track specialized training techniques",
@@ -374,7 +377,6 @@
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "repDuration": "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
       "defaultRepsPerSet": "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
-      "showQuickLogRibbon": "Show a dumbbell icon in the left ribbon to open the create workout log modal",
       "quickWeightIncrement": "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
       "createMuscleTagsCSV": "Create a CSV file with default muscle tag mappings. Edit this file to add custom tags in any language.",
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
@@ -383,14 +385,14 @@
       "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
     },
     "sections": {
+      "setupAndData": "Setup & data",
       "csvManagement": "CSV file management",
       "exampleData": "Example data",
       "filtering": "Filtering",
       "timerPresets": "Timer presets",
       "templates": "Templates",
-      "progressiveOverload": "Progressive overload",
+      "trainingParameters": "Training parameters",
       "customProtocols": "Custom protocols",
-      "durationEstimation": "Duration estimation",
       "quickLog": "Mobile logging"
     },
     "buttons": {
@@ -402,7 +404,14 @@
       "saveProtocol": "Save",
       "createMuscleTags": "Create muscle tags",
       "createFiles": "Create files",
-      "createExamples": "Create examples"
+      "createExamples": "Create examples",
+      "generating": "Generating...",
+      "generated": "Generated!",
+      "regenerateOverwrite": "Regenerate (overwrite)",
+      "overwriting": "Overwriting...",
+      "done": "Done!",
+      "failed": "Failed",
+      "generateTemplates": "Generate templates"
     },
     "options": {
       "none": "None",
@@ -410,6 +419,22 @@
         "kg": "Kilograms (kg)",
         "lb": "Pounds (lb)"
       }
+    },
+    "messages": {
+      "presetNameRequired": "Preset name is required",
+      "presetNameExists": "A preset with this name already exists",
+      "presetDeleted": "Preset deleted",
+      "presetSaved": "Preset saved",
+      "confirmDeletePreset": "Are you sure you want to delete this preset?",
+      "protocolNameRequired": "Protocol name is required",
+      "protocolAbbreviationRequired": "Abbreviation is required (max 3 characters)",
+      "protocolColorRequired": "Please enter a valid hex color (e.g. #FF5733)",
+      "protocolNameExists": "A protocol with this name already exists",
+      "protocolDeleted": "Protocol deleted",
+      "protocolSaved": "Protocol saved",
+      "confirmDeleteProtocol": "Are you sure you want to delete this protocol?",
+      "csvFilesCreated": "CSV files created successfully!",
+      "confirmOverwriteExamples": "An example folder already exists. Do you want to overwrite it?"
     },
     "addPreset": "Add Preset",
     "addProtocol": "Add Protocol",
@@ -636,7 +661,20 @@
       "up": "up",
       "down": "down",
       "neutral": "neutral",
-      "significantIncrease": "Significant increase"
+      "significantIncrease": "Significant increase",
+      "variationFromTo": " from {startValue} to {endValue}",
+      "trendType": "Trend {type}:",
+      "weightIncrementUnit": "Weight increment {weightIncrementUnit}",
+      "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}"
+    },
+    "types": {
+      "volume": "Volume",
+      "weight": "Weight",
+      "reps": "Reps",
+      "duration": "Duration",
+      "distance": "Distance",
+      "heartRate": "Heart Rate",
+      "pace": "Pace"
     },
     "date": "Date",
     "down": "Down",
@@ -718,7 +756,9 @@
     "noDataPeriod": "No workout data found for the selected time period.",
     "timerCompleted": "Timer completed!",
     "codeInserted": "Code Inserted",
-    "csvCreated": "Csv Created",
+    "success": {
+      "csvCreated": "CSV file created successfully!"
+    },
     "csvNotFound": "Csv Not Found",
     "fileEmpty": "File Empty",
     "imbalanceAlerts": "Imbalance Alerts",
@@ -727,7 +767,8 @@
     "noFrontmatter": "No Frontmatter",
     "noImbalances": "No Imbalances",
     "noTags": "No Tags",
-    "tagReferenceGenerated": "Tag Reference Generated"
+    "tagReferenceGenerated": "Tag reference generated successfully!",
+    "tagReferenceFailed": "Failed to generate tag reference: "
   },
   "validation": {
     "errors": {

@@ -57,7 +57,7 @@ export class TableColumnResolver {
       }
 
       // Start with Date column
-      const columns: string[] = [CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE];
+      const columns: string[] = [CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value];
 
       // Track if we have both reps and weight for volume calculation
       let hasReps = false;
@@ -79,7 +79,7 @@ export class TableColumnResolver {
 
       // Add Volume column for strength exercises (when both reps and weight are present)
       if (hasReps && hasWeight) {
-        columns.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
+        columns.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value);
       }
 
       // Notes, Protocol, and Actions are added conditionally by addOptionalColumns()
@@ -128,21 +128,21 @@ export class TableColumnResolver {
   ): string[] {
     if (isShowingAllLogs) {
       return [
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
-        ...(showDuration ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION] : []),
-        ...(showDistance ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE] : []),
-        ...(showHeartRate ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE] : []),
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
+        ...(showDuration ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value] : []),
+        ...(showDistance ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value] : []),
+        ...(showHeartRate ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value] : []),
       ];
     }
     return [
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT,
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
     ];
   }
 
@@ -160,12 +160,12 @@ export class TableColumnResolver {
   ): string[] {
     const result = [...baseHeaders];
     if (showNotes) {
-      result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES);
+      result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value);
     }
     if (showProtocol) {
-      result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL);
+      result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value);
     }
-    result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS);
+    result.push(CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value);
     return result;
   }
 }

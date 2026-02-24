@@ -1,13 +1,15 @@
-import { Setting, Notice } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { Setting, Notice, App } from "obsidian";
+import { t } from "@app/i18n";
 import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import WorkoutChartsPlugin from "main";
 
 export class CustomProtocolsSettings {
   private protocolsContainer: HTMLElement | null = null;
 
   constructor(
+    private app: App,
     private plugin: WorkoutChartsPlugin,
     private containerEl: HTMLElement,
   ) {}
@@ -16,12 +18,12 @@ export class CustomProtocolsSettings {
     const { containerEl } = this;
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.CUSTOM_PROTOCOLS)
+      .setName(t("settings.sections.customProtocols"))
       .setHeading();
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.CUSTOM_PROTOCOLS)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.CUSTOM_PROTOCOLS);
+      .setName(t("settings.labels.customProtocols"))
+      .setDesc(t("settings.descriptions.customProtocols"));
 
     // Container for protocols list
     this.protocolsContainer = containerEl.createDiv({
@@ -32,7 +34,7 @@ export class CustomProtocolsSettings {
     // Add protocol button
     new Setting(containerEl).addButton((button) =>
       button
-        .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.ADD_PROTOCOL)
+        .setButtonText(t("settings.buttons.addProtocol"))
         .setCta()
         .onClick(() => {
           this.showProtocolEditor(null);
@@ -49,7 +51,7 @@ export class CustomProtocolsSettings {
 
     if (protocols.length === 0) {
       this.protocolsContainer.createEl("p", {
-        text: CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.NO_CUSTOM_PROTOCOLS,
+        text: t("settings.descriptions.noCustomProtocols"),
         cls: "workout-setting-item-description",
       });
       return;
@@ -83,14 +85,14 @@ export class CustomProtocolsSettings {
         button
           .setIcon("trash")
           .setTooltip("Delete protocol")
-          .onClick(async () => {
-            if (
-              confirm(
-                CONSTANTS.WORKOUT.SETTINGS.MESSAGES.CONFIRM_DELETE_PROTOCOL,
-              )
-            ) {
-              await this.deleteProtocol(protocol.id);
-            }
+          .onClick(() => {
+            new ConfirmModal(
+              this.app,
+              t("settings.messages.confirmDeleteProtocol"),
+              async () => {
+                await this.deleteProtocol(protocol.id);
+              },
+            ).open();
           }),
       );
   }
@@ -150,7 +152,7 @@ export class CustomProtocolsSettings {
 
     // Protocol name input
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PROTOCOL_NAME)
+      .setName(t("settings.labels.protocolName"))
       .addText((text) =>
         text
           .setValue(formState.name)
@@ -169,8 +171,8 @@ export class CustomProtocolsSettings {
 
     // Protocol abbreviation input
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PROTOCOL_ABBREVIATION)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.PROTOCOL_ABBREVIATION)
+      .setName(t("settings.labels.protocolAbbreviation"))
+      .setDesc(t("settings.descriptions.protocolAbbreviation"))
       .addText((text) =>
         text
           .setValue(formState.abbreviation)
@@ -184,8 +186,8 @@ export class CustomProtocolsSettings {
 
     // Protocol color input
     new Setting(editorContainer)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.PROTOCOL_COLOR)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.PROTOCOL_COLOR)
+      .setName(t("settings.labels.protocolColor"))
+      .setDesc(t("settings.descriptions.protocolColor"))
       .addColorPicker((colorPicker) =>
         colorPicker.setValue(formState.color).onChange((value) => {
           formState.color = value;
@@ -196,7 +198,7 @@ export class CustomProtocolsSettings {
     new Setting(editorContainer)
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.SAVE_PROTOCOL)
+          .setButtonText(t("settings.buttons.saveProtocol"))
           .setCta()
           .onClick(async () => {
             await this.saveProtocol(formState, originalId);
@@ -205,7 +207,7 @@ export class CustomProtocolsSettings {
       )
       .addButton((button) =>
         button
-          .setButtonText(CONSTANTS.WORKOUT.SETTINGS.BUTTONS.CANCEL)
+          .setButtonText(t("settings.buttons.cancel"))
           .onClick(() => {
             editorContainer.remove();
           }),
@@ -218,21 +220,19 @@ export class CustomProtocolsSettings {
   ): Promise<void> {
     // Validate name
     if (!protocol.name.trim()) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_NAME_REQUIRED);
+      new Notice(t("settings.messages.protocolNameRequired"));
       return;
     }
 
     // Validate abbreviation
     if (!protocol.abbreviation.trim() || protocol.abbreviation.length > 3) {
-      new Notice(
-        CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_ABBREVIATION_REQUIRED,
-      );
+      new Notice(t("settings.messages.protocolAbbreviationRequired"));
       return;
     }
 
     // Validate color
     if (!protocol.color.trim() || !/^#[0-9A-Fa-f]{6}$/.test(protocol.color)) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_COLOR_REQUIRED);
+      new Notice(t("settings.messages.protocolColorRequired"));
       return;
     }
 
@@ -264,7 +264,7 @@ export class CustomProtocolsSettings {
     );
 
     if (existingNameIndex !== -1) {
-      new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_NAME_EXISTS);
+      new Notice(t("settings.messages.protocolNameExists"));
       return;
     }
 
@@ -286,7 +286,7 @@ export class CustomProtocolsSettings {
     }
 
     await this.plugin.saveSettings();
-    new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_SAVED);
+    new Notice(t("settings.messages.protocolSaved"));
 
     this.renderProtocolsList();
   }
@@ -304,7 +304,7 @@ export class CustomProtocolsSettings {
     }
 
     await this.plugin.saveSettings();
-    new Notice(CONSTANTS.WORKOUT.SETTINGS.MESSAGES.PROTOCOL_DELETED);
+    new Notice(t("settings.messages.protocolDeleted"));
 
     this.renderProtocolsList();
   }

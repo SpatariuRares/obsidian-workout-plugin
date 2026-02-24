@@ -1,6 +1,5 @@
-import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
-import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
+import { t } from "@app/i18n";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import { InsertTimerModal } from "@app/features/timer";
@@ -31,14 +30,13 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-csv-log",
-      name: CONSTANTS.WORKOUT.COMMANDS.CREATE_CSV,
+      name: t("commands.createCsvLog"),
       callback: async () => {
         try {
           await this.plugin.createCSVLogFile();
-          new Notice(CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CSV_CREATED);
+          new Notice(t("messages.success.csvCreated"));
         } catch (error) {
-          const errorMessage =
-            ErrorUtils.getErrorMessage(error);
+          const errorMessage = ErrorUtils.getErrorMessage(error);
           new Notice(`Error creating CSV file: ${errorMessage}`);
         }
       },
@@ -46,7 +44,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-chart",
-      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_CHART,
+      name: t("modal.titles.insertChart"),
       callback: () => {
         new InsertChartModal(this.app, this.plugin).open();
       },
@@ -54,7 +52,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-table",
-      name: CONSTANTS.WORKOUT.COMMANDS.INSERT_TABLE,
+      name: t("commands.insertTable"),
       callback: () => {
         new InsertTableModal(this.app, this.plugin).open();
       },
@@ -62,7 +60,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-timer",
-      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TIMER,
+      name: t("modal.titles.insertTimer"),
       callback: () => {
         new InsertTimerModal(this.app, this.plugin).open();
       },
@@ -70,7 +68,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-exercise-page",
-      name: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
+      name: t("modal.buttons.createExercise"),
       callback: () => {
         new CreateExercisePageModal(this.app, this.plugin).open();
       },
@@ -78,7 +76,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "create-exercise-section",
-      name: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_SECTION,
+      name: t("modal.titles.createExerciseSection"),
       callback: () => {
         new CreateExerciseSectionModal(this.app, this.plugin).open();
       },
@@ -86,7 +84,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-dashboard",
-      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DASHBOARD,
+      name: t("modal.titles.insertDashboard"),
       callback: () => {
         new InsertDashboardModal(this.app).open();
       },
@@ -94,7 +92,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "insert-workout-duration",
-      name: CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DURATION,
+      name: t("modal.titles.insertDuration"),
       callback: () => {
         CodeGenerator.generateDurationCode();
       },
@@ -102,7 +100,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "audit-exercise-names",
-      name: CONSTANTS.WORKOUT.COMMANDS.AUDIT_EXERCISE_NAMES,
+      name: t("commands.auditExerciseNames"),
       callback: () => {
         new AuditExerciseNamesModal(this.app, this.plugin).open();
       },
@@ -110,7 +108,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "add-exercise-block",
-      name: CONSTANTS.WORKOUT.COMMANDS.ADD_EXERCISE_BLOCK,
+      name: t("commands.addExerciseBlock"),
       callback: () => {
         new AddExerciseBlockModal(this.app, this.plugin).open();
       },
@@ -118,10 +116,9 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "export-workout-to-canvas",
-      name: CONSTANTS.WORKOUT.COMMANDS.EXPORT_WORKOUT_TO_CANVAS,
+      name: t("commands.exportWorkoutToCanvas"),
       callback: () => {
         new WorkoutFileSuggestModal(this.app, async (file) => {
-          // Open the canvas export options modal
           new CanvasExportModal(
             this.app,
             this.plugin,
@@ -130,15 +127,10 @@ export class CommandHandlerService {
               try {
                 const exporter = new CanvasExporter(this.app, this.plugin);
                 const canvasPath = await exporter.exportToCanvas(file, options);
-                new Notice(
-                  `${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORTED} (${canvasPath})`,
-                );
+                new Notice(`${t("modal.notices.canvasExported")} (${canvasPath})`);
               } catch (error) {
-                const errorMessage =
-                  ErrorUtils.getErrorMessage(error);
-                new Notice(
-                  `${CONSTANTS.WORKOUT.MODAL.NOTICES.CANVAS_EXPORT_ERROR}${errorMessage}`,
-                );
+                const errorMessage = ErrorUtils.getErrorMessage(error);
+                new Notice(`${t("modal.notices.canvasExportError")}${errorMessage}`);
               }
             },
           ).open();
@@ -148,7 +140,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "migrate-exercise-types",
-      name: CONSTANTS.WORKOUT.COMMANDS.MIGRATE_EXERCISE_TYPES,
+      name: t("commands.migrateExerciseTypes"),
       callback: async () => {
         await new ExerciseTypeMigration(this.plugin).migrateExerciseTypes();
       },
@@ -156,7 +148,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "convert-exercise-data",
-      name: CONSTANTS.WORKOUT.COMMANDS.CONVERT_EXERCISE,
+      name: t("commands.convertExercise"),
       callback: () => {
         new ConvertExerciseDataModal(this.app, this.plugin).open();
       },
@@ -164,7 +156,7 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "manage-muscle-tags",
-      name: CONSTANTS.WORKOUT.COMMANDS.MANAGE_MUSCLE_TAGS,
+      name: t("commands.manageMuscleTags"),
       callback: () => {
         new MuscleTagManagerModal(this.app, this.plugin).open();
       },
@@ -172,16 +164,14 @@ export class CommandHandlerService {
 
     this.plugin.addCommand({
       id: "generate-tag-reference",
-      name: CONSTANTS.WORKOUT.COMMANDS.GENERATE_TAG_REFERENCE,
+      name: t("commands.generateTagReference"),
       callback: async () => {
         try {
-          // Generate tag reference at vault root (empty folder path)
           await this.plugin.templateGeneratorService.generateTagReference(
             "",
             true,
           );
 
-          // Open the generated file
           const fileName = "Muscle Tags Reference.md";
           const file = this.app.vault.getAbstractFileByPath(fileName);
 
@@ -189,17 +179,10 @@ export class CommandHandlerService {
             await this.app.workspace.getLeaf(true).openFile(file);
           }
 
-          new Notice(
-            CONSTANTS.WORKOUT.MESSAGES.SUCCESS.TAG_REFERENCE_GENERATED,
-          );
+          new Notice(t("messages.tagReferenceGenerated"));
         } catch (error) {
-          const errorMessage =
-            ErrorUtils.getErrorMessage(error);
-          new Notice(
-            CONSTANTS.WORKOUT.MESSAGES.ERRORS.TAG_REFERENCE_FAILED(
-              errorMessage,
-            ),
-          );
+          const errorMessage = ErrorUtils.getErrorMessage(error);
+          new Notice(`${t("messages.errors.tagReferenceFailed")}${errorMessage}`);
         }
       },
     });

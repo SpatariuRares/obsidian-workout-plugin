@@ -8,6 +8,7 @@ import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { FilterResult } from "@app/types/CommonTypes";
 import { StringUtils } from "@app/utils/StringUtils";
+import { t } from "@app/i18n";
 
 /**
  * Common filter parameters used by DataFilter.
@@ -305,7 +306,7 @@ export class DataFilter {
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
-      return `file name (score: ${bestFileMatchesList[0]?.score || CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE})`;
+      return `file name (score: ${bestFileMatchesList[0]?.score || t("table.notAvailable")})`;
     }
     return "No match found";
   }

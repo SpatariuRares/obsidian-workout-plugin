@@ -3,6 +3,7 @@ import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TrendIndicator } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 /**
  * Renders trend header information for workout charts.
@@ -63,7 +64,7 @@ export class TrendHeader {
       text: CONSTANTS.WORKOUT.LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
     });
 
-    if (variationData.text !== undefined && percentChange !== CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE) {
+    if (variationData.text !== undefined && percentChange !== t("table.notAvailable")) {
       // Determine trend direction based on percentage and data type
       const percentValue = parseFloat(percentChange);
       const isLowerBetter = dataType ? FormatUtils.isLowerBetter(dataType) : false;
@@ -88,7 +89,7 @@ export class TrendHeader {
         className: "workout-charts-trend-variation",
       });
     } else if (variationData.text !== undefined) {
-      // Fallback for non-percentage values (e.g., CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, "Aumento signif.")
+      // Fallback for non-percentage values (e.g., t("table.notAvailable"), "Aumento signif.")
       const span = p.createEl("span", {
         cls: "workout-charts-trend-variation",
       });
@@ -141,7 +142,7 @@ export class TrendHeader {
   private static calculateVariation(volumeData: number[]) {
     let firstValue: number | undefined,
       lastValue: number | undefined,
-      percentChange: string = CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE;
+      percentChange: string = t("table.notAvailable");
 
     if (volumeData.length >= 2) {
       firstValue = volumeData[0];
@@ -200,6 +201,6 @@ export class TrendHeader {
         color: "",
       };
     }
-    return { text: CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, color: "" };
+    return { text: t("table.notAvailable"), color: "" };
   }
 }

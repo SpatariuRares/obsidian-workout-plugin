@@ -1,23 +1,29 @@
 import { Setting } from "obsidian";
-import { CONSTANTS, getDynamicSettingsLabels } from "@app/constants";
+import { t } from "@app/i18n";
+import { getDynamicSettingsLabels } from "@app/constants";
 import WorkoutChartsPlugin from "main";
 
+/**
+ * @deprecated Content merged into DurationEstimationSettings under "Training parameters" section.
+ * This class is kept for backwards compatibility but its render() is no longer called.
+ */
 export class ProgressiveOverloadSettings {
   constructor(
     private plugin: WorkoutChartsPlugin,
     private containerEl: HTMLElement,
   ) {}
 
+  /** @deprecated Use DurationEstimationSettings.render() which now includes weightIncrement. */
   render(): void {
     const { containerEl } = this;
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.PROGRESSIVE_OVERLOAD)
+      .setName(t("settings.sections.trainingParameters"))
       .setHeading();
 
     new Setting(containerEl)
       .setName(getDynamicSettingsLabels().WEIGHT_INCREMENT)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.WEIGHT_INCREMENT)
+      .setDesc(t("settings.descriptions.weightIncrement"))
       .addText((text) =>
         text
           .setValue(String(this.plugin.settings.weightIncrement))

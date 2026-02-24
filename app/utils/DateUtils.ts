@@ -1,4 +1,5 @@
 import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
@@ -135,7 +136,7 @@ export class DateUtils {
       const minutes = date.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
     } catch {
-      return CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE;
+      return t("table.notAvailable");
     }
   }
 
@@ -182,7 +183,7 @@ export class DateUtils {
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     } catch {
-      return CONSTANTS.WORKOUT.TABLE.LABELS.INVALID_DATE;
+      return t("table.invalidDate");
     }
   }
 

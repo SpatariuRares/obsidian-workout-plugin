@@ -79,25 +79,6 @@ workout: {{workout}}
 };
 
 /**
- * Default chart configuration values used in chart modals
- * and code block processing when not specified.
- */
-export const DEFAULT_CHART_CONFIG = {
-  /** Default date range for chart data (180 days / ~6 months) */
-  DATE_RANGE: 180,
-  /** Minimum allowed date range */
-  DATE_RANGE_MIN: 1,
-  /** Maximum allowed date range (1 year) */
-  DATE_RANGE_MAX: 365,
-  /** Default data point limit for charts */
-  LIMIT: 100,
-  /** Minimum data point limit */
-  LIMIT_MIN: 1,
-  /** Maximum data point limit */
-  LIMIT_MAX: 1000,
-} as const;
-
-/**
  * Default table configuration values used in table modals
  * and code block processing when not specified.
  */
@@ -116,49 +97,4 @@ export const DEFAULT_TABLE_CONFIG = {
   EXACT_MATCH: true,
   /** Default limit specifically for modal inserts (12 rows) */
   MODAL_INSERT_LIMIT: 12,
-} as const;
-
-/**
- * Default timer configuration values used in timer modals
- * and code block processing when not specified.
- */
-export const DEFAULT_TIMER_CONFIG = {
-  /** Default countdown duration in seconds (90 seconds / 1.5 minutes) */
-  DURATION: 90,
-  /** Minimum duration allowed */
-  DURATION_MIN: 1,
-  /** Maximum duration allowed (1 hour) */
-  DURATION_MAX: 3600,
-  /** Default interval time for interval timers */
-  INTERVAL: 30,
-  /** Minimum interval time */
-  INTERVAL_MIN: 1,
-  /** Maximum interval time (1 hour) */
-  INTERVAL_MAX: 3600,
-  /** Default number of rounds for interval timers */
-  ROUNDS: 5,
-  /** Minimum rounds */
-  ROUNDS_MIN: 1,
-  /** Maximum rounds */
-  ROUNDS_MAX: 100,
-} as const;
-
-/**
- * Default date key used when date parsing fails
- */
-export const DEFAULT_DATE_KEY = {
-  /** Key used for invalid dates in table grouping */
-  INVALID: "invalid-date",
-} as const;
-
-/**
- * Aggregated defaults export for convenient access
- * Groups all default configurations by domain
- */
-export const DEFAULTS = {
-  SETTINGS: DEFAULT_SETTINGS,
-  CHART: DEFAULT_CHART_CONFIG,
-  TABLE: DEFAULT_TABLE_CONFIG,
-  TIMER: DEFAULT_TIMER_CONFIG,
-  DATE_KEY: DEFAULT_DATE_KEY,
 } as const;

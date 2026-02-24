@@ -4,6 +4,7 @@ import {
   ChartDataset,
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
+import { t } from "@app/i18n";
 
 /**
  * Table-based representations of chart data.
@@ -78,7 +79,7 @@ export class ChartTableViews {
 
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.LABELS.DATA });
+    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.label });
     const columnLabels = getColumnLabels();
     headerRow.createEl("th", {
       text: columnLabels[chartType] || chartType,
@@ -88,7 +89,7 @@ export class ChartTableViews {
 
     // Get the main dataset (first dataset, excluding trend line)
     const mainDataset =
-      datasets.find((ds) => ds.label !== CONSTANTS.WORKOUT.TABLE.LABELS.TREND_LINE) ||
+      datasets.find((ds) => ds.label !== t("table.trendLine")) ||
       datasets[0];
 
     if (mainDataset && mainDataset.data) {
@@ -103,7 +104,7 @@ export class ChartTableViews {
     } else {
       const row = tbody.createEl("tr");
       row.createEl("td", {
-        text: CONSTANTS.WORKOUT.TABLE.LABELS.NO_DATA,
+        text: t("table.noData"),
         attr: { colspan: "2" },
       });
     }

@@ -2,6 +2,7 @@ import { CONSTANTS, getUnitsMap, getColumnLabels } from "@app/constants";
 import { CHART_TYPE, CHART_DATA_TYPE } from "@app/features/charts/types";
 import { ListItem } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 /**
  * Renders statistical information about workout data.
@@ -68,7 +69,7 @@ export class StatsBox {
       value: `${labels.length}`,
     });
 
-    if (recentTrendData.text !== CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE) {
+    if (recentTrendData.text !== t("table.notAvailable")) {
       const li5 = ListItem.createEmpty(ul);
       li5.appendText(CONSTANTS.WORKOUT.STATS.LABELS.RECENT_TREND);
       const span = li5.createEl("span", {
@@ -224,7 +225,7 @@ export class StatsBox {
         };
       }
     }
-    return { text: CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE, color: "" };
+    return { text: t("table.notAvailable"), color: "" };
   }
 
   /**

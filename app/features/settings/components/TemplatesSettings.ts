@@ -1,5 +1,5 @@
 import { Setting } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 import WorkoutChartsPlugin from "main";
 
 export class TemplatesSettings {
@@ -12,37 +12,33 @@ export class TemplatesSettings {
     const { containerEl } = this;
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.SECTIONS.TEMPLATES)
+      .setName(t("settings.sections.templates"))
       .setHeading();
 
     // Generate Templates button
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_DEFAULT_TEMPLATES)
-      .setDesc(
-        CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.GENERATE_DEFAULT_TEMPLATES,
-      )
+      .setName(t("settings.labels.generateDefaultTemplates"))
+      .setDesc(t("settings.descriptions.generateDefaultTemplates"))
       .addButton((button) => {
         button
-          .setButtonText(
-            CONSTANTS.WORKOUT.SETTINGS.LABELS.GENERATE_DEFAULT_TEMPLATES,
-          )
+          .setButtonText(t("settings.buttons.generateTemplates"))
           .setCta()
           .onClick(async () => {
             button.setDisabled(true);
-            button.setButtonText("Generating...");
+            button.setButtonText(t("settings.buttons.generating"));
             try {
               await this.plugin.templateGeneratorService.generateDefaultTemplates(
                 false,
               );
-              button.setButtonText("Generated!");
+              button.setButtonText(t("settings.buttons.generated"));
               setTimeout(() => {
-                button.setButtonText("Generate templates");
+                button.setButtonText(t("settings.buttons.generateTemplates"));
                 button.setDisabled(false);
               }, 2000);
             } catch (error) {
-              button.setButtonText("Failed");
+              button.setButtonText(t("settings.buttons.failed"));
               setTimeout(() => {
-                button.setButtonText("Generate templates");
+                button.setButtonText(t("settings.buttons.generateTemplates"));
                 button.setDisabled(false);
               }, 2000);
             }
@@ -50,25 +46,29 @@ export class TemplatesSettings {
       })
       .addButton((button) => {
         button
-          .setButtonText("Regenerate (overwrite)")
+          .setButtonText(t("settings.buttons.regenerateOverwrite"))
           .setWarning()
           .onClick(async () => {
             button.setDisabled(true);
-            button.setButtonText("Overwriting...");
+            button.setButtonText(t("settings.buttons.overwriting"));
             try {
               await this.plugin.templateGeneratorService.generateDefaultTemplates(
                 true,
               );
-              button.setButtonText("Done!");
+              button.setButtonText(t("settings.buttons.done"));
               setTimeout(() => {
-                button.setButtonText("Regenerate (overwrite)");
+                button.setButtonText(
+                  t("settings.buttons.regenerateOverwrite"),
+                );
                 button.setDisabled(false);
               }, 2000);
             } catch (error) {
               console.error("Failed to regenerate templates:", error);
-              button.setButtonText("Failed");
+              button.setButtonText(t("settings.buttons.failed"));
               setTimeout(() => {
-                button.setButtonText("Regenerate (overwrite)");
+                button.setButtonText(
+                  t("settings.buttons.regenerateOverwrite"),
+                );
                 button.setDisabled(false);
               }, 2000);
             }
@@ -76,8 +76,8 @@ export class TemplatesSettings {
       });
 
     new Setting(containerEl)
-      .setName(CONSTANTS.WORKOUT.SETTINGS.LABELS.EXERCISE_BLOCK_TEMPLATE)
-      .setDesc(CONSTANTS.WORKOUT.SETTINGS.DESCRIPTIONS.EXERCISE_BLOCK_TEMPLATE)
+      .setName(t("settings.labels.exerciseBlockTemplate"))
+      .setDesc(t("settings.descriptions.exerciseBlockTemplate"))
       .addTextArea((text) => {
         text
           .setValue(this.plugin.settings.exerciseBlockTemplate)

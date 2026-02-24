@@ -26,29 +26,16 @@ import {
   MODAL_UI,
   TABLE_UI,
   CHARTS_UI,
-  TIMER_UI,
   DASHBOARD_UI,
   GENERAL_UI,
-  MESSAGES_UI,
-  FORMS_UI,
-  STATS_UI,
-  TRENDS_UI,
-  TIME_PERIODS_UI,
-  COMMON_UI,
-  getColumnLabels,
 } from "@app/constants/ui.constants";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
-import {
-  BODY_PARTS,
-  MUSCLE_TAGS,
-  MUSCLE_TAG_MAP,
-} from "@app/constants/muscles.constants";
+import { MUSCLE_TAG_MAP } from "@app/constants/muscles.constants";
 
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
 import { ERROR_TYPES } from "@app/constants/validation.constants";
-import { t } from "@app/i18n";
 
 /**
  * Gets dynamic table labels with proper weight unit.
@@ -75,50 +62,11 @@ export const CONSTANTS = {
     UI: {
       LABELS: {
         TRAINING_ANALYSIS: "Training analysis",
-        FRONT: GENERAL_UI.LABELS.FRONT,
-        BACK: GENERAL_UI.LABELS.BACK,
-        MUSCLE_HEAT_MAP: GENERAL_UI.LABELS.MUSCLE_HEAT_MAP,
         TOTAL_WORKOUT: "Total workout",
-        WORKOUT_DATA: GENERAL_UI.LABELS.WORKOUT_DATA,
-        WORKOUT_LOG: GENERAL_UI.LABELS.WORKOUT_LOG,
-        CURRENT_FILE: GENERAL_UI.LABELS.CURRENT_FILE,
-        DASHBOARD: GENERAL_UI.LABELS.DASHBOARD,
       },
-    },
-    MESSAGES: {
-      NO_DATA_PERIOD: MESSAGES_UI.NO_DATA_PERIOD,
-      TIMER_COMPLETED: MESSAGES_UI.TIMER_COMPLETED,
-      WARNINGS: MESSAGES_UI.WARNINGS,
-      SUCCESS: MESSAGES_UI.SUCCESS,
-      ERRORS: MESSAGES_UI.ERRORS,
-      STATUS: MESSAGES_UI.STATUS,
-    },
-    FORMS: {
-      LABELS: FORMS_UI.LABELS,
-      PLACEHOLDERS: FORMS_UI.PLACEHOLDERS,
-    },
-    CHARTS: {
-      LABELS: {
-        REPS: CHARTS_UI.LABELS.REPS,
-        DATE: CHARTS_UI.LABELS.DATE,
-        TREND_LINE: CHARTS_UI.LABELS.TREND_LINE,
-      },
-      TYPES: CHARTS_UI.TYPES,
     },
     MUSCLES: {
       TAG_MAP: MUSCLE_TAG_MAP,
-    },
-    STATS: {
-      LABELS: STATS_UI.LABELS,
-    },
-    TRENDS: {
-      STATUS: TRENDS_UI.STATUS,
-      DIRECTIONS: TRENDS_UI.DIRECTIONS,
-    },
-    TIME_PERIODS: TIME_PERIODS_UI,
-    COMMON: COMMON_UI,
-    TIMER: {
-      TYPES: TIMER_UI.TYPES,
     },
     ERRORS: {
       TYPES: ERROR_TYPES,
@@ -141,7 +89,6 @@ export const CONSTANTS = {
         },
         TARGET_PREFIX: "Target:",
       },
-      ACTIONS: GENERAL_UI.ACTIONS,
       LOGS: GENERAL_UI.LOGS,
       DASHBOARD: DASHBOARD_UI,
       CHARTS: CHARTS_UI.LABELS,
@@ -156,7 +103,6 @@ export const CONSTANTS = {
       },
       ICONS: TABLE_UI.ICONS,
       DEFAULT_VISIBLE_COLUMNS: TABLE_UI.DEFAULT_VISIBLE_COLUMNS,
-      MESSAGES: TABLE_UI.MESSAGES,
       TARGET: TABLE_UI.TARGET,
       DATE_KEYS: {
         INVALID: "invalid-date",

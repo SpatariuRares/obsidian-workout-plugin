@@ -24,7 +24,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { LocalizationService } from "@app/i18n";
+import { LocalizationService, t } from "@app/i18n";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -145,7 +145,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.quickLogRibbonIcon = this.addRibbonIcon(
       "dumbbell",
-      CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG,
+      t("modal.titles.create_log"),
       () => {
         new CreateLogModal(
           this.app,

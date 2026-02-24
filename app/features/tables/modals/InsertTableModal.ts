@@ -69,7 +69,7 @@ export class InsertTableModal extends BaseInsertModal {
 
     for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
       this.tableTypeSelect.createEl("option", {
-        text: option.text,
+        text: option.label,
         value: option.value,
       });
     }
@@ -82,7 +82,7 @@ export class InsertTableModal extends BaseInsertModal {
     for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
       const isDefault = (option.value as TABLE_TYPE) === TABLE_TYPE.COMBINED;
       const chip = Chip.create(chipContainer, {
-        text: option.text,
+        text: option.label,
         selected: isDefault,
         onClick: () => this.onTableTypeChipClick(option.value),
       });

@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
+import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 /**
@@ -42,8 +43,9 @@ export class TargetHeader {
       parts.push(`${targetWeight}${weightUnit}`);
     }
     if (targetReps !== undefined) {
-      const separator = targetWeight !== undefined ? tableTarget.SEPARATOR : "";
-      parts.push(`${separator}${targetReps} ${tableTarget.REPS_SUFFIX}`);
+      const separator =
+        targetWeight !== undefined ? t("table.target.separator") : "";
+      parts.push(`${separator}${targetReps} ${t("table.target.repsSuffix")}`);
     }
 
     const targetText = `${CONSTANTS.WORKOUT.LABELS.TABLE.TARGET_PREFIX} ${parts.join("")}`;
@@ -103,7 +105,10 @@ export class TargetHeader {
     progressFill.addClass(`workout-progress-${progressLevel}`);
 
     // Add tooltip
-    const tooltip = CONSTANTS.WORKOUT.TABLE.TARGET.PROGRESS_TOOLTIP(bestReps, targetReps);
+    const tooltip = CONSTANTS.WORKOUT.TABLE.TARGET.PROGRESS_TOOLTIP(
+      bestReps,
+      targetReps,
+    );
     progressBar.setAttribute("title", tooltip);
     progressBar.setAttribute("aria-label", tooltip);
   }

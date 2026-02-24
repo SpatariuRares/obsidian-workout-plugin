@@ -227,13 +227,13 @@ export const MODAL_UI = {
   SELECT_OPTIONS: {
     CHART_TYPE: [
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.completeWorkout");
         },
         value: "workout",
       },
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.specificExercise");
         },
         value: "exercise",
@@ -244,42 +244,28 @@ export const MODAL_UI = {
     },
     TABLE_TYPE: [
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.exerciseWorkout");
         },
         value: "combined",
       },
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.specificExercise");
         },
         value: "exercise",
       },
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.completeWorkout");
         },
         value: "workout",
       },
       {
-        get text() {
+        get label() {
           return t("modal.selectOptions.allLogs");
         },
         value: "all",
-      },
-    ],
-    TIMER_TYPE: [
-      {
-        get text() {
-          return t("modal.selectOptions.countdown");
-        },
-        value: "countdown",
-      },
-      {
-        get text() {
-          return t("modal.selectOptions.interval");
-        },
-        value: "interval",
       },
     ],
     PROTOCOL: [
@@ -411,7 +397,9 @@ export function getDynamicSettingsLabels() {
   const weightUnit = getWeightUnit();
   return {
     WEIGHT_INCREMENT: t("charts.labels.weightIncrementUnit", { weightUnit }),
-    QUICK_WEIGHT_INCREMENT: t("charts.labels.quickWeightIncrementUnit", { weightUnit }),
+    QUICK_WEIGHT_INCREMENT: t("charts.labels.quickWeightIncrementUnit", {
+      weightUnit,
+    }),
   };
 }
 
@@ -619,12 +607,6 @@ export const CHARTS_UI = {
 };
 
 /**
- * Timer UI labels - timer types and related display text
- */
-export const TIMER_UI = {
-} as const;
-
-/**
  * Gets dynamic dashboard labels with proper weight unit.
  * Returns label strings that include weight units, adjusted based on settings.
  * @returns Object with dynamic dashboard labels organized by section
@@ -697,42 +679,12 @@ export const DASHBOARD_UI = {
  * Messages displayed to users - notifications, warnings, errors, and status messages
  */
 export const MESSAGES_UI = {
-  get NO_DATA_PERIOD() {
-    return t("messages.noDataPeriod");
-  },
-  get TIMER_COMPLETED() {
-    return t("messages.timerCompleted");
-  },
   ERRORS: {
     MUSCLE_TAGS_CSV_FAILED: (error: string) =>
       `Error creating muscle tags CSV: ${error}`,
     TAG_REFERENCE_FAILED: (error: string) =>
       `Error generating tag reference note: ${error}`,
   },
-} as const;
-
-/**
- * Form-related labels and placeholders
- */
-export const FORMS_UI = {
-} as const;
-
-/**
- * Statistics display labels
- */
-export const STATS_UI = {
-} as const;
-
-/**
- * Trend-related labels and status indicators
- */
-export const TRENDS_UI = {
-} as const;
-
-/**
- * Time period labels
- */
-export const TIME_PERIODS_UI = {
 } as const;
 
 /**
@@ -747,18 +699,6 @@ export function getDynamicCommonLabels() {
     },
   };
 }
-
-/**
- * Common/shared UI labels and values
- */
-export const COMMON_UI = {
-  UNITS: {
-    get WEIGHT_KG() {
-      return getDynamicCommonLabels().UNITS.WEIGHT;
-    },
-  },
-} as const;
-
 /**
  * Gets dynamic general UI labels with proper weight unit.
  * @returns Object with dynamic weight-related general labels
@@ -791,27 +731,6 @@ export const GENERAL_UI = {
     },
     get AVG_WEIGHT() {
       return getDynamicGeneralLabels().LABELS.AVG_WEIGHT;
-    },
-    get FRONT() {
-      return t("general.front");
-    },
-    get BACK() {
-      return t("general.back");
-    },
-    get MUSCLE_HEAT_MAP() {
-      return t("general.muscleHeatMap");
-    },
-    get WORKOUT_DATA() {
-      return t("general.workoutData");
-    },
-    get WORKOUT_LOG() {
-      return t("general.workoutLog");
-    },
-    get CURRENT_FILE() {
-      return t("general.currentFile");
-    },
-    get DASHBOARD() {
-      return t("general.dashboard");
     },
   },
   LOGS: {

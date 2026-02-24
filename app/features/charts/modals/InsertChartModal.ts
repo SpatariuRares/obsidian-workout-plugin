@@ -76,7 +76,7 @@ export class InsertChartModal extends BaseInsertModal {
 
     for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
       this.chartTypeSelect.createEl("option", {
-        text: option.text,
+        text: option.label,
         value: option.value,
       });
     }
@@ -89,7 +89,7 @@ export class InsertChartModal extends BaseInsertModal {
     for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
       const isDefault = option.value === "workout";
       const chip = Chip.create(chartTypeChipContainer, {
-        text: option.text,
+        text: option.label,
         selected: isDefault,
         onClick: () => this.onChartTypeChipClick(option.value),
       });
@@ -100,10 +100,7 @@ export class InsertChartModal extends BaseInsertModal {
     this.chartTypeSelect.value = "workout";
 
     // Data Type chips section
-    const dataTypeSection = this.createSection(
-      container,
-      t("modal.dataType"),
-    );
+    const dataTypeSection = this.createSection(container, t("modal.dataType"));
 
     // Hidden select as backing store for data type
     this.dataTypeSelect = dataTypeSection.createEl("select", {

@@ -33,7 +33,7 @@ export class SummaryWidget {
     this.createSummaryCard(
       summaryEl,
       t("dashboard.currentStreak"),
-      `${metrics.currentStreak} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK_SUFFIX}`,
+      t("dashboard.currentStreakSuffix", { count: metrics.currentStreak }),
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.CURRENT_STREAK,
     );
 

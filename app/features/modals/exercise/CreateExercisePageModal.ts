@@ -156,9 +156,7 @@ export class CreateExercisePageModal extends ModalBase {
         const folderPath = folderInput.value.trim();
 
         if (!exerciseName) {
-          new Notice(
-            t("modal.notices.exercisePageNameRequired"),
-          );
+          new Notice(t("modal.notices.exercisePageNameRequired"));
           return;
         }
 
@@ -179,10 +177,11 @@ export class CreateExercisePageModal extends ModalBase {
           this.close();
           new Notice(t("modal.notices.exercisePageCreated"));
         } catch (error) {
-          const errorMessage =
-            ErrorUtils.getErrorMessage(error);
+          const errorMessage = ErrorUtils.getErrorMessage(error);
           new Notice(
-            `${CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_ERROR}${errorMessage}`,
+            t("modal.notices.exercisePageError", {
+              error: errorMessage,
+            }),
           );
         }
       })();

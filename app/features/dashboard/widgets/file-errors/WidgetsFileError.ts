@@ -31,7 +31,7 @@ export class WidgetsFileError {
     if (fileErrors.length === 0) {
       Feedback.renderSuccess(
         errorEl,
-        `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.ALL_VALID}`,
+        `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${t("dashboard.fileErrors.allValid")}`,
         { className: "workout-feedback-success", append: true },
       );
       return;
@@ -125,18 +125,15 @@ export class WidgetsFileError {
 
       if (muscleTags.length === 0) {
         errors.push(
-          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.NO_TAGS}`,
+          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${t("dashboard.fileErrors.noTags")}`,
         );
       } else if (muscleTags.length > 3) {
         errors.push(
-          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TOO_MANY_TAGS(
-            muscleTags.length,
-          )}`,
+          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
         );
       }
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       errors.push(
         `${CONSTANTS.WORKOUT.ICONS.STATUS.ERROR} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
           errorMessage,

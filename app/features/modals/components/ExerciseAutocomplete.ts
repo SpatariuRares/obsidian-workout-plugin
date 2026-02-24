@@ -95,18 +95,18 @@ export class ExerciseAutocomplete {
 
     const autocomplete = CONSTANTS.WORKOUT.MODAL.AUTOCOMPLETE;
     if (matchType === "fuzzy") {
-      badge.textContent = autocomplete.FUZZY_BADGE;
+      badge.textContent = t("modal.autocomplete.fuzzyBadge");
       badge.title = autocomplete.FUZZY_TOOLTIP(score);
     } else {
       // Show score indicator for semantic matches
       if (score >= 90) {
-        badge.textContent = autocomplete.EXACT_BADGE;
+        badge.textContent = t("modal.autocomplete.exactBadge");
         badge.title = autocomplete.EXACT_TOOLTIP(score);
       } else if (score >= 70) {
-        badge.textContent = autocomplete.WORD_BADGE;
+        badge.textContent = t("modal.autocomplete.wordBadge");
         badge.title = autocomplete.WORD_TOOLTIP(score);
       } else {
-        badge.textContent = autocomplete.PARTIAL_BADGE;
+        badge.textContent = t("modal.autocomplete.partialBadge");
         badge.title = autocomplete.PARTIAL_TOOLTIP(score);
       }
     }
@@ -293,8 +293,7 @@ export class ExerciseAutocomplete {
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
         exerciseStatusContainer.className =
           "workout-exercise-status-container workout-exercise-autocomplete-no-found";
-        exerciseStatusText.textContent =
-          t("modal.exerciseStatus.notFound");
+        exerciseStatusText.textContent = t("modal.exerciseStatus.notFound");
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
 

@@ -63,8 +63,7 @@ export class VolumeAnalytics {
     data: [string, number][],
   ): void {
     container.createEl("h4", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS
-        .MUSCLE_BREAKDOWN_TITLE,
+      text: t("dashboard.muscleGroupBreakdown"),
     });
 
     const listEl = ListItem.createList(container, {

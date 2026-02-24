@@ -55,13 +55,13 @@ export class StatsBox {
     ListItem.createStat(ul, {
       label: "Max: ",
       value: stats.maxFormatted,
-      suffix: ` (${stats.maxVolumeDate || CONSTANTS.WORKOUT.COMMON.NOT_AVAILABLE})`,
+      suffix: ` (${stats.maxVolumeDate || t("common.notAvailable")})`,
     });
 
     ListItem.createStat(ul, {
       label: "Min: ",
       value: stats.minFormatted,
-      suffix: ` (${stats.minVolumeDate || CONSTANTS.WORKOUT.COMMON.NOT_AVAILABLE})`,
+      suffix: ` (${stats.minVolumeDate || t("common.notAvailable")})`,
     });
 
     ListItem.createStat(ul, {

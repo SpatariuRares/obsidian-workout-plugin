@@ -117,8 +117,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       // Sort by score (lowest first - worst matches first)
       this.mismatches.sort((a, b) => a.score - b.score);
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(`Error scanning exercise files: ${errorMessage}`);
     }
   }
@@ -252,7 +251,10 @@ export class AuditExerciseNamesModal extends ModalBase {
     const newName = mismatch.fileName;
 
     // Show confirmation dialog with preview
-    const confirmMessage = `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_CONFIRM_RENAME}\n\n"${oldName}" → "${newName}"`;
+    const confirmMessage = t("modal.notices.auditConfirmRename", {
+      oldName,
+      newName,
+    });
 
     // Use Obsidian's built-in confirm dialog
     const confirmed = confirm(confirmMessage);
@@ -267,17 +269,20 @@ export class AuditExerciseNamesModal extends ModalBase {
 
       // Show success message with count
       new Notice(
-        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_SUCCESS} (${count} ${count === 1 ? "entry" : "entries"} updated)`,
+        t("modal.notices.auditRenameSuccess", {
+          count,
+        }),
       );
 
       // Refresh modal to show updated state
       await this.scanExerciseFiles();
       this.renderResults();
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(
-        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_ERROR}${errorMessage}`,
+        t("modal.notices.auditRenameError", {
+          error: errorMessage,
+        }),
       );
     }
   }
@@ -290,7 +295,10 @@ export class AuditExerciseNamesModal extends ModalBase {
     const newFileName = mismatch.closestMatch;
 
     // Show confirmation dialog with preview
-    const confirmMessage = `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_CONFIRM_RENAME_FILE}\n\n"${oldFileName}.md" → "${newFileName}.md"`;
+    const confirmMessage = t("modal.notices.auditConfirmRenameFile", {
+      oldFileName,
+      newFileName,
+    });
 
     // Use Obsidian's built-in confirm dialog
     const confirmed = confirm(confirmMessage);
@@ -314,10 +322,11 @@ export class AuditExerciseNamesModal extends ModalBase {
       await this.scanExerciseFiles();
       this.renderResults();
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(
-        `${CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_ERROR}${errorMessage}`,
+        t("modal.notices.auditRenameFileError", {
+          error: errorMessage,
+        }),
       );
     }
   }

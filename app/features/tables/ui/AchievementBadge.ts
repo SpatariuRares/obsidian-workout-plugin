@@ -123,7 +123,10 @@ export class AchievementBadge {
     const suggestionText = suggestionDiv.createSpan({
       cls: "workout-suggestion-text",
     });
-    suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}${weightUnit}`;
+    suggestionText.textContent = t("modal.notices.suggestedNextWeight", {
+      suggestedWeight,
+      weightUnit,
+    });
 
     const updateButton = Button.create(suggestionDiv, {
       text: t("modal.buttons.updateTargetWeight"),
@@ -135,7 +138,10 @@ export class AchievementBadge {
       updateButton,
       async () => {
         const confirmed = confirm(
-          `${CONSTANTS.WORKOUT.MODAL.NOTICES.CONFIRM_UPDATE_TARGET} ${suggestedWeight}${weightUnit}?`,
+          t("modal.notices.confirmUpdateTarget", {
+            targetWeight: suggestedWeight,
+            weightUnit,
+          }),
         );
 
         if (confirmed) {

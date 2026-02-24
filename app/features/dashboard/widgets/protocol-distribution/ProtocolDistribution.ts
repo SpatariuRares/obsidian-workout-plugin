@@ -155,12 +155,10 @@ export class ProtocolDistribution {
     const filterLabel = activeStat?.label || activeFilter;
 
     FilterIndicator.create(container, {
-      label:
-        t("dashboard.filterActive"),
+      label: t("dashboard.filterActive"),
       filterValue: filterLabel,
       color: activeStat?.color,
-      clearText:
-        t("dashboard.clearFilter"),
+      clearText: t("dashboard.clearFilter"),
       className: "workout-protocol-filter-indicator",
       onClear: () => this.handleFilterChange(null),
     });
@@ -304,11 +302,16 @@ export class ProtocolDistribution {
             callbacks: {
               label: (context) => {
                 const stat = stats[context.dataIndex];
-                return `${stat.label}: ${stat.count} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SETS_LABEL} (${stat.percentage.toFixed(1)}${CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.PERCENT_LABEL})`;
+                return t("dashboard.protocol.setsLabel", {
+                  label: stat.label,
+                  count: stat.count,
+                  setsLabel: t("dashboard.protocol.setsLabel"),
+                  percentage: stat.percentage.toFixed(1),
+                  percentLabel: t("dashboard.protocol.percentLabel"),
+                });
               },
               afterLabel: () => {
-                return CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION
-                  .CLICK_TO_FILTER;
+                return t("dashboard.protocol.clickToFilter");
               },
             },
           },
@@ -372,9 +375,7 @@ export class ProtocolDistribution {
         label: stat.label,
         value: `${stat.count} (${stat.percentage.toFixed(1)}%)`,
         className: "workout-protocol-legend-item",
-        tooltip:
-          CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION
-            .CLICK_TO_FILTER,
+        tooltip: t("dashboard.protocol.clickToFilter"),
         isActive,
         isDimmed,
         onClick: () => {

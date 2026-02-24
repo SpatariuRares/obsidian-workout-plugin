@@ -47,7 +47,7 @@ export class ChartTableViews {
     tableDiv
       .createEl("div", { cls: "workout-charts-footer" })
       .appendText(
-        `${CONSTANTS.WORKOUT.ICONS.STATUS.INFO} ${CONSTANTS.WORKOUT.LABELS.CHARTS.FALLBACK_TABLE_MESSAGE}`,
+        `${CONSTANTS.WORKOUT.ICONS.STATUS.INFO} ${t("charts.fallbackTableMessage")}`,
       );
   }
 
@@ -79,7 +79,9 @@ export class ChartTableViews {
 
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.label });
+    headerRow.createEl("th", {
+      text: CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.label,
+    });
     const columnLabels = getColumnLabels();
     headerRow.createEl("th", {
       text: columnLabels[chartType] || chartType,
@@ -89,8 +91,7 @@ export class ChartTableViews {
 
     // Get the main dataset (first dataset, excluding trend line)
     const mainDataset =
-      datasets.find((ds) => ds.label !== t("table.trendLine")) ||
-      datasets[0];
+      datasets.find((ds) => ds.label !== t("table.trendLine")) || datasets[0];
 
     if (mainDataset && mainDataset.data) {
       labels.forEach((label, index) => {

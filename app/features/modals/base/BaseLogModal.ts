@@ -306,9 +306,7 @@ export abstract class BaseLogModal extends ModalBase {
       }
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(
-        `${CONSTANTS.WORKOUT.MODAL.NOTICES.GENERIC_ERROR}${errorMessage}`,
-      );
+      new Notice(t("modal.notices.genericError", { error: errorMessage }));
     }
   }
 

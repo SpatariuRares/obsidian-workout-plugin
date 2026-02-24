@@ -63,7 +63,7 @@ export class DurationComparison {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.title"),
@@ -100,7 +100,9 @@ export class DurationComparison {
    * @param data - Workout log data
    * @returns Array of workout sessions with duration data
    */
-  private static calculateWorkoutSessions(data: WorkoutLogData[]): WorkoutSession[] {
+  private static calculateWorkoutSessions(
+    data: WorkoutLogData[],
+  ): WorkoutSession[] {
     // Group entries by workout and date
     const sessionGroups = new Map<string, WorkoutLogData[]>();
 
@@ -126,7 +128,7 @@ export class DurationComparison {
 
       // Sort entries by timestamp
       const sortedEntries = entries.sort(
-        (a, b) => (a.timestamp || 0) - (b.timestamp || 0)
+        (a, b) => (a.timestamp || 0) - (b.timestamp || 0),
       );
 
       const firstEntry = sortedEntries[0];
@@ -182,7 +184,9 @@ export class DurationComparison {
    * @param sessions - Array of workout sessions (most recent first)
    * @returns Variance trend data
    */
-  private static calculateVarianceTrend(sessions: WorkoutSession[]): VarianceTrend {
+  private static calculateVarianceTrend(
+    sessions: WorkoutSession[],
+  ): VarianceTrend {
     if (sessions.length < 2) {
       return {
         direction: "stable",
@@ -194,7 +198,7 @@ export class DurationComparison {
     // Calculate average absolute variance
     const totalVariance = sessions.reduce(
       (sum, s) => sum + Math.abs(s.variancePercent),
-      0
+      0,
     );
     const averageVariance = totalVariance / sessions.length;
 
@@ -239,14 +243,14 @@ export class DurationComparison {
   private static formatDuration(seconds: number): string {
     const minutes = Math.round(seconds / 60);
     if (minutes < 60) {
-      return `${minutes}${CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.MINUTES_SUFFIX}`;
+      return `${minutes}${t("dashboard.durationComparison.minutesSuffix")}`;
     }
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     if (remainingMinutes === 0) {
       return `${hours}h`;
     }
-    return `${hours}h ${remainingMinutes}${CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.MINUTES_SUFFIX}`;
+    return `${hours}h ${remainingMinutes} ${t("dashboard.durationComparison.minutesSuffix")}`;
   }
 
   /**
@@ -256,7 +260,7 @@ export class DurationComparison {
    */
   private static renderComparisonTable(
     container: HTMLElement,
-    sessions: WorkoutSession[]
+    sessions: WorkoutSession[],
   ): void {
     const tableContainer = container.createEl("div", {
       cls: "workout-duration-comparison-table-container",
@@ -324,8 +328,8 @@ export class DurationComparison {
         Math.abs(session.variancePercent) <= 10
           ? "workout-duration-comparison-variance-good"
           : Math.abs(session.variancePercent) <= 25
-          ? "workout-duration-comparison-variance-moderate"
-          : "workout-duration-comparison-variance-poor";
+            ? "workout-duration-comparison-variance-moderate"
+            : "workout-duration-comparison-variance-poor";
 
       varianceCell.createEl("span", {
         text: `${varianceSign}${session.variancePercent.toFixed(0)}%`,
@@ -341,7 +345,7 @@ export class DurationComparison {
    */
   private static renderVarianceTrend(
     container: HTMLElement,
-    trend: VarianceTrend
+    trend: VarianceTrend,
   ): void {
     const trendEl = container.createEl("div", {
       cls: "workout-duration-comparison-trend",
@@ -363,8 +367,8 @@ export class DurationComparison {
       trend.direction === "improving"
         ? "↗"
         : trend.direction === "declining"
-        ? "↘"
-        : "→";
+          ? "↘"
+          : "→";
 
     messageEl.createEl("span", {
       text: icon,
@@ -375,8 +379,8 @@ export class DurationComparison {
       trend.direction === "improving"
         ? t("dashboard.varianceTrendImproving")
         : trend.direction === "declining"
-        ? t("dashboard.varianceTrendDeclining")
-        : t("dashboard.varianceTrendStable");
+          ? t("dashboard.varianceTrendDeclining")
+          : t("dashboard.varianceTrendStable");
 
     messageEl.createEl("span", {
       text: trendText,

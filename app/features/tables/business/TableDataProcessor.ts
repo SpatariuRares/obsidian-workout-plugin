@@ -5,6 +5,7 @@ import type WorkoutChartsPlugin from "main";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
+import { t } from "@app/i18n";
 
 /**
  * Orchestrates the processing of workout log data for table display.
@@ -83,7 +84,7 @@ export class TableDataProcessor {
       filterResult: {
         filteredData: sortedAndLimitedData,
         filterMethodUsed: "table processing",
-        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_LOG,
+        titlePrefix: t("general.workoutLog"),
       },
       params,
     };

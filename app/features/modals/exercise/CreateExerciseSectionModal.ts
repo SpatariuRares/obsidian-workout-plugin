@@ -9,6 +9,7 @@ import { TABLE_TYPE } from "@app/features/tables/types";
 import { TIMER_TYPE } from "@app/features/timer/types";
 import { Button } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
+import { t } from "@app/i18n";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -21,7 +22,7 @@ export class CreateExerciseSectionModal extends ModalBase {
   onOpen() {
     const { contentEl } = this;
     contentEl.createEl("h2", {
-      text: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_SECTION,
+      text: t("modal.titles.createExerciseSection"),
     });
 
     // Create main container with better styling
@@ -30,7 +31,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Exercise Configuration Section
     const exerciseSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.EXERCISE_CONFIGURATION,
+      t("modal.sections.exerciseConfiguration"),
     );
 
     // Exercise autocomplete using reusable component
@@ -43,14 +44,14 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Workout input for combined filtering
     const workoutInput = this.createTextField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT_NAME_OPTIONAL,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WORKOUT,
+      t("modal.workoutNameOptional"),
+      t("modal.placeholders.workout"),
     );
 
     // Current Workout checkbox
     const currentWorkoutToggle = this.createCheckboxField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
+      t("modal.checkboxes.useCurrentWorkoutFile"),
       false,
       "currentWorkout",
     );
@@ -58,8 +59,8 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Sets input
     const setsInput = this.createNumberField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.SETS,
-      parseInt(CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.SETS),
+      t("modal.sets"),
+      parseInt(t("modal.placeholders.sets")),
       {
         min: 1,
         max: 20,
@@ -69,16 +70,16 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Reps input
     const repsInput = this.createTextField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.REPS,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS_RANGE,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REPS_RANGE,
+      t("modal.labels.reps"),
+      t("modal.placeholders.repsRange"),
+      t("modal.placeholders.repsRange"),
     );
 
     // Rest time input
     const restTimeInput = this.createNumberField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.REST_TIME,
-      parseInt(CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.REST_TIME),
+      t("modal.restTime"),
+      parseInt(t("modal.placeholders.restTime")),
       {
         min: 30,
         max: 600,
@@ -88,27 +89,27 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Note input
     const noteInput = this.createTextField(
       exerciseSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.NOTE,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTE,
+      t("modal.note"),
+      t("modal.placeholders.note"),
     );
 
     // Options Section
     const optionsSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.OPTIONS,
+      t("modal.sections.options"),
     );
 
     // Show timer toggle
     const showTimerToggle = this.createCheckboxField(
       optionsSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_TIMER,
+      t("modal.checkboxes.includeTimer"),
       true,
       "showTimer",
     );
 
     const timerSoundToggle = this.createCheckboxField(
       optionsSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.TIMER_SOUND,
+      t("modal.checkboxes.timerSound"),
       true,
       "timerSound",
     );
@@ -116,7 +117,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     // Show log toggle
     const showLogToggle = this.createCheckboxField(
       optionsSection,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_LOG,
+      t("modal.checkboxes.includeLog"),
       true,
       "showLog",
     );
@@ -126,16 +127,16 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsSection, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
+      ariaLabel: t("modal.buttons.cancel"),
       variant: "warning",
     });
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsSection, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
+      text: t("modal.buttons.createSection"),
       variant: "primary",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_SECTION,
+      ariaLabel: t("modal.buttons.createSection"),
     });
 
     // Event listeners using Button helper
@@ -164,7 +165,7 @@ export class CreateExerciseSectionModal extends ModalBase {
       if (!exerciseName) {
         this.insertIntoEditor(
           "",
-          CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_NAME_REQUIRED,
+          t("modal.notices.exerciseNameRequired"),
         );
         return;
       }
@@ -183,7 +184,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
       this.insertIntoEditor(
         sectionCode,
-        CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_SECTION_CREATED,
+        t("modal.notices.exerciseSectionCreated"),
       );
       this.close();
     });

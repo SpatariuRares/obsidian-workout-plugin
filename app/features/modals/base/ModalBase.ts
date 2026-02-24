@@ -4,6 +4,7 @@ import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { Input } from "@app/components/atoms";
 import { FormField } from "@app/components/molecules/FormField";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { t } from "@app/i18n";
 
 export abstract class ModalBase extends Modal {
   constructor(app: App) {
@@ -43,7 +44,7 @@ export abstract class ModalBase extends Modal {
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     return (
-      activeView?.file?.basename || CONSTANTS.WORKOUT.UI.LABELS.CURRENT_FILE
+      activeView?.file?.basename || t("general.currentFile")
     );
   }
 
@@ -52,7 +53,7 @@ export abstract class ModalBase extends Modal {
    */
   protected insertIntoEditor(
     code: string,
-    successMessage: string = CONSTANTS.WORKOUT.MESSAGES.SUCCESS.CODE_INSERTED,
+    successMessage: string = t("messages.codeInserted"),
   ): void {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
@@ -61,7 +62,7 @@ export abstract class ModalBase extends Modal {
       editor.replaceRange(code + "\n\n", cursor);
       new Notice(successMessage);
     } else {
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.INSERT_CODE_NO_FILE);
+      new Notice(t("modal.notices.insertCodeNoFile"));
     }
   }
 

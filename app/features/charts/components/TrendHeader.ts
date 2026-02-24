@@ -61,7 +61,7 @@ export class TrendHeader {
       cls: "workout-charts-trend-header-p",
     });
     p.createEl("span", {
-      text: CONSTANTS.WORKOUT.LABELS.CHARTS.OVERALL_VARIATION_PREFIX,
+      text: t("charts.overallVariationPrefix"),
     });
 
     if (variationData.text !== undefined && percentChange !== t("table.notAvailable")) {
@@ -188,7 +188,7 @@ export class TrendHeader {
       return {
         text:
           percentChange === "Infinity"
-            ? CONSTANTS.WORKOUT.LABELS.CHARTS.SIGNIFICANT_INCREASE
+            ? t("charts.significantIncrease")
             : changeSign + percentChange + CONSTANTS.WORKOUT.ICONS.COMMON.PERCENTAGE,
         color: trendColor,
       };

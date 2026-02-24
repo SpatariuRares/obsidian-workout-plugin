@@ -3,6 +3,7 @@ import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { t } from "@app/i18n";
 
 export class DynamicFieldsRenderer {
   constructor(private plugin: WorkoutChartsPlugin) { }
@@ -55,7 +56,7 @@ export class DynamicFieldsRenderer {
       const increment = this.getIncrementForParameter(param);
 
       const minusBtn = Button.create(inputContainer, {
-        text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+        text: t("modal.buttons.adjustMinus") + increment,
         className: "workout-adjust-btn workout-adjust-minus",
         ariaLabel: `Decrease ${param.label} by ${increment}`,
         variant: "secondary",
@@ -73,7 +74,7 @@ export class DynamicFieldsRenderer {
       });
 
       const plusBtn = Button.create(inputContainer, {
-        text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+        text: t("modal.buttons.adjustPlus") + increment,
         className: "workout-adjust-btn workout-adjust-plus",
         ariaLabel: `Increase ${param.label} by ${increment}`,
         variant: "secondary",

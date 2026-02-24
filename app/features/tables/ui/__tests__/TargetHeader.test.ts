@@ -4,6 +4,7 @@ import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},
@@ -51,7 +52,7 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const repsSuffix = CONSTANTS.WORKOUT.TABLE.TARGET.REPS_SUFFIX;
+    const repsSuffix = t("table.target.repsSuffix");
     expect(result).not.toBeNull();
     expect(result!.textContent).toContain(`10 ${repsSuffix}`);
   });
@@ -66,7 +67,7 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const repsSuffix = CONSTANTS.WORKOUT.TABLE.TARGET.REPS_SUFFIX;
+    const repsSuffix = t("table.target.repsSuffix");
     expect(result).not.toBeNull();
     expect(result!.textContent).toContain("100kg");
     expect(result!.textContent).toContain(`10 ${repsSuffix}`);

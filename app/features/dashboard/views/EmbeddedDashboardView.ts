@@ -19,6 +19,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
+import { t } from "@app/i18n";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -129,7 +130,7 @@ export class EmbeddedDashboardView extends BaseView {
         this.handleNoFilteredData(
           container,
           params,
-          params.title || CONSTANTS.WORKOUT.UI.LABELS.DASHBOARD,
+          params.title || t("general.dashboard"),
           VIEW_TYPES.DASHBOARD,
         );
         return;

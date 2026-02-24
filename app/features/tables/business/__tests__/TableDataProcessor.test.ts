@@ -2,6 +2,7 @@ import { TableDataProcessor } from "@app/features/tables/business/TableDataProce
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/features/tables/types";
+import { t } from "@app/i18n";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},
@@ -533,7 +534,7 @@ describe("TableDataProcessor", () => {
 
       expect(result.filterResult.filterMethodUsed).toBe("table processing");
       expect(result.filterResult.titlePrefix).toBe(
-        CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_LOG,
+        t("general.workoutLog"),
       );
     });
 

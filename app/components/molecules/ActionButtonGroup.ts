@@ -6,6 +6,7 @@
 
 import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 export interface ActionButtonGroupProps {
   editTitle?: string;
@@ -43,9 +44,9 @@ export class ActionButtonGroup {
   private static readonly DEFAULT_DELETE_ICON =
     CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE;
   private static readonly DEFAULT_EDIT_TITLE =
-    CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT;
+    t("general.edit");
   private static readonly DEFAULT_DELETE_TITLE =
-    CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE;
+    t("general.delete");
 
   /**
    * Create an action button group

@@ -48,7 +48,7 @@ export class StatsBox {
     });
 
     ListItem.createStat(ul, {
-      label: CONSTANTS.WORKOUT.STATS.LABELS.AVG_VOLUME,
+      label: t("stats.avgVolume"),
       value: stats.avgFormatted,
     });
 
@@ -65,13 +65,13 @@ export class StatsBox {
     });
 
     ListItem.createStat(ul, {
-      label: CONSTANTS.WORKOUT.STATS.LABELS.SESSIONS,
+      label: t("stats.sessions"),
       value: `${labels.length}`,
     });
 
     if (recentTrendData.text !== t("table.notAvailable")) {
       const li5 = ListItem.createEmpty(ul);
-      li5.appendText(CONSTANTS.WORKOUT.STATS.LABELS.RECENT_TREND);
+      li5.appendText(t("stats.recentTrend"));
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
       });
@@ -193,7 +193,7 @@ export class StatsBox {
         };
       } else {
         return {
-          text: CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE,
+          text: t("trends.stable"),
           color: "var(--color-orange)",
           suffix: " (ultime 3)",
         };
@@ -219,7 +219,7 @@ export class StatsBox {
         };
       } else {
         return {
-          text: CONSTANTS.WORKOUT.TRENDS.STATUS.INVARIANT,
+          text: t("trends.invariant"),
           color: "var(--color-orange)",
           suffix: " (vs prec.)",
         };

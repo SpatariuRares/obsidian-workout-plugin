@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { parseYaml } from "obsidian";
+import { t } from "@app/i18n";
 /**
  * Utility for parsing YAML frontmatter from markdown files
  * Centralizes frontmatter parsing logic used across the application
@@ -111,19 +112,19 @@ export class FrontmatterParser {
 
     // Check if content is empty
     if (!content.trim()) {
-      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.FILE_EMPTY);
+      errors.push(t("messages.fileEmpty"));
       return errors;
     }
 
     // Check for frontmatter
     if (!this.hasFrontmatter(content)) {
-      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_FRONTMATTER);
+      errors.push(t("messages.noFrontmatter"));
       return errors;
     }
 
     // Check for tags
     if (!this.hasTags(content)) {
-      errors.push(CONSTANTS.WORKOUT.MESSAGES.ERRORS.NO_TAGS);
+      errors.push(t("messages.noTags"));
     }
 
     return errors;

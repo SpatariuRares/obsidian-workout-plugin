@@ -3,6 +3,7 @@ import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { t } from "@app/i18n";
 
 export class InsertDashboardModal extends BaseInsertModal {
   constructor(app: App) {
@@ -10,15 +11,15 @@ export class InsertDashboardModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_DASHBOARD;
+    return t("modal.titles.insertDashboard");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_DASHBOARD;
+    return t("modal.buttons.insertDashboard");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.DASHBOARD_INSERTED;
+    return t("modal.notices.dashboardInserted");
   }
 
   protected createConfigurationSections(container: HTMLElement): void {

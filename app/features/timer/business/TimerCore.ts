@@ -8,6 +8,7 @@ import {
   TimerDisplay,
   TimerControls,
 } from "@app/features/timer";
+import { t } from "@app/i18n";
 
 export class TimerCore {
   private state: TimerState;
@@ -146,7 +147,7 @@ export class TimerCore {
     this.updateDisplay();
 
     // Show completion message
-    new Notice(CONSTANTS.WORKOUT.MESSAGES.TIMER_COMPLETED);
+    new Notice(t("messages.timerCompleted"));
 
     this.callbacks.onTimerComplete?.();
   }

@@ -5,6 +5,7 @@ import {
   TableCallbacks,
   EmbeddedTableParams,
 } from "@app/features/tables/types";
+import { t } from "@app/i18n";
 
 export class TableRefresh {
   /**
@@ -31,7 +32,7 @@ export class TableRefresh {
 
       await renderCallback(container, freshLogData, params);
 
-      callbacks?.onSuccess?.(CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS);
+      callbacks?.onSuccess?.(t("table.refreshSuccess"));
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));

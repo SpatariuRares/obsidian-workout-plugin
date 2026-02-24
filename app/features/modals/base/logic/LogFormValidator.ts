@@ -1,6 +1,7 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { CONSTANTS } from "@app/constants";
 import { Notice } from "obsidian";
+import { t } from "@app/i18n";
 
 export class LogFormValidator {
   /**
@@ -14,7 +15,7 @@ export class LogFormValidator {
   ): boolean {
     // Exercise is always required
     if (!exercise) {
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_FILL_ALL);
+      new Notice(t("modal.notices.validationFillAll"));
       return false;
     }
 

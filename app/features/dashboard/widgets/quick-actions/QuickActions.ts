@@ -4,6 +4,7 @@ import type WorkoutChartsPlugin from "main";
 
 import { Button } from "@app/components/atoms";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 export class QuickActions {
   static render(
@@ -12,7 +13,7 @@ export class QuickActions {
     plugin: WorkoutChartsPlugin,
   ): void {
     const actionsEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-quick-actions",
     });
 
@@ -21,10 +22,10 @@ export class QuickActions {
 
     // Add workout log button
     const addLogBtn = Button.create(buttonsEl, {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
+      text: t("dashboard.addWorkoutLog"),
       variant: "primary",
       ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.ADD_WORKOUT_LOG,
+        t("dashboard.addWorkoutLog"),
     });
 
     Button.onClick(addLogBtn, () => {
@@ -33,10 +34,10 @@ export class QuickActions {
 
     // View all exercises button
     const viewExercisesBtn = Button.create(buttonsEl, {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
+      text: t("dashboard.viewExercises"),
       variant: "secondary",
       ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_ACTIONS.VIEW_EXERCISES,
+        t("dashboard.viewExercises"),
     });
 
     Button.onClick(viewExercisesBtn, () => {

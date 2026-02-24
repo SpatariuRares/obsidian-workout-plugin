@@ -14,6 +14,7 @@ import {
 } from "@app/utils/form/FormUtils";
 import { Chip } from "@app/components/atoms";
 import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
+import { t } from "@app/i18n";
 
 export class LogFormRenderer {
   constructor(
@@ -89,7 +90,7 @@ export class LogFormRenderer {
 
     const protocolSelect = modal.createSelectField(
       formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.PROTOCOL,
+      t("modal.protocol"),
       allProtocols,
     );
     protocolSelect.value = WorkoutProtocol.STANDARD;
@@ -97,8 +98,8 @@ export class LogFormRenderer {
     // Notes input
     const notesInput = modal.createTextField(
       formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.NOTES,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.NOTES,
+      t("modal.notes"),
+      t("modal.placeholders.notes"),
       "",
     );
 
@@ -116,7 +117,7 @@ export class LogFormRenderer {
         cls: "workout-log-mobile-accordion",
       });
       workoutSectionParent.createEl("summary", {
-        text: CONSTANTS.WORKOUT.MODAL.SECTIONS.MOBILE_OPTIONS,
+        text: t("modal.sections.mobileOptions"),
         cls: "workout-log-mobile-summary",
       });
 
@@ -129,7 +130,7 @@ export class LogFormRenderer {
     // Workout section
     const workoutSection = modal.createSection(
       workoutSectionParent,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT,
+      t("modal.sections.workout"),
     );
 
     // Current workout toggle
@@ -137,7 +138,7 @@ export class LogFormRenderer {
     if (shouldShowWorkoutToggle) {
       currentWorkoutToggle = modal.createCheckboxField(
         workoutSection,
-        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT,
+        t("modal.checkboxes.useCurrentWorkout"),
         initialWorkoutToggleState,
         "currentWorkout",
       );
@@ -146,7 +147,7 @@ export class LogFormRenderer {
     // Workout input
     const workoutInput = modal.createTextField(
       workoutSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT,
+      t("modal.workout"),
       "",
       initialCurrentPageLink || "",
     );
@@ -209,7 +210,7 @@ export class LogFormRenderer {
     }
 
     chipSection.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.RECENT_EXERCISES,
+      text: t("modal.recentExercises"),
       cls: "workout-log-recent-label",
     });
 

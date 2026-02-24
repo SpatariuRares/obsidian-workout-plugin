@@ -8,6 +8,7 @@ import { CONSTANTS } from "@app/constants";
 import { Input, Chip } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import type WorkoutChartsPlugin from "main";
+import { t } from "@app/i18n";
 
 export interface MuscleTagSelectorElements {
   container: HTMLElement;
@@ -50,14 +51,14 @@ export class MuscleTagSelector {
 
     // Label
     selectorContainer.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.TAGS_SELECTOR,
+      text: t("modal.tagsSelector"),
       cls: "workout-form-label",
     });
 
     // Search input
     const searchInput = Input.create(selectorContainer, {
       type: INPUT_TYPE.TEXT,
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.SEARCH_MUSCLE_TAGS,
+      placeholder: t("modal.placeholders.searchMuscleTags"),
     });
     searchInput.addClass("workout-muscle-tag-search");
 
@@ -127,7 +128,7 @@ export class MuscleTagSelector {
     if (filteredTags.length === 0) {
       container.createEl("div", {
         cls: "workout-muscle-tag-list-empty",
-        text: CONSTANTS.WORKOUT.MODAL.LABELS.NO_TAGS_FOUND,
+        text: t("modal.noTagsFound"),
       });
       return;
     }
@@ -177,7 +178,7 @@ export class MuscleTagSelector {
     if (this.selectedTags.size === 0) {
       container.createEl("div", {
         cls: "workout-selected-tags-empty",
-        text: CONSTANTS.WORKOUT.MODAL.LABELS.NO_TAGS_SELECTED,
+        text: t("modal.noTagsSelected"),
       });
       return;
     }

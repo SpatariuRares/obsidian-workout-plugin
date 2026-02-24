@@ -23,6 +23,7 @@ import WorkoutChartsPlugin from "main";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components";
+import { t } from "@app/i18n";
 
 /**
  * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
@@ -211,7 +212,7 @@ export class EmbeddedTableView extends BaseView {
       ? `[[${activeView.file.basename}]]`
       : "";
     const exerciseName =
-      params.exercise || CONSTANTS.WORKOUT.MODAL.SECTIONS.WORKOUT;
+      params.exercise || t("modal.sections.workout");
 
     const buttonContainer = Button.createContainer(contentDiv);
     buttonContainer.addClass("workout-add-log-button-container");

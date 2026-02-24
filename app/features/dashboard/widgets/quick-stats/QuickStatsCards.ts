@@ -7,6 +7,7 @@ import {
 } from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
 import { StatCard, DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 export class QuickStatsCards {
   static render(
@@ -15,7 +16,7 @@ export class QuickStatsCards {
     _params: EmbeddedDashboardParams,
   ): void {
     const cardsEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-stats-cards",
     });
 
@@ -31,19 +32,19 @@ export class QuickStatsCards {
     // Render stats cards
     this.createStatsCard(
       statsGrid,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
+      t("dashboard.week"),
       weekStats,
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
     );
     this.createStatsCard(
       statsGrid,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
+      t("dashboard.month"),
       monthStats,
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
     );
     this.createStatsCard(
       statsGrid,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
+      t("dashboard.year"),
       yearStats,
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
     );
@@ -69,7 +70,7 @@ export class QuickStatsCards {
     StatCard.create(statsEl, {
       icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
       value: stats.workouts.toString(),
-      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
+      label: t("dashboard.workouts"),
       className: "workout-stat-item",
     });
 

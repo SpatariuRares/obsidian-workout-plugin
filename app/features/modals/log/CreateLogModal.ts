@@ -5,6 +5,7 @@ import type WorkoutChartsPlugin from "main";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
+import { t } from "@app/i18n";
 
 export class CreateLogModal extends BaseLogModal {
   private initialValues?: Partial<LogFormData>;
@@ -25,15 +26,15 @@ export class CreateLogModal extends BaseLogModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_LOG;
+    return t("modal.titles.createLog");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE;
+    return t("modal.buttons.create");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_CREATED;
+    return t("modal.notices.logCreated");
   }
 
   protected getInitialWorkoutToggleState(): boolean {

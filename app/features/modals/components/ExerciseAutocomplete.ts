@@ -7,6 +7,7 @@ import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { StringUtils } from "@app/utils/StringUtils";
 
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -135,8 +136,8 @@ export class ExerciseAutocomplete {
     const exerciseContainer = modal.createFormGroup(container);
     const exerciseInput = modal.createTextInput(
       exerciseContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.EXERCISE,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.EXERCISE_AUTOCOMPLETE,
+      t("modal.labels.exercise"),
+      t("modal.placeholders.exerciseAutocomplete"),
       exerciseName || "",
     );
 
@@ -156,9 +157,9 @@ export class ExerciseAutocomplete {
 
     // Create exercise page button using Button atom
     const createExercisePageBtn = Button.create(exerciseStatusContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
+      text: t("modal.exerciseStatus.createPage"),
       className: "workout-create-exercise-page-btn workout-display-none",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.CREATE_PAGE,
+      ariaLabel: t("modal.exerciseStatus.createPage"),
       variant: "secondary",
     });
 
@@ -293,7 +294,7 @@ export class ExerciseAutocomplete {
         exerciseStatusContainer.className =
           "workout-exercise-status-container workout-exercise-autocomplete-no-found";
         exerciseStatusText.textContent =
-          CONSTANTS.WORKOUT.MODAL.EXERCISE_STATUS.NOT_FOUND;
+          t("modal.exerciseStatus.notFound");
         exerciseStatusText.className =
           "workout-exercise-status-text workout-exercise-status-warning";
 

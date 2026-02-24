@@ -7,6 +7,7 @@ import { Button } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import type WorkoutChartsPlugin from "main";
+import { t } from "@app/i18n";
 
 export interface TimerConfigurationElements {
   timerTypeChips: Map<TIMER_TYPE, HTMLButtonElement>;
@@ -41,13 +42,13 @@ export class TimerConfigurationSection {
   } {
     const timerSection = modal.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.TIMER_CONFIGURATION,
+      t("modal.sections.timerConfiguration"),
     );
 
     // Timer Type - chips instead of select
     const typeGroup = modal.createFormGroup(timerSection);
     typeGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.TIMER_TYPE,
+      text: t("modal.timerType"),
     });
 
     const chipContainer = typeGroup.createDiv({
@@ -60,11 +61,11 @@ export class TimerConfigurationSection {
     const timerTypes: Array<{ type: TIMER_TYPE; label: string }> = [
       {
         type: TIMER_TYPE.COUNTDOWN,
-        label: CONSTANTS.WORKOUT.TIMER.TYPES.COUNTDOWN,
+        label: t("timer.countdown"),
       },
       {
         type: TIMER_TYPE.INTERVAL,
-        label: CONSTANTS.WORKOUT.TIMER.TYPES.INTERVAL,
+        label: t("timer.interval"),
       },
     ];
 
@@ -87,7 +88,7 @@ export class TimerConfigurationSection {
     // Duration field with +/- adjust
     const durationInput = TimerConfigurationSection.createAdjustField(
       parametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DURATION,
+      t("modal.duration"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
@@ -101,7 +102,7 @@ export class TimerConfigurationSection {
     });
     const roundsInput = TimerConfigurationSection.createAdjustFieldInContainer(
       roundsContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.ROUNDS,
+      t("modal.rounds"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MIN,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MAX,
@@ -120,7 +121,7 @@ export class TimerConfigurationSection {
     // Display options - compact row
     const displaySection = modal.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
+      t("modal.sections.displayOptions"),
     );
 
     const optionsRow = displaySection.createDiv({
@@ -130,7 +131,7 @@ export class TimerConfigurationSection {
     const showControlsContainer = modal.createCheckboxGroup(optionsRow);
     const showControlsToggle = modal.createCheckbox(
       showControlsContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_CONTROLS,
+      t("modal.checkboxes.showControls"),
       true,
       "showControls",
     );
@@ -138,7 +139,7 @@ export class TimerConfigurationSection {
     const soundContainer = modal.createCheckboxGroup(optionsRow);
     const soundToggle = modal.createCheckbox(
       soundContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SOUND,
+      t("modal.checkboxes.sound"),
       false,
       "sound",
     );
@@ -232,7 +233,7 @@ export class TimerConfigurationSection {
     });
 
     const minusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+      text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
       ariaLabel: `Decrease ${label} by ${increment}`,
       variant: "secondary",
@@ -250,7 +251,7 @@ export class TimerConfigurationSection {
     });
 
     const plusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+      text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
       ariaLabel: `Increase ${label} by ${increment}`,
       variant: "secondary",

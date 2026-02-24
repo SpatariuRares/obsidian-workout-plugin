@@ -3,6 +3,7 @@ import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 import { Button, Input } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import type { MuscleTagSuggestionItem } from "@app/features/modals/muscle/types";
+import { t } from "@app/i18n";
 
 interface RenderMuscleTagFormOptions {
   title: string;
@@ -34,12 +35,12 @@ export class MuscleTagFormRenderer {
       cls: "workout-tag-field",
     });
     tagFieldContainer.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.TAG,
+      text: t("modal.tag"),
       cls: "workout-tag-label",
     });
 
     const tagInput = Input.create(tagFieldContainer, {
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.ENTER_TAG_NAME,
+      placeholder: t("modal.placeholders.enterTagName"),
       value: options.tagValue,
       className: "workout-tag-input",
     });
@@ -64,7 +65,7 @@ export class MuscleTagFormRenderer {
       cls: "workout-tag-field",
     });
     groupFieldContainer.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.MUSCLE_GROUP,
+      text: t("modal.muscleGroup"),
       cls: "workout-tag-label",
     });
 
@@ -96,16 +97,16 @@ export class MuscleTagFormRenderer {
     });
 
     const cancelButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
+      ariaLabel: t("modal.buttons.cancel"),
       variant: "warning",
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const saveButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.SAVE,
+      text: t("modal.save"),
       variant: "primary",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.SAVE,
+      ariaLabel: t("modal.save"),
     });
     Button.onClick(saveButton, () => options.onSave(tagInput, groupSelect));
 
@@ -153,7 +154,7 @@ export class MuscleTagFormRenderer {
       cls: "workout-tag-suggestions-header",
     });
     header.createEl("span", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILAR_TAGS,
+      text: t("modal.similarTags"),
       cls: "workout-tag-suggestions-label",
     });
     header.createEl("span", {
@@ -178,7 +179,7 @@ export class MuscleTagFormRenderer {
           text: "!",
           cls: "workout-tag-suggestion-warning-icon",
           attr: {
-            title: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SIMILAR_WARNING,
+            title: t("modal.notices.muscleTagSimilarWarning"),
           },
         });
       }

@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,
@@ -37,24 +38,24 @@ export class HeatMapControls {
     });
 
     const weekBtn = Button.create(timeFrameEl, {
-      text: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
+      text: t("timeperiods.week"),
       className: "workout-toggle-btn active",
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.WEEK,
+      ariaLabel: t("timeperiods.week"),
     });
 
     const monthBtn = Button.create(timeFrameEl, {
-      text: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
+      text: t("timeperiods.month"),
       className: "workout-toggle-btn",
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.MONTH,
+      ariaLabel: t("timeperiods.month"),
     });
 
     const yearBtn = Button.create(timeFrameEl, {
-      text: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
+      text: t("timeperiods.year"),
       className: "workout-toggle-btn",
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.TIME_PERIODS.YEAR,
+      ariaLabel: t("timeperiods.year"),
     });
 
     // View toggle
@@ -63,17 +64,17 @@ export class HeatMapControls {
     });
 
     const frontBtn = Button.create(viewToggleEl, {
-      text: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
+      text: t("general.front"),
       className: "workout-toggle-btn active",
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.FRONT,
+      ariaLabel: t("general.front"),
     });
 
     const backBtn = Button.create(viewToggleEl, {
-      text: CONSTANTS.WORKOUT.UI.LABELS.BACK,
+      text: t("general.back"),
       className: "workout-toggle-btn",
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.UI.LABELS.BACK,
+      ariaLabel: t("general.back"),
     });
 
     // Current options state

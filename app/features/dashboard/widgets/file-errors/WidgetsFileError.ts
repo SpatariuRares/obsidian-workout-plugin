@@ -7,6 +7,7 @@ import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
 import { StringUtils, ErrorUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 interface ExerciseFileError {
   file: TFile;
@@ -20,7 +21,7 @@ export class WidgetsFileError {
     plugin: WorkoutChartsPlugin,
   ): Promise<void> {
     const errorEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-file-errors",
     });
 

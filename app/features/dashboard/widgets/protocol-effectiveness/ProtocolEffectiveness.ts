@@ -4,6 +4,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type WorkoutChartsPlugin from "main";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 /**
  * Minimum number of entries required to show statistics for a protocol.
@@ -54,7 +55,7 @@ export class ProtocolEffectiveness {
     plugin?: WorkoutChartsPlugin
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-protocol-effectiveness",
       isWide: true,
     });
@@ -65,7 +66,7 @@ export class ProtocolEffectiveness {
     // Check if there's enough data
     if (stats.length === 0) {
       widgetEl.createEl("div", {
-        text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.NO_DATA,
+        text: t("dashboard.noData"),
         cls: "workout-protocol-effectiveness-no-data",
       });
       return;
@@ -76,7 +77,7 @@ export class ProtocolEffectiveness {
 
     // Render disclaimer
     widgetEl.createEl("div", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.DISCLAIMER,
+      text: t("dashboard.disclaimer"),
       cls: "workout-protocol-effectiveness-disclaimer",
     });
   }
@@ -297,16 +298,16 @@ export class ProtocolEffectiveness {
     const headerRow = thead.createEl("tr");
 
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.COLUMN_PROTOCOL,
+      text: t("dashboard.columnProtocol"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.COLUMN_ENTRIES,
+      text: t("dashboard.columnEntries"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.COLUMN_VOLUME_CHANGE,
+      text: t("dashboard.columnVolumeChange"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_EFFECTIVENESS.COLUMN_PROGRESSION,
+      text: t("dashboard.columnProgression"),
     });
 
     // Body

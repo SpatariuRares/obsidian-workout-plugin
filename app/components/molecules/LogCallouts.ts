@@ -7,6 +7,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
+import { t } from "@app/i18n";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -173,7 +174,7 @@ export class LogCallouts {
   static renderNoMatchMessage(container: HTMLElement): void {
     Feedback.renderInfo(
       container,
-      CONSTANTS.WORKOUT.LABELS.LOGS.NO_MATCH_MESSAGE,
+      t("general.noMatchMessage"),
       {
         icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
         className: "workout-log-no-match",

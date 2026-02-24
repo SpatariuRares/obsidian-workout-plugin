@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
+import { t } from "@app/i18n";
 
 /**
  * Utility class for data aggregation operations
@@ -52,7 +53,7 @@ export class DataAggregation {
   static aggregateWorkoutVolumes(data: WorkoutLogData[]): Map<string, number> {
     return this.aggregateByKey(
       data,
-      (d) => d.workout || CONSTANTS.WORKOUT.COMMON.DEFAULTS.UNKNOWN,
+      (d) => d.workout || t("common.unknown"),
       (d) => d.volume
     );
   }

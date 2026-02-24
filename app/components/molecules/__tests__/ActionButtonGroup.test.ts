@@ -3,6 +3,7 @@
 import { CONSTANTS } from "@app/constants";
 import { ActionButtonGroup } from "@app/components/molecules/ActionButtonGroup";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { t } from "@app/i18n";
 
 describe("ActionButtonGroup", () => {
 	const createParent = () => createObsidianContainer();
@@ -19,13 +20,13 @@ describe("ActionButtonGroup", () => {
 		expect(renderedButtons).toHaveLength(2);
 
 		expect(editBtn.classList.contains("workout-table-action-btn-edit")).toBe(true);
-		expect(editBtn.getAttribute("title")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT);
-		expect(editBtn.getAttribute("aria-label")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.EDIT);
+		expect(editBtn.getAttribute("title")).toBe(t("general.edit"));
+		expect(editBtn.getAttribute("aria-label")).toBe(t("general.edit"));
 		expect(editBtn.textContent).toBe(CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT.trim());
 
 		expect(deleteBtn.classList.contains("workout-table-action-btn-delete")).toBe(true);
-		expect(deleteBtn.getAttribute("title")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE);
-		expect(deleteBtn.getAttribute("aria-label")).toBe(CONSTANTS.WORKOUT.LABELS.ACTIONS.DELETE);
+		expect(deleteBtn.getAttribute("title")).toBe(t("general.delete"));
+		expect(deleteBtn.getAttribute("aria-label")).toBe(t("general.delete"));
 		expect(deleteBtn.textContent).toBe(CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE.trim());
 	});
 

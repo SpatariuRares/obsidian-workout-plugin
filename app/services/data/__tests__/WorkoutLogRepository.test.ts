@@ -9,6 +9,7 @@ import {
 } from "../../../types/WorkoutLogData";
 import { CONSTANTS } from "../../../constants";
 import * as WorkoutLogDataUtils from "../../../types/WorkoutLogData";
+import { t } from "@app/i18n";
 
 // Mock Obsidian types
 const mockVault = {
@@ -225,7 +226,7 @@ describe("WorkoutLogRepository", () => {
       (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
       await expect(
         repository.updateWorkoutLogEntry(originalLog, updatedEntry),
-      ).rejects.toThrow(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      ).rejects.toThrow(t("messages.csvNotFound"));
     });
 
     it("should fallback to matching by properties if timestamp not found", async () => {
@@ -331,7 +332,7 @@ describe("WorkoutLogRepository", () => {
       (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
       await expect(
         repository.deleteWorkoutLogEntry(logToDelete),
-      ).rejects.toThrow(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      ).rejects.toThrow(t("messages.csvNotFound"));
     });
 
     it("should fallback to matching by properties if timestamp not found", async () => {
@@ -410,7 +411,7 @@ describe("WorkoutLogRepository", () => {
     it("should throw error if file not found", async () => {
       (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
       await expect(repository.renameExercise("Old", "New")).rejects.toThrow(
-        CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND,
+        t("messages.csvNotFound"),
       );
     });
 

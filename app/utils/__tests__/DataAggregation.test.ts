@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { DataAggregation } from '@app/utils/data/DataAggregation';
 import { WorkoutLogData } from '@app/types/WorkoutLogData';
+import { t } from "@app/i18n";
 
 describe('DataAggregation', () => {
   const mockData: WorkoutLogData[] = [
@@ -112,7 +113,7 @@ describe('DataAggregation', () => {
       ];
 
       const result = DataAggregation.aggregateWorkoutVolumes(dataWithUndefined);
-      expect(result.get(CONSTANTS.WORKOUT.COMMON.DEFAULTS.UNKNOWN)).toBe(1000);
+      expect(result.get(t("common.unknown"))).toBe(1000);
     });
   });
 

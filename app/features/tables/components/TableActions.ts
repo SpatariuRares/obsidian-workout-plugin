@@ -6,6 +6,7 @@ import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { ActionButtons } from "@app/features/tables/ui";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { t } from "@app/i18n";
 
 /**
  * Handles actions for table rows (edit, delete)
@@ -34,12 +35,12 @@ export class TableActions {
   ): void {
     const modal = new ConfirmModal(
       plugin.app,
-      CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_CONFIRM,
+      t("table.deleteConfirm"),
       () => {
         void (async () => {
           try {
             await plugin.deleteWorkoutLogEntry(log);
-            new Notice(CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_SUCCESS);
+            new Notice(t("table.deleteSuccess"));
             plugin.triggerWorkoutLogRefresh({
               exercise: log.exercise,
               workout: log.workout,
@@ -48,7 +49,7 @@ export class TableActions {
             const errorMessage =
               ErrorUtils.getErrorMessage(error);
             new Notice(
-              CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_ERROR + errorMessage,
+              t("table.deleteError") + errorMessage,
             );
           }
         })();

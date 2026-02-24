@@ -18,6 +18,7 @@ import type {
 } from "@app/types/ExerciseTypes";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
+import { t } from "@app/i18n";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -49,7 +50,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Add modal title
     contentEl.createEl("h2", {
-      text: CONSTANTS.WORKOUT.MODAL.TITLES.CREATE_EXERCISE_PAGE,
+      text: t("modal.titles.createExercisePage"),
     });
 
     // Create form container
@@ -69,7 +70,7 @@ export class CreateExercisePageModal extends ModalBase {
     // Exercise type dropdown
     const exerciseTypeSelect = this.createSelectField(
       formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.EXERCISE_TYPE,
+      t("modal.exerciseType"),
       [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.EXERCISE_TYPE],
     );
     // Set default to strength
@@ -86,13 +87,13 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-custom-params-header",
     });
     customParamsHeader.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.CUSTOM_PARAMETERS,
+      text: t("modal.customParameters"),
     });
 
     const addParamBtn = Button.create(customParamsHeader, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
+      text: t("modal.buttons.addParameter"),
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADD_PARAMETER,
+      ariaLabel: t("modal.buttons.addParameter"),
     });
 
     // Container for parameter rows
@@ -122,8 +123,8 @@ export class CreateExercisePageModal extends ModalBase {
     // Folder path input
     const folderInput = this.createTextField(
       formContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.FOLDER_PATH,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.FOLDER_PATH,
+      t("modal.folderPath"),
+      t("modal.placeholders.folderPath"),
       this.plugin.settings.exerciseFolderPath,
     );
 
@@ -132,16 +133,16 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
+      text: t("modal.buttons.createExercise"),
       variant: "primary",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CREATE_EXERCISE,
+      ariaLabel: t("modal.buttons.createExercise"),
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
       variant: "warning",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: t("modal.buttons.cancel"),
     });
 
     // Event listeners using Button helper
@@ -156,7 +157,7 @@ export class CreateExercisePageModal extends ModalBase {
 
         if (!exerciseName) {
           new Notice(
-            CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_NAME_REQUIRED,
+            t("modal.notices.exercisePageNameRequired"),
           );
           return;
         }
@@ -176,7 +177,7 @@ export class CreateExercisePageModal extends ModalBase {
             customParameters,
           );
           this.close();
-          new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_PAGE_CREATED);
+          new Notice(t("modal.notices.exercisePageCreated"));
         } catch (error) {
           const errorMessage =
             ErrorUtils.getErrorMessage(error);
@@ -207,11 +208,11 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-param-field",
     });
     keyGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_KEY,
+      text: t("modal.parameterKey"),
     });
     const keyInput = Input.create(keyGroup, {
       type: INPUT_TYPE.TEXT,
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_KEY,
+      placeholder: t("modal.placeholders.parameterKey"),
     });
 
     // Label input
@@ -219,11 +220,11 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-param-field",
     });
     labelGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_LABEL,
+      text: t("modal.parameterLabel"),
     });
     const labelInput = Input.create(labelGroup, {
       type: INPUT_TYPE.TEXT,
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_LABEL,
+      placeholder: t("modal.placeholders.parameterLabel"),
     });
 
     // Type select
@@ -231,7 +232,7 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-param-field",
     });
     typeGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_TYPE,
+      text: t("modal.parameterType"),
     });
     const typeSelect = typeGroup.createEl("select");
     [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE].forEach(
@@ -248,11 +249,11 @@ export class CreateExercisePageModal extends ModalBase {
       cls: "workout-charts-param-field",
     });
     unitGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_UNIT,
+      text: t("modal.parameterUnit"),
     });
     const unitInput = Input.create(unitGroup, {
       type: INPUT_TYPE.TEXT,
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.PARAMETER_UNIT,
+      placeholder: t("modal.placeholders.parameterUnit"),
     });
 
     // Required checkbox
@@ -264,13 +265,13 @@ export class CreateExercisePageModal extends ModalBase {
     });
     requiredCheckbox.checked = true;
     requiredGroup.createEl("label", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.PARAMETER_REQUIRED,
+      text: t("modal.parameterRequired"),
     });
 
     // Remove button
     const removeBtn = Button.create(rowContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.REMOVE_PARAMETER,
+      text: t("modal.buttons.removeParameter"),
+      ariaLabel: t("modal.buttons.removeParameter"),
       variant: "warning",
       size: "small",
     });

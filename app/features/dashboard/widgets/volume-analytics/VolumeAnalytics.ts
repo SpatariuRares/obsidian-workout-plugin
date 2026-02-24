@@ -10,6 +10,7 @@ import {
 } from "@app/features/dashboard/widgets/volume-analytics/business/volumeAnalyticsData";
 import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 export class VolumeAnalytics {
   static render(
@@ -18,7 +19,7 @@ export class VolumeAnalytics {
     _params: EmbeddedDashboardParams,
   ): void {
     const analyticsEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-volume-analytics",
       isWide: true,
     });
@@ -44,7 +45,7 @@ export class VolumeAnalytics {
       ],
       {
         type: CHART_DATA_TYPE.VOLUME,
-        title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.CHART_TITLE,
+        title: t("dashboard.chartTitle"),
       },
     );
 

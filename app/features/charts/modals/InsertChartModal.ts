@@ -58,14 +58,14 @@ export class InsertChartModal extends BaseInsertModal {
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.CHART_INSERTED;
+    return t("modal.notices.chartInserted");
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CHART_TYPE,
+      t("modal.sections.chartType"),
     );
 
     // Hidden select as backing store for TargetSectionWithAutocomplete
@@ -102,7 +102,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Data Type chips section
     const dataTypeSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_TYPE,
+      t("modal.dataType"),
     );
 
     // Hidden select as backing store for data type
@@ -167,7 +167,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
+      t("modal.sections.configuration"),
     );
 
     // Parameters container (grid layout)
@@ -178,7 +178,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Date range with +/- adjust
     this.dateRangeInput = this.createAdjustField(
       parametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DAYS_RANGE,
+      t("modal.daysRange"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MIN,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_DATE_RANGE_MAX,
@@ -189,7 +189,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Limit with +/- adjust
     this.limitInput = this.createAdjustField(
       parametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DATA_LIMIT,
+      t("modal.dataLimit"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MIN,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.CHART_LIMIT_MAX,
@@ -199,7 +199,7 @@ export class InsertChartModal extends BaseInsertModal {
     // Display Options Section
     const displaySection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.DISPLAY_OPTIONS,
+      t("modal.sections.displayOptions"),
     );
 
     // Compact toggle row for display options
@@ -211,7 +211,7 @@ export class InsertChartModal extends BaseInsertModal {
     const trendLineContainer = this.createCheckboxGroup(toggleRow);
     this.trendLineToggle = this.createCheckbox(
       trendLineContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_LINE,
+      t("modal.checkboxes.showTrendLine"),
       true,
       "trendLine",
     );
@@ -220,7 +220,7 @@ export class InsertChartModal extends BaseInsertModal {
     const trendHeaderContainer = this.createCheckboxGroup(toggleRow);
     this.trendHeaderToggle = this.createCheckbox(
       trendHeaderContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_TREND_HEADER,
+      t("modal.checkboxes.showTrendHeader"),
       true,
       "trendHeader",
     );
@@ -229,7 +229,7 @@ export class InsertChartModal extends BaseInsertModal {
     const statsContainer = this.createCheckboxGroup(toggleRow);
     this.statsToggle = this.createCheckbox(
       statsContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_STATISTICS,
+      t("modal.checkboxes.showStatistics"),
       true,
       "stats",
     );
@@ -329,7 +329,7 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     const minusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+      text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
       ariaLabel: `Decrease ${label} by ${increment}`,
       variant: "secondary",
@@ -347,7 +347,7 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     const plusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+      text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
       ariaLabel: `Increase ${label} by ${increment}`,
       variant: "secondary",

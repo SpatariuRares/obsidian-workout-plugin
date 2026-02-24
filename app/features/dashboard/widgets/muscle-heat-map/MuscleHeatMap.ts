@@ -11,6 +11,7 @@ import {
 import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 /**
  * Main orchestrator for muscle heat map visualization
@@ -24,7 +25,7 @@ export class MuscleHeatMap {
     plugin: WorkoutChartsPlugin
   ): Promise<void> {
     const heatMapEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.UI.LABELS.MUSCLE_HEAT_MAP,
+      title: t("general.muscleHeatMap"),
       className: "workout-muscle-heatmap",
       isWide: true,
     });

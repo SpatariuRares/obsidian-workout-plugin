@@ -23,11 +23,11 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_EXERCISE_BLOCK;
+    return t("modal.buttons.insertExerciseBlock");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_BLOCK_INSERTED;
+    return t("modal.notices.exerciseBlockInserted");
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
@@ -56,7 +56,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
       ];
       this.presetSelect = this.createSelectField(
         timerSection,
-        CONSTANTS.WORKOUT.MODAL.LABELS.TIMER_PRESET,
+        t("modal.timerPreset"),
         presetOptions
       );
 
@@ -67,7 +67,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     }
 
     // Timer duration input
-    this.durationInput = this.createNumberField(timerSection, CONSTANTS.WORKOUT.MODAL.LABELS.TIMER_DURATION, 90, {
+    this.durationInput = this.createNumberField(timerSection, t("modal.timerDuration"), 90, {
       min: 1,
       max: 3600,
       placeholder: "90",
@@ -80,7 +80,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     const currentFileName = this.getCurrentFileName();
     this.workoutInput = this.createTextField(
       workoutSection,
-      CONSTANTS.WORKOUT.MODAL.LABELS.WORKOUT_FILE,
+      t("modal.workoutFile"),
       currentFileName,
       currentFileName
     );
@@ -88,12 +88,12 @@ export class AddExerciseBlockModal extends BaseInsertModal {
 
   protected generateCode(): string {
     if (!this.exerciseElements || !this.durationInput || !this.workoutInput || !this.plugin) {
-      throw new Error(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_FILL_ALL);
+      throw new Error(t("modal.notices.validationFillAll"));
     }
 
     const exerciseName = this.exerciseElements.exerciseInput.value.trim();
     if (!exerciseName) {
-      throw new Error(CONSTANTS.WORKOUT.MODAL.NOTICES.EXERCISE_NAME_REQUIRED);
+      throw new Error(t("modal.notices.exerciseNameRequired"));
     }
 
     const duration = this.durationInput.value || "90";

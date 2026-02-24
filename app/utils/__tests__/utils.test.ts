@@ -10,6 +10,7 @@ import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import { t } from "@app/i18n";
 
 // Mock TFile
 class MockTFile {
@@ -407,7 +408,7 @@ describe("Utility Classes", () => {
         30,
       );
       expect(result.datasets[0].label).toContain(
-        CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_REPS,
+        t("general.avgReps"),
       );
     });
 

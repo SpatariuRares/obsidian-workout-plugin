@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { FormatUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 /**
  * Calculates trend indicators for workout data.
@@ -23,7 +24,7 @@ export class TrendCalculator {
   ): TrendIndicators {
     if (volumeData.length < 2) {
       return {
-        trendDirection: CONSTANTS.WORKOUT.MESSAGES.STATUS.INSUFFICIENT_DATA,
+        trendDirection: t("messages.insufficientData"),
         trendColor: "var(--text-muted, #888)",
         trendIcon: "·",
       };
@@ -42,13 +43,13 @@ export class TrendCalculator {
       if (isLowerBetter) {
         // Positive slope for pace means getting slower = declining
         return {
-          trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.DECLINING,
+          trendDirection: t("trends.declining"),
           trendColor: "var(--color-red, #F44336)",
           trendIcon: "↘️",
         };
       }
       return {
-        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        trendDirection: t("trends.increasing"),
         trendColor: "var(--color-green, #4CAF50)",
         trendIcon: "↗️",
       };
@@ -56,19 +57,19 @@ export class TrendCalculator {
       if (isLowerBetter) {
         // Negative slope for pace means getting faster = improving
         return {
-          trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.IMPROVING,
+          trendDirection: t("trends.improving"),
           trendColor: "var(--color-green, #4CAF50)",
           trendIcon: "↗️",
         };
       }
       return {
-        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.DECREASING,
+        trendDirection: t("trends.decreasing"),
         trendColor: "var(--color-red, #F44336)",
         trendIcon: "↘️",
       };
     } else {
       return {
-        trendDirection: CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        trendDirection: t("trends.stableLower"),
         trendColor: "var(--color-accent, #FFC107)", // più visibile di orange
         trendIcon: "→",
       };

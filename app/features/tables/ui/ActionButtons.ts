@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { ActionButtonGroup } from "@app/components/molecules";
+import { t } from "@app/i18n";
 
 /**
  * UI component for creating action buttons (edit, delete, etc.).
@@ -21,8 +22,8 @@ export class ActionButtons {
 	} {
 		// Use ActionButtonGroup molecule for edit + delete buttons
 		const result = ActionButtonGroup.create(container, {
-			editTitle: CONSTANTS.WORKOUT.TABLE.MESSAGES.EDIT_TITLE,
-			deleteTitle: CONSTANTS.WORKOUT.TABLE.MESSAGES.DELETE_TITLE,
+			editTitle: t("table.editTitle"),
+			deleteTitle: t("table.deleteTitle"),
 			editIcon: CONSTANTS.WORKOUT.TABLE.ICONS.EDIT,
 			deleteIcon: CONSTANTS.WORKOUT.TABLE.ICONS.DELETE,
 			className: "workout-table-actions",

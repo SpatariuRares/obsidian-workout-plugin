@@ -4,6 +4,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
 import { DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 export class SummaryWidget {
   static render(
@@ -12,7 +13,7 @@ export class SummaryWidget {
     _params: EmbeddedDashboardParams,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TITLE,
+      title: t("dashboard.title"),
       className: "workout-summary-widget",
     });
 
@@ -24,28 +25,28 @@ export class SummaryWidget {
 
     this.createSummaryCard(
       summaryEl,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS,
+      t("dashboard.totalWorkouts"),
       metrics.totalWorkouts.toString(),
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS,
     );
 
     this.createSummaryCard(
       summaryEl,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK,
+      t("dashboard.currentStreak"),
       `${metrics.currentStreak} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.CURRENT_STREAK_SUFFIX}`,
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.CURRENT_STREAK,
     );
 
     this.createSummaryCard(
       summaryEl,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME,
+      t("dashboard.totalVolume"),
       `${metrics.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME_SUFFIX}`,
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_VOLUME,
     );
 
     this.createSummaryCard(
       summaryEl,
-      CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.PERSONAL_RECORDS,
+      t("dashboard.personalRecords"),
       metrics.personalRecords.toString(),
       CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.PERSONAL_RECORDS,
     );

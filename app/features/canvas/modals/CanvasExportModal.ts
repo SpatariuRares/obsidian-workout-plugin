@@ -14,6 +14,7 @@ import type {
   CanvasExportOptions,
   CanvasLayoutType,
 } from "@app/features/canvas/types";
+import { t } from "@app/i18n";
 
 /**
  * Modal for configuring canvas export options
@@ -48,7 +49,7 @@ export class CanvasExportModal extends ModalBase {
 
     // Title
     contentEl.createEl("h2", {
-      text: CONSTANTS.WORKOUT.MODAL.TITLES.CANVAS_EXPORT,
+      text: t("modal.titles.canvasExport"),
     });
 
     // Main container
@@ -60,14 +61,14 @@ export class CanvasExportModal extends ModalBase {
     // Layout section
     const layoutSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_LAYOUT,
+      t("modal.canvasLayout"),
     );
     this.createLayoutOptions(layoutSection);
 
     // Options section
     const optionsSection = this.createSection(
       mainContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.CANVAS_OPTIONS,
+      t("modal.canvasOptions"),
     );
     this.createOptionCheckboxes(optionsSection);
 
@@ -83,18 +84,18 @@ export class CanvasExportModal extends ModalBase {
 
     this.layoutSelect = this.createSelect(
       formGroup,
-      CONSTANTS.WORKOUT.MODAL.LABELS.LAYOUT_TYPE,
+      t("modal.layoutType"),
       [
         {
-          text: CONSTANTS.WORKOUT.MODAL.LABELS.LAYOUT_HORIZONTAL,
+          text: t("modal.layoutHorizontal"),
           value: "horizontal",
         },
         {
-          text: CONSTANTS.WORKOUT.MODAL.LABELS.LAYOUT_VERTICAL,
+          text: t("modal.layoutVertical"),
           value: "vertical",
         },
         {
-          text: CONSTANTS.WORKOUT.MODAL.LABELS.LAYOUT_GROUPED,
+          text: t("modal.layoutGrouped"),
           value: "grouped",
         },
       ],
@@ -108,7 +109,7 @@ export class CanvasExportModal extends ModalBase {
     // Include durations checkbox
     this.includeDurationsCheckbox = this.createCheckboxField(
       container,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_DURATIONS,
+      t("modal.checkboxes.includeDurations"),
       false,
       "include-durations",
     );
@@ -116,7 +117,7 @@ export class CanvasExportModal extends ModalBase {
     // Include stats checkbox
     this.includeStatsCheckbox = this.createCheckboxField(
       container,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.INCLUDE_STATS,
+      t("modal.checkboxes.includeStats"),
       false,
       "include-stats",
     );
@@ -124,7 +125,7 @@ export class CanvasExportModal extends ModalBase {
     // Connect supersets checkbox
     this.connectSupersetsCheckbox = this.createCheckboxField(
       container,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.CONNECT_SUPERSETS,
+      t("modal.checkboxes.connectSupersets"),
       true,
       "connect-supersets",
     );
@@ -138,19 +139,19 @@ export class CanvasExportModal extends ModalBase {
 
     // Cancel button
     const cancelButton = Button.create(buttonsSection, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
       variant: "secondary",
       className: "workout-charts-button",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: t("modal.buttons.cancel"),
     });
     Button.onClick(cancelButton, () => this.close());
 
     // Export button
     const exportButton = Button.create(buttonsSection, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
+      text: t("modal.buttons.export"),
       variant: "secondary",
       className: "workout-charts-button mod-cta",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.EXPORT,
+      ariaLabel: t("modal.buttons.export"),
     });
     Button.onClick(exportButton, () => this.handleExport());
   }

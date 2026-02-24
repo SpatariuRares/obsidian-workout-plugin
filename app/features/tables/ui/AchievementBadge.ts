@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { t } from "@app/i18n";
 
 /**
  * AchievementBadge - UI component for displaying achievement celebrations
@@ -69,7 +70,7 @@ export class AchievementBadge {
     const badgeDiv = container.createDiv({ cls: "workout-achievement-badge" });
 
     const badgeText = badgeDiv.createSpan({ cls: "workout-achievement-text" });
-    badgeText.textContent = CONSTANTS.WORKOUT.MODAL.NOTICES.TARGET_ACHIEVED;
+    badgeText.textContent = t("modal.notices.targetAchieved");
 
     // Render weight suggestion
     const suggestedWeight = targetWeight + weightIncrement;
@@ -125,8 +126,8 @@ export class AchievementBadge {
     suggestionText.textContent = `${CONSTANTS.WORKOUT.MODAL.NOTICES.SUGGESTED_NEXT_WEIGHT} ${suggestedWeight}${weightUnit}`;
 
     const updateButton = Button.create(suggestionDiv, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE_TARGET_WEIGHT,
+      text: t("modal.buttons.updateTargetWeight"),
+      ariaLabel: t("modal.buttons.updateTargetWeight"),
       variant: "primary",
     });
 

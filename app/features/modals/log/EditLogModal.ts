@@ -6,6 +6,7 @@ import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
+import { t } from "@app/i18n";
 
 export class EditLogModal extends BaseLogModal {
   private originalLog: WorkoutLogData;
@@ -21,15 +22,15 @@ export class EditLogModal extends BaseLogModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.EDIT_LOG;
+    return t("modal.titles.editLog");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.UPDATE;
+    return t("modal.buttons.update");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.LOG_UPDATED;
+    return t("modal.notices.logUpdated");
   }
 
   protected getInitialWorkoutToggleState(): boolean {

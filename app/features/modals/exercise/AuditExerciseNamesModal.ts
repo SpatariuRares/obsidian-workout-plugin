@@ -5,6 +5,7 @@ import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
 import { Button } from "@app/components/atoms";
 import { StringUtils, ErrorUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 interface MismatchEntry {
   file: TFile;
@@ -34,7 +35,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
     // Title
     contentEl.createEl("h2", {
-      text: CONSTANTS.WORKOUT.MODAL.TITLES.AUDIT_EXERCISE_NAMES,
+      text: t("modal.titles.auditExerciseNames"),
     });
 
     // Main container
@@ -44,7 +45,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
     // Show loading message
     this.contentContainer.createEl("p", {
-      text: CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_SCANNING,
+      text: t("modal.notices.auditScanning"),
     });
 
     // Scan for mismatches
@@ -133,7 +134,7 @@ export class AuditExerciseNamesModal extends ModalBase {
     // If no mismatches, show success message
     if (this.mismatches.length === 0) {
       this.contentContainer.createEl("p", {
-        text: CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_NO_MISMATCHES,
+        text: t("modal.notices.auditNoMismatches"),
         cls: "workout-audit-success",
       });
       return;
@@ -157,15 +158,15 @@ export class AuditExerciseNamesModal extends ModalBase {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.FILE_NAME,
+      text: t("modal.fileName"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.CSV_EXERCISE,
+      text: t("modal.csvExercise"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.SIMILARITY,
+      text: t("modal.similarity"),
     });
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.STATUS });
+    headerRow.createEl("th", { text: t("modal.status") });
     headerRow.createEl("th", { text: "Actions" });
 
     // Table body
@@ -222,9 +223,9 @@ export class AuditExerciseNamesModal extends ModalBase {
       // Only show rename buttons if there's a valid match to rename to
       if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
         const renameInCSVButton = Button.create(actionsCell, {
-          text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
+          text: t("modal.buttons.renameInCsv"),
           className: "mod-cta",
-          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_IN_CSV,
+          ariaLabel: t("modal.buttons.renameInCsv"),
           variant: "secondary",
         });
         Button.onClick(renameInCSVButton, async () => {
@@ -232,9 +233,9 @@ export class AuditExerciseNamesModal extends ModalBase {
         });
 
         const renameFileButton = Button.create(actionsCell, {
-          text: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
+          text: t("modal.buttons.renameFile"),
           variant: "secondary",
-          ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.RENAME_FILE,
+          ariaLabel: t("modal.buttons.renameFile"),
         });
         Button.onClick(renameFileButton, async () => {
           await this.handleRenameFile(mismatch);
@@ -307,7 +308,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       await this.app.vault.rename(mismatch.file, newPath);
 
       // Show success message
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.AUDIT_RENAME_FILE_SUCCESS);
+      new Notice(t("modal.notices.auditRenameFileSuccess"));
 
       // Refresh modal to show updated state
       await this.scanExerciseFiles();

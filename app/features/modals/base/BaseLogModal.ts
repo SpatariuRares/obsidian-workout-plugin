@@ -16,6 +16,7 @@ import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmiss
 
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
+import { t } from "@app/i18n";
 
 /**
  * Abstract base class for workout log modals.
@@ -249,8 +250,8 @@ export abstract class BaseLogModal extends ModalBase {
     });
 
     const cancelBtn = Button.create(container, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
+      ariaLabel: t("modal.buttons.cancel"),
       variant: "warning",
     });
 

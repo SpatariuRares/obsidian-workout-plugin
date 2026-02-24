@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 /**
  * Number of recent workouts to display in the comparison
@@ -65,8 +66,8 @@ export class DurationComparison {
     _params: EmbeddedDashboardParams
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.TITLE,
-      subtitle: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.SUBTITLE,
+      title: t("dashboard.title"),
+      subtitle: t("dashboard.subtitle"),
       className: "workout-duration-comparison",
       isWide: true,
     });
@@ -77,7 +78,7 @@ export class DurationComparison {
     // Check if there's enough data
     if (sessions.length === 0) {
       widgetEl.createEl("div", {
-        text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.NO_DATA,
+        text: t("dashboard.noData"),
         cls: "workout-duration-comparison-no-data",
       });
       return;
@@ -270,16 +271,16 @@ export class DurationComparison {
     const headerRow = thead.createEl("tr");
 
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.COLUMN_WORKOUT,
+      text: t("dashboard.columnWorkout"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.COLUMN_ESTIMATED,
+      text: t("dashboard.columnEstimated"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.COLUMN_ACTUAL,
+      text: t("dashboard.columnActual"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.COLUMN_VARIANCE,
+      text: t("dashboard.columnVariance"),
     });
 
     // Body
@@ -348,7 +349,7 @@ export class DurationComparison {
 
     // Title
     trendEl.createEl("div", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.VARIANCE_TREND_TITLE,
+      text: t("dashboard.varianceTrendTitle"),
       cls: "workout-duration-comparison-trend-title",
     });
 
@@ -372,10 +373,10 @@ export class DurationComparison {
 
     const trendText =
       trend.direction === "improving"
-        ? CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.VARIANCE_TREND_IMPROVING
+        ? t("dashboard.varianceTrendImproving")
         : trend.direction === "declining"
-        ? CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.VARIANCE_TREND_DECLINING
-        : CONSTANTS.WORKOUT.LABELS.DASHBOARD.DURATION_COMPARISON.VARIANCE_TREND_STABLE;
+        ? t("dashboard.varianceTrendDeclining")
+        : t("dashboard.varianceTrendStable");
 
     messageEl.createEl("span", {
       text: trendText,

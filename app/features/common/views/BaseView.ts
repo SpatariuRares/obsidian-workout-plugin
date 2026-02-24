@@ -9,6 +9,7 @@ import { CHART_TYPE } from "@app/features/charts/types";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { ErrorCollector } from "@app/orchestration/ErrorCollector";
+import { t } from "@app/i18n";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -100,7 +101,7 @@ export abstract class BaseView {
             return effectiveChartCategory === CHART_TYPE.WORKOUT;
           })()
         : !(
-            CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params &&
+            t("common.exercise") in params &&
             (params as { exercise?: string }).exercise
           );
 
@@ -111,7 +112,7 @@ export abstract class BaseView {
       );
     } else {
       const exerciseName =
-        CONSTANTS.WORKOUT.COMMON.TYPES.EXERCISE in params
+        t("common.exercise") in params
           ? (params as { exercise?: string }).exercise || ""
           : "";
       LogCallouts.renderNoMatchMessage(container);

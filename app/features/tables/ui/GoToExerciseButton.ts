@@ -1,6 +1,7 @@
 import { App } from "obsidian";
 import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 /**
  * GoToExerciseButton - UI component for exercise file navigation
@@ -30,9 +31,9 @@ export class GoToExerciseButton {
 
     const gotoBtn = Button.create(container, {
       icon: CONSTANTS.WORKOUT.TABLE.ICONS.GOTO,
-      text: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
+      text: t("table.gotoExercise"),
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.TABLE.MESSAGES.GOTO_EXERCISE,
+      ariaLabel: t("table.gotoExercise"),
     });
 
     Button.onClick(

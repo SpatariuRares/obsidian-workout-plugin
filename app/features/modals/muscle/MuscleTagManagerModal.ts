@@ -16,6 +16,7 @@ import type { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle
 import type { MuscleTagImportMode } from "@app/features/modals/muscle/types";
 import type WorkoutChartsPlugin from "main";
 import { StringUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 const DEBOUNCE_DELAY = 150;
 
@@ -44,14 +45,14 @@ export class MuscleTagManagerModal extends ModalBase {
     contentEl.addClass("workout-modal");
 
     contentEl.createEl("h2", {
-      text: CONSTANTS.WORKOUT.MODAL.TITLES.MUSCLE_TAG_MANAGER,
+      text: t("modal.titles.muscleTagManager"),
     });
 
     this.contentContainer = contentEl.createEl("div", {
       cls: "workout-charts-form",
     });
     this.contentContainer.createEl("p", {
-      text: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_LOADING,
+      text: t("modal.notices.muscleTagLoading"),
     });
 
     await this.loadTags();
@@ -121,13 +122,13 @@ export class MuscleTagManagerModal extends ModalBase {
   private showAddForm(): void {
     this.isEditing = false;
     this.editingTag = null;
-    this.renderForm(CONSTANTS.WORKOUT.MODAL.LABELS.NEW_TAG, "", "");
+    this.renderForm(t("modal.newTag"), "", "");
   }
 
   private showEditForm(tag: string, muscleGroup: string): void {
     this.isEditing = true;
     this.editingTag = tag;
-    this.renderForm(CONSTANTS.WORKOUT.MODAL.LABELS.EDIT_TAG, tag, muscleGroup);
+    this.renderForm(t("modal.editTag"), tag, muscleGroup);
   }
 
   private renderForm(
@@ -197,7 +198,7 @@ export class MuscleTagManagerModal extends ModalBase {
     try {
       await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVED);
+      new Notice(t("modal.notices.muscleTagSaved"));
       this.plugin.triggerMuscleTagRefresh();
       this.hideForm();
       this.renderTags();
@@ -226,7 +227,7 @@ export class MuscleTagManagerModal extends ModalBase {
     try {
       await this.plugin.getMuscleTagService().saveTags(nextTags);
       this.allTags = nextTags;
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_DELETED);
+      new Notice(t("modal.notices.muscleTagDeleted"));
       this.plugin.triggerMuscleTagRefresh();
       this.renderTags();
     } catch (error) {
@@ -243,7 +244,7 @@ export class MuscleTagManagerModal extends ModalBase {
         .getMuscleTagService()
         .exportToCsv(this.allTags);
       downloadCsv(csvContent, "muscle-tags-export.csv");
-      new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORTED);
+      new Notice(t("modal.notices.muscleTagExported"));
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(
@@ -309,7 +310,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
     if (!result.isValidFormat) {
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_FORMAT,
+        t("modal.notices.muscleTagImportInvalidFormat"),
       );
       return;
     }
@@ -317,7 +318,7 @@ export class MuscleTagManagerModal extends ModalBase {
     if (result.validTags.size === 0) {
       new Notice(
         result.errors[0] ||
-          CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_NO_VALID,
+          t("modal.notices.muscleTagImportNoValid"),
       );
       return;
     }

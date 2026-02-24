@@ -22,6 +22,7 @@ import type WorkoutChartsPlugin from "main";
 import { Canvas } from "@app/components/atoms";
 import { FilterIndicator } from "@app/components/molecules";
 import { ChartLegendItem } from "@app/features/charts/ui";
+import { t } from "@app/i18n";
 
 // Register required Chart.js components for pie charts
 Chart.register(ArcElement, PieController, Tooltip, Legend);
@@ -99,8 +100,8 @@ export class ProtocolDistribution {
     this.onFilterChange = onFilterChange || null;
 
     const widgetEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.TITLE,
-      subtitle: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.SUBTITLE,
+      title: t("dashboard.title"),
+      subtitle: t("dashboard.subtitle"),
       className: "workout-protocol-distribution",
       isWide: true,
     });
@@ -115,7 +116,7 @@ export class ProtocolDistribution {
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
       widgetEl.createEl("div", {
-        text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.NO_DATA,
+        text: t("dashboard.noData"),
         cls: "workout-protocol-no-data",
       });
       return;
@@ -155,11 +156,11 @@ export class ProtocolDistribution {
 
     FilterIndicator.create(container, {
       label:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.FILTER_ACTIVE,
+        t("dashboard.filterActive"),
       filterValue: filterLabel,
       color: activeStat?.color,
       clearText:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.PROTOCOL_DISTRIBUTION.CLEAR_FILTER,
+        t("dashboard.clearFilter"),
       className: "workout-protocol-filter-indicator",
       onClear: () => this.handleFilterChange(null),
     });

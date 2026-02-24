@@ -18,6 +18,7 @@ import { Chip } from "@app/components/atoms/Chip";
 import { Button } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { t } from "@app/i18n";
 
 const LIMIT_INCREMENT = 5;
 const DATE_RANGE_INCREMENT = 7;
@@ -42,22 +43,22 @@ export class InsertTableModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TABLE;
+    return t("modal.titles.insertTable");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_TABLE;
+    return t("modal.buttons.insertTable");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.TABLE_INSERTED;
+    return t("modal.notices.tableInserted");
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
     // Table Type Section
     const tableTypeSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.TABLE_TYPE,
+      t("modal.sections.tableType"),
     );
 
     // Hidden select as backing store for TargetSectionWithAutocomplete
@@ -121,7 +122,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Configuration Section
     const configSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.CONFIGURATION,
+      t("modal.sections.configuration"),
     );
 
     // Parameters container (grid layout)
@@ -132,7 +133,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Limit with +/- adjust
     this.limitInput = this.createAdjustField(
       parametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.MAX_LOG_COUNT,
+      t("modal.maxLogCount"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MIN,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT_MAX,
@@ -142,7 +143,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Date range with +/- adjust
     this.dateRangeInput = this.createAdjustField(
       parametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.DATE_RANGE,
+      t("modal.dateRange"),
       0,
       0,
       365,
@@ -153,7 +154,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Progressive Overload Section
     this.progressiveSection = this.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.PROGRESSIVE_OVERLOAD,
+      t("modal.sections.progressiveOverload"),
     );
 
     // Target parameters container (grid layout)
@@ -231,7 +232,7 @@ export class InsertTableModal extends BaseInsertModal {
     });
 
     const minusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_MINUS + increment,
+      text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
       ariaLabel: `Decrease ${label} by ${increment}`,
       variant: "secondary",
@@ -249,7 +250,7 @@ export class InsertTableModal extends BaseInsertModal {
     });
 
     const plusBtn = Button.create(inputContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.ADJUST_PLUS + increment,
+      text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
       ariaLabel: `Increase ${label} by ${increment}`,
       variant: "secondary",
@@ -331,7 +332,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Validation for combined mode
     if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
-        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.VALIDATION_COMBINED_MODE);
+        new Notice(t("modal.notices.validationCombinedMode"));
         throw new Error(
           "Both exercise and workout are required for combined mode",
         );

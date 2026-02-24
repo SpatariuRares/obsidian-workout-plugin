@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 interface MuscleTagTableRendererOptions {
   tableBody: HTMLElement;
@@ -21,7 +22,7 @@ export class MuscleTagTableRenderer {
         cls: "workout-tag-empty",
       });
       emptyCell.createEl("p", {
-        text: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_NO_RESULTS,
+        text: t("modal.notices.muscleTagNoResults"),
       });
       return;
     }
@@ -50,7 +51,7 @@ export class MuscleTagTableRenderer {
       });
 
       const editButton = Button.create(actionsCell, {
-        text: CONSTANTS.WORKOUT.MODAL.LABELS.EDIT_TAG,
+        text: t("modal.editTag"),
         className: "workout-tag-action-btn",
         variant: "secondary",
         ariaLabel: `Edit ${tag}`,
@@ -58,7 +59,7 @@ export class MuscleTagTableRenderer {
       Button.onClick(editButton, () => onEdit(tag, muscleGroup));
 
       const deleteButton = Button.create(actionsCell, {
-        text: CONSTANTS.WORKOUT.MODAL.LABELS.DELETE,
+        text: t("modal.delete"),
         className: "workout-tag-action-btn",
         variant: "warning",
         ariaLabel: `Delete ${tag}`,

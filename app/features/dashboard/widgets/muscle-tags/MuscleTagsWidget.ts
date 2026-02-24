@@ -3,6 +3,7 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
 import type WorkoutChartsPlugin from "main";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
+import { t } from "@app/i18n";
 
 const ICONS = CONSTANTS.WORKOUT.ICONS.EXERCISE;
 
@@ -36,14 +37,14 @@ export class MuscleTagsWidget {
     plugin: WorkoutChartsPlugin,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TITLE,
+      title: t("dashboard.title"),
       className: "workout-muscle-tags-widget",
       isWide: true,
     });
 
     widgetEl.createEl("p", {
       cls: "workout-widget-description",
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.DESCRIPTION,
+      text: t("dashboard.description"),
     });
 
     // Create muscle tags grid

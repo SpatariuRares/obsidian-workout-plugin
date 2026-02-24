@@ -3,13 +3,14 @@
 import { CONSTANTS } from "@app/constants";
 import { LoadingSpinner } from "@app/components/molecules/LoadingSpinner";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { t } from "@app/i18n";
 
 describe("LoadingSpinner molecule", () => {
 	it("renders spinner with optional icon and message", () => {
 		const parent = createObsidianContainer();
 
 		const spinner = LoadingSpinner.create(parent, {
-			message: CONSTANTS.WORKOUT.MESSAGES.LOADING,
+			message: t("messages.loading"),
 			icon: "⏳",
 			className: "mt-md",
 		});
@@ -20,7 +21,7 @@ describe("LoadingSpinner molecule", () => {
 			"⏳"
 		);
 		expect(spinner.querySelector(".loading-spinner-message")?.textContent).toBe(
-			CONSTANTS.WORKOUT.MESSAGES.LOADING
+			t("messages.loading")
 		);
 	});
 

@@ -10,6 +10,7 @@ import { App, TFile, Notice } from "obsidian";
 import type { CSVColumnService } from "@app/services/data/CSVColumnService";
 import type { CSVCacheService } from "@app/services/data/CSVCacheService";
 import { StringUtils, ErrorUtils, PathUtils } from "@app/utils";
+import { t } from "@app/i18n";
 
 /**
  * Repository for workout log CRUD operations.
@@ -107,7 +108,7 @@ export class WorkoutLogRepository {
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
-      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      throw new Error(t("messages.csvNotFound"));
     }
 
     // Ensure any custom field columns exist before writing
@@ -177,7 +178,7 @@ export class WorkoutLogRepository {
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
-      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      throw new Error(t("messages.csvNotFound"));
     }
 
     const csvFile = abstractFile;
@@ -229,7 +230,7 @@ export class WorkoutLogRepository {
     );
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
-      throw new Error(CONSTANTS.WORKOUT.MESSAGES.ERRORS.CSV_NOT_FOUND);
+      throw new Error(t("messages.csvNotFound"));
     }
 
     const csvFile = abstractFile;

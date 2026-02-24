@@ -65,7 +65,7 @@ export class DataFilter {
       return {
         filteredData: [],
         filterMethodUsed: "none",
-        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
+        titlePrefix: t("general.workoutData"),
       };
     }
 
@@ -75,13 +75,13 @@ export class DataFilter {
       return {
         filteredData: logData,
         filterMethodUsed: "all data (no filter)",
-        titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
+        titlePrefix: t("general.workoutData"),
       };
     }
 
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = t("general.workoutData");
 
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout;
@@ -161,7 +161,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = t("general.workoutData");
 
     if (params.workout) {
       const workoutName = params.workout;
@@ -222,7 +222,7 @@ export class DataFilter {
     return {
       filteredData,
       filterMethodUsed,
-      titlePrefix: CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA,
+      titlePrefix: t("general.workoutData"),
     };
   }
 
@@ -235,7 +235,7 @@ export class DataFilter {
   ): FilterResult {
     let filteredData = logData;
     let filterMethodUsed = "none";
-    let titlePrefix: string = CONSTANTS.WORKOUT.UI.LABELS.WORKOUT_DATA;
+    let titlePrefix: string = t("general.workoutData");
 
     if (params.exercise && params.exercise.trim()) {
       const exerciseName = params.exercise.trim();

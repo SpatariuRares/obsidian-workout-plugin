@@ -179,641 +179,48 @@ export function getDynamicDataTypeOptions() {
  * Modal UI labels - titles, buttons, labels, placeholders, and checkboxes
  */
 export const MODAL_UI = {
-  TITLES: {
-    get CREATE_LOG() {
-      return t("modal.titles.createLog");
-    },
-    get EDIT_LOG() {
-      return t("modal.titles.editLog");
-    },
-    get INSERT_CHART() {
-      return t("modal.titles.insertChart");
-    },
-    get INSERT_TABLE() {
-      return t("modal.titles.insertTable");
-    },
-    get INSERT_TIMER() {
-      return t("modal.titles.insertTimer");
-    },
-    get INSERT_DASHBOARD() {
-      return t("modal.titles.insertDashboard");
-    },
-    get INSERT_DURATION() {
-      return t("modal.titles.insertDuration");
-    },
-    get CREATE_EXERCISE_PAGE() {
-      return t("modal.titles.createExercisePage");
-    },
-    get CREATE_EXERCISE_SECTION() {
-      return t("modal.titles.createExerciseSection");
-    },
-    get CONFIRM_ACTION() {
-      return t("modal.titles.confirmAction");
-    },
-    get AUDIT_EXERCISE_NAMES() {
-      return t("modal.titles.auditExerciseNames");
-    },
-    get QUICK_LOG() {
-      return t("modal.titles.quickLog");
-    },
-    get CANVAS_EXPORT() {
-      return t("modal.titles.canvasExport");
-    },
-    get MUSCLE_TAG_MANAGER() {
-      return t("modal.titles.muscleTagManager");
-    },
-  },
-  BUTTONS: {
-    get CREATE() {
-      return t("modal.buttons.create");
-    },
-    get UPDATE() {
-      return t("modal.buttons.update");
-    },
-    get INSERT_CHART() {
-      return t("modal.buttons.insertChart");
-    },
-    get RENAME_IN_CSV() {
-      return t("modal.buttons.renameInCsv");
-    },
-    get RENAME_FILE() {
-      return t("modal.buttons.renameFile");
-    },
-    get INSERT_TABLE() {
-      return t("modal.buttons.insertTable");
-    },
-    get INSERT_TIMER() {
-      return t("modal.buttons.insertTimer");
-    },
-    get INSERT_DASHBOARD() {
-      return t("modal.buttons.insertDashboard");
-    },
-    get CANCEL() {
-      return t("modal.buttons.cancel");
-    },
-    get CONFIRM() {
-      return t("modal.buttons.confirm");
-    },
-    get CREATE_EXERCISE() {
-      return t("modal.buttons.createExercise");
-    },
-    get CREATE_SECTION() {
-      return t("modal.buttons.createSection");
-    },
-    get INSERT_EXERCISE_BLOCK() {
-      return t("modal.buttons.insertExerciseBlock");
-    },
-    get UPDATE_TARGET_WEIGHT() {
-      return t("modal.buttons.updateTargetWeight");
-    },
-    get ADJUST_PLUS() {
-      return t("modal.buttons.adjustPlus");
-    },
-    get ADJUST_MINUS() {
-      return t("modal.buttons.adjustMinus");
-    },
-    get EXPORT() {
-      return t("modal.buttons.export");
-    },
-    get ADD_PARAMETER() {
-      return t("modal.buttons.addParameter");
-    },
-    get REMOVE_PARAMETER() {
-      return t("modal.buttons.removeParameter");
-    },
-  },
   NOTICES: {
-    get LOG_CREATED() {
-      return t("modal.notices.logCreated");
-    },
-    get LOG_UPDATED() {
-      return t("modal.notices.logUpdated");
-    },
-    get LOG_CREATE_ERROR() {
-      return t("modal.notices.logCreateError");
-    },
-    get LOG_UPDATE_ERROR() {
-      return t("modal.notices.logUpdateError");
-    },
-    get CHART_INSERTED() {
-      return t("modal.notices.chartInserted");
-    },
-    get TABLE_INSERTED() {
-      return t("modal.notices.tableInserted");
-    },
-    get TIMER_INSERTED() {
-      return t("modal.notices.timerInserted");
-    },
-    get DASHBOARD_INSERTED() {
-      return t("modal.notices.dashboardInserted");
-    },
-    get VALIDATION_FILL_ALL() {
-      return t("modal.notices.validationFillAll");
-    },
-    get VALIDATION_POSITIVE_VALUES() {
-      return t("modal.notices.validationPositiveValues");
-    },
-    get VALIDATION_COMBINED_MODE() {
-      return t("modal.notices.validationCombinedMode");
-    },
-    get NO_ACTIVE_EDITOR() {
-      return t("modal.notices.noActiveEditor");
-    },
-    get INSERT_CODE_NO_FILE() {
-      return t("modal.notices.insertCodeNoFile");
-    },
-    get EXERCISE_PAGE_CREATED() {
-      return t("modal.notices.exercisePageCreated");
-    },
-    get EXERCISE_PAGE_ERROR() {
-      return t("modal.notices.exercisePageError");
-    },
-    get EXERCISE_PAGE_NAME_REQUIRED() {
-      return t("modal.notices.exercisePageNameRequired");
-    },
-    get EXERCISE_NAME_REQUIRED() {
-      return t("modal.notices.exerciseNameRequired");
-    },
-    get EXERCISE_SECTION_CREATED() {
-      return t("modal.notices.exerciseSectionCreated");
-    },
-    get DASHBOARD_CREATED() {
-      return t("modal.notices.dashboardCreated");
-    },
-    get GENERIC_ERROR() {
-      return t("modal.notices.genericError");
-    },
-    get TIMER_ELEMENTS_NOT_INITIALIZED() {
-      return t("modal.notices.timerElementsNotInitialized");
-    },
-    get AUDIT_NO_MISMATCHES() {
-      return t("modal.notices.auditNoMismatches");
-    },
-    get AUDIT_SCANNING() {
-      return t("modal.notices.auditScanning");
-    },
-    get AUDIT_RENAME_SUCCESS() {
-      return t("modal.notices.auditRenameSuccess");
-    },
-    get AUDIT_RENAME_ERROR() {
-      return t("modal.notices.auditRenameError");
-    },
-    get AUDIT_CONFIRM_RENAME() {
-      return t("modal.notices.auditConfirmRename");
-    },
-    get AUDIT_RENAME_FILE_SUCCESS() {
-      return t("modal.notices.auditRenameFileSuccess");
-    },
-    get AUDIT_RENAME_FILE_ERROR() {
-      return t("modal.notices.auditRenameFileError");
-    },
-    get AUDIT_CONFIRM_RENAME_FILE() {
-      return t("modal.notices.auditConfirmRenameFile");
-    },
-    get EXERCISE_BLOCK_INSERTED() {
-      return t("modal.notices.exerciseBlockInserted");
-    },
-    get CANVAS_EXPORTED() {
-      return t("modal.notices.canvasExported");
-    },
-    get CANVAS_EXPORT_ERROR() {
-      return t("modal.notices.canvasExportError");
-    },
-    get CANVAS_NO_EXERCISES() {
-      return t("modal.notices.canvasNoExercises");
-    },
-    get MUSCLE_TAG_LOADING() {
-      return t("modal.notices.muscleTagLoading");
-    },
     MUSCLE_TAG_COUNT: (count: number) =>
       `${count} tag${count !== 1 ? "s" : ""} found`,
-    get MUSCLE_TAG_NO_RESULTS() {
-      return t("modal.notices.muscleTagNoResults");
-    },
-    get MUSCLE_TAG_SAVED() {
-      return t("modal.notices.muscleTagSaved");
-    },
-    get MUSCLE_TAG_DELETED() {
-      return t("modal.notices.muscleTagDeleted");
-    },
     MUSCLE_TAG_DELETE_CONFIRM: (tag: string) =>
       `Are you sure you want to delete the tag "${tag}"?`,
     MUSCLE_TAG_SAVE_ERROR: (error: string) =>
       `Error saving muscle tag: ${error}`,
     MUSCLE_TAG_EXISTS: (tag: string) => `Tag "${tag}" already exists`,
-    get MUSCLE_TAG_SIMILAR_WARNING() {
-      return t("modal.notices.muscleTagSimilarWarning");
-    },
     MUSCLE_TAG_SIMILAR_FOUND: (count: number) =>
       `${count} similar tag${count !== 1 ? "s" : ""} found`,
-    get MUSCLE_TAG_EXPORTED() {
-      return t("modal.notices.muscleTagExported");
-    },
     MUSCLE_TAG_EXPORT_ERROR: (error: string) =>
       `Error exporting muscle tags: ${error}`,
     MUSCLE_TAG_IMPORTED: (count: number) =>
       `${count} muscle tag${count !== 1 ? "s" : ""} imported successfully!`,
     MUSCLE_TAG_IMPORT_ERROR: (error: string) =>
       `Error importing muscle tags: ${error}`,
-    get MUSCLE_TAG_IMPORT_INVALID_FORMAT() {
-      return t("modal.notices.muscleTagImportInvalidFormat");
-    },
     MUSCLE_TAG_IMPORT_INVALID_GROUP: (tag: string, group: string) =>
       `Invalid muscle group "${group}" for tag "${tag}". Must be a canonical muscle group.`,
     MUSCLE_TAG_IMPORT_PREVIEW: (count: number) =>
       `${count} tag${count !== 1 ? "s" : ""} to import`,
-    get MUSCLE_TAG_IMPORT_NO_VALID() {
-      return t("modal.notices.muscleTagImportNoValid");
-    },
-    get TARGET_ACHIEVED() {
-      return t("modal.notices.targetAchieved");
-    },
-    get TARGET_DISMISSED() {
-      return t("modal.notices.targetDismissed");
-    },
-    get SUGGESTED_NEXT_WEIGHT() {
-      return t("modal.notices.suggestedNextWeight");
-    },
-    get CONFIRM_UPDATE_TARGET() {
-      return t("modal.notices.confirmUpdateTarget");
-    },
     MIGRATION_COMPLETE: (count: number) =>
       `✅ Migration complete. Updated ${count} exercise files.`,
-    get MIGRATION_NO_UPDATES() {
-      return t("modal.notices.migrationNoUpdates");
-    },
-    get MIGRATION_ERROR() {
-      return t("modal.notices.migrationError");
-    },
   },
   LABELS: {
-    get EXERCISE() {
-      return t("modal.labels.exercise");
-    },
-    get REPS() {
-      return t("modal.labels.reps");
-    },
     get WEIGHT() {
       return getDynamicModalLabels().WEIGHT;
-    },
-    get NOTES() {
-      return t("modal.notes");
-    },
-    get WORKOUT() {
-      return t("modal.workout");
-    },
-    get WORKOUT_NAME() {
-      return t("modal.workoutName");
-    },
-    get WORKOUT_NAME_OPTIONAL() {
-      return t("modal.workoutNameOptional");
-    },
-    get CHART_TYPE() {
-      return t("modal.chartType");
-    },
-    get DATA_TYPE() {
-      return t("modal.dataType");
-    },
-    get TABLE_TYPE() {
-      return t("modal.tableType");
-    },
-    get DAYS_RANGE() {
-      return t("modal.daysRange");
-    },
-    get DATA_LIMIT() {
-      return t("modal.dataLimit");
-    },
-    get MAX_LOG_COUNT() {
-      return t("modal.maxLogCount");
-    },
-    get CUSTOM_TITLE() {
-      return t("modal.customTitle");
-    },
-    get TIMER_TYPE() {
-      return t("modal.timerType");
-    },
-    get DURATION() {
-      return t("modal.duration");
-    },
-    get INTERVAL_TIME() {
-      return t("modal.intervalTime");
-    },
-    get ROUNDS() {
-      return t("modal.rounds");
-    },
-    get TITLE() {
-      return t("modal.title");
-    },
-    get EXERCISE_NAME() {
-      return t("modal.exerciseName");
-    },
-    get EXERCISE_PATH() {
-      return t("modal.exercisePath");
-    },
-    get SETS() {
-      return t("modal.sets");
-    },
-    get REST_TIME() {
-      return t("modal.restTime");
-    },
-    get NOTE() {
-      return t("modal.note");
-    },
-    get TAGS() {
-      return t("modal.tags");
-    },
-    get FOLDER_PATH() {
-      return t("modal.folderPath");
-    },
-    get EXERCISE_TYPE() {
-      return t("modal.exerciseType");
-    },
-    get CUSTOM_PARAMETERS() {
-      return t("modal.customParameters");
-    },
-    get PARAMETER_KEY() {
-      return t("modal.parameterKey");
-    },
-    get PARAMETER_LABEL() {
-      return t("modal.parameterLabel");
-    },
-    get PARAMETER_TYPE() {
-      return t("modal.parameterType");
-    },
-    get PARAMETER_UNIT() {
-      return t("modal.parameterUnit");
-    },
-    get PARAMETER_REQUIRED() {
-      return t("modal.parameterRequired");
-    },
-    get CONFIRM_ACTION() {
-      return t("modal.confirmAction");
-    },
-    get FILE_NAME() {
-      return t("modal.fileName");
-    },
-    get CSV_EXERCISE() {
-      return t("modal.csvExercise");
-    },
-    get SIMILARITY() {
-      return t("modal.similarity");
-    },
-    get STATUS() {
-      return t("modal.status");
-    },
-    get TAG() {
-      return t("modal.tag");
-    },
-    get MUSCLE_GROUP() {
-      return t("modal.muscleGroup");
-    },
-    get ACTIONS() {
-      return t("modal.actions");
-    },
-    get ADD_TAG() {
-      return t("modal.addTag");
-    },
-    get EDIT_TAG() {
-      return t("modal.editTag");
-    },
-    get NEW_TAG() {
-      return t("modal.newTag");
-    },
-    get SAVE() {
-      return t("modal.save");
-    },
-    get DELETE() {
-      return t("modal.delete");
-    },
-    get SIMILAR_TAGS() {
-      return t("modal.similarTags");
-    },
-    get EXPORT_TAGS() {
-      return t("modal.exportTags");
-    },
-    get IMPORT_TAGS() {
-      return t("modal.importTags");
-    },
-    get IMPORT_MERGE() {
-      return t("modal.importMerge");
-    },
-    get IMPORT_REPLACE() {
-      return t("modal.importReplace");
-    },
-    get TIMER_DURATION() {
-      return t("modal.timerDuration");
-    },
-    get TIMER_PRESET() {
-      return t("modal.timerPreset");
-    },
-    get WORKOUT_FILE() {
-      return t("modal.workoutFile");
-    },
-    get DATE_RANGE() {
-      return t("modal.dateRange");
     },
     get TARGET_WEIGHT() {
       return getDynamicModalLabels().TARGET_WEIGHT;
     },
     TARGET_REPS: "Target reps:",
-    get PROTOCOL() {
-      return t("modal.protocol");
-    },
-    get RECENT_EXERCISES() {
-      return t("modal.recentExercises");
-    },
-    get CANVAS_LAYOUT() {
-      return t("modal.canvasLayout");
-    },
-    get CANVAS_OPTIONS() {
-      return t("modal.canvasOptions");
-    },
-    get LAYOUT_TYPE() {
-      return t("modal.layoutType");
-    },
-    get LAYOUT_HORIZONTAL() {
-      return t("modal.layoutHorizontal");
-    },
-    get LAYOUT_VERTICAL() {
-      return t("modal.layoutVertical");
-    },
-    get LAYOUT_GROUPED() {
-      return t("modal.layoutGrouped");
-    },
-    get TAGS_SELECTOR() {
-      return t("modal.tagsSelector");
-    },
-    get NO_TAGS_FOUND() {
-      return t("modal.noTagsFound");
-    },
-    get NO_TAGS_SELECTED() {
-      return t("modal.noTagsSelected");
-    },
-  },
-  PLACEHOLDERS: {
-    get SEARCH_TAGS() {
-      return t("modal.placeholders.searchTags");
-    },
-    get SEARCH_MUSCLE_TAGS() {
-      return t("modal.placeholders.searchMuscleTags");
-    },
-    get ENTER_TAG_NAME() {
-      return t("modal.placeholders.enterTagName");
-    },
-    get EXERCISE_AUTOCOMPLETE() {
-      return t("modal.placeholders.exerciseAutocomplete");
-    },
-    get REPS() {
-      return t("modal.placeholders.reps");
-    },
-    get REPS_RANGE() {
-      return t("modal.placeholders.repsRange");
-    },
-    get WEIGHT() {
-      return t("modal.placeholders.weight");
-    },
-    get NOTES() {
-      return t("modal.placeholders.notes");
-    },
-    get WORKOUT() {
-      return t("modal.placeholders.workout");
-    },
-    get CUSTOM_TITLE() {
-      return t("modal.placeholders.customTitle");
-    },
-    get TIMER_TITLE() {
-      return t("modal.placeholders.timerTitle");
-    },
-    get EXERCISE_NAME() {
-      return t("modal.placeholders.exerciseName");
-    },
-    get EXERCISE_PATH() {
-      return t("modal.placeholders.exercisePath");
-    },
-    get SETS() {
-      return t("modal.placeholders.sets");
-    },
-    get REST_TIME() {
-      return t("modal.placeholders.restTime");
-    },
-    get NOTE() {
-      return t("modal.placeholders.note");
-    },
-    get TAGS() {
-      return t("modal.placeholders.tags");
-    },
-    get FOLDER_PATH() {
-      return t("modal.placeholders.folderPath");
-    },
-    get PARAMETER_KEY() {
-      return t("modal.placeholders.parameterKey");
-    },
-    get PARAMETER_LABEL() {
-      return t("modal.placeholders.parameterLabel");
-    },
-    get PARAMETER_UNIT() {
-      return t("modal.placeholders.parameterUnit");
-    },
-  },
-  CHECKBOXES: {
-    get USE_CURRENT_WORKOUT() {
-      return t("modal.checkboxes.useCurrentWorkout");
-    },
-    get USE_CURRENT_WORKOUT_FILE() {
-      return t("modal.checkboxes.useCurrentWorkoutFile");
-    },
-    get SHOW_TREND_LINE() {
-      return t("modal.checkboxes.showTrendLine");
-    },
-    get SHOW_TREND_HEADER() {
-      return t("modal.checkboxes.showTrendHeader");
-    },
-    get SHOW_STATISTICS() {
-      return t("modal.checkboxes.showStatistics");
-    },
-    get SHOW_ADD_BUTTON() {
-      return t("modal.checkboxes.showAddButton");
-    },
-    get EXACT_MATCH() {
-      return t("modal.checkboxes.exactMatch");
-    },
-    get DEBUG_MODE() {
-      return t("modal.checkboxes.debugMode");
-    },
-    get SEARCH_BY_NAME() {
-      return t("modal.checkboxes.searchByName");
-    },
-    get SHOW_CONTROLS() {
-      return t("modal.checkboxes.showControls");
-    },
-    get AUTO_START() {
-      return t("modal.checkboxes.autoStart");
-    },
-    get SOUND() {
-      return t("modal.checkboxes.sound");
-    },
-    get INCLUDE_TIMER() {
-      return t("modal.checkboxes.includeTimer");
-    },
-    get INCLUDE_CHART() {
-      return t("modal.checkboxes.includeChart");
-    },
-    get INCLUDE_TABLE() {
-      return t("modal.checkboxes.includeTable");
-    },
-    get INCLUDE_LOG() {
-      return t("modal.checkboxes.includeLog");
-    },
-    get TIMER_AUTO_START() {
-      return t("modal.checkboxes.timerAutoStart");
-    },
-    get TIMER_SOUND() {
-      return t("modal.checkboxes.timerSound");
-    },
-    get USE_PRESET_ONLY() {
-      return t("modal.checkboxes.usePresetOnly");
-    },
-    get INCLUDE_DURATIONS() {
-      return t("modal.checkboxes.includeDurations");
-    },
-    get INCLUDE_STATS() {
-      return t("modal.checkboxes.includeStats");
-    },
-    get CONNECT_SUPERSETS() {
-      return t("modal.checkboxes.connectSupersets");
-    },
   },
   EXERCISE_STATUS: {
-    get CREATE_PAGE() {
-      return t("modal.exerciseStatus.createPage");
-    },
-    get SELECTED() {
-      return t("modal.exerciseStatus.selected");
-    },
-    get NOT_FOUND() {
-      return t("modal.exerciseStatus.notFound");
-    },
     FOUND: (count: number) => `📋 ${count} exercises found`,
   },
   AUTOCOMPLETE: {
-    get FUZZY_BADGE() {
-      return t("modal.autocomplete.fuzzyBadge");
-    },
     FUZZY_TOOLTIP: (score: number) =>
       t("modal.autocomplete.fuzzyTooltip").replace("{score}", String(score)),
-    get EXACT_BADGE() {
-      return t("modal.autocomplete.exactBadge");
-    },
     EXACT_TOOLTIP: (score: number) =>
       t("modal.autocomplete.exactTooltip").replace("{score}", String(score)),
-    get WORD_BADGE() {
-      return t("modal.autocomplete.wordBadge");
-    },
     WORD_TOOLTIP: (score: number) =>
       t("modal.autocomplete.wordTooltip").replace("{score}", String(score)),
-    get PARTIAL_BADGE() {
-      return t("modal.autocomplete.partialBadge");
-    },
     PARTIAL_TOOLTIP: (score: number) =>
       t("modal.autocomplete.partialTooltip").replace("{score}", String(score)),
   },
@@ -966,47 +373,6 @@ export const MODAL_UI = {
       },
     ],
   },
-  SECTIONS: {
-    get CHART_TYPE() {
-      return t("modal.sections.chartType");
-    },
-    get TABLE_TYPE() {
-      return t("modal.sections.tableType");
-    },
-    get TARGET() {
-      return t("modal.sections.target");
-    },
-    get CONFIGURATION() {
-      return t("modal.sections.configuration");
-    },
-    get DISPLAY_OPTIONS() {
-      return t("modal.sections.displayOptions");
-    },
-    get ADVANCED_OPTIONS() {
-      return t("modal.sections.advancedOptions");
-    },
-    get TIMER_CONFIGURATION() {
-      return t("modal.sections.timerConfiguration");
-    },
-    get WORKOUT() {
-      return t("modal.sections.workout");
-    },
-    get EXERCISE_CONFIGURATION() {
-      return t("modal.sections.exerciseConfiguration");
-    },
-    get OPTIONS() {
-      return t("modal.sections.options");
-    },
-    get PRESET() {
-      return t("modal.sections.preset");
-    },
-    get PROGRESSIVE_OVERLOAD() {
-      return t("modal.sections.progressiveOverload");
-    },
-    get MOBILE_OPTIONS() {
-      return t("modal.sections.mobileOptions");
-    },
-  },
   CODE_BLOCKS: {
     CHART: "workout-chart",
     TABLE: "workout-log",
@@ -1124,12 +490,6 @@ export const TABLE_UI = {
   },
 
   TARGET: {
-    get REPS_SUFFIX() {
-      return t("table.target.repsSuffix");
-    },
-    get SEPARATOR() {
-      return t("table.target.separator");
-    },
     PROGRESS_TOOLTIP: (best: number, target: number) =>
       t("table.target.progressTooltip", {
         best: String(best),
@@ -1170,29 +530,6 @@ export const TABLE_UI = {
     GOTO: "🔗",
   },
   DEFAULT_VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
-  MESSAGES: {
-    get DELETE_CONFIRM() {
-      return t("table.deleteConfirm");
-    },
-    get DELETE_SUCCESS() {
-      return t("table.deleteSuccess");
-    },
-    get DELETE_ERROR() {
-      return t("table.deleteError");
-    },
-    get REFRESH_SUCCESS() {
-      return t("table.refreshSuccess");
-    },
-    get GOTO_EXERCISE() {
-      return t("table.gotoExercise");
-    },
-    get EDIT_TITLE() {
-      return t("table.editTitle");
-    },
-    get DELETE_TITLE() {
-      return t("table.deleteTitle");
-    },
-  },
 } as const;
 
 /**
@@ -1243,15 +580,6 @@ export const CHARTS_UI = {
     get TREND_LINE() {
       return t("charts.trendLine");
     },
-    get UP() {
-      return t("charts.up");
-    },
-    get DOWN() {
-      return t("charts.down");
-    },
-    get NEUTRAL() {
-      return t("charts.neutral");
-    },
     /** @deprecated Use TREND_TITLE instead for dynamic type support */
     get TREND_TITLE_PREFIX() {
       return t("charts.trendTitlePrefix");
@@ -1262,9 +590,6 @@ export const CHARTS_UI = {
         ? DATA_TYPE_NAMES[dataType]
         : t("charts.types.volume");
       return t("charts.trendType", { typeName });
-    },
-    get OVERALL_VARIATION_PREFIX() {
-      return t("charts.overallVariationPrefix");
     },
 
     /** Dynamic variation display with proper units */
@@ -1290,23 +615,6 @@ export const CHARTS_UI = {
         : t("charts.types.volume");
       return `${typeName}: ${value}`;
     },
-    get SIGNIFICANT_INCREASE() {
-      return t("charts.significantIncrease");
-    },
-    get FALLBACK_TABLE_MESSAGE() {
-      return t("charts.fallbackTableMessage");
-    },
-  },
-  TYPES: {
-    get VOLUME() {
-      return t("charts.volume");
-    },
-    get WEIGHT() {
-      return t("charts.weight");
-    },
-    get REPS() {
-      return t("charts.reps");
-    },
   },
 };
 
@@ -1314,14 +622,6 @@ export const CHARTS_UI = {
  * Timer UI labels - timer types and related display text
  */
 export const TIMER_UI = {
-  TYPES: {
-    get COUNTDOWN() {
-      return t("timer.countdown");
-    },
-    get INTERVAL() {
-      return t("timer.interval");
-    },
-  },
 } as const;
 
 /**
@@ -1355,36 +655,8 @@ export function getDynamicDashboardLabels() {
  * Dashboard UI labels - section titles, metrics, and display text
  */
 export const DASHBOARD_UI = {
-  QUICK_ACTIONS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get ADD_WORKOUT_LOG() {
-      return t("dashboard.addWorkoutLog");
-    },
-    get VIEW_EXERCISES() {
-      return t("dashboard.viewExercises");
-    },
-  },
   QUICK_STATS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    PERIODS: {
-      get WEEK() {
-        return t("dashboard.week");
-      },
-      get MONTH() {
-        return t("dashboard.month");
-      },
-      get YEAR() {
-        return t("dashboard.year");
-      },
-    },
     METRICS: {
-      get WORKOUTS() {
-        return t("dashboard.workouts");
-      },
       get TOTAL_VOLUME() {
         return getDynamicDashboardLabels().QUICK_STATS.METRICS.TOTAL_VOLUME;
       },
@@ -1394,172 +666,28 @@ export const DASHBOARD_UI = {
     },
   },
   RECENT_WORKOUTS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get FALLBACK_NAME() {
-      return t("dashboard.fallbackName");
-    },
     get VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().RECENT_WORKOUTS.VOLUME_SUFFIX;
     },
   },
   SUMMARY: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get TOTAL_WORKOUTS() {
-      return t("dashboard.totalWorkouts");
-    },
-    get CURRENT_STREAK() {
-      return t("dashboard.currentStreak");
-    },
-    get CURRENT_STREAK_SUFFIX() {
-      return t("dashboard.currentStreakSuffix");
-    },
-    get TOTAL_VOLUME() {
-      return t("dashboard.totalVolume");
-    },
     get TOTAL_VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().SUMMARY.TOTAL_VOLUME_SUFFIX;
     },
-    get PERSONAL_RECORDS() {
-      return t("dashboard.personalRecords");
-    },
   },
   VOLUME_ANALYTICS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
     get DATASET_LABEL() {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS.DATASET_LABEL;
-    },
-    get CHART_TITLE() {
-      return t("dashboard.chartTitle");
-    },
-    get MUSCLE_BREAKDOWN_TITLE() {
-      return t("dashboard.muscleBreakdownTitle");
     },
     get VOLUME_SUFFIX() {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS.VOLUME_SUFFIX;
     },
   },
-  PROTOCOL_DISTRIBUTION: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get SUBTITLE() {
-      return t("dashboard.subtitle");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get SETS_LABEL() {
-      return t("dashboard.setsLabel");
-    },
-    get PERCENT_LABEL() {
-      return t("dashboard.percentLabel");
-    },
-    get FILTER_ACTIVE() {
-      return t("dashboard.filterActive");
-    },
-    get CLEAR_FILTER() {
-      return t("dashboard.clearFilter");
-    },
-    get CLICK_TO_FILTER() {
-      return t("dashboard.clickToFilter");
-    },
-  },
-  PROTOCOL_EFFECTIVENESS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get DISCLAIMER() {
-      return t("dashboard.disclaimer");
-    },
-    get COLUMN_PROTOCOL() {
-      return t("dashboard.columnProtocol");
-    },
-    get COLUMN_ENTRIES() {
-      return t("dashboard.columnEntries");
-    },
-    get COLUMN_VOLUME_CHANGE() {
-      return t("dashboard.columnVolumeChange");
-    },
-    get COLUMN_PROGRESSION() {
-      return t("dashboard.columnProgression");
-    },
-  },
-  DURATION_COMPARISON: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get SUBTITLE() {
-      return t("dashboard.subtitle");
-    },
-    get NO_DATA() {
-      return t("dashboard.noData");
-    },
-    get COLUMN_WORKOUT() {
-      return t("dashboard.columnWorkout");
-    },
-    get COLUMN_DATE() {
-      return t("dashboard.columnDate");
-    },
-    get COLUMN_ESTIMATED() {
-      return t("dashboard.columnEstimated");
-    },
-    get COLUMN_ACTUAL() {
-      return t("dashboard.columnActual");
-    },
-    get COLUMN_VARIANCE() {
-      return t("dashboard.columnVariance");
-    },
-    get VARIANCE_TREND_TITLE() {
-      return t("dashboard.varianceTrendTitle");
-    },
-    get VARIANCE_TREND_IMPROVING() {
-      return t("dashboard.varianceTrendImproving");
-    },
-    get VARIANCE_TREND_DECLINING() {
-      return t("dashboard.varianceTrendDeclining");
-    },
-    get VARIANCE_TREND_STABLE() {
-      return t("dashboard.varianceTrendStable");
-    },
-    get MINUTES_SUFFIX() {
-      return t("dashboard.minutesSuffix");
-    },
-    get OVER_ESTIMATED() {
-      return t("dashboard.overEstimated");
-    },
-    get UNDER_ESTIMATED() {
-      return t("dashboard.underEstimated");
-    },
-  },
   MUSCLE_TAGS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get DESCRIPTION() {
-      return t("dashboard.description");
-    },
     TOTAL_COUNT: (count: number) => `Total: ${count} tags available`,
     TOOLTIP: (tag: string) => `Click to copy: ${tag}`,
   },
   FILE_ERRORS: {
-    get TITLE() {
-      return t("dashboard.title");
-    },
-    get ALL_VALID() {
-      return t("dashboard.allValid");
-    },
-    get NO_TAGS() {
-      return t("dashboard.noTags");
-    },
     TOO_MANY_TAGS: (count: number) => `Too many muscle tags (${count})`,
     READ_ERROR: (message: string) => `Error reading file: ${message}`,
   },
@@ -1569,59 +697,17 @@ export const DASHBOARD_UI = {
  * Messages displayed to users - notifications, warnings, errors, and status messages
  */
 export const MESSAGES_UI = {
-  get NO_DATA() {
-    return t("messages.noData");
-  },
-  get LOADING() {
-    return t("messages.loading");
-  },
   get NO_DATA_PERIOD() {
     return t("messages.noDataPeriod");
   },
   get TIMER_COMPLETED() {
     return t("messages.timerCompleted");
   },
-  WARNINGS: {
-    get IMBALANCE_ALERTS() {
-      return t("messages.imbalanceAlerts");
-    },
-  },
-  SUCCESS: {
-    get NO_IMBALANCES() {
-      return t("messages.noImbalances");
-    },
-    get CODE_INSERTED() {
-      return t("messages.codeInserted");
-    },
-    get MUSCLE_TAGS_CSV_CREATED() {
-      return t("messages.muscleTagsCsvCreated");
-    },
-    get TAG_REFERENCE_GENERATED() {
-      return t("messages.tagReferenceGenerated");
-    },
-  },
   ERRORS: {
-    get CSV_NOT_FOUND() {
-      return t("messages.csvNotFound");
-    },
-    get FILE_EMPTY() {
-      return t("messages.fileEmpty");
-    },
-    get NO_FRONTMATTER() {
-      return t("messages.noFrontmatter");
-    },
-    get NO_TAGS() {
-      return t("messages.noTags");
-    },
     MUSCLE_TAGS_CSV_FAILED: (error: string) =>
       `Error creating muscle tags CSV: ${error}`,
     TAG_REFERENCE_FAILED: (error: string) =>
       `Error generating tag reference note: ${error}`,
-  },
-  STATUS: {
-    get INSUFFICIENT_DATA() {
-      return t("messages.insufficientData");
-    },
   },
 } as const;
 
@@ -1629,100 +715,24 @@ export const MESSAGES_UI = {
  * Form-related labels and placeholders
  */
 export const FORMS_UI = {
-  LABELS: {
-    get EXERCISE_NAME() {
-      return t("forms.exerciseName");
-    },
-    get WORKOUT_NAME() {
-      return t("forms.workoutName");
-    },
-  },
-  PLACEHOLDERS: {
-    get ENTER_EXERCISE_NAME() {
-      return t("forms.enterExerciseName");
-    },
-    get ENTER_CSV_PATH() {
-      return t("forms.enterCsvPath");
-    },
-    get ENTER_FOLDER_PATH() {
-      return t("forms.enterFolderPath");
-    },
-  },
 } as const;
 
 /**
  * Statistics display labels
  */
 export const STATS_UI = {
-  LABELS: {
-    get SESSIONS() {
-      return t("stats.sessions");
-    },
-    get RECENT_TREND() {
-      return t("stats.recentTrend");
-    },
-    get AVG_VOLUME() {
-      return t("stats.avgVolume");
-    },
-  },
 } as const;
 
 /**
  * Trend-related labels and status indicators
  */
 export const TRENDS_UI = {
-  STATUS: {
-    get STABLE() {
-      return t("trends.stable");
-    },
-    get INVARIANT() {
-      return t("trends.invariant");
-    },
-    get INCREASING() {
-      return t("trends.increasing");
-    },
-    get DECREASING() {
-      return t("trends.decreasing");
-    },
-    get IMPROVING() {
-      return t("trends.improving");
-    },
-    get DECLINING() {
-      return t("trends.declining");
-    },
-    get STABLE_LOWER() {
-      return t("trends.stableLower");
-    },
-    get STABLE_HIGHER() {
-      return t("trends.stableHigher");
-    },
-  },
-  DIRECTIONS: {
-    get UP() {
-      return t("trends.up");
-    },
-    get DOWN() {
-      return t("trends.down");
-    },
-    get NEUTRAL() {
-      return t("trends.neutral");
-    },
-  },
 } as const;
 
 /**
  * Time period labels
  */
 export const TIME_PERIODS_UI = {
-  get WEEK() {
-    return t("timeperiods.week");
-  },
-  get MONTH() {
-    return t("timeperiods.month");
-  },
-  get YEAR() {
-    return t("timeperiods.year");
-  },
 } as const;
 
 /**
@@ -1746,28 +756,6 @@ export const COMMON_UI = {
     get WEIGHT_KG() {
       return getDynamicCommonLabels().UNITS.WEIGHT;
     },
-  },
-  TYPES: {
-    get EXERCISE() {
-      return t("common.exercise");
-    },
-    get WORKOUT() {
-      return t("common.workout");
-    },
-  },
-  DEFAULTS: {
-    get UNKNOWN() {
-      return t("common.unknown");
-    },
-    get EXERCISE_NAME() {
-      return t("common.exerciseName");
-    },
-    get WORKOUT_NAME() {
-      return t("common.workoutName");
-    },
-  },
-  get NOT_AVAILABLE() {
-    return t("common.notAvailable");
   },
 } as const;
 
@@ -1804,18 +792,6 @@ export const GENERAL_UI = {
     get AVG_WEIGHT() {
       return getDynamicGeneralLabels().LABELS.AVG_WEIGHT;
     },
-    get TOTAL_REPS() {
-      return t("general.totalReps");
-    },
-    get AVG_REPS() {
-      return t("general.avgReps");
-    },
-    get WORKOUTS() {
-      return t("general.workouts");
-    },
-    get SEARCH() {
-      return t("general.search");
-    },
     get FRONT() {
       return t("general.front");
     },
@@ -1838,50 +814,6 @@ export const GENERAL_UI = {
       return t("general.dashboard");
     },
   },
-  ACTIONS: {
-    get EDIT_WORKOUT() {
-      return t("general.editWorkout");
-    },
-    get DELETE_WORKOUT() {
-      return t("general.deleteWorkout");
-    },
-    get EXPORT() {
-      return t("general.export");
-    },
-    get ADD() {
-      return t("general.add");
-    },
-    get ADD_LOG() {
-      return t("general.addLog");
-    },
-    get EDIT() {
-      return t("general.edit");
-    },
-    get EDIT_LOG_ENTRY() {
-      return t("general.editLogEntry");
-    },
-    get DELETE() {
-      return t("general.delete");
-    },
-    get DELETE_LOG_ENTRY() {
-      return t("general.deleteLogEntry");
-    },
-    get DELETE_CONFIRM() {
-      return t("general.deleteConfirm");
-    },
-    get DELETE_SUCCESS() {
-      return t("general.deleteSuccess");
-    },
-    get DELETE_ERROR() {
-      return t("general.deleteError");
-    },
-    get REFRESH_SUCCESS() {
-      return t("general.refreshSuccess");
-    },
-    get CREATE_FILE() {
-      return t("general.createFile");
-    },
-  },
   LOGS: {
     NO_DATA_TITLE: (exerciseName?: string) =>
       `No logs found for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
@@ -1897,8 +829,5 @@ export const GENERAL_UI = {
       `Create log for: ${exerciseName}`,
     CREATE_LOG_BUTTON_ARIA: (exerciseName: string) =>
       `Create log for ${exerciseName}`,
-    get NO_MATCH_MESSAGE() {
-      return t("general.noMatchMessage");
-    },
   },
 } as const;

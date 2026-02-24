@@ -1,13 +1,14 @@
 import { CONSTANTS } from "@app/constants";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { CHART_DATA_TYPE } from "@app/features/charts";
+import { t } from "@app/i18n";
 
 describe("TrendCalculator", () => {
   describe("getTrendIndicators", () => {
     it("should return insufficient data message when volumeData has less than 2 points", () => {
       const result = TrendCalculator.getTrendIndicators(0, [100]);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.MESSAGES.STATUS.INSUFFICIENT_DATA,
+        t("messages.insufficientData"),
       );
       expect(result.trendColor).toBe("var(--text-muted, #888)");
       expect(result.trendIcon).toBe("·");
@@ -16,7 +17,7 @@ describe("TrendCalculator", () => {
     it("should return insufficient data message for empty array", () => {
       const result = TrendCalculator.getTrendIndicators(0, []);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.MESSAGES.STATUS.INSUFFICIENT_DATA,
+        t("messages.insufficientData"),
       );
       expect(result.trendColor).toBe("var(--text-muted, #888)");
       expect(result.trendIcon).toBe("·");
@@ -30,7 +31,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
       expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       expect(result.trendIcon).toBe("↗️");
@@ -44,7 +45,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.DECREASING,
+        t("trends.decreasing"),
       );
       expect(result.trendColor).toBe("var(--color-red, #F44336)");
       expect(result.trendIcon).toBe("↘️");
@@ -56,7 +57,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
       expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
       expect(result.trendIcon).toBe("→");
@@ -68,7 +69,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
       expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
       expect(result.trendIcon).toBe("→");
@@ -81,7 +82,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
     });
 
@@ -93,7 +94,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
     });
 
@@ -103,7 +104,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
     });
 
@@ -114,7 +115,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
     });
 
@@ -125,7 +126,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
     });
 
@@ -136,7 +137,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
     });
 
@@ -146,7 +147,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+        t("trends.increasing"),
       );
     });
 
@@ -156,7 +157,7 @@ describe("TrendCalculator", () => {
 
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
     });
 
@@ -168,7 +169,7 @@ describe("TrendCalculator", () => {
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       // The condition is slope < -threshold, so -7.5 < -7.5 is false
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
     });
 
@@ -180,7 +181,7 @@ describe("TrendCalculator", () => {
       const result = TrendCalculator.getTrendIndicators(slope, volumeData);
       // The condition is slope > threshold, so 7.5 > 7.5 is false
       expect(result.trendDirection).toBe(
-        CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+        t("trends.stableLower"),
       );
     });
 
@@ -196,7 +197,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.PACE,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.IMPROVING,
+          t("trends.improving"),
         );
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
         expect(result.trendIcon).toBe("↗️");
@@ -213,7 +214,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.PACE,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.DECLINING,
+          t("trends.declining"),
         );
         expect(result.trendColor).toBe("var(--color-red, #F44336)");
         expect(result.trendIcon).toBe("↘️");
@@ -229,7 +230,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.VOLUME,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+          t("trends.increasing"),
         );
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
         expect(result.trendIcon).toBe("↗️");
@@ -241,7 +242,7 @@ describe("TrendCalculator", () => {
 
         const result = TrendCalculator.getTrendIndicators(slope, volumeData);
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+          t("trends.increasing"),
         );
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       });
@@ -257,7 +258,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.PACE,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.STABLE_LOWER,
+          t("trends.stableLower"),
         );
         expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
       });
@@ -273,7 +274,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.WEIGHT,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+          t("trends.increasing"),
         );
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       });
@@ -289,7 +290,7 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.HEART_RATE,
         );
         expect(result.trendDirection).toBe(
-          CONSTANTS.WORKOUT.TRENDS.STATUS.INCREASING,
+          t("trends.increasing"),
         );
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       });

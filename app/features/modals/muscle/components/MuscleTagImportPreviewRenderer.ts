@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
+import { t } from "@app/i18n";
 
 interface RenderImportPreviewOptions {
   tags: Map<string, string>;
@@ -71,9 +72,9 @@ export class MuscleTagImportPreviewRenderer {
 
     const thead = previewTable.createEl("thead");
     const headerRow = thead.createEl("tr");
-    headerRow.createEl("th", { text: CONSTANTS.WORKOUT.MODAL.LABELS.TAG });
+    headerRow.createEl("th", { text: t("modal.tag") });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.MUSCLE_GROUP,
+      text: t("modal.muscleGroup"),
     });
 
     const tbody = previewTable.createEl("tbody");
@@ -109,21 +110,21 @@ export class MuscleTagImportPreviewRenderer {
     });
 
     const cancelButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
       variant: "secondary",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: t("modal.buttons.cancel"),
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const mergeButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_MERGE,
+      text: t("modal.importMerge"),
       variant: "secondary",
       ariaLabel: "Merge: add new tags only, keep existing",
     });
     Button.onClick(mergeButton, options.onMerge);
 
     const replaceButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_REPLACE,
+      text: t("modal.importReplace"),
       variant: "warning",
       ariaLabel: "Replace: overwrite all existing tags",
     });

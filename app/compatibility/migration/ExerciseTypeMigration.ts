@@ -2,6 +2,7 @@ import { Notice, TFolder, TFile } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { CONSTANTS } from "@app/constants";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { t } from "@app/i18n";
 
 export class ExerciseTypeMigration {
   private plugin: WorkoutChartsPlugin;
@@ -14,7 +15,7 @@ export class ExerciseTypeMigration {
     try {
       const exerciseFolderPath = this.plugin.settings.exerciseFolderPath;
       if (!exerciseFolderPath) {
-        new Notice(CONSTANTS.WORKOUT.MESSAGES.ERRORS.FILE_EMPTY); // Using generic error or specific if available
+        new Notice(t("messages.fileEmpty")); // Using generic error or specific if available
         return;
       }
 
@@ -45,13 +46,13 @@ export class ExerciseTypeMigration {
           CONSTANTS.WORKOUT.MODAL.NOTICES.MIGRATION_COMPLETE(updatedCount),
         );
       } else {
-        new Notice(CONSTANTS.WORKOUT.MODAL.NOTICES.MIGRATION_NO_UPDATES);
+        new Notice(t("modal.notices.migrationNoUpdates"));
       }
     } catch (error) {
       const errorMessage =
         ErrorUtils.getErrorMessage(error);
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MIGRATION_ERROR + errorMessage,
+        t("modal.notices.migrationError") + errorMessage,
       );
     }
   }

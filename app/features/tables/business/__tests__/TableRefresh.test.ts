@@ -4,6 +4,7 @@ import { TableRefresh } from "@app/features/tables/business/TableRefresh";
 import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { TableCallbacks } from "@app/features/tables/types";
+import { t } from "@app/i18n";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},
@@ -64,7 +65,7 @@ describe("TableRefresh", () => {
     );
 
     expect(callbacks.onSuccess).toHaveBeenCalledWith(
-      CONSTANTS.WORKOUT.TABLE.MESSAGES.REFRESH_SUCCESS,
+      t("table.refreshSuccess"),
     );
   });
 

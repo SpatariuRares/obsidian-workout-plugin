@@ -7,6 +7,7 @@
 import { CONSTANTS } from "@app/constants";
 import { Icon, Input, Container } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { t } from "@app/i18n";
 
 export interface SearchBoxProps {
 	placeholder?: string;
@@ -60,7 +61,7 @@ export class SearchBox {
 		// Add input
 		const input = Input.create(container, {
 			type: INPUT_TYPE.TEXT,
-			placeholder: props?.placeholder || CONSTANTS.WORKOUT.LABELS.GENERAL.SEARCH,
+			placeholder: props?.placeholder || t("general.search"),
 			value: props?.value,
 			className: "search-box-input",
 		});

@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
+import { t } from "@app/i18n";
 
 export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;
@@ -24,7 +25,7 @@ export class AdvancedOptionsSection {
   ): AdvancedOptionsElements {
     const advancedSection = modal.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.ADVANCED_OPTIONS,
+      t("modal.sections.advancedOptions"),
     );
 
     // Compact mode: wrap checkboxes in a flex row
@@ -36,7 +37,7 @@ export class AdvancedOptionsSection {
     const exactMatchContainer = modal.createCheckboxGroup(checkboxParent);
     const exactMatchToggle = modal.createCheckbox(
       exactMatchContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.EXACT_MATCH,
+      t("modal.checkboxes.exactMatch"),
       false,
       "exactMatch",
     );
@@ -50,8 +51,8 @@ export class AdvancedOptionsSection {
       const titleContainer = modal.createFormGroup(advancedSection);
       const titleInput = modal.createTextInput(
         titleContainer,
-        CONSTANTS.WORKOUT.MODAL.LABELS.CUSTOM_TITLE,
-        CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.CUSTOM_TITLE,
+        t("modal.customTitle"),
+        t("modal.placeholders.customTitle"),
       );
       elements.titleInput = titleInput;
     }
@@ -61,7 +62,7 @@ export class AdvancedOptionsSection {
       const searchByNameContainer = modal.createCheckboxGroup(checkboxParent);
       const searchByNameToggle = modal.createCheckbox(
         searchByNameContainer,
-        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SEARCH_BY_NAME,
+        t("modal.checkboxes.searchByName"),
         false,
         "searchByName",
       );
@@ -73,7 +74,7 @@ export class AdvancedOptionsSection {
       const addButtonContainer = modal.createCheckboxGroup(checkboxParent);
       const addButtonToggle = modal.createCheckbox(
         addButtonContainer,
-        CONSTANTS.WORKOUT.MODAL.CHECKBOXES.SHOW_ADD_BUTTON,
+        t("modal.checkboxes.showAddButton"),
         true,
         "showAddButton",
       );

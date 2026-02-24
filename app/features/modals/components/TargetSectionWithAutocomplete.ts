@@ -4,6 +4,7 @@ import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAu
 import { CHART_TYPE } from "@app/features/charts/types";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import type WorkoutChartsPlugin from "main";
+import { t } from "@app/i18n";
 
 export interface TargetSectionWithAutocompleteElements {
   exerciseContainer: HTMLElement;
@@ -40,7 +41,7 @@ export class TargetSectionWithAutocomplete {
   } {
     const targetSection = modal.createSection(
       container,
-      CONSTANTS.WORKOUT.MODAL.SECTIONS.TARGET,
+      t("modal.sections.target"),
     );
 
     // Exercise autocomplete (for exercise-specific charts/tables)
@@ -57,12 +58,12 @@ export class TargetSectionWithAutocomplete {
     workoutContainer.classList.add("workout-target-workout");
     workoutContainer.setAttribute(
       "data-field-type",
-      CONSTANTS.WORKOUT.COMMON.TYPES.WORKOUT,
+      t("common.workout"),
     );
     const workoutInput = modal.createTextInput(
       workoutContainer,
-      CONSTANTS.WORKOUT.FORMS.LABELS.WORKOUT_NAME,
-      CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.WORKOUT,
+      t("forms.workoutName"),
+      t("modal.placeholders.workout"),
     );
 
     // Current Workout checkbox (for workout charts/tables)
@@ -71,7 +72,7 @@ export class TargetSectionWithAutocomplete {
     currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
-      CONSTANTS.WORKOUT.MODAL.CHECKBOXES.USE_CURRENT_WORKOUT_FILE,
+      t("modal.checkboxes.useCurrentWorkoutFile"),
       false,
       "currentWorkout",
     );

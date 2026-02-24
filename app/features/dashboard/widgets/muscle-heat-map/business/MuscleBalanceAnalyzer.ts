@@ -2,6 +2,7 @@ import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { MuscleGroupData } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { t } from "@app/i18n";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -84,7 +85,7 @@ export class MuscleBalanceAnalyzer {
     const analysis = this.analyze(muscleData);
 
     if (!analysis.hasData) {
-      Feedback.renderInfo(infoPanel, CONSTANTS.WORKOUT.MESSAGES.NO_DATA_PERIOD);
+      Feedback.renderInfo(infoPanel, t("messages.noDataPeriod"));
       return;
     }
 
@@ -99,11 +100,11 @@ export class MuscleBalanceAnalyzer {
     // Display imbalance alerts or success message
     if (analysis.imbalances.length > 0) {
       Feedback.renderWarning(infoPanel, analysis.imbalances, {
-        title: CONSTANTS.WORKOUT.MESSAGES.WARNINGS.IMBALANCE_ALERTS,
+        title: t("messages.imbalanceAlerts"),
         append: true
       });
     } else {
-      Feedback.renderSuccess(infoPanel, CONSTANTS.WORKOUT.MESSAGES.SUCCESS.NO_IMBALANCES, { append: true });
+      Feedback.renderSuccess(infoPanel, t("messages.noImbalances"), { append: true });
     }
   }
 }

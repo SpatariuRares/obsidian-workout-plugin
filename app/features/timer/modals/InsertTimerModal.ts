@@ -11,6 +11,7 @@ import {
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { Chip } from "@app/components/atoms/Chip";
 import type WorkoutChartsPlugin from "main";
+import { t } from "@app/i18n";
 
 export class InsertTimerModal extends BaseInsertModal {
   private timerElements?: TimerConfigurationElements;
@@ -23,15 +24,15 @@ export class InsertTimerModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return CONSTANTS.WORKOUT.MODAL.TITLES.INSERT_TIMER;
+    return t("modal.titles.insertTimer");
   }
 
   protected getButtonText(): string {
-    return CONSTANTS.WORKOUT.MODAL.BUTTONS.INSERT_TIMER;
+    return t("modal.buttons.insertTimer");
   }
 
   protected getSuccessMessage(): string {
-    return CONSTANTS.WORKOUT.MODAL.NOTICES.TIMER_INSERTED;
+    return t("modal.notices.timerInserted");
   }
 
   protected createConfigurationSections(container: HTMLElement): void {
@@ -44,7 +45,7 @@ export class InsertTimerModal extends BaseInsertModal {
     if (presetNames.length > 0) {
       const presetSection = this.createSection(
         container,
-        CONSTANTS.WORKOUT.MODAL.SECTIONS.PRESET,
+        t("modal.sections.preset"),
       );
 
       const chipsContainer = presetSection.createDiv({
@@ -118,7 +119,7 @@ export class InsertTimerModal extends BaseInsertModal {
   protected generateCode(): string {
     if (!this.timerElements) {
       throw new Error(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.TIMER_ELEMENTS_NOT_INITIALIZED,
+        t("modal.notices.timerElementsNotInitialized"),
       );
     }
 

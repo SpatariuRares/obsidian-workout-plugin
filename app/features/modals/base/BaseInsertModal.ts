@@ -5,6 +5,7 @@ import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 /**
  * Abstract base class for insert modals.
@@ -64,9 +65,9 @@ export abstract class BaseInsertModal extends ModalBase {
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
-      text: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      text: t("modal.buttons.cancel"),
       variant: "warning",
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.BUTTONS.CANCEL,
+      ariaLabel: t("modal.buttons.cancel"),
     });
 
     // Event listeners using Button helper

@@ -5,6 +5,7 @@ import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
 import { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
+import { t } from "@app/i18n";
 
 export interface MuscleTagLayoutCallbacks {
   onSearch: (value: string) => void;
@@ -68,7 +69,7 @@ export class MuscleTagLayoutRenderer {
     searchValue: string,
   ): void {
     const searchBox = SearchBox.create(headerSection, {
-      placeholder: CONSTANTS.WORKOUT.MODAL.PLACEHOLDERS.SEARCH_TAGS,
+      placeholder: t("modal.placeholders.searchTags"),
     });
 
     if (searchValue) {
@@ -84,22 +85,22 @@ export class MuscleTagLayoutRenderer {
     });
 
     const addButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.ADD_TAG,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.ADD_TAG,
+      text: t("modal.addTag"),
+      ariaLabel: t("modal.addTag"),
       variant: "primary",
     });
     Button.onClick(addButton, callbacks.onAdd);
 
     const exportButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.EXPORT_TAGS,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.EXPORT_TAGS,
+      text: t("modal.exportTags"),
+      ariaLabel: t("modal.exportTags"),
       variant: "secondary",
     });
     Button.onClick(exportButton, callbacks.onExport);
 
     const importButton = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
-      ariaLabel: CONSTANTS.WORKOUT.MODAL.LABELS.IMPORT_TAGS,
+      text: t("modal.importTags"),
+      ariaLabel: t("modal.importTags"),
       variant: "secondary",
     });
 
@@ -121,13 +122,13 @@ export class MuscleTagLayoutRenderer {
     const thead = table.createEl("thead");
     const headerRow = thead.createEl("tr");
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.TAG,
+      text: t("modal.tag"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.MUSCLE_GROUP,
+      text: t("modal.muscleGroup"),
     });
     headerRow.createEl("th", {
-      text: CONSTANTS.WORKOUT.MODAL.LABELS.ACTIONS,
+      text: t("modal.actions"),
       cls: "workout-tag-actions-header",
     });
 

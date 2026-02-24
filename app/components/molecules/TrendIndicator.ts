@@ -6,6 +6,7 @@
 
 import { CONSTANTS } from "@app/constants";
 import { Icon, Text, Container } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 export interface TrendIndicatorProps {
 	percentage: number;
@@ -39,11 +40,11 @@ export class TrendIndicator {
 	 */
 	private static getArrow(direction: typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS[keyof typeof CONSTANTS.WORKOUT.TRENDS.DIRECTIONS]): string {
 		switch (direction) {
-			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.UP:
+			case t("trends.up"):
 				return this.ARROW_UP;
-			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.DOWN:
+			case t("trends.down"):
 				return this.ARROW_DOWN;
-			case CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.NEUTRAL:
+			case t("trends.neutral"):
 				return this.ARROW_NEUTRAL;
 			default:
 				return this.ARROW_NEUTRAL;

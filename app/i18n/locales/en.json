@@ -770,7 +770,13 @@
       "variationFromTo": " from {startValue} to {endValue}",
       "trendType": "Trend {type}:",
       "weightIncrementUnit": "Weight increment {weightIncrementUnit}",
-      "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}"
+      "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}",
+      "volume": "Volume",
+      "weight": "Weight",
+      "duration": "Duration",
+      "distance": "Distance",
+      "heartRate": "Heart Rate",
+      "pace": "Pace"
     },
     "types": {
       "volume": "Volume",

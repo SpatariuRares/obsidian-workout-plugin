@@ -103,7 +103,6 @@ export const CONSTANTS = {
         INVALID: "invalid-date",
       },
       DEFAULTS: {
-        BUTTON_TEXT: DEFAULT_TABLE_CONFIG.BUTTON_TEXT,
         EXACT_MATCH: DEFAULT_TABLE_CONFIG.EXACT_MATCH,
       },
       VALIDATION_ERRORS: {

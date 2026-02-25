@@ -14,14 +14,14 @@ describe("ui.constants", () => {
       it("should return i18n key for trend title", () => {
         const result = CHARTS_UI.LABELS.TREND_TITLE();
         expect(result).toBe(
-          t("charts.trendType", { typeName: t("charts.types.volume") }),
+          t("charts.labels.trendType", { type: t("charts.types.volume") }),
         );
       });
 
       it("should return i18n key for volume data type", () => {
         const result = CHARTS_UI.LABELS.TREND_TITLE(CHART_DATA_TYPE.VOLUME);
         expect(result).toBe(
-          t("charts.trendType", { typeName: t("charts.types.volume") }),
+          t("charts.labels.trendType", { type: t("charts.types.volume") }),
         );
       });
     });
@@ -30,7 +30,10 @@ describe("ui.constants", () => {
       it("should format start and end values", () => {
         const result = CHARTS_UI.LABELS.VARIATION_FROM_TO_FORMATTED("50", "75");
         expect(result).toBe(
-          t("charts.variationFromTo", { startValue: "50", endValue: "75" }),
+          t("charts.labels.variationFromTo", {
+            startValue: "50",
+            endValue: "75",
+          }),
         );
       });
     });

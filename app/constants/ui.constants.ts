@@ -19,8 +19,8 @@
  */
 
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Gets the current weight unit from settings (kg or lb)
@@ -416,12 +416,12 @@ export const CHARTS_UI = {
       const typeName = dataType
         ? DATA_TYPE_NAMES[dataType]
         : t("charts.types.volume");
-      return t("charts.trendType", { typeName });
+      return t("charts.labels.trendType", { type: typeName });
     },
 
     /** Dynamic variation display with proper units */
     VARIATION_FROM_TO_FORMATTED: (startValue: string, endValue: string) =>
-      t("charts.variationFromTo", { startValue, endValue }),
+      t("charts.labels.variationFromTo", { startValue, endValue }),
     /** Dynamic single value display */
     VARIATION_SINGLE_VALUE_FORMATTED: (
       value: string,

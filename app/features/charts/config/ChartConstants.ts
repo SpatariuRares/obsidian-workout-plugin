@@ -14,13 +14,13 @@ export const ChartLabels = {
   TREND_LINE: t("charts.trendLine"),
   X_AXIS: t("charts.date"),
   Y_AXIS: {
-    VOLUME: t("charts.volume"),
-    WEIGHT: t("charts.weight"),
-    REPS: t("charts.reps"),
+    VOLUME: t("charts.labels.volume"),
+    WEIGHT: t("charts.labels.weight"),
+    REPS: t("charts.labels.reps"),
   },
   UNITS: {
-    WEIGHT: t("charts.weight"),
-    REPS: t("charts.reps"),
+    WEIGHT: t("charts.labels.weight"),
+    REPS: t("charts.labels.reps"),
   },
 } as const;
 
@@ -81,8 +81,8 @@ export function getDefaultChartTitle(chartType: string): string {
 export function getUnitForChartType(chartType: string): string {
   // For volume and weight charts, use the dynamic weight unit from settings
   if (
-    chartType === t("charts.volume") ||
-    chartType === t("charts.weight")
+    chartType === t("charts.labels.volume") ||
+    chartType === t("charts.labels.weight")
   ) {
     return ParameterUtils.getWeightUnit();
   }
@@ -102,11 +102,11 @@ export function getYAxisLabel(chartType: string): string {
   const weightUnit = ParameterUtils.getWeightUnit();
 
   switch (chartType) {
-    case t("charts.volume"):
+    case t("charts.labels.volume"):
       return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;
-    case t("charts.weight"):
+    case t("charts.labels.weight"):
       return `${ChartLabels.Y_AXIS.WEIGHT} (${weightUnit})`;
-    case t("charts.reps"):
+    case t("charts.labels.reps"):
       return ChartLabels.Y_AXIS.REPS;
     default:
       return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;

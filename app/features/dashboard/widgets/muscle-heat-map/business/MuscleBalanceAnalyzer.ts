@@ -1,8 +1,8 @@
-import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { MuscleGroupData } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -47,22 +47,22 @@ export class MuscleBalanceAnalyzer {
     // Check front-back imbalance
     const frontVolume = this.FRONT_MUSCLES.reduce(
       (sum, muscle) => sum + (muscleData.get(muscle)?.volume || 0),
-      0
+      0,
     );
     const backVolume = this.BACK_MUSCLES.reduce(
       (sum, muscle) => sum + (muscleData.get(muscle)?.volume || 0),
-      0
+      0,
     );
 
     const maxVolume = Math.max(frontVolume, backVolume);
     if (
       maxVolume > 0 &&
-      Math.abs(frontVolume - backVolume) / maxVolume >
-      this.IMBALANCE_THRESHOLD
+      Math.abs(frontVolume - backVolume) / maxVolume > this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${frontVolume > backVolume ? "Front" : "Back"
-        } dominant)`
+        `Front-Back imbalance detected (${
+          frontVolume > backVolume ? "Front" : "Back"
+        } dominant)`,
       );
     }
 
@@ -78,7 +78,7 @@ export class MuscleBalanceAnalyzer {
    */
   static renderToInfoPanel(
     infoPanel: HTMLElement,
-    muscleData: Map<string, MuscleGroupData>
+    muscleData: Map<string, MuscleGroupData>,
   ): void {
     infoPanel.empty();
 
@@ -90,7 +90,9 @@ export class MuscleBalanceAnalyzer {
     }
 
     // Display analysis header
-    infoPanel.createEl("h4", { text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS });
+    infoPanel.createEl("h4", {
+      text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS,
+    });
 
     const weightUnit = ParameterUtils.getWeightUnit();
     infoPanel.createEl("p", {
@@ -101,10 +103,12 @@ export class MuscleBalanceAnalyzer {
     if (analysis.imbalances.length > 0) {
       Feedback.renderWarning(infoPanel, analysis.imbalances, {
         title: t("messages.imbalanceAlerts"),
-        append: true
+        append: true,
       });
     } else {
-      Feedback.renderSuccess(infoPanel, t("messages.noImbalances"), { append: true });
+      Feedback.renderSuccess(infoPanel, t("messages.noImbalances"), {
+        append: true,
+      });
     }
   }
 }

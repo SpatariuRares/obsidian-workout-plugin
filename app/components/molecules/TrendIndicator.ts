@@ -4,7 +4,6 @@
  * Combines: Icon + Text + Container atoms
  */
 
-import { CONSTANTS } from "@app/constants";
 import { Icon, Text, Container } from "@app/components/atoms";
 import { t } from "@app/i18n";
 

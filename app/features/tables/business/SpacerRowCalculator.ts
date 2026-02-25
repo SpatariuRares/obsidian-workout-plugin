@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { TableRow } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";

@@ -91,8 +91,6 @@ export const DEFAULT_TABLE_CONFIG = {
   LIMIT_MAX: 1000,
   /** Default columns visible in workout log tables */
   VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
-  /** Default text for the add log button */
-  BUTTON_TEXT: "➕ Add Log",
   /** Default exact match setting for table filtering */
   EXACT_MATCH: true,
   /** Default limit specifically for modal inserts (12 rows) */

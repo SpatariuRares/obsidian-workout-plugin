@@ -1,8 +1,9 @@
 // Utility class for generating code blocks
-import { CONSTANTS } from "@app/constants";
+
 import { CHART_TYPE, EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer/types";
 import { TableCodeOptions, TABLE_TYPE } from "@app/features/tables/types";
+import { CONSTANTS } from "@app/constants";
 
 export class CodeGenerator {
   /**

@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Notice } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
@@ -16,10 +15,7 @@ export class TableActions {
   /**
    * Handle edit action for a workout log entry
    */
-  static handleEdit(
-    log: WorkoutLogData,
-    plugin: WorkoutChartsPlugin,
-  ): void {
+  static handleEdit(log: WorkoutLogData, plugin: WorkoutChartsPlugin): void {
     const modal = new EditLogModal(plugin.app, plugin, log, (ctx) => {
       plugin.triggerWorkoutLogRefresh(ctx);
     });
@@ -29,32 +25,22 @@ export class TableActions {
   /**
    * Handle delete action for a workout log entry
    */
-  static handleDelete(
-    log: WorkoutLogData,
-    plugin: WorkoutChartsPlugin,
-  ): void {
-    const modal = new ConfirmModal(
-      plugin.app,
-      t("table.deleteConfirm"),
-      () => {
-        void (async () => {
-          try {
-            await plugin.deleteWorkoutLogEntry(log);
-            new Notice(t("table.deleteSuccess"));
-            plugin.triggerWorkoutLogRefresh({
-              exercise: log.exercise,
-              workout: log.workout,
-            });
-          } catch (error) {
-            const errorMessage =
-              ErrorUtils.getErrorMessage(error);
-            new Notice(
-              t("table.deleteError") + errorMessage,
-            );
-          }
-        })();
-      },
-    );
+  static handleDelete(log: WorkoutLogData, plugin: WorkoutChartsPlugin): void {
+    const modal = new ConfirmModal(plugin.app, t("table.deleteConfirm"), () => {
+      void (async () => {
+        try {
+          await plugin.deleteWorkoutLogEntry(log);
+          new Notice(t("table.deleteSuccess"));
+          plugin.triggerWorkoutLogRefresh({
+            exercise: log.exercise,
+            workout: log.workout,
+          });
+        } catch (error) {
+          const errorMessage = ErrorUtils.getErrorMessage(error);
+          new Notice(t("table.deleteError") + errorMessage);
+        }
+      })();
+    });
     modal.open();
   }
 
@@ -66,7 +52,7 @@ export class TableActions {
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
     plugin?: WorkoutChartsPlugin,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): void {
     if (!originalLog || !plugin) {
       return;
@@ -77,16 +63,24 @@ export class TableActions {
       ActionButtons.createActionButtonsContainer(td);
 
     // Add event listeners with business logic, using AbortSignal for cleanup
-    editBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.handleEdit(originalLog, plugin);
-    }, signal ? { signal } : undefined);
+    editBtn.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.handleEdit(originalLog, plugin);
+      },
+      signal ? { signal } : undefined,
+    );
 
-    deleteBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.handleDelete(originalLog, plugin);
-    }, signal ? { signal } : undefined);
+    deleteBtn.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.handleDelete(originalLog, plugin);
+      },
+      signal ? { signal } : undefined,
+    );
   }
 }

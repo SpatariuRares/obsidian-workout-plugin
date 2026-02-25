@@ -3,7 +3,7 @@
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { CONSTANTS } from "@app/constants";
+
 import { t } from "@app/i18n";
 
 const createLog = (

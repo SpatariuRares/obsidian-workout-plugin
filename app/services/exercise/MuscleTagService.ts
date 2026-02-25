@@ -12,10 +12,7 @@
 
 import { App, TFile, normalizePath } from "obsidian";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import {
-  MUSCLE_TAG_ENTRIES,
-  type MuscleTagEntry,
-} from "@app/constants/muscles.constants";
+import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
 import { StringUtils, PathUtils, LanguageUtils } from "@app/utils";
 
 /**
@@ -98,9 +95,7 @@ export class MuscleTagService {
       }
 
       // Check if CSV needs migration (old format without language column)
-      const hasLanguageColumn = lines[0]
-        .toLowerCase()
-        .includes("language");
+      const hasLanguageColumn = lines[0].toLowerCase().includes("language");
 
       if (!hasLanguageColumn && lines.length > 0) {
         // Migrate old CSV to new format
@@ -137,26 +132,26 @@ export class MuscleTagService {
     // Skip header line if present
     const startIndex = lines[0].toLowerCase().startsWith("tag,") ? 1 : 0;
 
-      for (let i = startIndex; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
+    for (let i = startIndex; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
 
-        const parsed = this.parseCSVLine(line);
-        if (parsed.length >= 2) {
-          const tag = StringUtils.normalize(parsed[0]);
-          const muscleGroup = StringUtils.normalize(parsed[1]);
-          const language =
-            parsed.length >= 3 ? StringUtils.normalize(parsed[2]) : "en";
+      const parsed = this.parseCSVLine(line);
+      if (parsed.length >= 2) {
+        const tag = StringUtils.normalize(parsed[0]);
+        const muscleGroup = StringUtils.normalize(parsed[1]);
+        const language =
+          parsed.length >= 3 ? StringUtils.normalize(parsed[2]) : "en";
 
-          if (
-            tag &&
-            muscleGroup &&
-            (language === userLanguage || language === "en")
-          ) {
-            tags.set(tag, muscleGroup);
-          }
+        if (
+          tag &&
+          muscleGroup &&
+          (language === userLanguage || language === "en")
+        ) {
+          tags.set(tag, muscleGroup);
         }
       }
+    }
 
     // If no valid tags were parsed, return defaults
     if (tags.size === 0) {

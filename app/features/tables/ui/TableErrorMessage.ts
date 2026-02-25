@@ -1,5 +1,5 @@
-import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
+import { CONSTANTS } from "@app/constants";
 /**
  * UI component for rendering error messages.
  * Pure UI logic with no business dependencies.

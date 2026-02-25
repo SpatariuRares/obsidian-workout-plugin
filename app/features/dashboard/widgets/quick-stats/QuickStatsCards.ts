@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import {
@@ -8,6 +7,7 @@ import {
 import { StatCard, DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export class QuickStatsCards {
   static render(

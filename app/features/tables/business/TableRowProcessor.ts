@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
@@ -65,14 +64,9 @@ export class TableRowProcessor {
       const baseDataMap: Record<string, string> = {
         date: formattedDate,
         exercise: this.getExerciseDisplay(log.exercise),
-        reps:
-          log.reps?.toString() || t("table.notAvailable"),
-        weight:
-          log.weight?.toString() ||
-          t("table.notAvailable"),
-        volume:
-          log.volume?.toString() ||
-          t("table.notAvailable"),
+        reps: log.reps?.toString() || t("table.notAvailable"),
+        weight: log.weight?.toString() || t("table.notAvailable"),
+        volume: log.volume?.toString() || t("table.notAvailable"),
         // Add custom fields for cardio/timed exercises
         duration: this.formatCustomFieldValue(log.customFields?.duration),
         distance: this.formatCustomFieldValue(log.customFields?.distance),
@@ -157,9 +151,7 @@ export class TableRowProcessor {
       return t("table.notAvailable");
     }
     if (typeof value === "number") {
-      return value === 0
-        ? t("table.notAvailable")
-        : value.toString();
+      return value === 0 ? t("table.notAvailable") : value.toString();
     }
     if (typeof value === "string") {
       const num = parseFloat(value);

@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { ChartFallbackTable } from "../ChartTableViews";
-import { CONSTANTS } from "@app/constants";
+
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { t } from "@app/i18n";
 

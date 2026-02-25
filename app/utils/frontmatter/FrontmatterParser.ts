@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { parseYaml } from "obsidian";
 import { t } from "@app/i18n";
 /**

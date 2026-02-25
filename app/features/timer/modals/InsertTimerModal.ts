@@ -1,5 +1,5 @@
 // Refactored InsertTimerModal extending BaseInsertModal
-import { CONSTANTS } from "@app/constants";
+
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
@@ -118,9 +118,7 @@ export class InsertTimerModal extends BaseInsertModal {
 
   protected generateCode(): string {
     if (!this.timerElements) {
-      throw new Error(
-        t("modal.notices.timerElementsNotInitialized"),
-      );
+      throw new Error(t("modal.notices.timerElementsNotInitialized"));
     }
 
     // If a preset is selected, include preset reference in generated code

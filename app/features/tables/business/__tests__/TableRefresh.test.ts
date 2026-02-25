@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { TableRefresh } from "@app/features/tables/business/TableRefresh";
-import { CONSTANTS } from "@app/constants";
+
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { TableCallbacks } from "@app/features/tables/types";
 import { t } from "@app/i18n";
@@ -64,9 +64,7 @@ describe("TableRefresh", () => {
       callbacks,
     );
 
-    expect(callbacks.onSuccess).toHaveBeenCalledWith(
-      t("table.refreshSuccess"),
-    );
+    expect(callbacks.onSuccess).toHaveBeenCalledWith(t("table.refreshSuccess"));
   });
 
   it("calls onError callback on failure", async () => {

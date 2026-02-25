@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import {
   WorkoutLogData,
   CSVWorkoutLogEntry,
@@ -257,8 +256,7 @@ export class WorkoutLogRepository {
 
       return updateCount;
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       throw new Error(`Failed to rename exercise: ${errorMessage}`);
     }
   }

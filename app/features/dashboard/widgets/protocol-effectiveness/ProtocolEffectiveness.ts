@@ -1,5 +1,8 @@
-import { CONSTANTS } from "@app/constants";
-import { WorkoutLogData, WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+  CustomProtocolConfig,
+} from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type WorkoutChartsPlugin from "main";
@@ -28,12 +31,30 @@ interface ProtocolEffectivenessStats {
  * Protocol display configuration matching ProtocolDistribution
  */
 const PROTOCOL_CONFIG: Record<string, { label: string; color: string }> = {
-  [WorkoutProtocol.STANDARD]: { label: "Standard", color: "rgba(128, 128, 128, 0.7)" },
-  [WorkoutProtocol.DROP_SET]: { label: "Drop Set", color: "rgba(239, 68, 68, 0.7)" },
-  [WorkoutProtocol.MYO_REPS]: { label: "Myo Reps", color: "rgba(168, 85, 247, 0.7)" },
-  [WorkoutProtocol.REST_PAUSE]: { label: "Rest Pause", color: "rgba(249, 115, 22, 0.7)" },
-  [WorkoutProtocol.SUPERSET]: { label: "Superset", color: "rgba(59, 130, 246, 0.7)" },
-  [WorkoutProtocol.TWENTYONE]: { label: "21s", color: "rgba(34, 197, 94, 0.7)" },
+  [WorkoutProtocol.STANDARD]: {
+    label: "Standard",
+    color: "rgba(128, 128, 128, 0.7)",
+  },
+  [WorkoutProtocol.DROP_SET]: {
+    label: "Drop Set",
+    color: "rgba(239, 68, 68, 0.7)",
+  },
+  [WorkoutProtocol.MYO_REPS]: {
+    label: "Myo Reps",
+    color: "rgba(168, 85, 247, 0.7)",
+  },
+  [WorkoutProtocol.REST_PAUSE]: {
+    label: "Rest Pause",
+    color: "rgba(249, 115, 22, 0.7)",
+  },
+  [WorkoutProtocol.SUPERSET]: {
+    label: "Superset",
+    color: "rgba(59, 130, 246, 0.7)",
+  },
+  [WorkoutProtocol.TWENTYONE]: {
+    label: "21s",
+    color: "rgba(34, 197, 94, 0.7)",
+  },
 };
 
 /**
@@ -52,7 +73,7 @@ export class ProtocolEffectiveness {
     container: HTMLElement,
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.protocolEffectiveness.title"),
@@ -90,7 +111,7 @@ export class ProtocolEffectiveness {
    */
   private static calculateEffectivenessStats(
     data: WorkoutLogData[],
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
   ): ProtocolEffectivenessStats[] {
     // Group entries by protocol
     const protocolGroups = new Map<string, WorkoutLogData[]>();
@@ -118,7 +139,8 @@ export class ProtocolEffectiveness {
       }
 
       // Calculate average volume change and progression rate
-      const { avgVolumeChange, progressionRate } = this.calculateProgressionMetrics(entries, data);
+      const { avgVolumeChange, progressionRate } =
+        this.calculateProgressionMetrics(entries, data);
 
       stats.push({
         protocol,
@@ -142,7 +164,7 @@ export class ProtocolEffectiveness {
    */
   private static getProtocolConfig(
     protocol: string,
-    plugin?: WorkoutChartsPlugin
+    plugin?: WorkoutChartsPlugin,
   ): { label: string; color: string } | null {
     // Check built-in protocols
     if (PROTOCOL_CONFIG[protocol]) {
@@ -152,7 +174,7 @@ export class ProtocolEffectiveness {
     // Check custom protocols
     if (plugin?.settings?.customProtocols) {
       const customProtocol = plugin.settings.customProtocols.find(
-        (p: CustomProtocolConfig) => p.id === protocol
+        (p: CustomProtocolConfig) => p.id === protocol,
       );
       if (customProtocol) {
         return {
@@ -188,7 +210,7 @@ export class ProtocolEffectiveness {
    */
   private static calculateProgressionMetrics(
     protocolEntries: WorkoutLogData[],
-    allData: WorkoutLogData[]
+    allData: WorkoutLogData[],
   ): { avgVolumeChange: number; progressionRate: number } {
     // Group entries by exercise
     const exerciseGroups = new Map<string, WorkoutLogData[]>();
@@ -218,7 +240,7 @@ export class ProtocolEffectiveness {
       entries.forEach((protocolEntry) => {
         const protocolTimestamp = protocolEntry.timestamp || 0;
         const protocolIndex = allExerciseEntries.findIndex(
-          (e) => e.timestamp === protocolTimestamp
+          (e) => e.timestamp === protocolTimestamp,
         );
 
         if (protocolIndex === -1) {
@@ -228,13 +250,13 @@ export class ProtocolEffectiveness {
         // Get average volume of entries before this one (up to 3 previous)
         const beforeEntries = allExerciseEntries.slice(
           Math.max(0, protocolIndex - 3),
-          protocolIndex
+          protocolIndex,
         );
 
         // Get average volume of entries after this one (up to 3 next)
         const afterEntries = allExerciseEntries.slice(
           protocolIndex + 1,
-          Math.min(allExerciseEntries.length, protocolIndex + 4)
+          Math.min(allExerciseEntries.length, protocolIndex + 4),
         );
 
         if (beforeEntries.length > 0 && afterEntries.length > 0) {
@@ -242,7 +264,8 @@ export class ProtocolEffectiveness {
           const avgVolumeAfter = this.calculateAverageVolume(afterEntries);
 
           if (avgVolumeBefore > 0) {
-            const volumeChange = ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) * 100;
+            const volumeChange =
+              ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) * 100;
             totalVolumeChange += volumeChange;
             volumeChangeCount++;
           }
@@ -259,8 +282,10 @@ export class ProtocolEffectiveness {
       });
     });
 
-    const avgVolumeChange = volumeChangeCount > 0 ? totalVolumeChange / volumeChangeCount : 0;
-    const progressionRate = comparisonCount > 0 ? (progressionCount / comparisonCount) * 100 : 0;
+    const avgVolumeChange =
+      volumeChangeCount > 0 ? totalVolumeChange / volumeChangeCount : 0;
+    const progressionRate =
+      comparisonCount > 0 ? (progressionCount / comparisonCount) * 100 : 0;
 
     return { avgVolumeChange, progressionRate };
   }
@@ -283,7 +308,7 @@ export class ProtocolEffectiveness {
    */
   private static renderStatsTable(
     container: HTMLElement,
-    stats: ProtocolEffectivenessStats[]
+    stats: ProtocolEffectivenessStats[],
   ): void {
     const tableContainer = container.createEl("div", {
       cls: "workout-protocol-effectiveness-table-container",
@@ -337,11 +362,12 @@ export class ProtocolEffectiveness {
         cls: "workout-protocol-effectiveness-volume-cell",
       });
       const volumeSign = stat.avgVolumeChange >= 0 ? "+" : "";
-      const volumeClass = stat.avgVolumeChange > 0
-        ? "workout-protocol-effectiveness-positive"
-        : stat.avgVolumeChange < 0
-        ? "workout-protocol-effectiveness-negative"
-        : "workout-protocol-effectiveness-neutral";
+      const volumeClass =
+        stat.avgVolumeChange > 0
+          ? "workout-protocol-effectiveness-positive"
+          : stat.avgVolumeChange < 0
+            ? "workout-protocol-effectiveness-negative"
+            : "workout-protocol-effectiveness-neutral";
       volumeCell.createEl("span", {
         text: `${volumeSign}${stat.avgVolumeChange.toFixed(1)}%`,
         cls: volumeClass,
@@ -351,11 +377,12 @@ export class ProtocolEffectiveness {
       const progressionCell = row.createEl("td", {
         cls: "workout-protocol-effectiveness-progression-cell",
       });
-      const progressionClass = stat.progressionRate >= 70
-        ? "workout-protocol-effectiveness-positive"
-        : stat.progressionRate >= 50
-        ? "workout-protocol-effectiveness-neutral"
-        : "workout-protocol-effectiveness-negative";
+      const progressionClass =
+        stat.progressionRate >= 70
+          ? "workout-protocol-effectiveness-positive"
+          : stat.progressionRate >= 50
+            ? "workout-protocol-effectiveness-neutral"
+            : "workout-protocol-effectiveness-negative";
       progressionCell.createEl("span", {
         text: `${stat.progressionRate.toFixed(1)}%`,
         cls: progressionClass,

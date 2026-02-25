@@ -1,7 +1,7 @@
-import { CONSTANTS } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { CONSTANTS } from "@app/constants";
 
 /**
  * Resolves and formats table column headers based on exercise definitions.
@@ -133,9 +133,15 @@ export class TableColumnResolver {
         CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
         CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
         CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
-        ...(showDuration ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value] : []),
-        ...(showDistance ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value] : []),
-        ...(showHeartRate ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value] : []),
+        ...(showDuration
+          ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value]
+          : []),
+        ...(showDistance
+          ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value]
+          : []),
+        ...(showHeartRate
+          ? [CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value]
+          : []),
       ];
     }
     return [

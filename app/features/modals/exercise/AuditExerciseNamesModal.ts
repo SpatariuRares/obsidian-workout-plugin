@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";

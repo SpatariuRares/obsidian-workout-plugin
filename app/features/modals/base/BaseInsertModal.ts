@@ -1,6 +1,6 @@
 // Base class for insert modals (Chart, Table, Timer)
 // Extracts common structure and button creation logic
-import { CONSTANTS } from "@app/constants";
+
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";

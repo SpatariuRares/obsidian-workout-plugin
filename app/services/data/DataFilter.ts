@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import {
   ExerciseMatchUtils,
   MatchResult,
@@ -94,9 +93,7 @@ export class DataFilter {
         return {
           filteredData: [],
           filterMethodUsed: "No data found for workout",
-          titlePrefix: `${params.exercise} + ${
-            params.workout
-          }`,
+          titlePrefix: `${params.exercise} + ${params.workout}`,
         };
       }
 
@@ -138,9 +135,7 @@ export class DataFilter {
   /**
    * Checks if the params contain a protocol filter
    */
-  private static hasProtocolFilter(
-    params: DataFilterParams,
-  ): boolean {
+  private static hasProtocolFilter(params: DataFilterParams): boolean {
     const tableParams = params;
     if (!tableParams.protocol) return false;
     if (Array.isArray(tableParams.protocol)) {

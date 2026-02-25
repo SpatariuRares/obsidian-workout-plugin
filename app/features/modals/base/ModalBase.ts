@@ -1,5 +1,5 @@
 // Base modal class with common functionality
-import { CONSTANTS } from "@app/constants";
+
 import { App, Modal, Notice, MarkdownView } from "obsidian";
 import { Input } from "@app/components/atoms";
 import { FormField } from "@app/components/molecules/FormField";
@@ -43,9 +43,7 @@ export abstract class ModalBase extends Modal {
    */
   protected getCurrentFileName(): string {
     const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-    return (
-      activeView?.file?.basename || t("general.currentFile")
-    );
+    return activeView?.file?.basename || t("general.currentFile");
   }
 
   /**

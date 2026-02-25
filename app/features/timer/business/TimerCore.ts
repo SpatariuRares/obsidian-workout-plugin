@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Notice } from "obsidian";
 import {
   TimerState,

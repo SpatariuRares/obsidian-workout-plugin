@@ -1,5 +1,5 @@
 // Refactored InsertDashboardModal extending BaseInsertModal
-import { CONSTANTS } from "@app/constants";
+
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";

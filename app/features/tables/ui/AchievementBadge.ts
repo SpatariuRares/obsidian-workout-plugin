@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";

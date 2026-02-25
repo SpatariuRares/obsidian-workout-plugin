@@ -6,7 +6,7 @@
  */
 import { App, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { CONSTANTS } from "@app/constants";
+
 import type WorkoutChartsPlugin from "main";
 
 import { Button } from "@app/components/atoms";
@@ -82,24 +82,20 @@ export class CanvasExportModal extends ModalBase {
   private createLayoutOptions(container: HTMLElement): void {
     const formGroup = this.createFormGroup(container);
 
-    this.layoutSelect = this.createSelect(
-      formGroup,
-      t("modal.layoutType"),
-      [
-        {
-          text: t("modal.layoutHorizontal"),
-          value: "horizontal",
-        },
-        {
-          text: t("modal.layoutVertical"),
-          value: "vertical",
-        },
-        {
-          text: t("modal.layoutGrouped"),
-          value: "grouped",
-        },
-      ],
-    );
+    this.layoutSelect = this.createSelect(formGroup, t("modal.layoutType"), [
+      {
+        text: t("modal.layoutHorizontal"),
+        value: "horizontal",
+      },
+      {
+        text: t("modal.layoutVertical"),
+        value: "vertical",
+      },
+      {
+        text: t("modal.layoutGrouped"),
+        value: "grouped",
+      },
+    ]);
   }
 
   /**

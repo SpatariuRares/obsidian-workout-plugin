@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { TimerState, TIMER_TYPE } from "@app/features/timer";
 import { t } from "@app/i18n";
 

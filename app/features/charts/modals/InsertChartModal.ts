@@ -1,5 +1,5 @@
 // Refactored InsertChartModal extending BaseInsertModal
-import { CONSTANTS } from "@app/constants";
+
 import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
@@ -25,6 +25,7 @@ import { Button } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 const DATE_RANGE_INCREMENT = 7;
 const LIMIT_INCREMENT = 10;

@@ -51,7 +51,7 @@ export class DateUtils {
    */
   static filterByDateRange(
     data: WorkoutLogData[],
-    cutoffDate: Date
+    cutoffDate: Date,
   ): WorkoutLogData[] {
     return data.filter((d) => new Date(d.date) >= cutoffDate);
   }
@@ -61,7 +61,7 @@ export class DateUtils {
    */
   static filterByDaysAgo(
     data: WorkoutLogData[],
-    days: number
+    days: number,
   ): WorkoutLogData[] {
     const cutoffDate = this.getDaysAgo(days);
     return this.filterByDateRange(data, cutoffDate);
@@ -72,7 +72,7 @@ export class DateUtils {
    */
   static filterByTimeFrame(
     data: WorkoutLogData[],
-    timeFrame: "week" | "month" | "year"
+    timeFrame: "week" | "month" | "year",
   ): WorkoutLogData[] {
     const cutoffDate = this.getTimeFrameDate(timeFrame);
     return this.filterByDateRange(data, cutoffDate);
@@ -101,7 +101,7 @@ export class DateUtils {
    */
   static groupDatesByWeek(dates: string[]): Set<number> {
     return new Set(
-      dates.map((dateStr) => this.getWeekNumberFromToday(new Date(dateStr)))
+      dates.map((dateStr) => this.getWeekNumberFromToday(new Date(dateStr))),
     );
   }
 
@@ -194,7 +194,7 @@ export class DateUtils {
    */
   static formatDateWithFormat(
     date: string | Date,
-    format: string = "DD/MM/YYYY"
+    format: string = "DD/MM/YYYY",
   ): string {
     const d = new Date(date);
     const day = String(d.getDate()).padStart(2, "0");

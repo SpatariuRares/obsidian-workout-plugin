@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { t } from "@app/i18n";
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
@@ -19,8 +18,8 @@ export class AddExerciseBlockModal extends BaseInsertModal {
   }
 
   protected getModalTitle(): string {
-    return t("modal.titles.addExerciseBlock")
-    }
+    return t("modal.titles.addExerciseBlock");
+  }
 
   protected getButtonText(): string {
     return t("modal.buttons.insertExerciseBlock");
@@ -40,7 +39,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     const { elements: exerciseElements } = ExerciseAutocomplete.create(
       this,
       exerciseSection,
-      this.plugin
+      this.plugin,
     );
     this.exerciseElements = exerciseElements;
 
@@ -57,7 +56,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
       this.presetSelect = this.createSelectField(
         timerSection,
         t("modal.timerPreset"),
-        presetOptions
+        presetOptions,
       );
 
       // Set default preset if configured
@@ -67,11 +66,16 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     }
 
     // Timer duration input
-    this.durationInput = this.createNumberField(timerSection, t("modal.timerDuration"), 90, {
-      min: 1,
-      max: 3600,
-      placeholder: "90",
-    });
+    this.durationInput = this.createNumberField(
+      timerSection,
+      t("modal.timerDuration"),
+      90,
+      {
+        min: 1,
+        max: 3600,
+        placeholder: "90",
+      },
+    );
 
     // Workout file section
     const workoutSection = this.createSection(container, "Workout");
@@ -82,12 +86,17 @@ export class AddExerciseBlockModal extends BaseInsertModal {
       workoutSection,
       t("modal.workoutFile"),
       currentFileName,
-      currentFileName
+      currentFileName,
     );
   }
 
   protected generateCode(): string {
-    if (!this.exerciseElements || !this.durationInput || !this.workoutInput || !this.plugin) {
+    if (
+      !this.exerciseElements ||
+      !this.durationInput ||
+      !this.workoutInput ||
+      !this.plugin
+    ) {
       throw new Error(t("modal.notices.validationFillAll"));
     }
 

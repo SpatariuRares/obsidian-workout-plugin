@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import {
   ExerciseMatchUtils,
   ExerciseMatch,
@@ -407,9 +406,7 @@ describe("Utility Classes", () => {
         CHART_DATA_TYPE.REPS,
         30,
       );
-      expect(result.datasets[0].label).toContain(
-        t("general.avgReps"),
-      );
+      expect(result.datasets[0].label).toContain(t("general.avgReps"));
     });
 
     it("should filter data by date range", () => {

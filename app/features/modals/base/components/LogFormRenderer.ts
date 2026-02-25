@@ -1,5 +1,5 @@
 import type WorkoutChartsPlugin from "main";
-import { CONSTANTS } from "@app/constants";
+
 import { Platform } from "obsidian";
 import { LogFormElements } from "@app/types/ModalTypes";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
@@ -15,6 +15,7 @@ import {
 import { Chip } from "@app/components/atoms";
 import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export class LogFormRenderer {
   constructor(

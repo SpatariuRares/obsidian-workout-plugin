@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { EmbeddedChartView } from "@app/features/charts";
 import { EmbeddedTableView } from "@app/features/tables";
@@ -17,6 +16,7 @@ import { DataAwareRenderChild } from "@app/services/core/DataAwareRenderChild";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
 import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
+import { CONSTANTS } from "@app/constants";
 
 class TimerRenderChild extends MarkdownRenderChild {
   constructor(

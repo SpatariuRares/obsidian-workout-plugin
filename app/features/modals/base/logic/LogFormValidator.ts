@@ -1,5 +1,5 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { CONSTANTS } from "@app/constants";
+
 import { Notice } from "obsidian";
 import { t } from "@app/i18n";
 
@@ -11,7 +11,7 @@ export class LogFormValidator {
   static validateDynamicLogData(
     exercise: string,
     dynamicFieldInputs: Map<string, HTMLInputElement>,
-    currentParameters: ParameterDefinition[]
+    currentParameters: ParameterDefinition[],
   ): boolean {
     // Exercise is always required
     if (!exercise) {

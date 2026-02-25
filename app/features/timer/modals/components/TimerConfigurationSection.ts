@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
@@ -8,6 +7,7 @@ import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import type WorkoutChartsPlugin from "main";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export interface TimerConfigurationElements {
   timerTypeChips: Map<TIMER_TYPE, HTMLButtonElement>;

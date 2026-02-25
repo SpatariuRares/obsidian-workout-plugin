@@ -1,5 +1,5 @@
 // Reusable exercise autocomplete component
-import { CONSTANTS } from "@app/constants";
+
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";

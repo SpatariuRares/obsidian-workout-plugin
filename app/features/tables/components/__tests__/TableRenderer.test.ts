@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
-import { CONSTANTS } from "@app/constants";
+
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";

@@ -20,7 +20,6 @@ import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
-import { CONSTANTS } from "@app/constants";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";

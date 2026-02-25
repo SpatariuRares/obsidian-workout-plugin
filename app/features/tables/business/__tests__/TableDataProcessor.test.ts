@@ -1,5 +1,5 @@
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
-import { CONSTANTS } from "@app/constants";
+
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
@@ -23,10 +23,18 @@ describe("TableDataProcessor", () => {
 
       const result = await TableDataProcessor.processTableData(logData, params);
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
+      );
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
+      );
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
+      );
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
       );
@@ -72,7 +80,9 @@ describe("TableDataProcessor", () => {
 
     it("limits data to the specified limit", async () => {
       const logData = Array.from({ length: 10 }, (_, i) =>
-        createLog({ date: `2024-01-${String(i + 1).padStart(2, "0")}T10:00:00` }),
+        createLog({
+          date: `2024-01-${String(i + 1).padStart(2, "0")}T10:00:00`,
+        }),
       );
 
       const result = await TableDataProcessor.processTableData(logData, {
@@ -85,7 +95,9 @@ describe("TableDataProcessor", () => {
 
     it("uses default limit of 50 when not specified", async () => {
       const logData = Array.from({ length: 60 }, (_, i) =>
-        createLog({ date: `2024-01-${String((i % 28) + 1).padStart(2, "0")}T${String(i).padStart(2, "0")}:00:00` }),
+        createLog({
+          date: `2024-01-${String((i % 28) + 1).padStart(2, "0")}T${String(i).padStart(2, "0")}:00:00`,
+        }),
       );
 
       const result = await TableDataProcessor.processTableData(logData, {});
@@ -98,7 +110,9 @@ describe("TableDataProcessor", () => {
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
+      );
     });
 
     it("hides Notes column when no data has notes", async () => {
@@ -177,13 +191,13 @@ describe("TableDataProcessor", () => {
         columns: "not valid json",
       });
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
     });
 
     it("shows Duration column when custom field data exists", async () => {
-      const logData = [
-        createLog({ customFields: { duration: 120 } }),
-      ];
+      const logData = [createLog({ customFields: { duration: 120 } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -193,9 +207,7 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Distance column when custom field data exists", async () => {
-      const logData = [
-        createLog({ customFields: { distance: 5.2 } }),
-      ];
+      const logData = [createLog({ customFields: { distance: 5.2 } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -205,9 +217,7 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Heart Rate column when custom field data exists", async () => {
-      const logData = [
-        createLog({ customFields: { heartRate: 145 } }),
-      ];
+      const logData = [createLog({ customFields: { heartRate: 145 } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -246,7 +256,10 @@ describe("TableDataProcessor", () => {
 
     it("shows N/A for missing values", async () => {
       const logData = [
-        createLog({ reps: undefined as unknown as number, weight: undefined as unknown as number }),
+        createLog({
+          reps: undefined as unknown as number,
+          weight: undefined as unknown as number,
+        }),
       ];
 
       const result = await TableDataProcessor.processTableData(logData, {
@@ -296,7 +309,9 @@ describe("TableDataProcessor", () => {
       );
 
       expect(result.headers).toContain("Date");
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
+      );
     });
 
     it("falls back to defaults when exercise definition service returns null", async () => {
@@ -312,7 +327,9 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
     });
 
     it("falls back when getParametersForExercise returns empty", async () => {
@@ -330,7 +347,9 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
     });
 
     it("falls back when exercise definition throws", async () => {
@@ -350,7 +369,9 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
     });
 
     it("does not add Volume when exercise definition lacks reps or weight", async () => {
@@ -379,9 +400,7 @@ describe("TableDataProcessor", () => {
     });
 
     it("handles custom fields with string values in hasCustomField", async () => {
-      const logData = [
-        createLog({ customFields: { duration: "120" } }),
-      ];
+      const logData = [createLog({ customFields: { duration: "120" } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -391,9 +410,7 @@ describe("TableDataProcessor", () => {
     });
 
     it("ignores custom fields with empty string values", async () => {
-      const logData = [
-        createLog({ customFields: { duration: "" } }),
-      ];
+      const logData = [createLog({ customFields: { duration: "" } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -415,9 +432,7 @@ describe("TableDataProcessor", () => {
     });
 
     it("handles custom fields with zero string values", async () => {
-      const logData = [
-        createLog({ customFields: { duration: "0" } }),
-      ];
+      const logData = [createLog({ customFields: { duration: "0" } })];
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
@@ -439,9 +454,7 @@ describe("TableDataProcessor", () => {
 
       const durIdx = result.headers.indexOf("Duration");
       if (durIdx >= 0) {
-        expect(result.rows[0].displayRow[durIdx]).toBe(
-          t("table.notAvailable"),
-        );
+        expect(result.rows[0].displayRow[durIdx]).toBe(t("table.notAvailable"));
       }
     });
 
@@ -507,7 +520,9 @@ describe("TableDataProcessor", () => {
       });
 
       // Should fall back to defaults
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      );
     });
 
     it("adds additional custom fields to base data map", async () => {
@@ -533,9 +548,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.filterResult.filterMethodUsed).toBe("table processing");
-      expect(result.filterResult.titlePrefix).toBe(
-        t("general.workoutLog"),
-      );
+      expect(result.filterResult.titlePrefix).toBe(t("general.workoutLog"));
     });
 
     it("handles notes with only whitespace as empty", async () => {
@@ -563,9 +576,11 @@ describe("TableDataProcessor", () => {
     it("formats parameter header with unit", async () => {
       const mockPlugin = {
         getExerciseDefinitionService: jest.fn().mockReturnValue({
-          getParametersForExercise: jest.fn().mockResolvedValue([
-            { key: "weight", label: "Weight", unit: "kg" },
-          ]),
+          getParametersForExercise: jest
+            .fn()
+            .mockResolvedValue([
+              { key: "weight", label: "Weight", unit: "kg" },
+            ]),
         }),
       } as any;
 
@@ -583,9 +598,11 @@ describe("TableDataProcessor", () => {
     it("formats parameter header without unit", async () => {
       const mockPlugin = {
         getExerciseDefinitionService: jest.fn().mockReturnValue({
-          getParametersForExercise: jest.fn().mockResolvedValue([
-            { key: "reps", label: "Repetitions", unit: "" },
-          ]),
+          getParametersForExercise: jest
+            .fn()
+            .mockResolvedValue([
+              { key: "reps", label: "Repetitions", unit: "" },
+            ]),
         }),
       } as any;
 
@@ -603,9 +620,11 @@ describe("TableDataProcessor", () => {
     it("uses non-abbreviated label when no abbreviation exists", async () => {
       const mockPlugin = {
         getExerciseDefinitionService: jest.fn().mockReturnValue({
-          getParametersForExercise: jest.fn().mockResolvedValue([
-            { key: "customParam", label: "CustomParam", unit: "units" },
-          ]),
+          getParametersForExercise: jest
+            .fn()
+            .mockResolvedValue([
+              { key: "customParam", label: "CustomParam", unit: "units" },
+            ]),
         }),
       } as any;
 

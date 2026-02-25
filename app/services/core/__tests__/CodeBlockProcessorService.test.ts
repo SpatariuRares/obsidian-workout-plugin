@@ -52,7 +52,6 @@ import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
-import { CONSTANTS } from "@app/constants";
 
 describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
@@ -153,9 +152,7 @@ describe("CodeBlockProcessorService", () => {
         );
       const chartCallback = chartCall[1];
 
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
+      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
@@ -251,9 +248,7 @@ describe("CodeBlockProcessorService", () => {
 
   describe("handleWorkoutChart", () => {
     it("should render error if data loading fails", async () => {
-      mockChartView.loadChartData.mockRejectedValue(
-        new Error("Data Error"),
-      );
+      mockChartView.loadChartData.mockRejectedValue(new Error("Data Error"));
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -304,9 +299,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should create chart when data exists", async () => {
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
+      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -319,9 +312,7 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should pass params to loadChartData", async () => {
-      mockChartView.loadChartData.mockResolvedValue([
-        { date: "2023-01-01" },
-      ]);
+      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),

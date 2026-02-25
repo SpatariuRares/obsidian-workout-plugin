@@ -1,16 +1,16 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { getRecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export class RecentWorkouts {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams
+    _params: EmbeddedDashboardParams,
   ): void {
     const recentEl = WidgetContainer.create(container, {
       title: t("dashboard.recentWorkouts.title"),
@@ -27,9 +27,7 @@ export class RecentWorkouts {
     recentWorkouts.forEach((workout) => {
       ListItem.create(listEl, {
         secondary: workout.date,
-        label:
-          workout.workout ||
-          t("dashboard.recentWorkouts.fallbackName"),
+        label: workout.workout || t("dashboard.recentWorkouts.fallbackName"),
         value: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
         className: "workout-recent-workout-item",
         labelClassName: "workout-recent-name",

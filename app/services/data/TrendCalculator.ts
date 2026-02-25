@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { FormatUtils } from "@app/utils";
@@ -20,7 +19,7 @@ export class TrendCalculator {
   static getTrendIndicators(
     slope: number,
     volumeData: number[],
-    dataType?: CHART_DATA_TYPE
+    dataType?: CHART_DATA_TYPE,
   ): TrendIndicators {
     if (volumeData.length < 2) {
       return {

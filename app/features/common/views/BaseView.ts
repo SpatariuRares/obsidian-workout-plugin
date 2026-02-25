@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
@@ -10,6 +9,7 @@ import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { ErrorCollector } from "@app/orchestration/ErrorCollector";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.

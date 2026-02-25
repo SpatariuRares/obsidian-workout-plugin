@@ -1,8 +1,11 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
-import { Body, type BodyData, VIEW_TYPE } from "@app/features/dashboard/widgets/muscle-heat-map/body";
+import {
+  Body,
+  type BodyData,
+  VIEW_TYPE,
+} from "@app/features/dashboard/widgets/muscle-heat-map/body";
 import {
   MuscleDataCalculator,
   MuscleBalanceAnalyzer,
@@ -22,7 +25,7 @@ export class MuscleHeatMap {
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<void> {
     const heatMapEl = WidgetContainer.create(container, {
       title: t("general.muscleHeatMap"),
@@ -53,7 +56,7 @@ export class MuscleHeatMap {
       d: WorkoutLogData[],
       opts: MuscleHeatMapOptions,
       info: HTMLElement,
-      plg: WorkoutChartsPlugin
+      plg: WorkoutChartsPlugin,
     ): Promise<void> => {
       await MuscleHeatMap.renderHeatMap(cntr, d, opts, info, plg, calculator);
     };
@@ -65,7 +68,7 @@ export class MuscleHeatMap {
       canvasContainer,
       infoPanel,
       plugin,
-      renderHeatMap
+      renderHeatMap,
     );
 
     // Render initial heat map
@@ -75,7 +78,7 @@ export class MuscleHeatMap {
       currentOptions,
       infoPanel,
       plugin,
-      calculator
+      calculator,
     );
   }
 
@@ -85,20 +88,20 @@ export class MuscleHeatMap {
     options: MuscleHeatMapOptions,
     infoPanel: HTMLElement,
     plugin: WorkoutChartsPlugin,
-    calculator: MuscleDataCalculator
+    calculator: MuscleDataCalculator,
   ): Promise<void> {
     container.empty();
 
     // Filter data based on time frame
     const filteredData = MuscleDataCalculator.filterDataByTimeFrame(
       data,
-      options.timeFrame
+      options.timeFrame,
     );
 
     // Calculate muscle group volumes
     const muscleData = await calculator.calculateMuscleGroupVolumes(
       filteredData,
-      plugin
+      plugin,
     );
 
     // Create body data from muscle volumes
@@ -115,7 +118,7 @@ export class MuscleHeatMap {
   private static renderBodyVisualization(
     container: HTMLElement,
     bodyData: BodyData,
-    options: MuscleHeatMapOptions
+    options: MuscleHeatMapOptions,
   ): void {
     const maxValue = MuscleDataCalculator.calculateMaxValue(bodyData);
 

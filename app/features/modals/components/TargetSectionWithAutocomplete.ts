@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/features/charts/types";
@@ -56,10 +55,7 @@ export class TargetSectionWithAutocomplete {
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
     workoutContainer.classList.add("workout-target-workout");
-    workoutContainer.setAttribute(
-      "data-field-type",
-      t("common.workout"),
-    );
+    workoutContainer.setAttribute("data-field-type", t("common.workout"));
     const workoutInput = modal.createTextInput(
       workoutContainer,
       t("forms.workoutName"),
@@ -105,10 +101,22 @@ export class TargetSectionWithAutocomplete {
       const isWorkout = type === CHART_TYPE.WORKOUT;
       const isCombined = type === CHART_TYPE.COMBINED;
 
-      exerciseContainer.classList.toggle(HIDDEN_CLASS, !(isExercise || isCombined));
-      workoutContainer.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
-      currentWorkoutContainer.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
-      currentFileInfo.classList.toggle(HIDDEN_CLASS, !(isWorkout || isCombined));
+      exerciseContainer.classList.toggle(
+        HIDDEN_CLASS,
+        !(isExercise || isCombined),
+      );
+      workoutContainer.classList.toggle(
+        HIDDEN_CLASS,
+        !(isWorkout || isCombined),
+      );
+      currentWorkoutContainer.classList.toggle(
+        HIDDEN_CLASS,
+        !(isWorkout || isCombined),
+      );
+      currentFileInfo.classList.toggle(
+        HIDDEN_CLASS,
+        !(isWorkout || isCombined),
+      );
     };
 
     const handlers: TargetSectionWithAutocompleteHandlers = {
@@ -147,7 +155,11 @@ export class TargetSectionWithAutocomplete {
       case CHART_TYPE.WORKOUT:
         return { type, workout: workoutValue };
       case CHART_TYPE.COMBINED:
-        return { type, exercise: elements.exerciseInput.value.trim(), workout: workoutValue };
+        return {
+          type,
+          exercise: elements.exerciseInput.value.trim(),
+          workout: workoutValue,
+        };
       default:
         return { type: CHART_TYPE.NONE };
     }

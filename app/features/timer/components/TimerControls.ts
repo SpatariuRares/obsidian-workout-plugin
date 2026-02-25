@@ -1,4 +1,4 @@
-import { TimerState, TIMER_TYPE } from "@app/features/timer";
+import { TimerState } from "@app/features/timer";
 import { Button } from "@app/components/atoms";
 
 export interface TimerControlCallbacks {

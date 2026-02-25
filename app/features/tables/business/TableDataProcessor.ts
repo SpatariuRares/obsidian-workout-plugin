@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams, TableData } from "@app/features/tables/types";
 import type WorkoutChartsPlugin from "main";

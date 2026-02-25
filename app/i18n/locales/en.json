@@ -122,7 +122,7 @@
       "status": "Status",
       "actions": "Actions",
       "dateRange": "Date range (days):",
-      "targetWeight": "Target  ({unit}):",
+      "targetWeight": "Target: ({unit}):",
       "targetReps": "Target reps:",
       "protocol": "Protocol:"
     },
@@ -467,7 +467,8 @@
       "duration": "Duration",
       "distance": "Distance",
       "heartRate": "Heart rate",
-      "trendLine": "Trend Line"
+      "trendLine": "Trend Line",
+      "target": "Target:"
     },
     "target": {
       "repsSuffix": "reps",

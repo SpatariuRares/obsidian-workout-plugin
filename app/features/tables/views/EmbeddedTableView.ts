@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView, MarkdownRenderChild } from "obsidian";
@@ -211,8 +210,7 @@ export class EmbeddedTableView extends BaseView {
     const currentPageLink = activeView?.file
       ? `[[${activeView.file.basename}]]`
       : "";
-    const exerciseName =
-      params.exercise || t("modal.sections.workout");
+    const exerciseName = params.exercise || t("modal.sections.workout");
 
     const buttonContainer = Button.createContainer(contentDiv);
     buttonContainer.addClass("workout-add-log-button-container");

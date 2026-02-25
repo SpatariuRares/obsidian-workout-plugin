@@ -1,5 +1,5 @@
 import { App } from "obsidian";
-import { CONSTANTS } from "@app/constants";
+
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
 

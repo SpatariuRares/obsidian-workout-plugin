@@ -93,10 +93,6 @@ export class LocalizationService {
         this.fallbackTranslations = this.loadLocaleFile(this.DEFAULT_LOCALE);
       }
     } catch (error) {
-      console.error(
-        `[i18n] Error loading translations for locale "${this.currentLocale}":`,
-        error,
-      );
       // If loading fails, use fallback
       this.translations = this.loadLocaleFile(this.DEFAULT_LOCALE);
     }
@@ -112,7 +108,6 @@ export class LocalizationService {
       const localeFile = require(`./locales/${locale}.json`);
       return localeFile as Translations;
     } catch (error) {
-      console.warn(`[i18n] Locale file not found: ${locale}.json`);
       // Return empty object if file doesn't exist
       return {};
     }

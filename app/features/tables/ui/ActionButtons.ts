@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { ActionButtonGroup } from "@app/components/molecules";
 import { t } from "@app/i18n";
 

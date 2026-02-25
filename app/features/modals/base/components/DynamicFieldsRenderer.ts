@@ -1,12 +1,12 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
-import { CONSTANTS } from "@app/constants";
+
 import type WorkoutChartsPlugin from "main";
 import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
 
 export class DynamicFieldsRenderer {
-  constructor(private plugin: WorkoutChartsPlugin) { }
+  constructor(private plugin: WorkoutChartsPlugin) {}
 
   /**
    * Renders dynamic fields based on parameter definitions.

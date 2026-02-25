@@ -1,9 +1,9 @@
-import { CONSTANTS } from "@app/constants";
 import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TrendIndicator } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 /**
  * Renders trend header information for workout charts.

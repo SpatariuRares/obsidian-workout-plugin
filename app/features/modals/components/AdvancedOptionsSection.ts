@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { t } from "@app/i18n";
 

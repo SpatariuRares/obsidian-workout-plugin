@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { MarkdownView } from "obsidian";
 import { Button, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";

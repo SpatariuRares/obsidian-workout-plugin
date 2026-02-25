@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import {
   WorkoutLogData,

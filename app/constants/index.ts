@@ -85,7 +85,6 @@ export const CONSTANTS = {
         get VOLUME_WITH_UNIT() {
           return getDynamicTableLabels().VOLUME_WITH_UNIT;
         },
-        TARGET_PREFIX: "Target:",
       },
       DASHBOARD: DASHBOARD_UI,
       CHARTS: CHARTS_UI.LABELS,

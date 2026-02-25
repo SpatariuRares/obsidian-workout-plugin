@@ -45,8 +45,7 @@ export class TemplateGeneratorService {
         `Templates generated successfully in '${this.defaultTemplateFolder}'! You can now customize them.`,
       );
     } catch (error) {
-      console.error("Failed to generate templates:", error);
-      new Notice("Failed to generate templates. Check console for details.");
+      new Notice("Failed to generate templates.");
     }
   }
 

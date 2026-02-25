@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { TableRow, EmbeddedTableParams } from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
@@ -8,6 +7,7 @@ import { TableErrorMessage, TableHeader } from "@app/features/tables/ui";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { ProtocolResolver } from "@app/features/tables/business/ProtocolResolver";
+import { CONSTANTS } from "@app/constants";
 
 export class TableRenderer {
   /**
@@ -49,13 +49,7 @@ export class TableRenderer {
 
       const tbody = table.appendChild(document.createElement("tbody"));
 
-      this.applyRowGroupingOptimized(
-        tbody,
-        rows,
-        headers,
-        plugin,
-        signal,
-      );
+      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, signal);
 
       tableContainer.appendChild(fragment);
 
@@ -161,12 +155,7 @@ export class TableRenderer {
           td.textContent = cell;
         } else if (cellIndex === actionsColumnIndex) {
           td.className = "workout-table-actions-cell";
-          TableActions.renderActionButtons(
-            td,
-            row.originalLog,
-            plugin,
-            signal,
-          );
+          TableActions.renderActionButtons(td, row.originalLog, plugin, signal);
         } else if (cellIndex === volumeColumnIndex) {
           td.className = "workout-table-volume-cell";
           td.textContent = cell;

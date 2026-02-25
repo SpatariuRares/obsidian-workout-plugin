@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -47,7 +46,7 @@ export class TargetHeader {
       parts.push(`${separator}${targetReps} ${t("table.target.repsSuffix")}`);
     }
 
-    const targetText = `${CONSTANTS.WORKOUT.LABELS.TABLE.TARGET_PREFIX} ${parts.join("")}`;
+    const targetText = `${t("table.labels.target")} ${parts.join("")}`;
     const targetTextSpan = targetDiv.createSpan({ cls: "workout-target-text" });
     targetTextSpan.textContent = targetText;
 

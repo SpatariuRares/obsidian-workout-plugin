@@ -1,5 +1,4 @@
 import { TableConfig } from "@app/features/tables/business/TableConfig";
-import { CONSTANTS } from "@app/constants";
 
 describe("TableConfig", () => {
   describe("getDefaults", () => {

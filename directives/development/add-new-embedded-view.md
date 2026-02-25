@@ -14,6 +14,7 @@ Create a new code block processor that renders custom content inside Obsidian no
 ## 3. Input Requirements
 
 ### Required Information
+
 - **View name**: Identifier for code block (e.g., `workout-heatmap`)
 - **Feature domain**: Which feature directory (e.g., `charts`, `tables`, `dashboard`)
 - **Data source**: Where the view gets data (DataService, custom service)
@@ -21,6 +22,7 @@ Create a new code block processor that renders custom content inside Obsidian no
 - **Rendering logic**: What the view displays (chart, table, interactive component)
 
 ### Decision Points
+
 - Does this view need cleanup? (charts, timers, event listeners)
 - Does this view need real-time updates? (data polling, file watching)
 - Does this view need user interaction? (click handlers, forms)
@@ -29,6 +31,7 @@ Create a new code block processor that renders custom content inside Obsidian no
 ## 4. Execution Scripts
 
 ### Automation Scripts
+
 ```bash
 # Generate view boilerplate (future enhancement)
 npm run doe:generate-view -- --name=heatmap --feature=charts
@@ -38,6 +41,7 @@ npm run doe:validate
 ```
 
 ### Manual Validation
+
 ```bash
 # Run tests
 npm test -- features/[feature]/views/__tests__/[ViewName].test.ts
@@ -52,10 +56,9 @@ npm run build
 
 **Location**: `app/features/[feature]/views/[ViewName].ts`
 
-```typescript
+````typescript
 import { BaseView } from "@app/features/common/views/BaseView";
 import { WorkoutChartsPlugin } from "main";
-import { CONSTANTS } from "@app/constants";
 
 /**
  * Embedded view for [description]
@@ -81,7 +84,7 @@ export class EmbeddedViewName extends BaseView {
   async render(
     container: HTMLElement,
     source: string,
-    ctx: any
+    ctx: any,
   ): Promise<void> {
     try {
       // 1. Show loading spinner
@@ -144,7 +147,7 @@ export class EmbeddedViewName extends BaseView {
   private renderContent(
     container: HTMLElement,
     data: ViewData,
-    params: ViewParams
+    params: ViewParams,
   ): void {
     // Create container structure
     const wrapper = container.createDiv({ cls: "view-wrapper" });
@@ -204,7 +207,7 @@ interface ViewParams {
 interface ViewData {
   // Define data structure
 }
-```
+````
 
 ### Step 2: Register Code Block Processor
 
@@ -246,6 +249,7 @@ async onunload() {
 ```
 
 **Note**: Store view instance in plugin class if cleanup is needed:
+
 ```typescript
 export class WorkoutChartsPlugin extends Plugin {
   // ... existing properties ...
@@ -281,6 +285,7 @@ registerCommands(): void {
 ```
 
 Create corresponding modal in `app/features/modals/insert/`:
+
 ```typescript
 export class InsertViewNameModal extends BaseInsertModal {
   getModalTitle(): string {
@@ -333,9 +338,9 @@ describe("EmbeddedViewName", () => {
 
     it("should render content after data loads", async () => {
       const source = "exercise: Squat";
-      plugin.dataService.getWorkoutLogData = jest.fn().resolves([
-        { date: "2025-01-01", exercise: "Squat", weight: 100 },
-      ]);
+      plugin.dataService.getWorkoutLogData = jest
+        .fn()
+        .resolves([{ date: "2025-01-01", exercise: "Squat", weight: 100 }]);
 
       await view.render(container, source, {});
 
@@ -385,13 +390,16 @@ describe("EmbeddedViewName", () => {
 
 **Update**: `CLAUDE.md` in "Code Block Syntax" section:
 
-```markdown
+````markdown
 #### [view-name]
+
 ```yaml
-parameter1: value1   # Description
-parameter2: value2   # Description
+parameter1: value1 # Description
+parameter2: value2 # Description
 ```
-```
+````
+
+````
 
 **Add**: JSDoc comments to view class explaining:
 - Purpose and use case
@@ -453,9 +461,10 @@ npm run build
 
 # Validate imports
 npm run doe:validate
-```
+````
 
 ### Success Criteria
+
 - [ ] View renders in test note
 - [ ] All parameters work correctly
 - [ ] Empty data shows user-friendly message
@@ -468,6 +477,7 @@ npm run doe:validate
 ## 8. Common Mistakes
 
 ### ❌ Not Extending BaseView
+
 ```typescript
 // Wrong
 export class MyView {
@@ -485,6 +495,7 @@ export class MyView extends BaseView {
 **Why**: BaseView provides standardized error handling, loading states, empty data handling.
 
 ### ❌ Not Implementing Cleanup
+
 ```typescript
 // Wrong - creates memory leak
 export class ChartView extends BaseView {
@@ -512,6 +523,7 @@ export class ChartView extends BaseView {
 ```
 
 ### ❌ Using innerHTML
+
 ```typescript
 // Wrong - security risk
 container.innerHTML = `<h3>${params.title}</h3>`;
@@ -523,6 +535,7 @@ container.createEl("h3", { text: params.title });
 ```
 
 ### ❌ Hardcoding Strings
+
 ```typescript
 // Wrong
 container.createDiv({ text: "No data found" });
@@ -530,11 +543,12 @@ container.createDiv({ text: "No data found" });
 
 ```typescript
 // Correct - use constants
-import { CONSTANTS } from "@app/constants";
+
 container.createDiv({ text: CONSTANTS.WORKOUT.MESSAGES.NO_DATA });
 ```
 
 ### ❌ Not Handling Errors
+
 ```typescript
 // Wrong
 async render(container, source, ctx) {
@@ -556,6 +570,7 @@ async render(container, source, ctx) {
 ```
 
 ### ❌ Not Using TypeScript Paths
+
 ```typescript
 // Wrong
 import { DataService } from "../../../services/data/DataService";
@@ -578,6 +593,7 @@ import { DataService } from "@app/services/data/DataService";
 ## Examples
 
 ### Example 1: Simple View (No Cleanup)
+
 ```typescript
 // View that just displays text (no resources to clean up)
 export class SimpleView extends BaseView {
@@ -598,18 +614,25 @@ export class SimpleView extends BaseView {
 ```
 
 ### Example 2: Complex View (With Cleanup)
+
 ```typescript
 // View with chart, timer, event listeners (requires cleanup)
 export class ComplexView extends BaseView {
   private charts: Chart[] = [];
   private timers: NodeJS.Timeout[] = [];
-  private eventListeners: Array<{ el: HTMLElement; event: string; handler: () => void }> = [];
+  private eventListeners: Array<{
+    el: HTMLElement;
+    event: string;
+    handler: () => void;
+  }> = [];
 
   async render(container: HTMLElement, source: string, ctx: any) {
     try {
       // Create chart
       const canvas = container.createEl("canvas");
-      const chart = new Chart(canvas, { /* config */ });
+      const chart = new Chart(canvas, {
+        /* config */
+      });
       this.charts.push(chart);
 
       // Create timer

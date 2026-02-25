@@ -4,7 +4,6 @@
  * Shows available tags from MuscleTagService with muscle group labels
  */
 
-import { CONSTANTS } from "@app/constants";
 import { Input, Chip } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import type WorkoutChartsPlugin from "main";
@@ -149,15 +148,16 @@ export class MuscleTagSelector {
 
           // Re-render both sections
           this.renderSelectedTags(
-            container.closest(".workout-muscle-tag-selector")!.querySelector(
-              ".workout-selected-tags-container",
-            ) as HTMLElement,
+            container
+              .closest(".workout-muscle-tag-selector")!
+              .querySelector(".workout-selected-tags-container") as HTMLElement,
           );
           this.renderTagList(
             container,
             (container
               .closest(".workout-muscle-tag-selector")!
-              .querySelector(".workout-muscle-tag-search") as HTMLInputElement)!.value,
+              .querySelector(".workout-muscle-tag-search") as HTMLInputElement)!
+              .value,
           );
 
           // Trigger callback

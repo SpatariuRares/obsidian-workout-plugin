@@ -1,7 +1,7 @@
-import { CONSTANTS } from "@app/constants";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 /**
  * Extracts and maps chart data from workout log fields.
@@ -95,9 +95,7 @@ export class ChartDataExtractor {
       case "reps":
         return {
           data: dataArrays.repsData,
-          label: isAggregate
-            ? t("general.totalReps")
-            : t("general.avgReps"),
+          label: isAggregate ? t("general.totalReps") : t("general.avgReps"),
           color: "#FF9800",
         };
 

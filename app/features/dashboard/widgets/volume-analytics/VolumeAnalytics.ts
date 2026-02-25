@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE } from "@app/features/charts";
 
@@ -11,6 +10,7 @@ import {
 import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export class VolumeAnalytics {
   static render(

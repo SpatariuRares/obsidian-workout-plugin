@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
@@ -14,7 +13,7 @@ export class DataAggregation {
   static aggregateByKey<T>(
     data: T[],
     keyFn: (_item: T) => string,
-    valueFn: (_item: T) => number
+    valueFn: (_item: T) => number,
   ): Map<string, number> {
     const result = new Map<string, number>();
     data.forEach((item) => {
@@ -32,7 +31,7 @@ export class DataAggregation {
     return this.aggregateByKey(
       data,
       (d) => d.exercise,
-      (d) => d.volume
+      (d) => d.volume,
     );
   }
 
@@ -43,7 +42,7 @@ export class DataAggregation {
     return this.aggregateByKey(
       data,
       (d) => DateUtils.extractDateOnly(d.date),
-      (d) => d.volume
+      (d) => d.volume,
     );
   }
 
@@ -54,7 +53,7 @@ export class DataAggregation {
     return this.aggregateByKey(
       data,
       (d) => d.workout || t("common.unknown"),
-      (d) => d.volume
+      (d) => d.volume,
     );
   }
 
@@ -63,7 +62,7 @@ export class DataAggregation {
    */
   static getTopN(
     aggregatedData: Map<string, number>,
-    n: number
+    n: number,
   ): [string, number][] {
     return Array.from(aggregatedData.entries())
       .sort((a, b) => b[1] - a[1])
@@ -75,7 +74,7 @@ export class DataAggregation {
    */
   static getTopExercisesByVolume(
     data: WorkoutLogData[],
-    n: number
+    n: number,
   ): [string, number][] {
     const volumes = this.aggregateExerciseVolumes(data);
     return this.getTopN(volumes, n);
@@ -110,7 +109,7 @@ export class DataAggregation {
       data.map((d) => {
         const dateOnly = DateUtils.extractDateOnly(d.date);
         return `${dateOnly}-${d.workout}`;
-      })
+      }),
     );
     return uniqueWorkouts.size;
   }

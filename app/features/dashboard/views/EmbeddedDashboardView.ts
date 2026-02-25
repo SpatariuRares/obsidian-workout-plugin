@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/features/common/views/BaseView";

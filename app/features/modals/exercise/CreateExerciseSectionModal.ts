@@ -1,5 +1,5 @@
 // Refactored CreateExerciseSectionModal using reusable components
-import { CONSTANTS } from "@app/constants";
+
 import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
@@ -10,6 +10,7 @@ import { TIMER_TYPE } from "@app/features/timer/types";
 import { Button } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -163,10 +164,7 @@ export class CreateExerciseSectionModal extends ModalBase {
       const showLog = showLogToggle.checked;
 
       if (!exerciseName) {
-        this.insertIntoEditor(
-          "",
-          t("modal.notices.exerciseNameRequired"),
-        );
+        this.insertIntoEditor("", t("modal.notices.exerciseNameRequired"));
         return;
       }
 

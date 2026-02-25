@@ -1,5 +1,5 @@
 // Refactored CreateExercisePageModal using reusable components
-import { CONSTANTS } from "@app/constants";
+
 import {
   BUILT_IN_EXERCISE_TYPES,
   EXERCISE_TYPE_IDS,
@@ -19,6 +19,7 @@ import type {
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 interface CustomParameterRow {
   container: HTMLElement;

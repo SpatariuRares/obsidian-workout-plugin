@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { App } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";

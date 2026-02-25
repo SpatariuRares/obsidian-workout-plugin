@@ -107,9 +107,9 @@ export class ChartTypeResolver {
         isValid: false,
         //        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,
         errorMessage: t("charts.typeNotAvailable", {
-          chartDataType,
+          chartDataType: chartDataType,
           exerciseType: exerciseType.name,
-          typeList,
+          typeList: typeList,
         }),
       };
     }

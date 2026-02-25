@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, getUnitsMap } from "@app/constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary/business/calculateSummaryMetrics";
@@ -33,14 +33,16 @@ export class SummaryWidget {
     this.createSummaryCard(
       summaryEl,
       t("dashboard.summary.currentStreak"),
-      t("dashboard.summary.currentStreakSuffix", { count: metrics.currentStreak }),
+      t("dashboard.summary.currentStreakSuffix", {
+        count: metrics.currentStreak,
+      }),
       t("icons.dashboard.summary.currentStreak"),
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.summary.totalVolume"),
-      `${metrics.totalVolume.toLocaleString()} ${t("dashboard.summary.totalVolumeSuffix")}`,
+      `${metrics.totalVolume.toLocaleString()} ${getUnitsMap()["volume"]}`,
       t("icons.dashboard.summary.totalVolume"),
     );
 

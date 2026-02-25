@@ -251,9 +251,9 @@ export class AuditExerciseNamesModal extends ModalBase {
     const newName = mismatch.fileName;
 
     // Show confirmation dialog with preview
-    const confirmMessage = t("modal.notices.auditConfirmRename", {
-      oldName,
-      newName,
+    const confirmMessage = t("modal.notices.auditConfirmRenameFile", {
+      oldName: oldName,
+      newName: newName,
     });
 
     // Use Obsidian's built-in confirm dialog
@@ -296,8 +296,8 @@ export class AuditExerciseNamesModal extends ModalBase {
 
     // Show confirmation dialog with preview
     const confirmMessage = t("modal.notices.auditConfirmRenameFile", {
-      oldFileName,
-      newFileName,
+      oldName: oldFileName,
+      newName: newFileName,
     });
 
     // Use Obsidian's built-in confirm dialog

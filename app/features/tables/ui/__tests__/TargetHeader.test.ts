@@ -170,10 +170,10 @@ describe("TargetHeader", () => {
     const progressBar = result!.querySelector(".workout-progress-bar");
     expect(progressBar).not.toBeNull();
     expect(progressBar!.getAttribute("title")).toBe(
-      t("table.target.progressTooltip", { current: 8, target: 10 }),
+      t("table.target.progressTooltip", { best: 8, target: 10 }),
     );
     expect(progressBar!.getAttribute("aria-label")).toBe(
-      t("table.target.progressTooltip", { current: 8, target: 10 }),
+      t("table.target.progressTooltip", { best: 8, target: 10 }),
     );
   });
 

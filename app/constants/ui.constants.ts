@@ -288,9 +288,11 @@ export const MODAL_UI = {
 export function getDynamicSettingsLabels() {
   const weightUnit = getWeightUnit();
   return {
-    WEIGHT_INCREMENT: t("charts.labels.weightIncrementUnit", { weightUnit }),
+    WEIGHT_INCREMENT: t("charts.labels.weightIncrementUnit", {
+      weightIncrementUnit: weightUnit,
+    }),
     QUICK_WEIGHT_INCREMENT: t("charts.labels.quickWeightIncrementUnit", {
-      weightUnit,
+      weightIncrementUnit: weightUnit,
     }),
   };
 }

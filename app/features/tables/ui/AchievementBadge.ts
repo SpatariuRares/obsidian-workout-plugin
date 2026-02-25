@@ -140,7 +140,7 @@ export class AchievementBadge {
         const confirmed = confirm(
           t("modal.notices.confirmUpdateTarget", {
             targetWeight: suggestedWeight,
-            weightUnit,
+            weightUnit: weightUnit,
           }),
         );
 

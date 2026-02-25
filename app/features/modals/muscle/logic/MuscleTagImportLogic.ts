@@ -64,7 +64,10 @@ export class MuscleTagImportLogic {
 
       if (!this.isCanonicalMuscleGroup(muscleGroup)) {
         errors.push(
-          t("modal.notices.muscleTagImportInvalidGroup", { tag, group: muscleGroup }),
+          t("modal.notices.muscleTagImportInvalidGroup", {
+            tag: tag,
+            group: muscleGroup,
+          }),
         );
         continue;
       }

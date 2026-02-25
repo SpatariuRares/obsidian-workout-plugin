@@ -84,7 +84,8 @@
       "auditExerciseNames": "Audit exercise names",
       "addExerciseBlock": "Add exercise block",
       "canvasExport": "Export workout to canvas",
-      "muscleTagManager": "Manage muscle tags"
+      "muscleTagManager": "Manage muscle tags",
+      "create_log": "Create workout log"
     },
     "buttons": {
       "create": "Create log",
@@ -440,7 +441,11 @@
       "heartRate": "HR",
       "notes": "Notes",
       "protocol": "Prot",
-      "actions": "Act"
+      "actions": "Act",
+      "volumeUnit": "Vol ({weightUnit})",
+      "weightUnit": "Wgt ({weightUnit})",
+      "distanceUnit": "Dist ({distanceUnit})",
+      "pace": "Pace"
     },
     "columnLabels": {
       "date": "Date",
@@ -653,7 +658,10 @@
     "noFrontmatter": "No Frontmatter",
     "noImbalances": "No Imbalances",
     "noTags": "No Tags",
-    "tagReferenceGenerated": "Tag reference generated successfully!"
+    "tagReferenceGenerated": "Tag reference generated successfully!",
+    "errors": {
+      "tagReferenceFailed": "Error generating tag reference: "
+    }
   },
   "commands": {
     "addExerciseBlock": "Add Exercise Block",
@@ -663,7 +671,8 @@
     "generateTagReference": "Generate Tag Reference",
     "insertTable": "Insert Table",
     "manageMuscleTags": "Manage Muscle Tags",
-    "migrateExerciseTypes": "Migrate Exercise Types"
+    "migrateExerciseTypes": "Migrate Exercise Types",
+    "createCsvLog": "Create CSV log file"
   },
   "common": {
     "exercise": "Exercise",

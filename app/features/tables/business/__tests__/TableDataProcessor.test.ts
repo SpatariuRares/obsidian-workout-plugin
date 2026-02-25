@@ -23,12 +23,12 @@ describe("TableDataProcessor", () => {
 
       const result = await TableDataProcessor.processTableData(logData, params);
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT);
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value);
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
       );
       expect(result.rows.length).toBe(1);
       expect(result.totalRows).toBe(1);
@@ -41,7 +41,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, params);
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
       );
     });
 
@@ -52,7 +52,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, params);
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
       );
     });
 
@@ -98,7 +98,7 @@ describe("TableDataProcessor", () => {
 
       const result = await TableDataProcessor.processTableData(logData, {});
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value);
     });
 
     it("hides Notes column when no data has notes", async () => {
@@ -107,7 +107,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
       );
     });
 
@@ -117,7 +117,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
     });
 
@@ -127,7 +127,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
     });
 
@@ -139,7 +139,7 @@ describe("TableDataProcessor", () => {
       });
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
     });
 
@@ -155,7 +155,7 @@ describe("TableDataProcessor", () => {
       expect(result.headers).toContain("Date");
       expect(result.headers).toContain("Weight");
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
       );
     });
 
@@ -177,7 +177,7 @@ describe("TableDataProcessor", () => {
         columns: "not valid json",
       });
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
     });
 
     it("shows Duration column when custom field data exists", async () => {
@@ -188,7 +188,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
     });
 
@@ -200,7 +200,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value,
       );
     });
 
@@ -212,7 +212,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value,
       );
     });
 
@@ -224,10 +224,10 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value,
       );
     });
 
@@ -237,7 +237,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       const exerciseIdx = result.headers.indexOf(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
       );
       if (exerciseIdx >= 0) {
         expect(result.rows[0].displayRow[exerciseIdx]).toBe("Bench Press");
@@ -254,11 +254,11 @@ describe("TableDataProcessor", () => {
       });
 
       const repsIdx = result.headers.indexOf(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
       );
       if (repsIdx >= 0) {
         expect(result.rows[0].displayRow[repsIdx]).toBe(
-          CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          t("table.notAvailable"),
         );
       }
     });
@@ -296,7 +296,7 @@ describe("TableDataProcessor", () => {
       );
 
       expect(result.headers).toContain("Date");
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value);
     });
 
     it("falls back to defaults when exercise definition service returns null", async () => {
@@ -312,7 +312,7 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
     });
 
     it("falls back when getParametersForExercise returns empty", async () => {
@@ -330,7 +330,7 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
     });
 
     it("falls back when exercise definition throws", async () => {
@@ -350,7 +350,7 @@ describe("TableDataProcessor", () => {
         mockPlugin,
       );
 
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
     });
 
     it("does not add Volume when exercise definition lacks reps or weight", async () => {
@@ -372,7 +372,7 @@ describe("TableDataProcessor", () => {
       );
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
       );
       expect(result.headers).toContain("Dur (sec)");
       expect(result.headers).toContain("Dist (km)");
@@ -386,7 +386,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
     });
 
@@ -398,7 +398,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
     });
 
@@ -410,7 +410,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
     });
 
@@ -422,7 +422,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
       );
     });
 
@@ -440,7 +440,7 @@ describe("TableDataProcessor", () => {
       const durIdx = result.headers.indexOf("Duration");
       if (durIdx >= 0) {
         expect(result.rows[0].displayRow[durIdx]).toBe(
-          CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          t("table.notAvailable"),
         );
       }
     });
@@ -451,11 +451,11 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       const exerciseIdx = result.headers.indexOf(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
       );
       if (exerciseIdx >= 0) {
         expect(result.rows[0].displayRow[exerciseIdx]).toBe(
-          CONSTANTS.WORKOUT.TABLE.LABELS.NOT_AVAILABLE,
+          t("table.notAvailable"),
         );
       }
     });
@@ -466,7 +466,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       const protocolIdx = result.headers.indexOf(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
       if (protocolIdx >= 0) {
         expect(result.rows[0].displayRow[protocolIdx]).toBe(
@@ -490,7 +490,7 @@ describe("TableDataProcessor", () => {
       );
 
       const protocolIdx = result.headers.indexOf(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
       if (protocolIdx >= 0) {
         expect(result.rows[0].displayRow[protocolIdx]).toBe(
@@ -507,7 +507,7 @@ describe("TableDataProcessor", () => {
       });
 
       // Should fall back to defaults
-      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE);
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value);
     });
 
     it("adds additional custom fields to base data map", async () => {
@@ -544,7 +544,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
       );
     });
 
@@ -556,7 +556,7 @@ describe("TableDataProcessor", () => {
       const result = await TableDataProcessor.processTableData(logData, {});
 
       expect(result.headers).not.toContain(
-        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL,
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
       );
     });
 

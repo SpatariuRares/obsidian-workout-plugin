@@ -47,7 +47,7 @@ export class ChartTableViews {
     tableDiv
       .createEl("div", { cls: "workout-charts-footer" })
       .appendText(
-        `${CONSTANTS.WORKOUT.ICONS.STATUS.INFO} ${t("charts.fallbackTableMessage")}`,
+        `${t("icons.status.info")} ${t("charts.fallbackTableMessage")}`,
       );
   }
 

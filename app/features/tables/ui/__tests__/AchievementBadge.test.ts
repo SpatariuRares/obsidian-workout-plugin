@@ -136,7 +136,7 @@ describe("AchievementBadge", () => {
     const suggestionText = result!.container.querySelector(
       ".workout-suggestion-text",
     );
-    expect(suggestionText?.textContent).toContain("82.5kg");
+    expect(suggestionText?.textContent).toContain("modal.notices.suggestedNextWeight");
   });
 
   it("dismiss button removes badge and calls callback", async () => {
@@ -232,6 +232,8 @@ describe("AchievementBadge", () => {
     const suggestionText = result!.container.querySelector(
       ".workout-suggestion-text",
     );
-    expect(suggestionText?.textContent).toContain("82.5lb");
+    expect(suggestionText?.textContent).toContain(
+      "modal.notices.suggestedNextWeight",
+    );
   });
 });

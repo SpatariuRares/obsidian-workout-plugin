@@ -48,7 +48,7 @@ export class LogCallouts {
     ) as HTMLElement;
 
     Text.create(noDataDiv, {
-      text: CONSTANTS.WORKOUT.LABELS.LOGS.NO_DATA_TITLE(exerciseName),
+      text: t("logs.noDataTitle", { exerciseName: exerciseName ?? "exercise" }),
       className: "workout-log-no-data-title",
       tag: "strong",
     });
@@ -57,16 +57,15 @@ export class LogCallouts {
     buttonDiv.addClass("workout-charts-button-container");
 
     const createButton = Button.create(buttonDiv, {
-      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_TEXT(
-        exerciseName,
-      ),
-      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
+      text: t("logs.createFirstLogButton", {
+        exerciseName: exerciseName ?? "exercise",
+      }),
+      icon: t("icons.actions.add"),
       className: "add-log-button",
       variant: "primary",
-      ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_FIRST_LOG_BUTTON_ARIA(
-          exerciseName,
-        ),
+      ariaLabel: t("logs.createFirstLogButtonAria", {
+        exerciseName: exerciseName ?? "exercise",
+      }),
     });
 
     Button.onClick(createButton, () => {
@@ -92,8 +91,7 @@ export class LogCallouts {
     GoToExerciseButton.render(buttonDiv, {
       exerciseName: exerciseName || "",
       app: plugin.app,
-    }); 
- 
+    });
   }
 
   static renderAddLogButton(
@@ -110,11 +108,14 @@ export class LogCallouts {
     }
 
     const button = Button.create(container, {
-      text: CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_TEXT(exerciseName),
-      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
+      text: t("logs.addLogButtonText", {
+        exerciseName: exerciseName ?? "Workout",
+      }),
+      icon: t("icons.actions.add"),
       variant: "primary",
-      ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.LOGS.ADD_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel: t("logs.addLogButtonAria", {
+        exerciseName: exerciseName ?? "Workout",
+      }),
     });
 
     Button.onClick(
@@ -124,14 +125,14 @@ export class LogCallouts {
         // Include all fields: reps, weight, protocol, and customFields
         const prefillData = latestEntry
           ? {
-            exercise: latestEntry.exercise,
-            weight: latestEntry.weight,
-            reps: latestEntry.reps,
-            workout: latestEntry.workout || "",
-            notes: latestEntry.notes || "",
-            protocol: latestEntry.protocol,
-            customFields: latestEntry.customFields,
-          }
+              exercise: latestEntry.exercise,
+              weight: latestEntry.weight,
+              reps: latestEntry.reps,
+              workout: latestEntry.workout || "",
+              notes: latestEntry.notes || "",
+              protocol: latestEntry.protocol,
+              customFields: latestEntry.customFields,
+            }
           : undefined;
 
         new CreateLogModal(
@@ -158,12 +159,15 @@ export class LogCallouts {
     buttonContainer.addClass("create-log-button-container");
 
     const button = Button.create(buttonContainer, {
-      text: CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_TEXT(exerciseName),
-      icon: CONSTANTS.WORKOUT.ICONS.ACTIONS.ADD,
+      text: t("logs.createLogButtonText", {
+        exerciseName: exerciseName,
+      }),
+      icon: t("icons.actions.add"),
       className: "create-log-button",
       variant: "primary",
-      ariaLabel:
-        CONSTANTS.WORKOUT.LABELS.LOGS.CREATE_LOG_BUTTON_ARIA(exerciseName),
+      ariaLabel: t("logs.createLogButtonAria", {
+        exerciseName: exerciseName,
+      }),
     });
 
     Button.onClick(button, () => {
@@ -172,13 +176,9 @@ export class LogCallouts {
   }
 
   static renderNoMatchMessage(container: HTMLElement): void {
-    Feedback.renderInfo(
-      container,
-      t("general.noMatchMessage"),
-      {
-        icon: CONSTANTS.WORKOUT.ICONS.STATUS.INFO,
-        className: "workout-log-no-match",
-      },
-    );
+    Feedback.renderInfo(container, t("general.noMatchMessage"), {
+      icon: t("icons.status.info"),
+      className: "workout-log-no-match",
+    });
   }
 }

@@ -42,10 +42,10 @@ export function getUnitsMap(): Record<CHART_DATA_TYPE, string> {
     [CHART_DATA_TYPE.VOLUME]: weightUnit,
     [CHART_DATA_TYPE.WEIGHT]: weightUnit,
     [CHART_DATA_TYPE.REPS]: "",
-    [CHART_DATA_TYPE.DURATION]: "sec",
-    [CHART_DATA_TYPE.DISTANCE]: "km",
-    [CHART_DATA_TYPE.PACE]: "min/km",
-    [CHART_DATA_TYPE.HEART_RATE]: "bpm",
+    [CHART_DATA_TYPE.DURATION]: t("common.sec"),
+    [CHART_DATA_TYPE.DISTANCE]: t("common.km"),
+    [CHART_DATA_TYPE.PACE]: t("common.minPerKm"),
+    [CHART_DATA_TYPE.HEART_RATE]: t("common.bpm"),
   };
 }
 
@@ -57,13 +57,15 @@ export function getUnitsMap(): Record<CHART_DATA_TYPE, string> {
 export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
   const weightUnit = getWeightUnit();
   return {
-    [CHART_DATA_TYPE.VOLUME]: `Volume (${weightUnit})`,
-    [CHART_DATA_TYPE.WEIGHT]: `Weight (${weightUnit})`,
-    [CHART_DATA_TYPE.REPS]: "Reps",
-    [CHART_DATA_TYPE.DURATION]: "Duration",
-    [CHART_DATA_TYPE.DISTANCE]: "Distance (km)",
-    [CHART_DATA_TYPE.PACE]: "Pace (min/km)",
-    [CHART_DATA_TYPE.HEART_RATE]: "Heart Rate (bpm)",
+    [CHART_DATA_TYPE.VOLUME]: t("table.columns.volumeUnit", { weightUnit }),
+    [CHART_DATA_TYPE.WEIGHT]: t("table.columns.weightUnit", { weightUnit }),
+    [CHART_DATA_TYPE.REPS]: t("table.columns.reps"),
+    [CHART_DATA_TYPE.DURATION]: t("table.columns.duration"),
+    [CHART_DATA_TYPE.DISTANCE]: t("table.columns.distanceUnit", {
+      distanceUnit: "km",
+    }),
+    [CHART_DATA_TYPE.PACE]: t("table.columns.pace"),
+    [CHART_DATA_TYPE.HEART_RATE]: t("table.columns.heartRate"),
   };
 }
 
@@ -81,74 +83,6 @@ export const DATA_TYPE_NAMES: Record<CHART_DATA_TYPE, string> = {
 } as const;
 
 /**
- * Icon constants used throughout the UI
- */
-export const ICONS = {
-  COMMON: {
-    PERCENTAGE: "%",
-    PLUS: "+",
-    MINUS: "-",
-    ARROW_UP: "⬆️",
-    ARROW_DOWN: "⬇️",
-    ARROW_NEUTRAL: "↔️",
-    EMPTY: "",
-  },
-  ACTIONS: {
-    ADD: "➕",
-    EDIT: "✏️",
-    DELETE: "🗑️",
-    REFRESH: "🔄",
-  },
-  STATUS: {
-    SUCCESS: "✅",
-    ERROR: "❌",
-    WARNING: "⚠️",
-    INFO: "ℹ️",
-  },
-  DASHBOARD: {
-    QUICK_STATS: {
-      PERIODS: {
-        WEEK: "🗓️",
-        MONTH: "📆",
-        YEAR: "📈",
-      },
-      METRICS: {
-        WORKOUTS: "🏋️",
-        TOTAL_VOLUME: "📦",
-        AVG_VOLUME: "📊",
-      },
-    },
-    SUMMARY: {
-      TOTAL_WORKOUTS: "🏋️",
-      CURRENT_STREAK: "🔥",
-      TOTAL_VOLUME: "📦",
-      PERSONAL_RECORDS: "🏅",
-    },
-  },
-  EXERCISE: {
-    DEADLIFT: "💀",
-    CURL: "💪",
-    EXTENSION: "📏",
-    BICEPS: "💪",
-    TRICEPS: "💪",
-    CORE: "🎯",
-    FOREARM: "✊",
-    BACK: "🦾",
-    FLY: "🦅",
-    HIP_TRUST: "🍑",
-    SHOULDERS: "🦵",
-    ARMS: "🦵",
-    LEGS: "🦵",
-    GLUTES: "🍑",
-    CALVES: "🦵",
-    TRAPS: "🔺",
-    CARDIO: "⭐",
-    PUSH: "🔼",
-    PULL: "⬇️",
-  },
-} as const;
-
-/**
  * Gets dynamic modal labels with proper weight unit.
  * Returns label strings that include weight units, adjusted based on settings.
  * @returns Object with dynamic weight-related labels
@@ -156,8 +90,8 @@ export const ICONS = {
 export function getDynamicModalLabels() {
   const weightUnit = getWeightUnit();
   return {
-    WEIGHT: `Weight (${weightUnit}):`,
-    TARGET_WEIGHT: `Target weight (${weightUnit}):`,
+    WEIGHT: t("modal.labels.weight", { unit: weightUnit }),
+    TARGET_WEIGHT: t("modal.labels.targetWeight", { unit: weightUnit }),
   };
 }
 
@@ -169,9 +103,9 @@ export function getDynamicModalLabels() {
 export function getDynamicDataTypeOptions() {
   const weightUnit = getWeightUnit();
   return [
-    { text: `Volume (${weightUnit})`, value: "volume" },
-    { text: `Weight (${weightUnit})`, value: "weight" },
-    { text: "Reps", value: "reps" },
+    { text: t("modal.labels.volume", { unit: weightUnit }), value: "volume" },
+    { text: t("modal.labels.weight", { unit: weightUnit }), value: "weight" },
+    { text: t("modal.labels.reps"), value: "reps" },
   ];
 }
 
@@ -179,50 +113,8 @@ export function getDynamicDataTypeOptions() {
  * Modal UI labels - titles, buttons, labels, placeholders, and checkboxes
  */
 export const MODAL_UI = {
-  NOTICES: {
-    MUSCLE_TAG_COUNT: (count: number) =>
-      `${count} tag${count !== 1 ? "s" : ""} found`,
-    MUSCLE_TAG_DELETE_CONFIRM: (tag: string) =>
-      `Are you sure you want to delete the tag "${tag}"?`,
-    MUSCLE_TAG_SAVE_ERROR: (error: string) =>
-      `Error saving muscle tag: ${error}`,
-    MUSCLE_TAG_EXISTS: (tag: string) => `Tag "${tag}" already exists`,
-    MUSCLE_TAG_SIMILAR_FOUND: (count: number) =>
-      `${count} similar tag${count !== 1 ? "s" : ""} found`,
-    MUSCLE_TAG_EXPORT_ERROR: (error: string) =>
-      `Error exporting muscle tags: ${error}`,
-    MUSCLE_TAG_IMPORTED: (count: number) =>
-      `${count} muscle tag${count !== 1 ? "s" : ""} imported successfully!`,
-    MUSCLE_TAG_IMPORT_ERROR: (error: string) =>
-      `Error importing muscle tags: ${error}`,
-    MUSCLE_TAG_IMPORT_INVALID_GROUP: (tag: string, group: string) =>
-      `Invalid muscle group "${group}" for tag "${tag}". Must be a canonical muscle group.`,
-    MUSCLE_TAG_IMPORT_PREVIEW: (count: number) =>
-      `${count} tag${count !== 1 ? "s" : ""} to import`,
-    MIGRATION_COMPLETE: (count: number) =>
-      `✅ Migration complete. Updated ${count} exercise files.`,
-  },
   LABELS: {
-    get WEIGHT() {
-      return getDynamicModalLabels().WEIGHT;
-    },
-    get TARGET_WEIGHT() {
-      return getDynamicModalLabels().TARGET_WEIGHT;
-    },
-    TARGET_REPS: "Target reps:",
-  },
-  EXERCISE_STATUS: {
-    FOUND: (count: number) => `📋 ${count} exercises found`,
-  },
-  AUTOCOMPLETE: {
-    FUZZY_TOOLTIP: (score: number) =>
-      t("modal.autocomplete.fuzzyTooltip").replace("{score}", String(score)),
-    EXACT_TOOLTIP: (score: number) =>
-      t("modal.autocomplete.exactTooltip").replace("{score}", String(score)),
-    WORD_TOOLTIP: (score: number) =>
-      t("modal.autocomplete.wordTooltip").replace("{score}", String(score)),
-    PARTIAL_TOOLTIP: (score: number) =>
-      t("modal.autocomplete.partialTooltip").replace("{score}", String(score)),
+    TARGET_REPS: t("modal.labels.targetReps"),
   },
   SELECT_OPTIONS: {
     CHART_TYPE: [
@@ -477,46 +369,6 @@ export const TABLE_UI = {
     },
   },
 
-  TARGET: {
-    PROGRESS_TOOLTIP: (best: number, target: number) =>
-      t("table.target.progressTooltip", {
-        best: String(best),
-        target: String(target),
-      }),
-  },
-  /** Abbreviated labels for mobile/compact display */
-  LABELS_SHORT: {
-    get VOLUME() {
-      return t("table.volume");
-    },
-    WEIGHT: "Wgt",
-    get REPETITIONS() {
-      return t("table.repetitions");
-    },
-    get DURATION() {
-      return t("table.duration");
-    },
-    get DISTANCE() {
-      return t("table.distance");
-    },
-    get HEART_RATE() {
-      return t("table.heartRate");
-    },
-    get SETS() {
-      return t("table.sets");
-    },
-  },
-  ICONS: {
-    REPS: "🔁 ",
-    WEIGHT: "🏋️ ",
-    VOLUME: "📊 ",
-    DURATION: "⏱️ ",
-    DISTANCE: "📍 ",
-    HEART_RATE: "❤️ ",
-    EDIT: "✏️",
-    DELETE: "🗑️",
-    GOTO: "🔗",
-  },
   DEFAULT_VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
 } as const;
 
@@ -559,19 +411,6 @@ export function mapColumnIdentifiersToLabels(identifiers: string[]): string[] {
  */
 export const CHARTS_UI = {
   LABELS: {
-    get REPS() {
-      return t("charts.reps");
-    },
-    get DATE() {
-      return t("charts.date");
-    },
-    get TREND_LINE() {
-      return t("charts.trendLine");
-    },
-    /** @deprecated Use TREND_TITLE instead for dynamic type support */
-    get TREND_TITLE_PREFIX() {
-      return t("charts.trendTitlePrefix");
-    },
     /** Dynamic trend title based on data type */
     TREND_TITLE: (dataType?: CHART_DATA_TYPE) => {
       const typeName = dataType
@@ -616,8 +455,8 @@ export function getDynamicDashboardLabels() {
   return {
     QUICK_STATS: {
       METRICS: {
-        TOTAL_VOLUME: `Total volume (${weightUnit})`,
-        AVG_VOLUME: `Avg volume (${weightUnit})`,
+        TOTAL_VOLUME: t("general.labels.totalVolume", { weightUnit }),
+        AVG_VOLUME: t("general.labels.avgVolume", { weightUnit }),
       },
     },
     RECENT_WORKOUTS: {
@@ -627,7 +466,7 @@ export function getDynamicDashboardLabels() {
       TOTAL_VOLUME_SUFFIX: weightUnit,
     },
     VOLUME_ANALYTICS: {
-      DATASET_LABEL: `Daily volume (${weightUnit})`,
+      DATASET_LABEL: t("general.labels.dailyVolume", { weightUnit }),
       VOLUME_SUFFIX: weightUnit,
     },
   };
@@ -665,40 +504,8 @@ export const DASHBOARD_UI = {
       return getDynamicDashboardLabels().VOLUME_ANALYTICS.VOLUME_SUFFIX;
     },
   },
-  MUSCLE_TAGS: {
-    TOTAL_COUNT: (count: number) => `Total: ${count} tags available`,
-    TOOLTIP: (tag: string) => `Click to copy: ${tag}`,
-  },
-  FILE_ERRORS: {
-    TOO_MANY_TAGS: (count: number) => `Too many muscle tags (${count})`,
-    READ_ERROR: (message: string) => `Error reading file: ${message}`,
-  },
 } as const;
 
-/**
- * Messages displayed to users - notifications, warnings, errors, and status messages
- */
-export const MESSAGES_UI = {
-  ERRORS: {
-    MUSCLE_TAGS_CSV_FAILED: (error: string) =>
-      `Error creating muscle tags CSV: ${error}`,
-    TAG_REFERENCE_FAILED: (error: string) =>
-      `Error generating tag reference note: ${error}`,
-  },
-} as const;
-
-/**
- * Gets dynamic common UI labels with proper weight unit.
- * @returns Object with dynamic weight unit label
- */
-export function getDynamicCommonLabels() {
-  const weightUnit = getWeightUnit();
-  return {
-    UNITS: {
-      WEIGHT: `Weight (${weightUnit})`,
-    },
-  };
-}
 /**
  * Gets dynamic general UI labels with proper weight unit.
  * @returns Object with dynamic weight-related general labels
@@ -707,10 +514,10 @@ export function getDynamicGeneralLabels() {
   const weightUnit = getWeightUnit();
   return {
     LABELS: {
-      TOTAL_VOLUME: `Total volume (${weightUnit})`,
-      AVG_VOLUME: `Average volume (${weightUnit})`,
-      TOTAL_WEIGHT: `Total weight (${weightUnit})`,
-      AVG_WEIGHT: `Average weight (${weightUnit})`,
+      TOTAL_VOLUME: t("general.labels.totalVolume", { weightUnit }),
+      AVG_VOLUME: t("general.labels.avgVolume", { weightUnit }),
+      TOTAL_WEIGHT: t("general.labels.totalWeight", { weightUnit }),
+      AVG_WEIGHT: t("general.labels.avgWeight", { weightUnit }),
     },
   };
 }
@@ -732,21 +539,5 @@ export const GENERAL_UI = {
     get AVG_WEIGHT() {
       return getDynamicGeneralLabels().LABELS.AVG_WEIGHT;
     },
-  },
-  LOGS: {
-    NO_DATA_TITLE: (exerciseName?: string) =>
-      `No logs found for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
-    CREATE_FIRST_LOG_BUTTON_TEXT: (exerciseName?: string) =>
-      `Create first log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
-    CREATE_FIRST_LOG_BUTTON_ARIA: (exerciseName?: string) =>
-      `Create first log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "exercise"}`,
-    ADD_LOG_BUTTON_TEXT: (exerciseName?: string) =>
-      `Add log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "Workout"}`,
-    ADD_LOG_BUTTON_ARIA: (exerciseName?: string) =>
-      `Add log for ${exerciseName && exerciseName.trim().length > 0 ? exerciseName : "Workout"}`,
-    CREATE_LOG_BUTTON_TEXT: (exerciseName: string) =>
-      `Create log for: ${exerciseName}`,
-    CREATE_LOG_BUTTON_ARIA: (exerciseName: string) =>
-      `Create log for ${exerciseName}`,
   },
 } as const;

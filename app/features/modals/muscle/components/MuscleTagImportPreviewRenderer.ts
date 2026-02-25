@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Button } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
@@ -22,9 +21,7 @@ export class MuscleTagImportPreviewRenderer {
     DomUtils.setCssProps(this.container, { display: "block" });
 
     this.container.createEl("h4", {
-      text: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_PREVIEW(
-        options.tags.size,
-      ),
+      text: t("modal.notices.muscleTagImportPreview", { count: options.tags.size }),
     });
 
     if (options.errors.length > 0) {

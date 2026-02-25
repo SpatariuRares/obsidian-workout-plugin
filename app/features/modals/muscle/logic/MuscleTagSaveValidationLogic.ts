@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 
 export interface MuscleTagSaveValidationResult {
   isValid: boolean;
@@ -39,7 +39,7 @@ export function validateMuscleTagSave(
   if (!isEditing && allTags.has(tag)) {
     return {
       isValid: false,
-      notice: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXISTS(tag),
+      notice: t("modal.notices.muscleTagExists", { tag }),
       focusTarget: "tag",
     };
   }

@@ -2,8 +2,8 @@
 
 import { MobileTable } from "@app/features/charts/components/ChartTableViews";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { CONSTANTS } from "@app/constants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { t } from "@app/i18n";
 
 describe("MobileTable", () => {
   it("renders a mobile table with data", () => {
@@ -92,7 +92,7 @@ describe("MobileTable", () => {
       ["Jan 1"],
       [
         {
-          label: CONSTANTS.WORKOUT.TABLE.LABELS.TREND_LINE,
+          label: t("table.trendLine"),
           data: [50],
           backgroundColor: "",
           borderColor: "",
@@ -121,7 +121,7 @@ describe("MobileTable", () => {
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(1);
     expect(rows[0].querySelector("td")?.textContent).toBe(
-      CONSTANTS.WORKOUT.TABLE.LABELS.NO_DATA,
+      t("table.noData"),
     );
   });
 
@@ -146,7 +146,7 @@ describe("MobileTable", () => {
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(1);
     expect(rows[0].querySelector("td")?.textContent).toBe(
-      CONSTANTS.WORKOUT.TABLE.LABELS.NO_DATA,
+      t("table.noData"),
     );
   });
 
@@ -158,7 +158,7 @@ describe("MobileTable", () => {
       ["Jan 1"],
       [
         {
-          label: CONSTANTS.WORKOUT.TABLE.LABELS.TREND_LINE,
+          label: t("table.trendLine"),
           data: [50],
           backgroundColor: "",
           borderColor: "",

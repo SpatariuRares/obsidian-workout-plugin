@@ -27,28 +27,28 @@ export class SummaryWidget {
       summaryEl,
       t("dashboard.totalWorkouts"),
       metrics.totalWorkouts.toString(),
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_WORKOUTS,
+      t("icons.dashboard.summary.totalWorkouts"),
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.currentStreak"),
       t("dashboard.currentStreakSuffix", { count: metrics.currentStreak }),
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.CURRENT_STREAK,
+      t("icons.dashboard.summary.currentStreak"),
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.totalVolume"),
-      `${metrics.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.SUMMARY.TOTAL_VOLUME_SUFFIX}`,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.TOTAL_VOLUME,
+      `${metrics.totalVolume.toLocaleString()} ${t("dashboard.summary.totalVolumeSuffix")}`,
+      t("icons.dashboard.summary.totalVolume"),
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.personalRecords"),
       metrics.personalRecords.toString(),
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.SUMMARY.PERSONAL_RECORDS,
+      t("icons.dashboard.summary.personalRecords"),
     );
   }
 

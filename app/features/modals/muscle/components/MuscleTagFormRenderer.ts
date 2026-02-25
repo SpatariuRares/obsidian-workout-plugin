@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 import { Button, Input } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
@@ -158,9 +157,7 @@ export class MuscleTagFormRenderer {
       cls: "workout-tag-suggestions-label",
     });
     header.createEl("span", {
-      text: CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SIMILAR_FOUND(
-        suggestions.length,
-      ),
+      text: t("modal.notices.muscleTagSimilarFound", { count: suggestions.length }),
       cls: "workout-tag-suggestions-count",
     });
 

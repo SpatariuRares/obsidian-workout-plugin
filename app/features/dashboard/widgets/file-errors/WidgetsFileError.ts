@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
@@ -31,7 +30,7 @@ export class WidgetsFileError {
     if (fileErrors.length === 0) {
       Feedback.renderSuccess(
         errorEl,
-        `${CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS} ${t("dashboard.fileErrors.allValid")}`,
+        `${t("icons.status.success")} ${t("dashboard.fileErrors.allValid")}`,
         { className: "workout-feedback-success", append: true },
       );
       return;
@@ -112,7 +111,7 @@ export class WidgetsFileError {
       const validationErrors = FrontmatterParser.validateFrontmatter(content);
       if (validationErrors.length > 0) {
         return validationErrors.map(
-          (err) => `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${err}`,
+          (err) => `${t("icons.status.warning")} ${err}`,
         );
       }
 
@@ -125,19 +124,17 @@ export class WidgetsFileError {
 
       if (muscleTags.length === 0) {
         errors.push(
-          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${t("dashboard.fileErrors.noTags")}`,
+          `${t("icons.status.warning")} ${t("dashboard.fileErrors.noTags")}`,
         );
       } else if (muscleTags.length > 3) {
         errors.push(
-          `${CONSTANTS.WORKOUT.ICONS.STATUS.WARNING} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
+          `${t("icons.status.warning")} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
         );
       }
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       errors.push(
-        `${CONSTANTS.WORKOUT.ICONS.STATUS.ERROR} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.FILE_ERRORS.READ_ERROR(
-          errorMessage,
-        )}`,
+        t("dashboard.fileErrors.readError", { message: errorMessage }),
       );
     }
 

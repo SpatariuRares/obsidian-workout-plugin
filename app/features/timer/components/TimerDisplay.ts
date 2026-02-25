@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TimerState, TIMER_TYPE } from "@app/features/timer";
+import { t } from "@app/i18n";
 
 export class TimerDisplay {
   private static formatTime(milliseconds: number): string {
@@ -41,7 +42,7 @@ export class TimerDisplay {
       state.timerDisplay.empty();
       state.timerDisplay.createEl("span", {
         cls: "workout-timer-complete",
-        text: CONSTANTS.WORKOUT.ICONS.STATUS.SUCCESS,
+        text: t("icons.status.success"),
       });
     } else {
       state.timerDisplay.empty();

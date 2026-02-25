@@ -1,4 +1,3 @@
-import { CONSTANTS } from "@app/constants";
 import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
@@ -115,7 +114,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
     if (this.countDisplay) {
       this.countDisplay.textContent =
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_COUNT(filteredTags.size);
+        t("modal.notices.muscleTagCount", { count: filteredTags.size });
     }
   }
 
@@ -205,7 +204,7 @@ export class MuscleTagManagerModal extends ModalBase {
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
+        t("modal.notices.muscleTagSaveError", { error: message }),
       );
     }
   }
@@ -213,7 +212,7 @@ export class MuscleTagManagerModal extends ModalBase {
   private confirmDelete(tag: string): void {
     new ConfirmModal(
       this.app,
-      CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_DELETE_CONFIRM(tag),
+      t("modal.notices.muscleTagDeleteConfirm", { tag }),
       () => {
         void this.handleDelete(tag);
       },
@@ -233,7 +232,7 @@ export class MuscleTagManagerModal extends ModalBase {
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_SAVE_ERROR(message),
+        t("modal.notices.muscleTagSaveError", { error: message }),
       );
     }
   }
@@ -248,7 +247,7 @@ export class MuscleTagManagerModal extends ModalBase {
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_EXPORT_ERROR(message),
+        t("modal.notices.muscleTagExportError", { error: message }),
       );
     }
   }
@@ -298,9 +297,7 @@ export class MuscleTagManagerModal extends ModalBase {
       this.processImportFile(content);
     } catch {
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(
-          "Failed to read file",
-        ),
+        t("modal.notices.muscleTagImportError", { error: "Failed to read file" }),
       );
     }
   }
@@ -361,7 +358,7 @@ export class MuscleTagManagerModal extends ModalBase {
       await this.plugin.getMuscleTagService().saveTags(finalTags);
       this.allTags = finalTags;
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORTED(importedCount),
+        t("modal.notices.muscleTagImported", { count: importedCount }),
       );
       this.plugin.triggerMuscleTagRefresh();
       this.hideImportPreview();
@@ -369,7 +366,7 @@ export class MuscleTagManagerModal extends ModalBase {
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(
-        CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_ERROR(message),
+        t("modal.notices.muscleTagImportError", { error: message }),
       );
     }
   }

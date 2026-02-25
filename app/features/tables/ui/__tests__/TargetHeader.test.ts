@@ -169,9 +169,12 @@ describe("TargetHeader", () => {
 
     const progressBar = result!.querySelector(".workout-progress-bar");
     expect(progressBar).not.toBeNull();
-    const expectedTooltip = CONSTANTS.WORKOUT.TABLE.TARGET.PROGRESS_TOOLTIP(8, 10);
-    expect(progressBar!.getAttribute("title")).toBe(expectedTooltip);
-    expect(progressBar!.getAttribute("aria-label")).toBe(expectedTooltip);
+    expect(progressBar!.getAttribute("title")).toBe(
+      t("table.target.progressTooltip", { current: 8, target: 10 }),
+    );
+    expect(progressBar!.getAttribute("aria-label")).toBe(
+      t("table.target.progressTooltip", { current: 8, target: 10 }),
+    );
   });
 
   it("renders target text with lb unit", () => {

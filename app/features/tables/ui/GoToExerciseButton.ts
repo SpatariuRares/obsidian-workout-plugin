@@ -30,7 +30,7 @@ export class GoToExerciseButton {
     const { exerciseName, app } = props;
 
     const gotoBtn = Button.create(container, {
-      icon: CONSTANTS.WORKOUT.TABLE.ICONS.GOTO,
+      icon: t("icons.tables.goto"),
       text: t("table.gotoExercise"),
       variant: "secondary",
       ariaLabel: t("table.gotoExercise"),

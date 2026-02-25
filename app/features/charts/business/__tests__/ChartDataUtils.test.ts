@@ -144,7 +144,7 @@ describe("ChartDataUtils", () => {
 
       // Average of 1000 + 1000 / 2 = 1000
       expect(result.datasets[0].data[0]).toBe(1000);
-      expect(result.datasets[0].label).toContain("Average");
+      expect(result.datasets[0].label).toContain("general.labels.avgVolume");
     });
 
     it("should calculate totals for WORKOUT display type", () => {
@@ -158,7 +158,7 @@ describe("ChartDataUtils", () => {
 
       // Total of 1000 + 1000 = 2000
       expect(result.datasets[0].data[0]).toBe(2000);
-      expect(result.datasets[0].label).toContain("Total");
+      expect(result.datasets[0].label).toContain("general.labels.totalVolume");
     });
 
     it("should calculate totals for COMBINED display type", () => {

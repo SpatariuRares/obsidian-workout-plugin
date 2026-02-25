@@ -1,32 +1,33 @@
 import { CONSTANTS } from "@app/constants";
+import { MUSCLE_TAGS } from "@app/constants/muscles.constants";
 
 describe("MuscleTags", () => {
-  describe("CONSTANTS.WORKOUT.MUSCLES.TAGS constant", () => {
+  describe("MUSCLE_TAGS constant", () => {
     it("should contain all expected muscle tags", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("chest");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("back");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("legs");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("biceps");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("triceps");
+      expect(MUSCLE_TAGS).toContain("chest");
+      expect(MUSCLE_TAGS).toContain("back");
+      expect(MUSCLE_TAGS).toContain("legs");
+      expect(MUSCLE_TAGS).toContain("biceps");
+      expect(MUSCLE_TAGS).toContain("triceps");
     });
 
     it("should contain Italian muscle names", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("petto");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("schiena");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("gambe");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("glutei");
+      expect(MUSCLE_TAGS).toContain("petto");
+      expect(MUSCLE_TAGS).toContain("schiena");
+      expect(MUSCLE_TAGS).toContain("gambe");
+      expect(MUSCLE_TAGS).toContain("glutei");
     });
 
     it("should contain exercise type tags", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("push");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("pull");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("squat");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAGS).toContain("deadlift");
+      expect(MUSCLE_TAGS).toContain("push");
+      expect(MUSCLE_TAGS).toContain("pull");
+      expect(MUSCLE_TAGS).toContain("squat");
+      expect(MUSCLE_TAGS).toContain("deadlift");
     });
 
     it("should have all unique values", () => {
-      const uniqueTags = new Set(CONSTANTS.WORKOUT.MUSCLES.TAGS);
-      expect(uniqueTags.size).toBe(CONSTANTS.WORKOUT.MUSCLES.TAGS.length);
+      const uniqueTags = new Set(MUSCLE_TAGS);
+      expect(uniqueTags.size).toBe(MUSCLE_TAGS.length);
     });
   });
 

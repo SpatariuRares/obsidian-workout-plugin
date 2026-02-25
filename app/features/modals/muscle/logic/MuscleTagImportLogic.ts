@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 import {
   CANONICAL_MUSCLE_GROUPS,
   type CanonicalMuscleGroup,
@@ -64,10 +64,7 @@ export class MuscleTagImportLogic {
 
       if (!this.isCanonicalMuscleGroup(muscleGroup)) {
         errors.push(
-          CONSTANTS.WORKOUT.MODAL.NOTICES.MUSCLE_TAG_IMPORT_INVALID_GROUP(
-            tag,
-            muscleGroup,
-          ),
+          t("modal.notices.muscleTagImportInvalidGroup", { tag, group: muscleGroup }),
         );
         continue;
       }

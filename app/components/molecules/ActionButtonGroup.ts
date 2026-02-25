@@ -39,14 +39,6 @@ export interface ActionButtonGroupResult {
  */
 export class ActionButtonGroup {
   // Default icons
-  private static readonly DEFAULT_EDIT_ICON =
-    CONSTANTS.WORKOUT.ICONS.ACTIONS.EDIT;
-  private static readonly DEFAULT_DELETE_ICON =
-    CONSTANTS.WORKOUT.ICONS.ACTIONS.DELETE;
-  private static readonly DEFAULT_EDIT_TITLE =
-    t("general.edit");
-  private static readonly DEFAULT_DELETE_TITLE =
-    t("general.delete");
 
   /**
    * Create an action button group
@@ -67,20 +59,20 @@ export class ActionButtonGroup {
 
     // Create edit button
     const editBtn = Button.create(container, {
-      icon: props?.editIcon || this.DEFAULT_EDIT_ICON,
+      icon: props?.editIcon || t("icons.actions.edit"),
       className: "workout-table-action-btn workout-table-action-btn-edit",
-      title: props?.editTitle || this.DEFAULT_EDIT_TITLE,
+      title: props?.editTitle || t("general.edit"),
       variant: "secondary",
-      ariaLabel: props?.editTitle || this.DEFAULT_EDIT_TITLE,
+      ariaLabel: props?.editTitle || t("general.edit"),
     });
 
     // Create delete button
     const deleteBtn = Button.create(container, {
-      icon: props?.deleteIcon || this.DEFAULT_DELETE_ICON,
+      icon: props?.deleteIcon || t("icons.actions.delete"),
       className: "workout-table-action-btn workout-table-action-btn-delete",
       variant: "secondary",
-      title: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
-      ariaLabel: props?.deleteTitle || this.DEFAULT_DELETE_TITLE,
+      title: props?.deleteTitle || t("general.delete"),
+      ariaLabel: props?.deleteTitle || t("general.delete"),
     });
 
     return {

@@ -1,5 +1,6 @@
 import { CONSTANTS } from "@app/constants";
 import { TableRow } from "@app/features/tables/types";
+import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 export interface SpacerStatData {
@@ -73,15 +74,15 @@ export class SpacerRowCalculator {
 
     if (hasStrengthData) {
       stats.push({
-        icon: CONSTANTS.WORKOUT.TABLE.ICONS.REPS,
+        icon: t("icons.tables.reps"),
         value: totalReps.toString(),
       });
       stats.push({
-        icon: CONSTANTS.WORKOUT.TABLE.ICONS.WEIGHT,
+        icon: t("icons.tables.weight"),
         value: `${totalWeight.toFixed(1)}${ParameterUtils.getWeightUnit()}`,
       });
       stats.push({
-        icon: CONSTANTS.WORKOUT.TABLE.ICONS.VOLUME,
+        icon: t("icons.tables.volume"),
         value: `${totalVolume.toFixed(0)}${ParameterUtils.getWeightUnit()}`,
       });
     } else {
@@ -91,14 +92,14 @@ export class SpacerRowCalculator {
             ? `${Math.floor(totalDuration / 60)}m${Math.round(totalDuration % 60)}s`
             : `${Math.round(totalDuration)}s`;
         stats.push({
-          icon: CONSTANTS.WORKOUT.TABLE.ICONS.DURATION,
+          icon: t("icons.tables.duration"),
           value: durationDisplay,
         });
       }
 
       if (hasDistance) {
         stats.push({
-          icon: CONSTANTS.WORKOUT.TABLE.ICONS.DISTANCE,
+          icon: t("icons.tables.distance"),
           value: `${totalDistance.toFixed(2)}km`,
         });
       }
@@ -106,7 +107,7 @@ export class SpacerRowCalculator {
       if (hasHeartRate && heartRateCount > 0) {
         const avgHeartRate = Math.round(totalHeartRate / heartRateCount);
         stats.push({
-          icon: CONSTANTS.WORKOUT.TABLE.ICONS.HEART_RATE,
+          icon: t("icons.tables.heartRate"),
           value: `${avgHeartRate}bpm`,
         });
       }

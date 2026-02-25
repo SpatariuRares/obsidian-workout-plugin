@@ -1,30 +1,27 @@
-import { CONSTANTS } from "@app/constants";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
 import type WorkoutChartsPlugin from "main";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 
-const ICONS = CONSTANTS.WORKOUT.ICONS.EXERCISE;
-
 const MUSCLE_GROUP_EMOJI: Record<string, string> = {
-  chest: ICONS.CURL,
-  back: ICONS.BACK,
-  shoulders: ICONS.SHOULDERS,
-  biceps: ICONS.BICEPS,
-  triceps: ICONS.TRICEPS,
-  forearms: ICONS.FOREARM,
-  quads: ICONS.LEGS,
-  hamstrings: ICONS.LEGS,
-  glutes: ICONS.GLUTES,
-  calves: ICONS.CALVES,
-  abs: ICONS.CORE,
-  core: ICONS.CARDIO,
-  traps: ICONS.TRAPS,
-  rear_delts: ICONS.SHOULDERS,
+  chest: t("icons.exercise.chest"),
+  back: t("icons.exercise.back"),
+  shoulders: t("icons.exercise.shoulders"),
+  biceps: t("icons.exercise.biceps"),
+  triceps: t("icons.exercise.triceps"),
+  forearms: t("icons.exercise.forearms"),
+  quads: t("icons.exercise.quads"),
+  hamstrings: t("icons.exercise.hamstrings"),
+  glutes: t("icons.exercise.glutes"),
+  calves: t("icons.exercise.calves"),
+  abs: t("icons.exercise.abs"),
+  core: t("icons.exercise.core"),
+  traps: t("icons.exercise.traps"),
+  rear_delts: t("icons.exercise.rear_delts"),
 };
 
-const DEFAULT_EMOJI = ICONS.DEADLIFT;
+const DEFAULT_EMOJI = t("icons.exercise.deadlift");
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -68,9 +65,7 @@ export class MuscleTagsWidget {
     });
 
     infoEl.createEl("small", {
-      text: CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOTAL_COUNT(
-        sortedTags.length,
-      ),
+      text: t("dashboard.muscleTags.totalCount", { count: sortedTags.length }),
       cls: "workout-muscle-tags-count",
     });
   }
@@ -87,8 +82,7 @@ export class MuscleTagsWidget {
       icon: MUSCLE_GROUP_EMOJI[muscleGroup] ?? DEFAULT_EMOJI,
       text: this.formatMuscleName(tag),
       copyValue: tag,
-      tooltip:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.MUSCLE_TAGS.TOOLTIP(tag),
+      tooltip: t("dashboard.muscleTags.tooltip", { tag }),
       className: "workout-muscle-tag-badge",
       dataAttributes: { muscle: tag },
     });

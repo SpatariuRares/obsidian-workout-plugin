@@ -93,21 +93,20 @@ export class ExerciseAutocomplete {
       cls: `workout-autocomplete-badge workout-autocomplete-badge-${matchType}`,
     });
 
-    const autocomplete = CONSTANTS.WORKOUT.MODAL.AUTOCOMPLETE;
     if (matchType === "fuzzy") {
       badge.textContent = t("modal.autocomplete.fuzzyBadge");
-      badge.title = autocomplete.FUZZY_TOOLTIP(score);
+      badge.title = t("modal.autocomplete.fuzzyTooltip", { score });
     } else {
       // Show score indicator for semantic matches
       if (score >= 90) {
         badge.textContent = t("modal.autocomplete.exactBadge");
-        badge.title = autocomplete.EXACT_TOOLTIP(score);
+        badge.title = t("modal.autocomplete.exactTooltip", { score });
       } else if (score >= 70) {
         badge.textContent = t("modal.autocomplete.wordBadge");
-        badge.title = autocomplete.WORD_TOOLTIP(score);
+        badge.title = t("modal.autocomplete.wordTooltip", { score });
       } else {
         badge.textContent = t("modal.autocomplete.partialBadge");
-        badge.title = autocomplete.PARTIAL_TOOLTIP(score);
+        badge.title = t("modal.autocomplete.partialTooltip", { score });
       }
     }
 

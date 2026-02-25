@@ -34,19 +34,19 @@ export class QuickStatsCards {
       statsGrid,
       t("dashboard.week"),
       weekStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.WEEK,
+      t("icons.dashboard.quickStats.periods.week"),
     );
     this.createStatsCard(
       statsGrid,
       t("dashboard.month"),
       monthStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.MONTH,
+      t("icons.dashboard.quickStats.periods.month"),
     );
     this.createStatsCard(
       statsGrid,
       t("dashboard.year"),
       yearStats,
-      CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.PERIODS.YEAR,
+      t("icons.dashboard.quickStats.periods.year"),
     );
   }
 
@@ -68,7 +68,7 @@ export class QuickStatsCards {
 
     // Workouts stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.WORKOUTS,
+      icon: t("icons.dashboard.quickStats.metrics.workouts"),
       value: stats.workouts.toString(),
       label: t("dashboard.workouts"),
       className: "workout-stat-item",
@@ -76,18 +76,17 @@ export class QuickStatsCards {
 
     // Total volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
+      icon: t("icons.dashboard.quickStats.metrics.totalVolume"),
       value: stats.volume.toLocaleString(),
-      label:
-        CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.TOTAL_VOLUME,
+      label: t("dashboard.quickStats.metrics.totalVolume"),
       className: "workout-stat-item",
     });
 
     // Average volume stat using StatCard molecule
     StatCard.create(statsEl, {
-      icon: CONSTANTS.WORKOUT.ICONS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+      icon: t("icons.dashboard.quickStats.metrics.avgVolume"),
       value: stats.avgVolume.toLocaleString(),
-      label: CONSTANTS.WORKOUT.LABELS.DASHBOARD.QUICK_STATS.METRICS.AVG_VOLUME,
+      label: t("dashboard.quickStats.metrics.avgVolume"),
       className: "workout-stat-item",
     });
   }

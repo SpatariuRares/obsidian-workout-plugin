@@ -1,15 +1,15 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants";
 import { Badge } from "@app/components/molecules/Badge";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { BODY_PARTS } from "@app/constants/muscles.constants";
 
 describe("Badge molecule", () => {
 	it("renders badges with optional icons and variants", () => {
 		const parent = createObsidianContainer();
 
 		const badge = Badge.create(parent, {
-			text: CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY,
+			text: BODY_PARTS.UPPER_BODY,
 			icon: "💪",
 			variant: "info",
 			className: "mb-2",
@@ -20,7 +20,7 @@ describe("Badge molecule", () => {
 		expect(badge.className).toContain("badge-info");
 		expect(badge.className).toContain("mb-2");
 		expect(badge.querySelector(".badge-icon")?.textContent).toBe("💪");
-		expect(badge.querySelector(".badge-text")?.textContent).toBe(CONSTANTS.WORKOUT.MUSCLES.BODY_PARTS.UPPER_BODY);
+		expect(badge.querySelector(".badge-text")?.textContent).toBe(BODY_PARTS.UPPER_BODY);
 	});
 
 	it("uses default variant when none provided", () => {

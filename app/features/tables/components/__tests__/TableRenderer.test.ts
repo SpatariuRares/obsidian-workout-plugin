@@ -237,7 +237,7 @@ describe("TableRenderer", () => {
 
     it("applies volume cell class to volume column", () => {
       const container = document.createElement("div");
-      const volCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME;
+      const volCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value;
       const headers = ["Date", volCol];
       const rows = [
         createRow({ dateKey: "2024-01-15", displayRow: ["10:00", "640"] }),
@@ -251,7 +251,7 @@ describe("TableRenderer", () => {
 
     it("renders protocol badge for protocol column", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL];
+      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -269,7 +269,7 @@ describe("TableRenderer", () => {
 
     it("renders action buttons in actions column", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS];
+      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value];
       const log: WorkoutLogData = {
         date: "2024-01-15",
         exercise: "Bench",
@@ -320,7 +320,7 @@ describe("TableRenderer", () => {
   describe("renderProtocolBadge", () => {
     it("renders badge for built-in protocols", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL];
+      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -341,7 +341,7 @@ describe("TableRenderer", () => {
 
     it("does not render badge for standard protocol", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL];
+      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -359,7 +359,7 @@ describe("TableRenderer", () => {
 
     it("renders badge for custom protocols from plugin settings", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL];
+      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
       const rows = [
         createRow({
           dateKey: "2024-01-15",

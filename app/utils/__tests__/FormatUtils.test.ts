@@ -97,13 +97,13 @@ describe("FormatUtils", () => {
     describe("DURATION type", () => {
       it("should use formatDuration for duration values", () => {
         expect(FormatUtils.formatValue(90, CHART_DATA_TYPE.DURATION)).toBe(
-          "1m 30s"
+          "1m 30s",
         );
       });
 
       it("should format large duration values", () => {
         expect(FormatUtils.formatValue(5400, CHART_DATA_TYPE.DURATION)).toBe(
-          "1h 30m"
+          "1h 30m",
         );
       });
     });
@@ -131,13 +131,13 @@ describe("FormatUtils", () => {
     describe("VOLUME type", () => {
       it("should format volume with kg unit", () => {
         expect(FormatUtils.formatValue(1000, CHART_DATA_TYPE.VOLUME)).toBe(
-          "1000 kg"
+          "1000 kg",
         );
       });
 
       it("should format decimal volume with 2 decimal places", () => {
         expect(FormatUtils.formatValue(1000.567, CHART_DATA_TYPE.VOLUME)).toBe(
-          "1000.57 kg"
+          "1000.57 kg",
         );
       });
     });
@@ -145,13 +145,13 @@ describe("FormatUtils", () => {
     describe("WEIGHT type", () => {
       it("should format weight with kg unit", () => {
         expect(FormatUtils.formatValue(80, CHART_DATA_TYPE.WEIGHT)).toBe(
-          "80 kg"
+          "80 kg",
         );
       });
 
       it("should format decimal weight with 2 decimal places", () => {
         expect(FormatUtils.formatValue(82.5, CHART_DATA_TYPE.WEIGHT)).toBe(
-          "82.50 kg"
+          "82.50 kg",
         );
       });
     });
@@ -159,13 +159,13 @@ describe("FormatUtils", () => {
     describe("DISTANCE type", () => {
       it("should format distance with km unit", () => {
         expect(FormatUtils.formatValue(5, CHART_DATA_TYPE.DISTANCE)).toBe(
-          "5 km"
+          "5 common.km",
         );
       });
 
       it("should format decimal distance with 2 decimal places", () => {
         expect(FormatUtils.formatValue(10.123, CHART_DATA_TYPE.DISTANCE)).toBe(
-          "10.12 km"
+          "10.12 common.km",
         );
       });
     });
@@ -173,14 +173,14 @@ describe("FormatUtils", () => {
     describe("HEART_RATE type", () => {
       it("should format heart rate with bpm unit", () => {
         expect(FormatUtils.formatValue(150, CHART_DATA_TYPE.HEART_RATE)).toBe(
-          "150 bpm"
+          "150 common.bpm",
         );
       });
 
       it("should format decimal heart rate with 2 decimal places", () => {
         expect(
-          FormatUtils.formatValue(145.67, CHART_DATA_TYPE.HEART_RATE)
-        ).toBe("145.67 bpm");
+          FormatUtils.formatValue(145.67, CHART_DATA_TYPE.HEART_RATE),
+        ).toBe("145.67 common.bpm");
       });
     });
   });

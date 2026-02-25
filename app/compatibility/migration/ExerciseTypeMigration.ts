@@ -1,6 +1,5 @@
 import { Notice, TFolder, TFile } from "obsidian";
 import WorkoutChartsPlugin from "main";
-import { CONSTANTS } from "@app/constants";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 
@@ -43,7 +42,7 @@ export class ExerciseTypeMigration {
 
       if (updatedCount > 0) {
         new Notice(
-          CONSTANTS.WORKOUT.MODAL.NOTICES.MIGRATION_COMPLETE(updatedCount),
+          t("modal.notices.migrationComplete", { count: updatedCount }),
         );
       } else {
         new Notice(t("modal.notices.migrationNoUpdates"));

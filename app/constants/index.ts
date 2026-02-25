@@ -22,7 +22,6 @@ export * from "@app/constants/exerciseTypes.constants";
 
 // Import from modular files for composing CONSTANTS
 import {
-  ICONS,
   MODAL_UI,
   TABLE_UI,
   CHARTS_UI,
@@ -71,7 +70,6 @@ export const CONSTANTS = {
     ERRORS: {
       TYPES: ERROR_TYPES,
     },
-    ICONS: ICONS,
     LABELS: {
       GENERAL: GENERAL_UI.LABELS,
       TABLE: {
@@ -89,7 +87,6 @@ export const CONSTANTS = {
         },
         TARGET_PREFIX: "Target:",
       },
-      LOGS: GENERAL_UI.LOGS,
       DASHBOARD: DASHBOARD_UI,
       CHARTS: CHARTS_UI.LABELS,
     },
@@ -101,9 +98,7 @@ export const CONSTANTS = {
         MIN: DEFAULT_TABLE_CONFIG.LIMIT_MIN,
         MAX: DEFAULT_TABLE_CONFIG.LIMIT_MAX,
       },
-      ICONS: TABLE_UI.ICONS,
       DEFAULT_VISIBLE_COLUMNS: TABLE_UI.DEFAULT_VISIBLE_COLUMNS,
-      TARGET: TABLE_UI.TARGET,
       DATE_KEYS: {
         INVALID: "invalid-date",
       },

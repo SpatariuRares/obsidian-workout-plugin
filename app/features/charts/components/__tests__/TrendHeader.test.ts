@@ -6,6 +6,7 @@ import { CONSTANTS } from "@app/constants";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { TrendIndicator } from "@app/components/molecules";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { t } from "@app/i18n";
 
 jest.mock("@app/components/molecules", () => ({
   TrendIndicator: {
@@ -102,7 +103,7 @@ describe("TrendHeader", () => {
     ) as HTMLElement;
     expect(variation).toBeTruthy();
     expect(variation.textContent).toBe(
-      CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE,
+      t("table.notAvailable"),
     );
   });
 
@@ -144,7 +145,7 @@ describe("TrendHeader", () => {
     calculateSpy.mockReturnValue({
       firstValue: 10,
       lastValue: 20,
-      percentChange: CONSTANTS.WORKOUT.LABELS.TABLE.NOT_AVAILABLE,
+      percentChange: t("table.notAvailable"),
     });
 
     const cases = [

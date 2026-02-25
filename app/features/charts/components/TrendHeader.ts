@@ -22,7 +22,7 @@ export class TrendHeader {
     container: HTMLElement,
     trendIndicators: TrendIndicators,
     volumeData: number[],
-    dataType?: CHART_DATA_TYPE
+    dataType?: CHART_DATA_TYPE,
   ): void {
     const trendHeader = container.createEl("div", {
       cls: "workout-charts-trend-header",
@@ -36,7 +36,7 @@ export class TrendHeader {
       percentChange,
       trendIndicators.trendColor,
       volumeData,
-      dataType
+      dataType,
     );
 
     const h3 = trendHeader.createEl("h3", {
@@ -64,10 +64,15 @@ export class TrendHeader {
       text: t("charts.overallVariationPrefix"),
     });
 
-    if (variationData.text !== undefined && percentChange !== t("table.notAvailable")) {
+    if (
+      variationData.text !== undefined &&
+      percentChange !== t("table.notAvailable")
+    ) {
       // Determine trend direction based on percentage and data type
       const percentValue = parseFloat(percentChange);
-      const isLowerBetter = dataType ? FormatUtils.isLowerBetter(dataType) : false;
+      const isLowerBetter = dataType
+        ? FormatUtils.isLowerBetter(dataType)
+        : false;
 
       // For inverted types (pace), negative change = improvement (up arrow)
       // For normal types, positive change = improvement (up arrow)
@@ -121,15 +126,18 @@ export class TrendHeader {
       p.append(
         CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_FROM_TO_FORMATTED(
           formattedFirst,
-          formattedLast
-        )
+          formattedLast,
+        ),
       );
     } else if (firstValue !== undefined && volumeData.length === 1) {
       const formattedFirst = dataType
         ? FormatUtils.formatValue(firstValue, dataType)
         : firstValue.toFixed(1);
       p.append(
-        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(formattedFirst, dataType)
+        CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(
+          formattedFirst,
+          dataType,
+        ),
       );
     }
   }
@@ -177,19 +185,22 @@ export class TrendHeader {
     percentChange: string,
     trendColor: string,
     volumeData: number[],
-    dataType?: CHART_DATA_TYPE
+    dataType?: CHART_DATA_TYPE,
   ): { text: string; color: string } {
     if (
       firstValue !== undefined &&
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
-      const changeSign = parseFloat(percentChange) > 0 ? CONSTANTS.WORKOUT.ICONS.COMMON.PLUS : CONSTANTS.WORKOUT.ICONS.COMMON.EMPTY;
+      const changeSign =
+        parseFloat(percentChange) > 0
+          ? t("icons.common.plus")
+          : t("icons.common.empty");
       return {
         text:
           percentChange === "Infinity"
             ? t("charts.significantIncrease")
-            : changeSign + percentChange + CONSTANTS.WORKOUT.ICONS.COMMON.PERCENTAGE,
+            : changeSign + percentChange + t("icons.common.percentage"),
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {
@@ -197,7 +208,10 @@ export class TrendHeader {
         ? FormatUtils.formatValue(firstValue, dataType)
         : firstValue.toFixed(1);
       return {
-        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED(formattedValue, dataType),
+        text: CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_VALUE_LABEL_FORMATTED(
+          formattedValue,
+          dataType,
+        ),
         color: "",
       };
     }

@@ -1,4 +1,78 @@
 {
+  "icons": {
+    "common": {
+      "percentage": "%",
+      "plus": "+",
+      "minus": "-",
+      "arrowUp": "⬆️",
+      "arrowDown": "⬇️",
+      "arrowNeutral": "↔️",
+      "empty": ""
+    },
+    "tables": {
+      "reps": "🔁 ",
+      "weight": "🏋️ ",
+      "volume": "📊 ",
+      "duration": "⏱️ ",
+      "distance": "📍 ",
+      "heartRate": "❤️ ",
+      "edit": "✏️",
+      "delete": "🗑️",
+      "goto": "🔗"
+    },
+    "actions": {
+      "add": "➕",
+      "edit": "✏️",
+      "delete": "🗑️",
+      "refresh": "🔄"
+    },
+    "status": {
+      "success": "✅",
+      "warning": "⚠️",
+      "info": "ℹ️"
+    },
+    "dashboard": {
+      "quickStats": {
+        "periods": {
+          "week": "🗓️",
+          "month": "📆",
+          "year": "📈"
+        },
+        "metrics": {
+          "workouts": "🏋️",
+          "totalVolume": "📦",
+          "avgVolume": "📊"
+        }
+      },
+      "summary": {
+        "totalWorkouts": "🏋️",
+        "currentStreak": "🔥",
+        "totalVolume": "📦",
+        "personalRecords": "🏅"
+      }
+    },
+    "exercise": {
+      "deadlift": "💀",
+      "curl": "💪",
+      "extension": "📏",
+      "biceps": "💪",
+      "triceps": "💪",
+      "core": "🎯",
+      "forearm": "✊",
+      "back": "🦾",
+      "fly": "🦅",
+      "hipTrust": "🍑",
+      "shoulders": "🦵",
+      "arms": "🦵",
+      "legs": "🦵",
+      "glutes": "🍑",
+      "calves": "🦵",
+      "traps": "🔺",
+      "cardio": "⭐",
+      "push": "🔼",
+      "pull": "⬇️"
+    }
+  },
   "modal": {
     "titles": {
       "createLog": "Create workout log",
@@ -43,6 +117,7 @@
       "exercise": "Exercise:",
       "reps": "Reps:",
       "weight": "Weight ({unit}):",
+      "volume": "Volume ({unit}):",
       "notes": "Notes (optional):",
       "workout": "Workout (optional):",
       "workoutName": "Workout name:",
@@ -95,7 +170,7 @@
       "timerPreset": "Timer preset:",
       "workoutFile": "Workout file:",
       "dateRange": "Date range (days):",
-      "targetWeight": "Target weight ({unit}):",
+      "targetWeight": "Target  ({unit}):",
       "targetReps": "Target reps:",
       "protocol": "Protocol:",
       "recentExercises": "Recent:",
@@ -147,25 +222,25 @@
       "noActiveEditor": "No active markdown editor",
       "insertCodeNoFile": "Open a markdown file to insert the code",
       "exercisePageCreated": "Exercise page created successfully!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Error creating exercise page: {error}",
       "exercisePageNameRequired": "Please enter an exercise name",
       "exerciseNameRequired": "❌ please enter an exercise name",
       "exerciseSectionCreated": "✅ exercise section created successfully!",
       "dashboardCreated": "Dashboard section created successfully",
-      "genericError": "Error: ",
+      "genericError": "Error: {error}",
       "timerElementsNotInitialized": "Timer elements not initialized",
-      "auditConfirmRename": "Audit Confirm Rename",
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRename": "Audit Confirm Rename \n\n ",
+      "auditConfirmRenameFile": "Audit Confirm Rename File \n\n {oldName} -> {newName}",
       "auditNoMismatches": "Audit No Mismatches",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Audit Rename Error: {error}",
+      "auditRenameFileError": "Audit Rename File Error: {error}",
       "auditRenameFileSuccess": "Audit Rename File Success",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "Audit Rename Success ({count} files updated)",
       "auditScanning": "Audit Scanning",
       "canvasExportError": "Canvas Export Error",
       "canvasExported": "Canvas Exported",
       "canvasNoExercises": "Canvas No Exercises",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Confirm Update Target {targetWeight}{weightUnit}?",
       "exerciseBlockInserted": "Exercise Block Inserted",
       "migrationError": "Migration Error",
       "migrationNoUpdates": "Migration No Updates",
@@ -177,9 +252,20 @@
       "muscleTagNoResults": "Muscle Tag No Results",
       "muscleTagSaved": "Muscle Tag Saved",
       "muscleTagSimilarWarning": "Muscle Tag Similar Warning",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Suggested Next Weight {suggestedWeight}{weightUnit}",
       "targetAchieved": "Target Achieved",
-      "targetDismissed": "Target Dismissed"
+      "targetDismissed": "Target Dismissed",
+      "muscleTagCount": "{count} tag(s) found",
+      "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",
+      "muscleTagSaveError": "Error saving muscle tag: {error}",
+      "muscleTagExists": "Tag \"{tag}\" already exists",
+      "muscleTagSimilarFound": "{count} similar tag(s) found",
+      "muscleTagExportError": "Error exporting muscle tags: {error}",
+      "muscleTagImported": "{count} muscle tag(s) imported successfully!",
+      "muscleTagImportError": "Error importing muscle tags: {error}",
+      "muscleTagImportInvalidGroup": "Invalid muscle group \"{group}\" for tag \"{tag}\". Must be a canonical muscle group.",
+      "muscleTagImportPreview": "{count} tag(s) to import",
+      "migrationComplete": "Migration complete. Updated {count} exercise files."
     },
     "notes": "Notes (optional):",
     "workout": "Workout (optional):",
@@ -527,7 +613,11 @@
       "heartRate": "Heart Rate",
       "notes": "Notes",
       "protocol": "Protocol",
-      "actions": "Actions"
+      "actions": "Actions",
+      "volumeUnit": "Volume ({weightUnit})",
+      "weightUnit": "Weight ({weightUnit})",
+      "distanceUnit": "Distance ({distanceUnit})",
+      "pace": "Pace (min/km)"
     },
     "labels": {
       "data": "Date",
@@ -598,7 +688,7 @@
       "title": "Summary",
       "totalWorkouts": "Total workouts",
       "currentStreak": "Current streak",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} weeks",
       "totalVolume": "Total volume",
       "totalVolumeSuffix": "{unit}",
       "personalRecords": "Personal records"
@@ -610,11 +700,14 @@
       "muscleBreakdownTitle": "Top exercises by volume",
       "volumeSuffix": "{unit}"
     },
+    "muscleTags": {
+      "tooltip": "Click to copy: {tag}",
+      "totalCount": "Total: {count} tags available"
+    },
     "addWorkoutLog": "Add Workout Log",
     "allValid": "All Valid",
     "chartTitle": "Chart Title",
     "clearFilter": "Clear Filter",
-    "clickToFilter": "Click To Filter",
     "columnActual": "Column Actual",
     "columnDate": "Column Date",
     "columnEntries": "Column Entries",
@@ -630,11 +723,23 @@
     "disclaimer": "Disclaimer",
     "fallbackName": "Fallback Name",
     "filterActive": "Filter Active",
-    "minutesSuffix": "Minutes Suffix",
+    "durationComparison": {
+      "minutesSuffix": "Minutes Suffix"
+    },
+    "fileErrors": {
+      "allValid": "All Valid",
+      "noTags": "No Tags",
+      "tooManyTags": "Too many muscle tags ({count})",
+      "readError": "❌ Error reading file: {message}"
+    },
+    "protocol": {
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})",
+      "percentLabel": "Percent Label",
+      "clickToFilter": "Click To Filter"
+    },
     "month": "Month",
     "muscleBreakdownTitle": "Muscle Breakdown Title",
     "noData": "No Data",
-    "noTags": "No Tags",
     "overEstimated": "Over Estimated",
     "percentLabel": "Percent Label",
     "personalRecords": "Personal Records",
@@ -705,7 +810,8 @@
       "workoutData": "Workout data",
       "workoutLog": "Workout log",
       "currentFile": "Current file",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "dailyVolume": "Daily volume ({unit})"
     },
     "actions": {
       "editWorkout": "Edit workout",
@@ -803,7 +909,25 @@
     "notAvailable": "Not Available",
     "unknown": "Unknown",
     "workout": "Workout",
-    "workoutName": "Workout Name"
+    "workoutName": "Workout Name",
+    "sec": "sec",
+    "min": "min",
+    "hr": "hr",
+    "km": "km",
+    "mi": "mi",
+    "bpm": "bpm",
+    "minPerKm": "min/km",
+    "kg": "kg",
+    "lb": "lb"
+  },
+  "logs": {
+    "noDataTitle": "No logs found for {exerciseName}",
+    "createFirstLogButton": "Create first log for {exerciseName}",
+    "createFirstLogButtonAria": "Create first log for {exerciseName}",
+    "addLogButtonText": "Add log for {exerciseName}",
+    "addLogButtonAria": "Add log for {exerciseName}",
+    "createLogButtonText": "Create log for: {exerciseName}",
+    "createLogButtonAria": "Create log for: {exerciseName}"
   },
   "descriptions": {
     "insertTable": "Insert Table"

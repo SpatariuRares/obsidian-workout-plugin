@@ -13,7 +13,7 @@ export class SummaryWidget {
     _params: EmbeddedDashboardParams,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.summary.title"),
       className: "workout-summary-widget",
     });
 
@@ -25,28 +25,28 @@ export class SummaryWidget {
 
     this.createSummaryCard(
       summaryEl,
-      t("dashboard.totalWorkouts"),
+      t("dashboard.summary.totalWorkouts"),
       metrics.totalWorkouts.toString(),
       t("icons.dashboard.summary.totalWorkouts"),
     );
 
     this.createSummaryCard(
       summaryEl,
-      t("dashboard.currentStreak"),
-      t("dashboard.currentStreakSuffix", { count: metrics.currentStreak }),
+      t("dashboard.summary.currentStreak"),
+      t("dashboard.summary.currentStreakSuffix", { count: metrics.currentStreak }),
       t("icons.dashboard.summary.currentStreak"),
     );
 
     this.createSummaryCard(
       summaryEl,
-      t("dashboard.totalVolume"),
+      t("dashboard.summary.totalVolume"),
       `${metrics.totalVolume.toLocaleString()} ${t("dashboard.summary.totalVolumeSuffix")}`,
       t("icons.dashboard.summary.totalVolume"),
     );
 
     this.createSummaryCard(
       summaryEl,
-      t("dashboard.personalRecords"),
+      t("dashboard.summary.personalRecords"),
       metrics.personalRecords.toString(),
       t("icons.dashboard.summary.personalRecords"),
     );

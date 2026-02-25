@@ -4,7 +4,7 @@ import {
   CHART_DATA_TYPE,
   EmbeddedChartParams,
 } from "@app/features/charts/types";
-import { ChartLabels, ChartConfigBuilder } from "@app/features/charts/config";
+import { getChartLabels, ChartConfigBuilder } from "@app/features/charts/config";
 
 // Mock DOM createElement
 const createMockElement = (id?: string): HTMLElement => {
@@ -64,9 +64,10 @@ jest.mock("@app/features/charts/config", () => ({
       secondary: "rgba(100, 150, 200, 0.5)",
     })),
   },
-  ChartLabels: {
+  getChartLabels: jest.fn(() => ({
     TREND_LINE: "Trend Line",
-  },
+    X_AXIS: "Date",
+  })),
   getDefaultChartTitle: jest.fn(() => "Test Chart"),
   ChartConfigBuilder: {
     createChartConfig: jest.fn(
@@ -276,7 +277,7 @@ describe("ChartRenderer", () => {
       ChartRenderer.addTrendLineToDatasets(datasets);
 
       expect(datasets.length).toBe(2);
-      expect(datasets[1].label).toBe(ChartLabels.TREND_LINE);
+      expect(datasets[1].label).toBe(getChartLabels().TREND_LINE);
       // Data should be [90+0, 90+10, 90+20] = [90, 100, 110]
       // Note: usage is slope * index + intercept
       // Index 0: 10 * 0 + 90 = 90

@@ -9,7 +9,7 @@ export {
   type ColorScheme,
 } from "@app/features/charts/config/ChartTheme";
 export {
-  ChartLabels,
+  getChartLabels,
   ChartStyling,
   ChartInteraction,
   getDefaultChartTitle,

@@ -10,7 +10,7 @@ import {
   ColorScheme,
 } from "@app/features/charts/config/ChartTheme";
 import {
-  ChartLabels,
+  getChartLabels,
   ChartStyling,
   ChartInteraction,
   getYAxisLabel,
@@ -96,7 +96,7 @@ export class ChartConfigBuilder {
    */
   static createScalesConfig(colors: ChartColorPalette, chartType: string) {
     return {
-      x: this.createAxisConfig(colors, ChartLabels.X_AXIS, true),
+      x: this.createAxisConfig(colors, getChartLabels().X_AXIS, true),
       y: this.createAxisConfig(colors, getYAxisLabel(chartType), true),
     };
   }
@@ -203,7 +203,7 @@ export class ChartConfigBuilder {
    * Finds the trend line dataset in an array of datasets
    */
   static findTrendDataset(datasets: ChartDataset[]): ChartDataset | undefined {
-    return datasets.find((ds) => ds.label === ChartLabels.TREND_LINE);
+    return datasets.find((ds) => ds.label === getChartLabels().TREND_LINE);
   }
 
   /**

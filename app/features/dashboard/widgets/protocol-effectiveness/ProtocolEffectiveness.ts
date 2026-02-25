@@ -55,7 +55,7 @@ export class ProtocolEffectiveness {
     plugin?: WorkoutChartsPlugin
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.protocolEffectiveness.title"),
       className: "workout-protocol-effectiveness",
       isWide: true,
     });
@@ -66,7 +66,7 @@ export class ProtocolEffectiveness {
     // Check if there's enough data
     if (stats.length === 0) {
       widgetEl.createEl("div", {
-        text: t("dashboard.noData"),
+        text: t("dashboard.protocolEffectiveness.noData"),
         cls: "workout-protocol-effectiveness-no-data",
       });
       return;
@@ -77,7 +77,7 @@ export class ProtocolEffectiveness {
 
     // Render disclaimer
     widgetEl.createEl("div", {
-      text: t("dashboard.disclaimer"),
+      text: t("dashboard.protocolEffectiveness.disclaimer"),
       cls: "workout-protocol-effectiveness-disclaimer",
     });
   }
@@ -298,16 +298,16 @@ export class ProtocolEffectiveness {
     const headerRow = thead.createEl("tr");
 
     headerRow.createEl("th", {
-      text: t("dashboard.columnProtocol"),
+      text: t("dashboard.protocolEffectiveness.columnProtocol"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnEntries"),
+      text: t("dashboard.protocolEffectiveness.columnEntries"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnVolumeChange"),
+      text: t("dashboard.protocolEffectiveness.columnVolumeChange"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnProgression"),
+      text: t("dashboard.protocolEffectiveness.columnProgression"),
     });
 
     // Body

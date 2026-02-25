@@ -13,7 +13,7 @@ export class QuickActions {
     plugin: WorkoutChartsPlugin,
   ): void {
     const actionsEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.quickActions.title"),
       className: "workout-quick-actions",
     });
 
@@ -22,10 +22,9 @@ export class QuickActions {
 
     // Add workout log button
     const addLogBtn = Button.create(buttonsEl, {
-      text: t("dashboard.addWorkoutLog"),
+      text: t("dashboard.quickActions.addWorkoutLog"),
       variant: "primary",
-      ariaLabel:
-        t("dashboard.addWorkoutLog"),
+      ariaLabel: t("dashboard.quickActions.addWorkoutLog"),
     });
 
     Button.onClick(addLogBtn, () => {
@@ -34,10 +33,9 @@ export class QuickActions {
 
     // View all exercises button
     const viewExercisesBtn = Button.create(buttonsEl, {
-      text: t("dashboard.viewExercises"),
+      text: t("dashboard.quickActions.viewExercises"),
       variant: "secondary",
-      ariaLabel:
-        t("dashboard.viewExercises"),
+      ariaLabel: t("dashboard.quickActions.viewExercises"),
     });
 
     Button.onClick(viewExercisesBtn, () => {

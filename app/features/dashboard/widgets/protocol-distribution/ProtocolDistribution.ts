@@ -100,8 +100,8 @@ export class ProtocolDistribution {
     this.onFilterChange = onFilterChange || null;
 
     const widgetEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
-      subtitle: t("dashboard.subtitle"),
+      title: t("dashboard.protocolDistribution.title"),
+      subtitle: t("dashboard.protocolDistribution.subtitle"),
       className: "workout-protocol-distribution",
       isWide: true,
     });
@@ -116,7 +116,7 @@ export class ProtocolDistribution {
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
       widgetEl.createEl("div", {
-        text: t("dashboard.noData"),
+        text: t("dashboard.protocolDistribution.noData"),
         cls: "workout-protocol-no-data",
       });
       return;
@@ -155,10 +155,10 @@ export class ProtocolDistribution {
     const filterLabel = activeStat?.label || activeFilter;
 
     FilterIndicator.create(container, {
-      label: t("dashboard.filterActive"),
+      label: t("dashboard.protocolDistribution.filterActive"),
       filterValue: filterLabel,
       color: activeStat?.color,
-      clearText: t("dashboard.clearFilter"),
+      clearText: t("dashboard.protocolDistribution.clearFilter"),
       className: "workout-protocol-filter-indicator",
       onClear: () => this.handleFilterChange(null),
     });

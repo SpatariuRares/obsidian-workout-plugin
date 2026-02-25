@@ -455,8 +455,8 @@ export function getDynamicDashboardLabels() {
   return {
     QUICK_STATS: {
       METRICS: {
-        TOTAL_VOLUME: t("general.labels.totalVolume", { weightUnit }),
-        AVG_VOLUME: t("general.labels.avgVolume", { weightUnit }),
+        TOTAL_VOLUME: t("general.labels.totalVolume", { unit: weightUnit }),
+        AVG_VOLUME: t("general.labels.avgVolume", { unit: weightUnit }),
       },
     },
     RECENT_WORKOUTS: {
@@ -466,7 +466,7 @@ export function getDynamicDashboardLabels() {
       TOTAL_VOLUME_SUFFIX: weightUnit,
     },
     VOLUME_ANALYTICS: {
-      DATASET_LABEL: t("general.labels.dailyVolume", { weightUnit }),
+      DATASET_LABEL: t("general.labels.dailyVolume", { unit: weightUnit }),
       VOLUME_SUFFIX: weightUnit,
     },
   };
@@ -514,10 +514,10 @@ export function getDynamicGeneralLabels() {
   const weightUnit = getWeightUnit();
   return {
     LABELS: {
-      TOTAL_VOLUME: t("general.labels.totalVolume", { weightUnit }),
-      AVG_VOLUME: t("general.labels.avgVolume", { weightUnit }),
-      TOTAL_WEIGHT: t("general.labels.totalWeight", { weightUnit }),
-      AVG_WEIGHT: t("general.labels.avgWeight", { weightUnit }),
+      TOTAL_VOLUME: t("general.labels.totalVolume", { unit: weightUnit }),
+      AVG_VOLUME: t("general.labels.avgVolume", { unit: weightUnit }),
+      TOTAL_WEIGHT: t("general.labels.totalWeight", { unit: weightUnit }),
+      AVG_WEIGHT: t("general.labels.avgWeight", { unit: weightUnit }),
     },
   };
 }

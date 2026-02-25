@@ -66,8 +66,8 @@ export class DurationComparison {
     _params: EmbeddedDashboardParams,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
-      subtitle: t("dashboard.subtitle"),
+      title: t("dashboard.durationComparison.title"),
+      subtitle: t("dashboard.durationComparison.subtitle"),
       className: "workout-duration-comparison",
       isWide: true,
     });
@@ -78,7 +78,7 @@ export class DurationComparison {
     // Check if there's enough data
     if (sessions.length === 0) {
       widgetEl.createEl("div", {
-        text: t("dashboard.noData"),
+        text: t("dashboard.durationComparison.noData"),
         cls: "workout-duration-comparison-no-data",
       });
       return;
@@ -275,16 +275,16 @@ export class DurationComparison {
     const headerRow = thead.createEl("tr");
 
     headerRow.createEl("th", {
-      text: t("dashboard.columnWorkout"),
+      text: t("dashboard.durationComparison.columnWorkout"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnEstimated"),
+      text: t("dashboard.durationComparison.columnEstimated"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnActual"),
+      text: t("dashboard.durationComparison.columnActual"),
     });
     headerRow.createEl("th", {
-      text: t("dashboard.columnVariance"),
+      text: t("dashboard.durationComparison.columnVariance"),
     });
 
     // Body
@@ -353,7 +353,7 @@ export class DurationComparison {
 
     // Title
     trendEl.createEl("div", {
-      text: t("dashboard.varianceTrendTitle"),
+      text: t("dashboard.durationComparison.varianceTrendTitle"),
       cls: "workout-duration-comparison-trend-title",
     });
 
@@ -377,10 +377,10 @@ export class DurationComparison {
 
     const trendText =
       trend.direction === "improving"
-        ? t("dashboard.varianceTrendImproving")
+        ? t("dashboard.durationComparison.varianceTrendImproving")
         : trend.direction === "declining"
-          ? t("dashboard.varianceTrendDeclining")
-          : t("dashboard.varianceTrendStable");
+          ? t("dashboard.durationComparison.varianceTrendDeclining")
+          : t("dashboard.durationComparison.varianceTrendStable");
 
     messageEl.createEl("span", {
       text: trendText,

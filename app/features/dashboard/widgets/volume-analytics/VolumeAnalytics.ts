@@ -19,7 +19,7 @@ export class VolumeAnalytics {
     _params: EmbeddedDashboardParams,
   ): void {
     const analyticsEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.volumeAnalytics.title"),
       className: "workout-volume-analytics",
       isWide: true,
     });
@@ -45,7 +45,7 @@ export class VolumeAnalytics {
       ],
       {
         type: CHART_DATA_TYPE.VOLUME,
-        title: t("dashboard.chartTitle"),
+        title: t("dashboard.volumeAnalytics.chartTitle"),
       },
     );
 
@@ -63,7 +63,7 @@ export class VolumeAnalytics {
     data: [string, number][],
   ): void {
     container.createEl("h4", {
-      text: t("dashboard.muscleGroupBreakdown"),
+      text: t("dashboard.volumeAnalytics.muscleBreakdownTitle"),
     });
 
     const listEl = ListItem.createList(container, {

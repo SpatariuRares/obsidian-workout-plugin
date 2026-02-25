@@ -7,7 +7,7 @@ import {
 import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import {
   ChartColors,
-  ChartLabels,
+  getChartLabels,
   getDefaultChartTitle,
   ChartConfigBuilder,
   DatasetStyler,
@@ -49,7 +49,7 @@ export class ChartRenderer {
       );
 
       datasets.push({
-        label: ChartLabels.TREND_LINE,
+        label: getChartLabels().TREND_LINE,
         data: trendData,
       });
     }

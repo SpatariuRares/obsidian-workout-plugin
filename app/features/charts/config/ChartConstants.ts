@@ -3,26 +3,29 @@
  * Centralizes all magic strings, labels, and default values.
  */
 
-import { CONSTANTS } from "@app/constants";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
 
 /**
- * Default chart labels and text
+ * Default chart labels and text.
+ * Returns a fresh object each call so that t() is evaluated at runtime
+ * (after the i18n service is initialized), not at module-load time.
  */
-export const ChartLabels = {
-  TREND_LINE: t("charts.trendLine"),
-  X_AXIS: t("charts.date"),
-  Y_AXIS: {
-    VOLUME: t("charts.labels.volume"),
-    WEIGHT: t("charts.labels.weight"),
-    REPS: t("charts.labels.reps"),
-  },
-  UNITS: {
-    WEIGHT: t("charts.labels.weight"),
-    REPS: t("charts.labels.reps"),
-  },
-} as const;
+export function getChartLabels() {
+  return {
+    TREND_LINE: t("charts.trendLine"),
+    X_AXIS: t("charts.date"),
+    Y_AXIS: {
+      VOLUME: t("charts.labels.volume"),
+      WEIGHT: t("charts.labels.weight"),
+      REPS: t("charts.labels.reps"),
+    },
+    UNITS: {
+      WEIGHT: t("charts.labels.weight"),
+      REPS: t("charts.labels.reps"),
+    },
+  };
+}
 
 /**
  * Default chart styling values
@@ -100,16 +103,17 @@ export function getUnitForChartType(chartType: string): string {
  */
 export function getYAxisLabel(chartType: string): string {
   const weightUnit = ParameterUtils.getWeightUnit();
+  const labels = getChartLabels();
 
   switch (chartType) {
     case t("charts.labels.volume"):
-      return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;
+      return `${labels.Y_AXIS.VOLUME} (${weightUnit})`;
     case t("charts.labels.weight"):
-      return `${ChartLabels.Y_AXIS.WEIGHT} (${weightUnit})`;
+      return `${labels.Y_AXIS.WEIGHT} (${weightUnit})`;
     case t("charts.labels.reps"):
-      return ChartLabels.Y_AXIS.REPS;
+      return labels.Y_AXIS.REPS;
     default:
-      return `${ChartLabels.Y_AXIS.VOLUME} (${weightUnit})`;
+      return `${labels.Y_AXIS.VOLUME} (${weightUnit})`;
   }
 }
 

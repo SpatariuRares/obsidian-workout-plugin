@@ -4,24 +4,26 @@ import type WorkoutChartsPlugin from "main";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 
-const MUSCLE_GROUP_EMOJI: Record<string, string> = {
-  chest: t("icons.exercise.chest"),
-  back: t("icons.exercise.back"),
-  shoulders: t("icons.exercise.shoulders"),
-  biceps: t("icons.exercise.biceps"),
-  triceps: t("icons.exercise.triceps"),
-  forearms: t("icons.exercise.forearms"),
-  quads: t("icons.exercise.quads"),
-  hamstrings: t("icons.exercise.hamstrings"),
-  glutes: t("icons.exercise.glutes"),
-  calves: t("icons.exercise.calves"),
-  abs: t("icons.exercise.abs"),
-  core: t("icons.exercise.core"),
-  traps: t("icons.exercise.traps"),
-  rear_delts: t("icons.exercise.rear_delts"),
-};
+function getMuscleGroupEmoji(muscleGroup: string): string {
+  const MUSCLE_GROUP_EMOJI: Record<string, string> = {
+    chest: t("icons.exercise.chest"),
+    back: t("icons.exercise.back"),
+    shoulders: t("icons.exercise.shoulders"),
+    biceps: t("icons.exercise.biceps"),
+    triceps: t("icons.exercise.triceps"),
+    forearms: t("icons.exercise.forearms"),
+    quads: t("icons.exercise.quads"),
+    hamstrings: t("icons.exercise.hamstrings"),
+    glutes: t("icons.exercise.glutes"),
+    calves: t("icons.exercise.calves"),
+    abs: t("icons.exercise.abs"),
+    core: t("icons.exercise.core"),
+    traps: t("icons.exercise.traps"),
+    rear_delts: t("icons.exercise.rear_delts"),
+  };
 
-const DEFAULT_EMOJI = t("icons.exercise.deadlift");
+  return MUSCLE_GROUP_EMOJI[muscleGroup] ?? t("icons.exercise.deadlift");
+}
 
 /**
  * Widget that displays available muscle group tags in the plugin
@@ -34,14 +36,14 @@ export class MuscleTagsWidget {
     plugin: WorkoutChartsPlugin,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.muscleTags.title"),
       className: "workout-muscle-tags-widget",
       isWide: true,
     });
 
     widgetEl.createEl("p", {
       cls: "workout-widget-description",
-      text: t("dashboard.description"),
+      text: t("dashboard.muscleTags.description"),
     });
 
     // Create muscle tags grid
@@ -79,7 +81,7 @@ export class MuscleTagsWidget {
     muscleGroup: string,
   ): void {
     CopyableBadge.create(container, {
-      icon: MUSCLE_GROUP_EMOJI[muscleGroup] ?? DEFAULT_EMOJI,
+      icon: getMuscleGroupEmoji(muscleGroup),
       text: this.formatMuscleName(tag),
       copyValue: tag,
       tooltip: t("dashboard.muscleTags.tooltip", { tag }),

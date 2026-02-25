@@ -20,7 +20,7 @@ export class WidgetsFileError {
     plugin: WorkoutChartsPlugin,
   ): Promise<void> {
     const errorEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.fileErrors.title"),
       className: "workout-file-errors",
     });
 

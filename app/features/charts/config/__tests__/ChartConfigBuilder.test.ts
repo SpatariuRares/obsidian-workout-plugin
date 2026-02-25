@@ -1,7 +1,7 @@
 import { ChartConfigBuilder } from "../ChartConfigBuilder";
 import {
   ChartInteraction,
-  ChartLabels,
+  getChartLabels,
   ChartStyling,
   getUnitForChartType,
   getYAxisLabel,
@@ -86,7 +86,7 @@ describe("ChartConfigBuilder", () => {
       "weight",
     );
 
-    expect(scales.x.title.text).toBe(ChartLabels.X_AXIS);
+    expect(scales.x.title.text).toBe(getChartLabels().X_AXIS);
     expect(scales.y.title.text).toBe(getYAxisLabel("weight"));
 
     const interaction = ChartConfigBuilder.createInteractionConfig();

@@ -16,7 +16,7 @@ export class QuickStatsCards {
     _params: EmbeddedDashboardParams,
   ): void {
     const cardsEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.summary.title"),
       className: "workout-stats-cards",
     });
 
@@ -32,19 +32,19 @@ export class QuickStatsCards {
     // Render stats cards
     this.createStatsCard(
       statsGrid,
-      t("dashboard.week"),
+      t("dashboard.quickStats.week"),
       weekStats,
       t("icons.dashboard.quickStats.periods.week"),
     );
     this.createStatsCard(
       statsGrid,
-      t("dashboard.month"),
+      t("dashboard.quickStats.month"),
       monthStats,
       t("icons.dashboard.quickStats.periods.month"),
     );
     this.createStatsCard(
       statsGrid,
-      t("dashboard.year"),
+      t("dashboard.quickStats.year"),
       yearStats,
       t("icons.dashboard.quickStats.periods.year"),
     );
@@ -70,7 +70,7 @@ export class QuickStatsCards {
     StatCard.create(statsEl, {
       icon: t("icons.dashboard.quickStats.metrics.workouts"),
       value: stats.workouts.toString(),
-      label: t("dashboard.workouts"),
+      label: t("dashboard.quickStats.workouts"),
       className: "workout-stat-item",
     });
 
@@ -78,7 +78,7 @@ export class QuickStatsCards {
     StatCard.create(statsEl, {
       icon: t("icons.dashboard.quickStats.metrics.totalVolume"),
       value: stats.volume.toLocaleString(),
-      label: t("dashboard.quickStats.metrics.totalVolume"),
+      label: CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME,
       className: "workout-stat-item",
     });
 
@@ -86,7 +86,7 @@ export class QuickStatsCards {
     StatCard.create(statsEl, {
       icon: t("icons.dashboard.quickStats.metrics.avgVolume"),
       value: stats.avgVolume.toLocaleString(),
-      label: t("dashboard.quickStats.metrics.avgVolume"),
+      label: CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
       className: "workout-stat-item",
     });
   }

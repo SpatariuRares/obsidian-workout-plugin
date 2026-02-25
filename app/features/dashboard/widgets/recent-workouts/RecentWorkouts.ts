@@ -13,7 +13,7 @@ export class RecentWorkouts {
     _params: EmbeddedDashboardParams
   ): void {
     const recentEl = WidgetContainer.create(container, {
-      title: t("dashboard.title"),
+      title: t("dashboard.recentWorkouts.title"),
       className: "workout-recent-workouts",
     });
 
@@ -29,7 +29,7 @@ export class RecentWorkouts {
         secondary: workout.date,
         label:
           workout.workout ||
-          t("dashboard.fallbackName"),
+          t("dashboard.recentWorkouts.fallbackName"),
         value: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
         className: "workout-recent-workout-item",
         labelClassName: "workout-recent-name",

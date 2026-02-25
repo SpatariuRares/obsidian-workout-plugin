@@ -1,6 +1,9 @@
 import { ChartConfigBuilder } from "@app/features/charts/config/ChartConfigBuilder";
-import { ChartLabels, ChartStyling } from "@app/features/charts/config/ChartConstants";
-import { ChartColorPalette, ColorScheme } from "@app/features/charts/config/ChartTheme";
+import { ChartStyling, getChartLabels } from "@app/features/charts/config/ChartConstants";
+import {
+  ChartColorPalette,
+  ColorScheme,
+} from "@app/features/charts/config/ChartTheme";
 import { ChartDataset } from "@app/features/charts/types";
 
 describe("ChartConfigBuilder dataset styling", () => {
@@ -50,7 +53,7 @@ describe("ChartConfigBuilder dataset styling", () => {
 
   it("styles the trend dataset", () => {
     const dataset: ChartDataset = {
-      label: ChartLabels.TREND_LINE,
+      label: "",
       data: [1, 2],
     };
 
@@ -67,7 +70,7 @@ describe("ChartConfigBuilder dataset styling", () => {
   it("finds the trend dataset by label", () => {
     const datasets: ChartDataset[] = [
       { label: "Main", data: [1] },
-      { label: ChartLabels.TREND_LINE, data: [2] },
+      { label: getChartLabels().TREND_LINE, data: [2] },
     ];
 
     expect(ChartConfigBuilder.findTrendDataset(datasets)).toBe(datasets[1]);
@@ -76,7 +79,7 @@ describe("ChartConfigBuilder dataset styling", () => {
   it("styles datasets through the combined helper", () => {
     const datasets: ChartDataset[] = [
       { label: "Main", data: [1] },
-      { label: ChartLabels.TREND_LINE, data: [2] },
+      { label: getChartLabels().TREND_LINE, data: [2] },
     ];
 
     ChartConfigBuilder.styleDatasets(datasets, scheme, palette);

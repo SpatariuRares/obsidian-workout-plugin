@@ -1,5 +1,6 @@
 import { BUILT_IN_EXERCISE_TYPES } from "@app/constants/exerciseTypes.constants";
 import { Setting } from "obsidian";
+import { t } from "@app/i18n";
 
 export class ConversionTypeSelect {
   private container: HTMLElement;
@@ -9,7 +10,7 @@ export class ConversionTypeSelect {
   constructor(
     parent: HTMLElement,
     onTypeChange: (typeId: string) => void,
-    onUpdateFrontmatterChange: (update: boolean) => void
+    onUpdateFrontmatterChange: (update: boolean) => void,
   ) {
     this.container = parent.createDiv("workout-conversion-type-select");
     this.onTypeChange = onTypeChange;
@@ -25,7 +26,7 @@ export class ConversionTypeSelect {
     });
 
     new Setting(this.container)
-      .setName("Convert to:")
+      .setName(t("convert.typeSelect.convertTo"))
       .addDropdown((dropdown) => {
         dropdown.addOptions(options);
         dropdown.onChange((value) => {
@@ -34,7 +35,7 @@ export class ConversionTypeSelect {
       });
 
     new Setting(this.container)
-      .setName("Update exercise file type")
+      .setName(t("convert.typeSelect.updateFileType"))
       .addToggle((toggle) => {
         toggle.setValue(true);
         toggle.onChange((value) => {

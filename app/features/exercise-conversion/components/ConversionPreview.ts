@@ -1,5 +1,6 @@
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import { ListItem } from "@app/components/molecules";
+import { t } from "@app/i18n";
 
 export class ConversionPreview {
   private container: HTMLElement;
@@ -27,18 +28,19 @@ export class ConversionPreview {
   private render(): void {
     this.container.empty();
 
-    this.container.createEl("h3", { text: "Preview" });
+    this.container.createEl("h3", { text: t("convert.preview.title") });
 
     if (this.entryCount > 0) {
       this.container.createEl("p", {
-        text: `${this.entryCount} log ${
-          this.entryCount === 1 ? "entry" : "entries"
-        } will be converted`,
+        text:
+          this.entryCount === 1
+            ? t("convert.preview.willConvertOne")
+            : t("convert.preview.willConvertMany", { count: this.entryCount }),
         cls: "workout-convert-preview-count",
       });
     } else {
       this.container.createEl("p", {
-        text: "No log entries found for this exercise",
+        text: t("convert.preview.noEntries"),
         cls: "workout-convert-preview-warning",
       });
     }

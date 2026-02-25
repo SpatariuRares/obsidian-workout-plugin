@@ -68,6 +68,14 @@
       "cardio": "⭐",
       "push": "🔼",
       "pull": "⬇️"
+    },
+    "timer": {
+      "play": "▶",
+      "pause": "⏸",
+      "reset": "↺"
+    },
+    "duration": {
+      "timer": "⏱️"
     }
   },
   "modal": {
@@ -127,6 +135,8 @@
       "protocol": "Protocol:"
     },
     "placeholders": {
+      "selectWorkoutFile": "Select a workout file to export...",
+      "selectMuscleGroup": "Select muscle group...",
       "searchTags": "Search by tag or muscle group...",
       "searchMuscleTags": "Search muscle tags...",
       "enterTagName": "Enter tag name (e.g., chest, petto)",
@@ -162,7 +172,6 @@
       "exerciseSectionCreated": "✅ exercise section created successfully!",
       "genericError": "Error: {error}",
       "timerElementsNotInitialized": "Timer elements not initialized",
-      "auditConfirmRename": "Audit Confirm Rename \n\n ",
       "auditConfirmRenameFile": "Audit Confirm Rename File \n\n {oldName} -> {newName}",
       "auditNoMismatches": "Audit No Mismatches",
       "auditRenameError": "Audit Rename Error: {error}",
@@ -197,6 +206,9 @@
       "muscleTagImportInvalidGroup": "Invalid muscle group \"{group}\" for tag \"{tag}\". Must be a canonical muscle group.",
       "muscleTagImportPreview": "{count} tag(s) to import",
       "migrationComplete": "Migration complete. Updated {count} exercise files."
+    },
+    "info": {
+      "dashboardDescription": "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions."
     },
     "notes": "Notes (optional):",
     "workout": "Workout (optional):",
@@ -411,6 +423,17 @@
         "lb": "Pounds (lb)"
       }
     },
+    "tooltips": {
+      "editProtocol": "Edit protocol",
+      "deleteProtocol": "Delete protocol",
+      "editPreset": "Edit preset",
+      "deletePreset": "Delete preset"
+    },
+    "placeholders": {
+      "protocolName": "Enter protocol name",
+      "protocolAbbreviation": "E.g., gs",
+      "presetName": "Enter preset name"
+    },
     "messages": {
       "presetNameRequired": "Preset name is required",
       "presetNameExists": "A preset with this name already exists",
@@ -515,7 +538,6 @@
       "currentStreak": "Current streak",
       "currentStreakSuffix": "{count} weeks",
       "totalVolume": "Total volume",
-      "totalVolumeSuffix": "{unit}",
       "personalRecords": "Personal records"
     },
     "volumeAnalytics": {
@@ -628,7 +650,15 @@
       "front": "Front",
       "back": "Back",
       "dashboard": "Dashboard",
-      "dailyVolume": "Daily volume ({unit})"
+      "dailyVolume": "Daily volume ({unit})",
+      "totalDuration": "Total duration (sec)",
+      "avgDuration": "Avg duration (sec)",
+      "totalDistance": "Total distance (km)",
+      "avgDistance": "Avg distance (km)",
+      "pace": "Pace (min/km)",
+      "avgHeartRate": "Avg heart rate (bpm)",
+      "totalCustom": "Total {label}",
+      "avgCustom": "Avg {label}"
     },
     "avgReps": "Avg Reps",
     "back": "Back",
@@ -683,7 +713,10 @@
     "sec": "sec",
     "km": "km",
     "bpm": "bpm",
-    "minPerKm": "min/km"
+    "minPerKm": "min/km",
+    "cancel": "Cancel",
+    "convert": "Convert",
+    "reps": "Reps"
   },
   "logs": {
     "noDataTitle": "No logs found for {exerciseName}",
@@ -711,7 +744,17 @@
   },
   "timer": {
     "countdown": "Countdown",
-    "interval": "Interval"
+    "interval": "Interval",
+    "stopwatch": "Stopwatch",
+    "controls": {
+      "startTimer": "Start timer",
+      "pauseTimer": "Pause timer",
+      "resetTimer": "Reset timer"
+    },
+    "presets": {
+      "detailsControls": "Controls",
+      "detailsSound": "Sound"
+    }
   },
   "trends": {
     "declining": "Declining",
@@ -884,5 +927,38 @@
       "paceTrackingNote": "Track your pace improvement (lower = faster):",
       "chartTitle": "Chart"
     }
+  },
+  "convert": {
+    "title": "Convert exercise data",
+    "currentType": "Current type:",
+    "sectionExercise": "Exercise",
+    "preview": {
+      "title": "Preview",
+      "noEntries": "No log entries found for this exercise",
+      "willConvertOne": "1 log entry will be converted",
+      "willConvertMany": "{count} log entries will be converted"
+    },
+    "fieldMapping": {
+      "title": "Field mapping",
+      "addMapping": "Add field mapping",
+      "removeMapping": "Remove mapping",
+      "reps": "Reps",
+      "weight": "Weight ({unit})"
+    },
+    "typeSelect": {
+      "convertTo": "Convert to:",
+      "updateFileType": "Update exercise file type"
+    },
+    "errors": {
+      "convertError": "Error converting exercise data: {error}"
+    },
+    "success": "Successfully converted {count} log entries"
+  },
+  "duration": {
+    "estimatedDuration": "Estimated duration",
+    "restTime": "Rest time",
+    "setTime": "Set time",
+    "lastSession": "Last session",
+    "unableToAnalyze": "Unable to analyze workout file"
   }
 }

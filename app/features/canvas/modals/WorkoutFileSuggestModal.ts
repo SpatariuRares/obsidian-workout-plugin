@@ -5,6 +5,7 @@
  * for canvas export.
  */
 import { App, FuzzySuggestModal, TFile } from "obsidian";
+import { t } from "@app/i18n";
 
 /**
  * Modal for selecting workout files using fuzzy search
@@ -15,7 +16,7 @@ export class WorkoutFileSuggestModal extends FuzzySuggestModal<TFile> {
   constructor(app: App, onChoose: (file: TFile) => void) {
     super(app);
     this.onChoose = onChoose;
-    this.setPlaceholder("Select a workout file to export...");
+    this.setPlaceholder(t("modal.placeholders.selectWorkoutFile"));
   }
 
   /**

@@ -18,7 +18,7 @@ interface RenderMuscleTagFormOptions {
 export class MuscleTagFormRenderer {
   private suggestionsContainer: HTMLElement | null = null;
 
-  constructor(private readonly formContainer: HTMLElement) { }
+  constructor(private readonly formContainer: HTMLElement) {}
 
   render(options: RenderMuscleTagFormOptions): void {
     this.formContainer.empty();
@@ -73,7 +73,7 @@ export class MuscleTagFormRenderer {
     });
 
     const emptyOption = groupSelect.createEl("option", {
-      text: "Select muscle group...",
+      text: t("modal.placeholders.selectMuscleGroup"),
       value: "",
     });
     emptyOption.disabled = true;
@@ -157,7 +157,9 @@ export class MuscleTagFormRenderer {
       cls: "workout-tag-suggestions-label",
     });
     header.createEl("span", {
-      text: t("modal.notices.muscleTagSimilarFound", { count: suggestions.length }),
+      text: t("modal.notices.muscleTagSimilarFound", {
+        count: suggestions.length,
+      }),
       cls: "workout-tag-suggestions-count",
     });
 
@@ -167,8 +169,9 @@ export class MuscleTagFormRenderer {
 
     for (const suggestion of suggestions) {
       const item = list.createEl("div", {
-        cls: `workout-tag-suggestion-item${suggestion.isVeryClose ? " workout-tag-suggestion-warning" : ""
-          }`,
+        cls: `workout-tag-suggestion-item${
+          suggestion.isVeryClose ? " workout-tag-suggestion-warning" : ""
+        }`,
       });
 
       if (suggestion.isVeryClose) {

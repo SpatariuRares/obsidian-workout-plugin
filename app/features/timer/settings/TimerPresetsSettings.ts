@@ -91,7 +91,7 @@ export class TimerPresetsSettings {
       .addButton((button) =>
         button
           .setIcon("pencil")
-          .setTooltip("Edit preset")
+          .setTooltip(t("settings.tooltips.editPreset"))
           .onClick(() => {
             this.showPresetEditor(preset);
           }),
@@ -99,7 +99,7 @@ export class TimerPresetsSettings {
       .addButton((button) =>
         button
           .setIcon("trash")
-          .setTooltip("Delete preset")
+          .setTooltip(t("settings.tooltips.deletePreset"))
           .onClick(() => {
             new ConfirmModal(
               this.app,
@@ -122,8 +122,8 @@ export class TimerPresetsSettings {
     }
 
     const options: string[] = [];
-    if (preset.showControls) options.push("Controls");
-    if (preset.sound) options.push("Sound");
+    if (preset.showControls) options.push(t("timer.presets.detailsControls"));
+    if (preset.sound) options.push(t("timer.presets.detailsSound"));
 
     if (options.length > 0) {
       parts.push(`Options: ${options.join(", ")}`);
@@ -171,7 +171,7 @@ export class TimerPresetsSettings {
       .addText((text) =>
         text
           .setValue(formState.name)
-          .setPlaceholder("Enter preset name")
+          .setPlaceholder(t("settings.placeholders.presetName"))
           .onChange((value) => {
             formState.name = value;
           }),
@@ -181,9 +181,9 @@ export class TimerPresetsSettings {
     new Setting(editorContainer)
       .setName(t("settings.labels.presetType"))
       .addDropdown((dropdown) => {
-        dropdown.addOption(TIMER_TYPE.COUNTDOWN, "Countdown");
-        dropdown.addOption(TIMER_TYPE.INTERVAL, "Interval");
-        dropdown.addOption(TIMER_TYPE.STOPWATCH, "Stopwatch");
+        dropdown.addOption(TIMER_TYPE.COUNTDOWN, t("timer.countdown"));
+        dropdown.addOption(TIMER_TYPE.INTERVAL, t("timer.interval"));
+        dropdown.addOption(TIMER_TYPE.STOPWATCH, t("timer.stopwatch"));
         dropdown.setValue(formState.type);
         dropdown.onChange((value) => {
           formState.type = value as TIMER_TYPE;
@@ -249,11 +249,9 @@ export class TimerPresetsSettings {
           }),
       )
       .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => {
-            editorContainer.remove();
-          }),
+        button.setButtonText(t("settings.buttons.cancel")).onClick(() => {
+          editorContainer.remove();
+        }),
       );
   }
 

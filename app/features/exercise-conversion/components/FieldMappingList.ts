@@ -1,10 +1,9 @@
-import {
-  EXERCISE_TYPE_IDS,
-} from "@app/constants/exerciseTypes.constants";
+import { EXERCISE_TYPE_IDS } from "@app/constants/exerciseTypes.constants";
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import { Button } from "@app/components/atoms";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { t } from "@app/i18n";
 
 export class FieldMappingList {
   private container: HTMLElement;
@@ -15,7 +14,7 @@ export class FieldMappingList {
 
   constructor(
     parent: HTMLElement,
-    onChange: (mappings: FieldMapping[]) => void
+    onChange: (mappings: FieldMapping[]) => void,
   ) {
     this.container = parent.createDiv("workout-convert-mappings-container");
     this.onChange = onChange;
@@ -23,11 +22,11 @@ export class FieldMappingList {
 
   public setTypes(
     source: ExerciseTypeDefinition,
-    target: ExerciseTypeDefinition
+    target: ExerciseTypeDefinition,
   ): void {
     this.sourceType = source;
     this.targetType = target;
-    // When types change, we might want to validate or clear mappings, 
+    // When types change, we might want to validate or clear mappings,
     // but the parent controller usually handles the logic of "resetting" mappings.
     // We just re-render if needed.
     this.render();
@@ -57,18 +56,20 @@ export class FieldMappingList {
       return;
     }
 
-    this.container.createEl("h3", { text: "Field mapping" });
+    this.container.createEl("h3", { text: t("convert.fieldMapping.title") });
 
-    const listContainer = this.container.createDiv("workout-convert-mapping-list");
+    const listContainer = this.container.createDiv(
+      "workout-convert-mapping-list",
+    );
 
     this.mappings.forEach((mapping, index) => {
       this.renderMappingRow(listContainer, mapping, index);
     });
 
     const addButton = Button.create(this.container, {
-      text: "Add field mapping",
+      text: t("convert.fieldMapping.addMapping"),
       variant: "secondary",
-      ariaLabel: "Add field mapping",
+      ariaLabel: t("convert.fieldMapping.addMapping"),
     });
     Button.onClick(addButton, () => {
       this.addEmptyMapping();
@@ -78,7 +79,7 @@ export class FieldMappingList {
   private renderMappingRow(
     parent: HTMLElement,
     mapping: FieldMapping,
-    index: number
+    index: number,
   ): void {
     const row = parent.createDiv("workout-convert-mapping-row");
 
@@ -114,7 +115,7 @@ export class FieldMappingList {
     const removeBtn = Button.create(row, {
       text: "×",
       variant: "warning",
-      ariaLabel: "Remove mapping",
+      ariaLabel: t("convert.fieldMapping.removeMapping"),
     });
     Button.onClick(removeBtn, () => {
       this.removeMapping(index);
@@ -162,15 +163,18 @@ export class FieldMappingList {
   }
 
   private getSourceFieldOptions(
-    type: ExerciseTypeDefinition
+    type: ExerciseTypeDefinition,
   ): Array<{ text: string; value: string }> {
     const options: Array<{ text: string; value: string }> = [];
 
     // Standard fields usage based on type
     if (type.id === EXERCISE_TYPE_IDS.STRENGTH) {
-      options.push({ text: "Reps", value: "reps" });
+      options.push({ text: t("convert.fieldMapping.reps"), value: "reps" });
       const weightUnit = ParameterUtils.getWeightUnit();
-      options.push({ text: `Weight (${weightUnit})`, value: "weight" });
+      options.push({
+        text: t("convert.fieldMapping.weight", { unit: weightUnit }),
+        value: "weight",
+      });
     }
 
     for (const param of type.parameters) {
@@ -183,7 +187,7 @@ export class FieldMappingList {
   }
 
   private getFieldOptions(
-    type: ExerciseTypeDefinition
+    type: ExerciseTypeDefinition,
   ): Array<{ text: string; value: string }> {
     return this.getSourceFieldOptions(type);
   }

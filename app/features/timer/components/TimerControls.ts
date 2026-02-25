@@ -1,5 +1,6 @@
 import { TimerState } from "@app/features/timer";
 import { Button } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -20,19 +21,19 @@ export class TimerControls {
     // Start/Stop button
     const startStopBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-start-stop",
-      text: "▶",
+      text: t("icons.timer.play"),
       variant: "secondary",
       size: "small",
-      ariaLabel: "Start timer",
+      ariaLabel: t("timer.controls.startTimer"),
     });
 
     // Reset button
     const resetBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-reset",
-      text: "↺",
+      text: t("icons.timer.reset"),
       variant: "secondary",
       size: "small",
-      ariaLabel: "Reset timer",
+      ariaLabel: t("timer.controls.resetTimer"),
     });
 
     // Add event listeners
@@ -40,19 +41,19 @@ export class TimerControls {
       const state = getState();
       if (state.isRunning) {
         callbacks.onStop();
-        startStopBtn.textContent = "▶";
-        startStopBtn.setAttribute("aria-label", "Start timer");
+        startStopBtn.textContent = t("icons.timer.play");
+        startStopBtn.setAttribute("aria-label", t("timer.controls.startTimer"));
       } else {
         callbacks.onStart();
-        startStopBtn.textContent = "⏸";
-        startStopBtn.setAttribute("aria-label", "Pause timer");
+        startStopBtn.textContent = t("icons.timer.pause");
+        startStopBtn.setAttribute("aria-label", t("timer.controls.pauseTimer"));
       }
     });
 
     Button.onClick(resetBtn, () => {
       callbacks.onReset();
       startStopBtn.textContent = "▶";
-      startStopBtn.setAttribute("aria-label", "Start timer");
+      startStopBtn.setAttribute("aria-label", t("timer.controls.startTimer"));
     });
 
     return startStopBtn;
@@ -63,7 +64,9 @@ export class TimerControls {
     isRunning: boolean,
   ): void {
     if (button) {
-      button.textContent = isRunning ? "⏸" : "▶";
+      button.textContent = isRunning
+        ? t("icons.timer.pause")
+        : t("icons.timer.play");
     }
   }
 }

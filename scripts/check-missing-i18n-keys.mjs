@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Script to check for missing i18n keys in en.json
- * Compares keys used in ui.constants.ts with keys present in en.json
+ * Script to check for missing i18n keys in all locale JSON files.
+ * Compares keys used in ui.constants.ts with keys present in each locale file.
  */
 
 import fs from "fs";
@@ -13,15 +13,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ROOT_DIR = path.resolve(__dirname, "..");
-const EN_JSON_PATH = path.join(ROOT_DIR, "app/i18n/locales/en.json");
+const LOCALES_DIR = path.join(ROOT_DIR, "app/i18n/locales");
 const UI_CONSTANTS_PATH = path.join(ROOT_DIR, "app/constants/ui.constants.ts");
 
 /**
- * Reads and parses the en.json file
+ * Reads and parses a JSON file
+ * @param {string} filePath
  * @returns {Object} Parsed JSON object
  */
-function readEnJson() {
-  const content = fs.readFileSync(EN_JSON_PATH, "utf-8");
+function readJson(filePath) {
+  const content = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(content);
 }
 
@@ -46,7 +47,6 @@ function extractJsonKeys(obj, prefix = "") {
     const fullKey = prefix ? `${prefix}.${key}` : key;
 
     if (value && typeof value === "object" && !Array.isArray(value)) {
-      // Recursively extract nested keys
       const nestedKeys = extractJsonKeys(value, fullKey);
       nestedKeys.forEach((k) => keys.add(k));
     } else {
@@ -64,8 +64,6 @@ function extractJsonKeys(obj, prefix = "") {
  */
 function extractUsedKeys(content) {
   const keys = new Set();
-
-  // Match t("key") or t('key') calls
   const regex = /t\(["']([^"']+)["']\)/g;
   let match;
 
@@ -76,70 +74,50 @@ function extractUsedKeys(content) {
   return keys;
 }
 
-/**
- * Main function
- */
 function main() {
-  console.log("🔍 Checking for missing i18n keys...\n");
+  console.log("🔍 Checking for missing i18n keys across all locales...\n");
 
-  // Read files
-  const enJson = readEnJson();
+  const localeFiles = fs.readdirSync(LOCALES_DIR).filter(f => f.endsWith(".json"));
   const uiConstantsContent = readUiConstants();
-
-  // Extract keys
-  const jsonKeys = extractJsonKeys(enJson);
   const usedKeys = extractUsedKeys(uiConstantsContent);
 
-  console.log(`📦 Keys in en.json: ${jsonKeys.size}`);
   console.log(`🔑 Keys used in ui.constants.ts: ${usedKeys.size}\n`);
 
-  // Find missing keys
-  const missingKeys = new Set();
-  for (const key of usedKeys) {
-    if (!jsonKeys.has(key)) {
-      missingKeys.add(key);
+  let totalMissing = 0;
+  let problematicLocales = 0;
+
+  for (const file of localeFiles) {
+    const filePath = path.join(LOCALES_DIR, file);
+    const localeData = readJson(filePath);
+    const jsonKeys = extractJsonKeys(localeData);
+
+    const missingKeys = [];
+    for (const key of usedKeys) {
+      if (!jsonKeys.has(key)) {
+        missingKeys.push(key);
+      }
     }
-  }
 
-  // Find unused keys (keys in JSON but not used in code)
-  const unusedKeys = new Set();
-  for (const key of jsonKeys) {
-    if (!usedKeys.has(key)) {
-      unusedKeys.add(key);
+    if (missingKeys.length === 0) {
+      console.log(`✅ ${file}: All keys present.`);
+    } else {
+      console.log(`❌ ${file}: Missing ${missingKeys.length} keys`);
+      problematicLocales++;
+      totalMissing += missingKeys.length;
+      if (missingKeys.length <= 10) {
+        missingKeys.sort().forEach(k => console.log(`   - ${k}`));
+      } else {
+        console.log(`   - ${missingKeys.slice(0, 10).join("\n   - ")}`);
+        console.log(`   ... and ${missingKeys.length - 10} more`);
+      }
     }
-  }
-
-  // Report results
-  if (missingKeys.size === 0) {
-    console.log("✅ All keys are present in en.json!");
-  } else {
-    console.log(`❌ Missing keys in en.json: ${missingKeys.size}\n`);
-    console.log("Missing keys:");
-    const sortedMissing = Array.from(missingKeys).sort();
-    sortedMissing.forEach((key) => {
-      console.log(`  - ${key}`);
-    });
-  }
-
-  console.log();
-
-  if (unusedKeys.size > 0) {
-    console.log(`⚠️  Unused keys in en.json: ${unusedKeys.size}\n`);
-    console.log("Unused keys (may be used elsewhere or legacy):");
-    const sortedUnused = Array.from(unusedKeys).sort();
-    sortedUnused.forEach((key) => {
-      console.log(`  - ${key}`);
-    });
   }
 
   console.log("\n" + "=".repeat(60));
-  console.log(
-    `Summary: ${missingKeys.size} missing, ${unusedKeys.size} unused`,
-  );
+  console.log(`Summary: ${problematicLocales} locales with missing keys, ${totalMissing} total missing references`);
   console.log("=".repeat(60));
 
-  // Exit with error code if there are missing keys
-  process.exit(missingKeys.size > 0 ? 1 : 0);
+  process.exit(problematicLocales > 0 ? 1 : 0);
 }
 
 main();

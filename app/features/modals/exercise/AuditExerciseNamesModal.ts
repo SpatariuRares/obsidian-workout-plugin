@@ -165,7 +165,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       text: t("modal.similarity"),
     });
     headerRow.createEl("th", { text: t("modal.status") });
-    headerRow.createEl("th", { text: "Actions" });
+    headerRow.createEl("th", { text: t("modal.labels.actions") });
 
     // Table body
     const tbody = table.createEl("tbody");

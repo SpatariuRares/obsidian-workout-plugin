@@ -102,28 +102,32 @@ export class ChartDataExtractor {
       case "duration":
         return {
           data: dataArrays.durationData,
-          label: isAggregate ? "Total duration (sec)" : "Avg duration (sec)",
+          label: isAggregate
+            ? t("general.labels.totalDuration")
+            : t("general.labels.avgDuration"),
           color: "#2196F3",
         };
 
       case "distance":
         return {
           data: dataArrays.distanceData,
-          label: isAggregate ? "Total distance (km)" : "Avg distance (km)",
+          label: isAggregate
+            ? t("general.labels.totalDistance")
+            : t("general.labels.avgDistance"),
           color: "#9C27B0",
         };
 
       case "pace":
         return {
           data: dataArrays.paceData,
-          label: "Pace (min/km)",
+          label: t("general.labels.pace"),
           color: "#E91E63",
         };
 
       case "heartRate":
         return {
           data: dataArrays.heartRateData,
-          label: "Avg heart rate (bpm)",
+          label: t("general.labels.avgHeartRate"),
           color: "#F44336",
         };
 
@@ -134,7 +138,9 @@ export class ChartDataExtractor {
             customParamLabel || ParameterUtils.keyToLabel(chartType);
           return {
             data: dataArrays.customData,
-            label: isAggregate ? `Total ${label}` : `Avg ${label}`,
+            label: isAggregate
+              ? t("general.labels.totalCustom", { label })
+              : t("general.labels.avgCustom", { label }),
             color: ParameterUtils.getColorForDataType(chartType),
           };
         }

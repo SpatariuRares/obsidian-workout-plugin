@@ -76,7 +76,7 @@ export class CustomProtocolsSettings {
       .addButton((button) =>
         button
           .setIcon("pencil")
-          .setTooltip("Edit protocol")
+          .setTooltip(t("settings.tooltips.editProtocol"))
           .onClick(() => {
             this.showProtocolEditor(protocol);
           }),
@@ -84,7 +84,7 @@ export class CustomProtocolsSettings {
       .addButton((button) =>
         button
           .setIcon("trash")
-          .setTooltip("Delete protocol")
+          .setTooltip(t("settings.tooltips.deleteProtocol"))
           .onClick(() => {
             new ConfirmModal(
               this.app,
@@ -156,7 +156,7 @@ export class CustomProtocolsSettings {
       .addText((text) =>
         text
           .setValue(formState.name)
-          .setPlaceholder("E.g., giant set")
+          .setPlaceholder(t("settings.placeholders.protocolName"))
           .onChange((value) => {
             formState.name = value;
             // Auto-generate ID from name if creating new protocol
@@ -176,7 +176,7 @@ export class CustomProtocolsSettings {
       .addText((text) =>
         text
           .setValue(formState.abbreviation)
-          .setPlaceholder("E.g., gs")
+          .setPlaceholder(t("settings.placeholders.protocolAbbreviation"))
           .onChange((value) => {
             // Limit to 3 characters
             formState.abbreviation = value.slice(0, 3).toUpperCase();
@@ -206,11 +206,9 @@ export class CustomProtocolsSettings {
           }),
       )
       .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => {
-            editorContainer.remove();
-          }),
+        button.setButtonText(t("settings.buttons.cancel")).onClick(() => {
+          editorContainer.remove();
+        }),
       );
   }
 

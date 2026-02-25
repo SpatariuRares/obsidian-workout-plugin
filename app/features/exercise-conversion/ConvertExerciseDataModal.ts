@@ -1,6 +1,7 @@
 import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import { t } from "@app/i18n";
 import {
   getExerciseTypeById,
   EXERCISE_TYPE_IDS,
@@ -48,7 +49,7 @@ export class ConvertExerciseDataModal extends ModalBase {
     contentEl.empty();
     contentEl.addClass("workout-modal");
 
-    contentEl.createEl("h2", { text: "Convert exercise data" });
+    contentEl.createEl("h2", { text: t("convert.title") });
 
     const mainContainer = this.createStyledMainContainer(contentEl);
 
@@ -87,7 +88,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   }
 
   private async createExerciseSection(parent: HTMLElement): Promise<void> {
-    const section = this.createSection(parent, "Exercise");
+    const section = this.createSection(parent, t("convert.sectionExercise"));
 
     const { elements } = ExerciseAutocomplete.create(
       this,
@@ -110,7 +111,7 @@ export class ConvertExerciseDataModal extends ModalBase {
     });
 
     const typeGroup = this.createFormGroup(section);
-    typeGroup.createEl("label", { text: "Current type:" });
+    typeGroup.createEl("label", { text: t("convert.currentType") });
     this.currentTypeDisplay = typeGroup.createEl("span", {
       cls: "workout-convert-current-type",
       text: "—",
@@ -121,15 +122,15 @@ export class ConvertExerciseDataModal extends ModalBase {
     const buttonsSection = Button.createContainer(parent);
 
     const cancelButton = Button.create(buttonsSection, {
-      text: "Cancel",
+      text: t("common.cancel"),
       variant: "secondary",
-      ariaLabel: "Cancel",
+      ariaLabel: t("common.cancel"),
     });
     Button.onClick(cancelButton, () => this.close());
 
     this.convertButton = Button.create(buttonsSection, {
-      text: "Convert",
-      ariaLabel: "Convert",
+      text: t("common.convert"),
+      ariaLabel: t("common.convert"),
       variant: "primary",
     });
     Button.setDisabled(this.convertButton, true);
@@ -238,13 +239,13 @@ export class ConvertExerciseDataModal extends ModalBase {
         );
       }
 
-      new Notice(`Successfully converted ${count} log entries`);
+      new Notice(t("convert.success", { count }));
       this.close();
       this.plugin.triggerWorkoutLogRefresh({
         exercise: this.selectedExercise,
       });
     } catch (error) {
-      new Notice("Error converting exercise data: " + error);
+      new Notice(t("convert.errors.convertError", { error: String(error) }));
     }
   }
 }

@@ -4,6 +4,7 @@
  */
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { FormatUtils } from "@app/utils/FormatUtils";
+import { t } from "@app/i18n";
 
 /** Default set duration in seconds (used for debug display) */
 const DEFAULT_SET_DURATION = 45;
@@ -49,12 +50,12 @@ export class DurationRenderer {
 
     header.createEl("span", {
       cls: "workout-duration-icon",
-      text: "⏱️",
+      text: t("icons.duration.timer"),
     });
 
     header.createEl("span", {
       cls: "workout-duration-title",
-      text: "Estimated duration",
+      text: t("duration.estimatedDuration"),
     });
   }
 
@@ -64,7 +65,7 @@ export class DurationRenderer {
   private renderError(card: HTMLElement, error?: string): void {
     card.createEl("div", {
       cls: "workout-duration-error",
-      text: error || "Unable to analyze workout file",
+      text: error || t("duration.unableToAnalyze"),
     });
   }
 
@@ -99,26 +100,27 @@ export class DurationRenderer {
     // Rest time row
     this.renderBreakdownRow(
       breakdown,
-      "Rest time",
+      t("duration.restTime"),
       FormatUtils.formatDuration(analysis.totalRestTime),
     );
 
     // Set time row
     this.renderBreakdownRow(
       breakdown,
-      "Set time",
+      t("duration.setTime"),
       `${FormatUtils.formatDuration(analysis.totalSetTime)} (${analysis.setCount} sets)`,
     );
 
     // Historical duration row (if available)
     if (analysis.historicalDuration) {
-        const dateLabel = analysis.lastSessionDate ? ` (${analysis.lastSessionDate})` : "";
-        this.renderBreakdownRow(
-            breakdown,
-            "Last session",
-            FormatUtils.formatDuration(analysis.historicalDuration) + dateLabel
-        );
-        
+      const dateLabel = analysis.lastSessionDate
+        ? ` (${analysis.lastSessionDate})`
+        : "";
+      this.renderBreakdownRow(
+        breakdown,
+        t("duration.lastSession"),
+        FormatUtils.formatDuration(analysis.historicalDuration) + dateLabel,
+      );
     }
   }
 
@@ -143,38 +145,5 @@ export class DurationRenderer {
       cls: "workout-duration-detail",
       text: value,
     });
-  }
-
-  /**
-   * Renders debug information.
-   */
-  private renderDebugInfo(
-    card: HTMLElement,
-    analysis: DurationAnalysisResult,
-    setDuration?: number,
-  ): void {
-    const debugSection = card.createEl("div", {
-      cls: "workout-duration-debug",
-    });
-
-    debugSection.createEl("div", {
-      cls: "workout-duration-debug-title",
-      text: "Debug info",
-    });
-
-    const debugContent = debugSection.createEl("pre", {
-      cls: "workout-duration-debug-content",
-    });
-
-    debugContent.textContent = JSON.stringify(
-      {
-        workoutPath: analysis.workoutPath,
-        restPeriodCount: analysis.restPeriodCount,
-        setCount: analysis.setCount,
-        setDuration: setDuration || DEFAULT_SET_DURATION,
-      },
-      null,
-      2,
-    );
   }
 }

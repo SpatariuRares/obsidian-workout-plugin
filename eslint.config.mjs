@@ -194,6 +194,7 @@ export default [
               // Specifically ignore ${CLS}__something styling variables
               "\\$\\{CLS\\}.*",
               "^(md|txt|json|csv|yaml|yml|xml|html|css|js|ts|py|sh|cfg|ini|toml|log)$",
+              "workout-*",
             ],
           },
           "object-properties": {

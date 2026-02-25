@@ -21,7 +21,7 @@ DEFAULT_MODEL = "translategemma:4b"
 REQUEST_TIMEOUT = 120  # seconds
 
 # Translation settings
-CHUNK_SIZE = 8  # Number of key-value pairs per translation request
+CHUNK_SIZE = 20  # Number of key-value pairs per translation request
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds between retries
 DELAY_BETWEEN_CHUNKS = 0.5  # seconds between API calls

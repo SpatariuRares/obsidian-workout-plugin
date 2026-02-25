@@ -43,50 +43,70 @@ class Translator:
         self.use_translategemma = _is_translategemma(model)
 
     # ------------------------------------------------------------------
-    # Generic LLM mode (JSON array in/out)
+    # Generic LLM mode (JSON object in/out)
     # ------------------------------------------------------------------
 
-    def _build_prompt_generic(self, values: list[str], target_lang: str) -> str:
-        """Build the translation prompt for generic LLMs."""
-        values_json = json.dumps(values, ensure_ascii=False)
+    def _build_prompt_generic(self, chunk: dict[str, str], target_lang: str) -> str:
+        """Build the translation prompt for generic LLMs with keys for context."""
+        chunk_json = json.dumps(chunk, indent=2, ensure_ascii=False)
 
-        return f"""You are a professional translator. Translate the following UI strings from English to {target_lang}.
+        return f"""You are a professional translator specializing in UI localization.
+Translate the following English strings into {target_lang}.
+
+CONTEXT:
+The keys (e.g., 'modal.titles.createLog') provide hierarchical context about where the string is used in the application.
 
 RULES:
-1. Return ONLY a valid JSON array with the translated strings, in the SAME ORDER.
-2. The output array MUST have exactly {len(values)} elements.
+1. Return ONLY a valid JSON object with the EXACT same keys.
+2. Translate ONLY the values.
 3. Do NOT translate placeholder tokens like {{name}}, {{unit}}, {{score}}, {{exercise}}, etc.
 4. Do NOT translate technical symbols like +, -, ★, ◆, •, ×, ~.
 5. Do NOT add any explanation, markdown, or commentary.
 6. Preserve any emoji at the start of values (e.g., "✅", "❌", "⚠️", "📸").
-7. If a value is just a symbol or number, keep it as-is.
-8. Ensure the output is valid JSON that can be parsed with JSON.parse().
+7. Ensure the output is valid JSON.
 
-English strings to translate:
-{values_json}
+English strings to translate (as JSON):
+{chunk_json}
 
-Respond with ONLY the JSON array:"""
+Respond with ONLY the translated JSON object:"""
 
-    def _parse_response_generic(self, response_text: str, expected_count: int) -> list[str] | None:
-        """Parse a JSON array response from a generic LLM."""
+    def _parse_response_generic(self, response_text: str, chunk: dict[str, str]) -> dict[str, str] | None:
+        """Parse a JSON object response from a generic LLM."""
         text = response_text.strip()
+        expected_keys = list(chunk.keys())
 
+        # Try to find JSON block if model wrapped it in markdown
         if "```" in text:
-            start = text.find("[")
-            end = text.rfind("]") + 1
+            start = text.find("{")
+            end = text.rfind("}") + 1
             if start != -1 and end > start:
                 text = text[start:end]
 
-        if not text.startswith("["):
-            start = text.find("[")
-            end = text.rfind("]") + 1
+        # Ensure it starts and ends with braces
+        if not text.startswith("{"):
+            start = text.find("{")
+            end = text.rfind("}") + 1
             if start != -1 and end > start:
                 text = text[start:end]
 
         try:
             parsed = json.loads(text)
-            if isinstance(parsed, list) and len(parsed) == expected_count:
-                return [str(v) for v in parsed]
+            if isinstance(parsed, dict):
+                # Ensure all expected keys are present, fallback to original if missing
+                result = {}
+                missing_count = 0
+                for key in expected_keys:
+                    if key in parsed:
+                        result[key] = str(parsed[key])
+                    else:
+                        result[key] = chunk[key]
+                        missing_count += 1
+                
+                # Check if we got a significant number of missing keys (indicates failure)
+                if missing_count > len(expected_keys) / 3:
+                    return None
+                    
+                return result
         except json.JSONDecodeError:
             pass
 
@@ -96,10 +116,11 @@ Respond with ONLY the JSON array:"""
     # TranslateGemma mode (plain text, one value at a time)
     # ------------------------------------------------------------------
 
-    def _build_prompt_translategemma(self, value: str, target_lang: str, target_code: str) -> str:
-        """Build TranslateGemma's specific prompt format."""
+    def _build_prompt_translategemma(self, key: str, value: str, target_lang: str, target_code: str) -> str:
+        """Build TranslateGemma's specific prompt format with key context."""
         return (
-            f"You are a professional English (en) to {target_lang} ({target_code}) translator. "
+            f"You are a professional English (en) to {target_lang} ({target_code}) translator specializing in UI localization. "
+            f"Context: The key for this UI string is '{key}'. "
             f"Your goal is to accurately convey the meaning and nuances of the original English text "
             f"while adhering to {target_lang} grammar, vocabulary, and cultural sensitivities. "
             f"Produce only the {target_lang} translation, without any additional explanations or commentary. "
@@ -118,7 +139,7 @@ Respond with ONLY the JSON array:"""
                 result[key] = value
                 continue
 
-            prompt = self._build_prompt_translategemma(value, target_lang, target_code)
+            prompt = self._build_prompt_translategemma(key, value, target_lang, target_code)
 
             try:
                 response = self.llm.complete(prompt)
@@ -150,15 +171,13 @@ Respond with ONLY the JSON array:"""
             return self._translate_chunk_translategemma(chunk, target_lang, target_code)
 
         # Generic LLM path
-        keys = list(chunk.keys())
-        values = list(chunk.values())
-        prompt = self._build_prompt_generic(values, target_lang)
+        prompt = self._build_prompt_generic(chunk, target_lang)
 
         try:
             response = self.llm.complete(prompt)
-            translated_values = self._parse_response_generic(response.text, len(keys))
+            translated_dict = self._parse_response_generic(response.text, chunk)
 
-            if translated_values is None:
+            if translated_dict is None:
                 if retry < MAX_RETRIES:
                     print(f"    ⚠️  Parse error, retry {retry + 1}/{MAX_RETRIES}...")
                     time.sleep(RETRY_DELAY)
@@ -167,7 +186,7 @@ Respond with ONLY the JSON array:"""
                     print(f"    ❌ Failed to parse after {MAX_RETRIES} retries, using originals")
                     return chunk
 
-            return dict(zip(keys, translated_values))
+            return translated_dict
 
         except Exception as e:
             if retry < MAX_RETRIES:

@@ -4,27 +4,20 @@
  * find-missing-i18n-keys.mjs
  *
  * Scansiona l'intera codebase TypeScript/JavaScript e identifica chiamate t()
- * con chiavi i18n che NON esistono in en.json.
+ * con chiavi i18n che mancano in uno o più file locale in app/i18n/locales/.
  *
  * Strategia:
- *  1. Estrae tutte le chiavi foglia da en.json in dot-notation
- *  2. Scansiona ogni file .ts/.tsx/.js/.mjs nella cartella /app e main.ts
- *  3. Estrae ogni chiamata t("chiave") o t('chiave') con riga e file
- *  4. Confronta le chiavi usate con quelle definite in en.json
- *  5. Riporta le chiavi mancanti raggruppate per file
+ *  1. Carica tutti i file JSON da app/i18n/locales/
+ *  2. Estrae tutte le chiavi foglia da ogni locale in dot-notation
+ *  3. Scansiona ogni file .ts/.tsx/.js/.mjs nella cartella /app e main.ts
+ *  4. Estrae ogni chiamata t("chiave") o t('chiave')
+ *  5. Confronta le chiavi usate con quelle definite in OGNI file locale
+ *  6. Riporta le chiavi mancanti raggruppate per file e indica in quali lingue mancano
  *
  * Uso:
  *   node scripts/find-missing-i18n-keys.mjs [--json] [--output report.json]
  *   node scripts/find-missing-i18n-keys.mjs --verbose
  *   node scripts/find-missing-i18n-keys.mjs --ignore-patterns "examples.*,legacy.*"
- *
- * Flag:
- *   --json               Output in formato JSON
- *   --output <file>      Salva il report su file
- *   --locale <file>      Percorso al file JSON (default: app/i18n/locales/en.json)
- *   --verbose            Mostra anche le chiavi trovate che esistono
- *   --ignore-patterns    Pattern di chiavi da ignorare (regex, separati da virgola)
- *   --include <dir>      Directory aggiuntive da scansionare (separato da virgola)
  */
 
 import fs from "fs";
@@ -51,6 +44,8 @@ const EXCLUDED_DIRS = new Set([
   "__mocks__",
 ]);
 
+const LOCALES_DIR = path.resolve(ROOT_DIR, "app/i18n/locales");
+
 // ---------------------------------------------------------------------------
 // Parsing CLI
 // ---------------------------------------------------------------------------
@@ -65,7 +60,6 @@ function getArgValue(flag) {
 const outputJson = args.includes("--json");
 const verbose = args.includes("--verbose");
 const outputFile = getArgValue("--output");
-const localePath = getArgValue("--locale") ?? "app/i18n/locales/en.json";
 const extraDirs = getArgValue("--include")?.split(",").filter(Boolean) ?? [];
 const ignorePatternsRaw = getArgValue("--ignore-patterns");
 
@@ -76,21 +70,20 @@ const ignorePatterns = ignorePatternsRaw
       .map((p) => new RegExp(p.trim()))
   : [];
 
-const EN_JSON_PATH = path.resolve(ROOT_DIR, localePath);
 const DEFAULT_SCAN_DIRS = ["app", "main.ts", ...extraDirs];
 
 // ---------------------------------------------------------------------------
 // Raccolta file
 // ---------------------------------------------------------------------------
 
-function collectFiles(dir, acc = []) {
+function collectFiles(dir, acc = [], extensions = SCAN_EXTENSIONS) {
   const full = path.resolve(ROOT_DIR, dir);
   if (!fs.existsSync(full)) return acc;
 
   const stat = fs.statSync(full);
 
   if (stat.isFile()) {
-    if (SCAN_EXTENSIONS.has(path.extname(full))) acc.push(full);
+    if (extensions.has(path.extname(full))) acc.push(full);
     return acc;
   }
 
@@ -101,8 +94,8 @@ function collectFiles(dir, acc = []) {
     const childStat = fs.statSync(childPath);
 
     if (childStat.isDirectory()) {
-      collectFiles(path.relative(ROOT_DIR, childPath), acc);
-    } else if (SCAN_EXTENSIONS.has(path.extname(entry))) {
+      collectFiles(path.relative(ROOT_DIR, childPath), acc, extensions);
+    } else if (extensions.has(path.extname(entry))) {
       acc.push(childPath);
     }
   }
@@ -111,7 +104,7 @@ function collectFiles(dir, acc = []) {
 }
 
 // ---------------------------------------------------------------------------
-// Estrazione chiavi JSON (foglie)
+// Estrazione chiavi JSON
 // ---------------------------------------------------------------------------
 
 function extractLeafKeys(obj, prefix = "", result = new Set()) {
@@ -128,10 +121,6 @@ function extractLeafKeys(obj, prefix = "", result = new Set()) {
   return result;
 }
 
-/**
- * Estrae anche le chiavi intermedie (nodi non-foglia) per gestire
- * casi dove t() potrebbe ricevere un nodo intermedio.
- */
 function extractAllKeys(obj, prefix = "", result = new Set()) {
   if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
     return result;
@@ -152,22 +141,6 @@ function extractAllKeys(obj, prefix = "", result = new Set()) {
 // Estrazione chiamate t() dal codice sorgente
 // ---------------------------------------------------------------------------
 
-/**
- * @typedef {{ key: string, line: number, column: number, context: string }} TCall
- */
-
-/**
- * Rimuove tutti i commenti dal codice sorgente, sostituendoli con spazi
- * per preservare le posizioni dei caratteri (e quindi il mapping riga/colonna).
- *
- * Gestisce:
- *   - Commenti blocco (anche multi-riga)
- *   - Commenti inline //
- *   - Non tocca stringhe che contengono // o sequenze simili
- *
- * @param {string} content
- * @returns {string} Contenuto con commenti sostituiti da spazi
- */
 function stripComments(content) {
   const result = [];
   let i = 0;
@@ -176,7 +149,6 @@ function stripComments(content) {
   while (i < len) {
     const ch = content[i];
 
-    // Stringhe: salta l'intero contenuto (non rimuovere nulla)
     if (ch === '"' || ch === "'" || ch === "`") {
       const quote = ch;
       result.push(ch);
@@ -185,13 +157,11 @@ function stripComments(content) {
         const c = content[i];
         result.push(c);
         if (c === "\\" && i + 1 < len) {
-          // Carattere escaped: copia e salta
           i++;
           result.push(content[i]);
         } else if (c === quote && quote !== "`") {
           break;
         } else if (c === quote) {
-          // Backtick: chiude template literal (ignoriamo ${} annidati per semplicita)
           break;
         }
         i++;
@@ -200,9 +170,7 @@ function stripComments(content) {
       continue;
     }
 
-    // Commento blocco
     if (ch === "/" && i + 1 < len && content[i + 1] === "*") {
-      // Sostituisci con spazi, ma mantieni i newline
       result.push(" ", " ");
       i += 2;
       while (i < len) {
@@ -211,16 +179,13 @@ function stripComments(content) {
           i += 2;
           break;
         }
-        // Preserva newline per il mapping riga
         result.push(content[i] === "\n" ? "\n" : " ");
         i++;
       }
       continue;
     }
 
-    // Commento inline
     if (ch === "/" && i + 1 < len && content[i + 1] === "/") {
-      // Sostituisci fino a fine riga
       while (i < len && content[i] !== "\n") {
         result.push(" ");
         i++;
@@ -235,15 +200,7 @@ function stripComments(content) {
   return result.join("");
 }
 
-/**
- * Data una posizione (offset) nel contenuto, restituisce riga e colonna (1-based).
- *
- * @param {number[]} lineStarts - Array di offset di inizio riga
- * @param {number} offset
- * @returns {{ line: number, column: number }}
- */
 function offsetToLineCol(lineStarts, offset) {
-  // Binary search per trovare la riga
   let lo = 0;
   let hi = lineStarts.length - 1;
   while (lo < hi) {
@@ -257,12 +214,6 @@ function offsetToLineCol(lineStarts, offset) {
   return { line: lo + 1, column: offset - lineStarts[lo] + 1 };
 }
 
-/**
- * Costruisce un array di offset di inizio per ogni riga.
- *
- * @param {string} content
- * @returns {number[]}
- */
 function buildLineStarts(content) {
   const starts = [0];
   for (let i = 0; i < content.length; i++) {
@@ -273,51 +224,20 @@ function buildLineStarts(content) {
   return starts;
 }
 
-/**
- * Estrae tutte le chiamate t("key") e t('key') da un file.
- *
- * Funziona sull'intero contenuto (non riga per riga) per catturare
- * chiamate multi-riga come:
- *   t("modal.notices.auditConfirmRename", {
- *     oldName,
- *     newName,
- *   })
- * oppure:
- *   t(
- *     "modal.notices.auditConfirmRename",
- *     { oldName, newName }
- *   )
- *
- * @param {string} content - Contenuto del file
- * @param {string} filePath - Percorso del file (per esclusioni)
- * @returns {TCall[]}
- */
 function extractTCalls(content, filePath) {
   const calls = [];
-
-  // 1. Rimuovi commenti (preservando posizioni con spazi)
   const stripped = stripComments(content);
-
-  // 2. Prepara mapping offset -> riga/colonna (sul contenuto originale)
   const lineStarts = buildLineStarts(content);
   const originalLines = content.split("\n");
 
-  // 3. Cerca tutte le chiamate t() nel contenuto senza commenti
-  //    Il pattern e' multiline-aware grazie al flag 's' (dotAll) e [\s\S]*
-  //    Cattura: t( opzionali-spazi/newline "chiave.con.punti" opzionali-spazi/newline , o )
   const regex = /(?<![.\w])t\(\s*["']([a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)["']\s*[,)]/g;
   let match;
 
   while ((match = regex.exec(stripped)) !== null) {
     const key = match[1];
-
-    // Chiavi senza punto sono probabilmente non-i18n
     if (!key.includes(".")) continue;
 
-    // Calcola riga e colonna della chiamata t(
     const { line, column } = offsetToLineCol(lineStarts, match.index);
-
-    // Contesto: la riga originale dove inizia la chiamata t(
     const contextLine = originalLines[line - 1]?.trim() ?? "";
     const context =
       contextLine.length > 120
@@ -334,25 +254,7 @@ function extractTCalls(content, filePath) {
 // Analisi
 // ---------------------------------------------------------------------------
 
-/**
- * @typedef {{
- *   key: string,
- *   file: string,
- *   line: number,
- *   column: number,
- *   context: string
- * }} MissingKeyReference
- */
-
-/**
- * Analizza tutti i file e trova le chiavi mancanti.
- *
- * @param {string[]} files
- * @param {Set<string>} validKeys - Chiavi foglia esistenti in en.json
- * @param {Set<string>} allJsonKeys - Tutte le chiavi (incluse intermedie)
- * @returns {{ missing: MissingKeyReference[], valid: MissingKeyReference[], totalCalls: number }}
- */
-function analyze(files, validKeys, allJsonKeys) {
+function analyze(files, localesMap) {
   const missing = [];
   const valid = [];
   let totalCalls = 0;
@@ -369,8 +271,20 @@ function analyze(files, validKeys, allJsonKeys) {
     totalCalls += calls.length;
 
     for (const call of calls) {
-      // Controlla se la chiave e' nei pattern da ignorare
       if (ignorePatterns.some((p) => p.test(call.key))) continue;
+
+      const missingIn = [];
+      const intermediateIn = [];
+
+      for (const [localeFile, data] of localesMap.entries()) {
+        if (!data.leafKeys.has(call.key)) {
+          if (data.allKeys.has(call.key)) {
+            intermediateIn.push(localeFile);
+          } else {
+            missingIn.push(localeFile);
+          }
+        }
+      }
 
       const ref = {
         key: call.key,
@@ -380,17 +294,14 @@ function analyze(files, validKeys, allJsonKeys) {
         context: call.context,
       };
 
-      if (validKeys.has(call.key)) {
+      if (missingIn.length === 0 && intermediateIn.length === 0) {
         valid.push(ref);
-      } else if (allJsonKeys.has(call.key)) {
-        // La chiave esiste ma e' un nodo intermedio, non una foglia
-        // Questo e' probabilmente un errore - t() dovrebbe ricevere chiavi foglia
+      } else {
         missing.push({
           ...ref,
-          note: "Chiave intermedia (nodo, non foglia) - t() si aspetta una chiave foglia",
+          missingIn,
+          intermediateIn,
         });
-      } else {
-        missing.push(ref);
       }
     }
   }
@@ -402,7 +313,7 @@ function analyze(files, validKeys, allJsonKeys) {
 // Output: Testo
 // ---------------------------------------------------------------------------
 
-function printTextReport(result, totalFiles) {
+function printTextReport(result, totalFiles, localesCount) {
   const { missing, valid, totalCalls } = result;
 
   console.log(
@@ -413,33 +324,29 @@ function printTextReport(result, totalFiles) {
   );
 
   console.log(`\n  File scansionati:      ${totalFiles}`);
+  console.log(`  Lingue controllate:    ${localesCount}`);
   console.log(`  Chiamate t() trovate:  ${totalCalls}`);
-  console.log(`  Chiavi valide:         ${valid.length}`);
+  console.log(`  Chiavi valide ovunque: ${valid.length}`);
   console.log(`  Chiavi MANCANTI:       ${missing.length}`);
 
   if (missing.length === 0) {
-    console.log("\n  Tutte le chiavi i18n referenziate esistono in en.json!");
+    console.log("\n  Tutte le chiavi i18n referenziate esistono in tutti i file locale!");
     console.log("+" + "-".repeat(62) + "+\n");
     return;
   }
 
-  // Raggruppa per file
-  /** @type {Map<string, MissingKeyReference[]>} */
   const byFile = new Map();
   for (const ref of missing) {
     if (!byFile.has(ref.file)) byFile.set(ref.file, []);
     byFile.get(ref.file).push(ref);
   }
 
-  // Raggruppa per chiave (per il riepilogo)
-  /** @type {Map<string, MissingKeyReference[]>} */
   const byKey = new Map();
   for (const ref of missing) {
     if (!byKey.has(ref.key)) byKey.set(ref.key, []);
     byKey.get(ref.key).push(ref);
   }
 
-  // --- Sezione 1: Dettaglio per file ---
   console.log("\n" + "-".repeat(64));
   console.log("  CHIAVI MANCANTI PER FILE");
   console.log("-".repeat(64));
@@ -449,42 +356,46 @@ function printTextReport(result, totalFiles) {
   );
 
   for (const [file, refs] of sortedFiles) {
-    console.log(`\n  ${file} (${refs.length} chiavi mancanti)`);
+    console.log(`\n  ${file} (${refs.length} riferimenti problematici)`);
     for (const ref of refs.sort((a, b) => a.line - b.line)) {
       console.log(`    L${ref.line}:${ref.column}  ${ref.key}`);
-      if (ref.note) {
-        console.log(`             ^ ${ref.note}`);
+      if (ref.missingIn.length > 0) {
+        console.log(`             ❌ Mancante in: ${ref.missingIn.join(", ")}`);
+      }
+      if (ref.intermediateIn.length > 0) {
+        console.log(`             ⚠️  Nodo intermedio in: ${ref.intermediateIn.join(", ")}`);
       }
     }
   }
 
-  // --- Sezione 2: Chiavi uniche mancanti ---
   console.log("\n" + "-".repeat(64));
-  console.log("  CHIAVI UNICHE MANCANTI (ordinate)");
+  console.log("  RIEPILOGO CHIAVI PROBLEMATICHE");
   console.log("-".repeat(64));
 
-  // Raggruppa per sezione radice
-  /** @type {Map<string, Array<{key: string, count: number}>>} */
   const bySection = new Map();
   for (const [key, refs] of [...byKey.entries()].sort((a, b) =>
     a[0].localeCompare(b[0]),
   )) {
     const section = key.split(".")[0];
     if (!bySection.has(section)) bySection.set(section, []);
-    bySection.get(section).push({ key, count: refs.length });
+    bySection.get(section).push({ key, refs });
   }
 
-  for (const [section, keys] of [...bySection.entries()].sort((a, b) =>
+  for (const [section, items] of [...bySection.entries()].sort((a, b) =>
     a[0].localeCompare(b[0]),
   )) {
-    console.log(`\n  [${section}] (${keys.length} chiavi)`);
-    for (const { key, count } of keys) {
-      const countStr = count > 1 ? ` (x${count})` : "";
-      console.log(`    - ${key}${countStr}`);
+    console.log(`\n  [${section}] (${items.length} chiavi)`);
+    for (const { key, refs } of items) {
+      const missingCount = refs[0].missingIn.length;
+      const interCount = refs[0].intermediateIn.length;
+      let status = "";
+      if (missingCount > 0) status += `❌ mancano ${missingCount} lingue`;
+      if (interCount > 0) status += `${status ? ", " : ""}⚠️ intermedio in ${interCount} lingue`;
+      
+      console.log(`    - ${key} (${status})`);
     }
   }
 
-  // --- Verbose: chiavi valide ---
   if (verbose) {
     console.log("\n" + "-".repeat(64));
     console.log("  CHIAVI VALIDE TROVATE");
@@ -495,25 +406,18 @@ function printTextReport(result, totalFiles) {
     }
   }
 
-  // --- Riepilogo ---
   console.log("\n" + "=".repeat(64));
   console.log(
-    `  Riepilogo: ${byKey.size} chiavi uniche mancanti, ${missing.length} riferimenti totali`,
+    `  Riepilogo: ${byKey.size} chiavi problematiche, ${missing.length} riferimenti totali`,
   );
   console.log(`  in ${byFile.size} file su ${totalFiles} scansionati`);
   console.log("=".repeat(64) + "\n");
 }
 
-// ---------------------------------------------------------------------------
-// Output: JSON
-// ---------------------------------------------------------------------------
-
-function buildJsonReport(result, totalFiles) {
+function buildJsonReport(result, totalFiles, localesCount) {
   const { missing, valid, totalCalls } = result;
-
   const uniqueMissing = [...new Set(missing.map((r) => r.key))].sort();
 
-  /** @type {Record<string, Array<{file: string, line: number, column: number}>>} */
   const missingByKey = {};
   for (const ref of missing) {
     if (!missingByKey[ref.key]) missingByKey[ref.key] = [];
@@ -521,19 +425,21 @@ function buildJsonReport(result, totalFiles) {
       file: ref.file,
       line: ref.line,
       column: ref.column,
-      ...(ref.note ? { note: ref.note } : {}),
+      missingIn: ref.missingIn,
+      intermediateIn: ref.intermediateIn
     });
   }
 
   return {
     summary: {
       totalFiles,
+      localesCount,
       totalTCalls: totalCalls,
-      validKeys: valid.length,
-      missingReferences: missing.length,
-      uniqueMissingKeys: uniqueMissing.length,
+      validEverywhere: valid.length,
+      problematicReferences: missing.length,
+      uniqueProblematicKeys: uniqueMissing.length,
     },
-    missingKeys: missingByKey,
+    problematicKeys: missingByKey,
     ...(verbose
       ? { validKeys: [...new Set(valid.map((r) => r.key))].sort() }
       : {}),
@@ -545,28 +451,40 @@ function buildJsonReport(result, totalFiles) {
 // ---------------------------------------------------------------------------
 
 function main() {
-  // 1. Leggi en.json
-  if (!fs.existsSync(EN_JSON_PATH)) {
-    console.error(`File non trovato: ${EN_JSON_PATH}`);
+  if (!fs.existsSync(LOCALES_DIR)) {
+    console.error(`Directory locale non trovata: ${LOCALES_DIR}`);
     process.exit(2);
   }
 
-  const enJson = JSON.parse(fs.readFileSync(EN_JSON_PATH, "utf-8"));
-  const leafKeys = extractLeafKeys(enJson);
-  const allJsonKeys = extractAllKeys(enJson);
+  const localeFiles = collectFiles(LOCALES_DIR, [], new Set([".json"]));
+  const localesMap = new Map();
 
-  // 2. Raccogli file sorgente
+  for (const filePath of localeFiles) {
+    const fileName = path.relative(LOCALES_DIR, filePath);
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+      localesMap.set(fileName, {
+        leafKeys: extractLeafKeys(data),
+        allKeys: extractAllKeys(data)
+      });
+    } catch (e) {
+      console.warn(`⚠️  Errore nel parsing di ${fileName}: ${e.message}`);
+    }
+  }
+
+  if (localesMap.size === 0) {
+    console.error("Nessun file locale JSON valido trovato.");
+    process.exit(2);
+  }
+
   const files = [];
   for (const dir of DEFAULT_SCAN_DIRS) {
     collectFiles(dir, files);
   }
 
-  // Escludi questo script
   const selfPath = path.resolve(__filename);
   const filteredFiles = files.filter((f) => path.resolve(f) !== selfPath);
 
-  // Escludi file .test.ts e __tests__ per ridurre rumore (opzionale)
-  // I test possono usare chiavi inesistenti per motivi di mock
   const skipTests = args.includes("--skip-tests");
   const finalFiles = skipTests
     ? filteredFiles.filter(
@@ -574,12 +492,10 @@ function main() {
       )
     : filteredFiles;
 
-  // 3. Analizza
-  const result = analyze(finalFiles, leafKeys, allJsonKeys);
+  const result = analyze(finalFiles, localesMap);
 
-  // 4. Output
   if (outputJson) {
-    const report = buildJsonReport(result, finalFiles.length);
+    const report = buildJsonReport(result, finalFiles.length, localesMap.size);
     const jsonStr = JSON.stringify(report, null, 2);
 
     if (outputFile) {
@@ -589,10 +505,10 @@ function main() {
       console.log(jsonStr);
     }
   } else {
-    printTextReport(result, finalFiles.length);
+    printTextReport(result, finalFiles.length, localesMap.size);
 
     if (outputFile) {
-      const report = buildJsonReport(result, finalFiles.length);
+      const report = buildJsonReport(result, finalFiles.length, localesMap.size);
       fs.writeFileSync(
         path.resolve(ROOT_DIR, outputFile),
         JSON.stringify(report, null, 2),
@@ -602,7 +518,6 @@ function main() {
     }
   }
 
-  // Exit code 1 se ci sono chiavi mancanti (utile in CI)
   process.exit(result.missing.length > 0 ? 1 : 0);
 }
 

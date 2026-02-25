@@ -36,6 +36,43 @@ def unflatten_json(flat: dict[str, str]) -> dict:
 
 
 def chunk_dict(d: dict[str, str], size: int) -> list[dict[str, str]]:
-    """Split a dictionary into chunks of given size."""
+    """Split a dictionary into chunks, trying to group keys by prefix for context.
+    
+    It tries to keep keys that share the same first two parts (e.g., 'modal.titles.')
+    in the same chunk, as long as it doesn't exceed 2x the target size.
+    """
+    if not d:
+        return []
+
     items = list(d.items())
-    return [dict(items[i : i + size]) for i in range(0, len(items), size)]
+    chunks = []
+    current_chunk = {}
+    
+    def get_prefix(key: str) -> str:
+        parts = key.split(".")
+        return ".".join(parts[:2]) if len(parts) >= 2 else parts[0]
+
+    for key, value in items:
+        # If current chunk is empty, just add
+        if not current_chunk:
+            current_chunk[key] = value
+            continue
+            
+        # If adding this would exceed the target size
+        if len(current_chunk) >= size:
+            # Check if this key shares prefix with the last key in chunk
+            last_key = list(current_chunk.keys())[-1]
+            if get_prefix(key) == get_prefix(last_key) and len(current_chunk) < size * 2:
+                # Keep grouping if they share prefix and we aren't way over size
+                current_chunk[key] = value
+            else:
+                # Start new chunk
+                chunks.append(current_chunk)
+                current_chunk = {key: value}
+        else:
+            current_chunk[key] = value
+            
+    if current_chunk:
+        chunks.append(current_chunk)
+        
+    return chunks

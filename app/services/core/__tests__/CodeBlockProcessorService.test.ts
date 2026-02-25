@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { CONSTANTS } from "@app/constants";
 // Mock Obsidian module first
 jest.mock(
   "obsidian",

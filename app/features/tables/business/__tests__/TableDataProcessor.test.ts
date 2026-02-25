@@ -3,6 +3,7 @@ import { TableDataProcessor } from "@app/features/tables/business/TableDataProce
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},

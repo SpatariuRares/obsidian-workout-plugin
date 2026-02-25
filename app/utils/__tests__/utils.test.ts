@@ -10,6 +10,7 @@ import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 // Mock TFile
 class MockTFile {

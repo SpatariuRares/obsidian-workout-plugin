@@ -1,4 +1,5 @@
 import { MUSCLE_TAGS } from "@app/constants/muscles.constants";
+import { CONSTANTS } from "@app/constants";
 
 describe("MuscleTags", () => {
   describe("MUSCLE_TAGS constant", () => {

@@ -1,5 +1,6 @@
 /** @jest-environment jsdom */
 
+import { CONSTANTS } from "@app/constants";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 
 import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";

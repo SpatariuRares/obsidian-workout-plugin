@@ -2,6 +2,15 @@ import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { CHART_TYPE, CHART_DATA_TYPE } from "@app/features/charts/types";
 
+// Mock i18n to return key with parameters for testing
+jest.mock("@app/i18n", () => ({
+  t: (key: string, params?: any) => {
+    if (params && params.label) return `${key}:${params.label}`;
+    if (params && params.unit) return `${key}(${params.unit})`;
+    return key;
+  },
+}));
+
 describe("ChartDataUtils", () => {
   // Helper to create mock workout log data
   const createLogEntry = (

@@ -7,6 +7,7 @@ import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMo
 import { TrendIndicator } from "@app/components/molecules";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { t } from "@app/i18n";
+import { CONSTANTS } from "@app/constants";
 
 jest.mock("@app/components/molecules", () => ({
   TrendIndicator: {

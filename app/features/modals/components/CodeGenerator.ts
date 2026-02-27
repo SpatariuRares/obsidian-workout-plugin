@@ -56,6 +56,9 @@ export class CodeGenerator {
       `\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE}`,
     ];
 
+    // Add unique ID for code block identification
+    lines.push(`id: ${params.id}`);
+
     // Add target (exercise, workout, or both)
     if (params.tableType === TABLE_TYPE.ALL) {
       // No target specific fields needed for ALL type

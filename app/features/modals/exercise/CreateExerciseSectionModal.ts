@@ -11,6 +11,7 @@ import { Button } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -228,6 +229,7 @@ export class CreateExerciseSectionModal extends ModalBase {
         ? TABLE_TYPE.COMBINED
         : TABLE_TYPE.EXERCISE;
       const logCode = CodeGenerator.generateTableCode({
+        id: generateCodeBlockId(),
         tableType,
         exercise: params.exerciseName,
         workout: params.workoutName,

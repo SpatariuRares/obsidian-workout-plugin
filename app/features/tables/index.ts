@@ -28,11 +28,13 @@ export {
 export {
   TableHeader,
   GoToExerciseButton,
+  ExerciseActionSelect,
   TargetHeader,
   AchievementBadge,
 } from "@app/features/tables/ui";
 export type {
   GoToExerciseButtonProps,
+  ExerciseActionSelectProps,
   TargetHeaderProps,
   AchievementBadgeProps,
   AchievementBadgeCallbacks,

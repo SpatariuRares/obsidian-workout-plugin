@@ -114,6 +114,9 @@ jest.mock("@app/features/tables", () => ({
   GoToExerciseButton: {
     render: jest.fn(),
   },
+  ExerciseActionSelect: {
+    render: jest.fn(),
+  },
   TargetHeader: {
     render: jest.fn(),
   },
@@ -162,7 +165,7 @@ import {
   TableRefresh,
   TargetHeader,
   AchievementBadge,
-  GoToExerciseButton,
+  ExerciseActionSelect,
 } from "@app/features/tables";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 
@@ -355,14 +358,14 @@ describe("EmbeddedTableView", () => {
       expect(AchievementBadge.render).not.toHaveBeenCalled();
     });
 
-    it("renders goto exercise button when exercise is set", async () => {
+    it("renders exercise action select when exercise is set", async () => {
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {
         exercise: "Bench Press",
       });
 
-      expect(GoToExerciseButton.render).toHaveBeenCalledWith(
+      expect(ExerciseActionSelect.render).toHaveBeenCalledWith(
         expect.any(HTMLElement),
         expect.objectContaining({
           exerciseName: "Bench Press",
@@ -371,12 +374,12 @@ describe("EmbeddedTableView", () => {
       );
     });
 
-    it("does not render goto exercise button when no exercise", async () => {
+    it("does not render exercise action select when no exercise", async () => {
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
 
-      expect(GoToExerciseButton.render).not.toHaveBeenCalled();
+      expect(ExerciseActionSelect.render).not.toHaveBeenCalled();
     });
 
     it("renders fallback message when table rendering fails", async () => {

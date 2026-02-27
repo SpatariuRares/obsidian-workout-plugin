@@ -7,7 +7,7 @@ import {
   TableDataLoader,
   TableConfig,
   TableRefresh,
-  GoToExerciseButton,
+  ExerciseActionSelect,
   TargetHeader,
   AchievementBadge,
 } from "@app/features/tables";
@@ -231,9 +231,14 @@ export class EmbeddedTableView extends BaseView {
     );
 
     if (params.exercise) {
-      GoToExerciseButton.render(
+      ExerciseActionSelect.render(
         buttonContainer,
-        { exerciseName: params.exercise, app: this.plugin.app },
+        {
+          exerciseName: params.exercise,
+          app: this.plugin.app,
+          plugin: this.plugin,
+          params,
+        },
         signal,
       );
     }

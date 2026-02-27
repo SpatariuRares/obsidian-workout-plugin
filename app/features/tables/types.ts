@@ -2,6 +2,7 @@ import { FilterResult } from "@app/types/CommonTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 export interface EmbeddedTableParams {
+  id?: string; // Unique identifier for code block replacement
   exercise?: string;
   workout?: string;
   dateRange?: number; // Days to look back (handled by CodeBlockProcessorService before table render)
@@ -52,6 +53,7 @@ export interface TableCodeOptions
     >
   >,
   Pick<EmbeddedTableParams, "dateRange" | "targetWeight" | "targetReps"> {
+  id: string;
   tableType: TABLE_TYPE;
 }
 export interface TableCallbacks {

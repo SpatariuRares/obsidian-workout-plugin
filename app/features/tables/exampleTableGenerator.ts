@@ -1,5 +1,6 @@
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { TABLE_TYPE } from "@app/features/tables/types";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export function generateExerciseLogBlock(
   exercise: string,
@@ -7,6 +8,7 @@ export function generateExerciseLogBlock(
   opts?: { limit?: number; exactMatch?: boolean },
 ): string {
   return CodeGenerator.generateTableCode({
+    id: generateCodeBlockId(),
     tableType: TABLE_TYPE.COMBINED,
     exercise,
     workout,
@@ -22,6 +24,7 @@ export function generateExerciseOnlyLogBlock(
   limit: number,
 ): string {
   return CodeGenerator.generateTableCode({
+    id: generateCodeBlockId(),
     tableType: TABLE_TYPE.EXERCISE,
     exercise,
     workout: "",
@@ -37,6 +40,7 @@ export function generateWorkoutLogBlock(
   limit: number,
 ): string {
   return CodeGenerator.generateTableCode({
+    id: generateCodeBlockId(),
     tableType: TABLE_TYPE.WORKOUT,
     exercise: "",
     workout,
@@ -53,6 +57,7 @@ export function generateCombinedLogBlock(
   limit: number,
 ): string {
   return CodeGenerator.generateTableCode({
+    id: generateCodeBlockId(),
     tableType: TABLE_TYPE.COMBINED,
     exercise,
     workout,

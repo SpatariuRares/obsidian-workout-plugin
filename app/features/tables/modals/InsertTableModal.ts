@@ -18,6 +18,7 @@ import { Chip } from "@app/components/atoms/Chip";
 import { Button } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 const LIMIT_INCREMENT = 5;
@@ -26,16 +27,16 @@ const TARGET_WEIGHT_INCREMENT = 5;
 const TARGET_REPS_INCREMENT = 1;
 
 export class InsertTableModal extends BaseInsertModal {
-  private tableTypeSelect?: HTMLSelectElement;
-  private tableTypeChips: Map<string, HTMLButtonElement> = new Map();
-  private targetElements?: TargetSectionWithAutocompleteElements;
-  private limitInput?: HTMLInputElement;
-  private dateRangeInput?: HTMLInputElement;
-  private advancedElements?: AdvancedOptionsElements;
-  private targetWeightInput?: HTMLInputElement;
-  private targetRepsInput?: HTMLInputElement;
-  private progressiveSection?: HTMLElement;
-  private currentFileName: string;
+  protected tableTypeSelect?: HTMLSelectElement;
+  protected tableTypeChips: Map<string, HTMLButtonElement> = new Map();
+  protected targetElements?: TargetSectionWithAutocompleteElements;
+  protected limitInput?: HTMLInputElement;
+  protected dateRangeInput?: HTMLInputElement;
+  protected advancedElements?: AdvancedOptionsElements;
+  protected targetWeightInput?: HTMLInputElement;
+  protected targetRepsInput?: HTMLInputElement;
+  protected progressiveSection?: HTMLElement;
+  protected currentFileName: string;
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app, plugin);
@@ -175,7 +176,7 @@ export class InsertTableModal extends BaseInsertModal {
     // Target reps with +/- adjust
     this.targetRepsInput = this.createAdjustField(
       targetParametersContainer,
-      CONSTANTS.WORKOUT.MODAL.LABELS.TARGET_REPS,
+      t("modal.labels.targetReps"),
       0,
       0,
       100,
@@ -194,7 +195,7 @@ export class InsertTableModal extends BaseInsertModal {
       this.plugin.settings.defaultExactMatch;
   }
 
-  private onTableTypeChipClick(value: string): void {
+  protected onTableTypeChipClick(value: string): void {
     if (!this.tableTypeSelect) return;
 
     // Update chips
@@ -271,7 +272,7 @@ export class InsertTableModal extends BaseInsertModal {
     return input;
   }
 
-  private updateSectionsVisibility(targetHandlers: {
+  protected updateSectionsVisibility(targetHandlers: {
     updateVisibility: () => void;
   }): void {
     if (!this.tableTypeSelect || !this.targetElements) return;
@@ -340,6 +341,7 @@ export class InsertTableModal extends BaseInsertModal {
     }
 
     return CodeGenerator.generateTableCode({
+      id: this.getCodeBlockId(),
       tableType: tableType as TABLE_TYPE,
       exercise: target?.exercise || "",
       workout: target?.workout || "",
@@ -351,5 +353,13 @@ export class InsertTableModal extends BaseInsertModal {
       targetWeight: targetWeight > 0 ? targetWeight : undefined,
       targetReps: targetReps > 0 ? targetReps : undefined,
     });
+  }
+
+  /**
+   * Generates a unique ID for the code block.
+   * Subclasses can override to preserve an existing ID.
+   */
+  protected getCodeBlockId(): string {
+    return generateCodeBlockId();
   }
 }

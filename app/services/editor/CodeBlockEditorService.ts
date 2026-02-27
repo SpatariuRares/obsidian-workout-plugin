@@ -133,6 +133,75 @@ export class CodeBlockEditorService {
    * @param value - Parameter value
    * @returns True if successful
    */
+  /**
+   * Replace an entire code block with new content
+   *
+   * Finds the code block matching blockType + id and replaces it entirely.
+   *
+   * @param app - Obsidian App instance
+   * @param blockType - Code block type (e.g., "workout-log")
+   * @param id - Unique code block ID to match
+   * @param newCode - Full replacement code block (including opening/closing ```)
+   * @returns True if replacement was successful
+   */
+  static async replaceCodeBlock(
+    app: App,
+    blockType: string,
+    id: string,
+    newCode: string,
+  ): Promise<boolean> {
+    try {
+      const activeView = app.workspace.getActiveViewOfType(MarkdownView);
+      if (!activeView) {
+        return false;
+      }
+
+      const editor = activeView.editor;
+      const content = editor.getValue();
+      const lines = content.split("\n");
+
+      let inCodeBlock = false;
+      let codeBlockStart = -1;
+      let foundId = false;
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        if (line.startsWith(`\`\`\`${blockType}`)) {
+          inCodeBlock = true;
+          codeBlockStart = i;
+          foundId = false;
+          continue;
+        }
+
+        if (inCodeBlock && line.startsWith("```")) {
+          if (foundId) {
+            const before = lines.slice(0, codeBlockStart);
+            const after = lines.slice(i + 1);
+            const newContent = [...before, newCode, ...after].join("\n");
+            editor.setValue(newContent);
+            return true;
+          }
+          inCodeBlock = false;
+          continue;
+        }
+
+        if (!inCodeBlock) continue;
+
+        if (line.startsWith("id:")) {
+          const idValue = line.replace("id:", "").trim();
+          if (idValue === id) {
+            foundId = true;
+          }
+        }
+      }
+
+      return false;
+    } catch {
+      return false;
+    }
+  }
+
   static async setParameter(
     app: App,
     blockType: string,

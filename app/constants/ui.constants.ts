@@ -72,15 +72,17 @@ export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
 /**
  * Simple data type names without units, used for trend titles and labels
  */
-export const DATA_TYPE_NAMES: Record<CHART_DATA_TYPE, string> = {
-  [CHART_DATA_TYPE.VOLUME]: t("charts.types.volume"),
-  [CHART_DATA_TYPE.WEIGHT]: t("charts.types.weight"),
-  [CHART_DATA_TYPE.REPS]: t("charts.types.reps"),
-  [CHART_DATA_TYPE.DURATION]: t("charts.types.duration"),
-  [CHART_DATA_TYPE.DISTANCE]: t("charts.types.distance"),
-  [CHART_DATA_TYPE.PACE]: t("charts.types.pace"),
-  [CHART_DATA_TYPE.HEART_RATE]: t("charts.types.heartRate"),
-} as const;
+export function getTypeNames(): Record<CHART_DATA_TYPE, string> {
+  return {
+    [CHART_DATA_TYPE.VOLUME]: t("charts.types.volume"),
+    [CHART_DATA_TYPE.WEIGHT]: t("charts.types.weight"),
+    [CHART_DATA_TYPE.REPS]: t("charts.types.reps"),
+    [CHART_DATA_TYPE.DURATION]: t("charts.types.duration"),
+    [CHART_DATA_TYPE.DISTANCE]: t("charts.types.distance"),
+    [CHART_DATA_TYPE.PACE]: t("charts.types.pace"),
+    [CHART_DATA_TYPE.HEART_RATE]: t("charts.types.heartRate"),
+  };
+}
 
 /**
  * Gets dynamic modal labels with proper weight unit.
@@ -113,9 +115,6 @@ export function getDynamicDataTypeOptions() {
  * Modal UI labels - titles, buttons, labels, placeholders, and checkboxes
  */
 export const MODAL_UI = {
-  LABELS: {
-    TARGET_REPS: t("modal.labels.targetReps"),
-  },
   SELECT_OPTIONS: {
     CHART_TYPE: [
       {
@@ -416,7 +415,7 @@ export const CHARTS_UI = {
     /** Dynamic trend title based on data type */
     TREND_TITLE: (dataType?: CHART_DATA_TYPE) => {
       const typeName = dataType
-        ? DATA_TYPE_NAMES[dataType]
+        ? getTypeNames()[dataType]
         : t("charts.types.volume");
       return t("charts.labels.trendType", { type: typeName });
     },
@@ -430,7 +429,7 @@ export const CHARTS_UI = {
       dataType?: CHART_DATA_TYPE,
     ) => {
       const typeName = dataType
-        ? DATA_TYPE_NAMES[dataType]
+        ? getTypeNames()[dataType]
         : t("charts.types.volume");
       return ` (${typeName}: ${value})`;
     },
@@ -440,7 +439,7 @@ export const CHARTS_UI = {
       dataType?: CHART_DATA_TYPE,
     ) => {
       const typeName = dataType
-        ? DATA_TYPE_NAMES[dataType]
+        ? getTypeNames()[dataType]
         : t("charts.types.volume");
       return `${typeName}: ${value}`;
     },

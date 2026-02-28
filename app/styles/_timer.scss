@@ -8,6 +8,11 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
+  flex-wrap: wrap;
+
+  @media (max-width: variables.$breakpoint-tablet) {
+    flex-wrap: wrap;
+  }
 }
 
 /* Timer Styles */

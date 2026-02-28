@@ -74,10 +74,15 @@ export class LogFormRenderer {
     // Notify parent about initial parameters
     onExerciseChange(parameters);
 
-    const dynamicFieldInputs = this.dynamicFieldsRenderer.renderDynamicFields(
-      parametersContainer,
-      parameters,
-    );
+    const dynamicFieldInputs =
+      await this.dynamicFieldsRenderer.renderDynamicFields(
+        parametersContainer,
+        parameters,
+        {
+          exerciseName: initialExerciseName,
+          workoutName: initialCurrentPageLink,
+        },
+      );
 
     // Protocol dropdown
     const builtInProtocols = [
@@ -293,9 +298,11 @@ export class LogFormRenderer {
     }
 
     // Render new fields
-    const newFieldInputs = this.dynamicFieldsRenderer.renderDynamicFields(
+    const currentWorkoutValue = formElements.workoutInput?.value || "";
+    const newFieldInputs = await this.dynamicFieldsRenderer.renderDynamicFields(
       parametersContainer,
       newParameters,
+      { exerciseName, workoutName: currentWorkoutValue },
     );
     formElements.dynamicFieldInputs = newFieldInputs;
 

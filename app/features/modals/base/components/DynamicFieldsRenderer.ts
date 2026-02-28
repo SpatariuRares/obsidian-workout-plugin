@@ -3,6 +3,7 @@ import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type WorkoutChartsPlugin from "main";
 import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 
 export class DynamicFieldsRenderer {
@@ -12,17 +13,22 @@ export class DynamicFieldsRenderer {
    * Renders dynamic fields based on parameter definitions.
    * Clears existing fields and creates new inputs for each parameter.
    */
-  renderDynamicFields(
+  async renderDynamicFields(
     container: HTMLElement,
     parameters: ParameterDefinition[],
-  ): Map<string, HTMLInputElement> {
+    context?: { workoutName?: string; exerciseName?: string },
+  ): Promise<Map<string, HTMLInputElement>> {
     // Clear existing fields
     container.empty();
 
     const fieldInputs = new Map<string, HTMLInputElement>();
 
     for (const param of parameters) {
-      const input = this.renderParameterFieldWithAdjust(container, param);
+      const input = await this.renderParameterFieldWithAdjust(
+        container,
+        param,
+        context,
+      );
       fieldInputs.set(param.key, input);
     }
 
@@ -32,10 +38,11 @@ export class DynamicFieldsRenderer {
   /**
    * Renders a parameter field with optional quick-adjust buttons for numeric types.
    */
-  private renderParameterFieldWithAdjust(
+  private async renderParameterFieldWithAdjust(
     container: HTMLElement,
     param: ParameterDefinition,
-  ): HTMLInputElement {
+    context?: { workoutName?: string; exerciseName?: string },
+  ): Promise<HTMLInputElement> {
     const fieldContainer = container.createDiv({
       cls: "workout-field-with-adjust",
     });
@@ -53,7 +60,7 @@ export class DynamicFieldsRenderer {
       });
 
       // Quick adjust buttons
-      const increment = this.getIncrementForParameter(param);
+      const increment = await this.getIncrementForParameter(param, context);
 
       const minusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustMinus") + increment,
@@ -149,9 +156,97 @@ export class DynamicFieldsRenderer {
   /**
    * Determines increment value for quick-adjust buttons based on parameter key.
    */
-  private getIncrementForParameter(param: ParameterDefinition): number {
+  private async getIncrementForParameter(
+    param: ParameterDefinition,
+    context?: { workoutName?: string; exerciseName?: string },
+  ): Promise<number> {
     if (param.key === "reps") return 1;
     if (param.key === "weight") {
+      if (context?.exerciseName) {
+        try {
+          const allowedIncrements = [1, 1.25, 2, 2.5, 3, 5, 10, 15, 20];
+          const sortedIncrements = [...allowedIncrements].sort((a, b) => b - a);
+
+          const allLogs: WorkoutLogData[] =
+            await this.plugin.getWorkoutLogData();
+
+          const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+
+          let filteredLogs = allLogs.filter((log: WorkoutLogData) => {
+            const logTimestamp =
+              typeof log.timestamp === "string"
+                ? new Date(log.timestamp).getTime()
+                : log.timestamp || 0;
+
+            return (
+              log.exercise.toLowerCase() ===
+                context.exerciseName?.toLowerCase() &&
+              logTimestamp >= thirtyDaysAgo
+            );
+          });
+
+          if (context.workoutName) {
+            const workoutFiltered = filteredLogs.filter(
+              (log: WorkoutLogData) =>
+                log.workout?.toLowerCase() ===
+                context.workoutName?.toLowerCase(),
+            );
+            if (workoutFiltered.length >= 2) {
+              filteredLogs = workoutFiltered;
+            }
+          }
+
+          if (filteredLogs.length > 1) {
+            filteredLogs.sort((a, b) => {
+              const timeA =
+                typeof a.timestamp === "string"
+                  ? new Date(a.timestamp).getTime()
+                  : a.timestamp || 0;
+              const timeB =
+                typeof b.timestamp === "string"
+                  ? new Date(b.timestamp).getTime()
+                  : b.timestamp || 0;
+              return timeA - timeB;
+            });
+            const diffCounts = new Map<number, number>();
+
+            for (let i = 1; i < filteredLogs.length; i++) {
+              const prev = filteredLogs[i - 1].weight;
+              const curr = filteredLogs[i].weight;
+              if (typeof prev === "number" && typeof curr === "number") {
+                const diff = Math.abs(curr - prev);
+                if (diff > 0) {
+                  const match = sortedIncrements.find(
+                    (inc) => inc <= diff + 0.001,
+                  );
+                  if (match) {
+                    diffCounts.set(match, (diffCounts.get(match) || 0) + 1);
+                  }
+                }
+              }
+            }
+
+            let bestIncrement = 0;
+            let maxCount = 0;
+            for (const [inc, count] of diffCounts.entries()) {
+              if (count > maxCount) {
+                maxCount = count;
+                bestIncrement = inc;
+              } else if (count === maxCount && inc > bestIncrement) {
+                bestIncrement = inc;
+              }
+            }
+
+            if (bestIncrement > 0) {
+              return bestIncrement;
+            }
+          }
+        } catch (e) {
+          // Fallback to defaults on error
+          console.error("Failed to fetch logs for dynamic increment", e);
+        }
+      }
+
       const quickIncrement = this.plugin.settings.quickWeightIncrement;
       if (typeof quickIncrement === "number" && quickIncrement > 0) {
         return quickIncrement;

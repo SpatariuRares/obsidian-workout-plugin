@@ -1,6 +1,23 @@
 {
   "version": "1.0",
-  "lastUpdated": "2025-02-10T00:00:00.000Z",
-  "totalErrors": 0,
-  "errors": []
+  "lastUpdated": "2026-02-28T14:38:30.636Z",
+  "totalErrors": 1,
+  "errors": [
+    {
+      "id": "1772289510635-lgzhzeqgp",
+      "timestamp": "2026-02-28T14:38:30.635Z",
+      "type": "build_error",
+      "component": "esbuild.config.mjs",
+      "message": "Build failed with 1 error:\napp/i18n/locales/zh.json:733:46: ERROR: Expected \",\" in JSON but found \"{\"",
+      "stack": "Error: Build failed with 1 error:\napp/i18n/locales/zh.json:733:46: ERROR: Expected \",\" in JSON but found \"{\"\n    at failureErrorWithLog (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:1467:15)\n    at I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:926:25\n    at I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:878:52\n    at buildResponseToResult (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:924:7)\n    at I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:936:9\n    at new Promise (<anonymous>)\n    at requestCallbacks.on-end (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:935:54)\n    at handleRequest (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:628:17)\n    at handleIncomingPacket (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:653:7)\n    at Socket.readFromStdout (I:\\project\\obsidian-p\\obsidian-workout-plugin\\node_modules\\esbuild\\lib\\main.js:581:7)",
+      "context": {
+        "mode": "production",
+        "cwd": "I:\\project\\obsidian-p\\obsidian-workout-plugin",
+        "nodeVersion": "v24.12.0"
+      },
+      "resolved": false,
+      "resolution": null,
+      "directiveUpdated": null
+    }
+  ]
 }

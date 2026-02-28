@@ -1537,6 +1537,13 @@
   }
 }
 /* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* ============================================================================
    TIMER STYLES
    ============================================================================ */
 /* Timer row: timer fills space, action select stays small on the right */
@@ -1545,6 +1552,12 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .workout-timer-row {
+    flex-wrap: wrap;
+  }
 }
 
 /* Timer Styles */

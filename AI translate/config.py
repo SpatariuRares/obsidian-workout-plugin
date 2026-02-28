@@ -17,7 +17,7 @@ OLLAMA_BASE_URL = "http://localhost:11434"
 #   - qwen3:32b            (20 GB)   — Alibaba, excellent multilingual
 #   - glm-4.7-flash:q8_0   (31 GB)   — fast inference, large
 #   - glm-4.7-flash:bf16   (59 GB)   — highest quality, very large
-DEFAULT_MODEL = "translategemma:4b"
+DEFAULT_MODEL = "translategemma:latest"
 REQUEST_TIMEOUT = 120  # seconds
 
 # Translation settings

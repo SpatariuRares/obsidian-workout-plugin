@@ -123,6 +123,7 @@ Respond with ONLY the translated JSON object:"""
             f"Context: The key for this UI string is '{key}'. "
             f"Your goal is to accurately convey the meaning and nuances of the original English text "
             f"while adhering to {target_lang} grammar, vocabulary, and cultural sensitivities. "
+            f"CRITICAL RULE: Do NOT translate any placeholder tokens enclosed in curly braces (e.g. {{name}}, {{count}}). They must remain exactly as they are in the translated text. "
             f"Produce only the {target_lang} translation, without any additional explanations or commentary. "
             f"Please translate the following English text into {target_lang}: {value}"
         )
@@ -131,15 +132,26 @@ Respond with ONLY the translated JSON object:"""
         self, chunk: dict[str, str], target_lang: str, target_code: str
     ) -> dict[str, str]:
         """Translate a chunk using TranslateGemma (one call per value)."""
+        import re
         result: dict[str, str] = {}
+        
+        # Regex to find {variable} patterns
+        var_pattern = re.compile(r'\{[a-zA-Z0-9_]+\}')
 
         for key, value in chunk.items():
             # Skip values that are just symbols/numbers/placeholders
             if not value or value.strip() in ("+", "-", "×", "~", "★", "◆", "•"):
                 result[key] = value
                 continue
+                
+            # Extract variables and replace with indexed markers that the LLM is less likely to translate
+            variables = var_pattern.findall(value)
+            text_to_translate = value
+            for i, var in enumerate(variables):
+                # Using a generic marker like [VAR_0] which LLMs usually leave untouched
+                text_to_translate = text_to_translate.replace(var, f"[VAR_{i}]")
 
-            prompt = self._build_prompt_translategemma(key, value, target_lang, target_code)
+            prompt = self._build_prompt_translategemma(key, text_to_translate, target_lang, target_code)
 
             try:
                 response = self.llm.complete(prompt)
@@ -147,6 +159,13 @@ Respond with ONLY the translated JSON object:"""
                 # Remove quotes if the model wraps in them
                 if translated.startswith('"') and translated.endswith('"'):
                     translated = translated[1:-1]
+                    
+                # Reinsert variables
+                for i, var in enumerate(variables):
+                    translated = translated.replace(f"[VAR_{i}]", var)
+                    # Also try without brackets in case model removed them
+                    translated = translated.replace(f"VAR_{i}", var)
+                    
                 result[key] = translated
             except Exception as e:
                 print(f"    ⚠️  Error translating '{key}': {e}, using original")

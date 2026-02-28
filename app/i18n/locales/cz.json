@@ -14,7 +14,9 @@
       "addExerciseBlock": "Přidat blok cvičení",
       "canvasExport": "Exportovat trénink do canvasu",
       "muscleTagManager": "Spravovat značky svalů",
-      "create_log": "Create workout log"
+      "editTable": "Upravit parametry tabulky",
+      "editTimer": "Upravte parametry časovače",
+      "create_log": "Vytvořte záznam o tréninku"
     },
     "buttons": {
       "create": "Vytvořit záznam",
@@ -32,10 +34,12 @@
       "updateTargetWeight": "Aktualizovat cíl",
       "adjustPlus": "+",
       "adjustMinus": "-",
-      "export": "Export",
       "addParameter": "Přidat parametr",
       "removeParameter": "Odstranit",
-      "renameInCsv": "Přejmenovat v CSV"
+      "renameInCsv": "Přejmenovat v CSV",
+      "updateTable": "Aktualizovat tabulku",
+      "updateTimer": "Aktualizovat časovač",
+      "export": "Export"
     },
     "labels": {
       "exercise": "Trénink:",
@@ -47,13 +51,13 @@
       "duration": "Doba trvání (vteřiny):",
       "title": "Název:",
       "sets": "Série:",
-      "status": "Status",
       "actions": "Akce",
       "dateRange": "Období (dny):",
       "targetWeight": "Cílová hmotnost ({unit}):",
       "targetReps": "Cílový počet opakování:",
       "protocol": "Protokol:",
-      "volume": "Volume ({unit}):"
+      "volume": "Hlasitost ({unit}):",
+      "status": "Stav"
     },
     "placeholders": {
       "searchTags": "Hledejte podle značky nebo svalové skupiny. ..",
@@ -73,8 +77,8 @@
       "parameterKey": "např., rychlost",
       "parameterLabel": "např., Rychlost",
       "parameterUnit": "např., km/h",
-      "selectWorkoutFile": "Select a workout file to export...",
-      "selectMuscleGroup": "Select muscle group..."
+      "selectWorkoutFile": "Vyberte soubor s tréninkem, který chcete exportovat...",
+      "selectMuscleGroup": "Vyberte skupinu svalů..."
     },
     "notices": {
       "logCreated": "Záznam tréninku vytvořen úspěšně!",
@@ -116,17 +120,21 @@
       "muscleTagSimilarWarning": "Varování: Podobná Muscle značka",
       "suggestedNextWeight": "Návrhovaná další hmotnost",
       "targetAchieved": "Cíl dosažen",
-      "muscleTagCount": "{count} tag(s) found",
-      "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",
-      "muscleTagSaveError": "Error saving muscle tag: {error}",
-      "muscleTagExists": "Tag \"{tag}\" already exists",
-      "muscleTagSimilarFound": "{count} similar tag(s) found",
-      "muscleTagExportError": "Error exporting muscle tags: {error}",
-      "muscleTagImported": "{count} muscle tag(s) imported successfully!",
-      "muscleTagImportError": "Error importing muscle tags: {error}",
-      "muscleTagImportInvalidGroup": "Invalid muscle group \"{group}\" for tag \"{tag}\". Must be a canonical muscle group.",
-      "muscleTagImportPreview": "{count} tag(s) to import",
-      "migrationComplete": "Migration complete. Updated {count} exercise files."
+      "tableUpdated": "✅ Tabulka byla úspěšně aktualizována!",
+      "tableUpdateFailed": "Neúspěšné provedení aktualizace tabulky. Ujistěte se, že soubor je otevřen v editoru.",
+      "timerUpdated": "✅ Časovač byl úspěšně aktualizován!",
+      "timerUpdateFailed": "Neúspěšné provedení aktualizace časovače. Ujistěte se, že soubor je otevřen v editoru.",
+      "muscleTagCount": "{count} tag(ů) nalezeno",
+      "muscleTagDeleteConfirm": "Jste si jisti, že chcete smazat štítek \"{tag}\"?",
+      "muscleTagSaveError": "Chyba při ukládání štítku svalové skupiny: {error}",
+      "muscleTagExists": "Označení \"{tag}\" již existuje",
+      "muscleTagSimilarFound": "{count} nalezeny podobné štítky",
+      "muscleTagExportError": "Chyba při exportu značek svalů: {error}",
+      "muscleTagImported": "{count} Úspěšně importovány štítky pro svaly!",
+      "muscleTagImportError": "Chyba při importu značek svalů: {error}",
+      "muscleTagImportInvalidGroup": "Neplatná skupina svalů \"{group}\" pro tag \"{tag}\". Musí se jednat o standardní skupinu svalů.",
+      "muscleTagImportPreview": "{count} značek pro import",
+      "migrationComplete": "Migrace dokončena. Aktualizovány soubory cvičení {count}."
     },
     "notes": "Poznámky (volitelné):",
     "workout": "Trénink (volitelné):",
@@ -243,21 +251,21 @@
       "distance": "Vzdálenost",
       "dropSet": "Drobná série",
       "exerciseWorkout": "Cvičení tréninku",
-      "interval": "Interval",
       "myoReps": "Mojové opakování",
       "number": "Číslo",
       "restPause": "Pausa odpočinku",
       "specificExercise": "Konkrétní cvičení",
-      "standard": "Standard",
       "strength": "Silná",
       "superset": "Supsest",
-      "text": "Text",
       "timed": "Časované",
       "twentyones": "Dvacetjedenky",
-      "yesNo": "Ano Ne"
+      "yesNo": "Ano Ne",
+      "interval": "Interval",
+      "standard": "Standard",
+      "text": "Text"
     },
     "info": {
-      "dashboardDescription": "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions."
+      "dashboardDescription": "To přidá komplexní dashboard pro trénink, který obsahuje statistiky, grafy a rychlé akce."
     }
   },
   "settings": {
@@ -306,9 +314,9 @@
       "setupCSV": "Vytvořte oba soubory workout_logs.csv a muscle-tags.csv do konfigurované složky.",
       "generateExamples": "Vytvořte složku se záznamy ukázkových cvičení a tréninků, abyste mohli začít.",
       "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy.",
-      "presetNameDesc": "Unique name for this timer preset (e.g., 'Rest 90s', 'HIIT 30/10').",
-      "presetDurationDesc": "Duration in seconds (e.g., 90 for a 90-second timer).",
-      "presetRoundsDesc": "Number of interval rounds to cycle through before stopping."
+      "presetNameDesc": "Jedinečný název pro tuto přednastavenou časovač (např. 'Odpočinek 90s', 'HIIT 30/10').",
+      "presetDurationDesc": "Doba trvání v sekundách (např. 90 pro časovač 90 sekund).",
+      "presetRoundsDesc": "Počet kol, které se mají opakovaně použít, než se program zastaví."
     },
     "sections": {
       "csvManagement": "Správa CSV souborů",
@@ -318,8 +326,8 @@
       "templates": "Šablony",
       "customProtocols": "Vlastní protokoly",
       "quickLog": "Mobilní záznamy",
-      "setupAndData": "Setup & data",
-      "trainingParameters": "Training parameters"
+      "setupAndData": "Nastavení a data",
+      "trainingParameters": "Parametry trénování"
     },
     "buttons": {
       "addPreset": "Přidat přednastavení",
@@ -329,13 +337,13 @@
       "saveProtocol": "Uložit",
       "createFiles": "Vytvořit soubory",
       "createExamples": "Vytvořit příklady",
-      "generating": "Generating...",
-      "generated": "Generated!",
-      "regenerateOverwrite": "Regenerate (overwrite)",
-      "overwriting": "Overwriting...",
-      "done": "Done!",
-      "failed": "Failed",
-      "generateTemplates": "Generate templates"
+      "generating": "Generování...",
+      "generated": "Vytvořeno!",
+      "regenerateOverwrite": "Obnovit (přepsat)",
+      "overwriting": "Přepsání...",
+      "done": "Hotovo!",
+      "failed": "Neúspěšné",
+      "generateTemplates": "Vytvoř šablony"
     },
     "options": {
       "none": "Žádný",
@@ -345,31 +353,32 @@
       }
     },
     "none": "Žádná",
-    "tooltips": {
-      "editProtocol": "Edit protocol",
-      "deleteProtocol": "Delete protocol",
-      "editPreset": "Edit preset",
-      "deletePreset": "Delete preset"
-    },
     "placeholders": {
-      "protocolAbbreviation": "E.g., gs",
-      "presetName": "Enter preset name"
+      "protocolName": "Zadejte název protokolu",
+      "protocolAbbreviation": "Například: gs",
+      "presetName": "Zadejte název přednastavení"
+    },
+    "tooltips": {
+      "editProtocol": "Upravit protokol",
+      "deleteProtocol": "Smazat protokol",
+      "editPreset": "Upravit přednastavení",
+      "deletePreset": "Smazat přednastavení"
     },
     "messages": {
-      "presetNameRequired": "Preset name is required",
-      "presetNameExists": "A preset with this name already exists",
-      "presetDeleted": "Preset deleted",
-      "presetSaved": "Preset saved",
-      "confirmDeletePreset": "Are you sure you want to delete this preset?",
-      "protocolNameRequired": "Protocol name is required",
-      "protocolAbbreviationRequired": "Abbreviation is required (max 3 characters)",
-      "protocolColorRequired": "Please enter a valid hex color (e.g. #FF5733)",
-      "protocolNameExists": "A protocol with this name already exists",
-      "protocolDeleted": "Protocol deleted",
-      "protocolSaved": "Protocol saved",
-      "confirmDeleteProtocol": "Are you sure you want to delete this protocol?",
-      "csvFilesCreated": "CSV files created successfully!",
-      "confirmOverwriteExamples": "An example folder already exists. Do you want to overwrite it?"
+      "presetNameRequired": "Název přednastavené hodnoty je povinný.",
+      "presetNameExists": "Existuje již přednastavená konfigurace s tímto názvem.",
+      "presetDeleted": "Přednastavená konfigurace odstraněna",
+      "presetSaved": "Přednastavená konfigurace uložena",
+      "confirmDeletePreset": "Jste si jisti, že chcete tento přednastavený postup smazat?",
+      "protocolNameRequired": "Název protokolu je povinný",
+      "protocolAbbreviationRequired": "Abbr. je povinné (max. 3 znaky)",
+      "protocolColorRequired": "Prosím, zadejte platnou hexadecimální barvu (např. #FF5733)",
+      "protocolNameExists": "Existuje protokol s tímto názvem.",
+      "protocolDeleted": "Protokol smazán",
+      "protocolSaved": "Protokol uložen",
+      "confirmDeleteProtocol": "Jste si jisti, že chcete tento protokol smazat?",
+      "csvFilesCreated": "Soubory CSV byly úspěšně vytvořeny!",
+      "confirmOverwriteExamples": "Existuje již ukázková složka. Chcete ji přepsat?"
     }
   },
   "table": {
@@ -386,9 +395,9 @@
       "protocol": "Protein",
       "actions": "Aktivity",
       "volumeUnit": "Vol ({weightUnit})",
-      "weightUnit": "Wgt ({weightUnit})",
-      "distanceUnit": "Dist ({distanceUnit})",
-      "pace": "Pace"
+      "weightUnit": "Hmotnost ({weightUnit})",
+      "distanceUnit": "Vzdálenost ({distanceUnit})",
+      "pace": "Rychlost"
     },
     "columnLabels": {
       "date": "Datum",
@@ -402,7 +411,7 @@
       "notes": "Poznámky",
       "protocol": "Protokol",
       "actions": "Akce",
-      "pace": "Pace (min/km)"
+      "pace": "Rychlost (min/km)"
     },
     "labels": {
       "volume": "Objem",
@@ -411,7 +420,7 @@
       "distance": "Vzdálenost",
       "heartRate": "Srdeční frekvence",
       "trendLine": "Trendová řada",
-      "target": "Target:"
+      "target": "Cíl:"
     },
     "target": {
       "repsSuffix": "opakovaní",
@@ -433,7 +442,9 @@
     "refreshSuccess": "Obnovení úspěšné",
     "sets": "Sady",
     "trendLine": "Trendová linka",
-    "volume": "Objem"
+    "volume": "Objem",
+    "actions": "Akce",
+    "editTable": "Upravit tabulku"
   },
   "dashboard": {
     "quickStats": {
@@ -443,10 +454,10 @@
         "month": "Tento měsíc",
         "year": "Tento rok"
       },
-      "week": "Week",
-      "month": "Month",
-      "year": "Year",
-      "workouts": "Workouts"
+      "week": "Týden",
+      "month": "Měsíc",
+      "year": "Rok",
+      "workouts": "Tréninky"
     },
     "recentWorkouts": {
       "title": "Nedávné cvičení",
@@ -470,57 +481,57 @@
     "week": "Týden",
     "year": "Rok",
     "fileErrors": {
-      "title": "File errors",
-      "allValid": "All Valid",
-      "noTags": "No Tags",
-      "tooManyTags": "Too many muscle tags ({count})",
-      "readError": "❌ Error reading file: {message}"
+      "title": "Chyby související se soubory",
+      "allValid": "Všechny platné",
+      "noTags": "Žádné štítky",
+      "tooManyTags": "Příliš mnoho štítků svalů ({{count}})",
+      "readError": "❌ Chyba při čtení souboru: {message}"
     },
     "protocolDistribution": {
-      "title": "Protocol distribution",
-      "subtitle": "Training protocol breakdown (last 30 days)",
-      "noData": "No Data",
-      "filterActive": "Filter Active",
-      "clearFilter": "Clear Filter"
+      "title": "Rozdělení protokolů",
+      "subtitle": "Rozpis protokolu tréninku (posledních 30 dní)",
+      "noData": "Žádná data",
+      "filterActive": "Filtrovat aktivní",
+      "clearFilter": "Vymazat filtr"
     },
     "protocolEffectiveness": {
-      "title": "Protocol effectiveness",
-      "noData": "No Data",
-      "disclaimer": "Disclaimer",
-      "columnProtocol": "Protocol",
-      "columnEntries": "Entries",
-      "columnVolumeChange": "Volume Change",
-      "columnProgression": "Progression"
+      "title": "Účinnost protokolu",
+      "noData": "Žádná data",
+      "disclaimer": "Upozornění",
+      "columnProtocol": "Protokol",
+      "columnEntries": "Záznamy",
+      "columnVolumeChange": "Změna objemu",
+      "columnProgression": "Postup"
     },
     "protocol": {
       "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})",
-      "percentLabel": "Percent Label",
-      "clickToFilter": "Click To Filter"
+      "percentLabel": "Popis procenta",
+      "clickToFilter": "Klikněte pro filtrování"
     },
     "muscleTags": {
-      "title": "Muscle tags",
-      "description": "Description",
-      "tooltip": "Click to copy: {tag}",
-      "totalCount": "Total: {count} tags available"
+      "title": "Štítky pro svaly",
+      "description": "Popis",
+      "tooltip": "Klikněte pro kopírování: {tag}",
+      "totalCount": "Celkem: {count} tagů k dispozici"
     },
     "quickActions": {
-      "title": "Quick actions",
-      "addWorkoutLog": "Add Workout Log",
-      "viewExercises": "View Exercises"
+      "title": "Rychlé akce",
+      "addWorkoutLog": "Přidat záznam o tréninku",
+      "viewExercises": "Zobrazit cvičení"
     },
     "durationComparison": {
-      "title": "Duration comparison",
-      "subtitle": "Estimated vs actual workout duration",
-      "noData": "No Data",
-      "columnWorkout": "Workout",
-      "columnEstimated": "Estimated",
-      "columnActual": "Actual",
-      "columnVariance": "Variance",
-      "varianceTrendTitle": "Variance Trend Title",
-      "varianceTrendImproving": "Variance Trend Improving",
-      "varianceTrendDeclining": "Variance Trend Declining",
-      "varianceTrendStable": "Variance Trend Stable",
-      "minutesSuffix": " min"
+      "title": "Srovnání trvání",
+      "subtitle": "Odhadnutá vs. skutečná délka tréninku",
+      "noData": "Žádná data",
+      "columnWorkout": "Trénink",
+      "columnEstimated": "Odhadované",
+      "columnActual": "Skutečná",
+      "columnVariance": "Rozptyl",
+      "varianceTrendTitle": "Nadpis trendu odchylek",
+      "varianceTrendImproving": "Trendy odchylky se zlepšují",
+      "varianceTrendDeclining": "Trendy odchylky klesají",
+      "varianceTrendStable": "Trend odchylky – stabilní",
+      "minutesSuffix": "min"
     }
   },
   "charts": {
@@ -530,16 +541,16 @@
       "trendLine": "Vzestupná dráha",
       "down": "dolů",
       "neutral": "neúměrný",
-      "variationFromTo": " from {startValue} to {endValue}",
-      "trendType": "Trend {type}:",
-      "weightIncrementUnit": "Weight increment {weightIncrementUnit}",
-      "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}",
-      "volume": "Volume",
-      "weight": "Weight",
-      "duration": "Duration",
-      "distance": "Distance",
-      "heartRate": "Heart Rate",
-      "pace": "Pace"
+      "variationFromTo": "od {startValue} do {endValue}",
+      "trendType": "Trendy {type}:",
+      "weightIncrementUnit": "Zvýšení váhy {weightIncrementUnit}",
+      "quickWeightIncrementUnit": "Tlačítka pro váhu zvyšují hodnotu o {weightIncrementUnit}",
+      "volume": "Objem",
+      "weight": "Hmotnost",
+      "duration": "Doba",
+      "distance": "Vzdálenost",
+      "heartRate": "Srdeční frekvence",
+      "pace": "Rychlost"
     },
     "date": "Datum",
     "down": "Snížka",
@@ -552,13 +563,13 @@
     "volume": "Objem",
     "typeNotAvailable": "Typ grafu \"{chartDataType}\" není pro cvičení typu {exerciseType} dostupný. Dostupné typy: {typeList}",
     "types": {
-      "volume": "Volume",
-      "weight": "Weight",
-      "reps": "Reps",
-      "duration": "Duration",
-      "distance": "Distance",
-      "heartRate": "Heart Rate",
-      "pace": "Pace"
+      "volume": "Objem",
+      "weight": "Hmotnost",
+      "reps": "Typy grafů: Reprezentace",
+      "duration": "Doba",
+      "distance": "Vzdálenost",
+      "heartRate": "Srdeční frekvence",
+      "pace": "Rychlost"
     }
   },
   "general": {
@@ -570,15 +581,15 @@
       "front": "Přední",
       "back": "Zadní",
       "dashboard": "Panel",
-      "dailyVolume": "Daily volume ({unit})",
-      "totalDuration": "Total duration (sec)",
-      "avgDuration": "Avg duration (sec)",
-      "totalDistance": "Total distance (km)",
-      "avgDistance": "Avg distance (km)",
-      "pace": "Pace (min/km)",
-      "avgHeartRate": "Avg heart rate (bpm)",
-      "totalCustom": "Total {label}",
-      "avgCustom": "Avg {label}"
+      "dailyVolume": "Denní objem ({{unit}})",
+      "totalDuration": "Celková doba (sekundy)",
+      "avgDuration": "Průměrná doba (sekundy)",
+      "totalDistance": "Celková vzdálenost (km)",
+      "avgDistance": "Průměrná vzdálenost (km)",
+      "pace": "Rychlost (min/km)",
+      "avgHeartRate": "Průměrná srdeční frekvence (úderů za minutu)",
+      "totalCustom": "Celkem {label}",
+      "avgCustom": "Průměr {label}"
     },
     "avgReps": "Průměrná opakování",
     "back": "Zad",
@@ -608,10 +619,10 @@
     "noTags": "Žádné označení",
     "tagReferenceGenerated": "Vytvořeno odkazování na tagy",
     "success": {
-      "csvCreated": "CSV file created successfully!"
+      "csvCreated": "Soubor CSV byl úspěšně vytvořen!"
     },
     "errors": {
-      "tagReferenceFailed": "Error generating tag reference: "
+      "tagReferenceFailed": "Chyba při vytváření odkaz na tag:"
     }
   },
   "commands": {
@@ -623,20 +634,20 @@
     "insertTable": "Vložit tabulku",
     "manageMuscleTags": "Spravovat značky svalů",
     "migrateExerciseTypes": "Migruj typ cvičení",
-    "createCsvLog": "Create CSV log file"
+    "createCsvLog": "Vytvořte soubor CSV pro logování"
   },
   "common": {
     "exercise": "Cvičení",
     "notAvailable": "Nedostupné",
     "unknown": "Neznámé",
     "workout": "Trénink",
-    "sec": "sec",
+    "sec": "bezpečnost",
     "km": "km",
     "bpm": "bpm",
-    "minPerKm": "min/km",
-    "cancel": "Cancel",
-    "convert": "Convert",
-    "reps": "Reps"
+    "minPerKm": "minimální/km",
+    "cancel": "Zrušit",
+    "convert": "Převést",
+    "reps": "Zástavy"
   },
   "forms": {
     "enterCsvPath": "Zadejte cestu k CSV",
@@ -655,16 +666,17 @@
   },
   "timer": {
     "countdown": "Počítadlo",
+    "editTimer": "Upravit časovač",
     "interval": "Interval",
-    "stopwatch": "Stopwatch",
+    "stopwatch": "Stoppy",
     "controls": {
-      "startTimer": "Start timer",
-      "pauseTimer": "Pause timer",
-      "resetTimer": "Reset timer"
+      "startTimer": "Spustit časovač",
+      "pauseTimer": "Zastavit časovač",
+      "resetTimer": "Resetovat časovač"
     },
     "presets": {
-      "detailsControls": "Controls",
-      "detailsSound": "Sound"
+      "detailsControls": "Ovládací prvky",
+      "detailsSound": "Zvuk"
     }
   },
   "trends": {
@@ -691,11 +703,8 @@
       "dashboardDesc": "Vaše statistiky tréninku v přehledu",
       "featureShowcaseDesc": "Úplná referenční tabulka všech kódových bloků",
       "exercisesDesc": "Stránky s příklady cvičení s protokoly a grafy",
-      "exercisesFolder": "**{folder}/**",
       "workoutsDesc": "Příklad šablon tréninku",
-      "workoutsFolder": "**{folder}/**",
       "logDesc": "Vaše CSV databáze tréninku",
-      "logFolder": "**{folder}/**",
       "quickActionsTitle": "Rychlé akce",
       "quickActionsIntro": "Použijte tyto příkazy (Ctrl/Cmd + P):",
       "commandCreateLog": "Vytvořit záznam cvičení",
@@ -710,7 +719,10 @@
       "step1": "Otevřete [[Panel]] a zobrazte si své statistiky",
       "step2": "Zkontrolujte [[Zobrazení funkcí]] pro zobrazení všech dostupných funkcí",
       "step3": "Zkuste provést trénink ze složky **{workouts}**",
-      "step4": "Vytvořte své vlastní cvičení v **{exercises}**"
+      "step4": "Vytvořte své vlastní cvičení v **{exercises}**",
+      "exercisesFolder": "**{folder}**/**",
+      "workoutsFolder": "**{folder}**/**",
+      "logFolder": "**{folder}/**"
     },
     "dashboard": {
       "title": "Panel",
@@ -748,9 +760,6 @@
       "squatMultiPower": {
         "name": "Naklon Multi Power"
       },
-      "rdl": {
-        "name": "RDL"
-      },
       "legPress45": {
         "name": "Nohové táhlovky 45"
       },
@@ -759,6 +768,9 @@
       },
       "calfMachine": {
         "name": "Masáž nohou"
+      },
+      "rdl": {
+        "name": "RDL"
       }
     },
     "workouts": {
@@ -790,7 +802,6 @@
       "combinedTitle": "Spojené (Cvičení + Trénink)",
       "timersTitle": "3. Časovače",
       "countdownTimerTitle": "Časovač odpočtu",
-      "intervalTimerTitle": "Interval Timer",
       "durationEstimatorTitle": "Časový čidlo",
       "durationEstimatorIntro": "Ocení celkové trvání cvičení podle současného cvičení.",
       "trainingProtocolsTitle": "5. Cvičební postupy",
@@ -807,7 +818,8 @@
       "codeBlockWorkoutTimer": "Časovač nebo intervalový časovač",
       "codeBlockWorkoutDuration": " Odhadnutí délky tréninku",
       "codeBlockWorkoutDashboard": "Úplný přehled statistik",
-      "commandsNote": "**Příkazy** (Ctrl/Cmd + P): Vytvořit Záznam cvičení, Vložit graf, Vložit časový zákazník, Vytvořit stránku s cvičením"
+      "commandsNote": "**Příkazy** (Ctrl/Cmd + P): Vytvořit Záznam cvičení, Vložit graf, Vložit časový zákazník, Vytvořit stránku s cvičením",
+      "intervalTimerTitle": "Časovač intervalů"
     },
     "hiit": {
       "title": "Kardio SESSION HIIT",
@@ -918,46 +930,46 @@
       }
     }
   },
-  "duration": {
-    "setTime": "Set time",
-    "lastSession": "Last session",
-    "unableToAnalyze": "Unable to analyze workout file",
-    "estimatedDuration": "Estimated duration",
-    "restTime": "Rest time"
-  },
-  "logs": {
-    "noDataTitle": "No logs found for {exerciseName}",
-    "createFirstLogButton": "Create first log for {exerciseName}",
-    "createFirstLogButtonAria": "Create first log for {exerciseName}",
-    "addLogButtonText": "Add log for {exerciseName}",
-    "addLogButtonAria": "Add log for {exerciseName}",
-    "createLogButtonText": "Create log for: {exerciseName}",
-    "createLogButtonAria": "Create log for: {exerciseName}"
-  },
   "convert": {
-    "title": "Convert exercise data",
-    "currentType": "Current type:",
-    "sectionExercise": "Exercise",
+    "errors": {
+      "convertError": "Chyba při převodu dat o cvičení: {error}"
+    },
+    "success": "Úspěšně převedeny {count} záznamů.",
+    "title": "Převést data o cvičení",
+    "currentType": "Současný typ:",
+    "sectionExercise": "Úkol",
     "preview": {
-      "title": "Preview",
-      "noEntries": "No log entries found for this exercise",
-      "willConvertOne": "1 log entry will be converted",
-      "willConvertMany": "{count} log entries will be converted"
+      "title": "Předběžný náhled",
+      "noEntries": "Nejsou nalezeny žádné záznamy v protokolu pro tento úkol.",
+      "willConvertOne": "1 záznam bude převeden",
+      "willConvertMany": "{count} záznamy budou převedeny"
     },
     "fieldMapping": {
-      "title": "Field mapping",
-      "addMapping": "Add field mapping",
-      "removeMapping": "Remove mapping",
-      "reps": "Reps",
-      "weight": "Weight ({unit})"
+      "title": "Mapování polí",
+      "addMapping": "Přidat mapování pole",
+      "removeMapping": "Odstranit přiřazení",
+      "reps": "Reprezentace",
+      "weight": "Hmotnost ({unit})"
     },
     "typeSelect": {
-      "convertTo": "Convert to:",
-      "updateFileType": "Update exercise file type"
-    },
-    "errors": {
-      "convertError": "Error converting exercise data: {error}"
-    },
-    "success": "Successfully converted {count} log entries"
+      "convertTo": "Převeď na:",
+      "updateFileType": "Aktualizovat typ souboru cvičení"
+    }
+  },
+  "duration": {
+    "estimatedDuration": "Odhadovaná doba",
+    "restTime": "Čas odpočinku",
+    "setTime": "Nastavit čas",
+    "lastSession": "Poslední sezení",
+    "unableToAnalyze": "Nemožno analyzovat soubor s tréninkem."
+  },
+  "logs": {
+    "noDataTitle": "Nenašlo se žádných záznamů pro {{exerciseName}}",
+    "createFirstLogButton": "Vytvořit první záznam pro {exerciseName}",
+    "createFirstLogButtonAria": "Vytvořit první záznam pro {exerciseName}",
+    "addLogButtonText": "Přidat záznam do protokolu pro {exerciseName}",
+    "addLogButtonAria": "Přidat záznam do logu pro {exerciseName}",
+    "createLogButtonText": "Vytvořit záznam pro: {exerciseName}",
+    "createLogButtonAria": "Vytvořit záznam pro: {exerciseName}"
   }
 }

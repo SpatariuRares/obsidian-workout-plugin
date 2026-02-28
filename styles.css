@@ -913,7 +913,7 @@
   overflow: hidden;
   white-space: nowrap;
   height: auto;
-  min-height: 48px;
+  min-height: 30px;
   /* Basic select styling to ensure consistency */
   background-color: var(--background-primary);
   color: var(--text-normal);

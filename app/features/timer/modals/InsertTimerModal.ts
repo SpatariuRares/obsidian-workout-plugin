@@ -11,13 +11,14 @@ import {
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { Chip } from "@app/components/atoms/Chip";
 import type WorkoutChartsPlugin from "main";
+import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
 export class InsertTimerModal extends BaseInsertModal {
-  private timerElements?: TimerConfigurationElements;
-  private timerHandlers?: TimerConfigurationHandlers;
-  private selectedPreset?: string;
-  private presetChips: Map<string, HTMLButtonElement> = new Map();
+  protected timerElements?: TimerConfigurationElements;
+  protected timerHandlers?: TimerConfigurationHandlers;
+  protected selectedPreset?: string;
+  protected presetChips: Map<string, HTMLButtonElement> = new Map();
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app, plugin);
@@ -79,7 +80,7 @@ export class InsertTimerModal extends BaseInsertModal {
     }
   }
 
-  private onPresetChipClick(name: string): void {
+  protected onPresetChipClick(name: string): void {
     if (this.selectedPreset === name) {
       // Deselect
       this.selectedPreset = undefined;
@@ -97,7 +98,7 @@ export class InsertTimerModal extends BaseInsertModal {
     this.applyPresetValues(name);
   }
 
-  private applyPresetValues(presetName: string): void {
+  protected applyPresetValues(presetName: string): void {
     if (!this.timerElements || !this.timerHandlers || !this.plugin) return;
 
     const preset = this.plugin.settings.timerPresets[presetName];
@@ -126,6 +127,7 @@ export class InsertTimerModal extends BaseInsertModal {
     const timerValues = TimerConfigurationSection.getValues(this.timerElements);
 
     return CodeGenerator.generateTimerCode({
+      id: this.getCodeBlockId(),
       type: timerValues.type as TIMER_TYPE,
       duration: timerValues.duration,
       rounds: timerValues.rounds,
@@ -134,5 +136,13 @@ export class InsertTimerModal extends BaseInsertModal {
       sound: timerValues.sound,
       preset: presetName || undefined,
     });
+  }
+
+  /**
+   * Generates a unique ID for the code block.
+   * Subclasses can override to preserve an existing ID.
+   */
+  protected getCodeBlockId(): string {
+    return generateCodeBlockId();
   }
 }

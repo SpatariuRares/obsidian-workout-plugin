@@ -13,6 +13,7 @@ import {
   TIMER_TYPE,
 } from "@app/features/timer";
 import { BaseView } from "@app/features/common/views/BaseView";
+import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;
@@ -62,14 +63,13 @@ export class EmbeddedTimerView extends BaseView {
         startTime: undefined,
       });
 
-      this.renderTimerContent(container, resolvedParams);
+      this.renderTimerContent(container, resolvedParams, params);
 
       // Verify timer display was created
       const currentState = this.timerCore.getState();
       if (!currentState.timerDisplay) {
         return;
       }
-
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -186,11 +186,25 @@ export class EmbeddedTimerView extends BaseView {
   private renderTimerContent(
     container: HTMLElement,
     params: EmbeddedTimerParams,
+    originalParams: EmbeddedTimerParams,
   ): void {
     container.empty();
-    const contentDiv = container.createEl("div", {
-      cls: "workout-timer-container",
+
+    // Wrapper row: timer (grows) + action select (shrinks to right)
+    const rowDiv = container.createDiv({
+      cls: "workout-timer-row",
+    });
+
+    const contentDiv = rowDiv.createDiv({
+      cls: "workout-timer",
       attr: { id: this.timerId },
+    });
+
+    // Render action select after the timer, aligned right
+    TimerActionSelect.render(rowDiv, {
+      app: this.plugin.app,
+      plugin: this.plugin,
+      params: originalParams,
     });
 
     // Create timer display using the component
@@ -201,10 +215,6 @@ export class EmbeddedTimerView extends BaseView {
 
     // Create controls if requested
     if (params.showControls !== false) {
-      const timerDisplay = contentDiv.querySelector(
-        ".workout-timer-display",
-      ) as HTMLElement;
-
       const callbacks: TimerControlCallbacks = {
         onStart: () => this.timerCore.start(),
         onStop: () => this.timerCore.stop(),
@@ -212,7 +222,7 @@ export class EmbeddedTimerView extends BaseView {
       };
 
       const startStopBtn = TimerControls.createControls(
-        timerDisplay,
+        contentDiv,
         () => this.timerCore.getState(),
         callbacks,
       );

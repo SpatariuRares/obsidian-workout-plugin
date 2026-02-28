@@ -86,6 +86,7 @@
       "insertTable": "Insert workout log table",
       "editTable": "Edit table parameters",
       "insertTimer": "Insert workout timer",
+      "editTimer": "Edit timer parameters",
       "insertDashboard": "Insert workout dashboard",
       "insertDuration": "Insert workout duration",
       "createExercisePage": "Create exercise page",
@@ -104,6 +105,7 @@
       "insertTable": "Insert table",
       "updateTable": "Update table",
       "insertTimer": "Insert timer",
+      "updateTimer": "Update timer",
       "insertDashboard": "Insert dashboard",
       "cancel": "Cancel",
       "confirm": "Confirm",
@@ -165,6 +167,8 @@
       "tableUpdated": "✅ Table updated successfully!",
       "tableUpdateFailed": "Failed to update table. Make sure the file is open in the editor.",
       "timerInserted": "✅ Timer inserted successfully!",
+      "timerUpdated": "✅ Timer updated successfully!",
+      "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
       "dashboardInserted": "✅ Dashboard inserted successfully!",
       "validationFillAll": "Please fill in all fields with valid values",
       "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
@@ -760,7 +764,8 @@
     "presets": {
       "detailsControls": "Controls",
       "detailsSound": "Sound"
-    }
+    },
+    "editTimer": "Edit timer"
   },
   "trends": {
     "declining": "Declining",

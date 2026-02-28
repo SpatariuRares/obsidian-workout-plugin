@@ -53,11 +53,7 @@ export class TimerDisplay {
   }
 
   static createDisplay(container: HTMLElement): HTMLElement {
-    const timerDisplay = container.createEl("div", {
-      cls: "workout-timer-display",
-    });
-
-    const timeDisplay = timerDisplay.createEl("div", {
+    const timeDisplay = container.createEl("div", {
       cls: "workout-timer-time",
     });
 

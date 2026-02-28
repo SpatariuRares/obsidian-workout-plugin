@@ -142,6 +142,7 @@ export class EmbeddedTableView extends BaseView {
 
     const fragment = document.createDocumentFragment();
     const contentDiv = fragment.appendChild(document.createElement("div"));
+    contentDiv.addClass("workout-table-content-container");
     const signal = renderChild.getSignal();
 
     // Render action buttons (Add Log + Goto Exercise)

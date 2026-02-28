@@ -50,8 +50,7 @@ export class ExerciseActionSelect {
     }
 
     const { select } = SelectDropdown.create(container, {
-      placeholder: t("table.actions"),
-      className: "workout-exercise-action-select",
+      placeholder: `${t("icons.tables.edit")} ${t("table.actions")}`,
       ariaLabel: t("table.actions"),
       options,
     });

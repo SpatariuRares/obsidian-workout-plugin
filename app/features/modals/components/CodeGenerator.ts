@@ -99,6 +99,11 @@ export class CodeGenerator {
       `\`\`\`${CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER}`,
     ];
 
+    // Add unique ID for code block identification
+    if (params.id) {
+      lines.push(`id: ${params.id}`);
+    }
+
     // If only preset is specified, generate minimal code
     if (params.preset && !params.type) {
       lines.push(`preset: ${params.preset}`);

@@ -1,120 +1,122 @@
 @use "../variables";
 
 /* Workout table (general) */
-.workout-table {
-  &-container {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: var(--workout-space-lg);
-    border-radius: var(--workout-radius-lg);
-    background: var(--background-primary);
+.workout-table-content-container {
+  margin: var(--workout-space-sm) 0;
+  .workout-table {
+    &-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: var(--workout-space-lg);
+      border-radius: var(--workout-radius-lg);
+      background: var(--background-primary);
 
-    .workout-log-table {
-      td {
-        color: var(--text-normal);
-        vertical-align: middle;
-        white-space: nowrap;
+      .workout-log-table {
+        td {
+          color: var(--text-normal);
+          vertical-align: middle;
+          white-space: nowrap;
+        }
+
+        tr {
+          &.group-even {
+            background: var(--background-secondary);
+          }
+          &.group-odd {
+            background: var(--background-primary);
+          }
+        }
       }
 
-      tr {
-        &.group-even {
-          background: var(--background-secondary);
-        }
-        &.group-odd {
-          background: var(--background-primary);
-        }
+      .workout-table-spacer {
+        background: var(--background-modifier-border);
+        height: auto;
+        font-size: var(--workout-font-sm);
+        font-weight: 500;
       }
     }
 
-    .workout-table-spacer {
-      background: var(--background-modifier-border);
-      height: auto;
-      font-size: var(--workout-font-sm);
-      font-weight: 500;
+    &-link {
+      cursor: pointer;
+      font-weight: var(--workout-font-weight-medium);
+      color: var(--text-accent);
     }
-  }
 
-  &-link {
-    cursor: pointer;
-    font-weight: var(--workout-font-weight-medium);
-    color: var(--text-accent);
-  }
-
-  &-date-cell {
-    font-weight: var(--workout-font-weight-semibold);
-    color: var(--text-accent);
-  }
-
-  &-volume-cell {
-    font-weight: var(--workout-font-weight-bold);
-    color: var(--text-accent-hover);
-  }
-
-  &-actions {
-    display: flex;
-    gap: var(--workout-space-sm);
-    justify-content: center;
-    align-items: center;
-
-    &-cell {
-      text-align: center;
-      padding: var(--workout-space-xs) var(--workout-space-sm);
-    }
-  }
-
-
-  &-spacer {
     &-date-cell {
-      padding: var(--workout-space-xs) var(--workout-space-sm);
-      text-align: center;
-      font-weight: 600;
-      color: var(--text-muted);
-      background: var(--background-primary-alt);
+      font-weight: var(--workout-font-weight-semibold);
+      color: var(--text-accent);
     }
-    &-summary-cell {
-      padding: var(--workout-space-xs) var(--workout-space-md);
-      text-align: left;
-      background: var(--background-secondary);
+
+    &-volume-cell {
+      font-weight: var(--workout-font-weight-bold);
+      color: var(--text-accent-hover);
+    }
+
+    &-actions {
+      display: flex;
+      gap: var(--workout-space-sm);
+      justify-content: center;
+      align-items: center;
+
+      &-cell {
+        text-align: center;
+        padding: var(--workout-space-xs) var(--workout-space-sm);
+      }
+    }
+
+    &-spacer {
+      &-date-cell {
+        padding: var(--workout-space-xs) var(--workout-space-sm);
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: var(--background-primary-alt);
+      }
+      &-summary-cell {
+        padding: var(--workout-space-xs) var(--workout-space-md);
+        text-align: left;
+        background: var(--background-secondary);
+
+        .workout-spacer-stat {
+          display: inline-block;
+          margin-right: var(--workout-space-md);
+          color: var(--text-normal);
+
+          strong {
+            color: var(--text-accent);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    &-footer {
+      font-size: var(--workout-font-xs);
+      color: var(--text-muted);
+      margin-top: var(--workout-space-md);
+      padding: var(--workout-space-sm);
+      background-color: var(--background-secondary);
+      border-radius: var(--workout-radius-sm);
+    }
+  }
+
+  @media (max-width: variables.$breakpoint-mobile) {
+    .workout-table-spacer-summary-cell {
+      padding: var(--workout-space-xs) var(--workout-space-sm);
 
       .workout-spacer-stat {
-        display: inline-block;
-        margin-right: var(--workout-space-md);
-        color: var(--text-normal);
-
-        strong {
-          color: var(--text-accent);
-          font-weight: 600;
-        }
+        margin-right: var(--workout-space-sm);
+        font-size: var(--workout-font-xs);
       }
     }
-  }
 
-  &-footer {
-    font-size: var(--workout-font-xs);
-    color: var(--text-muted);
-    margin-top: var(--workout-space-md);
-    padding: var(--workout-space-sm);
-    background-color: var(--background-secondary);
-    border-radius: var(--workout-radius-sm);
-  }
-}
-
-@media (max-width: variables.$breakpoint-mobile) {
-  .workout-table-spacer-summary-cell {
-    padding: var(--workout-space-xs) var(--workout-space-sm);
-
-    .workout-spacer-stat {
-      margin-right: var(--workout-space-sm);
+    .workout-table-spacer-date-cell {
+      padding: var(--workout-space-xs) var(--workout-space-xs);
       font-size: var(--workout-font-xs);
     }
-  }
 
-  .workout-table-spacer-date-cell {
-    padding: var(--workout-space-xs) var(--workout-space-xs);
-    font-size: var(--workout-font-xs);
-  }
-
-  .workout-table-actions {
-    gap: var(--workout-space-xs);
+    .workout-table-actions {
+      gap: var(--workout-space-xs);
+    }
   }
 }

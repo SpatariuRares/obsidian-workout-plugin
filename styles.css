@@ -903,6 +903,32 @@
   color: var(--text-warning);
 }
 
+.workout-select-dropdown {
+  flex-shrink: 0;
+  font-size: var(--workout-font-xl);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  max-width: 140px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  height: auto;
+  min-height: 48px;
+  /* Basic select styling to ensure consistency */
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+}
+.workout-select-dropdown:hover {
+  border-color: var(--background-modifier-border-hover);
+}
+.workout-select-dropdown:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+
 /* Table styles entrypoint (split into app/styles/table/*) */
 /* Main workout charts table */
 .workout-charts-table {
@@ -979,75 +1005,78 @@
    All components follow Obsidian's theming system for consistent appearance.
    ============================================================================ */
 /* Workout table (general) */
-.workout-table-container {
+.workout-table-content-container {
+  margin: var(--workout-space-sm) 0;
+}
+.workout-table-content-container .workout-table-container {
   width: 100%;
   overflow-x: auto;
   margin-top: var(--workout-space-lg);
   border-radius: var(--workout-radius-lg);
   background: var(--background-primary);
 }
-.workout-table-container .workout-log-table td {
+.workout-table-content-container .workout-table-container .workout-log-table td {
   color: var(--text-normal);
   vertical-align: middle;
   white-space: nowrap;
 }
-.workout-table-container .workout-log-table tr.group-even {
+.workout-table-content-container .workout-table-container .workout-log-table tr.group-even {
   background: var(--background-secondary);
 }
-.workout-table-container .workout-log-table tr.group-odd {
+.workout-table-content-container .workout-table-container .workout-log-table tr.group-odd {
   background: var(--background-primary);
 }
-.workout-table-container .workout-table-spacer {
+.workout-table-content-container .workout-table-container .workout-table-spacer {
   background: var(--background-modifier-border);
   height: auto;
   font-size: var(--workout-font-sm);
   font-weight: 500;
 }
-.workout-table-link {
+.workout-table-content-container .workout-table-link {
   cursor: pointer;
   font-weight: var(--workout-font-weight-medium);
   color: var(--text-accent);
 }
-.workout-table-date-cell {
+.workout-table-content-container .workout-table-date-cell {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-accent);
 }
-.workout-table-volume-cell {
+.workout-table-content-container .workout-table-volume-cell {
   font-weight: var(--workout-font-weight-bold);
   color: var(--text-accent-hover);
 }
-.workout-table-actions {
+.workout-table-content-container .workout-table-actions {
   display: flex;
   gap: var(--workout-space-sm);
   justify-content: center;
   align-items: center;
 }
-.workout-table-actions-cell {
+.workout-table-content-container .workout-table-actions-cell {
   text-align: center;
   padding: var(--workout-space-xs) var(--workout-space-sm);
 }
-.workout-table-spacer-date-cell {
+.workout-table-content-container .workout-table-spacer-date-cell {
   padding: var(--workout-space-xs) var(--workout-space-sm);
   text-align: center;
   font-weight: 600;
   color: var(--text-muted);
   background: var(--background-primary-alt);
 }
-.workout-table-spacer-summary-cell {
+.workout-table-content-container .workout-table-spacer-summary-cell {
   padding: var(--workout-space-xs) var(--workout-space-md);
   text-align: left;
   background: var(--background-secondary);
 }
-.workout-table-spacer-summary-cell .workout-spacer-stat {
+.workout-table-content-container .workout-table-spacer-summary-cell .workout-spacer-stat {
   display: inline-block;
   margin-right: var(--workout-space-md);
   color: var(--text-normal);
 }
-.workout-table-spacer-summary-cell .workout-spacer-stat strong {
+.workout-table-content-container .workout-table-spacer-summary-cell .workout-spacer-stat strong {
   color: var(--text-accent);
   font-weight: 600;
 }
-.workout-table-footer {
+.workout-table-content-container .workout-table-footer {
   font-size: var(--workout-font-xs);
   color: var(--text-muted);
   margin-top: var(--workout-space-md);
@@ -1055,23 +1084,23 @@
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-sm);
 }
-
 @media (max-width: 484px) {
-  .workout-table-spacer-summary-cell {
+  .workout-table-content-container .workout-table-spacer-summary-cell {
     padding: var(--workout-space-xs) var(--workout-space-sm);
   }
-  .workout-table-spacer-summary-cell .workout-spacer-stat {
+  .workout-table-content-container .workout-table-spacer-summary-cell .workout-spacer-stat {
     margin-right: var(--workout-space-sm);
     font-size: var(--workout-font-xs);
   }
-  .workout-table-spacer-date-cell {
+  .workout-table-content-container .workout-table-spacer-date-cell {
     padding: var(--workout-space-xs) var(--workout-space-xs);
     font-size: var(--workout-font-xs);
   }
-  .workout-table-actions {
+  .workout-table-content-container .workout-table-actions {
     gap: var(--workout-space-xs);
   }
 }
+
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -1510,27 +1539,34 @@
 /* ============================================================================
    TIMER STYLES
    ============================================================================ */
+/* Timer row: timer fills space, action select stays small on the right */
+.workout-timer-row {
+  margin-bottom: var(--workout-space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
 /* Timer Styles */
-.workout-timer-container {
+.workout-timer {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   display: inline-flex;
   align-items: center;
-  gap: var(--workout-space-md);
-  font-size: var(--workout-font-xl);
-}
-.workout-timer-container .workout-timer-display {
-  display: flex;
-  align-items: center;
   gap: var(--workout-space-lg);
+  font-size: var(--workout-font-xl);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.workout-timer-container .workout-timer-time {
+.workout-timer .workout-timer-time {
   display: flex;
   align-items: center;
 }
-.workout-timer-container .workout-timer-time .workout-timer-time-display {
+.workout-timer .workout-timer-time .workout-timer-time-display {
   font-size: var(--workout-font-xl);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-accent);
@@ -1538,17 +1574,18 @@
   min-width: var(--workout-size-3xl);
   text-align: center;
 }
-.workout-timer-container .workout-timer-time .workout-timer-complete {
+.workout-timer .workout-timer-time .workout-timer-complete {
   font-size: var(--workout-font-xl);
   font-weight: var(--workout-font-weight-bold);
   color: var(--text-success);
 }
-.workout-timer-container .workout-timer-controls {
+.workout-timer .workout-timer-controls {
   display: flex;
   gap: var(--workout-space-xs);
   align-items: center;
 }
-.workout-timer-container .workout-timer-error {
+
+.workout-timer-error {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-modifier-error);
   color: var(--text-error);

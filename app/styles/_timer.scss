@@ -2,22 +2,28 @@
    TIMER STYLES
    ============================================================================ */
 
+/* Timer row: timer fills space, action select stays small on the right */
+.workout-timer-row {
+  margin-bottom: var(--workout-space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+
 /* Timer Styles */
-.workout-timer-container {
+.workout-timer {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   display: inline-flex;
   align-items: center;
-  gap: var(--workout-space-md);
+  gap: var(--workout-space-lg);
   font-size: var(--workout-font-xl);
-
-  .workout-timer-display {
-    display: flex;
-    align-items: center;
-    gap: var(--workout-space-lg);
-  }
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .workout-timer-time {
     display: flex;
@@ -38,19 +44,20 @@
       color: var(--text-success);
     }
   }
+
   .workout-timer-controls {
     display: flex;
     gap: var(--workout-space-xs);
     align-items: center;
   }
+}
 
-  .workout-timer-error {
-    padding: var(--workout-space-sm) var(--workout-space-md);
-    background: var(--background-modifier-error);
-    color: var(--text-error);
-    border-radius: var(--workout-radius-sm);
-    margin: var(--workout-space-sm) 0;
-    border: var(--workout-border-thin) solid var(--background-modifier-error);
-    font-size: var(--workout-font-base);
-  }
+.workout-timer-error {
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: var(--background-modifier-error);
+  color: var(--text-error);
+  border-radius: var(--workout-radius-sm);
+  margin: var(--workout-space-sm) 0;
+  border: var(--workout-border-thin) solid var(--background-modifier-error);
+  font-size: var(--workout-font-base);
 }

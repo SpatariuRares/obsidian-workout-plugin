@@ -1,0 +1,28 @@
+.workout-select-dropdown {
+  flex-shrink: 0;
+  font-size: var(--workout-font-xl);
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  cursor: pointer;
+  max-width: 140px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  height: auto;
+  min-height: 30px;
+
+  /* Basic select styling to ensure consistency */
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+
+  &:hover {
+    border-color: var(--background-modifier-border-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+  }
+}

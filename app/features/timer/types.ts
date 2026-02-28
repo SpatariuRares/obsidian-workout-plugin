@@ -18,6 +18,7 @@ export interface TimerPresetConfig {
 }
 
 export interface EmbeddedTimerParams {
+  id?: string; // Unique identifier for code block replacement
   duration?: number; // Duration in seconds (used for all timer types)
   type?: TIMER_TYPE;
   showControls?: boolean;

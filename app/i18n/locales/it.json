@@ -7,6 +7,7 @@
       "insertTable": "Inserisci tabella registro",
       "editTable": "Modifica parametri tabella",
       "insertTimer": "Inserisci timer allenamento",
+      "editTimer": "Modifica parametri timer",
       "insertDashboard": "Inserisci dashboard allenamento",
       "insertDuration": "Inserisci durata allenamento",
       "createExercisePage": "Crea pagina esercizio",
@@ -25,6 +26,7 @@
       "insertTable": "Inserisci tabella",
       "updateTable": "Aggiorna tabella",
       "insertTimer": "Inserisci timer",
+      "updateTimer": "Aggiorna timer",
       "insertDashboard": "Inserisci dashboard",
       "cancel": "Annulla",
       "confirm": "Conferma",
@@ -86,6 +88,8 @@
       "tableUpdated": "✅ Tabella aggiornata con successo!",
       "tableUpdateFailed": "Aggiornamento tabella fallito. Assicurati che il file sia aperto nell'editor.",
       "timerInserted": "✅ Timer inserito con successo!",
+      "timerUpdated": "✅ Timer aggiornato con successo!",
+      "timerUpdateFailed": "Aggiornamento timer fallito. Assicurati che il file sia aperto nell'editor.",
       "dashboardInserted": "✅ Dashboard inserita con successo!",
       "validationFillAll": "Compila tutti i campi con valori validi",
       "validationCombinedMode": "⚠️ per il tipo 'esercizio + allenamento' devi compilare entrambi i campi!",
@@ -843,7 +847,8 @@
     "presets": {
       "detailsControls": "Controls",
       "detailsSound": "Sound"
-    }
+    },
+    "editTimer": "Modifica timer"
   },
   "icons": {
     "timer": {

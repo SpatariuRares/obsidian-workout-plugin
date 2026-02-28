@@ -38,7 +38,8 @@
       "canvasExport": "अपने व्यायाम योजना को कैनवास पर निर्यात करें।",
       "muscleTagManager": "मांसपेशियों के उभारों का प्रबंधन करें।",
       "editTable": "टेबल के मापदंडों को संपादित करें",
-      "editTimer": "टाइमर पैरामीटर संपादित करें"
+      "editTimer": "टाइमर पैरामीटर संपादित करें",
+      "create_log": "वर्कआउट लॉग बनाएं"
     },
     "labels": {
       "exercise": "अभ्यास:",
@@ -55,12 +56,29 @@
       "dateRange": "दिनांक की सीमा (दिनों में):",
       "targetWeight": "लक्ष्यित वजन ({इकाई}):",
       "targetReps": "लक्ष्यित प्रतिनिधि:",
-      "protocol": "प्रोटोकॉल:"
+      "protocol": "प्रोटोकॉल:",
+      "volume": "वॉल्यूम ({unit}):"
     },
     "placeholders": {
       "repsRange": "8-10",
       "sets": "4",
-      "restTime": "90"
+      "restTime": "90",
+      "selectWorkoutFile": "निर्यात करने के लिए एक वर्कआउट फ़ाइल चुनें...",
+      "selectMuscleGroup": "मांसपेशियों का समूह चुनें...",
+      "searchTags": "टैग या मांसपेशी समूह के आधार पर खोजें...",
+      "searchMuscleTags": "मांस के टैग खोजें...",
+      "enterTagName": "टैग का नाम दर्ज करें (उदाहरण के लिए, छाती, पेत्तो)",
+      "exerciseAutocomplete": "अभ्यास देखने के लिए टाइपिंग शुरू करें...",
+      "reps": "उदाहरण के लिए, 10",
+      "weight": "उदाहरण के लिए, 10.5",
+      "notes": "उदाहरण के लिए, अच्छा फॉर्म, महसूस हुआ कि यह मजबूत है",
+      "workout": "उदाहरण के लिए: वर्कआउट ए, ट्रेनिंग बी, या नीचे दिए गए चेकबॉक्स का उपयोग करें।",
+      "customTitle": "यदि आप स्वचालित शीर्षक चाहते हैं, तो खाली छोड़ दें।",
+      "note": "यहां ज़ोर से प्रयास करें। यह आपकी बुनियादी व्यायाम है।",
+      "folderPath": "उदाहरण के लिए, व्यायाम करें या खाली छोड़ दें (रूट के लिए)।",
+      "parameterKey": "उदाहरण के लिए, गति",
+      "parameterLabel": "उदाहरण के लिए, गति",
+      "parameterUnit": "उदाहरण के लिए, किमी/घ"
     },
     "notices": {
       "exercisePageError": "Error creating exercise page: ",
@@ -74,57 +92,679 @@
       "tableUpdated": "✅ तालिका सफलतापूर्वक अपडेट की गई!",
       "tableUpdateFailed": "टेबल को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "timerUpdated": "✅ टाइमर सफलतापूर्वक अपडेट हो गया!",
-      "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।"
+      "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
+      "muscleTagDeleted": "मांस टैग हटा दिया गया",
+      "muscleTagExported": "मांस टैग निर्यात किया गया",
+      "muscleTagImportInvalidFormat": "मांस टैग आयात: अमान्य प्रारूप",
+      "muscleTagImportNoValid": "मांस टैग आयात: मान्य नहीं",
+      "muscleTagLoading": "मांस के टैग का लोडिंग",
+      "muscleTagNoResults": "मांस टैग के लिए कोई परिणाम नहीं",
+      "muscleTagSaved": "मांस के टैग को सफलतापूर्वक सहेज लिया गया",
+      "muscleTagSimilarWarning": "मांस टैग के समान चेतावनी",
+      "targetAchieved": "लक्ष्य प्राप्त",
+      "muscleTagCount": "{count} टैग(स) मिले",
+      "muscleTagDeleteConfirm": "क्या आप निश्चित रूप से टैग \"{tag}\" को हटाना चाहते हैं?",
+      "muscleTagSaveError": "मांस टैग को सेव करने में त्रुटि: {error}",
+      "muscleTagExists": "टैग \"{tag}\" पहले से मौजूद है",
+      "muscleTagSimilarFound": "{count} समान टैग(ओं) मिल गए",
+      "muscleTagExportError": "मांस टैग निर्यात में त्रुटि: {error}",
+      "muscleTagImported": "{count} मांसपेशियों के टैग सफलतापूर्वक आयात किए गए!",
+      "muscleTagImportError": "मांस टैग आयात करने में त्रुटि: {error}",
+      "muscleTagImportInvalidGroup": "अमान्य मांसपेशी समूह \"{group}\" को टैग \"{tag}\" के लिए उपयोग नहीं किया जा सकता। यह एक मानक मांसपेशी समूह होना चाहिए।",
+      "muscleTagImportPreview": "{count} टैग(स) आयात करने के लिए",
+      "migrationComplete": "स्थानांतरण पूर्ण। {count} व्यायाम फ़ाइलों को अपडेट किया गया।",
+      "logCreated": "वर्कआउट लॉग सफलतापूर्वक बनाया गया!",
+      "logUpdated": "वर्कआउट लॉग सफलतापूर्वक अपडेट किया गया!",
+      "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
+      "tableInserted": "✅ तालिका सफलतापूर्वक डाली गई!",
+      "timerInserted": "✅ टाइमर सफलतापूर्वक डाला गया!",
+      "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
+      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
+      "validationCombinedMode": "⚠️ 'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड को भरना होगा!",
+      "insertCodeNoFile": "कोड डालने के लिए एक मार्कडाउन फ़ाइल खोलें।",
+      "exercisePageCreated": "व्यायाम पृष्ठ सफलतापूर्वक बनाया गया!",
+      "exercisePageNameRequired": "कृपया व्यायाम का नाम दर्ज करें",
+      "exerciseNameRequired": "❌ कृपया व्यायाम का नाम दर्ज करें",
+      "exerciseSectionCreated": "✅ व्यायाम अनुभाग सफलतापूर्वक बनाया गया!",
+      "timerElementsNotInitialized": "टाइमर के तत्व अभी तक शुरू नहीं किए गए हैं",
+      "auditNoMismatches": "लेखांकन संख्या में विसंगतियां",
+      "auditRenameFileSuccess": "ऑडिट: फ़ाइल का नाम बदलकर सफलता",
+      "auditScanning": "ऑडिट स्कैनिंग",
+      "canvasExportError": "कैनवस निर्यात त्रुटि",
+      "canvasExported": "कैनवस निर्यात किया गया",
+      "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
+      "migrationError": "प्रवासन त्रुटि",
+      "migrationNoUpdates": "प्रवासन के लिए कोई अपडेट नहीं"
     },
     "autocomplete": {
       "wordBadge": "◆",
       "partialBadge": "•",
       "fuzzyBadge": "~",
-      "exactBadge": "★"
+      "exactBadge": "★",
+      "fuzzyTooltip": "अधूरे मिलान (टाइपिंग सुधार) - स्कोर: {score}",
+      "exactTooltip": "सटीक/प्रारंभिक मिलान - स्कोर: {score}",
+      "wordTooltip": "शब्द मिलान - स्कोर: {score}",
+      "partialTooltip": "अंश मिलान - स्कोर: {score}"
+    },
+    "parameterKey": "कुंजी:",
+    "parameterLabel": "लेबल:",
+    "parameterType": "प्रकार:",
+    "parameterUnit": "इकाई (वैकल्पिक):",
+    "parameterRequired": "आवश्यक",
+    "confirmAction": "कार्य को पुष्टिकरण करें",
+    "fileName": "फ़ाइल का नाम",
+    "csvExercise": "CSV अभ्यास",
+    "similarity": "समानता",
+    "status": "स्थिति",
+    "tag": "टैग",
+    "muscleGroup": "मांसपेशियों का समूह",
+    "actions": "क्रिया",
+    "addTag": "टैग जोड़ें",
+    "editTag": "टैग संपादित करें",
+    "newTag": "नया टैग",
+    "save": "सेव",
+    "delete": "हटाएं",
+    "similarTags": "समान टैग:",
+    "exportTags": "टैग निर्यात करें",
+    "info": {
+      "dashboardDescription": "यह एक विस्तृत वर्कआउट डैशबोर्ड डालेगा जिसमें आंकड़े, चार्ट और त्वरित क्रियाएं शामिल होंगी।"
+    },
+    "notes": "टिप्पणियाँ (वैकल्पिक):",
+    "workout": "वर्कआउट (वैकल्पिक):",
+    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):",
+    "chartType": "चार्ट का प्रकार:",
+    "dataType": "डेटा प्रकार:",
+    "daysRange": "दिनों की सीमा:",
+    "dataLimit": "डेटा सीमा:",
+    "maxLogCount": "अधिकतम लॉग की संख्या:",
+    "customTitle": "कस्टम शीर्षक:",
+    "timerType": "टाइमर का प्रकार:",
+    "duration": "अवधि (सेकंड):",
+    "rounds": "राउंड:",
+    "title": "शीर्षक:",
+    "sets": "सेट्स:",
+    "restTime": "आराम का समय (सेकंड):",
+    "note": "ध्यान दें:",
+    "folderPath": "फ़ोल्डर पथ (वैकल्पिक):",
+    "exerciseType": "व्यायाम का प्रकार:",
+    "customParameters": "कस्टम पैरामीटर:",
+    "importTags": "टैग आयात करें",
+    "importMerge": "विलय",
+    "importReplace": "सभी को बदलें",
+    "timerDuration": "टाइमर की अवधि (सेकंड):",
+    "timerPreset": "टाइमर प्रीसेट:",
+    "workoutFile": "वर्कआउट फ़ाइल:",
+    "dateRange": "तारीख सीमा (दिन):",
+    "protocol": "प्रोटोकॉल:",
+    "recentExercises": "नवीनतम:",
+    "canvasLayout": "लेआउट",
+    "canvasOptions": "विकल्प",
+    "layoutType": "लेआउट प्रकार:",
+    "layoutHorizontal": "क्षैतिज प्रवाह",
+    "layoutVertical": "ऊर्ध्वाधर प्रवाह",
+    "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
+    "tagsSelector": "मांस के टैग:",
+    "noTagsFound": "कोई भी टैग आपके खोज से मेल नहीं खाते",
+    "noTagsSelected": "कोई टैग नहीं चुना गया। नीचे दिए गए टैग पर क्लिक करके उन्हें जोड़ें।",
+    "text": "पूरा वर्कआउट",
+    "value": "वर्कआउट",
+    "checkboxes": {
+      "connectSupersets": "सुपरसेट्स से कनेक्ट करें",
+      "exactMatch": "सटीक मिलान",
+      "includeDurations": "अवधि शामिल करें",
+      "includeLog": "लॉग शामिल करें",
+      "includeStats": "आंकड़े शामिल करें",
+      "includeTimer": "टाइमर शामिल करें",
+      "searchByName": "नाम से खोजें",
+      "showAddButton": "'जोड़ें' बटन दिखाएं",
+      "showControls": "नियंत्रण दिखाएं",
+      "showStatistics": "सांख्यिकीय डेटा दिखाएं",
+      "showTrendHeader": "ट्रेंड शीर्षक दिखाएं",
+      "showTrendLine": "ट्रेंड लाइन दिखाएं",
+      "sound": "ध्वनि",
+      "timerSound": "टाइमर ध्वनि",
+      "useCurrentWorkout": "वर्तमान वर्कआउट का उपयोग करें",
+      "useCurrentWorkoutFile": "वर्तमान वर्कआउट फ़ाइल का उपयोग करें"
+    },
+    "exerciseStatus": {
+      "createPage": "पृष्ठ बनाए",
+      "notFound": "नहीं मिला"
+    },
+    "sections": {
+      "advancedOptions": "उन्नत विकल्प",
+      "chartType": "चार्ट का प्रकार",
+      "configuration": "कॉन्फ़िगरेशन",
+      "displayOptions": "प्रदर्शन विकल्प",
+      "exerciseConfiguration": "व्यायाम कॉन्फ़िगरेशन",
+      "mobileOptions": "मोबाइल विकल्प",
+      "options": "विकल्प",
+      "preset": "पहले से निर्धारित",
+      "progressiveOverload": "प्रगतिशील अधिभार",
+      "tableType": "टेबल का प्रकार",
+      "target": "लक्ष्य",
+      "timerConfiguration": "टाइमर कॉन्फ़िगरेशन",
+      "workout": "वर्कआउट"
+    },
+    "selectOptions": {
+      "allLogs": "सभी लॉग",
+      "cardio": "कार्डियो",
+      "completeWorkout": "पूरा वर्कआउट",
+      "countdown": "काउंटडाउन",
+      "custom": "कस्टम",
+      "distance": "दूरी",
+      "dropSet": "ड्रॉप सेट",
+      "exerciseWorkout": "व्यायाम",
+      "interval": "समय अंतराल",
+      "myoReps": "माय ओ रेप्स",
+      "number": "संख्या",
+      "restPause": "विश्राम ब्रेक",
+      "specificExercise": "विशिष्ट व्यायाम",
+      "standard": "मानक",
+      "strength": "शक्ति",
+      "superset": "सुपरसेट",
+      "text": "टेक्स्ट",
+      "timed": "समयबद्ध",
+      "twentyones": "21",
+      "yesNo": "हाँ नहीं"
     }
   },
   "settings": {
     "placeholders": {
-      "protocolName": "प्रोटोकॉल का नाम दर्ज करें"
-    }
+      "protocolName": "प्रोटोकॉल का नाम दर्ज करें",
+      "protocolAbbreviation": "उदाहरण के लिए, gs",
+      "presetName": "पूर्व निर्धारित नाम दर्ज करें"
+    },
+    "labels": {
+      "generateDefaultTemplates": "डिफ़ॉल्ट टेम्प्लेट जेनरेट करें",
+      "csvPath": "CSV लॉग फ़ाइल का पथ",
+      "exerciseFolder": "व्यायाम फ़ोल्डर का पथ",
+      "defaultExactMatch": "डिफ़ॉल्ट सटीक मिलान",
+      "defaultTimerPreset": "डिफ़ॉल्ट टाइमर प्रीसेट",
+      "presetName": "प्रेडसेट का नाम",
+      "presetType": "टाइमर का प्रकार",
+      "presetDuration": "अवधि (सेकंड)",
+      "presetRounds": "राउंड",
+      "presetShowControls": "नियंत्रण दिखाएं",
+      "presetSound": "ध्वनि",
+      "exerciseBlockTemplate": "व्यायाम ब्लॉक टेम्पलेट",
+      "customProtocols": "कस्टम प्रोटोकॉल",
+      "protocolName": "प्रोटोकॉल का नाम",
+      "protocolAbbreviation": "संक्षिप्",
+      "protocolColor": "बजह का रंग",
+      "setDuration": "वैकल्पिक अवधि (सेकंड)",
+      "repDuration": "प्रति पुनरावृत्ति की अवधि (सेकंड)",
+      "defaultRepsPerSet": "डिफ़ॉल्ट सेट प्रति दोहराव",
+      "setupCSV": "CSV फ़ाइलों को सेटअप करें",
+      "generateExamples": "उदाहरण डेटा उत्पन्न करें",
+      "weightUnit": "वज़न की इकाई"
+    },
+    "descriptions": {
+      "generateDefaultTemplates": "'वर्कआउट टेम्पलेट्स' फ़ोल्डर में डिफ़ॉल्ट एक्सरसाइज पेज टेम्पलेट और टैग संदर्भ उत्पन्न करें। आप इन फ़ाइलों को अनुकूलित करके भाषा और संरचना को बदल सकते हैं।",
+      "csvFolder": "वह फ़ोल्डर जहाँ वर्कआउट लॉग और मसल टैग CSV फ़ाइलों को संग्रहीत किया जाएगा।",
+      "exerciseFolder": "अभ्यास पृष्ठों वाले फ़ोल्डर का पथ",
+      "defaultExactMatch": "जब सक्षम किया जाता है, तो व्यायाम फ़िल्टरिंग डिफ़ॉल्ट रूप से सटीक नाम मिलान का उपयोग करता है। अस्पष्ट मिलान के लिए अक्षम करें।",
+      "defaultTimerPreset": "नए टाइमर के लिए एक डिफ़ॉल्ट प्रीसेट चुनें।",
+      "noPresets": "कोई टाइमर प्रीसेट कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रीसेट जोड़ें' पर क्लिक करें।",
+      "presetNameDesc": "इस टाइमर प्रीसेट के लिए एक अद्वितीय नाम (उदाहरण के लिए, 'रेस्ट 90', 'HIIT 30/10')।",
+      "presetDurationDesc": "सेकंड में अवधि (उदाहरण के लिए, 90 सेकंड के टाइमर के लिए 90)।",
+      "presetRoundsDesc": "स्टॉप करने से पहले, चक्रित करने के लिए राउंड की संख्या।",
+      "exerciseBlockTemplate": "व्यायाम ब्लॉक के लिए टेम्पलेट। उपलब्ध प्लेसहोल्डर: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
+      "weightIncrement": "प्रगतिशील भार के लिए डिफ़ॉल्ट भार वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
+      "customProtocols": "विशेष प्रशिक्षण तकनीकों को ट्रैक करने के लिए अनुकूल वर्कआउट प्रोटोकॉल बनाएं।",
+      "noCustomProtocols": "कोई कस्टम प्रोटोकॉल कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रोटोकॉल जोड़ें' पर क्लिक करें।",
+      "protocolAbbreviation": "बज में प्रदर्शित संक्षिप्त संक्षिप्त नाम (अधिकतम 3 अक्षर)",
+      "protocolColor": "बैज की पृष्ठभूमि का रंग (हेक्स फॉर्मेट, उदाहरण के लिए, #FF5733)",
+      "setDuration": "जब प्रतिनिधि निर्दिष्ट नहीं होते हैं (डिफ़ॉल्ट)। सामान्य सीमा: 30-60 सेकंड।",
+      "repDuration": "एक दोहराव को पूरा करने में लगने वाला अनुमानित समय। यह तब उपयोग किया जाता है जब दोहराव की संख्या ज्ञात हो (उदाहरण के लिए, 'x 10 दोहराव')।",
+      "defaultRepsPerSet": "यदि निर्दिष्ट नहीं किया गया है, तो अनुमानित पुनरावृत्तियों की संख्या। यदि 0 है, तो 'बैकअप सेट अवधि' का उपयोग किया जाता है।",
+      "quickWeightIncrement": "प्लस/माइनस बटनों द्वारा उपयोग की जाने वाली वज़न में वृद्धि (जैसे, +2.5 / -2.5 इकाइयों के लिए)। यह वज़न बढ़ाने/घटाने के लिए उपयोग किया जाता है, जो कि वर्कआउट लॉग के निर्माण/संशोधन मोड में उपलब्ध है।",
+      "confirmOverwriteMuscleTags": "एक मसल टैग्स CSV फ़ाइल पहले से मौजूद है। क्या आप इसे डिफ़ॉल्ट मानों के साथ ओवरराइट करना चाहते हैं? इससे सभी कस्टम टैग हटा दिए जाएंगे।",
+      "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
+      "generateExamples": "उदाहरण अभ्यासों और वर्कआउट के साथ एक फ़ोल्डर बनाएं ताकि आपको शुरुआत करने में मदद मिल सके।",
+      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।"
+    },
+    "sections": {
+      "setupAndData": "स्थापना और डेटा",
+      "csvManagement": "CSV फ़ाइल प्रबंधन",
+      "exampleData": "उदाहरण डेटा",
+      "filtering": "फ़िल्टरिंग",
+      "timerPresets": "टाइमर की पूर्व निर्धारित सेटिंग्स",
+      "templates": "टेम्प्लेट",
+      "trainingParameters": "प्रशिक्षण पैरामीटर",
+      "customProtocols": "कस्टम प्रोटोकॉल",
+      "quickLog": "मोबाइल लॉगिंग"
+    },
+    "buttons": {
+      "addPreset": "पहले से मौजूद सेट जोड़ें",
+      "savePreset": "सेव करें",
+      "cancel": "रद्द करें",
+      "addProtocol": "प्रोटोकॉल जोड़ें",
+      "saveProtocol": "सेव करें",
+      "createFiles": "फ़ाइलें बनाएँ",
+      "createExamples": "उदाहरण बनाए",
+      "generating": "जनरेटिंग...",
+      "generated": "जनरेटेड!",
+      "regenerateOverwrite": "पुनर्जनरेट (ओवरराइट)",
+      "overwriting": "अतिरेक...",
+      "done": "पूर्ण!",
+      "failed": "असफल",
+      "generateTemplates": "टेम्प्लेट जेनरेट करें"
+    },
+    "options": {
+      "none": "कोई नहीं",
+      "weightUnit": {
+        "kg": "किलोग्राम (किलो)",
+        "lb": "पाउंड (lb)"
+      }
+    },
+    "tooltips": {
+      "editProtocol": "प्रोटोकॉल संपादित करें",
+      "deleteProtocol": "प्रोटोकॉल हटाएं",
+      "editPreset": "प्रेडसेट संपादित करें",
+      "deletePreset": "प्रेडसेट हटाएं"
+    },
+    "messages": {
+      "presetNameRequired": "आवश्यक है कि प्रीसेट का नाम दिया जाए",
+      "presetNameExists": "इस नाम के साथ पहले से एक प्रीसेट मौजूद है।",
+      "presetDeleted": "पहले से निर्धारित सेटिंग हटा दी गई",
+      "presetSaved": "पहले से सहे हुए",
+      "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
+      "protocolNameRequired": "प्रोटोकॉल का नाम आवश्यक है",
+      "protocolAbbreviationRequired": "संक्षिप्तीकरण आवश्यक है (अधिकतम 3 अक्षर)",
+      "protocolColorRequired": "कृपया एक वैध हेक्स रंग दर्ज करें (उदाहरण के लिए: #FF5733)",
+      "protocolNameExists": "इस नाम के साथ एक प्रोटोकॉल पहले से मौजूद है।",
+      "protocolDeleted": "प्रोटोकॉल हटा दिया गया",
+      "protocolSaved": "प्रोटोकॉल सहेजा गया",
+      "confirmDeleteProtocol": "क्या आप निश्चित रूप से इस प्रोटोकॉल को हटाना चाहते हैं?",
+      "csvFilesCreated": "CSV फाइलें सफलतापूर्वक बनाई गईं!",
+      "confirmOverwriteExamples": "एक उदाहरण फ़ोल्डर पहले से मौजूद है। क्या आप इसे ओवरराइट करना चाहते हैं?"
+    },
+    "none": "कोई नहीं"
   },
   "table": {
     "target": {
-      "separator": " × "
+      "separator": " × ",
+      "repsSuffix": "प्रतिनिधि",
+      "progressTooltip": "सर्वश्रेष्ठ: {best} प्रतिनिधि / लक्ष्य: {target} प्रतिनिधि"
     },
     "actions": "क्रियाएं",
-    "editTable": "टेबल संपादित करें"
+    "editTable": "टेबल संपादित करें",
+    "labels": {
+      "volume": "वॉल्यूम",
+      "weight": "वजन",
+      "duration": "अवधि",
+      "distance": "दूरी",
+      "heartRate": "हृदय गति",
+      "trendLine": "ट्रेंड लाइन",
+      "target": "लक्ष्य:"
+    },
+    "deleteConfirm": "पुष्टि करें",
+    "deleteError": "डिलीट त्रुट",
+    "deleteSuccess": "सफलतापूर्वक हटा दिया गया",
+    "deleteTitle": "हटाएं",
+    "distance": "दूरी",
+    "duration": "अवधि",
+    "editTitle": "संपादित शीर्षक",
+    "gotoExercise": "अभ्यास पर जाएं",
+    "heartRate": "हृदय गति",
+    "invalidDate": "अमान्य तिथि",
+    "noData": "कोई डेटा नहीं",
+    "notAvailable": "उपलब्ध नहीं",
+    "refreshSuccess": "सफलतापूर्वक रिफ्रेश",
+    "sets": "सेट",
+    "trendLine": "ट्रेंड लाइन",
+    "volume": "ध्वनि",
+    "columns": {
+      "date": "तिथि",
+      "exercise": "व्यायाम",
+      "reps": "प्रतिनिधि",
+      "weight": "वज़न",
+      "volume": "मात्रा",
+      "duration": "दूरी",
+      "distance": "दूरी",
+      "heartRate": "एचआर",
+      "notes": "टिप्पणियाँ",
+      "protocol": "प्रोटो",
+      "actions": "कार्य",
+      "volumeUnit": "मात्रा ({weightUnit})",
+      "weightUnit": "वज़न ({weightUnit})",
+      "distanceUnit": "दूरी ({distanceUnit})",
+      "pace": "गति"
+    },
+    "columnLabels": {
+      "date": "तिथि",
+      "exercise": "व्यायाम",
+      "reps": "प्रतिनिधियाँ",
+      "weight": "वजन",
+      "volume": "मात्रा",
+      "duration": "अवधि",
+      "distance": "दूरी",
+      "heartRate": "हृदय गति",
+      "notes": "टिप्पणियाँ",
+      "protocol": "प्रोटोकॉल",
+      "actions": "क्रिया",
+      "pace": "गति (मिन/किमी)"
+    }
   },
   "dashboard": {
     "summary": {
-      "currentStreakSuffix": "weeks"
-    }
+      "currentStreakSuffix": "weeks",
+      "title": "सारांश",
+      "totalWorkouts": "कुल वर्कआउट",
+      "currentStreak": "वर्तमानStreak",
+      "totalVolume": "कुल मात्रा",
+      "personalRecords": "व्यक्तिगत रिकॉर्ड"
+    },
+    "quickStats": {
+      "title": "त्वरित आँकड़े",
+      "week": "सप्ताह",
+      "month": "महीना",
+      "year": "वर्ष",
+      "workouts": "वर्कआउट",
+      "periods": {
+        "week": "इस सप्ताह",
+        "month": "इस महीने",
+        "year": "इस वर्ष"
+      }
+    },
+    "recentWorkouts": {
+      "title": "हाल के वर्कआउट",
+      "fallbackName": "वर्कआउट"
+    },
+    "volumeAnalytics": {
+      "title": "मात्रा विश्लेषण",
+      "chartTitle": "मात्रा का रुझान (पिछले 30 दिन)",
+      "muscleBreakdownTitle": "मात्रा के अनुसार शीर्ष व्यायाम"
+    },
+    "muscleTags": {
+      "title": "मांस के टैग",
+      "description": "विवरण",
+      "tooltip": "कॉपी करने के लिए क्लिक करें: {tag}",
+      "totalCount": "कुल: {{count}} टैग उपलब्ध"
+    },
+    "quickActions": {
+      "title": "त्वरित क्रियाएं",
+      "addWorkoutLog": "वर्कआउट लॉग जोड़ें",
+      "viewExercises": "व्यायाम देखें"
+    },
+    "durationComparison": {
+      "title": "अवधि की तुलना",
+      "subtitle": "अनुमानित बनाम वास्तविक कसरत की अवधि",
+      "noData": "कोई डेटा नहीं",
+      "columnWorkout": "वर्कआउट",
+      "columnEstimated": "अनुमानित",
+      "columnActual": "वास्तविक",
+      "columnVariance": "विचलन",
+      "varianceTrendTitle": "विचलन प्रवृत्ति शीर्षक",
+      "varianceTrendImproving": "विचलन का प्रवृत्ति में सुधार",
+      "varianceTrendDeclining": "विचलन का प्रवृत्ति घट रही है",
+      "varianceTrendStable": "विचलन का रुझान स्थिर",
+      "minutesSuffix": "मिन"
+    },
+    "fileErrors": {
+      "title": "फ़ाइल त्रुटियाँ",
+      "allValid": "सभी मान्य",
+      "noTags": "कोई टैग नहीं",
+      "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})",
+      "readError": "❌ फ़ाइल पढ़ने में त्रुटि: {message}"
+    },
+    "protocolDistribution": {
+      "title": "प्रोटोकॉल वितरण",
+      "subtitle": "प्रशिक्षण प्रोटोकॉल का विवरण (अंतिम 30 दिन)",
+      "noData": "कोई डेटा नहीं",
+      "filterActive": "सक्रिय फ़िल्टर",
+      "clearFilter": "फ़िल्टर साफ़ करें"
+    },
+    "protocolEffectiveness": {
+      "title": "प्रोटोकॉल की प्रभावशीलता",
+      "noData": "कोई डेटा नहीं",
+      "disclaimer": "अस्वीकरण",
+      "columnProtocol": "प्रोटोकॉल",
+      "columnEntries": "प्रविष्ट",
+      "columnVolumeChange": "मात्रा में परिवर्तन",
+      "columnProgression": "प्रगति"
+    },
+    "protocol": {
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})",
+      "percentLabel": "प्रतिशत लेबल",
+      "clickToFilter": "फ़िल्टर करने के लिए क्लिक करें"
+    },
+    "month": "महीना",
+    "title": "शीर्षक",
+    "week": "सप्ताह",
+    "year": "वर्ष"
   },
   "charts": {
-    "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}"
+    "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}",
+    "labels": {
+      "reps": "प्रतिनिधियाँ",
+      "date": "तिथि",
+      "trendLine": "ट्रेंड लाइन",
+      "down": "नीचे",
+      "neutral": "तटस्थ",
+      "variationFromTo": "{startValue} से {endValue} तक",
+      "trendType": "ट्रेंड {type}:",
+      "weightIncrementUnit": "वज़न में वृद्धि {weightIncrementUnit}",
+      "quickWeightIncrementUnit": "वज़न बटन {weightIncrementUnit} से बढ़ जाते हैं",
+      "volume": "मात्रा",
+      "weight": "वजन",
+      "duration": "अवधि",
+      "distance": "दूरी",
+      "heartRate": "हृदय गति",
+      "pace": "गति"
+    },
+    "types": {
+      "volume": "मात्रा",
+      "weight": "वजन",
+      "reps": "प्रतिनिधित्व",
+      "duration": "अवधि",
+      "distance": "दूरी",
+      "heartRate": "हृदय गति",
+      "pace": "गति"
+    },
+    "date": "तिथि",
+    "down": "नीचे",
+    "fallbackTableMessage": "बैकअप टेबल संदेश",
+    "neutral": "तटस्थ",
+    "overallVariationPrefix": "कुल भिन्नता उपसर्ग",
+    "reps": "प्रतिनिधियाँ",
+    "significantIncrease": "महत्वपूर्ण वृद्धि",
+    "trendLine": "ट्रेंड लाइन",
+    "volume": "मात्रा"
   },
   "messages": {
-    "tagReferenceGenerated": "Tag Reference Generated"
+    "tagReferenceGenerated": "Tag Reference Generated",
+    "loading": "वर्कआउट डेटा लोड हो रहा है...",
+    "noDataPeriod": "चुने गए समय अवधि के लिए कोई वर्कआउट डेटा नहीं मिला।",
+    "timerCompleted": "टाइमर समाप्त!",
+    "codeInserted": "कोड डाला गया",
+    "success": {
+      "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!"
+    },
+    "csvNotFound": "CSV फाइल नहीं मिली",
+    "fileEmpty": "फ़ाइल खाली",
+    "imbalanceAlerts": "असंतुलन की सूचनाएं",
+    "insufficientData": "अपर्याप्त डेटा",
+    "noFrontmatter": "कोई फ्रंटमेट",
+    "noImbalances": "कोई असंतुलन नहीं",
+    "noTags": "कोई टैग नहीं",
+    "errors": {
+      "tagReferenceFailed": "टैग संदर्भ उत्पन्न करने में त्रुटि:"
+    }
   },
   "timer": {
-    "editTimer": "टाइमर संपादित करें"
+    "editTimer": "टाइमर संपादित करें",
+    "countdown": "काउंटडाउन",
+    "interval": "समय अंतराल",
+    "stopwatch": "स्टॉपवॉच",
+    "controls": {
+      "startTimer": "टाइमर शुरू करें",
+      "pauseTimer": "टाइमर को रोकें",
+      "resetTimer": "टाइमर को रीसेट करें"
+    },
+    "presets": {
+      "detailsControls": "नियंत्रण",
+      "detailsSound": "ध्वनि"
+    }
   },
   "examples": {
     "gettingStarted": {
       "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features"
+      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "title": "द गिम प्लगइन के साथ शुरुआत करना",
+      "welcome": "स्वागत है! इस फ़ोल्डर में ऐसे उदाहरण फ़ाइलें शामिल हैं जो आपको सभी सुविधाओं को सीखने में मदद करेंगे।",
+      "folderStructureTitle": "फ़ोल्डर संरचना",
+      "tableHeaderFileFolder": "फ़ाइल/फ़ोल्डर",
+      "tableHeaderDescription": "विवरण",
+      "dashboardDesc": "आपकी वर्कआउट आँकड़े एक नज़र में",
+      "featureShowcaseDesc": "सभी कोड ब्लॉक का संपूर्ण संदर्भ",
+      "exercisesDesc": "उदाहरण अभ्यास पृष्ठ, जिनमें लॉग और चार्ट शामिल हैं",
+      "exercisesFolder": "**{folder}**/**",
+      "workoutsDesc": "उदाहरण वर्कआउट टेम्पलेट",
+      "workoutsFolder": "**{folder}**/**",
+      "logDesc": "आपके CSV वर्कआउट डेटा",
+      "logFolder": "**{folder}**/**",
+      "quickActionsTitle": "त्वरित क्रियाएं",
+      "quickActionsIntro": "इन कमांड्स (Ctrl/Cmd + P) का उपयोग करें:",
+      "commandCreateLog": "वर्कआउट लॉग बनाएं",
+      "commandCreateLogDesc": "एक नया वर्कआउट एंट्री जोड़ें",
+      "commandInsertChart": "वर्कआउट चार्ट डालें",
+      "commandInsertChartDesc": "किसी भी नोट में एक चार्ट जोड़ें",
+      "commandInsertTimer": "वर्कआउट टाइमर डालें",
+      "commandInsertTimerDesc": "एक आराम टाइमर जोड़ें",
+      "commandCreateExercise": "अभ्यास पृष्ठ बनाएँ",
+      "commandCreateExerciseDesc": "एक नई एक्सरसाइज फ़ाइल बनाएँ",
+      "nextStepsTitle": "अगले कदम",
+      "step3": "**{workouts}** फ़ोल्डर से एक वर्कआउट आज़माएं।",
+      "step4": "**{exercises}** में अपने स्वयं के व्यायाम बनाएँ।"
     },
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components."
+      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "title": "डैशबोर्ड"
     },
     "featureShowcase": {
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]"
+      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "title": "विशेषता प्रदर्शन",
+      "intro": "वर्कआउट प्लगइन में उपलब्ध सभी कोड ब्लॉक प्रकारों का संपूर्ण संदर्भ।",
+      "chartsTitle": "1. चार्ट",
+      "chartsIntro": "चार्ट आपके समय के अनुसार प्रगति को दर्शाते हैं। उपलब्ध प्रकार: `मात्रा`, `वजन`, `रिप्स`, `अवधि`, `दूरी`, `हृदय गति`, `गति`.",
+      "strengthExerciseTitle": "स्ट्रेंथ एक्सरसाइज (वॉल्यूम + वज़न)",
+      "cardioExerciseTitle": "कार्डियो व्यायाम (दूरी + गति)",
+      "timedExerciseTitle": "समयबद्ध व्यायाम (अवधि)",
+      "workoutChartTitle": "वर्कआउट चार्ट (सभी अभ्यासों का संयोजन)",
+      "allDataChartTitle": "सभी डेटा चार्ट",
+      "tablesTitle": "2. टेबल",
+      "tablesIntro": "टेबल आपकी वर्कआउट लॉग को सॉर्ट और एडिट करने की क्षमता के साथ प्रदर्शित करते हैं।",
+      "byExerciseTitle": "अभ्यास के अनुसार",
+      "byWorkoutTitle": "वर्कआउट के अनुसार",
+      "combinedTitle": "संयुक्त (व्यायाम + कसरत)",
+      "timersTitle": "3. टाइमर",
+      "countdownTimerTitle": "काउंटडाउन टाइमर",
+      "intervalTimerTitle": "इंतर्वल टाइमर",
+      "durationEstimatorTitle": "4. अवधि अनुमानक",
+      "durationEstimatorIntro": "वर्तमान नोट में दिए गए अभ्यासों के आधार पर, कुल वर्कआउट की अवधि का अनुमान लगाया जाता है।",
+      "trainingProtocolsTitle": "5. प्रशिक्षण प्रोटोकॉल",
+      "trainingProtocolsIntro": "यह प्लगइन आपके लॉग में इन प्रोटोकॉल बैज का समर्थन करता है:",
+      "protocolStandard": "सामान्य सेट",
+      "protocolDropset": "वजन कम करें, दोहराव जारी रखें",
+      "protocolMyoReps": "सक्रिय सेट + छोटे सेट",
+      "protocolRestPause": "थोड़ा आराम करें, फिर विफल होने तक जारी रखें।",
+      "protocolSuperset": "जुड़े हुए व्यायाम",
+      "protocol21s": "7+7+7 आंशिक प्रतिनिधि",
+      "quickReferenceTitle": "त्वरित संदर्भ",
+      "codeBlockWorkoutChart": "समय के साथ प्रगति को देखें",
+      "codeBlockWorkoutLog": "वर्कआउट डेटा तालिका प्रदर्शित करें",
+      "codeBlockWorkoutTimer": "काउंटडाउन या अंतराल टाइमर",
+      "codeBlockWorkoutDuration": "प्रशिक्षण की अवधि का अनुमान",
+      "codeBlockWorkoutDashboard": "पूरे आँकड़ों का अवलोकन",
+      "commandsNote": "**कमांड्स** (Ctrl/Cmd + P): वर्कआउट लॉग बनाएं, चार्ट डालें, टाइमर डालें, एक्सरसाइज पेज बनाएं"
     },
     "fileNames": {
       "gettingStarted": "शुरू करना",
       "dashboard": "डैशबोर्ड",
       "featureShowcase": "विशेषताओं का प्रदर्शन",
       "hiitCardioSession": "हाई इंटेंसिटी इंटरवल ट्रेनिंग (HIIT) कार्डियो सत्र"
+    },
+    "workout": {
+      "duration": "अवधि",
+      "chart": "चार्ट",
+      "note": "ध्यान दें: ज़ोर से प्रयास करें",
+      "recoverySuffix": "(पुनर्प्राप्ति: {seconds} सेकंड)",
+      "setsReps": "{sets} सेट x {reps} रेप्स"
+    },
+    "folderNames": {
+      "base": "जिम के उदाहरण",
+      "exercises": "अभ्यास",
+      "workouts": "वर्कआउट",
+      "log": "लॉग"
+    },
+    "exercises": {
+      "benchPress": {
+        "name": "बेंच प्रेस"
+      },
+      "squat": {
+        "name": "स्क्वाट"
+      },
+      "running": {
+        "name": "दौड़"
+      },
+      "plank": {
+        "name": "प्लैंक"
+      },
+      "cycling": {
+        "name": "साइकिल चलाना"
+      },
+      "squatMultiPower": {
+        "name": "स्क्वाट मल्टी पावर"
+      },
+      "rdl": {
+        "name": "आरडीएल"
+      },
+      "legPress45": {
+        "name": "लेग प्रेस 45"
+      },
+      "legCurlSeated": {
+        "name": "सीट पर लेग कर्ल"
+      },
+      "calfMachine": {
+        "name": "काल्फ मशीन"
+      }
+    },
+    "folderCreatedSuccess": "उदाहरण फ़ोल्डर '{folder}' सफलतापूर्वक बनाया गया!",
+    "folderCreatedError": "उदाहरण फ़ोल्डर बनाने में विफल।",
+    "hiit": {
+      "title": "हाई इंटेंसिटी इंटरवल ट्रेनिंग (HIIT) कार्डियो सत्र",
+      "intro": "उच्च तीव्रता अंतराल प्रशिक्षण, जिसमें अंतराल टाइमर और कार्डियो ट्रैकिंग शामिल हैं।",
+      "warmupTitle": "वार्म-अप (5 मिनट)",
+      "sprintIntervalsTitle": "स्प्रिंट अंतराल (30 सेकंड × 8 राउंड)",
+      "runningProgressTitle": "दौड़ की प्रगति",
+      "cyclingCooldownTitle": "साइकिलिंग के बाद आराम"
+    },
+    "exercise": {
+      "descriptionTitle": "विवरण",
+      "descriptionTemplate": "{name} के लिए एक उदाहरण विवरण।",
+      "logTitle": "रिकॉर्ड",
+      "volumeChartTitle": "वॉल्यूम चार्ट",
+      "weightProgressionTitle": "वजन में प्रगति",
+      "repTrackingTitle": "रिप ट्रैकिंग",
+      "durationChartTitle": "अवधि चार्ट",
+      "heartRateTitle": "हृदय गति",
+      "distanceChartTitle": "दूरी चार्ट",
+      "durationTitle": "अवधि",
+      "paceTrackingTitle": "गति ट्रैकिंग",
+      "paceTrackingNote": "अपनी गति में सुधार को ट्रैक करें (कम = तेज़):",
+      "chartTitle": "चार्ट"
+    },
+    "workouts": {
+      "lowerBodyA": {
+        "name": "दिन 1 लोअर बॉडी ए 2.0"
+      },
+      "upperBodyPower": {
+        "name": "ऊपरी शरीर की शक्ति"
+      },
+      "cardioDay": {
+        "name": "कार्डियो डे"
+      }
     }
   },
   "icons": {
@@ -205,5 +845,131 @@
         "personalRecords": "🏅"
       }
     }
+  },
+  "general": {
+    "labels": {
+      "totalVolume": "कुल मात्रा ({unit})",
+      "avgVolume": "औसत मात्रा ({unit})",
+      "totalWeight": "कुल वजन ({unit})",
+      "avgWeight": "औसत वजन ({unit})",
+      "front": "सामने",
+      "back": "वापस",
+      "dashboard": "डैशबोर्ड",
+      "dailyVolume": "दैनिक मात्रा ({unit})",
+      "totalDuration": "कुल अवधि (सेकंड)",
+      "avgDuration": "औसत अवधि (सेकंड)",
+      "totalDistance": "कुल दूरी (किमी)",
+      "avgDistance": "औसत दूरी (किमी)",
+      "pace": "गति (मिन/किमी)",
+      "avgHeartRate": "औसत हृदय गति (बीपीएम)",
+      "totalCustom": "कुल {label}",
+      "avgCustom": "औसत {label}"
+    },
+    "avgReps": "औसत प्रतिनिधि",
+    "back": "वापस",
+    "currentFile": "वर्तमान फ़ाइल",
+    "dashboard": "डैशबोर्ड",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "front": "सामने",
+    "muscleHeatMap": "मांसपेशियों का हीट मैप",
+    "noMatchMessage": "कोई मिलान नहीं",
+    "search": "खोज",
+    "totalReps": "कुल पुनरावृत्तियाँ",
+    "workoutData": "वर्कआउट डेटा",
+    "workoutLog": "वर्कआउट लॉग"
+  },
+  "commands": {
+    "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
+    "auditExerciseNames": "ऑडिट एक्सरसाइज के नाम",
+    "convertExercise": "अभ्यास रूपांतरित करें",
+    "exportWorkoutToCanvas": "वर्कआउट को कैनवास पर निर्यात करें",
+    "generateTagReference": "टैग संदर्भ उत्पन्न करें",
+    "insertTable": "टेबल डालें",
+    "manageMuscleTags": "मांस के टैग प्रबंधित करें",
+    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें",
+    "createCsvLog": "CSV लॉग फ़ाइल बनाएँ"
+  },
+  "common": {
+    "exercise": "अभ्यास",
+    "notAvailable": "उपलब्ध नहीं",
+    "unknown": "अज्ञात",
+    "workout": "वर्कआउट",
+    "sec": "सुर",
+    "km": "km",
+    "bpm": "बीपीएम",
+    "minPerKm": "प्रति किलोमीटर न्यूनतम",
+    "cancel": "रद्द करें",
+    "convert": "रूपांतरण",
+    "reps": "प्रतिनिधियाँ"
+  },
+  "logs": {
+    "noDataTitle": "[{{exerciseName}} के लिए कोई लॉग नहीं मिला",
+    "createFirstLogButton": "{exerciseName} के लिए पहली लॉग बनाएं",
+    "createFirstLogButtonAria": "{exerciseName} के लिए पहली लॉग बनाएं",
+    "addLogButtonText": "{exerciseName} के लिए लॉग जोड़ें",
+    "addLogButtonAria": "{exerciseName} के लिए लॉग जोड़ें",
+    "createLogButtonText": "{exerciseName} के लिए लॉग बनाएं:",
+    "createLogButtonAria": "{exerciseName} के लिए लॉग बनाएं:"
+  },
+  "forms": {
+    "enterCsvPath": "CSV पथ दर्ज करें",
+    "enterFolderPath": "फ़ोल्डर का पथ दर्ज करें",
+    "workoutName": "वर्कआउट का नाम"
+  },
+  "stats": {
+    "avgVolume": "औसत मात्रा",
+    "recentTrend": "हाल का रुझान",
+    "sessions": "सत्र"
+  },
+  "timeperiods": {
+    "month": "महीना",
+    "week": "सप्ताह",
+    "year": "वर्ष"
+  },
+  "trends": {
+    "declining": "घटती हुई",
+    "decreasing": "घट रही",
+    "down": "नीचे",
+    "improving": "सुधार",
+    "increasing": "बढ़ रहा",
+    "invariant": "स्थिर",
+    "neutral": "तटस्थ",
+    "stable": "स्थिर",
+    "stableLower": "स्थिर निचला",
+    "up": "ऊपर"
+  },
+  "convert": {
+    "title": "व्यायाम डेटा को रूपांतरित करें",
+    "currentType": "वर्तमान प्रकार:",
+    "sectionExercise": "अभ्यास",
+    "preview": {
+      "title": "नमूना",
+      "noEntries": "इस अभ्यास के लिए कोई लॉग प्रविष्टियाँ नहीं मिलीं",
+      "willConvertOne": "1 लॉग प्रविष्टि परिवर्तित की जाएगी",
+      "willConvertMany": "{count} लॉग प्रविष्टियाँ परिवर्तित की जाएंगी"
+    },
+    "fieldMapping": {
+      "title": "फ़ील्ड मैपिंग",
+      "addMapping": "फ़ील्ड मैपिंग जोड़ें",
+      "removeMapping": "मैपिंग हटाएं",
+      "reps": "प्रतिनिधियाँ",
+      "weight": "वज़न ({unit})"
+    },
+    "typeSelect": {
+      "convertTo": "रूपांतरण करें:",
+      "updateFileType": "व्यायाम फ़ाइल प्रकार को अपडेट करें"
+    },
+    "errors": {
+      "convertError": "व्यायाम डेटा को रूपांतरित करने में त्रुटि: {error}"
+    },
+    "success": "सफलतापूर्वक {count} लॉग प्रविष्टियाँ परिवर्तित की गईं।"
+  },
+  "duration": {
+    "estimatedDuration": "अनुमानित अवधि",
+    "restTime": "आराम का समय",
+    "setTime": "समय निर्धारित करें",
+    "lastSession": "अंतिम सत्र",
+    "unableToAnalyze": "वर्कआउट फ़ाइल का विश्लेषण करने में असमर्थ"
   }
 }

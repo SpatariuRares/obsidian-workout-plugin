@@ -1,213 +1,532 @@
 {
-  "modal": {
-    "buttons": {
-      "adjustPlus": "+",
-      "adjustMinus": "-",
-      "updateTable": "更新表格",
-      "updateTimer": "更新計時器",
-      "create": "建立記錄",
-      "update": "更新紀錄",
-      "insertChart": "插入圖表",
-      "renameFile": "重新命名檔案",
-      "insertTable": "插入表格",
-      "insertTimer": "插入計時器",
-      "insertDashboard": "新增看板",
-      "cancel": "取消",
-      "confirm": "確認",
-      "createExercise": "建立運動頁",
-      "createSection": "建立區塊",
-      "insertExerciseBlock": "新增",
-      "updateTargetWeight": "更新目標",
-      "export": "匯出",
-      "addParameter": "新增參數",
-      "removeParameter": "移除",
-      "renameInCsv": "以 CSV 格式重新命名"
-    },
-    "titles": {
-      "editTable": "編輯表格參數",
-      "editTimer": "編輯計時器參數",
-      "createLog": "建立運動紀錄",
-      "editLog": "編輯運動紀錄",
-      "insertChart": "插入運動圖表",
-      "insertTable": "插入運動記錄表格",
-      "insertTimer": "插入運動計時器",
-      "insertDashboard": "新增運動追蹤儀表板",
-      "insertDuration": "輸入運動時間",
-      "createExercisePage": "建立運動頁",
-      "createExerciseSection": "建立運動區",
-      "auditExerciseNames": "審計測驗名稱",
-      "addExerciseBlock": "新增運動區塊",
-      "canvasExport": "將運動記錄匯出至畫布",
-      "muscleTagManager": "管理肌肉標籤",
-      "create_log": "建立運動紀錄"
-    },
-    "placeholders": {
-      "sets": "4",
-      "restTime": "90",
-      "repsRange": "8-10",
-      "selectWorkoutFile": "選擇一個運動檔案以匯出...",
-      "selectMuscleGroup": "選擇肌肉群...",
-      "searchTags": "按標籤或肌肉群進行搜尋...",
-      "searchMuscleTags": "搜尋肌肉標籤...",
-      "enterTagName": "請輸入標籤名稱（例如：胸部、petto）",
-      "exerciseAutocomplete": "開始輸入以查看可用的運動...",
-      "reps": "例如：10",
-      "weight": "例如：10.5",
-      "notes": "例如：良好的體態，感覺很有力量",
-      "workout": "例如：運動 A、訓練 B，或使用下方勾選框",
-      "customTitle": "若要使用自動標題，請留空。",
-      "note": "用力地在這裡操作。這是您的基本訓練。",
-      "folderPath": "例如：輸入運動項目，或留空以指定根目錄",
-      "parameterKey": "例如：速度",
-      "parameterLabel": "例如：速度",
-      "parameterUnit": "例如：公里/小時"
-    },
-    "notices": {
-      "exercisePageError": "Error creating exercise page: ",
-      "genericError": "Error: ",
-      "confirmUpdateTarget": "Confirm Update Target",
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
-      "auditRenameSuccess": "Audit Rename Success",
-      "suggestedNextWeight": "Suggested Next Weight",
-      "tableUpdated": "✅ 表格已成功更新！",
-      "tableUpdateFailed": "無法更新表格。請確認檔案已在編輯器中開啟。",
-      "timerUpdated": "✅ 倒計時已成功更新！",
-      "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
-      "muscleTagImportPreview": "{count} 標籤，用於匯入",
-      "migrationComplete": "遷移完成。已更新 {count} 練習檔案。",
-      "logCreated": "運動紀錄已成功建立！",
-      "logUpdated": "運動紀錄已成功更新！",
-      "chartInserted": "✅ 圖表已成功插入！",
-      "tableInserted": "✅ 表格已成功插入！",
-      "timerInserted": "✅ 倒計時已成功插入！",
-      "dashboardInserted": "✅ 儀表板已成功插入！",
-      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。",
-      "validationCombinedMode": "⚠️ 針對「運動 + 訓練」類型，您必須填寫兩個欄位！",
-      "insertCodeNoFile": "開啟 Markdown 檔案，以便插入程式碼",
-      "exercisePageCreated": "運動頁面已成功建立！",
-      "exercisePageNameRequired": "請輸入運動名稱",
-      "exerciseNameRequired": "❌ 請輸入運動名稱",
-      "exerciseSectionCreated": "✅ 成功建立運動區！",
-      "timerElementsNotInitialized": "計時元素尚未初始化",
-      "auditNoMismatches": "審計結果與原資料不符",
-      "auditRenameFileSuccess": "檔案重命名成功",
-      "auditScanning": "審計掃描",
-      "canvasExportError": "畫布匯出錯誤",
-      "canvasExported": "畫布已匯出",
-      "exerciseBlockInserted": "已插入運動區塊",
-      "migrationError": "遷移錯誤",
-      "migrationNoUpdates": "遷移時，沒有更新",
-      "muscleTagDeleted": "肌肉標籤已刪除",
-      "muscleTagExported": "肌肉標籤已匯出",
-      "muscleTagImportInvalidFormat": "肌肉標籤匯入格式無效",
-      "muscleTagImportNoValid": "肌肉標籤匯入：無效",
-      "muscleTagLoading": "肌肉標籤載入中",
-      "muscleTagNoResults": "找不到相關肌肉標籤",
-      "muscleTagSaved": "肌肉標籤已儲存",
-      "muscleTagSimilarWarning": "肌肉標籤相似警告",
-      "targetAchieved": "目標已達成",
-      "muscleTagCount": "{count} 標籤已找到",
-      "muscleTagDeleteConfirm": "您確定要刪除標籤 \"{tag}\" 嗎？",
-      "muscleTagSaveError": "儲存肌群標籤時發生錯誤：{error}",
-      "muscleTagExists": "標籤「{tag}」已存在",
-      "muscleTagSimilarFound": "{count} 找到類似標籤",
-      "muscleTagExportError": "匯出肌肉標籤時發生錯誤：{error}",
-      "muscleTagImported": "{count} 成功匯入肌肉標籤！",
-      "muscleTagImportError": "匯入肌肉標籤時發生錯誤：{error}",
-      "muscleTagImportInvalidGroup": "無效的肌肉群 \"{group}\"，用於標籤 \"{tag}\"。必須是標準化的肌肉群。"
-    },
-    "autocomplete": {
-      "fuzzyBadge": "~",
-      "exactBadge": "★",
-      "wordBadge": "◆",
-      "partialBadge": "•",
-      "fuzzyTooltip": "模糊匹配（拼寫校正） - 準確度：{score}",
-      "exactTooltip": "完全/前綴匹配 - 準確度：{score}",
-      "wordTooltip": "匹配結果 - 評分：{score}",
-      "partialTooltip": "部分匹配 - 評分：{score}"
-    },
-    "info": {
-      "dashboardDescription": "這將插入一個全面的運動追蹤儀表板，包含統計數據、圖表和快速操作。"
-    },
-    "notes": "備註（可選）：",
-    "workout": "運動 (可選)：",
-    "workoutNameOptional": "運動名稱（可選）：",
-    "chartType": "圖表類型：",
-    "dataType": "資料類型：",
-    "daysRange": "日期範圍：",
-    "dataLimit": "資料限制：",
-    "maxLogCount": "最大記錄數量：",
-    "customTitle": "自訂標題：",
-    "timerType": "計時類型：",
-    "duration": "時長 (秒)：",
-    "rounds": "輪數：",
-    "title": "標題：",
-    "sets": "設定：",
-    "restTime": "休息時間 (秒)：",
-    "note": "請注意：",
-    "folderPath": "資料夾路徑 (可選)：",
+  "charts": {
+    "date": "日期",
+    "down": "向下",
+    "fallbackTableMessage": "備用表格訊息",
     "labels": {
-      "exercise": "運動：",
-      "reps": "代表：",
-      "weight": "重量：({unit})",
-      "volume": "音量：({unit})",
-      "notes": "備註 (可選)：",
-      "workout": "運動 (可選)：",
-      "chartType": "圖表類型：",
-      "duration": "時長 (秒)：",
-      "title": "標題：",
-      "sets": "集合：",
-      "status": "狀態",
-      "actions": "動作",
-      "dateRange": "日期範圍（天數）：",
-      "targetWeight": "目標：({unit})：",
-      "targetReps": "目標次數：",
-      "protocol": "協定："
+      "date": "日期",
+      "distance": "距離",
+      "down": "下降",
+      "duration": "時長",
+      "heartRate": "心率",
+      "neutral": "中性",
+      "pace": "速度",
+      "quickWeightIncrementUnit": "按重量按鈕可增加 {weightIncrementUnit}",
+      "reps": "代表",
+      "trendLine": "趨勢線",
+      "trendType": "趨勢 {type}:",
+      "variationFromTo": "從 {{startValue}} 到 {{endValue}}",
+      "volume": "體積",
+      "weight": "重量",
+      "weightIncrementUnit": "重量增加 {weightIncrementUnit}"
     },
-    "exerciseType": "運動類型：",
-    "customParameters": "自訂參數：",
-    "parameterKey": "關鍵：",
-    "parameterLabel": "標籤：",
-    "parameterType": "類型：",
-    "parameterUnit": "單位 (可選)：",
-    "parameterRequired": "必填",
-    "confirmAction": "確認動作",
-    "fileName": "檔案名稱",
-    "csvExercise": "CSV 練習",
-    "similarity": "相似度",
-    "status": "狀態",
-    "tag": "標籤",
-    "muscleGroup": "肌肉群",
+    "neutral": "中立",
+    "overallVariationPrefix": "總體變動前綴",
+    "reps": "代表",
+    "significantIncrease": "顯著增加",
+    "trendLine": "趨勢線",
+    "typeNotAvailable": "圖表類型 \"{chartDataType}\" 僅適用於 {exerciseType} 運動。可用的圖表類型：{typeList}",
+    "types": {
+      "distance": "距離",
+      "duration": "時長",
+      "heartRate": "心率",
+      "pace": "速度",
+      "reps": "代表",
+      "volume": "體積",
+      "weight": "權重"
+    },
+    "volume": "體積"
+  },
+  "commands": {
+    "addExerciseBlock": "新增運動區塊",
+    "auditExerciseNames": "審核運動名稱",
+    "convertExercise": "轉換練習",
+    "createCsvLog": "建立 CSV 記錄檔",
+    "exportWorkoutToCanvas": "將運動計畫匯出至畫布",
+    "generateTagReference": "產生標籤參考",
+    "insertTable": "插入表格",
+    "manageMuscleTags": "管理肌肉標籤",
+    "migrateExerciseTypes": "遷移運動類型"
+  },
+  "common": {
+    "bpm": "bpm",
+    "cancel": "取消",
+    "convert": "轉換",
+    "exercise": "運動",
+    "km": "公里",
+    "minPerKm": "每公里",
+    "notAvailable": "無法取得",
+    "reps": "代表",
+    "sec": "安全",
+    "unknown": "未定",
+    "workout": "運動"
+  },
+  "convert": {
+    "currentType": "目前類型：",
+    "errors": {
+      "convertError": "轉換運動數據時發生錯誤：{error}"
+    },
+    "fieldMapping": {
+      "addMapping": "新增欄位映射",
+      "removeMapping": "移除映射",
+      "reps": "代表",
+      "title": "欄位對應",
+      "weight": "權重 ({unit})"
+    },
+    "preview": {
+      "noEntries": "未找到與此動作相關的任何記錄",
+      "title": "預覽",
+      "willConvertMany": "{count} 將會記錄",
+      "willConvertOne": "1 記錄將會被轉換"
+    },
+    "sectionExercise": "練習",
+    "success": "成功轉換了 {count} 記錄",
+    "title": "轉換運動數據",
+    "typeSelect": {
+      "convertTo": "轉換成：",
+      "updateFileType": "更新運動檔案類型"
+    }
+  },
+  "dashboard": {
+    "durationComparison": {
+      "columnActual": "實際",
+      "columnEstimated": "預估",
+      "columnVariance": "變異",
+      "columnWorkout": "運動",
+      "minutesSuffix": "分鐘",
+      "noData": "沒有資料",
+      "subtitle": "預估與實際運動時間",
+      "title": "時間比較",
+      "varianceTrendDeclining": "變異趨勢：下降",
+      "varianceTrendImproving": "變異趨勢趨向改善",
+      "varianceTrendStable": "變異趨勢穩定",
+      "varianceTrendTitle": "變異趨勢標題"
+    },
+    "fileErrors": {
+      "allValid": "全部有效",
+      "noTags": "沒有標籤",
+      "readError": "❌ 檔案讀取錯誤：{message}",
+      "title": "檔案錯誤",
+      "tooManyTags": "過多的肌肉標籤（{count}）"
+    },
+    "month": "月份",
+    "muscleTags": {
+      "description": "說明",
+      "title": "肌肉標籤",
+      "tooltip": "點擊複製：{tag}",
+      "totalCount": "總計：有 {{count}} 標籤可用"
+    },
+    "protocol": {
+      "clickToFilter": "點擊以過濾",
+      "percentLabel": "百分比標籤",
+      "setsLabel": "[變數 0]: [變數 1] [變數 2] ( [變數 3][變數 4])"
+    },
+    "protocolDistribution": {
+      "clearFilter": "清除篩選",
+      "filterActive": "篩選：顯示目前活躍的",
+      "noData": "沒有資料",
+      "subtitle": "訓練計畫細節（過去 30 天）",
+      "title": "協議分配"
+    },
+    "protocolEffectiveness": {
+      "columnEntries": "條目",
+      "columnProgression": "進度",
+      "columnProtocol": "協議",
+      "columnVolumeChange": "體積變化",
+      "disclaimer": "免責聲",
+      "noData": "沒有資料",
+      "title": "協議有效性"
+    },
+    "quickActions": {
+      "addWorkoutLog": "新增運動記錄",
+      "title": "快速操作",
+      "viewExercises": "檢視運動"
+    },
+    "quickStats": {
+      "month": "月份",
+      "periods": {
+        "month": "本月",
+        "week": "本週",
+        "year": "今年"
+      },
+      "title": "快速統計",
+      "week": "本週",
+      "workouts": "運動",
+      "year": "年份"
+    },
+    "recentWorkouts": {
+      "fallbackName": "運動",
+      "title": "最近的運動"
+    },
+    "summary": {
+      "currentStreak": "當前連勝紀錄",
+      "currentStreakSuffix": "weeks",
+      "personalRecords": "個人記錄",
+      "title": "總結",
+      "totalVolume": "總體量",
+      "totalWorkouts": "總運動次數"
+    },
+    "title": "標題",
+    "volumeAnalytics": {
+      "chartTitle": "音量趨勢（過去 30 天）",
+      "muscleBreakdownTitle": "按體積排序的運動",
+      "title": "音量分析"
+    },
+    "week": "本週",
+    "year": "年份"
+  },
+  "duration": {
+    "estimatedDuration": "預估時間",
+    "lastSession": "上次的會",
+    "restTime": "休息時間",
+    "setTime": "設定時間",
+    "unableToAnalyze": "無法分析運動檔案"
+  },
+  "examples": {
+    "dashboard": {
+      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "title": "儀表板"
+    },
+    "exercise": {
+      "chartTitle": "圖表",
+      "descriptionTemplate": "範例說明：針對 {{name}}",
+      "descriptionTitle": "說明",
+      "distanceChartTitle": "距離圖",
+      "durationChartTitle": "時間圖",
+      "durationTitle": "時長",
+      "heartRateTitle": "心率",
+      "logTitle": "記錄",
+      "paceTrackingNote": "追蹤您的速度提升 (速度越低越好)：",
+      "paceTrackingTitle": "追蹤速度",
+      "repTrackingTitle": "重複次數追蹤",
+      "volumeChartTitle": "體積圖",
+      "weightProgressionTitle": "重量增長"
+    },
+    "exercises": {
+      "benchPress": {
+        "name": "臥推"
+      },
+      "calfMachine": {
+        "name": "小腿肌訓練器"
+      },
+      "cycling": {
+        "name": "自行車"
+      },
+      "legCurlSeated": {
+        "name": "坐姿腿彎舉"
+      },
+      "legPress45": {
+        "name": "腿壓 45"
+      },
+      "plank": {
+        "name": "平板式"
+      },
+      "rdl": {
+        "name": "RDL"
+      },
+      "running": {
+        "name": "跑步"
+      },
+      "squat": {
+        "name": "深蹲"
+      },
+      "squatMultiPower": {
+        "name": "深蹲多功能訓練"
+      }
+    },
+    "featureShowcase": {
+      "allDataChartTitle": "所有數據圖",
+      "byExerciseTitle": "按運動",
+      "byWorkoutTitle": "依照運動",
+      "cardioExerciseTitle": "心肺運動 (距離 + 速度)",
+      "chartsIntro": "圖表可以顯示您在不同時間段內的進度。可用的類型：`體積`、`重量`、`次數`、`時間`、`距離`、`心率`、`配速`。",
+      "chartsTitle": "1. 圖表",
+      "codeBlockWorkoutChart": "可視化時間上的進展",
+      "codeBlockWorkoutDashboard": "完整統計概覽",
+      "codeBlockWorkoutDuration": "預估運動時間",
+      "codeBlockWorkoutLog": "顯示運動數據表格",
+      "codeBlockWorkoutTimer": "倒數計時或間隔計時",
+      "combinedTitle": "結合（運動 + 訓練）",
+      "commandsNote": "**指令** (Ctrl/Cmd + P)：建立運動記錄、插入圖表、插入計時器、建立運動頁",
+      "countdownTimerTitle": "倒數計時器",
+      "durationEstimatorIntro": "根據當前筆記中的運動，估算出總運動時間。",
+      "durationEstimatorTitle": "4. 預估時間",
+      "intervalTimerTitle": "間隔計時器",
+      "intro": "Workout 插件中所有程式碼區塊類型的一覽。",
+      "protocol21s": "7+7+7 階段性練習",
+      "protocolDropset": "減輕重量，繼續進行動作",
+      "protocolMyoReps": "啟用組 + 迷你組",
+      "protocolRestPause": "短暫休息，然後繼續直到達到極限",
+      "protocolStandard": "標準設定",
+      "protocolSuperset": "搭配練習",
+      "quickReferenceTitle": "快速參考",
+      "strengthExerciseTitle": "力量訓練 (體積 + 重量)",
+      "tablesIntro": "表格可顯示您的運動紀錄，並提供排序和編輯功能。",
+      "tablesTitle": "2. 表格",
+      "timedExerciseTitle": "計時運動 (時間)",
+      "timersTitle": "3. 倒數計時",
+      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "title": "功能展示",
+      "trainingProtocolsIntro": "此插件支援在您的日誌中顯示以下協定標誌：",
+      "trainingProtocolsTitle": "5. 訓練規範",
+      "workoutChartTitle": "運動圖表 (所有運動組合)"
+    },
+    "fileNames": {
+      "dashboard": "儀表板",
+      "featureShowcase": "功能展示",
+      "gettingStarted": "開始使用",
+      "hiitCardioSession": "高強度間歇訓練（HIIT）心臟訓練"
+    },
+    "folderCreatedError": "無法建立範例資料夾。",
+    "folderCreatedSuccess": "範例資料夾「{folder}」已成功建立！",
+    "folderNames": {
+      "base": "健身房範例",
+      "exercises": "練習",
+      "log": "記錄",
+      "workouts": "運動"
+    },
+    "gettingStarted": {
+      "commandCreateExercise": "建立練習頁",
+      "commandCreateExerciseDesc": "建立新的練習檔案",
+      "commandCreateLog": "建立運動紀錄",
+      "commandCreateLogDesc": "新增運動記錄",
+      "commandInsertChart": "插入運動圖表",
+      "commandInsertChartDesc": "將圖表新增至任何筆記",
+      "commandInsertTimer": "插入運動計時器",
+      "commandInsertTimerDesc": "新增休息計時器",
+      "dashboardDesc": "您的運動數據一覽",
+      "exercisesDesc": "包含記錄和圖表的範例練習頁",
+      "exercisesFolder": "**{folder}** /",
+      "featureShowcaseDesc": "所有程式碼區塊的完整參考",
+      "folderStructureTitle": "資料夾結構",
+      "logDesc": "您的 CSV 健身數據",
+      "logFolder": "**{folder}** /",
+      "nextStepsTitle": "下一步",
+      "quickActionsIntro": "使用這些指令 (Ctrl/Cmd + P)：",
+      "quickActionsTitle": "快速操作",
+      "step1": "Open [[Dashboard]] to see your stats",
+      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step3": "請嘗試從 **{workouts}** 資料夾中選擇一個運動計畫。",
+      "step4": "在 **{exercises}** 中建立您自己的練習",
+      "tableHeaderDescription": "說明",
+      "tableHeaderFileFolder": "檔案/資料夾",
+      "title": "開始使用 The Gym 插件",
+      "welcome": "歡迎！此資料夾包含範例檔案，有助您了解所有功能。",
+      "workoutsDesc": "示範運動範本",
+      "workoutsFolder": "**{folder}** /"
+    },
+    "hiit": {
+      "cyclingCooldownTitle": "自行車降溫",
+      "intro": "高強度間歇訓練，包含間歇計時器和心血管追蹤功能。",
+      "runningProgressTitle": "跑步進度",
+      "sprintIntervalsTitle": "衝刺間歇 (30 秒 × 8 輪)",
+      "title": "高強度間歇訓練（HIIT）心臟訓練",
+      "warmupTitle": "熱身 (5 分鐘)"
+    },
+    "workout": {
+      "chart": "圖表",
+      "duration": "時長",
+      "note": "請注意：用力推",
+      "recoverySuffix": "(恢復：{seconds}次)",
+      "setsReps": "{sets} 組 x {reps} 次"
+    },
+    "workouts": {
+      "cardioDay": {
+        "name": "有氧運動日"
+      },
+      "lowerBodyA": {
+        "name": "第一天：下半身 A 2.0"
+      },
+      "upperBodyPower": {
+        "name": "上肢力量"
+      }
+    }
+  },
+  "forms": {
+    "enterCsvPath": "輸入 CSV 檔案路徑",
+    "enterFolderPath": "輸入資料夾路徑",
+    "workoutName": "運動名稱"
+  },
+  "general": {
+    "avgReps": "平均次數",
+    "back": "返回",
+    "currentFile": "目前檔案",
+    "dashboard": "主控面板",
+    "delete": "刪除",
+    "edit": "編輯",
+    "front": "正面",
+    "labels": {
+      "avgCustom": "平均值 {label}",
+      "avgDistance": "平均距離 (公里)",
+      "avgDuration": "平均時長 (秒)",
+      "avgHeartRate": "平均心率 (每分鐘次)",
+      "avgVolume": "平均體積 ({unit})",
+      "avgWeight": "平均重量 ({unit})",
+      "back": "返回",
+      "dailyVolume": "每日交易量 ({{unit}})",
+      "dashboard": "儀表板",
+      "front": "正面",
+      "pace": "速度 (分鐘/公里)",
+      "totalCustom": "總計 {label}",
+      "totalDistance": "總距離 (公里)",
+      "totalDuration": "總時長 (秒)",
+      "totalVolume": "總容量 ({unit})",
+      "totalWeight": "總重量：{{unit}}"
+    },
+    "muscleHeatMap": "肌肉熱度圖",
+    "noMatchMessage": "找不到結果",
+    "search": "搜尋",
+    "totalReps": "總次數",
+    "workoutData": "運動數據",
+    "workoutLog": "運動紀錄"
+  },
+  "icons": {
+    "actions": {
+      "add": "➕",
+      "delete": "🗑️",
+      "edit": "✏️"
+    },
+    "common": {
+      "empty": "",
+      "percentage": "%",
+      "plus": "+"
+    },
+    "dashboard": {
+      "quickStats": {
+        "metrics": {
+          "avgVolume": "📊",
+          "totalVolume": "📦",
+          "workouts": "🏋️"
+        },
+        "periods": {
+          "month": "📆",
+          "week": "🗓️",
+          "year": "📈"
+        }
+      },
+      "summary": {
+        "currentStreak": "🔥",
+        "personalRecords": "🏅",
+        "totalVolume": "📦",
+        "totalWorkouts": "🏋️"
+      }
+    },
+    "duration": {
+      "timer": "⏱️"
+    },
+    "exercise": {
+      "abs": "🎯",
+      "back": "🦾",
+      "biceps": "💪",
+      "calves": "🦵",
+      "cardio": "⭐",
+      "chest": "🫁",
+      "core": "🎯",
+      "curl": "💪",
+      "deadlift": "💀",
+      "extension": "📏",
+      "forearms": "✊",
+      "glutes": "🍑",
+      "hamstrings": "🦵",
+      "legs": "🦵",
+      "pull": "⬇️",
+      "push": "🔼",
+      "quads": "🦵",
+      "rear_delts": "🔙",
+      "shoulders": "🦵",
+      "traps": "🔺",
+      "triceps": "💪"
+    },
+    "status": {
+      "info": "ℹ️",
+      "success": "✅",
+      "warning": "⚠️"
+    },
+    "tables": {
+      "delete": "🗑️",
+      "distance": "📍 ",
+      "duration": "⏱️ ",
+      "edit": "✏️",
+      "goto": "🔗",
+      "heartRate": "❤️ ",
+      "reps": "🔁 ",
+      "volume": "📊 ",
+      "weight": "🏋️ "
+    },
+    "timer": {
+      "pause": "⏸",
+      "play": "▶",
+      "reset": "↺"
+    }
+  },
+  "logs": {
+    "addLogButtonAria": "新增記錄：{exerciseName}",
+    "addLogButtonText": "新增記錄：{exerciseName}",
+    "createFirstLogButton": "為 {exerciseName} 建立第一個記錄",
+    "createFirstLogButtonAria": "為 {exerciseName} 建立第一個記錄",
+    "createLogButtonAria": "建立記錄：{exerciseName}",
+    "createLogButtonText": "建立記錄：{exerciseName}",
+    "noDataTitle": "未找到任何相關記錄，針對 {{exerciseName}}"
+  },
+  "messages": {
+    "codeInserted": "程式已插入",
+    "csvNotFound": "找不到 CSV 檔案",
+    "errors": {
+      "tagReferenceFailed": "產生標籤參考時發生錯誤："
+    },
+    "fileEmpty": "檔案已清空",
+    "imbalanceAlerts": "不平衡警示",
+    "insufficientData": "數據不足",
+    "loading": "正在載入運動數據...",
+    "noDataPeriod": "未找到指定時間段內的運動數據。",
+    "noFrontmatter": "沒有前置內容",
+    "noImbalances": "沒有任何不平衡",
+    "noTags": "沒有標籤",
+    "success": {
+      "csvCreated": "CSV 檔案已成功建立！"
+    },
+    "tagReferenceGenerated": "Tag Reference Generated",
+    "timerCompleted": "計時已完成！"
+  },
+  "modal": {
     "actions": "動作",
     "addTag": "新增標籤",
-    "editTag": "編輯標籤",
-    "newTag": "新增標籤",
-    "save": "儲存",
-    "delete": "刪除",
-    "similarTags": "類似標籤：",
-    "exportTags": "匯出標籤",
-    "importTags": "匯入標籤",
-    "importMerge": "合併",
-    "importReplace": "全部替換",
-    "timerDuration": "倒計時長度（秒）：",
-    "timerPreset": "預設計時：",
-    "workoutFile": "運動檔案：",
-    "dateRange": "日期範圍（天數）：",
-    "protocol": "協定：",
-    "recentExercises": "最近：",
+    "autocomplete": {
+      "exactBadge": "★",
+      "exactTooltip": "完全/前綴匹配 - 準確度：{score}",
+      "fuzzyBadge": "~",
+      "fuzzyTooltip": "模糊匹配（拼寫校正） - 準確度：{score}",
+      "partialBadge": "•",
+      "partialTooltip": "部分匹配 - 評分：{score}",
+      "wordBadge": "◆",
+      "wordTooltip": "匹配結果 - 評分：{score}"
+    },
+    "buttons": {
+      "addParameter": "新增參數",
+      "adjustMinus": "-",
+      "adjustPlus": "+",
+      "cancel": "取消",
+      "confirm": "確認",
+      "create": "建立記錄",
+      "createExercise": "建立運動頁",
+      "createSection": "建立區塊",
+      "export": "匯出",
+      "insertChart": "插入圖表",
+      "insertDashboard": "新增看板",
+      "insertExerciseBlock": "新增",
+      "insertTable": "插入表格",
+      "insertTimer": "插入計時器",
+      "removeParameter": "移除",
+      "renameFile": "重新命名檔案",
+      "renameInCsv": "以 CSV 格式重新命名",
+      "update": "更新紀錄",
+      "updateTable": "更新表格",
+      "updateTargetWeight": "更新目標",
+      "updateTimer": "更新計時器"
+    },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
-    "layoutType": "佈局類型：",
-    "layoutHorizontal": "水平排列",
-    "layoutVertical": "垂直排列",
-    "layoutGrouped": "按肌肉分類",
-    "tagsSelector": "肌肉標籤：",
-    "noTagsFound": "沒有找到符合您搜尋的標籤",
-    "noTagsSelected": "未選擇任何標籤。點擊下方標籤以新增。",
-    "text": "完成運動",
-    "value": "運動",
+    "chartType": "圖表類型：",
     "checkboxes": {
       "connectSupersets": "連接超組",
       "exactMatch": "完全匹配",
@@ -226,10 +545,147 @@
       "useCurrentWorkout": "使用當前運動",
       "useCurrentWorkoutFile": "使用當前運動檔案"
     },
+    "confirmAction": "確認動作",
+    "csvExercise": "CSV 練習",
+    "customParameters": "自訂參數：",
+    "customTitle": "自訂標題：",
+    "dataLimit": "資料限制：",
+    "dataType": "資料類型：",
+    "dateRange": "日期範圍（天數）：",
+    "daysRange": "日期範圍：",
+    "delete": "刪除",
+    "duration": "時長 (秒)：",
+    "editTag": "編輯標籤",
     "exerciseStatus": {
       "createPage": "建立頁面",
       "notFound": "未找到"
     },
+    "exerciseType": "運動類型：",
+    "exportTags": "匯出標籤",
+    "fileName": "檔案名稱",
+    "folderPath": "資料夾路徑 (可選)：",
+    "importMerge": "合併",
+    "importReplace": "全部替換",
+    "importTags": "匯入標籤",
+    "info": {
+      "dashboardDescription": "這將插入一個全面的運動追蹤儀表板，包含統計數據、圖表和快速操作。"
+    },
+    "labels": {
+      "actions": "動作",
+      "chartType": "圖表類型：",
+      "dateRange": "日期範圍（天數）：",
+      "duration": "時長 (秒)：",
+      "exercise": "運動：",
+      "notes": "備註 (可選)：",
+      "protocol": "協定：",
+      "reps": "代表：",
+      "sets": "集合：",
+      "status": "狀態",
+      "targetReps": "目標次數：",
+      "targetWeight": "目標：({unit})：",
+      "title": "標題：",
+      "volume": "音量：({unit})",
+      "weight": "重量：({unit})",
+      "workout": "運動 (可選)："
+    },
+    "layoutGrouped": "按肌肉分類",
+    "layoutHorizontal": "水平排列",
+    "layoutType": "佈局類型：",
+    "layoutVertical": "垂直排列",
+    "maxLogCount": "最大記錄數量：",
+    "muscleGroup": "肌肉群",
+    "newTag": "新增標籤",
+    "noTagsFound": "沒有找到符合您搜尋的標籤",
+    "noTagsSelected": "未選擇任何標籤。點擊下方標籤以新增。",
+    "note": "請注意：",
+    "notes": "備註（可選）：",
+    "notices": {
+      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditNoMismatches": "審計結果與原資料不符",
+      "auditRenameError": "Audit Rename Error",
+      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameFileSuccess": "檔案重命名成功",
+      "auditRenameSuccess": "Audit Rename Success",
+      "auditScanning": "審計掃描",
+      "canvasExportError": "畫布匯出錯誤",
+      "canvasExported": "畫布已匯出",
+      "chartInserted": "✅ 圖表已成功插入！",
+      "confirmUpdateTarget": "Confirm Update Target",
+      "dashboardInserted": "✅ 儀表板已成功插入！",
+      "exerciseBlockInserted": "已插入運動區塊",
+      "exerciseNameRequired": "❌ 請輸入運動名稱",
+      "exercisePageCreated": "運動頁面已成功建立！",
+      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageNameRequired": "請輸入運動名稱",
+      "exerciseSectionCreated": "✅ 成功建立運動區！",
+      "genericError": "Error: ",
+      "insertCodeNoFile": "開啟 Markdown 檔案，以便插入程式碼",
+      "logCreated": "運動紀錄已成功建立！",
+      "logUpdated": "運動紀錄已成功更新！",
+      "migrationComplete": "遷移完成。已更新 {count} 練習檔案。",
+      "migrationError": "遷移錯誤",
+      "migrationNoUpdates": "遷移時，沒有更新",
+      "muscleTagCount": "{count} 標籤已找到",
+      "muscleTagDeleteConfirm": "您確定要刪除標籤 \"{tag}\" 嗎？",
+      "muscleTagDeleted": "肌肉標籤已刪除",
+      "muscleTagExists": "標籤「{tag}」已存在",
+      "muscleTagExportError": "匯出肌肉標籤時發生錯誤：{error}",
+      "muscleTagExported": "肌肉標籤已匯出",
+      "muscleTagImportError": "匯入肌肉標籤時發生錯誤：{error}",
+      "muscleTagImportInvalidFormat": "肌肉標籤匯入格式無效",
+      "muscleTagImportInvalidGroup": "無效的肌肉群 \"{group}\"，用於標籤 \"{tag}\"。必須是標準化的肌肉群。",
+      "muscleTagImportNoValid": "肌肉標籤匯入：無效",
+      "muscleTagImportPreview": "{count} 標籤，用於匯入",
+      "muscleTagImported": "{count} 成功匯入肌肉標籤！",
+      "muscleTagLoading": "肌肉標籤載入中",
+      "muscleTagNoResults": "找不到相關肌肉標籤",
+      "muscleTagSaveError": "儲存肌群標籤時發生錯誤：{error}",
+      "muscleTagSaved": "肌肉標籤已儲存",
+      "muscleTagSimilarFound": "{count} 找到類似標籤",
+      "muscleTagSimilarWarning": "肌肉標籤相似警告",
+      "suggestedNextWeight": "Suggested Next Weight",
+      "tableInserted": "✅ 表格已成功插入！",
+      "tableUpdateFailed": "無法更新表格。請確認檔案已在編輯器中開啟。",
+      "tableUpdated": "✅ 表格已成功更新！",
+      "targetAchieved": "目標已達成",
+      "timerElementsNotInitialized": "計時元素尚未初始化",
+      "timerInserted": "✅ 倒計時已成功插入！",
+      "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
+      "timerUpdated": "✅ 倒計時已成功更新！",
+      "validationCombinedMode": "⚠️ 針對「運動 + 訓練」類型，您必須填寫兩個欄位！",
+      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。"
+    },
+    "parameterKey": "關鍵：",
+    "parameterLabel": "標籤：",
+    "parameterRequired": "必填",
+    "parameterType": "類型：",
+    "parameterUnit": "單位 (可選)：",
+    "placeholders": {
+      "customTitle": "若要使用自動標題，請留空。",
+      "enterTagName": "請輸入標籤名稱（例如：胸部、petto）",
+      "exerciseAutocomplete": "開始輸入以查看可用的運動...",
+      "folderPath": "例如：輸入運動項目，或留空以指定根目錄",
+      "note": "用力地在這裡操作。這是您的基本訓練。",
+      "notes": "例如：良好的體態，感覺很有力量",
+      "parameterKey": "例如：速度",
+      "parameterLabel": "例如：速度",
+      "parameterUnit": "例如：公里/小時",
+      "reps": "例如：10",
+      "repsRange": "8-10",
+      "restTime": "90",
+      "searchMuscleTags": "搜尋肌肉標籤...",
+      "searchTags": "按標籤或肌肉群進行搜尋...",
+      "selectMuscleGroup": "選擇肌肉群...",
+      "selectWorkoutFile": "選擇一個運動檔案以匯出...",
+      "sets": "4",
+      "weight": "例如：10.5",
+      "workout": "例如：運動 A、訓練 B，或使用下方勾選框"
+    },
+    "protocol": "協定：",
+    "recentExercises": "最近：",
+    "restTime": "休息時間 (秒)：",
+    "rounds": "輪數：",
+    "save": "儲存",
     "sections": {
       "advancedOptions": "高級選項",
       "chartType": "圖表類型",
@@ -266,90 +722,124 @@
       "timed": "設定時間",
       "twentyones": "二十一",
       "yesNo": "是/否"
-    }
+    },
+    "sets": "設定：",
+    "similarTags": "類似標籤：",
+    "similarity": "相似度",
+    "status": "狀態",
+    "tag": "標籤",
+    "tagsSelector": "肌肉標籤：",
+    "text": "完成運動",
+    "timerDuration": "倒計時長度（秒）：",
+    "timerPreset": "預設計時：",
+    "timerType": "計時類型：",
+    "title": "標題：",
+    "titles": {
+      "addExerciseBlock": "新增運動區塊",
+      "auditExerciseNames": "審計測驗名稱",
+      "canvasExport": "將運動記錄匯出至畫布",
+      "createExercisePage": "建立運動頁",
+      "createExerciseSection": "建立運動區",
+      "createLog": "建立運動紀錄",
+      "create_log": "建立運動紀錄",
+      "editLog": "編輯運動紀錄",
+      "editTable": "編輯表格參數",
+      "editTimer": "編輯計時器參數",
+      "insertChart": "插入運動圖表",
+      "insertDashboard": "新增運動追蹤儀表板",
+      "insertDuration": "輸入運動時間",
+      "insertTable": "插入運動記錄表格",
+      "insertTimer": "插入運動計時器",
+      "muscleTagManager": "管理肌肉標籤"
+    },
+    "value": "運動",
+    "workout": "運動 (可選)：",
+    "workoutFile": "運動檔案：",
+    "workoutNameOptional": "運動名稱（可選）："
   },
   "settings": {
-    "placeholders": {
-      "protocolName": "請輸入協定名稱",
-      "protocolAbbreviation": "例如：gs",
-      "presetName": "請輸入預設名稱"
+    "buttons": {
+      "addPreset": "新增預設",
+      "addProtocol": "新增協議",
+      "cancel": "取消",
+      "createExamples": "建立範例",
+      "createFiles": "建立檔案",
+      "done": "完成！",
+      "failed": "失敗",
+      "generateTemplates": "建立範本",
+      "generated": "已產生！",
+      "generating": "正在生成...",
+      "overwriting": "覆蓋...",
+      "regenerateOverwrite": "重新生成 (覆蓋)",
+      "savePreset": "儲存",
+      "saveProtocol": "儲存"
+    },
+    "descriptions": {
+      "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
+      "csvFolder": "存放運動記錄和肌肉標籤 CSV 檔案的資料夾。",
+      "customProtocols": "建立自訂的訓練方案，以追蹤專業的訓練技巧。",
+      "defaultExactMatch": "啟用時，運動篩選預設使用完全名稱匹配。 停用以進行模糊匹配。",
+      "defaultRepsPerSet": "預設的重複次數，若未指定則採用此值。如果為 0，則使用「備用組次數」。",
+      "defaultTimerPreset": "選擇預設的計時器設定",
+      "exerciseBlockTemplate": "運動組模板。可用的變數：{{exercise}、{duration}、{workout}、{preset}}",
+      "exerciseFolder": "包含運動頁面的資料夾的路徑",
+      "generateDefaultTemplates": "在「運動模板」資料夾中，產生預設的運動頁面模板和標籤參考。您可以自定義這些檔案，以更改語言和結構。",
+      "generateExamples": "建立一個包含範例練習和運動計畫的資料夾，以幫助您開始。",
+      "noCustomProtocols": "沒有設定任何自訂協議。點擊「新增協議」以建立一個。",
+      "noPresets": "沒有設定任何計時器預設。點擊「新增預設」以建立一個。",
+      "presetDurationDesc": "時間長度（以秒為單位，例如：90 秒，用於 90 秒計時器）。",
+      "presetNameDesc": "為此計時器預設設定指定一個獨特的名稱 (例如：'休息 90 秒'、'HIIT 30/10')。",
+      "presetRoundsDesc": "在停止之前，要循環播放的間隔回合數。",
+      "protocolAbbreviation": "縮寫，最多 3 個字，顯示於徽章上",
+      "protocolColor": "徽章背景顏色（十六進位格式，例如：#FF5733）",
+      "quickWeightIncrement": "用於「+」和「-」按鈕在建立/編輯運動記錄模態中的重量增減值（例如，2.5 代表增加/減少 2.5 單位）。",
+      "repDuration": "預估完成一次重複所需的時間。適用於已知重複次數的情況（例如：「x 10 次」）。",
+      "setDuration": "當沒有指定時，使用此選項作為備用。 典型範圍：30-60 秒。",
+      "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
+      "weightIncrement": "預設的增重幅度，適用於漸進式超負荷（例如，每增加 2.5 單位時，增重幅度為 2.5）。",
+      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。"
     },
     "labels": {
-      "generateDefaultTemplates": "產生預設模板",
       "csvPath": "CSV 記錄檔路徑",
-      "exerciseFolder": "運動資料夾路徑",
+      "customProtocols": "自訂協議",
       "defaultExactMatch": "預設完全匹配",
+      "defaultRepsPerSet": "預設每組動作次數",
       "defaultTimerPreset": "預設計時器設定",
-      "presetName": "預設名稱",
-      "presetType": "計時器類型",
+      "exerciseBlockTemplate": "運動計畫範本",
+      "exerciseFolder": "運動資料夾路徑",
+      "generateDefaultTemplates": "產生預設模板",
+      "generateExamples": "產生範例資料",
       "presetDuration": "時長 (秒)",
+      "presetName": "預設名稱",
       "presetRounds": "輪次",
       "presetShowControls": "顯示控制",
       "presetSound": "聲音",
-      "exerciseBlockTemplate": "運動計畫範本",
-      "customProtocols": "自訂協議",
-      "protocolName": "協定名稱",
+      "presetType": "計時器類型",
       "protocolAbbreviation": "縮寫",
       "protocolColor": "徽章顏色",
-      "setDuration": "備用設定時長 (秒)",
+      "protocolName": "協定名稱",
       "repDuration": "每次重複的長度（秒）",
-      "defaultRepsPerSet": "預設每組動作次數",
+      "setDuration": "備用設定時長 (秒)",
       "setupCSV": "設定 CSV 檔案",
-      "generateExamples": "產生範例資料",
       "weightUnit": "重量單位"
     },
-    "descriptions": {
-      "generateDefaultTemplates": "在「運動模板」資料夾中，產生預設的運動頁面模板和標籤參考。您可以自定義這些檔案，以更改語言和結構。",
-      "csvFolder": "存放運動記錄和肌肉標籤 CSV 檔案的資料夾。",
-      "exerciseFolder": "包含運動頁面的資料夾的路徑",
-      "defaultExactMatch": "啟用時，運動篩選預設使用完全名稱匹配。 停用以進行模糊匹配。",
-      "defaultTimerPreset": "選擇預設的計時器設定",
-      "noPresets": "沒有設定任何計時器預設。點擊「新增預設」以建立一個。",
-      "presetNameDesc": "為此計時器預設設定指定一個獨特的名稱 (例如：'休息 90 秒'、'HIIT 30/10')。",
-      "presetDurationDesc": "時間長度（以秒為單位，例如：90 秒，用於 90 秒計時器）。",
-      "presetRoundsDesc": "在停止之前，要循環播放的間隔回合數。",
-      "exerciseBlockTemplate": "運動組模板。可用的變數：{{exercise}、{duration}、{workout}、{preset}}",
-      "weightIncrement": "預設的增重幅度，適用於漸進式超負荷（例如，每增加 2.5 單位時，增重幅度為 2.5）。",
-      "customProtocols": "建立自訂的訓練方案，以追蹤專業的訓練技巧。",
-      "noCustomProtocols": "沒有設定任何自訂協議。點擊「新增協議」以建立一個。",
-      "protocolAbbreviation": "縮寫，最多 3 個字，顯示於徽章上",
-      "protocolColor": "徽章背景顏色（十六進位格式，例如：#FF5733）",
-      "setDuration": "當沒有指定時，使用此選項作為備用。 典型範圍：30-60 秒。",
-      "repDuration": "預估完成一次重複所需的時間。適用於已知重複次數的情況（例如：「x 10 次」）。",
-      "defaultRepsPerSet": "預設的重複次數，若未指定則採用此值。如果為 0，則使用「備用組次數」。",
-      "quickWeightIncrement": "用於「+」和「-」按鈕在建立/編輯運動記錄模態中的重量增減值（例如，2.5 代表增加/減少 2.5 單位）。",
-      "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
-      "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
-      "generateExamples": "建立一個包含範例練習和運動計畫的資料夾，以幫助您開始。",
-      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。"
+    "messages": {
+      "confirmDeletePreset": "您確定要刪除這個預設嗎？",
+      "confirmDeleteProtocol": "您確定要刪除此協議嗎？",
+      "confirmOverwriteExamples": "已經存在一個範例資料夾。您是否要覆蓋它？",
+      "csvFilesCreated": "CSV 檔案已成功建立！",
+      "presetDeleted": "預設已刪除",
+      "presetNameExists": "已經存在一個名稱為 {name} 的預設",
+      "presetNameRequired": "預設名稱必填",
+      "presetSaved": "預設儲存",
+      "protocolAbbreviationRequired": "必須提供縮寫 (最多 3 個字)",
+      "protocolColorRequired": "請輸入有效的十六進位顏色碼（例如：#FF5733）",
+      "protocolDeleted": "協議已刪除",
+      "protocolNameExists": "已經存在一個名稱為此的協定",
+      "protocolNameRequired": "協議名稱必填",
+      "protocolSaved": "協定已儲存"
     },
-    "sections": {
-      "setupAndData": "設定與數據",
-      "csvManagement": "CSV 檔案管理",
-      "exampleData": "範例資料",
-      "filtering": "篩選",
-      "timerPresets": "預設計時",
-      "templates": "範本",
-      "trainingParameters": "訓練參數",
-      "customProtocols": "自訂協議",
-      "quickLog": "行動裝置記錄"
-    },
-    "buttons": {
-      "addPreset": "新增預設",
-      "savePreset": "儲存",
-      "cancel": "取消",
-      "addProtocol": "新增協議",
-      "saveProtocol": "儲存",
-      "createFiles": "建立檔案",
-      "createExamples": "建立範例",
-      "generating": "正在生成...",
-      "generated": "已產生！",
-      "regenerateOverwrite": "重新生成 (覆蓋)",
-      "overwriting": "覆蓋...",
-      "done": "完成！",
-      "failed": "失敗",
-      "generateTemplates": "建立範本"
-    },
+    "none": "沒有",
     "options": {
       "none": "沒有",
       "weightUnit": {
@@ -357,46 +847,66 @@
         "lb": "磅 (lb)"
       }
     },
+    "placeholders": {
+      "presetName": "請輸入預設名稱",
+      "protocolAbbreviation": "例如：gs",
+      "protocolName": "請輸入協定名稱"
+    },
+    "sections": {
+      "csvManagement": "CSV 檔案管理",
+      "customProtocols": "自訂協議",
+      "exampleData": "範例資料",
+      "filtering": "篩選",
+      "quickLog": "行動裝置記錄",
+      "setupAndData": "設定與數據",
+      "templates": "範本",
+      "timerPresets": "預設計時",
+      "trainingParameters": "訓練參數"
+    },
     "tooltips": {
-      "editProtocol": "編輯協議",
+      "deletePreset": "刪除預設",
       "deleteProtocol": "刪除協定",
       "editPreset": "編輯預設",
-      "deletePreset": "刪除預設"
-    },
-    "messages": {
-      "presetNameRequired": "預設名稱必填",
-      "presetNameExists": "已經存在一個名稱為 {name} 的預設",
-      "presetDeleted": "預設已刪除",
-      "presetSaved": "預設儲存",
-      "confirmDeletePreset": "您確定要刪除這個預設嗎？",
-      "protocolNameRequired": "協議名稱必填",
-      "protocolAbbreviationRequired": "必須提供縮寫 (最多 3 個字)",
-      "protocolColorRequired": "請輸入有效的十六進位顏色碼（例如：#FF5733）",
-      "protocolNameExists": "已經存在一個名稱為此的協定",
-      "protocolDeleted": "協議已刪除",
-      "protocolSaved": "協定已儲存",
-      "confirmDeleteProtocol": "您確定要刪除此協議嗎？",
-      "csvFilesCreated": "CSV 檔案已成功建立！",
-      "confirmOverwriteExamples": "已經存在一個範例資料夾。您是否要覆蓋它？"
-    },
-    "none": "沒有"
+      "editProtocol": "編輯協議"
+    }
+  },
+  "stats": {
+    "avgVolume": "平均體積",
+    "recentTrend": "近期趨勢",
+    "sessions": "會計"
   },
   "table": {
-    "target": {
-      "separator": " × ",
-      "repsSuffix": "代表",
-      "progressTooltip": "最佳：{best} 次 / 目標：{target} 次"
-    },
     "actions": "動作",
-    "editTable": "編輯表格",
-    "labels": {
-      "volume": "音量",
-      "weight": "重量",
-      "duration": "時長",
+    "columnLabels": {
+      "actions": "動作",
+      "date": "日期",
       "distance": "距離",
+      "duration": "時長",
+      "exercise": "運動",
       "heartRate": "心率",
-      "trendLine": "趨勢線",
-      "target": "目標："
+      "notes": "備註",
+      "pace": "速度 (分鐘/公里)",
+      "protocol": "協定",
+      "reps": "代表",
+      "volume": "音量",
+      "weight": "重量"
+    },
+    "columns": {
+      "actions": "動作",
+      "date": "日期",
+      "distance": "間距",
+      "distanceUnit": "間距 ({distanceUnit})",
+      "duration": "持續時間",
+      "exercise": "運動",
+      "heartRate": "心率",
+      "notes": "備註",
+      "pace": "速度",
+      "protocol": "協定",
+      "reps": "代表",
+      "volume": "音量",
+      "volumeUnit": "體積 ({weightUnit})",
+      "weight": "重量",
+      "weightUnit": "重量 ({weightUnit})"
     },
     "deleteConfirm": "確認刪除",
     "deleteError": "刪除失敗",
@@ -404,528 +914,51 @@
     "deleteTitle": "刪除標題",
     "distance": "距離",
     "duration": "時長",
+    "editTable": "編輯表格",
     "editTitle": "編輯標題",
     "gotoExercise": "前往練習",
     "heartRate": "心率",
     "invalidDate": "無效日期",
+    "labels": {
+      "distance": "距離",
+      "duration": "時長",
+      "heartRate": "心率",
+      "target": "目標：",
+      "trendLine": "趨勢線",
+      "volume": "音量",
+      "weight": "重量"
+    },
     "noData": "沒有資料",
     "notAvailable": "無法取得",
     "refreshSuccess": "重新載入成功",
     "sets": "集合",
+    "target": {
+      "progressTooltip": "最佳：{best} 次 / 目標：{target} 次",
+      "repsSuffix": "代表",
+      "separator": " × "
+    },
     "trendLine": "趨勢線",
-    "volume": "音量",
-    "columns": {
-      "date": "日期",
-      "exercise": "運動",
-      "reps": "代表",
-      "weight": "重量",
-      "volume": "音量",
-      "duration": "持續時間",
-      "distance": "間距",
-      "heartRate": "心率",
-      "notes": "備註",
-      "protocol": "協定",
-      "actions": "動作",
-      "volumeUnit": "體積 ({weightUnit})",
-      "weightUnit": "重量 ({weightUnit})",
-      "distanceUnit": "間距 ({distanceUnit})",
-      "pace": "速度"
-    },
-    "columnLabels": {
-      "date": "日期",
-      "exercise": "運動",
-      "reps": "代表",
-      "weight": "重量",
-      "volume": "音量",
-      "duration": "時長",
-      "distance": "距離",
-      "heartRate": "心率",
-      "notes": "備註",
-      "protocol": "協定",
-      "actions": "動作",
-      "pace": "速度 (分鐘/公里)"
-    }
-  },
-  "dashboard": {
-    "summary": {
-      "currentStreakSuffix": "weeks",
-      "title": "總結",
-      "totalWorkouts": "總運動次數",
-      "currentStreak": "當前連勝紀錄",
-      "totalVolume": "總體量",
-      "personalRecords": "個人記錄"
-    },
-    "quickStats": {
-      "title": "快速統計",
-      "week": "本週",
-      "month": "月份",
-      "year": "年份",
-      "workouts": "運動",
-      "periods": {
-        "week": "本週",
-        "month": "本月",
-        "year": "今年"
-      }
-    },
-    "recentWorkouts": {
-      "title": "最近的運動",
-      "fallbackName": "運動"
-    },
-    "volumeAnalytics": {
-      "title": "音量分析",
-      "chartTitle": "音量趨勢（過去 30 天）",
-      "muscleBreakdownTitle": "按體積排序的運動"
-    },
-    "muscleTags": {
-      "title": "肌肉標籤",
-      "description": "說明",
-      "tooltip": "點擊複製：{tag}",
-      "totalCount": "總計：有 {{count}} 標籤可用"
-    },
-    "quickActions": {
-      "title": "快速操作",
-      "addWorkoutLog": "新增運動記錄",
-      "viewExercises": "檢視運動"
-    },
-    "durationComparison": {
-      "title": "時間比較",
-      "subtitle": "預估與實際運動時間",
-      "noData": "沒有資料",
-      "columnWorkout": "運動",
-      "columnEstimated": "預估",
-      "columnActual": "實際",
-      "columnVariance": "變異",
-      "varianceTrendTitle": "變異趨勢標題",
-      "varianceTrendImproving": "變異趨勢趨向改善",
-      "varianceTrendDeclining": "變異趨勢：下降",
-      "varianceTrendStable": "變異趨勢穩定",
-      "minutesSuffix": "分鐘"
-    },
-    "fileErrors": {
-      "title": "檔案錯誤",
-      "allValid": "全部有效",
-      "noTags": "沒有標籤",
-      "tooManyTags": "過多的肌肉標籤（{count}）",
-      "readError": "❌ 檔案讀取錯誤：{message}"
-    },
-    "protocolDistribution": {
-      "title": "協議分配",
-      "subtitle": "訓練計畫細節（過去 30 天）",
-      "noData": "沒有資料",
-      "filterActive": "篩選：顯示目前活躍的",
-      "clearFilter": "清除篩選"
-    },
-    "protocolEffectiveness": {
-      "title": "協議有效性",
-      "noData": "沒有資料",
-      "disclaimer": "免責聲",
-      "columnProtocol": "協議",
-      "columnEntries": "條目",
-      "columnVolumeChange": "體積變化",
-      "columnProgression": "進度"
-    },
-    "protocol": {
-      "setsLabel": "[變數 0]: [變數 1] [變數 2] ( [變數 3][變數 4])",
-      "percentLabel": "百分比標籤",
-      "clickToFilter": "點擊以過濾"
-    },
-    "month": "月份",
-    "title": "標題",
-    "week": "本週",
-    "year": "年份"
-  },
-  "charts": {
-    "typeNotAvailable": "圖表類型 \"{chartDataType}\" 僅適用於 {exerciseType} 運動。可用的圖表類型：{typeList}",
-    "labels": {
-      "reps": "代表",
-      "date": "日期",
-      "trendLine": "趨勢線",
-      "down": "下降",
-      "neutral": "中性",
-      "variationFromTo": "從 {{startValue}} 到 {{endValue}}",
-      "trendType": "趨勢 {type}:",
-      "weightIncrementUnit": "重量增加 {weightIncrementUnit}",
-      "quickWeightIncrementUnit": "按重量按鈕可增加 {weightIncrementUnit}",
-      "volume": "體積",
-      "weight": "重量",
-      "duration": "時長",
-      "distance": "距離",
-      "heartRate": "心率",
-      "pace": "速度"
-    },
-    "types": {
-      "volume": "體積",
-      "weight": "權重",
-      "reps": "代表",
-      "duration": "時長",
-      "distance": "距離",
-      "heartRate": "心率",
-      "pace": "速度"
-    },
-    "date": "日期",
-    "down": "向下",
-    "fallbackTableMessage": "備用表格訊息",
-    "neutral": "中立",
-    "overallVariationPrefix": "總體變動前綴",
-    "reps": "代表",
-    "significantIncrease": "顯著增加",
-    "trendLine": "趨勢線",
-    "volume": "體積"
-  },
-  "messages": {
-    "tagReferenceGenerated": "Tag Reference Generated",
-    "loading": "正在載入運動數據...",
-    "noDataPeriod": "未找到指定時間段內的運動數據。",
-    "timerCompleted": "計時已完成！",
-    "codeInserted": "程式已插入",
-    "success": {
-      "csvCreated": "CSV 檔案已成功建立！"
-    },
-    "csvNotFound": "找不到 CSV 檔案",
-    "fileEmpty": "檔案已清空",
-    "imbalanceAlerts": "不平衡警示",
-    "insufficientData": "數據不足",
-    "noFrontmatter": "沒有前置內容",
-    "noImbalances": "沒有任何不平衡",
-    "noTags": "沒有標籤",
-    "errors": {
-      "tagReferenceFailed": "產生標籤參考時發生錯誤："
-    }
-  },
-  "timer": {
-    "editTimer": "編輯計時器",
-    "countdown": "倒數",
-    "interval": "間隔",
-    "stopwatch": "計時器（計時功能）",
-    "controls": {
-      "startTimer": "開始計時",
-      "pauseTimer": "暫停計時器",
-      "resetTimer": "重置計時器"
-    },
-    "presets": {
-      "detailsControls": "控制",
-      "detailsSound": "聲音"
-    }
-  },
-  "examples": {
-    "gettingStarted": {
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
-      "title": "開始使用 The Gym 插件",
-      "welcome": "歡迎！此資料夾包含範例檔案，有助您了解所有功能。",
-      "folderStructureTitle": "資料夾結構",
-      "tableHeaderFileFolder": "檔案/資料夾",
-      "tableHeaderDescription": "說明",
-      "dashboardDesc": "您的運動數據一覽",
-      "featureShowcaseDesc": "所有程式碼區塊的完整參考",
-      "exercisesDesc": "包含記錄和圖表的範例練習頁",
-      "exercisesFolder": "**{folder}** /",
-      "workoutsDesc": "示範運動範本",
-      "workoutsFolder": "**{folder}** /",
-      "logDesc": "您的 CSV 健身數據",
-      "logFolder": "**{folder}** /",
-      "quickActionsTitle": "快速操作",
-      "quickActionsIntro": "使用這些指令 (Ctrl/Cmd + P)：",
-      "commandCreateLog": "建立運動紀錄",
-      "commandCreateLogDesc": "新增運動記錄",
-      "commandInsertChart": "插入運動圖表",
-      "commandInsertChartDesc": "將圖表新增至任何筆記",
-      "commandInsertTimer": "插入運動計時器",
-      "commandInsertTimerDesc": "新增休息計時器",
-      "commandCreateExercise": "建立練習頁",
-      "commandCreateExerciseDesc": "建立新的練習檔案",
-      "nextStepsTitle": "下一步",
-      "step3": "請嘗試從 **{workouts}** 資料夾中選擇一個運動計畫。",
-      "step4": "在 **{exercises}** 中建立您自己的練習"
-    },
-    "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
-      "title": "儀表板"
-    },
-    "featureShowcase": {
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
-      "title": "功能展示",
-      "intro": "Workout 插件中所有程式碼區塊類型的一覽。",
-      "chartsTitle": "1. 圖表",
-      "chartsIntro": "圖表可以顯示您在不同時間段內的進度。可用的類型：`體積`、`重量`、`次數`、`時間`、`距離`、`心率`、`配速`。",
-      "strengthExerciseTitle": "力量訓練 (體積 + 重量)",
-      "cardioExerciseTitle": "心肺運動 (距離 + 速度)",
-      "timedExerciseTitle": "計時運動 (時間)",
-      "workoutChartTitle": "運動圖表 (所有運動組合)",
-      "allDataChartTitle": "所有數據圖",
-      "tablesTitle": "2. 表格",
-      "tablesIntro": "表格可顯示您的運動紀錄，並提供排序和編輯功能。",
-      "byExerciseTitle": "按運動",
-      "byWorkoutTitle": "依照運動",
-      "combinedTitle": "結合（運動 + 訓練）",
-      "timersTitle": "3. 倒數計時",
-      "countdownTimerTitle": "倒數計時器",
-      "intervalTimerTitle": "間隔計時器",
-      "durationEstimatorTitle": "4. 預估時間",
-      "durationEstimatorIntro": "根據當前筆記中的運動，估算出總運動時間。",
-      "trainingProtocolsTitle": "5. 訓練規範",
-      "trainingProtocolsIntro": "此插件支援在您的日誌中顯示以下協定標誌：",
-      "protocolStandard": "標準設定",
-      "protocolDropset": "減輕重量，繼續進行動作",
-      "protocolMyoReps": "啟用組 + 迷你組",
-      "protocolRestPause": "短暫休息，然後繼續直到達到極限",
-      "protocolSuperset": "搭配練習",
-      "protocol21s": "7+7+7 階段性練習",
-      "quickReferenceTitle": "快速參考",
-      "codeBlockWorkoutChart": "可視化時間上的進展",
-      "codeBlockWorkoutLog": "顯示運動數據表格",
-      "codeBlockWorkoutTimer": "倒數計時或間隔計時",
-      "codeBlockWorkoutDuration": "預估運動時間",
-      "codeBlockWorkoutDashboard": "完整統計概覽",
-      "commandsNote": "**指令** (Ctrl/Cmd + P)：建立運動記錄、插入圖表、插入計時器、建立運動頁"
-    },
-    "fileNames": {
-      "gettingStarted": "開始使用",
-      "dashboard": "儀表板",
-      "featureShowcase": "功能展示",
-      "hiitCardioSession": "高強度間歇訓練（HIIT）心臟訓練"
-    },
-    "folderCreatedSuccess": "範例資料夾「{folder}」已成功建立！",
-    "folderCreatedError": "無法建立範例資料夾。",
-    "workout": {
-      "duration": "時長",
-      "chart": "圖表",
-      "note": "請注意：用力推",
-      "recoverySuffix": "(恢復：{seconds}次)",
-      "setsReps": "{sets} 組 x {reps} 次"
-    },
-    "folderNames": {
-      "base": "健身房範例",
-      "exercises": "練習",
-      "workouts": "運動",
-      "log": "記錄"
-    },
-    "exercises": {
-      "benchPress": {
-        "name": "臥推"
-      },
-      "squat": {
-        "name": "深蹲"
-      },
-      "running": {
-        "name": "跑步"
-      },
-      "plank": {
-        "name": "平板式"
-      },
-      "cycling": {
-        "name": "自行車"
-      },
-      "squatMultiPower": {
-        "name": "深蹲多功能訓練"
-      },
-      "rdl": {
-        "name": "RDL"
-      },
-      "legPress45": {
-        "name": "腿壓 45"
-      },
-      "legCurlSeated": {
-        "name": "坐姿腿彎舉"
-      },
-      "calfMachine": {
-        "name": "小腿肌訓練器"
-      }
-    },
-    "hiit": {
-      "title": "高強度間歇訓練（HIIT）心臟訓練",
-      "intro": "高強度間歇訓練，包含間歇計時器和心血管追蹤功能。",
-      "warmupTitle": "熱身 (5 分鐘)",
-      "sprintIntervalsTitle": "衝刺間歇 (30 秒 × 8 輪)",
-      "runningProgressTitle": "跑步進度",
-      "cyclingCooldownTitle": "自行車降溫"
-    },
-    "exercise": {
-      "descriptionTitle": "說明",
-      "descriptionTemplate": "範例說明：針對 {{name}}",
-      "logTitle": "記錄",
-      "volumeChartTitle": "體積圖",
-      "weightProgressionTitle": "重量增長",
-      "repTrackingTitle": "重複次數追蹤",
-      "durationChartTitle": "時間圖",
-      "heartRateTitle": "心率",
-      "distanceChartTitle": "距離圖",
-      "durationTitle": "時長",
-      "paceTrackingTitle": "追蹤速度",
-      "paceTrackingNote": "追蹤您的速度提升 (速度越低越好)：",
-      "chartTitle": "圖表"
-    },
-    "workouts": {
-      "lowerBodyA": {
-        "name": "第一天：下半身 A 2.0"
-      },
-      "upperBodyPower": {
-        "name": "上肢力量"
-      },
-      "cardioDay": {
-        "name": "有氧運動日"
-      }
-    }
-  },
-  "icons": {
-    "timer": {
-      "play": "▶",
-      "pause": "⏸",
-      "reset": "↺"
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "deadlift": "💀",
-      "curl": "💪",
-      "extension": "📏",
-      "biceps": "💪",
-      "triceps": "💪",
-      "core": "🎯",
-      "forearms": "✊",
-      "back": "🦾",
-      "chest": "🫁",
-      "shoulders": "🦵",
-      "legs": "🦵",
-      "quads": "🦵",
-      "hamstrings": "🦵",
-      "glutes": "🍑",
-      "calves": "🦵",
-      "abs": "🎯",
-      "traps": "🔺",
-      "rear_delts": "🔙",
-      "cardio": "⭐",
-      "push": "🔼",
-      "pull": "⬇️"
-    },
-    "common": {
-      "percentage": "%",
-      "plus": "+",
-      "empty": ""
-    },
-    "tables": {
-      "reps": "🔁 ",
-      "weight": "🏋️ ",
-      "volume": "📊 ",
-      "duration": "⏱️ ",
-      "distance": "📍 ",
-      "heartRate": "❤️ ",
-      "edit": "✏️",
-      "delete": "🗑️",
-      "goto": "🔗"
-    },
-    "actions": {
-      "add": "➕",
-      "edit": "✏️",
-      "delete": "🗑️"
-    },
-    "status": {
-      "success": "✅",
-      "warning": "⚠️",
-      "info": "ℹ️"
-    },
-    "dashboard": {
-      "quickStats": {
-        "periods": {
-          "week": "🗓️",
-          "month": "📆",
-          "year": "📈"
-        },
-        "metrics": {
-          "workouts": "🏋️",
-          "totalVolume": "📦",
-          "avgVolume": "📊"
-        }
-      },
-      "summary": {
-        "totalWorkouts": "🏋️",
-        "currentStreak": "🔥",
-        "totalVolume": "📦",
-        "personalRecords": "🏅"
-      }
-    }
-  },
-  "general": {
-    "labels": {
-      "totalVolume": "總容量 ({unit})",
-      "avgVolume": "平均體積 ({unit})",
-      "totalWeight": "總重量：{{unit}}",
-      "avgWeight": "平均重量 ({unit})",
-      "front": "正面",
-      "back": "返回",
-      "dashboard": "儀表板",
-      "dailyVolume": "每日交易量 ({{unit}})",
-      "totalDuration": "總時長 (秒)",
-      "avgDuration": "平均時長 (秒)",
-      "totalDistance": "總距離 (公里)",
-      "avgDistance": "平均距離 (公里)",
-      "pace": "速度 (分鐘/公里)",
-      "avgHeartRate": "平均心率 (每分鐘次)",
-      "totalCustom": "總計 {label}",
-      "avgCustom": "平均值 {label}"
-    },
-    "avgReps": "平均次數",
-    "back": "返回",
-    "currentFile": "目前檔案",
-    "dashboard": "主控面板",
-    "delete": "刪除",
-    "edit": "編輯",
-    "front": "正面",
-    "muscleHeatMap": "肌肉熱度圖",
-    "noMatchMessage": "找不到結果",
-    "search": "搜尋",
-    "totalReps": "總次數",
-    "workoutData": "運動數據",
-    "workoutLog": "運動紀錄"
-  },
-  "commands": {
-    "addExerciseBlock": "新增運動區塊",
-    "auditExerciseNames": "審核運動名稱",
-    "convertExercise": "轉換練習",
-    "exportWorkoutToCanvas": "將運動計畫匯出至畫布",
-    "generateTagReference": "產生標籤參考",
-    "insertTable": "插入表格",
-    "manageMuscleTags": "管理肌肉標籤",
-    "migrateExerciseTypes": "遷移運動類型",
-    "createCsvLog": "建立 CSV 記錄檔"
-  },
-  "common": {
-    "exercise": "運動",
-    "notAvailable": "無法取得",
-    "unknown": "未定",
-    "workout": "運動",
-    "sec": "安全",
-    "km": "公里",
-    "bpm": "bpm",
-    "minPerKm": "每公里",
-    "cancel": "取消",
-    "convert": "轉換",
-    "reps": "代表"
-  },
-  "logs": {
-    "noDataTitle": "未找到任何相關記錄，針對 {{exerciseName}}",
-    "createFirstLogButton": "為 {exerciseName} 建立第一個記錄",
-    "createFirstLogButtonAria": "為 {exerciseName} 建立第一個記錄",
-    "addLogButtonText": "新增記錄：{exerciseName}",
-    "addLogButtonAria": "新增記錄：{exerciseName}",
-    "createLogButtonText": "建立記錄：{exerciseName}",
-    "createLogButtonAria": "建立記錄：{exerciseName}"
-  },
-  "forms": {
-    "enterCsvPath": "輸入 CSV 檔案路徑",
-    "enterFolderPath": "輸入資料夾路徑",
-    "workoutName": "運動名稱"
-  },
-  "stats": {
-    "avgVolume": "平均體積",
-    "recentTrend": "近期趨勢",
-    "sessions": "會計"
+    "volume": "音量"
   },
   "timeperiods": {
     "month": "月份",
     "week": "本週",
     "year": "年份"
+  },
+  "timer": {
+    "controls": {
+      "pauseTimer": "暫停計時器",
+      "resetTimer": "重置計時器",
+      "startTimer": "開始計時"
+    },
+    "countdown": "倒數",
+    "editTimer": "編輯計時器",
+    "interval": "間隔",
+    "presets": {
+      "detailsControls": "控制",
+      "detailsSound": "聲音"
+    },
+    "stopwatch": "計時器（計時功能）"
   },
   "trends": {
     "declining": "下降",
@@ -938,38 +971,5 @@
     "stable": "穩定",
     "stableLower": "穩定較低",
     "up": "上"
-  },
-  "convert": {
-    "title": "轉換運動數據",
-    "currentType": "目前類型：",
-    "sectionExercise": "練習",
-    "preview": {
-      "title": "預覽",
-      "noEntries": "未找到與此動作相關的任何記錄",
-      "willConvertOne": "1 記錄將會被轉換",
-      "willConvertMany": "{count} 將會記錄"
-    },
-    "fieldMapping": {
-      "title": "欄位對應",
-      "addMapping": "新增欄位映射",
-      "removeMapping": "移除映射",
-      "reps": "代表",
-      "weight": "權重 ({unit})"
-    },
-    "typeSelect": {
-      "convertTo": "轉換成：",
-      "updateFileType": "更新運動檔案類型"
-    },
-    "errors": {
-      "convertError": "轉換運動數據時發生錯誤：{error}"
-    },
-    "success": "成功轉換了 {count} 記錄"
-  },
-  "duration": {
-    "estimatedDuration": "預估時間",
-    "restTime": "休息時間",
-    "setTime": "設定時間",
-    "lastSession": "上次的會",
-    "unableToAnalyze": "無法分析運動檔案"
   }
 }

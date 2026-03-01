@@ -115,6 +115,14 @@ export default [
       // i18next/no-literal-string rule removed from here and moved to a targeted block below
     },
   },
+  
+  // Specific sorting for locale files
+  {
+    files: ["app/i18n/locales/**/*.json"],
+    rules: {
+      "json/sort-keys": ["error", "asc"],
+    },
+  },
 
   // Targeted rules for UI components (features and components)
   {

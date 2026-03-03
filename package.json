@@ -45,6 +45,8 @@
     "builtin-modules": "3.3.0",
     "esbuild": "^0.25.11",
     "esbuild-postcss": "^0.0.4",
+    "prettier": "^3.8.1",
+    "prettier-plugin-sort-json": "^4.2.0",
     "eslint": "^9.39.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-obsidianmd": "^0.1.9",

@@ -1,213 +1,532 @@
 {
-  "modal": {
-    "titles": {
-      "editTable": "テーブルのパラメータを編集する",
-      "editTimer": "タイマー設定を編集する",
-      "createLog": "ワークアウト記録を作成する",
-      "editLog": "ワークアウト記録を編集する",
-      "insertChart": "ワークアウトのグラフを挿入する",
-      "insertTable": "ワークアウト記録テーブルの挿入",
-      "insertTimer": "ワークアウトタイマーを設定する",
-      "insertDashboard": "ワークアウトダッシュボードを追加する",
-      "insertDuration": "エクササイズの期間を入力",
-      "createExercisePage": "エクササイズページの作成",
-      "createExerciseSection": "エクササイズセクションを作成する",
-      "auditExerciseNames": "監査対象のトレーニング名",
-      "addExerciseBlock": "エクササイズブロックを追加する",
-      "canvasExport": "キャンバスへのワークアウトのエクスポート",
-      "muscleTagManager": "筋肉タグの管理",
-      "create_log": "ワークアウトの記録を作成する"
-    },
-    "buttons": {
-      "adjustPlus": "+",
-      "adjustMinus": "-",
-      "updateTable": "テーブルを更新する",
-      "updateTimer": "タイマーを更新する",
-      "create": "ログを作成",
-      "update": "更新ログ",
-      "insertChart": "グラフを挿入",
-      "renameFile": "ファイル名を変更",
-      "insertTable": "テーブルを挿入",
-      "insertTimer": "タイマーを挿入する",
-      "insertDashboard": "ダッシュボードを追加する",
-      "cancel": "キャンセル",
-      "confirm": "確認",
-      "createExercise": "エクササイズ作成ページ",
-      "createSection": "セクションを作成",
-      "insertExerciseBlock": "挿入",
-      "updateTargetWeight": "目標の更新",
-      "export": "エクスポート",
-      "addParameter": "パラメータを追加",
-      "removeParameter": "削除",
-      "renameInCsv": "CSVで名前を変更"
-    },
+  "charts": {
+    "date": "日付",
+    "down": "下へ",
+    "fallbackTableMessage": "代替テーブルメッセージ",
     "labels": {
-      "exercise": "エクササイズ:",
-      "reps": "代表者:",
-      "weight": "体重 ({{unit}}):",
-      "volume": "音量 ({{unit}}):",
-      "notes": "メモ（任意）：",
-      "workout": "ワークアウト（任意）：",
-      "chartType": "グラフの種類:",
-      "duration": "期間（秒）：",
-      "title": "タイトル:",
-      "sets": "セット：",
-      "status": "ステータス",
-      "actions": "操作",
-      "dateRange": "日付範囲（日数）：",
-      "targetReps": "目標回数：",
-      "protocol": "プロトコル：",
-      "targetWeight": "目標: ({unit}):"
+      "date": "日付",
+      "distance": "距離",
+      "down": "下",
+      "duration": "期間",
+      "heartRate": "心拍数",
+      "neutral": "中立",
+      "pace": "ペース",
+      "quickWeightIncrementUnit": "重量ボタンで{weightIncrementUnit}ずつ増やす",
+      "reps": "代表",
+      "trendLine": "トレンドライン",
+      "trendType": "トレンド {type}:",
+      "variationFromTo": "{startValue} から {endValue} までの範囲",
+      "volume": "体積",
+      "weight": "重さ",
+      "weightIncrementUnit": "重量の増分 {weightIncrementUnit}"
     },
-    "placeholders": {
-      "sets": "4",
-      "restTime": "90",
-      "repsRange": "8-10",
-      "selectWorkoutFile": "エクササイズファイルを選択してエクスポートする...",
-      "selectMuscleGroup": "筋肉グループを選択してください...",
-      "searchTags": "タグまたは筋肉グループで検索...",
-      "searchMuscleTags": "筋肉のタグを検索する...",
-      "enterTagName": "タグ名を入力してください (例: 胸、ペット)",
-      "exerciseAutocomplete": "入力を開始して、利用可能なエクササイズを確認してください...",
-      "reps": "例：10",
-      "weight": "例：10.5",
-      "notes": "例：良いフォーム、力強いと感じた",
-      "workout": "例：ワークアウト A、トレーニング B、または、以下のチェックボックスを使用",
-      "customTitle": "自動でタイトルを設定する場合は、空欄にする。",
-      "note": "ここで力を入れてください。これはあなたの基本的なエクササイズです。",
-      "folderPath": "例：エクササイズを行うか、または空欄にする（ルートの場合）",
-      "parameterKey": "例：速度",
-      "parameterLabel": "例：速度",
-      "parameterUnit": "例：km/h"
+    "neutral": "中立",
+    "overallVariationPrefix": "全体変動のプレフィックス",
+    "reps": "代表",
+    "significantIncrease": "顕著な増加",
+    "trendLine": "トレンドライン",
+    "typeNotAvailable": "グラフの種類「{chartDataType}」は、{exerciseType}のトレーニングには使用できません。利用可能なグラフの種類: {typeList}",
+    "types": {
+      "distance": "距離",
+      "duration": "期間",
+      "heartRate": "心拍数",
+      "pace": "ペース",
+      "reps": "代表",
+      "volume": "体積",
+      "weight": "重み"
     },
-    "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
-      "auditRenameSuccess": "Audit Rename Success",
-      "exercisePageError": "Error creating exercise page: ",
-      "genericError": "Error: ",
-      "confirmUpdateTarget": "Confirm Update Target",
-      "suggestedNextWeight": "Suggested Next Weight",
-      "tableUpdated": "✅ テーブルが正常に更新されました！",
-      "tableUpdateFailed": "テーブルの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
-      "timerUpdated": "✅ タイマーが正常に更新されました！",
-      "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
-      "muscleTagImportPreview": "{count} タグをインポート",
-      "migrationComplete": "移行が完了しました。{count} の練習ファイルが更新されました。",
-      "logCreated": "ワークアウト記録が正常に作成されました！",
-      "logUpdated": "ワークアウト記録が正常に更新されました！",
-      "chartInserted": "✅ グラフが正常に挿入されました！",
-      "tableInserted": "✅ テーブルが正常に挿入されました！",
-      "timerInserted": "✅ タイマーが正常に挿入されました！",
-      "dashboardInserted": "✅ ダッシュボードの挿入に成功しました！",
-      "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
-      "validationCombinedMode": "⚠️ 「エクササイズ + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "insertCodeNoFile": "コードを挿入するために、Markdown ファイルを開く",
-      "exercisePageCreated": "エクササイズページが正常に作成されました！",
-      "exercisePageNameRequired": "運動の名前を入力してください",
-      "exerciseNameRequired": "❌ 運動の名前を入力してください",
-      "exerciseSectionCreated": "✅ 運動セクションの作成に成功しました！",
-      "timerElementsNotInitialized": "タイマー要素が初期化されていません",
-      "auditNoMismatches": "監査結果と一致しない",
-      "auditRenameFileSuccess": "ファイル名の変更監査 成功",
-      "auditScanning": "監査スキャン",
-      "canvasExportError": "キャンバスのエクスポートエラー",
-      "canvasExported": "キャンバスのデータのエクスポート",
-      "exerciseBlockInserted": "エクササイズブロックの挿入",
-      "migrationError": "マイグレーションエラー",
-      "migrationNoUpdates": "マイグレーションのアップデートは行っていません",
-      "muscleTagDeleted": "筋肉タグが削除されました",
-      "muscleTagExported": "筋肉タグのエクスポート",
-      "muscleTagImportInvalidFormat": "筋肉タグのインポート：無効な形式",
-      "muscleTagImportNoValid": "筋肉タグのインポートには無効なデータが含まれています",
-      "muscleTagLoading": "筋肉タグの読み込み",
-      "muscleTagNoResults": "筋肉タグによる検索結果はありません",
-      "muscleTagSaved": "筋肉タグが保存されました",
-      "muscleTagSimilarWarning": "筋肉タグと類似した内容に関する警告",
-      "targetAchieved": "目標達成",
-      "muscleTagCount": "{count} 個のタグが見つかりました",
-      "muscleTagDeleteConfirm": "「{tag}」のタグを削除してもよろしいですか？",
-      "muscleTagSaveError": "筋肉タグの保存に失敗しました: {error}",
-      "muscleTagExists": "タグ「{tag}」はすでに存在します",
-      "muscleTagSimilarFound": "{count} 類似のタグが見つかりました",
-      "muscleTagExportError": "筋肉タグのエクスポートに失敗しました: {error}",
-      "muscleTagImported": "{count} 筋肉タグが正常にインポートされました！",
-      "muscleTagImportError": "筋肉タグのインポートエラー: {error}",
-      "muscleTagImportInvalidGroup": "無効な筋肉グループ「{group}」がタグ「{tag}」に指定されています。有効な筋肉グループを指定してください。"
+    "volume": "体積"
+  },
+  "commands": {
+    "addExerciseBlock": "エクササイズブロックを追加する",
+    "auditExerciseNames": "監査用エクササイズの名前",
+    "convertExercise": "エクササイズを変換する",
+    "createCsvLog": "CSV ログ ファイルを作成する",
+    "exportWorkoutToCanvas": "ワークアウトをキャンバスにエクスポートする",
+    "generateTagReference": "タグ参照を生成する",
+    "insertTable": "テーブルの挿入",
+    "manageMuscleTags": "筋肉タグの管理",
+    "migrateExerciseTypes": "エクササイズタイプの移行"
+  },
+  "common": {
+    "bpm": "bpm",
+    "cancel": "キャンセル",
+    "convert": "変換",
+    "exercise": "エクササイズ",
+    "km": "common.km",
+    "minPerKm": "1kmあたりの最小",
+    "notAvailable": "利用できません",
+    "reps": "代表",
+    "sec": "sec",
+    "unknown": "不明",
+    "workout": "ワークアウト"
+  },
+  "convert": {
+    "currentType": "現在の種類:",
+    "errors": {
+      "convertError": "エクササイズデータの変換エラー: {error}"
     },
-    "autocomplete": {
-      "wordBadge": "◆",
-      "partialBadge": "•",
-      "fuzzyBadge": "~",
-      "exactBadge": "★",
-      "fuzzyTooltip": "近似一致（スペル修正） - スコア：{score}",
-      "exactTooltip": "完全一致/接頭辞一致 - スコア: {score}",
-      "wordTooltip": "単語の一致 - スコア: {score}",
-      "partialTooltip": "部分一致 - スコア: {score}"
+    "fieldMapping": {
+      "addMapping": "フィールドのマッピングを追加する",
+      "removeMapping": "マッピングを削除する",
+      "reps": "代表",
+      "title": "フィールドのマッピング",
+      "weight": "重み ({unit})"
     },
-    "info": {
-      "dashboardDescription": "これにより、統計、グラフ、および迅速な操作を含む、包括的なワークアウトダッシュボードが挿入されます。"
+    "preview": {
+      "noEntries": "このエクササイズに関するログエントリは見つかりませんでした。",
+      "title": "プレビュー",
+      "willConvertMany": "{count} のログエントリが変換されます",
+      "willConvertOne": "1つのログエントリが変換されます"
     },
-    "notes": "メモ（任意）：",
-    "workout": "ワークアウト（任意）：",
-    "workoutNameOptional": "ワークアウト名（任意）：",
-    "chartType": "グラフの種類:",
-    "dataType": "データ型:",
-    "daysRange": "日数範囲:",
-    "dataLimit": "データ制限:",
-    "maxLogCount": "最大ログ数:",
-    "customTitle": "カスタムタイトル:",
-    "timerType": "タイマーの種類:",
-    "duration": "期間（秒）：",
-    "rounds": "ラウンド：",
-    "title": "タイトル:",
-    "sets": "設定:",
-    "restTime": "休憩時間（秒）：",
-    "note": "注:",
-    "folderPath": "フォルダパス (任意):",
-    "exerciseType": "エクササイズの種類:",
-    "customParameters": "カスタムパラメータ：",
-    "parameterKey": "キー:",
-    "parameterLabel": "ラベル:",
-    "parameterType": "種類:",
-    "parameterUnit": "単位（任意）：",
-    "parameterRequired": "必須",
-    "confirmAction": "確認",
-    "fileName": "ファイル名",
-    "csvExercise": "CSV 練習",
-    "similarity": "類似性",
-    "status": "ステータス",
-    "tag": "タグ",
-    "muscleGroup": "筋肉群",
+    "sectionExercise": "エクササイズ",
+    "success": "{count} のログエントリを正常に変換しました",
+    "title": "エクササイズデータを変換する",
+    "typeSelect": {
+      "convertTo": "変換元:",
+      "updateFileType": "エクササイズファイルのファイルタイプを更新する"
+    }
+  },
+  "dashboard": {
+    "durationComparison": {
+      "columnActual": "実際の",
+      "columnEstimated": "見積",
+      "columnVariance": "変動",
+      "columnWorkout": "ワークアウト",
+      "minutesSuffix": "分",
+      "noData": "データなし",
+      "subtitle": "予想時間と実際のトレーニング時間",
+      "title": "期間比較",
+      "varianceTrendDeclining": "変動傾向：減少",
+      "varianceTrendImproving": "変動傾向の改善",
+      "varianceTrendStable": "変動傾向が安定",
+      "varianceTrendTitle": "変動傾向のタイトル"
+    },
+    "fileErrors": {
+      "allValid": "すべて有効",
+      "noTags": "タグなし",
+      "readError": "❌ ファイルの読み込みエラー: {message}",
+      "title": "ファイルのエラー",
+      "tooManyTags": "筋肉タグが多すぎます（[{{count}}]）"
+    },
+    "month": "月",
+    "muscleTags": {
+      "description": "説明",
+      "title": "筋肉タグ",
+      "tooltip": "コピーするにはクリック: {tag}",
+      "totalCount": "合計: {count} 件のタグが利用可能です"
+    },
+    "protocol": {
+      "clickToFilter": "フィルタリングするには、ここをクリック",
+      "percentLabel": "割合を示すラベル",
+      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+    },
+    "protocolDistribution": {
+      "clearFilter": "フィルタをクリア",
+      "filterActive": "アクティブなものをフィルタリングする",
+      "noData": "データなし",
+      "subtitle": "トレーニングプロトコルの詳細（過去30日間）",
+      "title": "プロトコル配分"
+    },
+    "protocolEffectiveness": {
+      "columnEntries": "項目",
+      "columnProgression": "進捗",
+      "columnProtocol": "プロトコル",
+      "columnVolumeChange": "体積の変化",
+      "disclaimer": "免責事項",
+      "noData": "データなし",
+      "title": "プロトコルの有効性"
+    },
+    "quickActions": {
+      "addWorkoutLog": "ワークアウト記録を追加する",
+      "title": "クイックアクション",
+      "viewExercises": "エクササイズを見る"
+    },
+    "quickStats": {
+      "month": "月",
+      "periods": {
+        "month": "今月",
+        "week": "今週",
+        "year": "今年"
+      },
+      "title": "クイック統計",
+      "week": "今週",
+      "workouts": "ワークアウト",
+      "year": "年"
+    },
+    "recentWorkouts": {
+      "fallbackName": "ワークアウト",
+      "title": "最近のトレーニング"
+    },
+    "summary": {
+      "currentStreak": "現在の連続",
+      "currentStreakSuffix": "weeks",
+      "personalRecords": "個人の記録",
+      "title": "概要",
+      "totalVolume": "総体積",
+      "totalWorkouts": "総トレーニング数"
+    },
+    "title": "タイトル",
+    "volumeAnalytics": {
+      "chartTitle": "体積の推移（過去30日間）",
+      "muscleBreakdownTitle": "ボリューム別の人気エクササイズ",
+      "title": "音量分析"
+    },
+    "week": "今週",
+    "year": "年"
+  },
+  "duration": {
+    "estimatedDuration": "推定時間",
+    "lastSession": "直前のセッション",
+    "restTime": "休憩時間",
+    "setTime": "時間を設定する",
+    "unableToAnalyze": "ワークアウトファイルの分析に失敗"
+  },
+  "examples": {
+    "dashboard": {
+      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "title": "ダッシュボード"
+    },
+    "exercise": {
+      "chartTitle": "グラフ",
+      "descriptionTemplate": "例：{name}の説明",
+      "descriptionTitle": "説明",
+      "distanceChartTitle": "距離グラフ",
+      "durationChartTitle": "期間グラフ",
+      "durationTitle": "期間",
+      "heartRateTitle": "心拍数",
+      "logTitle": "記録",
+      "paceTrackingNote": "ペースの改善を追跡する（低いほど速い）：",
+      "paceTrackingTitle": "ペース追跡",
+      "repTrackingTitle": "反復回数記録",
+      "volumeChartTitle": "体積グラフ",
+      "weightProgressionTitle": "体重増加の段階"
+    },
+    "exercises": {
+      "benchPress": {
+        "name": "ベンチプレース"
+      },
+      "calfMachine": {
+        "name": "ふくらはぎマシン"
+      },
+      "cycling": {
+        "name": "サイクリング"
+      },
+      "legCurlSeated": {
+        "name": "座った状態でのレッグカール"
+      },
+      "legPress45": {
+        "name": "レッグプレス 45"
+      },
+      "plank": {
+        "name": "プランク"
+      },
+      "rdl": {
+        "name": "RDL"
+      },
+      "running": {
+        "name": "ランニング"
+      },
+      "squat": {
+        "name": "スクワット"
+      },
+      "squatMultiPower": {
+        "name": "スクワット マルチ パワー"
+      }
+    },
+    "featureShowcase": {
+      "allDataChartTitle": "すべてのデータグラフ",
+      "byExerciseTitle": "エクササイズ別",
+      "byWorkoutTitle": "ワークアウト別",
+      "cardioExerciseTitle": "有酸素運動（距離 + ペース）",
+      "chartsIntro": "グラフは、時間の経過に伴うあなたの進捗状況を視覚化します。利用可能な種類: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
+      "chartsTitle": "1. グラフ",
+      "codeBlockWorkoutChart": "時間経過に伴う進捗状況を可視化する",
+      "codeBlockWorkoutDashboard": "すべての統計情報の概要",
+      "codeBlockWorkoutDuration": "ワークアウトの所要時間を推定する",
+      "codeBlockWorkoutLog": "ワークアウトのデータ表を表示する",
+      "codeBlockWorkoutTimer": "カウントダウンまたはインターバルタイマー",
+      "combinedTitle": "（エクササイズ + トレーニング）",
+      "commandsNote": "**操作** (Ctrl/Cmd + P): ワークアウト記録の作成、グラフの挿入、タイマーの挿入、エクササイズのページの作成",
+      "countdownTimerTitle": "カウントダウンタイマー",
+      "durationEstimatorIntro": "現在のメモに記載されているエクササイズのリストに基づいて、合計のトレーニング時間を推定します。",
+      "durationEstimatorTitle": "4. 期間推定",
+      "intervalTimerTitle": "インターバルタイマー",
+      "intro": "Workout プラグインで利用可能なすべてのコードブロックタイプの完全なリファレンス。",
+      "protocol21s": "7回 x 7回 x 7回（分割回数）",
+      "protocolDropset": "重量を減らし、セットを繰り返す",
+      "protocolMyoReps": "アクティベーションセット + ミニセット",
+      "protocolRestPause": "短い休憩、限界まで続ける",
+      "protocolStandard": "標準的なセット",
+      "protocolSuperset": "関連するエクササイズ",
+      "quickReferenceTitle": "クイックリファレンス",
+      "strengthExerciseTitle": "筋力トレーニング（回数 + 重量）",
+      "tablesIntro": "テーブルには、ソートおよび編集機能を使用して、ワークアウトの記録を表示します。",
+      "tablesTitle": "2. テーブル",
+      "timedExerciseTitle": "時間制限付きエクササイズ (時間)",
+      "timersTitle": "3. タイマー",
+      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "title": "機能紹介",
+      "trainingProtocolsIntro": "このプラグインは、以下のプロトコルバッジをログに表示できます：",
+      "trainingProtocolsTitle": "5. トレーニングプロトコル",
+      "workoutChartTitle": "エクササイズ全体のグラフ"
+    },
+    "fileNames": {
+      "dashboard": "ダッシュボード",
+      "featureShowcase": "主要機能紹介",
+      "gettingStarted": "始める",
+      "hiitCardioSession": "HIIT（高強度インターバルトレーニング）のカーディオセッション"
+    },
+    "folderCreatedError": "例のフォルダの作成に失敗しました。",
+    "folderCreatedSuccess": "例：フォルダ「{folder}」が正常に作成されました！",
+    "folderNames": {
+      "base": "ジムの例",
+      "exercises": "エクササイズ",
+      "log": "ログ",
+      "workouts": "ワークアウト"
+    },
+    "gettingStarted": {
+      "commandCreateExercise": "エクササイズ作成ページ",
+      "commandCreateExerciseDesc": "新しいエクササイズファイルを作成する",
+      "commandCreateLog": "ワークアウト記録を作成する",
+      "commandCreateLogDesc": "新しいワークアウトの記録を追加する",
+      "commandInsertChart": "ワークアウトのグラフを挿入する",
+      "commandInsertChartDesc": "メモにグラフを追加する",
+      "commandInsertTimer": "ワークアウトタイマーを開始する",
+      "commandInsertTimerDesc": "休憩タイマーを追加する",
+      "dashboardDesc": "あなたのトレーニングの統計情報を一目で確認",
+      "exercisesDesc": "例となる演習ページ（ログとグラフを含む）",
+      "exercisesFolder": "**{folder}** /",
+      "featureShowcaseDesc": "すべてのコードブロックに関する完全なリファレンス",
+      "folderStructureTitle": "フォルダ構造",
+      "logDesc": "あなたのCSV形式のワークアウトデータ",
+      "logFolder": "**{folder}/**",
+      "nextStepsTitle": "次のステップ",
+      "quickActionsIntro": "以下のコマンド（Ctrl/Cmd + P）を使用してください：",
+      "quickActionsTitle": "クイックアクション",
+      "step1": "Open [[Dashboard]] to see your stats",
+      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step3": "**{workouts}** フォルダにあるワークアウトを試してみてください。",
+      "step4": "**{exercises}** で、独自のトレーニングを作成してください。",
+      "tableHeaderDescription": "説明",
+      "tableHeaderFileFolder": "ファイル/フォルダ",
+      "title": "The Gym プラグインの開始方法",
+      "welcome": "ようこそ！このフォルダには、すべての機能を学ぶのに役立つサンプルファイルが含まれています。",
+      "workoutsDesc": "例となるワークアウトのテンプレート",
+      "workoutsFolder": "**{folder}** /"
+    },
+    "hiit": {
+      "cyclingCooldownTitle": "サイクリングクールダウン",
+      "intro": "高強度インターバルトレーニング。インターバルタイマーと心拍数トラッキング機能付き。",
+      "runningProgressTitle": "ランニングの進捗",
+      "sprintIntervalsTitle": "スプリントインターバル (30秒 × 8ラウンド)",
+      "title": "HIIT（高強度インターバルトレーニング）カーディオセッション",
+      "warmupTitle": "ウォーミングアップ (5分)"
+    },
+    "workout": {
+      "chart": "グラフ",
+      "duration": "期間",
+      "note": "注: 強く押してください",
+      "recoverySuffix": "（回復：{seconds}回）",
+      "setsReps": "{sets} 回 × {reps} 回"
+    },
+    "workouts": {
+      "cardioDay": {
+        "name": "有酸素運動の日"
+      },
+      "lowerBodyA": {
+        "name": "1日目 LOWER BODY A 2.0"
+      },
+      "upperBodyPower": {
+        "name": "上半身パワー"
+      }
+    }
+  },
+  "forms": {
+    "enterCsvPath": "CSVファイルのパスを入力する",
+    "enterFolderPath": "フォルダのパスを入力してください",
+    "workoutName": "ワークアウト名"
+  },
+  "general": {
+    "avgReps": "平均回数",
+    "back": "戻る",
+    "currentFile": "現在開いているファイル",
+    "dashboard": "ダッシュボード",
+    "delete": "削除",
+    "edit": "編集",
+    "front": "正面",
+    "labels": {
+      "avgCustom": "平均 {{label}}",
+      "avgDistance": "平均距離 (km)",
+      "avgDuration": "平均時間 (秒)",
+      "avgHeartRate": "平均心拍数 (bpm)",
+      "avgVolume": "平均体積 ({unit})",
+      "avgWeight": "平均重量（{{unit}}）",
+      "back": "戻る",
+      "dailyVolume": "1日の取引量（{{unit}}）",
+      "dashboard": "ダッシュボード",
+      "front": "正面",
+      "pace": "ペース (分/km)",
+      "totalCustom": "合計 {label}",
+      "totalDistance": "総距離（km）",
+      "totalDuration": "合計時間 (秒)",
+      "totalVolume": "総容量（{unit}）",
+      "totalWeight": "総重量 ({{unit}})"
+    },
+    "muscleHeatMap": "筋肉の熱分布",
+    "noMatchMessage": "一致しないメッセージ",
+    "search": "検索",
+    "totalReps": "総回数",
+    "workoutData": "ワークアウトデータ",
+    "workoutLog": "ワークアウト記録"
+  },
+  "icons": {
+    "actions": {
+      "add": "➕",
+      "delete": "🗑️",
+      "edit": "✏️"
+    },
+    "common": {
+      "empty": "",
+      "percentage": "%",
+      "plus": "+"
+    },
+    "dashboard": {
+      "quickStats": {
+        "metrics": {
+          "avgVolume": "📊",
+          "totalVolume": "📦",
+          "workouts": "🏋️"
+        },
+        "periods": {
+          "month": "📆",
+          "week": "🗓️",
+          "year": "📈"
+        }
+      },
+      "summary": {
+        "currentStreak": "🔥",
+        "personalRecords": "🏅",
+        "totalVolume": "📦",
+        "totalWorkouts": "🏋️"
+      }
+    },
+    "duration": {
+      "timer": "⏱️"
+    },
+    "exercise": {
+      "abs": "🎯",
+      "back": "🦾",
+      "biceps": "💪",
+      "calves": "🦵",
+      "cardio": "⭐",
+      "chest": "🫁",
+      "core": "🎯",
+      "curl": "💪",
+      "deadlift": "💀",
+      "extension": "📏",
+      "forearms": "✊",
+      "glutes": "🍑",
+      "hamstrings": "🦵",
+      "legs": "🦵",
+      "pull": "⬇️",
+      "push": "🔼",
+      "quads": "🦵",
+      "rear_delts": "🔙",
+      "shoulders": "🦵",
+      "traps": "🔺",
+      "triceps": "💪"
+    },
+    "status": {
+      "info": "ℹ️",
+      "success": "✅",
+      "warning": "⚠️"
+    },
+    "tables": {
+      "delete": "🗑️",
+      "distance": "📍 ",
+      "duration": "⏱️ ",
+      "edit": "✏️",
+      "goto": "🔗",
+      "heartRate": "❤️ ",
+      "reps": "🔁 ",
+      "volume": "📊 ",
+      "weight": "🏋️ "
+    },
+    "timer": {
+      "pause": "⏸",
+      "play": "▶",
+      "reset": "↺"
+    }
+  },
+  "logs": {
+    "addLogButtonAria": "{exerciseName} のログを追加する",
+    "addLogButtonText": "{exerciseName} のログを追加する",
+    "createFirstLogButton": "{exerciseName} のための最初のログを作成する",
+    "createFirstLogButtonAria": "{exerciseName} のための最初のログを作成する",
+    "createLogButtonAria": "{exerciseName} のログを作成する",
+    "createLogButtonText": "{exerciseName} のログを作成する",
+    "noDataTitle": "{exerciseName} のログが見つかりませんでした。"
+  },
+  "messages": {
+    "codeInserted": "コード挿入",
+    "csvNotFound": "CSVファイルが見つかりません",
+    "errors": {
+      "tagReferenceFailed": "タグ参照の生成に失敗しました:"
+    },
+    "fileEmpty": "ファイルが空",
+    "imbalanceAlerts": "不均衡アラート",
+    "insufficientData": "データ不足",
+    "loading": "トレーニングデータの読み込み中...",
+    "noDataPeriod": "選択した期間のワークアウトデータが見つかりませんでした。",
+    "noFrontmatter": "フロントマターなし",
+    "noImbalances": "不均衡はありません",
+    "noTags": "タグなし",
+    "success": {
+      "csvCreated": "CSVファイルが正常に作成されました！"
+    },
+    "tagReferenceGenerated": "Tag Reference Generated",
+    "timerCompleted": "タイマーが終了しました！"
+  },
+  "modal": {
     "actions": "操作",
     "addTag": "タグを追加",
-    "editTag": "タグを編集する",
-    "newTag": "新しいタグ",
-    "save": "保存",
-    "delete": "削除",
-    "similarTags": "関連するタグ:",
-    "exportTags": "タグのエクスポート",
-    "importTags": "タグをインポートする",
-    "importMerge": "マージ",
-    "importReplace": "すべてのものを置き換える",
-    "timerDuration": "タイマー時間（秒）：",
-    "timerPreset": "タイマー設定:",
-    "workoutFile": "ワークアウトファイル:",
-    "dateRange": "日付範囲（日数）：",
-    "protocol": "プロトコル：",
-    "recentExercises": "最近:",
+    "autocomplete": {
+      "exactBadge": "★",
+      "exactTooltip": "完全一致/接頭辞一致 - スコア: {score}",
+      "fuzzyBadge": "~",
+      "fuzzyTooltip": "近似一致（スペル修正） - スコア：{score}",
+      "partialBadge": "•",
+      "partialTooltip": "部分一致 - スコア: {score}",
+      "wordBadge": "◆",
+      "wordTooltip": "単語の一致 - スコア: {score}"
+    },
+    "buttons": {
+      "addParameter": "パラメータを追加",
+      "adjustMinus": "-",
+      "adjustPlus": "+",
+      "cancel": "キャンセル",
+      "confirm": "確認",
+      "create": "ログを作成",
+      "createExercise": "エクササイズ作成ページ",
+      "createSection": "セクションを作成",
+      "export": "エクスポート",
+      "insertChart": "グラフを挿入",
+      "insertDashboard": "ダッシュボードを追加する",
+      "insertExerciseBlock": "挿入",
+      "insertTable": "テーブルを挿入",
+      "insertTimer": "タイマーを挿入する",
+      "removeParameter": "削除",
+      "renameFile": "ファイル名を変更",
+      "renameInCsv": "CSVで名前を変更",
+      "update": "更新ログ",
+      "updateTable": "テーブルを更新する",
+      "updateTargetWeight": "目標の更新",
+      "updateTimer": "タイマーを更新する"
+    },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
-    "layoutType": "レイアウトの種類:",
-    "layoutHorizontal": "水平方向のレイアウト",
-    "layoutVertical": "縦方向のレイアウト",
-    "layoutGrouped": "筋肉ごとにグループ化",
-    "tagsSelector": "筋肉に関するタグ:",
-    "noTagsFound": "検索条件に一致するタグは見つかりませんでした",
-    "noTagsSelected": "タグが選択されていません。以下のタグをクリックして追加してください。",
-    "text": "ワークアウトを完了する",
-    "value": "ワークアウト",
+    "chartType": "グラフの種類:",
     "checkboxes": {
       "connectSupersets": "スーパーセットを接続する",
       "exactMatch": "完全一致",
@@ -226,10 +545,147 @@
       "useCurrentWorkout": "現在のワークアウトを使用",
       "useCurrentWorkoutFile": "現在のワークアウトファイルを有効にする"
     },
+    "confirmAction": "確認",
+    "csvExercise": "CSV 練習",
+    "customParameters": "カスタムパラメータ：",
+    "customTitle": "カスタムタイトル:",
+    "dataLimit": "データ制限:",
+    "dataType": "データ型:",
+    "dateRange": "日付範囲（日数）：",
+    "daysRange": "日数範囲:",
+    "delete": "削除",
+    "duration": "期間（秒）：",
+    "editTag": "タグを編集する",
     "exerciseStatus": {
       "createPage": "作成ページ",
       "notFound": "該当するものが見つかりませんでした"
     },
+    "exerciseType": "エクササイズの種類:",
+    "exportTags": "タグのエクスポート",
+    "fileName": "ファイル名",
+    "folderPath": "フォルダパス (任意):",
+    "importMerge": "マージ",
+    "importReplace": "すべてのものを置き換える",
+    "importTags": "タグをインポートする",
+    "info": {
+      "dashboardDescription": "これにより、統計、グラフ、および迅速な操作を含む、包括的なワークアウトダッシュボードが挿入されます。"
+    },
+    "labels": {
+      "actions": "操作",
+      "chartType": "グラフの種類:",
+      "dateRange": "日付範囲（日数）：",
+      "duration": "期間（秒）：",
+      "exercise": "エクササイズ:",
+      "notes": "メモ（任意）：",
+      "protocol": "プロトコル：",
+      "reps": "代表者:",
+      "sets": "セット：",
+      "status": "ステータス",
+      "targetReps": "目標回数：",
+      "targetWeight": "目標: ({unit}):",
+      "title": "タイトル:",
+      "volume": "音量 ({{unit}}):",
+      "weight": "体重 ({{unit}}):",
+      "workout": "ワークアウト（任意）："
+    },
+    "layoutGrouped": "筋肉ごとにグループ化",
+    "layoutHorizontal": "水平方向のレイアウト",
+    "layoutType": "レイアウトの種類:",
+    "layoutVertical": "縦方向のレイアウト",
+    "maxLogCount": "最大ログ数:",
+    "muscleGroup": "筋肉群",
+    "newTag": "新しいタグ",
+    "noTagsFound": "検索条件に一致するタグは見つかりませんでした",
+    "noTagsSelected": "タグが選択されていません。以下のタグをクリックして追加してください。",
+    "note": "注:",
+    "notes": "メモ（任意）：",
+    "notices": {
+      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditNoMismatches": "監査結果と一致しない",
+      "auditRenameError": "Audit Rename Error",
+      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameFileSuccess": "ファイル名の変更監査 成功",
+      "auditRenameSuccess": "Audit Rename Success",
+      "auditScanning": "監査スキャン",
+      "canvasExportError": "キャンバスのエクスポートエラー",
+      "canvasExported": "キャンバスのデータのエクスポート",
+      "chartInserted": "✅ グラフが正常に挿入されました！",
+      "confirmUpdateTarget": "Confirm Update Target",
+      "dashboardInserted": "✅ ダッシュボードの挿入に成功しました！",
+      "exerciseBlockInserted": "エクササイズブロックの挿入",
+      "exerciseNameRequired": "❌ 運動の名前を入力してください",
+      "exercisePageCreated": "エクササイズページが正常に作成されました！",
+      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageNameRequired": "運動の名前を入力してください",
+      "exerciseSectionCreated": "✅ 運動セクションの作成に成功しました！",
+      "genericError": "Error: ",
+      "insertCodeNoFile": "コードを挿入するために、Markdown ファイルを開く",
+      "logCreated": "ワークアウト記録が正常に作成されました！",
+      "logUpdated": "ワークアウト記録が正常に更新されました！",
+      "migrationComplete": "移行が完了しました。{count} の練習ファイルが更新されました。",
+      "migrationError": "マイグレーションエラー",
+      "migrationNoUpdates": "マイグレーションのアップデートは行っていません",
+      "muscleTagCount": "{count} 個のタグが見つかりました",
+      "muscleTagDeleteConfirm": "「{tag}」のタグを削除してもよろしいですか？",
+      "muscleTagDeleted": "筋肉タグが削除されました",
+      "muscleTagExists": "タグ「{tag}」はすでに存在します",
+      "muscleTagExportError": "筋肉タグのエクスポートに失敗しました: {error}",
+      "muscleTagExported": "筋肉タグのエクスポート",
+      "muscleTagImportError": "筋肉タグのインポートエラー: {error}",
+      "muscleTagImportInvalidFormat": "筋肉タグのインポート：無効な形式",
+      "muscleTagImportInvalidGroup": "無効な筋肉グループ「{group}」がタグ「{tag}」に指定されています。有効な筋肉グループを指定してください。",
+      "muscleTagImportNoValid": "筋肉タグのインポートには無効なデータが含まれています",
+      "muscleTagImportPreview": "{count} タグをインポート",
+      "muscleTagImported": "{count} 筋肉タグが正常にインポートされました！",
+      "muscleTagLoading": "筋肉タグの読み込み",
+      "muscleTagNoResults": "筋肉タグによる検索結果はありません",
+      "muscleTagSaveError": "筋肉タグの保存に失敗しました: {error}",
+      "muscleTagSaved": "筋肉タグが保存されました",
+      "muscleTagSimilarFound": "{count} 類似のタグが見つかりました",
+      "muscleTagSimilarWarning": "筋肉タグと類似した内容に関する警告",
+      "suggestedNextWeight": "Suggested Next Weight",
+      "tableInserted": "✅ テーブルが正常に挿入されました！",
+      "tableUpdateFailed": "テーブルの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
+      "tableUpdated": "✅ テーブルが正常に更新されました！",
+      "targetAchieved": "目標達成",
+      "timerElementsNotInitialized": "タイマー要素が初期化されていません",
+      "timerInserted": "✅ タイマーが正常に挿入されました！",
+      "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
+      "timerUpdated": "✅ タイマーが正常に更新されました！",
+      "validationCombinedMode": "⚠️ 「エクササイズ + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！",
+      "validationFillAll": "すべてのフィールドに有効な値を入力してください。"
+    },
+    "parameterKey": "キー:",
+    "parameterLabel": "ラベル:",
+    "parameterRequired": "必須",
+    "parameterType": "種類:",
+    "parameterUnit": "単位（任意）：",
+    "placeholders": {
+      "customTitle": "自動でタイトルを設定する場合は、空欄にする。",
+      "enterTagName": "タグ名を入力してください (例: 胸、ペット)",
+      "exerciseAutocomplete": "入力を開始して、利用可能なエクササイズを確認してください...",
+      "folderPath": "例：エクササイズを行うか、または空欄にする（ルートの場合）",
+      "note": "ここで力を入れてください。これはあなたの基本的なエクササイズです。",
+      "notes": "例：良いフォーム、力強いと感じた",
+      "parameterKey": "例：速度",
+      "parameterLabel": "例：速度",
+      "parameterUnit": "例：km/h",
+      "reps": "例：10",
+      "repsRange": "8-10",
+      "restTime": "90",
+      "searchMuscleTags": "筋肉のタグを検索する...",
+      "searchTags": "タグまたは筋肉グループで検索...",
+      "selectMuscleGroup": "筋肉グループを選択してください...",
+      "selectWorkoutFile": "エクササイズファイルを選択してエクスポートする...",
+      "sets": "4",
+      "weight": "例：10.5",
+      "workout": "例：ワークアウト A、トレーニング B、または、以下のチェックボックスを使用"
+    },
+    "protocol": "プロトコル：",
+    "recentExercises": "最近:",
+    "restTime": "休憩時間（秒）：",
+    "rounds": "ラウンド：",
+    "save": "保存",
     "sections": {
       "advancedOptions": "高度なオプション",
       "chartType": "グラフの種類",
@@ -266,90 +722,124 @@
       "timed": "時間指定",
       "twentyones": "21個",
       "yesNo": "はい いいえ"
-    }
+    },
+    "sets": "設定:",
+    "similarTags": "関連するタグ:",
+    "similarity": "類似性",
+    "status": "ステータス",
+    "tag": "タグ",
+    "tagsSelector": "筋肉に関するタグ:",
+    "text": "ワークアウトを完了する",
+    "timerDuration": "タイマー時間（秒）：",
+    "timerPreset": "タイマー設定:",
+    "timerType": "タイマーの種類:",
+    "title": "タイトル:",
+    "titles": {
+      "addExerciseBlock": "エクササイズブロックを追加する",
+      "auditExerciseNames": "監査対象のトレーニング名",
+      "canvasExport": "キャンバスへのワークアウトのエクスポート",
+      "createExercisePage": "エクササイズページの作成",
+      "createExerciseSection": "エクササイズセクションを作成する",
+      "createLog": "ワークアウト記録を作成する",
+      "create_log": "ワークアウトの記録を作成する",
+      "editLog": "ワークアウト記録を編集する",
+      "editTable": "テーブルのパラメータを編集する",
+      "editTimer": "タイマー設定を編集する",
+      "insertChart": "ワークアウトのグラフを挿入する",
+      "insertDashboard": "ワークアウトダッシュボードを追加する",
+      "insertDuration": "エクササイズの期間を入力",
+      "insertTable": "ワークアウト記録テーブルの挿入",
+      "insertTimer": "ワークアウトタイマーを設定する",
+      "muscleTagManager": "筋肉タグの管理"
+    },
+    "value": "ワークアウト",
+    "workout": "ワークアウト（任意）：",
+    "workoutFile": "ワークアウトファイル:",
+    "workoutNameOptional": "ワークアウト名（任意）："
   },
   "settings": {
-    "placeholders": {
-      "protocolName": "プロトコル名を入力してください",
-      "protocolAbbreviation": "例：gs",
-      "presetName": "プレセットの名前を入力してください"
+    "buttons": {
+      "addPreset": "プリセットを追加",
+      "addProtocol": "プロトコルを追加",
+      "cancel": "キャンセル",
+      "createExamples": "例を作成",
+      "createFiles": "ファイルを作成",
+      "done": "完了！",
+      "failed": "失敗",
+      "generateTemplates": "テンプレートを生成する",
+      "generated": "生成されました！",
+      "generating": "生成中...",
+      "overwriting": "上書き...",
+      "regenerateOverwrite": "再生成 (上書き)",
+      "savePreset": "保存",
+      "saveProtocol": "保存"
+    },
+    "descriptions": {
+      "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
+      "csvFolder": "ワークアウトの記録と筋肉タグのCSVファイルを保存するフォルダ。",
+      "customProtocols": "特定のトレーニング技術を追跡するための、独自のワークアウトプロトコルを作成する。",
+      "defaultExactMatch": "有効にした場合、フィルタリングはデフォルトで完全一致による名前のマッチングを使用します。あいまいなマッチングを使用するには、無効にします。",
+      "defaultRepsPerSet": "指定がない場合の推定回数。0の場合、「代替セットの期間」を使用します。",
+      "defaultTimerPreset": "新しいタイマー用のデフォルト設定を選択してください。",
+      "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
+      "exerciseFolder": "エクササイズページの保存されているフォルダへのパス",
+      "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
+      "generateExamples": "例となるエクササイズやワークアウトを含むフォルダを作成し、開始するのに役立ててください。",
+      "noCustomProtocols": "カスタムプロトコルは設定されていません。 'プロトコルを追加' をクリックして作成してください。",
+      "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
+      "presetDurationDesc": "秒単位で設定 (例: 90 は 90 秒タイマーの場合)。",
+      "presetNameDesc": "このタイマー設定の固有の名前 (例: 'レスト 90秒', 'HIIT 30/10')",
+      "presetRoundsDesc": "停止するまでの、繰り返す間隔ラウンドの数。",
+      "protocolAbbreviation": "バッジに表示される短い略称（最大3文字）",
+      "protocolColor": "バッジの背景色（16進数形式、例：#FF5733）",
+      "quickWeightIncrement": "+/- ボタンで作成/編集するワークアウトログのモーダルで使用される、重量の増減ステップ（例：+2.5 / -2.5 単位）。",
+      "repDuration": "1回の反復にかかる推定時間。反復回数が分かっている場合に利用します（例：「10回 ×」）。",
+      "setDuration": "使用される場合：担当者が指定されていない場合に備えとして。\n一般的な範囲：30～60秒。",
+      "setupCSV": "設定されたフォルダに、workout_logs.csv と muscle-tags.csv の両方を作成してください。",
+      "weightIncrement": "漸進的な負荷（例：2.5単位の増加の場合、2.5）に対するデフォルトの重量増加",
+      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。"
     },
     "labels": {
-      "generateDefaultTemplates": "デフォルトのテンプレートを生成する",
       "csvPath": "CSV形式のログファイルのパス",
-      "exerciseFolder": "エクササイズフォルダのパス",
+      "customProtocols": "カスタムプロトコル",
       "defaultExactMatch": "デフォルトの完全一致",
+      "defaultRepsPerSet": "デフォルトのセットごとの回数",
       "defaultTimerPreset": "デフォルトのタイマー設定",
-      "presetName": "プリセット名",
-      "presetType": "タイマーの種類",
+      "exerciseBlockTemplate": "エクササイズブロックテンプレート",
+      "exerciseFolder": "エクササイズフォルダのパス",
+      "generateDefaultTemplates": "デフォルトのテンプレートを生成する",
+      "generateExamples": "サンプルデータを作成",
       "presetDuration": "期間（秒）",
+      "presetName": "プリセット名",
       "presetRounds": "ラウンド",
       "presetShowControls": "コントロールを表示する",
       "presetSound": "音",
-      "exerciseBlockTemplate": "エクササイズブロックテンプレート",
-      "customProtocols": "カスタムプロトコル",
-      "protocolName": "プロトコルの名前",
+      "presetType": "タイマーの種類",
       "protocolAbbreviation": "略語",
       "protocolColor": "バッジの色",
-      "setDuration": "代替設定時間 (秒)",
+      "protocolName": "プロトコルの名前",
       "repDuration": "1回の繰り返しあたりの時間（秒）",
-      "defaultRepsPerSet": "デフォルトのセットごとの回数",
+      "setDuration": "代替設定時間 (秒)",
       "setupCSV": "CSVファイルのセットアップ",
-      "generateExamples": "サンプルデータを作成",
       "weightUnit": "単位（重量）"
     },
-    "descriptions": {
-      "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
-      "csvFolder": "ワークアウトの記録と筋肉タグのCSVファイルを保存するフォルダ。",
-      "exerciseFolder": "エクササイズページの保存されているフォルダへのパス",
-      "defaultExactMatch": "有効にした場合、フィルタリングはデフォルトで完全一致による名前のマッチングを使用します。あいまいなマッチングを使用するには、無効にします。",
-      "defaultTimerPreset": "新しいタイマー用のデフォルト設定を選択してください。",
-      "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
-      "presetNameDesc": "このタイマー設定の固有の名前 (例: 'レスト 90秒', 'HIIT 30/10')",
-      "presetDurationDesc": "秒単位で設定 (例: 90 は 90 秒タイマーの場合)。",
-      "presetRoundsDesc": "停止するまでの、繰り返す間隔ラウンドの数。",
-      "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
-      "weightIncrement": "漸進的な負荷（例：2.5単位の増加の場合、2.5）に対するデフォルトの重量増加",
-      "customProtocols": "特定のトレーニング技術を追跡するための、独自のワークアウトプロトコルを作成する。",
-      "noCustomProtocols": "カスタムプロトコルは設定されていません。 'プロトコルを追加' をクリックして作成してください。",
-      "protocolAbbreviation": "バッジに表示される短い略称（最大3文字）",
-      "protocolColor": "バッジの背景色（16進数形式、例：#FF5733）",
-      "setDuration": "使用される場合：担当者が指定されていない場合に備えとして。\n一般的な範囲：30～60秒。",
-      "repDuration": "1回の反復にかかる推定時間。反復回数が分かっている場合に利用します（例：「10回 ×」）。",
-      "defaultRepsPerSet": "指定がない場合の推定回数。0の場合、「代替セットの期間」を使用します。",
-      "quickWeightIncrement": "+/- ボタンで作成/編集するワークアウトログのモーダルで使用される、重量の増減ステップ（例：+2.5 / -2.5 単位）。",
-      "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
-      "setupCSV": "設定されたフォルダに、workout_logs.csv と muscle-tags.csv の両方を作成してください。",
-      "generateExamples": "例となるエクササイズやワークアウトを含むフォルダを作成し、開始するのに役立ててください。",
-      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。"
+    "messages": {
+      "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
+      "confirmDeleteProtocol": "このプロトコルを削除してもよろしいですか？",
+      "confirmOverwriteExamples": "既存の例フォルダが存在します。それを上書きしますか？",
+      "csvFilesCreated": "CSVファイルが正常に作成されました！",
+      "presetDeleted": "プリセットが削除されました",
+      "presetNameExists": "同じ名前のプリセットが既に存在します",
+      "presetNameRequired": "プリセットの名前は必須です",
+      "presetSaved": "保存されたプリセット",
+      "protocolAbbreviationRequired": "略称は必須（最大3文字）",
+      "protocolColorRequired": "有効な16進カラーコード（例：#FF5733）を入力してください。",
+      "protocolDeleted": "プロトコルを削除",
+      "protocolNameExists": "同じ名前のプロトコルはすでに存在しています",
+      "protocolNameRequired": "プロトコルの名前が必要です",
+      "protocolSaved": "プロトコルを保存しました"
     },
-    "sections": {
-      "setupAndData": "設定とデータ",
-      "csvManagement": "CSVファイルの管理",
-      "exampleData": "例",
-      "filtering": "フィルタリング",
-      "timerPresets": "タイマー設定",
-      "templates": "テンプレート",
-      "trainingParameters": "トレーニングパラメータ",
-      "customProtocols": "カスタムプロトコル",
-      "quickLog": "モバイルでの記録"
-    },
-    "buttons": {
-      "addPreset": "プリセットを追加",
-      "savePreset": "保存",
-      "cancel": "キャンセル",
-      "addProtocol": "プロトコルを追加",
-      "saveProtocol": "保存",
-      "createFiles": "ファイルを作成",
-      "createExamples": "例を作成",
-      "generating": "生成中...",
-      "generated": "生成されました！",
-      "regenerateOverwrite": "再生成 (上書き)",
-      "overwriting": "上書き...",
-      "done": "完了！",
-      "failed": "失敗",
-      "generateTemplates": "テンプレートを生成する"
-    },
+    "none": "該当なし",
     "options": {
       "none": "なし",
       "weightUnit": {
@@ -357,46 +847,66 @@
         "lb": "ポンド (lb)"
       }
     },
+    "placeholders": {
+      "presetName": "プレセットの名前を入力してください",
+      "protocolAbbreviation": "例：gs",
+      "protocolName": "プロトコル名を入力してください"
+    },
+    "sections": {
+      "csvManagement": "CSVファイルの管理",
+      "customProtocols": "カスタムプロトコル",
+      "exampleData": "例",
+      "filtering": "フィルタリング",
+      "quickLog": "モバイルでの記録",
+      "setupAndData": "設定とデータ",
+      "templates": "テンプレート",
+      "timerPresets": "タイマー設定",
+      "trainingParameters": "トレーニングパラメータ"
+    },
     "tooltips": {
-      "editProtocol": "プロトコルを編集する",
+      "deletePreset": "プリセットを削除",
       "deleteProtocol": "プロトコルを削除",
       "editPreset": "プリセットを編集する",
-      "deletePreset": "プリセットを削除"
-    },
-    "messages": {
-      "presetNameRequired": "プリセットの名前は必須です",
-      "presetNameExists": "同じ名前のプリセットが既に存在します",
-      "presetDeleted": "プリセットが削除されました",
-      "presetSaved": "保存されたプリセット",
-      "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
-      "protocolNameRequired": "プロトコルの名前が必要です",
-      "protocolAbbreviationRequired": "略称は必須（最大3文字）",
-      "protocolColorRequired": "有効な16進カラーコード（例：#FF5733）を入力してください。",
-      "protocolNameExists": "同じ名前のプロトコルはすでに存在しています",
-      "protocolDeleted": "プロトコルを削除",
-      "protocolSaved": "プロトコルを保存しました",
-      "confirmDeleteProtocol": "このプロトコルを削除してもよろしいですか？",
-      "csvFilesCreated": "CSVファイルが正常に作成されました！",
-      "confirmOverwriteExamples": "既存の例フォルダが存在します。それを上書きしますか？"
-    },
-    "none": "該当なし"
+      "editProtocol": "プロトコルを編集する"
+    }
+  },
+  "stats": {
+    "avgVolume": "平均音量",
+    "recentTrend": "最近の傾向",
+    "sessions": "セッション"
   },
   "table": {
-    "target": {
-      "separator": " × ",
-      "repsSuffix": "代表",
-      "progressTooltip": "最適: {best} 回 / 目標: {target} 回"
-    },
     "actions": "操作",
-    "editTable": "テーブルの編集",
-    "labels": {
-      "volume": "音量",
-      "weight": "体重",
-      "duration": "期間",
+    "columnLabels": {
+      "actions": "操作",
+      "date": "日付",
       "distance": "距離",
+      "duration": "期間",
+      "exercise": "エクササイズ",
       "heartRate": "心拍数",
-      "trendLine": "トレンドライン",
-      "target": "目標:"
+      "notes": "備考",
+      "pace": "ペース (分/km)",
+      "protocol": "プロトコル",
+      "reps": "代表",
+      "volume": "音量",
+      "weight": "体重"
+    },
+    "columns": {
+      "actions": "実行",
+      "date": "日付",
+      "distance": "列間の距離",
+      "distanceUnit": "距離 ({distanceUnit})",
+      "duration": "期間",
+      "exercise": "エクササイズ",
+      "heartRate": "心拍数",
+      "notes": "備考",
+      "pace": "ペース",
+      "protocol": "プロトコル",
+      "reps": "代表",
+      "volume": "音量",
+      "volumeUnit": "体積 ({weightUnit})",
+      "weight": "重み",
+      "weightUnit": "重さ ({weightUnit})"
     },
     "deleteConfirm": "削除確認",
     "deleteError": "削除エラー",
@@ -404,528 +914,51 @@
     "deleteTitle": "削除する",
     "distance": "距離",
     "duration": "期間",
+    "editTable": "テーブルの編集",
     "editTitle": "編集タイトル",
     "gotoExercise": "エクササイズへ移動",
     "heartRate": "心拍数",
     "invalidDate": "無効な日付",
+    "labels": {
+      "distance": "距離",
+      "duration": "期間",
+      "heartRate": "心拍数",
+      "target": "目標:",
+      "trendLine": "トレンドライン",
+      "volume": "音量",
+      "weight": "体重"
+    },
     "noData": "データなし",
     "notAvailable": "利用できません",
     "refreshSuccess": "リフレッシュ成功",
     "sets": "セット",
+    "target": {
+      "progressTooltip": "最適: {best} 回 / 目標: {target} 回",
+      "repsSuffix": "代表",
+      "separator": " × "
+    },
     "trendLine": "トレンドライン",
-    "volume": "音量",
-    "columns": {
-      "date": "日付",
-      "exercise": "エクササイズ",
-      "reps": "代表",
-      "weight": "重み",
-      "volume": "音量",
-      "duration": "期間",
-      "distance": "列間の距離",
-      "heartRate": "心拍数",
-      "notes": "備考",
-      "protocol": "プロトコル",
-      "actions": "実行",
-      "volumeUnit": "体積 ({weightUnit})",
-      "weightUnit": "重さ ({weightUnit})",
-      "distanceUnit": "距離 ({distanceUnit})",
-      "pace": "ペース"
-    },
-    "columnLabels": {
-      "date": "日付",
-      "exercise": "エクササイズ",
-      "reps": "代表",
-      "weight": "体重",
-      "volume": "音量",
-      "duration": "期間",
-      "distance": "距離",
-      "heartRate": "心拍数",
-      "notes": "備考",
-      "protocol": "プロトコル",
-      "actions": "操作",
-      "pace": "ペース (分/km)"
-    }
-  },
-  "dashboard": {
-    "summary": {
-      "currentStreakSuffix": "weeks",
-      "title": "概要",
-      "totalWorkouts": "総トレーニング数",
-      "currentStreak": "現在の連続",
-      "totalVolume": "総体積",
-      "personalRecords": "個人の記録"
-    },
-    "quickStats": {
-      "title": "クイック統計",
-      "week": "今週",
-      "month": "月",
-      "year": "年",
-      "workouts": "ワークアウト",
-      "periods": {
-        "week": "今週",
-        "month": "今月",
-        "year": "今年"
-      }
-    },
-    "recentWorkouts": {
-      "title": "最近のトレーニング",
-      "fallbackName": "ワークアウト"
-    },
-    "volumeAnalytics": {
-      "title": "音量分析",
-      "chartTitle": "体積の推移（過去30日間）",
-      "muscleBreakdownTitle": "ボリューム別の人気エクササイズ"
-    },
-    "muscleTags": {
-      "title": "筋肉タグ",
-      "description": "説明",
-      "tooltip": "コピーするにはクリック: {tag}",
-      "totalCount": "合計: {count} 件のタグが利用可能です"
-    },
-    "quickActions": {
-      "title": "クイックアクション",
-      "addWorkoutLog": "ワークアウト記録を追加する",
-      "viewExercises": "エクササイズを見る"
-    },
-    "durationComparison": {
-      "title": "期間比較",
-      "subtitle": "予想時間と実際のトレーニング時間",
-      "noData": "データなし",
-      "columnWorkout": "ワークアウト",
-      "columnEstimated": "見積",
-      "columnActual": "実際の",
-      "columnVariance": "変動",
-      "varianceTrendTitle": "変動傾向のタイトル",
-      "varianceTrendImproving": "変動傾向の改善",
-      "varianceTrendDeclining": "変動傾向：減少",
-      "varianceTrendStable": "変動傾向が安定",
-      "minutesSuffix": "分"
-    },
-    "fileErrors": {
-      "title": "ファイルのエラー",
-      "allValid": "すべて有効",
-      "noTags": "タグなし",
-      "tooManyTags": "筋肉タグが多すぎます（[{{count}}]）",
-      "readError": "❌ ファイルの読み込みエラー: {message}"
-    },
-    "protocolDistribution": {
-      "title": "プロトコル配分",
-      "subtitle": "トレーニングプロトコルの詳細（過去30日間）",
-      "noData": "データなし",
-      "filterActive": "アクティブなものをフィルタリングする",
-      "clearFilter": "フィルタをクリア"
-    },
-    "protocolEffectiveness": {
-      "title": "プロトコルの有効性",
-      "noData": "データなし",
-      "disclaimer": "免責事項",
-      "columnProtocol": "プロトコル",
-      "columnEntries": "項目",
-      "columnVolumeChange": "体積の変化",
-      "columnProgression": "進捗"
-    },
-    "protocol": {
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})",
-      "percentLabel": "割合を示すラベル",
-      "clickToFilter": "フィルタリングするには、ここをクリック"
-    },
-    "month": "月",
-    "title": "タイトル",
-    "week": "今週",
-    "year": "年"
-  },
-  "charts": {
-    "typeNotAvailable": "グラフの種類「{chartDataType}」は、{exerciseType}のトレーニングには使用できません。利用可能なグラフの種類: {typeList}",
-    "labels": {
-      "reps": "代表",
-      "date": "日付",
-      "trendLine": "トレンドライン",
-      "down": "下",
-      "neutral": "中立",
-      "variationFromTo": "{startValue} から {endValue} までの範囲",
-      "trendType": "トレンド {type}:",
-      "weightIncrementUnit": "重量の増分 {weightIncrementUnit}",
-      "quickWeightIncrementUnit": "重量ボタンで{weightIncrementUnit}ずつ増やす",
-      "volume": "体積",
-      "weight": "重さ",
-      "duration": "期間",
-      "distance": "距離",
-      "heartRate": "心拍数",
-      "pace": "ペース"
-    },
-    "types": {
-      "volume": "体積",
-      "weight": "重み",
-      "reps": "代表",
-      "duration": "期間",
-      "distance": "距離",
-      "heartRate": "心拍数",
-      "pace": "ペース"
-    },
-    "date": "日付",
-    "down": "下へ",
-    "fallbackTableMessage": "代替テーブルメッセージ",
-    "neutral": "中立",
-    "overallVariationPrefix": "全体変動のプレフィックス",
-    "reps": "代表",
-    "significantIncrease": "顕著な増加",
-    "trendLine": "トレンドライン",
-    "volume": "体積"
-  },
-  "messages": {
-    "tagReferenceGenerated": "Tag Reference Generated",
-    "loading": "トレーニングデータの読み込み中...",
-    "noDataPeriod": "選択した期間のワークアウトデータが見つかりませんでした。",
-    "timerCompleted": "タイマーが終了しました！",
-    "codeInserted": "コード挿入",
-    "success": {
-      "csvCreated": "CSVファイルが正常に作成されました！"
-    },
-    "csvNotFound": "CSVファイルが見つかりません",
-    "fileEmpty": "ファイルが空",
-    "imbalanceAlerts": "不均衡アラート",
-    "insufficientData": "データ不足",
-    "noFrontmatter": "フロントマターなし",
-    "noImbalances": "不均衡はありません",
-    "noTags": "タグなし",
-    "errors": {
-      "tagReferenceFailed": "タグ参照の生成に失敗しました:"
-    }
-  },
-  "timer": {
-    "editTimer": "タイマーの編集",
-    "countdown": "カウントダウン",
-    "interval": "間隔",
-    "stopwatch": "ストップウォッチ",
-    "controls": {
-      "startTimer": "タイマーを開始する",
-      "pauseTimer": "タイマー一時停止",
-      "resetTimer": "タイマーをリセットする"
-    },
-    "presets": {
-      "detailsControls": "操作",
-      "detailsSound": "音"
-    }
-  },
-  "examples": {
-    "gettingStarted": {
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
-      "title": "The Gym プラグインの開始方法",
-      "welcome": "ようこそ！このフォルダには、すべての機能を学ぶのに役立つサンプルファイルが含まれています。",
-      "folderStructureTitle": "フォルダ構造",
-      "tableHeaderFileFolder": "ファイル/フォルダ",
-      "tableHeaderDescription": "説明",
-      "dashboardDesc": "あなたのトレーニングの統計情報を一目で確認",
-      "featureShowcaseDesc": "すべてのコードブロックに関する完全なリファレンス",
-      "exercisesDesc": "例となる演習ページ（ログとグラフを含む）",
-      "exercisesFolder": "**{folder}** /",
-      "workoutsDesc": "例となるワークアウトのテンプレート",
-      "workoutsFolder": "**{folder}** /",
-      "logDesc": "あなたのCSV形式のワークアウトデータ",
-      "logFolder": "**{folder}/**",
-      "quickActionsTitle": "クイックアクション",
-      "quickActionsIntro": "以下のコマンド（Ctrl/Cmd + P）を使用してください：",
-      "commandCreateLog": "ワークアウト記録を作成する",
-      "commandCreateLogDesc": "新しいワークアウトの記録を追加する",
-      "commandInsertChart": "ワークアウトのグラフを挿入する",
-      "commandInsertChartDesc": "メモにグラフを追加する",
-      "commandInsertTimer": "ワークアウトタイマーを開始する",
-      "commandInsertTimerDesc": "休憩タイマーを追加する",
-      "commandCreateExercise": "エクササイズ作成ページ",
-      "commandCreateExerciseDesc": "新しいエクササイズファイルを作成する",
-      "nextStepsTitle": "次のステップ",
-      "step3": "**{workouts}** フォルダにあるワークアウトを試してみてください。",
-      "step4": "**{exercises}** で、独自のトレーニングを作成してください。"
-    },
-    "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
-      "title": "ダッシュボード"
-    },
-    "featureShowcase": {
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
-      "title": "機能紹介",
-      "intro": "Workout プラグインで利用可能なすべてのコードブロックタイプの完全なリファレンス。",
-      "chartsTitle": "1. グラフ",
-      "chartsIntro": "グラフは、時間の経過に伴うあなたの進捗状況を視覚化します。利用可能な種類: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
-      "strengthExerciseTitle": "筋力トレーニング（回数 + 重量）",
-      "cardioExerciseTitle": "有酸素運動（距離 + ペース）",
-      "timedExerciseTitle": "時間制限付きエクササイズ (時間)",
-      "workoutChartTitle": "エクササイズ全体のグラフ",
-      "allDataChartTitle": "すべてのデータグラフ",
-      "tablesTitle": "2. テーブル",
-      "tablesIntro": "テーブルには、ソートおよび編集機能を使用して、ワークアウトの記録を表示します。",
-      "byExerciseTitle": "エクササイズ別",
-      "byWorkoutTitle": "ワークアウト別",
-      "combinedTitle": "（エクササイズ + トレーニング）",
-      "timersTitle": "3. タイマー",
-      "countdownTimerTitle": "カウントダウンタイマー",
-      "intervalTimerTitle": "インターバルタイマー",
-      "durationEstimatorTitle": "4. 期間推定",
-      "durationEstimatorIntro": "現在のメモに記載されているエクササイズのリストに基づいて、合計のトレーニング時間を推定します。",
-      "trainingProtocolsTitle": "5. トレーニングプロトコル",
-      "trainingProtocolsIntro": "このプラグインは、以下のプロトコルバッジをログに表示できます：",
-      "protocolStandard": "標準的なセット",
-      "protocolDropset": "重量を減らし、セットを繰り返す",
-      "protocolMyoReps": "アクティベーションセット + ミニセット",
-      "protocolRestPause": "短い休憩、限界まで続ける",
-      "protocolSuperset": "関連するエクササイズ",
-      "protocol21s": "7回 x 7回 x 7回（分割回数）",
-      "quickReferenceTitle": "クイックリファレンス",
-      "codeBlockWorkoutChart": "時間経過に伴う進捗状況を可視化する",
-      "codeBlockWorkoutLog": "ワークアウトのデータ表を表示する",
-      "codeBlockWorkoutTimer": "カウントダウンまたはインターバルタイマー",
-      "codeBlockWorkoutDuration": "ワークアウトの所要時間を推定する",
-      "codeBlockWorkoutDashboard": "すべての統計情報の概要",
-      "commandsNote": "**操作** (Ctrl/Cmd + P): ワークアウト記録の作成、グラフの挿入、タイマーの挿入、エクササイズのページの作成"
-    },
-    "fileNames": {
-      "gettingStarted": "始める",
-      "dashboard": "ダッシュボード",
-      "featureShowcase": "主要機能紹介",
-      "hiitCardioSession": "HIIT（高強度インターバルトレーニング）のカーディオセッション"
-    },
-    "workout": {
-      "duration": "期間",
-      "chart": "グラフ",
-      "note": "注: 強く押してください",
-      "recoverySuffix": "（回復：{seconds}回）",
-      "setsReps": "{sets} 回 × {reps} 回"
-    },
-    "folderNames": {
-      "base": "ジムの例",
-      "exercises": "エクササイズ",
-      "workouts": "ワークアウト",
-      "log": "ログ"
-    },
-    "exercises": {
-      "benchPress": {
-        "name": "ベンチプレース"
-      },
-      "squat": {
-        "name": "スクワット"
-      },
-      "running": {
-        "name": "ランニング"
-      },
-      "plank": {
-        "name": "プランク"
-      },
-      "cycling": {
-        "name": "サイクリング"
-      },
-      "squatMultiPower": {
-        "name": "スクワット マルチ パワー"
-      },
-      "rdl": {
-        "name": "RDL"
-      },
-      "legPress45": {
-        "name": "レッグプレス 45"
-      },
-      "legCurlSeated": {
-        "name": "座った状態でのレッグカール"
-      },
-      "calfMachine": {
-        "name": "ふくらはぎマシン"
-      }
-    },
-    "folderCreatedSuccess": "例：フォルダ「{folder}」が正常に作成されました！",
-    "folderCreatedError": "例のフォルダの作成に失敗しました。",
-    "hiit": {
-      "title": "HIIT（高強度インターバルトレーニング）カーディオセッション",
-      "intro": "高強度インターバルトレーニング。インターバルタイマーと心拍数トラッキング機能付き。",
-      "warmupTitle": "ウォーミングアップ (5分)",
-      "sprintIntervalsTitle": "スプリントインターバル (30秒 × 8ラウンド)",
-      "runningProgressTitle": "ランニングの進捗",
-      "cyclingCooldownTitle": "サイクリングクールダウン"
-    },
-    "exercise": {
-      "descriptionTitle": "説明",
-      "descriptionTemplate": "例：{name}の説明",
-      "logTitle": "記録",
-      "volumeChartTitle": "体積グラフ",
-      "weightProgressionTitle": "体重増加の段階",
-      "repTrackingTitle": "反復回数記録",
-      "durationChartTitle": "期間グラフ",
-      "heartRateTitle": "心拍数",
-      "distanceChartTitle": "距離グラフ",
-      "durationTitle": "期間",
-      "paceTrackingTitle": "ペース追跡",
-      "paceTrackingNote": "ペースの改善を追跡する（低いほど速い）：",
-      "chartTitle": "グラフ"
-    },
-    "workouts": {
-      "lowerBodyA": {
-        "name": "1日目 LOWER BODY A 2.0"
-      },
-      "upperBodyPower": {
-        "name": "上半身パワー"
-      },
-      "cardioDay": {
-        "name": "有酸素運動の日"
-      }
-    }
-  },
-  "icons": {
-    "timer": {
-      "play": "▶",
-      "pause": "⏸",
-      "reset": "↺"
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "deadlift": "💀",
-      "curl": "💪",
-      "extension": "📏",
-      "biceps": "💪",
-      "triceps": "💪",
-      "core": "🎯",
-      "forearms": "✊",
-      "back": "🦾",
-      "chest": "🫁",
-      "shoulders": "🦵",
-      "legs": "🦵",
-      "quads": "🦵",
-      "hamstrings": "🦵",
-      "glutes": "🍑",
-      "calves": "🦵",
-      "abs": "🎯",
-      "traps": "🔺",
-      "rear_delts": "🔙",
-      "cardio": "⭐",
-      "push": "🔼",
-      "pull": "⬇️"
-    },
-    "common": {
-      "percentage": "%",
-      "plus": "+",
-      "empty": ""
-    },
-    "tables": {
-      "reps": "🔁 ",
-      "weight": "🏋️ ",
-      "volume": "📊 ",
-      "duration": "⏱️ ",
-      "distance": "📍 ",
-      "heartRate": "❤️ ",
-      "edit": "✏️",
-      "delete": "🗑️",
-      "goto": "🔗"
-    },
-    "actions": {
-      "add": "➕",
-      "edit": "✏️",
-      "delete": "🗑️"
-    },
-    "status": {
-      "success": "✅",
-      "warning": "⚠️",
-      "info": "ℹ️"
-    },
-    "dashboard": {
-      "quickStats": {
-        "periods": {
-          "week": "🗓️",
-          "month": "📆",
-          "year": "📈"
-        },
-        "metrics": {
-          "workouts": "🏋️",
-          "totalVolume": "📦",
-          "avgVolume": "📊"
-        }
-      },
-      "summary": {
-        "totalWorkouts": "🏋️",
-        "currentStreak": "🔥",
-        "totalVolume": "📦",
-        "personalRecords": "🏅"
-      }
-    }
-  },
-  "general": {
-    "labels": {
-      "totalVolume": "総容量（{unit}）",
-      "avgVolume": "平均体積 ({unit})",
-      "totalWeight": "総重量 ({{unit}})",
-      "avgWeight": "平均重量（{{unit}}）",
-      "front": "正面",
-      "back": "戻る",
-      "dashboard": "ダッシュボード",
-      "dailyVolume": "1日の取引量（{{unit}}）",
-      "totalDuration": "合計時間 (秒)",
-      "avgDuration": "平均時間 (秒)",
-      "totalDistance": "総距離（km）",
-      "avgDistance": "平均距離 (km)",
-      "pace": "ペース (分/km)",
-      "avgHeartRate": "平均心拍数 (bpm)",
-      "totalCustom": "合計 {label}",
-      "avgCustom": "平均 {{label}}"
-    },
-    "avgReps": "平均回数",
-    "back": "戻る",
-    "currentFile": "現在開いているファイル",
-    "dashboard": "ダッシュボード",
-    "delete": "削除",
-    "edit": "編集",
-    "front": "正面",
-    "muscleHeatMap": "筋肉の熱分布",
-    "noMatchMessage": "一致しないメッセージ",
-    "search": "検索",
-    "totalReps": "総回数",
-    "workoutData": "ワークアウトデータ",
-    "workoutLog": "ワークアウト記録"
-  },
-  "commands": {
-    "addExerciseBlock": "エクササイズブロックを追加する",
-    "auditExerciseNames": "監査用エクササイズの名前",
-    "convertExercise": "エクササイズを変換する",
-    "exportWorkoutToCanvas": "ワークアウトをキャンバスにエクスポートする",
-    "generateTagReference": "タグ参照を生成する",
-    "insertTable": "テーブルの挿入",
-    "manageMuscleTags": "筋肉タグの管理",
-    "migrateExerciseTypes": "エクササイズタイプの移行",
-    "createCsvLog": "CSV ログ ファイルを作成する"
-  },
-  "common": {
-    "exercise": "エクササイズ",
-    "notAvailable": "利用できません",
-    "unknown": "不明",
-    "workout": "ワークアウト",
-    "sec": "sec",
-    "km": "common.km",
-    "bpm": "bpm",
-    "minPerKm": "1kmあたりの最小",
-    "cancel": "キャンセル",
-    "convert": "変換",
-    "reps": "代表"
-  },
-  "logs": {
-    "noDataTitle": "{exerciseName} のログが見つかりませんでした。",
-    "createFirstLogButton": "{exerciseName} のための最初のログを作成する",
-    "createFirstLogButtonAria": "{exerciseName} のための最初のログを作成する",
-    "addLogButtonText": "{exerciseName} のログを追加する",
-    "addLogButtonAria": "{exerciseName} のログを追加する",
-    "createLogButtonText": "{exerciseName} のログを作成する",
-    "createLogButtonAria": "{exerciseName} のログを作成する"
-  },
-  "forms": {
-    "enterCsvPath": "CSVファイルのパスを入力する",
-    "enterFolderPath": "フォルダのパスを入力してください",
-    "workoutName": "ワークアウト名"
-  },
-  "stats": {
-    "avgVolume": "平均音量",
-    "recentTrend": "最近の傾向",
-    "sessions": "セッション"
+    "volume": "音量"
   },
   "timeperiods": {
     "month": "月",
     "week": "週",
     "year": "年"
+  },
+  "timer": {
+    "controls": {
+      "pauseTimer": "タイマー一時停止",
+      "resetTimer": "タイマーをリセットする",
+      "startTimer": "タイマーを開始する"
+    },
+    "countdown": "カウントダウン",
+    "editTimer": "タイマーの編集",
+    "interval": "間隔",
+    "presets": {
+      "detailsControls": "操作",
+      "detailsSound": "音"
+    },
+    "stopwatch": "ストップウォッチ"
   },
   "trends": {
     "declining": "減少",
@@ -938,38 +971,5 @@
     "stable": "安定",
     "stableLower": "安定した低い",
     "up": "上昇"
-  },
-  "convert": {
-    "title": "エクササイズデータを変換する",
-    "currentType": "現在の種類:",
-    "sectionExercise": "エクササイズ",
-    "preview": {
-      "title": "プレビュー",
-      "noEntries": "このエクササイズに関するログエントリは見つかりませんでした。",
-      "willConvertOne": "1つのログエントリが変換されます",
-      "willConvertMany": "{count} のログエントリが変換されます"
-    },
-    "fieldMapping": {
-      "title": "フィールドのマッピング",
-      "addMapping": "フィールドのマッピングを追加する",
-      "removeMapping": "マッピングを削除する",
-      "reps": "代表",
-      "weight": "重み ({unit})"
-    },
-    "typeSelect": {
-      "convertTo": "変換元:",
-      "updateFileType": "エクササイズファイルのファイルタイプを更新する"
-    },
-    "errors": {
-      "convertError": "エクササイズデータの変換エラー: {error}"
-    },
-    "success": "{count} のログエントリを正常に変換しました"
-  },
-  "duration": {
-    "estimatedDuration": "推定時間",
-    "restTime": "休憩時間",
-    "setTime": "時間を設定する",
-    "lastSession": "直前のセッション",
-    "unableToAnalyze": "ワークアウトファイルの分析に失敗"
   }
 }

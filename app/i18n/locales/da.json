@@ -1,198 +1,532 @@
 {
-  "modal": {
-    "titles": {
-      "createLog": "Opret træningslog",
-      "editLog": "Rediger træningslog",
-      "insertChart": "Indsæt træningsdiagram",
-      "insertTable": "Indsæt træningslog tabel",
-      "insertTimer": "Indsæt træningstimer",
-      "insertDashboard": "Indsæt træningspaneel",
-      "insertDuration": "Indsæt træningsvarighed",
-      "createExercisePage": "Opret øvelsesside",
-      "createExerciseSection": "Opret træningssekktion",
-      "auditExerciseNames": "Overvåge træningstitler",
-      "addExerciseBlock": "Tilføj træningsblok",
-      "canvasExport": "Eksporter træning til tavle",
-      "muscleTagManager": "Administrer muskel-etiketter",
-      "editTable": "Rediger tabelindstillinger",
-      "editTimer": "Rediger tidsintervallets indstillinger",
-      "create_log": "Opret træningslog"
-    },
-    "buttons": {
-      "update": "Opdateringslog",
-      "insertChart": "Indsæt graf",
-      "renameFile": "Omdøb fil",
-      "insertTable": "Indsæt tabel",
-      "insertTimer": "Indsæt timer",
-      "insertDashboard": "Indsæt dashboard",
-      "cancel": "Afbryd",
-      "confirm": "Bekræft",
-      "createExercise": "Opret træningsside",
-      "createSection": "Opret sektion",
-      "insertExerciseBlock": "Indsæt",
-      "updateTargetWeight": "Opdater mål",
-      "adjustPlus": "+",
-      "adjustMinus": "-",
-      "export": "Eksport",
-      "create": "Opret log",
-      "addParameter": "Tilføj parametre",
-      "removeParameter": "Fjern",
-      "renameInCsv": "Omdøb i CSV",
-      "updateTable": "Opdater tabel",
-      "updateTimer": "Opdater tidsinterval"
-    },
+  "charts": {
+    "date": "Dato",
+    "down": "Ned",
+    "fallbackTableMessage": "Faldback Tabel Meddelelse",
     "labels": {
-      "exercise": "Øvelse:",
-      "reps": "Gange:",
-      "weight": "Vægt ({unit}):",
-      "notes": "Notater (valgfrit):",
-      "workout": "Træning (valgfrit):",
-      "chartType": "Grafstype:",
-      "duration": "Varighed (sekunder):",
-      "title": "Overskrift:",
-      "sets": "Sætter:",
-      "actions": "Handlinger",
-      "dateRange": "Datointervall (dage):",
-      "targetWeight": "Målvet ({unit}):",
-      "targetReps": "Mål gange:",
-      "protocol": "Protokol:",
-      "volume": "Volumen ({unit}):",
-      "status": "Status"
+      "date": "Dato",
+      "distance": "Afstand",
+      "down": "ned",
+      "duration": "Varighed",
+      "heartRate": "Pulsmåling",
+      "neutral": "neutral",
+      "pace": "Tempo",
+      "quickWeightIncrementUnit": "Vægtknapperne øger {weightIncrementUnit}",
+      "reps": "Repetitioner",
+      "trendLine": "Trendlinje",
+      "trendType": "Trend {type}:",
+      "variationFromTo": "fra {{startValue}} til {{endValue}}",
+      "volume": "Volumen",
+      "weight": "Vægt",
+      "weightIncrementUnit": "Vægtøgning {weightIncrementUnit}"
     },
-    "placeholders": {
-      "searchTags": "Søg efter tag eller muskelsæt...",
-      "searchMuscleTags": "Søg muskel-etiketter...",
-      "enterTagName": "Indtast etiketnavn (f.eks., bryst, petto)",
-      "exerciseAutocomplete": "Start at skrive for at se tilgængelige uøvelser...",
-      "reps": "f.eks., 10",
-      "repsRange": "8-10",
-      "weight": "f.eks., 10,5",
-      "notes": "f.eks., God form, følte stærk",
-      "workout": "f.eks. Workout A, Training B, eller brug krydsningsboks nedenfor",
-      "customTitle": "Lad tom for automatisk titel",
-      "sets": "4",
-      "restTime": "90",
-      "note": "Tryk hård her. Dette er dit fundamentale øvelse.",
-      "folderPath": "e.g., Øvelser eller lad tom for rødder",
-      "parameterKey": "e.g., hastighed",
-      "parameterLabel": "e.g., Hastighed",
-      "parameterUnit": "e.g., km/t",
-      "selectWorkoutFile": "Vælg en træningsfil til eksport...",
-      "selectMuscleGroup": "Vælg muskelgruppe..."
+    "neutral": "Nøjagtig",
+    "overallVariationPrefix": "Samlet Variation Forudsætning",
+    "reps": "Serier",
+    "significantIncrease": "Betydelig Øget",
+    "trendLine": "Trendlinje",
+    "typeNotAvailable": "Diagramtype \"{chartDataType}\" er ikke tilgængelig for {exerciseType} øvelser. Tilgængelige typer: {typeList}",
+    "types": {
+      "distance": "Afstand",
+      "duration": "Varighed",
+      "heartRate": "Pulsmåling",
+      "pace": "Hastighed",
+      "reps": "Rep",
+      "volume": "Volumen",
+      "weight": "Vægt"
     },
-    "notices": {
-      "logCreated": "Træningslog oprettet korrekt!",
-      "logUpdated": "Træningslog opdateret korrekt!",
-      "chartInserted": "✅ Indsat Chart succesfuldt!",
-      "tableInserted": "✅ Indsat Tabel succesfuldt!",
-      "timerInserted": "✅ Indsat Timer succesfuldt!",
-      "dashboardInserted": "✅ Indsat Dashboard succesfuldt!",
-      "validationFillAll": "Venligst fyld alle felter med gyldige værdier",
-      "validationCombinedMode": "⚠️ Vær opmærksom på, at du skal udfylde begge felt for 'øvelse + træning'!",
-      "insertCodeNoFile": "Åbn et markdown-fil for at indsætte koden",
-      "exercisePageCreated": "Exercise-side oprettet korrekt!",
-      "exercisePageError": "Fejl ved oprettelse af exercise-side: ",
-      "exercisePageNameRequired": "Indtast navnet på en udførsel",
-      "exerciseNameRequired": "❌ Indtast navnet på en udførsel",
-      "exerciseSectionCreated": "✅ Udførelsessektion oprettet korrekt!",
-      "genericError": "Fejl: ",
-      "timerElementsNotInitialized": "Tidselementer er ikke initialiseret",
-      "auditConfirmRenameFile": "Revisjon bekræftelse Omdøb Fil",
-      "auditNoMismatches": "Ingen fejltræffer i revisjonen",
-      "auditRenameError": "Fejl ved omdøb i revisjonen",
-      "auditRenameFileError": "Fejl ved omdøb af fil i revisjonen",
-      "auditRenameFileSuccess": "Succes med omdøb af fil i revisjonen",
-      "auditRenameSuccess": "Omdøb i revisjonen succes",
-      "auditScanning": "Audit Scannings",
-      "canvasExportError": "Kanvas eksportfejl",
-      "canvasExported": "Kanvas eksportet",
-      "confirmUpdateTarget": "Bekræft opdateringsmål",
-      "exerciseBlockInserted": "Øvelsesblok indsat",
-      "migrationError": "Migreringsfejl",
-      "migrationNoUpdates": "Ingen opdateringer migreret",
-      "muscleTagDeleted": "Muskel-etiket slettet",
-      "muscleTagExported": "Muskel-etiket eksportet",
-      "muscleTagImportInvalidFormat": "Muskel-etiket import fejlformat",
-      "muscleTagImportNoValid": "Muskel-etiket import ingen gyldige",
-      "muscleTagLoading": "Muskel-etiket lades ind",
-      "muscleTagNoResults": "Muskel-etiket ingen resultater",
-      "muscleTagSaved": "Muskel-etiket gemt",
-      "muscleTagSimilarWarning": "Muskel-etiket lighed varsel",
-      "suggestedNextWeight": "Foreslået næste vægt",
-      "targetAchieved": "Mål opnået",
-      "tableUpdated": "✅ Tabellen er opdateret med succes!",
-      "tableUpdateFailed": "Opdatering af tabellen mislykkedes. Sørg for, at filen er åben i redigeringsprogrammet.",
-      "timerUpdated": "✅ Timer er opdateret med succes!",
-      "timerUpdateFailed": "Kunne ikke opdatere timeren. Sørg for, at filen er åben i redigeringsprogrammet.",
-      "muscleTagCount": "{count} mærke(r) fundet",
-      "muscleTagDeleteConfirm": "Er du sikker på, at du vil slette mærket \"{tag}\"?",
-      "muscleTagSaveError": "Fejl ved gemning af muskel-tag: {error}",
-      "muscleTagExists": "Mærket \"{tag}\" findes allerede",
-      "muscleTagSimilarFound": "{count} lignende tag(e) fundet",
-      "muscleTagExportError": "Fejl ved eksport af muskelmærker: {error}",
-      "muscleTagImported": "{count} Muskelmærker importeret med succes!",
-      "muscleTagImportError": "Fejl ved import af muskel-tags: {error}",
-      "muscleTagImportInvalidGroup": "Ugyldig muskelgruppe \"{group}\" for tag \"{tag}\". Skal være en standardiseret muskelgruppe.",
-      "muscleTagImportPreview": "{count} mærker til import",
-      "migrationComplete": "Migration fuldført. Opdaterede træningsfiler for {{count}}."
+    "volume": "Volumen"
+  },
+  "commands": {
+    "addExerciseBlock": "Tilføj Øvelsesblok",
+    "auditExerciseNames": "Overvåge Navne på Øvelser",
+    "convertExercise": "Omvandl Øvelse",
+    "createCsvLog": "Opret CSV-logfil",
+    "exportWorkoutToCanvas": "Eksport Arbejdsprogram til Canvas",
+    "generateTagReference": "Generer Tagreferens",
+    "insertTable": "Indsæt Tabel",
+    "manageMuscleTags": "Administrér Muskelmærker",
+    "migrateExerciseTypes": "Migrer Efterøvelsetype"
+  },
+  "common": {
+    "bpm": "bpm",
+    "cancel": "Annulér",
+    "convert": "Konverter",
+    "exercise": "Efterøvelse",
+    "km": "common.km",
+    "minPerKm": "min/km",
+    "notAvailable": "Ikke Tilgængelig",
+    "reps": "Rep",
+    "sec": "common.sec",
+    "unknown": "Ukendt",
+    "workout": "Træning"
+  },
+  "convert": {
+    "currentType": "Aktuel type:",
+    "errors": {
+      "convertError": "Fejl ved konvertering af træningsdata: {error}"
     },
-    "notes": "Notater (valgfrit):",
-    "workout": "Øvelse (valgfrit):",
-    "workoutNameOptional": "Øvelsesnavn (valgfrit):",
-    "chartType": "Graftype:",
-    "dataType": "Regeltype:",
-    "daysRange": "Dage omfang:",
-    "dataLimit": "Data grænse:",
-    "maxLogCount": "Log max antal:",
-    "customTitle": "Brugerdefineret overskrift:",
-    "timerType": "Tidsmåltype:",
-    "duration": "Varighed (sekunder):",
-    "rounds": "Runder:",
-    "title": "Titel:",
-    "sets": "Sætter:",
-    "restTime": "Pause tid (sekunder):",
-    "note": "Bemærkning:",
-    "folderPath": "Mappe-sti (valgfrit):",
-    "exerciseType": "Øvelsetype:",
-    "customParameters": "Konfigurationsparametre:",
-    "parameterKey": "Nøgle:",
-    "parameterLabel": "Etiket:",
-    "parameterUnit": "Enhed (valgfrit):",
-    "parameterRequired": "Krav",
-    "confirmAction": "Bekræft handling",
-    "fileName": "Filnavn",
-    "csvExercise": "CSV-øvelse",
-    "similarity": "Lignende",
-    "tag": "Tagg",
-    "muscleGroup": "Muskelgruppe",
+    "fieldMapping": {
+      "addMapping": "Tilføj kortlægning",
+      "removeMapping": "Fjern kortlægning",
+      "reps": "Rep",
+      "title": "Kortlægning af felter",
+      "weight": "Vægt ({unit})"
+    },
+    "preview": {
+      "noEntries": "Ingen logindata fundet for denne øvelse",
+      "title": "Forhåndsvisning",
+      "willConvertMany": "{count} logfiler vil blive konverteret",
+      "willConvertOne": "1 log vil blive konverteret"
+    },
+    "sectionExercise": "Øvelse",
+    "success": "Konverteret {count} log-indlæsninger med succes.",
+    "title": "Konverter træningsdata",
+    "typeSelect": {
+      "convertTo": "Konverter til:",
+      "updateFileType": "Opdater filtype for øvelsen"
+    }
+  },
+  "dashboard": {
+    "durationComparison": {
+      "columnActual": "Faktisk",
+      "columnEstimated": "Estimeret",
+      "columnVariance": "Varians",
+      "columnWorkout": "Træning",
+      "minutesSuffix": "min",
+      "noData": "Ingen data",
+      "subtitle": "Estimeret vs. faktisk træningstid",
+      "title": "Sammenligning af varighed",
+      "varianceTrendDeclining": "Tendens for variation: aftagende",
+      "varianceTrendImproving": "Tendens for reduceret variation",
+      "varianceTrendStable": "Variations Trend: Stabil",
+      "varianceTrendTitle": "Overskrift for variationstendens"
+    },
+    "fileErrors": {
+      "allValid": "Alle gyldige",
+      "noTags": "Ingen tags",
+      "readError": "❌ Fejl ved læsning af fil: {message}",
+      "title": "Fejl ved fil",
+      "tooManyTags": "For mange muskelmærkninger ({count})"
+    },
+    "month": "Måned",
+    "muscleTags": {
+      "description": "Beskrivelse",
+      "title": "Muskeltags",
+      "tooltip": "Klik for at kopiere: {tag}",
+      "totalCount": "Samlet: {count} tags tilgængelige"
+    },
+    "protocol": {
+      "clickToFilter": "Klik for at filtrere",
+      "percentLabel": "Procentsymbol",
+      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+    },
+    "protocolDistribution": {
+      "clearFilter": "Rens filter",
+      "filterActive": "Filtrér aktive",
+      "noData": "Ingen data",
+      "subtitle": "Detaljeret oversigt over træningsprotokol (de seneste 30 dage)",
+      "title": "Fordeling af protokoller"
+    },
+    "protocolEffectiveness": {
+      "columnEntries": "Indlæg",
+      "columnProgression": "Progression",
+      "columnProtocol": "Protokol",
+      "columnVolumeChange": "Volumenændring",
+      "disclaimer": "Ansvarsfraskrivelse",
+      "noData": "Ingen data",
+      "title": "Effektivitet af protokollen"
+    },
+    "quickActions": {
+      "addWorkoutLog": "Tilføj træningslog",
+      "title": "Hurtige handlinger",
+      "viewExercises": "Vis øvelser"
+    },
+    "quickStats": {
+      "month": "Måned",
+      "periods": {
+        "month": "Denne måned",
+        "week": "Denne uge",
+        "year": "Dette år"
+      },
+      "title": "Hurtige statistikker",
+      "week": "Uge",
+      "workouts": "Træninger",
+      "year": "År"
+    },
+    "recentWorkouts": {
+      "fallbackName": "Øvelse",
+      "title": "Seneste øvelser"
+    },
+    "summary": {
+      "currentStreak": "Nuværende serie",
+      "currentStreakSuffix": "Uger",
+      "personalRecords": "Personske rekorder",
+      "title": "Sammenfatning",
+      "totalVolume": "Totalt volumen",
+      "totalWorkouts": "Totale træningsøvelser"
+    },
+    "title": "Titel",
+    "volumeAnalytics": {
+      "chartTitle": "Volumetrend (sidste 30 dage)",
+      "muscleBreakdownTitle": "Top-øvelser efter volumen",
+      "title": "Volumestatistik"
+    },
+    "week": "Uge",
+    "year": "År"
+  },
+  "duration": {
+    "estimatedDuration": "Estimeret varighed",
+    "lastSession": "Sidste session",
+    "restTime": "Hvordan lang",
+    "setTime": "Angiv tid",
+    "unableToAnalyze": "Kan ikke analysere træningsfil"
+  },
+  "examples": {
+    "dashboard": {
+      "description": "Din træningsstatistik i oversigt. Se [[Funktionsvisning]] for alle tilgængelige komponenter.",
+      "title": "Kontrolpanel"
+    },
+    "exercise": {
+      "chartTitle": "Kort",
+      "descriptionTemplate": "Eksempel beskrivelse for {name}.",
+      "descriptionTitle": "Beskrivelse",
+      "distanceChartTitle": "Afstandskort",
+      "durationChartTitle": "Varighedsforløb",
+      "durationTitle": "Varighed",
+      "heartRateTitle": "Hjertetakt",
+      "logTitle": "Logbog",
+      "paceTrackingNote": "Følge din løbsfarts forbedring (lavere = hurtigere):",
+      "paceTrackingTitle": "Løbsfart Overvågning",
+      "repTrackingTitle": "Rep-følgning",
+      "volumeChartTitle": "Volumeforløb",
+      "weightProgressionTitle": "Vægtforløb"
+    },
+    "exercises": {
+      "benchPress": {
+        "name": "Bench Presse"
+      },
+      "calfMachine": {
+        "name": "Kalvenmaskine"
+      },
+      "cycling": {
+        "name": "Cykling"
+      },
+      "legCurlSeated": {
+        "name": "Siddende Knækur"
+      },
+      "legPress45": {
+        "name": "Benpres 45"
+      },
+      "plank": {
+        "name": "Planke"
+      },
+      "rdl": {
+        "name": "RDL"
+      },
+      "running": {
+        "name": "Løb"
+      },
+      "squat": {
+        "name": "Kvad"
+      },
+      "squatMultiPower": {
+        "name": "Kvad Multi Power"
+      }
+    },
+    "featureShowcase": {
+      "allDataChartTitle": "Alle Data Chart",
+      "byExerciseTitle": "På Uøvelse",
+      "byWorkoutTitle": "På Arbejdsdag",
+      "cardioExerciseTitle": "Kardioøvelse (Afstand + Pace)",
+      "chartsIntro": "Diagrammer visualiserer din fremskridt gennem tiden. Tilladte typer: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
+      "chartsTitle": "1. Diagrammer",
+      "codeBlockWorkoutChart": "Visualisér fremskridt over tid",
+      "codeBlockWorkoutDashboard": "Fuldt statistisk oversigt",
+      "codeBlockWorkoutDuration": "Forkalke workout længde",
+      "codeBlockWorkoutLog": "Vis workout data tabel",
+      "codeBlockWorkoutTimer": "Tæller eller interval timer",
+      "combinedTitle": "Kombineret (Uøvelse + Arbejdsdag)",
+      "commandsNote": "**Befalinger** (Ctrl/Cmd + P): Opret Arbejdslog, Indsæt Diagram, Indsæt Tidertimer, Opret Øvelsesside",
+      "countdownTimerTitle": "Tidsløbstimer",
+      "durationEstimatorIntro": "Vurderer samlet træningsvarighed baseret på den aktuelle notes øvelser.",
+      "durationEstimatorTitle": "4. Varigheds-Estimator",
+      "intervalTimerTitle": "Intervaltimer",
+      "intro": "Fuldstændig reference over alle kodebloktyper, der er tilgængelige i Workout Plugin.",
+      "protocol21s": "7+7+7 delvis reps",
+      "protocolDropset": "Reducer weight, fortsæt med reps",
+      "protocolMyoReps": "Aktiveringssæt + mini sæt",
+      "protocolRestPause": "Kort ophold, fortsæt til fejlslag",
+      "protocolStandard": "Normale sæt",
+      "protocolSuperset": "Parerede øvelser",
+      "quickReferenceTitle": "Hurtig Referens",
+      "strengthExerciseTitle": "Styrkeøvelse (Volume + Vægt)",
+      "tablesIntro": "Tabeller viser dit træningslog med sorterings- og redigeringsmuligheder.",
+      "tablesTitle": "2. Tabeller",
+      "timedExerciseTitle": "Timet Øvelse (Durationalt)",
+      "timersTitle": "3. Tidsmåler",
+      "tip": "**Tip**: For din personlige dashboard, se [[Dashboard]]",
+      "title": "Funktionsvisuel Præsentation",
+      "trainingProtocolsIntro": "Pluginet støtter disse protokol-emblemer i dine logbøger:",
+      "trainingProtocolsTitle": "5. Uddannelsesprotokoller",
+      "workoutChartTitle": "Øvelsesdiagram (Alle Øvelser Samlet)"
+    },
+    "fileNames": {
+      "dashboard": "Dashboard",
+      "featureShowcase": "Funktioner i fokus",
+      "gettingStarted": "Sådan kommer du i gang",
+      "hiitCardioSession": "HIIT-cardio træning"
+    },
+    "folderCreatedError": "Eksempelmappe '{folder}' kunne ikke oprettes.",
+    "folderCreatedSuccess": "Eksempelmappe '{folder}' oprettet korrekt!",
+    "folderNames": {
+      "base": "Gymnastik-eksemplerne",
+      "exercises": "Øvelser",
+      "log": "Logbog",
+      "workouts": "Arbejder"
+    },
+    "gettingStarted": {
+      "commandCreateExercise": "Opret Udvælgingsside",
+      "commandCreateExerciseDesc": "Opret en ny udvælgelsesfil",
+      "commandCreateLog": "Opret Arbejdslog",
+      "commandCreateLogDesc": "Tilføj en ny træningsopgave",
+      "commandInsertChart": "Indsæt Arbejdslog-diagram",
+      "commandInsertChartDesc": "Tilføj diagram til enhver notat",
+      "commandInsertTimer": "Indsæt Arbejdslog-timer",
+      "commandInsertTimerDesc": "Tilføj en pause-timer",
+      "dashboardDesc": "Dine træningsstatistikker på et blik",
+      "exercisesDesc": "Eksempeltræningssider med log og graf",
+      "exercisesFolder": "**{folder}**/**",
+      "featureShowcaseDesc": "Fuldstændig referens over alle kodeblokke",
+      "folderStructureTitle": "Mappe/Fil struktur",
+      "logDesc": "Dine CSV-træningsdata",
+      "logFolder": "**{folder}**/**",
+      "nextStepsTitle": "Næste Trin",
+      "quickActionsIntro": "Brug disse kommandoer (Ctrl/Cmd + P):",
+      "quickActionsTitle": "Kortløbninger",
+      "step1": "Åben [[Kontrolpanel]] for at se dine statistikker",
+      "step2": " Kontrollér [[Funktionsvisning]] for at lære alle tilgængelige funktioner",
+      "step3": "Prøv et arbejdsudkast fra den **{workouts}** mappe",
+      "step4": "Opret dine egne udvælgelsesøvelser i **{exercises}**",
+      "tableHeaderDescription": "Beskrivelse",
+      "tableHeaderFileFolder": "Fil/Mappe",
+      "title": "Start med The Gym Plugin",
+      "welcome": "Velkommen! Dette indeholder eksemelfiler, der skal hjælpe dig med at lære alle funktionerne.",
+      "workoutsDesc": "Eksempeltræningsmønstre",
+      "workoutsFolder": "**{folder}**/**"
+    },
+    "hiit": {
+      "cyclingCooldownTitle": "Cykling Køling",
+      "intro": "Højintensiv Interval Træning med interval-timer og kardiotracking.",
+      "runningProgressTitle": "Løbetilgang",
+      "sprintIntervalsTitle": "Sprint Intervaler (30s × 8 omgange)",
+      "title": "HIIT Kardio Session",
+      "warmupTitle": "Varm-op (5 min)"
+    },
+    "workout": {
+      "chart": "diagram",
+      "duration": "Varighed",
+      "note": "Noter: kæmpe hård",
+      "recoverySuffix": "(Genopretning: {sekunder}s)",
+      "setsReps": "{sets} sæt x {reps} gange"
+    },
+    "workouts": {
+      "cardioDay": {
+        "name": "Aktivitetsdag"
+      },
+      "lowerBodyA": {
+        "name": "Dag 1 NEDRE KROPS A 2.0"
+      },
+      "upperBodyPower": {
+        "name": "Øverkrops Kraft"
+      }
+    }
+  },
+  "forms": {
+    "enterCsvPath": "Indtast Csv-sti",
+    "enterFolderPath": "Indtast Mappe-sti",
+    "workoutName": "Træningsnavn"
+  },
+  "general": {
+    "avgReps": "Gennemsnitlige Gange",
+    "back": "Ryg",
+    "currentFile": "Aktuel Fil",
+    "dashboard": "Kontrolpanel",
+    "delete": "Slet",
+    "edit": "Rediger",
+    "front": "Forside",
+    "labels": {
+      "avgCustom": "Gennemsnit {label}",
+      "avgDistance": "Gennemsnitlig afstand (km)",
+      "avgDuration": "Gennemsnitlig varighed (sek)",
+      "avgHeartRate": "Gennemsnitlig puls (slag pr. minut)",
+      "avgVolume": "Gennemsnitlig volumen ({unit})",
+      "avgWeight": "Gennemsnitlig vægt ({unit})",
+      "back": "Bag",
+      "dailyVolume": "Dagligt volumen ({{unit}})",
+      "dashboard": "Kontrolpanelet",
+      "front": "Forside",
+      "pace": "Tempo (min/km)",
+      "totalCustom": "Samlet {label}",
+      "totalDistance": "Samlet distance (km)",
+      "totalDuration": "Samlet varighed (sek)",
+      "totalVolume": "Samlet volumen ({unit})",
+      "totalWeight": "Samlet vægt ({unit})"
+    },
+    "muscleHeatMap": "Muscle Heat Kort",
+    "noMatchMessage": "Ingen Tilpasning Melding",
+    "search": "Søg",
+    "totalReps": "Totale Repetitioner",
+    "workoutData": "Træningsdata",
+    "workoutLog": "Træningslog"
+  },
+  "icons": {
+    "actions": {
+      "add": "➕",
+      "delete": "🗑️",
+      "edit": "✏️"
+    },
+    "common": {
+      "empty": "",
+      "percentage": "%",
+      "plus": "+"
+    },
+    "dashboard": {
+      "quickStats": {
+        "metrics": {
+          "avgVolume": "📊",
+          "totalVolume": "📦",
+          "workouts": "🏋️"
+        },
+        "periods": {
+          "month": "📆",
+          "week": "🗓️",
+          "year": "📈"
+        }
+      },
+      "summary": {
+        "currentStreak": "🔥",
+        "personalRecords": "🏅",
+        "totalVolume": "📦",
+        "totalWorkouts": "🏋️"
+      }
+    },
+    "duration": {
+      "timer": "⏱️"
+    },
+    "exercise": {
+      "abs": "🎯",
+      "back": "🦾",
+      "biceps": "💪",
+      "calves": "🦵",
+      "cardio": "⭐",
+      "chest": "🫁",
+      "core": "🎯",
+      "curl": "💪",
+      "deadlift": "💀",
+      "extension": "📏",
+      "forearms": "✊",
+      "glutes": "🍑",
+      "hamstrings": "🦵",
+      "legs": "🦵",
+      "pull": "⬇️",
+      "push": "🔼",
+      "quads": "🦵",
+      "rear_delts": "🔙",
+      "shoulders": "🦵",
+      "traps": "🔺",
+      "triceps": "💪"
+    },
+    "status": {
+      "info": "ℹ️",
+      "success": "✅",
+      "warning": "⚠️"
+    },
+    "tables": {
+      "delete": "🗑️",
+      "distance": "📍 ",
+      "duration": "⏱️ ",
+      "edit": "✏️",
+      "goto": "🔗",
+      "heartRate": "❤️ ",
+      "reps": "🔁 ",
+      "volume": "📊 ",
+      "weight": "🏋️ "
+    },
+    "timer": {
+      "pause": "⏸",
+      "play": "▶",
+      "reset": "↺"
+    }
+  },
+  "logs": {
+    "addLogButtonAria": "Tilføj log for {{exerciseName}}",
+    "addLogButtonText": "Tilføj log for {{exerciseName}}",
+    "createFirstLogButton": "Opret første log for {{exerciseName}}",
+    "createFirstLogButtonAria": "Opret det første log for {{exerciseName}}",
+    "createLogButtonAria": "Opret log for: {exerciseName}",
+    "createLogButtonText": "Opret log for: {exerciseName}",
+    "noDataTitle": "Ingen logfiler fundet for {{exerciseName}}"
+  },
+  "messages": {
+    "codeInserted": "Kode indsat",
+    "csvNotFound": "Csv ikke fundet",
+    "errors": {
+      "tagReferenceFailed": "Fejl ved generering af tag-reference:"
+    },
+    "fileEmpty": "Filen er tom",
+    "imbalanceAlerts": "Løbende Balanceadvarsel",
+    "insufficientData": "For lidt data",
+    "loading": "Værktøjet læses op...",
+    "noDataPeriod": "Ingen workout-data fundet for den valgte tidsperiode.",
+    "noFrontmatter": "Ingen Frontmatter",
+    "noImbalances": "Ingen Udligninger",
+    "noTags": "Ingen Etiketter",
+    "success": {
+      "csvCreated": "CSV-filen er oprettet med succes!"
+    },
+    "tagReferenceGenerated": "Tag Referens Genereret",
+    "timerCompleted": "Tidslinje fuldført!"
+  },
+  "modal": {
     "actions": "Handlinger",
     "addTag": "Tilføj et tag",
-    "editTag": "Rediger et tag",
-    "newTag": "Ny etiket",
-    "save": "Gem",
-    "delete": "Slet",
-    "similarTags": "Lignende etiketter:",
-    "exportTags": "Eksportér etiketter",
-    "importTags": "Import markører",
-    "importMerge": "Fusioner",
-    "importReplace": "Erstat alt",
-    "timerDuration": "Tidsdueration (sekunder):",
-    "timerPreset": "Tidspræambel:",
-    "workoutFile": "Træningsfilen:",
-    "dateRange": "Datointerval (dage):",
-    "protocol": "Protokol:",
-    "recentExercises": "Nylige:",
+    "autocomplete": {
+      "exactBadge": "★",
+      "exactTooltip": "Ekskakt/Forhøjelse - Poäng: {score}",
+      "fuzzyBadge": "~",
+      "fuzzyTooltip": "Fuzzy match (tastfejl korrektion) - Score: {score}",
+      "partialBadge": "•",
+      "partialTooltip": "Delvis match - Poäng: {score}",
+      "wordBadge": "◆",
+      "wordTooltip": "Ordbogsmatch - Poäng: {score}"
+    },
+    "buttons": {
+      "addParameter": "Tilføj parametre",
+      "adjustMinus": "-",
+      "adjustPlus": "+",
+      "cancel": "Afbryd",
+      "confirm": "Bekræft",
+      "create": "Opret log",
+      "createExercise": "Opret træningsside",
+      "createSection": "Opret sektion",
+      "export": "Eksport",
+      "insertChart": "Indsæt graf",
+      "insertDashboard": "Indsæt dashboard",
+      "insertExerciseBlock": "Indsæt",
+      "insertTable": "Indsæt tabel",
+      "insertTimer": "Indsæt timer",
+      "removeParameter": "Fjern",
+      "renameFile": "Omdøb fil",
+      "renameInCsv": "Omdøb i CSV",
+      "update": "Opdateringslog",
+      "updateTable": "Opdater tabel",
+      "updateTargetWeight": "Opdater mål",
+      "updateTimer": "Opdater tidsinterval"
+    },
     "canvasLayout": "Layouter",
     "canvasOptions": "Valgmuligheder",
-    "layoutType": "Layouter type:",
-    "layoutHorizontal": "Horisontal flød",
-    "layoutVertical": "Verdensflød",
-    "layoutGrouped": "Grupperet efter muskel",
-    "tagsSelector": "Muskel etiketter:",
-    "noTagsFound": "Intet mærke passer til din søgning",
-    "noTagsSelected": "Ingen mærker valgt. Klik på mærkerne nedenfor for at tilføje dem.",
-    "text": "Udfør træningsprogrammet",
-    "value": "træningsprogram",
+    "chartType": "Graftype:",
     "checkboxes": {
       "connectSupersets": "Forbind Supersets",
       "exactMatch": "Precis Lignende",
@@ -211,20 +545,147 @@
       "useCurrentWorkout": "Brug Aktuel Udvælgelse",
       "useCurrentWorkoutFile": "Bruger Aktuel Arbejdsfil"
     },
+    "confirmAction": "Bekræft handling",
+    "csvExercise": "CSV-øvelse",
+    "customParameters": "Konfigurationsparametre:",
+    "customTitle": "Brugerdefineret overskrift:",
+    "dataLimit": "Data grænse:",
+    "dataType": "Regeltype:",
+    "dateRange": "Datointerval (dage):",
+    "daysRange": "Dage omfang:",
+    "delete": "Slet",
+    "duration": "Varighed (sekunder):",
+    "editTag": "Rediger et tag",
     "exerciseStatus": {
       "createPage": "Opret Side",
       "notFound": "Ikke Fundet"
     },
-    "autocomplete": {
-      "fuzzyBadge": "~",
-      "fuzzyTooltip": "Fuzzy match (tastfejl korrektion) - Score: {score}",
-      "exactBadge": "★",
-      "exactTooltip": "Ekskakt/Forhøjelse - Poäng: {score}",
-      "wordBadge": "◆",
-      "wordTooltip": "Ordbogsmatch - Poäng: {score}",
-      "partialBadge": "•",
-      "partialTooltip": "Delvis match - Poäng: {score}"
+    "exerciseType": "Øvelsetype:",
+    "exportTags": "Eksportér etiketter",
+    "fileName": "Filnavn",
+    "folderPath": "Mappe-sti (valgfrit):",
+    "importMerge": "Fusioner",
+    "importReplace": "Erstat alt",
+    "importTags": "Import markører",
+    "info": {
+      "dashboardDescription": "Dette vil indsætte et omfattende træningsdashboard med statistikker, grafer og hurtige handlinger."
     },
+    "labels": {
+      "actions": "Handlinger",
+      "chartType": "Grafstype:",
+      "dateRange": "Datointervall (dage):",
+      "duration": "Varighed (sekunder):",
+      "exercise": "Øvelse:",
+      "notes": "Notater (valgfrit):",
+      "protocol": "Protokol:",
+      "reps": "Gange:",
+      "sets": "Sætter:",
+      "status": "Status",
+      "targetReps": "Mål gange:",
+      "targetWeight": "Målvet ({unit}):",
+      "title": "Overskrift:",
+      "volume": "Volumen ({unit}):",
+      "weight": "Vægt ({unit}):",
+      "workout": "Træning (valgfrit):"
+    },
+    "layoutGrouped": "Grupperet efter muskel",
+    "layoutHorizontal": "Horisontal flød",
+    "layoutType": "Layouter type:",
+    "layoutVertical": "Verdensflød",
+    "maxLogCount": "Log max antal:",
+    "muscleGroup": "Muskelgruppe",
+    "newTag": "Ny etiket",
+    "noTagsFound": "Intet mærke passer til din søgning",
+    "noTagsSelected": "Ingen mærker valgt. Klik på mærkerne nedenfor for at tilføje dem.",
+    "note": "Bemærkning:",
+    "notes": "Notater (valgfrit):",
+    "notices": {
+      "auditConfirmRenameFile": "Revisjon bekræftelse Omdøb Fil",
+      "auditNoMismatches": "Ingen fejltræffer i revisjonen",
+      "auditRenameError": "Fejl ved omdøb i revisjonen",
+      "auditRenameFileError": "Fejl ved omdøb af fil i revisjonen",
+      "auditRenameFileSuccess": "Succes med omdøb af fil i revisjonen",
+      "auditRenameSuccess": "Omdøb i revisjonen succes",
+      "auditScanning": "Audit Scannings",
+      "canvasExportError": "Kanvas eksportfejl",
+      "canvasExported": "Kanvas eksportet",
+      "chartInserted": "✅ Indsat Chart succesfuldt!",
+      "confirmUpdateTarget": "Bekræft opdateringsmål",
+      "dashboardInserted": "✅ Indsat Dashboard succesfuldt!",
+      "exerciseBlockInserted": "Øvelsesblok indsat",
+      "exerciseNameRequired": "❌ Indtast navnet på en udførsel",
+      "exercisePageCreated": "Exercise-side oprettet korrekt!",
+      "exercisePageError": "Fejl ved oprettelse af exercise-side: ",
+      "exercisePageNameRequired": "Indtast navnet på en udførsel",
+      "exerciseSectionCreated": "✅ Udførelsessektion oprettet korrekt!",
+      "genericError": "Fejl: ",
+      "insertCodeNoFile": "Åbn et markdown-fil for at indsætte koden",
+      "logCreated": "Træningslog oprettet korrekt!",
+      "logUpdated": "Træningslog opdateret korrekt!",
+      "migrationComplete": "Migration fuldført. Opdaterede træningsfiler for {{count}}.",
+      "migrationError": "Migreringsfejl",
+      "migrationNoUpdates": "Ingen opdateringer migreret",
+      "muscleTagCount": "{count} mærke(r) fundet",
+      "muscleTagDeleteConfirm": "Er du sikker på, at du vil slette mærket \"{tag}\"?",
+      "muscleTagDeleted": "Muskel-etiket slettet",
+      "muscleTagExists": "Mærket \"{tag}\" findes allerede",
+      "muscleTagExportError": "Fejl ved eksport af muskelmærker: {error}",
+      "muscleTagExported": "Muskel-etiket eksportet",
+      "muscleTagImportError": "Fejl ved import af muskel-tags: {error}",
+      "muscleTagImportInvalidFormat": "Muskel-etiket import fejlformat",
+      "muscleTagImportInvalidGroup": "Ugyldig muskelgruppe \"{group}\" for tag \"{tag}\". Skal være en standardiseret muskelgruppe.",
+      "muscleTagImportNoValid": "Muskel-etiket import ingen gyldige",
+      "muscleTagImportPreview": "{count} mærker til import",
+      "muscleTagImported": "{count} Muskelmærker importeret med succes!",
+      "muscleTagLoading": "Muskel-etiket lades ind",
+      "muscleTagNoResults": "Muskel-etiket ingen resultater",
+      "muscleTagSaveError": "Fejl ved gemning af muskel-tag: {error}",
+      "muscleTagSaved": "Muskel-etiket gemt",
+      "muscleTagSimilarFound": "{count} lignende tag(e) fundet",
+      "muscleTagSimilarWarning": "Muskel-etiket lighed varsel",
+      "suggestedNextWeight": "Foreslået næste vægt",
+      "tableInserted": "✅ Indsat Tabel succesfuldt!",
+      "tableUpdateFailed": "Opdatering af tabellen mislykkedes. Sørg for, at filen er åben i redigeringsprogrammet.",
+      "tableUpdated": "✅ Tabellen er opdateret med succes!",
+      "targetAchieved": "Mål opnået",
+      "timerElementsNotInitialized": "Tidselementer er ikke initialiseret",
+      "timerInserted": "✅ Indsat Timer succesfuldt!",
+      "timerUpdateFailed": "Kunne ikke opdatere timeren. Sørg for, at filen er åben i redigeringsprogrammet.",
+      "timerUpdated": "✅ Timer er opdateret med succes!",
+      "validationCombinedMode": "⚠️ Vær opmærksom på, at du skal udfylde begge felt for 'øvelse + træning'!",
+      "validationFillAll": "Venligst fyld alle felter med gyldige værdier"
+    },
+    "parameterKey": "Nøgle:",
+    "parameterLabel": "Etiket:",
+    "parameterRequired": "Krav",
+    "parameterType": "Type:",
+    "parameterUnit": "Enhed (valgfrit):",
+    "placeholders": {
+      "customTitle": "Lad tom for automatisk titel",
+      "enterTagName": "Indtast etiketnavn (f.eks., bryst, petto)",
+      "exerciseAutocomplete": "Start at skrive for at se tilgængelige uøvelser...",
+      "folderPath": "e.g., Øvelser eller lad tom for rødder",
+      "note": "Tryk hård her. Dette er dit fundamentale øvelse.",
+      "notes": "f.eks., God form, følte stærk",
+      "parameterKey": "e.g., hastighed",
+      "parameterLabel": "e.g., Hastighed",
+      "parameterUnit": "e.g., km/t",
+      "reps": "f.eks., 10",
+      "repsRange": "8-10",
+      "restTime": "90",
+      "searchMuscleTags": "Søg muskel-etiketter...",
+      "searchTags": "Søg efter tag eller muskelsæt...",
+      "selectMuscleGroup": "Vælg muskelgruppe...",
+      "selectWorkoutFile": "Vælg en træningsfil til eksport...",
+      "sets": "4",
+      "weight": "f.eks., 10,5",
+      "workout": "f.eks. Workout A, Training B, eller brug krydsningsboks nedenfor"
+    },
+    "protocol": "Protokol:",
+    "recentExercises": "Nylige:",
+    "restTime": "Pause tid (sekunder):",
+    "rounds": "Runder:",
+    "save": "Gem",
     "sections": {
       "advancedOptions": "Avancerede Indstillinger",
       "chartType": "Graf Type",
@@ -247,104 +708,138 @@
       "countdown": "Tælleropgave",
       "custom": "Anpasset",
       "distance": "Afstand",
+      "dropSet": "Sæt",
       "exerciseWorkout": "Øvelses Arbejde",
       "interval": "Intervall",
       "myoReps": "Mio Repetitioner",
       "number": "Tal",
       "restPause": "Pause under Vægt",
       "specificExercise": "Specifik Øvelse",
+      "standard": "Standard",
       "strength": "Kraft",
       "superset": "Supersæt",
       "text": "Tekst",
       "timed": "Timeret",
       "twentyones": "21-kort",
-      "yesNo": "Ja Nej",
-      "dropSet": "Sæt",
-      "standard": "Standard"
+      "yesNo": "Ja Nej"
     },
-    "info": {
-      "dashboardDescription": "Dette vil indsætte et omfattende træningsdashboard med statistikker, grafer og hurtige handlinger."
+    "sets": "Sætter:",
+    "similarTags": "Lignende etiketter:",
+    "similarity": "Lignende",
+    "status": "Status",
+    "tag": "Tagg",
+    "tagsSelector": "Muskel etiketter:",
+    "text": "Udfør træningsprogrammet",
+    "timerDuration": "Tidsdueration (sekunder):",
+    "timerPreset": "Tidspræambel:",
+    "timerType": "Tidsmåltype:",
+    "title": "Titel:",
+    "titles": {
+      "addExerciseBlock": "Tilføj træningsblok",
+      "auditExerciseNames": "Overvåge træningstitler",
+      "canvasExport": "Eksporter træning til tavle",
+      "createExercisePage": "Opret øvelsesside",
+      "createExerciseSection": "Opret træningssekktion",
+      "createLog": "Opret træningslog",
+      "create_log": "Opret træningslog",
+      "editLog": "Rediger træningslog",
+      "editTable": "Rediger tabelindstillinger",
+      "editTimer": "Rediger tidsintervallets indstillinger",
+      "insertChart": "Indsæt træningsdiagram",
+      "insertDashboard": "Indsæt træningspaneel",
+      "insertDuration": "Indsæt træningsvarighed",
+      "insertTable": "Indsæt træningslog tabel",
+      "insertTimer": "Indsæt træningstimer",
+      "muscleTagManager": "Administrer muskel-etiketter"
     },
-    "parameterType": "Type:",
-    "status": "Status"
+    "value": "træningsprogram",
+    "workout": "Øvelse (valgfrit):",
+    "workoutFile": "Træningsfilen:",
+    "workoutNameOptional": "Øvelsesnavn (valgfrit):"
   },
   "settings": {
+    "buttons": {
+      "addPreset": "Tilføj foruddefineret",
+      "addProtocol": "Tilføj protokol",
+      "cancel": "Annuller",
+      "createExamples": "Opret eksempler",
+      "createFiles": "Opret filer",
+      "done": "Færdig!",
+      "failed": "Mislykket",
+      "generateTemplates": "Generer skabeloner",
+      "generated": "Genereret!",
+      "generating": "Genererer...",
+      "overwriting": "Overskriver...",
+      "regenerateOverwrite": "Genopbyg (erstatter)",
+      "savePreset": "Gem",
+      "saveProtocol": "Gem"
+    },
+    "descriptions": {
+      "confirmOverwriteMuscleTags": "Et muskel-etiket CSV-fil eksisterer allerede. Vil du overskrive det med standardværdier? Dette fjerner alle kundegivne etiketter.",
+      "csvFolder": "Mappe hvor arbejdsloggene og muskel-tags CSV-filer vil blive lagret.",
+      "customProtocols": "Opret personlige træningsprotokoller til at overvåge specialiserede træningsmetoder",
+      "defaultExactMatch": "Når aktiveret, bruges filtrering af træningsøvelser på navnesammenhæng. Slå det til for løse matchinger.",
+      "defaultRepsPerSet": "Antaget antal repetitioner, hvis intet angivet. Hvis 0, bruger 'Faldback tidsrum'.",
+      "defaultTimerPreset": "Vælg et standard-præsetting for nye timere",
+      "exerciseBlockTemplate": "Mall for træningsblokke. Tilladelige placeholders: {{exercise}}, {{durata}}, {{workout}}, {{preset}}",
+      "exerciseFolder": "Sti til mappe med uøvelsesider",
+      "generateDefaultTemplates": "Generer standard siden-skabelon og tag referens i 'Arbejdsplaner' mappe. Du kan ændre disse filer for at ændre sprog og struktur.",
+      "generateExamples": "Opret en mappe med eksempeløvelser og arbejdslog, der kan hjælpe dig med at starte.",
+      "noCustomProtocols": "Ingen personlige protokoller konfigureret. Klik 'Tilføj protokol' for at oprette en.",
+      "noPresets": "Ingen tidsindstillings-præsettinger konfigureret. Klik 'Tilføj præsetting' for at oprette en.",
+      "presetDurationDesc": "Varighed i sekunder (f.eks. 90 for en 90-sekunders timer).",
+      "presetNameDesc": "Unikt navn til denne tidsplan (f.eks. 'Rest 90s', 'HIIT 30/10').",
+      "presetRoundsDesc": "Antal runder, der skal gennemgås, før programmet stopper.",
+      "protocolAbbreviation": "Kort forkortelse vist i badge (maks 3 tegn)",
+      "protocolColor": "Badge baggrundsfarve (hex-format, f.eks., #FF5733)",
+      "quickWeightIncrement": "Vægtincrement brugt af +/- knapper i create/edit workout log modals (f.eks., 2,5 for +2,5 / -2,5 enheder)",
+      "repDuration": "Vurderet tid til at udføre en repetition. Bruges ved oplyst antal repetitioner (f.eks., 'x 10 repetitioner').",
+      "setDuration": "Bruges ved uoplyste repetitioner (faldback). Typisk interval: 30-60 sekunder.",
+      "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
+      "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
+      "weightUnit": "Vælg enhed for vægtmålinger (kg/lb). Dette påvirker standardenhed for nye loggere."
+    },
     "labels": {
-      "generateDefaultTemplates": "Generer standardskabeloner",
       "csvPath": "CSV-logfil sti",
-      "exerciseFolder": "Øvelsesmappe sti",
+      "customProtocols": "Kundespecifikke protokoller",
       "defaultExactMatch": "Standard præcis sammenhæng",
+      "defaultRepsPerSet": "Standard antal gentagelser pr. sæt",
       "defaultTimerPreset": "Standard tidsindstilling",
-      "presetName": "Præ-set navn",
-      "presetType": "Tidstype",
+      "exerciseBlockTemplate": "Øvelsesblokk-skabelon",
+      "exerciseFolder": "Øvelsesmappe sti",
+      "generateDefaultTemplates": "Generer standardskabeloner",
+      "generateExamples": "Generer eksempeldata",
       "presetDuration": "Varighed (sekunder)",
+      "presetName": "Præ-set navn",
       "presetRounds": "Runder",
       "presetShowControls": "Vis kontroller",
       "presetSound": "Lyd",
-      "exerciseBlockTemplate": "Øvelsesblokk-skabelon",
-      "customProtocols": "Kundespecifikke protokoller",
-      "protocolName": "Protokolnavn",
+      "presetType": "Tidstype",
+      "protocolAbbreviation": "Forkortelse",
       "protocolColor": "Badge farve",
-      "setDuration": "Tilfældighetsstilling (sekunder)",
+      "protocolName": "Protokolnavn",
       "repDuration": "Gennemførelsetid pr. gentagelse (sekunder)",
-      "defaultRepsPerSet": "Standard antal gentagelser pr. sæt",
+      "setDuration": "Tilfældighetsstilling (sekunder)",
       "setupCSV": "Opstill CSV-filer",
-      "generateExamples": "Generer eksempeldata",
-      "weightUnit": "Vægt enhed",
-      "protocolAbbreviation": "Forkortelse"
+      "weightUnit": "Vægt enhed"
     },
-    "descriptions": {
-      "generateDefaultTemplates": "Generer standard siden-skabelon og tag referens i 'Arbejdsplaner' mappe. Du kan ændre disse filer for at ændre sprog og struktur.",
-      "csvFolder": "Mappe hvor arbejdsloggene og muskel-tags CSV-filer vil blive lagret.",
-      "exerciseFolder": "Sti til mappe med uøvelsesider",
-      "defaultExactMatch": "Når aktiveret, bruges filtrering af træningsøvelser på navnesammenhæng. Slå det til for løse matchinger.",
-      "defaultTimerPreset": "Vælg et standard-præsetting for nye timere",
-      "noPresets": "Ingen tidsindstillings-præsettinger konfigureret. Klik 'Tilføj præsetting' for at oprette en.",
-      "exerciseBlockTemplate": "Mall for træningsblokke. Tilladelige placeholders: {{exercise}}, {{durata}}, {{workout}}, {{preset}}",
-      "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
-      "customProtocols": "Opret personlige træningsprotokoller til at overvåge specialiserede træningsmetoder",
-      "noCustomProtocols": "Ingen personlige protokoller konfigureret. Klik 'Tilføj protokol' for at oprette en.",
-      "protocolAbbreviation": "Kort forkortelse vist i badge (maks 3 tegn)",
-      "protocolColor": "Badge baggrundsfarve (hex-format, f.eks., #FF5733)",
-      "setDuration": "Bruges ved uoplyste repetitioner (faldback). Typisk interval: 30-60 sekunder.",
-      "repDuration": "Vurderet tid til at udføre en repetition. Bruges ved oplyst antal repetitioner (f.eks., 'x 10 repetitioner').",
-      "defaultRepsPerSet": "Antaget antal repetitioner, hvis intet angivet. Hvis 0, bruger 'Faldback tidsrum'.",
-      "quickWeightIncrement": "Vægtincrement brugt af +/- knapper i create/edit workout log modals (f.eks., 2,5 for +2,5 / -2,5 enheder)",
-      "confirmOverwriteMuscleTags": "Et muskel-etiket CSV-fil eksisterer allerede. Vil du overskrive det med standardværdier? Dette fjerner alle kundegivne etiketter.",
-      "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
-      "generateExamples": "Opret en mappe med eksempeløvelser og arbejdslog, der kan hjælpe dig med at starte.",
-      "weightUnit": "Vælg enhed for vægtmålinger (kg/lb). Dette påvirker standardenhed for nye loggere.",
-      "presetNameDesc": "Unikt navn til denne tidsplan (f.eks. 'Rest 90s', 'HIIT 30/10').",
-      "presetDurationDesc": "Varighed i sekunder (f.eks. 90 for en 90-sekunders timer).",
-      "presetRoundsDesc": "Antal runder, der skal gennemgås, før programmet stopper."
+    "messages": {
+      "confirmDeletePreset": "Er du sikker på, at du vil slette denne opsætning?",
+      "confirmDeleteProtocol": "Er du sikker på, at du vil slette denne protokol?",
+      "confirmOverwriteExamples": "En eksempelmappe findes allerede. Vil du overskrive den?",
+      "csvFilesCreated": "CSV-filer er blevet oprettet med succes!",
+      "presetDeleted": "Forudindstillet opsætning slettet",
+      "presetNameExists": "En foruddefineret indstilling med dette navn findes allerede.",
+      "presetNameRequired": "Navn på forudindstillet opsætning er påkrævet",
+      "presetSaved": "Foruddefineret opsætning gemt",
+      "protocolAbbreviationRequired": "Forkortelse er påkrævet (maks. 3 tegn)",
+      "protocolColorRequired": "Vær venlig at indtaste en gyldig heks-farve (f.eks. #FF5733)",
+      "protocolDeleted": "Protokol slettet",
+      "protocolNameExists": "Et protokol med dette navn eksisterer allerede.",
+      "protocolNameRequired": "Navn på protokollen er påkrævet",
+      "protocolSaved": "Protokol gemt"
     },
-    "sections": {
-      "csvManagement": "CSV-fil administration",
-      "exampleData": "Eksempeldata",
-      "filtering": "Filtrering",
-      "timerPresets": "Timer presetter",
-      "templates": "Mallene",
-      "customProtocols": "Kunde protokoller",
-      "quickLog": "Mobil-loggering",
-      "setupAndData": "Opsætning og data",
-      "trainingParameters": "Træningsparametre"
-    },
-    "buttons": {
-      "addPreset": "Tilføj foruddefineret",
-      "savePreset": "Gem",
-      "cancel": "Annuller",
-      "addProtocol": "Tilføj protokol",
-      "saveProtocol": "Gem",
-      "createFiles": "Opret filer",
-      "createExamples": "Opret eksempler",
-      "generating": "Genererer...",
-      "generated": "Genereret!",
-      "regenerateOverwrite": "Genopbyg (erstatter)",
-      "overwriting": "Overskriver...",
-      "done": "Færdig!",
-      "failed": "Mislykket",
-      "generateTemplates": "Generer skabeloner"
-    },
+    "none": "Intet",
     "options": {
       "none": "Ingen",
       "weightUnit": {
@@ -352,80 +847,66 @@
         "lb": "Pund (lb)"
       }
     },
-    "none": "Intet",
     "placeholders": {
-      "protocolName": "Indtast protokollnavn",
+      "presetName": "Indtast navnet på den forudindstillede",
       "protocolAbbreviation": "E.g., gs",
-      "presetName": "Indtast navnet på den forudindstillede"
+      "protocolName": "Indtast protokollnavn"
+    },
+    "sections": {
+      "csvManagement": "CSV-fil administration",
+      "customProtocols": "Kunde protokoller",
+      "exampleData": "Eksempeldata",
+      "filtering": "Filtrering",
+      "quickLog": "Mobil-loggering",
+      "setupAndData": "Opsætning og data",
+      "templates": "Mallene",
+      "timerPresets": "Timer presetter",
+      "trainingParameters": "Træningsparametre"
     },
     "tooltips": {
-      "editProtocol": "Rediger protokol",
+      "deletePreset": "Slet forudindstilling",
       "deleteProtocol": "Slet protokol",
       "editPreset": "Rediger foruddefineret",
-      "deletePreset": "Slet forudindstilling"
-    },
-    "messages": {
-      "presetNameRequired": "Navn på forudindstillet opsætning er påkrævet",
-      "presetNameExists": "En foruddefineret indstilling med dette navn findes allerede.",
-      "presetDeleted": "Forudindstillet opsætning slettet",
-      "presetSaved": "Foruddefineret opsætning gemt",
-      "confirmDeletePreset": "Er du sikker på, at du vil slette denne opsætning?",
-      "protocolNameRequired": "Navn på protokollen er påkrævet",
-      "protocolAbbreviationRequired": "Forkortelse er påkrævet (maks. 3 tegn)",
-      "protocolColorRequired": "Vær venlig at indtaste en gyldig heks-farve (f.eks. #FF5733)",
-      "protocolNameExists": "Et protokol med dette navn eksisterer allerede.",
-      "protocolDeleted": "Protokol slettet",
-      "protocolSaved": "Protokol gemt",
-      "confirmDeleteProtocol": "Er du sikker på, at du vil slette denne protokol?",
-      "csvFilesCreated": "CSV-filer er blevet oprettet med succes!",
-      "confirmOverwriteExamples": "En eksempelmappe findes allerede. Vil du overskrive den?"
+      "editProtocol": "Rediger protokol"
     }
   },
+  "stats": {
+    "avgVolume": "Gennemsnitlig Volumen",
+    "recentTrend": "Nylig Trend",
+    "sessions": "Sessions"
+  },
   "table": {
-    "columns": {
-      "date": "Dato",
-      "exercise": "Øvelse",
-      "reps": "Sætninger",
-      "weight": "Vægt",
-      "volume": "Volumen",
-      "duration": "Tid",
-      "protocol": "Regler",
-      "actions": "Aktiviteter",
-      "distance": "Afstand",
-      "heartRate": "HR",
-      "notes": "Noter",
-      "volumeUnit": "Volumen ({weightUnit})",
-      "weightUnit": "Vægt ({weightUnit})",
-      "distanceUnit": "Afstand ({distanceUnit})",
-      "pace": "Tempo"
-    },
+    "actions": "Handlinger",
     "columnLabels": {
+      "actions": "Handlinger",
       "date": "Dato",
-      "exercise": "Øvelse",
-      "reps": "Sæt",
-      "weight": "Vægt",
-      "volume": "Volumen",
-      "duration": "Durational",
       "distance": "Afstand",
+      "duration": "Durational",
+      "exercise": "Øvelse",
       "heartRate": "Hjertetakt",
       "notes": "Notater",
+      "pace": "Tempo (min/km)",
       "protocol": "Protokol",
-      "actions": "Handlinger",
-      "pace": "Tempo (min/km)"
-    },
-    "labels": {
+      "reps": "Sæt",
       "volume": "Volumen",
-      "weight": "Vægt",
-      "duration": "Tid",
-      "distance": "Afstand",
-      "heartRate": "Hjertetakt",
-      "trendLine": "Trendlinje",
-      "target": "Mål:"
+      "weight": "Vægt"
     },
-    "target": {
-      "repsSuffix": "satser",
-      "separator": " × ",
-      "progressTooltip": "Bedste: {best} satser / Mål: {target} satser"
+    "columns": {
+      "actions": "Aktiviteter",
+      "date": "Dato",
+      "distance": "Afstand",
+      "distanceUnit": "Afstand ({distanceUnit})",
+      "duration": "Tid",
+      "exercise": "Øvelse",
+      "heartRate": "HR",
+      "notes": "Noter",
+      "pace": "Tempo",
+      "protocol": "Regler",
+      "reps": "Sætninger",
+      "volume": "Volumen",
+      "volumeUnit": "Volumen ({weightUnit})",
+      "weight": "Vægt",
+      "weightUnit": "Vægt ({weightUnit})"
     },
     "deleteConfirm": "Bekræft sletning",
     "deleteError": "Sletningsfejl",
@@ -433,231 +914,31 @@
     "deleteTitle": "Slet titel",
     "distance": "Afstand",
     "duration": "Varighed",
+    "editTable": "Rediger tabel",
     "editTitle": "Rediger titel",
     "gotoExercise": "Gå til øvelse",
     "heartRate": "Hjertetakt",
     "invalidDate": "Ugyldig dato",
+    "labels": {
+      "distance": "Afstand",
+      "duration": "Tid",
+      "heartRate": "Hjertetakt",
+      "target": "Mål:",
+      "trendLine": "Trendlinje",
+      "volume": "Volumen",
+      "weight": "Vægt"
+    },
     "noData": "Ingen Data",
     "notAvailable": "Ikke Tilgængelig",
     "refreshSuccess": "Opdatering Lykkes",
     "sets": "Sætninger",
+    "target": {
+      "progressTooltip": "Bedste: {best} satser / Mål: {target} satser",
+      "repsSuffix": "satser",
+      "separator": " × "
+    },
     "trendLine": "Trendlinje",
-    "volume": "Volumen",
-    "actions": "Handlinger",
-    "editTable": "Rediger tabel"
-  },
-  "dashboard": {
-    "quickStats": {
-      "title": "Hurtige statistikker",
-      "periods": {
-        "week": "Denne uge",
-        "month": "Denne måned",
-        "year": "Dette år"
-      },
-      "week": "Uge",
-      "month": "Måned",
-      "year": "År",
-      "workouts": "Træninger"
-    },
-    "recentWorkouts": {
-      "title": "Seneste øvelser",
-      "fallbackName": "Øvelse"
-    },
-    "summary": {
-      "title": "Sammenfatning",
-      "totalWorkouts": "Totale træningsøvelser",
-      "currentStreak": "Nuværende serie",
-      "currentStreakSuffix": "Uger",
-      "totalVolume": "Totalt volumen",
-      "personalRecords": "Personske rekorder"
-    },
-    "volumeAnalytics": {
-      "title": "Volumestatistik",
-      "chartTitle": "Volumetrend (sidste 30 dage)",
-      "muscleBreakdownTitle": "Top-øvelser efter volumen"
-    },
-    "month": "Måned",
-    "title": "Titel",
-    "week": "Uge",
-    "year": "År",
-    "muscleTags": {
-      "title": "Muskeltags",
-      "description": "Beskrivelse",
-      "tooltip": "Klik for at kopiere: {tag}",
-      "totalCount": "Samlet: {count} tags tilgængelige"
-    },
-    "quickActions": {
-      "title": "Hurtige handlinger",
-      "addWorkoutLog": "Tilføj træningslog",
-      "viewExercises": "Vis øvelser"
-    },
-    "durationComparison": {
-      "title": "Sammenligning af varighed",
-      "subtitle": "Estimeret vs. faktisk træningstid",
-      "noData": "Ingen data",
-      "columnWorkout": "Træning",
-      "columnEstimated": "Estimeret",
-      "columnActual": "Faktisk",
-      "columnVariance": "Varians",
-      "varianceTrendTitle": "Overskrift for variationstendens",
-      "varianceTrendImproving": "Tendens for reduceret variation",
-      "varianceTrendDeclining": "Tendens for variation: aftagende",
-      "varianceTrendStable": "Variations Trend: Stabil",
-      "minutesSuffix": "min"
-    },
-    "fileErrors": {
-      "title": "Fejl ved fil",
-      "allValid": "Alle gyldige",
-      "noTags": "Ingen tags",
-      "tooManyTags": "For mange muskelmærkninger ({count})",
-      "readError": "❌ Fejl ved læsning af fil: {message}"
-    },
-    "protocolDistribution": {
-      "title": "Fordeling af protokoller",
-      "subtitle": "Detaljeret oversigt over træningsprotokol (de seneste 30 dage)",
-      "noData": "Ingen data",
-      "filterActive": "Filtrér aktive",
-      "clearFilter": "Rens filter"
-    },
-    "protocolEffectiveness": {
-      "title": "Effektivitet af protokollen",
-      "noData": "Ingen data",
-      "disclaimer": "Ansvarsfraskrivelse",
-      "columnProtocol": "Protokol",
-      "columnEntries": "Indlæg",
-      "columnVolumeChange": "Volumenændring",
-      "columnProgression": "Progression"
-    },
-    "protocol": {
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})",
-      "percentLabel": "Procentsymbol",
-      "clickToFilter": "Klik for at filtrere"
-    }
-  },
-  "charts": {
-    "labels": {
-      "reps": "Repetitioner",
-      "date": "Dato",
-      "trendLine": "Trendlinje",
-      "down": "ned",
-      "neutral": "neutral",
-      "variationFromTo": "fra {{startValue}} til {{endValue}}",
-      "trendType": "Trend {type}:",
-      "weightIncrementUnit": "Vægtøgning {weightIncrementUnit}",
-      "quickWeightIncrementUnit": "Vægtknapperne øger {weightIncrementUnit}",
-      "volume": "Volumen",
-      "weight": "Vægt",
-      "duration": "Varighed",
-      "distance": "Afstand",
-      "heartRate": "Pulsmåling",
-      "pace": "Tempo"
-    },
-    "date": "Dato",
-    "down": "Ned",
-    "fallbackTableMessage": "Faldback Tabel Meddelelse",
-    "neutral": "Nøjagtig",
-    "overallVariationPrefix": "Samlet Variation Forudsætning",
-    "reps": "Serier",
-    "significantIncrease": "Betydelig Øget",
-    "trendLine": "Trendlinje",
-    "volume": "Volumen",
-    "typeNotAvailable": "Diagramtype \"{chartDataType}\" er ikke tilgængelig for {exerciseType} øvelser. Tilgængelige typer: {typeList}",
-    "types": {
-      "volume": "Volumen",
-      "weight": "Vægt",
-      "reps": "Rep",
-      "duration": "Varighed",
-      "distance": "Afstand",
-      "heartRate": "Pulsmåling",
-      "pace": "Hastighed"
-    }
-  },
-  "general": {
-    "labels": {
-      "totalVolume": "Samlet volumen ({unit})",
-      "avgVolume": "Gennemsnitlig volumen ({unit})",
-      "totalWeight": "Samlet vægt ({unit})",
-      "avgWeight": "Gennemsnitlig vægt ({unit})",
-      "front": "Forside",
-      "back": "Bag",
-      "dashboard": "Kontrolpanelet",
-      "dailyVolume": "Dagligt volumen ({{unit}})",
-      "totalDuration": "Samlet varighed (sek)",
-      "avgDuration": "Gennemsnitlig varighed (sek)",
-      "totalDistance": "Samlet distance (km)",
-      "avgDistance": "Gennemsnitlig afstand (km)",
-      "pace": "Tempo (min/km)",
-      "avgHeartRate": "Gennemsnitlig puls (slag pr. minut)",
-      "totalCustom": "Samlet {label}",
-      "avgCustom": "Gennemsnit {label}"
-    },
-    "avgReps": "Gennemsnitlige Gange",
-    "back": "Ryg",
-    "currentFile": "Aktuel Fil",
-    "dashboard": "Kontrolpanel",
-    "delete": "Slet",
-    "edit": "Rediger",
-    "front": "Forside",
-    "muscleHeatMap": "Muscle Heat Kort",
-    "noMatchMessage": "Ingen Tilpasning Melding",
-    "search": "Søg",
-    "totalReps": "Totale Repetitioner",
-    "workoutData": "Træningsdata",
-    "workoutLog": "Træningslog"
-  },
-  "messages": {
-    "loading": "Værktøjet læses op...",
-    "noDataPeriod": "Ingen workout-data fundet for den valgte tidsperiode.",
-    "timerCompleted": "Tidslinje fuldført!",
-    "codeInserted": "Kode indsat",
-    "csvNotFound": "Csv ikke fundet",
-    "fileEmpty": "Filen er tom",
-    "imbalanceAlerts": "Løbende Balanceadvarsel",
-    "insufficientData": "For lidt data",
-    "noFrontmatter": "Ingen Frontmatter",
-    "noImbalances": "Ingen Udligninger",
-    "noTags": "Ingen Etiketter",
-    "tagReferenceGenerated": "Tag Referens Genereret",
-    "success": {
-      "csvCreated": "CSV-filen er oprettet med succes!"
-    },
-    "errors": {
-      "tagReferenceFailed": "Fejl ved generering af tag-reference:"
-    }
-  },
-  "commands": {
-    "addExerciseBlock": "Tilføj Øvelsesblok",
-    "auditExerciseNames": "Overvåge Navne på Øvelser",
-    "convertExercise": "Omvandl Øvelse",
-    "exportWorkoutToCanvas": "Eksport Arbejdsprogram til Canvas",
-    "generateTagReference": "Generer Tagreferens",
-    "insertTable": "Indsæt Tabel",
-    "manageMuscleTags": "Administrér Muskelmærker",
-    "migrateExerciseTypes": "Migrer Efterøvelsetype",
-    "createCsvLog": "Opret CSV-logfil"
-  },
-  "common": {
-    "exercise": "Efterøvelse",
-    "notAvailable": "Ikke Tilgængelig",
-    "unknown": "Ukendt",
-    "workout": "Træning",
-    "sec": "common.sec",
-    "km": "common.km",
-    "bpm": "bpm",
-    "minPerKm": "min/km",
-    "cancel": "Annulér",
-    "convert": "Konverter",
-    "reps": "Rep"
-  },
-  "forms": {
-    "enterCsvPath": "Indtast Csv-sti",
-    "enterFolderPath": "Indtast Mappe-sti",
-    "workoutName": "Træningsnavn"
-  },
-  "stats": {
-    "avgVolume": "Gennemsnitlig Volumen",
-    "recentTrend": "Nylig Trend",
-    "sessions": "Sessions"
+    "volume": "Volumen"
   },
   "timeperiods": {
     "month": "Måned",
@@ -665,19 +946,19 @@
     "year": "År"
   },
   "timer": {
-    "countdown": "Tæller til",
-    "interval": "Intervall",
-    "editTimer": "Rediger tidsinterval",
-    "stopwatch": "Stopwatch",
     "controls": {
-      "startTimer": "Start timer",
       "pauseTimer": "Pause timer",
-      "resetTimer": "Genstart timer"
+      "resetTimer": "Genstart timer",
+      "startTimer": "Start timer"
     },
+    "countdown": "Tæller til",
+    "editTimer": "Rediger tidsinterval",
+    "interval": "Intervall",
     "presets": {
       "detailsControls": "Kontroller",
       "detailsSound": "Lyd"
-    }
+    },
+    "stopwatch": "Stopwatch"
   },
   "trends": {
     "declining": "Faldende",
@@ -690,286 +971,5 @@
     "stable": "Stabil",
     "stableLower": "Stabil Lavere",
     "up": "Op"
-  },
-  "examples": {
-    "folderCreatedSuccess": "Eksempelmappe '{folder}' oprettet korrekt!",
-    "folderCreatedError": "Eksempelmappe '{folder}' kunne ikke oprettes.",
-    "gettingStarted": {
-      "title": "Start med The Gym Plugin",
-      "welcome": "Velkommen! Dette indeholder eksemelfiler, der skal hjælpe dig med at lære alle funktionerne.",
-      "folderStructureTitle": "Mappe/Fil struktur",
-      "tableHeaderFileFolder": "Fil/Mappe",
-      "tableHeaderDescription": "Beskrivelse",
-      "dashboardDesc": "Dine træningsstatistikker på et blik",
-      "featureShowcaseDesc": "Fuldstændig referens over alle kodeblokke",
-      "exercisesDesc": "Eksempeltræningssider med log og graf",
-      "workoutsDesc": "Eksempeltræningsmønstre",
-      "logDesc": "Dine CSV-træningsdata",
-      "quickActionsTitle": "Kortløbninger",
-      "quickActionsIntro": "Brug disse kommandoer (Ctrl/Cmd + P):",
-      "commandCreateLog": "Opret Arbejdslog",
-      "commandCreateLogDesc": "Tilføj en ny træningsopgave",
-      "commandInsertChart": "Indsæt Arbejdslog-diagram",
-      "commandInsertChartDesc": "Tilføj diagram til enhver notat",
-      "commandInsertTimer": "Indsæt Arbejdslog-timer",
-      "commandInsertTimerDesc": "Tilføj en pause-timer",
-      "commandCreateExercise": "Opret Udvælgingsside",
-      "commandCreateExerciseDesc": "Opret en ny udvælgelsesfil",
-      "nextStepsTitle": "Næste Trin",
-      "step1": "Åben [[Kontrolpanel]] for at se dine statistikker",
-      "step2": " Kontrollér [[Funktionsvisning]] for at lære alle tilgængelige funktioner",
-      "step3": "Prøv et arbejdsudkast fra den **{workouts}** mappe",
-      "step4": "Opret dine egne udvælgelsesøvelser i **{exercises}**",
-      "exercisesFolder": "**{folder}**/**",
-      "workoutsFolder": "**{folder}**/**",
-      "logFolder": "**{folder}**/**"
-    },
-    "dashboard": {
-      "title": "Kontrolpanel",
-      "description": "Din træningsstatistik i oversigt. Se [[Funktionsvisning]] for alle tilgængelige komponenter."
-    },
-    "workout": {
-      "duration": "Varighed",
-      "note": "Noter: kæmpe hård",
-      "recoverySuffix": "(Genopretning: {sekunder}s)",
-      "setsReps": "{sets} sæt x {reps} gange",
-      "chart": "diagram"
-    },
-    "folderNames": {
-      "base": "Gymnastik-eksemplerne",
-      "exercises": "Øvelser",
-      "workouts": "Arbejder",
-      "log": "Logbog"
-    },
-    "exercises": {
-      "benchPress": {
-        "name": "Bench Presse"
-      },
-      "squat": {
-        "name": "Kvad"
-      },
-      "running": {
-        "name": "Løb"
-      },
-      "cycling": {
-        "name": "Cykling"
-      },
-      "squatMultiPower": {
-        "name": "Kvad Multi Power"
-      },
-      "legPress45": {
-        "name": "Benpres 45"
-      },
-      "legCurlSeated": {
-        "name": "Siddende Knækur"
-      },
-      "calfMachine": {
-        "name": "Kalvenmaskine"
-      },
-      "plank": {
-        "name": "Planke"
-      },
-      "rdl": {
-        "name": "RDL"
-      }
-    },
-    "workouts": {
-      "lowerBodyA": {
-        "name": "Dag 1 NEDRE KROPS A 2.0"
-      },
-      "upperBodyPower": {
-        "name": "Øverkrops Kraft"
-      },
-      "cardioDay": {
-        "name": "Aktivitetsdag"
-      }
-    },
-    "featureShowcase": {
-      "title": "Funktionsvisuel Præsentation",
-      "intro": "Fuldstændig reference over alle kodebloktyper, der er tilgængelige i Workout Plugin.",
-      "tip": "**Tip**: For din personlige dashboard, se [[Dashboard]]",
-      "chartsTitle": "1. Diagrammer",
-      "chartsIntro": "Diagrammer visualiserer din fremskridt gennem tiden. Tilladte typer: `volume`, `weight`, `reps`, `duration`, `distance`, `heartRate`, `pace`.",
-      "strengthExerciseTitle": "Styrkeøvelse (Volume + Vægt)",
-      "cardioExerciseTitle": "Kardioøvelse (Afstand + Pace)",
-      "timedExerciseTitle": "Timet Øvelse (Durationalt)",
-      "workoutChartTitle": "Øvelsesdiagram (Alle Øvelser Samlet)",
-      "allDataChartTitle": "Alle Data Chart",
-      "tablesTitle": "2. Tabeller",
-      "tablesIntro": "Tabeller viser dit træningslog med sorterings- og redigeringsmuligheder.",
-      "byExerciseTitle": "På Uøvelse",
-      "byWorkoutTitle": "På Arbejdsdag",
-      "combinedTitle": "Kombineret (Uøvelse + Arbejdsdag)",
-      "timersTitle": "3. Tidsmåler",
-      "countdownTimerTitle": "Tidsløbstimer",
-      "durationEstimatorTitle": "4. Varigheds-Estimator",
-      "durationEstimatorIntro": "Vurderer samlet træningsvarighed baseret på den aktuelle notes øvelser.",
-      "trainingProtocolsTitle": "5. Uddannelsesprotokoller",
-      "trainingProtocolsIntro": "Pluginet støtter disse protokol-emblemer i dine logbøger:",
-      "protocolStandard": "Normale sæt",
-      "protocolDropset": "Reducer weight, fortsæt med reps",
-      "protocolMyoReps": "Aktiveringssæt + mini sæt",
-      "protocolRestPause": "Kort ophold, fortsæt til fejlslag",
-      "protocolSuperset": "Parerede øvelser",
-      "protocol21s": "7+7+7 delvis reps",
-      "quickReferenceTitle": "Hurtig Referens",
-      "codeBlockWorkoutChart": "Visualisér fremskridt over tid",
-      "codeBlockWorkoutLog": "Vis workout data tabel",
-      "codeBlockWorkoutTimer": "Tæller eller interval timer",
-      "codeBlockWorkoutDuration": "Forkalke workout længde",
-      "codeBlockWorkoutDashboard": "Fuldt statistisk oversigt",
-      "commandsNote": "**Befalinger** (Ctrl/Cmd + P): Opret Arbejdslog, Indsæt Diagram, Indsæt Tidertimer, Opret Øvelsesside",
-      "intervalTimerTitle": "Intervaltimer"
-    },
-    "hiit": {
-      "title": "HIIT Kardio Session",
-      "intro": "Højintensiv Interval Træning med interval-timer og kardiotracking.",
-      "warmupTitle": "Varm-op (5 min)",
-      "sprintIntervalsTitle": "Sprint Intervaler (30s × 8 omgange)",
-      "runningProgressTitle": "Løbetilgang",
-      "cyclingCooldownTitle": "Cykling Køling"
-    },
-    "exercise": {
-      "descriptionTitle": "Beskrivelse",
-      "descriptionTemplate": "Eksempel beskrivelse for {name}.",
-      "logTitle": "Logbog",
-      "volumeChartTitle": "Volumeforløb",
-      "weightProgressionTitle": "Vægtforløb",
-      "repTrackingTitle": "Rep-følgning",
-      "durationChartTitle": "Varighedsforløb",
-      "heartRateTitle": "Hjertetakt",
-      "distanceChartTitle": "Afstandskort",
-      "durationTitle": "Varighed",
-      "paceTrackingTitle": "Løbsfart Overvågning",
-      "paceTrackingNote": "Følge din løbsfarts forbedring (lavere = hurtigere):",
-      "chartTitle": "Kort"
-    },
-    "fileNames": {
-      "gettingStarted": "Sådan kommer du i gang",
-      "featureShowcase": "Funktioner i fokus",
-      "hiitCardioSession": "HIIT-cardio træning",
-      "dashboard": "Dashboard"
-    }
-  },
-  "icons": {
-    "timer": {
-      "play": "▶",
-      "pause": "⏸",
-      "reset": "↺"
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "deadlift": "💀",
-      "curl": "💪",
-      "extension": "📏",
-      "biceps": "💪",
-      "triceps": "💪",
-      "core": "🎯",
-      "forearms": "✊",
-      "back": "🦾",
-      "chest": "🫁",
-      "shoulders": "🦵",
-      "legs": "🦵",
-      "quads": "🦵",
-      "hamstrings": "🦵",
-      "glutes": "🍑",
-      "calves": "🦵",
-      "abs": "🎯",
-      "traps": "🔺",
-      "rear_delts": "🔙",
-      "cardio": "⭐",
-      "push": "🔼",
-      "pull": "⬇️"
-    },
-    "common": {
-      "percentage": "%",
-      "plus": "+",
-      "empty": ""
-    },
-    "tables": {
-      "reps": "🔁 ",
-      "weight": "🏋️ ",
-      "volume": "📊 ",
-      "duration": "⏱️ ",
-      "distance": "📍 ",
-      "heartRate": "❤️ ",
-      "edit": "✏️",
-      "delete": "🗑️",
-      "goto": "🔗"
-    },
-    "actions": {
-      "add": "➕",
-      "edit": "✏️",
-      "delete": "🗑️"
-    },
-    "status": {
-      "success": "✅",
-      "warning": "⚠️",
-      "info": "ℹ️"
-    },
-    "dashboard": {
-      "quickStats": {
-        "periods": {
-          "week": "🗓️",
-          "month": "📆",
-          "year": "📈"
-        },
-        "metrics": {
-          "workouts": "🏋️",
-          "totalVolume": "📦",
-          "avgVolume": "📊"
-        }
-      },
-      "summary": {
-        "totalWorkouts": "🏋️",
-        "currentStreak": "🔥",
-        "totalVolume": "📦",
-        "personalRecords": "🏅"
-      }
-    }
-  },
-  "logs": {
-    "noDataTitle": "Ingen logfiler fundet for {{exerciseName}}",
-    "createFirstLogButton": "Opret første log for {{exerciseName}}",
-    "createFirstLogButtonAria": "Opret det første log for {{exerciseName}}",
-    "addLogButtonText": "Tilføj log for {{exerciseName}}",
-    "addLogButtonAria": "Tilføj log for {{exerciseName}}",
-    "createLogButtonText": "Opret log for: {exerciseName}",
-    "createLogButtonAria": "Opret log for: {exerciseName}"
-  },
-  "convert": {
-    "typeSelect": {
-      "convertTo": "Konverter til:",
-      "updateFileType": "Opdater filtype for øvelsen"
-    },
-    "errors": {
-      "convertError": "Fejl ved konvertering af træningsdata: {error}"
-    },
-    "success": "Konverteret {count} log-indlæsninger med succes.",
-    "title": "Konverter træningsdata",
-    "currentType": "Aktuel type:",
-    "sectionExercise": "Øvelse",
-    "preview": {
-      "title": "Forhåndsvisning",
-      "noEntries": "Ingen logindata fundet for denne øvelse",
-      "willConvertOne": "1 log vil blive konverteret",
-      "willConvertMany": "{count} logfiler vil blive konverteret"
-    },
-    "fieldMapping": {
-      "title": "Kortlægning af felter",
-      "addMapping": "Tilføj kortlægning",
-      "removeMapping": "Fjern kortlægning",
-      "reps": "Rep",
-      "weight": "Vægt ({unit})"
-    }
-  },
-  "duration": {
-    "estimatedDuration": "Estimeret varighed",
-    "restTime": "Hvordan lang",
-    "setTime": "Angiv tid",
-    "lastSession": "Sidste session",
-    "unableToAnalyze": "Kan ikke analysere træningsfil"
   }
 }

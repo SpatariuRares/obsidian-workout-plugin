@@ -1,7 +1,508 @@
 {
+  "charts": {
+    "date": "日期",
+    "down": "向下",
+    "fallbackTableMessage": "备用表消息",
+    "labels": {
+      "date": "日期",
+      "distance": "距离",
+      "down": "向下",
+      "duration": "时长",
+      "heartRate": "心率",
+      "neutral": "中性",
+      "pace": "速度",
+      "quickWeightIncrementUnit": "重量按钮增加 {weightIncrementUnit}",
+      "reps": "代表",
+      "trendLine": "趋势线",
+      "trendType": "趋势 {type}:",
+      "variationFromTo": "从 {{startValue}} 到 {{endValue}}",
+      "volume": "音量",
+      "weight": "重量",
+      "weightIncrementUnit": "重量增加 {weightIncrementUnit}"
+    },
+    "neutral": "中立",
+    "overallVariationPrefix": "总体变化前缀",
+    "reps": "代表",
+    "significantIncrease": "显著增长",
+    "trendLine": "趋势线",
+    "typeNotAvailable": "图表类型 \"{chartDataType}\" 不适用于 {exerciseType} 类型的练习。 可用的图表类型：{typeList}",
+    "types": {
+      "distance": "距离",
+      "duration": "时长",
+      "heartRate": "心率",
+      "pace": "速度",
+      "reps": "图表类型：代表",
+      "volume": "体积",
+      "weight": "重量"
+    },
+    "volume": "音量"
+  },
+  "commands": {
+    "addExerciseBlock": "添加锻炼块",
+    "auditExerciseNames": "审计练习名称",
+    "convertExercise": "转换练习",
+    "createCsvLog": "创建 CSV 格式的日志文件",
+    "exportWorkoutToCanvas": "将锻炼计划导出到画布",
+    "generateTagReference": "生成标签参考",
+    "insertTable": "插入表格",
+    "manageMuscleTags": "管理肌肉标签",
+    "migrateExerciseTypes": "迁移锻炼类型"
+  },
+  "common": {
+    "bpm": "bpm",
+    "cancel": "取消",
+    "convert": "转换",
+    "exercise": "锻炼",
+    "km": "km",
+    "minPerKm": "每公里",
+    "notAvailable": "未提供",
+    "reps": "代表",
+    "sec": "安全",
+    "unknown": "未知的",
+    "workout": "锻炼"
+  },
+  "convert": {
+    "currentType": "当前类型：",
+    "errors": {
+      "convertError": "转换锻炼数据时出错：{error}"
+    },
+    "fieldMapping": {
+      "addMapping": "添加字段映射",
+      "removeMapping": "移除映射",
+      "reps": "代表",
+      "title": "字段映射",
+      "weight": "权重 ({unit})"
+    },
+    "preview": {
+      "noEntries": "未找到与此操作相关的日志记录",
+      "title": "预览",
+      "willConvertMany": "{count} 将记录进行转换",
+      "willConvertOne": "1 条日志将被转换"
+    },
+    "sectionExercise": "练习",
+    "success": "成功转换了 {count} 条日志",
+    "title": "转换锻炼数据",
+    "typeSelect": {
+      "convertTo": "转换为：",
+      "updateFileType": "更新锻炼文件类型"
+    }
+  },
+  "dashboard": {
+    "durationComparison": {
+      "columnActual": "实际",
+      "columnEstimated": "预估",
+      "columnVariance": "变异",
+      "columnWorkout": "锻炼",
+      "minutesSuffix": "分钟",
+      "noData": "无数据",
+      "subtitle": "预计时长与实际时长比较",
+      "title": "持续时间比较",
+      "varianceTrendDeclining": "变异趋势：下降",
+      "varianceTrendImproving": "波动趋势正在改善",
+      "varianceTrendStable": "波动趋势稳定",
+      "varianceTrendTitle": "变异趋势标题"
+    },
+    "fileErrors": {
+      "allValid": "全部有效",
+      "noTags": "没有标签",
+      "readError": "❌ 文件读取错误：{message}",
+      "title": "文件错误",
+      "tooManyTags": "标签数量过多 ({count})"
+    },
+    "month": "月份",
+    "muscleTags": {
+      "description": "描述",
+      "title": "肌肉标签",
+      "tooltip": "点击复制：{tag}",
+      "totalCount": "总数：{count} 个标签可用"
+    },
+    "protocol": {
+      "clickToFilter": "点击筛选",
+      "percentLabel": "百分比标签",
+      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+    },
+    "protocolDistribution": {
+      "clearFilter": "清除筛选",
+      "filterActive": "筛选活动",
+      "noData": "无数据",
+      "subtitle": "培训协议分解（最近30天）",
+      "title": "协议分配"
+    },
+    "protocolEffectiveness": {
+      "columnEntries": "条目",
+      "columnProgression": "进度",
+      "columnProtocol": "协议",
+      "columnVolumeChange": "体量变化",
+      "disclaimer": "免责声明",
+      "noData": "无数据",
+      "title": "协议有效性"
+    },
+    "quickActions": {
+      "addWorkoutLog": "添加锻炼记录",
+      "title": "快速操作",
+      "viewExercises": "查看锻炼"
+    },
+    "quickStats": {
+      "month": "月份",
+      "periods": {
+        "month": "本月",
+        "week": "本周",
+        "year": "今年"
+      },
+      "title": "快速统计",
+      "week": "本周",
+      "workouts": "锻炼",
+      "year": "年份"
+    },
+    "recentWorkouts": {
+      "fallbackName": "锻炼",
+      "title": "最近的锻炼"
+    },
+    "summary": {
+      "currentStreak": "当前连胜数",
+      "currentStreakSuffix": "weeks",
+      "personalRecords": "个人记录",
+      "title": "摘要",
+      "totalVolume": "总量",
+      "totalWorkouts": "总训练次数"
+    },
+    "title": "标题",
+    "volumeAnalytics": {
+      "chartTitle": "音量趋势（最近30天）",
+      "muscleBreakdownTitle": "按训练量排序的常用动作",
+      "title": "音量分析"
+    },
+    "week": "本周",
+    "year": "年份"
+  },
+  "duration": {
+    "estimatedDuration": "预估时长",
+    "lastSession": "上次会",
+    "restTime": "休息时间",
+    "setTime": "设置时间",
+    "unableToAnalyze": "无法分析锻炼文件"
+  },
+  "examples": {
+    "dashboard": {
+      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "title": "仪表盘"
+    },
+    "exercise": {
+      "chartTitle": "图表",
+      "descriptionTemplate": "{name} 的示例说明",
+      "descriptionTitle": "描述",
+      "distanceChartTitle": "距离图",
+      "durationChartTitle": "时长图",
+      "durationTitle": "时长",
+      "heartRateTitle": "心率",
+      "logTitle": "记录",
+      "paceTrackingNote": "追踪你的速度提升（数值越小，速度越快）：",
+      "paceTrackingTitle": "速度跟踪",
+      "repTrackingTitle": "重复次数跟踪",
+      "volumeChartTitle": "图表",
+      "weightProgressionTitle": "重量递增"
+    },
+    "exercises": {
+      "benchPress": {
+        "name": "卧推"
+      },
+      "calfMachine": {
+        "name": "小腿肌锻炼器"
+      },
+      "cycling": {
+        "name": "骑自行车"
+      },
+      "legCurlSeated": {
+        "name": "坐姿腿弯举"
+      },
+      "legPress45": {
+        "name": "腿举 45"
+      },
+      "plank": {
+        "name": "平板支撑"
+      },
+      "rdl": {
+        "name": "RDL"
+      },
+      "running": {
+        "name": "跑步"
+      },
+      "squat": {
+        "name": "深蹲"
+      },
+      "squatMultiPower": {
+        "name": "深蹲多力量"
+      }
+    },
+    "featureShowcase": {
+      "allDataChartTitle": "所有数据图表",
+      "byExerciseTitle": "按锻炼",
+      "byWorkoutTitle": "按锻炼类型",
+      "cardioExerciseTitle": "有氧运动（距离 + 速度）",
+      "chartsIntro": "图表可以直观地展示您的进度随时间的变化。可用的类型：`volume`（体积）、`weight`（重量）、`reps`（次数）、`duration`（时长）、`distance`（距离）、`heartRate`（心率）、`pace`（速度）。",
+      "chartsTitle": "1. 图表",
+      "codeBlockWorkoutChart": "可视化时间上的进度",
+      "codeBlockWorkoutDashboard": "完整统计概览",
+      "codeBlockWorkoutDuration": "估算锻炼时长",
+      "codeBlockWorkoutLog": "显示锻炼数据表格",
+      "codeBlockWorkoutTimer": "倒计时或间隔计时器",
+      "combinedTitle": "组合（锻炼 + 训练）",
+      "commandsNote": "**命令** (Ctrl/Cmd + P)：创建训练记录，插入图表，插入计时器，创建锻炼页面",
+      "countdownTimerTitle": "倒计时",
+      "durationEstimatorIntro": "根据当前笔记中列出的运动项目，估算出总的锻炼时长。",
+      "durationEstimatorTitle": "4. 预计时长",
+      "intervalTimerTitle": "间隔计时器",
+      "intro": "Workout 插件中所有代码块类型的完整参考。",
+      "protocol21s": "7+7+7 训练次数",
+      "protocolDropset": "减轻重量，继续进行重复动作",
+      "protocolMyoReps": "激活套 + 迷你套",
+      "protocolRestPause": "短暂休息，直至达到极限",
+      "protocolStandard": "标准设置",
+      "protocolSuperset": "配套练习",
+      "quickReferenceTitle": "快速参考",
+      "strengthExerciseTitle": "力量训练（包含重量和次数）",
+      "tablesIntro": "表格显示您的锻炼记录，并提供排序和编辑功能。",
+      "tablesTitle": "2. 表格",
+      "timedExerciseTitle": "限时运动（时长）",
+      "timersTitle": "3. 计时器",
+      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "title": "功能展示",
+      "trainingProtocolsIntro": "该插件支持在您的日志中显示以下协议徽章：",
+      "trainingProtocolsTitle": "5. 培训协议",
+      "workoutChartTitle": "训练图表（所有运动项目组合）"
+    },
+    "fileNames": {
+      "dashboard": "仪表盘",
+      "featureShowcase": "功能展示",
+      "gettingStarted": "开始使用",
+      "hiitCardioSession": "高强度间歇训练（HIIT）心血管训练"
+    },
+    "folderCreatedError": "未能创建示例文件夹。",
+    "folderCreatedSuccess": "示例文件夹“{folder}”已成功创建！",
+    "folderNames": {
+      "base": "健身房示例",
+      "exercises": "练习",
+      "log": "日志",
+      "workouts": "锻炼"
+    },
+    "gettingStarted": {
+      "commandCreateExercise": "创建练习页面",
+      "commandCreateExerciseDesc": "创建新的练习文件",
+      "commandCreateLog": "创建锻炼记录",
+      "commandCreateLogDesc": "添加新的锻炼记录",
+      "commandInsertChart": "插入锻炼图表",
+      "commandInsertChartDesc": "将图表添加到任何笔记中",
+      "commandInsertTimer": "插入锻炼计时器",
+      "commandInsertTimerDesc": "添加休息计时器",
+      "dashboardDesc": "一览您的锻炼数据",
+      "exercisesDesc": "包含日志和图表的示例练习页面",
+      "exercisesFolder": "**{folder}**/**",
+      "featureShowcaseDesc": "所有代码块的完整参考",
+      "folderStructureTitle": "文件夹结构",
+      "logDesc": "您的 CSV 健身数据",
+      "logFolder": "**{folder}**/**",
+      "nextStepsTitle": "下一步",
+      "quickActionsIntro": "使用这些命令（Ctrl/Cmd + P）：",
+      "quickActionsTitle": "快速操作",
+      "step1": "Open [[Dashboard]] to see your stats",
+      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step3": "尝试从 **{workouts}** 文件夹中选择一个锻炼计划。",
+      "step4": "在 **{exercises}** 中创建您自己的练习",
+      "tableHeaderDescription": "描述",
+      "tableHeaderFileFolder": "文件/文件夹",
+      "title": "开始使用 The Gym 插件",
+      "welcome": "欢迎！此文件夹包含示例文件，以帮助您学习所有功能。",
+      "workoutsDesc": "示例锻炼模板",
+      "workoutsFolder": "**{folder}**/**"
+    },
+    "hiit": {
+      "cyclingCooldownTitle": "骑行放松",
+      "intro": "高强度间歇训练，包含间歇计时器和心率监测功能。",
+      "runningProgressTitle": "跑步进度",
+      "sprintIntervalsTitle": "冲刺间歇 (30秒 × 8组)",
+      "title": "高强度间歇训练（HIIT）心血管训练",
+      "warmupTitle": "热身 (5 分钟)"
+    },
+    "workout": {
+      "chart": "图表",
+      "duration": "时长",
+      "note": "请注意：用力进行",
+      "recoverySuffix": "（恢复：{seconds}次）",
+      "setsReps": "{sets} 组 x {reps} 次"
+    },
+    "workouts": {
+      "cardioDay": {
+        "name": "有氧运动日"
+      },
+      "lowerBodyA": {
+        "name": "第一天，下半身 A 2.0"
+      },
+      "upperBodyPower": {
+        "name": "上肢力量"
+      }
+    }
+  },
+  "forms": {
+    "enterCsvPath": "输入 CSV 路径",
+    "enterFolderPath": "请输入文件夹路径",
+    "workoutName": "锻炼名称"
+  },
+  "general": {
+    "avgReps": "平均次数",
+    "back": "返回",
+    "currentFile": "当前文件",
+    "dashboard": "仪表盘",
+    "delete": "删除",
+    "edit": "编辑",
+    "front": "正面",
+    "labels": {
+      "avgCustom": "平均值 {label}",
+      "avgDistance": "平均距离 (公里)",
+      "avgDuration": "平均时长 (秒)",
+      "avgHeartRate": "平均心率 (每分钟)",
+      "avgVolume": "平均体积 ({unit})",
+      "avgWeight": "平均重量 ({unit})",
+      "back": "返回",
+      "dailyVolume": "每日交易量（{{unit}}）",
+      "dashboard": "仪表盘",
+      "front": "正面",
+      "pace": "速度（分钟/公里）",
+      "totalCustom": "总计 {label}",
+      "totalDistance": "总距离（公里）",
+      "totalDuration": "总时长（秒）",
+      "totalVolume": "总容量 ({unit})",
+      "totalWeight": "总重量 ({unit})"
+    },
+    "muscleHeatMap": "肌肉热图",
+    "noMatchMessage": "未找到匹配",
+    "search": "搜索",
+    "totalReps": "总次数",
+    "workoutData": "锻炼数据",
+    "workoutLog": "锻炼记录"
+  },
+  "icons": {
+    "actions": {
+      "add": "➕",
+      "delete": "🗑️",
+      "edit": "✏️"
+    },
+    "common": {
+      "empty": "",
+      "percentage": "%",
+      "plus": "+"
+    },
+    "dashboard": {
+      "quickStats": {
+        "metrics": {
+          "avgVolume": "📊",
+          "totalVolume": "📦",
+          "workouts": "🏋️"
+        },
+        "periods": {
+          "month": "📆",
+          "week": "🗓️",
+          "year": "📈"
+        }
+      },
+      "summary": {
+        "currentStreak": "🔥",
+        "personalRecords": "🏅",
+        "totalVolume": "📦",
+        "totalWorkouts": "🏋️"
+      }
+    },
+    "duration": {
+      "timer": "⏱️"
+    },
+    "exercise": {
+      "abs": "🎯",
+      "back": "🦾",
+      "biceps": "💪",
+      "calves": "🦵",
+      "cardio": "⭐",
+      "chest": "🫁",
+      "core": "🎯",
+      "curl": "💪",
+      "deadlift": "💀",
+      "extension": "📏",
+      "forearms": "✊",
+      "glutes": "🍑",
+      "hamstrings": "🦵",
+      "legs": "🦵",
+      "pull": "⬇️",
+      "push": "🔼",
+      "quads": "🦵",
+      "rear_delts": "🔙",
+      "shoulders": "🦵",
+      "traps": "🔺",
+      "triceps": "💪"
+    },
+    "status": {
+      "info": "ℹ️",
+      "success": "✅",
+      "warning": "⚠️"
+    },
+    "tables": {
+      "delete": "🗑️",
+      "distance": "📍 ",
+      "duration": "⏱️ ",
+      "edit": "✏️",
+      "goto": "🔗",
+      "heartRate": "❤️ ",
+      "reps": "🔁 ",
+      "volume": "📊 ",
+      "weight": "🏋️ "
+    },
+    "timer": {
+      "pause": "⏸",
+      "play": "▶",
+      "reset": "↺"
+    }
+  },
+  "logs": {
+    "addLogButtonAria": "为 {exerciseName} 添加日志",
+    "addLogButtonText": "添加日志记录：{exerciseName}",
+    "createFirstLogButton": "为 {exerciseName} 创建第一个日志",
+    "createFirstLogButtonAria": "为 {exerciseName} 创建第一个日志",
+    "createLogButtonAria": "创建日志：{exerciseName}",
+    "createLogButtonText": "创建日志：{exerciseName}",
+    "noDataTitle": "未找到与 {{exerciseName}} 相关的日志"
+  },
+  "messages": {
+    "codeInserted": "代码已插入",
+    "csvNotFound": "CSV 文件未找到",
+    "errors": {
+      "tagReferenceFailed": "生成标签引用时出错："
+    },
+    "fileEmpty": "文件为空",
+    "imbalanceAlerts": "不平衡警报",
+    "insufficientData": "数据不足",
+    "loading": "正在加载锻炼数据...",
+    "noDataPeriod": "未找到所选时间段内的锻炼数据。",
+    "noFrontmatter": "无前置内容",
+    "noImbalances": "无不平衡",
+    "noTags": "无标签",
+    "success": {
+      "csvCreated": "CSV 文件已成功创建！"
+    },
+    "tagReferenceGenerated": "Tag Reference Generated",
+    "timerCompleted": "倒计时已完成！"
+  },
   "modal": {
+    "actions": "操作",
+    "addTag": "添加标签",
+    "autocomplete": {
+      "exactBadge": "★",
+      "exactTooltip": "完全匹配/前缀匹配 - 评分：{score}",
+      "fuzzyBadge": "~",
+      "fuzzyTooltip": "模糊匹配（拼写纠错） - 分数：{score}",
+      "partialBadge": "•",
+      "partialTooltip": "部分匹配 - 分数：{score}",
+      "wordBadge": "◆",
+      "wordTooltip": "匹配词 - 分数：{score}"
+    },
     "buttons": {
-      "adjustPlus": "+",
+      "addParameter": "添加参数",
       "adjustMinus": "-",
       "updateTable": "更新表格",
       "updateTimer": "更新计时器",
@@ -16,10 +517,12 @@
       "confirm": "确认",
       "createExercise": "创建训练页面",
       "createSection": "创建部分",
-      "insertExerciseBlock": "插入",
-      "updateTargetWeight": "更新目标",
       "export": "导出",
-      "addParameter": "添加参数",
+      "insertChart": "插入图表",
+      "insertDashboard": "插入仪表盘",
+      "insertExerciseBlock": "插入",
+      "insertTable": "插入表格",
+      "insertTimer": "插入计时器",
       "removeParameter": "删除",
       "renameInCsv": "在 CSV 中重命名"
     },
@@ -80,8 +583,7 @@
       "logCreated": "训练记录已成功创建！",
       "logUpdated": "训练记录已成功更新！",
       "chartInserted": "✅ 图表已成功插入！",
-      "tableInserted": "✅ 表格已成功插入！",
-      "timerInserted": "✅ 计时器已成功插入！",
+      "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ 仪表盘已成功插入！",
       "validationFillAll": "请填写所有字段并使用有效值。",
       "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
@@ -100,12 +602,16 @@
       "migrationError": "迁移错误",
       "migrationNoUpdates": "迁移无更新",
       "muscleTagDeleted": "肌肉标签已删除",
+      "muscleTagExists": "标签 \"{tag}\" 已经存在",
+      "muscleTagExportError": "导出肌肉标签时出错：{error}",
       "muscleTagExported": "肌肉标签已导出",
+      "muscleTagImportError": "导入肌肉标签时出错：{error}",
       "muscleTagImportInvalidFormat": "肌肉标签导入格式无效",
       "muscleTagImportNoValid": "肌肉标签导入：无有效标签",
       "muscleTagLoading": "肌肉标签加载中",
       "muscleTagNoResults": "未找到肌肉标签结果",
       "muscleTagSaved": "肌肉标签已保存",
+      "muscleTagSimilarFound": "{count} 找到相似标签",
       "muscleTagSimilarWarning": "肌肉标签相似警告",
       "targetAchieved": "目标已达成",
       "muscleTagCount": "找到 {count} 个标签",
@@ -170,6 +676,7 @@
     "customParameters": "自定义参数：",
     "parameterKey": "键：",
     "parameterLabel": "标签：",
+    "parameterRequired": "必填",
     "parameterType": "类型：",
     "parameterUnit": "单位（可选）：",
     "parameterRequired": "必填",
@@ -350,12 +857,29 @@
       "failed": "失败",
       "generateTemplates": "生成模板"
     },
+    "none": "无",
     "options": {
       "none": "无",
       "weightUnit": {
         "kg": "千克 (kg)",
         "lb": "磅 (lb)"
       }
+    },
+    "placeholders": {
+      "presetName": "请输入预设名称",
+      "protocolAbbreviation": "例如：gs",
+      "protocolName": "请输入协议名称"
+    },
+    "sections": {
+      "csvManagement": "CSV 文件管理",
+      "customProtocols": "自定义协议",
+      "exampleData": "示例数据",
+      "filtering": "筛选",
+      "quickLog": "移动日志",
+      "setupAndData": "设置与数据",
+      "templates": "模板",
+      "timerPresets": "定时器预设",
+      "trainingParameters": "训练参数"
     },
     "tooltips": {
       "editProtocol": "编辑训练方案",
@@ -393,10 +917,31 @@
       "volume": "训练量",
       "weight": "重量",
       "duration": "时长",
-      "distance": "距离",
+      "exercise": "锻炼",
       "heartRate": "心率",
-      "trendLine": "趋势线",
-      "target": "目标："
+      "notes": "备注",
+      "pace": "速度（分钟/公里）",
+      "protocol": "协议",
+      "reps": "代表",
+      "volume": "音量",
+      "weight": "重量"
+    },
+    "columns": {
+      "actions": "操作",
+      "date": "日期",
+      "distance": "距离",
+      "distanceUnit": "距离 ({distanceUnit})",
+      "duration": "时长",
+      "exercise": "锻炼",
+      "heartRate": "心率",
+      "notes": "备注",
+      "pace": "速度",
+      "protocol": "协议",
+      "reps": "重复",
+      "volume": "音量",
+      "volumeUnit": "体积 ({weightUnit})",
+      "weight": "重量",
+      "weightUnit": "重量 ({weightUnit})"
     },
     "deleteConfirm": "确认删除",
     "deleteError": "删除失败",
@@ -404,6 +949,7 @@
     "deleteTitle": "删除标题",
     "distance": "距离",
     "duration": "时长",
+    "editTable": "编辑表格",
     "editTitle": "编辑标题",
     "gotoExercise": "跳转到训练",
     "heartRate": "心率",
@@ -438,7 +984,6 @@
       "weight": "重量",
       "volume": "训练量",
       "duration": "时长",
-      "distance": "距离",
       "heartRate": "心率",
       "notes": "备注",
       "protocol": "训练方案",
@@ -598,10 +1143,13 @@
     "interval": "间歇",
     "stopwatch": "秒表",
     "controls": {
-      "startTimer": "开始计时",
       "pauseTimer": "暂停计时器",
-      "resetTimer": "重置计时器"
+      "resetTimer": "重置计时器",
+      "startTimer": "开始计时"
     },
+    "countdown": "倒计时",
+    "editTimer": "编辑计时器",
+    "interval": "间隔",
     "presets": {
       "detailsControls": "控件",
       "detailsSound": "声音"

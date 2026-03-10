@@ -19,11 +19,11 @@ export class EmbeddedTimerView extends BaseView {
   private timerId: string;
   private timerCore: TimerCore;
 
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutChartsPlugin, id?: string) {
     super(plugin);
-    this.timerId = `timer-${Date.now()}-${Math.random()
-      .toString(36)
-      .substring(2, 9)}`;
+    this.timerId =
+      id ||
+      `timer-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
     // Initialize timer core with callbacks
     this.timerCore = new TimerCore(this.timerId, {
@@ -47,29 +47,33 @@ export class EmbeddedTimerView extends BaseView {
         return;
       }
 
-      this.timerCore.stop();
-
+      // If timer is already running, we only re-render the UI components
+      // without resetting the core timing state, unless parameters changed significantly
+      const currentState = this.timerCore.getState();
       const timerType = resolvedParams.type || TIMER_TYPE.COUNTDOWN;
       const duration = resolvedParams.duration || 30;
       const totalRounds = resolvedParams.rounds || 1;
 
-      this.timerCore.setState({
-        timerType,
-        duration,
-        totalRounds,
-        elapsedTime: 0,
-        currentRound: 1,
-        isRunning: false,
-        startTime: undefined,
-      });
+      const needsReset =
+        !this.timerCore.isRunning() ||
+        currentState.timerType !== timerType ||
+        currentState.duration !== duration ||
+        currentState.totalRounds !== totalRounds;
+
+      if (needsReset) {
+        this.timerCore.stop();
+        this.timerCore.setState({
+          timerType,
+          duration,
+          totalRounds,
+          elapsedTime: 0,
+          currentRound: 1,
+          isRunning: false,
+          startTime: undefined,
+        });
+      }
 
       this.renderTimerContent(container, resolvedParams, params);
-
-      // Verify timer display was created
-      const currentState = this.timerCore.getState();
-      if (!currentState.timerDisplay) {
-        return;
-      }
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -225,6 +229,12 @@ export class EmbeddedTimerView extends BaseView {
         contentDiv,
         () => this.timerCore.getState(),
         callbacks,
+      );
+
+      // Ensure button icon matches current running state (important for persistent IDs)
+      TimerControls.updateStartStopButton(
+        startStopBtn,
+        this.timerCore.isRunning(),
       );
 
       // Store reference in timer core state

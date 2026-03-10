@@ -48,11 +48,27 @@ jest.mock("@app/components/molecules/LogCallouts", () => ({
   },
 }));
 
+jest.mock("@app/utils/BlockIdMigration", () => ({
+  runAddMissingBlockIds: jest.fn(),
+}));
+
+jest.mock("@app/orchestration/ErrorCollector", () => ({
+  ErrorCollector: {
+    logError: jest.fn(),
+    getInstance: jest.fn().mockReturnValue({ isEnabled: true }),
+  },
+}));
+
+jest.mock("@app/i18n", () => ({
+  t: jest.fn((key) => key),
+}));
+
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
+import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 
 describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
@@ -67,6 +83,15 @@ describe("CodeBlockProcessorService", () => {
   beforeEach(() => {
     // Create mocks
     mockPlugin = {
+      app: {
+        vault: {
+          getMarkdownFiles: jest.fn().mockReturnValue([]),
+        },
+      },
+      settings: {
+        timerPresets: {},
+        defaultTimerPreset: "",
+      },
       registerMarkdownCodeBlockProcessor: jest.fn(),
     };
     mockDataService = {
@@ -560,6 +585,30 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("handleWorkoutTimer", () => {
+    it("should trigger migration if id is missing", () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      expect(runAddMissingBlockIds).toHaveBeenCalledWith(mockPlugin.app);
+    });
+
+    it("should NOT trigger migration if id is present", () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      (service as any).handleWorkoutTimer("id: timer123\nduration: 60", el, ctx);
+
+      expect(runAddMissingBlockIds).not.toHaveBeenCalled();
+    });
+
     it("should create timer and register child", () => {
       const el = document.createElement("div");
       const ctx = {

@@ -1,4 +1,5 @@
 import { App, Notice, TFile } from "obsidian";
+import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { t } from "@app/i18n";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
@@ -159,6 +160,31 @@ export class CommandHandlerService {
       name: t("commands.manageMuscleTags"),
       callback: () => {
         new MuscleTagManagerModal(this.app, this.plugin).open();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "add-missing-block-ids",
+      name: t("commands.addMissingBlockIds"),
+      callback: async () => {
+        try {
+          const { totalAdded, modifiedFiles } = await runAddMissingBlockIds(
+            this.app,
+          );
+          if (totalAdded === 0) {
+            new Notice(t("messages.success.noBlockIdsNeeded"));
+          } else {
+            new Notice(
+              t("messages.success.blockIdsAdded", {
+                count: totalAdded,
+                files: modifiedFiles,
+              }),
+            );
+          }
+        } catch (error) {
+          const errorMessage = ErrorUtils.getErrorMessage(error);
+          new Notice(`Error adding block IDs: ${errorMessage}`);
+        }
       },
     });
 

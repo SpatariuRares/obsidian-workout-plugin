@@ -24,12 +24,12 @@ export class CodeBlockEditorService {
   ): Promise<boolean> {
     try {
       const activeView = app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView) {
+      if (!activeView?.file) {
         return false;
       }
 
-      const editor = activeView.editor;
-      const content = editor.getValue();
+      const file = activeView.file;
+      const content = await app.vault.read(file);
 
       const result = this.updateCodeBlockParameter(
         content,
@@ -40,7 +40,7 @@ export class CodeBlockEditorService {
       );
 
       if (result.updated) {
-        editor.setValue(result.content);
+        await app.vault.modify(file, result.content);
         return true;
       }
 
@@ -122,18 +122,6 @@ export class CodeBlockEditorService {
   }
 
   /**
-   * Add or update a parameter in a code block
-   *
-   * If the parameter exists, updates it. If not, adds it before the closing ```.
-   *
-   * @param app - Obsidian App instance
-   * @param blockType - Code block type
-   * @param exercise - Exercise name to match
-   * @param paramName - Parameter name
-   * @param value - Parameter value
-   * @returns True if successful
-   */
-  /**
    * Replace an entire code block with new content
    *
    * Finds the code block matching blockType + id and replaces it entirely.
@@ -152,12 +140,13 @@ export class CodeBlockEditorService {
   ): Promise<boolean> {
     try {
       const activeView = app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView) {
+      if (!activeView?.file) {
         return false;
       }
 
-      const editor = activeView.editor;
-      const content = editor.getValue();
+      // Use vault API instead of editor API so it works in Reading Mode too
+      const file = activeView.file;
+      const content = await app.vault.read(file);
       const lines = content.split("\n");
 
       let inCodeBlock = false;
@@ -179,7 +168,7 @@ export class CodeBlockEditorService {
             const before = lines.slice(0, codeBlockStart);
             const after = lines.slice(i + 1);
             const newContent = [...before, newCode, ...after].join("\n");
-            editor.setValue(newContent);
+            await app.vault.modify(file, newContent);
             return true;
           }
           inCodeBlock = false;
@@ -211,12 +200,12 @@ export class CodeBlockEditorService {
   ): Promise<boolean> {
     try {
       const activeView = app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView) {
+      if (!activeView?.file) {
         return false;
       }
 
-      const editor = activeView.editor;
-      const content = editor.getValue();
+      const file = activeView.file;
+      const content = await app.vault.read(file);
       const lines = content.split("\n");
 
       let inCodeBlock = false;
@@ -262,16 +251,14 @@ export class CodeBlockEditorService {
       }
 
       if (paramLineIndex !== -1) {
-        // Update existing parameter
         lines[paramLineIndex] = `${paramName}: ${value}`;
       } else if (codeBlockEndIndex !== -1) {
-        // Add new parameter before closing ```
         lines.splice(codeBlockEndIndex, 0, `${paramName}: ${value}`);
       } else {
         return false;
       }
 
-      editor.setValue(lines.join("\n"));
+      await app.vault.modify(file, lines.join("\n"));
       return true;
     } catch {
       return false;

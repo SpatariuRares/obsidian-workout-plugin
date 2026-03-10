@@ -39,6 +39,7 @@
   },
   "commands": {
     "addExerciseBlock": "Add Exercise Block",
+    "addMissingBlockIds": "Add missing IDs to code blocks",
     "auditExerciseNames": "Audit Exercise Names",
     "convertExercise": "Convert Exercise",
     "createCsvLog": "Create CSV log file",
@@ -483,7 +484,9 @@
     "noImbalances": "No Imbalances",
     "noTags": "No Tags",
     "success": {
-      "csvCreated": "CSV file created successfully!"
+      "blockIdsAdded": "Added {count} missing ID(s) in {files} file(s)",
+      "csvCreated": "CSV file created successfully!",
+      "noBlockIdsNeeded": "All code blocks already have IDs"
     },
     "tagReferenceGenerated": "Tag reference generated successfully!",
     "timerCompleted": "Timer completed!"
@@ -764,6 +767,7 @@
       "cancel": "Cancel",
       "createExamples": "Create examples",
       "createFiles": "Create files",
+      "runAllMaintenance": "Run all",
       "done": "Done!",
       "failed": "Failed",
       "generateTemplates": "Generate templates",
@@ -795,6 +799,7 @@
       "quickWeightIncrement": "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
       "repDuration": "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
+      "runAllMaintenance": "Run all maintenance tasks sequentially. Safe to run multiple times.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
@@ -820,6 +825,7 @@
       "protocolName": "Protocol name",
       "repDuration": "Duration per repetition (seconds)",
       "setDuration": "Fallback set duration (seconds)",
+      "runAllMaintenance": "Run all maintenance tasks",
       "setupCSV": "Setup CSV files",
       "weightUnit": "Weight unit"
     },
@@ -854,6 +860,7 @@
     },
     "sections": {
       "csvManagement": "CSV file management",
+      "maintenance": "Maintenance",
       "customProtocols": "Custom protocols",
       "exampleData": "Example data",
       "filtering": "Filtering",

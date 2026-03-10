@@ -7,6 +7,7 @@ import { CustomProtocolsSettings } from "@app/features/settings/components/Custo
 import { TemplatesSettings } from "@app/features/settings/components/TemplatesSettings";
 import { DurationEstimationSettings } from "@app/features/duration";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
+import { MaintenanceSettings } from "@app/features/settings/components/MaintenanceSettings";
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: WorkoutChartsPlugin;
@@ -37,5 +38,8 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
 
     // Quick Log Section
     new QuickLogSettings(this.plugin, containerEl).render();
+
+    // Maintenance Section
+    new MaintenanceSettings(this.app, this.plugin, containerEl).render();
   }
 }

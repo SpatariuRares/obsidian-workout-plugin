@@ -57,40 +57,35 @@ export class EditTimerModal extends InsertTimerModal {
 
     if (!this.timerElements || !this.timerHandlers) return;
 
-    // Set timer type
+    // Apply preset values as base first, then override with explicit params.
+    // This ensures preset-only timers (e.g. `preset: rest90` with no explicit
+    // duration/type) show the correct preset values instead of form defaults.
+    if (params.preset) {
+      this.applyPresetValues(params.preset);
+      this.selectedPreset = params.preset;
+      for (const [name, chip] of this.presetChips) {
+        Chip.setSelected(chip, name === params.preset);
+      }
+    }
+
+    // Override with explicit params from the code block
     if (params.type) {
       this.timerHandlers.setTimerType(params.type);
     }
-
-    // Pre-fill duration
     if (params.duration !== undefined) {
       this.timerElements.durationInput.value = params.duration.toString();
     }
-
-    // Pre-fill rounds
     if (params.rounds !== undefined) {
       this.timerElements.roundsInput.value = params.rounds.toString();
     }
-
-    // Pre-fill exercise
     if (params.exercise) {
       this.timerElements.exerciseInput.value = params.exercise;
     }
-
-    // Pre-fill toggles
     if (params.showControls !== undefined) {
       this.timerElements.showControlsToggle.checked = params.showControls;
     }
     if (params.sound !== undefined) {
       this.timerElements.soundToggle.checked = params.sound;
-    }
-
-    // Select preset chip if applicable
-    if (params.preset) {
-      this.selectedPreset = params.preset;
-      for (const [name, chip] of this.presetChips) {
-        Chip.setSelected(chip, name === params.preset);
-      }
     }
   }
 

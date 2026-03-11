@@ -5,6 +5,7 @@ import {
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
+import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
@@ -20,6 +21,9 @@ export class CSVCacheService {
   // Lock to prevent parallel CSV loading (race condition fix)
   private loadingPromise: Promise<WorkoutLogData[]> | null = null;
 
+  // Event bus subscriptions to unregister on destroy
+  private unsubscribers: Array<() => void> = [];
+
   /**
    * Maximum cache size to prevent excessive memory consumption.
    * For users with large workout histories (10,000+ entries), we limit the cache
@@ -31,7 +35,28 @@ export class CSVCacheService {
   constructor(
     private app: App,
     private settings: WorkoutChartsSettings,
-  ) {}
+    eventBus: WorkoutEventBus,
+  ) {
+    this.setupEventListeners(eventBus);
+  }
+
+  private setupEventListeners(eventBus: WorkoutEventBus): void {
+    this.unsubscribers.push(
+      eventBus.on('log:added',        () => this.clearCache()),
+      eventBus.on('log:updated',      () => this.clearCache()),
+      eventBus.on('log:deleted',      () => this.clearCache()),
+      eventBus.on('log:bulk-changed', () => this.clearCache()),
+    );
+  }
+
+  /**
+   * De-register event bus listeners.
+   * Call in plugin.onunload() via DataService.destroy().
+   */
+  public destroy(): void {
+    for (const unsub of this.unsubscribers) unsub();
+    this.unsubscribers = [];
+  }
 
   /**
    * Get raw (unfiltered) data from cache or CSV.

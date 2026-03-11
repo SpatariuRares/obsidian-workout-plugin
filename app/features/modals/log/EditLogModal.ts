@@ -5,7 +5,6 @@ import type WorkoutChartsPlugin from "main";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { t } from "@app/i18n";
 
 export class EditLogModal extends BaseLogModal {
@@ -15,9 +14,8 @@ export class EditLogModal extends BaseLogModal {
     app: App,
     plugin: WorkoutChartsPlugin,
     originalLog: WorkoutLogData,
-    onLogUpdated?: (context?: WorkoutDataChangedEvent) => void,
   ) {
-    super(app, plugin, originalLog.exercise, originalLog.origine, onLogUpdated);
+    super(app, plugin, originalLog.exercise, originalLog.origine);
     this.originalLog = originalLog;
   }
 

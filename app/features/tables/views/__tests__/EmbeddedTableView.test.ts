@@ -426,7 +426,6 @@ describe("EmbeddedTableView", () => {
         "Squat",
         expect.any(String),
         plugin,
-        expect.any(Function),
         expect.any(AbortSignal),
         expect.anything(),
       );
@@ -439,8 +438,8 @@ describe("EmbeddedTableView", () => {
 
       const addLogCall = (LogCallouts.renderAddLogButton as jest.Mock).mock
         .calls[0];
-      // The 7th argument is latestEntry
-      expect(addLogCall[6]).toBeDefined();
+      // The 6th argument is latestEntry
+      expect(addLogCall[5]).toBeDefined();
     });
   });
 
@@ -569,7 +568,6 @@ describe("EmbeddedTableView", () => {
         expect.any(HTMLElement),
         expect.any(String),
         "[[My Workout]]",
-        expect.anything(),
         expect.anything(),
         expect.anything(),
         expect.anything(),

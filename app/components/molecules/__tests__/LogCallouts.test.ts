@@ -80,13 +80,12 @@ describe("LogCallouts organism", () => {
         plugin,
         "Deadlift",
         "[[TestPage]]",
-        expect.any(Function),
         undefined,
         false,
       );
     });
 
-    it("uses triggerWorkoutLogRefresh as default callback when no active file", () => {
+    it("opens CreateLogModal without callback when no active file", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();
 
@@ -97,17 +96,14 @@ describe("LogCallouts organism", () => {
       ) as HTMLButtonElement;
       button.click();
 
-      // Get the callback that was passed to CreateLogModal
-      const mockCalls = (CreateLogModal as jest.Mock).mock.calls;
-      expect(mockCalls.length).toBe(1);
-
-      // Callback should be a function
-      const callback = mockCalls[0][4];
-      expect(typeof callback).toBe("function");
-
-      // Call the callback and verify it calls triggerWorkoutLogRefresh
-      callback();
-      expect(plugin.triggerWorkoutLogRefresh).toHaveBeenCalled();
+      expect(CreateLogModal).toHaveBeenCalledWith(
+        plugin.app,
+        plugin,
+        "Bench",
+        "",
+        undefined,
+        true,
+      );
     });
   });
 
@@ -153,7 +149,6 @@ describe("LogCallouts organism", () => {
         "Squat",
         "[[Page]]",
         undefined,
-        undefined,
         false,
       );
     });
@@ -181,7 +176,6 @@ describe("LogCallouts organism", () => {
         "[[Page]]",
         plugin,
         undefined,
-        undefined,
         latestEntry,
       );
 
@@ -195,7 +189,6 @@ describe("LogCallouts organism", () => {
         plugin,
         "Squat",
         "[[Page]]",
-        undefined,
         {
           exercise: "Squat",
           weight: 100,
@@ -205,35 +198,6 @@ describe("LogCallouts organism", () => {
           protocol: WorkoutProtocol.DROP_SET,
           customFields: { tempo: "2-1-2" },
         },
-        false,
-      );
-    });
-
-    it("calls onLogCreated callback when provided", () => {
-      const container = createObsidianContainer();
-      const plugin = createMockPlugin();
-      const onLogCreated = jest.fn();
-
-      LogCallouts.renderAddLogButton(
-        container,
-        "Squat",
-        "[[Page]]",
-        plugin,
-        onLogCreated,
-      );
-
-      const button = container.querySelector(
-        ".workout-btn-primary",
-      ) as HTMLButtonElement;
-      button.click();
-
-      expect(CreateLogModal).toHaveBeenCalledWith(
-        plugin.app,
-        plugin,
-        "Squat",
-        "[[Page]]",
-        onLogCreated,
-        undefined,
         false,
       );
     });
@@ -261,7 +225,6 @@ describe("LogCallouts organism", () => {
         "[[Page]]",
         plugin,
         undefined,
-        undefined,
         latestEntry,
       );
 
@@ -275,7 +238,6 @@ describe("LogCallouts organism", () => {
         plugin,
         "Squat",
         "[[Page]]",
-        undefined,
         {
           exercise: "Squat",
           weight: 100,
@@ -327,7 +289,6 @@ describe("LogCallouts organism", () => {
         plugin,
         "Deadlift",
         "[[ExercisePage]]",
-        expect.any(Function),
         undefined,
         false,
       );

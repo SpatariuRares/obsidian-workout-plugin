@@ -69,7 +69,7 @@ export class GeneralSettings {
             ParameterUtils.setWeightUnit(value);
             await this.plugin.saveSettings();
             // Trigger global refresh to update all views with new unit
-            this.plugin.triggerWorkoutLogRefresh({});
+            this.plugin.eventBus.emit({ type: 'log:bulk-changed', payload: { count: 0, operation: 'other' } });
           }),
       );
 

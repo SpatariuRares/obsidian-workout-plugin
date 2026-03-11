@@ -1,6 +1,7 @@
 import { CSVCacheService } from "../CSVCacheService";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { App, TFile, Notice } from "obsidian";
-import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import { WorkoutChartsSettings, WorkoutLogData } from "@app/types/WorkoutLogData";
 import * as WorkoutLogDataModule from "@app/types/WorkoutLogData";
 
 // Mock dependencies
@@ -16,9 +17,11 @@ describe("CSVCacheService", () => {
   let mockApp: App;
   let mockSettings: WorkoutChartsSettings;
   let mockVault: any;
+  let eventBus: WorkoutEventBus;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    eventBus = new WorkoutEventBus();
 
     mockVault = {
       getAbstractFileByPath: jest.fn(),
@@ -33,7 +36,11 @@ describe("CSVCacheService", () => {
       csvLogFilePath: "folder/workout_log.csv",
     } as WorkoutChartsSettings;
 
-    service = new CSVCacheService(mockApp, mockSettings);
+    service = new CSVCacheService(mockApp, mockSettings, eventBus);
+  });
+
+  afterEach(() => {
+    eventBus.destroy();
   });
 
   describe("getRawData", () => {
@@ -269,4 +276,103 @@ describe("CSVCacheService", () => {
       expect(service.isCacheValid()).toBe(false);
     });
   });
+});
+
+describe("CSVCacheService event integration", () => {
+  let cache: CSVCacheService;
+  let eventBus: WorkoutEventBus;
+  let mockApp: App;
+  let mockSettings: WorkoutChartsSettings;
+  let mockVault: any;
+
+  const mockEntry = {
+    exercise: 'Squat',
+    date: '2025-01-01',
+    reps: 10,
+    weight: 100,
+    volume: 1000,
+  } as WorkoutLogData;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockVault = {
+      getAbstractFileByPath: jest.fn(),
+      read: jest.fn(),
+    };
+    mockApp = { vault: mockVault } as unknown as App;
+    mockSettings = { csvLogFilePath: "workout_log.csv" } as WorkoutChartsSettings;
+
+    // Setup vault to return valid data so getRawData() populates cache
+    const mockFile = new TFile();
+    mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+    mockVault.read.mockResolvedValue("content");
+    (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
+    (WorkoutLogDataModule.convertFromCSVEntry as jest.Mock).mockReturnValue(mockEntry);
+
+    eventBus = new WorkoutEventBus();
+    cache = new CSVCacheService(mockApp, mockSettings, eventBus);
+  });
+
+  afterEach(() => {
+    eventBus.destroy();
+  });
+
+  it("should clear cache when log:added is emitted", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({ type: 'log:added', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+
+    expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should clear cache when log:updated is emitted", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({ type: 'log:updated', payload: { previous: mockEntry, updated: mockEntry } });
+
+    expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should clear cache when log:deleted is emitted", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({ type: 'log:deleted', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+
+    expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should clear cache when log:bulk-changed is emitted", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({ type: 'log:bulk-changed', payload: { count: 5, operation: 'import' } });
+
+    expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should NOT clear cache on muscle-tags:changed", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({ type: 'muscle-tags:changed', payload: {} });
+
+    expect(cache.isCacheValid()).toBe(true);
+  });
+
+  it("should NOT clear cache after destroy()", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    cache.destroy();
+
+    eventBus.emit({ type: 'log:added', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+
+    // Listener removed — cache should remain valid
+    expect(cache.isCacheValid()).toBe(true);
+  });
+
 });

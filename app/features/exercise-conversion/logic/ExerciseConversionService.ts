@@ -60,63 +60,65 @@ export class ExerciseConversionService {
 
     let convertedCount = 0;
 
-    for (const log of logData) {
-      // Build updated entry
-      const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
-        date: log.date,
-        exercise: log.exercise,
-        reps: log.reps,
-        weight: log.weight,
-        volume: log.volume,
-        origine: log.origine,
-        workout: log.workout,
-        notes: log.notes,
-        protocol: log.protocol,
-        customFields: { ...log.customFields },
-      };
+    await this.plugin.batchOperation('other', async () => {
+      for (const log of logData) {
+        // Build updated entry
+        const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
+          date: log.date,
+          exercise: log.exercise,
+          reps: log.reps,
+          weight: log.weight,
+          volume: log.volume,
+          origine: log.origine,
+          workout: log.workout,
+          notes: log.notes,
+          protocol: log.protocol,
+          customFields: { ...log.customFields },
+        };
 
-      // Apply field mappings
-      for (const mapping of fieldMappings) {
-        const sourceValue = this.getFieldValue(log, mapping.fromField);
+        // Apply field mappings
+        for (const mapping of fieldMappings) {
+          const sourceValue = this.getFieldValue(log, mapping.fromField);
 
-        if (sourceValue !== undefined && sourceValue !== null) {
-          this.setFieldValue(updatedEntry, mapping.toField, sourceValue);
-        }
-      }
-
-      // Clear fields that don't belong to the target type
-      const targetType = getExerciseTypeById(targetTypeId);
-      const targetFieldKeys = new Set(
-        targetType?.parameters.map((p) => p.key) ?? []
-      );
-
-      if (!targetFieldKeys.has("reps")) {
-        updatedEntry.reps = 0;
-      }
-      if (!targetFieldKeys.has("weight")) {
-        updatedEntry.weight = 0;
-      }
-
-      // Remove custom fields not defined in the target type
-      if (updatedEntry.customFields) {
-        for (const key of Object.keys(updatedEntry.customFields)) {
-          if (!targetFieldKeys.has(key)) {
-            delete updatedEntry.customFields[key];
+          if (sourceValue !== undefined && sourceValue !== null) {
+            this.setFieldValue(updatedEntry, mapping.toField, sourceValue);
           }
         }
-      }
 
-      // Recalculate volume for strength type
-      if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
-        updatedEntry.volume = updatedEntry.reps * updatedEntry.weight;
-      } else {
-        updatedEntry.volume = 0;
-      }
+        // Clear fields that don't belong to the target type
+        const targetType = getExerciseTypeById(targetTypeId);
+        const targetFieldKeys = new Set(
+          targetType?.parameters.map((p) => p.key) ?? []
+        );
 
-      // Update entry
-      await this.plugin.updateWorkoutLogEntry(log, updatedEntry);
-      convertedCount++;
-    }
+        if (!targetFieldKeys.has("reps")) {
+          updatedEntry.reps = 0;
+        }
+        if (!targetFieldKeys.has("weight")) {
+          updatedEntry.weight = 0;
+        }
+
+        // Remove custom fields not defined in the target type
+        if (updatedEntry.customFields) {
+          for (const key of Object.keys(updatedEntry.customFields)) {
+            if (!targetFieldKeys.has(key)) {
+              delete updatedEntry.customFields[key];
+            }
+          }
+        }
+
+        // Recalculate volume for strength type
+        if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
+          updatedEntry.volume = updatedEntry.reps * updatedEntry.weight;
+        } else {
+          updatedEntry.volume = 0;
+        }
+
+        // Update entry
+        await this.plugin.updateWorkoutLogEntry(log, updatedEntry);
+        convertedCount++;
+      }
+    });
 
     return convertedCount;
   }

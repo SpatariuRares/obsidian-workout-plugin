@@ -241,9 +241,6 @@ export class ConvertExerciseDataModal extends ModalBase {
 
       new Notice(t("convert.success", { count }));
       this.close();
-      this.plugin.triggerWorkoutLogRefresh({
-        exercise: this.selectedExercise,
-      });
     } catch (error) {
       new Notice(t("convert.errors.convertError", { error: String(error) }));
     }

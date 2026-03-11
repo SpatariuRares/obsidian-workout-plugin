@@ -69,6 +69,7 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
@@ -79,6 +80,7 @@ describe("CodeBlockProcessorService", () => {
   let mockDashboardView: any;
   let activeTimers: Map<string, EmbeddedTimerView>;
   let mockMuscleTagService: any;
+  let eventBus: WorkoutEventBus;
 
   beforeEach(() => {
     // Create mocks
@@ -115,6 +117,7 @@ describe("CodeBlockProcessorService", () => {
     mockMuscleTagService = {
       getTagMap: jest.fn().mockReturnValue(new Map()),
     };
+    eventBus = new WorkoutEventBus();
 
     service = new CodeBlockProcessorService(
       mockPlugin,
@@ -123,9 +126,14 @@ describe("CodeBlockProcessorService", () => {
       mockTableView,
       mockDashboardView,
       activeTimers,
+      eventBus,
     );
 
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    eventBus.destroy();
   });
 
   describe("registerProcessors", () => {
@@ -318,7 +326,6 @@ describe("CodeBlockProcessorService", () => {
       expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalledWith(
         el,
         mockPlugin,
-        undefined,
         undefined,
         "[[path]]",
       );
@@ -568,7 +575,7 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("should use DataAwareRenderChild with empty params for dashboard", async () => {
+    it("should use EventAwareRenderChild with muscleTagsAware for dashboard", async () => {
       mockDashboardView.loadDashboardData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);

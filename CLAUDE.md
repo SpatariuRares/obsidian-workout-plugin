@@ -345,36 +345,43 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 ### Refresh Architecture (Event-Driven)
 
-All data mutations trigger a centralized refresh via workspace events. Views subscribe through `DataAwareRenderChild` and selectively re-render based on event context.
+All data mutations emit typed events on `WorkoutEventBus`. Views subscribe via `EventAwareRenderChild` and selectively re-render based on event type and exercise/workout filter.
 
-**Workout log data** (`workout_logs.csv`):
-
-```
-Mutation → plugin.triggerWorkoutLogRefresh({exercise?, workout?})
-  → clearLogDataCache()
-  → workspace.trigger("workout-planner:data-changed", context)
-  → DataAwareRenderChild instances decide whether to refresh
-```
-
-**Muscle tag data** (`muscle-tags.csv`):
+**Workout log mutation flow:**
 
 ```
-Mutation → plugin.triggerMuscleTagRefresh()
+Repository.add/update/delete/rename
+  → eventBus.emit(log:added | log:updated | log:deleted | log:bulk-changed)
+  → CSVCacheService clears cache (reactive subscriber)
+  → EventAwareRenderChild receives event → filters by exercise/workout → calls renderFn()
+```
+
+**Muscle tag mutation flow:**
+
+```
+plugin.triggerMuscleTagRefresh()
   → muscleTagService.clearCache()
-  → workspace.trigger("workout-planner:muscle-tags-changed", {})
-  → triggerWorkoutLogRefresh() (dashboard refresh)
+  → eventBus.emit(muscle-tags:changed)
+  → EventAwareRenderChild with muscleTagsAware=true re-renders (dashboards)
+```
+
+**Bulk operations (e.g. exercise conversion, import):**
+
+```
+dataService.batchOperation('import', async () => { ... N mutations ... })
+  → All log:* events suppressed during fn()
+  → One log:bulk-changed emitted at end
+  → All EventAwareRenderChild instances re-render once
 ```
 
 **Key components:**
 
-- `DataAwareRenderChild` — Listens for `data-changed`, calls `shouldRefresh(ctx)` to filter by exercise/workout
-- `CodeBlockProcessorService` — Wires each code block to a `DataAwareRenderChild` with its specific refresh function
-- `triggerWorkoutLogRefresh(ctx?)` — Entry point for workout log changes (tables, charts, dashboards)
-- `triggerMuscleTagRefresh()` — Entry point for muscle tag changes (dashboards)
+- `WorkoutEventBus` (`app/services/events/WorkoutEventBus.ts`) — Typed internal event bus; `batch()` coalesces N events into one `log:bulk-changed`
+- `EventAwareRenderChild` (`app/services/core/EventAwareRenderChild.ts`) — Replaces the old `DataAwareRenderChild`; filters by `exercise`, `workout`, `exactMatch`, `muscleTagsAware`
+- `WorkoutEventTypes.ts` — Discriminated union `WorkoutEvent`, `normalizeExercise()` for case/whitespace-insensitive comparison
+- `triggerWorkoutLogRefresh()` in `main.ts` — **Deprecated** public method; emits `log:bulk-changed` for backward compat with external callers
 
-**Selective refresh:** When context includes exercise/workout, only matching views re-render. Empty context `{}` triggers global refresh of all views.
-
-**Important:** Do NOT pass local `onRefresh` callbacks through table components. The global event system handles all refresh logic. Table actions (edit/delete) call `triggerWorkoutLogRefresh()` directly.
+**Important:** Do NOT pass `onRefresh` callbacks through modal or table components. The event bus handles all refresh logic automatically after every repository mutation.
 
 ### Data Flow
 

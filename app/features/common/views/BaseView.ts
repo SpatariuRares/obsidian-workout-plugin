@@ -51,7 +51,6 @@ export abstract class BaseView {
         container,
         this.plugin,
         exerciseName,
-        undefined,
         currentPageLink,
       );
       return true;

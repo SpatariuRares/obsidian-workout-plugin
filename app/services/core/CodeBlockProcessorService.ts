@@ -12,10 +12,11 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
-import { DataAwareRenderChild } from "@app/services/core/DataAwareRenderChild";
+import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 import { CONSTANTS } from "@app/constants";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 
@@ -28,31 +29,29 @@ class TimerRenderChild extends MarkdownRenderChild {
     private persistentId?: string,
     private exercise?: string,
     private workout?: string,
+    private eventBus?: WorkoutEventBus,
   ) {
     super(containerEl);
   }
 
   onload() {
-    if (!this.exercise || !this.workout) return;
+    if (!this.exercise || !this.workout || !this.eventBus) return;
 
-    const exerciseLower = this.exercise.toLowerCase();
-    const workoutLower = this.workout.toLowerCase();
+    const exerciseNorm = normalizeExercise(this.exercise);
+    const workoutNorm = normalizeExercise(this.workout);
 
-    // Only auto-start on log-added, not on edit/delete (data-changed)
-    this.registerEvent(
-      this.plugin.app.workspace.on(
-        "workout-planner:log-added",
-        (evt: WorkoutDataChangedEvent) => {
-          if (
-            evt.exercise?.toLowerCase() === exerciseLower &&
-            evt.workout?.toLowerCase() === workoutLower &&
-            !this.timerView.isTimerRunning()
-          ) {
-            this.timerView.reset();
-            this.timerView.start();
-          }
-        },
-      ),
+    // Only auto-start on log:added, not on edit/delete
+    this.register(
+      this.eventBus.on('log:added', ({ context }) => {
+        if (
+          normalizeExercise(context.exercise) === exerciseNorm &&
+          context.workout && normalizeExercise(context.workout) === workoutNorm &&
+          !this.timerView.isTimerRunning()
+        ) {
+          this.timerView.reset();
+          this.timerView.start();
+        }
+      })
     );
   }
 
@@ -81,6 +80,7 @@ export class CodeBlockProcessorService {
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,
     private activeTimers: Map<string, EmbeddedTimerView>,
+    private eventBus: WorkoutEventBus,
   ) {
     // Initialize duration view internally (no external dependencies needed)
     this.embeddedDurationView = new EmbeddedDurationView(plugin);
@@ -133,11 +133,16 @@ export class CodeBlockProcessorService {
       );
 
       ctx.addChild(
-        new DataAwareRenderChild(el, this.plugin, params, () =>
-          this.embeddedChartView.refreshChart(
-            el,
-            params as EmbeddedChartParams,
-          ),
+        new EventAwareRenderChild(
+          el,
+          this.eventBus,
+          {
+            exercise: params.exercise as string | undefined,
+            workout: params.workout as string | undefined,
+            exactMatch: params.exactMatch as boolean | undefined,
+            muscleTagsAware: false,
+          },
+          () => this.embeddedChartView.refreshChart(el, params as EmbeddedChartParams),
         ),
       );
     } catch (error) {
@@ -164,11 +169,16 @@ export class CodeBlockProcessorService {
       );
 
       ctx.addChild(
-        new DataAwareRenderChild(el, this.plugin, params, () =>
-          this.embeddedTableView.refreshTable(
-            el,
-            params as EmbeddedTableParams,
-          ),
+        new EventAwareRenderChild(
+          el,
+          this.eventBus,
+          {
+            exercise: params.exercise as string | undefined,
+            workout: params.workout as string | undefined,
+            exactMatch: params.exactMatch as boolean | undefined,
+            muscleTagsAware: false,
+          },
+          () => this.embeddedTableView.refreshTable(el, params as EmbeddedTableParams),
         ),
       );
     } catch (error) {
@@ -235,6 +245,7 @@ export class CodeBlockProcessorService {
         params.id, // Pass persistentId for lifecycle management
         timerExercise,
         timerWorkout,
+        this.eventBus,
       ),
     );
 
@@ -264,13 +275,15 @@ export class CodeBlockProcessorService {
         params as EmbeddedDashboardParams,
       );
 
-      // Dashboard has no exercise/workout filters → pass {} so it always refreshes
       ctx.addChild(
-        new DataAwareRenderChild(el, this.plugin, {}, () =>
-          this.embeddedDashboardView.refreshDashboard(
-            el,
-            params as EmbeddedDashboardParams,
-          ),
+        new EventAwareRenderChild(
+          el,
+          this.eventBus,
+          {
+            // Nessun filtro esercizio/workout = sempre refresh
+            muscleTagsAware: true, // Dashboard mostra muscle heat map
+          },
+          () => this.embeddedDashboardView.refreshDashboard(el, params as EmbeddedDashboardParams),
         ),
       );
     } catch (error) {
@@ -337,7 +350,6 @@ export class CodeBlockProcessorService {
     LogCallouts.renderCsvNoDataMessage(
       el,
       this.plugin,
-      undefined,
       undefined,
       currentPageLink,
     );

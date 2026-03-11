@@ -8,6 +8,7 @@ import {
 import { App, TFile, Notice } from "obsidian";
 import type { CSVColumnService } from "@app/services/data/CSVColumnService";
 import type { CSVCacheService } from "@app/services/data/CSVCacheService";
+import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { StringUtils, ErrorUtils, PathUtils } from "@app/utils";
 import { t } from "@app/i18n";
 
@@ -23,6 +24,7 @@ export class WorkoutLogRepository {
     private settings: WorkoutChartsSettings,
     private columnService: CSVColumnService,
     private cacheService: CSVCacheService,
+    private eventBus: WorkoutEventBus,
   ) {}
 
   /**
@@ -79,12 +81,15 @@ export class WorkoutLogRepository {
     // Get existing custom columns to preserve column order
     const existingCustomColumns = await this.columnService.getCustomColumns();
 
+    let generatedTimestamp = Date.now();
+
     await this.app.vault.process(csvFile, (content) => {
       const csvEntries = parseCSVLogFile(content);
 
+      generatedTimestamp = Date.now();
       const newEntry: CSVWorkoutLogEntry = {
         ...entry,
-        timestamp: Date.now(),
+        timestamp: generatedTimestamp,
       };
 
       csvEntries.push(newEntry);
@@ -92,7 +97,13 @@ export class WorkoutLogRepository {
       return entriesToCSVContent(csvEntries, existingCustomColumns);
     });
 
-    this.cacheService.clearCache();
+    this.eventBus.emit({
+      type: 'log:added',
+      payload: {
+        entry: { ...entry, timestamp: generatedTimestamp } as WorkoutLogData,
+        context: { exercise: entry.exercise, workout: entry.workout },
+      },
+    });
   }
 
   /**
@@ -163,7 +174,13 @@ export class WorkoutLogRepository {
       return entriesToCSVContent(csvEntries, existingCustomColumns);
     });
 
-    this.cacheService.clearCache();
+    this.eventBus.emit({
+      type: 'log:updated',
+      payload: {
+        previous: originalLog,
+        updated: { ...updatedEntry, timestamp: originalLog.timestamp } as WorkoutLogData,
+      },
+    });
   }
 
   /**
@@ -211,7 +228,13 @@ export class WorkoutLogRepository {
       return entriesToCSVContent(csvEntries);
     });
 
-    this.cacheService.clearCache();
+    this.eventBus.emit({
+      type: 'log:deleted',
+      payload: {
+        entry: logToDelete,
+        context: { exercise: logToDelete.exercise, workout: logToDelete.workout },
+      },
+    });
   }
 
   /**
@@ -252,7 +275,10 @@ export class WorkoutLogRepository {
         return entriesToCSVContent(csvEntries);
       });
 
-      this.cacheService.clearCache();
+      this.eventBus.emit({
+        type: 'log:bulk-changed',
+        payload: { count: updateCount, operation: 'rename' },
+      });
 
       return updateCount;
     } catch (error) {

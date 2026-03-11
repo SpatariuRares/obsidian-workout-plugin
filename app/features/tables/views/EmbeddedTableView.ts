@@ -226,7 +226,6 @@ export class EmbeddedTableView extends BaseView {
       exerciseName,
       currentPageLink,
       this.plugin,
-      (ctx) => this.plugin.triggerWorkoutLogRefresh(ctx),
       signal,
       latestEntry,
     );

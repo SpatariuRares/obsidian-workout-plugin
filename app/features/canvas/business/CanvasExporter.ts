@@ -124,7 +124,7 @@ export class CanvasExporter {
     private app: App,
     private plugin: WorkoutChartsPlugin,
   ) {
-    const dataService = new DataService(app, plugin.settings);
+    const dataService = new DataService(app, plugin.settings, plugin.eventBus);
     this.api = new WorkoutPlannerAPI(dataService, app, plugin.settings);
     this.tagMapper = new MuscleTagMapper(plugin.getMuscleTagService());
   }

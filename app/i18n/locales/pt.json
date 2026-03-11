@@ -46,7 +46,8 @@
     "generateTagReference": "Gerar Referência de Tag",
     "insertTable": "Inserir Tabela",
     "manageMuscleTags": "Gerenciar etiquetas de músculos",
-    "migrateExerciseTypes": "Migrar Tipos de Exercícios"
+    "migrateExerciseTypes": "Migrar Tipos de Exercícios",
+    "addMissingBlockIds": "Adicione os IDs ausentes aos blocos de código"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Sem discrepâncias",
     "noTags": "Sem etiquetas",
     "success": {
-      "csvCreated": "O arquivo CSV foi criado com sucesso!"
+      "csvCreated": "O arquivo CSV foi criado com sucesso!",
+      "blockIdsAdded": "Adicionados os IDs faltantes {count} no(s) arquivo(s) {files}",
+      "noBlockIdsNeeded": "Todos os blocos de código já possuem IDs."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Cronômetro finalizado!"
@@ -772,7 +775,8 @@
       "overwriting": "Substituir...",
       "regenerateOverwrite": "Recriar (substituir)",
       "savePreset": "Salvar",
-      "saveProtocol": "Salvar"
+      "saveProtocol": "Salvar",
+      "runAllMaintenance": "Executar tudo"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Um arquivo CSV de etiquetas musculares já existe. Você deseja sobrescrevê-lo com valores padrão? Isso removerá todas as etiquetas personalizadas.",
@@ -797,7 +801,8 @@
       "setDuration": "Utilizado quando o tipo de representação não é especificado (opção padrão). Faixa típica: 30-60 segundos.",
       "setupCSV": "Crie os arquivos workout_logs.csv e muscle-tags.csv na pasta configurada.",
       "weightIncrement": "Incremento padrão de peso para sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
-      "weightUnit": "Selecione a unidade para medições de peso (kg/lb). Isso afeta a unidade padrão para novos registros."
+      "weightUnit": "Selecione a unidade para medições de peso (kg/lb). Isso afeta a unidade padrão para novos registros.",
+      "runAllMaintenance": "Execute todas as tarefas de manutenção de forma sequencial. Seguro para executar várias vezes."
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
@@ -821,7 +826,8 @@
       "repDuration": "Duração por repetição (segundos)",
       "setDuration": "Duração padrão (segundos)",
       "setupCSV": "Configurar ficheiros CSV",
-      "weightUnit": "Unidade de peso"
+      "weightUnit": "Unidade de peso",
+      "runAllMaintenance": "Executar todas as tarefas de manutenção"
     },
     "messages": {
       "confirmDeletePreset": "Tem certeza de que deseja excluir este preset?",
@@ -861,7 +867,8 @@
       "setupAndData": "Configuração e dados",
       "templates": "Modelos",
       "timerPresets": "Predefinições de temporizador",
-      "trainingParameters": "Parâmetros de treinamento"
+      "trainingParameters": "Parâmetros de treinamento",
+      "maintenance": "Manutenção"
     },
     "tooltips": {
       "deletePreset": "Excluir predefinição",

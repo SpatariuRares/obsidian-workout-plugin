@@ -46,7 +46,8 @@
     "generateTagReference": "إنشاء مرجع العلامات",
     "insertTable": "إدراج جدول",
     "manageMuscleTags": "إدارة علامات العضلات",
-    "migrateExerciseTypes": "التحوّل بين أنواع التمارين"
+    "migrateExerciseTypes": "التحوّل بين أنواع التمارين",
+    "addMissingBlockIds": "أضف المعرفات المفقودة إلى كتل التعليمات البرمجية."
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "لا يوجد توازنات",
     "noTags": "لا توجد علامات",
     "success": {
-      "csvCreated": "تم إنشاء ملف CSV بنجاح!"
+      "csvCreated": "تم إنشاء ملف CSV بنجاح!",
+      "blockIdsAdded": "تمت إضافة معرف(ات) مفقودة(ين) في الملف(ات) {files}",
+      "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات."
     },
     "tagReferenceGenerated": "تم إنشاء مرجع العلامات",
     "timerCompleted": "تم إكمال العداد!"
@@ -772,7 +775,8 @@
       "overwriting": "الكتابة فوق...",
       "regenerateOverwrite": "إعادة إنشاء (الكتابة فوق)",
       "savePreset": "حفظ",
-      "saveProtocol": "حفظ"
+      "saveProtocol": "حفظ",
+      "runAllMaintenance": "تشغيل الكل"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "يوجد ملف CSV للتسميات العضلية بالفعل. هل ترغب في استبداله بالقيم الافتراضية؟ هذا سيقوم بإزالة أي تسميات مخصصة.",
@@ -797,7 +801,8 @@
       "setDuration": "يُستخدم عندما لا يتم تحديد عدد التكرارات (الخيار الافتراضي). نطاق معتدل: 30-60 ثانية.",
       "setupCSV": "أنشئ كلاً من workout_logs.csv و muscle-tags.csv في المجلد المُحدد.",
       "weightIncrement": "الزيادة الافتراضية في الوزن لزيادة التحميل التدريجي (مثلاً: 2.5 للزيادة بمقدار 2.5 وحدة)",
-      "weightUnit": "اختر الوحدة لقياس الوزن (kg/lb). هذا يؤثر على الوحدة الافتراضية للسجلات الجديدة."
+      "weightUnit": "اختر الوحدة لقياس الوزن (kg/lb). هذا يؤثر على الوحدة الافتراضية للسجلات الجديدة.",
+      "runAllMaintenance": "تنفيذ جميع مهام الصيانة بالتسلسل. آمن لتنفيذها عدة مرات."
     },
     "labels": {
       "csvPath": "مسار ملف سجل CSV",
@@ -821,7 +826,8 @@
       "repDuration": "مدة كل تكرار (ثوانٍ)",
       "setDuration": "مدة كل مجموعة (الخيار الاحتياطي) (ثوانٍ)",
       "setupCSV": "إعدادات الملفات (CSV)",
-      "weightUnit": "وحدة الوزن"
+      "weightUnit": "وحدة الوزن",
+      "runAllMaintenance": "تنفيذ جميع مهام الصيانة"
     },
     "messages": {
       "confirmDeletePreset": "هل أنت متأكد من أنك تريد حذف هذا الإعداد؟",
@@ -861,7 +867,8 @@
       "setupAndData": "الإعداد والبيانات",
       "templates": "القوالب",
       "timerPresets": "الإعدادات المسبقة للساعة",
-      "trainingParameters": "معلمات التدريب"
+      "trainingParameters": "معلمات التدريب",
+      "maintenance": "الصيانة"
     },
     "tooltips": {
       "deletePreset": "حذف القالب",

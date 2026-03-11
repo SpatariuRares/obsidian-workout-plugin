@@ -46,7 +46,8 @@
     "generateTagReference": "Générer une référence de balise.",
     "insertTable": "Insérer le tableau.",
     "manageMuscleTags": "Gérer les excroissances cutanées.",
-    "migrateExerciseTypes": "Migrer les types d'exercices."
+    "migrateExerciseTypes": "Migrer les types d'exercices.",
+    "addMissingBlockIds": "Ajouter les ID manquants aux blocs de code"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Pas de déséquilibres.",
     "noTags": "Pas de balises.",
     "success": {
-      "csvCreated": "Le fichier CSV a été créé avec succès !"
+      "csvCreated": "Le fichier CSV a été créé avec succès !",
+      "blockIdsAdded": "Ajouté(s) l'ID(s) manquant(s) {count} dans le(s) fichier(s) {files}.",
+      "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants."
     },
     "tagReferenceGenerated": "Référence de balise générée.",
     "timerCompleted": "Le compte à rebours est terminé !"
@@ -772,7 +775,8 @@
       "overwriting": "Écraser...",
       "regenerateOverwrite": "Ré-générer (écraser)",
       "savePreset": "Enregistrer.",
-      "saveProtocol": "Enregistrer."
+      "saveProtocol": "Enregistrer.",
+      "runAllMaintenance": "Exécuter toutes"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV contenant les balises de muscles existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera toutes les balises personnalisées.",
@@ -797,7 +801,8 @@
       "setDuration": "Utilisé lorsque le nombre de répétitions n'est pas précisé (solution de repli). Plage typique : 30 à 60 secondes.",
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
-      "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements."
+      "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements.",
+      "runAllMaintenance": "Exécuter toutes les tâches de maintenance de manière séquentielle. Sécurisé pour être exécuté plusieurs fois."
     },
     "labels": {
       "csvPath": "Chemin d'accès au fichier journal au format CSV.",
@@ -821,7 +826,8 @@
       "repDuration": "Durée par répétition (en secondes).",
       "setDuration": "Durée de la période de repli (en secondes).",
       "setupCSV": "Configurer les fichiers CSV.",
-      "weightUnit": "Unité de mesure de masse."
+      "weightUnit": "Unité de mesure de masse.",
+      "runAllMaintenance": "Exécuter toutes les tâches de maintenance"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce modèle ?",
@@ -861,7 +867,8 @@
       "setupAndData": "Configuration et données",
       "templates": "Modèles.",
       "timerPresets": "Réglages prédéfinis du minuteur.",
-      "trainingParameters": "Paramètres d'entraînement"
+      "trainingParameters": "Paramètres d'entraînement",
+      "maintenance": "Maintenance"
     },
     "tooltips": {
       "deletePreset": "Supprimer le modèle",

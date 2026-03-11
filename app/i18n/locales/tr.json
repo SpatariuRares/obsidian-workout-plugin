@@ -46,7 +46,8 @@
     "generateTagReference": "Etiket Referansını Oluştur",
     "insertTable": "Tablo ekle",
     "manageMuscleTags": "Kas Etiketlerini Yönet",
-    "migrateExerciseTypes": "Egzersiz Türlerini Taşı"
+    "migrateExerciseTypes": "Egzersiz Türlerini Taşı",
+    "addMissingBlockIds": "Kod bloklarına eksik ID'leri ekle"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Dengesizlik Yok",
     "noTags": "Etiket Yok",
     "success": {
-      "csvCreated": "CSV dosyası başarıyla oluşturuldu!"
+      "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
+      "blockIdsAdded": "{count} numaralı eksik ID'ler {files} dosyalarında eklendi.",
+      "noBlockIdsNeeded": "Tüm kod blokları zaten ID'ye sahip."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Zamanlayıcı tamamlandı!"
@@ -772,7 +775,8 @@
       "overwriting": "Yeniden yazma...",
       "regenerateOverwrite": "Yeniden oluştur (yazıyı geçersiz kıl)",
       "savePreset": "Kaydet",
-      "saveProtocol": "Kaydet"
+      "saveProtocol": "Kaydet",
+      "runAllMaintenance": "Tüm bakımları gerçekleştir"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -797,7 +801,8 @@
       "setDuration": "Kullanılırken temsilciler belirtilmediğinde (varsayılan değer). Tipik aralık: 30-60 saniye.",
       "setupCSV": "Ayarlama klasöründe hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
-      "weightUnit": "Ağırlık ölçümleri için birim seçin (kg/lb). Bu, yeni günlükler için varsayılan birimi etkiler."
+      "weightUnit": "Ağırlık ölçümleri için birim seçin (kg/lb). Bu, yeni günlükler için varsayılan birimi etkiler.",
+      "runAllMaintenance": "Tüm bakım görevlerini ardışık olarak çalıştırın. Tekrar tekrar çalıştırılması güvenlidir."
     },
     "labels": {
       "csvPath": "CSV log dosyası yolu",
@@ -821,7 +826,8 @@
       "repDuration": "Tekrarlama süresi (saniye)",
       "setDuration": "Yedekleme süresi (saniye)",
       "setupCSV": "CSV dosyalarını yapılandırın",
-      "weightUnit": "Ağırlık birimi"
+      "weightUnit": "Ağırlık birimi",
+      "runAllMaintenance": "Tüm bakım görevlerini gerçekleştir"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -861,7 +867,8 @@
       "setupAndData": "Kurulum ve veri",
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
-      "trainingParameters": "Eğitim parametreleri"
+      "trainingParameters": "Eğitim parametreleri",
+      "maintenance": "Bakım"
     },
     "tooltips": {
       "deletePreset": "Önceden ayarlanmış değeri sil",

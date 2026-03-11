@@ -46,7 +46,8 @@
     "generateTagReference": "Krijo Referencë",
     "insertTable": "Shto tabelë",
     "manageMuscleTags": "Menaxhimi i Etiketave të Muskulaturës",
-    "migrateExerciseTypes": "Migro Lojërat"
+    "migrateExerciseTypes": "Migro Lojërat",
+    "addMissingBlockIds": "Shto ID-të e mungueshme në blloqe të kodit"
   },
   "common": {
     "bpm": "BPM",
@@ -483,7 +484,9 @@
     "noImbalances": "Nëse nuk ka disbalancim",
     "noTags": "Pa etiketa",
     "success": {
-      "csvCreated": "Fajla CSV u krijua me sukses!"
+      "csvCreated": "Fajla CSV u krijua me sukses!",
+      "blockIdsAdded": "U shtuar(a) ID(et) e munguar {count} në fail(et) {files}.",
+      "noBlockIdsNeeded": "Tutte kodet kanë tashmë ID-t"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Trajimi është përfunduar!"
@@ -772,7 +775,8 @@
       "overwriting": "Zëvendësim...",
       "regenerateOverwrite": "Regjenero (zëvendëso)",
       "savePreset": "Ruaj",
-      "saveProtocol": "Ruaj"
+      "saveProtocol": "Ruaj",
+      "runAllMaintenance": "Zgjidh të kryej të gjitha"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një dosje CSV me etiketat e muskujve tashmë ekziston. A dëshironi të shkrihen me vlerat e parapara? Kjo do të fshirë të gjitha etiketat e personalizuara.",
@@ -797,7 +801,8 @@
       "setDuration": "Shumë përdorur kur nuk janë specifikuar. (version i zëvendësimit). Rrezimi tipik: 30-60 sekonda.",
       "setupCSV": "Kriju të gjithë file-t workout_logs.csv dhe muscle-tags.csv në folderin e konfiguruar.",
       "weightIncrement": "Shuma e parësore e rritjes së pesheve për mbiemërim progresiv (p.sh., 2.5 për rritje me 2.5 unitete)",
-      "weightUnit": "Pëzgjidhni unitetin për matjet e peshës (kg/lb). Kjo ndikon në unitetin e vullnetshëm për regjistrat të reja."
+      "weightUnit": "Pëzgjidhni unitetin për matjet e peshës (kg/lb). Kjo ndikon në unitetin e vullnetshëm për regjistrat të reja.",
+      "runAllMaintenance": "Zgjidhni dhe ekzekutoni të gjitha deturat e mirëmbajtjes në një radhë. Sigur, mund të ekzekutohet disa herë."
     },
     "labels": {
       "csvPath": "Rruga e failit të loogut CSV",
@@ -821,7 +826,8 @@
       "repDuration": "Koha për përitë (sekondë)",
       "setDuration": "Vlera e parësore (sekonda)",
       "setupCSV": "Konfigurimi i failëve CSV",
-      "weightUnit": "Jedunitë e pesheve"
+      "weightUnit": "Jedunitë e pesheve",
+      "runAllMaintenance": "Zgjidhni të gjitha detyrat e mirëmbajtjes"
     },
     "messages": {
       "confirmDeletePreset": "Sigurisht ke dëshirë të fshirë këtë profil?",
@@ -861,7 +867,8 @@
       "setupAndData": "Konfigurim dhe të dhëna",
       "templates": "Shablonet",
       "timerPresets": "Paraqësit e kohës",
-      "trainingParameters": "Parametrat e trajtimit"
+      "trainingParameters": "Parametrat e trajtimit",
+      "maintenance": "Mirëmbajtje"
     },
     "tooltips": {
       "deletePreset": "Fshrimi i profilit",

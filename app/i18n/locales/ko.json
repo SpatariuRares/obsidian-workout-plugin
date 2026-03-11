@@ -46,7 +46,8 @@
     "generateTagReference": "태그 참조 생성",
     "insertTable": "테이블 삽입",
     "manageMuscleTags": "근육 태그 관리",
-    "migrateExerciseTypes": "운동 유형 마이그레이션"
+    "migrateExerciseTypes": "운동 유형 마이그레이션",
+    "addMissingBlockIds": "코드 블록에 누락된 ID 추가"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "불균형 없음",
     "noTags": "태그 없음",
     "success": {
-      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!"
+      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",
+      "blockIdsAdded": "{files} 파일에 {count} 누락된 ID(들) 추가",
+      "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "타이머 완료!"
@@ -772,7 +775,8 @@
       "overwriting": "덮어쓰기...",
       "regenerateOverwrite": "재생성 (덮어쓰기)",
       "savePreset": "저장",
-      "saveProtocol": "저장"
+      "saveProtocol": "저장",
+      "runAllMaintenance": "모든 유지보수 실행"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -797,7 +801,8 @@
       "setDuration": "대리인 정보가 지정되지 않은 경우에 사용됩니다 (기본값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
-      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다."
+      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다.",
+      "runAllMaintenance": "모든 유지보수 작업을 순차적으로 실행합니다. 여러 번 실행해도 안전합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
@@ -821,7 +826,8 @@
       "repDuration": "반복 횟수당 지속 시간 (초)",
       "setDuration": "대체 설정 지속 시간 (초)",
       "setupCSV": "CSV 파일 설정",
-      "weightUnit": "무게 단위"
+      "weightUnit": "무게 단위",
+      "runAllMaintenance": "모든 유지보수 작업 실행"
     },
     "messages": {
       "confirmDeletePreset": "이 프리셋을 삭제하시겠습니까?",
@@ -861,7 +867,8 @@
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 설정",
-      "trainingParameters": "훈련 매개변수"
+      "trainingParameters": "훈련 매개변수",
+      "maintenance": "유지보수"
     },
     "tooltips": {
       "deletePreset": "{preset} 삭제",

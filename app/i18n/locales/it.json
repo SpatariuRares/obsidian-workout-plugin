@@ -46,7 +46,8 @@
     "generateTagReference": "Genera riferimento tag",
     "insertTable": "Inserisci tabella",
     "manageMuscleTags": "Gestisci le etichette muscolari",
-    "migrateExerciseTypes": "Migra i tipi di esercizio"
+    "migrateExerciseTypes": "Migra i tipi di esercizio",
+    "addMissingBlockIds": "Aggiungi gli ID mancanti ai blocchi di codice"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Nessun disavanzo",
     "noTags": "Nessun tag",
     "success": {
-      "csvCreated": "Il file CSV è stato creato correttamente!"
+      "csvCreated": "Il file CSV è stato creato correttamente!",
+      "blockIdsAdded": "Aggiunti gli ID mancanti {count} nel/i file {files}",
+      "noBlockIdsNeeded": "Tutti i blocchi di codice hanno già un ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer completato!"
@@ -772,7 +775,8 @@
       "overwriting": "Sovrascrittura...",
       "regenerateOverwrite": "Riaffina (sovrascrivi)",
       "savePreset": "Salva",
-      "saveProtocol": "Salva"
+      "saveProtocol": "Salva",
+      "runAllMaintenance": "Esegui tutti"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
@@ -797,7 +801,8 @@
       "setDuration": "Utilizzato quando le ripetizioni non sono specificate (fallback). Intervallo tipico: 30-60 secondi.",
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
-      "weightUnit": "Seleziona l'unità di misura per le misurazioni del peso (kg/lb). Questo influisce sull'unità predefinita per i nuovi registri."
+      "weightUnit": "Seleziona l'unità di misura per le misurazioni del peso (kg/lb). Questo influisce sull'unità predefinita per i nuovi registri.",
+      "runAllMaintenance": "Esegui tutte le attività di manutenzione in sequenza. È sicuro eseguirle più volte."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -821,7 +826,8 @@
       "repDuration": "Durata per ripetizione (secondi)",
       "setDuration": "Durata serie di riserva (secondi)",
       "setupCSV": "Configura file CSV",
-      "weightUnit": "Unità di misura peso"
+      "weightUnit": "Unità di misura peso",
+      "runAllMaintenance": "Esegui tutte le operazioni di manutenzione"
     },
     "messages": {
       "confirmDeletePreset": "Sei sicuro di voler eliminare questa impostazione predefinita?",
@@ -861,7 +867,8 @@
       "setupAndData": "Configurazione e dati",
       "templates": "Template",
       "timerPresets": "Preset timer",
-      "trainingParameters": "Parametri di addestramento"
+      "trainingParameters": "Parametri di addestramento",
+      "maintenance": "Manutenzione"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",

@@ -46,7 +46,8 @@
     "generateTagReference": "Generează referință pentru etichetă",
     "insertTable": "Adaugă tabel",
     "manageMuscleTags": "Gestionați etichetele pentru mușchi",
-    "migrateExerciseTypes": "Migrează tipurile de exerciții"
+    "migrateExerciseTypes": "Migrează tipurile de exerciții",
+    "addMissingBlockIds": "Adăugați ID-urile lipsă în blocuri de cod"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Fără dezechilibre",
     "noTags": "Fără etichete",
     "success": {
-      "csvCreated": "Fișierul CSV a fost creat cu succes!"
+      "csvCreated": "Fișierul CSV a fost creat cu succes!",
+      "blockIdsAdded": "Au fost adăugate ID-urile lipsă {count} în fișierul(ele) {files}.",
+      "noBlockIdsNeeded": "Toate blocurile de cod au deja ID-uri."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Cronometrul s-a încheiat!"
@@ -772,7 +775,8 @@
       "overwriting": "Supra-scriere...",
       "regenerateOverwrite": "Re generează (supra scrie)",
       "savePreset": "Salva",
-      "saveProtocol": "Salva"
+      "saveProtocol": "Salva",
+      "runAllMaintenance": "Rulează toate"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -797,7 +801,8 @@
       "setDuration": "Utilizat atunci când tipul de reprezentare nu este specificat (ca alternativă). Interval tipic: 30-60 secunde.",
       "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru antrenamentul progresiv (de exemplu, 2,5 pentru incrementări de 2,5 unități)",
-      "weightUnit": "Selectați unitatea de măsură pentru greutate (kg/lb). Aceasta influențează unitatea implicită pentru noile înregistrări."
+      "weightUnit": "Selectați unitatea de măsură pentru greutate (kg/lb). Aceasta influențează unitatea implicită pentru noile înregistrări.",
+      "runAllMaintenance": "Execută toate sarcinile de întreținere în mod secvențial. Este sigur să le execuți de mai multe ori."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -821,7 +826,8 @@
       "repDuration": "Durata pentru fiecare repetiție (secunde)",
       "setDuration": "Durata de rezervă (secunde)",
       "setupCSV": "Configurare fișiere CSV",
-      "weightUnit": "Unitatea de măsură a greutății"
+      "weightUnit": "Unitatea de măsură a greutății",
+      "runAllMaintenance": "Execută toate sarcinile de întreținere"
     },
     "messages": {
       "confirmDeletePreset": "Sunteți sigur(ă) că doriți să ștergeți acest preset?",
@@ -861,7 +867,8 @@
       "setupAndData": "Configurare și date",
       "templates": "Șabloane",
       "timerPresets": "Prezăsetări ale cronometrului",
-      "trainingParameters": "Parametri de antrenare"
+      "trainingParameters": "Parametri de antrenare",
+      "maintenance": "Întreținere"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",

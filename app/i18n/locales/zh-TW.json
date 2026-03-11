@@ -46,7 +46,8 @@
     "generateTagReference": "產生標籤參考",
     "insertTable": "插入表格",
     "manageMuscleTags": "管理肌肉標籤",
-    "migrateExerciseTypes": "遷移運動類型"
+    "migrateExerciseTypes": "遷移運動類型",
+    "addMissingBlockIds": "將缺少 ID 填入程式碼區塊"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "沒有任何不平衡",
     "noTags": "沒有標籤",
     "success": {
-      "csvCreated": "CSV 檔案已成功建立！"
+      "csvCreated": "CSV 檔案已成功建立！",
+      "blockIdsAdded": "已新增 {count} 缺失的 ID(們) 在 {files} 檔案中",
+      "noBlockIdsNeeded": "所有程式碼區塊已經都有 ID"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "計時已完成！"
@@ -772,7 +775,8 @@
       "overwriting": "覆蓋...",
       "regenerateOverwrite": "重新生成 (覆蓋)",
       "savePreset": "儲存",
-      "saveProtocol": "儲存"
+      "saveProtocol": "儲存",
+      "runAllMaintenance": "執行全部"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -797,7 +801,8 @@
       "setDuration": "當沒有指定時，使用此選項作為備用。 典型範圍：30-60 秒。",
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "預設的增重幅度，適用於漸進式超負荷（例如，每增加 2.5 單位時，增重幅度為 2.5）。",
-      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。"
+      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。",
+      "runAllMaintenance": "依照順序執行所有維護任務。 能夠多次安全執行。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -821,7 +826,8 @@
       "repDuration": "每次重複的長度（秒）",
       "setDuration": "備用設定時長 (秒)",
       "setupCSV": "設定 CSV 檔案",
-      "weightUnit": "重量單位"
+      "weightUnit": "重量單位",
+      "runAllMaintenance": "執行所有維護任務"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",
@@ -861,7 +867,8 @@
       "setupAndData": "設定與數據",
       "templates": "範本",
       "timerPresets": "預設計時",
-      "trainingParameters": "訓練參數"
+      "trainingParameters": "訓練參數",
+      "maintenance": "維護"
     },
     "tooltips": {
       "deletePreset": "刪除預設",

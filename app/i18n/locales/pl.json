@@ -46,7 +46,8 @@
     "generateTagReference": "Wygeneruj odnośnik do tagu",
     "insertTable": "Dodaj tabelę",
     "manageMuscleTags": "Zarządzaj tagami mięśni",
-    "migrateExerciseTypes": "Przenieś typy ćwiczeń"
+    "migrateExerciseTypes": "Przenieś typy ćwiczeń",
+    "addMissingBlockIds": "Dodaj brakujące identyfikatory do bloków kodu"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Brak niezgodności",
     "noTags": "Brak tagów",
     "success": {
-      "csvCreated": "Plik CSV został pomyślnie utworzony!"
+      "csvCreated": "Plik CSV został pomyślnie utworzony!",
+      "blockIdsAdded": "Dodano brakujące ID(y) w pliku(ach) {files}",
+      "noBlockIdsNeeded": "Wszystkie bloki kodu już posiadają identyfikatory."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer zakończony!"
@@ -772,7 +775,8 @@
       "overwriting": "Nadpisywanie...",
       "regenerateOverwrite": "Wygeneruj (nadpisz)",
       "savePreset": "Zapisz",
-      "saveProtocol": "Zapisz"
+      "saveProtocol": "Zapisz",
+      "runAllMaintenance": "Uruchom wszystko"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -797,7 +801,8 @@
       "setDuration": "Używane, gdy nie podano konkretnych wartości (w przypadku braku danych). Typowy zakres: 30-60 sekund.",
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
-      "weightUnit": "Wybierz jednostkę dla pomiarów wagi (kg/lb). To wpływa na domyślną jednostkę dla nowych wpisów."
+      "weightUnit": "Wybierz jednostkę dla pomiarów wagi (kg/lb). To wpływa na domyślną jednostkę dla nowych wpisów.",
+      "runAllMaintenance": "Wykonuj wszystkie zadania konserwacyjne sekwencyjnie. Bezpieczne jest wykonywanie ich wielokrotnie."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
@@ -821,7 +826,8 @@
       "repDuration": "Czas trwania pojedynczej powtórki (sekundy)",
       "setDuration": "Czas trwania w przypadku awarii (sekundy)",
       "setupCSV": "Konfiguracja plików CSV",
-      "weightUnit": "Jednostka wagi"
+      "weightUnit": "Jednostka wagi",
+      "runAllMaintenance": "Wykonaj wszystkie zadania konserwacyjne"
     },
     "messages": {
       "confirmDeletePreset": "Czy na pewno chcesz usunąć ten szablon?",
@@ -861,7 +867,8 @@
       "setupAndData": "Konfiguracja i dane",
       "templates": "Szablony",
       "timerPresets": "Predefiniowane ustawienia timera",
-      "trainingParameters": "Parametry szkolenia"
+      "trainingParameters": "Parametry szkolenia",
+      "maintenance": "Utrzymanie"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",

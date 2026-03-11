@@ -46,7 +46,8 @@
     "generateTagReference": "Generer Tagreferens",
     "insertTable": "Indsæt Tabel",
     "manageMuscleTags": "Administrér Muskelmærker",
-    "migrateExerciseTypes": "Migrer Efterøvelsetype"
+    "migrateExerciseTypes": "Migrer Efterøvelsetype",
+    "addMissingBlockIds": "Tilføj manglende ID'er til kodeblokke"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Ingen Udligninger",
     "noTags": "Ingen Etiketter",
     "success": {
-      "csvCreated": "CSV-filen er oprettet med succes!"
+      "csvCreated": "CSV-filen er oprettet med succes!",
+      "blockIdsAdded": "Tilføjet {count} manglende ID(er) i {files} fil(er).",
+      "noBlockIdsNeeded": "Alle kodeblokke har allerede ID'er."
     },
     "tagReferenceGenerated": "Tag Referens Genereret",
     "timerCompleted": "Tidslinje fuldført!"
@@ -772,7 +775,8 @@
       "overwriting": "Overskriver...",
       "regenerateOverwrite": "Genopbyg (erstatter)",
       "savePreset": "Gem",
-      "saveProtocol": "Gem"
+      "saveProtocol": "Gem",
+      "runAllMaintenance": "Kør alle"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Et muskel-etiket CSV-fil eksisterer allerede. Vil du overskrive det med standardværdier? Dette fjerner alle kundegivne etiketter.",
@@ -797,7 +801,8 @@
       "setDuration": "Bruges ved uoplyste repetitioner (faldback). Typisk interval: 30-60 sekunder.",
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
-      "weightUnit": "Vælg enhed for vægtmålinger (kg/lb). Dette påvirker standardenhed for nye loggere."
+      "weightUnit": "Vælg enhed for vægtmålinger (kg/lb). Dette påvirker standardenhed for nye loggere.",
+      "runAllMaintenance": "Udfør alle vedligeholdelsesopgaver i rækkefølge. Sikkert at køre flere gange."
     },
     "labels": {
       "csvPath": "CSV-logfil sti",
@@ -821,7 +826,8 @@
       "repDuration": "Gennemførelsetid pr. gentagelse (sekunder)",
       "setDuration": "Tilfældighetsstilling (sekunder)",
       "setupCSV": "Opstill CSV-filer",
-      "weightUnit": "Vægt enhed"
+      "weightUnit": "Vægt enhed",
+      "runAllMaintenance": "Udfør alle vedligeholdelsesopgaver"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på, at du vil slette denne opsætning?",
@@ -861,7 +867,8 @@
       "setupAndData": "Opsætning og data",
       "templates": "Mallene",
       "timerPresets": "Timer presetter",
-      "trainingParameters": "Træningsparametre"
+      "trainingParameters": "Træningsparametre",
+      "maintenance": "Vedligehold"
     },
     "tooltips": {
       "deletePreset": "Slet forudindstilling",

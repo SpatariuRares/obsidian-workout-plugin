@@ -46,7 +46,8 @@
     "generateTagReference": "Hasilkan Referensi Tag",
     "insertTable": "Sisipkan Tabel",
     "manageMuscleTags": "Kelola Tag Otot",
-    "migrateExerciseTypes": "Migrasikan Jenis Latihan"
+    "migrateExerciseTypes": "Migrasikan Jenis Latihan",
+    "addMissingBlockIds": "Tambahkan ID yang hilang ke blok kode"
   },
   "common": {
     "bpm": "BPM",
@@ -483,7 +484,9 @@
     "noImbalances": "Tidak ada ketidakseimbangan",
     "noTags": "Tidak ada tag",
     "success": {
-      "csvCreated": "File CSV berhasil dibuat!"
+      "csvCreated": "File CSV berhasil dibuat!",
+      "blockIdsAdded": "Menambahkan ID yang hilang {count} dalam file {files}.",
+      "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer selesai!"
@@ -772,7 +775,8 @@
       "overwriting": "Menimpa...",
       "regenerateOverwrite": "Hasilkan ulang (menimpa)",
       "savePreset": "Simpan",
-      "saveProtocol": "Simpan"
+      "saveProtocol": "Simpan",
+      "runAllMaintenance": "Jalankan semua"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -797,7 +801,8 @@
       "setDuration": "Digunakan ketika jenis representasi tidak ditentukan (sebagai opsi cadangan). Rentang yang umum: 30-60 detik.",
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat standar untuk latihan bertahap (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
-      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru."
+      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru.",
+      "runAllMaintenance": "Jalankan semua tugas pemeliharaan secara berurutan. Aman untuk dijalankan beberapa kali."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -821,7 +826,8 @@
       "repDuration": "Durasi per pengulangan (detik)",
       "setDuration": "Durasi cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
-      "weightUnit": "Satuan berat"
+      "weightUnit": "Satuan berat",
+      "runAllMaintenance": "Jalankan semua tugas pemeliharaan"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -861,7 +867,8 @@
       "setupAndData": "Pengaturan & data",
       "templates": "Templat",
       "timerPresets": "Preset waktu",
-      "trainingParameters": "Parameter pelatihan"
+      "trainingParameters": "Parameter pelatihan",
+      "maintenance": "Perawatan"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",

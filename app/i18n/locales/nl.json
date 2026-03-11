@@ -46,7 +46,8 @@
     "generateTagReference": "Tag-referentie genereren",
     "insertTable": "Voeg tabel in",
     "manageMuscleTags": "Beheer spieretiketten",
-    "migrateExerciseTypes": "Migreer oefentypen"
+    "migrateExerciseTypes": "Migreer oefentypen",
+    "addMissingBlockIds": "Voeg ontbrekende ID's toe aan codeblokken"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Geen onbalans",
     "noTags": "Geen tags",
     "success": {
-      "csvCreated": "Het CSV-bestand is succesvol gemaakt!"
+      "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
+      "blockIdsAdded": "Voegde {count} ontbrekende ID(s) toe in het(de) bestand(en) {files}.",
+      "noBlockIdsNeeded": "Alle codeblokken hebben al een ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer voltooid!"
@@ -772,7 +775,8 @@
       "overwriting": "Overnemen...",
       "regenerateOverwrite": "Herstellen (aanpassen)",
       "savePreset": "Opslaan",
-      "saveProtocol": "Opslaan"
+      "saveProtocol": "Opslaan",
+      "runAllMaintenance": "Alle onderhoud uitvoeren"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -797,7 +801,8 @@
       "setDuration": "Wordt gebruikt wanneer de vertegenwoordigers niet zijn gespecificeerd (standaardwaarde). Typische duur: 30-60 seconden.",
       "setupCSV": "Maak zowel het bestand `workout_logs.csv` als `muscle-tags.csv` aan in de geconfigureerde map.",
       "weightIncrement": "Standaard toename in gewicht voor progressieve belasting (bijvoorbeeld 2,5 voor toenames van 2,5 eenheden)",
-      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs."
+      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs.",
+      "runAllMaintenance": "Voer alle onderhoudstaken één voor één uit. Veilig om meerdere keren uit te voeren."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -821,7 +826,8 @@
       "repDuration": "Duur per herhaling (seconden)",
       "setDuration": "Alternatieve duur (seconden)",
       "setupCSV": "Bestanden voor het importeren van CSV-gegevens",
-      "weightUnit": "Eenheid voor gewicht"
+      "weightUnit": "Eenheid voor gewicht",
+      "runAllMaintenance": "Alle onderhoudstaken uitvoeren"
     },
     "messages": {
       "confirmDeletePreset": "Bent u er zeker van dat u deze preset wilt verwijderen?",
@@ -861,7 +867,8 @@
       "setupAndData": "Instellingen en gegevens",
       "templates": "Templates",
       "timerPresets": "Vooraf ingestelde timers",
-      "trainingParameters": "Parameters voor training"
+      "trainingParameters": "Parameters voor training",
+      "maintenance": "Onderhoud"
     },
     "tooltips": {
       "deletePreset": "Preset verwijderen",

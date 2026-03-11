@@ -46,7 +46,8 @@
     "generateTagReference": "Generer referanse for tag",
     "insertTable": "Legg til tabell",
     "manageMuscleTags": "Administrer muskelmerker",
-    "migrateExerciseTypes": "Migrer øvelsetyper"
+    "migrateExerciseTypes": "Migrer øvelsetyper",
+    "addMissingBlockIds": "Legg til manglende ID-er i kodeblokker"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Ingen ubalanser",
     "noTags": "Ingen tagger",
     "success": {
-      "csvCreated": "CSV-filen ble opprettet med suksess!"
+      "csvCreated": "CSV-filen ble opprettet med suksess!",
+      "blockIdsAdded": "Legger til {count} manglende ID(er) i {files} fil(er).",
+      "noBlockIdsNeeded": "Alle kodeblokker har allerede ID-er."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer er fullført!"
@@ -772,7 +775,8 @@
       "overwriting": "Overstyre...",
       "regenerateOverwrite": "Generer på nytt (erstatt)",
       "savePreset": "Lagre",
-      "saveProtocol": "Lagre"
+      "saveProtocol": "Lagre",
+      "runAllMaintenance": "Kjør alt"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskelmerker eksisterer allerede. Vil du overskrive den med standardverdier? Dette vil fjerne alle tilpassede merker.",
@@ -797,7 +801,8 @@
       "setDuration": "Brukes når antall representanter ikke er angitt (som standardverdi). Typisk område: 30-60 sekunder.",
       "setupCSV": "Opprett både filer `workout_logs.csv` og `muscle-tags.csv` i den angitte mappen.",
       "weightIncrement": "Standard økning i vekt for gradvis belastning (f.eks. 2,5 for økninger på 2,5 enheter)",
-      "weightUnit": "Velg enheten for vektmålinger (kg/lb). Dette påvirker standardenheten for nye logger."
+      "weightUnit": "Velg enheten for vektmålinger (kg/lb). Dette påvirker standardenheten for nye logger.",
+      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver i rekkefølge. Trygt å kjøre flere ganger."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -821,7 +826,8 @@
       "repDuration": "Varighet per repetisjon (sekunder)",
       "setDuration": "Alternativ varighet (sekunder)",
       "setupCSV": "Opprett CSV-filer",
-      "weightUnit": "Enhet for vekt"
+      "weightUnit": "Enhet for vekt",
+      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -861,7 +867,8 @@
       "setupAndData": "Oppsett og data",
       "templates": "Mal",
       "timerPresets": "Forhåndsinnstilte tidere",
-      "trainingParameters": "Innstillinger for opplæring"
+      "trainingParameters": "Innstillinger for opplæring",
+      "maintenance": "Vedlikehold"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",

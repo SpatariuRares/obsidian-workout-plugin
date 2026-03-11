@@ -46,7 +46,8 @@
     "generateTagReference": "生成标签参考",
     "insertTable": "插入表格",
     "manageMuscleTags": "管理肌肉标签",
-    "migrateExerciseTypes": "迁移训练类型"
+    "migrateExerciseTypes": "迁移训练类型",
+    "addMissingBlockIds": "将缺失的 ID 添加到代码块中"
   },
   "common": {
     "bpm": "次/分钟",
@@ -483,7 +484,9 @@
     "noImbalances": "无不平衡",
     "noTags": "无标签",
     "success": {
-      "csvCreated": "CSV 文件已成功创建！"
+      "csvCreated": "CSV 文件已成功创建！",
+      "blockIdsAdded": "已在 {files} 文件中添加了缺失的 ID(s)：{count}",
+      "noBlockIdsNeeded": "所有代码块都已经有ID。"
     },
     "tagReferenceGenerated": "标签参考已生成",
     "timerCompleted": "计时器已完成！"
@@ -772,7 +775,8 @@
       "overwriting": "覆盖中...",
       "regenerateOverwrite": "重新生成（覆盖）",
       "savePreset": "保存",
-      "saveProtocol": "保存"
+      "saveProtocol": "保存",
+      "runAllMaintenance": "运行所有"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -797,7 +801,8 @@
       "setDuration": "当未指定次数时使用（备用）。典型范围：30-60秒。",
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
-      "weightUnit": "选择重量测量单位（千克/磅）。这会影响新记录的默认单位。"
+      "weightUnit": "选择重量测量单位（千克/磅）。这会影响新记录的默认单位。",
+      "runAllMaintenance": "依次执行所有维护任务。 可以在多次执行，且安全。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -821,7 +826,8 @@
       "repDuration": "每次重复时长（秒）",
       "setDuration": "备用组时长（秒）",
       "setupCSV": "设置 CSV 文件",
-      "weightUnit": "重量单位"
+      "weightUnit": "重量单位",
+      "runAllMaintenance": "执行所有维护任务"
     },
     "messages": {
       "confirmDeletePreset": "确定要删除此预设吗？",
@@ -861,7 +867,8 @@
       "setupAndData": "设置与数据",
       "templates": "模板",
       "timerPresets": "计时器预设",
-      "trainingParameters": "训练参数"
+      "trainingParameters": "训练参数",
+      "maintenance": "维护"
     },
     "tooltips": {
       "deletePreset": "删除预设",

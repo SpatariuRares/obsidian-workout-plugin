@@ -46,7 +46,8 @@
     "generateTagReference": "タグ参照を生成する",
     "insertTable": "テーブルの挿入",
     "manageMuscleTags": "筋肉タグの管理",
-    "migrateExerciseTypes": "エクササイズタイプの移行"
+    "migrateExerciseTypes": "エクササイズタイプの移行",
+    "addMissingBlockIds": "コードブロックに欠けているIDを追加する"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "不均衡はありません",
     "noTags": "タグなし",
     "success": {
-      "csvCreated": "CSVファイルが正常に作成されました！"
+      "csvCreated": "CSVファイルが正常に作成されました！",
+      "blockIdsAdded": "{count} の欠落した ID を {files} ファイルに登録しました。",
+      "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "タイマーが終了しました！"
@@ -772,7 +775,8 @@
       "overwriting": "上書き...",
       "regenerateOverwrite": "再生成 (上書き)",
       "savePreset": "保存",
-      "saveProtocol": "保存"
+      "saveProtocol": "保存",
+      "runAllMaintenance": "すべてのメンテナンスを実行する"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -797,7 +801,8 @@
       "setDuration": "使用される場合：担当者が指定されていない場合に備えとして。\n一般的な範囲：30～60秒。",
       "setupCSV": "設定されたフォルダに、workout_logs.csv と muscle-tags.csv の両方を作成してください。",
       "weightIncrement": "漸進的な負荷（例：2.5単位の増加の場合、2.5）に対するデフォルトの重量増加",
-      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。"
+      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。",
+      "runAllMaintenance": "すべてのメンテナンス作業を順番に実行してください。 繰り返し実行しても安全です。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -821,7 +826,8 @@
       "repDuration": "1回の繰り返しあたりの時間（秒）",
       "setDuration": "代替設定時間 (秒)",
       "setupCSV": "CSVファイルのセットアップ",
-      "weightUnit": "単位（重量）"
+      "weightUnit": "単位（重量）",
+      "runAllMaintenance": "すべてのメンテナンスタスクを実行する"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
@@ -861,7 +867,8 @@
       "setupAndData": "設定とデータ",
       "templates": "テンプレート",
       "timerPresets": "タイマー設定",
-      "trainingParameters": "トレーニングパラメータ"
+      "trainingParameters": "トレーニングパラメータ",
+      "maintenance": "メンテナンス"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",

@@ -46,7 +46,8 @@
     "generateTagReference": "टैग संदर्भ उत्पन्न करें",
     "insertTable": "टेबल डालें",
     "manageMuscleTags": "मांस के टैग प्रबंधित करें",
-    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें"
+    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें",
+    "addMissingBlockIds": "कोड ब्लॉकों में गुम आईडी जोड़ें"
   },
   "common": {
     "bpm": "बीपीएम",
@@ -483,7 +484,9 @@
     "noImbalances": "कोई असंतुलन नहीं",
     "noTags": "कोई टैग नहीं",
     "success": {
-      "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!"
+      "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",
+      "blockIdsAdded": "{count} गुम ID(s) को {files} फ़ाइल(s) में जोड़ा गया।",
+      "noBlockIdsNeeded": "सभी कोड ब्लॉक में पहले से ही आईडी मौजूद हैं।"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "टाइमर समाप्त!"
@@ -772,7 +775,8 @@
       "overwriting": "अतिरेक...",
       "regenerateOverwrite": "पुनर्जनरेट (ओवरराइट)",
       "savePreset": "सेव करें",
-      "saveProtocol": "सेव करें"
+      "saveProtocol": "सेव करें",
+      "runAllMaintenance": "सभी रखरखाव"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "एक मसल टैग्स CSV फ़ाइल पहले से मौजूद है। क्या आप इसे डिफ़ॉल्ट मानों के साथ ओवरराइट करना चाहते हैं? इससे सभी कस्टम टैग हटा दिए जाएंगे।",
@@ -797,7 +801,8 @@
       "setDuration": "जब प्रतिनिधि निर्दिष्ट नहीं होते हैं (डिफ़ॉल्ट)। सामान्य सीमा: 30-60 सेकंड।",
       "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
       "weightIncrement": "प्रगतिशील भार के लिए डिफ़ॉल्ट भार वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
-      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।"
+      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।",
+      "runAllMaintenance": "सभी रखरखाव कार्यों को क्रमानुसार चलाएं। कई बार चलाने के लिए सुरक्षित।"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -821,7 +826,8 @@
       "repDuration": "प्रति पुनरावृत्ति की अवधि (सेकंड)",
       "setDuration": "वैकल्पिक अवधि (सेकंड)",
       "setupCSV": "CSV फ़ाइलों को सेटअप करें",
-      "weightUnit": "वज़न की इकाई"
+      "weightUnit": "वज़न की इकाई",
+      "runAllMaintenance": "सभी रखरखाव कार्यों को चलाएं"
     },
     "messages": {
       "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
@@ -861,7 +867,8 @@
       "setupAndData": "स्थापना और डेटा",
       "templates": "टेम्प्लेट",
       "timerPresets": "टाइमर की पूर्व निर्धारित सेटिंग्स",
-      "trainingParameters": "प्रशिक्षण पैरामीटर"
+      "trainingParameters": "प्रशिक्षण पैरामीटर",
+      "maintenance": "रखरखाव"
     },
     "tooltips": {
       "deletePreset": "प्रेडसेट हटाएं",

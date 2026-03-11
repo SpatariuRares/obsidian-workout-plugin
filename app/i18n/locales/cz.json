@@ -46,7 +46,8 @@
     "generateTagReference": "Vygenerovat referenční seznam tagů",
     "insertTable": "Vložit tabulku",
     "manageMuscleTags": "Spravovat značky svalů",
-    "migrateExerciseTypes": "Migruj typ cvičení"
+    "migrateExerciseTypes": "Migruj typ cvičení",
+    "addMissingBlockIds": "Přidejte chybějící ID do bloků kódu"
   },
   "common": {
     "bpm": "bpm",
@@ -483,7 +484,9 @@
     "noImbalances": "Nebyl nalezen žádný nerovnováha",
     "noTags": "Žádné označení",
     "success": {
-      "csvCreated": "Soubor CSV byl úspěšně vytvořen!"
+      "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
+      "blockIdsAdded": "Přidány {count} chybějící ID(y) ve souboru(ech) {files}",
+      "noBlockIdsNeeded": "Všechny bloky kódu již mají ID."
     },
     "tagReferenceGenerated": "Vytvořeno odkazování na tagy",
     "timerCompleted": "Táimer dokončen!"
@@ -772,7 +775,8 @@
       "overwriting": "Přepsání...",
       "regenerateOverwrite": "Obnovit (přepsat)",
       "savePreset": "Uložit",
-      "saveProtocol": "Uložit"
+      "saveProtocol": "Uložit",
+      "runAllMaintenance": "Spustit vše"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Chybící soubor s hmotnostními značkami pro složku již existuje. Chcete přepsat ho výchozími hodnotami? Tím budou odstraněny všechny vlastní značky.",
@@ -797,7 +801,8 @@
       "setDuration": "Používáno při nezadaných opakováních (pádback). Obvyklý rozsah: 30-60 sekund.",
       "setupCSV": "Vytvořte oba soubory workout_logs.csv a muscle-tags.csv do konfigurované složky.",
       "weightIncrement": "Výchozí zvětšovací krok pro přetahování (např., 2,5 pro zvětšení o 2,5 jednotek)",
-      "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy."
+      "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy.",
+      "runAllMaintenance": "Spusťte všechny úkoly údržby postupně. Bezpečné pro opakované spuštění."
     },
     "labels": {
       "csvPath": "Cesta k souboru CSV logu",
@@ -821,7 +826,8 @@
       "repDuration": "Doba na opakování (sekundy)",
       "setDuration": "Doba náhrady (sekundy)",
       "setupCSV": "Nastavení souborů CSV",
-      "weightUnit": "Jednotka hmotnosti"
+      "weightUnit": "Jednotka hmotnosti",
+      "runAllMaintenance": "Spustit všechny úkoly údržby"
     },
     "messages": {
       "confirmDeletePreset": "Jste si jisti, že chcete tento přednastavený postup smazat?",
@@ -861,7 +867,8 @@
       "setupAndData": "Nastavení a data",
       "templates": "Šablony",
       "timerPresets": "Nastavení časových presetů",
-      "trainingParameters": "Parametry trénování"
+      "trainingParameters": "Parametry trénování",
+      "maintenance": "Údržba"
     },
     "tooltips": {
       "deletePreset": "Smazat přednastavení",

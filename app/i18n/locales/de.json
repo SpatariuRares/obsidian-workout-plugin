@@ -46,7 +46,8 @@
     "generateTagReference": "Tagreferenz generieren",
     "insertTable": "Tabelle einfügen",
     "manageMuscleTags": "Muskel-Tags verwalten",
-    "migrateExerciseTypes": "Überschreiben Übungstypen"
+    "migrateExerciseTypes": "Überschreiben Übungstypen",
+    "addMissingBlockIds": "Fügen Sie fehlende IDs zu Codeblöcken hinzu"
   },
   "common": {
     "bpm": "BPM",
@@ -483,7 +484,9 @@
     "noImbalances": "Keine Ungleichgewichte",
     "noTags": "Keine Tags",
     "success": {
-      "csvCreated": "CSV-Datei erfolgreich erstellt!"
+      "csvCreated": "CSV-Datei erfolgreich erstellt!",
+      "blockIdsAdded": "Fehlende IDs {count} in den Dateien {files} hinzugefügt.",
+      "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs."
     },
     "tagReferenceGenerated": "Tag Referenz erzeugt",
     "timerCompleted": "Timer abgelaufen!"
@@ -772,7 +775,8 @@
       "overwriting": "Überschreiben...",
       "regenerateOverwrite": "Neu generieren (überschreiben)",
       "savePreset": "Speichern",
-      "saveProtocol": "Speichern"
+      "saveProtocol": "Speichern",
+      "runAllMaintenance": "Alle durchführen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskelbezeichnungen existiert bereits. Möchten Sie sie mit Standardwerten überschreiben? Dadurch werden alle persönlichen Bezeichnungen gelöscht.",
@@ -797,7 +801,8 @@
       "setDuration": "Verwendet, wenn Wiederholungen nicht angegeben sind (Fallback). Typische Bereich: 30-60 Sekunden.",
       "setupCSV": "Erstelle beide workout_logs.csv und muscle-tags.csv in dem konfigurierten Ordner.",
       "weightIncrement": "Standarderhöhungswert für progressives Überlasten (z.B., 2,5 für 2,5 Einheiten-Schritte)",
-      "weightUnit": "Wählen Sie die Einheit für Gewichtsmaßeinheiten (kg/lb). Das betrifft den Standardwert für neue Protokolle."
+      "weightUnit": "Wählen Sie die Einheit für Gewichtsmaßeinheiten (kg/lb). Das betrifft den Standardwert für neue Protokolle.",
+      "runAllMaintenance": "Führen Sie alle Wartungsaufgaben nacheinander aus. Es ist sicher, die Wartung mehrfach durchzuführen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -821,7 +826,8 @@
       "repDuration": "Wiederholungsdauer pro Wiederholung (Sekunden)",
       "setDuration": "Fallback-Set-Dauer (Sekunden)",
       "setupCSV": "Einstellungs-CSV-Dateien",
-      "weightUnit": "Gewichtseinheit"
+      "weightUnit": "Gewichtseinheit",
+      "runAllMaintenance": "Alle Wartungsarbeiten durchführen"
     },
     "messages": {
       "confirmDeletePreset": "Sind Sie sicher, dass Sie dieses Preset löschen möchten?",
@@ -861,7 +867,8 @@
       "setupAndData": "Einrichtung und Daten",
       "templates": "Vorlagen",
       "timerPresets": "Uhrzeitanpassungen",
-      "trainingParameters": "Parameter für das Training"
+      "trainingParameters": "Parameter für das Training",
+      "maintenance": "Wartung"
     },
     "tooltips": {
       "deletePreset": "Vorhandene Einstellung löschen",

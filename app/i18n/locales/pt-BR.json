@@ -978,5 +978,6 @@
     "stable": "Estável",
     "stableLower": "Estável (menor)",
     "up": "Para cima"
-  }
+  },
+  "test": "test"
 }

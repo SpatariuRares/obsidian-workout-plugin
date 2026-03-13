@@ -1,4 +1,5 @@
 {
+  "test": "test",
   "charts": {
     "date": "Date",
     "down": "Down",

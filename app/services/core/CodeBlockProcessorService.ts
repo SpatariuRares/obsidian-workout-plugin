@@ -190,7 +190,7 @@ export class CodeBlockProcessorService {
   }
 
   // Handle workout timer code blocks
-  private handleWorkoutTimer(
+  private async handleWorkoutTimer(
     source: string,
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
@@ -200,7 +200,7 @@ export class CodeBlockProcessorService {
 
       // If no ID is present, trigger a migration check
       if (!params.id) {
-        runAddMissingBlockIds(this.plugin.app);
+        await runAddMissingBlockIds(this.plugin.app);
       }
 
       this.createEmbeddedTimer(el, params, ctx);

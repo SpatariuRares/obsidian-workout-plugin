@@ -116,14 +116,6 @@ export default [
     },
   },
   
-  // Specific sorting for locale files
-  {
-    files: ["app/i18n/locales/**/*.json"],
-    rules: {
-      "json/sort-keys": ["error", "asc"],
-    },
-  },
-
   // Targeted rules for UI components (features and components)
   {
     files: [

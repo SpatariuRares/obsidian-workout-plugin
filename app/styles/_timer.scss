@@ -39,7 +39,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 20vh;
   padding: var(--workout-space-sm) var(--workout-space-lg);
+  padding-top: max(var(--workout-space-sm), env(safe-area-inset-top));
   pointer-events: none;
 
   .workout-timer-urgent-overlay__count {

@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Data",
-    "down": "Para",
     "fallbackTableMessage": "Mesazhi për tabelën e zëvendësimit",
     "labels": {
-      "date": "Data",
-      "distance": "Distançë",
-      "down": "para",
-      "duration": "Mëzg",
-      "heartRate": "Rregullore",
-      "neutral": "neutral",
-      "pace": "Rregullim",
       "quickWeightIncrementUnit": "Butonat e pesheve rritin {weightIncrementUnit}",
       "reps": "Repetimet",
-      "trendLine": "Linja e tendencës",
       "trendType": "Tendenca {type}:",
       "variationFromTo": "nga {{startValue}} në {{endValue}}",
       "volume": "Volum",
       "weight": "Pesha",
       "weightIncrementUnit": "Shkallëzim i pesheve {weightIncrementUnit}"
     },
-    "neutral": "Neutral",
     "overallVariationPrefix": "Prefiks i përgjithshëm",
-    "reps": "Repetimet",
     "significantIncrease": "Rritje e Zës",
     "trendLine": "Linja e tendencës",
     "typeNotAvailable": "Lloj shart: \"{chartDataType}\" nuk është i disponueshëm për veprimtjet {exerciseType}. Llojet e disponueshme: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Repetimet",
       "volume": "Volum",
       "weight": "Pesha"
-    },
-    "volume": "Vlera"
+    }
   },
   "commands": {
     "addExerciseBlock": "Shto Bloke Stërmorr",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "minimum/km",
     "notAvailable": "Nuk është disponues",
-    "reps": "Repetimet",
     "sec": "sek",
     "unknown": "E panjohur",
     "workout": "Tregimi"
@@ -110,7 +97,6 @@
       "title": "Gabimet në fail",
       "tooManyTags": "Të shumë etiket të muskujve ({count})"
     },
-    "month": "Mjes",
     "muscleTags": {
       "description": "Shpjegim",
       "title": "Etiketat për muskuj",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Mësim",
-      "periods": {
-        "month": "Këtë muaj",
-        "week": "Kjo javë",
-        "year": "Këtë vit"
-      },
-      "title": "Statistikat e shpejtës",
       "week": "Javë",
       "workouts": "Trajnime",
       "year": "Vjet"
@@ -167,14 +147,11 @@
       "totalVolume": "Vlera totale",
       "totalWorkouts": "Numri total i stërdhimeve"
     },
-    "title": "Titull",
     "volumeAnalytics": {
       "chartTitle": "Tendenca e volumit (30 ditët e fundit)",
       "muscleBreakdownTitle": "Trajnimet më të mira sipas volumit",
       "title": "Analizë e volumit"
-    },
-    "week": "Javu",
-    "year": "Vjetori"
+    }
   },
   "duration": {
     "estimatedDuration": "Koha e shpërfilljes",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Rregullore mesatare e ritmit të zemrës (bpm)",
       "avgVolume": "Volumi mesatër ({unit})",
       "avgWeight": "Pesha mesatare ({unit})",
-      "back": "Para",
       "dailyVolume": "Volumi ditore ({{unit}})",
-      "dashboard": "Dasbord",
-      "front": "Para",
       "pace": "Shpejtësia (min/km)",
       "totalCustom": "Total {{label}}",
       "totalDistance": "Distancë totale (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Fajla është bosh",
     "imbalanceAlerts": "Alarmi për disbalancë",
     "insufficientData": "Data të mungueshme",
-    "loading": "Duke ngarkuar të dhënat e stilit...",
     "noDataPeriod": "Nuk u gjet asnjë informacion për antrenimin për periudhën e zgjedhur.",
     "noFrontmatter": "Pa Frontmatter",
     "noImbalances": "Nëse nuk ka disbalancim",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Dispozitimi",
     "canvasOptions": "Opsion",
-    "chartType": "Lloj grafik:",
     "checkboxes": {
       "connectSupersets": "Lidhja me superset",
       "exactMatch": "Përshatës",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Akcje",
-      "chartType": "Lloj shart:",
-      "dateRange": "Shumë datore (ditë):",
-      "duration": "Trajtës (sekonda):",
       "exercise": "Të kryejë",
-      "notes": "Shënime (opcional):",
-      "protocol": "Protokol:",
       "reps": "Repetimet:",
-      "sets": "Grupe:",
-      "status": "Status",
       "targetReps": "Shënimet për numrin e përrjeteve:",
       "targetWeight": "Shërbim: ({unit}):",
-      "title": "Titulli:",
       "volume": "Shumës (\\{unit}):",
-      "weight": "Pesha ({{unit}}):",
-      "workout": "Tregimi (opcional):"
+      "weight": "Pesha ({{unit}}):"
     },
     "layoutGrouped": "Grupuar sipas muskujve",
     "layoutHorizontal": "Rregullore horizontale",
@@ -673,7 +630,6 @@
       "parameterKey": "p.sh., shpejtësia",
       "parameterLabel": "p.sh., Shpejtësia",
       "parameterUnit": "p.sh., km/h",
-      "reps": "p.sh., 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Kërkojeni etiketat e muskujve...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Pëzgjidh grupin e muskujve...",
       "selectWorkoutFile": "Përpiçni një dosje stërdhës për të eksportuar...",
       "sets": "4",
-      "weight": "p.sh., 10.5",
       "workout": "P.sh., \"Tregimi A\", \"Trajnimi B\", ose përdysh kuti kërcim më poshtë"
     },
     "protocol": "Protokol:",
@@ -708,12 +663,10 @@
       "allLogs": "Të gjitha",
       "cardio": "Kardio",
       "completeWorkout": "Mbarëmbajtja",
-      "countdown": "Trajtimi",
       "custom": "Personalizuar",
       "distance": "Distançe",
       "dropSet": "Seria",
       "exerciseWorkout": "Tipi stili",
-      "interval": "Interval",
       "myoReps": "Lista e Repave",
       "number": "Numër",
       "restPause": "Pausa",
@@ -732,11 +685,9 @@
     "status": "Status",
     "tag": "Etiketë",
     "tagsSelector": "Etiketat për muskujt:",
-    "text": "Mërgëmbim i plotë",
     "timerDuration": "Dëgjimi (sekonda):",
     "timerPreset": "Paraqisimi i kohës:",
     "timerType": "Lloj orë:",
-    "title": "Titulli:",
     "titles": {
       "addExerciseBlock": "Shto seksionin me veprime",
       "auditExerciseNames": "Emrat e ushtrimeve të auditimit",
@@ -755,7 +706,6 @@
       "insertTimer": "Shtypni për të përfshirë timerin e stërvitjes",
       "muscleTagManager": "Menaxhimi i etiketave të muskujve"
     },
-    "value": "stërvitje",
     "workout": "Tregimi (opcional):",
     "workoutFile": "Fajla e stilit:",
     "workoutNameOptional": "Emri i stërmorës (opcional):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Emri i protokollit është obligueshëm",
       "protocolSaved": "Protokoli është ruajtur"
     },
-    "none": "Asnjë",
     "options": {
       "none": "Asnjë",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Të stresoje",
       "heartRate": "Rregull i Shpejtës",
       "notes": "Shënime",
-      "pace": "Shpejtësia (min/km)",
       "protocol": "Protokol",
       "reps": "Repetimet",
       "volume": "Volum",
       "weight": "Pesha"
     },
     "columns": {
-      "actions": "Veçmasa",
-      "date": "Data",
-      "distance": "Mërgimi",
       "distanceUnit": "Distanë ({distanceUnit})",
       "duration": "Dur",
-      "exercise": "Të stresoje",
       "heartRate": "Rregulli",
-      "notes": "Shënime",
       "pace": "Shpejtësia",
-      "protocol": "Protokoli",
       "reps": "Rep",
-      "volume": "Volume",
       "volumeUnit": "Volum ({weightUnit})",
-      "weight": "Pesha",
       "weightUnit": "Pesha ({weightUnit})"
     },
     "deleteConfirm": "Konfirmim",
     "deleteError": "Gabim në fshirje",
     "deleteSuccess": "Sigurim",
     "deleteTitle": "Titull për fshirje",
-    "distance": "Distançe",
-    "duration": "Mëzgjimi",
     "editTable": "Redakto tablen",
     "editTitle": "Titull për redaktim",
     "gotoExercise": "Shiko Të gjykën",
-    "heartRate": "Rregullore",
     "invalidDate": "Data e ejet",
     "labels": {
-      "distance": "Distançe",
-      "duration": "Mëzgjimi",
-      "heartRate": "Rregullore",
-      "target": "Qasja:",
-      "trendLine": "Linja e tendencës",
-      "volume": "Shumës",
-      "weight": "Pesha"
+      "target": "Qasja:"
     },
     "noData": "Nuk ka të dhana",
     "notAvailable": "Nuk është disponues",
     "refreshSuccess": "Sukses në rikthimin",
-    "sets": "Grupet",
     "target": {
       "progressTooltip": "Më mirë: {best} serija / Objektiv: {target} serija",
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linja e tendencës",
-    "volume": "Shumës"
+    "trendLine": "Linja e tendencës"
   },
   "timeperiods": {
     "month": "Mjes",
@@ -978,6 +907,5 @@
     "stable": "Stabilitet",
     "stableLower": "Stabilitet e Ulta",
     "up": "Lart"
-  },
-  "test": "test"
+  }
 }

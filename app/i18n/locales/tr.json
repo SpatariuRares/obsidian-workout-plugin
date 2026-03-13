@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Tarih",
-    "down": "Aşağı",
     "fallbackTableMessage": "Alternatif Tablo Mesajı",
     "labels": {
-      "date": "Tarih",
-      "distance": "Mesafe",
-      "down": "aşağı",
-      "duration": "Süre",
-      "heartRate": "Nabız",
-      "neutral": "nötr",
-      "pace": "Hız",
       "quickWeightIncrementUnit": "Ağırlık butonları, {{weightIncrementUnit}} kadar artırır",
       "reps": "Temsilciler",
-      "trendLine": "Trend çizgisi",
       "trendType": "Trend {type}:",
       "variationFromTo": "{startValue} değerinden {endValue} değerine",
       "volume": "Hacim",
       "weight": "Ağırlık",
       "weightIncrementUnit": "Ağırlık artışı {weightIncrementUnit}"
     },
-    "neutral": "Tarafsız",
     "overallVariationPrefix": "Genel Değişim Ön Eklemi",
-    "reps": "Temsilciler",
     "significantIncrease": "Önemli Artış",
     "trendLine": "Trend Hattı",
     "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılabilir değildir. Kullanılabilir türler: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Grafik türleri: Göstergeler",
       "volume": "Hacim",
       "weight": "Ağırlık"
-    },
-    "volume": "Hacim"
+    }
   },
   "commands": {
     "addExerciseBlock": "Egzersiz Bloğunu Ekle",
@@ -57,7 +45,6 @@
     "km": "common.km",
     "minPerKm": "dakika/km",
     "notAvailable": "Mevcut değil",
-    "reps": "Temsilciler",
     "sec": "sec",
     "unknown": "Bilinmiyor",
     "workout": "Egzersiz"
@@ -110,7 +97,6 @@
       "title": "Dosya hataları",
       "tooManyTags": "Çok fazla kas etiketi ({{count}})"
     },
-    "month": "Ay",
     "muscleTags": {
       "description": "Açıklama",
       "title": "Kas etiketleri",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Ay",
-      "periods": {
-        "month": "Bu ay",
-        "week": "Bu hafta",
-        "year": "Bu yıl"
-      },
-      "title": "Hızlı istatistikler",
       "week": "Hafta",
       "workouts": "Egzersizler",
       "year": "Yıl"
@@ -167,14 +147,11 @@
       "totalVolume": "Toplam hacim",
       "totalWorkouts": "Toplam antrenman"
     },
-    "title": "Başlık",
     "volumeAnalytics": {
       "chartTitle": "Hacim eğilimi (son 30 gün)",
       "muscleBreakdownTitle": "Hacımıza göre en popüler egzersizler",
       "title": "Hacim analizi"
-    },
-    "week": "Hafta",
-    "year": "Yıl"
+    }
   },
   "duration": {
     "estimatedDuration": "Tahmini süre",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Ortalama kalp hızı (vuruş/dakika)",
       "avgVolume": "Ortalama hacim ({{unit}})",
       "avgWeight": "Ortalama ağırlık ({{unit}})",
-      "back": "Geri",
       "dailyVolume": "Günlük hacim ({{unit}})",
-      "dashboard": "Gösterge",
-      "front": "Ön",
       "pace": "Hız (dakika/km)",
       "totalCustom": "Toplam: {{label}}",
       "totalDistance": "Toplam mesafe (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Dosya Boş",
     "imbalanceAlerts": "Dengesizlik Uyarıları",
     "insufficientData": "Yetersiz Veri",
-    "loading": "Egzersiz verilerini yükleniyor...",
     "noDataPeriod": "Belirtilen zaman aralığı için herhangi bir antrenman verisi bulunamadı.",
     "noFrontmatter": "Ön başlık yok",
     "noImbalances": "Dengesizlik Yok",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
-    "chartType": "Grafik türü:",
     "checkboxes": {
       "connectSupersets": "Supersetleri Bağla",
       "exactMatch": "Tam Eşleşme",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Eylemler",
-      "chartType": "Grafik türü:",
-      "dateRange": "Tarih aralığı (gün):",
-      "duration": "Süre (saniye):",
       "exercise": "Egzersiz:",
-      "notes": "Notlar (isteğe bağlı):",
-      "protocol": "Protokol:",
       "reps": "Temsilciler:",
-      "sets": "Kümeler:",
-      "status": "Durum",
       "targetReps": "Hedeflenen satış temsilcileri:",
       "targetWeight": "Hedef: ({{unit}}):",
-      "title": "Başlık:",
       "volume": "Ses Seviyesi ({{unit}}):",
-      "weight": "Ağırlık ({{unit}}):",
-      "workout": "Egzersiz (isteğe bağlı):"
+      "weight": "Ağırlık ({{unit}}):"
     },
     "layoutGrouped": "Kas gruplarına göre düzenlenmiş",
     "layoutHorizontal": "Yatay düzen",
@@ -673,7 +630,6 @@
       "parameterKey": "örneğin, hız",
       "parameterLabel": "örneğin, Hız",
       "parameterUnit": "örneğin, km/sa",
-      "reps": "örneğin, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Kas etiketlerini arayın...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Kas grubunu seçin...",
       "selectWorkoutFile": "Çalışma dosyasını seçerek dışa aktar...",
       "sets": "4",
-      "weight": "örneğin, 10,5",
       "workout": "Örneğin, \"Egzersiz A\", \"Eğitim B\" veya aşağıdaki kutuyu kullanın."
     },
     "protocol": "Protokol:",
@@ -708,12 +663,10 @@
       "allLogs": "Tüm günlükler",
       "cardio": "Kardiyo",
       "completeWorkout": "Tamamlanan Antrenman",
-      "countdown": "Sayım",
       "custom": "Özel",
       "distance": "Mesafe",
       "dropSet": "Düşük Set",
       "exerciseWorkout": "Egzersiz Programı",
-      "interval": "Aralık",
       "myoReps": "Oyuncuların listesi",
       "number": "Sayı",
       "restPause": "Dinlenme ve Devam",
@@ -732,11 +685,9 @@
     "status": "Durum",
     "tag": "Etiket",
     "tagsSelector": "Kas etiketleri:",
-    "text": "Tam bir egzersiz",
     "timerDuration": "Zamanlayıcı süresi (saniye):",
     "timerPreset": "Zamanlayıcı ön ayarı:",
     "timerType": "Zamanlayıcı türü:",
-    "title": "Başlık:",
     "titles": {
       "addExerciseBlock": "Egzersiz bloğunu ekle",
       "auditExerciseNames": "Denetleme egzersizlerinin adları",
@@ -755,7 +706,6 @@
       "insertTimer": "Egzersiz zamanlayıcısını ekle",
       "muscleTagManager": "Kas etiketlerini yönet"
     },
-    "value": "egzersiz",
     "workout": "Egzersiz (isteğe bağlı):",
     "workoutFile": "Egzersiz dosyası:",
     "workoutNameOptional": "Egzersiz adı (isteğe bağlı):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Protokol adı gereklidir",
       "protocolSaved": "Protokol kaydedildi"
     },
-    "none": "Yok",
     "options": {
       "none": "Yok",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Egzersiz",
       "heartRate": "Nabız",
       "notes": "Notlar",
-      "pace": "Hız (dakika/km)",
       "protocol": "Protokol",
       "reps": "Temsilciler",
       "volume": "Hacim",
       "weight": "Ağırlık"
     },
     "columns": {
-      "actions": "Eyle",
-      "date": "Tarih",
-      "distance": "Sıra aralıkları",
       "distanceUnit": "Mesafe ({distanceUnit})",
       "duration": "Süre",
-      "exercise": "Egzersiz",
       "heartRate": "Nabız",
-      "notes": "Notlar",
       "pace": "Hız",
-      "protocol": "Protokol",
       "reps": "Temsil",
-      "volume": "Hacim",
       "volumeUnit": "Hacim ({weightUnit})",
-      "weight": "Ağırlık",
       "weightUnit": "Ağırlık ({weightUnit})"
     },
     "deleteConfirm": "Onaylamak",
     "deleteError": "Silme Hatası",
     "deleteSuccess": "Silme Başarılı",
     "deleteTitle": "Silme",
-    "distance": "Mesafe",
-    "duration": "Süre",
     "editTable": "Tabloyu düzenle",
     "editTitle": "Düzenle",
     "gotoExercise": "Eseri başlat",
-    "heartRate": "Nabız",
     "invalidDate": "Geçersiz tarih",
     "labels": {
-      "distance": "Mesafe",
-      "duration": "Süre",
-      "heartRate": "Nabız",
-      "target": "Hedef:",
-      "trendLine": "Trend Hattı",
-      "volume": "Ses seviyesi",
-      "weight": "Ağırlık"
+      "target": "Hedef:"
     },
     "noData": "Veri yok",
     "notAvailable": "Erişilemiyor",
     "refreshSuccess": "Yenileme Başarılı",
-    "sets": "Koleksiyonlar",
     "target": {
       "progressTooltip": "En İyi: {best} tekrar / Hedef: {target} tekrar",
       "repsSuffix": "temsil",
       "separator": " × "
     },
-    "trendLine": "Trend Hattı",
-    "volume": "Ses seviyesi"
+    "trendLine": "Trend Hattı"
   },
   "timeperiods": {
     "month": "Ay",
@@ -978,6 +907,5 @@
     "stable": "Kararlı",
     "stableLower": "Kararlı Düşük",
     "up": "Yukarı"
-  },
-  "test": "test"
+  }
 }

@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Tanggal",
-    "down": "Turun",
     "fallbackTableMessage": "Pesan Tabel Cadangan",
     "labels": {
-      "date": "Tanggal",
-      "distance": "Jarak",
-      "down": "turun",
-      "duration": "Durasi",
-      "heartRate": "Detak Jantung",
-      "neutral": "netral",
-      "pace": "Kecepatan",
       "quickWeightIncrementUnit": "Tombol berat menambah {weightIncrementUnit}",
       "reps": "Perwakilan",
-      "trendLine": "Garis tren",
       "trendType": "Tren {type}:",
       "variationFromTo": "dari {{startValue}} hingga {{endValue}}",
       "volume": "Volume",
       "weight": "Berat",
       "weightIncrementUnit": "Penambahan berat {weightIncrementUnit}"
     },
-    "neutral": "Netral",
     "overallVariationPrefix": "Awalan Perubahan Keseluruhan",
-    "reps": "Perwakilan",
     "significantIncrease": "Peningkatan yang Signifikan",
     "trendLine": "Garis Tren",
     "typeNotAvailable": "Jenis grafik \"{chartDataType}\" tidak tersedia untuk latihan {exerciseType}. Jenis yang tersedia: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Jenis representasi",
       "volume": "Volume",
       "weight": "Berat"
-    },
-    "volume": "Volume"
+    }
   },
   "commands": {
     "addExerciseBlock": "Tambahkan Blok Latihan",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "minimum/km",
     "notAvailable": "Tidak Tersedia",
-    "reps": "Perwakilan",
     "sec": "keamanan",
     "unknown": "Tidak Diketahui",
     "workout": "Latihan"
@@ -110,7 +97,6 @@
       "title": "Kesalahan pada file",
       "tooManyTags": "Terlalu banyak tag otot ({count})"
     },
-    "month": "Bulan",
     "muscleTags": {
       "description": "Deskripsi",
       "title": "Tag otot",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Bulan",
-      "periods": {
-        "month": "Bulan ini",
-        "week": "Minggu ini",
-        "year": "Tahun ini"
-      },
-      "title": "Statistik cepat",
       "week": "Minggu",
       "workouts": "Latihan",
       "year": "Tahun"
@@ -167,14 +147,11 @@
       "totalVolume": "Total volume",
       "totalWorkouts": "Total latihan"
     },
-    "title": "Judul",
     "volumeAnalytics": {
       "chartTitle": "Tren volume (30 hari terakhir)",
       "muscleBreakdownTitle": "Latihan terpopuler berdasarkan volume",
       "title": "Analisis volume"
-    },
-    "week": "Minggu",
-    "year": "Tahun"
+    }
   },
   "duration": {
     "estimatedDuration": "Durasi yang diperkirakan",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Rata-rata detak jantung (bpm)",
       "avgVolume": "Volume rata-rata ({unit})",
       "avgWeight": "Berat rata-rata ({unit})",
-      "back": "Kembali",
       "dailyVolume": "Volume harian ({unit})",
-      "dashboard": "Dasbor",
-      "front": "Depan",
       "pace": "Kecepatan (menit/km)",
       "totalCustom": "Total {{label}}",
       "totalDistance": "Total jarak (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Berkas Kosong",
     "imbalanceAlerts": "Peringatan Ketidakseimbangan",
     "insufficientData": "Data tidak mencukupi",
-    "loading": "Sedang memuat data latihan...",
     "noDataPeriod": "Tidak ada data latihan yang ditemukan untuk periode waktu yang dipilih.",
     "noFrontmatter": "Tidak ada Frontmatter",
     "noImbalances": "Tidak ada ketidakseimbangan",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Tata Letak",
     "canvasOptions": "Pilihan",
-    "chartType": "Jenis grafik:",
     "checkboxes": {
       "connectSupersets": "Hubungkan Superset",
       "exactMatch": "Cocok Persis",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Opsi",
-      "chartType": "Jenis grafik:",
-      "dateRange": "Rentang tanggal (hari):",
-      "duration": "Durasi (detik):",
       "exercise": "Latihan:",
-      "notes": "Catatan (opsional):",
-      "protocol": "Protokol:",
       "reps": "Perwakilan:",
-      "sets": "Kumpulan:",
-      "status": "Status",
       "targetReps": "Target:",
       "targetWeight": "Target: ({unit}):",
-      "title": "Judul:",
       "volume": "Volume ({unit}):",
-      "weight": "Berat ({unit}):",
-      "workout": "Latihan (opsional):"
+      "weight": "Berat ({unit}):"
     },
     "layoutGrouped": "Dikategorikan berdasarkan otot",
     "layoutHorizontal": "Aliran horizontal",
@@ -673,7 +630,6 @@
       "parameterKey": "misalnya, kecepatan",
       "parameterLabel": "misalnya, Kecepatan",
       "parameterUnit": "misalnya, km/jam",
-      "reps": "misalnya, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Cari tag otot...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Pilih kelompok otot...",
       "selectWorkoutFile": "Pilih file latihan untuk diekspor...",
       "sets": "4",
-      "weight": "misalnya, 10,5",
       "workout": "Contohnya: Latihan A, Pelatihan B, atau gunakan kotak centang di bawah"
     },
     "protocol": "Protokol:",
@@ -708,12 +663,10 @@
       "allLogs": "Semua Log",
       "cardio": "Latihan Kardio",
       "completeWorkout": "Selesaikan Latihan",
-      "countdown": "Menghitung mundur",
       "custom": "Pilihan khusus",
       "distance": "Jarak",
       "dropSet": "Set Turun",
       "exerciseWorkout": "Latihan",
-      "interval": "Interval",
       "myoReps": "Pilihan Rep",
       "number": "Jumlah",
       "restPause": "Istirahat",
@@ -732,11 +685,9 @@
     "status": "Status",
     "tag": "Label",
     "tagsSelector": "Tag otot:",
-    "text": "Selesaikan latihan",
     "timerDuration": "Durasi timer (detik):",
     "timerPreset": "Pengaturan waktu:",
     "timerType": "Jenis timer:",
-    "title": "Judul:",
     "titles": {
       "addExerciseBlock": "Tambahkan blok latihan",
       "auditExerciseNames": "Nama latihan audit",
@@ -755,7 +706,6 @@
       "insertTimer": "Masukkan timer untuk latihan",
       "muscleTagManager": "Kelola tag otot"
     },
-    "value": "olahraga",
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
     "workoutNameOptional": "Nama latihan (opsional):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Nama protokol diperlukan",
       "protocolSaved": "Protokol tersimpan"
     },
-    "none": "Tidak ada",
     "options": {
       "none": "Tidak ada",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Latihan",
       "heartRate": "Detak Jantung",
       "notes": "Catatan",
-      "pace": "Kecepatan (menit/km)",
       "protocol": "Protokol",
       "reps": "Perwakilan",
       "volume": "Volume",
       "weight": "Berat"
     },
     "columns": {
-      "actions": "Lakukan",
-      "date": "Tanggal",
-      "distance": "Jarak",
       "distanceUnit": "Jarak ({distanceUnit})",
       "duration": "Dur",
-      "exercise": "Latihan",
       "heartRate": "Detak Jantung",
-      "notes": "Catatan",
       "pace": "Kecepatan",
-      "protocol": "Protokol",
       "reps": "Perwakilan",
-      "volume": "Volume",
       "volumeUnit": "Volume ({weightUnit})",
-      "weight": "Berat",
       "weightUnit": "Berat ({weightUnit})"
     },
     "deleteConfirm": "Konfirmasi Penghapusan",
     "deleteError": "Kesalahan Penghapusan",
     "deleteSuccess": "Berhasil dihapus",
     "deleteTitle": "Judul Penghapusan",
-    "distance": "Jarak",
-    "duration": "Durasi",
     "editTable": "Sunting tabel",
     "editTitle": "Judul",
     "gotoExercise": "Buka Latihan",
-    "heartRate": "Detak Jantung",
     "invalidDate": "Tanggal Tidak Valid",
     "labels": {
-      "distance": "Jarak",
-      "duration": "Durasi",
-      "heartRate": "Detak jantung",
-      "target": "Target:",
-      "trendLine": "Garis Tren",
-      "volume": "Volume",
-      "weight": "Berat"
+      "target": "Target:"
     },
     "noData": "Tidak ada data",
     "notAvailable": "Tidak Tersedia",
     "refreshSuccess": "Berhasil Memperbarui",
-    "sets": "Kumpulan",
     "target": {
       "progressTooltip": "Terbaik: {best} repetisi / Target: {target} repetisi",
       "repsSuffix": "representasi",
       "separator": " × "
     },
-    "trendLine": "Garis Tren",
-    "volume": "Volume"
+    "trendLine": "Garis Tren"
   },
   "timeperiods": {
     "month": "Bulan",
@@ -978,6 +907,5 @@
     "stable": "Stabil",
     "stableLower": "Stabil",
     "up": "Naik"
-  },
-  "test": "uji"
+  }
 }

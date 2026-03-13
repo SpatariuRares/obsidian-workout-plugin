@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "तिथि",
-    "down": "नीचे",
     "fallbackTableMessage": "बैकअप टेबल संदेश",
     "labels": {
-      "date": "तिथि",
-      "distance": "दूरी",
-      "down": "नीचे",
-      "duration": "अवधि",
-      "heartRate": "हृदय गति",
-      "neutral": "तटस्थ",
-      "pace": "गति",
       "quickWeightIncrementUnit": "वज़न बटन {weightIncrementUnit} से बढ़ जाते हैं",
       "reps": "प्रतिनिधियाँ",
-      "trendLine": "ट्रेंड लाइन",
       "trendType": "ट्रेंड {type}:",
       "variationFromTo": "{startValue} से {endValue} तक",
       "volume": "मात्रा",
       "weight": "वजन",
       "weightIncrementUnit": "वज़न में वृद्धि {weightIncrementUnit}"
     },
-    "neutral": "तटस्थ",
     "overallVariationPrefix": "कुल भिन्नता उपसर्ग",
-    "reps": "प्रतिनिधियाँ",
     "significantIncrease": "महत्वपूर्ण वृद्धि",
     "trendLine": "ट्रेंड लाइन",
     "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "प्रतिनिधित्व",
       "volume": "मात्रा",
       "weight": "वजन"
-    },
-    "volume": "मात्रा"
+    }
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "प्रति किलोमीटर न्यूनतम",
     "notAvailable": "उपलब्ध नहीं",
-    "reps": "प्रतिनिधियाँ",
     "sec": "सुर",
     "unknown": "अज्ञात",
     "workout": "वर्कआउट"
@@ -110,7 +97,6 @@
       "title": "फ़ाइल त्रुटियाँ",
       "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})"
     },
-    "month": "महीना",
     "muscleTags": {
       "description": "विवरण",
       "title": "मांस के टैग",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "महीना",
-      "periods": {
-        "month": "इस महीने",
-        "week": "इस सप्ताह",
-        "year": "इस वर्ष"
-      },
-      "title": "त्वरित आँकड़े",
       "week": "सप्ताह",
       "workouts": "वर्कआउट",
       "year": "वर्ष"
@@ -167,14 +147,11 @@
       "totalVolume": "कुल मात्रा",
       "totalWorkouts": "कुल वर्कआउट"
     },
-    "title": "शीर्षक",
     "volumeAnalytics": {
       "chartTitle": "मात्रा का रुझान (पिछले 30 दिन)",
       "muscleBreakdownTitle": "मात्रा के अनुसार शीर्ष व्यायाम",
       "title": "मात्रा विश्लेषण"
-    },
-    "week": "सप्ताह",
-    "year": "वर्ष"
+    }
   },
   "duration": {
     "estimatedDuration": "अनुमानित अवधि",
@@ -363,10 +340,7 @@
       "avgHeartRate": "औसत हृदय गति (बीपीएम)",
       "avgVolume": "औसत मात्रा ({unit})",
       "avgWeight": "औसत वजन ({unit})",
-      "back": "वापस",
       "dailyVolume": "दैनिक मात्रा ({unit})",
-      "dashboard": "डैशबोर्ड",
-      "front": "सामने",
       "pace": "गति (मिन/किमी)",
       "totalCustom": "कुल {label}",
       "totalDistance": "कुल दूरी (किमी)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "फ़ाइल खाली",
     "imbalanceAlerts": "असंतुलन की सूचनाएं",
     "insufficientData": "अपर्याप्त डेटा",
-    "loading": "वर्कआउट डेटा लोड हो रहा है...",
     "noDataPeriod": "चुने गए समय अवधि के लिए कोई वर्कआउट डेटा नहीं मिला।",
     "noFrontmatter": "कोई फ्रंटमेट",
     "noImbalances": "कोई असंतुलन नहीं",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
-    "chartType": "चार्ट का प्रकार:",
     "checkboxes": {
       "connectSupersets": "सुपरसेट्स से कनेक्ट करें",
       "exactMatch": "सटीक मिलान",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "कार्रवाइयाँ।",
-      "chartType": "चार्ट का प्रकार:",
-      "dateRange": "दिनांक की सीमा (दिनों में):",
-      "duration": "अवधि (सेकंड में):",
       "exercise": "अभ्यास:",
-      "notes": "टिप्पणियाँ (वैकल्पिक):",
-      "protocol": "प्रोटोकॉल:",
       "reps": "प्रतिनिधि:",
-      "sets": "सेट:",
-      "status": "स्थिति।",
       "targetReps": "लक्ष्यित प्रतिनिधि:",
       "targetWeight": "लक्ष्यित वजन ({इकाई}):",
-      "title": "शीर्षक:",
       "volume": "वॉल्यूम ({unit}):",
-      "weight": "वजन ({इकाई}):",
-      "workout": "व्यायाम (वैकल्पिक):"
+      "weight": "वजन ({इकाई}):"
     },
     "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
     "layoutHorizontal": "क्षैतिज प्रवाह",
@@ -673,7 +630,6 @@
       "parameterKey": "उदाहरण के लिए, गति",
       "parameterLabel": "उदाहरण के लिए, गति",
       "parameterUnit": "उदाहरण के लिए, किमी/घ",
-      "reps": "उदाहरण के लिए, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "मांस के टैग खोजें...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "मांसपेशियों का समूह चुनें...",
       "selectWorkoutFile": "निर्यात करने के लिए एक वर्कआउट फ़ाइल चुनें...",
       "sets": "4",
-      "weight": "उदाहरण के लिए, 10.5",
       "workout": "उदाहरण के लिए: वर्कआउट ए, ट्रेनिंग बी, या नीचे दिए गए चेकबॉक्स का उपयोग करें।"
     },
     "protocol": "प्रोटोकॉल:",
@@ -708,12 +663,10 @@
       "allLogs": "सभी लॉग",
       "cardio": "कार्डियो",
       "completeWorkout": "पूरा वर्कआउट",
-      "countdown": "काउंटडाउन",
       "custom": "कस्टम",
       "distance": "दूरी",
       "dropSet": "ड्रॉप सेट",
       "exerciseWorkout": "व्यायाम",
-      "interval": "समय अंतराल",
       "myoReps": "माय ओ रेप्स",
       "number": "संख्या",
       "restPause": "विश्राम ब्रेक",
@@ -732,11 +685,9 @@
     "status": "स्थिति",
     "tag": "टैग",
     "tagsSelector": "मांस के टैग:",
-    "text": "पूरा वर्कआउट",
     "timerDuration": "टाइमर की अवधि (सेकंड):",
     "timerPreset": "टाइमर प्रीसेट:",
     "timerType": "टाइमर का प्रकार:",
-    "title": "शीर्षक:",
     "titles": {
       "addExerciseBlock": "व्यायाम अनुभाग जोड़ें।",
       "auditExerciseNames": "लेखा परीक्षा (ऑडिट) के नाम।",
@@ -755,7 +706,6 @@
       "insertTimer": "वर्कआउट टाइमर डालें।",
       "muscleTagManager": "मांसपेशियों के उभारों का प्रबंधन करें।"
     },
-    "value": "वर्कआउट",
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
     "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "प्रोटोकॉल का नाम आवश्यक है",
       "protocolSaved": "प्रोटोकॉल सहेजा गया"
     },
-    "none": "कोई नहीं",
     "options": {
       "none": "कोई नहीं",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "व्यायाम",
       "heartRate": "हृदय गति",
       "notes": "टिप्पणियाँ",
-      "pace": "गति (मिन/किमी)",
       "protocol": "प्रोटोकॉल",
       "reps": "प्रतिनिधियाँ",
       "volume": "मात्रा",
       "weight": "वजन"
     },
     "columns": {
-      "actions": "कार्य",
-      "date": "तिथि",
-      "distance": "दूरी",
       "distanceUnit": "दूरी ({distanceUnit})",
       "duration": "दूरी",
-      "exercise": "व्यायाम",
       "heartRate": "एचआर",
-      "notes": "टिप्पणियाँ",
       "pace": "गति",
-      "protocol": "प्रोटो",
       "reps": "प्रतिनिधि",
-      "volume": "मात्रा",
       "volumeUnit": "मात्रा ({weightUnit})",
-      "weight": "वज़न",
       "weightUnit": "वज़न ({weightUnit})"
     },
     "deleteConfirm": "पुष्टि करें",
     "deleteError": "डिलीट त्रुट",
     "deleteSuccess": "सफलतापूर्वक हटा दिया गया",
     "deleteTitle": "हटाएं",
-    "distance": "दूरी",
-    "duration": "अवधि",
     "editTable": "टेबल संपादित करें",
     "editTitle": "संपादित शीर्षक",
     "gotoExercise": "अभ्यास पर जाएं",
-    "heartRate": "हृदय गति",
     "invalidDate": "अमान्य तिथि",
     "labels": {
-      "distance": "दूरी",
-      "duration": "अवधि",
-      "heartRate": "हृदय गति",
-      "target": "लक्ष्य:",
-      "trendLine": "ट्रेंड लाइन",
-      "volume": "वॉल्यूम",
-      "weight": "वजन"
+      "target": "लक्ष्य:"
     },
     "noData": "कोई डेटा नहीं",
     "notAvailable": "उपलब्ध नहीं",
     "refreshSuccess": "सफलतापूर्वक रिफ्रेश",
-    "sets": "सेट",
     "target": {
       "progressTooltip": "सर्वश्रेष्ठ: {best} प्रतिनिधि / लक्ष्य: {target} प्रतिनिधि",
       "repsSuffix": "प्रतिनिधि",
       "separator": " × "
     },
-    "trendLine": "ट्रेंड लाइन",
-    "volume": "ध्वनि"
+    "trendLine": "ट्रेंड लाइन"
   },
   "timeperiods": {
     "month": "महीना",
@@ -978,6 +907,5 @@
     "stable": "स्थिर",
     "stableLower": "स्थिर निचला",
     "up": "ऊपर"
-  },
-  "test": "टेस्ट"
+  }
 }

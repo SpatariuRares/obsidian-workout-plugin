@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Datum",
-    "down": "Snížka",
     "fallbackTableMessage": "Záložní zpráva pro tabulku",
     "labels": {
-      "date": "Datum",
-      "distance": "Vzdálenost",
-      "down": "dolů",
-      "duration": "Doba",
-      "heartRate": "Srdeční frekvence",
-      "neutral": "neúměrný",
-      "pace": "Rychlost",
       "quickWeightIncrementUnit": "Tlačítka pro váhu zvyšují hodnotu o {weightIncrementUnit}",
       "reps": "Opakovaní",
-      "trendLine": "Vzestupná dráha",
       "trendType": "Trendy {type}:",
       "variationFromTo": "od {startValue} do {endValue}",
       "volume": "Objem",
       "weight": "Hmotnost",
       "weightIncrementUnit": "Zvýšení váhy {weightIncrementUnit}"
     },
-    "neutral": "Neutrální",
     "overallVariationPrefix": "Celková variace předpona",
-    "reps": "Opakování",
     "significantIncrease": "Významný nárůst",
     "trendLine": "Trendová linka",
     "typeNotAvailable": "Typ grafu \"{chartDataType}\" není pro cvičení typu {exerciseType} dostupný. Dostupné typy: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Typy grafů: Reprezentace",
       "volume": "Objem",
       "weight": "Hmotnost"
-    },
-    "volume": "Objem"
+    }
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "minimální/km",
     "notAvailable": "Nedostupné",
-    "reps": "Zástavy",
     "sec": "bezpečnost",
     "unknown": "Neznámé",
     "workout": "Trénink"
@@ -110,7 +97,6 @@
       "title": "Chyby související se soubory",
       "tooManyTags": "Příliš mnoho štítků svalů ({{count}})"
     },
-    "month": "Měsíc",
     "muscleTags": {
       "description": "Popis",
       "title": "Štítky pro svaly",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Měsíc",
-      "periods": {
-        "month": "Tento měsíc",
-        "week": "Tento týden",
-        "year": "Tento rok"
-      },
-      "title": "Rychlé statistiky",
       "week": "Týden",
       "workouts": "Tréninky",
       "year": "Rok"
@@ -167,14 +147,11 @@
       "totalVolume": "Celková hmotnost",
       "totalWorkouts": "Celkový počet tréninků"
     },
-    "title": "Nadpis",
     "volumeAnalytics": {
       "chartTitle": "Trend objemu (posledních 30 dnů)",
       "muscleBreakdownTitle": "Nejčastější cvičení podle objemu",
       "title": "Volumová analýza"
-    },
-    "week": "Týden",
-    "year": "Rok"
+    }
   },
   "duration": {
     "estimatedDuration": "Odhadovaná doba",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Průměrná srdeční frekvence (úderů za minutu)",
       "avgVolume": "Průměrný objem ({unit})",
       "avgWeight": "Průměrná hmotnost ({unit})",
-      "back": "Zadní",
       "dailyVolume": "Denní objem ({{unit}})",
-      "dashboard": "Panel",
-      "front": "Přední",
       "pace": "Rychlost (min/km)",
       "totalCustom": "Celkem {label}",
       "totalDistance": "Celková vzdálenost (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Soubor prázdný",
     "imbalanceAlerts": "Nedostatek informací",
     "insufficientData": "Chybí data pro zpracování",
-    "loading": "Načítání dat tréninku...",
     "noDataPeriod": "Pro vybraný časový úsek nebylo nalezeno žádné tréninkové data.",
     "noFrontmatter": "Záhlaví nebylo nalezeno",
     "noImbalances": "Nebyl nalezen žádný nerovnováha",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
-    "chartType": "Grafický typ:",
     "checkboxes": {
       "connectSupersets": "Připojit supersady",
       "exactMatch": "Precizní shoda",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Akce",
-      "chartType": "Typ grafu:",
-      "dateRange": "Období (dny):",
-      "duration": "Doba trvání (vteřiny):",
       "exercise": "Trénink:",
-      "notes": "Poznámky (volitelné):",
-      "protocol": "Protokol:",
       "reps": "Opakování:",
-      "sets": "Série:",
-      "status": "Stav",
       "targetReps": "Cílový počet opakování:",
       "targetWeight": "Cílová hmotnost ({unit}):",
-      "title": "Název:",
       "volume": "Hlasitost ({unit}):",
-      "weight": "Váha ({unit}):",
-      "workout": "Trénink (volitelné):"
+      "weight": "Váha ({unit}):"
     },
     "layoutGrouped": "Grupováno podle svalu",
     "layoutHorizontal": "Protilehlý proud",
@@ -673,7 +630,6 @@
       "parameterKey": "např., rychlost",
       "parameterLabel": "např., Rychlost",
       "parameterUnit": "např., km/h",
-      "reps": "např., 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Hledat svalové tagy...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Vyberte skupinu svalů...",
       "selectWorkoutFile": "Vyberte soubor s tréninkem, který chcete exportovat...",
       "sets": "4",
-      "weight": "např., 10.5",
       "workout": "např. Trénink A, Trénink B, nebo použijte zaškrtávací políčko níže"
     },
     "protocol": "Protokol:",
@@ -708,12 +663,10 @@
       "allLogs": "Všechny záznamy",
       "cardio": "Kardio",
       "completeWorkout": "Dokončit cvičení",
-      "countdown": "Počítadlo",
       "custom": "Vlastní",
       "distance": "Vzdálenost",
       "dropSet": "Drobná série",
       "exerciseWorkout": "Cvičení tréninku",
-      "interval": "Interval",
       "myoReps": "Mojové opakování",
       "number": "Číslo",
       "restPause": "Pausa odpočinku",
@@ -732,11 +685,9 @@
     "status": "Stav",
     "tag": "Značka",
     "tagsSelector": "Značky svalů:",
-    "text": "Dokončit trénink",
     "timerDuration": "Délka timera (sekundy):",
     "timerPreset": "Přepnutí nastavení:",
     "timerType": "Typ časovače:",
-    "title": "Nadpis:",
     "titles": {
       "addExerciseBlock": "Přidat blok cvičení",
       "auditExerciseNames": "Audit názvů cvičení",
@@ -755,7 +706,6 @@
       "insertTimer": "Vložit časovač tréninku",
       "muscleTagManager": "Spravovat značky svalů"
     },
-    "value": "trénink",
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
     "workoutNameOptional": "Název tréninku (volitelné):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Název protokolu je povinný",
       "protocolSaved": "Protokol uložen"
     },
-    "none": "Žádná",
     "options": {
       "none": "Žádný",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Cvičení",
       "heartRate": "Srdeční frekvence",
       "notes": "Poznámky",
-      "pace": "Rychlost (min/km)",
       "protocol": "Protokol",
       "reps": "Opakovaní",
       "volume": "Objem",
       "weight": "Váha"
     },
     "columns": {
-      "actions": "Aktivity",
-      "date": "Datum",
-      "distance": "Dostup",
       "distanceUnit": "Vzdálenost ({distanceUnit})",
       "duration": "Doba",
-      "exercise": "Cvičení",
       "heartRate": "Srdeční frekvence",
-      "notes": "Poznámky",
       "pace": "Rychlost",
-      "protocol": "Protein",
       "reps": "Opakovaní",
-      "volume": "Objem",
       "volumeUnit": "Vol ({weightUnit})",
-      "weight": "Váha",
       "weightUnit": "Hmotnost ({weightUnit})"
     },
     "deleteConfirm": "Potvrzení smazání",
     "deleteError": "Chyba při smazání",
     "deleteSuccess": "Smazání úspěšné",
     "deleteTitle": "Název smazání",
-    "distance": "Vzdálenost",
-    "duration": "Doba trvání",
     "editTable": "Upravit tabulku",
     "editTitle": "Upravit název",
     "gotoExercise": "Přejít na cvičení",
-    "heartRate": "Srdeční tep",
     "invalidDate": "Neplatná data",
     "labels": {
-      "distance": "Vzdálenost",
-      "duration": "Doba",
-      "heartRate": "Srdeční frekvence",
-      "target": "Cíl:",
-      "trendLine": "Trendová řada",
-      "volume": "Objem",
-      "weight": "Vaha"
+      "target": "Cíl:"
     },
     "noData": "Žádná data",
     "notAvailable": "Nedostupné",
     "refreshSuccess": "Obnovení úspěšné",
-    "sets": "Sady",
     "target": {
       "progressTooltip": "Nejlepší: {best} opakování / Cíl: {target} opakování",
       "repsSuffix": "opakovaní",
       "separator": " × "
     },
-    "trendLine": "Trendová linka",
-    "volume": "Objem"
+    "trendLine": "Trendová linka"
   },
   "timeperiods": {
     "month": "Měsíc",
@@ -978,6 +907,5 @@
     "stable": "Stabilní",
     "stableLower": "Stabilní nižší",
     "up": "Nahoru"
-  },
-  "test": "test"
+  }
 }

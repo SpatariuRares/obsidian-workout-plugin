@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "日期",
-    "down": "下降",
     "fallbackTableMessage": "备用表格消息",
     "labels": {
-      "date": "日期",
-      "distance": "距离",
-      "down": "下降",
-      "duration": "时长",
-      "heartRate": "心率",
-      "neutral": "中性",
-      "pace": "配速",
       "quickWeightIncrementUnit": "重量按钮增量 {weightIncrementUnit}",
       "reps": "次数",
-      "trendLine": "趋势线",
       "trendType": "趋势 {type}：",
       "variationFromTo": "从 {startValue} 到 {endValue}",
       "volume": "训练量",
       "weight": "重量",
       "weightIncrementUnit": "重量增量 {weightIncrementUnit}"
     },
-    "neutral": "中性",
     "overallVariationPrefix": "总体变化前缀",
-    "reps": "次数",
     "significantIncrease": "显著增长",
     "trendLine": "趋势线",
     "typeNotAvailable": "图表类型 '{chartDataType}' 不适用于 {exerciseType} 类型的训练。可用类型：{typeList}",
@@ -34,8 +23,7 @@
       "reps": "次数",
       "volume": "训练量",
       "weight": "重量"
-    },
-    "volume": "训练量"
+    }
   },
   "commands": {
     "addExerciseBlock": "添加训练块",
@@ -57,7 +45,6 @@
     "km": "公里",
     "minPerKm": "分钟/公里",
     "notAvailable": "不可用",
-    "reps": "次数",
     "sec": "秒",
     "unknown": "未知",
     "workout": "训练"
@@ -110,7 +97,6 @@
       "title": "文件错误",
       "tooManyTags": "肌肉标签过多 ({count})"
     },
-    "month": "月",
     "muscleTags": {
       "description": "描述",
       "title": "肌肉标签",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "本月",
-      "periods": {
-        "month": "本月",
-        "week": "本周",
-        "year": "本年"
-      },
-      "title": "快速统计",
       "week": "本周",
       "workouts": "训练",
       "year": "本年"
@@ -167,14 +147,11 @@
       "totalVolume": "总训练量",
       "totalWorkouts": "总训练次数"
     },
-    "title": "标题",
     "volumeAnalytics": {
       "chartTitle": "训练量趋势（最近30天）",
       "muscleBreakdownTitle": "按训练量排序的主要训练",
       "title": "训练量分析"
-    },
-    "week": "周",
-    "year": "年"
+    }
   },
   "duration": {
     "estimatedDuration": "预估时长",
@@ -363,10 +340,7 @@
       "avgHeartRate": "平均心率（次/分钟）",
       "avgVolume": "平均训练量 ({unit})",
       "avgWeight": "平均重量 ({unit})",
-      "back": "背面",
       "dailyVolume": "每日训练量 ({unit})",
-      "dashboard": "仪表盘",
-      "front": "正面",
       "pace": "配速（分钟/公里）",
       "totalCustom": "总计 {label}",
       "totalDistance": "总距离（公里）",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "文件为空",
     "imbalanceAlerts": "不平衡警报",
     "insufficientData": "数据不足",
-    "loading": "正在加载训练数据...",
     "noDataPeriod": "未找到所选时间段的训练数据。",
     "noFrontmatter": "无前置内容",
     "noImbalances": "无不平衡",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
-    "chartType": "图表类型：",
     "checkboxes": {
       "connectSupersets": "连接超级组",
       "exactMatch": "完全匹配",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "操作",
-      "chartType": "图表类型：",
-      "dateRange": "日期范围（天）：",
-      "duration": "时长（秒）：",
       "exercise": "训练：",
-      "notes": "备注（可选）：",
-      "protocol": "训练方案：",
       "reps": "次数：",
-      "sets": "组数：",
-      "status": "状态",
       "targetReps": "目标次数：",
       "targetWeight": "目标：({unit}):",
-      "title": "标题：",
       "volume": "训练量：{unit}",
-      "weight": "重量：{unit}",
-      "workout": "训练（可选）："
+      "weight": "重量：{unit}"
     },
     "layoutGrouped": "按肌肉分组",
     "layoutHorizontal": "水平布局",
@@ -673,7 +630,6 @@
       "parameterKey": "例如：速度",
       "parameterLabel": "例如：速度",
       "parameterUnit": "例如：公里/小时",
-      "reps": "例如：10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "搜索肌肉标签...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "选择肌肉群...",
       "selectWorkoutFile": "选择一个训练文件以导出...",
       "sets": "4",
-      "weight": "例如：10.5",
       "workout": "例如：训练 A、训练 B，或使用下方复选框"
     },
     "protocol": "训练方案：",
@@ -708,12 +663,10 @@
       "allLogs": "所有记录",
       "cardio": "有氧运动",
       "completeWorkout": "完整训练",
-      "countdown": "倒计时",
       "custom": "自定义",
       "distance": "距离",
       "dropSet": "降组",
       "exerciseWorkout": "训练组合",
-      "interval": "间歇",
       "myoReps": "肌动重复",
       "number": "数字",
       "restPause": "休息暂停",
@@ -732,11 +685,9 @@
     "status": "状态",
     "tag": "标签",
     "tagsSelector": "肌肉标签：",
-    "text": "完成训练",
     "timerDuration": "计时器时长（秒）：",
     "timerPreset": "预设计时器：",
     "timerType": "计时器类型：",
-    "title": "标题：",
     "titles": {
       "addExerciseBlock": "添加训练块",
       "auditExerciseNames": "审核训练名称",
@@ -755,7 +706,6 @@
       "insertTimer": "插入训练计时器",
       "muscleTagManager": "管理肌肉标签"
     },
-    "value": "训练",
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
     "workoutNameOptional": "训练名称（可选）："
@@ -845,7 +795,6 @@
       "protocolNameRequired": "训练方案名称为必填项",
       "protocolSaved": "训练方案已保存"
     },
-    "none": "无",
     "options": {
       "none": "无",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "训练",
       "heartRate": "心率",
       "notes": "备注",
-      "pace": "配速（分钟/公里）",
       "protocol": "训练方案",
       "reps": "次数",
       "volume": "训练量",
       "weight": "重量"
     },
     "columns": {
-      "actions": "操作",
-      "date": "日期",
-      "distance": "距离",
       "distanceUnit": "距离 ({distanceUnit})",
       "duration": "时长",
-      "exercise": "训练",
       "heartRate": "心率",
-      "notes": "备注",
       "pace": "配速",
-      "protocol": "方案",
       "reps": "次数",
-      "volume": "训练量",
       "volumeUnit": "训练量 ({weightUnit})",
-      "weight": "重量",
       "weightUnit": "重量 ({weightUnit})"
     },
     "deleteConfirm": "确认删除",
     "deleteError": "删除失败",
     "deleteSuccess": "删除成功",
     "deleteTitle": "删除标题",
-    "distance": "距离",
-    "duration": "时长",
     "editTable": "编辑表格",
     "editTitle": "编辑标题",
     "gotoExercise": "跳转到训练",
-    "heartRate": "心率",
     "invalidDate": "无效日期",
     "labels": {
-      "distance": "距离",
-      "duration": "时长",
-      "heartRate": "心率",
-      "target": "目标：",
-      "trendLine": "趋势线",
-      "volume": "训练量",
-      "weight": "重量"
+      "target": "目标："
     },
     "noData": "无数据",
     "notAvailable": "不可用",
     "refreshSuccess": "刷新成功",
-    "sets": "组数",
     "target": {
       "progressTooltip": "最佳：{best} 次 / 目标：{target} 次",
       "repsSuffix": "次",
       "separator": " × "
     },
-    "trendLine": "趋势线",
-    "volume": "训练量"
+    "trendLine": "趋势线"
   },
   "timeperiods": {
     "month": "月",
@@ -978,6 +907,5 @@
     "stable": "稳定",
     "stableLower": "稳定较低",
     "up": "上升"
-  },
-  "test": "测试"
+  }
 }

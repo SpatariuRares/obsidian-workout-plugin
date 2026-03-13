@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Fecha.",
-    "down": "Abajo.",
     "fallbackTableMessage": "Mensaje de tabla de respaldo.",
     "labels": {
-      "date": "Fecha.",
-      "distance": "Distancia",
-      "down": "abajo",
-      "duration": "Duración",
-      "heartRate": "Frecuencia cardíaca",
-      "neutral": "neutral",
-      "pace": "Velocidad",
       "quickWeightIncrementUnit": "Los botones de peso incrementan en {weightIncrementUnit}",
       "reps": "Representantes.",
-      "trendLine": "Línea de tendencia.",
       "trendType": "Tendencia {type}:",
       "variationFromTo": "de {{startValue}} a {{endValue}}",
       "volume": "Volumen",
       "weight": "Peso",
       "weightIncrementUnit": "Incremento de peso {weightIncrementUnit}"
     },
-    "neutral": "Neutral.",
     "overallVariationPrefix": "Variación general. Prefijo.",
-    "reps": "Representantes.",
     "significantIncrease": "Aumento significativo.",
     "trendLine": "Línea de tendencia.",
     "typeNotAvailable": "El tipo de gráfico \"{chartDataType}\" no está disponible para los ejercicios de tipo {exerciseType}. Tipos disponibles: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Tipos de gráficos",
       "volume": "Volumen",
       "weight": "Peso"
-    },
-    "volume": "Volumen."
+    }
   },
   "commands": {
     "addExerciseBlock": "Añadir bloque de ejercicios.",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "min/km",
     "notAvailable": "No disponible.",
-    "reps": "Representaciones",
     "sec": "sec",
     "unknown": "Desconocido.",
     "workout": "Entrenamiento."
@@ -110,7 +97,6 @@
       "title": "Errores de archivo",
       "tooManyTags": "Demasiadas etiquetas de músculo ({count})"
     },
-    "month": "Mes.",
     "muscleTags": {
       "description": "Descripción",
       "title": "Etiquetas para músculos",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Mes",
-      "periods": {
-        "month": "Este mes.",
-        "week": "Esta semana.",
-        "year": "Este año."
-      },
-      "title": "Datos rápidos.",
       "week": "Semana",
       "workouts": "Entrenamientos",
       "year": "Año"
@@ -167,14 +147,11 @@
       "totalVolume": "Volumen total.",
       "totalWorkouts": "Entrenamientos totales."
     },
-    "title": "Título.",
     "volumeAnalytics": {
       "chartTitle": "Tendencia del volumen (últimos 30 días).",
       "muscleBreakdownTitle": "Ejercicios más populares según el volumen de búsquedas.",
       "title": "Análisis de volúmenes."
-    },
-    "week": "Semana.",
-    "year": "Año."
+    }
   },
   "duration": {
     "estimatedDuration": "Duración estimada",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Frecuencia cardíaca promedio (latidos por minuto)",
       "avgVolume": "Volumen promedio ({unidad}).",
       "avgWeight": "Peso promedio ({unidad}).",
-      "back": "Volver.",
       "dailyVolume": "Volumen diario ({{unit}})",
-      "dashboard": "Panel de control.",
-      "front": "Frente.",
       "pace": "Velocidad (min/km)",
       "totalCustom": "Total: {{label}}",
       "totalDistance": "Distancia total (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Archivo vacío.",
     "imbalanceAlerts": "Alertas de desequilibrio.",
     "insufficientData": "Datos insuficientes.",
-    "loading": "Cargando los datos del entrenamiento...",
     "noDataPeriod": "No se encontraron datos de entrenamiento para el período de tiempo seleccionado.",
     "noFrontmatter": "Sin material preliminar.",
     "noImbalances": "Sin desequilibrios.",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Diseño",
     "canvasOptions": "Opciones",
-    "chartType": "Tipo de Gráfico:",
     "checkboxes": {
       "connectSupersets": "Conectar Superseries",
       "exactMatch": "Coincidencia exacta",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Acciones",
-      "chartType": "Tipo de gráfica:",
-      "dateRange": "Rango de fecha (días):",
-      "duration": "Duración (segundos):",
       "exercise": "Ejercicio:",
-      "notes": "Notas (opcionales):",
-      "protocol": "Protocolo:",
       "reps": "Repeticiones:",
-      "sets": "Conjuntos:",
-      "status": "Estado",
       "targetReps": "Repeticiones objetivas:",
       "targetWeight": "Peso objetivo ({unit}):",
-      "title": "Título:",
       "volume": "Volumen ({{unit}}):",
-      "weight": "Peso ({unit}):",
-      "workout": "Entrenamiento (opcional)"
+      "weight": "Peso ({unit}):"
     },
     "layoutGrouped": "Agrupado por músculo",
     "layoutHorizontal": "Flujo horizontal",
@@ -673,7 +630,6 @@
       "parameterKey": "e.g., velocidad",
       "parameterLabel": "e.g., Velocidad",
       "parameterUnit": "ej., km/h",
-      "reps": "ej., 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Búsqueda de etiquetas de músculo...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Seleccionar grupo muscular...",
       "selectWorkoutFile": "Seleccione un archivo de entrenamiento para exportarlo...",
       "sets": "4",
-      "weight": "ej., 10.5",
       "workout": "e.g. Entrenamiento A, Entrenamiento B, o utiliza la casilla de verificación debajo"
     },
     "protocol": "Protocolo:",
@@ -708,12 +663,10 @@
       "allLogs": "Todos los registros",
       "cardio": "Entrenamiento cardiovascular",
       "completeWorkout": "Entrenamiento completado",
-      "countdown": "Cuenta regresiva",
       "custom": "Personalizado",
       "distance": "Distancia",
       "dropSet": "Serie descendente",
       "exerciseWorkout": "Entrenamiento de ejercicios",
-      "interval": "Intervalo",
       "myoReps": "Repeticiones miostáticas",
       "number": "Número",
       "restPause": "Pausa de descanso",
@@ -732,11 +685,9 @@
     "status": "Estado",
     "tag": "Etiqueta",
     "tagsSelector": "Etiquetas de músculo:",
-    "text": "Entrenamiento completo",
     "timerDuration": "Duración del reloj (segundos):",
     "timerPreset": "Preset de reloj:",
     "timerType": "Tipo de temporizador:",
-    "title": "Título:",
     "titles": {
       "addExerciseBlock": "Agregar bloque de ejercicio",
       "auditExerciseNames": "Revisar nombres de ejercicios",
@@ -755,7 +706,6 @@
       "insertTimer": "Insertar reloj de entrenamiento",
       "muscleTagManager": "Gestionar etiquetas musculares"
     },
-    "value": "entrenamiento",
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
     "workoutNameOptional": "Nombre del Entrenamiento (opcional):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "El nombre del protocolo es obligatorio.",
       "protocolSaved": "Protocolo guardado"
     },
-    "none": "Ninguno.",
     "options": {
       "none": "Ninguno.",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Ejercicio.",
       "heartRate": "Frecuencia cardíaca.",
       "notes": "Notas.",
-      "pace": "Velocidad (min/km)",
       "protocol": "Protocolo.",
       "reps": "Representantes.",
       "volume": "Volumen.",
       "weight": "Peso."
     },
     "columns": {
-      "actions": "Actuar.",
-      "date": "Fecha.",
-      "distance": "Dist.",
       "distanceUnit": "Distancia ({distanceUnit})",
       "duration": "Dur.",
-      "exercise": "Ejercicio.",
       "heartRate": "Recursos Humanos.",
-      "notes": "Notas.",
       "pace": "Velocidad",
-      "protocol": "Prot.",
       "reps": "Rep.",
-      "volume": "Vol.",
       "volumeUnit": "Volumen ({weightUnit})",
-      "weight": "Peso",
       "weightUnit": "Peso ({weightUnit})"
     },
     "deleteConfirm": "Eliminar Confirmar.",
     "deleteError": "Eliminar error.",
     "deleteSuccess": "Eliminación exitosa.",
     "deleteTitle": "Eliminar título.",
-    "distance": "Distancia.",
-    "duration": "Duración.",
     "editTable": "Editar tabla",
     "editTitle": "Editar título.",
     "gotoExercise": "Ir al ejercicio.",
-    "heartRate": "Frecuencia cardíaca.",
     "invalidDate": "Fecha inválida.",
     "labels": {
-      "distance": "Distancia.",
-      "duration": "Duración.",
-      "heartRate": "Frecuencia cardíaca.",
-      "target": "Objetivo:",
-      "trendLine": "Línea de tendencia.",
-      "volume": "Volumen.",
-      "weight": "Peso."
+      "target": "Objetivo:"
     },
     "noData": "Sin datos.",
     "notAvailable": "No disponible.",
     "refreshSuccess": "Renueva tu éxito.",
-    "sets": "Conjuntos.",
     "target": {
       "progressTooltip": "Mejor: {best} repeticiones / Objetivo: {target} repeticiones.",
       "repsSuffix": "representantes",
       "separator": " × "
     },
-    "trendLine": "Línea de tendencia.",
-    "volume": "Volumen."
+    "trendLine": "Línea de tendencia."
   },
   "timeperiods": {
     "month": "Mes.",
@@ -978,6 +907,5 @@
     "stable": "Estable.",
     "stableLower": "Estable, nivel inferior.",
     "up": "Arriba."
-  },
-  "test": "test"
+  }
 }

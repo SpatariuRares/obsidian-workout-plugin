@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Data",
-    "down": "În jos",
     "fallbackTableMessage": "Mesaj pentru tabelul de rezervă",
     "labels": {
-      "date": "Data",
-      "distance": "Distanță",
-      "down": "în jos",
-      "duration": "Durată",
-      "heartRate": "Frecvența cardiacă",
-      "neutral": "neutru",
-      "pace": "Ritm",
       "quickWeightIncrementUnit": "Butoanele de greutate cresc cu {weightIncrementUnit}",
       "reps": "Reprezentări",
-      "trendLine": "Linia de tendință",
       "trendType": "Tendință {type}:",
       "variationFromTo": "de la {startValue} la {endValue}",
       "volume": "Volum",
       "weight": "Greutate",
       "weightIncrementUnit": "Creștere a greutății {weightIncrementUnit}"
     },
-    "neutral": "Neutru",
     "overallVariationPrefix": "Prefix pentru variația generală",
-    "reps": "Reprezentări",
     "significantIncrease": "Creștere semnificativă",
     "trendLine": "Linia de tendință",
     "typeNotAvailable": "Tipul de grafic \"{chartDataType}\" nu este disponibil pentru exercițiile de tip {exerciseType}. Tipuri disponibile: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Reprezentări",
       "volume": "Volum",
       "weight": "Greutate"
-    },
-    "volume": "Volum"
+    }
   },
   "commands": {
     "addExerciseBlock": "Adaugă bloc de exerciții",
@@ -57,7 +45,6 @@
     "km": "km",
     "minPerKm": "minim/km",
     "notAvailable": "Nu este disponibil",
-    "reps": "Rep",
     "sec": "sec",
     "unknown": "Necunoscut",
     "workout": "Antrenament"
@@ -110,7 +97,6 @@
       "title": "Erori în fișiere",
       "tooManyTags": "Prea multe etichete pentru mușchi ({{count}})"
     },
-    "month": "Luna",
     "muscleTags": {
       "description": "Descriere",
       "title": "Etichete pentru mușchi",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Luna",
-      "periods": {
-        "month": "Acest lună",
-        "week": "Această săptămână",
-        "year": "Acest an"
-      },
-      "title": "Statistici rapide",
       "week": "Săptămână",
       "workouts": "Antrenamente",
       "year": "An"
@@ -167,14 +147,11 @@
       "totalVolume": "Volum total",
       "totalWorkouts": "Număr total de antrenamente"
     },
-    "title": "Titlu",
     "volumeAnalytics": {
       "chartTitle": "Tendința volumului (ultimele 30 de zile)",
       "muscleBreakdownTitle": "Exercițiile cele mai eficiente, în funcție de volum",
       "title": "Analiza volumului"
-    },
-    "week": "Săptămână",
-    "year": "An"
+    }
   },
   "duration": {
     "estimatedDuration": "Durata estimată",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Rata medie a pulsului (bătăi pe minut)",
       "avgVolume": "Volum mediu ({unit})",
       "avgWeight": "Greutate medie ({{unit}})",
-      "back": "Înapoi",
       "dailyVolume": "Volumul zilnic ({{unit}})",
-      "dashboard": "Panou de control",
-      "front": "Față",
       "pace": "Ritm (min/km)",
       "totalCustom": "Total {{label}}",
       "totalDistance": "Distanța totală (km)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Fișierul este gol",
     "imbalanceAlerts": "Alarme pentru dezechilibre",
     "insufficientData": "Date insuficiente",
-    "loading": "Se încarcă datele antrenamentului...",
     "noDataPeriod": "Nu au fost găsite date despre antrenament pentru perioada selectată.",
     "noFrontmatter": "Nu există conținut predefinit",
     "noImbalances": "Fără dezechilibre",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
-    "chartType": "Tip de grafic:",
     "checkboxes": {
       "connectSupersets": "Conectează seturi",
       "exactMatch": "Potrivire exactă",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Acțiuni",
-      "chartType": "Tip de grafic:",
-      "dateRange": "Interval de date (număr de zile):",
-      "duration": "Durată (secunde):",
       "exercise": "Exercițiu:",
-      "notes": "Note (opțional):",
-      "protocol": "Protocol:",
       "reps": "Reprezentări:",
-      "sets": "Seturi:",
-      "status": "Stare",
       "targetReps": "Reprezentanții țintă:",
       "targetWeight": "Obiectiv: ({unit}):",
-      "title": "Titlu:",
       "volume": "Volum ({{unit}}):",
-      "weight": "Greutate ({{unit}}):",
-      "workout": "Antrenament (opțional):"
+      "weight": "Greutate ({{unit}}):"
     },
     "layoutGrouped": "Grupat după mușchi",
     "layoutHorizontal": "Flux orizontal",
@@ -673,7 +630,6 @@
       "parameterKey": "de exemplu, viteză",
       "parameterLabel": "ex., Viteza",
       "parameterUnit": "de exemplu, km/h",
-      "reps": "de exemplu, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Caută etichete pentru mușchi...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Selectați grupa musculară...",
       "selectWorkoutFile": "Selectați un fișier de antrenament pentru a exporta...",
       "sets": "4",
-      "weight": "de exemplu, 10,5",
       "workout": "de exemplu, Antrenament A, Antrenament B, sau folosiți caseta de selectare de mai jos"
     },
     "protocol": "Protocol:",
@@ -708,12 +663,10 @@
       "allLogs": "Toate jurnalele",
       "cardio": "Activități cardio",
       "completeWorkout": "Finalizare antrenament",
-      "countdown": "Numărătoare inversă",
       "custom": "Personalizat",
       "distance": "Distanță",
       "dropSet": "Set de exerciții",
       "exerciseWorkout": "Antrenament",
-      "interval": "Interval",
       "myoReps": "Repartiția mea",
       "number": "Număr",
       "restPause": "Pauză",
@@ -732,11 +685,9 @@
     "status": "Stare",
     "tag": "Etichetă",
     "tagsSelector": "Etichete pentru mușchi:",
-    "text": "Finalizează antrenamentul",
     "timerDuration": "Durata temporizării (secunde):",
     "timerPreset": "Prezentare preset temporizator:",
     "timerType": "Tip de temporizator:",
-    "title": "Titlu:",
     "titles": {
       "addExerciseBlock": "Adaugă bloc exerciții",
       "auditExerciseNames": "Numele exercițiilor de audit",
@@ -755,7 +706,6 @@
       "insertTimer": "Adaugă cronometrul pentru antrenament",
       "muscleTagManager": "Gestionați etichetele pentru mușchi"
     },
-    "value": "antrenament",
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișier antrenament:",
     "workoutNameOptional": "Numele antrenamentului (opțional):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Numele protocolului este obligatoriu",
       "protocolSaved": "Protocol salvat"
     },
-    "none": "Niciunul",
     "options": {
       "none": "Niciunul",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Exercițiu",
       "heartRate": "Frecvența cardiacă",
       "notes": "Note",
-      "pace": "Ritm (min/km)",
       "protocol": "Protocol",
       "reps": "Reprezentări",
       "volume": "Volum",
       "weight": "Greutate"
     },
     "columns": {
-      "actions": "Acțiune",
-      "date": "Data",
-      "distance": "Distanța",
       "distanceUnit": "Distanță ({distanceUnit})",
       "duration": "Dur",
-      "exercise": "Exercițiu",
       "heartRate": "Frecvența cardiacă",
-      "notes": "Note",
       "pace": "Ritmul",
-      "protocol": "Protocol",
       "reps": "Rep",
-      "volume": "Vol",
       "volumeUnit": "Volum ({weightUnit})",
-      "weight": "Greutate",
       "weightUnit": "Greutate ({weightUnit})"
     },
     "deleteConfirm": "Confirmă ștergere",
     "deleteError": "Eroare la ștergere",
     "deleteSuccess": "Eliminare reușită",
     "deleteTitle": "Titlu ștergere",
-    "distance": "Distanță",
-    "duration": "Durată",
     "editTable": "Modifică tabelul",
     "editTitle": "Titlu",
     "gotoExercise": "Mergi la exercițiu",
-    "heartRate": "Frecvența cardiacă",
     "invalidDate": "Data introdusă este incorectă",
     "labels": {
-      "distance": "Distanță",
-      "duration": "Durată",
-      "heartRate": "Frecvența cardiacă",
-      "target": "Țintă:",
-      "trendLine": "Linia de tendință",
-      "volume": "Volum",
-      "weight": "Greutate"
+      "target": "Țintă:"
     },
     "noData": "Nu există date",
     "notAvailable": "Nu este disponibil",
     "refreshSuccess": "Actualizare reușită",
-    "sets": "Seturi",
     "target": {
       "progressTooltip": "Ideal: {best} repetări / Obiectiv: {target} repetări",
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linia de tendință",
-    "volume": "Volum"
+    "trendLine": "Linia de tendință"
   },
   "timeperiods": {
     "month": "Luna",
@@ -978,6 +907,5 @@
     "stable": "Stabil",
     "stableLower": "Stabilitate, nivel mai mic",
     "up": "În sus"
-  },
-  "test": "test"
+  }
 }

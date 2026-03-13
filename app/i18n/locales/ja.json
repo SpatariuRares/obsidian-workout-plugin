@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "日付",
-    "down": "下へ",
     "fallbackTableMessage": "代替テーブルメッセージ",
     "labels": {
-      "date": "日付",
-      "distance": "距離",
-      "down": "下",
-      "duration": "期間",
-      "heartRate": "心拍数",
-      "neutral": "中立",
-      "pace": "ペース",
       "quickWeightIncrementUnit": "重量ボタンで{weightIncrementUnit}ずつ増やす",
       "reps": "代表",
-      "trendLine": "トレンドライン",
       "trendType": "トレンド {type}:",
       "variationFromTo": "{startValue} から {endValue} までの範囲",
       "volume": "体積",
       "weight": "重さ",
       "weightIncrementUnit": "重量の増分 {weightIncrementUnit}"
     },
-    "neutral": "中立",
     "overallVariationPrefix": "全体変動のプレフィックス",
-    "reps": "代表",
     "significantIncrease": "顕著な増加",
     "trendLine": "トレンドライン",
     "typeNotAvailable": "グラフの種類「{chartDataType}」は、{exerciseType}のトレーニングには使用できません。利用可能なグラフの種類: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "代表",
       "volume": "体積",
       "weight": "重み"
-    },
-    "volume": "体積"
+    }
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加する",
@@ -57,7 +45,6 @@
     "km": "common.km",
     "minPerKm": "1kmあたりの最小",
     "notAvailable": "利用できません",
-    "reps": "代表",
     "sec": "sec",
     "unknown": "不明",
     "workout": "ワークアウト"
@@ -110,7 +97,6 @@
       "title": "ファイルのエラー",
       "tooManyTags": "筋肉タグが多すぎます（[{{count}}]）"
     },
-    "month": "月",
     "muscleTags": {
       "description": "説明",
       "title": "筋肉タグ",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "月",
-      "periods": {
-        "month": "今月",
-        "week": "今週",
-        "year": "今年"
-      },
-      "title": "クイック統計",
       "week": "今週",
       "workouts": "ワークアウト",
       "year": "年"
@@ -167,14 +147,11 @@
       "totalVolume": "総体積",
       "totalWorkouts": "総トレーニング数"
     },
-    "title": "タイトル",
     "volumeAnalytics": {
       "chartTitle": "体積の推移（過去30日間）",
       "muscleBreakdownTitle": "ボリューム別の人気エクササイズ",
       "title": "音量分析"
-    },
-    "week": "今週",
-    "year": "年"
+    }
   },
   "duration": {
     "estimatedDuration": "推定時間",
@@ -363,10 +340,7 @@
       "avgHeartRate": "平均心拍数 (bpm)",
       "avgVolume": "平均体積 ({unit})",
       "avgWeight": "平均重量（{{unit}}）",
-      "back": "戻る",
       "dailyVolume": "1日の取引量（{{unit}}）",
-      "dashboard": "ダッシュボード",
-      "front": "正面",
       "pace": "ペース (分/km)",
       "totalCustom": "合計 {label}",
       "totalDistance": "総距離（km）",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "ファイルが空",
     "imbalanceAlerts": "不均衡アラート",
     "insufficientData": "データ不足",
-    "loading": "トレーニングデータの読み込み中...",
     "noDataPeriod": "選択した期間のワークアウトデータが見つかりませんでした。",
     "noFrontmatter": "フロントマターなし",
     "noImbalances": "不均衡はありません",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
-    "chartType": "グラフの種類:",
     "checkboxes": {
       "connectSupersets": "スーパーセットを接続する",
       "exactMatch": "完全一致",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "操作",
-      "chartType": "グラフの種類:",
-      "dateRange": "日付範囲（日数）：",
-      "duration": "期間（秒）：",
       "exercise": "エクササイズ:",
-      "notes": "メモ（任意）：",
-      "protocol": "プロトコル：",
       "reps": "代表者:",
-      "sets": "セット：",
-      "status": "ステータス",
       "targetReps": "目標回数：",
       "targetWeight": "目標: ({unit}):",
-      "title": "タイトル:",
       "volume": "音量 ({{unit}}):",
-      "weight": "体重 ({{unit}}):",
-      "workout": "ワークアウト（任意）："
+      "weight": "体重 ({{unit}}):"
     },
     "layoutGrouped": "筋肉ごとにグループ化",
     "layoutHorizontal": "水平方向のレイアウト",
@@ -673,7 +630,6 @@
       "parameterKey": "例：速度",
       "parameterLabel": "例：速度",
       "parameterUnit": "例：km/h",
-      "reps": "例：10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "筋肉のタグを検索する...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "筋肉グループを選択してください...",
       "selectWorkoutFile": "エクササイズファイルを選択してエクスポートする...",
       "sets": "4",
-      "weight": "例：10.5",
       "workout": "例：ワークアウト A、トレーニング B、または、以下のチェックボックスを使用"
     },
     "protocol": "プロトコル：",
@@ -708,12 +663,10 @@
       "allLogs": "すべてのログ",
       "cardio": "有酸素運動",
       "completeWorkout": "ワークアウト完了",
-      "countdown": "カウントダウン",
       "custom": "カスタム",
       "distance": "距離",
       "dropSet": "ドロップセット",
       "exerciseWorkout": "エクササイズ・ワークアウト",
-      "interval": "間隔",
       "myoReps": "マイ・レップ",
       "number": "件数",
       "restPause": "休憩モード",
@@ -732,11 +685,9 @@
     "status": "ステータス",
     "tag": "タグ",
     "tagsSelector": "筋肉に関するタグ:",
-    "text": "ワークアウトを完了する",
     "timerDuration": "タイマー時間（秒）：",
     "timerPreset": "タイマー設定:",
     "timerType": "タイマーの種類:",
-    "title": "タイトル:",
     "titles": {
       "addExerciseBlock": "エクササイズブロックを追加する",
       "auditExerciseNames": "監査対象のトレーニング名",
@@ -755,7 +706,6 @@
       "insertTimer": "ワークアウトタイマーを設定する",
       "muscleTagManager": "筋肉タグの管理"
     },
-    "value": "ワークアウト",
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
     "workoutNameOptional": "ワークアウト名（任意）："
@@ -845,7 +795,6 @@
       "protocolNameRequired": "プロトコルの名前が必要です",
       "protocolSaved": "プロトコルを保存しました"
     },
-    "none": "該当なし",
     "options": {
       "none": "なし",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "エクササイズ",
       "heartRate": "心拍数",
       "notes": "備考",
-      "pace": "ペース (分/km)",
       "protocol": "プロトコル",
       "reps": "代表",
       "volume": "音量",
       "weight": "体重"
     },
     "columns": {
-      "actions": "実行",
-      "date": "日付",
-      "distance": "列間の距離",
       "distanceUnit": "距離 ({distanceUnit})",
       "duration": "期間",
-      "exercise": "エクササイズ",
       "heartRate": "心拍数",
-      "notes": "備考",
       "pace": "ペース",
-      "protocol": "プロトコル",
       "reps": "代表",
-      "volume": "音量",
       "volumeUnit": "体積 ({weightUnit})",
-      "weight": "重み",
       "weightUnit": "重さ ({weightUnit})"
     },
     "deleteConfirm": "削除確認",
     "deleteError": "削除エラー",
     "deleteSuccess": "削除に成功",
     "deleteTitle": "削除する",
-    "distance": "距離",
-    "duration": "期間",
     "editTable": "テーブルの編集",
     "editTitle": "編集タイトル",
     "gotoExercise": "エクササイズへ移動",
-    "heartRate": "心拍数",
     "invalidDate": "無効な日付",
     "labels": {
-      "distance": "距離",
-      "duration": "期間",
-      "heartRate": "心拍数",
-      "target": "目標:",
-      "trendLine": "トレンドライン",
-      "volume": "音量",
-      "weight": "体重"
+      "target": "目標:"
     },
     "noData": "データなし",
     "notAvailable": "利用できません",
     "refreshSuccess": "リフレッシュ成功",
-    "sets": "セット",
     "target": {
       "progressTooltip": "最適: {best} 回 / 目標: {target} 回",
       "repsSuffix": "代表",
       "separator": " × "
     },
-    "trendLine": "トレンドライン",
-    "volume": "音量"
+    "trendLine": "トレンドライン"
   },
   "timeperiods": {
     "month": "月",
@@ -978,6 +907,5 @@
     "stable": "安定",
     "stableLower": "安定した低い",
     "up": "上昇"
-  },
-  "test": "テスト"
+  }
 }

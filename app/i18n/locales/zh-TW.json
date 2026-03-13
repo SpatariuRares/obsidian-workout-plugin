@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "日期",
-    "down": "向下",
     "fallbackTableMessage": "備用表格訊息",
     "labels": {
-      "date": "日期",
-      "distance": "距離",
-      "down": "下降",
-      "duration": "時長",
-      "heartRate": "心率",
-      "neutral": "中性",
-      "pace": "速度",
       "quickWeightIncrementUnit": "按重量按鈕可增加 {weightIncrementUnit}",
       "reps": "代表",
-      "trendLine": "趨勢線",
       "trendType": "趨勢 {type}:",
       "variationFromTo": "從 {{startValue}} 到 {{endValue}}",
       "volume": "體積",
       "weight": "重量",
       "weightIncrementUnit": "重量增加 {weightIncrementUnit}"
     },
-    "neutral": "中立",
     "overallVariationPrefix": "總體變動前綴",
-    "reps": "代表",
     "significantIncrease": "顯著增加",
     "trendLine": "趨勢線",
     "typeNotAvailable": "圖表類型 \"{chartDataType}\" 僅適用於 {exerciseType} 運動。可用的圖表類型：{typeList}",
@@ -34,8 +23,7 @@
       "reps": "代表",
       "volume": "體積",
       "weight": "權重"
-    },
-    "volume": "體積"
+    }
   },
   "commands": {
     "addExerciseBlock": "新增運動區塊",
@@ -57,7 +45,6 @@
     "km": "公里",
     "minPerKm": "每公里",
     "notAvailable": "無法取得",
-    "reps": "代表",
     "sec": "安全",
     "unknown": "未定",
     "workout": "運動"
@@ -110,7 +97,6 @@
       "title": "檔案錯誤",
       "tooManyTags": "過多的肌肉標籤（{count}）"
     },
-    "month": "月份",
     "muscleTags": {
       "description": "說明",
       "title": "肌肉標籤",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "月份",
-      "periods": {
-        "month": "本月",
-        "week": "本週",
-        "year": "今年"
-      },
-      "title": "快速統計",
       "week": "本週",
       "workouts": "運動",
       "year": "年份"
@@ -167,14 +147,11 @@
       "totalVolume": "總體量",
       "totalWorkouts": "總運動次數"
     },
-    "title": "標題",
     "volumeAnalytics": {
       "chartTitle": "音量趨勢（過去 30 天）",
       "muscleBreakdownTitle": "按體積排序的運動",
       "title": "音量分析"
-    },
-    "week": "本週",
-    "year": "年份"
+    }
   },
   "duration": {
     "estimatedDuration": "預估時間",
@@ -363,10 +340,7 @@
       "avgHeartRate": "平均心率 (每分鐘次)",
       "avgVolume": "平均體積 ({unit})",
       "avgWeight": "平均重量 ({unit})",
-      "back": "返回",
       "dailyVolume": "每日交易量 ({{unit}})",
-      "dashboard": "儀表板",
-      "front": "正面",
       "pace": "速度 (分鐘/公里)",
       "totalCustom": "總計 {label}",
       "totalDistance": "總距離 (公里)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "檔案已清空",
     "imbalanceAlerts": "不平衡警示",
     "insufficientData": "數據不足",
-    "loading": "正在載入運動數據...",
     "noDataPeriod": "未找到指定時間段內的運動數據。",
     "noFrontmatter": "沒有前置內容",
     "noImbalances": "沒有任何不平衡",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
-    "chartType": "圖表類型：",
     "checkboxes": {
       "connectSupersets": "連接超組",
       "exactMatch": "完全匹配",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "動作",
-      "chartType": "圖表類型：",
-      "dateRange": "日期範圍（天數）：",
-      "duration": "時長 (秒)：",
       "exercise": "運動：",
-      "notes": "備註 (可選)：",
-      "protocol": "協定：",
       "reps": "代表：",
-      "sets": "集合：",
-      "status": "狀態",
       "targetReps": "目標次數：",
       "targetWeight": "目標：({unit})：",
-      "title": "標題：",
       "volume": "音量：({unit})",
-      "weight": "重量：({unit})",
-      "workout": "運動 (可選)："
+      "weight": "重量：({unit})"
     },
     "layoutGrouped": "按肌肉分類",
     "layoutHorizontal": "水平排列",
@@ -673,7 +630,6 @@
       "parameterKey": "例如：速度",
       "parameterLabel": "例如：速度",
       "parameterUnit": "例如：公里/小時",
-      "reps": "例如：10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "搜尋肌肉標籤...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "選擇肌肉群...",
       "selectWorkoutFile": "選擇一個運動檔案以匯出...",
       "sets": "4",
-      "weight": "例如：10.5",
       "workout": "例如：運動 A、訓練 B，或使用下方勾選框"
     },
     "protocol": "協定：",
@@ -708,12 +663,10 @@
       "allLogs": "所有記錄",
       "cardio": "心血管訓練",
       "completeWorkout": "完成運動",
-      "countdown": "倒數",
       "custom": "自訂",
       "distance": "距離",
       "dropSet": "下拉式選擇",
       "exerciseWorkout": "運動訓練",
-      "interval": "間隔",
       "myoReps": "我的代表",
       "number": "數量",
       "restPause": "暫停",
@@ -732,11 +685,9 @@
     "status": "狀態",
     "tag": "標籤",
     "tagsSelector": "肌肉標籤：",
-    "text": "完成運動",
     "timerDuration": "倒計時長度（秒）：",
     "timerPreset": "預設計時：",
     "timerType": "計時類型：",
-    "title": "標題：",
     "titles": {
       "addExerciseBlock": "新增運動區塊",
       "auditExerciseNames": "審計測驗名稱",
@@ -755,7 +706,6 @@
       "insertTimer": "插入運動計時器",
       "muscleTagManager": "管理肌肉標籤"
     },
-    "value": "運動",
     "workout": "運動 (可選)：",
     "workoutFile": "運動檔案：",
     "workoutNameOptional": "運動名稱（可選）："
@@ -845,7 +795,6 @@
       "protocolNameRequired": "協議名稱必填",
       "protocolSaved": "協定已儲存"
     },
-    "none": "沒有",
     "options": {
       "none": "沒有",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "運動",
       "heartRate": "心率",
       "notes": "備註",
-      "pace": "速度 (分鐘/公里)",
       "protocol": "協定",
       "reps": "代表",
       "volume": "音量",
       "weight": "重量"
     },
     "columns": {
-      "actions": "動作",
-      "date": "日期",
-      "distance": "間距",
       "distanceUnit": "間距 ({distanceUnit})",
       "duration": "持續時間",
-      "exercise": "運動",
       "heartRate": "心率",
-      "notes": "備註",
       "pace": "速度",
-      "protocol": "協定",
       "reps": "代表",
-      "volume": "音量",
       "volumeUnit": "體積 ({weightUnit})",
-      "weight": "重量",
       "weightUnit": "重量 ({weightUnit})"
     },
     "deleteConfirm": "確認刪除",
     "deleteError": "刪除失敗",
     "deleteSuccess": "刪除成功",
     "deleteTitle": "刪除標題",
-    "distance": "距離",
-    "duration": "時長",
     "editTable": "編輯表格",
     "editTitle": "編輯標題",
     "gotoExercise": "前往練習",
-    "heartRate": "心率",
     "invalidDate": "無效日期",
     "labels": {
-      "distance": "距離",
-      "duration": "時長",
-      "heartRate": "心率",
-      "target": "目標：",
-      "trendLine": "趨勢線",
-      "volume": "音量",
-      "weight": "重量"
+      "target": "目標："
     },
     "noData": "沒有資料",
     "notAvailable": "無法取得",
     "refreshSuccess": "重新載入成功",
-    "sets": "集合",
     "target": {
       "progressTooltip": "最佳：{best} 次 / 目標：{target} 次",
       "repsSuffix": "代表",
       "separator": " × "
     },
-    "trendLine": "趨勢線",
-    "volume": "音量"
+    "trendLine": "趨勢線"
   },
   "timeperiods": {
     "month": "月份",
@@ -978,6 +907,5 @@
     "stable": "穩定",
     "stableLower": "穩定較低",
     "up": "上"
-  },
-  "test": "測試"
+  }
 }

@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Дата",
-    "down": "Вниз",
     "fallbackTableMessage": "Сообщение для таблицы резервного копирования",
     "labels": {
-      "date": "Дата",
-      "distance": "Расстояние",
-      "down": "вниз",
-      "duration": "Продолжительность",
-      "heartRate": "Частота сердечных сокращений",
-      "neutral": "нейтральный",
-      "pace": "Темп",
       "quickWeightIncrementUnit": "Кнопки изменения веса увеличивают {weightIncrementUnit}",
       "reps": "Представления",
-      "trendLine": "Линия тренда",
       "trendType": "Динамика {type}:",
       "variationFromTo": "от {{startValue}} до {{endValue}}",
       "volume": "Объем",
       "weight": "Вес",
       "weightIncrementUnit": "Увеличение веса {weightIncrementUnit}"
     },
-    "neutral": "Нейтральный",
     "overallVariationPrefix": "Префикс для общей вариации",
-    "reps": "Представления",
     "significantIncrease": "Значительный рост",
     "trendLine": "Линия тренда",
     "typeNotAvailable": "Тип диаграммы \"{chartDataType}\" недоступен для упражнений типа {exerciseType}. Доступные типы: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Типы графиков: отображение",
       "volume": "Объем",
       "weight": "Вес"
-    },
-    "volume": "Объем"
+    }
   },
   "commands": {
     "addExerciseBlock": "Добавить блок упражнений",
@@ -57,7 +45,6 @@
     "km": "common.km",
     "minPerKm": "минуты/км",
     "notAvailable": "Не доступно",
-    "reps": "Представления",
     "sec": "безопасность",
     "unknown": "Неизвестно",
     "workout": "Тренировка"
@@ -110,7 +97,6 @@
       "title": "Ошибки при работе с файлами",
       "tooManyTags": "Слишком много меток для мышц ({count})"
     },
-    "month": "Месяц",
     "muscleTags": {
       "description": "Описание",
       "title": "Теги для мышц",
@@ -145,12 +131,6 @@
     },
     "quickStats": {
       "month": "Месяц",
-      "periods": {
-        "month": "В этом месяце",
-        "week": "На этой неделе",
-        "year": "В этом году"
-      },
-      "title": "Быстрые показатели",
       "week": "Неделя",
       "workouts": "Тренировки",
       "year": "Год"
@@ -167,14 +147,11 @@
       "totalVolume": "Общий объем",
       "totalWorkouts": "Общее количество тренировок"
     },
-    "title": "Заголовок",
     "volumeAnalytics": {
       "chartTitle": "Динамика объема (последние 30 дней)",
       "muscleBreakdownTitle": "Лучшие упражнения по объему",
       "title": "Анализ объема"
-    },
-    "week": "Неделя",
-    "year": "Год"
+    }
   },
   "duration": {
     "estimatedDuration": "Ожидаемая продолжительность",
@@ -363,10 +340,7 @@
       "avgHeartRate": "Средняя частота сердечных сокращений (ударов в минуту)",
       "avgVolume": "Средний объем ({unit})",
       "avgWeight": "Средний вес ({unit})",
-      "back": "Назад",
       "dailyVolume": "Ежедневный объем ({{unit}})",
-      "dashboard": "Панель управления",
-      "front": "Передняя часть",
       "pace": "Темп (мин/км)",
       "totalCustom": "Общая сумма {label}",
       "totalDistance": "Общая дистанция (км)",
@@ -420,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -478,7 +446,6 @@
     "fileEmpty": "Файл пуст",
     "imbalanceAlerts": "Предупреждения о дисбалансе",
     "insufficientData": "Недостаточно данных",
-    "loading": "Загрузка данных тренировки...",
     "noDataPeriod": "Данные тренировок не найдены для выбранного периода времени.",
     "noFrontmatter": "Нет информации о структуре",
     "noImbalances": "Отсутствуют несовпадения",
@@ -529,7 +496,6 @@
     },
     "canvasLayout": "Макет",
     "canvasOptions": "Варианты",
-    "chartType": "Тип графика:",
     "checkboxes": {
       "connectSupersets": "Соединить суперсеты",
       "exactMatch": "Точное соответствие",
@@ -575,21 +541,12 @@
     },
     "labels": {
       "actions": "Действия",
-      "chartType": "Тип графика:",
-      "dateRange": "Диапазон дат (дни):",
-      "duration": "Продолжительность (секунды):",
       "exercise": "Упражнение:",
-      "notes": "Примечания (необязательно):",
-      "protocol": "Протокол:",
       "reps": "Представители:",
-      "sets": "Наборы:",
-      "status": "Статус",
       "targetReps": "Целевые показатели:",
       "targetWeight": "Цель: ({unit}):",
-      "title": "Заголовок:",
       "volume": "Громкость ({unit}):",
-      "weight": "Вес ({{unit}}):",
-      "workout": "Тренировка (необязательно):"
+      "weight": "Вес ({{unit}}):"
     },
     "layoutGrouped": "Группировано по мышцам",
     "layoutHorizontal": "Горизонтальное расположение",
@@ -673,7 +630,6 @@
       "parameterKey": "например, скорость",
       "parameterLabel": "например, Скорость",
       "parameterUnit": "например, км/ч",
-      "reps": "например, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Поиск тегов для мышц...",
@@ -681,7 +637,6 @@
       "selectMuscleGroup": "Выбрать группу мышц...",
       "selectWorkoutFile": "Выберите файл тренировки для экспорта...",
       "sets": "4",
-      "weight": "например, 10,5",
       "workout": "Например: Тренировка A, Тренировка B, или используйте флажок ниже"
     },
     "protocol": "Протокол:",
@@ -708,12 +663,10 @@
       "allLogs": "Все записи",
       "cardio": "Кардио",
       "completeWorkout": "Завершить тренировку",
-      "countdown": "Счет отсчета",
       "custom": "Пользовательские",
       "distance": "Расстояние",
       "dropSet": "Набор упражнений",
       "exerciseWorkout": "Тренировка",
-      "interval": "Интервал",
       "myoReps": "Список моих спортивных заведений",
       "number": "Количество",
       "restPause": "Пауза для отдыха",
@@ -732,11 +685,9 @@
     "status": "Статус",
     "tag": "Метка",
     "tagsSelector": "Теги для мышц:",
-    "text": "Завершить тренировку",
     "timerDuration": "Продолжительность таймера (секунды):",
     "timerPreset": "Предустановленный таймер:",
     "timerType": "Тип таймера:",
-    "title": "Заголовок:",
     "titles": {
       "addExerciseBlock": "Добавить блок упражнений",
       "auditExerciseNames": "Названия упражнений для аудита",
@@ -755,7 +706,6 @@
       "insertTimer": "Добавить таймер для тренировки",
       "muscleTagManager": "Управление тегами для мышц"
     },
-    "value": "тренировка",
     "workout": "Тренировка (необязательно):",
     "workoutFile": "Файл тренировки:",
     "workoutNameOptional": "Название тренировки (необязательно):"
@@ -845,7 +795,6 @@
       "protocolNameRequired": "Необходимо указать название протокола.",
       "protocolSaved": "Протокол сохранен"
     },
-    "none": "Нет",
     "options": {
       "none": "Нет",
       "weightUnit": {
@@ -892,60 +841,40 @@
       "exercise": "Упражнение",
       "heartRate": "Частота сердечных сокращений",
       "notes": "Примечания",
-      "pace": "Темп (мин/км)",
       "protocol": "Протокол",
       "reps": "Представители",
       "volume": "Объем",
       "weight": "Вес"
     },
     "columns": {
-      "actions": "Действие",
-      "date": "Дата",
-      "distance": "Расстояние",
       "distanceUnit": "Расстояние ({distanceUnit})",
       "duration": "Продолжительность",
-      "exercise": "Упражнение",
       "heartRate": "ЧСС",
-      "notes": "Примечания",
       "pace": "Темп",
-      "protocol": "Протокол",
       "reps": "Представление",
-      "volume": "Объем",
       "volumeUnit": "Объем ({weightUnit})",
-      "weight": "Вес",
       "weightUnit": "Вес ({weightUnit})"
     },
     "deleteConfirm": "Подтвердить удаление",
     "deleteError": "Ошибка при удалении",
     "deleteSuccess": "Успешно удалено",
     "deleteTitle": "Заголовок для удаления",
-    "distance": "Расстояние",
-    "duration": "Продолжительность",
     "editTable": "Редактировать таблицу",
     "editTitle": "Заголовок для редактирования",
     "gotoExercise": "Перейти к упражнению",
-    "heartRate": "Частота сердечных сокращений",
     "invalidDate": "Неверная дата",
     "labels": {
-      "distance": "Расстояние",
-      "duration": "Продолжительность",
-      "heartRate": "Частота сердечных сокращений",
-      "target": "Цель:",
-      "trendLine": "Линия тренда",
-      "volume": "Объем",
-      "weight": "Вес"
+      "target": "Цель:"
     },
     "noData": "Нет данных",
     "notAvailable": "Не доступно",
     "refreshSuccess": "Успешно обновлено",
-    "sets": "Наборы",
     "target": {
       "progressTooltip": "Лучший вариант: {best} повторений / Цель: {target} повторений",
       "repsSuffix": "представления",
       "separator": " × "
     },
-    "trendLine": "Линия тренда",
-    "volume": "Объем"
+    "trendLine": "Линия тренда"
   },
   "timeperiods": {
     "month": "Месяц",
@@ -978,6 +907,5 @@
     "stable": "Стабильный",
     "stableLower": "Стабильный, нижний уровень",
     "up": "Вверх"
-  },
-  "test": "тест"
+  }
 }

@@ -41,15 +41,20 @@ Access via Command Palette (`Ctrl/Cmd + P`):
 
 | Command | Description |
 |---------|-------------|
-| Create Workout Log | Open the log creation modal |
-| Quick Log | Fast entry with touch-friendly UI |
-| Insert Workout Chart | Insert a `workout-chart` code block |
-| Insert Workout Table | Insert a `workout-log` code block |
-| Insert Workout Timer | Insert a `workout-timer` code block |
-| Create Exercise Page | Create a new exercise page |
-| Create Exercise Section | Add an exercise block to a note |
+| Create CSV log file | Initialize the CSV file for storing workout logs |
+| Insert workout chart | Insert a `workout-chart` code block |
+| Insert workout table | Insert a `workout-log` code block |
+| Insert workout timer | Insert a `workout-timer` code block |
+| Insert workout dashboard | Insert a `workout-dashboard` code block |
+| Insert workout duration | Insert a workout duration estimator code block |
+| Create exercise page | Create a new exercise page |
+| Create exercise section | Add an exercise block to a note |
+| Add exercise block | Insert an exercise block with autocomplete |
+| Export workout to canvas | Export workout data to Obsidian Canvas |
+| Convert exercise | Convert exercise logs from one type to another |
 | Manage muscle tags | Open the muscle tag manager |
-| Generate tag reference note | Create a reference note for all tags |
+| Generate tag reference | Create a reference note for all available muscle tags |
+| Audit exercise names | Scan vault for exercise name inconsistencies |
 
 ### Code Blocks
 
@@ -70,12 +75,16 @@ height: 400
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `exercise` | string | — | Exercise name to filter (optional) |
+| `exercise` | string | — | Exercise name to filter |
 | `type` | string | `volume` | `volume`, `weight`, `reps`, `duration`, `distance`, `pace`, `heartRate` |
+| `chartType` | string | `exercise` | Group by: `exercise`, `workout`, `combined`, `all` |
 | `dateRange` | number | `30` | Days to include |
 | `showTrendLine` | boolean | `true` | Display trend line |
 | `showStats` | boolean | `false` | Show avg/max/min stats box |
+| `exactMatch` | boolean | `false` | Exact vs. fuzzy exercise name matching |
 | `height` | number | `400` | Chart height in pixels |
+| `title` | string | — | Custom chart title |
+| `limit` | number | — | Maximum number of data points |
 
 > **Pace charts**: trend logic is inverted — decreasing pace (faster) = Improving (green), increasing pace (slower) = Declining (red).
 
@@ -105,22 +114,23 @@ limit: 50
 #### workout-timer
 
 ```workout-timer
+type: countdown
 duration: 90
-label: Rest Period
-autoStart: false
+rounds: 3
 sound: true
 preset: rest
 ```
 
 **Parameters:**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `duration` | number | Duration in seconds |
-| `label` | string | Timer label |
-| `autoStart` | boolean | Start automatically on render |
-| `sound` | boolean | Play audio on completion |
-| `preset` | string | Use a saved preset by name |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `type` | string | `countdown` | Timer mode: `countdown`, `interval`, `stopwatch` |
+| `duration` | number | `30` | Duration in seconds (countdown/interval) |
+| `rounds` | number | `1` | Number of rounds (interval mode) |
+| `sound` | boolean | `false` | Play audio on completion |
+| `showControls` | boolean | `true` | Show play/pause/reset buttons |
+| `preset` | string | — | Use a saved preset by name (overridden by explicit params) |
 
 #### workout-dashboard
 

@@ -7,6 +7,8 @@ import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 export class GeneralSettings {
+  private csvPathValidationTimer: ReturnType<typeof setTimeout> | null = null;
+
   constructor(
     private app: App,
     private plugin: WorkoutChartsPlugin,
@@ -21,7 +23,7 @@ export class GeneralSettings {
       .setName(t("settings.sections.setupAndData"))
       .setHeading();
 
-    new Setting(containerEl)
+    const csvPathSetting = new Setting(containerEl)
       .setName(t("settings.labels.csvPath"))
       .setDesc(t("settings.descriptions.csvFolder"))
       .addText((text) => {
@@ -38,8 +40,13 @@ export class GeneralSettings {
             const folder = normalizePath(value);
             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
             await this.plugin.saveSettings();
+            this.scheduleCsvPathValidation(value.trim(), csvPathWarning);
           });
       });
+    const csvPathWarning = csvPathSetting.controlEl.createEl("div", {
+      cls: "workout-setting-error",
+    });
+    csvPathWarning.style.display = "none";
 
     new Setting(containerEl)
       .setName(t("settings.labels.exerciseFolder"))
@@ -70,23 +77,6 @@ export class GeneralSettings {
             await this.plugin.saveSettings();
             // Trigger global refresh to update all views with new unit
             this.plugin.eventBus.emit({ type: 'log:bulk-changed', payload: { count: 0, operation: 'other' } });
-          }),
-      );
-
-    // Filtering Section
-    new Setting(containerEl)
-      .setName(t("settings.sections.filtering"))
-      .setHeading();
-
-    new Setting(containerEl)
-      .setName(t("settings.labels.defaultExactMatch"))
-      .setDesc(t("settings.descriptions.defaultExactMatch"))
-      .addToggle((toggle) =>
-        toggle
-          .setValue(this.plugin.settings.defaultExactMatch)
-          .onChange(async (value) => {
-            this.plugin.settings.defaultExactMatch = value;
-            await this.plugin.saveSettings();
           }),
       );
 
@@ -150,6 +140,28 @@ export class GeneralSettings {
             }
           }),
       );
+  }
+
+  private scheduleCsvPathValidation(folderValue: string, warningEl: HTMLElement): void {
+    if (this.csvPathValidationTimer !== null) {
+      clearTimeout(this.csvPathValidationTimer);
+    }
+    this.csvPathValidationTimer = setTimeout(async () => {
+      this.csvPathValidationTimer = null;
+      if (!folderValue) {
+        warningEl.textContent = t("settings.validation.csvPathEmpty");
+        warningEl.addClass("is-visible");
+        return;
+      }
+      const folder = normalizePath(folderValue);
+      const exists = await this.app.vault.adapter.exists(folder);
+      if (!exists) {
+        warningEl.textContent = t("settings.validation.csvFolderNotFound");
+        warningEl.addClass("is-visible");
+      } else {
+        warningEl.removeClass("is-visible");
+      }
+    }, 300);
   }
 
   /**

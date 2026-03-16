@@ -808,6 +808,7 @@
       "protocolName": "Enter protocol name"
     },
     "sections": {
+      "advanced": "Advanced",
       "csvManagement": "CSV file management",
       "maintenance": "Maintenance",
       "customProtocols": "Custom protocols",
@@ -818,6 +819,12 @@
       "templates": "Templates",
       "timerPresets": "Timer presets",
       "trainingParameters": "Training parameters"
+    },
+    "validation": {
+      "mustBePositive": "Must be greater than 0",
+      "mustBeNonNegative": "Must be 0 or greater",
+      "csvPathEmpty": "Path cannot be empty",
+      "csvFolderNotFound": "Folder not found in vault. Run Setup CSV to create it."
     },
     "tooltips": {
       "deletePreset": "Delete preset",

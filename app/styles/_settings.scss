@@ -1,0 +1,48 @@
+/* ============================================================================
+   SETTINGS PAGE STYLES
+   Styles for the plugin settings tab UI enhancements
+   ============================================================================ */
+
+/* Inline validation error text shown below numeric/text fields */
+.workout-setting-error {
+  display: none;
+  color: var(--text-error);
+  font-size: var(--font-smallest);
+  margin-top: 4px;
+  width: 100%;
+
+  &.is-visible {
+    display: block;
+  }
+}
+
+/* Collapsible "Advanced" section wrapper */
+.workout-advanced-section {
+  margin-top: var(--size-4-4);
+
+  > summary {
+    cursor: pointer;
+    font-size: var(--font-ui-medium);
+    font-weight: var(--font-semibold);
+    color: var(--text-normal);
+    padding: var(--size-4-2) 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    border-top: 1px solid var(--background-modifier-border);
+    user-select: none;
+
+    &::before {
+      content: "▶";
+      font-size: 0.7em;
+      color: var(--text-muted);
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+  }
+
+  &[open] > summary::before {
+    transform: rotate(90deg);
+  }
+}

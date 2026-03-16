@@ -68,8 +68,6 @@ workout: {{workout}}
   repDuration: 5,
   /** Default reps per set (0 means use setDuration fallback if not found) */
   defaultRepsPerSet: 0,
-  /** Legacy quick-log ribbon preference (deprecated, no longer used) */
-  showQuickLogRibbon: true,
   /** Recent exercises shown as chips in create/edit modals */
   recentExercises: [],
   /** Weight increment for +/- buttons in create/edit log forms */

@@ -149,10 +149,6 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.quickLogRibbonIcon = null;
     }
 
-    if (!this.settings.showQuickLogRibbon) {
-      return;
-    }
-
     this.quickLogRibbonIcon = this.addRibbonIcon(
       "dumbbell",
       t("modal.titles.create_log"),

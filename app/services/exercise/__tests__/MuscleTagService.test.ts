@@ -99,7 +99,6 @@ describe("MuscleTagService", () => {
       achievedTargets: {},
       customProtocols: [],
       setDuration: 45,
-      showQuickLogRibbon: true,
       recentExercises: [],
       quickWeightIncrement: 2.5,
       repDuration: 5,

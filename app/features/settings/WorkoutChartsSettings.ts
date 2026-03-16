@@ -1,5 +1,6 @@
 // Settings tab for the Workout Charts plugin
 import { App, PluginSettingTab } from "obsidian";
+import { t } from "@app/i18n";
 import WorkoutChartsPlugin from "main";
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
 import { TimerPresetsSettings } from "@app/features/timer";
@@ -21,8 +22,11 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    // General Settings (paths + weight unit, filtering, CSV management, example data)
+    // Setup & Data (paths, weight unit, CSV management, example data)
     new GeneralSettings(this.app, this.plugin, containerEl).render();
+
+    // Quick Log Section (exact match + weight increment)
+    new QuickLogSettings(this.plugin, containerEl).render();
 
     // Timer Presets Section
     new TimerPresetsSettings(this.app, this.plugin, containerEl).render();
@@ -30,16 +34,19 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     // Custom Protocols Section
     new CustomProtocolsSettings(this.app, this.plugin, containerEl).render();
 
-    // Templates Section
-    new TemplatesSettings(this.plugin, containerEl).render();
-
-    // Training Parameters Section (weight increment + duration estimation — replaces separate Progressive Overload section)
+    // Training Parameters Section
     new DurationEstimationSettings(this.plugin, containerEl).render();
 
-    // Quick Log Section
-    new QuickLogSettings(this.plugin, containerEl).render();
+    // Advanced collapsible section (Templates + Maintenance)
+    const advancedDetails = containerEl.createEl("details", {
+      cls: "workout-advanced-section",
+    });
+    advancedDetails.createEl("summary", {
+      cls: "workout-advanced-section__toggle",
+      text: t("settings.sections.advanced"),
+    });
 
-    // Maintenance Section
-    new MaintenanceSettings(this.app, this.plugin, containerEl).render();
+    new TemplatesSettings(this.plugin, advancedDetails).render();
+    new MaintenanceSettings(this.app, this.plugin, advancedDetails).render();
   }
 }

@@ -20,7 +20,6 @@ import { TemplateGeneratorService } from "@app/services/templates/TemplateGenera
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { LocalizationService, t } from "@app/i18n";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
@@ -74,13 +73,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async onload() {
-    PerformanceMonitor.start("plugin:onload");
     await this.loadSettings();
 
     // Fase 1: inizializza event bus (non ancora usato da altri componenti)
     this.eventBus = new WorkoutEventBus();
     this.eventBus.on('plugin:error', ({ source, error, recoverable }) => {
-      console.error(`[workout-plugin:${source}]`, error);
       if (!recoverable) {
         new Notice(`Workout Plugin [${source}]: ${error.message}`);
       }
@@ -98,7 +95,6 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
-    PerformanceMonitor.start("plugin:initServices");
     this.dataService = new DataService(this.app, this.settings, this.eventBus);
     this.exerciseDefinitionService = new ExerciseDefinitionService(
       this.app,
@@ -119,8 +115,6 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.activeTimers,
       this.eventBus,
     );
-    PerformanceMonitor.end("plugin:initServices");
-
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
       this.dataService,
@@ -137,7 +131,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
     this.updateQuickLogRibbon();
-    PerformanceMonitor.end("plugin:onload");
   }
 
   /**

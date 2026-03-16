@@ -6,7 +6,6 @@ import {
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 /**
@@ -63,7 +62,6 @@ export class CSVCacheService {
    * Uses a loading lock to prevent parallel CSV reads.
    */
   public async getRawData(): Promise<WorkoutLogData[]> {
-    PerformanceMonitor.start("csv:getRawData");
     const now = Date.now();
 
     const cacheValid =
@@ -72,7 +70,6 @@ export class CSVCacheService {
       this.logDataCache.length <= this.MAX_CACHE_SIZE;
 
     if (cacheValid) {
-      PerformanceMonitor.end("csv:getRawData");
       return this.logDataCache!;
     }
 
@@ -84,20 +81,14 @@ export class CSVCacheService {
 
     // If already loading, wait for that promise (race condition prevention)
     if (this.loadingPromise) {
-      const result = await this.loadingPromise;
-      PerformanceMonitor.end("csv:getRawData");
-      return result;
+      return await this.loadingPromise;
     }
 
     // Start loading with lock
-    // eslint-disable-next-line no-console
-    console.debug("[PERF] csv:cacheMiss");
     this.loadingPromise = this.loadCSVData();
 
     try {
-      const data = await this.loadingPromise;
-      PerformanceMonitor.end("csv:getRawData");
-      return data;
+      return await this.loadingPromise;
     } finally {
       this.loadingPromise = null;
     }
@@ -108,7 +99,6 @@ export class CSVCacheService {
    * Includes retry logic for vault initialization timing.
    */
   private async loadCSVData(retryCount = 0): Promise<WorkoutLogData[]> {
-    PerformanceMonitor.start("csv:loadCSVData");
     const logData: WorkoutLogData[] = [];
     const MAX_RETRIES = 3;
     const RETRY_DELAY = 100; // ms
@@ -144,7 +134,6 @@ export class CSVCacheService {
       new Notice(`Error loading CSV workout data: ${errorMessage}`);
     }
 
-    PerformanceMonitor.end("csv:loadCSVData");
     return logData;
   }
 

@@ -1,6 +1,5 @@
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { FilterResult, TrendIndicators } from "@app/types/CommonTypes";
 import {
   EmbeddedChartParams,
@@ -65,13 +64,11 @@ export class EmbeddedChartView extends BaseView {
     container: HTMLElement,
     params: EmbeddedChartParams,
   ): Promise<void> {
-    PerformanceMonitor.start("chart:refreshChart");
     const freshData = await this.loadChartData(params);
     container.empty();
     if (freshData.length > 0) {
       await this.createChart(container, freshData, params);
     }
-    PerformanceMonitor.end("chart:refreshChart");
   }
 
   async createChart(

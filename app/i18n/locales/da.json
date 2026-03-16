@@ -817,13 +817,20 @@
       "templates": "Mallene",
       "timerPresets": "Timer presetter",
       "trainingParameters": "Træningsparametre",
-      "maintenance": "Vedligehold"
+      "maintenance": "Vedligehold",
+      "advanced": "Avancerede"
     },
     "tooltips": {
       "deletePreset": "Slet forudindstilling",
       "deleteProtocol": "Slet protokol",
       "editPreset": "Rediger foruddefineret",
       "editProtocol": "Rediger protokol"
+    },
+    "validation": {
+      "mustBePositive": "Skal være større end 0",
+      "mustBeNonNegative": "Skal være 0 eller større",
+      "csvPathEmpty": "Stien må ikke være tom",
+      "csvFolderNotFound": "Mappe ikke fundet i arkivet. Kør opsætningen for CSV for at oprette den."
     }
   },
   "stats": {

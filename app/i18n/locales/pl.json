@@ -817,13 +817,20 @@
       "templates": "Szablony",
       "timerPresets": "Predefiniowane ustawienia timera",
       "trainingParameters": "Parametry szkolenia",
-      "maintenance": "Utrzymanie"
+      "maintenance": "Utrzymanie",
+      "advanced": "Zaawansowane"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",
       "deleteProtocol": "Usuń protokół",
       "editPreset": "Edytuj ustawienie",
       "editProtocol": "Edytuj protokół"
+    },
+    "validation": {
+      "mustBePositive": "Musi być większe niż 0",
+      "mustBeNonNegative": "Musi być równe 0 lub większe",
+      "csvPathEmpty": "Ścieżka nie może być pusta",
+      "csvFolderNotFound": "Folder nie został znaleziony w archiwum. Uruchom Setup CSV, aby go utworzyć."
     }
   },
   "stats": {

@@ -817,13 +817,20 @@
       "templates": "Templates",
       "timerPresets": "Vooraf ingestelde timers",
       "trainingParameters": "Parameters voor training",
-      "maintenance": "Onderhoud"
+      "maintenance": "Onderhoud",
+      "advanced": "Geavanceerd"
     },
     "tooltips": {
       "deletePreset": "Preset verwijderen",
       "deleteProtocol": "Protocol verwijderen",
       "editPreset": "Preset bewerken",
       "editProtocol": "Protocol bewerken"
+    },
+    "validation": {
+      "mustBePositive": "Moet groter zijn dan 0",
+      "mustBeNonNegative": "Moet 0 of groter zijn",
+      "csvPathEmpty": "Het pad mag niet leeg zijn",
+      "csvFolderNotFound": "Map niet gevonden in de opslag. Voer de CSV-installatie uit om deze te creëren."
     }
   },
   "stats": {

@@ -817,13 +817,20 @@
       "templates": "Modelos",
       "timerPresets": "Predefinições de temporizador",
       "trainingParameters": "Parâmetros de treinamento",
-      "maintenance": "Manutenção"
+      "maintenance": "Manutenção",
+      "advanced": "Avançado"
     },
     "tooltips": {
       "deletePreset": "Excluir predefinição",
       "deleteProtocol": "Excluir protocolo",
       "editPreset": "Editar predefinição",
       "editProtocol": "Editar protocolo"
+    },
+    "validation": {
+      "mustBePositive": "Deve ser maior que 0",
+      "mustBeNonNegative": "Deve ser 0 ou um valor positivo.",
+      "csvPathEmpty": "O caminho não pode estar vazio",
+      "csvFolderNotFound": "Pasta não encontrada no cofre. Execute a configuração CSV para criá-la."
     }
   },
   "stats": {

@@ -817,13 +817,20 @@
       "templates": "Shablonet",
       "timerPresets": "Paraqësit e kohës",
       "trainingParameters": "Parametrat e trajtimit",
-      "maintenance": "Mirëmbajtje"
+      "maintenance": "Mirëmbajtje",
+      "advanced": "Avancuar"
     },
     "tooltips": {
       "deletePreset": "Fshrimi i profilit",
       "deleteProtocol": "Fshiri protokol",
       "editPreset": "Redakto paraqitjen",
       "editProtocol": "Redakto"
+    },
+    "validation": {
+      "mustBePositive": "Duhet të jetë më i madh se 0",
+      "mustBeNonNegative": "Duhet të jetë 0 ose më shumë",
+      "csvPathEmpty": "Rruga nuk mund të jetë e boş",
+      "csvFolderNotFound": "Dosja nuk u gjua në arkivin. Zgjidhni \"Konfigurim CSV\" për të krijuar atë."
     }
   },
   "stats": {

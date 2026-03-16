@@ -817,13 +817,20 @@
       "templates": "Templat",
       "timerPresets": "Preset waktu",
       "trainingParameters": "Parameter pelatihan",
-      "maintenance": "Perawatan"
+      "maintenance": "Perawatan",
+      "advanced": "Lanjutan"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",
       "deleteProtocol": "Hapus protokol",
       "editPreset": "Edit preset",
       "editProtocol": "Ubah protokol"
+    },
+    "validation": {
+      "mustBePositive": "Harus lebih besar dari 0",
+      "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
+      "csvPathEmpty": "Jalur tidak boleh kosong",
+      "csvFolderNotFound": "Folder tidak ditemukan di penyimpanan. Jalankan Setup CSV untuk membuatnya."
     }
   },
   "stats": {

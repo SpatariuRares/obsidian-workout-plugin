@@ -817,13 +817,20 @@
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
       "trainingParameters": "Eğitim parametreleri",
-      "maintenance": "Bakım"
+      "maintenance": "Bakım",
+      "advanced": "Gelişmiş"
     },
     "tooltips": {
       "deletePreset": "Önceden ayarlanmış değeri sil",
       "deleteProtocol": "Protokolü sil",
       "editPreset": "Ön ayarı düzenle",
       "editProtocol": "Protokolü düzenle"
+    },
+    "validation": {
+      "mustBePositive": "0'dan büyük olmalıdır",
+      "mustBeNonNegative": "0 veya daha büyük olmalıdır",
+      "csvPathEmpty": "Yol boş olamaz",
+      "csvFolderNotFound": "Klasör, depoda bulunamadı. CSV dosyası oluşturmak için kurulumu başlatın."
     }
   },
   "stats": {

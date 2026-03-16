@@ -817,13 +817,20 @@
       "templates": "Vorlagen",
       "timerPresets": "Uhrzeitanpassungen",
       "trainingParameters": "Parameter für das Training",
-      "maintenance": "Wartung"
+      "maintenance": "Wartung",
+      "advanced": "Erweiterte"
     },
     "tooltips": {
       "deletePreset": "Vorhandene Einstellung löschen",
       "deleteProtocol": "Protokoll löschen",
       "editPreset": "Voreingestellte Einstellungen bearbeiten",
       "editProtocol": "Protokoll bearbeiten"
+    },
+    "validation": {
+      "mustBePositive": "Muss größer als 0 sein",
+      "mustBeNonNegative": "Muss 0 oder größer sein",
+      "csvPathEmpty": "Der Pfad darf nicht leer sein",
+      "csvFolderNotFound": "Ordner nicht gefunden im Speicher. Führen Sie die CSV-Einrichtung aus, um ihn zu erstellen."
     }
   },
   "stats": {

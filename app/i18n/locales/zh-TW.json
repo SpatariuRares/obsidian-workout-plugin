@@ -817,13 +817,20 @@
       "templates": "範本",
       "timerPresets": "預設計時",
       "trainingParameters": "訓練參數",
-      "maintenance": "維護"
+      "maintenance": "維護",
+      "advanced": "高級"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
       "deleteProtocol": "刪除協定",
       "editPreset": "編輯預設",
       "editProtocol": "編輯協議"
+    },
+    "validation": {
+      "mustBePositive": "必須大於 0",
+      "mustBeNonNegative": "必須為 0 或大於 0",
+      "csvPathEmpty": "路徑欄位不能為空",
+      "csvFolderNotFound": "找不到資料夾。請執行「建立 CSV 資料夾」以建立它。"
     }
   },
   "stats": {

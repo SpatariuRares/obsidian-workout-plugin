@@ -817,13 +817,20 @@
       "templates": "Template",
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di addestramento",
-      "maintenance": "Manutenzione"
+      "maintenance": "Manutenzione",
+      "advanced": "Avanzate"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",
       "deleteProtocol": "Elimina protocollo",
       "editPreset": "Modifica preset",
       "editProtocol": "Modifica protocollo"
+    },
+    "validation": {
+      "mustBePositive": "Deve essere maggiore di 0",
+      "mustBeNonNegative": "Deve essere 0 o superiore",
+      "csvPathEmpty": "Il percorso non può essere vuoto",
+      "csvFolderNotFound": "La cartella non è stata trovata nel vault. Eseguire l'installazione CSV per crearla."
     }
   },
   "stats": {

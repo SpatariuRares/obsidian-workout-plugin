@@ -817,13 +817,20 @@
       "templates": "Šablony",
       "timerPresets": "Nastavení časových presetů",
       "trainingParameters": "Parametry trénování",
-      "maintenance": "Údržba"
+      "maintenance": "Údržba",
+      "advanced": "Pokročilé"
     },
     "tooltips": {
       "deletePreset": "Smazat přednastavení",
       "deleteProtocol": "Smazat protokol",
       "editPreset": "Upravit přednastavení",
       "editProtocol": "Upravit protokol"
+    },
+    "validation": {
+      "mustBePositive": "Musí být větší než 0",
+      "mustBeNonNegative": "Musí být 0 nebo větší",
+      "csvPathEmpty": "Cesta nemůže být prázdná",
+      "csvFolderNotFound": "Seznam nebylo nalezeno ve úložišti. Spusťte nastavení CSV pro jeho vytvoření."
     }
   },
   "stats": {

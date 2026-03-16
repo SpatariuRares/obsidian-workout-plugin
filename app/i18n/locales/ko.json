@@ -817,13 +817,20 @@
       "templates": "템플릿",
       "timerPresets": "타이머 설정",
       "trainingParameters": "훈련 매개변수",
-      "maintenance": "유지보수"
+      "maintenance": "유지보수",
+      "advanced": "고급"
     },
     "tooltips": {
       "deletePreset": "{preset} 삭제",
       "deleteProtocol": "프로토콜 삭제",
       "editPreset": "{preset} 편집",
       "editProtocol": "프로토콜 편집"
+    },
+    "validation": {
+      "mustBePositive": "0보다 커야 합니다",
+      "mustBeNonNegative": "0 또는 그 이상의 값이어야 합니다.",
+      "csvPathEmpty": "경로는 비어 있을 수 없습니다",
+      "csvFolderNotFound": "{vault}에 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 설정\"을 실행하십시오."
     }
   },
   "stats": {

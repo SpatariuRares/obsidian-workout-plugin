@@ -817,13 +817,20 @@
       "templates": "Mal",
       "timerPresets": "Forhåndsinnstilte tidere",
       "trainingParameters": "Innstillinger for opplæring",
-      "maintenance": "Vedlikehold"
+      "maintenance": "Vedlikehold",
+      "advanced": "Avanserte"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
       "deleteProtocol": "Slett protokoll",
       "editPreset": "Rediger forhåndsinnstilling",
       "editProtocol": "Rediger protokoll"
+    },
+    "validation": {
+      "mustBePositive": "Må være større enn 0",
+      "mustBeNonNegative": "Må være 0 eller større",
+      "csvPathEmpty": "Stien kan ikke være tom",
+      "csvFolderNotFound": "Mappe ikke funnet i arkivet. Kjør oppsett for CSV for å opprette den."
     }
   },
   "stats": {

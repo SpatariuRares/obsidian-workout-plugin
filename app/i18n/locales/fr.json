@@ -817,13 +817,20 @@
       "templates": "Modèles.",
       "timerPresets": "Réglages prédéfinis du minuteur.",
       "trainingParameters": "Paramètres d'entraînement",
-      "maintenance": "Maintenance"
+      "maintenance": "Maintenance",
+      "advanced": "Options avancées"
     },
     "tooltips": {
       "deletePreset": "Supprimer le modèle",
       "deleteProtocol": "Supprimer le protocole",
       "editPreset": "Modifier le preset",
       "editProtocol": "Modifier"
+    },
+    "validation": {
+      "mustBePositive": "Doit être supérieur à 0",
+      "mustBeNonNegative": "Doit être 0 ou supérieur",
+      "csvPathEmpty": "Le chemin ne peut pas être vide",
+      "csvFolderNotFound": "Le dossier n'a pas été trouvé dans le coffre. Exécutez la configuration CSV pour le créer."
     }
   },
   "stats": {

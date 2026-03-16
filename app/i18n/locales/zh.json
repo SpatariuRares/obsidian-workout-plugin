@@ -817,13 +817,20 @@
       "templates": "模板",
       "timerPresets": "计时器预设",
       "trainingParameters": "训练参数",
-      "maintenance": "维护"
+      "maintenance": "维护",
+      "advanced": "高级"
     },
     "tooltips": {
       "deletePreset": "删除预设",
       "deleteProtocol": "删除训练方案",
       "editPreset": "编辑预设",
       "editProtocol": "编辑训练方案"
+    },
+    "validation": {
+      "mustBePositive": "必须大于 0",
+      "mustBeNonNegative": "必须为 0 或以上",
+      "csvPathEmpty": "路径不能为空",
+      "csvFolderNotFound": "找不到文件夹。请运行“创建 CSV 文件夹”设置。"
     }
   },
   "stats": {

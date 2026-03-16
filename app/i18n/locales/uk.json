@@ -817,13 +817,20 @@
       "templates": "Шаблони",
       "timerPresets": "Заздалегідь встановлені таймери",
       "trainingParameters": "Параметри навчання",
-      "maintenance": "Технічне обслуговування"
+      "maintenance": "Технічне обслуговування",
+      "advanced": "Додаткові"
     },
     "tooltips": {
       "deletePreset": "Видалити попередньо налаштований варіант",
       "deleteProtocol": "Видалити протокол",
       "editPreset": "Редагувати попередньо задані налаштування",
       "editProtocol": "Редагувати протокол"
+    },
+    "validation": {
+      "mustBePositive": "Повинен бути більше 0",
+      "mustBeNonNegative": "Має бути 0 або більше",
+      "csvPathEmpty": "Шлях не може бути порожнім",
+      "csvFolderNotFound": "Папка не знайдена в сховищі. Запустіть Setup CSV для її створення."
     }
   },
   "stats": {

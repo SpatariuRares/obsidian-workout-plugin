@@ -817,13 +817,20 @@
       "templates": "القوالب",
       "timerPresets": "الإعدادات المسبقة للساعة",
       "trainingParameters": "معلمات التدريب",
-      "maintenance": "الصيانة"
+      "maintenance": "الصيانة",
+      "advanced": "متقدم"
     },
     "tooltips": {
       "deletePreset": "حذف القالب",
       "deleteProtocol": "حذف البروتوكول",
       "editPreset": "تحرير الإعداد المسبق",
       "editProtocol": "تحرير البروتوكول"
+    },
+    "validation": {
+      "mustBePositive": "يجب أن يكون أكبر من 0",
+      "mustBeNonNegative": "يجب أن يكون 0 أو أكبر",
+      "csvPathEmpty": "لا يمكن أن يكون المسار فارغًا",
+      "csvFolderNotFound": "لم يتم العثور على المجلد في المستودع. قم بتشغيل إعداد CSV لإنشائه."
     }
   },
   "stats": {

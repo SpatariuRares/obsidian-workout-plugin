@@ -817,13 +817,20 @@
       "templates": "Plantillas.",
       "timerPresets": "Temporizadores predefinidos.",
       "trainingParameters": "Parámetros de entrenamiento",
-      "maintenance": "Mantenimiento"
+      "maintenance": "Mantenimiento",
+      "advanced": "Avanzado"
     },
     "tooltips": {
       "deletePreset": "Eliminar plantilla",
       "deleteProtocol": "Eliminar protocolo",
       "editPreset": "Editar predefinido",
       "editProtocol": "Editar protocolo"
+    },
+    "validation": {
+      "mustBePositive": "Debe ser mayor que 0",
+      "mustBeNonNegative": "Debe ser 0 o un valor positivo.",
+      "csvPathEmpty": "El campo no puede estar vacío",
+      "csvFolderNotFound": "La carpeta no se encuentra en el almacén. Ejecute la configuración CSV para crearla."
     }
   },
   "stats": {

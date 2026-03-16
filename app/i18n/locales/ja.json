@@ -817,13 +817,20 @@
       "templates": "テンプレート",
       "timerPresets": "タイマー設定",
       "trainingParameters": "トレーニングパラメータ",
-      "maintenance": "メンテナンス"
+      "maintenance": "メンテナンス",
+      "advanced": "高度な"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",
       "deleteProtocol": "プロトコルを削除",
       "editPreset": "プリセットを編集する",
       "editProtocol": "プロトコルを編集する"
+    },
+    "validation": {
+      "mustBePositive": "0より大きい値で",
+      "mustBeNonNegative": "0以上でなければなりません",
+      "csvPathEmpty": "パスは空にできません",
+      "csvFolderNotFound": "{vault}内にフォルダが見つかりません。Setup CSVを実行して作成してください。"
     }
   },
   "stats": {

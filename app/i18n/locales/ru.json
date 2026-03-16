@@ -817,13 +817,20 @@
       "templates": "Шаблоны",
       "timerPresets": "Предустановки таймера",
       "trainingParameters": "Параметры обучения",
-      "maintenance": "Обслуживание"
+      "maintenance": "Обслуживание",
+      "advanced": "Расширенные"
     },
     "tooltips": {
       "deletePreset": "Удалить сохраненную конфигурацию",
       "deleteProtocol": "Удалить протокол",
       "editPreset": "Редактировать сохраненную настройку",
       "editProtocol": "Редактировать протокол"
+    },
+    "validation": {
+      "mustBePositive": "Должно быть больше 0",
+      "mustBeNonNegative": "Должно быть 0 или больше",
+      "csvPathEmpty": "Путь не может быть пустым",
+      "csvFolderNotFound": "Папка не найдена в хранилище. Запустите установку CSV для ее создания."
     }
   },
   "stats": {

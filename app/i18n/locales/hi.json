@@ -817,13 +817,20 @@
       "templates": "टेम्प्लेट",
       "timerPresets": "टाइमर की पूर्व निर्धारित सेटिंग्स",
       "trainingParameters": "प्रशिक्षण पैरामीटर",
-      "maintenance": "रखरखाव"
+      "maintenance": "रखरखाव",
+      "advanced": "उन्नत"
     },
     "tooltips": {
       "deletePreset": "प्रेडसेट हटाएं",
       "deleteProtocol": "प्रोटोकॉल हटाएं",
       "editPreset": "प्रेडसेट संपादित करें",
       "editProtocol": "प्रोटोकॉल संपादित करें"
+    },
+    "validation": {
+      "mustBePositive": "0 से अधिक होना चाहिए",
+      "mustBeNonNegative": "0 या उससे अधिक होना चाहिए",
+      "csvPathEmpty": "पथ खाली नहीं हो सकता",
+      "csvFolderNotFound": "फ़ोल्डर नहीं मिला। इसे बनाने के लिए सेटअप CSV चलाएं।"
     }
   },
   "stats": {

@@ -817,13 +817,20 @@
       "templates": "Șabloane",
       "timerPresets": "Prezăsetări ale cronometrului",
       "trainingParameters": "Parametri de antrenare",
-      "maintenance": "Întreținere"
+      "maintenance": "Întreținere",
+      "advanced": "Avansat"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",
       "deleteProtocol": "Șterge protocol",
       "editPreset": "Modifică preset",
       "editProtocol": "Modifică protocolul"
+    },
+    "validation": {
+      "mustBePositive": "Trebuie să fie mai mare decât 0",
+      "mustBeNonNegative": "Trebuie să fie 0 sau mai mare",
+      "csvPathEmpty": "Calele nu pot fi goale",
+      "csvFolderNotFound": "Dosarul nu a fost găsit în arhivă. Rulați procedura de configurare CSV pentru a-l crea."
     }
   },
   "stats": {

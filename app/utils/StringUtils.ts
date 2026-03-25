@@ -4,19 +4,41 @@
  */
 export class StringUtils {
   /**
-   * Normalize a string for case-insensitive comparison
-   * Trims whitespace and converts to lowercase
+   * Normalize a string for case-insensitive comparison.
+   * Strips wiki-link syntax, collapses multiple spaces, trims, and lowercases.
    *
    * @param str - String to normalize
-   * @returns Normalized string (trimmed and lowercase)
+   * @param options.stripWikiLinks - Remove Obsidian wiki-link brackets `[[` / `]]` (default: false)
+   * @returns Normalized string
    *
    * @example
-   * StringUtils.normalize("  Hello World  ") // "hello world"
-   * StringUtils.normalize("CHEST") // "chest"
+   * StringUtils.normalize("  Hello   World  ") // "hello world"
+   * StringUtils.normalize("[[Push Day]]", { stripWikiLinks: true }) // "push day"
    */
-  static normalize(str: string | undefined | null): string {
+  static normalize(
+    str: string | undefined | null,
+    options?: { stripWikiLinks?: boolean },
+  ): string {
     if (!str) return "";
-    return str.trim().toLowerCase();
+    let result = str;
+    if (options?.stripWikiLinks) {
+      result = result.replace(/\[\[|\]\]/g, "");
+    }
+    return result.replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
+  /**
+   * Capitalize the first letter of each word (Title Case).
+   *
+   * @param str - String to capitalize
+   * @returns Title-cased string, e.g. "bench press" → "Bench Press"
+   */
+  static capitalize(str: string | undefined | null): string {
+    if (!str) return "";
+    return str
+      .trim()
+      .replace(/\s+/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
   /**

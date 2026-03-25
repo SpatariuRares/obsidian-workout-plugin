@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Përshtatje e pjësore - Shën: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Përputhje me fjalë - Shën: {score}"
+      "wordTooltip": "Përputhje me fjalë - Shën: {score}",
+      "addExercise": "Shto \"{name}\""
     },
     "buttons": {
       "addParameter": "Shto parametër",

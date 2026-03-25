@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "अंश मिलान - स्कोर: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "शब्द मिलान - स्कोर: {score}"
+      "wordTooltip": "शब्द मिलान - स्कोर: {score}",
+      "addExercise": "\"{name}\" जोड़ें"
     },
     "buttons": {
       "addParameter": "पैरामीटर जोड़ें।",

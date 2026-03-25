@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Delvis match - Poäng: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Ordbogsmatch - Poäng: {score}"
+      "wordTooltip": "Ordbogsmatch - Poäng: {score}",
+      "addExercise": "Tilføj \"{name}\""
     },
     "buttons": {
       "addParameter": "Tilføj parametre",

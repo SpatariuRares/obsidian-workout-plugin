@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Correspondance partielle - Score : {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Correspondance de mots - Score : {score}"
+      "wordTooltip": "Correspondance de mots - Score : {score}",
+      "addExercise": "Ajouter \"{name}\""
     },
     "buttons": {
       "addParameter": "Ajouter un paramètre.",

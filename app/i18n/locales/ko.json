@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "부분 일치 - 점수: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "단어 일치 - 점수: {score}"
+      "wordTooltip": "단어 일치 - 점수: {score}",
+      "addExercise": "{name} 추가"
     },
     "buttons": {
       "addParameter": "매개변수 추가",

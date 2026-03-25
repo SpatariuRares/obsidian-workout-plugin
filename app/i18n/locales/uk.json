@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Часткове збіг – Оцінка: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Збіг слів - Оцінка: {score}"
+      "wordTooltip": "Збіг слів - Оцінка: {score}",
+      "addExercise": "Додати \"{name}\""
     },
     "buttons": {
       "addParameter": "Додати параметр",

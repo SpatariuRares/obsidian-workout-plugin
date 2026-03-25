@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Partialne dopasowanie - Wynik: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Dopasowanie słowa - Wynik: {score}"
+      "wordTooltip": "Dopasowanie słowa - Wynik: {score}",
+      "addExercise": "Dodaj \"{name}\""
     },
     "buttons": {
       "addParameter": "Dodaj parametr",

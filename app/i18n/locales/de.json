@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Teilmatch - Punktzahl: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Wortmatch - Punktzahl: {score}"
+      "wordTooltip": "Wortmatch - Punktzahl: {score}",
+      "addExercise": "Füge \"{name}\" hinzu"
     },
     "buttons": {
       "addParameter": "Hinzufügen von Parameter",

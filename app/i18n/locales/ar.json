@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "التوافق الجزئي - الدرجة: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "التوافق في الكلمات - الدرجة: {score}"
+      "wordTooltip": "التوافق في الكلمات - الدرجة: {score}",
+      "addExercise": "أضف \"{name}\""
     },
     "buttons": {
       "addParameter": "أضف معلمة",

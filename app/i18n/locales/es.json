@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Coincidencia parcial - Puntuación: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Coincidencia de palabra - Puntuación: {score}"
+      "wordTooltip": "Coincidencia de palabra - Puntuación: {score}",
+      "addExercise": "Añadir \"{name}\""
     },
     "buttons": {
       "addParameter": "Agregar parámetro",

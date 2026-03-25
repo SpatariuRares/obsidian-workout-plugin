@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Cocok sebagian - Skor: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Pencocokan kata - Skor: {score}"
+      "wordTooltip": "Pencocokan kata - Skor: {score}",
+      "addExercise": "Tambahkan \"{name}\""
     },
     "buttons": {
       "addParameter": "Tambahkan parameter",

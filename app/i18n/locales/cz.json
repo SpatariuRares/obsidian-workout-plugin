@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Částečná shoda - Skóre: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Slovo shoda - Skóre: {score}"
+      "wordTooltip": "Slovo shoda - Skóre: {score}",
+      "addExercise": "Přidat \"{name}\""
     },
     "buttons": {
       "addParameter": "Přidat parametr",

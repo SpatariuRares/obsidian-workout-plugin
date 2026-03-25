@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Частичное совпадение - Оценка: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Соответствие словам - Оценка: {score}"
+      "wordTooltip": "Соответствие словам - Оценка: {score}",
+      "addExercise": "Добавить \"{name}\""
     },
     "buttons": {
       "addParameter": "Добавить параметр",

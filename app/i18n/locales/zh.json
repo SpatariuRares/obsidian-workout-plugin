@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "部分匹配 - 分数：{score}",
       "wordBadge": "◆",
-      "wordTooltip": "单词匹配 - 分数：{score}"
+      "wordTooltip": "单词匹配 - 分数：{score}",
+      "addExercise": "添加 \"{name}\""
     },
     "buttons": {
       "addParameter": "添加参数",

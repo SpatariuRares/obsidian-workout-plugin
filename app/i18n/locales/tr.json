@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Kısmi eşleşme - Puan: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Kelime eşleşmesi - Puan: {score}"
+      "wordTooltip": "Kelime eşleşmesi - Puan: {score}",
+      "addExercise": "\"{name}\"'ı ekle"
     },
     "buttons": {
       "addParameter": "Parametre ekle",

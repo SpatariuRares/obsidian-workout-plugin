@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Potrivire parțială - Scor: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Potrivire cuvânt - Scor: {score}"
+      "wordTooltip": "Potrivire cuvânt - Scor: {score}",
+      "addExercise": "Adaugă \"{name}\""
     },
     "buttons": {
       "addParameter": "Adaugă parametru",

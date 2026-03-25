@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "部分一致 - スコア: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "単語の一致 - スコア: {score}"
+      "wordTooltip": "単語の一致 - スコア: {score}",
+      "addExercise": "「{name}」を追加する"
     },
     "buttons": {
       "addParameter": "パラメータを追加",

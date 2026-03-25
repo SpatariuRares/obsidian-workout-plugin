@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Gedeeltelijke overeenkomst - Score: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Exacte overeenkomst - Score: {score}"
+      "wordTooltip": "Exacte overeenkomst - Score: {score}",
+      "addExercise": "Voeg \"{name}\" toe"
     },
     "buttons": {
       "addParameter": "Voeg parameter toe",

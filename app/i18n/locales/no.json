@@ -469,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Delvis match – Poeng: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Ordmatch – Poeng: {score}"
+      "wordTooltip": "Ordmatch – Poeng: {score}",
+      "addExercise": "Legg til \"{name}\""
     },
     "buttons": {
       "addParameter": "Legg til parameter",

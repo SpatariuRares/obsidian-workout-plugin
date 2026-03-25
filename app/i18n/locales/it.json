@@ -462,6 +462,7 @@
     "actions": "Azioni",
     "addTag": "Aggiungi tag",
     "autocomplete": {
+      "addExercise": "Aggiungi \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Corrispondenza esatta/prefisso – Punteggio: {score}",
       "fuzzyBadge": "~",

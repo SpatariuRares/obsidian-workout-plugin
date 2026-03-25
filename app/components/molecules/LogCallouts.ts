@@ -4,7 +4,8 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 
 /**
@@ -36,6 +37,7 @@ export class LogCallouts {
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
+    codeBlockId?: string,
   ): void {
     Feedback.renderEmpty(container, "", { className: "workout-log-no-data" });
     const noDataDiv = container.querySelector(
@@ -82,10 +84,17 @@ export class LogCallouts {
       ).open();
     });
 
-    GoToExerciseButton.render(buttonDiv, {
-      exerciseName: exerciseName || "",
-      app: plugin.app,
-    });
+    if (exerciseName) {
+      ExerciseActionSelect.render(
+        buttonDiv,
+        {
+          exerciseName,
+          app: plugin.app,
+          plugin,
+          params: { exercise: exerciseName, id: codeBlockId } as EmbeddedTableParams,
+        },
+      );
+    }
   }
 
   static renderAddLogButton(

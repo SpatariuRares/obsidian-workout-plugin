@@ -45,6 +45,7 @@ export abstract class BaseView {
     logData: WorkoutLogData[],
     exerciseName?: string,
     currentPageLink?: string,
+    codeBlockId?: string,
   ): boolean {
     if (logData.length === 0) {
       LogCallouts.renderCsvNoDataMessage(
@@ -52,6 +53,7 @@ export abstract class BaseView {
         this.plugin,
         exerciseName,
         currentPageLink,
+        codeBlockId,
       );
       return true;
     }

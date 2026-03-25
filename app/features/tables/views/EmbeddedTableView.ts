@@ -86,7 +86,7 @@ export class EmbeddedTableView extends BaseView {
 
       const loadingDiv = this.showLoadingIndicator(container);
       // Use global refresh for the "create first log" button so all views update
-      if (this.handleEmptyData(container, logData, params.exercise)) {
+      if (this.handleEmptyData(container, logData, params.exercise, undefined, params.id)) {
         loadingDiv.remove();
         return;
       }

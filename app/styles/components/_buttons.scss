@@ -204,13 +204,6 @@
    Single Context Buttons
    ---------------------------------------------------------------------------- */
 
-.workout-exercise-autocomplete-no-found .workout-create-exercise-page-btn {
-  @extend %workout-btn-secondary;
-
-  &:hover {
-    @include workout-btn-secondary-hover;
-  }
-}
 
 .workout-achievement-badge .workout-update-target-button {
   @extend %workout-btn-primary;

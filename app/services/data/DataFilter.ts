@@ -56,10 +56,7 @@ export class DataFilter {
    * @param params - Filter parameters (exercise, workout, protocol, etc.)
    * @returns Filtered data with information about the filtering method used
    */
-  static filterData(
-    logData: WorkoutLogData[],
-    params: DataFilterParams,
-  ): FilterResult {
+  static filterData(logData: WorkoutLogData[], params: DataFilterParams): FilterResult {
     if (!logData || logData.length === 0) {
       return {
         filteredData: [],
@@ -98,10 +95,7 @@ export class DataFilter {
       }
 
       // Then filter the workout results by exercise
-      const exerciseResult = this.filterByExercise(
-        workoutResult.filteredData,
-        params,
-      );
+      const exerciseResult = this.filterByExercise(workoutResult.filteredData, params);
 
       filteredData = exerciseResult.filteredData;
       filterMethodUsed = `${workoutResult.filterMethodUsed} + ${exerciseResult.filterMethodUsed}`;
@@ -141,10 +135,7 @@ export class DataFilter {
     if (Array.isArray(tableParams.protocol)) {
       return tableParams.protocol.length > 0;
     }
-    return (
-      typeof tableParams.protocol === "string" &&
-      tableParams.protocol.trim() !== ""
-    );
+    return typeof tableParams.protocol === "string" && tableParams.protocol.trim() !== "";
   }
 
   /**
@@ -163,16 +154,11 @@ export class DataFilter {
       if (workoutName) {
         titlePrefix = workoutName;
 
-        const workoutNameLower = workoutName
-          .toLowerCase()
-          .replace(/\s+/g, " ")
-          .trim();
+        const workoutNameLower = StringUtils.normalize(workoutName);
         filteredData = logData.filter((log) => {
-          const source = (log.workout || log.origine || "")
-            .toLowerCase()
-            .replace(/\[\[|\]\]/g, "")
-            .replace(/\s+/g, " ")
-            .trim();
+          const source = StringUtils.normalize(log.workout || log.origine || "", {
+            stripWikiLinks: true,
+          });
           return source.includes(workoutNameLower);
         });
 
@@ -205,9 +191,7 @@ export class DataFilter {
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {
-      const logProtocol = (
-        log.protocol || WorkoutProtocol.STANDARD
-      ).toLowerCase();
+      const logProtocol = (log.protocol || WorkoutProtocol.STANDARD).toLowerCase();
       return protocols.includes(logProtocol);
     });
 
@@ -237,23 +221,14 @@ export class DataFilter {
       titlePrefix = exerciseName;
 
       if (params.exactMatch) {
-        const exerciseNameLower = exerciseName
-          .toLowerCase()
-          .replace(/\s+/g, " ")
-          .trim();
+        const exerciseNameLower = exerciseName.toLowerCase().replace(/\s+/g, " ").trim();
         filteredData = logData.filter((log) => {
-          const exerciseField = (log.exercise || "")
-            .toLowerCase()
-            .replace(/\s+/g, " ")
-            .trim();
+          const exerciseField = (log.exercise || "").toLowerCase().replace(/\s+/g, " ").trim();
           return exerciseField === exerciseNameLower;
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = ExerciseMatchUtils.findExerciseMatches(
-          logData,
-          exerciseName,
-        );
+        const matchesResult = ExerciseMatchUtils.findExerciseMatches(logData, exerciseName);
 
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
@@ -297,8 +272,7 @@ export class DataFilter {
     bestFileMatchesList: ExerciseMatch[],
   ): string {
     if (bestStrategy === "field") {
-      const bestPathScore =
-        matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
+      const bestPathScore = matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
       return `file name (score: ${bestFileMatchesList[0]?.score || t("table.notAvailable")})`;
@@ -326,22 +300,14 @@ export class DataFilter {
     const normalizedFilters: NormalizedFilters = {};
 
     if (filterParams.exercise) {
-      normalizedFilters.exerciseName = filterParams.exercise
-        .toLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
+      normalizedFilters.exerciseName = StringUtils.normalize(filterParams.exercise);
     }
 
     if (filterParams.workout) {
-      normalizedFilters.workoutName = filterParams.workout
-        .toLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
+      normalizedFilters.workoutName = StringUtils.normalize(filterParams.workout);
     }
 
-    return logData.filter((log) =>
-      this.matchesEarlyFilter(log, filterParams, normalizedFilters),
-    );
+    return logData.filter((log) => this.matchesEarlyFilter(log, filterParams, normalizedFilters));
   }
 
   /**
@@ -358,13 +324,9 @@ export class DataFilter {
     // Check exercise filter
     if (filterParams.exercise) {
       const exerciseName =
-        normalizedFilters?.exerciseName ||
-        filterParams.exercise.toLowerCase().replace(/\s+/g, " ").trim();
+        normalizedFilters?.exerciseName || StringUtils.normalize(filterParams.exercise);
 
-      const logExercise = (log.exercise || "")
-        .toLowerCase()
-        .replace(/\s+/g, " ")
-        .trim();
+      const logExercise = StringUtils.normalize(log.exercise || "");
 
       if (filterParams.exactMatch) {
         if (logExercise !== exerciseName) {
@@ -380,14 +342,11 @@ export class DataFilter {
     // Check workout filter
     if (filterParams.workout) {
       const workoutName =
-        normalizedFilters?.workoutName ||
-        filterParams.workout.toLowerCase().replace(/\s+/g, " ").trim();
+        normalizedFilters?.workoutName || StringUtils.normalize(filterParams.workout);
 
-      const logSource = (log.workout || log.origine || "")
-        .toLowerCase()
-        .replace(/\[\[|\]\]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+      const logSource = StringUtils.normalize(log.workout || log.origine || "", {
+        stripWikiLinks: true,
+      });
 
       if (filterParams.exactMatch) {
         if (logSource !== workoutName) {

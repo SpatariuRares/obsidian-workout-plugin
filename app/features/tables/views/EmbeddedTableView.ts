@@ -1,4 +1,3 @@
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import {
@@ -79,7 +78,6 @@ export class EmbeddedTableView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
   ): Promise<void> {
-    PerformanceMonitor.start("table:renderTable");
     try {
       const validationErrors = TableConfig.validateParams(params);
       if (!this.validateAndHandleErrors(container, validationErrors)) {
@@ -88,7 +86,7 @@ export class EmbeddedTableView extends BaseView {
 
       const loadingDiv = this.showLoadingIndicator(container);
       // Use global refresh for the "create first log" button so all views update
-      if (this.handleEmptyData(container, logData, params.exercise)) {
+      if (this.handleEmptyData(container, logData, params.exercise, undefined, params.id)) {
         loadingDiv.remove();
         return;
       }
@@ -120,9 +118,7 @@ export class EmbeddedTableView extends BaseView {
       );
 
       this.renderTableContentOptimized(container, tableData);
-      PerformanceMonitor.end("table:renderTable");
     } catch (error) {
-      PerformanceMonitor.end("table:renderTable");
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
@@ -226,7 +222,6 @@ export class EmbeddedTableView extends BaseView {
       exerciseName,
       currentPageLink,
       this.plugin,
-      (ctx) => this.plugin.triggerWorkoutLogRefresh(ctx),
       signal,
       latestEntry,
     );

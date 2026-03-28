@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Дата",
-    "down": "Вниз",
     "fallbackTableMessage": "Повідомлення про використання альтернативної таблиці",
     "labels": {
-      "date": "Дата",
-      "distance": "Відстань",
-      "down": "вниз",
-      "duration": "Тривалість",
-      "heartRate": "Частота серцебиття",
-      "neutral": "нейтральний",
-      "pace": "Темп",
       "quickWeightIncrementUnit": "Кнопки зміни ваги збільшують {weightIncrementUnit}",
       "reps": "Кількість",
-      "trendLine": "Лінія тренду",
       "trendType": "Тенденція {type}:",
       "variationFromTo": "від {{startValue}} до {{endValue}}",
       "volume": "Об'єм",
       "weight": "Вага",
       "weightIncrementUnit": "Крок збільшення ваги {weightIncrementUnit}"
     },
-    "neutral": "Нейтральний",
     "overallVariationPrefix": "Префікс загальної зміни",
-    "reps": "Представники",
     "significantIncrease": "Значний приріст",
     "trendLine": "Лінія тренду",
     "typeNotAvailable": "Тип діаграми \"{chartDataType}\" недоступний для вправ типу {exerciseType}. Доступні типи: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "Графіки: Типи",
       "volume": "Об'єм",
       "weight": "Вага"
-    },
-    "volume": "Об'єм"
+    }
   },
   "commands": {
     "addExerciseBlock": "Додати блок з вправами",
@@ -46,7 +34,8 @@
     "generateTagReference": "Згенерувати посилання на тег",
     "insertTable": "Вставити таблицю",
     "manageMuscleTags": "Керування тегами для м'язів",
-    "migrateExerciseTypes": "Мігрувати типи вправ"
+    "migrateExerciseTypes": "Мігрувати типи вправ",
+    "addMissingBlockIds": "Додайте відсутні ID до блоків коду"
   },
   "common": {
     "bpm": "bpm",
@@ -56,7 +45,6 @@
     "km": "км",
     "minPerKm": "мінімальна відстань/км",
     "notAvailable": "Не доступно",
-    "reps": "Представники",
     "sec": "безпека",
     "unknown": "Невідомо",
     "workout": "Тренування"
@@ -109,7 +97,6 @@
       "title": "Помилки при роботі з файлами",
       "tooManyTags": "Занадто багато тегів для м'язів ({count})"
     },
-    "month": "Місяць",
     "muscleTags": {
       "description": "Опис",
       "title": "Теги для м'язів",
@@ -144,12 +131,6 @@
     },
     "quickStats": {
       "month": "Місяць",
-      "periods": {
-        "month": "Цього місяця",
-        "week": "Цього тижня",
-        "year": "Цього року"
-      },
-      "title": "Швидкі показники",
       "week": "Тиждень",
       "workouts": "Тренування",
       "year": "Рік"
@@ -166,14 +147,11 @@
       "totalVolume": "Загальний об'єм",
       "totalWorkouts": "Загальна кількість тренувань"
     },
-    "title": "Заголовок",
     "volumeAnalytics": {
       "chartTitle": "Тенденція обсягу (останні 30 днів)",
       "muscleBreakdownTitle": "Найпопулярніші вправи за обсягом",
       "title": "Аналітика обсягів"
-    },
-    "week": "Тиждень",
-    "year": "Рік"
+    }
   },
   "duration": {
     "estimatedDuration": "Орієнтовна тривалість",
@@ -362,10 +340,7 @@
       "avgHeartRate": "Середня частота серцевих скорочень (уд/хв)",
       "avgVolume": "Середній об'єм ({unit})",
       "avgWeight": "Середня вага ({unit})",
-      "back": "Назад",
       "dailyVolume": "Щоденний об'єм ({{unit}})",
-      "dashboard": "Панель керування",
-      "front": "Передній",
       "pace": "Швидкість (хв/км)",
       "totalCustom": "Загальна сума {label}",
       "totalDistance": "Загальна відстань (км)",
@@ -419,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -477,13 +446,14 @@
     "fileEmpty": "Файл порожній",
     "imbalanceAlerts": "Сповіщення про дисбаланс",
     "insufficientData": "Недостатньо даних",
-    "loading": "Завантаження даних тренування...",
     "noDataPeriod": "Не знайдено даних про тренування за вибраний період.",
     "noFrontmatter": "Без префіксів",
     "noImbalances": "Відсутні невідповідності",
     "noTags": "Без тегів",
     "success": {
-      "csvCreated": "Файл CSV успішно створено!"
+      "csvCreated": "Файл CSV успішно створено!",
+      "blockIdsAdded": "Додано {{count}} відсутні ID(и) у файлі(ах) {{files}}",
+      "noBlockIdsNeeded": "Усі блоки коду вже мають ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Таймер завершено!"
@@ -499,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "Часткове збіг – Оцінка: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Збіг слів - Оцінка: {score}"
+      "wordTooltip": "Збіг слів - Оцінка: {score}",
+      "addExercise": "Додати \"{name}\""
     },
     "buttons": {
       "addParameter": "Додати параметр",
@@ -526,7 +497,6 @@
     },
     "canvasLayout": "Макет",
     "canvasOptions": "Варіанти",
-    "chartType": "Тип діаграми:",
     "checkboxes": {
       "connectSupersets": "Підключити суперсети",
       "exactMatch": "Точна відповідність",
@@ -572,21 +542,12 @@
     },
     "labels": {
       "actions": "Дії",
-      "chartType": "Тип діаграми:",
-      "dateRange": "Діапазон дат (дні):",
-      "duration": "Тривалість (секунди):",
       "exercise": "Вправа:",
-      "notes": "Примітки (необов'язково):",
-      "protocol": "Протокол:",
       "reps": "Представники:",
-      "sets": "Набори:",
-      "status": "Статус",
       "targetReps": "Цільові показники:",
       "targetWeight": "Ціль: ({unit}):",
-      "title": "Заголовок:",
       "volume": "Гучність ({unit}):",
-      "weight": "Вага ({{unit}}):",
-      "workout": "Тренування (необов'язково):"
+      "weight": "Вага ({{unit}}):"
     },
     "layoutGrouped": "Групується за м'язами",
     "layoutHorizontal": "Горизонтальне розташування",
@@ -670,7 +631,6 @@
       "parameterKey": "наприклад, швидкість",
       "parameterLabel": "наприклад, Швидкість",
       "parameterUnit": "наприклад, км/год",
-      "reps": "наприклад, 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Пошук тегів для м'язів...",
@@ -678,7 +638,6 @@
       "selectMuscleGroup": "Виберіть групу м'язів...",
       "selectWorkoutFile": "Виберіть файл тренування для експорту...",
       "sets": "4",
-      "weight": "наприклад, 10,5",
       "workout": "наприклад, Тренування A, Тренування B, або використовуйте прапорець нижче"
     },
     "protocol": "Протокол:",
@@ -705,12 +664,10 @@
       "allLogs": "Усі записи",
       "cardio": "Кардіо",
       "completeWorkout": "Завершити тренування",
-      "countdown": "Лічильник часу",
       "custom": "Налаштовані",
       "distance": "Відстань",
       "dropSet": "Набір",
       "exerciseWorkout": "Тренування",
-      "interval": "Інтервал",
       "myoReps": "Мої репетитори",
       "number": "Кількість",
       "restPause": "Пауза для відпочинку",
@@ -729,11 +686,9 @@
     "status": "Статус",
     "tag": "Мітка",
     "tagsSelector": "Теги для м'язів:",
-    "text": "Завершити тренування",
     "timerDuration": "Тривалість таймера (секунди):",
     "timerPreset": "Запис попереднього значення таймера:",
     "timerType": "Тип таймера:",
-    "title": "Заголовок:",
     "titles": {
       "addExerciseBlock": "Додати блок з вправами",
       "auditExerciseNames": "Назви вправ для аудиту",
@@ -752,7 +707,6 @@
       "insertTimer": "Додати таймер для тренування",
       "muscleTagManager": "Керування тегами для м'язів"
     },
-    "value": "тренування",
     "workout": "Тренування (необов'язково):",
     "workoutFile": "Файл для тренування:",
     "workoutNameOptional": "Назва тренування (необов'язково):"
@@ -772,7 +726,8 @@
       "overwriting": "Перезапис...",
       "regenerateOverwrite": "Повторити (перезаписати)",
       "savePreset": "Зберегти",
-      "saveProtocol": "Зберегти"
+      "saveProtocol": "Зберегти",
+      "runAllMaintenance": "Запустити все"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Файл CSV з тегами м'язів вже існує. Чи хочете ви перезаписати його значеннями за замовчуванням? Це видалить будь-які налаштовані теги.",
@@ -797,7 +752,8 @@
       "setDuration": "Використовується, коли кількість представників не вказана (за замовчуванням). Типовий діапазон: 30-60 секунд.",
       "setupCSV": "Створіть файли workout_logs.csv та muscle-tags.csv у визначеній папці.",
       "weightIncrement": "Стандартне збільшення ваги для прогресивного навантаження (наприклад, 2,5 для збільшення на 2,5 одиниці)",
-      "weightUnit": "Виберіть одиницю вимірювання ваги (кг/фунти). Це впливає на одиницю за замовчуванням для нових записів."
+      "weightUnit": "Виберіть одиницю вимірювання ваги (кг/фунти). Це впливає на одиницю за замовчуванням для нових записів.",
+      "runAllMaintenance": "Виконайте всі завдання з обслуговування послідовно. Безпечно можна виконувати кілька разів."
     },
     "labels": {
       "csvPath": "Шлях до файлу журналу CSV",
@@ -821,7 +777,8 @@
       "repDuration": "Тривалість на один повтор (секунди)",
       "setDuration": "Тривалість резервного часу (секунди)",
       "setupCSV": "Налаштування файлів CSV",
-      "weightUnit": "Одиниця вимірювання ваги"
+      "weightUnit": "Одиниця вимірювання ваги",
+      "runAllMaintenance": "Виконати всі завдання з технічного обслуговування"
     },
     "messages": {
       "confirmDeletePreset": "Ви впевнені, що хочете видалити цей шаблон?",
@@ -839,7 +796,6 @@
       "protocolNameRequired": "Поле \"Назва протоколу\" обов'язкове.",
       "protocolSaved": "Протокол збережено"
     },
-    "none": "Нема",
     "options": {
       "none": "Жоден",
       "weightUnit": {
@@ -861,13 +817,21 @@
       "setupAndData": "Налаштування та дані",
       "templates": "Шаблони",
       "timerPresets": "Заздалегідь встановлені таймери",
-      "trainingParameters": "Параметри навчання"
+      "trainingParameters": "Параметри навчання",
+      "maintenance": "Технічне обслуговування",
+      "advanced": "Додаткові"
     },
     "tooltips": {
       "deletePreset": "Видалити попередньо налаштований варіант",
       "deleteProtocol": "Видалити протокол",
       "editPreset": "Редагувати попередньо задані налаштування",
       "editProtocol": "Редагувати протокол"
+    },
+    "validation": {
+      "mustBePositive": "Повинен бути більше 0",
+      "mustBeNonNegative": "Має бути 0 або більше",
+      "csvPathEmpty": "Шлях не може бути порожнім",
+      "csvFolderNotFound": "Папка не знайдена в сховищі. Запустіть Setup CSV для її створення."
     }
   },
   "stats": {
@@ -885,60 +849,40 @@
       "exercise": "Вправа",
       "heartRate": "Частота серцевих скорочень",
       "notes": "Примітки",
-      "pace": "Швидкість (хв/км)",
       "protocol": "Протокол",
       "reps": "Кількість",
       "volume": "Об'єм",
       "weight": "Вага"
     },
     "columns": {
-      "actions": "Дія",
-      "date": "Дата",
-      "distance": "Відстань",
       "distanceUnit": "Відстань ({distanceUnit})",
       "duration": "Тривалість",
-      "exercise": "Вправа",
       "heartRate": "Частота серцевих скорочень",
-      "notes": "Примітки",
       "pace": "Темп",
-      "protocol": "Протокол",
       "reps": "Представник",
-      "volume": "Об'єм",
       "volumeUnit": "Об'єм ({weightUnit})",
-      "weight": "Вага",
       "weightUnit": "Вага ({weightUnit})"
     },
     "deleteConfirm": "Підтвердити видалення",
     "deleteError": "Помилка при видаленні",
     "deleteSuccess": "Успішне видалення",
     "deleteTitle": "Заголовок для видалення",
-    "distance": "Відстань",
-    "duration": "Тривалість",
     "editTable": "Редагувати таблицю",
     "editTitle": "Заголовок для редагування",
     "gotoExercise": "Перейти до вправи",
-    "heartRate": "Частота серцебиття",
     "invalidDate": "Неправильна дата",
     "labels": {
-      "distance": "Відстань",
-      "duration": "Тривалість",
-      "heartRate": "Частота серцебиття",
-      "target": "Ціль:",
-      "trendLine": "Лінія тренду",
-      "volume": "Об'єм",
-      "weight": "Вага"
+      "target": "Ціль:"
     },
     "noData": "Відсутні дані",
     "notAvailable": "Не доступно",
     "refreshSuccess": "Успішно оновлено",
-    "sets": "Набори",
     "target": {
       "progressTooltip": "Найкраще: {best} повторень / Мета: {target} повторень",
       "repsSuffix": "репрезентанти",
       "separator": " × "
     },
-    "trendLine": "Лінія тренду",
-    "volume": "Гучність"
+    "trendLine": "Лінія тренду"
   },
   "timeperiods": {
     "month": "Місяць",

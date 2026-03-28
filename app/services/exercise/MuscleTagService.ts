@@ -75,7 +75,6 @@ export class MuscleTagService {
    * Automatically migrates old CSV format (without language column) to new format.
    */
   private async loadTagsInternal(): Promise<Map<string, string>> {
-    const tags = new Map<string, string>();
     const csvPath = this.computeCsvPath();
     const userLanguage = this.getUserLanguage();
 

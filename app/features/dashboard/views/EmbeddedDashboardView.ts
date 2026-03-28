@@ -17,7 +17,6 @@ import {
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { t } from "@app/i18n";
 
 /**
@@ -100,8 +99,6 @@ export class EmbeddedDashboardView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
   ): Promise<void> {
-    PerformanceMonitor.start("dashboard:createDashboard");
-
     // Store state for potential re-rendering (e.g., protocol filter changes)
     this.currentContainer = container;
     this.currentData = logData;
@@ -140,10 +137,7 @@ export class EmbeddedDashboardView extends BaseView {
 
       // Create dashboard layout
       await this.renderDashboard(container, filteredData, params);
-
-      PerformanceMonitor.end("dashboard:createDashboard");
     } catch (error) {
-      PerformanceMonitor.end("dashboard:createDashboard");
       this.handleError(container, error as Error);
     }
   }
@@ -218,27 +212,11 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
-    PerformanceMonitor.start("dashboard:widget:summary");
     SummaryWidget.render(gridEl, displayData, params);
-    PerformanceMonitor.end("dashboard:widget:summary");
-
-    PerformanceMonitor.start("dashboard:widget:quickStats");
     QuickStatsCards.render(gridEl, displayData, params);
-    PerformanceMonitor.end("dashboard:widget:quickStats");
-
-    PerformanceMonitor.start("dashboard:widget:muscleHeatMap");
     await MuscleHeatMap.render(gridEl, displayData, params, this.plugin);
-    PerformanceMonitor.end("dashboard:widget:muscleHeatMap");
-
-    PerformanceMonitor.start("dashboard:widget:volumeAnalytics");
     VolumeAnalytics.render(gridEl, displayData, params);
-    PerformanceMonitor.end("dashboard:widget:volumeAnalytics");
-
-    PerformanceMonitor.start("dashboard:widget:recentWorkouts");
     RecentWorkouts.render(gridEl, displayData, params);
-    PerformanceMonitor.end("dashboard:widget:recentWorkouts");
-
-    PerformanceMonitor.start("dashboard:widget:protocolDistribution");
     ProtocolDistribution.render(
       gridEl,
       data,
@@ -246,27 +224,11 @@ export class EmbeddedDashboardView extends BaseView {
       this.plugin,
       this.handleProtocolFilterChange,
     );
-    PerformanceMonitor.end("dashboard:widget:protocolDistribution");
-
-    PerformanceMonitor.start("dashboard:widget:protocolEffectiveness");
     ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
-    PerformanceMonitor.end("dashboard:widget:protocolEffectiveness");
-
-    PerformanceMonitor.start("dashboard:widget:durationComparison");
     DurationComparison.render(gridEl, data, params);
-    PerformanceMonitor.end("dashboard:widget:durationComparison");
-
-    PerformanceMonitor.start("dashboard:widget:quickActions");
     QuickActions.render(gridEl, params, this.plugin);
-    PerformanceMonitor.end("dashboard:widget:quickActions");
-
-    PerformanceMonitor.start("dashboard:widget:fileErrors");
     await WidgetsFileError.render(gridEl, this.plugin);
-    PerformanceMonitor.end("dashboard:widget:fileErrors");
-
-    PerformanceMonitor.start("dashboard:widget:muscleTags");
     MuscleTagsWidget.render(gridEl, params, this.plugin);
-    PerformanceMonitor.end("dashboard:widget:muscleTags");
 
     // Apply bento layout and observe for resize
     this.applyBentoLayout(gridEl);

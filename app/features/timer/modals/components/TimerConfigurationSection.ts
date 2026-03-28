@@ -13,6 +13,7 @@ export interface TimerConfigurationElements {
   timerTypeChips: Map<TIMER_TYPE, HTMLButtonElement>;
   selectedTimerType: TIMER_TYPE;
   durationInput: HTMLInputElement;
+  durationContainer: HTMLElement;
   roundsInput: HTMLInputElement;
   roundsContainer: HTMLElement;
   exerciseInput: HTMLInputElement;
@@ -67,6 +68,10 @@ export class TimerConfigurationSection {
         type: TIMER_TYPE.INTERVAL,
         label: t("timer.interval"),
       },
+      {
+        type: TIMER_TYPE.STOPWATCH,
+        label: t("timer.stopwatch"),
+      },
     ];
 
     for (const { type, label } of timerTypes) {
@@ -85,9 +90,12 @@ export class TimerConfigurationSection {
       cls: "workout-parameters-container",
     });
 
-    // Duration field with +/- adjust
-    const durationInput = TimerConfigurationSection.createAdjustField(
-      parametersContainer,
+    // Duration field with +/- adjust (hidden for stopwatch)
+    const durationContainer = parametersContainer.createDiv({
+      cls: "workout-field-with-adjust",
+    });
+    const durationInput = TimerConfigurationSection.createAdjustFieldInContainer(
+      durationContainer,
       t("modal.duration"),
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
       CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
@@ -148,6 +156,7 @@ export class TimerConfigurationSection {
       timerTypeChips,
       selectedTimerType,
       durationInput,
+      durationContainer,
       roundsInput,
       roundsContainer,
       exerciseInput: exerciseElements.exerciseInput,
@@ -158,10 +167,16 @@ export class TimerConfigurationSection {
     // Visibility handler
     const updateVisibility = () => {
       const isInterval = elements.selectedTimerType === TIMER_TYPE.INTERVAL;
+      const isStopwatch = elements.selectedTimerType === TIMER_TYPE.STOPWATCH;
       if (isInterval) {
         roundsContainer.removeClass("workout-display-none");
       } else {
         roundsContainer.addClass("workout-display-none");
+      }
+      if (isStopwatch) {
+        durationContainer.addClass("workout-display-none");
+      } else {
+        durationContainer.removeClass("workout-display-none");
       }
     };
 
@@ -285,7 +300,9 @@ export class TimerConfigurationSection {
       sound: elements.soundToggle.checked,
     };
 
-    values.duration = parseInt(elements.durationInput.value) || 30;
+    if (timerType !== TIMER_TYPE.STOPWATCH) {
+      values.duration = parseInt(elements.durationInput.value) || 30;
+    }
 
     if (timerType === TIMER_TYPE.INTERVAL) {
       values.rounds = parseInt(elements.roundsInput.value) || 5;

@@ -2,89 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## DOE Framework for AI Development
+## Development Principles
 
-This project follows the **DOE Framework** (Directive, Orchestration, Execution) for AI-assisted development. This framework ensures reliable, maintainable, and self-improving code.
-
-### Framework Architecture
-
-#### D - Directive Layer (The Manager)
-
-**What**: Documentation files (Markdown SOPs - Standard Operating Procedures) written in natural language.
-
-**Function**: Defines **what** needs to be done:
-
-- Objectives and strategies
-- Required inputs and outputs
-- Which scripts/tools to use
-- How to handle edge cases
-- Project-specific patterns and conventions
-
-**Analogy**: The manager who establishes rules and strategy but doesn't execute the work directly.
-
-**In this project**: This CLAUDE.md file serves as the primary directive, along with inline documentation and architectural decisions.
-
-#### O - Orchestration Layer (The Employee)
-
-**What**: The LLM itself (Claude Code) working within the development environment.
-
-**Function**: Acts as the **bridge** between directives and execution:
-
-- Reads and interprets directives (D)
-- Decides which execution tools (E) to activate
-- Follows established procedures rather than inventing solutions
-- Delegates complex, deterministic tasks to scripts/tools
-
-**Analogy**: The employee who receives orders from the manager and executes the plan using provided tools.
-
-**Critical Rule**: The orchestrator should **follow procedures**, not invent complex implementations. When complexity is needed, delegate to deterministic code (E layer).
-
-#### E - Execution Layer (The Tools)
-
-**What**: Deterministic scripts, build tools, tests, and automation.
-
-**Function**: Executes the **"dirty work"**:
-
-- Build system (esbuild, PostCSS, TypeScript compiler)
-- Test suite (Jest)
-- Linting and formatting (ESLint)
-- Data processing scripts
-- API calls and external integrations
-
-**Analogy**: The tools and machinery that the employee uses to complete the work.
-
-**Philosophy**: Delegate complexity to **rigid, deterministic code** rather than probabilistic AI reasoning. Scripts don't hallucinate or make random mistakes.
-
-### Self-Learning Mechanism
-
-The DOE framework includes a **self-improvement loop**:
-
-1. **Error Detection**: When a script (E) fails, the orchestrator (O) reads error logs
-2. **Root Cause Analysis**: Understanding the problem and its context
-3. **Script Correction**: Autonomously rewriting the script to fix the issue
-4. **Directive Update**: If necessary, updating directives (D) to prevent future occurrences
-5. **Knowledge Accumulation**: The system becomes more robust with each error encountered
-
-**Result**: The system transitions from **probabilistic** (typical AI behavior) to **deterministic and reliable** behavior over time.
-
-### Applying DOE in This Project
-
-When working on this codebase:
-
-1. **Consult Directives First**: Always read this CLAUDE.md and related documentation before implementing features
-2. **Follow Established Patterns**: Use the patterns described in "Key Development Patterns" section
-3. **Delegate to Tools**:
-   - Use build system for compilation
-   - Use Jest for testing
-   - Use ESLint for code quality
-   - Don't manually validate what tools can check
-4. **Update Documentation**: When discovering new patterns or solving complex problems, update this CLAUDE.md
-5. **Prefer Code Over Instructions**: For complex logic, create deterministic utilities/services rather than relying on AI reasoning each time
-
-**Example**:
-
-- ❌ **Wrong**: Manually parsing CSV data in a modal each time
-- ✅ **Right**: Use `DataService` (E layer) which has deterministic parsing logic
+- **Follow established patterns** — use "Key Development Patterns" section before implementing features
+- **Delegate to tools** — use build system, Jest, ESLint; don't manually validate what tools can check
+- **Use services, not ad-hoc logic** — e.g., use `DataService` for CSV operations, not inline parsing
+- **Update this file** — when discovering new patterns or solving complex problems, document them here
 
 ## Development Commands
 
@@ -345,36 +268,43 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 ### Refresh Architecture (Event-Driven)
 
-All data mutations trigger a centralized refresh via workspace events. Views subscribe through `DataAwareRenderChild` and selectively re-render based on event context.
+All data mutations emit typed events on `WorkoutEventBus`. Views subscribe via `EventAwareRenderChild` and selectively re-render based on event type and exercise/workout filter.
 
-**Workout log data** (`workout_logs.csv`):
-
-```
-Mutation → plugin.triggerWorkoutLogRefresh({exercise?, workout?})
-  → clearLogDataCache()
-  → workspace.trigger("workout-planner:data-changed", context)
-  → DataAwareRenderChild instances decide whether to refresh
-```
-
-**Muscle tag data** (`muscle-tags.csv`):
+**Workout log mutation flow:**
 
 ```
-Mutation → plugin.triggerMuscleTagRefresh()
+Repository.add/update/delete/rename
+  → eventBus.emit(log:added | log:updated | log:deleted | log:bulk-changed)
+  → CSVCacheService clears cache (reactive subscriber)
+  → EventAwareRenderChild receives event → filters by exercise/workout → calls renderFn()
+```
+
+**Muscle tag mutation flow:**
+
+```
+plugin.triggerMuscleTagRefresh()
   → muscleTagService.clearCache()
-  → workspace.trigger("workout-planner:muscle-tags-changed", {})
-  → triggerWorkoutLogRefresh() (dashboard refresh)
+  → eventBus.emit(muscle-tags:changed)
+  → EventAwareRenderChild with muscleTagsAware=true re-renders (dashboards)
+```
+
+**Bulk operations (e.g. exercise conversion, import):**
+
+```
+dataService.batchOperation('import', async () => { ... N mutations ... })
+  → All log:* events suppressed during fn()
+  → One log:bulk-changed emitted at end
+  → All EventAwareRenderChild instances re-render once
 ```
 
 **Key components:**
 
-- `DataAwareRenderChild` — Listens for `data-changed`, calls `shouldRefresh(ctx)` to filter by exercise/workout
-- `CodeBlockProcessorService` — Wires each code block to a `DataAwareRenderChild` with its specific refresh function
-- `triggerWorkoutLogRefresh(ctx?)` — Entry point for workout log changes (tables, charts, dashboards)
-- `triggerMuscleTagRefresh()` — Entry point for muscle tag changes (dashboards)
+- `WorkoutEventBus` (`app/services/events/WorkoutEventBus.ts`) — Typed internal event bus; `batch()` coalesces N events into one `log:bulk-changed`
+- `EventAwareRenderChild` (`app/services/core/EventAwareRenderChild.ts`) — Replaces the old `DataAwareRenderChild`; filters by `exercise`, `workout`, `exactMatch`, `muscleTagsAware`
+- `WorkoutEventTypes.ts` — Discriminated union `WorkoutEvent`, `normalizeExercise()` for case/whitespace-insensitive comparison
+- `triggerWorkoutLogRefresh()` in `main.ts` — **Deprecated** public method; emits `log:bulk-changed` for backward compat with external callers
 
-**Selective refresh:** When context includes exercise/workout, only matching views re-render. Empty context `{}` triggers global refresh of all views.
-
-**Important:** Do NOT pass local `onRefresh` callbacks through table components. The global event system handles all refresh logic. Table actions (edit/delete) call `triggerWorkoutLogRefresh()` directly.
+**Important:** Do NOT pass `onRefresh` callbacks through modal or table components. The event bus handles all refresh logic automatically after every repository mutation.
 
 ### Data Flow
 

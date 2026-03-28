@@ -48,11 +48,28 @@ jest.mock("@app/components/molecules/LogCallouts", () => ({
   },
 }));
 
+jest.mock("@app/utils/BlockIdMigration", () => ({
+  runAddMissingBlockIds: jest.fn(),
+}));
+
+jest.mock("@app/orchestration/ErrorCollector", () => ({
+  ErrorCollector: {
+    logError: jest.fn(),
+    getInstance: jest.fn().mockReturnValue({ isEnabled: true }),
+  },
+}));
+
+jest.mock("@app/i18n", () => ({
+  t: jest.fn((key) => key),
+}));
+
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
+import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 describe("CodeBlockProcessorService", () => {
   let service: CodeBlockProcessorService;
@@ -63,10 +80,20 @@ describe("CodeBlockProcessorService", () => {
   let mockDashboardView: any;
   let activeTimers: Map<string, EmbeddedTimerView>;
   let mockMuscleTagService: any;
+  let eventBus: WorkoutEventBus;
 
   beforeEach(() => {
     // Create mocks
     mockPlugin = {
+      app: {
+        vault: {
+          getMarkdownFiles: jest.fn().mockReturnValue([]),
+        },
+      },
+      settings: {
+        timerPresets: {},
+        defaultTimerPreset: "",
+      },
       registerMarkdownCodeBlockProcessor: jest.fn(),
     };
     mockDataService = {
@@ -90,6 +117,7 @@ describe("CodeBlockProcessorService", () => {
     mockMuscleTagService = {
       getTagMap: jest.fn().mockReturnValue(new Map()),
     };
+    eventBus = new WorkoutEventBus();
 
     service = new CodeBlockProcessorService(
       mockPlugin,
@@ -98,9 +126,14 @@ describe("CodeBlockProcessorService", () => {
       mockTableView,
       mockDashboardView,
       activeTimers,
+      eventBus,
     );
 
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    eventBus.destroy();
   });
 
   describe("registerProcessors", () => {
@@ -183,7 +216,7 @@ describe("CodeBlockProcessorService", () => {
       expect(mockTableView.createTable).toHaveBeenCalled();
     });
 
-    it("should invoke timer callback when registered processor is called", () => {
+    it("should invoke timer callback when registered processor is called", async () => {
       service.registerProcessors();
 
       const timerCall =
@@ -196,7 +229,7 @@ describe("CodeBlockProcessorService", () => {
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
-      timerCallback("duration: 60", el, ctx);
+      await timerCallback("duration: 60", el, ctx);
 
       expect(ctx.addChild).toHaveBeenCalled();
     });
@@ -293,7 +326,6 @@ describe("CodeBlockProcessorService", () => {
       expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalledWith(
         el,
         mockPlugin,
-        undefined,
         undefined,
         "[[path]]",
       );
@@ -543,7 +575,7 @@ describe("CodeBlockProcessorService", () => {
       );
     });
 
-    it("should use DataAwareRenderChild with empty params for dashboard", async () => {
+    it("should use EventAwareRenderChild with muscleTagsAware for dashboard", async () => {
       mockDashboardView.loadDashboardData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
@@ -560,20 +592,44 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("handleWorkoutTimer", () => {
-    it("should create timer and register child", () => {
+    it("should trigger migration if id is missing", async () => {
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+
+      expect(runAddMissingBlockIds).toHaveBeenCalledWith(mockPlugin.app);
+    });
+
+    it("should NOT trigger migration if id is present", async () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutTimer("id: timer123\nduration: 60", el, ctx);
+
+      expect(runAddMissingBlockIds).not.toHaveBeenCalled();
+    });
+
+    it("should create timer and register child", async () => {
+      const el = document.createElement("div");
+      const ctx = {
+        addChild: jest.fn(),
+        sourcePath: "test/path.md",
+      } as unknown as MarkdownPostProcessorContext;
+
+      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
 
       expect(ctx.addChild).toHaveBeenCalled();
       expect(activeTimers.size).toBe(1);
     });
 
-    it("should catch errors", () => {
+    it("should catch errors", async () => {
       // Mock parser to throw
       const originalParse = (service as any).parseCodeBlockParams;
       (service as any).parseCodeBlockParams = () => {
@@ -586,7 +642,7 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("", el, ctx);
+      await (service as any).handleWorkoutTimer("", el, ctx);
 
       expect(Feedback.renderError).toHaveBeenCalled();
 
@@ -594,7 +650,7 @@ describe("CodeBlockProcessorService", () => {
       (service as any).parseCodeBlockParams = originalParse;
     });
 
-    it("should remove timer from activeTimers when child is unloaded", () => {
+    it("should remove timer from activeTimers when child is unloaded", async () => {
       const el = document.createElement("div");
       let registeredChild: any = null;
       const ctx = {
@@ -604,7 +660,7 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
 
       expect(activeTimers.size).toBe(1);
       const timerId = Array.from(activeTimers.keys())[0];
@@ -616,7 +672,7 @@ describe("CodeBlockProcessorService", () => {
       expect(activeTimers.size).toBe(0);
     });
 
-    it("should call destroy on timerView when unloaded", () => {
+    it("should call destroy on timerView when unloaded", async () => {
       const el = document.createElement("div");
       let registeredChild: any = null;
       const ctx = {
@@ -626,7 +682,7 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
 
       // Get the timer view from activeTimers
       const timerId = Array.from(activeTimers.keys())[0];
@@ -638,7 +694,7 @@ describe("CodeBlockProcessorService", () => {
       expect(destroySpy).toHaveBeenCalled();
     });
 
-    it("should handle non-Error exceptions", () => {
+    it("should handle non-Error exceptions", async () => {
       const originalParse = (service as any).parseCodeBlockParams;
       (service as any).parseCodeBlockParams = () => {
         throw "string error";
@@ -650,7 +706,7 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("", el, ctx);
+      await (service as any).handleWorkoutTimer("", el, ctx);
 
       expect(Feedback.renderError).toHaveBeenCalledWith(
         el,
@@ -661,7 +717,7 @@ describe("CodeBlockProcessorService", () => {
       (service as any).parseCodeBlockParams = originalParse;
     });
 
-    it("should handle unload when timer already removed from activeTimers", () => {
+    it("should handle unload when timer already removed from activeTimers", async () => {
       const el = document.createElement("div");
       let registeredChild: any = null;
       const ctx = {
@@ -671,7 +727,7 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
 
       // Manually clear activeTimers before unload
       activeTimers.clear();

@@ -1,12 +1,11 @@
 // Main plugin file - Workout Charts for Obsidian
-import { Plugin } from "obsidian";
+import { Plugin, Notice } from "obsidian";
 import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
   WorkoutLogData,
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "@app/features/charts";
 import { EmbeddedTableView } from "@app/features/tables";
@@ -21,9 +20,10 @@ import { TemplateGeneratorService } from "@app/services/templates/TemplateGenera
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { LocalizationService, t } from "@app/i18n";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -53,6 +53,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   // Public API for Dataview integration
   private workoutPlannerAPI!: WorkoutPlannerAPI;
 
+  // Event bus (Fase 1 — non ancora usato da nessuno)
+  public eventBus!: WorkoutEventBus;
+
   // Expose createLogModalHandler for dashboard quick actions
   public get createLogModalHandler() {
     return {
@@ -62,9 +65,6 @@ export default class WorkoutChartsPlugin extends Plugin {
           this,
           undefined,
           undefined,
-          (ctx) => {
-            this.triggerWorkoutLogRefresh(ctx);
-          },
           undefined,
           true,
         ).open();
@@ -73,8 +73,15 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async onload() {
-    PerformanceMonitor.start("plugin:onload");
     await this.loadSettings();
+
+    // Fase 1: inizializza event bus (non ancora usato da altri componenti)
+    this.eventBus = new WorkoutEventBus();
+    this.eventBus.on('plugin:error', ({ source, error, recoverable }) => {
+      if (!recoverable) {
+        new Notice(`Workout Plugin [${source}]: ${error.message}`);
+      }
+    });
 
     // Initialize LocalizationService (must be first - other services may use translations)
     LocalizationService.initialize(this.app);
@@ -88,8 +95,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
-    PerformanceMonitor.start("plugin:initServices");
-    this.dataService = new DataService(this.app, this.settings);
+    this.dataService = new DataService(this.app, this.settings, this.eventBus);
     this.exerciseDefinitionService = new ExerciseDefinitionService(
       this.app,
       this.settings,
@@ -107,9 +113,8 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.embeddedTableView,
       this.embeddedDashboardView,
       this.activeTimers,
+      this.eventBus,
     );
-    PerformanceMonitor.end("plugin:initServices");
-
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
       this.dataService,
@@ -126,7 +131,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
     this.updateQuickLogRibbon();
-    PerformanceMonitor.end("plugin:onload");
   }
 
   /**
@@ -138,10 +142,6 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.quickLogRibbonIcon = null;
     }
 
-    if (!this.settings.showQuickLogRibbon) {
-      return;
-    }
-
     this.quickLogRibbonIcon = this.addRibbonIcon(
       "dumbbell",
       t("modal.titles.create_log"),
@@ -151,9 +151,6 @@ export default class WorkoutChartsPlugin extends Plugin {
           this,
           undefined,
           undefined,
-          (ctx) => {
-            this.triggerWorkoutLogRefresh(ctx);
-          },
           undefined,
           true,
         ).open();
@@ -179,6 +176,9 @@ export default class WorkoutChartsPlugin extends Plugin {
      * - Service references preventing garbage collection
      */
 
+    // 0. Destroy event bus (must be first to prevent stale handlers)
+    this.eventBus?.destroy();
+
     // 1. Clean up all active timers
     for (const timerView of this.activeTimers.values()) {
       timerView.destroy();
@@ -190,8 +190,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedTableView?.cleanup();
     this.embeddedDashboardView?.cleanup();
 
-    // 3. Clear data service cache to release memory
-    this.dataService?.clearLogDataCache();
+    // 3. Destroy data service (de-registers cache event listeners, clears cache)
+    this.dataService?.destroy();
 
     // 3b. Clear exercise definition service cache
     this.exerciseDefinitionService?.clearCache();
@@ -294,6 +294,17 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   /**
+   * Groups multiple mutations into a single coalesced event.
+   * See DataService.batchOperation for full documentation.
+   */
+  public async batchOperation(
+    operation: LogBulkChangedPayload['operation'],
+    fn: () => Promise<void>,
+  ): Promise<void> {
+    return this.dataService.batchOperation(operation, fn);
+  }
+
+  /**
    * Rename an exercise in the CSV file
    */
   public async renameExercise(
@@ -314,23 +325,15 @@ export default class WorkoutChartsPlugin extends Plugin {
 
   /**
    * Trigger targeted refresh of workout log views via custom workspace events.
+   * Forces a global refresh of all embedded views via the event bus.
+   * Emits log:bulk-changed which causes all EventAwareRenderChild instances to re-render.
    *
-   * Each rendered code block (table, chart, dashboard) registers a
-   * MarkdownRenderChild that listens for "workout-planner:data-changed".
-   * The RenderChild compares the event context (exercise/workout) with its
-   * own params and only re-renders when there is a match.
-   *
-   * Passing no context (or empty object) triggers a global refresh of all views.
+   * @deprecated Internal views now refresh automatically via WorkoutEventBus.
+   * This method is kept for external callers (e.g. Dataview scripts) that need
+   * to force a manual refresh.
    */
-  public triggerWorkoutLogRefresh(context?: WorkoutDataChangedEvent): void {
-    PerformanceMonitor.start("refresh:workoutLog");
-    // Clear cache first to ensure fresh data on next render
-    this.clearLogDataCache();
-
-    // Fire custom event - each DataAwareRenderChild decides whether to refresh
-    // Timers also listen on this event and auto-start when exercise+workout match
-    this.app.workspace.trigger("workout-planner:data-changed", context ?? {});
-    PerformanceMonitor.end("refresh:workoutLog");
+  public triggerWorkoutLogRefresh(): void {
+    this.eventBus.emit({ type: 'log:bulk-changed', payload: { count: 0, operation: 'other' } });
   }
 
   /**
@@ -343,10 +346,6 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public triggerMuscleTagRefresh(): void {
     this.muscleTagService.clearCache();
-
-    this.app.workspace.trigger("workout-planner:muscle-tags-changed", {});
-
-    // Dashboards already refresh on global data-changed events
-    this.triggerWorkoutLogRefresh();
+    this.eventBus.emit({ type: 'muscle-tags:changed', payload: {} });
   }
 }

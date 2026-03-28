@@ -48,6 +48,20 @@
       }
     }
 
+    .workout-exercise-autocomplete-create {
+      display: flex;
+      align-items: center;
+      gap: var(--workout-space-sm);
+      color: var(--interactive-accent);
+      border-top: var(--workout-border-thin) solid var(--background-modifier-border);
+      font-style: italic;
+
+      .workout-exercise-autocomplete-create-icon {
+        font-weight: bold;
+        font-style: normal;
+      }
+    }
+
     .workout-exercise-autocomplete-wrapper {
       position: relative;
     }

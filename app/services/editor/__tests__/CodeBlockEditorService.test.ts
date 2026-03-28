@@ -5,17 +5,22 @@ describe("CodeBlockEditorService", () => {
   let app: App;
   let mockEditor: any;
   let mockView: any;
+  let mockFile: any;
 
   beforeEach(() => {
     app = new App();
+    mockFile = { path: "test.md" };
     mockEditor = {
       getValue: jest.fn(),
       setValue: jest.fn(),
     };
     mockView = {
       editor: mockEditor,
+      file: mockFile,
     };
     (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(mockView);
+    (app.vault.read as jest.Mock).mockResolvedValue("");
+    (app.vault.modify as jest.Mock).mockResolvedValue(undefined);
     jest.clearAllMocks();
   });
 
@@ -27,7 +32,7 @@ exercise: Bench Press
 targetWeight: 100
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.updateTargetWeight(
         app,
@@ -36,7 +41,8 @@ targetWeight: 100
       );
 
       expect(result).toBe(true);
-      expect(mockEditor.setValue).toHaveBeenCalledWith(
+      expect(app.vault.modify).toHaveBeenCalledWith(
+        mockFile,
         expect.stringContaining("targetWeight: 105"),
       );
     });
@@ -58,7 +64,7 @@ exercise: Squat
 targetWeight: 100
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
       const result = await CodeBlockEditorService.updateTargetWeight(
         app,
         "Bench Press",
@@ -68,7 +74,7 @@ targetWeight: 100
     });
 
     it("should return false when an error is thrown", async () => {
-      mockEditor.getValue.mockImplementation(() => {
+      (app.vault.read as jest.Mock).mockImplementation(() => {
         throw new Error("Test error");
       });
 
@@ -90,7 +96,7 @@ exercise: Running
 type: distance
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,
@@ -101,7 +107,8 @@ type: distance
       );
 
       expect(result).toBe(true);
-      expect(mockEditor.setValue).toHaveBeenCalledWith(
+      expect(app.vault.modify).toHaveBeenCalledWith(
+        mockFile,
         expect.stringContaining("type: pace"),
       );
     });
@@ -112,7 +119,7 @@ type: distance
 exercise: Running
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,
@@ -124,7 +131,8 @@ exercise: Running
 
       expect(result).toBe(true);
       // Verify it was added
-      expect(mockEditor.setValue).toHaveBeenCalledWith(
+      expect(app.vault.modify).toHaveBeenCalledWith(
+        mockFile,
         expect.stringContaining("type: distance"),
       );
     });
@@ -150,7 +158,7 @@ exercise: Swimming
 type: distance
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,
@@ -175,7 +183,7 @@ exercise: Running
 type: distance
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,
@@ -186,13 +194,14 @@ type: distance
       );
 
       expect(result).toBe(true);
-      expect(mockEditor.setValue).toHaveBeenCalledWith(
+      expect(app.vault.modify).toHaveBeenCalledWith(
+        mockFile,
         expect.stringContaining("type: pace"),
       );
     });
 
     it("should return false when an error is thrown", async () => {
-      mockEditor.getValue.mockImplementation(() => {
+      (app.vault.read as jest.Mock).mockImplementation(() => {
         throw new Error("Test error");
       });
 
@@ -214,7 +223,7 @@ exercise: Running
 showTrendLine: false
 \`\`\`
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,
@@ -225,7 +234,8 @@ showTrendLine: false
       );
 
       expect(result).toBe(true);
-      expect(mockEditor.setValue).toHaveBeenCalledWith(
+      expect(app.vault.modify).toHaveBeenCalledWith(
+        mockFile,
         expect.stringContaining("showTrendLine: true"),
       );
     });
@@ -237,7 +247,7 @@ showTrendLine: false
 exercise: Running
 type: distance
 `;
-      mockEditor.getValue.mockReturnValue(content);
+      (app.vault.read as jest.Mock).mockResolvedValue(content);
 
       const result = await CodeBlockEditorService.setParameter(
         app,

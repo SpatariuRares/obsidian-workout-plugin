@@ -17,24 +17,61 @@
   }
 }
 
+/* Timer urgent overlay animation */
+@keyframes workout-timer-urgent-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* Urgent countdown overlay — fixed top of page */
+.workout-timer-urgent-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(var(--color-red-rgb, 220, 53, 69), 0.93);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20vh;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  padding-top: max(var(--workout-space-sm), env(safe-area-inset-top));
+  pointer-events: none;
+
+  .workout-timer-urgent-overlay__count {
+    font-size: 2.4rem;
+    font-weight: 900;
+    font-family: monospace;
+    letter-spacing: -0.02em;
+    animation: workout-timer-urgent-pulse 1s ease-in-out infinite;
+  }
+}
+
 /* Timer Styles */
 .workout-timer {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--workout-space-lg);
   font-size: var(--workout-font-xl);
   flex: 1;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
 
   .workout-timer-time {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    gap: var(--workout-space-2xs, 2px);
 
     .workout-timer-time-display {
       font-size: var(--workout-font-xl);
@@ -43,6 +80,14 @@
       font-family: monospace;
       min-width: var(--workout-size-3xl);
       text-align: center;
+    }
+
+    .workout-timer-round-counter {
+      font-size: var(--workout-font-sm);
+      color: var(--text-muted);
+      font-family: monospace;
+      text-align: center;
+      letter-spacing: 0.04em;
     }
 
     .workout-timer-complete {

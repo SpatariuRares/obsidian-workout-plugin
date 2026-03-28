@@ -10,8 +10,6 @@ export interface TargetSectionWithAutocompleteElements {
   exerciseInput: HTMLInputElement;
   container: HTMLElement;
   autocompleteContainer: HTMLElement;
-  exerciseStatusText: HTMLElement;
-  createExercisePageBtn: HTMLButtonElement;
   workoutContainer: HTMLElement;
   workoutInput: HTMLInputElement;
   currentWorkoutToggle: HTMLInputElement;
@@ -86,8 +84,6 @@ export class TargetSectionWithAutocomplete {
       exerciseContainer,
       exerciseInput: exerciseElements.exerciseInput,
       autocompleteContainer: exerciseElements.autocompleteContainer,
-      exerciseStatusText: exerciseElements.exerciseStatusText,
-      createExercisePageBtn: exerciseElements.createExercisePageBtn,
       workoutContainer,
       workoutInput,
       currentWorkoutToggle,

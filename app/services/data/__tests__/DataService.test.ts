@@ -1,6 +1,7 @@
 import { DataService } from "../DataService";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE } from "@app/features/charts";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 // Mock Obsidian module
 
@@ -25,10 +26,12 @@ describe("DataService", () => {
   let mockApp: MockApp;
   let mockSettings: WorkoutChartsSettings;
   let mockVault: MockVault;
+  let eventBus: WorkoutEventBus;
 
   beforeEach(() => {
     // Reset mocks
     jest.clearAllMocks();
+    eventBus = new WorkoutEventBus();
 
     // Create mock vault
     mockVault = {
@@ -62,7 +65,6 @@ describe("DataService", () => {
       achievedTargets: {},
       customProtocols: [],
       setDuration: 45,
-      showQuickLogRibbon: true,
       recentExercises: [],
       quickWeightIncrement: 2.5,
       repDuration: 5,
@@ -70,7 +72,11 @@ describe("DataService", () => {
     };
 
     // Create DataService instance
-    dataService = new DataService(mockApp as any, mockSettings);
+    dataService = new DataService(mockApp as any, mockSettings, eventBus);
+  });
+
+  afterEach(() => {
+    eventBus.destroy();
   });
 
   describe("addWorkoutLogEntry - Recursion Protection", () => {
@@ -940,6 +946,64 @@ describe("DataService", () => {
           expect(writtenContent).toContain("Squat");
         });
       });
+    });
+  });
+
+  describe("batchOperation", () => {
+    it("should coalesce multiple emissions into one log:bulk-changed", async () => {
+      const bulkHandler = jest.fn();
+      const addHandler = jest.fn();
+      eventBus.on('log:bulk-changed', bulkHandler);
+      eventBus.on('log:added', addHandler);
+
+      const csvContent =
+        "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol\n";
+      const mockFile = new (require("obsidian").TFile)();
+      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
+      mockVault.read.mockResolvedValue(csvContent);
+      mockVault.process.mockImplementation((_file: unknown, fn: (content: string) => string) => {
+        fn(csvContent);
+        return Promise.resolve("");
+      });
+
+      await dataService.batchOperation('import', async () => {
+        await dataService.addWorkoutLogEntry({
+          date: "2024-01-01",
+          exercise: "Squat",
+          reps: 10,
+          weight: 100,
+          volume: 1000,
+          origine: "",
+          workout: "Legs",
+          notes: "",
+          protocol: undefined,
+        });
+        await dataService.addWorkoutLogEntry({
+          date: "2024-01-01",
+          exercise: "Bench Press",
+          reps: 8,
+          weight: 80,
+          volume: 640,
+          origine: "",
+          workout: "Push",
+          notes: "",
+          protocol: undefined,
+        });
+      });
+
+      expect(addHandler).not.toHaveBeenCalled();
+      expect(bulkHandler).toHaveBeenCalledTimes(1);
+      expect(bulkHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ count: 2, operation: 'import' }),
+      );
+    });
+
+    it("should propagate errors from fn", async () => {
+      await expect(
+        dataService.batchOperation('other', async () => {
+          throw new Error("batch failure");
+        }),
+      ).rejects.toThrow("batch failure");
     });
   });
 });

@@ -7,6 +7,8 @@ import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 export class GeneralSettings {
+  private csvPathValidationTimer: ReturnType<typeof setTimeout> | null = null;
+
   constructor(
     private app: App,
     private plugin: WorkoutChartsPlugin,
@@ -17,19 +19,16 @@ export class GeneralSettings {
     const { containerEl } = this;
 
     // Top-level "Setup & data" heading for the path/unit fields
-    new Setting(containerEl)
-      .setName(t("settings.sections.setupAndData"))
-      .setHeading();
+    new Setting(containerEl).setName(t("settings.sections.setupAndData")).setHeading();
 
-    new Setting(containerEl)
+    const csvPathSetting = new Setting(containerEl)
       .setName(t("settings.labels.csvPath"))
       .setDesc(t("settings.descriptions.csvFolder"))
       .addText((text) => {
         new FolderSuggest(this.app, text.inputEl);
         const currentPath = this.plugin.settings.csvLogFilePath;
         const lastSlash = currentPath.lastIndexOf("/");
-        const folderPath =
-          lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
+        const folderPath = lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
 
         text
           .setPlaceholder(t("forms.enterCsvPath"))
@@ -38,8 +37,15 @@ export class GeneralSettings {
             const folder = normalizePath(value);
             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
             await this.plugin.saveSettings();
+            this.scheduleCsvPathValidation(value.trim(), csvPathWarning);
           });
       });
+    const csvPathWarning = csvPathSetting.controlEl.createEl("div", {
+      cls: "workout-setting-error",
+    });
+    csvPathWarning.setCssProps({
+      display: "none",
+    });
 
     new Setting(containerEl)
       .setName(t("settings.labels.exerciseFolder"))
@@ -69,87 +75,87 @@ export class GeneralSettings {
             ParameterUtils.setWeightUnit(value);
             await this.plugin.saveSettings();
             // Trigger global refresh to update all views with new unit
-            this.plugin.triggerWorkoutLogRefresh({});
-          }),
-      );
-
-    // Filtering Section
-    new Setting(containerEl)
-      .setName(t("settings.sections.filtering"))
-      .setHeading();
-
-    new Setting(containerEl)
-      .setName(t("settings.labels.defaultExactMatch"))
-      .setDesc(t("settings.descriptions.defaultExactMatch"))
-      .addToggle((toggle) =>
-        toggle
-          .setValue(this.plugin.settings.defaultExactMatch)
-          .onChange(async (value) => {
-            this.plugin.settings.defaultExactMatch = value;
-            await this.plugin.saveSettings();
+            this.plugin.eventBus.emit({
+              type: "log:bulk-changed",
+              payload: { count: 0, operation: "other" },
+            });
           }),
       );
 
     // CSV Management Section
-    new Setting(containerEl)
-      .setName(t("settings.sections.csvManagement"))
-      .setHeading();
+    new Setting(containerEl).setName(t("settings.sections.csvManagement")).setHeading();
 
     new Setting(containerEl)
       .setName(t("settings.labels.setupCSV"))
       .setDesc(t("settings.descriptions.setupCSV"))
       .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.createFiles"))
-          .onClick(async () => {
-            try {
-              // Create workout log CSV
-              await this.plugin.createCSVLogFile();
+        button.setButtonText(t("settings.buttons.createFiles")).onClick(async () => {
+          try {
+            // Create workout log CSV
+            await this.plugin.createCSVLogFile();
 
-              // Create muscle tags CSV
-              await this.handleCreateMuscleTagsCsv();
+            // Create muscle tags CSV
+            await this.handleCreateMuscleTagsCsv();
 
-              new Notice(t("settings.messages.csvFilesCreated"));
-            } catch (error) {
-              const errorMessage = ErrorUtils.getErrorMessage(error);
-              new Notice(`Error creating CSV files: ${errorMessage}`);
-            }
-          }),
+            new Notice(t("settings.messages.csvFilesCreated"));
+          } catch (error) {
+            const errorMessage = ErrorUtils.getErrorMessage(error);
+            new Notice(`Error creating CSV files: ${errorMessage}`);
+          }
+        }),
       );
 
     // Initial Setup Section
-    new Setting(containerEl)
-      .setName(t("settings.sections.exampleData"))
-      .setHeading();
+    new Setting(containerEl).setName(t("settings.sections.exampleData")).setHeading();
 
     new Setting(containerEl)
       .setName(t("settings.labels.generateExamples"))
       .setDesc(t("settings.descriptions.generateExamples"))
       .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.createExamples"))
-          .onClick(async () => {
-            const { ExampleGeneratorService } =
-              await import("@app/services/examples/ExampleGeneratorService");
-            const generator = new ExampleGeneratorService(this.app);
+        button.setButtonText(t("settings.buttons.createExamples")).onClick(async () => {
+          const { ExampleGeneratorService } =
+            await import("@app/services/examples/ExampleGeneratorService");
+          const generator = new ExampleGeneratorService(this.app);
 
-            const folderExists = await this.app.vault.adapter.exists(
-              normalizePath("The gym examples"),
-            );
+          const folderExists = await this.app.vault.adapter.exists(
+            normalizePath("The gym examples"),
+          );
 
-            if (folderExists) {
-              new ConfirmModal(
-                this.app,
-                t("settings.messages.confirmOverwriteExamples"),
-                async () => {
-                  await generator.generateExampleFolder(true);
-                },
-              ).open();
-            } else {
-              await generator.generateExampleFolder(false);
-            }
-          }),
+          if (folderExists) {
+            new ConfirmModal(
+              this.app,
+              t("settings.messages.confirmOverwriteExamples"),
+              async () => {
+                await generator.generateExampleFolder(true);
+              },
+            ).open();
+          } else {
+            await generator.generateExampleFolder(false);
+          }
+        }),
       );
+  }
+
+  private scheduleCsvPathValidation(folderValue: string, warningEl: HTMLElement): void {
+    if (this.csvPathValidationTimer !== null) {
+      clearTimeout(this.csvPathValidationTimer);
+    }
+    this.csvPathValidationTimer = setTimeout(async () => {
+      this.csvPathValidationTimer = null;
+      if (!folderValue) {
+        warningEl.textContent = t("settings.validation.csvPathEmpty");
+        warningEl.addClass("is-visible");
+        return;
+      }
+      const folder = normalizePath(folderValue);
+      const exists = await this.app.vault.adapter.exists(folder);
+      if (!exists) {
+        warningEl.textContent = t("settings.validation.csvFolderNotFound");
+        warningEl.addClass("is-visible");
+      } else {
+        warningEl.removeClass("is-visible");
+      }
+    }, 300);
   }
 
   /**

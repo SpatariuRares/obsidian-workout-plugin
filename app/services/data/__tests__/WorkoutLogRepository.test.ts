@@ -2,9 +2,11 @@ import { WorkoutLogRepository } from "../WorkoutLogRepository";
 import { App, TFile, Notice } from "obsidian";
 import { CSVCacheService } from "../CSVCacheService";
 import { CSVColumnService } from "../CSVColumnService";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import {
   WorkoutChartsSettings,
   CSVWorkoutLogEntry,
+  WorkoutLogData,
   WorkoutProtocol,
 } from "../../../types/WorkoutLogData";
 import { CONSTANTS } from "../../../constants";
@@ -50,14 +52,17 @@ jest.mock("../../../types/WorkoutLogData", () => {
 
 describe("WorkoutLogRepository", () => {
   let repository: WorkoutLogRepository;
+  let mockEventBus: jest.Mocked<Pick<WorkoutEventBus, 'emit'>>;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockEventBus = { emit: jest.fn() };
     repository = new WorkoutLogRepository(
       mockApp,
       defaultSettings,
       mockColumnService,
       mockCacheService,
+      mockEventBus as unknown as WorkoutEventBus,
     );
   });
 
@@ -82,6 +87,7 @@ describe("WorkoutLogRepository", () => {
         settingsWithFolder,
         mockColumnService,
         mockCacheService,
+        mockEventBus as unknown as WorkoutEventBus,
       );
 
       // Mock getAbstractFileByPath to return null (folder doesn't exist)
@@ -125,7 +131,6 @@ describe("WorkoutLogRepository", () => {
         mockFile,
         expect.any(Function),
       );
-      expect(mockCacheService.clearCache).toHaveBeenCalled();
     });
 
     it("should handle custom fields properly", async () => {
@@ -151,7 +156,6 @@ describe("WorkoutLogRepository", () => {
         expect.any(Function),
       );
       expect(mockVault.process).toHaveBeenCalled();
-      expect(mockCacheService.clearCache).toHaveBeenCalled();
     });
 
     it("should recursive retry if file not found and successfully create it", async () => {
@@ -216,10 +220,7 @@ describe("WorkoutLogRepository", () => {
 
       await repository.updateWorkoutLogEntry(originalLog, updatedEntry);
 
-      // verify process callback logic implicitly via coverage or by mocking implementation of process to run callback
-      // But here we rely on process being called
       expect(mockVault.process).toHaveBeenCalled();
-      expect(mockCacheService.clearCache).toHaveBeenCalled();
     });
 
     it("should throw error if file does not exist", async () => {
@@ -325,7 +326,6 @@ describe("WorkoutLogRepository", () => {
       await repository.deleteWorkoutLogEntry(logToDelete);
 
       expect(mockVault.process).toHaveBeenCalled();
-      expect(mockCacheService.clearCache).toHaveBeenCalled();
     });
 
     it("should throw error if file not found", async () => {
@@ -404,8 +404,6 @@ describe("WorkoutLogRepository", () => {
       expect(entries[0].exercise).toBe("Back Squat");
       expect(entries[1].exercise).toBe("Back Squat");
       expect(entries[2].exercise).toBe("Bench");
-
-      expect(mockCacheService.clearCache).toHaveBeenCalled();
     });
 
     it("should throw error if file not found", async () => {
@@ -427,5 +425,111 @@ describe("WorkoutLogRepository", () => {
         "Failed to rename exercise: Process failed",
       );
     });
+  });
+
+  describe("eventBus integration", () => {
+    beforeEach(() => {
+      // Reset process mock implementation that may have been set by previous describe blocks
+      (mockVault.process as jest.Mock).mockReset();
+    });
+
+    const baseEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
+      date: "2024-01-01",
+      exercise: "Squat",
+      reps: 5,
+      weight: 100,
+      volume: 500,
+      origine: "Log",
+      workout: "Leg Day",
+      protocol: WorkoutProtocol.STANDARD,
+    };
+
+    it("should emit log:added after addWorkoutLogEntry", async () => {
+      const mockFile = new TFile();
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
+      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
+      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
+
+      await repository.addWorkoutLogEntry(baseEntry);
+
+      expect(mockEventBus.emit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'log:added',
+          payload: expect.objectContaining({
+            context: { exercise: "Squat", workout: "Leg Day" },
+          }),
+        }),
+      );
+    });
+
+    it("should emit log:updated after updateWorkoutLogEntry", async () => {
+      const originalLog = { ...baseEntry, timestamp: 123456789 } as WorkoutLogData;
+      const mockFile = new TFile();
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
+      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
+      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+
+      await repository.updateWorkoutLogEntry(originalLog, { ...baseEntry, reps: 8 });
+
+      expect(mockEventBus.emit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'log:updated',
+          payload: expect.objectContaining({
+            previous: originalLog,
+          }),
+        }),
+      );
+    });
+
+    it("should emit log:deleted after deleteWorkoutLogEntry", async () => {
+      const logToDelete = { ...baseEntry, timestamp: 123456789 } as WorkoutLogData;
+      const mockFile = new TFile();
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
+      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+
+      await repository.deleteWorkoutLogEntry(logToDelete);
+
+      expect(mockEventBus.emit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'log:deleted',
+          payload: expect.objectContaining({
+            context: { exercise: "Squat", workout: "Leg Day" },
+          }),
+        }),
+      );
+    });
+
+    it("should emit log:bulk-changed after renameExercise", async () => {
+      const mockFile = new TFile();
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ exercise: "Squat" }]);
+      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+
+      await repository.renameExercise("Squat", "Back Squat");
+
+      expect(mockEventBus.emit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'log:bulk-changed',
+          payload: expect.objectContaining({ operation: 'rename' }),
+        }),
+      );
+    });
+
+    it("should NOT emit if vault.process throws", async () => {
+      const mockFile = new TFile();
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
+      (mockVault.process as jest.Mock).mockRejectedValue(new Error("IO error"));
+
+      await expect(repository.addWorkoutLogEntry(baseEntry)).rejects.toThrow("IO error");
+      expect(mockEventBus.emit).not.toHaveBeenCalled();
+    });
+
   });
 });

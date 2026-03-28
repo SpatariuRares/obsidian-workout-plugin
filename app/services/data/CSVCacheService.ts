@@ -5,7 +5,7 @@ import {
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
 import { App, TFile, Notice } from "obsidian";
-import { PerformanceMonitor } from "@app/utils/PerformanceMonitor";
+import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 /**
@@ -20,6 +20,9 @@ export class CSVCacheService {
   // Lock to prevent parallel CSV loading (race condition fix)
   private loadingPromise: Promise<WorkoutLogData[]> | null = null;
 
+  // Event bus subscriptions to unregister on destroy
+  private unsubscribers: Array<() => void> = [];
+
   /**
    * Maximum cache size to prevent excessive memory consumption.
    * For users with large workout histories (10,000+ entries), we limit the cache
@@ -31,14 +34,34 @@ export class CSVCacheService {
   constructor(
     private app: App,
     private settings: WorkoutChartsSettings,
-  ) {}
+    eventBus: WorkoutEventBus,
+  ) {
+    this.setupEventListeners(eventBus);
+  }
+
+  private setupEventListeners(eventBus: WorkoutEventBus): void {
+    this.unsubscribers.push(
+      eventBus.on('log:added',        () => this.clearCache()),
+      eventBus.on('log:updated',      () => this.clearCache()),
+      eventBus.on('log:deleted',      () => this.clearCache()),
+      eventBus.on('log:bulk-changed', () => this.clearCache()),
+    );
+  }
+
+  /**
+   * De-register event bus listeners.
+   * Call in plugin.onunload() via DataService.destroy().
+   */
+  public destroy(): void {
+    for (const unsub of this.unsubscribers) unsub();
+    this.unsubscribers = [];
+  }
 
   /**
    * Get raw (unfiltered) data from cache or CSV.
    * Uses a loading lock to prevent parallel CSV reads.
    */
   public async getRawData(): Promise<WorkoutLogData[]> {
-    PerformanceMonitor.start("csv:getRawData");
     const now = Date.now();
 
     const cacheValid =
@@ -47,7 +70,6 @@ export class CSVCacheService {
       this.logDataCache.length <= this.MAX_CACHE_SIZE;
 
     if (cacheValid) {
-      PerformanceMonitor.end("csv:getRawData");
       return this.logDataCache!;
     }
 
@@ -59,20 +81,14 @@ export class CSVCacheService {
 
     // If already loading, wait for that promise (race condition prevention)
     if (this.loadingPromise) {
-      const result = await this.loadingPromise;
-      PerformanceMonitor.end("csv:getRawData");
-      return result;
+      return await this.loadingPromise;
     }
 
     // Start loading with lock
-    // eslint-disable-next-line no-console
-    console.debug("[PERF] csv:cacheMiss");
     this.loadingPromise = this.loadCSVData();
 
     try {
-      const data = await this.loadingPromise;
-      PerformanceMonitor.end("csv:getRawData");
-      return data;
+      return await this.loadingPromise;
     } finally {
       this.loadingPromise = null;
     }
@@ -83,7 +99,6 @@ export class CSVCacheService {
    * Includes retry logic for vault initialization timing.
    */
   private async loadCSVData(retryCount = 0): Promise<WorkoutLogData[]> {
-    PerformanceMonitor.start("csv:loadCSVData");
     const logData: WorkoutLogData[] = [];
     const MAX_RETRIES = 3;
     const RETRY_DELAY = 100; // ms
@@ -119,7 +134,6 @@ export class CSVCacheService {
       new Notice(`Error loading CSV workout data: ${errorMessage}`);
     }
 
-    PerformanceMonitor.end("csv:loadCSVData");
     return logData;
   }
 

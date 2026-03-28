@@ -100,28 +100,3 @@
   }
 }
 
-.workout-exercise-autocomplete-no-found {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--workout-space-sm);
-  padding: var(--workout-space-sm);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-
-  .workout-exercise-status-text {
-    font-size: var(--workout-font-base);
-    font-weight: var(--workout-font-weight-medium);
-
-    &.workout-exercise-status-success {
-      color: var(--text-success);
-    }
-    &.workout-exercise-status-accent {
-      color: var(--text-accent);
-    }
-    &.workout-exercise-status-warning {
-      color: var(--text-warning);
-    }
-  }
-}

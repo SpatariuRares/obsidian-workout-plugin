@@ -4,11 +4,13 @@ import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
 import { Button } from "@app/components/atoms";
 import { StringUtils, ErrorUtils } from "@app/utils";
+import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { t } from "@app/i18n";
 
 interface MismatchEntry {
   file: TFile;
   fileName: string;
+  canonicalName: string;
   closestMatch: string;
   score: number;
 }
@@ -66,37 +68,55 @@ export class AuditExerciseNamesModal extends ModalBase {
     this.mismatches = [];
 
     try {
-      // Get all CSV exercise names
       const logData = await this.plugin.getWorkoutLogData();
-      const csvExercises = new Set(
-        logData.map((log) => StringUtils.normalize(log.exercise)),
+      const csvExerciseOriginals = [
+        ...new Map(
+          logData
+            .filter((log) => log.exercise)
+            .map((log) => [StringUtils.normalize(log.exercise), log.exercise]),
+        ).values(),
+      ];
+      const csvExercisesNormalized = new Set(
+        csvExerciseOriginals.map((e) => StringUtils.normalize(e)),
       );
 
       // Get all exercise files from the exercise folder
       const exerciseFolder = this.plugin.settings.exerciseFolderPath;
       const files = this.app.vault.getMarkdownFiles();
-      const exerciseFiles = files.filter((file) =>
-        file.path.startsWith(exerciseFolder),
-      );
+      const exerciseFiles = files.filter((file) => file.path.startsWith(exerciseFolder));
 
       // Check each file for mismatches
       for (const file of exerciseFiles) {
         const fileName = file.basename;
-        const fileNameLower = StringUtils.normalize(fileName);
 
-        // Check for exact match
-        if (csvExercises.has(fileNameLower)) {
+        // Resolve canonical name: exercise_name → nome_esercizio → basename
+        let canonicalName = fileName;
+        try {
+          const content = await this.app.vault.read(file);
+          const frontmatterName =
+            FrontmatterParser.parseField(content, "exercise_name") ??
+            FrontmatterParser.parseField(content, "nome_esercizio");
+          if (frontmatterName) {
+            canonicalName = frontmatterName;
+          }
+        } catch {
+          // fallback to basename
+        }
+
+        const canonicalNameLower = StringUtils.normalize(canonicalName);
+
+        if (csvExercisesNormalized.has(canonicalNameLower)) {
           continue; // Perfect match, skip
         }
 
-        // Find closest match using fuzzy matching
+        // Find closest match using fuzzy matching, keeping original casing
         let bestMatch = "";
         let bestScore = 0;
 
-        for (const csvExercise of csvExercises) {
+        for (const csvExercise of csvExerciseOriginals) {
           const score = ExerciseMatchUtils.getMatchScore(
-            fileNameLower,
-            csvExercise,
+            canonicalNameLower,
+            StringUtils.normalize(csvExercise),
           );
           if (score > bestScore) {
             bestScore = score;
@@ -108,6 +128,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         this.mismatches.push({
           file,
           fileName,
+          canonicalName,
           closestMatch: bestMatch || "No match found",
           score: bestScore,
         });
@@ -172,7 +193,6 @@ export class AuditExerciseNamesModal extends ModalBase {
     for (const mismatch of this.mismatches) {
       const row = tbody.createEl("tr");
 
-      // File name (with link)
       const fileCell = row.createEl("td");
       const fileLink = fileCell.createEl("a", {
         text: mismatch.fileName,
@@ -182,6 +202,12 @@ export class AuditExerciseNamesModal extends ModalBase {
         e.preventDefault();
         void this.app.workspace.openLinkText(mismatch.file.path, "", false);
       });
+      if (mismatch.canonicalName !== mismatch.fileName) {
+        fileCell.createEl("span", {
+          text: ` (${mismatch.canonicalName})`,
+          cls: "workout-text-muted",
+        });
+      }
 
       // Closest match
       row.createEl("td", { text: mismatch.closestMatch });
@@ -212,11 +238,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
       // Actions cell with Rename in CSV and Rename File buttons
       const actionsCell = row.createEl("td");
-      actionsCell.addClasses([
-        "workout-flex",
-        "workout-items-center",
-        "workout-gap-2",
-      ]);
+      actionsCell.addClasses(["workout-flex", "workout-items-center", "workout-gap-2"]);
 
       // Only show rename buttons if there's a valid match to rename to
       if (mismatch.closestMatch !== "No match found" && mismatch.score > 0) {
@@ -247,7 +269,7 @@ export class AuditExerciseNamesModal extends ModalBase {
    */
   private async handleRenameInCSV(mismatch: MismatchEntry): Promise<void> {
     const oldName = mismatch.closestMatch;
-    const newName = mismatch.fileName;
+    const newName = StringUtils.capitalize(mismatch.canonicalName);
 
     // Show confirmation dialog with preview
     const confirmMessage = t("modal.notices.auditConfirmRenameFile", {
@@ -291,7 +313,7 @@ export class AuditExerciseNamesModal extends ModalBase {
    */
   private async handleRenameFile(mismatch: MismatchEntry): Promise<void> {
     const oldFileName = mismatch.fileName;
-    const newFileName = mismatch.closestMatch;
+    const newFileName = StringUtils.capitalize(mismatch.closestMatch);
 
     // Show confirmation dialog with preview
     const confirmMessage = t("modal.notices.auditConfirmRenameFile", {
@@ -307,11 +329,17 @@ export class AuditExerciseNamesModal extends ModalBase {
     }
 
     try {
-      // Calculate new file path
+      // Update exercise_name / nome_esercizio in frontmatter if present
+      await this.app.fileManager.processFrontMatter(mismatch.file, (frontmatter) => {
+        if (typeof frontmatter.exercise_name === "string") {
+          frontmatter.exercise_name = newFileName;
+        } else if (typeof frontmatter.nome_esercizio === "string") {
+          frontmatter.nome_esercizio = newFileName;
+        }
+      });
+
       const oldPath = mismatch.file.path;
       const newPath = oldPath.replace(`${oldFileName}.md`, `${newFileName}.md`);
-
-      // Rename file using Obsidian vault API
       await this.app.vault.rename(mismatch.file, newPath);
 
       // Show success message

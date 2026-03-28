@@ -29,6 +29,7 @@ const EXCLUDED_DIRS = new Set([
   "build",
   "coverage",
   ".obsidian",
+  "__tests__",
 ]);
 
 const LOCALES_DIR = path.resolve(ROOT_DIR, "app/i18n/locales");
@@ -91,17 +92,21 @@ function extractLeafKeys(obj, prefix = "", result = new Set()) {
 }
 
 function isKeyUsedInContent(content, key) {
-  const parts = key.split(".");
-  const fragments = [key];
-  const lastName = parts[parts.length - 1];
-  if (lastName.length >= 4) fragments.push(lastName);
+  // Escapa i punti per la regex
+  const escapedKey = key.replace(/\./g, "\\.");
   
-  for (const fragment of fragments) {
-    const escaped = fragment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const pattern = new RegExp("['\"\x60]" + escaped + "['\"\x60]");
-    if (pattern.test(content)) return true;
-  }
-  return false;
+  // Cerca pattern come:
+  // t("key")
+  // t('key')
+  // t(`key`)
+  // hasKey("key")
+  // .t("key")
+  const patterns = [
+    new RegExp(`t\\(['"\x60]${escapedKey}['"\x60]`),
+    new RegExp(`hasKey\\(['"\x60]${escapedKey}['"\x60]`)
+  ];
+
+  return patterns.some(pattern => pattern.test(content));
 }
 
 function pruneEmptyNodes(obj) {

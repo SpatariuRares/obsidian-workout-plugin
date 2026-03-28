@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -128,6 +129,18 @@
 }
 .workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-suggestion:hover {
   background: var(--background-modifier-hover);
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-create {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  color: var(--interactive-accent);
+  border-top: var(--workout-border-thin) solid var(--background-modifier-border);
+  font-style: italic;
+}
+.workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-create .workout-exercise-autocomplete-create-icon {
+  font-weight: bold;
+  font-style: normal;
 }
 .workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-wrapper {
   position: relative;
@@ -380,7 +393,7 @@
 /* ----------------------------------------------------------------------------
    1. BASE PLACEHOLDERS & MIXINS
    ---------------------------------------------------------------------------- */
-.workout-table-action-btn, .workout-timer-btn, .workout-quick-log-weight-btn, .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-adjust-btn, .workout-frame-toggle .workout-toggle-btn, .workout-exercise-autocomplete-no-found .workout-create-exercise-page-btn, .workout-buttons-container .workout-btn-secondary, .workout-timer-btn-start-stop, .workout-frame-toggle .workout-toggle-btn.active, .workout-achievement-badge .workout-update-target-button, .workout-buttons-container .workout-btn-primary, .workout-buttons-container .workout-btn {
+.workout-table-action-btn, .workout-timer-btn, .workout-quick-log-weight-btn, .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-adjust-btn, .workout-frame-toggle .workout-toggle-btn, .workout-buttons-container .workout-btn-secondary, .workout-timer-btn-start-stop, .workout-frame-toggle .workout-toggle-btn.active, .workout-achievement-badge .workout-update-target-button, .workout-buttons-container .workout-btn-primary, .workout-buttons-container .workout-btn {
   cursor: pointer;
   transition: var(--workout-transition);
 }
@@ -403,7 +416,7 @@
   color: var(--text-on-accent);
 }
 
-.workout-quick-log-cancel-btn, .workout-frame-toggle .workout-toggle-btn, .workout-exercise-autocomplete-no-found .workout-create-exercise-page-btn, .workout-buttons-container .workout-btn-secondary {
+.workout-quick-log-cancel-btn, .workout-frame-toggle .workout-toggle-btn, .workout-buttons-container .workout-btn-secondary {
   background: var(--interactive-normal);
   color: var(--text-on-normal);
 }
@@ -477,10 +490,6 @@
 /* ----------------------------------------------------------------------------
    Single Context Buttons
    ---------------------------------------------------------------------------- */
-.workout-exercise-autocomplete-no-found .workout-create-exercise-page-btn:hover {
-  background: var(--interactive-normal-hover);
-}
-
 /* ----------------------------------------------------------------------------
    Toggle Buttons
    ---------------------------------------------------------------------------- */
@@ -877,30 +886,6 @@
   color: var(--text-muted);
   text-align: center;
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-}
-
-.workout-exercise-autocomplete-no-found {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--workout-space-sm);
-  padding: var(--workout-space-sm);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
-}
-.workout-exercise-autocomplete-no-found .workout-exercise-status-text {
-  font-size: var(--workout-font-base);
-  font-weight: var(--workout-font-weight-medium);
-}
-.workout-exercise-autocomplete-no-found .workout-exercise-status-text.workout-exercise-status-success {
-  color: var(--text-success);
-}
-.workout-exercise-autocomplete-no-found .workout-exercise-status-text.workout-exercise-status-accent {
-  color: var(--text-accent);
-}
-.workout-exercise-autocomplete-no-found .workout-exercise-status-text.workout-exercise-status-warning {
-  color: var(--text-warning);
 }
 
 .workout-select-dropdown {
@@ -1560,19 +1545,51 @@
   }
 }
 
+/* Timer urgent overlay animation */
+@keyframes workout-timer-urgent-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+/* Urgent countdown overlay — fixed top of page */
+.workout-timer-urgent-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(var(--color-red-rgb, 220, 53, 69), 0.93);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20vh;
+  padding: var(--workout-space-sm) var(--workout-space-lg);
+  padding-top: max(var(--workout-space-sm), env(safe-area-inset-top));
+  pointer-events: none;
+}
+.workout-timer-urgent-overlay .workout-timer-urgent-overlay__count {
+  font-size: 2.4rem;
+  font-weight: 900;
+  font-family: monospace;
+  letter-spacing: -0.02em;
+  animation: workout-timer-urgent-pulse 1s ease-in-out infinite;
+}
+
 /* Timer Styles */
 .workout-timer {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-secondary);
   border-radius: var(--workout-radius-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--workout-space-lg);
   font-size: var(--workout-font-xl);
   flex: 1;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 .workout-timer .workout-timer-time {
@@ -3469,4 +3486,48 @@
   display: flex;
   align-items: center;
   gap: var(--workout-space-sm);
+}
+
+/* ============================================================================
+   SETTINGS PAGE STYLES
+   Styles for the plugin settings tab UI enhancements
+   ============================================================================ */
+/* Inline validation error text shown below numeric/text fields */
+.workout-setting-error {
+  display: none;
+  color: var(--text-error);
+  font-size: var(--font-smallest);
+  margin-top: 4px;
+  width: 100%;
+}
+.workout-setting-error.is-visible {
+  display: block;
+}
+
+/* Collapsible "Advanced" section wrapper */
+.workout-advanced-section {
+  margin-top: var(--size-4-4);
+}
+.workout-advanced-section > summary {
+  cursor: pointer;
+  font-size: var(--font-ui-medium);
+  font-weight: var(--font-semibold);
+  color: var(--text-normal);
+  padding: var(--size-4-2) 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  border-top: 1px solid var(--background-modifier-border);
+  user-select: none;
+}
+.workout-advanced-section > summary::before {
+  content: "▶";
+  font-size: 0.7em;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+  display: inline-block;
+}
+.workout-advanced-section[open] > summary::before {
+  transform: rotate(90deg);
 }

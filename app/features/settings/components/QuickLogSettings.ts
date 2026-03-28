@@ -16,20 +16,39 @@ export class QuickLogSettings {
       .setName(t("settings.sections.quickLog"))
       .setHeading();
 
-    // TODO: this will be default in future — add a system to control data from csv to decide what to show
     new Setting(containerEl)
+      .setName(t("settings.labels.defaultExactMatch"))
+      .setDesc(t("settings.descriptions.defaultExactMatch"))
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.defaultExactMatch)
+          .onChange(async (value) => {
+            this.plugin.settings.defaultExactMatch = value;
+            await this.plugin.saveSettings();
+          }),
+      );
+
+    // TODO: this will be default in future — add a system to control data from csv to decide what to show
+    const quickWeightSetting = new Setting(containerEl)
       .setName(getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT)
       .setDesc(t("settings.descriptions.quickWeightIncrement"))
-      .addText((text) =>
+      .addText((text) => {
         text
           .setValue(String(this.plugin.settings.quickWeightIncrement))
           .onChange(async (value) => {
             const numValue = parseFloat(value);
-            if (!isNaN(numValue) && numValue > 0) {
+            const isValid = !isNaN(numValue) && numValue > 0;
+            quickWeightError.toggleClass("is-visible", !isValid);
+            if (isValid) {
               this.plugin.settings.quickWeightIncrement = numValue;
               await this.plugin.saveSettings();
             }
-          }),
-      );
+          });
+      });
+    const quickWeightError = quickWeightSetting.controlEl.createEl("div", {
+      cls: "workout-setting-error",
+      text: t("settings.validation.mustBePositive"),
+    });
+    void quickWeightError;
   }
 }

@@ -4,8 +4,8 @@ import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
-import { GoToExerciseButton } from "@app/features/tables/ui/GoToExerciseButton";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 
 /**
@@ -16,7 +16,6 @@ export class LogCallouts {
   private static openCreateLogModal(
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
-    onComplete?: (context?: WorkoutDataChangedEvent) => void,
   ): void {
     const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
     const currentPageLink = activeView?.file
@@ -28,7 +27,6 @@ export class LogCallouts {
       plugin,
       exerciseName,
       currentPageLink,
-      onComplete || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
       undefined,
       !currentPageLink,
     ).open();
@@ -38,8 +36,8 @@ export class LogCallouts {
     container: HTMLElement,
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
-    onRefresh?: (context?: WorkoutDataChangedEvent) => void,
     currentPageLink?: string,
+    codeBlockId?: string,
   ): void {
     Feedback.renderEmpty(container, "", { className: "workout-log-no-data" });
     const noDataDiv = container.querySelector(
@@ -81,16 +79,22 @@ export class LogCallouts {
         plugin,
         exerciseName,
         link,
-        onRefresh || ((ctx) => plugin.triggerWorkoutLogRefresh(ctx)),
         undefined,
         !link,
       ).open();
     });
 
-    GoToExerciseButton.render(buttonDiv, {
-      exerciseName: exerciseName || "",
-      app: plugin.app,
-    });
+    if (exerciseName) {
+      ExerciseActionSelect.render(
+        buttonDiv,
+        {
+          exerciseName,
+          app: plugin.app,
+          plugin,
+          params: { exercise: exerciseName, id: codeBlockId } as EmbeddedTableParams,
+        },
+      );
+    }
   }
 
   static renderAddLogButton(
@@ -98,7 +102,6 @@ export class LogCallouts {
     exerciseName: string,
     currentPageLink: string,
     plugin: WorkoutChartsPlugin,
-    onLogCreated?: (context?: WorkoutDataChangedEvent) => void,
     signal?: AbortSignal,
     latestEntry?: WorkoutLogData,
   ): void {
@@ -139,7 +142,6 @@ export class LogCallouts {
           plugin,
           exerciseName,
           currentPageLink,
-          onLogCreated,
           prefillData,
           false,
         ).open();
@@ -152,7 +154,6 @@ export class LogCallouts {
     container: HTMLElement,
     exerciseName: string,
     plugin: WorkoutChartsPlugin,
-    onRefresh?: (context?: WorkoutDataChangedEvent) => void,
   ): void {
     const buttonContainer = Button.createContainer(container);
     buttonContainer.addClass("create-log-button-container");
@@ -170,7 +171,7 @@ export class LogCallouts {
     });
 
     Button.onClick(button, () => {
-      LogCallouts.openCreateLogModal(plugin, exerciseName, onRefresh);
+      LogCallouts.openCreateLogModal(plugin, exerciseName);
     });
   }
 

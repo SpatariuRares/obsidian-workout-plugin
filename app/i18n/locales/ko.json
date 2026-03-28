@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "날짜",
-    "down": "내리기",
     "fallbackTableMessage": "대체 테이블 메시지",
     "labels": {
-      "date": "날짜",
-      "distance": "거리",
-      "down": "내림",
-      "duration": "기간",
-      "heartRate": "심박수",
-      "neutral": "중립",
-      "pace": "속도",
       "quickWeightIncrementUnit": "무게 버튼은 {weightIncrementUnit} 단위로 증가합니다.",
       "reps": "대표",
-      "trendLine": "추세선",
       "trendType": "추세 {type}:",
       "variationFromTo": "{startValue}에서 {endValue}까지",
       "volume": "볼륨",
       "weight": "무게",
       "weightIncrementUnit": "무게 증가 {weightIncrementUnit}"
     },
-    "neutral": "중립",
     "overallVariationPrefix": "전체 변동의 접두사",
-    "reps": "대표",
     "significantIncrease": "유의미한 증가",
     "trendLine": "트렌드 라인",
     "typeNotAvailable": "\"{chartDataType}\" 유형의 차트는 {exerciseType} 운동에 사용할 수 없습니다. 사용 가능한 유형: {typeList}",
@@ -34,8 +23,7 @@
       "reps": "대표",
       "volume": "부피",
       "weight": "무게"
-    },
-    "volume": "볼륨"
+    }
   },
   "commands": {
     "addExerciseBlock": "운동 블록 추가",
@@ -46,7 +34,8 @@
     "generateTagReference": "태그 참조 생성",
     "insertTable": "테이블 삽입",
     "manageMuscleTags": "근육 태그 관리",
-    "migrateExerciseTypes": "운동 유형 마이그레이션"
+    "migrateExerciseTypes": "운동 유형 마이그레이션",
+    "addMissingBlockIds": "코드 블록에 누락된 ID 추가"
   },
   "common": {
     "bpm": "bpm",
@@ -56,7 +45,6 @@
     "km": "common.km",
     "minPerKm": "분/km",
     "notAvailable": "사용 불가",
-    "reps": "대표",
     "sec": "보안",
     "unknown": "알 수 없음",
     "workout": "운동"
@@ -109,7 +97,6 @@
       "title": "파일 오류",
       "tooManyTags": "너무 많은 근육 태그가 있습니다 ({count})"
     },
-    "month": "월",
     "muscleTags": {
       "description": "설명",
       "title": "근육 태그",
@@ -144,12 +131,6 @@
     },
     "quickStats": {
       "month": "월",
-      "periods": {
-        "month": "이번 달",
-        "week": "이번 주",
-        "year": "올해"
-      },
-      "title": "빠른 통계",
       "week": "이번 주",
       "workouts": "운동",
       "year": "연"
@@ -166,14 +147,11 @@
       "totalVolume": "총 거래량",
       "totalWorkouts": "총 운동 횟수"
     },
-    "title": "제목",
     "volumeAnalytics": {
       "chartTitle": "볼륨 추이 (지난 30일)",
       "muscleBreakdownTitle": "볼륨 기준으로 인기 운동",
       "title": "볼륨 분석"
-    },
-    "week": "이번 주",
-    "year": "연"
+    }
   },
   "duration": {
     "estimatedDuration": "예상 소요 시간",
@@ -362,10 +340,7 @@
       "avgHeartRate": "평균 심박수 (bpm)",
       "avgVolume": "평균 부피 ({unit})",
       "avgWeight": "평균 무게 ({unit})",
-      "back": "뒤로",
       "dailyVolume": "하루 거래량 ({{unit}})",
-      "dashboard": "대시보드",
-      "front": "전면",
       "pace": "속도 (분/km)",
       "totalCustom": "총 {{label}}",
       "totalDistance": "총 거리 (km)",
@@ -419,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -477,13 +446,14 @@
     "fileEmpty": "파일이 비어 있습니다",
     "imbalanceAlerts": "불균형 알림",
     "insufficientData": "데이터 부족",
-    "loading": "운동 데이터 로딩 중...",
     "noDataPeriod": "선택된 기간 동안 운동 데이터가 없습니다.",
     "noFrontmatter": "프론트매터 없음",
     "noImbalances": "불균형 없음",
     "noTags": "태그 없음",
     "success": {
-      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!"
+      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",
+      "blockIdsAdded": "{files} 파일에 {count} 누락된 ID(들) 추가",
+      "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "타이머 완료!"
@@ -499,7 +469,8 @@
       "partialBadge": "•",
       "partialTooltip": "부분 일치 - 점수: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "단어 일치 - 점수: {score}"
+      "wordTooltip": "단어 일치 - 점수: {score}",
+      "addExercise": "{name} 추가"
     },
     "buttons": {
       "addParameter": "매개변수 추가",
@@ -526,7 +497,6 @@
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
-    "chartType": "차트 유형:",
     "checkboxes": {
       "connectSupersets": "서펫 연결",
       "exactMatch": "정확 일치",
@@ -572,21 +542,12 @@
     },
     "labels": {
       "actions": "액션",
-      "chartType": "차트 유형:",
-      "dateRange": "날짜 범위 (일):",
-      "duration": "기간 (초):",
       "exercise": "운동:",
-      "notes": "참고사항 (선택 사항):",
-      "protocol": "프로토콜:",
       "reps": "대표:",
-      "sets": "세트:",
-      "status": "상태",
       "targetReps": "목표 대상:",
       "targetWeight": "목표: ({unit}):",
-      "title": "제목:",
       "volume": "볼륨 ({{unit}}):",
-      "weight": "무게 ({{unit}}):",
-      "workout": "운동 (선택 사항):"
+      "weight": "무게 ({{unit}}):"
     },
     "layoutGrouped": "근육별로 그룹화",
     "layoutHorizontal": "수평 방향 흐름",
@@ -670,7 +631,6 @@
       "parameterKey": "예: 속도",
       "parameterLabel": "예: 속도",
       "parameterUnit": "예: 킬로미터/시",
-      "reps": "예: 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "근육 태그 검색...",
@@ -678,7 +638,6 @@
       "selectMuscleGroup": "근육 그룹 선택...",
       "selectWorkoutFile": "운동 파일을 선택하여 내보냅니다...",
       "sets": "4",
-      "weight": "예: 10.5",
       "workout": "예: 워크아웃 A, 훈련 B, 또는 아래 확인란을 사용"
     },
     "protocol": "프로토콜:",
@@ -705,12 +664,10 @@
       "allLogs": "모든 로그",
       "cardio": "유산소 운동",
       "completeWorkout": "운동 완료",
-      "countdown": "카운트다운",
       "custom": "사용자 정의",
       "distance": "거리",
       "dropSet": "세트 선택",
       "exerciseWorkout": "운동 프로그램",
-      "interval": "간격",
       "myoReps": "마요 랩",
       "number": "숫자",
       "restPause": "휴식 모드",
@@ -729,11 +686,9 @@
     "status": "상태",
     "tag": "태그",
     "tagsSelector": "근육 관련 태그:",
-    "text": "운동 완료",
     "timerDuration": "타이머 지속 시간 (초):",
     "timerPreset": "타이머 설정:",
     "timerType": "타이머 유형:",
-    "title": "제목:",
     "titles": {
       "addExerciseBlock": "운동 블록 추가",
       "auditExerciseNames": "감사 훈련 이름",
@@ -752,7 +707,6 @@
       "insertTimer": "운동 시간 설정",
       "muscleTagManager": "근육 태그 관리"
     },
-    "value": "운동",
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
     "workoutNameOptional": "운동 이름 (선택 사항):"
@@ -772,7 +726,8 @@
       "overwriting": "덮어쓰기...",
       "regenerateOverwrite": "재생성 (덮어쓰기)",
       "savePreset": "저장",
-      "saveProtocol": "저장"
+      "saveProtocol": "저장",
+      "runAllMaintenance": "모든 유지보수 실행"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -797,7 +752,8 @@
       "setDuration": "대리인 정보가 지정되지 않은 경우에 사용됩니다 (기본값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
-      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다."
+      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다.",
+      "runAllMaintenance": "모든 유지보수 작업을 순차적으로 실행합니다. 여러 번 실행해도 안전합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
@@ -821,7 +777,8 @@
       "repDuration": "반복 횟수당 지속 시간 (초)",
       "setDuration": "대체 설정 지속 시간 (초)",
       "setupCSV": "CSV 파일 설정",
-      "weightUnit": "무게 단위"
+      "weightUnit": "무게 단위",
+      "runAllMaintenance": "모든 유지보수 작업 실행"
     },
     "messages": {
       "confirmDeletePreset": "이 프리셋을 삭제하시겠습니까?",
@@ -839,7 +796,6 @@
       "protocolNameRequired": "프로토콜 이름은 필수입니다",
       "protocolSaved": "프로토콜 저장"
     },
-    "none": "없음",
     "options": {
       "none": "없음",
       "weightUnit": {
@@ -861,13 +817,21 @@
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 설정",
-      "trainingParameters": "훈련 매개변수"
+      "trainingParameters": "훈련 매개변수",
+      "maintenance": "유지보수",
+      "advanced": "고급"
     },
     "tooltips": {
       "deletePreset": "{preset} 삭제",
       "deleteProtocol": "프로토콜 삭제",
       "editPreset": "{preset} 편집",
       "editProtocol": "프로토콜 편집"
+    },
+    "validation": {
+      "mustBePositive": "0보다 커야 합니다",
+      "mustBeNonNegative": "0 또는 그 이상의 값이어야 합니다.",
+      "csvPathEmpty": "경로는 비어 있을 수 없습니다",
+      "csvFolderNotFound": "{vault}에 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 설정\"을 실행하십시오."
     }
   },
   "stats": {
@@ -885,60 +849,40 @@
       "exercise": "운동",
       "heartRate": "심박수",
       "notes": "참고사항",
-      "pace": "속도 (분/km)",
       "protocol": "프로토콜",
       "reps": "대표",
       "volume": "볼륨",
       "weight": "무게"
     },
     "columns": {
-      "actions": "실행",
-      "date": "날짜",
-      "distance": "각 열 사이의 간격",
       "distanceUnit": "거리 ({distanceUnit})",
       "duration": "{duration}",
-      "exercise": "운동",
       "heartRate": "심박수",
-      "notes": "참고사항",
       "pace": "속도",
-      "protocol": "프로토콜",
       "reps": "대표",
-      "volume": "볼륨",
       "volumeUnit": "볼륨 ({weightUnit})",
-      "weight": "무게",
       "weightUnit": "무게 ({weightUnit})"
     },
     "deleteConfirm": "삭제 확인",
     "deleteError": "삭제 오류",
     "deleteSuccess": "삭제 성공",
     "deleteTitle": "삭제 제목",
-    "distance": "거리",
-    "duration": "기간",
     "editTable": "테이블 편집",
     "editTitle": "편집 제목",
     "gotoExercise": "운동으로 이동",
-    "heartRate": "심박수",
     "invalidDate": "유효하지 않은 날짜",
     "labels": {
-      "distance": "거리",
-      "duration": "기간",
-      "heartRate": "심박수",
-      "target": "대상:",
-      "trendLine": "추세선",
-      "volume": "볼륨",
-      "weight": "무게"
+      "target": "대상:"
     },
     "noData": "데이터 없음",
     "notAvailable": "사용 불가",
     "refreshSuccess": "갱신 성공",
-    "sets": "세트",
     "target": {
       "progressTooltip": "최적: {best} 회 / 목표: {target} 회",
       "repsSuffix": "대표",
       "separator": " × "
     },
-    "trendLine": "추세선",
-    "volume": "볼륨"
+    "trendLine": "추세선"
   },
   "timeperiods": {
     "month": "월",

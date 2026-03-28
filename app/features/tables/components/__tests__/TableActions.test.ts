@@ -100,7 +100,6 @@ describe("TableActions", () => {
         plugin.app,
         plugin,
         log,
-        expect.any(Function),
       );
       expect(mockEditModalOpen).toHaveBeenCalled();
     });

@@ -4,7 +4,6 @@ import { App } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { t } from "@app/i18n";
 
 export class CreateLogModal extends BaseLogModal {
@@ -16,11 +15,10 @@ export class CreateLogModal extends BaseLogModal {
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
-    onLogCreated?: (context?: WorkoutDataChangedEvent) => void,
     initialValues?: Partial<LogFormData>,
     currentWorkoutDoesntExist = false,
   ) {
-    super(app, plugin, exerciseName, currentPageLink, onLogCreated);
+    super(app, plugin, exerciseName, currentPageLink);
     this.initialValues = initialValues;
     this.currentWorkoutDoesntExist = currentWorkoutDoesntExist;
   }

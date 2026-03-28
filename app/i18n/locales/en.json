@@ -1,28 +1,17 @@
 {
   "charts": {
     "date": "Date",
-    "down": "Down",
     "fallbackTableMessage": "Fallback Table Message",
     "labels": {
-      "date": "Date",
-      "distance": "Distance",
-      "down": "down",
-      "duration": "Duration",
-      "heartRate": "Heart Rate",
-      "neutral": "neutral",
-      "pace": "Pace",
       "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}",
       "reps": "Reps",
-      "trendLine": "Trend line",
       "trendType": "Trend {type}:",
       "variationFromTo": " from {startValue} to {endValue}",
       "volume": "Volume",
       "weight": "Weight",
       "weightIncrementUnit": "Weight increment {weightIncrementUnit}"
     },
-    "neutral": "Neutral",
     "overallVariationPrefix": "Overall Variation Prefix",
-    "reps": "Reps",
     "significantIncrease": "Significant Increase",
     "trendLine": "Trend Line",
     "typeNotAvailable": "Chart type \"{chartDataType}\" is not available for {exerciseType} exercises. Available types: {typeList}",
@@ -34,11 +23,11 @@
       "reps": "Reps",
       "volume": "Volume",
       "weight": "Weight"
-    },
-    "volume": "Volume"
+    }
   },
   "commands": {
     "addExerciseBlock": "Add Exercise Block",
+    "addMissingBlockIds": "Add missing IDs to code blocks",
     "auditExerciseNames": "Audit Exercise Names",
     "convertExercise": "Convert Exercise",
     "createCsvLog": "Create CSV log file",
@@ -56,7 +45,6 @@
     "km": "km",
     "minPerKm": "min/km",
     "notAvailable": "Not Available",
-    "reps": "Reps",
     "sec": "sec",
     "unknown": "Unknown",
     "workout": "Workout"
@@ -109,7 +97,6 @@
       "title": "File errors",
       "tooManyTags": "Too many muscle tags ({count})"
     },
-    "month": "Month",
     "muscleTags": {
       "description": "Description",
       "title": "Muscle tags",
@@ -144,12 +131,6 @@
     },
     "quickStats": {
       "month": "Month",
-      "periods": {
-        "month": "This month",
-        "week": "This week",
-        "year": "This year"
-      },
-      "title": "Quick stats",
       "week": "Week",
       "workouts": "Workouts",
       "year": "Year"
@@ -166,14 +147,11 @@
       "totalVolume": "Total volume",
       "totalWorkouts": "Total workouts"
     },
-    "title": "Title",
     "volumeAnalytics": {
       "chartTitle": "Volume trend (last 30 days)",
       "muscleBreakdownTitle": "Top exercises by volume",
       "title": "Volume analytics"
-    },
-    "week": "Week",
-    "year": "Year"
+    }
   },
   "duration": {
     "estimatedDuration": "Estimated duration",
@@ -362,10 +340,7 @@
       "avgHeartRate": "Avg heart rate (bpm)",
       "avgVolume": "Average volume ({unit})",
       "avgWeight": "Average weight ({unit})",
-      "back": "Back",
       "dailyVolume": "Daily volume ({unit})",
-      "dashboard": "Dashboard",
-      "front": "Front",
       "pace": "Pace (min/km)",
       "totalCustom": "Total {label}",
       "totalDistance": "Total distance (km)",
@@ -419,18 +394,12 @@
       "back": "🦾",
       "biceps": "💪",
       "calves": "🦵",
-      "cardio": "⭐",
       "chest": "🫁",
       "core": "🎯",
-      "curl": "💪",
       "deadlift": "💀",
-      "extension": "📏",
       "forearms": "✊",
       "glutes": "🍑",
       "hamstrings": "🦵",
-      "legs": "🦵",
-      "pull": "⬇️",
-      "push": "🔼",
       "quads": "🦵",
       "rear_delts": "🔙",
       "shoulders": "🦵",
@@ -477,13 +446,14 @@
     "fileEmpty": "File Empty",
     "imbalanceAlerts": "Imbalance Alerts",
     "insufficientData": "Insufficient Data",
-    "loading": "Loading workout data...",
     "noDataPeriod": "No workout data found for the selected time period.",
     "noFrontmatter": "No Frontmatter",
     "noImbalances": "No Imbalances",
     "noTags": "No Tags",
     "success": {
-      "csvCreated": "CSV file created successfully!"
+      "blockIdsAdded": "Added {count} missing ID(s) in {files} file(s)",
+      "csvCreated": "CSV file created successfully!",
+      "noBlockIdsNeeded": "All code blocks already have IDs"
     },
     "tagReferenceGenerated": "Tag reference generated successfully!",
     "timerCompleted": "Timer completed!"
@@ -492,6 +462,7 @@
     "actions": "Actions",
     "addTag": "Add tag",
     "autocomplete": {
+      "addExercise": "Add \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Exact/Prefix match - Score: {score}",
       "fuzzyBadge": "~",
@@ -526,7 +497,6 @@
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
-    "chartType": "Chart type:",
     "checkboxes": {
       "connectSupersets": "Connect Supersets",
       "exactMatch": "Exact Match",
@@ -572,21 +542,12 @@
     },
     "labels": {
       "actions": "Actions",
-      "chartType": "Chart type:",
-      "dateRange": "Date range (days):",
-      "duration": "Duration (seconds):",
       "exercise": "Exercise:",
-      "notes": "Notes (optional):",
-      "protocol": "Protocol:",
       "reps": "Reps:",
-      "sets": "Sets:",
-      "status": "Status",
       "targetReps": "Target reps:",
       "targetWeight": "Target: ({unit}):",
-      "title": "Title:",
       "volume": "Volume ({unit}):",
-      "weight": "Weight ({unit}):",
-      "workout": "Workout (optional):"
+      "weight": "Weight ({unit}):"
     },
     "layoutGrouped": "Grouped by muscle",
     "layoutHorizontal": "Horizontal flow",
@@ -670,7 +631,6 @@
       "parameterKey": "e.g., speed",
       "parameterLabel": "e.g., Speed",
       "parameterUnit": "e.g., km/h",
-      "reps": "e.g., 10",
       "repsRange": "8-10",
       "restTime": "90",
       "searchMuscleTags": "Search muscle tags...",
@@ -678,7 +638,6 @@
       "selectMuscleGroup": "Select muscle group...",
       "selectWorkoutFile": "Select a workout file to export...",
       "sets": "4",
-      "weight": "e.g., 10.5",
       "workout": "e.g. Workout A, Training B, or use checkbox below"
     },
     "protocol": "Protocol:",
@@ -705,12 +664,10 @@
       "allLogs": "All Logs",
       "cardio": "Cardio",
       "completeWorkout": "Complete Workout",
-      "countdown": "Countdown",
       "custom": "Custom",
       "distance": "Distance",
       "dropSet": "Drop Set",
       "exerciseWorkout": "Exercise Workout",
-      "interval": "Interval",
       "myoReps": "Myo Reps",
       "number": "Number",
       "restPause": "Rest Pause",
@@ -729,11 +686,9 @@
     "status": "Status",
     "tag": "Tag",
     "tagsSelector": "Muscle tags:",
-    "text": "Complete workout",
     "timerDuration": "Timer duration (seconds):",
     "timerPreset": "Timer preset:",
     "timerType": "Timer type:",
-    "title": "Title:",
     "titles": {
       "addExerciseBlock": "Add exercise block",
       "auditExerciseNames": "Audit exercise names",
@@ -752,7 +707,6 @@
       "insertTimer": "Insert workout timer",
       "muscleTagManager": "Manage muscle tags"
     },
-    "value": "workout",
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
     "workoutNameOptional": "Workout name (optional):"
@@ -764,6 +718,7 @@
       "cancel": "Cancel",
       "createExamples": "Create examples",
       "createFiles": "Create files",
+      "runAllMaintenance": "Run all",
       "done": "Done!",
       "failed": "Failed",
       "generateTemplates": "Generate templates",
@@ -795,6 +750,7 @@
       "quickWeightIncrement": "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
       "repDuration": "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
+      "runAllMaintenance": "Run all maintenance tasks sequentially. Safe to run multiple times.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
@@ -820,6 +776,7 @@
       "protocolName": "Protocol name",
       "repDuration": "Duration per repetition (seconds)",
       "setDuration": "Fallback set duration (seconds)",
+      "runAllMaintenance": "Run all maintenance tasks",
       "setupCSV": "Setup CSV files",
       "weightUnit": "Weight unit"
     },
@@ -839,7 +796,6 @@
       "protocolNameRequired": "Protocol name is required",
       "protocolSaved": "Protocol saved"
     },
-    "none": "None",
     "options": {
       "none": "None",
       "weightUnit": {
@@ -853,7 +809,9 @@
       "protocolName": "Enter protocol name"
     },
     "sections": {
+      "advanced": "Advanced",
       "csvManagement": "CSV file management",
+      "maintenance": "Maintenance",
       "customProtocols": "Custom protocols",
       "exampleData": "Example data",
       "filtering": "Filtering",
@@ -862,6 +820,12 @@
       "templates": "Templates",
       "timerPresets": "Timer presets",
       "trainingParameters": "Training parameters"
+    },
+    "validation": {
+      "mustBePositive": "Must be greater than 0",
+      "mustBeNonNegative": "Must be 0 or greater",
+      "csvPathEmpty": "Path cannot be empty",
+      "csvFolderNotFound": "Folder not found in vault. Run Setup CSV to create it."
     },
     "tooltips": {
       "deletePreset": "Delete preset",
@@ -885,60 +849,40 @@
       "exercise": "Exercise",
       "heartRate": "Heart Rate",
       "notes": "Notes",
-      "pace": "Pace (min/km)",
       "protocol": "Protocol",
       "reps": "Reps",
       "volume": "Volume",
       "weight": "Weight"
     },
     "columns": {
-      "actions": "Act",
-      "date": "Date",
-      "distance": "Dist",
       "distanceUnit": "Dist ({distanceUnit})",
       "duration": "Dur",
-      "exercise": "Exercise",
       "heartRate": "HR",
-      "notes": "Notes",
       "pace": "Pace",
-      "protocol": "Prot",
       "reps": "Rep",
-      "volume": "Vol",
       "volumeUnit": "Vol ({weightUnit})",
-      "weight": "Wgt",
       "weightUnit": "Wgt ({weightUnit})"
     },
     "deleteConfirm": "Delete Confirm",
     "deleteError": "Delete Error",
     "deleteSuccess": "Delete Success",
     "deleteTitle": "Delete Title",
-    "distance": "Distance",
-    "duration": "Duration",
     "editTable": "Edit table",
     "editTitle": "Edit Title",
     "gotoExercise": "Goto Exercise",
-    "heartRate": "Heart Rate",
     "invalidDate": "Invalid Date",
     "labels": {
-      "distance": "Distance",
-      "duration": "Duration",
-      "heartRate": "Heart rate",
-      "target": "Target:",
-      "trendLine": "Trend Line",
-      "volume": "Volume",
-      "weight": "Weight"
+      "target": "Target:"
     },
     "noData": "No Data",
     "notAvailable": "Not Available",
     "refreshSuccess": "Refresh Success",
-    "sets": "Sets",
     "target": {
       "progressTooltip": "Best: {best} reps / Target: {target} reps",
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Trend Line",
-    "volume": "Volume"
+    "trendLine": "Trend Line"
   },
   "timeperiods": {
     "month": "Month",

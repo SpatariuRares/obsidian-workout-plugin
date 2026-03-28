@@ -11,7 +11,8 @@ permissions:
   packages: write
 
 jobs:
-  build:
+  quality:
+    name: Quality Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +28,154 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+  translate:
+    name: Translate
+    runs-on: ubuntu-latest
+    needs: quality
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync manifest.json version with tag
+        run: |
+          TAG="${{ github.ref_name }}"
+          CURRENT=$(jq -r '.version' manifest.json)
+          if [ "$CURRENT" != "$TAG" ]; then
+            echo "Updating manifest.json: $CURRENT → $TAG"
+            jq --arg v "$TAG" '.version = $v' manifest.json > manifest.tmp && mv manifest.tmp manifest.json
+          else
+            echo "manifest.json already at $TAG"
+          fi
+
+      - name: Check if translation needed
+        id: check_translations
+        run: |
+          python3 - <<'EOF'
+          import json, os
+          from pathlib import Path
+
+          def flatten(d, prefix=""):
+              result = {}
+              for k, v in d.items():
+                  key = f"{prefix}.{k}" if prefix else k
+                  if isinstance(v, dict):
+                      result.update(flatten(v, key))
+                  else:
+                      result[key] = v
+              return result
+
+          locales_dir = Path("app/i18n/locales")
+          source_keys = set(flatten(json.loads((locales_dir / "en.json").read_text())).keys())
+          needs = False
+
+          for f in sorted(locales_dir.glob("*.json")):
+              if f.stem == "en":
+                  continue
+              missing = source_keys - set(flatten(json.loads(f.read_text())).keys())
+              if missing:
+                  print(f"  {f.stem}: {len(missing)} missing keys")
+                  needs = True
+
+          value = "true" if needs else "false"
+          print(f"needs_translation={value}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+              fh.write(f"needs_translation={value}\n")
+          EOF
+
+      - name: Set up Python
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache Ollama model
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-translategemma-latest
+
+      - name: Cache Python dependencies
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('AI translate/requirements.txt') }}
+
+      - name: Install Ollama
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        run: curl -fsSL https://ollama.com/install.sh | sh
+
+      - name: Start Ollama and pull model
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        run: |
+          ollama serve &
+          echo "Waiting for Ollama to start..."
+          until curl -s http://localhost:11434/api/tags > /dev/null; do sleep 2; done
+          echo "Ollama ready, pulling model..."
+          ollama pull translategemma:latest
+
+      - name: Install Python dependencies
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        run: pip install -r "AI translate/requirements.txt"
+
+      - name: Run AI Translation
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        run: |
+          cd "AI translate"
+          python translate.py
+
+      - name: Commit manifest and translations to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add manifest.json app/i18n/locales/
+          git diff --staged --quiet && echo "Nothing to commit" || (
+            git commit -m "chore: release ${{ github.ref_name }} — sync manifest and translations"
+            git push origin HEAD:main
+          )
+
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    needs: [quality, translate]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Build project
         run: npm run build
+
+      - name: Check bundle size
+        run: |
+          SIZE=$(wc -c < main.js)
+          SIZE_MB=$(echo "scale=2; $SIZE / 1048576" | bc)
+          LIMIT=2097152
+          echo "Bundle size: ${SIZE_MB} MB"
+          if [ "$SIZE" -gt "$LIMIT" ]; then
+            echo "❌ Bundle size ${SIZE_MB} MB exceeds 2 MB limit"
+            exit 1
+          fi
+          echo "✅ Bundle size OK (${SIZE_MB} MB)"
 
       - name: Create release files
         run: |

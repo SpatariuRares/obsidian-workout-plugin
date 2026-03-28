@@ -243,7 +243,6 @@ export class DynamicFieldsRenderer {
           }
         } catch (e) {
           // Fallback to defaults on error
-          console.error("Failed to fetch logs for dynamic increment", e);
         }
       }
 

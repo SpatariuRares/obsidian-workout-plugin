@@ -5,7 +5,6 @@ import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
-import { WorkoutDataChangedEvent } from "@app/types/WorkoutEvents";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -26,7 +25,6 @@ import { t } from "@app/i18n";
 export abstract class BaseLogModal extends ModalBase {
   protected exerciseName?: string;
   protected currentPageLink?: string;
-  protected onComplete?: (context?: WorkoutDataChangedEvent) => void;
   protected dynamicFieldsRenderer: DynamicFieldsRenderer;
   protected logFormRenderer: LogFormRenderer;
   protected recentExercisesService: RecentExercisesService;
@@ -40,12 +38,10 @@ export abstract class BaseLogModal extends ModalBase {
     protected plugin: WorkoutChartsPlugin,
     exerciseName?: string,
     currentPageLink?: string,
-    onComplete?: (context?: WorkoutDataChangedEvent) => void,
   ) {
     super(app);
     this.exerciseName = exerciseName;
     this.currentPageLink = currentPageLink;
-    this.onComplete = onComplete;
     this.dynamicFieldsRenderer = new DynamicFieldsRenderer(this.plugin);
     this.recentExercisesService = new RecentExercisesService(this.plugin);
     this.logFormRenderer = new LogFormRenderer(
@@ -291,19 +287,6 @@ export abstract class BaseLogModal extends ModalBase {
 
       this.close();
       new Notice(this.getSuccessMessage());
-
-      // Fire log-added event so timers can auto-start
-      this.plugin.app.workspace.trigger("workout-planner:log-added", {
-        exercise: data.exercise,
-        workout: data.workout,
-      });
-
-      if (this.onComplete) {
-        this.onComplete({
-          exercise: data.exercise,
-          workout: data.workout,
-        });
-      }
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(t("modal.notices.genericError", { error: errorMessage }));

@@ -6,8 +6,6 @@ import { DurationAnalysisResult } from "@app/features/duration/types";
 import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 
-/** Default set duration in seconds (used for debug display) */
-const DEFAULT_SET_DURATION = 45;
 
 export class DurationRenderer {
   /**

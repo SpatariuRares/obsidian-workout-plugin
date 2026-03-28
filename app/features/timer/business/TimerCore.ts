@@ -13,6 +13,7 @@ export class TimerCore {
   private state: TimerState;
   private timerId: string;
   private callbacks: TimerCallbacks;
+  private earlySoundPlayed = false;
 
   constructor(timerId: string, callbacks: TimerCallbacks = {}) {
     this.timerId = timerId;
@@ -60,6 +61,7 @@ export class TimerCore {
       }
     }
 
+    this.earlySoundPlayed = false;
     this.setState({
       isRunning: true,
       startTime: Date.now() - this.state.elapsedTime,
@@ -88,6 +90,8 @@ export class TimerCore {
 
   reset(): void {
     this.stop();
+    this.earlySoundPlayed = false;
+    TimerDisplay.cleanupOverlay(this.timerId);
     this.setState({
       elapsedTime: 0,
       currentRound: 1,
@@ -108,6 +112,11 @@ export class TimerCore {
         0,
         this.state.duration * 1000 - this.state.elapsedTime,
       );
+      if (!this.earlySoundPlayed && remaining <= 2000 && remaining > 0) {
+        this.earlySoundPlayed = true;
+        TimerAudio.playSound();
+        this.callbacks.onSoundPlay?.();
+      }
       if (remaining <= 0) {
         this.handleTimerComplete();
         return;
@@ -136,7 +145,10 @@ export class TimerCore {
 
   private handleTimerComplete(): void {
     this.stop();
-    TimerAudio.playSound();
+    TimerDisplay.cleanupOverlay(this.timerId);
+    if (!this.earlySoundPlayed) {
+      TimerAudio.playSound();
+    }
 
     if (this.state.startStopBtn) {
       TimerControls.updateStartStopButton(this.state.startStopBtn, false);
@@ -162,5 +174,6 @@ export class TimerCore {
   // Cleanup method
   destroy(): void {
     this.stop();
+    TimerDisplay.cleanupOverlay(this.timerId);
   }
 }

@@ -79,19 +79,6 @@ export class ErrorCollector {
 		// Generate simple ID (timestamp + random)
 		const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-		// In development mode, also log to console
-		if (instance.isDevelopmentMode()) {
-			// eslint-disable-next-line no-console
-			console.error(`[ErrorCollector] ${normalized.type}:`, {
-				component: normalized.component,
-				message:
-					normalized.error instanceof Error
-						? normalized.error.message
-						: normalized.error,
-				context: normalized.context,
-			});
-		}
-
 		return id;
 	}
 
@@ -109,16 +96,6 @@ export class ErrorCollector {
 				errorData.script ||
 				"unknown",
 		};
-	}
-
-	/**
-	 * Check if in development mode
-	 */
-	private isDevelopmentMode(): boolean {
-		// In Obsidian plugin context, we don't have process.env
-		// Check if console.debug is available (desktop app)
-		// eslint-disable-next-line no-console
-		return typeof console.debug === "function";
 	}
 
 	/**

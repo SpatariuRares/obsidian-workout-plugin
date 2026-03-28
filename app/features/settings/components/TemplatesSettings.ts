@@ -35,7 +35,7 @@ export class TemplatesSettings {
                 button.setButtonText(t("settings.buttons.generateTemplates"));
                 button.setDisabled(false);
               }, 2000);
-            } catch (error) {
+            } catch {
               button.setButtonText(t("settings.buttons.failed"));
               setTimeout(() => {
                 button.setButtonText(t("settings.buttons.generateTemplates"));
@@ -62,8 +62,7 @@ export class TemplatesSettings {
                 );
                 button.setDisabled(false);
               }, 2000);
-            } catch (error) {
-              console.error("Failed to regenerate templates:", error);
+            } catch {
               button.setButtonText(t("settings.buttons.failed"));
               setTimeout(() => {
                 button.setButtonText(

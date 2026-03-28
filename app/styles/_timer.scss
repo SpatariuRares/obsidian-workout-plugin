@@ -61,6 +61,7 @@
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--workout-space-lg);
   font-size: var(--workout-font-xl);
   flex: 1;

@@ -100,6 +100,13 @@ export class TimerDisplay {
       cls: "workout-timer-time-display",
       text: displayTime,
     });
+
+    if (state.timerType === TIMER_TYPE.INTERVAL) {
+      state.timerDisplay.createEl("span", {
+        cls: "workout-timer-round-counter",
+        text: `${state.currentRound} / ${state.totalRounds}`,
+      });
+    }
   }
 
   static createDisplay(container: HTMLElement): HTMLElement {

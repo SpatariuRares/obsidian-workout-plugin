@@ -69,6 +69,8 @@
   .workout-timer-time {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    gap: var(--workout-space-2xs, 2px);
 
     .workout-timer-time-display {
       font-size: var(--workout-font-xl);
@@ -77,6 +79,14 @@
       font-family: monospace;
       min-width: var(--workout-size-3xl);
       text-align: center;
+    }
+
+    .workout-timer-round-counter {
+      font-size: var(--workout-font-sm);
+      color: var(--text-muted);
+      font-family: monospace;
+      text-align: center;
+      letter-spacing: 0.04em;
     }
 
     .workout-timer-complete {

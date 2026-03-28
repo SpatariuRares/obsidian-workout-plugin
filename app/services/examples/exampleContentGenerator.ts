@@ -52,15 +52,8 @@ ${t("examples.gettingStarted.quickActionsIntro")}
 `;
 }
 
-export function generateExerciseContent(
-  name: string,
-  type: string,
-  tags: string[],
-): string {
-  const tagsYaml =
-    tags.length > 0
-      ? `tags:\n${tags.map((tag) => `  - ${tag}`).join("\n")}`
-      : "";
+export function generateExerciseContent(name: string, type: string, tags: string[]): string {
+  const tagsYaml = tags.length > 0 ? `tags:\n${tags.map((tag) => `  - ${tag}`).join("\n")}` : "";
 
   const chartSections = getChartSectionsForExerciseType(name, type);
 
@@ -99,7 +92,7 @@ ${generateWorkoutChartBlock(workoutName, { dateRange: 89 })}
 
 **${t("examples.workout.note")}**
 
-${generateCountdownTimerBlock(180, "Hip Thrust")}
+${generateCountdownTimerBlock("idHipThrust", 180, "Hip Thrust")}
 
 ${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workoutName)}
 
@@ -107,7 +100,7 @@ ${generateExerciseLogBlock(t("examples.exercises.squatMultiPower.name"), workout
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "8-12" })} ${t("examples.workout.recoverySuffix", { seconds: "180" })}
 
-${generateCountdownTimerBlock(180, "RDL")}
+${generateCountdownTimerBlock("idRDL", 180, "RDL")}
 
 ${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName)}
 
@@ -115,7 +108,7 @@ ${generateExerciseLogBlock(t("examples.exercises.rdl.name"), workoutName)}
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "120" })}
 
-${generateCountdownTimerBlock(120, "Hack squat")}
+${generateCountdownTimerBlock("idHackSquat", 120, "Hack squat")}
 
 ${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName)}
 
@@ -123,7 +116,7 @@ ${generateExerciseLogBlock(t("examples.exercises.legPress45.name"), workoutName)
 
 ### ${t("examples.workout.setsReps", { sets: "3", reps: "10-15" })} ${t("examples.workout.recoverySuffix", { seconds: "90" })}
 
-${generateCountdownTimerBlock(90, "Leg Curl Sdraiato")}
+${generateCountdownTimerBlock("idLegCurl", 90, "Leg Curl Sdraiato")}
 
 ${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutName)}
 
@@ -131,7 +124,7 @@ ${generateExerciseLogBlock(t("examples.exercises.legCurlSeated.name"), workoutNa
 
 ### ${t("examples.workout.setsReps", { sets: "4", reps: "15-20" })} ${t("examples.workout.recoverySuffix", { seconds: "60" })}
 
-${generateCountdownTimerBlock(60, "Calf Machine")}
+${generateCountdownTimerBlock("idCalfMachine", 60, "Calf Machine")}
 
 ${generateExerciseLogBlock(t("examples.exercises.calfMachine.name"), workoutName)}
 `;
@@ -204,11 +197,11 @@ ${generateCombinedLogBlock(`${squat} multi power`, lowerBody, 10)}
 
 ### ${t("examples.featureShowcase.countdownTimerTitle")}
 
-${generateCountdownTimerBlock(90, "Rest Timer")}
+${generateCountdownTimerBlock("idCountdown", 90, "Rest Timer")}
 
 ### ${t("examples.featureShowcase.intervalTimerTitle")}
 
-${generateIntervalTimerBlock(30, 5, "HIIT Intervals")}
+${generateIntervalTimerBlock("idIntervals", 30, 5, "HIIT Intervals")}
 
 ---
 
@@ -263,13 +256,13 @@ ${generateDurationBlock()}
 
 ## ${t("examples.hiit.warmupTitle")}
 
-${generateCountdownTimerBlock(300, "Warm-up")}
+${generateCountdownTimerBlock("idWarmup", 300, "Warm-up")}
 
 ---
 
 ## ${t("examples.hiit.sprintIntervalsTitle")}
 
-${generateIntervalTimerBlock(30, 8, "Sprint Intervals")}
+${generateIntervalTimerBlock("idIntervals", 30, 8, "Sprint Intervals")}
 
 ---
 

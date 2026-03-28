@@ -88,6 +88,7 @@
 }
 .workout-log-no-data .workout-buttons-container {
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* Exercise styles */
@@ -1587,6 +1588,7 @@
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--workout-space-lg);
   font-size: var(--workout-font-xl);
   flex: 1;
@@ -1595,6 +1597,8 @@
 .workout-timer .workout-timer-time {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  gap: var(--workout-space-2xs, 2px);
 }
 .workout-timer .workout-timer-time .workout-timer-time-display {
   font-size: var(--workout-font-xl);
@@ -1603,6 +1607,13 @@
   font-family: monospace;
   min-width: var(--workout-size-3xl);
   text-align: center;
+}
+.workout-timer .workout-timer-time .workout-timer-round-counter {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  font-family: monospace;
+  text-align: center;
+  letter-spacing: 0.04em;
 }
 .workout-timer .workout-timer-time .workout-timer-complete {
   font-size: var(--workout-font-xl);

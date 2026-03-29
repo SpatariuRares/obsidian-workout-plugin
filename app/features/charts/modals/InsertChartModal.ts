@@ -355,7 +355,7 @@ export class InsertChartModal extends BaseInsertModal {
     const minusBtn = Button.create(inputContainer, {
       text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: `Decrease ${label} by ${increment}`,
+      ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
       variant: "secondary",
       size: "small",
     });
@@ -373,7 +373,7 @@ export class InsertChartModal extends BaseInsertModal {
     const plusBtn = Button.create(inputContainer, {
       text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: `Increase ${label} by ${increment}`,
+      ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
       variant: "secondary",
       size: "small",
     });
@@ -458,10 +458,10 @@ export class InsertChartModal extends BaseInsertModal {
           }),
         );
       standardOptions.forEach((opt) => {
-        const option = document.createElement("option");
-        option.value = opt.value;
-        option.text = opt.text;
-        this.dataTypeSelect?.appendChild(option);
+        this.dataTypeSelect?.createEl("option", {
+          text: opt.text,
+          attr: { value: opt.value },
+        });
       });
       this.buildDataTypeChips(standardOptions);
       return;
@@ -492,22 +492,18 @@ export class InsertChartModal extends BaseInsertModal {
     const newOptions: Array<{ text: string; value: string }> = [];
 
     availableTypes.forEach((type) => {
-      const option = document.createElement("option");
-      option.value = type;
-
       // Determine display text using ParameterUtils
-      let displayText: string;
       const customParam = definition?.customParameters?.find(
         (p) => p.key === type,
       );
-      if (customParam) {
-        displayText = ParameterUtils.formatParamWithUnit(customParam);
-      } else {
-        displayText = ParameterUtils.formatKeyWithUnit(type);
-      }
+      const displayText = customParam
+        ? ParameterUtils.formatParamWithUnit(customParam)
+        : ParameterUtils.formatKeyWithUnit(type);
 
-      option.text = displayText;
-      this.dataTypeSelect?.appendChild(option);
+      this.dataTypeSelect?.createEl("option", {
+        text: displayText,
+        attr: { value: type },
+      });
       newOptions.push({ text: displayText, value: type });
     });
 

@@ -113,7 +113,7 @@ export class GeneralSettings {
               new Notice(t("settings.messages.csvFilesCreated"));
             } catch (error) {
               const errorMessage = ErrorUtils.getErrorMessage(error);
-              new Notice(`Error creating CSV files: ${errorMessage}`);
+              new Notice(t("messages.errors.csvFilesError", { error: errorMessage }));
             }
           }),
       );
@@ -208,7 +208,7 @@ export class GeneralSettings {
       }
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(`Error creating muscle tags CSV: ${errorMessage}`);
+      new Notice(t("messages.errors.muscleTagsCsvError", { error: errorMessage }));
     }
   }
 
@@ -227,7 +227,7 @@ export class GeneralSettings {
       new Notice(t("settings.messages.csvFilesCreated"));
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(`Error creating muscle tags CSV: ${errorMessage}`);
+      new Notice(t("messages.errors.muscleTagsCsvError", { error: errorMessage }));
     }
   }
 }

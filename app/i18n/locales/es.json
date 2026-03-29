@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tendencia de variación decreciente",
       "varianceTrendImproving": "Tendencia de variación mejorando",
       "varianceTrendStable": "Tendencia de variación estable",
-      "varianceTrendTitle": "Título de la tendencia de la variación"
+      "varianceTrendTitle": "Título de la tendencia de la variación",
+      "avgVarianceStat": "Varianza media: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Todos válidos",
@@ -443,7 +444,16 @@
     "codeInserted": "Código insertado.",
     "csvNotFound": "Archivo CSV no encontrado.",
     "errors": {
-      "tagReferenceFailed": "Error al generar la referencia de la etiqueta:"
+      "tagReferenceFailed": "Error al generar la referencia de la etiqueta: {error}",
+      "csvLoadError": "Error al cargar datos CSV: {error}",
+      "csvCreateError": "Error al crear archivo CSV: {error}",
+      "blockIdsError": "Error al agregar IDs de bloque: {error}",
+      "csvFilesError": "Error al crear archivos CSV: {error}",
+      "muscleTagsCsvError": "Error al crear CSV de etiquetas musculares: {error}",
+      "muscleTagsLoadError": "Error al cargar etiquetas musculares: {error}",
+      "templateGenError": "Error al generar plantillas: {error}",
+      "workoutLogCreateError": "No se pudo crear el archivo CSV en la ruta: {path}. Comprueba la ruta en los ajustes.",
+      "tableRenderError": "Error al renderizar la tabla"
     },
     "fileEmpty": "Archivo vacío.",
     "imbalanceAlerts": "Alertas de desequilibrio.",
@@ -499,7 +509,9 @@
       "update": "Actualización de registro",
       "updateTable": "Actualizar tabla",
       "updateTargetWeight": "Actualizar objetivo",
-      "updateTimer": "Actualizar temporizador"
+      "updateTimer": "Actualizar temporizador",
+      "decreaseBy": "Disminuir {label} en {increment}",
+      "increaseBy": "Aumentar {label} en {increment}"
     },
     "canvasLayout": "Diseño",
     "canvasOptions": "Opciones",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Éxito al renombrar en Auditoría",
       "auditScanError": "Error al escanear archivos: {error}",
       "auditScanning": "Escaneo de auditoría",
-      "canvasExportError": "Error de exportación de lienzo",
-      "canvasExported": "Lienzo exportado",
+      "canvasExportError": "Error de exportación de lienzo: {error}",
+      "canvasExported": "Lienzo exportado ({path})",
       "chartInserted": "✅ Insertado correctamente el gráfico!",
       "confirmUpdateTarget": "Confirmar actualización del destino",
       "dashboardInserted": "✅ Insertado correctamente el panel de control!",
@@ -595,7 +607,7 @@
       "logCreated": "Registro de entrenamiento creado correctamente!",
       "logUpdated": "Registro de entrenamiento actualizado correctamente!",
       "migrationComplete": "Proceso de migración completado. Archivos de ejercicio actualizados: {count}.",
-      "migrationError": "Error de migración",
+      "migrationError": "Error de migración: {error}",
       "migrationNoUpdates": "Sin actualizaciones",
       "muscleTagCount": "{count} etiquetas encontradas",
       "muscleTagDeleteConfirm": "¿Está seguro de que desea eliminar la etiqueta \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "No se pudo actualizar el temporizador. Asegúrese de que el archivo esté abierto en el editor.",
       "timerUpdated": "✅ Temporizador actualizado correctamente.",
       "validationCombinedMode": "⚠️ Para el tipo 'ejercicio + entrenamiento' es necesario rellenar ambos campos!",
-      "validationFillAll": "Por favor, llena todos los campos con valores válidos"
+      "validationFillAll": "Por favor, llena todos los campos con valores válidos",
+      "validMissingField": "Campo obligatorio faltante: {field}",
+      "validMustBeNumber": "{field} debe ser un número válido",
+      "validMinValue": "{field} debe ser al menos {min}",
+      "validMaxValue": "{field} debe ser como máximo {max}",
+      "validFieldRequired": "{field} es obligatorio",
+      "migrationFolderNotFound": "Carpeta de ejercicios no encontrada: {path}"
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Étiqueta:",
@@ -720,7 +738,11 @@
     },
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
-    "workoutNameOptional": "Nombre del Entrenamiento (opcional):"
+    "workoutNameOptional": "Nombre del Entrenamiento (opcional):",
+    "importMergeAriaLabel": "Combinar: agregar solo etiquetas nuevas, conservar existentes",
+    "importReplaceAriaLabel": "Reemplazar: sobrescribir todas las etiquetas existentes",
+    "editItem": "Editar {item}",
+    "deleteItem": "Eliminar {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Peso ({weightUnit})"
     },
     "deleteConfirm": "Eliminar Confirmar.",
-    "deleteError": "Eliminar error.",
+    "deleteError": "Eliminar error: {error}",
     "deleteSuccess": "Eliminación exitosa.",
     "deleteTitle": "Eliminar título.",
     "editTable": "Editar tabla",

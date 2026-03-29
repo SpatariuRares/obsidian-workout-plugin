@@ -248,7 +248,7 @@ export class InsertTableModal extends BaseInsertModal {
     const minusBtn = Button.create(inputContainer, {
       text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
-      ariaLabel: `Decrease ${label} by ${increment}`,
+      ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
       variant: "secondary",
       size: "small",
     });
@@ -266,7 +266,7 @@ export class InsertTableModal extends BaseInsertModal {
     const plusBtn = Button.create(inputContainer, {
       text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
-      ariaLabel: `Increase ${label} by ${increment}`,
+      ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
       variant: "secondary",
       size: "small",
     });

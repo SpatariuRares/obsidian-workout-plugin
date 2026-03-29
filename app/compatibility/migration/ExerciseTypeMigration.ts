@@ -24,7 +24,7 @@ export class ExerciseTypeMigration {
       );
       if (!folder || !(folder instanceof TFolder)) {
         new Notice(
-          `Exercise folder not found: ${exerciseFolderPath}`,
+          t("modal.notices.migrationFolderNotFound", { path: exerciseFolderPath }),
         );
         return;
       }
@@ -55,7 +55,7 @@ export class ExerciseTypeMigration {
       }
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(t("modal.notices.migrationError") + errorMessage);
+      new Notice(t("modal.notices.migrationError", { error: errorMessage }));
     }
   }
 

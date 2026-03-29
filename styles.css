@@ -943,6 +943,7 @@
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .workout-icon-dropdown-btn {

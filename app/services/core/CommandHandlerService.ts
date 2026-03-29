@@ -37,7 +37,7 @@ export class CommandHandlerService {
           new Notice(t("messages.success.csvCreated"));
         } catch (error) {
           const errorMessage = ErrorUtils.getErrorMessage(error);
-          new Notice(`Error creating CSV file: ${errorMessage}`);
+          new Notice(t("messages.errors.csvCreateError", { error: errorMessage }));
         }
       },
     });
@@ -134,13 +134,13 @@ export class CommandHandlerService {
                   options,
                 );
                 new Notice(
-                  `${t("modal.notices.canvasExported")} (${canvasPath})`,
+                  t("modal.notices.canvasExported", { path: canvasPath }),
                 );
               } catch (error) {
                 const errorMessage =
                   ErrorUtils.getErrorMessage(error);
                 new Notice(
-                  `${t("modal.notices.canvasExportError")}${errorMessage}`,
+                  t("modal.notices.canvasExportError", { error: errorMessage }),
                 );
               }
             },
@@ -194,7 +194,7 @@ export class CommandHandlerService {
           }
         } catch (error) {
           const errorMessage = ErrorUtils.getErrorMessage(error);
-          new Notice(`Error adding block IDs: ${errorMessage}`);
+          new Notice(t("messages.errors.blockIdsError", { error: errorMessage }));
         }
       },
     });
@@ -220,7 +220,7 @@ export class CommandHandlerService {
         } catch (error) {
           const errorMessage = ErrorUtils.getErrorMessage(error);
           new Notice(
-            `${t("messages.errors.tagReferenceFailed")}${errorMessage}`,
+            t("messages.errors.tagReferenceFailed", { error: errorMessage }),
           );
         }
       },

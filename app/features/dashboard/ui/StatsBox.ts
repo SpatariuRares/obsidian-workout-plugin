@@ -50,10 +50,10 @@ export class StatsBox {
         ? CONSTANTS.WORKOUT.UI.LABELS.TOTAL_WORKOUT
         : CONSTANTS.WORKOUT.LABELS.TABLE.EXERCISE;
 
-    const strongEl = statsDiv.createEl("strong", {
+    statsDiv.createEl("strong", {
       cls: "workout-charts-stats-title",
+      text: t("stats.title", { dataTypeLabel, contextLabel }),
     });
-    strongEl.textContent = `📈 ${dataTypeLabel} Statistics (${contextLabel}):`;
 
     const ul = ListItem.createList(statsDiv, {
       className: "workout-charts-stats-list",
@@ -65,13 +65,13 @@ export class StatsBox {
     });
 
     ListItem.createStat(ul, {
-      label: "Max: ",
+      label: t("stats.max"),
       value: stats.maxFormatted,
       suffix: ` (${stats.maxVolumeDate || t("common.notAvailable")})`,
     });
 
     ListItem.createStat(ul, {
-      label: "Min: ",
+      label: t("stats.min"),
       value: stats.minFormatted,
       suffix: ` (${stats.minVolumeDate || t("common.notAvailable")})`,
     });
@@ -86,8 +86,8 @@ export class StatsBox {
       li5.appendText(t("stats.recentTrend"));
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
+        text: recentTrendData.text,
       });
-      span.textContent = recentTrendData.text;
       if (recentTrendData.color) {
         // Apply color class based on trend color
         if (recentTrendData.color.includes("green")) {
@@ -198,7 +198,7 @@ export class StatsBox {
         return {
           text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
-          suffix: " (ultime 3)",
+          suffix: t("stats.recentLast3"),
         };
       } else if (changeRecent < -0.05 * recent[0]) {
         // Value decreased
@@ -208,13 +208,13 @@ export class StatsBox {
         return {
           text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
-          suffix: " (ultime 3)",
+          suffix: t("stats.recentLast3"),
         };
       } else {
         return {
           text: t("trends.stable"),
           color: "var(--color-orange)",
-          suffix: " (ultime 3)",
+          suffix: t("stats.recentLast3"),
         };
       }
     } else if (volumeData.length === 2) {
@@ -228,7 +228,7 @@ export class StatsBox {
         return {
           text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
-          suffix: " (vs prec.)",
+          suffix: t("stats.recentVsPrev"),
         };
       } else if (changeRecent < 0) {
         // Value decreased
@@ -238,13 +238,13 @@ export class StatsBox {
         return {
           text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
-          suffix: " (vs prec.)",
+          suffix: t("stats.recentVsPrev"),
         };
       } else {
         return {
           text: t("trends.invariant"),
           color: "var(--color-orange)",
-          suffix: " (vs prec.)",
+          suffix: t("stats.recentVsPrev"),
         };
       }
     }

@@ -58,7 +58,7 @@ export class TimerControls {
 
     Button.onClick(resetBtn, () => {
       callbacks.onReset();
-      startStopBtn.textContent = "▶";
+      startStopBtn.textContent = t("icons.timer.play");
       startStopBtn.setAttribute(
         "aria-label",
         t("timer.controls.startTimer"),

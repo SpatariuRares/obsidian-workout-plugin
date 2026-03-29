@@ -48,28 +48,15 @@ export class TableRenderer {
     signal?: AbortSignal,
   ): boolean {
     try {
-      const fragment = document.createDocumentFragment();
-
-      const table = fragment.appendChild(
-        document.createElement("table"),
-      );
-      table.className = "workout-log-table";
+      const table = tableContainer.createEl("table", {
+        cls: "workout-log-table",
+      });
 
       TableHeader.render(table, headers);
 
-      const tbody = table.appendChild(
-        document.createElement("tbody"),
-      );
+      const tbody = table.createEl("tbody");
 
-      this.applyRowGroupingOptimized(
-        tbody,
-        rows,
-        headers,
-        plugin,
-        signal,
-      );
-
-      tableContainer.appendChild(fragment);
+      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, signal);
 
       return true;
     } catch {
@@ -105,8 +92,6 @@ export class TableRenderer {
     let groupIndex = 0;
     const columnCount = rows[0].displayRow.length;
 
-    const fragment = document.createDocumentFragment();
-
     // Group rows by date for calculating aggregates
     const groupedRows: { [key: string]: typeof rows } = {};
     const dateKeys: string[] = [];
@@ -123,30 +108,21 @@ export class TableRenderer {
       const groupRows = groupedRows[dateKey];
       const spacerData = SpacerRowCalculator.calculate(groupRows);
 
-      const spacerRow = fragment.appendChild(
-        document.createElement("tr"),
-      );
-      spacerRow.className = "workout-table-spacer";
+      const spacerRow = tbody.createEl("tr", {
+        cls: "workout-table-spacer",
+      });
 
       // First cell: formatted date
-      const dateCell = spacerRow.appendChild(
-        document.createElement("td"),
-      );
-      dateCell.className = "workout-table-spacer-date-cell";
-      const formattedDate = DateUtils.toShortDate(
-        groupRows[0].originalDate,
-      );
-      dateCell.textContent = formattedDate;
+      spacerRow.createEl("td", {
+        cls: "workout-table-spacer-date-cell",
+        text: DateUtils.toShortDate(groupRows[0].originalDate),
+      });
 
       // Create summary cell for the remaining columns
-      const summaryCell = spacerRow.appendChild(
-        document.createElement("td"),
-      );
-      summaryCell.className = "workout-table-spacer-summary-cell";
-      summaryCell.setAttribute(
-        "colspan",
-        (columnCount - 1).toString(),
-      );
+      const summaryCell = spacerRow.createEl("td", {
+        cls: "workout-table-spacer-summary-cell",
+        attr: { colspan: (columnCount - 1).toString() },
+      });
 
       spacerData.stats.forEach((stat) => {
         SpacerStat.create(summaryCell, stat);
@@ -174,39 +150,26 @@ export class TableRenderer {
         groupIndex++;
       }
 
-      const tr = fragment.appendChild(document.createElement("tr"));
-      tr.className = `workout-same-day-log ${
-        groupIndex % 2 === 0 ? "group-even" : "group-odd"
-      }`;
+      const tr = tbody.createEl("tr", {
+        cls: `workout-same-day-log ${groupIndex % 2 === 0 ? "group-even" : "group-odd"}`,
+      });
 
       row.displayRow.forEach((cell, cellIndex) => {
-        const td = tr.appendChild(document.createElement("td"));
-
         if (cellIndex === 0) {
-          td.className = "workout-table-date-cell";
-          td.textContent = cell;
+          tr.createEl("td", { cls: "workout-table-date-cell", text: cell });
         } else if (cellIndex === actionsColumnIndex) {
-          td.className = "workout-table-actions-cell";
-          TableActions.renderActionButtons(
-            td,
-            row.originalLog,
-            plugin,
-            signal,
-          );
+          const td = tr.createEl("td", { cls: "workout-table-actions-cell" });
+          TableActions.renderActionButtons(td, row.originalLog, plugin, signal);
         } else if (cellIndex === volumeColumnIndex) {
-          td.className = "workout-table-volume-cell";
-          td.textContent = cell;
+          tr.createEl("td", { cls: "workout-table-volume-cell", text: cell });
         } else if (cellIndex === protocolColumnIndex) {
-          // Render protocol badge
-          td.className = "workout-table-protocol-cell";
+          const td = tr.createEl("td", { cls: "workout-table-protocol-cell" });
           this.renderProtocolBadge(td, cell, plugin);
         } else {
-          td.textContent = cell;
+          tr.createEl("td", { text: cell });
         }
       });
     });
-
-    tbody.appendChild(fragment);
   }
 
   /**

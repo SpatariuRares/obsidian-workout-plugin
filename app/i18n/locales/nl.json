@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Trend van variatie: afnemend",
       "varianceTrendImproving": "Trend van variatie: verbeterend",
       "varianceTrendStable": "Trend met stabiele variantie",
-      "varianceTrendTitle": "Titel: Trend van de variatie"
+      "varianceTrendTitle": "Titel: Trend van de variatie",
+      "avgVarianceStat": "Gem. variantie: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle velden zijn correct ingevuld",
@@ -443,7 +444,16 @@
     "codeInserted": "Code is ingevoerd",
     "csvNotFound": "CSV-bestand niet gevonden",
     "errors": {
-      "tagReferenceFailed": "Fout bij het genereren van de referentie:"
+      "tagReferenceFailed": "Fout bij het genereren van de referentie: {error}",
+      "csvLoadError": "Fout bij laden CSV-gegevens: {error}",
+      "csvCreateError": "Fout bij aanmaken CSV-bestand: {error}",
+      "blockIdsError": "Fout bij toevoegen blok-IDs: {error}",
+      "csvFilesError": "Fout bij aanmaken CSV-bestanden: {error}",
+      "muscleTagsCsvError": "Fout bij aanmaken spiergroep-CSV: {error}",
+      "muscleTagsLoadError": "Fout bij laden spiergroep-tags: {error}",
+      "templateGenError": "Sjablonen genereren mislukt: {error}",
+      "workoutLogCreateError": "Kan CSV-bestand niet maken op pad: {path}. Controleer het pad in de instellingen.",
+      "tableRenderError": "Fout bij het renderen van de tabel"
     },
     "fileEmpty": "Bestand is leeg",
     "imbalanceAlerts": "Waarschuwingen voor onbalans",
@@ -499,7 +509,9 @@
       "update": "Logboek voor updates",
       "updateTable": "Tabel bijwerken",
       "updateTargetWeight": "Doelgewicht bijwerken",
-      "updateTimer": "Timer bijwerken"
+      "updateTimer": "Timer bijwerken",
+      "decreaseBy": "{label} met {increment} verlagen",
+      "increaseBy": "{label} met {increment} verhogen"
     },
     "canvasLayout": "Lay-out",
     "canvasOptions": "Opties",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Fout bij het scannen: {error}",
       "auditScanning": "Auditscan",
-      "canvasExportError": "Fout bij exporteren van het canvas",
-      "canvasExported": "Canvas is geëxporteerd",
+      "canvasExportError": "Fout bij exporteren van het canvas: {error}",
+      "canvasExported": "Canvas is geëxporteerd ({path})",
       "chartInserted": "✅ Grafiek succesvol toegevoegd!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dashboard succesvol geïnstalleerd!",
@@ -595,7 +607,7 @@
       "logCreated": "Trainingstraject succesvol opgeslagen!",
       "logUpdated": "Trainingstraject succesvol bijgewerkt!",
       "migrationComplete": "Migratie voltooid. Bijgewerkte oefenvormbestanden {count}.",
-      "migrationError": "Fout bij migratie",
+      "migrationError": "Fout bij migratie: {error}",
       "migrationNoUpdates": "Geen updates",
       "muscleTagCount": "{count} tag(s) gevonden",
       "muscleTagDeleteConfirm": "Bent u er zeker van dat u het label \"{tag}\" wilt verwijderen?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "timerUpdated": "✅ Timer is succesvol bijgewerkt!",
       "validationCombinedMode": "⚠️ Voor het type 'oefening + training' moet u beide velden invullen!",
-      "validationFillAll": "Vul al de velden in met geldige waarden."
+      "validationFillAll": "Vul al de velden in met geldige waarden.",
+      "validMissingField": "Verplicht veld ontbreekt: {field}",
+      "validMustBeNumber": "{field} moet een geldig getal zijn",
+      "validMinValue": "{field} moet minimaal {min} zijn",
+      "validMaxValue": "{field} mag maximaal {max} zijn",
+      "validFieldRequired": "{field} is verplicht",
+      "migrationFolderNotFound": "Oefenmap niet gevonden: {path}"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -720,7 +738,11 @@
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Bestand voor de training:",
-    "workoutNameOptional": "Naam van de workout (optioneel):"
+    "workoutNameOptional": "Naam van de workout (optioneel):",
+    "importMergeAriaLabel": "Samenvoegen: alleen nieuwe tags toevoegen, bestaande bewaren",
+    "importReplaceAriaLabel": "Vervangen: alle bestaande tags overschrijven",
+    "editItem": "{item} bewerken",
+    "deleteItem": "{item} verwijderen"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Gewicht ({weightUnit})"
     },
     "deleteConfirm": "Bevestig verwijderen",
-    "deleteError": "Fout bij verwijderen",
+    "deleteError": "Fout bij verwijderen: {error}",
     "deleteSuccess": "Succesvol verwijderd",
     "deleteTitle": "Titel verwijderen",
     "editTable": "Tabel bewerken",

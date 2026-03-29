@@ -25,7 +25,7 @@ export class LogFormValidator {
 
       const input = dynamicFieldInputs.get(param.key);
       if (!input) {
-        new Notice(`Missing required field: ${param.label}`);
+        new Notice(t("modal.notices.validMissingField", { field: param.label }));
         return false;
       }
 
@@ -34,21 +34,21 @@ export class LogFormValidator {
       if (param.type === "number") {
         const numValue = parseFloat(value);
         if (isNaN(numValue)) {
-          new Notice(`${param.label} must be a valid number`);
+          new Notice(t("modal.notices.validMustBeNumber", { field: param.label }));
           return false;
         }
 
         // Check min/max
         if (param.min !== undefined && numValue < param.min) {
-          new Notice(`${param.label} must be at least ${param.min}`);
+          new Notice(t("modal.notices.validMinValue", { field: param.label, min: param.min }));
           return false;
         }
         if (param.max !== undefined && numValue > param.max) {
-          new Notice(`${param.label} must be at most ${param.max}`);
+          new Notice(t("modal.notices.validMaxValue", { field: param.label, max: param.max }));
           return false;
         }
       } else if (param.type === "string" && !value) {
-        new Notice(`${param.label} is required`);
+        new Notice(t("modal.notices.validFieldRequired", { field: param.label }));
         return false;
       }
     }

@@ -57,7 +57,7 @@ export class MuscleTagTableRenderer {
         text: t("modal.editTag"),
         className: "workout-tag-action-btn",
         variant: "secondary",
-        ariaLabel: `Edit ${tag}`,
+        ariaLabel: t("modal.editItem", { item: tag }),
       });
       Button.onClick(editButton, () => onEdit(tag, muscleGroup));
 
@@ -65,7 +65,7 @@ export class MuscleTagTableRenderer {
         text: t("modal.delete"),
         className: "workout-tag-action-btn",
         variant: "warning",
-        ariaLabel: `Delete ${tag}`,
+        ariaLabel: t("modal.deleteItem", { item: tag }),
       });
       Button.onClick(deleteButton, () => onDelete(tag));
     }

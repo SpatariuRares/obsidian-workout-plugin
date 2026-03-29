@@ -64,7 +64,7 @@ export class WorkoutLogRepository {
 
     if (!abstractFile || !(abstractFile instanceof TFile)) {
       if (retryCount >= this.MAX_RETRIES) {
-        const errorMsg = `Failed to create CSV file at path: ${this.settings.csvLogFilePath}. Please check the path in settings.`;
+        const errorMsg = t("messages.errors.workoutLogCreateError", { path: this.settings.csvLogFilePath });
         new Notice(errorMsg);
         throw new Error(errorMsg);
       }

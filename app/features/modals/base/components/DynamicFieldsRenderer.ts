@@ -70,7 +70,7 @@ export class DynamicFieldsRenderer {
       const minusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustMinus") + increment,
         className: "workout-adjust-btn workout-adjust-minus",
-        ariaLabel: `Decrease ${param.label} by ${increment}`,
+        ariaLabel: t("modal.buttons.decreaseBy", { label: param.label, increment }),
         variant: "secondary",
         size: "small",
       });
@@ -88,7 +88,7 @@ export class DynamicFieldsRenderer {
       const plusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustPlus") + increment,
         className: "workout-adjust-btn workout-adjust-plus",
-        ariaLabel: `Increase ${param.label} by ${increment}`,
+        ariaLabel: t("modal.buttons.increaseBy", { label: param.label, increment }),
         variant: "secondary",
         size: "small",
       });

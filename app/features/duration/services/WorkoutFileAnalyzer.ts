@@ -5,10 +5,19 @@
 import { TFile } from "obsidian";
 import WorkoutChartsPlugin from "main";
 import { DurationAnalysisResult } from "@app/features/duration/types";
-import { StringUtils } from "@app/utils";
+import { StringUtils, ErrorUtils } from "@app/utils";
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 60;
+
+/** Minimum valid workout duration in seconds (5 minutes) */
+const MIN_VALID_DURATION_SECONDS = 300;
+
+/** Maximum valid workout duration in seconds (5 hours) */
+const MAX_VALID_DURATION_SECONDS = 18000;
+
+/** Maximum reasonable set count (guards against parsing years like 2023 as sets) */
+const MAX_REASONABLE_SETS = 100;
 
 export class WorkoutFileAnalyzer {
   constructor(private plugin: WorkoutChartsPlugin) {}
@@ -82,10 +91,7 @@ export class WorkoutFileAnalyzer {
 
       result.success = true;
     } catch (error) {
-      result.error =
-        error instanceof Error
-          ? error.message
-          : "Unknown error occurred";
+      result.error = ErrorUtils.getErrorMessage(error);
     }
 
     return result;
@@ -162,7 +168,10 @@ export class WorkoutFileAnalyzer {
         const duration = (max - min) / 1000; // Convert ms to seconds
 
         // Basic validation: duration > 5 mins (300s) and < 5 hours (18000s)
-        if (duration > 300 && duration < 18000) {
+        if (
+          duration > MIN_VALID_DURATION_SECONDS &&
+          duration < MAX_VALID_DURATION_SECONDS
+        ) {
           result.historicalDuration = duration;
           result.lastSessionDate = date;
           break;
@@ -246,7 +255,7 @@ export class WorkoutFileAnalyzer {
     if (sets === 0) sets = 1;
 
     // Add checks to prevent unreasonable set counts (e.g. year 2023)
-    if (sets > 100) sets = 1;
+    if (sets > MAX_REASONABLE_SETS) sets = 1;
 
     result.setCount += sets;
 

@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "差异趋势：下降",
       "varianceTrendImproving": "差异趋势正在改善",
       "varianceTrendStable": "差异趋势稳定",
-      "varianceTrendTitle": "差异趋势"
+      "varianceTrendTitle": "差异趋势",
+      "avgVarianceStat": "平均差异：±{value}%"
     },
     "fileErrors": {
       "allValid": "全部有效",
@@ -443,7 +444,16 @@
     "codeInserted": "代码已插入",
     "csvNotFound": "未找到 CSV 文件",
     "errors": {
-      "tagReferenceFailed": "生成标签参考时出错："
+      "tagReferenceFailed": "生成标签参考时出错: {error}",
+      "csvLoadError": "加载CSV数据时出错：{error}",
+      "csvCreateError": "创建CSV文件时出错：{error}",
+      "blockIdsError": "添加块ID时出错：{error}",
+      "csvFilesError": "创建CSV文件时出错：{error}",
+      "muscleTagsCsvError": "创建肌肉标签CSV时出错：{error}",
+      "muscleTagsLoadError": "加载肌肉标签时出错：{error}",
+      "templateGenError": "生成模板失败：{error}",
+      "workoutLogCreateError": "无法在路径 {path} 创建 CSV 文件，请检查设置中的路径。",
+      "tableRenderError": "表格渲染错误"
     },
     "fileEmpty": "文件为空",
     "imbalanceAlerts": "不平衡警报",
@@ -499,7 +509,9 @@
       "update": "更新记录",
       "updateTable": "更新表格",
       "updateTargetWeight": "更新目标",
-      "updateTimer": "更新计时器"
+      "updateTimer": "更新计时器",
+      "decreaseBy": "将{label}减少{increment}",
+      "increaseBy": "将{label}增加{increment}"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "审核重命名成功",
       "auditScanError": "扫描文件时出错：{error}",
       "auditScanning": "正在审核扫描",
-      "canvasExportError": "画布导出错误",
-      "canvasExported": "画布已导出",
+      "canvasExportError": "画布导出错误: {error}",
+      "canvasExported": "画布已导出 ({path})",
       "chartInserted": "✅ 图表已成功插入！",
       "confirmUpdateTarget": "确认更新目标",
       "dashboardInserted": "✅ 仪表盘已成功插入！",
@@ -595,7 +607,7 @@
       "logCreated": "训练记录已成功创建！",
       "logUpdated": "训练记录已成功更新！",
       "migrationComplete": "迁移完成。已更新 {count} 个训练文件。",
-      "migrationError": "迁移错误",
+      "migrationError": "迁移错误: {error}",
       "migrationNoUpdates": "迁移无更新",
       "muscleTagCount": "找到 {count} 个标签",
       "muscleTagDeleteConfirm": "确定要删除标签 '{tag}' 吗？",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
       "timerUpdated": "✅ 计时器已成功更新！",
       "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
-      "validationFillAll": "请填写所有字段并使用有效值。"
+      "validationFillAll": "请填写所有字段并使用有效值。",
+      "validMissingField": "缺少必填字段：{field}",
+      "validMustBeNumber": "{field}必须是有效数字",
+      "validMinValue": "{field}至少为{min}",
+      "validMaxValue": "{field}最多为{max}",
+      "validFieldRequired": "{field}为必填项",
+      "migrationFolderNotFound": "未找到练习文件夹：{path}"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -720,7 +738,11 @@
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
-    "workoutNameOptional": "训练名称（可选）："
+    "workoutNameOptional": "训练名称（可选）：",
+    "importMergeAriaLabel": "合并：仅添加新标签，保留现有标签",
+    "importReplaceAriaLabel": "替换：覆盖所有现有标签",
+    "editItem": "编辑{item}",
+    "deleteItem": "删除{item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "重量 ({weightUnit})"
     },
     "deleteConfirm": "确认删除",
-    "deleteError": "删除失败",
+    "deleteError": "删除失败: {error}",
     "deleteSuccess": "删除成功",
     "deleteTitle": "删除标题",
     "editTable": "编辑表格",

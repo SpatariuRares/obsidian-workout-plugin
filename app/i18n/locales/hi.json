@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "विचलन का प्रवृत्ति घट रही है",
       "varianceTrendImproving": "विचलन का प्रवृत्ति में सुधार",
       "varianceTrendStable": "विचलन का रुझान स्थिर",
-      "varianceTrendTitle": "विचलन प्रवृत्ति शीर्षक"
+      "varianceTrendTitle": "विचलन प्रवृत्ति शीर्षक",
+      "avgVarianceStat": "औसत विचरण: ±{value}%"
     },
     "fileErrors": {
       "allValid": "सभी मान्य",
@@ -443,7 +444,16 @@
     "codeInserted": "कोड डाला गया",
     "csvNotFound": "CSV फाइल नहीं मिली",
     "errors": {
-      "tagReferenceFailed": "टैग संदर्भ उत्पन्न करने में त्रुटि:"
+      "tagReferenceFailed": "टैग संदर्भ उत्पन्न करने में त्रुटि: {error}",
+      "csvLoadError": "CSV डेटा लोड करने में त्रुटि: {error}",
+      "csvCreateError": "CSV फ़ाइल बनाने में त्रुटि: {error}",
+      "blockIdsError": "ब्लॉक ID जोड़ने में त्रुटि: {error}",
+      "csvFilesError": "CSV फ़ाइलें बनाने में त्रुटि: {error}",
+      "muscleTagsCsvError": "मांसपेशी टैग CSV बनाने में त्रुटि: {error}",
+      "muscleTagsLoadError": "मांसपेशी टैग लोड करने में त्रुटि: {error}",
+      "templateGenError": "टेम्पलेट जनरेट करने में विफलता: {error}",
+      "workoutLogCreateError": "पथ {path} पर CSV फ़ाइल बनाने में विफल। कृपया सेटिंग्स में पथ जाँचें।",
+      "tableRenderError": "तालिका रेंडरिंग त्रुटि"
     },
     "fileEmpty": "फ़ाइल खाली",
     "imbalanceAlerts": "असंतुलन की सूचनाएं",
@@ -499,7 +509,9 @@
       "update": "अपडेट लॉग।",
       "updateTable": "टेबल को अपडेट करें",
       "updateTargetWeight": "लक्ष्य को अपडेट करें।",
-      "updateTimer": "टाइमर को अपडेट करें"
+      "updateTimer": "टाइमर को अपडेट करें",
+      "decreaseBy": "{label} को {increment} से कम करें",
+      "increaseBy": "{label} को {increment} से बढ़ाएं"
     },
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "स्कैन में त्रुटि: {error}",
       "auditScanning": "ऑडिट स्कैनिंग",
-      "canvasExportError": "कैनवस निर्यात त्रुटि",
-      "canvasExported": "कैनवस निर्यात किया गया",
+      "canvasExportError": "कैनवस निर्यात त्रुटि: {error}",
+      "canvasExported": "कैनवस निर्यात किया गया ({path})",
       "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
@@ -595,7 +607,7 @@
       "logCreated": "वर्कआउट लॉग सफलतापूर्वक बनाया गया!",
       "logUpdated": "वर्कआउट लॉग सफलतापूर्वक अपडेट किया गया!",
       "migrationComplete": "स्थानांतरण पूर्ण। {count} व्यायाम फ़ाइलों को अपडेट किया गया।",
-      "migrationError": "प्रवासन त्रुटि",
+      "migrationError": "प्रवासन त्रुटि: {error}",
       "migrationNoUpdates": "प्रवासन के लिए कोई अपडेट नहीं",
       "muscleTagCount": "{count} टैग(स) मिले",
       "muscleTagDeleteConfirm": "क्या आप निश्चित रूप से टैग \"{tag}\" को हटाना चाहते हैं?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "timerUpdated": "✅ टाइमर सफलतापूर्वक अपडेट हो गया!",
       "validationCombinedMode": "⚠️ 'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड को भरना होगा!",
-      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।"
+      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
+      "validMissingField": "आवश्यक फ़ील्ड गायब है: {field}",
+      "validMustBeNumber": "{field} एक मान्य संख्या होनी चाहिए",
+      "validMinValue": "{field} कम से कम {min} होना चाहिए",
+      "validMaxValue": "{field} अधिकतम {max} होना चाहिए",
+      "validFieldRequired": "{field} आवश्यक है",
+      "migrationFolderNotFound": "व्यायाम फ़ोल्डर नहीं मिला: {path}"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -720,7 +738,11 @@
     },
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
-    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):"
+    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):",
+    "importMergeAriaLabel": "मर्ज करें: केवल नए टैग जोड़ें, मौजूदा रखें",
+    "importReplaceAriaLabel": "बदलें: सभी मौजूदा टैग ओवरराइट करें",
+    "editItem": "{item} संपादित करें",
+    "deleteItem": "{item} हटाएं"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "वज़न ({weightUnit})"
     },
     "deleteConfirm": "पुष्टि करें",
-    "deleteError": "डिलीट त्रुट",
+    "deleteError": "डिलीट त्रुट: {error}",
     "deleteSuccess": "सफलतापूर्वक हटा दिया गया",
     "deleteTitle": "हटाएं",
     "editTable": "टेबल संपादित करें",

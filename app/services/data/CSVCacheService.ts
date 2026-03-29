@@ -7,6 +7,7 @@ import {
 import { App, TFile, Notice } from "obsidian";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { t } from "@app/i18n";
 
 /**
  * Service responsible for CSV data caching and loading.
@@ -137,7 +138,7 @@ export class CSVCacheService {
       this.lastCacheTime = Date.now();
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(`Error loading CSV workout data: ${errorMessage}`);
+      new Notice(t("messages.errors.csvLoadError", { error: errorMessage }));
     }
 
     return logData;

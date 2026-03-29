@@ -1,7 +1,9 @@
+import { App } from "obsidian";
 import { Button, Text } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
+import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 
 /**
  * AchievementBadge - UI component for displaying achievement celebrations
@@ -10,6 +12,7 @@ import { t } from "@app/i18n";
  * and dismiss functionality.
  */
 export interface AchievementBadgeProps {
+  app: App;
   exercise: string;
   targetWeight: number;
   targetReps: number;
@@ -46,6 +49,7 @@ export class AchievementBadge {
     signal?: AbortSignal,
   ): AchievementBadgeResult | null {
     const {
+      app,
       targetWeight,
       targetReps,
       filteredData,
@@ -79,6 +83,7 @@ export class AchievementBadge {
     // Render weight suggestion
     const suggestedWeight = targetWeight + weightIncrement;
     const { updateButton } = this.renderWeightSuggestion(
+      app,
       badgeDiv,
       suggestedWeight,
       weightUnit,
@@ -114,6 +119,7 @@ export class AchievementBadge {
    * Renders weight suggestion section within the badge
    */
   private static renderWeightSuggestion(
+    app: App,
     badgeDiv: HTMLElement,
     suggestedWeight: number,
     weightUnit: string,
@@ -141,17 +147,17 @@ export class AchievementBadge {
 
     Button.onClick(
       updateButton,
-      async () => {
-        const confirmed = confirm(
+      () => {
+        new ConfirmModal(
+          app,
           t("modal.notices.confirmUpdateTarget", {
             targetWeight: suggestedWeight,
             weightUnit: weightUnit,
           }),
-        );
-
-        if (confirmed) {
-          await onUpdateTarget(suggestedWeight);
-        }
+          async () => {
+            await onUpdateTarget(suggestedWeight);
+          },
+        ).open();
       },
       signal,
     );

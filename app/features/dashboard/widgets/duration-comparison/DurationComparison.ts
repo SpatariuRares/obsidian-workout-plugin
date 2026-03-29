@@ -14,6 +14,18 @@ const RECENT_WORKOUT_COUNT = 5;
  */
 const MIN_ENTRIES_FOR_SESSION = 2;
 
+/** Default estimated duration per set in seconds */
+const DEFAULT_SET_DURATION_SECONDS = 45;
+
+/** Default rest duration between sets in seconds */
+const DEFAULT_REST_BETWEEN_SETS_SECONDS = 90;
+
+/** Threshold (% points) below which variance trend is considered improving */
+const VARIANCE_IMPROVEMENT_THRESHOLD = 5;
+
+/** Threshold (% points) above which variance trend is considered declining */
+const VARIANCE_DECLINE_THRESHOLD = 5;
+
 /**
  * Represents a workout session with duration data
  */
@@ -149,11 +161,9 @@ export class DurationComparison {
       // Calculate estimated duration
       // Estimate: setCount * 45 seconds per set + (setCount - 1) * 90 seconds rest between sets
       const setCount = entries.length;
-      const setDuration = 45; // Default set duration in seconds
-      const restDuration = 90; // Default rest between sets in seconds
       const estimatedDuration =
-        setCount * setDuration +
-        Math.max(0, setCount - 1) * restDuration;
+        setCount * DEFAULT_SET_DURATION_SECONDS +
+        Math.max(0, setCount - 1) * DEFAULT_REST_BETWEEN_SETS_SECONDS;
 
       // Calculate variance percentage
       const variancePercent =
@@ -228,9 +238,9 @@ export class DurationComparison {
     const varianceChange = recentAvg - olderAvg;
 
     let direction: "improving" | "declining" | "stable";
-    if (varianceChange < -5) {
+    if (varianceChange < -VARIANCE_IMPROVEMENT_THRESHOLD) {
       direction = "improving";
-    } else if (varianceChange > 5) {
+    } else if (varianceChange > VARIANCE_DECLINE_THRESHOLD) {
       direction = "declining";
     } else {
       direction = "stable";
@@ -397,7 +407,7 @@ export class DurationComparison {
 
     // Average variance stat
     trendEl.createEl("div", {
-      text: `Avg variance: ±${trend.averageVariance.toFixed(0)}%`,
+      text: t("dashboard.durationComparison.avgVarianceStat", { value: trend.averageVariance.toFixed(0) }),
       cls: "workout-duration-comparison-trend-stat",
     });
   }

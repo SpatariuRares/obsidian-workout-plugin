@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Trendy odchylky klesají",
       "varianceTrendImproving": "Trendy odchylky se zlepšují",
       "varianceTrendStable": "Trend odchylky – stabilní",
-      "varianceTrendTitle": "Nadpis trendu odchylek"
+      "varianceTrendTitle": "Nadpis trendu odchylek",
+      "avgVarianceStat": "Průměr. odchylka: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Všechny platné",
@@ -443,7 +444,16 @@
     "codeInserted": "Kód vložen",
     "csvNotFound": "Csv nebyl nalezen",
     "errors": {
-      "tagReferenceFailed": "Chyba při vytváření odkaz na tag:"
+      "tagReferenceFailed": "Chyba při vytváření odkaz na tag: {error}",
+      "csvLoadError": "Chyba načítání CSV: {error}",
+      "csvCreateError": "Chyba vytváření CSV souboru: {error}",
+      "blockIdsError": "Chyba přidávání ID bloků: {error}",
+      "csvFilesError": "Chyba vytváření CSV souborů: {error}",
+      "muscleTagsCsvError": "Chyba vytváření CSV tagů svalů: {error}",
+      "muscleTagsLoadError": "Chyba načítání tagů svalů: {error}",
+      "templateGenError": "Nepodařilo se vytvořit šablony: {error}",
+      "workoutLogCreateError": "Nepodařilo se vytvořit soubor CSV na cestě: {path}. Zkontrolujte cestu v nastavení.",
+      "tableRenderError": "Chyba při vykreslování tabulky"
     },
     "fileEmpty": "Soubor prázdný",
     "imbalanceAlerts": "Nedostatek informací",
@@ -499,7 +509,9 @@
       "update": "Aktualizační protokol",
       "updateTable": "Aktualizovat tabulku",
       "updateTargetWeight": "Aktualizovat cíl",
-      "updateTimer": "Aktualizovat časovač"
+      "updateTimer": "Aktualizovat časovač",
+      "decreaseBy": "Snížit {label} o {increment}",
+      "increaseBy": "Zvýšit {label} o {increment}"
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Úspěch přejmenování",
       "auditScanError": "Chyba při skenování: {error}",
       "auditScanning": "Audit Skenerování",
-      "canvasExportError": "Chyba exportu plátna",
-      "canvasExported": "Plátno exportováno",
+      "canvasExportError": "Chyba exportu plátna: {error}",
+      "canvasExported": "Plátno exportováno ({path})",
       "chartInserted": "✅ Graf vložen úspěšně!",
       "confirmUpdateTarget": "Potvrďte aktualizaci cíle",
       "dashboardInserted": "✅ Dashboard vložen úspěšně!",
@@ -595,7 +607,7 @@
       "logCreated": "Záznam tréninku vytvořen úspěšně!",
       "logUpdated": "Záznam tréninku aktualizován úspěšně!",
       "migrationComplete": "Migrace dokončena. Aktualizovány soubory cvičení {count}.",
-      "migrationError": "Chyba migrace",
+      "migrationError": "Chyba migrace: {error}",
       "migrationNoUpdates": "Migrace žádná aktualizace",
       "muscleTagCount": "{count} tag(ů) nalezeno",
       "muscleTagDeleteConfirm": "Jste si jisti, že chcete smazat štítek \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Neúspěšné provedení aktualizace časovače. Ujistěte se, že soubor je otevřen v editoru.",
       "timerUpdated": "✅ Časovač byl úspěšně aktualizován!",
       "validationCombinedMode": "⚠️ pro typ 'cvičení + trénink' musíte vyplnit obě pole!",
-      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami"
+      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami",
+      "validMissingField": "Chybí povinné pole: {field}",
+      "validMustBeNumber": "{field} musí být platné číslo",
+      "validMinValue": "{field} musí být alespoň {min}",
+      "validMaxValue": "{field} musí být nejvýše {max}",
+      "validFieldRequired": "{field} je povinné",
+      "migrationFolderNotFound": "Složka cvičení nenalezena: {path}"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -720,7 +738,11 @@
     },
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
-    "workoutNameOptional": "Název tréninku (volitelné):"
+    "workoutNameOptional": "Název tréninku (volitelné):",
+    "importMergeAriaLabel": "Sloučit: přidat pouze nové tagy, zachovat stávající",
+    "importReplaceAriaLabel": "Nahradit: přepsat všechny stávající tagy",
+    "editItem": "Upravit {item}",
+    "deleteItem": "Smazat {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Hmotnost ({weightUnit})"
     },
     "deleteConfirm": "Potvrzení smazání",
-    "deleteError": "Chyba při smazání",
+    "deleteError": "Chyba při smazání: {error}",
     "deleteSuccess": "Smazání úspěšné",
     "deleteTitle": "Název smazání",
     "editTable": "Upravit tabulku",

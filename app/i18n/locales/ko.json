@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "변동 추세 감소",
       "varianceTrendImproving": "변동 추세 개선",
       "varianceTrendStable": "변동 추세 안정",
-      "varianceTrendTitle": "변동 추세 제목"
+      "varianceTrendTitle": "변동 추세 제목",
+      "avgVarianceStat": "평균 변동: ±{value}%"
     },
     "fileErrors": {
       "allValid": "모든 항목 유효",
@@ -443,7 +444,16 @@
     "codeInserted": "코드 삽입",
     "csvNotFound": "CSV 파일을 찾을 수 없습니다.",
     "errors": {
-      "tagReferenceFailed": "태그 참조 생성 오류:"
+      "tagReferenceFailed": "태그 참조 생성 오류: {error}",
+      "csvLoadError": "CSV 데이터 로드 오류: {error}",
+      "csvCreateError": "CSV 파일 생성 오류: {error}",
+      "blockIdsError": "블록 ID 추가 오류: {error}",
+      "csvFilesError": "CSV 파일 생성 오류: {error}",
+      "muscleTagsCsvError": "근육 태그 CSV 생성 오류: {error}",
+      "muscleTagsLoadError": "근육 태그 로드 오류: {error}",
+      "templateGenError": "템플릿 생성 실패: {error}",
+      "workoutLogCreateError": "경로 {path}에 CSV 파일을 만들 수 없습니다. 설정에서 경로를 확인하세요.",
+      "tableRenderError": "테이블 렌더링 오류"
     },
     "fileEmpty": "파일이 비어 있습니다",
     "imbalanceAlerts": "불균형 알림",
@@ -499,7 +509,9 @@
       "update": "업데이트 기록",
       "updateTable": "테이블 업데이트",
       "updateTargetWeight": "대상 업데이트",
-      "updateTimer": "타이머 업데이트"
+      "updateTimer": "타이머 업데이트",
+      "decreaseBy": "{label}을(를) {increment} 줄이기",
+      "increaseBy": "{label}을(를) {increment} 늘리기"
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "스캔 중 오류: {error}",
       "auditScanning": "감사 검사",
-      "canvasExportError": "캔버스 내보내기 오류",
-      "canvasExported": "캔버스 내 콘텐츠 내보내기",
+      "canvasExportError": "캔버스 내보내기 오류: {error}",
+      "canvasExported": "캔버스 내 콘텐츠 내보내기 ({path})",
       "chartInserted": "✅ 차트가 성공적으로 삽입되었습니다!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ 대시보드가 성공적으로 삽입되었습니다!",
@@ -595,7 +607,7 @@
       "logCreated": "운동 기록이 성공적으로 생성되었습니다!",
       "logUpdated": "운동 기록이 성공적으로 업데이트되었습니다!",
       "migrationComplete": "마이그레이션 완료. {count} 훈련 파일 업데이트 완료.",
-      "migrationError": "이동 오류",
+      "migrationError": "이동 오류: {error}",
       "migrationNoUpdates": "마이그레이션 업데이트 없음",
       "muscleTagCount": "{count} 태그(들) 발견",
       "muscleTagDeleteConfirm": "{tag} 태그를 삭제하시겠습니까?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "timerUpdated": "✅ 타이머가 성공적으로 업데이트되었습니다!",
       "validationCombinedMode": "⚠️ '운동 + 운동' 유형의 경우, 두 필드를 모두 채워야 합니다!",
-      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요."
+      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
+      "validMissingField": "필수 필드 없음: {field}",
+      "validMustBeNumber": "{field}은(는) 유효한 숫자여야 합니다",
+      "validMinValue": "{field}은(는) 최소 {min}이어야 합니다",
+      "validMaxValue": "{field}은(는) 최대 {max}이어야 합니다",
+      "validFieldRequired": "{field}은(는) 필수입니다",
+      "migrationFolderNotFound": "운동 폴더를 찾을 수 없습니다: {path}"
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -720,7 +738,11 @@
     },
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
-    "workoutNameOptional": "운동 이름 (선택 사항):"
+    "workoutNameOptional": "운동 이름 (선택 사항):",
+    "importMergeAriaLabel": "병합: 새 태그만 추가, 기존 태그 유지",
+    "importReplaceAriaLabel": "대체: 기존 태그 모두 덮어쓰기",
+    "editItem": "{item} 편집",
+    "deleteItem": "{item} 삭제"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "무게 ({weightUnit})"
     },
     "deleteConfirm": "삭제 확인",
-    "deleteError": "삭제 오류",
+    "deleteError": "삭제 오류: {error}",
     "deleteSuccess": "삭제 성공",
     "deleteTitle": "삭제 제목",
     "editTable": "테이블 편집",

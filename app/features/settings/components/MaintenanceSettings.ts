@@ -54,7 +54,7 @@ export class MaintenanceSettings {
               ).migrateExerciseTypes();
             } catch (error) {
               const errorMessage = ErrorUtils.getErrorMessage(error);
-              new Notice(`Error: ${errorMessage}`);
+              new Notice(t("modal.notices.genericError", { error: errorMessage }));
             } finally {
               button.setDisabled(false);
             }

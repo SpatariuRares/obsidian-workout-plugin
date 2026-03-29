@@ -40,7 +40,7 @@ export class TableActions {
             new Notice(t("table.deleteSuccess"));
           } catch (error) {
             const errorMessage = ErrorUtils.getErrorMessage(error);
-            new Notice(t("table.deleteError") + errorMessage);
+            new Notice(t("table.deleteError", { error: errorMessage }));
           }
         })();
       },

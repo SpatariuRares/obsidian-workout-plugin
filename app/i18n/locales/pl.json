@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Trend różnicujący się w kierunku spadku",
       "varianceTrendImproving": "Trend różnic się poprawia",
       "varianceTrendStable": "Trend wariancji stabilny",
-      "varianceTrendTitle": "Tytuł trendu wariancji"
+      "varianceTrendTitle": "Tytuł trendu wariancji",
+      "avgVarianceStat": "Śred. wariancja: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Wszystkie poprawne",
@@ -443,7 +444,16 @@
     "codeInserted": "Kod został wstawiony",
     "csvNotFound": "Plik CSV nie został znaleziony",
     "errors": {
-      "tagReferenceFailed": "Błąd podczas generowania odniesienia do tagu:"
+      "tagReferenceFailed": "Błąd podczas generowania odniesienia do tagu: {error}",
+      "csvLoadError": "Błąd ładowania CSV: {error}",
+      "csvCreateError": "Błąd tworzenia pliku CSV: {error}",
+      "blockIdsError": "Błąd dodawania ID bloków: {error}",
+      "csvFilesError": "Błąd tworzenia plików CSV: {error}",
+      "muscleTagsCsvError": "Błąd tworzenia CSV tagów mięśni: {error}",
+      "muscleTagsLoadError": "Błąd ładowania tagów mięśni: {error}",
+      "templateGenError": "Nie udało się wygenerować szablonów: {error}",
+      "workoutLogCreateError": "Nie udało się utworzyć pliku CSV pod ścieżką: {path}. Sprawdź ścieżkę w ustawieniach.",
+      "tableRenderError": "Błąd renderowania tabeli"
     },
     "fileEmpty": "Plik jest pusty",
     "imbalanceAlerts": "Alerty dotyczące niezrównoważenia",
@@ -499,7 +509,9 @@
       "update": "Log aktualizacji",
       "updateTable": "Zaktualizuj tabelę",
       "updateTargetWeight": "Zaktualizuj docelową wartość",
-      "updateTimer": "Aktualizuj timer"
+      "updateTimer": "Aktualizuj timer",
+      "decreaseBy": "Zmniejsz {label} o {increment}",
+      "increaseBy": "Zwiększ {label} o {increment}"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Błąd skanowania: {error}",
       "auditScanning": "Przegląd audytowy",
-      "canvasExportError": "Błąd eksportu na płótnie",
-      "canvasExported": "Eksport na płótno",
+      "canvasExportError": "Błąd eksportu na płótnie: {error}",
+      "canvasExported": "Eksport na płótno ({path})",
       "chartInserted": "✅ Wykres został pomyślnie dodany!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Panel został pomyślnie wstawiony!",
@@ -595,7 +607,7 @@
       "logCreated": "Zapis treningu został pomyślnie utworzony!",
       "logUpdated": "Zapis treningu został pomyślnie zaktualizowany!",
       "migrationComplete": "Migracja zakończona. Zaktualizowane pliki ćwiczeń {count}.",
-      "migrationError": "Błąd migracji",
+      "migrationError": "Błąd migracji: {error}",
       "migrationNoUpdates": "Brak aktualizacji migracji",
       "muscleTagCount": "{count} tag(ów) znaleziono",
       "muscleTagDeleteConfirm": "Czy na pewno chcesz usunąć tag \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Nie udało się zaktualizować timera. Upewnij się, że plik jest otwarty w edytorze.",
       "timerUpdated": "✅ Timer został pomyślnie zaktualizowany!",
       "validationCombinedMode": "⚠️ W przypadku typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
-      "validationFillAll": "Prosimy o wypełnienie wszystkich pól, używając prawidłowych wartości."
+      "validationFillAll": "Prosimy o wypełnienie wszystkich pól, używając prawidłowych wartości.",
+      "validMissingField": "Brak wymaganego pola: {field}",
+      "validMustBeNumber": "{field} musi być prawidłową liczbą",
+      "validMinValue": "{field} musi wynosić co najmniej {min}",
+      "validMaxValue": "{field} może wynosić co najwyżej {max}",
+      "validFieldRequired": "{field} jest wymagane",
+      "migrationFolderNotFound": "Folder ćwiczeń nie znaleziony: {path}"
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -720,7 +738,11 @@
     },
     "workout": "Trening (opcjonalnie):",
     "workoutFile": "Plik treningowy:",
-    "workoutNameOptional": "Nazwa ćwiczenia (opcjonalnie):"
+    "workoutNameOptional": "Nazwa ćwiczenia (opcjonalnie):",
+    "importMergeAriaLabel": "Scal: dodaj tylko nowe tagi, zachowaj istniejące",
+    "importReplaceAriaLabel": "Zastąp: nadpisz wszystkie istniejące tagi",
+    "editItem": "Edytuj {item}",
+    "deleteItem": "Usuń {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Waga ({weightUnit})"
     },
     "deleteConfirm": "Potwierdź usunięcie",
-    "deleteError": "Błąd usuwania",
+    "deleteError": "Błąd usuwania: {error}",
     "deleteSuccess": "Pomyślne usunięcie",
     "deleteTitle": "Tytuł usuwania",
     "editTable": "Edytuj tabelę",

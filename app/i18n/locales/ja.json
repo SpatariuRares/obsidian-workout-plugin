@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "変動傾向：減少",
       "varianceTrendImproving": "変動傾向の改善",
       "varianceTrendStable": "変動傾向が安定",
-      "varianceTrendTitle": "変動傾向のタイトル"
+      "varianceTrendTitle": "変動傾向のタイトル",
+      "avgVarianceStat": "平均変動: ±{value}%"
     },
     "fileErrors": {
       "allValid": "すべて有効",
@@ -443,7 +444,16 @@
     "codeInserted": "コード挿入",
     "csvNotFound": "CSVファイルが見つかりません",
     "errors": {
-      "tagReferenceFailed": "タグ参照の生成に失敗しました:"
+      "tagReferenceFailed": "タグ参照の生成に失敗しました: {error}",
+      "csvLoadError": "CSVデータの読み込みエラー：{error}",
+      "csvCreateError": "CSVファイルの作成エラー：{error}",
+      "blockIdsError": "ブロックIDの追加エラー：{error}",
+      "csvFilesError": "CSVファイルの作成エラー：{error}",
+      "muscleTagsCsvError": "筋肉タグCSVの作成エラー：{error}",
+      "muscleTagsLoadError": "筋肉タグの読み込みエラー：{error}",
+      "templateGenError": "テンプレートの生成に失敗：{error}",
+      "workoutLogCreateError": "パス {path} にCSVファイルを作成できませんでした。設定でパスを確認してください。",
+      "tableRenderError": "テーブルレンダリングエラー"
     },
     "fileEmpty": "ファイルが空",
     "imbalanceAlerts": "不均衡アラート",
@@ -499,7 +509,9 @@
       "update": "更新ログ",
       "updateTable": "テーブルを更新する",
       "updateTargetWeight": "目標の更新",
-      "updateTimer": "タイマーを更新する"
+      "updateTimer": "タイマーを更新する",
+      "decreaseBy": "{label}を{increment}減らす",
+      "increaseBy": "{label}を{increment}増やす"
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "スキャン中にエラー：{error}",
       "auditScanning": "監査スキャン",
-      "canvasExportError": "キャンバスのエクスポートエラー",
-      "canvasExported": "キャンバスのデータのエクスポート",
+      "canvasExportError": "キャンバスのエクスポートエラー: {error}",
+      "canvasExported": "キャンバスのデータのエクスポート ({path})",
       "chartInserted": "✅ グラフが正常に挿入されました！",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ ダッシュボードの挿入に成功しました！",
@@ -595,7 +607,7 @@
       "logCreated": "ワークアウト記録が正常に作成されました！",
       "logUpdated": "ワークアウト記録が正常に更新されました！",
       "migrationComplete": "移行が完了しました。{count} の練習ファイルが更新されました。",
-      "migrationError": "マイグレーションエラー",
+      "migrationError": "マイグレーションエラー: {error}",
       "migrationNoUpdates": "マイグレーションのアップデートは行っていません",
       "muscleTagCount": "{count} 個のタグが見つかりました",
       "muscleTagDeleteConfirm": "「{tag}」のタグを削除してもよろしいですか？",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
       "timerUpdated": "✅ タイマーが正常に更新されました！",
       "validationCombinedMode": "⚠️ 「エクササイズ + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "validationFillAll": "すべてのフィールドに有効な値を入力してください。"
+      "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
+      "validMissingField": "必須フィールドがありません：{field}",
+      "validMustBeNumber": "{field}は有効な数値でなければなりません",
+      "validMinValue": "{field}は{min}以上でなければなりません",
+      "validMaxValue": "{field}は{max}以下でなければなりません",
+      "validFieldRequired": "{field}は必須です",
+      "migrationFolderNotFound": "エクササイズフォルダが見つかりません: {path}"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -720,7 +738,11 @@
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
-    "workoutNameOptional": "ワークアウト名（任意）："
+    "workoutNameOptional": "ワークアウト名（任意）：",
+    "importMergeAriaLabel": "マージ：新しいタグのみ追加、既存を保持",
+    "importReplaceAriaLabel": "置換：既存のタグをすべて上書き",
+    "editItem": "{item}を編集",
+    "deleteItem": "{item}を削除"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "重さ ({weightUnit})"
     },
     "deleteConfirm": "削除確認",
-    "deleteError": "削除エラー",
+    "deleteError": "削除エラー: {error}",
     "deleteSuccess": "削除に成功",
     "deleteTitle": "削除する",
     "editTable": "テーブルの編集",

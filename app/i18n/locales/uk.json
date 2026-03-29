@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Тенденція: Зменшення відхилення",
       "varianceTrendImproving": "Тенденція зменшення відхилень",
       "varianceTrendStable": "Стабільна тенденція відхилень",
-      "varianceTrendTitle": "Заголовок: Тенденція відхилень"
+      "varianceTrendTitle": "Заголовок: Тенденція відхилень",
+      "avgVarianceStat": "Сер. відхилення: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Усі дані є дійсними",
@@ -443,7 +444,16 @@
     "codeInserted": "Код додано",
     "csvNotFound": "Файл CSV не знайдено",
     "errors": {
-      "tagReferenceFailed": "Помилка при створенні посилання на тег:"
+      "tagReferenceFailed": "Помилка при створенні посилання на тег: {error}",
+      "csvLoadError": "Помилка завантаження CSV: {error}",
+      "csvCreateError": "Помилка створення CSV файлу: {error}",
+      "blockIdsError": "Помилка додавання ID блоків: {error}",
+      "csvFilesError": "Помилка створення CSV файлів: {error}",
+      "muscleTagsCsvError": "Помилка створення CSV тегів м'язів: {error}",
+      "muscleTagsLoadError": "Помилка завантаження тегів м'язів: {error}",
+      "templateGenError": "Не вдалося створити шаблони: {error}",
+      "workoutLogCreateError": "Не вдалося створити CSV-файл за шляхом: {path}. Перевірте шлях у налаштуваннях.",
+      "tableRenderError": "Помилка рендерингу таблиці"
     },
     "fileEmpty": "Файл порожній",
     "imbalanceAlerts": "Сповіщення про дисбаланс",
@@ -499,7 +509,9 @@
       "update": "Журнал оновлень",
       "updateTable": "Оновити таблицю",
       "updateTargetWeight": "Оновити цільову вагу",
-      "updateTimer": "Оновити таймер"
+      "updateTimer": "Оновити таймер",
+      "decreaseBy": "Зменшити {label} на {increment}",
+      "increaseBy": "Збільшити {label} на {increment}"
     },
     "canvasLayout": "Макет",
     "canvasOptions": "Варіанти",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Помилка сканування: {error}",
       "auditScanning": "Сканування для аудиту",
-      "canvasExportError": "Помилка експорту на холст",
-      "canvasExported": "Експорт на холст",
+      "canvasExportError": "Помилка експорту на холст: {error}",
+      "canvasExported": "Експорт на холст ({path})",
       "chartInserted": "✅ Графік успішно додано!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Панель керування успішно додана!",
@@ -595,7 +607,7 @@
       "logCreated": "Запис тренування успішно створено!",
       "logUpdated": "Запис тренування успішно оновлено!",
       "migrationComplete": "Міграція завершена. Оновлені файли для вправи {count}.",
-      "migrationError": "Помилка міграції",
+      "migrationError": "Помилка міграції: {error}",
       "migrationNoUpdates": "Відсутні оновлення міграції",
       "muscleTagCount": "{count} тег(и) знайдено",
       "muscleTagDeleteConfirm": "Ви впевнені, що хочете видалити мітку \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
       "timerUpdated": "✅ Таймер успішно оновлено!",
       "validationCombinedMode": "⚠️ Для типу 'тренування + фітнес' необхідно заповнити обидва поля!",
-      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення."
+      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення.",
+      "validMissingField": "Відсутнє обов'язкове поле: {field}",
+      "validMustBeNumber": "{field} повинно бути числом",
+      "validMinValue": "{field} повинно бути не менше {min}",
+      "validMaxValue": "{field} повинно бути не більше {max}",
+      "validFieldRequired": "{field} обов'язкове",
+      "migrationFolderNotFound": "Папку вправ не знайдено: {path}"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -720,7 +738,11 @@
     },
     "workout": "Тренування (необов'язково):",
     "workoutFile": "Файл для тренування:",
-    "workoutNameOptional": "Назва тренування (необов'язково):"
+    "workoutNameOptional": "Назва тренування (необов'язково):",
+    "importMergeAriaLabel": "Об'єднати: додати тільки нові теги, зберегти існуючі",
+    "importReplaceAriaLabel": "Замінити: перезаписати всі існуючі теги",
+    "editItem": "Редагувати {item}",
+    "deleteItem": "Видалити {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Вага ({weightUnit})"
     },
     "deleteConfirm": "Підтвердити видалення",
-    "deleteError": "Помилка при видаленні",
+    "deleteError": "Помилка при видаленні: {error}",
     "deleteSuccess": "Успішне видалення",
     "deleteTitle": "Заголовок для видалення",
     "editTable": "Редагувати таблицю",

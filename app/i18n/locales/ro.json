@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tendință de scădere a variației",
       "varianceTrendImproving": "Tendința variației se îmbunătățește",
       "varianceTrendStable": "Tendință stabilă a variației",
-      "varianceTrendTitle": "Titlul tendinței variației"
+      "varianceTrendTitle": "Titlul tendinței variației",
+      "avgVarianceStat": "Varianță medie: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Toate",
@@ -443,7 +444,16 @@
     "codeInserted": "Cod introdus",
     "csvNotFound": "Fișierul CSV nu a fost găsit",
     "errors": {
-      "tagReferenceFailed": "Eroare la generarea referinței etichetă:"
+      "tagReferenceFailed": "Eroare la generarea referinței etichetă: {error}",
+      "csvLoadError": "Eroare la încărcarea datelor CSV: {error}",
+      "csvCreateError": "Eroare la crearea fișierului CSV: {error}",
+      "blockIdsError": "Eroare la adăugarea ID-urilor blocurilor: {error}",
+      "csvFilesError": "Eroare la crearea fișierelor CSV: {error}",
+      "muscleTagsCsvError": "Eroare la crearea CSV pentru etichetele musculare: {error}",
+      "muscleTagsLoadError": "Eroare la încărcarea etichetelor musculare: {error}",
+      "templateGenError": "Eșec la generarea șabloanelor: {error}",
+      "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verificați calea în setări.",
+      "tableRenderError": "Eroare la redarea tabelului"
     },
     "fileEmpty": "Fișierul este gol",
     "imbalanceAlerts": "Alarme pentru dezechilibre",
@@ -499,7 +509,9 @@
       "update": "Jurnal de actualizări",
       "updateTable": "Actualizează tabelul",
       "updateTargetWeight": "Actualizează țintă",
-      "updateTimer": "Actualizează temporizatorul"
+      "updateTimer": "Actualizează temporizatorul",
+      "decreaseBy": "Scade {label} cu {increment}",
+      "increaseBy": "Crește {label} cu {increment}"
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Eroare la scanare: {error}",
       "auditScanning": "Scanare audit",
-      "canvasExportError": "Eroare la exportarea pe canvas",
-      "canvasExported": "Exportarea pe pânză",
+      "canvasExportError": "Eroare la exportarea pe canvas: {error}",
+      "canvasExported": "Exportarea pe pânză ({path})",
       "chartInserted": "✅ Graficul a fost inserat cu succes!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Panoul de control a fost inserat cu succes!",
@@ -595,7 +607,7 @@
       "logCreated": "Jurnalul antrenamentului a fost creat cu succes!",
       "logUpdated": "Jurnalul antrenamentului a fost actualizat cu succes!",
       "migrationComplete": "Migrarea a fost finalizată. Fișierele de exerciții {count} au fost actualizate.",
-      "migrationError": "Eroare la migrare",
+      "migrationError": "Eroare la migrare: {error}",
       "migrationNoUpdates": "Nu există actualizări pentru migrare",
       "muscleTagCount": "{count} etichete găsite",
       "muscleTagDeleteConfirm": "Sunteți sigur(ă) că doriți să ștergeți eticheta \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Nu s-a reușit actualizarea temporizatorului. Asigurați-vă că fișierul este deschis în editor.",
       "timerUpdated": "✅ Timpul a fost actualizat cu succes!",
       "validationCombinedMode": "⚠️ Pentru tipul de exerciții 'exerciții + antrenament', trebuie să completați ambele câmpuri!",
-      "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide."
+      "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide.",
+      "validMissingField": "Câmp obligatoriu lipsă: {field}",
+      "validMustBeNumber": "{field} trebuie să fie un număr valid",
+      "validMinValue": "{field} trebuie să fie cel puțin {min}",
+      "validMaxValue": "{field} trebuie să fie cel mult {max}",
+      "validFieldRequired": "{field} este obligatoriu",
+      "migrationFolderNotFound": "Dosarul de exerciții nu a fost găsit: {path}"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -720,7 +738,11 @@
     },
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișier antrenament:",
-    "workoutNameOptional": "Numele antrenamentului (opțional):"
+    "workoutNameOptional": "Numele antrenamentului (opțional):",
+    "importMergeAriaLabel": "Îmbinare: adaugă doar etichete noi, păstrează existente",
+    "importReplaceAriaLabel": "Înlocuire: suprascrie toate etichetele existente",
+    "editItem": "Editează {item}",
+    "deleteItem": "Șterge {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Greutate ({weightUnit})"
     },
     "deleteConfirm": "Confirmă ștergere",
-    "deleteError": "Eroare la ștergere",
+    "deleteError": "Eroare la ștergere: {error}",
     "deleteSuccess": "Eliminare reușită",
     "deleteTitle": "Titlu ștergere",
     "editTable": "Modifică tabelul",

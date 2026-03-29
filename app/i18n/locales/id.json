@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tren Variasi Menurun",
       "varianceTrendImproving": "Tren Variansi Meningkat",
       "varianceTrendStable": "Tren Varians Stabil",
-      "varianceTrendTitle": "Judul Tren Variasi"
+      "varianceTrendTitle": "Judul Tren Variasi",
+      "avgVarianceStat": "Var. rata-rata: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Semua Valid",
@@ -443,7 +444,16 @@
     "codeInserted": "Kode Telah Disisipkan",
     "csvNotFound": "Berkas CSV tidak ditemukan",
     "errors": {
-      "tagReferenceFailed": "Kesalahan saat membuat referensi tag:"
+      "tagReferenceFailed": "Kesalahan saat membuat referensi tag: {error}",
+      "csvLoadError": "Kesalahan memuat data CSV: {error}",
+      "csvCreateError": "Kesalahan membuat file CSV: {error}",
+      "blockIdsError": "Kesalahan menambahkan ID blok: {error}",
+      "csvFilesError": "Kesalahan membuat file CSV: {error}",
+      "muscleTagsCsvError": "Kesalahan membuat CSV tag otot: {error}",
+      "muscleTagsLoadError": "Kesalahan memuat tag otot: {error}",
+      "templateGenError": "Gagal membuat template: {error}",
+      "workoutLogCreateError": "Gagal membuat file CSV di jalur: {path}. Periksa jalur di pengaturan.",
+      "tableRenderError": "Kesalahan saat merender tabel"
     },
     "fileEmpty": "Berkas Kosong",
     "imbalanceAlerts": "Peringatan Ketidakseimbangan",
@@ -499,7 +509,9 @@
       "update": "Log pembaruan",
       "updateTable": "Perbarui tabel",
       "updateTargetWeight": "Perbarui target",
-      "updateTimer": "Perbarui timer"
+      "updateTimer": "Perbarui timer",
+      "decreaseBy": "Kurangi {label} sebesar {increment}",
+      "increaseBy": "Tambah {label} sebesar {increment}"
     },
     "canvasLayout": "Tata Letak",
     "canvasOptions": "Pilihan",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Kesalahan saat memindai: {error}",
       "auditScanning": "Pemindaian Audit",
-      "canvasExportError": "Kesalahan Ekspor Kanvas",
-      "canvasExported": "Gambar berhasil diekspor",
+      "canvasExportError": "Kesalahan Ekspor Kanvas: {error}",
+      "canvasExported": "Gambar berhasil diekspor ({path})",
       "chartInserted": "✅ Grafik berhasil ditambahkan!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dasbor berhasil ditambahkan!",
@@ -595,7 +607,7 @@
       "logCreated": "Catatan latihan berhasil dibuat!",
       "logUpdated": "Catatan latihan berhasil diperbarui!",
       "migrationComplete": "Migrasi selesai. File latihan {count} telah diperbarui.",
-      "migrationError": "Kesalahan Migrasi",
+      "migrationError": "Kesalahan Migrasi: {error}",
       "migrationNoUpdates": "Tidak ada pembaruan migrasi",
       "muscleTagCount": "{count} tag ditemukan",
       "muscleTagDeleteConfirm": "Apakah Anda yakin ingin menghapus tag \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Gagal memperbarui timer. Pastikan file tersebut terbuka di dalam editor.",
       "timerUpdated": "✅ Waktu telah diperbarui dengan sukses!",
       "validationCombinedMode": "⚠️ Untuk jenis 'olahraga + latihan', Anda harus mengisi kedua kolom!",
-      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid."
+      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid.",
+      "validMissingField": "Bidang wajib tidak ada: {field}",
+      "validMustBeNumber": "{field} harus berupa angka valid",
+      "validMinValue": "{field} harus minimal {min}",
+      "validMaxValue": "{field} harus paling banyak {max}",
+      "validFieldRequired": "{field} wajib diisi",
+      "migrationFolderNotFound": "Folder olahraga tidak ditemukan: {path}"
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -720,7 +738,11 @@
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
-    "workoutNameOptional": "Nama latihan (opsional):"
+    "workoutNameOptional": "Nama latihan (opsional):",
+    "importMergeAriaLabel": "Gabung: tambah hanya tag baru, pertahankan yang ada",
+    "importReplaceAriaLabel": "Ganti: timpa semua tag yang ada",
+    "editItem": "Edit {item}",
+    "deleteItem": "Hapus {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Berat ({weightUnit})"
     },
     "deleteConfirm": "Konfirmasi Penghapusan",
-    "deleteError": "Kesalahan Penghapusan",
+    "deleteError": "Kesalahan Penghapusan: {error}",
     "deleteSuccess": "Berhasil dihapus",
     "deleteTitle": "Judul Penghapusan",
     "editTable": "Sunting tabel",

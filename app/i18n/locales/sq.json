@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tendenca e variancës që rëndon",
       "varianceTrendImproving": "Tendenca e variancës po përmirësohet",
       "varianceTrendStable": "Tendenca e variancës, stabil",
-      "varianceTrendTitle": "Titull për Tendencat e Varianseve"
+      "varianceTrendTitle": "Titull për Tendencat e Varianseve",
+      "avgVarianceStat": "Variancë mesatare: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Tüm të sakta",
@@ -443,7 +444,16 @@
     "codeInserted": "Kodi është i ëndosur",
     "csvNotFound": "CSV nuk u gjua",
     "errors": {
-      "tagReferenceFailed": "Gabim në krijimin e referencës për etiketën:"
+      "tagReferenceFailed": "Gabim në krijimin e referencës për etiketën: {error}",
+      "csvLoadError": "Gabim gjatë ngarkimit të CSV: {error}",
+      "csvCreateError": "Gabim gjatë krijimit të skedarit CSV: {error}",
+      "blockIdsError": "Gabim gjatë shtimit të ID-ve të bllokut: {error}",
+      "csvFilesError": "Gabim gjatë krijimit të skedarëve CSV: {error}",
+      "muscleTagsCsvError": "Gabim gjatë krijimit të CSV për etiketat e muskujve: {error}",
+      "muscleTagsLoadError": "Gabim gjatë ngarkimit të etiketave të muskujve: {error}",
+      "templateGenError": "Dështoi gjenerimi i shablloneve: {error}",
+      "workoutLogCreateError": "Dështoi krijimi i skedarit CSV në rrugën: {path}. Kontrolloni rrugën në cilësimet.",
+      "tableRenderError": "Gabim në paraqitjen e tabelës"
     },
     "fileEmpty": "Fajla është bosh",
     "imbalanceAlerts": "Alarmi për disbalancë",
@@ -499,7 +509,9 @@
       "update": "Loja e përditësimit",
       "updateTable": "Përpunoj tabelën",
       "updateTargetWeight": "Ndryshojë synimin",
-      "updateTimer": "Përpunoj orën"
+      "updateTimer": "Përpunoj orën",
+      "decreaseBy": "Ul {label} me {increment}",
+      "increaseBy": "Rrit {label} me {increment}"
     },
     "canvasLayout": "Dispozitimi",
     "canvasOptions": "Opsion",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Gabim gjatë skanimit: {error}",
       "auditScanning": "Skanimi i auditimit",
-      "canvasExportError": "Gabim në eksportimin e pëlhurës",
-      "canvasExported": "Ekspozione e Tavlinës",
+      "canvasExportError": "Gabim në eksportimin e pëlhurës: {error}",
+      "canvasExported": "Ekspozione e Tavlinës ({path})",
       "chartInserted": "✅ Diagrama u krijua me sukses!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dasbordi u krijua me sukses!",
@@ -595,7 +607,7 @@
       "logCreated": "Shënimi i ushtrimit u krijua me sukses!",
       "logUpdated": "Dëshifrimi i ushtrimit u përdithes suksesfully!",
       "migrationComplete": "Migracioni është përfunduar. Arkivat e stilit {count} janë përditësuar.",
-      "migrationError": "Gabim në migrim",
+      "migrationError": "Gabim në migrim: {error}",
       "migrationNoUpdates": "Nuk ka më shumë përditshme",
       "muscleTagCount": "{count} etiket(a) janë gjetur",
       "muscleTagDeleteConfirm": "Sigurisht që dëshironi të fshini etiketën \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Më nuk u përpohet të përditësohet çorabi. Sigurohuni që dosja është hapur në redaktoren.",
       "timerUpdated": "✅ Koha u përditësoi me sukses!",
       "validationCombinedMode": "⚠️ për tipin 'eksercizim + stërmorë', duhet të mbushni të dy fushat!",
-      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme."
+      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme.",
+      "validMissingField": "Mungon fusha e detyrueshme: {field}",
+      "validMustBeNumber": "{field} duhet të jetë numër i vlefshëm",
+      "validMinValue": "{field} duhet të jetë të paktën {min}",
+      "validMaxValue": "{field} duhet të jetë më shumë se {max}",
+      "validFieldRequired": "{field} është e detyrueshme",
+      "migrationFolderNotFound": "Dosja e ushtrimeve nuk u gjet: {path}"
     },
     "parameterKey": "Çelë:",
     "parameterLabel": "Etiketa:",
@@ -720,7 +738,11 @@
     },
     "workout": "Tregimi (opcional):",
     "workoutFile": "Fajla e stilit:",
-    "workoutNameOptional": "Emri i stërmorës (opcional):"
+    "workoutNameOptional": "Emri i stërmorës (opcional):",
+    "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
+    "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
+    "editItem": "Ndrysho {item}",
+    "deleteItem": "Fshi {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Pesha ({weightUnit})"
     },
     "deleteConfirm": "Konfirmim",
-    "deleteError": "Gabim në fshirje",
+    "deleteError": "Gabim në fshirje: {error}",
     "deleteSuccess": "Sigurim",
     "deleteTitle": "Titull për fshirje",
     "editTable": "Redakto tablen",

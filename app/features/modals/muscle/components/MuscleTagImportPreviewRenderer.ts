@@ -118,14 +118,14 @@ export class MuscleTagImportPreviewRenderer {
     const mergeButton = Button.create(buttonContainer, {
       text: t("modal.importMerge"),
       variant: "secondary",
-      ariaLabel: "Merge: add new tags only, keep existing",
+      ariaLabel: t("modal.importMergeAriaLabel"),
     });
     Button.onClick(mergeButton, options.onMerge);
 
     const replaceButton = Button.create(buttonContainer, {
       text: t("modal.importReplace"),
       variant: "warning",
-      ariaLabel: "Replace: overwrite all existing tags",
+      ariaLabel: t("modal.importReplaceAriaLabel"),
     });
     Button.onClick(replaceButton, options.onReplace);
   }

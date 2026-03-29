@@ -73,6 +73,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -94,6 +95,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -115,6 +117,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -141,6 +144,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -168,6 +172,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -190,6 +195,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -213,6 +219,7 @@ describe("AchievementBadge", () => {
     AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,
@@ -241,6 +248,7 @@ describe("AchievementBadge", () => {
     const result = AchievementBadge.render(
       container,
       {
+        app: {} as any,
         exercise: "Bench Press",
         targetWeight: 80,
         targetReps: 10,

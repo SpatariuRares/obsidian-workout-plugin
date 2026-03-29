@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tendens for variation: aftagende",
       "varianceTrendImproving": "Tendens for reduceret variation",
       "varianceTrendStable": "Variations Trend: Stabil",
-      "varianceTrendTitle": "Overskrift for variationstendens"
+      "varianceTrendTitle": "Overskrift for variationstendens",
+      "avgVarianceStat": "Gns. varians: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle gyldige",
@@ -443,7 +444,16 @@
     "codeInserted": "Kode indsat",
     "csvNotFound": "Csv ikke fundet",
     "errors": {
-      "tagReferenceFailed": "Fejl ved generering af tag-reference:"
+      "tagReferenceFailed": "Fejl ved generering af tag-reference: {error}",
+      "csvLoadError": "Fejl ved indlæsning af CSV-data: {error}",
+      "csvCreateError": "Fejl ved oprettelse af CSV-fil: {error}",
+      "blockIdsError": "Fejl ved tilføjelse af blok-ID'er: {error}",
+      "csvFilesError": "Fejl ved oprettelse af CSV-filer: {error}",
+      "muscleTagsCsvError": "Fejl ved oprettelse af CSV til muskel-tags: {error}",
+      "muscleTagsLoadError": "Fejl ved indlæsning af muskel-tags: {error}",
+      "templateGenError": "Kunne ikke generere skabeloner: {error}",
+      "workoutLogCreateError": "Kunne ikke oprette CSV-fil på stien: {path}. Kontroller stien i indstillingerne.",
+      "tableRenderError": "Fejl ved tabelgengivelse"
     },
     "fileEmpty": "Filen er tom",
     "imbalanceAlerts": "Løbende Balanceadvarsel",
@@ -499,7 +509,9 @@
       "update": "Opdateringslog",
       "updateTable": "Opdater tabel",
       "updateTargetWeight": "Opdater mål",
-      "updateTimer": "Opdater tidsinterval"
+      "updateTimer": "Opdater tidsinterval",
+      "decreaseBy": "Sænk {label} med {increment}",
+      "increaseBy": "Øg {label} med {increment}"
     },
     "canvasLayout": "Layouter",
     "canvasOptions": "Valgmuligheder",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Omdøb i revisjonen succes",
       "auditScanError": "Fejl ved scanning: {error}",
       "auditScanning": "Audit Scannings",
-      "canvasExportError": "Kanvas eksportfejl",
-      "canvasExported": "Kanvas eksportet",
+      "canvasExportError": "Kanvas eksportfejl: {error}",
+      "canvasExported": "Kanvas eksportet ({path})",
       "chartInserted": "✅ Indsat Chart succesfuldt!",
       "confirmUpdateTarget": "Bekræft opdateringsmål",
       "dashboardInserted": "✅ Indsat Dashboard succesfuldt!",
@@ -595,7 +607,7 @@
       "logCreated": "Træningslog oprettet korrekt!",
       "logUpdated": "Træningslog opdateret korrekt!",
       "migrationComplete": "Migration fuldført. Opdaterede træningsfiler for {{count}}.",
-      "migrationError": "Migreringsfejl",
+      "migrationError": "Migreringsfejl: {error}",
       "migrationNoUpdates": "Ingen opdateringer migreret",
       "muscleTagCount": "{count} mærke(r) fundet",
       "muscleTagDeleteConfirm": "Er du sikker på, at du vil slette mærket \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Kunne ikke opdatere timeren. Sørg for, at filen er åben i redigeringsprogrammet.",
       "timerUpdated": "✅ Timer er opdateret med succes!",
       "validationCombinedMode": "⚠️ Vær opmærksom på, at du skal udfylde begge felt for 'øvelse + træning'!",
-      "validationFillAll": "Venligst fyld alle felter med gyldige værdier"
+      "validationFillAll": "Venligst fyld alle felter med gyldige værdier",
+      "validMissingField": "Obligatorisk felt mangler: {field}",
+      "validMustBeNumber": "{field} skal være et gyldigt tal",
+      "validMinValue": "{field} skal være mindst {min}",
+      "validMaxValue": "{field} må højst være {max}",
+      "validFieldRequired": "{field} er obligatorisk",
+      "migrationFolderNotFound": "Træningsmappe ikke fundet: {path}"
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",
@@ -720,7 +738,11 @@
     },
     "workout": "Øvelse (valgfrit):",
     "workoutFile": "Træningsfilen:",
-    "workoutNameOptional": "Øvelsesnavn (valgfrit):"
+    "workoutNameOptional": "Øvelsesnavn (valgfrit):",
+    "importMergeAriaLabel": "Flet: tilføj kun nye tags, behold eksisterende",
+    "importReplaceAriaLabel": "Erstat: overskriv alle eksisterende tags",
+    "editItem": "Rediger {item}",
+    "deleteItem": "Slet {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Vægt ({weightUnit})"
     },
     "deleteConfirm": "Bekræft sletning",
-    "deleteError": "Sletningsfejl",
+    "deleteError": "Sletningsfejl: {error}",
     "deleteSuccess": "Slet succes",
     "deleteTitle": "Slet titel",
     "editTable": "Rediger tabel",

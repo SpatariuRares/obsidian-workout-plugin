@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Tendance à la diminution de la variance",
       "varianceTrendImproving": "Tendance à l'amélioration de la variance",
       "varianceTrendStable": "Tendance de la variance stable",
-      "varianceTrendTitle": "Titre de l'évolution de la variance"
+      "varianceTrendTitle": "Titre de l'évolution de la variance",
+      "avgVarianceStat": "Variance moy. : ±{value}%"
     },
     "fileErrors": {
       "allValid": "Tous valides",
@@ -443,7 +444,16 @@
     "codeInserted": "Code inséré.",
     "csvNotFound": "Fichier CSV introuvable.",
     "errors": {
-      "tagReferenceFailed": "Erreur lors de la génération de la référence de balise :"
+      "tagReferenceFailed": "Erreur lors de la génération de la référence de balise: {error}",
+      "csvLoadError": "Erreur de chargement des données CSV : {error}",
+      "csvCreateError": "Erreur de création du fichier CSV : {error}",
+      "blockIdsError": "Erreur d'ajout des IDs de blocs : {error}",
+      "csvFilesError": "Erreur de création des fichiers CSV : {error}",
+      "muscleTagsCsvError": "Erreur de création du CSV des tags musculaires : {error}",
+      "muscleTagsLoadError": "Erreur de chargement des tags musculaires : {error}",
+      "templateGenError": "Échec de la génération des modèles : {error}",
+      "workoutLogCreateError": "Impossible de créer le fichier CSV au chemin: {path}. Veuillez vérifier le chemin dans les paramètres.",
+      "tableRenderError": "Erreur lors du rendu du tableau"
     },
     "fileEmpty": "Fichier vide.",
     "imbalanceAlerts": "Alertes de déséquilibre.",
@@ -499,7 +509,9 @@
       "update": "Journal des modifications.",
       "updateTable": "Mettre à jour la table",
       "updateTargetWeight": "Mettre à jour la cible.",
-      "updateTimer": "Mettre à jour le minuteur"
+      "updateTimer": "Mettre à jour le minuteur",
+      "decreaseBy": "Diminuer {label} de {increment}",
+      "increaseBy": "Augmenter {label} de {increment}"
     },
     "canvasLayout": "Mise en page.",
     "canvasOptions": "Options.",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit : Renommage réussi.",
       "auditScanError": "Erreur lors du scan : {error}",
       "auditScanning": "Analyse de sécurité.",
-      "canvasExportError": "Erreur lors de l'exportation depuis Canvas.",
-      "canvasExported": "Exportation vers Canvas.",
+      "canvasExportError": "Erreur lors de l'exportation depuis Canvas: {error}",
+      "canvasExported": "Exportation vers Canvas ({path})",
       "chartInserted": "✅ Le graphique a été inséré avec succès !",
       "confirmUpdateTarget": "Confirmer la cible de la mise à jour.",
       "dashboardInserted": "✅ Le tableau de bord a été inséré avec succès !",
@@ -595,7 +607,7 @@
       "logCreated": "Journal d'entraînement créé avec succès !",
       "logUpdated": "Votre journal d'entraînement a été mis à jour avec succès !",
       "migrationComplete": "Migration terminée. Fichiers d'exercice {count} mis à jour.",
-      "migrationError": "Erreur de migration.",
+      "migrationError": "Erreur de migration: {error}",
       "migrationNoUpdates": "Migration : Aucune mise à jour.",
       "muscleTagCount": "{count} étiquettes trouvées",
       "muscleTagDeleteConfirm": "Êtes-vous sûr de vouloir supprimer l'étiquette \"{tag}\" ?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Échec de la mise à jour du minuteur. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "timerUpdated": "✅ Minuteur mis à jour avec succès !",
       "validationCombinedMode": "⚠️ Pour le type d'activité \"exercice + entraînement\", vous devez remplir les deux champs !",
-      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides."
+      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides.",
+      "validMissingField": "Champ obligatoire manquant : {field}",
+      "validMustBeNumber": "{field} doit être un nombre valide",
+      "validMinValue": "{field} doit être au moins {min}",
+      "validMaxValue": "{field} doit être au maximum {max}",
+      "validFieldRequired": "{field} est obligatoire",
+      "migrationFolderNotFound": "Dossier d'exercices introuvable: {path}"
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -720,7 +738,11 @@
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
-    "workoutNameOptional": "Nom de l'entraînement (facultatif) :"
+    "workoutNameOptional": "Nom de l'entraînement (facultatif) :",
+    "importMergeAriaLabel": "Fusionner : ajouter uniquement les nouveaux tags, conserver les existants",
+    "importReplaceAriaLabel": "Remplacer : écraser tous les tags existants",
+    "editItem": "Modifier {item}",
+    "deleteItem": "Supprimer {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Poids ({weightUnit})"
     },
     "deleteConfirm": "Supprimer Confirmer.",
-    "deleteError": "Supprimer l'erreur.",
+    "deleteError": "Supprimer l'erreur: {error}",
     "deleteSuccess": "Suppression réussie.",
     "deleteTitle": "Supprimer le titre.",
     "editTable": "Modifier la table",

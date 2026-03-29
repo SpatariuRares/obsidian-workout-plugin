@@ -73,7 +73,7 @@ export class MuscleTagManagerModal extends ModalBase {
         .loadTags();
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
-      new Notice(`Error loading muscle tags: ${message}`);
+      new Notice(t("messages.errors.muscleTagsLoadError", { error: message }));
       this.allTags = new Map();
     }
   }

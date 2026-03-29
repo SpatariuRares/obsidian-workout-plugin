@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "اتجاه التباين في الانخفاض",
       "varianceTrendImproving": "اتجاه التباين يتحسن",
       "varianceTrendStable": "اتجاه التباين: مستقر",
-      "varianceTrendTitle": "عنوان اتجاه التباين"
+      "varianceTrendTitle": "عنوان اتجاه التباين",
+      "avgVarianceStat": "متوسط التباين: ±{value}%"
     },
     "fileErrors": {
       "allValid": "كلها صحيحة",
@@ -443,7 +444,16 @@
     "codeInserted": "تم إدراج الكود",
     "csvNotFound": "لم يتم العثور على ملف CSV",
     "errors": {
-      "tagReferenceFailed": "خطأ في إنشاء مرجع العلامة:"
+      "tagReferenceFailed": "خطأ في إنشاء مرجع العلامة: {error}",
+      "csvLoadError": "خطأ في تحميل بيانات CSV: {error}",
+      "csvCreateError": "خطأ في إنشاء ملف CSV: {error}",
+      "blockIdsError": "خطأ في إضافة معرفات الكتل: {error}",
+      "csvFilesError": "خطأ في إنشاء ملفات CSV: {error}",
+      "muscleTagsCsvError": "خطأ في إنشاء CSV لعلامات العضلات: {error}",
+      "muscleTagsLoadError": "خطأ في تحميل علامات العضلات: {error}",
+      "templateGenError": "فشل توليد القوالب: {error}",
+      "workoutLogCreateError": "فشل إنشاء ملف CSV في المسار: {path}. يرجى التحقق من المسار في الإعدادات.",
+      "tableRenderError": "خطأ في عرض الجدول"
     },
     "fileEmpty": "الملف فارغ",
     "imbalanceAlerts": "تحذيرات عدم التوازن",
@@ -499,7 +509,9 @@
       "update": "سجل التحديثات",
       "updateTable": "تحديث الجدول",
       "updateTargetWeight": "تحديث الهدف",
-      "updateTimer": "تحديث المؤقت"
+      "updateTimer": "تحديث المؤقت",
+      "decreaseBy": "تقليل {label} بمقدار {increment}",
+      "increaseBy": "زيادة {label} بمقدار {increment}"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "مراجعة نجاح إعادة التسمية",
       "auditScanError": "خطأ أثناء الفحص: {error}",
       "auditScanning": "مراجعة المسح",
-      "canvasExportError": "خطأ تصدير القماش",
-      "canvasExported": "تم تصدير القماش",
+      "canvasExportError": "خطأ تصدير القماش: {error}",
+      "canvasExported": "تم تصدير القماش ({path})",
       "chartInserted": "✅ تم إدراج الرسم البياني بنجاح!",
       "confirmUpdateTarget": "تأكيد الهدف بالتحديث",
       "dashboardInserted": "✅ تم إدخال لوحة التحكم بنجاح!",
@@ -595,7 +607,7 @@
       "logCreated": "تم إنشاء سجل التدريب بنجاح!",
       "logUpdated": "تم تحديث سجل التدريب بنجاح!",
       "migrationComplete": "اكتملت عملية الترحيل. تم تحديث ملفات التمرين {count}.",
-      "migrationError": "خطأ الهجرة",
+      "migrationError": "خطأ الهجرة: {error}",
       "migrationNoUpdates": "هجرة بدون تحديثات",
       "muscleTagCount": "{count} علامة (علامات) تم العثور عليها",
       "muscleTagDeleteConfirm": "هل أنت متأكد من أنك تريد حذف العلامة \"{tag}\"؟",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "فشلت عملية تحديث المؤقت. تأكد من أن الملف مفتوح في محرر النصوص.",
       "timerUpdated": "✅ تم تحديث المؤقت بنجاح!",
       "validationCombinedMode": "⚠️ لـ 'exercise + workout' نوع يجب ملء الحقول المذكورة!",
-      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة"
+      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة",
+      "validMissingField": "حقل مطلوب مفقود: {field}",
+      "validMustBeNumber": "{field} يجب أن يكون رقماً صحيحاً",
+      "validMinValue": "{field} يجب أن يكون على الأقل {min}",
+      "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
+      "validFieldRequired": "{field} مطلوب",
+      "migrationFolderNotFound": "لم يتم العثور على مجلد التمرين: {path}"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -720,7 +738,11 @@
     },
     "workout": "تمارين (اختياري):",
     "workoutFile": "ملف التدريب:",
-    "workoutNameOptional": "اسم التمارين (اختياري):"
+    "workoutNameOptional": "اسم التمارين (اختياري):",
+    "importMergeAriaLabel": "دمج: إضافة علامات جديدة فقط، الاحتفاظ بالموجودة",
+    "importReplaceAriaLabel": "استبدال: الكتابة فوق جميع العلامات الموجودة",
+    "editItem": "تعديل {item}",
+    "deleteItem": "حذف {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "وزن ({{weightUnit}})"
     },
     "deleteConfirm": "تأكيد الحذف",
-    "deleteError": "خطأ الحذف",
+    "deleteError": "خطأ الحذف: {error}",
     "deleteSuccess": "نجاح الحذف",
     "deleteTitle": "حذف العنوان",
     "editTable": "تحرير الجدول",

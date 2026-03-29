@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Variance Trend Declining",
       "varianceTrendImproving": "Variance Trend Improving",
       "varianceTrendStable": "Variance Trend Stable",
-      "varianceTrendTitle": "Variance Trend Title"
+      "varianceTrendTitle": "Variance Trend Title",
+      "avgVarianceStat": "Avg variance: ±{value}%"
     },
     "fileErrors": {
       "allValid": "All Valid",
@@ -443,7 +444,16 @@
     "codeInserted": "Code Inserted",
     "csvNotFound": "Csv Not Found",
     "errors": {
-      "tagReferenceFailed": "Error generating tag reference: "
+      "tagReferenceFailed": "Error generating tag reference: {error}",
+      "csvLoadError": "Error loading CSV workout data: {error}",
+      "csvCreateError": "Error creating CSV file: {error}",
+      "blockIdsError": "Error adding block IDs: {error}",
+      "csvFilesError": "Error creating CSV files: {error}",
+      "muscleTagsCsvError": "Error creating muscle tags CSV: {error}",
+      "muscleTagsLoadError": "Error loading muscle tags: {error}",
+      "templateGenError": "Failed to generate templates: {error}",
+      "workoutLogCreateError": "Failed to create CSV file at path: {path}. Please check the path in settings.",
+      "tableRenderError": "Error in table rendering"
     },
     "fileEmpty": "File Empty",
     "imbalanceAlerts": "Imbalance Alerts",
@@ -499,7 +509,9 @@
       "update": "Update log",
       "updateTable": "Update table",
       "updateTargetWeight": "Update target",
-      "updateTimer": "Update timer"
+      "updateTimer": "Update timer",
+      "decreaseBy": "Decrease {label} by {increment}",
+      "increaseBy": "Increase {label} by {increment}"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success ({count} files updated)",
       "auditScanError": "Error scanning exercise files: {error}",
       "auditScanning": "Audit Scanning",
-      "canvasExportError": "Canvas Export Error",
-      "canvasExported": "Canvas Exported",
+      "canvasExportError": "Canvas Export Error: {error}",
+      "canvasExported": "Canvas Exported ({path})",
       "chartInserted": "✅ Chart inserted successfully!",
       "confirmUpdateTarget": "Confirm Update Target {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard inserted successfully!",
@@ -595,7 +607,7 @@
       "logCreated": "Workout log created successfully!",
       "logUpdated": "Workout log updated successfully!",
       "migrationComplete": "Migration complete. Updated {count} exercise files.",
-      "migrationError": "Migration Error",
+      "migrationError": "Migration Error: {error}",
       "migrationNoUpdates": "Migration No Updates",
       "muscleTagCount": "{count} tag(s) found",
       "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
       "timerUpdated": "✅ Timer updated successfully!",
       "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
-      "validationFillAll": "Please fill in all fields with valid values"
+      "validationFillAll": "Please fill in all fields with valid values",
+      "validMissingField": "Missing required field: {field}",
+      "validMustBeNumber": "{field} must be a valid number",
+      "validMinValue": "{field} must be at least {min}",
+      "validMaxValue": "{field} must be at most {max}",
+      "validFieldRequired": "{field} is required",
+      "migrationFolderNotFound": "Exercise folder not found: {path}"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -720,7 +738,11 @@
     },
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):"
+    "workoutNameOptional": "Workout name (optional):",
+    "importMergeAriaLabel": "Merge: add new tags only, keep existing",
+    "importReplaceAriaLabel": "Replace: overwrite all existing tags",
+    "editItem": "Edit {item}",
+    "deleteItem": "Delete {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Wgt ({weightUnit})"
     },
     "deleteConfirm": "Delete Confirm",
-    "deleteError": "Delete Error",
+    "deleteError": "Delete Error: {error}",
     "deleteSuccess": "Delete Success",
     "deleteTitle": "Delete Title",
     "editTable": "Edit table",

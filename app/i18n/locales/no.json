@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Trend med synkende variasjon",
       "varianceTrendImproving": "Trend med økende variasjon",
       "varianceTrendStable": "Variasjonstrend: Stabil",
-      "varianceTrendTitle": "Tittel for variasjonsutvikling"
+      "varianceTrendTitle": "Tittel for variasjonsutvikling",
+      "avgVarianceStat": "Gj.sn. varians: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Alle gyldige",
@@ -443,7 +444,16 @@
     "codeInserted": "Kode lagt inn",
     "csvNotFound": "CSV-fil ikke funnet",
     "errors": {
-      "tagReferenceFailed": "Feil ved generering av tag-referanse:"
+      "tagReferenceFailed": "Feil ved generering av tag-referanse: {error}",
+      "csvLoadError": "Feil ved lasting av CSV-data: {error}",
+      "csvCreateError": "Feil ved oppretting av CSV-fil: {error}",
+      "blockIdsError": "Feil ved tillegg av blokk-IDer: {error}",
+      "csvFilesError": "Feil ved oppretting av CSV-filer: {error}",
+      "muscleTagsCsvError": "Feil ved oppretting av CSV for muskeltagg: {error}",
+      "muscleTagsLoadError": "Feil ved lasting av muskeltagg: {error}",
+      "templateGenError": "Kunne ikke generere maler: {error}",
+      "workoutLogCreateError": "Kunne ikke opprette CSV-fil på stien: {path}. Sjekk stien i innstillingene.",
+      "tableRenderError": "Feil ved tabellgjengivelse"
     },
     "fileEmpty": "Filen er tom",
     "imbalanceAlerts": "Varsler om ubalanse",
@@ -499,7 +509,9 @@
       "update": "Oppdateringslogg",
       "updateTable": "Oppdater tabell",
       "updateTargetWeight": "Oppdater mål",
-      "updateTimer": "Oppdater tidsinnstilling"
+      "updateTimer": "Oppdater tidsinnstilling",
+      "decreaseBy": "Reduser {label} med {increment}",
+      "increaseBy": "Øk {label} med {increment}"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Alternativer",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Feil ved skanning: {error}",
       "auditScanning": "Revisjonssøk",
-      "canvasExportError": "Feil ved eksport fra Canvas",
-      "canvasExported": "Bilde eksportert fra lerret",
+      "canvasExportError": "Feil ved eksport fra Canvas: {error}",
+      "canvasExported": "Bilde eksportert fra lerret ({path})",
       "chartInserted": "✅ Diagrammet er lagt inn med suksess!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dashboard er nå lagt til!",
@@ -595,7 +607,7 @@
       "logCreated": "Treningsoppføring opprettet med suksess!",
       "logUpdated": "Treningsoppføring oppdatert med suksess!",
       "migrationComplete": "Migrering fullført. Oppdatert {count} treningsfiler.",
-      "migrationError": "Feil under migrering",
+      "migrationError": "Feil under migrering: {error}",
       "migrationNoUpdates": "Ingen oppdateringer",
       "muscleTagCount": "{count} tag(er) funnet",
       "muscleTagDeleteConfirm": "Er du sikker på at du vil slette taggen \"{tag}\"?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Feilet ved oppdatering av tidsinnstilling. Sørg for at filen er åpen i redigeringsprogrammet.",
       "timerUpdated": "✅ Timer oppdatert med suksess!",
       "validationCombinedMode": "⚠️ For 'trening + treningsøkt'-typen må du fylle ut begge feltene!",
-      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier."
+      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier.",
+      "validMissingField": "Obligatorisk felt mangler: {field}",
+      "validMustBeNumber": "{field} må være et gyldig tall",
+      "validMinValue": "{field} må være minst {min}",
+      "validMaxValue": "{field} kan være høyst {max}",
+      "validFieldRequired": "{field} er obligatorisk",
+      "migrationFolderNotFound": "Treningsmappen ble ikke funnet: {path}"
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Merknad:",
@@ -720,7 +738,11 @@
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Fil for trening:",
-    "workoutNameOptional": "Navn på treningsøkten (valgfritt):"
+    "workoutNameOptional": "Navn på treningsøkten (valgfritt):",
+    "importMergeAriaLabel": "Slå sammen: legg til kun nye tagger, behold eksisterende",
+    "importReplaceAriaLabel": "Erstatt: overskriv alle eksisterende tagger",
+    "editItem": "Rediger {item}",
+    "deleteItem": "Slett {item}"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Vekt ({weightUnit})"
     },
     "deleteConfirm": "Bekreft sletting",
-    "deleteError": "Feil ved sletting",
+    "deleteError": "Feil ved sletting: {error}",
     "deleteSuccess": "Suksessfull sletting",
     "deleteTitle": "Fjern",
     "editTable": "Rediger tabell",

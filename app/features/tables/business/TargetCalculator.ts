@@ -1,5 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
+const PROGRESS_COMPLETE_THRESHOLD = 100;
+const PROGRESS_HIGH_THRESHOLD = 90;
+const PROGRESS_MEDIUM_THRESHOLD = 50;
+
 /**
  * TargetCalculator - Business logic for target weight/reps calculations
  *
@@ -95,9 +99,9 @@ export class TargetCalculator {
   static getProgressLevel(
     progressPercent: number,
   ): "complete" | "high" | "medium" | "low" {
-    if (progressPercent >= 100) return "complete";
-    if (progressPercent >= 90) return "high";
-    if (progressPercent >= 50) return "medium";
+    if (progressPercent >= PROGRESS_COMPLETE_THRESHOLD) return "complete";
+    if (progressPercent >= PROGRESS_HIGH_THRESHOLD) return "high";
+    if (progressPercent >= PROGRESS_MEDIUM_THRESHOLD) return "medium";
     return "low";
   }
 }

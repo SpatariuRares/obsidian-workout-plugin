@@ -146,11 +146,9 @@ export class EmbeddedTableView extends BaseView {
     const renderChild = new TableRenderChild(container);
     this.renderChildren.push(renderChild);
 
-    const fragment = document.createDocumentFragment();
-    const contentDiv = fragment.appendChild(
-      document.createElement("div"),
-    );
-    contentDiv.addClass("workout-table-content-container");
+    const contentDiv = createEl("div", {
+      cls: "workout-table-content-container",
+    });
     const signal = renderChild.getSignal();
 
     // Render action buttons (Add Log + Goto Exercise)
@@ -203,11 +201,11 @@ export class EmbeddedTableView extends BaseView {
     if (!tableSuccess) {
       TableRenderer.renderFallbackMessage(
         tableContainer,
-        "Error in table rendering",
+        t("messages.errors.tableRenderError"),
       );
     }
 
-    container.appendChild(fragment);
+    container.appendChild(contentDiv);
     renderChild.load();
   }
 
@@ -287,6 +285,7 @@ export class EmbeddedTableView extends BaseView {
     AchievementBadge.render(
       contentDiv,
       {
+        app: this.plugin.app,
         exercise,
         targetWeight,
         targetReps,

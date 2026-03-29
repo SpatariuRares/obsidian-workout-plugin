@@ -89,7 +89,8 @@
       "varianceTrendDeclining": "Değer Farkı Eğilimi Azalıyor",
       "varianceTrendImproving": "Değer Farkı Eğilimi İyileşiyor",
       "varianceTrendStable": "Değişim Trendi: İstikrarlı",
-      "varianceTrendTitle": "Değişim Trendi Başlığı"
+      "varianceTrendTitle": "Değişim Trendi Başlığı",
+      "avgVarianceStat": "Ort. varyans: ±{value}%"
     },
     "fileErrors": {
       "allValid": "Tüm geçerli",
@@ -443,7 +444,16 @@
     "codeInserted": "Kod Eklendi",
     "csvNotFound": "CSV dosyası bulunamadı",
     "errors": {
-      "tagReferenceFailed": "Etiket referansını oluşturma hatası:"
+      "tagReferenceFailed": "Etiket referansını oluşturma hatası: {error}",
+      "csvLoadError": "CSV verisi yüklenirken hata: {error}",
+      "csvCreateError": "CSV dosyası oluşturulurken hata: {error}",
+      "blockIdsError": "Blok ID eklenirken hata: {error}",
+      "csvFilesError": "CSV dosyaları oluşturulurken hata: {error}",
+      "muscleTagsCsvError": "Kas etiketi CSV oluşturulurken hata: {error}",
+      "muscleTagsLoadError": "Kas etiketleri yüklenirken hata: {error}",
+      "templateGenError": "Şablonlar oluşturulamadı: {error}",
+      "workoutLogCreateError": "{path} yolunda CSV dosyası oluşturulamadı. Lütfen ayarlardaki yolu kontrol edin.",
+      "tableRenderError": "Tablo oluşturma hatası"
     },
     "fileEmpty": "Dosya Boş",
     "imbalanceAlerts": "Dengesizlik Uyarıları",
@@ -499,7 +509,9 @@
       "update": "Güncelleme geçmişi",
       "updateTable": "Tabloyu güncelle",
       "updateTargetWeight": "Hedef ağırlığı güncelle",
-      "updateTimer": "Zamanlayıcıyı güncelle"
+      "updateTimer": "Zamanlayıcıyı güncelle",
+      "decreaseBy": "{label} değerini {increment} azalt",
+      "increaseBy": "{label} değerini {increment} artır"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -578,8 +590,8 @@
       "auditRenameSuccess": "Audit Rename Success",
       "auditScanError": "Tarama hatası: {error}",
       "auditScanning": "Denetim taraması",
-      "canvasExportError": "Çizim İhracat Hatası",
-      "canvasExported": "Çizim, dışa aktarıldı",
+      "canvasExportError": "Çizim İhracat Hatası: {error}",
+      "canvasExported": "Çizim, dışa aktarıldı ({path})",
       "chartInserted": "✅ Grafik başarıyla eklendi!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Gösterge paneli başarıyla eklendi!",
@@ -595,7 +607,7 @@
       "logCreated": "Egzersiz kaydı başarıyla oluşturuldu!",
       "logUpdated": "Egzersiz kaydı başarıyla güncellendi!",
       "migrationComplete": "Göç tamamlandı. Güncellenmiş {count} egzersiz dosyaları.",
-      "migrationError": "Göç İşlemi Hatası",
+      "migrationError": "Göç İşlemi Hatası: {error}",
       "migrationNoUpdates": "Göç için güncellemeler mevcut değil",
       "muscleTagCount": "{count} etiket(ler) bulundu",
       "muscleTagDeleteConfirm": "\"{tag}\" etiketini silmekten emin misiniz?",
@@ -625,7 +637,13 @@
       "timerUpdateFailed": "Zamanlayıcı güncellenmedi. Dosyanın düzenleyici programda açık olduğundan emin olun.",
       "timerUpdated": "✅ Zamanlayıcı başarıyla güncellendi!",
       "validationCombinedMode": "⚠️ \"Egzersiz + Antrenman\" türü için, her iki alanı da doldurmanız gerekmektedir!",
-      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun."
+      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun.",
+      "validMissingField": "Zorunlu alan eksik: {field}",
+      "validMustBeNumber": "{field} geçerli bir sayı olmalıdır",
+      "validMinValue": "{field} en az {min} olmalıdır",
+      "validMaxValue": "{field} en fazla {max} olmalıdır",
+      "validFieldRequired": "{field} zorunludur",
+      "migrationFolderNotFound": "Egzersiz klasörü bulunamadı: {path}"
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -720,7 +738,11 @@
     },
     "workout": "Egzersiz (isteğe bağlı):",
     "workoutFile": "Egzersiz dosyası:",
-    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):"
+    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):",
+    "importMergeAriaLabel": "Birleştir: yalnızca yeni etiket ekle, mevcutları koru",
+    "importReplaceAriaLabel": "Değiştir: tüm mevcut etiketlerin üzerine yaz",
+    "editItem": "{item} düzenle",
+    "deleteItem": "{item} sil"
   },
   "settings": {
     "buttons": {
@@ -880,7 +902,7 @@
       "weightUnit": "Ağırlık ({weightUnit})"
     },
     "deleteConfirm": "Onaylamak",
-    "deleteError": "Silme Hatası",
+    "deleteError": "Silme Hatası: {error}",
     "deleteSuccess": "Silme Başarılı",
     "deleteTitle": "Silme",
     "editTable": "Tabloyu düzenle",

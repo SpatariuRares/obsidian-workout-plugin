@@ -1,5 +1,7 @@
 import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
 import type WorkoutChartsPlugin from "main";
+import { t } from "@app/i18n";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 /**
  * Service for generating and reading template files.
@@ -47,8 +49,8 @@ export class TemplateGeneratorService {
       new Notice(
         `Templates generated successfully in '${this.defaultTemplateFolder}'! You can now customize them.`,
       );
-    } catch {
-      new Notice("Failed to generate templates.");
+    } catch (error) {
+      new Notice(t("messages.errors.templateGenError", { error: ErrorUtils.getErrorMessage(error) }));
     }
   }
 

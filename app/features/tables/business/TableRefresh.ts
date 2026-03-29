@@ -35,7 +35,7 @@ export class TableRefresh {
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
-      callbacks?.onError?.(errorObj, "refreshing table");
+      callbacks?.onError?.(errorObj, t("table.refreshingTable"));
     }
   }
 }

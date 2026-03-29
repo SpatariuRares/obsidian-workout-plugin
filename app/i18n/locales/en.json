@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "Avg variance: ±{value}%",
       "columnActual": "Actual",
       "columnEstimated": "Estimated",
       "columnVariance": "Variance",
@@ -89,8 +90,7 @@
       "varianceTrendDeclining": "Variance Trend Declining",
       "varianceTrendImproving": "Variance Trend Improving",
       "varianceTrendStable": "Variance Trend Stable",
-      "varianceTrendTitle": "Variance Trend Title",
-      "avgVarianceStat": "Avg variance: ±{value}%"
+      "varianceTrendTitle": "Variance Trend Title"
     },
     "fileErrors": {
       "allValid": "All Valid",
@@ -444,16 +444,16 @@
     "codeInserted": "Code Inserted",
     "csvNotFound": "Csv Not Found",
     "errors": {
-      "tagReferenceFailed": "Error generating tag reference: {error}",
-      "csvLoadError": "Error loading CSV workout data: {error}",
-      "csvCreateError": "Error creating CSV file: {error}",
       "blockIdsError": "Error adding block IDs: {error}",
+      "csvCreateError": "Error creating CSV file: {error}",
       "csvFilesError": "Error creating CSV files: {error}",
+      "csvLoadError": "Error loading CSV workout data: {error}",
       "muscleTagsCsvError": "Error creating muscle tags CSV: {error}",
       "muscleTagsLoadError": "Error loading muscle tags: {error}",
+      "tableRenderError": "Error in table rendering",
+      "tagReferenceFailed": "Error generating tag reference: {error}",
       "templateGenError": "Failed to generate templates: {error}",
-      "workoutLogCreateError": "Failed to create CSV file at path: {path}. Please check the path in settings.",
-      "tableRenderError": "Error in table rendering"
+      "workoutLogCreateError": "Failed to create CSV file at path: {path}. Please check the path in settings."
     },
     "fileEmpty": "File Empty",
     "imbalanceAlerts": "Imbalance Alerts",
@@ -497,7 +497,9 @@
       "create": "Create log",
       "createExercise": "Create exercise page",
       "createSection": "Create section",
+      "decreaseBy": "Decrease {label} by {increment}",
       "export": "Export",
+      "increaseBy": "Increase {label} by {increment}",
       "insertChart": "Insert chart",
       "insertDashboard": "Insert dashboard",
       "insertExerciseBlock": "Insert",
@@ -509,9 +511,7 @@
       "update": "Update log",
       "updateTable": "Update table",
       "updateTargetWeight": "Update target",
-      "updateTimer": "Update timer",
-      "decreaseBy": "Decrease {label} by {increment}",
-      "increaseBy": "Increase {label} by {increment}"
+      "updateTimer": "Update timer"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
@@ -542,8 +542,14 @@
     "dateRange": "Date range (days):",
     "daysRange": "Days range:",
     "delete": "Delete",
+    "deleteItem": "Delete {item}",
     "duration": "Duration (seconds):",
+    "editItem": "Edit {item}",
     "editTag": "Edit tag",
+    "errors": {
+      "missingElements": "Missing elements"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Reps: {reps}\n- Rest: {restTime}s\n\n",
     "exerciseStatus": {
       "createPage": "Create Page",
       "notFound": "Not Found"
@@ -553,7 +559,9 @@
     "fileName": "File name",
     "folderPath": "Folder path (optional):",
     "importMerge": "Merge",
+    "importMergeAriaLabel": "Merge: add new tags only, keep existing",
     "importReplace": "Replace all",
+    "importReplaceAriaLabel": "Replace: overwrite all existing tags",
     "importTags": "Import tags",
     "info": {
       "dashboardDescription": "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions."
@@ -578,6 +586,7 @@
     "noTagsFound": "No tags match your search",
     "noTagsSelected": "No tags selected. Click on tags below to add them.",
     "note": "Note:",
+    "noteTemplate": "**Note: ${params.note}**\n",
     "notes": "Notes (optional):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File \n\n {oldName} -> {newName}",
@@ -608,6 +617,7 @@
       "logUpdated": "Workout log updated successfully!",
       "migrationComplete": "Migration complete. Updated {count} exercise files.",
       "migrationError": "Migration Error: {error}",
+      "migrationFolderNotFound": "Exercise folder not found: {path}",
       "migrationNoUpdates": "Migration No Updates",
       "muscleTagCount": "{count} tag(s) found",
       "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",
@@ -636,14 +646,13 @@
       "timerInserted": "✅ Timer inserted successfully!",
       "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
       "timerUpdated": "✅ Timer updated successfully!",
-      "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
-      "validationFillAll": "Please fill in all fields with valid values",
+      "validFieldRequired": "{field} is required",
+      "validMaxValue": "{field} must be at most {max}",
+      "validMinValue": "{field} must be at least {min}",
       "validMissingField": "Missing required field: {field}",
       "validMustBeNumber": "{field} must be a valid number",
-      "validMinValue": "{field} must be at least {min}",
-      "validMaxValue": "{field} must be at most {max}",
-      "validFieldRequired": "{field} is required",
-      "migrationFolderNotFound": "Exercise folder not found: {path}"
+      "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
+      "validationFillAll": "Please fill in all fields with valid values"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -738,11 +747,7 @@
     },
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):",
-    "importMergeAriaLabel": "Merge: add new tags only, keep existing",
-    "importReplaceAriaLabel": "Replace: overwrite all existing tags",
-    "editItem": "Edit {item}",
-    "deleteItem": "Delete {item}"
+    "workoutNameOptional": "Workout name (optional):"
   },
   "settings": {
     "buttons": {
@@ -910,11 +915,15 @@
     "gotoExercise": "Goto Exercise",
     "invalidDate": "Invalid Date",
     "labels": {
+      "errors": {
+        "tableElementsNotInitialized": "Table elements not initialized"
+      },
       "target": "Target:"
     },
     "noData": "No Data",
     "notAvailable": "Not Available",
     "refreshSuccess": "Refresh Success",
+    "refreshingTable": "Refreshing table...",
     "target": {
       "progressTooltip": "Best: {best} reps / Target: {target} reps",
       "repsSuffix": "reps",

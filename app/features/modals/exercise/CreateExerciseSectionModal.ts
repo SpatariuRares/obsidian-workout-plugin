@@ -206,13 +206,17 @@ export class CreateExerciseSectionModal extends ModalBase {
     timerSound: boolean;
     showLog: boolean;
   }): string {
-    let sectionCode = `## ${params.exerciseName}:\n`;
-    sectionCode += `### ${params.sets} sets x ${params.reps} reps (Rest: ${params.restTime}s)\n\n`;
-
+    let sectionCode = t("modal.exerciseSectionTemplate", {
+      exerciseName: params.exerciseName,
+      sets: params.sets,
+      reps: params.reps,
+      restTime: params.restTime,
+    });
     if (params.note) {
-      sectionCode += `**Note: ${params.note}**\n`;
+      sectionCode += t("modal.noteTemplate", {
+        note: params.note,
+      });
     }
-
     if (params.showTimer) {
       const timerCode = CodeGenerator.generateTimerCode({
         type: TIMER_TYPE.COUNTDOWN,

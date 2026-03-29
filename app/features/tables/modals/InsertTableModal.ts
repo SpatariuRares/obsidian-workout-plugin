@@ -322,7 +322,7 @@ export class InsertTableModal extends BaseInsertModal {
       !this.limitInput ||
       !this.advancedElements
     ) {
-      throw new Error("Table elements not initialized");
+      throw new Error(t("modal.errors.missingElements"));
     }
 
     const tableType = this.tableTypeSelect.value;
@@ -351,9 +351,7 @@ export class InsertTableModal extends BaseInsertModal {
     if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
       if (!target.exercise || !target.workout) {
         new Notice(t("modal.notices.validationCombinedMode"));
-        throw new Error(
-          "Both exercise and workout are required for combined mode",
-        );
+        throw new Error(t("modal.errors.validationCombinedMode"));
       }
     }
 

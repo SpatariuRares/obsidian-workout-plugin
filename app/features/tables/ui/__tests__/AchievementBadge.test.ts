@@ -6,6 +6,18 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 
 jest.mock("@app/components/atoms", () => ({
+  BUTTONVARIANT: {
+    PRIMARY: "primary",
+    SECONDARY: "secondary",
+    DANGER: "danger",
+    WARNING: "warning",
+  },
+  BUTTONSIZE: {
+    SMALL: "small",
+    MEDIUM: "medium",
+    BIG: "big",
+    GIANT: "giant",
+  },
   Button: {
     create: jest.fn((parent: HTMLElement, opts: any) => {
       const btn = document.createElement("button");

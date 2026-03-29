@@ -9,13 +9,12 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 
 import type WorkoutChartsPlugin from "main";
 
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import type {
   CanvasExportOptions,
   CanvasLayoutType,
 } from "@app/features/canvas/types";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * Modal for configuring canvas export options

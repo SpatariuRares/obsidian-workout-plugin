@@ -5,6 +5,8 @@
 
 export {
   Button,
+  BUTTONVARIANT,
+  BUTTONSIZE,
   type ButtonProps,
 } from "@app/components/atoms/Button";
 export {

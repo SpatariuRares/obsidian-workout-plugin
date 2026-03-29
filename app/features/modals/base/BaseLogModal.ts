@@ -8,7 +8,7 @@ import {
   CSVWorkoutLogEntry,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
@@ -19,7 +19,6 @@ import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmiss
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * Abstract base class for workout log modals.

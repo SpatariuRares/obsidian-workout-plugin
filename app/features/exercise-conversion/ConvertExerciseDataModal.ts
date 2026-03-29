@@ -15,8 +15,7 @@ import {
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
-import { Button } from "@app/components/atoms";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 
 export class ConvertExerciseDataModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;

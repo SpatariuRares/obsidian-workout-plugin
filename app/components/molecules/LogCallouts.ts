@@ -1,5 +1,5 @@
 import { MarkdownView } from "obsidian";
-import { Button, Text } from "@app/components/atoms";
+import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type WorkoutChartsPlugin from "main";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
@@ -7,7 +7,6 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "../atoms/Button";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.

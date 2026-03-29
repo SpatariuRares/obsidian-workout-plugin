@@ -2,12 +2,11 @@ import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type WorkoutChartsPlugin from "main";
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface MismatchEntry {
   file: TFile;
@@ -300,8 +299,13 @@ export class AuditExerciseNamesModal extends ModalBase {
       t("modal.notices.auditConfirmRenameFile", { oldName, newName }),
       async () => {
         try {
-          const count = await this.plugin.renameExercise(oldName, newName);
-          new Notice(t("modal.notices.auditRenameSuccess", { count }));
+          const count = await this.plugin.renameExercise(
+            oldName,
+            newName,
+          );
+          new Notice(
+            t("modal.notices.auditRenameSuccess", { count }),
+          );
           await this.scanExerciseFiles();
           this.renderResults();
         } catch (error) {
@@ -335,7 +339,9 @@ export class AuditExerciseNamesModal extends ModalBase {
             (frontmatter) => {
               if (typeof frontmatter.exercise_name === "string") {
                 frontmatter.exercise_name = newFileName;
-              } else if (typeof frontmatter.nome_esercizio === "string") {
+              } else if (
+                typeof frontmatter.nome_esercizio === "string"
+              ) {
                 frontmatter.nome_esercizio = newFileName;
               }
             },

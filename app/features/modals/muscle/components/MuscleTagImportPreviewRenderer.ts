@@ -1,7 +1,6 @@
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface RenderImportPreviewOptions {
   tags: Map<string, string>;

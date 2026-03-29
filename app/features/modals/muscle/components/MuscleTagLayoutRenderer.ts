@@ -1,11 +1,10 @@
 import { SearchBox } from "@app/components/molecules";
-import { Button, Input } from "@app/components/atoms";
+import { Button, BUTTONVARIANT, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
 import { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export interface MuscleTagLayoutCallbacks {
   onSearch: (value: string) => void;

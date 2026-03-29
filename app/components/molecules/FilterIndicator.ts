@@ -4,9 +4,8 @@
  * Combines: Text + Button atoms
  */
 
-import { Button, Text } from "@app/components/atoms";
+import { Button, Text, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "../atoms/Button";
 
 export interface FilterIndicatorProps {
   label: string;

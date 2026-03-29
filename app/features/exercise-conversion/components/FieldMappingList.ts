@@ -1,10 +1,9 @@
 import { EXERCISE_TYPE_IDS } from "@app/constants/exerciseTypes.constants";
 import type { FieldMapping } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class FieldMappingList {
   private container: HTMLElement;

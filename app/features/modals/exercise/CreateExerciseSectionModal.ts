@@ -7,12 +7,11 @@ import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { TABLE_TYPE } from "@app/features/tables/types";
 import { TIMER_TYPE } from "@app/features/timer/types";
-import { Button } from "@app/components/atoms";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;

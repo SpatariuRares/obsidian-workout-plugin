@@ -1,10 +1,9 @@
 import { App } from "obsidian";
-import { Button, Text } from "@app/components/atoms";
+import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * AchievementBadge - UI component for displaying achievement celebrations

@@ -1,5 +1,5 @@
-import { Button } from "@app/components/atoms";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
+
 import { t } from "@app/i18n";
 
 interface MuscleTagTableRendererOptions {

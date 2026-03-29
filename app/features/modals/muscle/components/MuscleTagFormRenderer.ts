@@ -1,9 +1,8 @@
 import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
-import { Button, Input } from "@app/components/atoms";
+import { Button, BUTTONVARIANT, Input } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import type { MuscleTagSuggestionItem } from "@app/features/modals/muscle/types";
 import { t } from "@app/i18n";
-import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface RenderMuscleTagFormOptions {
   title: string;

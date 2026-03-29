@@ -93,7 +93,7 @@ export class DateUtils {
     const today = new Date();
     const diffTime = today.getTime() - date.getTime();
     const diffDays = Math.floor(diffTime / this.MS_PER_DAY);
-    return Math.floor(diffDays / 7);
+    return Math.round(diffDays / 7);
   }
 
   /**

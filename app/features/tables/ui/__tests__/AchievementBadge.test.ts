@@ -24,6 +24,22 @@ jest.mock("@app/components/atoms", () => ({
       },
     ),
   },
+  Text: {
+    createSpan: jest.fn((parent: HTMLElement, text: string, className?: string) => {
+      const span = document.createElement("span");
+      span.textContent = text;
+      if (className) span.className = className;
+      parent.appendChild(span);
+      return span;
+    }),
+    create: jest.fn((parent: HTMLElement, opts: any) => {
+      const el = document.createElement(opts.tag || "span");
+      el.textContent = opts.text || "";
+      if (opts.className) el.className = opts.className;
+      parent.appendChild(el);
+      return el;
+    }),
+  },
 }));
 
 const createLog = (

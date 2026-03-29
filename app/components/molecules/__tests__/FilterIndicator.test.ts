@@ -28,7 +28,7 @@ describe("FilterIndicator molecule", () => {
 		// Check clear button
 		const clearBtn = indicator.querySelector(".workout-filter-indicator-clear");
 		expect(clearBtn).not.toBeNull();
-		expect(clearBtn?.textContent).toBe("Clear");
+		expect(clearBtn?.textContent).toBe("common.clear");
 	});
 
 	it("uses custom className when provided", () => {

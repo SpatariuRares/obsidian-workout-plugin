@@ -423,6 +423,7 @@
       "weight": "🏋️ "
     },
     "timer": {
+      "menu": "⋮",
       "pause": "⏸",
       "play": "▶",
       "reset": "↺"
@@ -893,7 +894,8 @@
     "controls": {
       "pauseTimer": "Wstrzymaj timer",
       "resetTimer": "Przywróć działanie timera",
-      "startTimer": "Uruchom timer"
+      "startTimer": "Uruchom timer",
+      "timerMenu": "Timer menu"
     },
     "countdown": "Licznik wsteczny",
     "editTimer": "Edytuj timer",

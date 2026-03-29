@@ -1,7 +1,7 @@
 .workout-select-dropdown {
   flex-shrink: 0;
   font-size: var(--workout-font-xl);
-  padding: var(--workout-space-sm) var(--workout-space-md);
+  padding: var(--workout-space-xs);
   cursor: pointer;
   max-width: 140px;
   text-overflow: ellipsis;
@@ -10,18 +10,25 @@
   height: auto;
   min-height: 30px;
 
-  /* Basic select styling to ensure consistency */
-  background-color: var(--background-primary);
+  /* Icon-only appearance when closed */
+  background-color: transparent;
   color: var(--text-normal);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid transparent;
   border-radius: var(--workout-radius-sm);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  /* Hide the native dropdown arrow */
+  appearance: none;
+  -webkit-appearance: none;
 
   &:hover {
+    background-color: var(--background-modifier-hover);
     border-color: var(--background-modifier-border-hover);
   }
 
   &:focus {
     outline: none;
+    background-color: var(--background-primary);
     border-color: var(--interactive-accent);
     box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
   }

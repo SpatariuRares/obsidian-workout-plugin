@@ -22,7 +22,7 @@ export class TimerControls {
     const startStopBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-start-stop",
       text: t("icons.timer.play"),
-      variant: "secondary",
+      variant: "primary",
       size: "small",
       ariaLabel: t("timer.controls.startTimer"),
     });
@@ -59,14 +59,9 @@ export class TimerControls {
     return startStopBtn;
   }
 
-  static updateStartStopButton(
-    button: HTMLButtonElement | undefined,
-    isRunning: boolean,
-  ): void {
+  static updateStartStopButton(button: HTMLButtonElement | undefined, isRunning: boolean): void {
     if (button) {
-      button.textContent = isRunning
-        ? t("icons.timer.pause")
-        : t("icons.timer.play");
+      button.textContent = isRunning ? t("icons.timer.pause") : t("icons.timer.play");
     }
   }
 }

@@ -82,6 +82,7 @@ export class TimerDisplay {
         cls: "workout-timer-complete",
         text: t("icons.status.success"),
       });
+      this.updateRoundCounter(state, "");
       return;
     }
 
@@ -102,10 +103,16 @@ export class TimerDisplay {
     });
 
     if (state.timerType === TIMER_TYPE.INTERVAL) {
-      state.timerDisplay.createEl("span", {
-        cls: "workout-timer-round-counter",
-        text: `${state.currentRound} / ${state.totalRounds}`,
-      });
+      this.updateRoundCounter(
+        state,
+        `${state.currentRound} / ${state.totalRounds}`,
+      );
+    }
+  }
+
+  private static updateRoundCounter(state: TimerState, text: string): void {
+    if (state.roundCounterDisplay) {
+      state.roundCounterDisplay.textContent = text;
     }
   }
 
@@ -115,5 +122,11 @@ export class TimerDisplay {
     });
 
     return timeDisplay;
+  }
+
+  static createRoundCounter(container: HTMLElement): HTMLElement {
+    return container.createEl("span", {
+      cls: "workout-timer-round-counter",
+    });
   }
 }

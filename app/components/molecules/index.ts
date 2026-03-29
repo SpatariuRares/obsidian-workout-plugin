@@ -62,3 +62,9 @@ export {
   type SelectDropdownResult,
   type SelectOption,
 } from "@app/components/molecules/SelectDropdown";
+export {
+  IconDropdown,
+  type IconDropdownProps,
+  type IconDropdownResult,
+  type IconDropdownOption,
+} from "@app/components/molecules/IconDropdown";

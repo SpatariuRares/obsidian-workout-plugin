@@ -194,7 +194,6 @@ export class EmbeddedTimerView extends BaseView {
   ): void {
     container.empty();
 
-    // Wrapper row: timer (grows) + action select (shrinks to right)
     const rowDiv = container.createDiv({
       cls: "workout-timer-row",
     });
@@ -204,20 +203,16 @@ export class EmbeddedTimerView extends BaseView {
       attr: { id: this.timerId },
     });
 
-    // Render action select after the timer, aligned right
-    TimerActionSelect.render(rowDiv, {
-      app: this.plugin.app,
-      plugin: this.plugin,
-      params: originalParams,
-    });
-
-    // Create timer display using the component
+    // Time display
     const timeDisplay = TimerDisplay.createDisplay(contentDiv);
 
-    // Store reference in timer core state
-    this.timerCore.setState({ timerDisplay: timeDisplay });
+    // Actions group: controls + dropdown together on the right
+    const actionsGroup = contentDiv.createDiv({
+      cls: "workout-timer-actions-group",
+    });
 
-    // Create controls if requested
+    // Controls (play/pause + reset)
+    let startStopBtn: HTMLButtonElement | undefined;
     if (params.showControls !== false) {
       const callbacks: TimerControlCallbacks = {
         onStart: () => this.timerCore.start(),
@@ -225,21 +220,38 @@ export class EmbeddedTimerView extends BaseView {
         onReset: () => this.timerCore.reset(),
       };
 
-      const startStopBtn = TimerControls.createControls(
-        contentDiv,
+      startStopBtn = TimerControls.createControls(
+        actionsGroup,
         () => this.timerCore.getState(),
         callbacks,
       );
 
-      // Ensure button icon matches current running state (important for persistent IDs)
       TimerControls.updateStartStopButton(
         startStopBtn,
         this.timerCore.isRunning(),
       );
-
-      // Store reference in timer core state
-      this.timerCore.setState({ startStopBtn });
     }
+
+    // Round counter (interval timers only) — sibling after controls
+    const timerType = params.type || TIMER_TYPE.COUNTDOWN;
+    let roundCounterDisplay: HTMLElement | undefined;
+    if (timerType === TIMER_TYPE.INTERVAL) {
+      roundCounterDisplay = TimerDisplay.createRoundCounter(actionsGroup);
+    }
+
+    // Menu button (only if code block has an ID)
+    TimerActionSelect.render(actionsGroup, {
+      app: this.plugin.app,
+      plugin: this.plugin,
+      params: originalParams,
+    });
+
+    // Store references in timer core state
+    this.timerCore.setState({
+      timerDisplay: timeDisplay,
+      roundCounterDisplay,
+      startStopBtn,
+    });
 
     // Initial display update
     TimerDisplay.updateDisplay(this.timerCore.getState(), this.timerId);

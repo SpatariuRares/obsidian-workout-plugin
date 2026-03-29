@@ -1,15 +1,15 @@
 import { App } from "obsidian";
 
-import { SelectDropdown } from "@app/components/molecules/SelectDropdown";
+import { IconDropdown } from "@app/components/molecules/IconDropdown";
 import { t } from "@app/i18n";
 import type WorkoutChartsPlugin from "main";
 import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 
 /**
- * TimerActionSelect - Dropdown select for timer-level actions
+ * TimerActionSelect - Icon button dropdown for timer-level actions
  *
- * Offers an "Edit timer" action for embedded timers.
+ * Renders an icon-only button that opens a custom dropdown panel.
  * Only rendered when the code block has an ID.
  */
 export interface TimerActionSelectProps {
@@ -20,33 +20,36 @@ export interface TimerActionSelectProps {
 
 export class TimerActionSelect {
   /**
-   * Renders an action select dropdown with the edit option.
+   * Renders an icon button with a dropdown action panel.
    * Returns null if the code block has no ID (not editable).
    */
   static render(
     container: HTMLElement,
     props: TimerActionSelectProps,
     signal?: AbortSignal,
-  ): HTMLSelectElement | null {
+  ): HTMLElement | null {
     const { app, plugin, params } = props;
 
     if (!params.id) {
       return null;
     }
 
-    const { select } = SelectDropdown.create(container, {
-      placeholder: `${t("icons.tables.edit")} ${t("table.actions")}`,
+    const { wrapper } = IconDropdown.create(container, {
+      // eslint-disable-next-line i18next/no-literal-string
+      icon: t("icons.timer.menu"),
       ariaLabel: t("table.actions"),
       options: [
         {
-          label: `${t("icons.tables.edit")} ${t("timer.editTimer")}`,
+          label: t("timer.editTimer"),
           value: "edit",
+          // eslint-disable-next-line i18next/no-literal-string
+          icon: t("icons.tables.edit"),
         },
       ],
     });
 
-    SelectDropdown.onChange(
-      select,
+    IconDropdown.onChange(
+      wrapper,
       (value) => {
         if (value === "edit") {
           const modal = new EditTimerModal(app, plugin, params);
@@ -56,6 +59,6 @@ export class TimerActionSelect {
       signal,
     );
 
-    return select;
+    return wrapper;
   }
 }

@@ -423,6 +423,7 @@
       "weight": "🏋️ "
     },
     "timer": {
+      "menu": "⋮",
       "pause": "⏸",
       "play": "▶",
       "reset": "↺"
@@ -893,7 +894,8 @@
     "controls": {
       "pauseTimer": "Pause timer",
       "resetTimer": "Genstart timer",
-      "startTimer": "Start timer"
+      "startTimer": "Start timer",
+      "timerMenu": "Timer menu"
     },
     "countdown": "Tæller til",
     "editTimer": "Rediger tidsinterval",

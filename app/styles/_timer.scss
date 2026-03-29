@@ -4,22 +4,17 @@
    TIMER STYLES
    ============================================================================ */
 
-/* Timer row: timer fills space, action select stays small on the right */
+/* Timer row: single-line compact layout */
 .workout-timer-row {
   margin-bottom: var(--workout-space-sm);
   display: flex;
   align-items: center;
-  gap: var(--workout-space-sm);
-  flex-wrap: wrap;
-
-  @media (max-width: variables.$breakpoint-tablet) {
-    flex-wrap: wrap;
-  }
 }
 
 /* Timer urgent overlay animation */
 @keyframes workout-timer-urgent-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -53,16 +48,11 @@
   }
 }
 
-/* Timer Styles */
+/* Timer: inline flex container (no box styling) */
 .workout-timer {
-  padding: var(--workout-space-sm) var(--workout-space-md);
-  background: var(--background-secondary);
-  border-radius: var(--workout-radius-md);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--workout-space-lg);
+  gap: var(--workout-space-sm);
   font-size: var(--workout-font-xl);
   flex: 1;
   justify-content: space-between;
@@ -70,8 +60,6 @@
   .workout-timer-time {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    gap: var(--workout-space-2xs, 2px);
 
     .workout-timer-time-display {
       font-size: var(--workout-font-xl);
@@ -80,14 +68,6 @@
       font-family: monospace;
       min-width: var(--workout-size-3xl);
       text-align: center;
-    }
-
-    .workout-timer-round-counter {
-      font-size: var(--workout-font-sm);
-      color: var(--text-muted);
-      font-family: monospace;
-      text-align: center;
-      letter-spacing: 0.04em;
     }
 
     .workout-timer-complete {
@@ -101,6 +81,36 @@
     display: flex;
     gap: var(--workout-space-xs);
     align-items: center;
+  }
+
+  .workout-timer-actions-group {
+    display: flex;
+    align-items: center;
+    gap: var(--workout-space-xs);
+  }
+
+  .workout-timer-round-counter {
+    font-size: var(--workout-font-sm);
+    color: var(--text-muted);
+    font-family: monospace;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .workout-timer-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: var(--workout-font-lg);
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: var(--workout-radius-sm);
+
+    &:hover {
+      color: var(--text-normal);
+      background: var(--background-modifier-hover);
+    }
   }
 }
 

@@ -1,0 +1,93 @@
+// Icon-only button that opens a custom dropdown panel
+
+.workout-icon-dropdown {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+// Trigger button — shows only the icon, no visual chrome
+.workout-icon-dropdown-btn {
+  min-width: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: var(--workout-border-thin) solid transparent;
+  border-radius: var(--workout-radius-sm);
+  color: var(--text-normal);
+  font-size: var(--workout-font-xl);
+  padding: var(--workout-space-xs);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+  box-shadow: none;
+
+  &:hover {
+    background-color: var(--background-modifier-hover);
+    border-color: var(--background-modifier-border-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+  }
+}
+
+// Dropdown panel — hidden by default
+.workout-icon-dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 100;
+  min-width: 160px;
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+  box-shadow: var(--workout-shadow-md);
+  overflow: hidden;
+  flex-direction: column;
+}
+
+// Panel is visible when parent has --open modifier
+.workout-icon-dropdown--open .workout-icon-dropdown-panel {
+  display: flex;
+}
+
+// Individual menu items
+.workout-icon-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  width: 100%;
+  padding: var(--workout-space-sm) var(--workout-space-md);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--text-normal);
+  font-size: var(--workout-font-base);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: none;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--text-normal);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: -2px;
+  }
+
+  // Checkmark for active item (left side)
+  &[aria-checked="true"]::before {
+    content: "✓";
+    color: var(--interactive-accent);
+    font-size: var(--workout-font-sm);
+  }
+}

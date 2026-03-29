@@ -1,16 +1,16 @@
 import { App } from "obsidian";
 
-import { SelectDropdown } from "@app/components/molecules/SelectDropdown";
+import { IconDropdown } from "@app/components/molecules/IconDropdown";
 import { t } from "@app/i18n";
 import type WorkoutChartsPlugin from "main";
 import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 
 /**
- * ExerciseActionSelect - Dropdown select for exercise-level actions
+ * ExerciseActionSelect - Icon button dropdown for exercise-level actions
  *
- * Replaces the GoToExerciseButton with a select that offers
- * "Goto exercise" and "Edit table" actions.
+ * Offers "Goto exercise" and (when an ID is set) "Edit table" actions
+ * via a custom dropdown panel triggered by an icon-only button.
  */
 export interface ExerciseActionSelectProps {
   exerciseName: string;
@@ -21,22 +21,24 @@ export interface ExerciseActionSelectProps {
 
 export class ExerciseActionSelect {
   /**
-   * Renders an action select dropdown with goto and edit options
+   * Renders an icon button with a dropdown action panel.
    * @param container - Parent element
    * @param props - Select properties
    * @param signal - Optional AbortSignal for cleanup
-   * @returns The created select element
+   * @returns The created wrapper element
    */
   static render(
     container: HTMLElement,
     props: ExerciseActionSelectProps,
     signal?: AbortSignal,
-  ): HTMLSelectElement {
+  ): HTMLElement {
     const { exerciseName, app, plugin, params } = props;
 
     const options = [
       {
-        label: `${t("icons.tables.goto")} ${t("table.gotoExercise")}`,
+        // eslint-disable-next-line i18next/no-literal-string
+        icon: t("icons.tables.goto"),
+        label: t("table.gotoExercise"),
         value: "goto",
       },
     ];
@@ -44,19 +46,21 @@ export class ExerciseActionSelect {
     // Only show edit option when the code block has an ID
     if (params.id) {
       options.push({
-        label: `${t("icons.tables.edit")} ${t("table.editTable")}`,
+        // eslint-disable-next-line i18next/no-literal-string
+        icon: t("icons.tables.edit"),
+        label: t("table.editTable"),
         value: "edit",
       });
     }
 
-    const { select } = SelectDropdown.create(container, {
-      placeholder: `${t("icons.tables.edit")} ${t("table.actions")}`,
+    const { wrapper } = IconDropdown.create(container, {
+      icon: t("icons.timer.menu"),
       ariaLabel: t("table.actions"),
       options,
     });
 
-    SelectDropdown.onChange(
-      select,
+    IconDropdown.onChange(
+      wrapper,
       (value) => {
         if (value === "goto") {
           this.navigateToExercise(app, exerciseName);
@@ -68,7 +72,7 @@ export class ExerciseActionSelect {
       signal,
     );
 
-    return select;
+    return wrapper;
   }
 
   /**

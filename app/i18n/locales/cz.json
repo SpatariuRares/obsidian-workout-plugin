@@ -423,6 +423,7 @@
       "weight": "🏋️ "
     },
     "timer": {
+      "menu": "⋮",
       "pause": "⏸",
       "play": "▶",
       "reset": "↺"
@@ -893,7 +894,8 @@
     "controls": {
       "pauseTimer": "Zastavit časovač",
       "resetTimer": "Resetovat časovač",
-      "startTimer": "Spustit časovač"
+      "startTimer": "Spustit časovač",
+      "timerMenu": "Timer menu"
     },
     "countdown": "Počítadlo",
     "editTimer": "Upravit časovač",

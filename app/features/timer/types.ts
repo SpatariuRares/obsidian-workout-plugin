@@ -39,6 +39,7 @@ export interface TimerState {
   timerType: TIMER_TYPE;
   duration: number;
   timerDisplay?: HTMLElement;
+  roundCounterDisplay?: HTMLElement;
   startStopBtn?: HTMLButtonElement;
 }
 

@@ -26,6 +26,7 @@
   border: none;
   border-radius: var(--button-radius, var(--workout-radius-md));
   font-weight: var(--workout-font-weight-semibold);
+  white-space: normal;
 }
 
 // Press effect - subtle scale down on click
@@ -203,7 +204,6 @@
 /* ----------------------------------------------------------------------------
    Single Context Buttons
    ---------------------------------------------------------------------------- */
-
 
 .workout-achievement-badge .workout-update-target-button {
   @extend %workout-btn-primary;

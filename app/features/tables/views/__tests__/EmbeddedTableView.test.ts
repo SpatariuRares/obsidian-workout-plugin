@@ -223,6 +223,32 @@ describe("EmbeddedTableView", () => {
       this.classList.remove(className);
       return this;
     };
+    // Obsidian createEl / createDiv helpers used by production code
+    (HTMLElement.prototype as any).createEl = function (
+      tag: string,
+      options?: { cls?: string | string[]; text?: string; attr?: Record<string, string> },
+    ): HTMLElement {
+      const el = document.createElement(tag);
+      if (options?.cls) {
+        const classes = Array.isArray(options.cls)
+          ? options.cls
+          : options.cls.split(/\s+/);
+        classes.filter(Boolean).forEach((c) => el.classList.add(c));
+      }
+      if (options?.text !== undefined) el.textContent = options.text;
+      if (options?.attr) {
+        Object.entries(options.attr).forEach(([k, v]) =>
+          el.setAttribute(k, v),
+        );
+      }
+      this.appendChild(el);
+      return el;
+    };
+    (HTMLElement.prototype as any).createDiv = function (
+      options?: { cls?: string | string[]; text?: string },
+    ): HTMLElement {
+      return (this as any).createEl("div", options);
+    };
   });
 
   describe("createTable", () => {

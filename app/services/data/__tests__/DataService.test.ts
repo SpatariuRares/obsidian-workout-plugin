@@ -3,6 +3,25 @@ import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { CHART_DATA_TYPE } from "@app/features/charts";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
+// Mock i18n to interpolate {key} placeholders, mirroring LocalizationService behaviour
+jest.mock("@app/i18n", () => ({
+  t: jest.fn(
+    (key: string, params?: Record<string, string | number>) => {
+      // Load English locale to get the actual translation string
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const en = require("@app/i18n/locales/en.json");
+      // Walk nested keys (dot-notation)
+      const translation = key.split(".").reduce((obj: any, k) => obj?.[k], en);
+      const str = typeof translation === "string" ? translation : key;
+      if (!params) return str;
+      // Interpolate {param} placeholders
+      return str.replace(/\{(\w+)\}/g, (_: string, k: string) =>
+        k in params ? String(params[k]) : `{${k}}`,
+      );
+    },
+  ),
+}));
+
 // Mock Obsidian module
 
 // Import after mocking

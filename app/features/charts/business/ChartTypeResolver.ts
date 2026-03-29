@@ -34,7 +34,8 @@ export class ChartTypeResolver {
 
     // Try to get exercise definition to determine default type
     if (params.exercise) {
-      const exerciseDefService = plugin.getExerciseDefinitionService();
+      const exerciseDefService =
+        plugin.getExerciseDefinitionService();
       if (exerciseDefService) {
         const exerciseType = await exerciseDefService.getExerciseType(
           params.exercise,
@@ -75,9 +76,8 @@ export class ChartTypeResolver {
     }
 
     // Check if exercise has an explicit definition
-    const exerciseDefinition = await exerciseDefService.getExerciseDefinition(
-      params.exercise,
-    );
+    const exerciseDefinition =
+      await exerciseDefService.getExerciseDefinition(params.exercise);
 
     // If no explicit definition found, allow any chart type (backward compatible)
     if (!exerciseDefinition) {
@@ -93,7 +93,11 @@ export class ChartTypeResolver {
 
     // Check if the requested type is valid for this exercise type
     if (
-      !isValidChartDataType(exerciseType.id, chartDataType, customNumericParams)
+      !isValidChartDataType(
+        exerciseType.id,
+        chartDataType,
+        customNumericParams,
+      )
     ) {
       const availableTypes = getAvailableChartDataTypes(
         exerciseType.id,

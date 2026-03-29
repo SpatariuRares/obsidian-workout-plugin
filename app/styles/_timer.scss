@@ -120,6 +120,7 @@
   color: var(--text-error);
   border-radius: var(--workout-radius-sm);
   margin: var(--workout-space-sm) 0;
-  border: var(--workout-border-thin) solid var(--background-modifier-error);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-error);
   font-size: var(--workout-font-base);
 }

@@ -5,4 +5,7 @@
  * Must be initialized in plugin onload() before use.
  */
 
-export { LocalizationService, t } from "@app/i18n/LocalizationService";
+export {
+  LocalizationService,
+  t,
+} from "@app/i18n/LocalizationService";

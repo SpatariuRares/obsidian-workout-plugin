@@ -30,10 +30,18 @@ describe("ChartFallbackTable", () => {
 
     const rows = table.querySelectorAll("tbody tr");
     expect(rows.length).toBe(2);
-    expect(rows[0].querySelectorAll("td")[0].textContent).toBe("2024-01-01");
-    expect(rows[0].querySelectorAll("td")[1].textContent).toBe("100.0");
-    expect(rows[1].querySelectorAll("td")[0].textContent).toBe("2024-01-02");
-    expect(rows[1].querySelectorAll("td")[1].textContent).toBe("110.6");
+    expect(rows[0].querySelectorAll("td")[0].textContent).toBe(
+      "2024-01-01",
+    );
+    expect(rows[0].querySelectorAll("td")[1].textContent).toBe(
+      "100.0",
+    );
+    expect(rows[1].querySelectorAll("td")[0].textContent).toBe(
+      "2024-01-02",
+    );
+    expect(rows[1].querySelectorAll("td")[1].textContent).toBe(
+      "110.6",
+    );
 
     const footer = tableWrapper.querySelector(
       ".workout-charts-footer",

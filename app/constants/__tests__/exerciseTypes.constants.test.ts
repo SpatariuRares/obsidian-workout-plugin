@@ -29,7 +29,7 @@ describe("exerciseTypes.constants", () => {
 
     it("should have strength type with reps and weight parameters", () => {
       const strengthType = BUILT_IN_EXERCISE_TYPES.find(
-        (t) => t.id === "strength"
+        (t) => t.id === "strength",
       );
       expect(strengthType).toBeDefined();
       expect(strengthType?.name).toBe("Strength");
@@ -39,7 +39,9 @@ describe("exerciseTypes.constants", () => {
     });
 
     it("should have timed type with duration parameter", () => {
-      const timedType = BUILT_IN_EXERCISE_TYPES.find((t) => t.id === "timed");
+      const timedType = BUILT_IN_EXERCISE_TYPES.find(
+        (t) => t.id === "timed",
+      );
       expect(timedType).toBeDefined();
       expect(timedType?.name).toBe("Timed");
       expect(timedType?.parameters).toHaveLength(1);
@@ -48,7 +50,7 @@ describe("exerciseTypes.constants", () => {
 
     it("should have distance type with distance and optional duration parameters", () => {
       const distanceType = BUILT_IN_EXERCISE_TYPES.find(
-        (t) => t.id === "distance"
+        (t) => t.id === "distance",
       );
       expect(distanceType).toBeDefined();
       expect(distanceType?.name).toBe("Distance");
@@ -61,7 +63,7 @@ describe("exerciseTypes.constants", () => {
 
     it("should have cardio type with duration, optional distance, and optional heart rate", () => {
       const cardioType = BUILT_IN_EXERCISE_TYPES.find(
-        (t) => t.id === "cardio"
+        (t) => t.id === "cardio",
       );
       expect(cardioType).toBeDefined();
       expect(cardioType?.name).toBe("Cardio");
@@ -73,7 +75,7 @@ describe("exerciseTypes.constants", () => {
 
     it("should have custom type with no parameters", () => {
       const customType = BUILT_IN_EXERCISE_TYPES.find(
-        (t) => t.id === "custom"
+        (t) => t.id === "custom",
       );
       expect(customType).toBeDefined();
       expect(customType?.name).toBe("Custom");
@@ -139,7 +141,9 @@ describe("exerciseTypes.constants", () => {
     });
 
     it("should match EXERCISE_TYPE_IDS.STRENGTH", () => {
-      expect(DEFAULT_EXERCISE_TYPE_ID).toBe(EXERCISE_TYPE_IDS.STRENGTH);
+      expect(DEFAULT_EXERCISE_TYPE_ID).toBe(
+        EXERCISE_TYPE_IDS.STRENGTH,
+      );
     });
   });
 });

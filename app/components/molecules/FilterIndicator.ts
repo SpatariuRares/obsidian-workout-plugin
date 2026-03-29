@@ -38,7 +38,10 @@ export class FilterIndicator {
    * @param props - Filter indicator properties
    * @returns The created filter indicator container
    */
-  static create(parent: HTMLElement, props: FilterIndicatorProps): HTMLElement {
+  static create(
+    parent: HTMLElement,
+    props: FilterIndicatorProps,
+  ): HTMLElement {
     const container = parent.createEl("div", {
       cls: props.className || "workout-filter-indicator",
     });

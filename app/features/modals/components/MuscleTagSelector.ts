@@ -150,14 +150,17 @@ export class MuscleTagSelector {
           this.renderSelectedTags(
             container
               .closest(".workout-muscle-tag-selector")!
-              .querySelector(".workout-selected-tags-container") as HTMLElement,
+              .querySelector(
+                ".workout-selected-tags-container",
+              ) as HTMLElement,
           );
           this.renderTagList(
             container,
             (container
               .closest(".workout-muscle-tag-selector")!
-              .querySelector(".workout-muscle-tag-search") as HTMLInputElement)!
-              .value,
+              .querySelector(
+                ".workout-muscle-tag-search",
+              ) as HTMLInputElement)!.value,
           );
 
           // Trigger callback

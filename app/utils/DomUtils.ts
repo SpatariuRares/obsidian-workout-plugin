@@ -8,10 +8,8 @@ export class DomUtils {
    */
   static setCssProps(
     element: HTMLElement,
-    props: Partial<CSSStyleDeclaration> | Record<string, string>
+    props: Partial<CSSStyleDeclaration> | Record<string, string>,
   ): void {
     Object.assign(element.style, props);
   }
 }
-
- 

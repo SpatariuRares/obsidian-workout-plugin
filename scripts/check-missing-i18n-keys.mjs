@@ -14,7 +14,10 @@ const __dirname = path.dirname(__filename);
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const LOCALES_DIR = path.join(ROOT_DIR, "app/i18n/locales");
-const UI_CONSTANTS_PATH = path.join(ROOT_DIR, "app/constants/ui.constants.ts");
+const UI_CONSTANTS_PATH = path.join(
+  ROOT_DIR,
+  "app/constants/ui.constants.ts",
+);
 
 /**
  * Reads and parses a JSON file
@@ -75,9 +78,13 @@ function extractUsedKeys(content) {
 }
 
 function main() {
-  console.log("🔍 Checking for missing i18n keys across all locales...\n");
+  console.log(
+    "🔍 Checking for missing i18n keys across all locales...\n",
+  );
 
-  const localeFiles = fs.readdirSync(LOCALES_DIR).filter(f => f.endsWith(".json"));
+  const localeFiles = fs
+    .readdirSync(LOCALES_DIR)
+    .filter((f) => f.endsWith(".json"));
   const uiConstantsContent = readUiConstants();
   const usedKeys = extractUsedKeys(uiConstantsContent);
 
@@ -105,16 +112,20 @@ function main() {
       problematicLocales++;
       totalMissing += missingKeys.length;
       if (missingKeys.length <= 10) {
-        missingKeys.sort().forEach(k => console.log(`   - ${k}`));
+        missingKeys.sort().forEach((k) => console.log(`   - ${k}`));
       } else {
-        console.log(`   - ${missingKeys.slice(0, 10).join("\n   - ")}`);
+        console.log(
+          `   - ${missingKeys.slice(0, 10).join("\n   - ")}`,
+        );
         console.log(`   ... and ${missingKeys.length - 10} more`);
       }
     }
   }
 
   console.log("\n" + "=".repeat(60));
-  console.log(`Summary: ${problematicLocales} locales with missing keys, ${totalMissing} total missing references`);
+  console.log(
+    `Summary: ${problematicLocales} locales with missing keys, ${totalMissing} total missing references`,
+  );
   console.log("=".repeat(60));
 
   process.exit(problematicLocales > 0 ? 1 : 0);

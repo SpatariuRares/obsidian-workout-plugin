@@ -29,10 +29,18 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     new QuickLogSettings(this.plugin, containerEl).render();
 
     // Timer Presets Section
-    new TimerPresetsSettings(this.app, this.plugin, containerEl).render();
+    new TimerPresetsSettings(
+      this.app,
+      this.plugin,
+      containerEl,
+    ).render();
 
     // Custom Protocols Section
-    new CustomProtocolsSettings(this.app, this.plugin, containerEl).render();
+    new CustomProtocolsSettings(
+      this.app,
+      this.plugin,
+      containerEl,
+    ).render();
 
     // Training Parameters Section
     new DurationEstimationSettings(this.plugin, containerEl).render();
@@ -47,6 +55,10 @@ export class WorkoutChartsSettingTab extends PluginSettingTab {
     });
 
     new TemplatesSettings(this.plugin, advancedDetails).render();
-    new MaintenanceSettings(this.app, this.plugin, advancedDetails).render();
+    new MaintenanceSettings(
+      this.app,
+      this.plugin,
+      advancedDetails,
+    ).render();
   }
 }

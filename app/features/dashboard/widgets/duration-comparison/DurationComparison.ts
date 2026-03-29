@@ -137,7 +137,9 @@ export class DurationComparison {
       const endTimestamp = lastEntry.timestamp || 0;
 
       // Calculate actual duration in seconds
-      const actualDuration = Math.round((endTimestamp - startTimestamp) / 1000);
+      const actualDuration = Math.round(
+        (endTimestamp - startTimestamp) / 1000,
+      );
 
       // Skip if actual duration is 0 or negative (invalid data)
       if (actualDuration <= 0) {
@@ -150,12 +152,15 @@ export class DurationComparison {
       const setDuration = 45; // Default set duration in seconds
       const restDuration = 90; // Default rest between sets in seconds
       const estimatedDuration =
-        setCount * setDuration + Math.max(0, setCount - 1) * restDuration;
+        setCount * setDuration +
+        Math.max(0, setCount - 1) * restDuration;
 
       // Calculate variance percentage
       const variancePercent =
         estimatedDuration > 0
-          ? ((actualDuration - estimatedDuration) / estimatedDuration) * 100
+          ? ((actualDuration - estimatedDuration) /
+              estimatedDuration) *
+            100
           : 0;
 
       const [workout, date] = key.split("|");
@@ -208,11 +213,15 @@ export class DurationComparison {
     const olderSessions = sessions.slice(midpoint);
 
     const recentAvg =
-      recentSessions.reduce((sum, s) => sum + Math.abs(s.variancePercent), 0) /
-      recentSessions.length;
+      recentSessions.reduce(
+        (sum, s) => sum + Math.abs(s.variancePercent),
+        0,
+      ) / recentSessions.length;
     const olderAvg =
-      olderSessions.reduce((sum, s) => sum + Math.abs(s.variancePercent), 0) /
-      olderSessions.length;
+      olderSessions.reduce(
+        (sum, s) => sum + Math.abs(s.variancePercent),
+        0,
+      ) / olderSessions.length;
 
     // Positive change means variance increased (getting worse)
     // Negative change means variance decreased (getting better)

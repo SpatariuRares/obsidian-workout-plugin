@@ -262,7 +262,9 @@ const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
 // -> { totalVolume, maxWeight, totalSets, trend, averages, prWeight, prReps }
 
 // List all exercises, optionally by tag
-const exercises = await WorkoutPlannerAPI.getExercises({ tag: "glutes" });
+const exercises = await WorkoutPlannerAPI.getExercises({
+  tag: "glutes",
+});
 ```
 
 ---

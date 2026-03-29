@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Добавить блок упражнений",
+    "addMissingBlockIds": "Добавьте отсутствующие идентификаторы в блоки кода",
     "auditExerciseNames": "Названия упражнений для аудита",
     "convertExercise": "Преобразовать упражнение",
     "createCsvLog": "Создать файл журнала в формате CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Создать ссылку на тег",
     "insertTable": "Добавить таблицу",
     "manageMuscleTags": "Управление тегами для мышц",
-    "migrateExerciseTypes": "Перенос типов упражнений",
-    "addMissingBlockIds": "Добавьте отсутствующие идентификаторы в блоки кода"
+    "migrateExerciseTypes": "Перенос типов упражнений"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Отменить",
+    "clear": "Очистить",
     "convert": "Преобразовать",
     "exercise": "Упражнение",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "Не доступно",
     "sec": "безопасность",
     "unknown": "Неизвестно",
-    "workout": "Тренировка",
-    "clear": "Очистить"
+    "workout": "Тренировка"
   },
   "convert": {
     "currentType": "Текущий тип:",
@@ -453,8 +453,8 @@
     "noImbalances": "Отсутствуют несовпадения",
     "noTags": "Нет тегов",
     "success": {
-      "csvCreated": "Файл CSV успешно создан!",
       "blockIdsAdded": "Добавлены отсутствующие идентификаторы {count} в файлах {files}.",
+      "csvCreated": "Файл CSV успешно создан!",
       "noBlockIdsNeeded": "Все блоки кода уже имеют идентификаторы."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Действия",
     "addTag": "Добавить тег",
+    "auditStatusCloseMatch": "Близкое совпадение",
+    "auditStatusExactMatch": "Точное совпадение",
+    "auditStatusNoMatch": "Нет совпадения",
+    "auditStatusPartialMatch": "Частичное совпадение",
     "autocomplete": {
+      "addExercise": "Добавить \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Точное/Соответствие префиксу - Оценка: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Частичное совпадение - Оценка: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Соответствие словам - Оценка: {score}",
-      "addExercise": "Добавить \"{name}\""
+      "wordTooltip": "Соответствие словам - Оценка: {score}"
     },
     "buttons": {
       "addParameter": "Добавить параметр",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Действия",
+      "currentFileInfo": "Текущий файл: {fileName}",
       "exercise": "Упражнение:",
       "reps": "Представители:",
       "targetReps": "Целевые показатели:",
       "targetWeight": "Цель: ({unit}):",
       "volume": "Громкость ({unit}):",
-      "weight": "Вес ({{unit}}):",
-      "currentFileInfo": "Текущий файл: {fileName}"
+      "weight": "Вес ({{unit}}):"
     },
     "layoutGrouped": "Группировано по мышцам",
     "layoutHorizontal": "Горизонтальное расположение",
@@ -565,17 +569,21 @@
     "notes": "Примечания (необязательно):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "Найдено {count} несоответствий:",
+      "auditNoMatchFound": "Совпадений не найдено",
       "auditNoMismatches": "Отсутствие несоответствий в ходе аудита",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Успешно переименовано файл в рамках аудита",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Ошибка сканирования: {error}",
       "auditScanning": "Сканирование для аудита",
       "canvasExportError": "Ошибка при экспорте на холст",
       "canvasExported": "Экспорт на холст",
       "chartInserted": "✅ График успешно добавлен!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Панель управления успешно добавлена!",
+      "dismissAchievement": "Закрыть достижение",
       "exerciseBlockInserted": "Блок упражнений добавлен",
       "exerciseNameRequired": "❌, пожалуйста, введите название упражнения",
       "exercisePageCreated": "Страница для тренировок успешно создана!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Не удалось обновить таймер. Убедитесь, что файл открыт в редакторе.",
       "timerUpdated": "✅ Таймер успешно обновлен!",
       "validationCombinedMode": "⚠️ Для типа \"упражнения + тренировка\" необходимо заполнить оба поля!",
-      "validationFillAll": "Пожалуйста, заполните все поля, используя допустимые значения.",
-      "dismissAchievement": "Закрыть достижение",
-      "auditScanError": "Ошибка сканирования: {error}",
-      "auditMismatchCount": "Найдено {count} несоответствий:",
-      "auditNoMatchFound": "Совпадений не найдено"
+      "validationFillAll": "Пожалуйста, заполните все поля, используя допустимые значения."
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Метка:",
@@ -716,11 +720,7 @@
     },
     "workout": "Тренировка (необязательно):",
     "workoutFile": "Файл тренировки:",
-    "workoutNameOptional": "Название тренировки (необязательно):",
-    "auditStatusNoMatch": "Нет совпадения",
-    "auditStatusExactMatch": "Точное совпадение",
-    "auditStatusCloseMatch": "Близкое совпадение",
-    "auditStatusPartialMatch": "Частичное совпадение"
+    "workoutNameOptional": "Название тренировки (необязательно):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Генерация...",
       "overwriting": "Перезапись...",
       "regenerateOverwrite": "Перегенерировать (заменить)",
+      "runAllMaintenance": "Выполнить все",
       "savePreset": "Сохранить",
-      "saveProtocol": "Сохранить",
-      "runAllMaintenance": "Выполнить все"
+      "saveProtocol": "Сохранить"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Существует уже файл CSV с тегами мышц. Вы хотите перезаписать его значениями по умолчанию? Это удалит все пользовательские теги.",
@@ -760,11 +760,11 @@
       "protocolColor": "Цвет фона значка (в шестнадцатеричном формате, например, #FF5733)",
       "quickWeightIncrement": "Размер увеличения веса, используемый кнопками \"+\" и \"-\" в модальных окнах для создания/редактирования записи тренировки (например, 2,5 для увеличения на 2,5 / уменьшения на 2,5 единиц).",
       "repDuration": "Ожидаемое время для выполнения одной повторения. Используется, когда известно количество повторений (например, «x 10 повторений»).",
+      "runAllMaintenance": "Выполняйте все задачи обслуживания последовательно. Безопасно можно выполнять несколько раз.",
       "setDuration": "Используется в случае, когда тип представителя не указан (в качестве резервного варианта). Типичный диапазон: 30-60 секунд.",
       "setupCSV": "Создайте файлы workout_logs.csv и muscle-tags.csv в указанной папке.",
       "weightIncrement": "Стандартное увеличение веса для прогрессивной нагрузки (например, 2,5 для увеличения на 2,5 единицы)",
-      "weightUnit": "Выберите единицу измерения для веса (кг/фунт). Это влияет на единицу по умолчанию для новых записей.",
-      "runAllMaintenance": "Выполняйте все задачи обслуживания последовательно. Безопасно можно выполнять несколько раз."
+      "weightUnit": "Выберите единицу измерения для веса (кг/фунт). Это влияет на единицу по умолчанию для новых записей."
     },
     "labels": {
       "csvPath": "Путь к файлу журнала в формате CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "Цвет значка",
       "protocolName": "Название протокола",
       "repDuration": "Продолжительность одного повторения (секунды)",
+      "runAllMaintenance": "Выполнить все задачи по обслуживанию",
       "setDuration": "Длительность резервного времени (секунды)",
       "setupCSV": "Настройка файлов CSV",
-      "weightUnit": "Единица измерения веса",
-      "runAllMaintenance": "Выполнить все задачи по обслуживанию"
+      "weightUnit": "Единица измерения веса"
     },
     "messages": {
       "confirmDeletePreset": "Вы уверены, что хотите удалить этот шаблон?",
@@ -820,17 +820,17 @@
       "protocolName": "Введите название протокола"
     },
     "sections": {
+      "advanced": "Расширенные",
       "csvManagement": "Управление файлами CSV",
       "customProtocols": "Настраиваемые протоколы",
       "exampleData": "Пример данных",
       "filtering": "Фильтрация",
+      "maintenance": "Обслуживание",
       "quickLog": "Логирование на мобильных устройствах",
       "setupAndData": "Настройка и данные",
       "templates": "Шаблоны",
       "timerPresets": "Предустановки таймера",
-      "trainingParameters": "Параметры обучения",
-      "maintenance": "Обслуживание",
-      "advanced": "Расширенные"
+      "trainingParameters": "Параметры обучения"
     },
     "tooltips": {
       "deletePreset": "Удалить сохраненную конфигурацию",
@@ -839,21 +839,21 @@
       "editProtocol": "Редактировать протокол"
     },
     "validation": {
-      "mustBePositive": "Должно быть больше 0",
-      "mustBeNonNegative": "Должно быть 0 или больше",
+      "csvFolderNotFound": "Папка не найдена в хранилище. Запустите установку CSV для ее создания.",
       "csvPathEmpty": "Путь не может быть пустым",
-      "csvFolderNotFound": "Папка не найдена в хранилище. Запустите установку CSV для ее создания."
+      "mustBeNonNegative": "Должно быть 0 или больше",
+      "mustBePositive": "Должно быть больше 0"
     }
   },
   "stats": {
     "avgVolume": "Средний объем",
-    "recentTrend": "Последняя тенденция",
-    "sessions": "Сеансы",
     "max": "Макс: ",
     "min": "Мин: ",
-    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (последние 3)",
-    "recentVsPrev": " (vs пред.)"
+    "recentTrend": "Последняя тенденция",
+    "recentVsPrev": " (vs пред.)",
+    "sessions": "Сеансы",
+    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Действия",

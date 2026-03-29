@@ -1,0 +1,8 @@
+node_modules
+main.js
+styles.css
+.tmp
+.mjs
+.claude/*
+.obsidian/*
+.claude

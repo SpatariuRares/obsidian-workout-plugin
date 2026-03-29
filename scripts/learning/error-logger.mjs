@@ -33,8 +33,15 @@ class ErrorLogEntry {
     this.id = this.generateId();
     this.timestamp = new Date().toISOString();
     this.type = data.type || "unknown";
-    this.component = data.component || data.service || data.modal || data.view || data.script || "unknown";
-    this.message = data.error?.message || data.error || "No error message";
+    this.component =
+      data.component ||
+      data.service ||
+      data.modal ||
+      data.view ||
+      data.script ||
+      "unknown";
+    this.message =
+      data.error?.message || data.error || "No error message";
     this.stack = data.error?.stack || null;
     this.context = data.context || {};
     this.resolved = false;
@@ -90,7 +97,11 @@ async function writeErrorLog(errors) {
     errors: errors,
   };
 
-  await fs.writeFile(ERROR_LOG_PATH, JSON.stringify(data, null, 2), "utf-8");
+  await fs.writeFile(
+    ERROR_LOG_PATH,
+    JSON.stringify(data, null, 2),
+    "utf-8",
+  );
 }
 
 /**
@@ -126,7 +137,10 @@ export async function logError(errorData) {
   } catch (error) {
     // If error logging fails, write to console but don't throw
     // (we don't want error logging to break the application)
-    console.error("[ErrorLogger] Failed to log error:", error.message);
+    console.error(
+      "[ErrorLogger] Failed to log error:",
+      error.message,
+    );
     return null;
   }
 }
@@ -160,7 +174,11 @@ export async function logBuildError(errorData) {
  * @param {string} resolution - How the error was resolved
  * @param {string} directiveUpdated - Which directive was updated (if any)
  */
-export async function markResolved(errorId, resolution, directiveUpdated = null) {
+export async function markResolved(
+  errorId,
+  resolution,
+  directiveUpdated = null,
+) {
   try {
     const errors = await readErrorLog();
     const error = errors.find((e) => e.id === errorId);
@@ -177,7 +195,10 @@ export async function markResolved(errorId, resolution, directiveUpdated = null)
 
     return false;
   } catch (error) {
-    console.error("[ErrorLogger] Failed to mark error as resolved:", error.message);
+    console.error(
+      "[ErrorLogger] Failed to mark error as resolved:",
+      error.message,
+    );
     return false;
   }
 }
@@ -201,12 +222,16 @@ export async function getErrorStats() {
     // Count by type
     errors.forEach((error) => {
       stats.byType[error.type] = (stats.byType[error.type] || 0) + 1;
-      stats.byComponent[error.component] = (stats.byComponent[error.component] || 0) + 1;
+      stats.byComponent[error.component] =
+        (stats.byComponent[error.component] || 0) + 1;
     });
 
     return stats;
   } catch (error) {
-    console.error("[ErrorLogger] Failed to get error stats:", error.message);
+    console.error(
+      "[ErrorLogger] Failed to get error stats:",
+      error.message,
+    );
     return null;
   }
 }
@@ -225,7 +250,9 @@ export async function pruneResolvedErrors(days = 30) {
     const filtered = errors.filter((error) => {
       if (!error.resolved) return true; // Keep all unresolved errors
 
-      const resolvedDate = new Date(error.resolvedAt || error.timestamp);
+      const resolvedDate = new Date(
+        error.resolvedAt || error.timestamp,
+      );
       return resolvedDate > cutoffDate; // Keep recent resolved errors
     });
 
@@ -237,7 +264,10 @@ export async function pruneResolvedErrors(days = 30) {
       removed: errors.length - filtered.length,
     };
   } catch (error) {
-    console.error("[ErrorLogger] Failed to prune errors:", error.message);
+    console.error(
+      "[ErrorLogger] Failed to prune errors:",
+      error.message,
+    );
     return null;
   }
 }
@@ -275,7 +305,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     case "prune":
       const days = parseInt(process.argv[3]) || 30;
       const result = await pruneResolvedErrors(days);
-      console.log(`Pruned ${result.removed} resolved errors older than ${days} days`);
+      console.log(
+        `Pruned ${result.removed} resolved errors older than ${days} days`,
+      );
       break;
 
     default:

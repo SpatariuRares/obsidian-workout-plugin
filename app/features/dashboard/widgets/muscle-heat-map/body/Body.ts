@@ -19,7 +19,10 @@ export class Body {
   private dataPreparer: ViewDataPreparer;
   private container: HTMLElement | null = null;
 
-  constructor(bodyData: BodyData, options?: Partial<BodyVisualizationOptions>) {
+  constructor(
+    bodyData: BodyData,
+    options?: Partial<BodyVisualizationOptions>,
+  ) {
     this.bodyData = bodyData;
     this.options = {
       view: options?.view || VIEW_TYPE.FRONT,
@@ -58,7 +61,9 @@ export class Body {
   }
 
   private renderFrontView(svg: SVGSVGElement): void {
-    const colors = this.dataPreparer.prepareFrontViewData(this.bodyData);
+    const colors = this.dataPreparer.prepareFrontViewData(
+      this.bodyData,
+    );
 
     const svgContent = BODY_VIEWS_SVG.FRONT(
       colors.traps,
@@ -77,7 +82,9 @@ export class Body {
   }
 
   private renderBackView(svg: SVGSVGElement): void {
-    const colors = this.dataPreparer.prepareBackViewData(this.bodyData);
+    const colors = this.dataPreparer.prepareBackViewData(
+      this.bodyData,
+    );
 
     const svgContent = BODY_VIEWS_SVG.BACK(
       colors.lowerBack,
@@ -96,7 +103,10 @@ export class Body {
     this.appendSvgContent(svgContent, svg);
   }
 
-  private appendSvgContent(svgString: string, targetSvg: SVGSVGElement): void {
+  private appendSvgContent(
+    svgString: string,
+    targetSvg: SVGSVGElement,
+  ): void {
     const parser = new DOMParser();
     const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${svgString}</svg>`;
     const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
@@ -120,19 +130,34 @@ export class Body {
       };
     }
     if (bodyData.chest) {
-      this.bodyData.chest = { ...this.bodyData.chest, ...bodyData.chest };
+      this.bodyData.chest = {
+        ...this.bodyData.chest,
+        ...bodyData.chest,
+      };
     }
     if (bodyData.back) {
-      this.bodyData.back = { ...this.bodyData.back, ...bodyData.back };
+      this.bodyData.back = {
+        ...this.bodyData.back,
+        ...bodyData.back,
+      };
     }
     if (bodyData.arms) {
-      this.bodyData.arms = { ...this.bodyData.arms, ...bodyData.arms };
+      this.bodyData.arms = {
+        ...this.bodyData.arms,
+        ...bodyData.arms,
+      };
     }
     if (bodyData.legs) {
-      this.bodyData.legs = { ...this.bodyData.legs, ...bodyData.legs };
+      this.bodyData.legs = {
+        ...this.bodyData.legs,
+        ...bodyData.legs,
+      };
     }
     if (bodyData.core) {
-      this.bodyData.core = { ...this.bodyData.core, ...bodyData.core };
+      this.bodyData.core = {
+        ...this.bodyData.core,
+        ...bodyData.core,
+      };
     }
 
     // Re-render if container is available

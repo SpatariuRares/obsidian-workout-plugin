@@ -10,7 +10,8 @@
   background: var(--text-success);
   color: var(--text-on-accent);
   border-radius: var(--workout-radius-md);
-  border-left: var(--workout-border-accent) solid var(--interactive-accent);
+  border-left: var(--workout-border-accent) solid
+    var(--interactive-accent);
   box-shadow: var(--workout-shadow-sm);
   animation: slideIn 0.3s ease-out;
 }

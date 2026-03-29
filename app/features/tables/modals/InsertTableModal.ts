@@ -28,7 +28,8 @@ const TARGET_REPS_INCREMENT = 1;
 
 export class InsertTableModal extends BaseInsertModal {
   protected tableTypeSelect?: HTMLSelectElement;
-  protected tableTypeChips: Map<string, HTMLButtonElement> = new Map();
+  protected tableTypeChips: Map<string, HTMLButtonElement> =
+    new Map();
   protected targetElements?: TargetSectionWithAutocompleteElements;
   protected limitInput?: HTMLInputElement;
   protected dateRangeInput?: HTMLInputElement;
@@ -55,7 +56,9 @@ export class InsertTableModal extends BaseInsertModal {
     return t("modal.notices.tableInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     // Table Type Section
     const tableTypeSection = this.createSection(
       container,
@@ -68,7 +71,8 @@ export class InsertTableModal extends BaseInsertModal {
     });
     DomUtils.setCssProps(this.tableTypeSelect, { display: "none" });
 
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
+      .TABLE_TYPE) {
       this.tableTypeSelect.createEl("option", {
         text: option.label,
         value: option.value,
@@ -80,8 +84,10 @@ export class InsertTableModal extends BaseInsertModal {
       cls: "workout-table-type-chips",
     });
 
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.TABLE_TYPE) {
-      const isDefault = (option.value as TABLE_TYPE) === TABLE_TYPE.COMBINED;
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
+      .TABLE_TYPE) {
+      const isDefault =
+        (option.value as TABLE_TYPE) === TABLE_TYPE.COMBINED;
       const chip = Chip.create(chipContainer, {
         text: option.label,
         selected: isDefault,
@@ -159,9 +165,10 @@ export class InsertTableModal extends BaseInsertModal {
     );
 
     // Target parameters container (grid layout)
-    const targetParametersContainer = this.progressiveSection.createDiv({
-      cls: "workout-parameters-container",
-    });
+    const targetParametersContainer =
+      this.progressiveSection.createDiv({
+        cls: "workout-parameters-container",
+      });
 
     // Target weight with +/- adjust
     this.targetWeightInput = this.createAdjustField(
@@ -184,11 +191,15 @@ export class InsertTableModal extends BaseInsertModal {
     );
 
     // Advanced Options Section using reusable component
-    this.advancedElements = AdvancedOptionsSection.create(this, container, {
-      showSearchByName: true,
-      showAddButton: true,
-      compact: true,
-    });
+    this.advancedElements = AdvancedOptionsSection.create(
+      this,
+      container,
+      {
+        showSearchByName: true,
+        showAddButton: true,
+        compact: true,
+      },
+    );
 
     // Set default values based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
@@ -225,7 +236,9 @@ export class InsertTableModal extends BaseInsertModal {
     });
 
     const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({ cls: "workout-field-label" });
+    const labelEl = fieldContainer.createDiv({
+      cls: "workout-field-label",
+    });
     labelEl.textContent = labelText;
 
     const inputContainer = fieldContainer.createDiv({

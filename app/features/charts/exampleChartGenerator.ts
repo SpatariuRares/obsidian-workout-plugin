@@ -1,5 +1,8 @@
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import {
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+} from "@app/features/charts/types";
 import { t } from "@app/i18n";
 
 export function getChartSectionsForExerciseType(
@@ -75,7 +78,11 @@ export function generateWorkoutChartBlock(
 export function generateExerciseChartBlock(
   exercise: string,
   dataType: CHART_DATA_TYPE,
-  opts?: { dateRange?: number; showStats?: boolean; showTrendLine?: boolean },
+  opts?: {
+    dateRange?: number;
+    showStats?: boolean;
+    showTrendLine?: boolean;
+  },
 ): string {
   return CodeGenerator.generateChartCode({
     chartType: CHART_TYPE.EXERCISE,

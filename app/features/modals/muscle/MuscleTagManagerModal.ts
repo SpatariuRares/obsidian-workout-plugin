@@ -25,13 +25,15 @@ export class MuscleTagManagerModal extends ModalBase {
   private tableBody: HTMLElement | null = null;
   private countDisplay: HTMLElement | null = null;
   private formRenderer: MuscleTagFormRenderer | null = null;
-  private importPreviewRenderer: MuscleTagImportPreviewRenderer | null = null;
+  private importPreviewRenderer: MuscleTagImportPreviewRenderer | null =
+    null;
   private allTags = new Map<string, string>();
   private pendingImportTags = new Map<string, string>();
   private searchValue = "";
   private isEditing = false;
   private editingTag: string | null = null;
-  private debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+  private debounceTimeout: ReturnType<typeof setTimeout> | null =
+    null;
 
   constructor(app: App, plugin: WorkoutChartsPlugin) {
     super(app);
@@ -66,7 +68,9 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private async loadTags(): Promise<void> {
     try {
-      this.allTags = await this.plugin.getMuscleTagService().loadTags();
+      this.allTags = await this.plugin
+        .getMuscleTagService()
+        .loadTags();
     } catch (error) {
       const message = ErrorUtils.getErrorMessage(error);
       new Notice(`Error loading muscle tags: ${message}`);
@@ -103,18 +107,24 @@ export class MuscleTagManagerModal extends ModalBase {
       return;
     }
 
-    const filteredTags = filterMuscleTags(this.allTags, this.searchValue);
+    const filteredTags = filterMuscleTags(
+      this.allTags,
+      this.searchValue,
+    );
 
     MuscleTagTableRenderer.render({
       tableBody: this.tableBody,
       tags: filteredTags,
-      onEdit: (tag, muscleGroup) => this.showEditForm(tag, muscleGroup),
+      onEdit: (tag, muscleGroup) =>
+        this.showEditForm(tag, muscleGroup),
       onDelete: (tag) => this.confirmDelete(tag),
     });
 
     if (this.countDisplay) {
-      this.countDisplay.textContent =
-        t("modal.notices.muscleTagCount", { count: filteredTags.size });
+      this.countDisplay.textContent = t(
+        "modal.notices.muscleTagCount",
+        { count: filteredTags.size },
+      );
     }
   }
 
@@ -189,7 +199,11 @@ export class MuscleTagManagerModal extends ModalBase {
     }
 
     const nextTags = new Map(this.allTags);
-    if (this.isEditing && this.editingTag && this.editingTag !== tag) {
+    if (
+      this.isEditing &&
+      this.editingTag &&
+      this.editingTag !== tag
+    ) {
       nextTags.delete(this.editingTag);
     }
     nextTags.set(tag, muscleGroup);
@@ -278,9 +292,12 @@ export class MuscleTagManagerModal extends ModalBase {
       needle,
       this.allTags,
     );
-    this.formRenderer.renderSuggestions(suggestions, (tag, muscleGroup) => {
-      this.showEditForm(tag, muscleGroup);
-    });
+    this.formRenderer.renderSuggestions(
+      suggestions,
+      (tag, muscleGroup) => {
+        this.showEditForm(tag, muscleGroup);
+      },
+    );
   }
 
   private async handleFileSelect(event: Event): Promise<void> {
@@ -297,25 +314,25 @@ export class MuscleTagManagerModal extends ModalBase {
       this.processImportFile(content);
     } catch {
       new Notice(
-        t("modal.notices.muscleTagImportError", { error: "Failed to read file" }),
+        t("modal.notices.muscleTagImportError", {
+          error: "Failed to read file",
+        }),
       );
     }
   }
 
   private processImportFile(content: string): void {
-    const result = MuscleTagImportLogic.parseImportFileContent(content);
+    const result =
+      MuscleTagImportLogic.parseImportFileContent(content);
 
     if (!result.isValidFormat) {
-      new Notice(
-        t("modal.notices.muscleTagImportInvalidFormat"),
-      );
+      new Notice(t("modal.notices.muscleTagImportInvalidFormat"));
       return;
     }
 
     if (result.validTags.size === 0) {
       new Notice(
-        result.errors[0] ||
-          t("modal.notices.muscleTagImportNoValid"),
+        result.errors[0] || t("modal.notices.muscleTagImportNoValid"),
       );
       return;
     }
@@ -324,7 +341,10 @@ export class MuscleTagManagerModal extends ModalBase {
     this.showImportPreview(result.validTags, result.errors);
   }
 
-  private showImportPreview(tags: Map<string, string>, errors: string[]): void {
+  private showImportPreview(
+    tags: Map<string, string>,
+    errors: string[],
+  ): void {
     if (!this.importPreviewRenderer) {
       return;
     }
@@ -347,7 +367,9 @@ export class MuscleTagManagerModal extends ModalBase {
     this.pendingImportTags.clear();
   }
 
-  private async executeImport(mode: MuscleTagImportMode): Promise<void> {
+  private async executeImport(
+    mode: MuscleTagImportMode,
+  ): Promise<void> {
     const { finalTags, importedCount } = mergeMuscleTagImport(
       mode,
       this.allTags,
@@ -358,7 +380,9 @@ export class MuscleTagManagerModal extends ModalBase {
       await this.plugin.getMuscleTagService().saveTags(finalTags);
       this.allTags = finalTags;
       new Notice(
-        t("modal.notices.muscleTagImported", { count: importedCount }),
+        t("modal.notices.muscleTagImported", {
+          count: importedCount,
+        }),
       );
       this.plugin.triggerMuscleTagRefresh();
       this.hideImportPreview();

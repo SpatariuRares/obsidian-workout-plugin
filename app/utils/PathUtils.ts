@@ -20,7 +20,10 @@ export class PathUtils {
    * @param siblingName - Name of the sibling file (e.g., "muscle-tags.csv")
    * @returns Sibling path (e.g., "folder/muscle-tags.csv")
    */
-  static getSiblingPath(filePath: string, siblingName: string): string {
+  static getSiblingPath(
+    filePath: string,
+    siblingName: string,
+  ): string {
     const folder = this.getFolderPath(filePath);
     return folder ? `${folder}/${siblingName}` : siblingName;
   }
@@ -30,7 +33,10 @@ export class PathUtils {
    * @param app - Obsidian App instance
    * @param filePath - File path whose parent folder should exist
    */
-  static async ensureFolderExists(app: App, filePath: string): Promise<void> {
+  static async ensureFolderExists(
+    app: App,
+    filePath: string,
+  ): Promise<void> {
     const folder = this.getFolderPath(filePath);
     if (folder) {
       const folderExists = app.vault.getAbstractFileByPath(folder);

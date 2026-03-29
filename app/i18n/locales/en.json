@@ -40,6 +40,7 @@
   "common": {
     "bpm": "bpm",
     "cancel": "Cancel",
+    "clear": "Clear",
     "convert": "Convert",
     "exercise": "Exercise",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Not Available",
     "sec": "sec",
     "unknown": "Unknown",
-    "workout": "Workout",
-    "clear": "Clear"
+    "workout": "Workout"
   },
   "convert": {
     "currentType": "Current type:",
@@ -463,6 +463,10 @@
   "modal": {
     "actions": "Actions",
     "addTag": "Add tag",
+    "auditStatusCloseMatch": "Close match",
+    "auditStatusExactMatch": "Exact match",
+    "auditStatusNoMatch": "No match",
+    "auditStatusPartialMatch": "Partial match",
     "autocomplete": {
       "addExercise": "Add \"{name}\"",
       "exactBadge": "★",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Actions",
+      "currentFileInfo": "Current file: {fileName}",
       "exercise": "Exercise:",
       "reps": "Reps:",
       "targetReps": "Target reps:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
-      "weight": "Weight ({unit}):",
-      "currentFileInfo": "Current file: {fileName}"
+      "weight": "Weight ({unit}):"
     },
     "layoutGrouped": "Grouped by muscle",
     "layoutHorizontal": "Horizontal flow",
@@ -565,17 +569,21 @@
     "notes": "Notes (optional):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File \n\n {oldName} -> {newName}",
+      "auditMismatchCount": "Found {count} potential mismatches:",
+      "auditNoMatchFound": "No match found",
       "auditNoMismatches": "Audit No Mismatches",
       "auditRenameError": "Audit Rename Error: {error}",
       "auditRenameFileError": "Audit Rename File Error: {error}",
       "auditRenameFileSuccess": "Audit Rename File Success",
       "auditRenameSuccess": "Audit Rename Success ({count} files updated)",
+      "auditScanError": "Error scanning exercise files: {error}",
       "auditScanning": "Audit Scanning",
       "canvasExportError": "Canvas Export Error",
       "canvasExported": "Canvas Exported",
       "chartInserted": "✅ Chart inserted successfully!",
       "confirmUpdateTarget": "Confirm Update Target {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard inserted successfully!",
+      "dismissAchievement": "Dismiss achievement",
       "exerciseBlockInserted": "Exercise Block Inserted",
       "exerciseNameRequired": "❌ please enter an exercise name",
       "exercisePageCreated": "Exercise page created successfully!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
       "timerUpdated": "✅ Timer updated successfully!",
       "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
-      "validationFillAll": "Please fill in all fields with valid values",
-      "dismissAchievement": "Dismiss achievement",
-      "auditScanError": "Error scanning exercise files: {error}",
-      "auditMismatchCount": "Found {count} potential mismatches:",
-      "auditNoMatchFound": "No match found"
+      "validationFillAll": "Please fill in all fields with valid values"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -716,11 +720,7 @@
     },
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):",
-    "auditStatusNoMatch": "No match",
-    "auditStatusExactMatch": "Exact match",
-    "auditStatusCloseMatch": "Close match",
-    "auditStatusPartialMatch": "Partial match"
+    "workoutNameOptional": "Workout name (optional):"
   },
   "settings": {
     "buttons": {
@@ -729,7 +729,6 @@
       "cancel": "Cancel",
       "createExamples": "Create examples",
       "createFiles": "Create files",
-      "runAllMaintenance": "Run all",
       "done": "Done!",
       "failed": "Failed",
       "generateTemplates": "Generate templates",
@@ -737,6 +736,7 @@
       "generating": "Generating...",
       "overwriting": "Overwriting...",
       "regenerateOverwrite": "Regenerate (overwrite)",
+      "runAllMaintenance": "Run all",
       "savePreset": "Save",
       "saveProtocol": "Save"
     },
@@ -760,8 +760,8 @@
       "protocolColor": "Badge background color (hex format, e.g., #FF5733)",
       "quickWeightIncrement": "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
       "repDuration": "Estimated time to perform one repetition. Used when rep count is known (e.g., 'x 10 reps').",
-      "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "runAllMaintenance": "Run all maintenance tasks sequentially. Safe to run multiple times.",
+      "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
@@ -786,8 +786,8 @@
       "protocolColor": "Badge color",
       "protocolName": "Protocol name",
       "repDuration": "Duration per repetition (seconds)",
-      "setDuration": "Fallback set duration (seconds)",
       "runAllMaintenance": "Run all maintenance tasks",
+      "setDuration": "Fallback set duration (seconds)",
       "setupCSV": "Setup CSV files",
       "weightUnit": "Weight unit"
     },
@@ -822,38 +822,38 @@
     "sections": {
       "advanced": "Advanced",
       "csvManagement": "CSV file management",
-      "maintenance": "Maintenance",
       "customProtocols": "Custom protocols",
       "exampleData": "Example data",
       "filtering": "Filtering",
+      "maintenance": "Maintenance",
       "quickLog": "Mobile logging",
       "setupAndData": "Setup & data",
       "templates": "Templates",
       "timerPresets": "Timer presets",
       "trainingParameters": "Training parameters"
     },
-    "validation": {
-      "mustBePositive": "Must be greater than 0",
-      "mustBeNonNegative": "Must be 0 or greater",
-      "csvPathEmpty": "Path cannot be empty",
-      "csvFolderNotFound": "Folder not found in vault. Run Setup CSV to create it."
-    },
     "tooltips": {
       "deletePreset": "Delete preset",
       "deleteProtocol": "Delete protocol",
       "editPreset": "Edit preset",
       "editProtocol": "Edit protocol"
+    },
+    "validation": {
+      "csvFolderNotFound": "Folder not found in vault. Run Setup CSV to create it.",
+      "csvPathEmpty": "Path cannot be empty",
+      "mustBeNonNegative": "Must be 0 or greater",
+      "mustBePositive": "Must be greater than 0"
     }
   },
   "stats": {
     "avgVolume": "Avg Volume",
-    "recentTrend": "Recent Trend",
-    "sessions": "Sessions",
     "max": "Max: ",
     "min": "Min: ",
-    "title": "📈 {dataTypeLabel} Statistics ({contextLabel}):",
     "recentLast3": " (last 3)",
-    "recentVsPrev": " (vs prev.)"
+    "recentTrend": "Recent Trend",
+    "recentVsPrev": " (vs prev.)",
+    "sessions": "Sessions",
+    "title": "📈 {dataTypeLabel} Statistics ({contextLabel}):"
   },
   "table": {
     "actions": "Actions",

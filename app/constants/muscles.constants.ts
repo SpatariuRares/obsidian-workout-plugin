@@ -31,7 +31,8 @@ export const CANONICAL_MUSCLE_GROUPS = [
   "rear_delts",
 ] as const;
 
-export type CanonicalMuscleGroup = (typeof CANONICAL_MUSCLE_GROUPS)[number];
+export type CanonicalMuscleGroup =
+  (typeof CANONICAL_MUSCLE_GROUPS)[number];
 
 /**
  * Body part regions for exercise categorization.
@@ -156,8 +157,16 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   // Main muscle groups - Shoulders (Italian)
   { tag: "spalle", muscleGroup: "shoulders", language: "it" },
   { tag: "deltoidi", muscleGroup: "shoulders", language: "it" },
-  { tag: "deltoideanteriore", muscleGroup: "shoulders", language: "it" },
-  { tag: "deltoidilaterale", muscleGroup: "shoulders", language: "it" },
+  {
+    tag: "deltoideanteriore",
+    muscleGroup: "shoulders",
+    language: "it",
+  },
+  {
+    tag: "deltoidilaterale",
+    muscleGroup: "shoulders",
+    language: "it",
+  },
 
   // Main muscle groups - Arms (English)
   { tag: "biceps", muscleGroup: "biceps", language: "en" },
@@ -204,8 +213,16 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   // Secondary muscle groups (Italian)
   { tag: "avambracci", muscleGroup: "forearms", language: "it" },
   { tag: "trapezi", muscleGroup: "traps", language: "it" },
-  { tag: "deltoidi_posteriori", muscleGroup: "rear_delts", language: "it" },
-  { tag: "deltoidiposteriori", muscleGroup: "rear_delts", language: "it" },
+  {
+    tag: "deltoidi_posteriori",
+    muscleGroup: "rear_delts",
+    language: "it",
+  },
+  {
+    tag: "deltoidiposteriori",
+    muscleGroup: "rear_delts",
+    language: "it",
+  },
 
   // Exercise types that help determine muscle groups (English)
   { tag: "push", muscleGroup: "chest", language: "en" },
@@ -303,4 +320,3 @@ export const MUSCLE_TAG_MAP: Record<string, string> = {
   row: "back",
   spintaanca: "glutes",
 };
-

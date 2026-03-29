@@ -41,10 +41,10 @@ export class CSVCacheService {
 
   private setupEventListeners(eventBus: WorkoutEventBus): void {
     this.unsubscribers.push(
-      eventBus.on('log:added',        () => this.clearCache()),
-      eventBus.on('log:updated',      () => this.clearCache()),
-      eventBus.on('log:deleted',      () => this.clearCache()),
-      eventBus.on('log:bulk-changed', () => this.clearCache()),
+      eventBus.on("log:added", () => this.clearCache()),
+      eventBus.on("log:updated", () => this.clearCache()),
+      eventBus.on("log:deleted", () => this.clearCache()),
+      eventBus.on("log:bulk-changed", () => this.clearCache()),
     );
   }
 
@@ -74,7 +74,10 @@ export class CSVCacheService {
     }
 
     // Cache miss or exceeded size limit - clear if needed
-    if (this.logDataCache && this.logDataCache.length > this.MAX_CACHE_SIZE) {
+    if (
+      this.logDataCache &&
+      this.logDataCache.length > this.MAX_CACHE_SIZE
+    ) {
       this.logDataCache = null;
       this.lastCacheTime = 0;
     }
@@ -98,7 +101,9 @@ export class CSVCacheService {
    * Load all data from CSV file (no filtering).
    * Includes retry logic for vault initialization timing.
    */
-  private async loadCSVData(retryCount = 0): Promise<WorkoutLogData[]> {
+  private async loadCSVData(
+    retryCount = 0,
+  ): Promise<WorkoutLogData[]> {
     const logData: WorkoutLogData[] = [];
     const MAX_RETRIES = 3;
     const RETRY_DELAY = 100; // ms
@@ -110,7 +115,9 @@ export class CSVCacheService {
 
       if (!abstractFile || !(abstractFile instanceof TFile)) {
         if (retryCount < MAX_RETRIES) {
-          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
+          await new Promise((resolve) =>
+            setTimeout(resolve, RETRY_DELAY),
+          );
           return this.loadCSVData(retryCount + 1);
         }
         return logData;
@@ -129,8 +136,7 @@ export class CSVCacheService {
       this.logDataCache = logData;
       this.lastCacheTime = Date.now();
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
+      const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(`Error loading CSV workout data: ${errorMessage}`);
     }
 

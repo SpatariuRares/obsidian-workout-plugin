@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Ajouter un bloc d'exercices.",
+    "addMissingBlockIds": "Ajouter les ID manquants aux blocs de code",
     "auditExerciseNames": "Exercices d'audit : noms.",
     "convertExercise": "Convertir l'exercice.",
     "createCsvLog": "Créer un fichier de journal CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Générer une référence de balise.",
     "insertTable": "Insérer le tableau.",
     "manageMuscleTags": "Gérer les excroissances cutanées.",
-    "migrateExerciseTypes": "Migrer les types d'exercices.",
-    "addMissingBlockIds": "Ajouter les ID manquants aux blocs de code"
+    "migrateExerciseTypes": "Migrer les types d'exercices."
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Annuler",
+    "clear": "Effacer",
     "convert": "Convert",
     "exercise": "Exercice.",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Non disponible.",
     "sec": "common.sec",
     "unknown": "Inconnu.",
-    "workout": "Entraînement.",
-    "clear": "Effacer"
+    "workout": "Entraînement."
   },
   "convert": {
     "currentType": "Type actuel:",
@@ -453,8 +453,8 @@
     "noImbalances": "Pas de déséquilibres.",
     "noTags": "Pas de balises.",
     "success": {
-      "csvCreated": "Le fichier CSV a été créé avec succès !",
       "blockIdsAdded": "Ajouté(s) l'ID(s) manquant(s) {count} dans le(s) fichier(s) {files}.",
+      "csvCreated": "Le fichier CSV a été créé avec succès !",
       "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants."
     },
     "tagReferenceGenerated": "Référence de balise générée.",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Actions.",
     "addTag": "Ajouter une étiquette.",
+    "auditStatusCloseMatch": "Correspondance proche",
+    "auditStatusExactMatch": "Correspondance exacte",
+    "auditStatusNoMatch": "Aucune correspondance",
+    "auditStatusPartialMatch": "Correspondance partielle",
     "autocomplete": {
+      "addExercise": "Ajouter \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Correspondance exacte/préfixe - Score : {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Correspondance partielle - Score : {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Correspondance de mots - Score : {score}",
-      "addExercise": "Ajouter \"{name}\""
+      "wordTooltip": "Correspondance de mots - Score : {score}"
     },
     "buttons": {
       "addParameter": "Ajouter un paramètre.",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Actions.",
+      "currentFileInfo": "Fichier actuel : {fileName}",
       "exercise": "Exercice :",
       "reps": "Représentants :",
       "targetReps": "Représentants cibles :",
       "targetWeight": "Poids cible ({unité}) :",
       "volume": "Volume ({{unit}}):",
-      "weight": "Poids : ({unité})",
-      "currentFileInfo": "Fichier actuel : {fileName}"
+      "weight": "Poids : ({unité})"
     },
     "layoutGrouped": "Regroupés par muscle.",
     "layoutHorizontal": "Flux horizontal.",
@@ -565,17 +569,21 @@
     "notes": "Notes (facultatif) :",
     "notices": {
       "auditConfirmRenameFile": "Vérification, confirmation, renommer le fichier.",
+      "auditMismatchCount": "{count} discordances potentielles trouvées :",
+      "auditNoMatchFound": "Aucune correspondance trouvée",
       "auditNoMismatches": "Vérification des incohérences.",
       "auditRenameError": "Erreur de renommage lors de l'audit.",
       "auditRenameFileError": "Audit : Renommage de fichier : erreur.",
       "auditRenameFileSuccess": "Audit : Renommage du fichier réussi.",
       "auditRenameSuccess": "Audit : Renommage réussi.",
+      "auditScanError": "Erreur lors du scan : {error}",
       "auditScanning": "Analyse de sécurité.",
       "canvasExportError": "Erreur lors de l'exportation depuis Canvas.",
       "canvasExported": "Exportation vers Canvas.",
       "chartInserted": "✅ Le graphique a été inséré avec succès !",
       "confirmUpdateTarget": "Confirmer la cible de la mise à jour.",
       "dashboardInserted": "✅ Le tableau de bord a été inséré avec succès !",
+      "dismissAchievement": "Ignorer la réussite",
       "exerciseBlockInserted": "Bloc d'exercices inséré.",
       "exerciseNameRequired": "❌ Veuillez saisir le nom de l'exercice.",
       "exercisePageCreated": "La page de l'exercice a été créée avec succès !",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Échec de la mise à jour du minuteur. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "timerUpdated": "✅ Minuteur mis à jour avec succès !",
       "validationCombinedMode": "⚠️ Pour le type d'activité \"exercice + entraînement\", vous devez remplir les deux champs !",
-      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides.",
-      "dismissAchievement": "Ignorer la réussite",
-      "auditScanError": "Erreur lors du scan : {error}",
-      "auditMismatchCount": "{count} discordances potentielles trouvées :",
-      "auditNoMatchFound": "Aucune correspondance trouvée"
+      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides."
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -716,11 +720,7 @@
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
-    "workoutNameOptional": "Nom de l'entraînement (facultatif) :",
-    "auditStatusNoMatch": "Aucune correspondance",
-    "auditStatusExactMatch": "Correspondance exacte",
-    "auditStatusCloseMatch": "Correspondance proche",
-    "auditStatusPartialMatch": "Correspondance partielle"
+    "workoutNameOptional": "Nom de l'entraînement (facultatif) :"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "En cours de génération...",
       "overwriting": "Écraser...",
       "regenerateOverwrite": "Ré-générer (écraser)",
+      "runAllMaintenance": "Exécuter toutes",
       "savePreset": "Enregistrer.",
-      "saveProtocol": "Enregistrer.",
-      "runAllMaintenance": "Exécuter toutes"
+      "saveProtocol": "Enregistrer."
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV contenant les balises de muscles existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera toutes les balises personnalisées.",
@@ -760,11 +760,11 @@
       "protocolColor": "Couleur de fond du badge (format hexadécimal, par exemple : #FF5733).",
       "quickWeightIncrement": "Incrément de poids utilisé par les boutons \"+\" et \"-\" dans les fenêtres de création/modification des enregistrements d'entraînement (par exemple, 2,5 pour +2,5 / -2,5 unités).",
       "repDuration": "Temps estimé pour effectuer une répétition. Utilisé lorsque le nombre de répétitions est connu (par exemple, « x 10 répétitions »).",
+      "runAllMaintenance": "Exécuter toutes les tâches de maintenance de manière séquentielle. Sécurisé pour être exécuté plusieurs fois.",
       "setDuration": "Utilisé lorsque le nombre de répétitions n'est pas précisé (solution de repli). Plage typique : 30 à 60 secondes.",
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
-      "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements.",
-      "runAllMaintenance": "Exécuter toutes les tâches de maintenance de manière séquentielle. Sécurisé pour être exécuté plusieurs fois."
+      "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements."
     },
     "labels": {
       "csvPath": "Chemin d'accès au fichier journal au format CSV.",
@@ -786,10 +786,10 @@
       "protocolColor": "Couleur de la plaque.",
       "protocolName": "Nom du protocole.",
       "repDuration": "Durée par répétition (en secondes).",
+      "runAllMaintenance": "Exécuter toutes les tâches de maintenance",
       "setDuration": "Durée de la période de repli (en secondes).",
       "setupCSV": "Configurer les fichiers CSV.",
-      "weightUnit": "Unité de mesure de masse.",
-      "runAllMaintenance": "Exécuter toutes les tâches de maintenance"
+      "weightUnit": "Unité de mesure de masse."
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce modèle ?",
@@ -820,17 +820,17 @@
       "protocolName": "Entrez le nom du protocole"
     },
     "sections": {
+      "advanced": "Options avancées",
       "csvManagement": "Gestion des fichiers CSV.",
       "customProtocols": "Protocoles personnalisés.",
       "exampleData": "Exemple de données.",
       "filtering": "Filtrage.",
+      "maintenance": "Maintenance",
       "quickLog": "Journalisation mobile.",
       "setupAndData": "Configuration et données",
       "templates": "Modèles.",
       "timerPresets": "Réglages prédéfinis du minuteur.",
-      "trainingParameters": "Paramètres d'entraînement",
-      "maintenance": "Maintenance",
-      "advanced": "Options avancées"
+      "trainingParameters": "Paramètres d'entraînement"
     },
     "tooltips": {
       "deletePreset": "Supprimer le modèle",
@@ -839,21 +839,21 @@
       "editProtocol": "Modifier"
     },
     "validation": {
-      "mustBePositive": "Doit être supérieur à 0",
-      "mustBeNonNegative": "Doit être 0 ou supérieur",
+      "csvFolderNotFound": "Le dossier n'a pas été trouvé dans le coffre. Exécutez la configuration CSV pour le créer.",
       "csvPathEmpty": "Le chemin ne peut pas être vide",
-      "csvFolderNotFound": "Le dossier n'a pas été trouvé dans le coffre. Exécutez la configuration CSV pour le créer."
+      "mustBeNonNegative": "Doit être 0 ou supérieur",
+      "mustBePositive": "Doit être supérieur à 0"
     }
   },
   "stats": {
     "avgVolume": "Volume moyen.",
-    "recentTrend": "Tendances récentes.",
-    "sessions": "Séances.",
     "max": "Max : ",
     "min": "Min : ",
-    "title": "📈 Statistiques {dataTypeLabel} ({contextLabel}) :",
     "recentLast3": " (3 dernières)",
-    "recentVsPrev": " (vs préc.)"
+    "recentTrend": "Tendances récentes.",
+    "recentVsPrev": " (vs préc.)",
+    "sessions": "Séances.",
+    "title": "📈 Statistiques {dataTypeLabel} ({contextLabel}) :"
   },
   "table": {
     "actions": "Actions",

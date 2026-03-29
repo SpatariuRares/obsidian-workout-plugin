@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Hinzufügen Ausübungsblock",
+    "addMissingBlockIds": "Fügen Sie fehlende IDs zu Codeblöcken hinzu",
     "auditExerciseNames": "Überprüfung der Ausübungsnamen",
     "convertExercise": "Ausübung umwandeln",
     "createCsvLog": "CSV-Log-Datei erstellen",
@@ -34,12 +35,12 @@
     "generateTagReference": "Tagreferenz generieren",
     "insertTable": "Tabelle einfügen",
     "manageMuscleTags": "Muskel-Tags verwalten",
-    "migrateExerciseTypes": "Überschreiben Übungstypen",
-    "addMissingBlockIds": "Fügen Sie fehlende IDs zu Codeblöcken hinzu"
+    "migrateExerciseTypes": "Überschreiben Übungstypen"
   },
   "common": {
     "bpm": "BPM",
     "cancel": "Abbrechen",
+    "clear": "Löschen",
     "convert": "Konvertieren",
     "exercise": "Übung",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Nicht verfügbar",
     "sec": "common.sec",
     "unknown": "Unbekannt",
-    "workout": "Training",
-    "clear": "Löschen"
+    "workout": "Training"
   },
   "convert": {
     "currentType": "Aktueller Typ:",
@@ -453,8 +453,8 @@
     "noImbalances": "Keine Ungleichgewichte",
     "noTags": "Keine Tags",
     "success": {
-      "csvCreated": "CSV-Datei erfolgreich erstellt!",
       "blockIdsAdded": "Fehlende IDs {count} in den Dateien {files} hinzugefügt.",
+      "csvCreated": "CSV-Datei erfolgreich erstellt!",
       "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs."
     },
     "tagReferenceGenerated": "Tag Referenz erzeugt",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Aktionen",
     "addTag": "Tag hinzufügen",
+    "auditStatusCloseMatch": "Nahe Übereinstimmung",
+    "auditStatusExactMatch": "Exakte Übereinstimmung",
+    "auditStatusNoMatch": "Keine Übereinstimmung",
+    "auditStatusPartialMatch": "Teilweise Übereinstimmung",
     "autocomplete": {
+      "addExercise": "Füge \"{name}\" hinzu",
       "exactBadge": "★",
       "exactTooltip": "Genau/Vorangestellter Match - Punktzahl: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Teilmatch - Punktzahl: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Wortmatch - Punktzahl: {score}",
-      "addExercise": "Füge \"{name}\" hinzu"
+      "wordTooltip": "Wortmatch - Punktzahl: {score}"
     },
     "buttons": {
       "addParameter": "Hinzufügen von Parameter",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Aktionen",
+      "currentFileInfo": "Aktuelle Datei: {fileName}",
       "exercise": "Übung:",
       "reps": "Wiederholungen:",
       "targetReps": "Ziel-Wiederholungen:",
       "targetWeight": "Zielgewicht ({Unit}):",
       "volume": "Lautstärke ({unit}):",
-      "weight": "Gewicht ({unit}):",
-      "currentFileInfo": "Aktuelle Datei: {fileName}"
+      "weight": "Gewicht ({unit}):"
     },
     "layoutGrouped": "Gruppiert nach Muskel",
     "layoutHorizontal": "Horizontaler Ablauf",
@@ -565,17 +569,21 @@
     "notes": "Notizen (optional):",
     "notices": {
       "auditConfirmRenameFile": "Audit Bestätigen Umbenennen Datei",
+      "auditMismatchCount": "{count} mögliche Unstimmigkeiten gefunden:",
+      "auditNoMatchFound": "Keine Übereinstimmung gefunden",
       "auditNoMismatches": "Audit Keine Diskrepanzen",
       "auditRenameError": "Audit Umbenennen Fehler",
       "auditRenameFileError": "Audit Umbenennen Datei Fehler",
       "auditRenameFileSuccess": "Audit Umbenennen Datei Erfolg",
       "auditRenameSuccess": "Audit Umbenennen Erfolg",
+      "auditScanError": "Fehler beim Scannen: {error}",
       "auditScanning": "Audit Scannen",
       "canvasExportError": "Fehler beim Canvas Export",
       "canvasExported": "Canvas exportiert",
       "chartInserted": "✅ Chart eingefügt erfolgreich!",
       "confirmUpdateTarget": "Bestätigen Aktualisierungsziel",
       "dashboardInserted": "✅ Dashboard eingefügt erfolgreich!",
+      "dismissAchievement": "Erfolg schließen",
       "exerciseBlockInserted": "Eingeblendes Übungsblock",
       "exerciseNameRequired": "❌ Bitte geben Sie einen Übungstitel ein",
       "exercisePageCreated": "Erfolgreich wurde die Übungsseite erstellt!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Fehler beim Aktualisieren des Timers. Stellen Sie sicher, dass die Datei im Editor geöffnet ist.",
       "timerUpdated": "✅ Timer erfolgreich aktualisiert!",
       "validationCombinedMode": "⚠️ Für den Typ 'exercise + workout' müssen beide Felder gefüllt werden!",
-      "validationFillAll": "Bitte alle Felder mit gültigen Werten füllen",
-      "dismissAchievement": "Erfolg schließen",
-      "auditScanError": "Fehler beim Scannen: {error}",
-      "auditMismatchCount": "{count} mögliche Unstimmigkeiten gefunden:",
-      "auditNoMatchFound": "Keine Übereinstimmung gefunden"
+      "validationFillAll": "Bitte alle Felder mit gültigen Werten füllen"
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -716,11 +720,7 @@
     },
     "workout": "Training (optional):",
     "workoutFile": "Training-Datei:",
-    "workoutNameOptional": "Trainingstitel (optional):",
-    "auditStatusNoMatch": "Keine Übereinstimmung",
-    "auditStatusExactMatch": "Exakte Übereinstimmung",
-    "auditStatusCloseMatch": "Nahe Übereinstimmung",
-    "auditStatusPartialMatch": "Teilweise Übereinstimmung"
+    "workoutNameOptional": "Trainingstitel (optional):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Wird generiert...",
       "overwriting": "Überschreiben...",
       "regenerateOverwrite": "Neu generieren (überschreiben)",
+      "runAllMaintenance": "Alle durchführen",
       "savePreset": "Speichern",
-      "saveProtocol": "Speichern",
-      "runAllMaintenance": "Alle durchführen"
+      "saveProtocol": "Speichern"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskelbezeichnungen existiert bereits. Möchten Sie sie mit Standardwerten überschreiben? Dadurch werden alle persönlichen Bezeichnungen gelöscht.",
@@ -760,11 +760,11 @@
       "protocolColor": "Badge Hintergrundfarbe (hex-Format, z.B., #FF5733)",
       "quickWeightIncrement": "Gewichtszuwachs, der von +/- Schaltern in Erstellungs-/Bearbeitungsmodalen für Trainingsprotokolle verwendet wird (z.B., 2,5 für +2,5 / -2,5 Einheiten)",
       "repDuration": "Schätzter Zeit pro Wiederholung. Verwendet, wenn Wiederholungszahl bekannt ist (z.B., 'x 10 Mal')",
+      "runAllMaintenance": "Führen Sie alle Wartungsaufgaben nacheinander aus. Es ist sicher, die Wartung mehrfach durchzuführen.",
       "setDuration": "Verwendet, wenn Wiederholungen nicht angegeben sind (Fallback). Typische Bereich: 30-60 Sekunden.",
       "setupCSV": "Erstelle beide workout_logs.csv und muscle-tags.csv in dem konfigurierten Ordner.",
       "weightIncrement": "Standarderhöhungswert für progressives Überlasten (z.B., 2,5 für 2,5 Einheiten-Schritte)",
-      "weightUnit": "Wählen Sie die Einheit für Gewichtsmaßeinheiten (kg/lb). Das betrifft den Standardwert für neue Protokolle.",
-      "runAllMaintenance": "Führen Sie alle Wartungsaufgaben nacheinander aus. Es ist sicher, die Wartung mehrfach durchzuführen."
+      "weightUnit": "Wählen Sie die Einheit für Gewichtsmaßeinheiten (kg/lb). Das betrifft den Standardwert für neue Protokolle."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -786,10 +786,10 @@
       "protocolColor": "Badge-Farbe",
       "protocolName": "Protokollname",
       "repDuration": "Wiederholungsdauer pro Wiederholung (Sekunden)",
+      "runAllMaintenance": "Alle Wartungsarbeiten durchführen",
       "setDuration": "Fallback-Set-Dauer (Sekunden)",
       "setupCSV": "Einstellungs-CSV-Dateien",
-      "weightUnit": "Gewichtseinheit",
-      "runAllMaintenance": "Alle Wartungsarbeiten durchführen"
+      "weightUnit": "Gewichtseinheit"
     },
     "messages": {
       "confirmDeletePreset": "Sind Sie sicher, dass Sie dieses Preset löschen möchten?",
@@ -820,17 +820,17 @@
       "protocolName": "Geben Sie den Namen des Protokolls ein"
     },
     "sections": {
+      "advanced": "Erweiterte",
       "csvManagement": "CSV-Dateiverwaltung",
       "customProtocols": "Benutzerdefinierte Protokolle",
       "exampleData": "Beispieldaten",
       "filtering": "Filterung",
+      "maintenance": "Wartung",
       "quickLog": "Mobilprotokollierung",
       "setupAndData": "Einrichtung und Daten",
       "templates": "Vorlagen",
       "timerPresets": "Uhrzeitanpassungen",
-      "trainingParameters": "Parameter für das Training",
-      "maintenance": "Wartung",
-      "advanced": "Erweiterte"
+      "trainingParameters": "Parameter für das Training"
     },
     "tooltips": {
       "deletePreset": "Vorhandene Einstellung löschen",
@@ -839,21 +839,21 @@
       "editProtocol": "Protokoll bearbeiten"
     },
     "validation": {
-      "mustBePositive": "Muss größer als 0 sein",
-      "mustBeNonNegative": "Muss 0 oder größer sein",
+      "csvFolderNotFound": "Ordner nicht gefunden im Speicher. Führen Sie die CSV-Einrichtung aus, um ihn zu erstellen.",
       "csvPathEmpty": "Der Pfad darf nicht leer sein",
-      "csvFolderNotFound": "Ordner nicht gefunden im Speicher. Führen Sie die CSV-Einrichtung aus, um ihn zu erstellen."
+      "mustBeNonNegative": "Muss 0 oder größer sein",
+      "mustBePositive": "Muss größer als 0 sein"
     }
   },
   "stats": {
     "avgVolume": "Durchschnittlicher Volumen",
-    "recentTrend": "aktuelle Trend",
-    "sessions": "Sitzungen",
     "max": "Max: ",
     "min": "Min: ",
-    "title": "📈 {dataTypeLabel} Statistiken ({contextLabel}):",
     "recentLast3": " (letzte 3)",
-    "recentVsPrev": " (vs. vorh.)"
+    "recentTrend": "aktuelle Trend",
+    "recentVsPrev": " (vs. vorh.)",
+    "sessions": "Sitzungen",
+    "title": "📈 {dataTypeLabel} Statistiken ({contextLabel}):"
   },
   "table": {
     "actions": "Aktionen",

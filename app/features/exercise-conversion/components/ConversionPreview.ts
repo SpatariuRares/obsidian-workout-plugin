@@ -28,14 +28,18 @@ export class ConversionPreview {
   private render(): void {
     this.container.empty();
 
-    this.container.createEl("h3", { text: t("convert.preview.title") });
+    this.container.createEl("h3", {
+      text: t("convert.preview.title"),
+    });
 
     if (this.entryCount > 0) {
       this.container.createEl("p", {
         text:
           this.entryCount === 1
             ? t("convert.preview.willConvertOne")
-            : t("convert.preview.willConvertMany", { count: this.entryCount }),
+            : t("convert.preview.willConvertMany", {
+                count: this.entryCount,
+              }),
         cls: "workout-convert-preview-count",
       });
     } else {

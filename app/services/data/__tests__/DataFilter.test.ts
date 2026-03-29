@@ -1,5 +1,11 @@
-import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  DataFilter,
+  DataFilterParams,
+} from "@app/services/data/DataFilter";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { EmbeddedChartParams } from "@app/features/charts/types";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import { TFile } from "obsidian";
@@ -133,7 +139,8 @@ describe("DataFilter", () => {
     it("should return empty array if logData is null or empty", () => {
       const params: Partial<EmbeddedChartParams> = {};
       expect(
-        DataFilter.filterData([], params as EmbeddedChartParams).filteredData,
+        DataFilter.filterData([], params as EmbeddedChartParams)
+          .filteredData,
       ).toHaveLength(0);
       expect(
         DataFilter.filterData(
@@ -145,7 +152,9 @@ describe("DataFilter", () => {
 
     describe("Workout Filtering", () => {
       it("should filter by workout name using the CONSTANTS.WORKOUT.LABELS.COMMON.TYPES.WORKOUT field", () => {
-        const params: Partial<EmbeddedChartParams> = { workout: "Leg Day" };
+        const params: Partial<EmbeddedChartParams> = {
+          workout: "Leg Day",
+        };
         const result = DataFilter.filterData(
           mockLogData,
           params as EmbeddedChartParams,
@@ -154,7 +163,9 @@ describe("DataFilter", () => {
         expect(result.filteredData[0].workout).toBe("Leg Day");
         expect(result.filteredData[1].workout).toBe("Leg Day");
         expect(result.titlePrefix).toBe("Leg Day");
-        expect(result.filterMethodUsed).toBe('campo Origine:: "Leg Day"');
+        expect(result.filterMethodUsed).toBe(
+          'campo Origine:: "Leg Day"',
+        );
       });
 
       it('should filter by workout name using the "origine" field and handle wiki links', () => {
@@ -166,8 +177,12 @@ describe("DataFilter", () => {
           params as EmbeddedChartParams,
         );
         expect(result.filteredData).toHaveLength(2);
-        expect(result.filteredData[0].origine).toBe("[[Strength Training]]");
-        expect(result.filterMethodUsed).toContain("Strength Training");
+        expect(result.filteredData[0].origine).toBe(
+          "[[Strength Training]]",
+        );
+        expect(result.filterMethodUsed).toContain(
+          "Strength Training",
+        );
       });
 
       it("should be case-insensitive and trim whitespace for workout filtering", () => {
@@ -271,7 +286,9 @@ describe("DataFilter", () => {
           params as EmbeddedChartParams,
         );
         expect(result.filteredData).toHaveLength(0);
-        expect(result.filterMethodUsed).toBe("No data found for workout");
+        expect(result.filterMethodUsed).toBe(
+          "No data found for workout",
+        );
       });
     });
 
@@ -290,7 +307,9 @@ describe("DataFilter", () => {
         >;
 
       it("should call fuzzy matching utilities when exactMatch is false", () => {
-        const params: Partial<EmbeddedChartParams> = { exercise: "sqwat" };
+        const params: Partial<EmbeddedChartParams> = {
+          exercise: "sqwat",
+        };
 
         // Setup mocks
         const mockMatchesResult = {
@@ -307,7 +326,9 @@ describe("DataFilter", () => {
         const filteredByUtil = [mockLogData[0]];
 
         mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
-        mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+        mockDetermineExerciseFilterStrategy.mockReturnValue(
+          mockStrategy,
+        );
         mockFilterLogDataByExercise.mockReturnValue(filteredByUtil);
 
         const result = DataFilter.filterData(
@@ -319,7 +340,9 @@ describe("DataFilter", () => {
           mockLogData,
           "sqwat",
         );
-        expect(mockDetermineExerciseFilterStrategy).toHaveBeenCalled();
+        expect(
+          mockDetermineExerciseFilterStrategy,
+        ).toHaveBeenCalled();
         expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
           mockLogData,
           "field",
@@ -333,7 +356,9 @@ describe("DataFilter", () => {
       });
 
       it("should use filename strategy when determined", () => {
-        const params: Partial<EmbeddedChartParams> = { exercise: "bench" };
+        const params: Partial<EmbeddedChartParams> = {
+          exercise: "bench",
+        };
         const mockMatchesResult = {
           fileNameMatches: [],
           allExercisePathsAndScores: new Map(),
@@ -353,7 +378,9 @@ describe("DataFilter", () => {
         };
 
         mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
-        mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+        mockDetermineExerciseFilterStrategy.mockReturnValue(
+          mockStrategy,
+        );
         mockFilterLogDataByExercise.mockReturnValue([mockLogData[1]]);
 
         const result = DataFilter.filterData(
@@ -388,7 +415,9 @@ describe("DataFilter", () => {
         };
 
         mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
-        mockDetermineExerciseFilterStrategy.mockReturnValue(mockStrategy);
+        mockDetermineExerciseFilterStrategy.mockReturnValue(
+          mockStrategy,
+        );
         mockFilterLogDataByExercise.mockReturnValue([]);
 
         const result = DataFilter.filterData(
@@ -406,10 +435,17 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: "drop_set",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(2);
-        expect(result.filteredData[0].protocol).toBe(WorkoutProtocol.DROP_SET);
-        expect(result.filteredData[1].protocol).toBe(WorkoutProtocol.DROP_SET);
+        expect(result.filteredData[0].protocol).toBe(
+          WorkoutProtocol.DROP_SET,
+        );
+        expect(result.filteredData[1].protocol).toBe(
+          WorkoutProtocol.DROP_SET,
+        );
         expect(result.filterMethodUsed).toBe("protocol: [drop_set]");
       });
 
@@ -417,19 +453,27 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: ["drop_set", "myo_reps"],
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(3);
         const protocols = result.filteredData.map((d) => d.protocol);
         expect(protocols).toContain(WorkoutProtocol.DROP_SET);
         expect(protocols).toContain(WorkoutProtocol.MYO_REPS);
-        expect(result.filterMethodUsed).toBe("protocol: [drop_set, myo_reps]");
+        expect(result.filterMethodUsed).toBe(
+          "protocol: [drop_set, myo_reps]",
+        );
       });
 
       it("should be case-insensitive for protocol filtering", () => {
         const params: DataFilterParams = {
           protocol: "DROP_SET",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(2);
         expect(result.filterMethodUsed).toBe("protocol: [drop_set]");
       });
@@ -438,7 +482,10 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: "standard",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         // Should include the entry with explicit STANDARD and the entry without protocol
         expect(result.filteredData).toHaveLength(2);
       });
@@ -449,10 +496,15 @@ describe("DataFilter", () => {
           exactMatch: true,
           protocol: "drop_set",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(1);
         expect(result.filteredData[0].exercise).toBe("Squat");
-        expect(result.filteredData[0].protocol).toBe(WorkoutProtocol.DROP_SET);
+        expect(result.filteredData[0].protocol).toBe(
+          WorkoutProtocol.DROP_SET,
+        );
         expect(result.filterMethodUsed).toContain("exact match");
         expect(result.filterMethodUsed).toContain("protocol");
       });
@@ -462,11 +514,14 @@ describe("DataFilter", () => {
           workout: "Leg Day",
           protocol: ["drop_set", "rest_pause"],
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
-        expect(result.filteredData).toHaveLength(2);
-        expect(result.filteredData.every((d) => d.workout === "Leg Day")).toBe(
-          true,
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
         );
+        expect(result.filteredData).toHaveLength(2);
+        expect(
+          result.filteredData.every((d) => d.workout === "Leg Day"),
+        ).toBe(true);
         expect(result.filterMethodUsed).toContain("Leg Day");
         expect(result.filterMethodUsed).toContain("protocol");
       });
@@ -475,7 +530,10 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: "superset",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(0);
       });
 
@@ -483,7 +541,10 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: "",
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(
           mockLogDataWithProtocol.length,
         );
@@ -494,7 +555,10 @@ describe("DataFilter", () => {
         const params: DataFilterParams = {
           protocol: [],
         };
-        const result = DataFilter.filterData(mockLogDataWithProtocol, params);
+        const result = DataFilter.filterData(
+          mockLogDataWithProtocol,
+          params,
+        );
         expect(result.filteredData).toHaveLength(
           mockLogDataWithProtocol.length,
         );

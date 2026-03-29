@@ -44,16 +44,16 @@ export class TargetSectionWithAutocomplete {
     // Exercise autocomplete (for exercise-specific charts/tables)
     const exerciseContainer = modal.createFormGroup(targetSection);
     exerciseContainer.classList.add("workout-target-exercise");
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      modal,
-      exerciseContainer,
-      plugin,
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(modal, exerciseContainer, plugin);
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);
     workoutContainer.classList.add("workout-target-workout");
-    workoutContainer.setAttribute("data-field-type", t("common.workout"));
+    workoutContainer.setAttribute(
+      "data-field-type",
+      t("common.workout"),
+    );
     const workoutInput = modal.createTextInput(
       workoutContainer,
       t("forms.workoutName"),
@@ -61,9 +61,15 @@ export class TargetSectionWithAutocomplete {
     );
 
     // Current Workout checkbox (for workout charts/tables)
-    const currentWorkoutContainer = modal.createCheckboxGroup(targetSection);
-    currentWorkoutContainer.classList.add("workout-target-current-workout");
-    currentWorkoutContainer.setAttribute("data-field-type", "current-workout");
+    const currentWorkoutContainer =
+      modal.createCheckboxGroup(targetSection);
+    currentWorkoutContainer.classList.add(
+      "workout-target-current-workout",
+    );
+    currentWorkoutContainer.setAttribute(
+      "data-field-type",
+      "current-workout",
+    );
     const currentWorkoutToggle = modal.createCheckbox(
       currentWorkoutContainer,
       t("modal.checkboxes.useCurrentWorkoutFile"),
@@ -147,7 +153,10 @@ export class TargetSectionWithAutocomplete {
 
     switch (type) {
       case CHART_TYPE.EXERCISE:
-        return { type, exercise: elements.exerciseInput.value.trim() };
+        return {
+          type,
+          exercise: elements.exerciseInput.value.trim(),
+        };
       case CHART_TYPE.WORKOUT:
         return { type, workout: workoutValue };
       case CHART_TYPE.COMBINED:

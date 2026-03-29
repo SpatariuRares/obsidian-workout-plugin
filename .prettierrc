@@ -12,7 +12,7 @@
     }
   ],
   "plugins": ["prettier-plugin-sort-json"],
-  "printWidth": 100,
+  "printWidth": 70,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "semi": true,

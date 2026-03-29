@@ -309,7 +309,10 @@ export class InsertViewNameModal extends BaseInsertModal {
 ```typescript
 import { EmbeddedViewName } from "../EmbeddedViewName";
 import { WorkoutChartsPlugin } from "main";
-import { mockPlugin, mockContainer } from "@app/__tests__/obsidianDomMocks";
+import {
+  mockPlugin,
+  mockContainer,
+} from "@app/__tests__/obsidianDomMocks";
 
 describe("EmbeddedViewName", () => {
   let view: EmbeddedViewName;
@@ -331,7 +334,9 @@ describe("EmbeddedViewName", () => {
       const source = "exercise: Squat";
       const renderPromise = view.render(container, source, {});
 
-      expect(container.querySelector(".loading-spinner")).toBeTruthy();
+      expect(
+        container.querySelector(".loading-spinner"),
+      ).toBeTruthy();
 
       await renderPromise;
     });
@@ -340,7 +345,9 @@ describe("EmbeddedViewName", () => {
       const source = "exercise: Squat";
       plugin.dataService.getWorkoutLogData = jest
         .fn()
-        .resolves([{ date: "2025-01-01", exercise: "Squat", weight: 100 }]);
+        .resolves([
+          { date: "2025-01-01", exercise: "Squat", weight: 100 },
+        ]);
 
       await view.render(container, source, {});
 
@@ -599,7 +606,9 @@ import { DataService } from "@app/services/data/DataService";
 export class SimpleView extends BaseView {
   async render(container: HTMLElement, source: string, ctx: any) {
     try {
-      const data = await this.plugin.dataService.getWorkoutLogData({});
+      const data = await this.plugin.dataService.getWorkoutLogData(
+        {},
+      );
       const count = data.length;
       container.createDiv({ text: `Total workouts: ${count}` });
     } catch (error) {
@@ -640,10 +649,16 @@ export class ComplexView extends BaseView {
       this.timers.push(timer);
 
       // Add event listener
-      const button = container.createEl("button", { text: "Refresh" });
+      const button = container.createEl("button", {
+        text: "Refresh",
+      });
       const handler = () => this.refresh();
       button.addEventListener("click", handler);
-      this.eventListeners.push({ el: button, event: "click", handler });
+      this.eventListeners.push({
+        el: button,
+        event: "click",
+        handler,
+      });
     } catch (error) {
       this.handleError(container, error as Error);
     }

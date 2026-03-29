@@ -234,13 +234,17 @@ describe("WorkoutPlannerAPI", () => {
         getAbstractFileByPath: jest.fn().mockReturnValue(folder),
         cachedRead: jest.fn((file: { path: string }) => {
           if (file.path.includes("bench")) {
-            return Promise.resolve("---\ntags: [chest, compound]\n---");
+            return Promise.resolve(
+              "---\ntags: [chest, compound]\n---",
+            );
           }
           if (file.path.includes("pushup")) {
             return Promise.resolve("---\ntags: chest\n---");
           }
           if (file.path.includes("squat")) {
-            return Promise.resolve("---\ntags:\n  - legs\n  - compound\n---");
+            return Promise.resolve(
+              "---\ntags:\n  - legs\n  - compound\n---",
+            );
           }
           return Promise.resolve("");
         }),

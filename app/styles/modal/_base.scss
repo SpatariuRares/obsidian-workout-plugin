@@ -31,7 +31,8 @@
   padding: var(--workout-space-lg);
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-lg);

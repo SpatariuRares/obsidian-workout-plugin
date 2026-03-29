@@ -5,69 +5,69 @@ import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMo
 import { INPUT_TYPE } from "@app/types/InputTypes";
 
 describe("Input atom", () => {
-	it("creates an input with provided attributes", () => {
-		const parent = createObsidianContainer();
-		const input = Input.create(parent, {
-			type: INPUT_TYPE.NUMBER,
-			placeholder: "Weight",
-			value: 42,
-			className: "weight-input",
-			min: 0,
-			max: 300,
-			step: 5,
-		});
+  it("creates an input with provided attributes", () => {
+    const parent = createObsidianContainer();
+    const input = Input.create(parent, {
+      type: INPUT_TYPE.NUMBER,
+      placeholder: "Weight",
+      value: 42,
+      className: "weight-input",
+      min: 0,
+      max: 300,
+      step: 5,
+    });
 
-		expect(input.tagName).toBe("INPUT");
-		expect(input.classList.contains("weight-input")).toBe(true);
-		expect(input.getAttribute("type")).toBe("number");
-		expect(input.getAttribute("placeholder")).toBe("Weight");
-		expect(Input.getValue(input)).toBe("42");
-		expect(input.getAttribute("min")).toBe("0");
-		expect(input.getAttribute("max")).toBe("300");
-		expect(input.getAttribute("step")).toBe("5");
-	});
+    expect(input.tagName).toBe("INPUT");
+    expect(input.classList.contains("weight-input")).toBe(true);
+    expect(input.getAttribute("type")).toBe("number");
+    expect(input.getAttribute("placeholder")).toBe("Weight");
+    expect(Input.getValue(input)).toBe("42");
+    expect(input.getAttribute("min")).toBe("0");
+    expect(input.getAttribute("max")).toBe("300");
+    expect(input.getAttribute("step")).toBe("5");
+  });
 
-	it("sets values and fires change handlers", () => {
-		const parent = createObsidianContainer();
-		const input = Input.create(parent);
+  it("sets values and fires change handlers", () => {
+    const parent = createObsidianContainer();
+    const input = Input.create(parent);
 
-		expect(input.classList.contains("input")).toBe(true);
+    expect(input.classList.contains("input")).toBe(true);
 
-		Input.setValue(input, 99);
-		expect(Input.getValue(input)).toBe("99");
+    Input.setValue(input, 99);
+    expect(Input.getValue(input)).toBe("99");
 
-		const handler = jest.fn();
-		Input.onChange(input, handler);
-		input.dispatchEvent(new Event("change"));
-		expect(handler).toHaveBeenCalledTimes(1);
-	});
+    const handler = jest.fn();
+    Input.onChange(input, handler);
+    input.dispatchEvent(new Event("change"));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
 
-	it("creates input with disabled attribute", () => {
-		const parent = createObsidianContainer();
-		const input = Input.create(parent, {
-			disabled: true,
-		});
+  it("creates input with disabled attribute", () => {
+    const parent = createObsidianContainer();
+    const input = Input.create(parent, {
+      disabled: true,
+    });
 
-		expect(input.getAttribute("disabled")).toBe("true");
-	});
+    expect(input.getAttribute("disabled")).toBe("true");
+  });
 
-	it("creates input with required attribute", () => {
-		const parent = createObsidianContainer();
-		const input = Input.create(parent, {
-			required: true,
-		});
+  it("creates input with required attribute", () => {
+    const parent = createObsidianContainer();
+    const input = Input.create(parent, {
+      required: true,
+    });
 
-		expect(input.getAttribute("required")).toBe("true");
-	});
+    expect(input.getAttribute("required")).toBe("true");
+  });
 
-	it("creates input with both disabled and required", () => {
-		const parent = createObsidianContainer();
-		const input = Input.create(parent, {
-			disabled: true,
-			required: true,
-		});
+  it("creates input with both disabled and required", () => {
+    const parent = createObsidianContainer();
+    const input = Input.create(parent, {
+      disabled: true,
+      required: true,
+    });
 
-		expect(input.getAttribute("disabled")).toBe("true");
-		expect(input.getAttribute("required")).toBe("true");
-	});
+    expect(input.getAttribute("disabled")).toBe("true");
+    expect(input.getAttribute("required")).toBe("true");
+  });
 });

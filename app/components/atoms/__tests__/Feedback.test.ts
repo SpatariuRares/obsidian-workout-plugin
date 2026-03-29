@@ -10,10 +10,18 @@ describe("Feedback atom", () => {
 
       Feedback.renderError(container, "Something went wrong");
 
-      const errorDiv = container.querySelector(".workout-feedback-error");
+      const errorDiv = container.querySelector(
+        ".workout-feedback-error",
+      );
       expect(errorDiv).toBeTruthy();
-      expect(errorDiv?.querySelector(".workout-feedback-error-icon")?.textContent).toBe("⚠️");
-      expect(errorDiv?.querySelector(".workout-feedback-error-message")?.textContent).toBe("Something went wrong");
+      expect(
+        errorDiv?.querySelector(".workout-feedback-error-icon")
+          ?.textContent,
+      ).toBe("⚠️");
+      expect(
+        errorDiv?.querySelector(".workout-feedback-error-message")
+          ?.textContent,
+      ).toBe("Something went wrong");
     });
 
     it("renders error message with custom class and icon", () => {
@@ -26,7 +34,10 @@ describe("Feedback atom", () => {
 
       const errorDiv = container.querySelector(".custom-error-class");
       expect(errorDiv).toBeTruthy();
-      expect(errorDiv?.querySelector(".workout-feedback-error-icon")?.textContent).toBe("❌");
+      expect(
+        errorDiv?.querySelector(".workout-feedback-error-icon")
+          ?.textContent,
+      ).toBe("❌");
     });
 
     it("renders error message without icon when icon is empty", () => {
@@ -36,9 +47,13 @@ describe("Feedback atom", () => {
         icon: "",
       });
 
-      const errorDiv = container.querySelector(".workout-feedback-error");
+      const errorDiv = container.querySelector(
+        ".workout-feedback-error",
+      );
       expect(errorDiv).toBeTruthy();
-      expect(errorDiv?.querySelector(".workout-feedback-error-icon")).toBeNull();
+      expect(
+        errorDiv?.querySelector(".workout-feedback-error-icon"),
+      ).toBeNull();
     });
 
     it("empties container by default before rendering", () => {
@@ -48,17 +63,25 @@ describe("Feedback atom", () => {
       Feedback.renderError(container, "Error message");
 
       expect(container.querySelector("p")).toBeNull();
-      expect(container.querySelector(".workout-feedback-error")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-feedback-error"),
+      ).toBeTruthy();
     });
 
     it("appends to container when append option is true", () => {
       const container = createObsidianContainer();
       container.createEl("p", { text: "Existing content" });
 
-      Feedback.renderError(container, "Error message", { append: true });
+      Feedback.renderError(container, "Error message", {
+        append: true,
+      });
 
-      expect(container.querySelector("p")?.textContent).toBe("Existing content");
-      expect(container.querySelector(".workout-feedback-error")).toBeTruthy();
+      expect(container.querySelector("p")?.textContent).toBe(
+        "Existing content",
+      );
+      expect(
+        container.querySelector(".workout-feedback-error"),
+      ).toBeTruthy();
     });
   });
 
@@ -68,7 +91,9 @@ describe("Feedback atom", () => {
 
       Feedback.renderEmpty(container, "No data available");
 
-      const emptyDiv = container.querySelector(".workout-feedback-info");
+      const emptyDiv = container.querySelector(
+        ".workout-feedback-info",
+      );
       expect(emptyDiv).toBeTruthy();
       expect(emptyDiv?.textContent).toBe("No data available");
     });
@@ -101,7 +126,9 @@ describe("Feedback atom", () => {
 
       Feedback.renderInfo(container, "Information message");
 
-      const infoDiv = container.querySelector(".workout-feedback-info");
+      const infoDiv = container.querySelector(
+        ".workout-feedback-info",
+      );
       expect(infoDiv).toBeTruthy();
       expect(infoDiv?.textContent).toBe("Information message");
     });
@@ -124,7 +151,9 @@ describe("Feedback atom", () => {
       Feedback.renderInfo(container, "Info", { append: true });
 
       expect(container.querySelector(".existing")).toBeTruthy();
-      expect(container.querySelector(".workout-feedback-info")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-feedback-info"),
+      ).toBeTruthy();
     });
   });
 
@@ -134,7 +163,9 @@ describe("Feedback atom", () => {
 
       Feedback.renderSuccess(container, "Operation successful!");
 
-      const successDiv = container.querySelector(".workout-success-message");
+      const successDiv = container.querySelector(
+        ".workout-success-message",
+      );
       expect(successDiv).toBeTruthy();
       expect(successDiv?.textContent).toBe("Operation successful!");
     });
@@ -146,7 +177,9 @@ describe("Feedback atom", () => {
         className: "custom-success-class",
       });
 
-      const successDiv = container.querySelector(".custom-success-class");
+      const successDiv = container.querySelector(
+        ".custom-success-class",
+      );
       expect(successDiv).toBeTruthy();
     });
   });
@@ -157,9 +190,14 @@ describe("Feedback atom", () => {
 
       Feedback.renderWarning(container, "Warning message");
 
-      const warningDiv = container.querySelector(".workout-feedback-warning");
+      const warningDiv = container.querySelector(
+        ".workout-feedback-warning",
+      );
       expect(warningDiv).toBeTruthy();
-      expect(warningDiv?.querySelector(".workout-alert-message")?.textContent).toBe("Warning message");
+      expect(
+        warningDiv?.querySelector(".workout-alert-message")
+          ?.textContent,
+      ).toBe("Warning message");
     });
 
     it("renders warning with title", () => {
@@ -169,17 +207,30 @@ describe("Feedback atom", () => {
         title: "Warning Title",
       });
 
-      const warningDiv = container.querySelector(".workout-feedback-warning");
-      expect(warningDiv?.querySelector(".workout-alert-title")?.textContent).toBe("Warning Title");
+      const warningDiv = container.querySelector(
+        ".workout-feedback-warning",
+      );
+      expect(
+        warningDiv?.querySelector(".workout-alert-title")
+          ?.textContent,
+      ).toBe("Warning Title");
     });
 
     it("renders warning with multiple messages", () => {
       const container = createObsidianContainer();
 
-      Feedback.renderWarning(container, ["First warning", "Second warning", "Third warning"]);
+      Feedback.renderWarning(container, [
+        "First warning",
+        "Second warning",
+        "Third warning",
+      ]);
 
-      const warningDiv = container.querySelector(".workout-feedback-warning");
-      const messages = warningDiv?.querySelectorAll(".workout-alert-message");
+      const warningDiv = container.querySelector(
+        ".workout-feedback-warning",
+      );
+      const messages = warningDiv?.querySelectorAll(
+        ".workout-alert-message",
+      );
       expect(messages?.length).toBe(3);
       expect(messages?.[0]?.textContent).toBe("First warning");
       expect(messages?.[1]?.textContent).toBe("Second warning");
@@ -193,7 +244,9 @@ describe("Feedback atom", () => {
         className: "custom-warning-class",
       });
 
-      expect(container.querySelector(".custom-warning-class")).toBeTruthy();
+      expect(
+        container.querySelector(".custom-warning-class"),
+      ).toBeTruthy();
     });
 
     it("renders warning without title when not provided", () => {
@@ -201,8 +254,12 @@ describe("Feedback atom", () => {
 
       Feedback.renderWarning(container, "No title warning");
 
-      const warningDiv = container.querySelector(".workout-feedback-warning");
-      expect(warningDiv?.querySelector(".workout-alert-title")).toBeNull();
+      const warningDiv = container.querySelector(
+        ".workout-feedback-warning",
+      );
+      expect(
+        warningDiv?.querySelector(".workout-alert-title"),
+      ).toBeNull();
     });
   });
 });

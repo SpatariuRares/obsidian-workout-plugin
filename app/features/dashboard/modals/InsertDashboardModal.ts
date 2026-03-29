@@ -22,14 +22,18 @@ export class InsertDashboardModal extends BaseInsertModal {
     return t("modal.notices.dashboardInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     // Dashboard has no configuration options yet
     // In the future, we could add options like:
     // - Which widgets to show (stats, volume analytics, muscle heat map, etc.)
     // - Time range for data
     // - Custom styling options
 
-    const infoSection = container.createDiv({ cls: "workout-modal-section" });
+    const infoSection = container.createDiv({
+      cls: "workout-modal-section",
+    });
     infoSection.createEl("p", {
       text: t("modal.info.dashboardDescription"),
       cls: "setting-item-description",

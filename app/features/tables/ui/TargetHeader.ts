@@ -22,15 +22,21 @@ export class TargetHeader {
    * @param props - Header properties
    * @returns The created header element, or null if no targets set
    */
-  static render(container: HTMLElement, props: TargetHeaderProps): HTMLElement | null {
-    const { targetWeight, targetReps, filteredData, weightUnit } = props;
+  static render(
+    container: HTMLElement,
+    props: TargetHeaderProps,
+  ): HTMLElement | null {
+    const { targetWeight, targetReps, filteredData, weightUnit } =
+      props;
 
     // Only render if at least one target is set
     if (targetWeight === undefined && targetReps === undefined) {
       return null;
     }
 
-    const targetDiv = container.createDiv({ cls: "workout-target-header" });
+    const targetDiv = container.createDiv({
+      cls: "workout-target-header",
+    });
 
     // Build the target text
     const parts: string[] = [];
@@ -38,16 +44,27 @@ export class TargetHeader {
       parts.push(`${targetWeight}${weightUnit}`);
     }
     if (targetReps !== undefined) {
-      const separator = targetWeight !== undefined ? t("table.target.separator") : "";
-      parts.push(`${separator}${targetReps} ${t("table.target.repsSuffix")}`);
+      const separator =
+        targetWeight !== undefined ? t("table.target.separator") : "";
+      parts.push(
+        `${separator}${targetReps} ${t("table.target.repsSuffix")}`,
+      );
     }
 
     const targetText = `${t("table.labels.target")} ${parts.join("")}`;
-    targetDiv.createSpan({ cls: "workout-target-text", text: targetText });
+    targetDiv.createSpan({
+      cls: "workout-target-text",
+      text: targetText,
+    });
 
     // Render progress bar if both targets are set
     if (targetWeight !== undefined && targetReps !== undefined) {
-      this.renderProgressBar(targetDiv, targetWeight, targetReps, filteredData);
+      this.renderProgressBar(
+        targetDiv,
+        targetWeight,
+        targetReps,
+        filteredData,
+      );
     }
 
     return targetDiv;
@@ -62,15 +79,22 @@ export class TargetHeader {
     targetReps: number,
     filteredData: WorkoutLogData[],
   ): void {
-    const bestReps = TargetCalculator.calculateBestRepsAtWeight(targetWeight, filteredData);
+    const bestReps = TargetCalculator.calculateBestRepsAtWeight(
+      targetWeight,
+      filteredData,
+    );
 
     if (bestReps === 0) {
       // No data at target weight yet
       return;
     }
 
-    const progressPercent = TargetCalculator.calculateProgressPercent(bestReps, targetReps);
-    const progressLevel = TargetCalculator.getProgressLevel(progressPercent);
+    const progressPercent = TargetCalculator.calculateProgressPercent(
+      bestReps,
+      targetReps,
+    );
+    const progressLevel =
+      TargetCalculator.getProgressLevel(progressPercent);
 
     // Create progress bar container
     const progressContainer = container.createDiv({

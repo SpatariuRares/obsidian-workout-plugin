@@ -13,8 +13,11 @@ export class RecentExercisesService {
   /**
    * Returns recent exercises for chip display.
    */
-  getDisplayRecentExercises(limit = DEFAULT_DISPLAY_RECENT_COUNT): string[] {
-    const recentExercises = this.plugin.settings.recentExercises || [];
+  getDisplayRecentExercises(
+    limit = DEFAULT_DISPLAY_RECENT_COUNT,
+  ): string[] {
+    const recentExercises =
+      this.plugin.settings.recentExercises || [];
     return recentExercises.slice(0, limit);
   }
 
@@ -27,11 +30,13 @@ export class RecentExercisesService {
 
     const currentRecent = this.plugin.settings.recentExercises || [];
     const alreadyFirst =
-      currentRecent[0]?.toLowerCase() === normalizedExercise.toLowerCase();
+      currentRecent[0]?.toLowerCase() ===
+      normalizedExercise.toLowerCase();
     if (alreadyFirst) return;
 
     const filteredRecent = currentRecent.filter(
-      (item) => item.toLowerCase() !== normalizedExercise.toLowerCase(),
+      (item) =>
+        item.toLowerCase() !== normalizedExercise.toLowerCase(),
     );
 
     this.plugin.settings.recentExercises = [

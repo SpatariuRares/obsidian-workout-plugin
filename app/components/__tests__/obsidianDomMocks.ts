@@ -7,13 +7,15 @@ interface CreateElOptions {
 export type ObsidianHTMLElement = HTMLElement & {
   createEl: <K extends keyof HTMLElementTagNameMap>(
     tag: K,
-    options?: CreateElOptions
-  ) => (HTMLElementTagNameMap[K] & ObsidianHTMLElement) | HTMLElementTagNameMap[K];
+    options?: CreateElOptions,
+  ) =>
+    | (HTMLElementTagNameMap[K] & ObsidianHTMLElement)
+    | HTMLElementTagNameMap[K];
   createDiv: (
-    options?: CreateElOptions
+    options?: CreateElOptions,
   ) => (HTMLDivElement & ObsidianHTMLElement) | HTMLDivElement;
   createSpan: (
-    options?: CreateElOptions
+    options?: CreateElOptions,
   ) => (HTMLSpanElement & ObsidianHTMLElement) | HTMLSpanElement;
   addClass: (cls: string) => void;
   removeClass: (cls: string) => void;
@@ -30,16 +32,18 @@ export const createObsidianContainer = (): ObsidianHTMLElement => {
 };
 
 export const attachObsidianHelpers = <T extends HTMLElement>(
-  element: T
+  element: T,
 ): T & ObsidianHTMLElement => {
   const obsidianElement = element as T & ObsidianHTMLElement;
 
-  obsidianElement.createEl = function createEl<K extends keyof HTMLElementTagNameMap>(
+  obsidianElement.createEl = function createEl<
+    K extends keyof HTMLElementTagNameMap,
+  >(
     tag: K,
-    options?: CreateElOptions
+    options?: CreateElOptions,
   ): HTMLElementTagNameMap[K] & ObsidianHTMLElement {
     const child = attachObsidianHelpers(
-      document.createElement(tag)
+      document.createElement(tag),
     ) as HTMLElementTagNameMap[K] & ObsidianHTMLElement;
 
     applyOptions(child, options);
@@ -49,25 +53,26 @@ export const attachObsidianHelpers = <T extends HTMLElement>(
   };
 
   obsidianElement.createDiv = function createDiv(
-    options?: CreateElOptions
+    options?: CreateElOptions,
   ): HTMLDivElement & ObsidianHTMLElement {
-    return this.createEl("div", options) as HTMLDivElement & ObsidianHTMLElement;
+    return this.createEl("div", options) as HTMLDivElement &
+      ObsidianHTMLElement;
   };
 
   obsidianElement.createSpan = function createSpan(
-    options?: CreateElOptions
+    options?: CreateElOptions,
   ): HTMLSpanElement & ObsidianHTMLElement {
-    return this.createEl(
-      "span",
-      options
-    ) as HTMLSpanElement & ObsidianHTMLElement;
+    return this.createEl("span", options) as HTMLSpanElement &
+      ObsidianHTMLElement;
   };
 
   obsidianElement.addClass = function addClass(cls: string): void {
     applyClasses(this, cls);
   };
 
-  obsidianElement.removeClass = function removeClass(cls: string): void {
+  obsidianElement.removeClass = function removeClass(
+    cls: string,
+  ): void {
     if (!cls) {
       return;
     }
@@ -79,7 +84,9 @@ export const attachObsidianHelpers = <T extends HTMLElement>(
       .forEach((name) => this.classList.remove(name));
   };
 
-  obsidianElement.appendText = function appendText(text: string): Text {
+  obsidianElement.appendText = function appendText(
+    text: string,
+  ): Text {
     const textNode = document.createTextNode(text);
     this.appendChild(textNode);
     return textNode;
@@ -91,7 +98,9 @@ export const attachObsidianHelpers = <T extends HTMLElement>(
     }
   };
 
-  obsidianElement.setText = function setText(text: string): ObsidianHTMLElement {
+  obsidianElement.setText = function setText(
+    text: string,
+  ): ObsidianHTMLElement {
     this.textContent = text;
     return this as unknown as ObsidianHTMLElement;
   };
@@ -101,7 +110,7 @@ export const attachObsidianHelpers = <T extends HTMLElement>(
 
 const applyOptions = (
   element: HTMLElement,
-  options?: CreateElOptions
+  options?: CreateElOptions,
 ): void => {
   if (!options) {
     return;
@@ -122,13 +131,15 @@ const applyOptions = (
 
 const applyClasses = (
   element: Element,
-  classes?: string | string[]
+  classes?: string | string[],
 ): void => {
   if (!classes) {
     return;
   }
 
-  const tokens = Array.isArray(classes) ? classes : classes.split(/\s+/);
+  const tokens = Array.isArray(classes)
+    ? classes
+    : classes.split(/\s+/);
 
   tokens
     .map((cls) => cls.trim())

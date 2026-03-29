@@ -12,16 +12,20 @@ export class ExerciseTypeMigration {
 
   public async migrateExerciseTypes(): Promise<void> {
     try {
-      const exerciseFolderPath = this.plugin.settings.exerciseFolderPath;
+      const exerciseFolderPath =
+        this.plugin.settings.exerciseFolderPath;
       if (!exerciseFolderPath) {
         new Notice(t("messages.fileEmpty")); // Using generic error or specific if available
         return;
       }
 
-      const folder =
-        this.plugin.app.vault.getAbstractFileByPath(exerciseFolderPath);
+      const folder = this.plugin.app.vault.getAbstractFileByPath(
+        exerciseFolderPath,
+      );
       if (!folder || !(folder instanceof TFolder)) {
-        new Notice(`Exercise folder not found: ${exerciseFolderPath}`);
+        new Notice(
+          `Exercise folder not found: ${exerciseFolderPath}`,
+        );
         return;
       }
 
@@ -42,17 +46,16 @@ export class ExerciseTypeMigration {
 
       if (updatedCount > 0) {
         new Notice(
-          t("modal.notices.migrationComplete", { count: updatedCount }),
+          t("modal.notices.migrationComplete", {
+            count: updatedCount,
+          }),
         );
       } else {
         new Notice(t("modal.notices.migrationNoUpdates"));
       }
     } catch (error) {
-      const errorMessage =
-        ErrorUtils.getErrorMessage(error);
-      new Notice(
-        t("modal.notices.migrationError") + errorMessage,
-      );
+      const errorMessage = ErrorUtils.getErrorMessage(error);
+      new Notice(t("modal.notices.migrationError") + errorMessage);
     }
   }
 

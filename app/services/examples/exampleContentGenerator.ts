@@ -52,8 +52,15 @@ ${t("examples.gettingStarted.quickActionsIntro")}
 `;
 }
 
-export function generateExerciseContent(name: string, type: string, tags: string[]): string {
-  const tagsYaml = tags.length > 0 ? `tags:\n${tags.map((tag) => `  - ${tag}`).join("\n")}` : "";
+export function generateExerciseContent(
+  name: string,
+  type: string,
+  tags: string[],
+): string {
+  const tagsYaml =
+    tags.length > 0
+      ? `tags:\n${tags.map((tag) => `  - ${tag}`).join("\n")}`
+      : "";
 
   const chartSections = getChartSectionsForExerciseType(name, type);
 

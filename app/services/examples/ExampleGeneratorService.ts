@@ -44,17 +44,63 @@ export class ExampleGeneratorService {
       );
 
       // Create Exercises
-      const exercises: { name: string; type: string; tags: string[]; overwrite?: boolean }[] = [
-        { name: t("examples.exercises.benchPress.name"), type: "strength", tags: ["chest", "triceps", "shoulders"], overwrite: true },
-        { name: t("examples.exercises.squat.name"), type: "strength", tags: ["legs", "quads", "glutes"] },
-        { name: t("examples.exercises.running.name"), type: "cardio", tags: ["cardio", "legs"] },
-        { name: t("examples.exercises.plank.name"), type: "timed", tags: ["core", "abs"] },
-        { name: t("examples.exercises.cycling.name"), type: "distance", tags: ["cardio", "legs"] },
-        { name: t("examples.exercises.squatMultiPower.name"), type: "strength", tags: ["legs", "quads"] },
-        { name: t("examples.exercises.rdl.name"), type: "strength", tags: ["legs", "hamstrings", "glutes"] },
-        { name: t("examples.exercises.legPress45.name"), type: "strength", tags: ["legs", "quads"] },
-        { name: t("examples.exercises.legCurlSeated.name"), type: "strength", tags: ["legs", "hamstrings"] },
-        { name: t("examples.exercises.calfMachine.name"), type: "strength", tags: ["legs", "calves"] },
+      const exercises: {
+        name: string;
+        type: string;
+        tags: string[];
+        overwrite?: boolean;
+      }[] = [
+        {
+          name: t("examples.exercises.benchPress.name"),
+          type: "strength",
+          tags: ["chest", "triceps", "shoulders"],
+          overwrite: true,
+        },
+        {
+          name: t("examples.exercises.squat.name"),
+          type: "strength",
+          tags: ["legs", "quads", "glutes"],
+        },
+        {
+          name: t("examples.exercises.running.name"),
+          type: "cardio",
+          tags: ["cardio", "legs"],
+        },
+        {
+          name: t("examples.exercises.plank.name"),
+          type: "timed",
+          tags: ["core", "abs"],
+        },
+        {
+          name: t("examples.exercises.cycling.name"),
+          type: "distance",
+          tags: ["cardio", "legs"],
+        },
+        {
+          name: t("examples.exercises.squatMultiPower.name"),
+          type: "strength",
+          tags: ["legs", "quads"],
+        },
+        {
+          name: t("examples.exercises.rdl.name"),
+          type: "strength",
+          tags: ["legs", "hamstrings", "glutes"],
+        },
+        {
+          name: t("examples.exercises.legPress45.name"),
+          type: "strength",
+          tags: ["legs", "quads"],
+        },
+        {
+          name: t("examples.exercises.legCurlSeated.name"),
+          type: "strength",
+          tags: ["legs", "hamstrings"],
+        },
+        {
+          name: t("examples.exercises.calfMachine.name"),
+          type: "strength",
+          tags: ["legs", "calves"],
+        },
       ];
 
       for (const ex of exercises) {
@@ -107,7 +153,9 @@ export class ExampleGeneratorService {
       );
 
       new Notice(
-        t("examples.folderCreatedSuccess", { folder: baseFolderName }),
+        t("examples.folderCreatedSuccess", {
+          folder: baseFolderName,
+        }),
       );
     } catch {
       new Notice(t("examples.folderCreatedError"));
@@ -130,7 +178,8 @@ export class ExampleGeneratorService {
     overwrite: boolean,
   ): Promise<void> {
     const filePath = normalizePath(`${folderPath}/${fileName}`);
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
+    const existingFile =
+      this.app.vault.getAbstractFileByPath(filePath);
 
     if (existingFile && !overwrite) {
       return;

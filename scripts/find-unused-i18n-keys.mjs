@@ -21,7 +21,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-const SCAN_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".mjs", ".cjs"]);
+const SCAN_EXTENSIONS = new Set([
+  ".ts",
+  ".tsx",
+  ".js",
+  ".mjs",
+  ".cjs",
+]);
 const EXCLUDED_DIRS = new Set([
   "node_modules",
   ".git",
@@ -50,7 +56,8 @@ const verbose = args.includes("--verbose");
 const fixMode = args.includes("--fix");
 const dryRun = args.includes("--dry-run");
 const outputFile = getArgValue("--output");
-const extraDirs = getArgValue("--include")?.split(",").filter(Boolean) ?? [];
+const extraDirs =
+  getArgValue("--include")?.split(",").filter(Boolean) ?? [];
 
 const DEFAULT_SCAN_DIRS = ["app", "main.ts", ...extraDirs];
 
@@ -94,7 +101,7 @@ function extractLeafKeys(obj, prefix = "", result = new Set()) {
 function isKeyUsedInContent(content, key) {
   // Escapa i punti per la regex
   const escapedKey = key.replace(/\./g, "\\.");
-  
+
   // Cerca pattern come:
   // t("key")
   // t('key')
@@ -103,17 +110,21 @@ function isKeyUsedInContent(content, key) {
   // .t("key")
   const patterns = [
     new RegExp(`t\\(['"\x60]${escapedKey}['"\x60]`),
-    new RegExp(`hasKey\\(['"\x60]${escapedKey}['"\x60]`)
+    new RegExp(`hasKey\\(['"\x60]${escapedKey}['"\x60]`),
   ];
 
-  return patterns.some(pattern => pattern.test(content));
+  return patterns.some((pattern) => pattern.test(content));
 }
 
 function pruneEmptyNodes(obj) {
   if (typeof obj !== "object" || obj === null) return false;
   for (const key of Object.keys(obj)) {
     const child = obj[key];
-    if (typeof child === "object" && child !== null && !Array.isArray(child)) {
+    if (
+      typeof child === "object" &&
+      child !== null &&
+      !Array.isArray(child)
+    ) {
       const isEmpty = pruneEmptyNodes(child);
       if (isEmpty) delete obj[key];
     }
@@ -122,7 +133,8 @@ function pruneEmptyNodes(obj) {
 }
 
 function deleteNestedKey(obj, parts) {
-  if (parts.length === 0 || typeof obj !== "object" || obj === null) return;
+  if (parts.length === 0 || typeof obj !== "object" || obj === null)
+    return;
   const [head, ...tail] = parts;
   if (tail.length === 0) {
     delete obj[head];
@@ -132,27 +144,37 @@ function deleteNestedKey(obj, parts) {
 }
 
 function main() {
-  const localeFiles = fs.readdirSync(LOCALES_DIR).filter(f => f.endsWith(".json"));
+  const localeFiles = fs
+    .readdirSync(LOCALES_DIR)
+    .filter((f) => f.endsWith(".json"));
   const allLocaleKeys = new Set();
   const localeDataMap = new Map();
 
   for (const file of localeFiles) {
-    const data = JSON.parse(fs.readFileSync(path.join(LOCALES_DIR, file), "utf-8"));
+    const data = JSON.parse(
+      fs.readFileSync(path.join(LOCALES_DIR, file), "utf-8"),
+    );
     const keys = extractLeafKeys(data);
     localeDataMap.set(file, data);
-    keys.forEach(k => allLocaleKeys.add(k));
+    keys.forEach((k) => allLocaleKeys.add(k));
   }
 
   const sourceFiles = [];
   for (const dir of DEFAULT_SCAN_DIRS) collectFiles(dir, sourceFiles);
-  const filteredFiles = sourceFiles.filter(f => path.resolve(f) !== path.resolve(__filename));
-  
-  const fileContents = filteredFiles.map(f => fs.readFileSync(f, "utf-8"));
+  const filteredFiles = sourceFiles.filter(
+    (f) => path.resolve(f) !== path.resolve(__filename),
+  );
+
+  const fileContents = filteredFiles.map((f) =>
+    fs.readFileSync(f, "utf-8"),
+  );
 
   const unusedKeys = [];
   const usedKeys = new Set();
 
-  console.log(`🔍 Checking ${allLocaleKeys.size} unique keys across ${localeFiles.length} locales...\n`);
+  console.log(
+    `🔍 Checking ${allLocaleKeys.size} unique keys across ${localeFiles.length} locales...\n`,
+  );
 
   for (const key of allLocaleKeys) {
     let used = false;
@@ -173,7 +195,7 @@ function main() {
     console.log("🎉 No unused keys found!");
   } else {
     console.log(`❌ Found ${unusedKeys.length} unused keys:\n`);
-    unusedKeys.sort().forEach(k => console.log(`   - ${k}`));
+    unusedKeys.sort().forEach((k) => console.log(`   - ${k}`));
   }
 
   if (fixMode && unusedKeys.length > 0) {
@@ -187,7 +209,11 @@ function main() {
         let current = data;
         let exists = true;
         for (const p of parts) {
-          if (current && typeof current === "object" && p in current) {
+          if (
+            current &&
+            typeof current === "object" &&
+            p in current
+          ) {
             current = current[p];
           } else {
             exists = false;
@@ -201,10 +227,15 @@ function main() {
       }
       pruneEmptyNodes(data);
       if (!dryRun) {
-        fs.writeFileSync(path.join(LOCALES_DIR, file), JSON.stringify(data, null, 2) + "\n");
+        fs.writeFileSync(
+          path.join(LOCALES_DIR, file),
+          JSON.stringify(data, null, 2) + "\n",
+        );
         console.log(`   ✅ ${file}: Removed ${removedCount} keys`);
       } else {
-        console.log(`   [dry-run] ${file}: Would remove ${removedCount} keys`);
+        console.log(
+          `   [dry-run] ${file}: Would remove ${removedCount} keys`,
+        );
       }
     }
   }

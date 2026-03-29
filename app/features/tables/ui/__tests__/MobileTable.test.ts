@@ -18,7 +18,13 @@ describe("MobileTable", () => {
       },
     ];
 
-    MobileTable.render(container, labels, datasets, CHART_DATA_TYPE.VOLUME, {});
+    MobileTable.render(
+      container,
+      labels,
+      datasets,
+      CHART_DATA_TYPE.VOLUME,
+      {},
+    );
 
     const table = container.querySelector("table");
     expect(table).not.toBeNull();
@@ -38,12 +44,21 @@ describe("MobileTable", () => {
     MobileTable.render(
       container,
       ["Jan 1"],
-      [{ label: "Volume", data: [100], backgroundColor: "", borderColor: "" }],
+      [
+        {
+          label: "Volume",
+          data: [100],
+          backgroundColor: "",
+          borderColor: "",
+        },
+      ],
       CHART_DATA_TYPE.VOLUME,
       { title: "My Custom Chart" },
     );
 
-    const title = container.querySelector(".workout-mobile-table-title");
+    const title = container.querySelector(
+      ".workout-mobile-table-title",
+    );
     expect(title?.textContent).toBe("My Custom Chart");
   });
 
@@ -53,12 +68,21 @@ describe("MobileTable", () => {
     MobileTable.render(
       container,
       ["Jan 1"],
-      [{ label: "Weight", data: [80], backgroundColor: "", borderColor: "" }],
+      [
+        {
+          label: "Weight",
+          data: [80],
+          backgroundColor: "",
+          borderColor: "",
+        },
+      ],
       CHART_DATA_TYPE.WEIGHT,
       {},
     );
 
-    const title = container.querySelector(".workout-mobile-table-title");
+    const title = container.querySelector(
+      ".workout-mobile-table-title",
+    );
     expect(title?.textContent).toContain("Weight");
   });
 
@@ -110,13 +134,21 @@ describe("MobileTable", () => {
 
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(1);
-    expect(rows[0].querySelectorAll("td")[1].textContent).toBe("100.0");
+    expect(rows[0].querySelectorAll("td")[1].textContent).toBe(
+      "100.0",
+    );
   });
 
   it("shows no data message when no datasets", () => {
     const container = createObsidianContainer();
 
-    MobileTable.render(container, ["Jan 1"], [], CHART_DATA_TYPE.VOLUME, {});
+    MobileTable.render(
+      container,
+      ["Jan 1"],
+      [],
+      CHART_DATA_TYPE.VOLUME,
+      {},
+    );
 
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(1);

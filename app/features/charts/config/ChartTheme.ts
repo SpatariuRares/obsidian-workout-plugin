@@ -61,7 +61,10 @@ export class ChartColors {
    * @param fallback - Fallback value if variable is not defined
    * @returns The CSS variable value or fallback
    */
-  private static getCSSVar(varName: string, fallback: string): string {
+  private static getCSSVar(
+    varName: string,
+    fallback: string,
+  ): string {
     const style = getComputedStyle(document.documentElement);
     const value = style.getPropertyValue(`--${varName}`).trim();
     return value || fallback;
@@ -103,7 +106,10 @@ export class ChartColors {
   ): ColorScheme {
     const main = this.getCSSVar(mainVar, mainFallback);
     const dark = this.getCSSVar(hoverVar, hoverFallback);
-    const point = this.getCSSVar("text-on-accent", this.FALLBACK_COLORS.white);
+    const point = this.getCSSVar(
+      "text-on-accent",
+      this.FALLBACK_COLORS.white,
+    );
 
     return {
       main,
@@ -169,7 +175,10 @@ export class ChartColors {
           "interactive-accent",
           this.FALLBACK_COLORS.primary,
         ),
-        text: this.getCSSVar("text-normal", this.FALLBACK_COLORS.white),
+        text: this.getCSSVar(
+          "text-normal",
+          this.FALLBACK_COLORS.white,
+        ),
       },
     };
   }
@@ -179,7 +188,9 @@ export class ChartColors {
    * @param chartType - Type of chart data (volume, weight, reps)
    * @returns Color scheme object
    */
-  static getColorSchemeForType(chartType: CHART_DATA_TYPE): ColorScheme {
+  static getColorSchemeForType(
+    chartType: CHART_DATA_TYPE,
+  ): ColorScheme {
     const colors = this.getChartColors();
     switch (chartType) {
       case CHART_DATA_TYPE.VOLUME:

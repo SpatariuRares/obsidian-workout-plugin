@@ -65,116 +65,138 @@ describe("FormatUtils", () => {
 
   describe("isLowerBetter", () => {
     it("should return true for PACE type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.PACE)).toBe(true);
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.PACE)).toBe(
+        true,
+      );
     });
 
     it("should return false for VOLUME type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.VOLUME)).toBe(false);
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.VOLUME)).toBe(
+        false,
+      );
     });
 
     it("should return false for WEIGHT type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.WEIGHT)).toBe(false);
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.WEIGHT)).toBe(
+        false,
+      );
     });
 
     it("should return false for REPS type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.REPS)).toBe(false);
+      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.REPS)).toBe(
+        false,
+      );
     });
 
     it("should return false for DURATION type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.DURATION)).toBe(false);
+      expect(
+        FormatUtils.isLowerBetter(CHART_DATA_TYPE.DURATION),
+      ).toBe(false);
     });
 
     it("should return false for DISTANCE type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.DISTANCE)).toBe(false);
+      expect(
+        FormatUtils.isLowerBetter(CHART_DATA_TYPE.DISTANCE),
+      ).toBe(false);
     });
 
     it("should return false for HEART_RATE type", () => {
-      expect(FormatUtils.isLowerBetter(CHART_DATA_TYPE.HEART_RATE)).toBe(false);
+      expect(
+        FormatUtils.isLowerBetter(CHART_DATA_TYPE.HEART_RATE),
+      ).toBe(false);
     });
   });
 
   describe("formatValue", () => {
     describe("DURATION type", () => {
       it("should use formatDuration for duration values", () => {
-        expect(FormatUtils.formatValue(90, CHART_DATA_TYPE.DURATION)).toBe(
-          "1m 30s",
-        );
+        expect(
+          FormatUtils.formatValue(90, CHART_DATA_TYPE.DURATION),
+        ).toBe("1m 30s");
       });
 
       it("should format large duration values", () => {
-        expect(FormatUtils.formatValue(5400, CHART_DATA_TYPE.DURATION)).toBe(
-          "1h 30m",
-        );
+        expect(
+          FormatUtils.formatValue(5400, CHART_DATA_TYPE.DURATION),
+        ).toBe("1h 30m");
       });
     });
 
     describe("PACE type", () => {
       it("should use formatPace for pace values", () => {
-        expect(FormatUtils.formatValue(5.5, CHART_DATA_TYPE.PACE)).toBe("5:30");
+        expect(
+          FormatUtils.formatValue(5.5, CHART_DATA_TYPE.PACE),
+        ).toBe("5:30");
       });
 
       it("should format integer pace values", () => {
-        expect(FormatUtils.formatValue(6, CHART_DATA_TYPE.PACE)).toBe("6:00");
+        expect(FormatUtils.formatValue(6, CHART_DATA_TYPE.PACE)).toBe(
+          "6:00",
+        );
       });
     });
 
     describe("REPS type", () => {
       it("should round reps to integer", () => {
-        expect(FormatUtils.formatValue(10.7, CHART_DATA_TYPE.REPS)).toBe("11");
+        expect(
+          FormatUtils.formatValue(10.7, CHART_DATA_TYPE.REPS),
+        ).toBe("11");
       });
 
       it("should format integer reps without decimals", () => {
-        expect(FormatUtils.formatValue(12, CHART_DATA_TYPE.REPS)).toBe("12");
+        expect(
+          FormatUtils.formatValue(12, CHART_DATA_TYPE.REPS),
+        ).toBe("12");
       });
     });
 
     describe("VOLUME type", () => {
       it("should format volume with kg unit", () => {
-        expect(FormatUtils.formatValue(1000, CHART_DATA_TYPE.VOLUME)).toBe(
-          "1000 kg",
-        );
+        expect(
+          FormatUtils.formatValue(1000, CHART_DATA_TYPE.VOLUME),
+        ).toBe("1000 kg");
       });
 
       it("should format decimal volume with 2 decimal places", () => {
-        expect(FormatUtils.formatValue(1000.567, CHART_DATA_TYPE.VOLUME)).toBe(
-          "1000.57 kg",
-        );
+        expect(
+          FormatUtils.formatValue(1000.567, CHART_DATA_TYPE.VOLUME),
+        ).toBe("1000.57 kg");
       });
     });
 
     describe("WEIGHT type", () => {
       it("should format weight with kg unit", () => {
-        expect(FormatUtils.formatValue(80, CHART_DATA_TYPE.WEIGHT)).toBe(
-          "80 kg",
-        );
+        expect(
+          FormatUtils.formatValue(80, CHART_DATA_TYPE.WEIGHT),
+        ).toBe("80 kg");
       });
 
       it("should format decimal weight with 2 decimal places", () => {
-        expect(FormatUtils.formatValue(82.5, CHART_DATA_TYPE.WEIGHT)).toBe(
-          "82.50 kg",
-        );
+        expect(
+          FormatUtils.formatValue(82.5, CHART_DATA_TYPE.WEIGHT),
+        ).toBe("82.50 kg");
       });
     });
 
     describe("DISTANCE type", () => {
       it("should format distance with km unit", () => {
-        expect(FormatUtils.formatValue(5, CHART_DATA_TYPE.DISTANCE)).toBe(
-          "5 common.km",
-        );
+        expect(
+          FormatUtils.formatValue(5, CHART_DATA_TYPE.DISTANCE),
+        ).toBe("5 common.km");
       });
 
       it("should format decimal distance with 2 decimal places", () => {
-        expect(FormatUtils.formatValue(10.123, CHART_DATA_TYPE.DISTANCE)).toBe(
-          "10.12 common.km",
-        );
+        expect(
+          FormatUtils.formatValue(10.123, CHART_DATA_TYPE.DISTANCE),
+        ).toBe("10.12 common.km");
       });
     });
 
     describe("HEART_RATE type", () => {
       it("should format heart rate with bpm unit", () => {
-        expect(FormatUtils.formatValue(150, CHART_DATA_TYPE.HEART_RATE)).toBe(
-          "150 common.bpm",
-        );
+        expect(
+          FormatUtils.formatValue(150, CHART_DATA_TYPE.HEART_RATE),
+        ).toBe("150 common.bpm");
       });
 
       it("should format decimal heart rate with 2 decimal places", () => {

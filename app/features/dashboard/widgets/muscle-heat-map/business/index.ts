@@ -12,4 +12,3 @@ export {
   type ImbalanceAnalysis,
 } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleBalanceAnalyzer";
 export { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
- 

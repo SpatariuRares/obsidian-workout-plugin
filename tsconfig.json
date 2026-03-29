@@ -20,10 +20,6 @@
     "skipLibCheck": true,
     "types": ["node", "jest"]
   },
-  "include": ["**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/**",
-    "**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "**/__tests__/**", "**/*.test.ts"],
+  "include": ["**/*.ts"]
 }

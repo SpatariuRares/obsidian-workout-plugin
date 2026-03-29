@@ -37,11 +37,8 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      this,
-      exerciseSection,
-      this.plugin,
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(this, exerciseSection, this.plugin);
 
     // Workout input for combined filtering
     const workoutInput = this.createTextField(
@@ -150,7 +147,8 @@ export class CreateExerciseSectionModal extends ModalBase {
     );
 
     Button.onClick(createBtn, () => {
-      const exerciseName = exerciseElements.exerciseInput.value.trim();
+      const exerciseName =
+        exerciseElements.exerciseInput.value.trim();
       const useCurrentWorkout = currentWorkoutToggle.checked;
       const currentFileName = this.getCurrentFileName();
       const workoutName = useCurrentWorkout
@@ -165,7 +163,10 @@ export class CreateExerciseSectionModal extends ModalBase {
       const showLog = showLogToggle.checked;
 
       if (!exerciseName) {
-        this.insertIntoEditor("", t("modal.notices.exerciseNameRequired"));
+        this.insertIntoEditor(
+          "",
+          t("modal.notices.exerciseNameRequired"),
+        );
         return;
       }
 

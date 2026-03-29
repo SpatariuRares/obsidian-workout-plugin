@@ -1,5 +1,8 @@
 import { ChartConfigBuilder } from "@app/features/charts/config/ChartConfigBuilder";
-import { ChartStyling, getChartLabels } from "@app/features/charts/config/ChartConstants";
+import {
+  ChartStyling,
+  getChartLabels,
+} from "@app/features/charts/config/ChartConstants";
 import {
   ChartColorPalette,
   ColorScheme,
@@ -45,7 +48,9 @@ describe("ChartConfigBuilder dataset styling", () => {
     expect(dataset.pointBackgroundColor).toBe(scheme.point);
     expect(dataset.pointBorderColor).toBe(scheme.pointBorder);
     expect(dataset.pointRadius).toBe(ChartStyling.POINT_RADIUS);
-    expect(dataset.pointHoverRadius).toBe(ChartStyling.POINT_HOVER_RADIUS);
+    expect(dataset.pointHoverRadius).toBe(
+      ChartStyling.POINT_HOVER_RADIUS,
+    );
     expect(dataset.borderWidth).toBe(ChartStyling.BORDER_WIDTH);
     expect(dataset.tension).toBe(ChartStyling.TENSION);
     expect(dataset.fill).toBe(true);
@@ -64,7 +69,9 @@ describe("ChartConfigBuilder dataset styling", () => {
     expect(dataset.borderDash).toBe(ChartStyling.TREND_LINE_DASH);
     expect(dataset.borderWidth).toBe(ChartStyling.BORDER_WIDTH);
     expect(dataset.pointRadius).toBe(ChartStyling.TREND_POINT_RADIUS);
-    expect(dataset.pointHoverRadius).toBe(ChartStyling.TREND_POINT_RADIUS);
+    expect(dataset.pointHoverRadius).toBe(
+      ChartStyling.TREND_POINT_RADIUS,
+    );
   });
 
   it("finds the trend dataset by label", () => {
@@ -73,7 +80,9 @@ describe("ChartConfigBuilder dataset styling", () => {
       { label: getChartLabels().TREND_LINE, data: [2] },
     ];
 
-    expect(ChartConfigBuilder.findTrendDataset(datasets)).toBe(datasets[1]);
+    expect(ChartConfigBuilder.findTrendDataset(datasets)).toBe(
+      datasets[1],
+    );
   });
 
   it("styles datasets through the combined helper", () => {

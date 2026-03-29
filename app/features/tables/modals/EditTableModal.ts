@@ -1,7 +1,10 @@
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
-import { EmbeddedTableParams, TABLE_TYPE } from "@app/features/tables/types";
+import {
+  EmbeddedTableParams,
+  TABLE_TYPE,
+} from "@app/features/tables/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
@@ -43,7 +46,9 @@ export class EditTableModal extends InsertTableModal {
     return this.initialParams.id || super.getCodeBlockId();
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
   }
@@ -89,19 +94,22 @@ export class EditTableModal extends InsertTableModal {
     // Pre-fill advanced options
     if (this.advancedElements) {
       if (params.exactMatch !== undefined) {
-        this.advancedElements.exactMatchToggle.checked = params.exactMatch;
+        this.advancedElements.exactMatchToggle.checked =
+          params.exactMatch;
       }
       if (
         params.searchByName !== undefined &&
         this.advancedElements.searchByNameToggle
       ) {
-        this.advancedElements.searchByNameToggle.checked = params.searchByName;
+        this.advancedElements.searchByNameToggle.checked =
+          params.searchByName;
       }
       if (
         params.showAddButton !== undefined &&
         this.advancedElements.addButtonToggle
       ) {
-        this.advancedElements.addButtonToggle.checked = params.showAddButton;
+        this.advancedElements.addButtonToggle.checked =
+          params.showAddButton;
       }
     }
   }

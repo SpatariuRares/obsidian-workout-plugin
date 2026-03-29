@@ -26,7 +26,9 @@ jest.mock("@app/components/atoms", () => ({
   },
   Text: {
     create: jest.fn((parent, props) => {
-      const el = attachObsidianHelpers(document.createElement(props?.tag || "div"));
+      const el = attachObsidianHelpers(
+        document.createElement(props?.tag || "div"),
+      );
       if (props?.className) el.className = props.className;
       if (props?.text) el.textContent = props.text;
       parent.appendChild(el);

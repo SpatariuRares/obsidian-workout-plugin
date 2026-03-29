@@ -13,7 +13,9 @@ import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 jest.mock("@app/utils/parameter/ParameterUtils", () => ({
   ParameterUtils: {
     validateParam: jest.fn().mockReturnValue({ isValid: true }),
-    validateParams: jest.fn().mockReturnValue({ isValid: true, errors: [] }),
+    validateParams: jest
+      .fn()
+      .mockReturnValue({ isValid: true, errors: [] }),
   },
 }));
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
@@ -100,7 +102,9 @@ describe("ExerciseDefinitionService", () => {
         mockFolder,
       );
 
-      const result = await service.getExerciseDefinition("Unknown Exercise");
+      const result = await service.getExerciseDefinition(
+        "Unknown Exercise",
+      );
       expect(result).toBeUndefined();
     });
 
@@ -126,7 +130,8 @@ tags:
 # Content`;
       (app.vault.read as jest.Mock).mockResolvedValue(fileContent);
 
-      const result = await service.getExerciseDefinition("Bench Press");
+      const result =
+        await service.getExerciseDefinition("Bench Press");
 
       expect(result).toBeDefined();
       expect(result?.name).toBe("Bench Press");
@@ -214,7 +219,10 @@ type: cardio
       // Resolve the read
       resolveRead!("---\nexercise_type: strength\n---");
 
-      const [result1, result2] = await Promise.all([promise1, promise2]);
+      const [result1, result2] = await Promise.all([
+        promise1,
+        promise2,
+      ]);
 
       // Both should succeed
       expect(result1).toBeDefined();
@@ -259,14 +267,21 @@ type: cardio
 
   describe("saveExerciseDefinition", () => {
     it("should creating new file if it does not exist", async () => {
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
 
       const def = {
         name: "New Exercise",
         typeId: "cardio",
         muscleGroups: ["legs"],
         customParameters: [
-          { key: "incline", type: "number", label: "Incline", required: false },
+          {
+            key: "incline",
+            type: "number",
+            label: "Incline",
+            required: false,
+          },
         ],
       };
 
@@ -284,7 +299,9 @@ type: cardio
 
     it("should update existing file frontmatter", async () => {
       const mockFile = new TFile();
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
 
       const def = {
         name: "Existing Exercise",
@@ -300,8 +317,9 @@ type: cardio
       );
 
       // Verify callback logic
-      const callback = (app.fileManager.processFrontMatter as jest.Mock).mock
-        .calls[0][1];
+      const callback = (
+        app.fileManager.processFrontMatter as jest.Mock
+      ).mock.calls[0][1];
       const frontmatter: any = {};
       callback(frontmatter);
       expect(frontmatter.exercise_type).toBe("strength");
@@ -310,7 +328,9 @@ type: cardio
 
     it("should remove parameters if null/empty in update", async () => {
       const mockFile = new TFile();
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
 
       const def = {
         name: "Existing Exercise",
@@ -319,8 +339,9 @@ type: cardio
 
       await service.saveExerciseDefinition(def as any);
 
-      const callback = (app.fileManager.processFrontMatter as jest.Mock).mock
-        .calls[0][1];
+      const callback = (
+        app.fileManager.processFrontMatter as jest.Mock
+      ).mock.calls[0][1];
       const frontmatter: any = { parameters: [{ key: "old" }] };
       callback(frontmatter);
       expect(frontmatter.parameters).toBeUndefined();
@@ -328,7 +349,9 @@ type: cardio
 
     it("should update tags (muscleGroups) in existing file frontmatter", async () => {
       const mockFile = new TFile();
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
 
       const def = {
         name: "Existing Exercise",
@@ -338,15 +361,18 @@ type: cardio
 
       await service.saveExerciseDefinition(def as any);
 
-      const callback = (app.fileManager.processFrontMatter as jest.Mock).mock
-        .calls[0][1];
+      const callback = (
+        app.fileManager.processFrontMatter as jest.Mock
+      ).mock.calls[0][1];
       const frontmatter: any = {};
       callback(frontmatter);
       expect(frontmatter.tags).toEqual(["chest", "triceps"]);
     });
 
     it("should create file with all parameter optional fields", async () => {
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
 
       const def = {
         name: "Full Param Exercise",
@@ -468,12 +494,16 @@ parameters:
       });
 
       // Mock validation failure for specific key
-      (ParameterUtils.validateParam as jest.Mock).mockImplementation((p) => {
-        if (p.key === "bad_param") return { isValid: false, error: "Bad" };
-        return { isValid: true };
-      });
+      (ParameterUtils.validateParam as jest.Mock).mockImplementation(
+        (p) => {
+          if (p.key === "bad_param")
+            return { isValid: false, error: "Bad" };
+          return { isValid: true };
+        },
+      );
 
-      const result = await service.getExerciseDefinition("InvalidParams");
+      const result =
+        await service.getExerciseDefinition("InvalidParams");
       // Should skip bad_param
       expect(result?.customParameters).toHaveLength(1);
       expect(result?.customParameters![0].key).toBe("valid_param");
@@ -517,7 +547,9 @@ parameters:
       (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
         mockFolder,
       );
-      (app.vault.read as jest.Mock).mockResolvedValue("---\nparameters:\n---");
+      (app.vault.read as jest.Mock).mockResolvedValue(
+        "---\nparameters:\n---",
+      );
 
       (parseYaml as jest.Mock).mockReturnValue({
         parameters: [
@@ -527,7 +559,8 @@ parameters:
         ],
       });
 
-      const result = await service.getExerciseDefinition("NonObjectParams");
+      const result =
+        await service.getExerciseDefinition("NonObjectParams");
 
       expect(result?.customParameters).toHaveLength(1);
       expect(result?.customParameters![0].key).toBe("valid");
@@ -543,7 +576,9 @@ parameters:
       (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
         mockFolder,
       );
-      (app.vault.read as jest.Mock).mockResolvedValue("---\nparameters:\n---");
+      (app.vault.read as jest.Mock).mockResolvedValue(
+        "---\nparameters:\n---",
+      );
 
       (parseYaml as jest.Mock).mockReturnValue({
         parameters: [
@@ -554,7 +589,8 @@ parameters:
         ],
       });
 
-      const result = await service.getExerciseDefinition("NoKeyParams");
+      const result =
+        await service.getExerciseDefinition("NoKeyParams");
 
       expect(result?.customParameters).toHaveLength(1);
       expect(result?.customParameters![0].key).toBe("valid");
@@ -568,7 +604,8 @@ parameters:
         new TFolder(),
       ); // empty folder
 
-      const params = await service.getParametersForExercise("Unknown");
+      const params =
+        await service.getParametersForExercise("Unknown");
 
       expect(params).toEqual([{ key: "weight", type: "number" }]); // From mocked DEFAULT strength
     });
@@ -615,7 +652,8 @@ parameters:
 exercise_type: non_existent_type
 ---`);
 
-      const params = await service.getParametersForExercise("BadType");
+      const params =
+        await service.getParametersForExercise("BadType");
       expect(params).toEqual([{ key: "weight", type: "number" }]);
     });
   });
@@ -665,7 +703,9 @@ exercise_type: cardio
     });
 
     it("should return empty array if folder does not exist", async () => {
-      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
       const results = await service.getAllExerciseDefinitions();
       expect(results).toEqual([]);
     });

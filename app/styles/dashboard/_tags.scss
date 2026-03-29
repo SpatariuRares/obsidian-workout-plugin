@@ -3,7 +3,6 @@
    ============================================================================ */
 
 .workout-muscle-tags-widget {
-
   .workout-widget-description {
     margin: 0 0 var(--workout-space-lg) 0;
     color: var(--text-muted);
@@ -29,7 +28,8 @@
     gap: var(--workout-space-xs);
     padding: var(--workout-space-sm) var(--workout-space-md);
     background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     border-radius: var(--workout-radius-md);
     cursor: pointer;
     transition: var(--workout-transition);

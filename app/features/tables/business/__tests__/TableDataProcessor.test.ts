@@ -1,6 +1,9 @@
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
@@ -22,7 +25,10 @@ describe("TableDataProcessor", () => {
       const logData = [createLog()];
       const params: EmbeddedTableParams = { exercise: "Bench Press" };
 
-      const result = await TableDataProcessor.processTableData(logData, params);
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        params,
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
@@ -47,7 +53,10 @@ describe("TableDataProcessor", () => {
       const logData = [createLog()];
       const params: EmbeddedTableParams = {};
 
-      const result = await TableDataProcessor.processTableData(logData, params);
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        params,
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
@@ -58,7 +67,10 @@ describe("TableDataProcessor", () => {
       const logData = [createLog()];
       const params: EmbeddedTableParams = { exercise: "Bench Press" };
 
-      const result = await TableDataProcessor.processTableData(logData, params);
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        params,
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
@@ -72,7 +84,10 @@ describe("TableDataProcessor", () => {
         createLog({ date: "2024-01-12T10:00:00" }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       // First row should be newest date
       expect(result.rows[0].originalDate).toBe("2024-01-15T10:00:00");
@@ -86,9 +101,12 @@ describe("TableDataProcessor", () => {
         }),
       );
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        limit: 5,
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          limit: 5,
+        },
+      );
 
       expect(result.rows.length).toBe(5);
       expect(result.totalRows).toBe(5);
@@ -101,7 +119,10 @@ describe("TableDataProcessor", () => {
         }),
       );
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.totalRows).toBe(50);
     });
@@ -109,7 +130,10 @@ describe("TableDataProcessor", () => {
     it("shows Notes column when data has notes", async () => {
       const logData = [createLog({ notes: "Felt strong" })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
@@ -119,7 +143,10 @@ describe("TableDataProcessor", () => {
     it("hides Notes column when no data has notes", async () => {
       const logData = [createLog({ notes: undefined })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
@@ -127,9 +154,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Protocol column when non-standard protocols present", async () => {
-      const logData = [createLog({ protocol: WorkoutProtocol.DROP_SET })];
+      const logData = [
+        createLog({ protocol: WorkoutProtocol.DROP_SET }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
@@ -137,9 +169,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("hides Protocol column when only standard protocols", async () => {
-      const logData = [createLog({ protocol: WorkoutProtocol.STANDARD })];
+      const logData = [
+        createLog({ protocol: WorkoutProtocol.STANDARD }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
@@ -147,11 +184,16 @@ describe("TableDataProcessor", () => {
     });
 
     it("hides Protocol column when showProtocol is false", async () => {
-      const logData = [createLog({ protocol: WorkoutProtocol.DROP_SET })];
+      const logData = [
+        createLog({ protocol: WorkoutProtocol.DROP_SET }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        showProtocol: false,
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          showProtocol: false,
+        },
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
@@ -162,9 +204,12 @@ describe("TableDataProcessor", () => {
       const logData = [createLog()];
       const customColumns = ["Date", "Weight"];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: customColumns,
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: customColumns,
+        },
+      );
 
       // Should contain the custom columns plus Actions
       expect(result.headers).toContain("Date");
@@ -177,9 +222,12 @@ describe("TableDataProcessor", () => {
     it("parses string columns parameter as JSON", async () => {
       const logData = [createLog()];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: '["Date", "Reps"]',
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: '["Date", "Reps"]',
+        },
+      );
 
       expect(result.headers).toContain("Date");
       expect(result.headers).toContain("Reps");
@@ -188,9 +236,12 @@ describe("TableDataProcessor", () => {
     it("falls back to defaults for invalid JSON string columns", async () => {
       const logData = [createLog()];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: "not valid json",
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: "not valid json",
+        },
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
@@ -198,9 +249,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Duration column when custom field data exists", async () => {
-      const logData = [createLog({ customFields: { duration: 120 } })];
+      const logData = [
+        createLog({ customFields: { duration: 120 } }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -208,9 +264,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Distance column when custom field data exists", async () => {
-      const logData = [createLog({ customFields: { distance: 5.2 } })];
+      const logData = [
+        createLog({ customFields: { distance: 5.2 } }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value,
@@ -218,9 +279,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("shows Heart Rate column when custom field data exists", async () => {
-      const logData = [createLog({ customFields: { heartRate: 145 } })];
+      const logData = [
+        createLog({ customFields: { heartRate: 145 } }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value,
@@ -232,7 +298,10 @@ describe("TableDataProcessor", () => {
         createLog({ customFields: { duration: 0, distance: 0 } }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -245,13 +314,18 @@ describe("TableDataProcessor", () => {
     it("strips .md extension from exercise names in rows", async () => {
       const logData = [createLog({ exercise: "Bench Press.md" })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       const exerciseIdx = result.headers.indexOf(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
       );
       if (exerciseIdx >= 0) {
-        expect(result.rows[0].displayRow[exerciseIdx]).toBe("Bench Press");
+        expect(result.rows[0].displayRow[exerciseIdx]).toBe(
+          "Bench Press",
+        );
       }
     });
 
@@ -263,9 +337,12 @@ describe("TableDataProcessor", () => {
         }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        exercise: "Bench",
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          exercise: "Bench",
+        },
+      );
 
       const repsIdx = result.headers.indexOf(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
@@ -280,9 +357,12 @@ describe("TableDataProcessor", () => {
     it("maps abbreviated headers to data keys", async () => {
       const logData = [createLog({ weight: 100, reps: 8 })];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: ["Wgt (kg)", "Rep"],
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: ["Wgt (kg)", "Rep"],
+        },
+      );
 
       // Wgt (kg) should map to weight, Rep should map to reps
       const wgtIdx = result.headers.indexOf("Wgt (kg)");
@@ -401,9 +481,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("handles custom fields with string values in hasCustomField", async () => {
-      const logData = [createLog({ customFields: { duration: "120" } })];
+      const logData = [
+        createLog({ customFields: { duration: "120" } }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -413,7 +498,10 @@ describe("TableDataProcessor", () => {
     it("ignores custom fields with empty string values", async () => {
       const logData = [createLog({ customFields: { duration: "" } })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -422,10 +510,15 @@ describe("TableDataProcessor", () => {
 
     it("ignores custom fields with null/undefined values", async () => {
       const logData = [
-        createLog({ customFields: { duration: null as unknown as number } }),
+        createLog({
+          customFields: { duration: null as unknown as number },
+        }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -433,9 +526,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("handles custom fields with zero string values", async () => {
-      const logData = [createLog({ customFields: { duration: "0" } })];
+      const logData = [
+        createLog({ customFields: { duration: "0" } }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
@@ -449,20 +547,28 @@ describe("TableDataProcessor", () => {
         }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: ["Duration"],
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: ["Duration"],
+        },
+      );
 
       const durIdx = result.headers.indexOf("Duration");
       if (durIdx >= 0) {
-        expect(result.rows[0].displayRow[durIdx]).toBe(t("table.notAvailable"));
+        expect(result.rows[0].displayRow[durIdx]).toBe(
+          t("table.notAvailable"),
+        );
       }
     });
 
     it("shows N/A for exercise when empty", async () => {
       const logData = [createLog({ exercise: "" })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       const exerciseIdx = result.headers.indexOf(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
@@ -475,9 +581,14 @@ describe("TableDataProcessor", () => {
     });
 
     it("includes protocol value in row data", async () => {
-      const logData = [createLog({ protocol: WorkoutProtocol.DROP_SET })];
+      const logData = [
+        createLog({ protocol: WorkoutProtocol.DROP_SET }),
+      ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       const protocolIdx = result.headers.indexOf(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
@@ -516,9 +627,12 @@ describe("TableDataProcessor", () => {
     it("handles non-array non-string columns type gracefully", async () => {
       const logData = [createLog()];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: { invalid: true } as unknown as string[],
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: { invalid: true } as unknown as string[],
+        },
+      );
 
       // Should fall back to defaults
       expect(result.headers).toContain(
@@ -533,9 +647,12 @@ describe("TableDataProcessor", () => {
         }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: ["mycustomfield"],
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: ["mycustomfield"],
+        },
+      );
 
       const idx = result.headers.indexOf("mycustomfield");
       if (idx >= 0) {
@@ -546,16 +663,26 @@ describe("TableDataProcessor", () => {
     it("returns filter method and title in filterResult", async () => {
       const logData = [createLog()];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
-      expect(result.filterResult.filterMethodUsed).toBe("table processing");
-      expect(result.filterResult.titlePrefix).toBe(t("general.workoutLog"));
+      expect(result.filterResult.filterMethodUsed).toBe(
+        "table processing",
+      );
+      expect(result.filterResult.titlePrefix).toBe(
+        t("general.workoutLog"),
+      );
     });
 
     it("handles notes with only whitespace as empty", async () => {
       const logData = [createLog({ notes: "   " })];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
@@ -567,7 +694,10 @@ describe("TableDataProcessor", () => {
         createLog({ protocol: "   " as unknown as WorkoutProtocol }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {});
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {},
+      );
 
       expect(result.headers).not.toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
@@ -624,7 +754,11 @@ describe("TableDataProcessor", () => {
           getParametersForExercise: jest
             .fn()
             .mockResolvedValue([
-              { key: "customParam", label: "CustomParam", unit: "units" },
+              {
+                key: "customParam",
+                label: "CustomParam",
+                unit: "units",
+              },
             ]),
         }),
       } as any;
@@ -647,9 +781,12 @@ describe("TableDataProcessor", () => {
         }),
       ];
 
-      const result = await TableDataProcessor.processTableData(logData, {
-        columns: ["flag"],
-      });
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: ["flag"],
+        },
+      );
 
       const idx = result.headers.indexOf("flag");
       if (idx >= 0) {

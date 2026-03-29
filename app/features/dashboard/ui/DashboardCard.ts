@@ -30,11 +30,22 @@ export class DashboardCard {
    * @param props Card properties
    * @returns The created card element
    */
-  static create(parent: HTMLElement, props: DashboardCardProps): HTMLElement {
-    const { icon, title, value, variant = "summary", className = "" } = props;
+  static create(
+    parent: HTMLElement,
+    props: DashboardCardProps,
+  ): HTMLElement {
+    const {
+      icon,
+      title,
+      value,
+      variant = "summary",
+      className = "",
+    } = props;
 
     const isStats = variant === "stats";
-    const baseClass = isStats ? "workout-stats-card" : "workout-summary-card";
+    const baseClass = isStats
+      ? "workout-stats-card"
+      : "workout-summary-card";
 
     const card = Container.create(parent, {
       className: `${baseClass} ${className}`.trim(),

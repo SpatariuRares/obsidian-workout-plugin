@@ -30,7 +30,10 @@ interface ProtocolEffectivenessStats {
 /**
  * Protocol display configuration matching ProtocolDistribution
  */
-const PROTOCOL_CONFIG: Record<string, { label: string; color: string }> = {
+const PROTOCOL_CONFIG: Record<
+  string,
+  { label: string; color: string }
+> = {
   [WorkoutProtocol.STANDARD]: {
     label: "Standard",
     color: "rgba(128, 128, 128, 0.7)",
@@ -153,7 +156,9 @@ export class ProtocolEffectiveness {
     });
 
     // Sort by progression rate descending
-    return stats.sort((a, b) => b.progressionRate - a.progressionRate);
+    return stats.sort(
+      (a, b) => b.progressionRate - a.progressionRate,
+    );
   }
 
   /**
@@ -260,12 +265,15 @@ export class ProtocolEffectiveness {
         );
 
         if (beforeEntries.length > 0 && afterEntries.length > 0) {
-          const avgVolumeBefore = this.calculateAverageVolume(beforeEntries);
-          const avgVolumeAfter = this.calculateAverageVolume(afterEntries);
+          const avgVolumeBefore =
+            this.calculateAverageVolume(beforeEntries);
+          const avgVolumeAfter =
+            this.calculateAverageVolume(afterEntries);
 
           if (avgVolumeBefore > 0) {
             const volumeChange =
-              ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) * 100;
+              ((avgVolumeAfter - avgVolumeBefore) / avgVolumeBefore) *
+              100;
             totalVolumeChange += volumeChange;
             volumeChangeCount++;
           }
@@ -283,9 +291,13 @@ export class ProtocolEffectiveness {
     });
 
     const avgVolumeChange =
-      volumeChangeCount > 0 ? totalVolumeChange / volumeChangeCount : 0;
+      volumeChangeCount > 0
+        ? totalVolumeChange / volumeChangeCount
+        : 0;
     const progressionRate =
-      comparisonCount > 0 ? (progressionCount / comparisonCount) * 100 : 0;
+      comparisonCount > 0
+        ? (progressionCount / comparisonCount) * 100
+        : 0;
 
     return { avgVolumeChange, progressionRate };
   }
@@ -295,9 +307,14 @@ export class ProtocolEffectiveness {
    * @param entries - Workout entries
    * @returns Average volume
    */
-  private static calculateAverageVolume(entries: WorkoutLogData[]): number {
+  private static calculateAverageVolume(
+    entries: WorkoutLogData[],
+  ): number {
     if (entries.length === 0) return 0;
-    const totalVolume = entries.reduce((sum, e) => sum + (e.volume || 0), 0);
+    const totalVolume = entries.reduce(
+      (sum, e) => sum + (e.volume || 0),
+      0,
+    );
     return totalVolume / entries.length;
   }
 

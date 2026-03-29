@@ -15,7 +15,10 @@ export class TableActions {
   /**
    * Handle edit action for a workout log entry
    */
-  static handleEdit(log: WorkoutLogData, plugin: WorkoutChartsPlugin): void {
+  static handleEdit(
+    log: WorkoutLogData,
+    plugin: WorkoutChartsPlugin,
+  ): void {
     const modal = new EditLogModal(plugin.app, plugin, log);
     modal.open();
   }
@@ -23,18 +26,25 @@ export class TableActions {
   /**
    * Handle delete action for a workout log entry
    */
-  static handleDelete(log: WorkoutLogData, plugin: WorkoutChartsPlugin): void {
-    const modal = new ConfirmModal(plugin.app, t("table.deleteConfirm"), () => {
-      void (async () => {
-        try {
-          await plugin.deleteWorkoutLogEntry(log);
-          new Notice(t("table.deleteSuccess"));
-        } catch (error) {
-          const errorMessage = ErrorUtils.getErrorMessage(error);
-          new Notice(t("table.deleteError") + errorMessage);
-        }
-      })();
-    });
+  static handleDelete(
+    log: WorkoutLogData,
+    plugin: WorkoutChartsPlugin,
+  ): void {
+    const modal = new ConfirmModal(
+      plugin.app,
+      t("table.deleteConfirm"),
+      () => {
+        void (async () => {
+          try {
+            await plugin.deleteWorkoutLogEntry(log);
+            new Notice(t("table.deleteSuccess"));
+          } catch (error) {
+            const errorMessage = ErrorUtils.getErrorMessage(error);
+            new Notice(t("table.deleteError") + errorMessage);
+          }
+        })();
+      },
+    );
     modal.open();
   }
 

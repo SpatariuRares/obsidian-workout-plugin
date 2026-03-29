@@ -60,13 +60,14 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Exercise autocomplete using reusable component
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      this,
-      formContainer,
-      this.plugin,
-      this.exerciseName,
-      { showCreateButton: false },
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(
+        this,
+        formContainer,
+        this.plugin,
+        this.exerciseName,
+        { showCreateButton: false },
+      );
 
     // Exercise type dropdown
     const exerciseTypeSelect = this.createSelectField(
@@ -81,12 +82,15 @@ export class CreateExercisePageModal extends ModalBase {
     this.customParametersContainer = formContainer.createEl("div", {
       cls: "workout-charts-custom-parameters-section",
     });
-    DomUtils.setCssProps(this.customParametersContainer, { display: "none" });
+    DomUtils.setCssProps(this.customParametersContainer, {
+      display: "none",
+    });
 
     // Custom parameters header with add button
-    const customParamsHeader = this.customParametersContainer.createEl("div", {
-      cls: "workout-charts-custom-params-header",
-    });
+    const customParamsHeader =
+      this.customParametersContainer.createEl("div", {
+        cls: "workout-charts-custom-params-header",
+      });
     customParamsHeader.createEl("label", {
       text: t("modal.customParameters"),
     });
@@ -98,13 +102,15 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Container for parameter rows
-    const paramRowsContainer = this.customParametersContainer.createEl("div", {
-      cls: "workout-charts-param-rows",
-    });
+    const paramRowsContainer =
+      this.customParametersContainer.createEl("div", {
+        cls: "workout-charts-param-rows",
+      });
 
     // Handle exercise type change
     exerciseTypeSelect.addEventListener("change", () => {
-      const isCustom = exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
+      const isCustom =
+        exerciseTypeSelect.value === EXERCISE_TYPE_IDS.CUSTOM;
       if (this.customParametersContainer) {
         DomUtils.setCssProps(this.customParametersContainer, {
           display: isCustom ? "block" : "none",
@@ -118,7 +124,10 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Muscle tag selector (replaces plain text input)
-    const tagSelector = MuscleTagSelector.create(formContainer, this.plugin);
+    const tagSelector = MuscleTagSelector.create(
+      formContainer,
+      this.plugin,
+    );
     this.getSelectedTags = tagSelector.getSelectedTags;
 
     // Folder path input
@@ -151,9 +160,12 @@ export class CreateExercisePageModal extends ModalBase {
 
     Button.onClick(createBtn, () => {
       void (async () => {
-        const exerciseName = exerciseElements.exerciseInput.value.trim();
+        const exerciseName =
+          exerciseElements.exerciseInput.value.trim();
         const exerciseType = exerciseTypeSelect.value;
-        const selectedTags = this.getSelectedTags ? this.getSelectedTags() : [];
+        const selectedTags = this.getSelectedTags
+          ? this.getSelectedTags()
+          : [];
         const folderPath = folderInput.value.trim();
 
         if (!exerciseName) {
@@ -235,14 +247,14 @@ export class CreateExercisePageModal extends ModalBase {
       text: t("modal.parameterType"),
     });
     const typeSelect = typeGroup.createEl("select");
-    [...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE].forEach(
-      (option) => {
-        typeSelect.createEl("option", {
-          text: option.text,
-          value: option.value,
-        });
-      },
-    );
+    [
+      ...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PARAMETER_TYPE,
+    ].forEach((option) => {
+      typeSelect.createEl("option", {
+        text: option.text,
+        value: option.value,
+      });
+    });
 
     // Unit input
     const unitGroup = rowContainer.createEl("div", {
@@ -375,23 +387,46 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Replace frontmatter fields
     content = content
-      .replace(/^exercise_name:\s*$/m, `exercise_name: ${exerciseName}`)
-      .replace(/^exercise_type:\s*$/m, `exercise_type: ${exerciseType}`)
-      .replace(/^tags:\s*$/m, tagsYaml ? `tags:\n${tagsYaml}` : "tags: []");
+      .replace(
+        /^exercise_name:\s*$/m,
+        `exercise_name: ${exerciseName}`,
+      )
+      .replace(
+        /^exercise_type:\s*$/m,
+        `exercise_type: ${exerciseType}`,
+      )
+      .replace(
+        /^tags:\s*$/m,
+        tagsYaml ? `tags:\n${tagsYaml}` : "tags: []",
+      );
 
     // Add custom parameters if present (insert after tags in frontmatter)
     if (customParametersYaml) {
-      content = content.replace(/(tags:.*?\n)/s, `$1${customParametersYaml}\n`);
+      content = content.replace(
+        /(tags:.*?\n)/s,
+        `$1${customParametersYaml}\n`,
+      );
     }
 
     // Replace "Type:" placeholder
-    content = content.replace(/^Type:\s*$/m, `Type: ${exerciseTypeName}`);
+    content = content.replace(
+      /^Type:\s*$/m,
+      `Type: ${exerciseTypeName}`,
+    );
 
     // Replace "name" placeholder in code blocks with actual exercise name
-    content = content.replace(/exercise: name/g, `exercise: ${exerciseName}`);
+    content = content.replace(
+      /exercise: name/g,
+      `exercise: ${exerciseName}`,
+    );
 
-    const safeExerciseName = exerciseName.replace(/[\\/:"*?<>|]/g, "_");
-    const fileName = normalizePath(folderPath + "/" + safeExerciseName + ".md");
+    const safeExerciseName = exerciseName.replace(
+      /[\\/:"*?<>|]/g,
+      "_",
+    );
+    const fileName = normalizePath(
+      folderPath + "/" + safeExerciseName + ".md",
+    );
     await this.app.vault.create(fileName, content);
   }
 }

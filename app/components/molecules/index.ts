@@ -29,7 +29,10 @@ export {
   type SearchBoxProps,
   type SearchBoxResult,
 } from "@app/components/molecules/SearchBox";
-export { Badge, type BadgeProps } from "@app/components/molecules/Badge";
+export {
+  Badge,
+  type BadgeProps,
+} from "@app/components/molecules/Badge";
 export {
   LoadingSpinner,
   type LoadingSpinnerProps,

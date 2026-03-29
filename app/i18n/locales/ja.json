@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加する",
+    "addMissingBlockIds": "コードブロックに欠けているIDを追加する",
     "auditExerciseNames": "監査用エクササイズの名前",
     "convertExercise": "エクササイズを変換する",
     "createCsvLog": "CSV ログ ファイルを作成する",
@@ -34,12 +35,12 @@
     "generateTagReference": "タグ参照を生成する",
     "insertTable": "テーブルの挿入",
     "manageMuscleTags": "筋肉タグの管理",
-    "migrateExerciseTypes": "エクササイズタイプの移行",
-    "addMissingBlockIds": "コードブロックに欠けているIDを追加する"
+    "migrateExerciseTypes": "エクササイズタイプの移行"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "キャンセル",
+    "clear": "クリア",
     "convert": "変換",
     "exercise": "エクササイズ",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "利用できません",
     "sec": "sec",
     "unknown": "不明",
-    "workout": "ワークアウト",
-    "clear": "クリア"
+    "workout": "ワークアウト"
   },
   "convert": {
     "currentType": "現在の種類:",
@@ -453,8 +453,8 @@
     "noImbalances": "不均衡はありません",
     "noTags": "タグなし",
     "success": {
-      "csvCreated": "CSVファイルが正常に作成されました！",
       "blockIdsAdded": "{count} の欠落した ID を {files} ファイルに登録しました。",
+      "csvCreated": "CSVファイルが正常に作成されました！",
       "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "操作",
     "addTag": "タグを追加",
+    "auditStatusCloseMatch": "近似一致",
+    "auditStatusExactMatch": "完全一致",
+    "auditStatusNoMatch": "一致なし",
+    "auditStatusPartialMatch": "部分一致",
     "autocomplete": {
+      "addExercise": "「{name}」を追加する",
       "exactBadge": "★",
       "exactTooltip": "完全一致/接頭辞一致 - スコア: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "部分一致 - スコア: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "単語の一致 - スコア: {score}",
-      "addExercise": "「{name}」を追加する"
+      "wordTooltip": "単語の一致 - スコア: {score}"
     },
     "buttons": {
       "addParameter": "パラメータを追加",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "操作",
+      "currentFileInfo": "現在のファイル：{fileName}",
       "exercise": "エクササイズ:",
       "reps": "代表者:",
       "targetReps": "目標回数：",
       "targetWeight": "目標: ({unit}):",
       "volume": "音量 ({{unit}}):",
-      "weight": "体重 ({{unit}}):",
-      "currentFileInfo": "現在のファイル：{fileName}"
+      "weight": "体重 ({{unit}}):"
     },
     "layoutGrouped": "筋肉ごとにグループ化",
     "layoutHorizontal": "水平方向のレイアウト",
@@ -565,17 +569,21 @@
     "notes": "メモ（任意）：",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "{count} 件の不一致が見つかりました：",
+      "auditNoMatchFound": "一致なし",
       "auditNoMismatches": "監査結果と一致しない",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "ファイル名の変更監査 成功",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "スキャン中にエラー：{error}",
       "auditScanning": "監査スキャン",
       "canvasExportError": "キャンバスのエクスポートエラー",
       "canvasExported": "キャンバスのデータのエクスポート",
       "chartInserted": "✅ グラフが正常に挿入されました！",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ ダッシュボードの挿入に成功しました！",
+      "dismissAchievement": "実績を閉じる",
       "exerciseBlockInserted": "エクササイズブロックの挿入",
       "exerciseNameRequired": "❌ 運動の名前を入力してください",
       "exercisePageCreated": "エクササイズページが正常に作成されました！",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
       "timerUpdated": "✅ タイマーが正常に更新されました！",
       "validationCombinedMode": "⚠️ 「エクササイズ + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
-      "dismissAchievement": "実績を閉じる",
-      "auditScanError": "スキャン中にエラー：{error}",
-      "auditMismatchCount": "{count} 件の不一致が見つかりました：",
-      "auditNoMatchFound": "一致なし"
+      "validationFillAll": "すべてのフィールドに有効な値を入力してください。"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -716,11 +720,7 @@
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
-    "workoutNameOptional": "ワークアウト名（任意）：",
-    "auditStatusNoMatch": "一致なし",
-    "auditStatusExactMatch": "完全一致",
-    "auditStatusCloseMatch": "近似一致",
-    "auditStatusPartialMatch": "部分一致"
+    "workoutNameOptional": "ワークアウト名（任意）："
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "生成中...",
       "overwriting": "上書き...",
       "regenerateOverwrite": "再生成 (上書き)",
+      "runAllMaintenance": "すべてのメンテナンスを実行する",
       "savePreset": "保存",
-      "saveProtocol": "保存",
-      "runAllMaintenance": "すべてのメンテナンスを実行する"
+      "saveProtocol": "保存"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -760,11 +760,11 @@
       "protocolColor": "バッジの背景色（16進数形式、例：#FF5733）",
       "quickWeightIncrement": "+/- ボタンで作成/編集するワークアウトログのモーダルで使用される、重量の増減ステップ（例：+2.5 / -2.5 単位）。",
       "repDuration": "1回の反復にかかる推定時間。反復回数が分かっている場合に利用します（例：「10回 ×」）。",
+      "runAllMaintenance": "すべてのメンテナンス作業を順番に実行してください。 繰り返し実行しても安全です。",
       "setDuration": "使用される場合：担当者が指定されていない場合に備えとして。\n一般的な範囲：30～60秒。",
       "setupCSV": "設定されたフォルダに、workout_logs.csv と muscle-tags.csv の両方を作成してください。",
       "weightIncrement": "漸進的な負荷（例：2.5単位の増加の場合、2.5）に対するデフォルトの重量増加",
-      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。",
-      "runAllMaintenance": "すべてのメンテナンス作業を順番に実行してください。 繰り返し実行しても安全です。"
+      "weightUnit": "重量の測定に使用する単位（kg/lb）を選択します。これにより、新規ログのデフォルト単位が設定されます。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -786,10 +786,10 @@
       "protocolColor": "バッジの色",
       "protocolName": "プロトコルの名前",
       "repDuration": "1回の繰り返しあたりの時間（秒）",
+      "runAllMaintenance": "すべてのメンテナンスタスクを実行する",
       "setDuration": "代替設定時間 (秒)",
       "setupCSV": "CSVファイルのセットアップ",
-      "weightUnit": "単位（重量）",
-      "runAllMaintenance": "すべてのメンテナンスタスクを実行する"
+      "weightUnit": "単位（重量）"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
@@ -820,17 +820,17 @@
       "protocolName": "プロトコル名を入力してください"
     },
     "sections": {
+      "advanced": "高度な",
       "csvManagement": "CSVファイルの管理",
       "customProtocols": "カスタムプロトコル",
       "exampleData": "例",
       "filtering": "フィルタリング",
+      "maintenance": "メンテナンス",
       "quickLog": "モバイルでの記録",
       "setupAndData": "設定とデータ",
       "templates": "テンプレート",
       "timerPresets": "タイマー設定",
-      "trainingParameters": "トレーニングパラメータ",
-      "maintenance": "メンテナンス",
-      "advanced": "高度な"
+      "trainingParameters": "トレーニングパラメータ"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",
@@ -839,21 +839,21 @@
       "editProtocol": "プロトコルを編集する"
     },
     "validation": {
-      "mustBePositive": "0より大きい値で",
-      "mustBeNonNegative": "0以上でなければなりません",
+      "csvFolderNotFound": "{vault}内にフォルダが見つかりません。Setup CSVを実行して作成してください。",
       "csvPathEmpty": "パスは空にできません",
-      "csvFolderNotFound": "{vault}内にフォルダが見つかりません。Setup CSVを実行して作成してください。"
+      "mustBeNonNegative": "0以上でなければなりません",
+      "mustBePositive": "0より大きい値で"
     }
   },
   "stats": {
     "avgVolume": "平均音量",
-    "recentTrend": "最近の傾向",
-    "sessions": "セッション",
     "max": "最大：",
     "min": "最小：",
-    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):",
     "recentLast3": " (直近3回)",
-    "recentVsPrev": " (前回比)"
+    "recentTrend": "最近の傾向",
+    "recentVsPrev": " (前回比)",
+    "sessions": "セッション",
+    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):"
   },
   "table": {
     "actions": "操作",

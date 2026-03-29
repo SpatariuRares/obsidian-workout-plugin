@@ -1,5 +1,8 @@
 /** @jest-environment jsdom */
-import { setupWorkoutToggle, fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
+import {
+  setupWorkoutToggle,
+  fillDynamicInputsFromCustomFields,
+} from "@app/utils/form/FormUtils";
 
 describe("FormUtils", () => {
   describe("setupWorkoutToggle", () => {
@@ -38,8 +41,12 @@ describe("FormUtils", () => {
         toggle.checked = true;
         setupWorkoutToggle(toggle, workoutInput, getFileName);
 
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(false);
       });
     });
 
@@ -63,8 +70,12 @@ describe("FormUtils", () => {
         toggle.checked = false;
         setupWorkoutToggle(toggle, workoutInput, getFileName);
 
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(false);
       });
     });
 
@@ -79,8 +90,12 @@ describe("FormUtils", () => {
 
         expect(workoutInput.disabled).toBe(true);
         expect(workoutInput.value).toBe("test-workout-file.md");
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(false);
       });
 
       it("should enable input and clear value when toggled to unchecked", () => {
@@ -93,8 +108,12 @@ describe("FormUtils", () => {
 
         expect(workoutInput.disabled).toBe(false);
         expect(workoutInput.value).toBe("");
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(false);
       });
 
       it("should call getFileName on each toggle to checked", () => {
@@ -136,26 +155,38 @@ describe("FormUtils", () => {
         toggle.checked = false;
         setupWorkoutToggle(toggle, workoutInput, getFileName);
 
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(true);
 
         toggle.checked = true;
         toggle.dispatchEvent(new Event("change"));
 
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(false);
       });
 
       it("should remove workout-opacity-50 and add workout-opacity-100 when unchecked", () => {
         toggle.checked = true;
         setupWorkoutToggle(toggle, workoutInput, getFileName);
 
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(true);
 
         toggle.checked = false;
         toggle.dispatchEvent(new Event("change"));
 
-        expect(workoutInput.classList.contains("workout-opacity-100")).toBe(true);
-        expect(workoutInput.classList.contains("workout-opacity-50")).toBe(false);
+        expect(
+          workoutInput.classList.contains("workout-opacity-100"),
+        ).toBe(true);
+        expect(
+          workoutInput.classList.contains("workout-opacity-50"),
+        ).toBe(false);
       });
     });
   });

@@ -14,10 +14,13 @@ export function calculatePeriodStats(
 ): PeriodStats {
   const periodData = DateUtils.filterByDaysAgo(data, days);
 
-  const uniqueWorkouts = DataAggregation.countUniqueWorkouts(periodData);
+  const uniqueWorkouts =
+    DataAggregation.countUniqueWorkouts(periodData);
 
-  const totalVolume = DataAggregation.calculateTotalVolume(periodData);
-  const avgVolume = uniqueWorkouts > 0 ? totalVolume / uniqueWorkouts : 0;
+  const totalVolume =
+    DataAggregation.calculateTotalVolume(periodData);
+  const avgVolume =
+    uniqueWorkouts > 0 ? totalVolume / uniqueWorkouts : 0;
 
   return {
     workouts: uniqueWorkouts,

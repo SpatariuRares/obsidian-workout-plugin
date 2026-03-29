@@ -66,9 +66,15 @@ export class AchievementBadge {
     }
 
     // Create achievement badge
-    const badgeDiv = container.createDiv({ cls: "workout-achievement-badge" });
+    const badgeDiv = container.createDiv({
+      cls: "workout-achievement-badge",
+    });
 
-    Text.createSpan(badgeDiv, t("modal.notices.targetAchieved"), "workout-achievement-text");
+    Text.createSpan(
+      badgeDiv,
+      t("modal.notices.targetAchieved"),
+      "workout-achievement-text",
+    );
 
     // Render weight suggestion
     const suggestedWeight = targetWeight + weightIncrement;
@@ -120,7 +126,10 @@ export class AchievementBadge {
 
     Text.createSpan(
       suggestionDiv,
-      t("modal.notices.suggestedNextWeight", { suggestedWeight, weightUnit }),
+      t("modal.notices.suggestedNextWeight", {
+        suggestedWeight,
+        weightUnit,
+      }),
       "workout-suggestion-text",
     );
 

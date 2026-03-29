@@ -4,8 +4,8 @@
  */
 
 export interface ContainerProps {
-	className?: string;
-	id?: string;
+  className?: string;
+  id?: string;
 }
 
 /**
@@ -13,19 +13,19 @@ export interface ContainerProps {
  * This is an atom - it has no dependencies on other UI components
  */
 export class Container {
-	/**
-	 * Create a div container
-	 * @param parent - Parent HTML element
-	 * @param props - Container properties
-	 * @returns The created div element
-	 */
-	static create(
-		parent: HTMLElement,
-		props?: ContainerProps
-	): HTMLElement {
-		return parent.createEl("div", {
-			cls: props?.className || "container",
-			attr: props?.id ? { id: props.id } : undefined,
-		});
-	}
+  /**
+   * Create a div container
+   * @param parent - Parent HTML element
+   * @param props - Container properties
+   * @returns The created div element
+   */
+  static create(
+    parent: HTMLElement,
+    props?: ContainerProps,
+  ): HTMLElement {
+    return parent.createEl("div", {
+      cls: props?.className || "container",
+      attr: props?.id ? { id: props.id } : undefined,
+    });
+  }
 }

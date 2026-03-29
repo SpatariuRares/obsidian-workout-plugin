@@ -33,7 +33,10 @@ export class EmbeddedTimerView extends BaseView {
     });
   }
 
-  createTimer(container: HTMLElement, params: EmbeddedTimerParams): void {
+  createTimer(
+    container: HTMLElement,
+    params: EmbeddedTimerParams,
+  ): void {
     try {
       // Resolve parameters from preset and defaults
       const resolveResult = this.resolveTimerParams(params);
@@ -108,7 +111,8 @@ export class EmbeddedTimerView extends BaseView {
     }
     // Check for default preset if no explicit preset specified
     else if (settings.defaultTimerPreset) {
-      const defaultPreset = settings.timerPresets[settings.defaultTimerPreset];
+      const defaultPreset =
+        settings.timerPresets[settings.defaultTimerPreset];
       if (defaultPreset) {
         baseParams = this.presetToParams(defaultPreset);
       }
@@ -236,7 +240,8 @@ export class EmbeddedTimerView extends BaseView {
     const timerType = params.type || TIMER_TYPE.COUNTDOWN;
     let roundCounterDisplay: HTMLElement | undefined;
     if (timerType === TIMER_TYPE.INTERVAL) {
-      roundCounterDisplay = TimerDisplay.createRoundCounter(actionsGroup);
+      roundCounterDisplay =
+        TimerDisplay.createRoundCounter(actionsGroup);
     }
 
     // Menu button (only if code block has an ID)
@@ -254,7 +259,10 @@ export class EmbeddedTimerView extends BaseView {
     });
 
     // Initial display update
-    TimerDisplay.updateDisplay(this.timerCore.getState(), this.timerId);
+    TimerDisplay.updateDisplay(
+      this.timerCore.getState(),
+      this.timerId,
+    );
   }
 
   // Public methods for external control - delegated to TimerCore

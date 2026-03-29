@@ -49,7 +49,9 @@ export class MaintenanceSettings {
                 );
               }
 
-              await new ExerciseTypeMigration(this.plugin).migrateExerciseTypes();
+              await new ExerciseTypeMigration(
+                this.plugin,
+              ).migrateExerciseTypes();
             } catch (error) {
               const errorMessage = ErrorUtils.getErrorMessage(error);
               new Notice(`Error: ${errorMessage}`);

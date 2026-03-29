@@ -59,13 +59,18 @@ describe("ChartConfigBuilder", () => {
     expect(plugins.title.display).toBe(true);
     expect(plugins.title.text).toBe("My Chart");
     expect(plugins.title.color).toBe(colors.text);
-    expect(plugins.title.font.size).toBe(ChartStyling.TITLE_FONT_SIZE);
+    expect(plugins.title.font.size).toBe(
+      ChartStyling.TITLE_FONT_SIZE,
+    );
 
     expect(plugins.legend.display).toBe(true);
     expect(plugins.legend.labels.color).toBe(colors.text);
-    expect(plugins.legend.labels.boxWidth).toBe(ChartStyling.LEGEND_BOX_WIDTH);
+    expect(plugins.legend.labels.boxWidth).toBe(
+      ChartStyling.LEGEND_BOX_WIDTH,
+    );
 
-    const tooltipLabel = plugins.tooltip.callbacks.label as (tooltipItem: {
+    const tooltipLabel = plugins.tooltip.callbacks
+      .label as (tooltipItem: {
       parsed: { y: number };
       dataset: { label?: string };
     }) => string;
@@ -96,7 +101,9 @@ describe("ChartConfigBuilder", () => {
 
   it("creates a complete chart config", () => {
     const labels = ["2024-01-01", "2024-01-02"];
-    const datasets: ChartDataset[] = [{ label: "Volume", data: [10, 20] }];
+    const datasets: ChartDataset[] = [
+      { label: "Volume", data: [10, 20] },
+    ];
 
     const config = ChartConfigBuilder.createChartConfig(
       labels,
@@ -109,7 +116,9 @@ describe("ChartConfigBuilder", () => {
     expect(config.type).toBe("line");
     expect(config.data?.labels).toBe(labels);
     expect(config.data?.datasets).toBe(datasets);
-    expect(config.options?.aspectRatio).toBe(ChartStyling.ASPECT_RATIO);
+    expect(config.options?.aspectRatio).toBe(
+      ChartStyling.ASPECT_RATIO,
+    );
     expect(config.options?.interaction?.mode).toBe(
       ChartInteraction.INTERACTION_MODE,
     );

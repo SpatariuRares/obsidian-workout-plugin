@@ -50,10 +50,10 @@ The build process is sequential and must complete in order. Development mode (`n
 ```json
 {
   "baseUrl": ".",
+  "noImplicitAny": true,
   "paths": { "@app/*": ["app/*"] },
   "strict": true,
-  "strictNullChecks": true,
-  "noImplicitAny": true
+  "strictNullChecks": true
 }
 ```
 
@@ -119,7 +119,12 @@ All embedded views extend `BaseView` for consistent error handling, loading stat
 ```typescript
 abstract class BaseView {
   protected handleError(container, error): void;
-  protected handleEmptyData(container, data, exercise?, pageLink?): boolean;
+  protected handleEmptyData(
+    container,
+    data,
+    exercise?,
+    pageLink?,
+  ): boolean;
   protected renderLoadingSpinner(container): HTMLElement;
 }
 ```
@@ -552,7 +557,9 @@ const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
 //            averageWeight, averageReps, lastWorkoutDate, trend }
 
 // Get list of exercises
-const exercises = await WorkoutPlannerAPI.getExercises({ tag: "chest" });
+const exercises = await WorkoutPlannerAPI.getExercises({
+  tag: "chest",
+});
 ```
 
 **Example Dataview Query:**

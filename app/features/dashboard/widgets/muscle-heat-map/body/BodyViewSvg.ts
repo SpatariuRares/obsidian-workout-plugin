@@ -9,7 +9,7 @@ export const BODY_VIEWS_SVG = {
     obliquesColor: string,
     frontShouldersColor: string,
     upperChestColor: string,
-    middleChestColor: string
+    middleChestColor: string,
   ) =>
     `<g id="neck" style="color: ${trapsColor}">
         <path
@@ -378,7 +378,7 @@ export const BODY_VIEWS_SVG = {
     quadsColor: string,
     hamstringsColor: string,
     calvesColor: string,
-    rearShouldersColor: string
+    rearShouldersColor: string,
   ) => `<g id="neck"  style="color: ${trapsColor}">
         <path
             d="M340.53,131.46c16.8.29,28.51,4.08,33.82,10.94.31.39.59.8.85,1.2-.61.77-1.18,1.55-1.59,2.3-1.16,2.17-1.4,16.38-.81,25.34-8.57-2.68-20.8-5.64-33.58-5.87-.08,0-.16-.02-.24-.02-.22,0-.44,0-.66,0-.23,0-.44,0-.67,0-.09,0-.17,0-.25.02-12.43.22-24.35,3.03-32.88,5.65.58-8.98.33-22.99-.83-25.14-.41-.73-.96-1.5-1.56-2.27,2.69-4.18,7.28-7.58,16.14-9.93,7.79-2.06,14.87-2.37,22.27-2.24Z"
@@ -695,4 +695,3 @@ export const BODY_VIEWS_SVG = {
     </g>
 		`,
 } as const;
-

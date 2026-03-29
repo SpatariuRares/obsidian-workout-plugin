@@ -13,7 +13,8 @@ export class LanguageUtils {
   static getUserLanguage(normalize = false): string {
     try {
       const lang =
-        window.localStorage.getItem("language") || this.DEFAULT_LOCALE;
+        window.localStorage.getItem("language") ||
+        this.DEFAULT_LOCALE;
 
       if (normalize && lang.includes("-")) {
         const parts = lang.split("-");

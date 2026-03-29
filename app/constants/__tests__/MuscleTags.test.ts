@@ -33,35 +33,53 @@ describe("MuscleTags", () => {
 
   describe("CONSTANTS.WORKOUT.MUSCLES.TAG_MAP constant", () => {
     it("should map Italian names to English muscle groups", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["petto"]).toBe("chest");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["schiena"]).toBe("back");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["gambe"]).toBe("quads");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["glutei"]).toBe("glutes");
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["petto"]).toBe(
+        "chest",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["schiena"]).toBe(
+        "back",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["gambe"]).toBe(
+        "quads",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["glutei"]).toBe(
+        "glutes",
+      );
     });
 
     it("should map exercise types to muscle groups", () => {
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["push"]).toBe("chest");
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pull"]).toBe("back");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["squat"]).toBe("quads");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["deadlift"]).toBe("back");
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["squat"]).toBe(
+        "quads",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["deadlift"]).toBe(
+        "back",
+      );
     });
 
     it("should map specific muscle variations", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pettoralesuperior"]).toBe(
-        "chest",
-      );
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["deltoideanteriore"]).toBe(
-        "shoulders",
-      );
+      expect(
+        CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pettoralesuperior"],
+      ).toBe("chest");
+      expect(
+        CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["deltoideanteriore"],
+      ).toBe("shoulders");
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["ischiocrurali"]).toBe(
         "hamstrings",
       );
     });
 
     it("should have consistent mapping for same muscle", () => {
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["chest"]).toBe("chest");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["petto"]).toBe("chest");
-      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pettorale"]).toBe("chest");
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["chest"]).toBe(
+        "chest",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["petto"]).toBe(
+        "chest",
+      );
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pettorale"]).toBe(
+        "chest",
+      );
     });
   });
 
@@ -81,7 +99,9 @@ describe("MuscleTags", () => {
       ];
 
       mainGroups.forEach((group) => {
-        expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP[group]).toBeDefined();
+        expect(
+          CONSTANTS.WORKOUT.MUSCLES.TAG_MAP[group],
+        ).toBeDefined();
       });
     });
 

@@ -59,7 +59,8 @@ export class ActionButtonGroup {
     // Create edit button
     const editBtn = Button.create(container, {
       icon: props?.editIcon || t("icons.actions.edit"),
-      className: "workout-table-action-btn workout-table-action-btn-edit",
+      className:
+        "workout-table-action-btn workout-table-action-btn-edit",
       title: props?.editTitle || t("general.edit"),
       variant: "secondary",
       ariaLabel: props?.editTitle || t("general.edit"),
@@ -68,7 +69,8 @@ export class ActionButtonGroup {
     // Create delete button
     const deleteBtn = Button.create(container, {
       icon: props?.deleteIcon || t("icons.actions.delete"),
-      className: "workout-table-action-btn workout-table-action-btn-delete",
+      className:
+        "workout-table-action-btn workout-table-action-btn-delete",
       variant: "secondary",
       title: props?.deleteTitle || t("general.delete"),
       ariaLabel: props?.deleteTitle || t("general.delete"),

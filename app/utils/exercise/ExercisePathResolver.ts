@@ -33,14 +33,19 @@ export class ExercisePathResolver {
   /**
    * Check if a file is in the exercise folder
    */
-  static isInExerciseFolder(file: TFile, exerciseFolderPath: string): boolean {
+  static isInExerciseFolder(
+    file: TFile,
+    exerciseFolderPath: string,
+  ): boolean {
     const normalizedFilePath = this.normalizeFilePath(file.path);
-    const pathsToCheck = this.getExerciseFolderPaths(exerciseFolderPath);
+    const pathsToCheck = this.getExerciseFolderPaths(
+      exerciseFolderPath,
+    );
 
     return pathsToCheck.some(
       (path) =>
         normalizedFilePath.startsWith(path) ||
-        normalizedFilePath.includes(path + "/")
+        normalizedFilePath.includes(path + "/"),
     );
   }
 
@@ -55,7 +60,7 @@ export class ExercisePathResolver {
 
     const allFiles = plugin.app.vault.getMarkdownFiles();
     return allFiles.filter((file) =>
-      this.isInExerciseFolder(file, exerciseFolderPath)
+      this.isInExerciseFolder(file, exerciseFolderPath),
     );
   }
 
@@ -65,7 +70,7 @@ export class ExercisePathResolver {
    */
   static findExerciseFile(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): TFile | undefined {
     const exerciseFolderPath = plugin.settings.exerciseFolderPath;
     if (!exerciseFolderPath) {

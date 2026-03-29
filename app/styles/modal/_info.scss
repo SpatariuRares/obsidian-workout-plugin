@@ -1,7 +1,8 @@
 /* Info boxes & sections */
 .workout-charts-mode-info {
   background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-md);
   margin-bottom: var(--workout-space-xl);
@@ -29,7 +30,8 @@
 
 .workout-csv-mode-info {
   background: var(--background-secondary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-md);
   margin-bottom: var(--workout-space-xl);
@@ -48,7 +50,8 @@
 
 .workout-migration-section {
   background: var(--background-secondary-alt);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-lg);
   margin-top: var(--workout-space-md);

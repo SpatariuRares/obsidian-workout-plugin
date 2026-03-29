@@ -7,9 +7,9 @@
 import { Icon, Text, Container } from "@app/components/atoms";
 
 export interface LoadingSpinnerProps {
-	message?: string;
-	icon?: string;
-	className?: string;
+  message?: string;
+  icon?: string;
+  className?: string;
 }
 
 /**
@@ -27,62 +27,62 @@ export interface LoadingSpinnerProps {
  * ```
  */
 export class LoadingSpinner {
-	// Default loading icon
-	private static readonly DEFAULT_ICON = "⏳";
+  // Default loading icon
+  private static readonly DEFAULT_ICON = "⏳";
 
-	/**
-	 * Create a loading spinner element
-	 * @param parent - Parent HTML element
-	 * @param props - Loading spinner properties
-	 * @returns The created spinner container
-	 */
-	static create(
-		parent: HTMLElement,
-		props?: LoadingSpinnerProps
-	): HTMLElement {
-		// Create spinner container
-		const spinner = Container.create(parent, {
-			className: `loading-spinner ${props?.className || ""}`.trim(),
-		});
+  /**
+   * Create a loading spinner element
+   * @param parent - Parent HTML element
+   * @param props - Loading spinner properties
+   * @returns The created spinner container
+   */
+  static create(
+    parent: HTMLElement,
+    props?: LoadingSpinnerProps,
+  ): HTMLElement {
+    // Create spinner container
+    const spinner = Container.create(parent, {
+      className: `loading-spinner ${props?.className || ""}`.trim(),
+    });
 
-		// Add spinner icon
-		Icon.create(spinner, {
-			name: props?.icon || this.DEFAULT_ICON,
-			className: "loading-spinner-icon",
-		});
+    // Add spinner icon
+    Icon.create(spinner, {
+      name: props?.icon || this.DEFAULT_ICON,
+      className: "loading-spinner-icon",
+    });
 
-		// Add optional message
-		if (props?.message) {
-			Text.create(spinner, {
-				text: props.message,
-				className: "loading-spinner-message",
-				tag: "p",
-			});
-		}
+    // Add optional message
+    if (props?.message) {
+      Text.create(spinner, {
+        text: props.message,
+        className: "loading-spinner-message",
+        tag: "p",
+      });
+    }
 
-		return spinner;
-	}
+    return spinner;
+  }
 
-	/**
-	 * Create a simple loading spinner without message
-	 * @param parent - Parent HTML element
-	 * @param className - Optional additional classes
-	 * @returns The created spinner container
-	 */
-	static createSimple(
-		parent: HTMLElement,
-		className?: string
-	): HTMLElement {
-		return this.create(parent, {
-			className: `loading-spinner-simple ${className || ""}`.trim(),
-		});
-	}
+  /**
+   * Create a simple loading spinner without message
+   * @param parent - Parent HTML element
+   * @param className - Optional additional classes
+   * @returns The created spinner container
+   */
+  static createSimple(
+    parent: HTMLElement,
+    className?: string,
+  ): HTMLElement {
+    return this.create(parent, {
+      className: `loading-spinner-simple ${className || ""}`.trim(),
+    });
+  }
 
-	/**
-	 * Remove a loading spinner from the DOM
-	 * @param spinner - The spinner element to remove
-	 */
-	static remove(spinner: HTMLElement): void {
-		spinner.remove();
-	}
+  /**
+   * Remove a loading spinner from the DOM
+   * @param spinner - The spinner element to remove
+   */
+  static remove(spinner: HTMLElement): void {
+    spinner.remove();
+  }
 }

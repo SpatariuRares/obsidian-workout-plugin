@@ -22,7 +22,7 @@ export class SVGBuilder {
    * @returns The created SVG element
    */
   static createElement<K extends keyof SVGElementTagNameMap>(
-    tagName: K
+    tagName: K,
   ): SVGElementTagNameMap[K] {
     return document.createElementNS(SVG_NS, tagName);
   }
@@ -32,7 +32,10 @@ export class SVGBuilder {
    * @param element - The SVG element to modify
    * @param attributes - Object containing attribute key-value pairs
    */
-  static setAttributes(element: SVGElement, attributes: SVGAttributes): void {
+  static setAttributes(
+    element: SVGElement,
+    attributes: SVGAttributes,
+  ): void {
     Object.entries(attributes).forEach(([key, value]) => {
       element.setAttribute(key, String(value));
     });
@@ -44,10 +47,9 @@ export class SVGBuilder {
    * @param attributes - Object containing attribute key-value pairs
    * @returns The created and configured SVG element
    */
-  static createElementWithAttributes<K extends keyof SVGElementTagNameMap>(
-    tagName: K,
-    attributes: SVGAttributes
-  ): SVGElementTagNameMap[K] {
+  static createElementWithAttributes<
+    K extends keyof SVGElementTagNameMap,
+  >(tagName: K, attributes: SVGAttributes): SVGElementTagNameMap[K] {
     const element = this.createElement(tagName);
     this.setAttributes(element, attributes);
     return element;
@@ -59,7 +61,10 @@ export class SVGBuilder {
    * @param attributes - Additional attributes
    * @returns The created path element
    */
-  static createPath(d: string, attributes?: SVGAttributes): SVGPathElement {
+  static createPath(
+    d: string,
+    attributes?: SVGAttributes,
+  ): SVGPathElement {
     return this.createElementWithAttributes("path", {
       d,
       ...attributes,
@@ -80,7 +85,7 @@ export class SVGBuilder {
     y: number,
     width: number,
     height: number,
-    attributes?: SVGAttributes
+    attributes?: SVGAttributes,
   ): SVGRectElement {
     return this.createElementWithAttributes("rect", {
       x,
@@ -103,7 +108,7 @@ export class SVGBuilder {
     cx: number,
     cy: number,
     r: number,
-    attributes?: SVGAttributes
+    attributes?: SVGAttributes,
   ): SVGCircleElement {
     return this.createElementWithAttributes("circle", {
       cx,
@@ -127,7 +132,7 @@ export class SVGBuilder {
     cy: number,
     rx: number,
     ry: number,
-    attributes?: SVGAttributes
+    attributes?: SVGAttributes,
   ): SVGEllipseElement {
     return this.createElementWithAttributes("ellipse", {
       cx,
@@ -166,7 +171,7 @@ export class SVGBuilder {
    */
   static createRadialGradient(
     id: string,
-    attributes?: SVGAttributes
+    attributes?: SVGAttributes,
   ): SVGRadialGradientElement {
     return this.createElementWithAttributes("radialGradient", {
       id,
@@ -182,7 +187,7 @@ export class SVGBuilder {
    */
   static createLinearGradient(
     id: string,
-    attributes?: SVGAttributes
+    attributes?: SVGAttributes,
   ): SVGLinearGradientElement {
     return this.createElementWithAttributes("linearGradient", {
       id,
@@ -200,7 +205,7 @@ export class SVGBuilder {
   static createStop(
     offset: string | number,
     color: string,
-    opacity?: number
+    opacity?: number,
   ): SVGStopElement {
     const attributes: SVGAttributes = {
       offset: String(offset),
@@ -217,8 +222,10 @@ export class SVGBuilder {
    * @param parent - Parent SVG element
    * @param children - Array of child elements to append
    */
-  static appendChildren(parent: SVGElement, children: SVGElement[]): void {
+  static appendChildren(
+    parent: SVGElement,
+    children: SVGElement[],
+  ): void {
     children.forEach((child) => parent.appendChild(child));
   }
 }
-

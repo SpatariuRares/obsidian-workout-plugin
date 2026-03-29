@@ -80,13 +80,23 @@ export class EmbeddedTableView extends BaseView {
   ): Promise<void> {
     try {
       const validationErrors = TableConfig.validateParams(params);
-      if (!this.validateAndHandleErrors(container, validationErrors)) {
+      if (
+        !this.validateAndHandleErrors(container, validationErrors)
+      ) {
         return;
       }
 
       const loadingDiv = this.showLoadingIndicator(container);
       // Use global refresh for the "create first log" button so all views update
-      if (this.handleEmptyData(container, logData, params.exercise, undefined, params.id)) {
+      if (
+        this.handleEmptyData(
+          container,
+          logData,
+          params.exercise,
+          undefined,
+          params.id,
+        )
+      ) {
         loadingDiv.remove();
         return;
       }
@@ -137,13 +147,20 @@ export class EmbeddedTableView extends BaseView {
     this.renderChildren.push(renderChild);
 
     const fragment = document.createDocumentFragment();
-    const contentDiv = fragment.appendChild(document.createElement("div"));
+    const contentDiv = fragment.appendChild(
+      document.createElement("div"),
+    );
     contentDiv.addClass("workout-table-content-container");
     const signal = renderChild.getSignal();
 
     // Render action buttons (Add Log + Goto Exercise)
     if (params.showAddButton !== false) {
-      this.renderActionButtons(contentDiv, params, filterResult, signal);
+      this.renderActionButtons(
+        contentDiv,
+        params,
+        filterResult,
+        signal,
+      );
     }
 
     // Render target header with progress bar
@@ -171,7 +188,8 @@ export class EmbeddedTableView extends BaseView {
     }
 
     // Render the table
-    const tableContainer = TableRenderer.createTableContainer(contentDiv);
+    const tableContainer =
+      TableRenderer.createTableContainer(contentDiv);
     const tableSuccess = TableRenderer.renderTable(
       tableContainer,
       headers,
@@ -207,7 +225,8 @@ export class EmbeddedTableView extends BaseView {
     const currentPageLink = activeView?.file
       ? `[[${activeView.file.basename}]]`
       : "";
-    const exerciseName = params.exercise || t("modal.sections.workout");
+    const exerciseName =
+      params.exercise || t("modal.sections.workout");
 
     const buttonContainer = Button.createContainer(contentDiv);
     buttonContainer.addClass("workout-add-log-button-container");
@@ -253,11 +272,16 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
-    if (targetWeight === undefined || targetReps === undefined || !exercise) {
+    if (
+      targetWeight === undefined ||
+      targetReps === undefined ||
+      !exercise
+    ) {
       return;
     }
 
-    const dismissedWeight = this.plugin.settings.achievedTargets[exercise];
+    const dismissedWeight =
+      this.plugin.settings.achievedTargets[exercise];
     const isDismissedForWeight = dismissedWeight === targetWeight;
 
     AchievementBadge.render(
@@ -273,15 +297,17 @@ export class EmbeddedTableView extends BaseView {
       },
       {
         onDismiss: async () => {
-          this.plugin.settings.achievedTargets[exercise] = targetWeight;
+          this.plugin.settings.achievedTargets[exercise] =
+            targetWeight;
           await this.plugin.saveSettings();
         },
         onUpdateTarget: async (newWeight: number) => {
-          const success = await CodeBlockEditorService.updateTargetWeight(
-            this.plugin.app,
-            exercise,
-            newWeight,
-          );
+          const success =
+            await CodeBlockEditorService.updateTargetWeight(
+              this.plugin.app,
+              exercise,
+              newWeight,
+            );
           if (success) {
             await this.refreshTable(tableContainer, {
               ...params,

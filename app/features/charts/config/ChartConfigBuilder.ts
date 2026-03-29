@@ -16,7 +16,7 @@ import {
   getYAxisLabel,
   getUnitForChartType,
 } from "@app/features/charts/config/ChartConstants";
-import { ChartTypeRegistry, TooltipItem } from 'chart.js';
+import { ChartTypeRegistry, TooltipItem } from "chart.js";
 
 /**
  * Builds Chart.js configuration objects with modular, reusable methods.
@@ -29,7 +29,7 @@ export class ChartConfigBuilder {
   static createPluginsConfig(
     title: string,
     colors: ChartColorPalette,
-    chartType: string
+    chartType: string,
   ) {
     return {
       title: {
@@ -66,7 +66,7 @@ export class ChartConfigBuilder {
 
   private static createTooltipConfig(
     colors: ChartColorPalette,
-    chartType: string
+    chartType: string,
   ) {
     return {
       mode: ChartInteraction.TOOLTIP_MODE,
@@ -80,12 +80,15 @@ export class ChartConfigBuilder {
       padding: ChartStyling.TOOLTIP_PADDING,
       displayColors: true,
       callbacks: {
-        label: function (tooltipItem: TooltipItem<keyof ChartTypeRegistry>) {
+        label: function (
+          tooltipItem: TooltipItem<keyof ChartTypeRegistry>,
+        ) {
           const value = tooltipItem.parsed.y;
           const label = tooltipItem.dataset.label ?? "";
           const unit = getUnitForChartType(chartType);
-          return `${label}: ${value?.toFixed ? value.toFixed(1) : value
-            } ${unit}`;
+          return `${label}: ${
+            value?.toFixed ? value.toFixed(1) : value
+          } ${unit}`;
         },
       },
     };
@@ -94,17 +97,24 @@ export class ChartConfigBuilder {
   /**
    * Creates the scales configuration for the chart
    */
-  static createScalesConfig(colors: ChartColorPalette, chartType: string) {
+  static createScalesConfig(
+    colors: ChartColorPalette,
+    chartType: string,
+  ) {
     return {
       x: this.createAxisConfig(colors, getChartLabels().X_AXIS, true),
-      y: this.createAxisConfig(colors, getYAxisLabel(chartType), true),
+      y: this.createAxisConfig(
+        colors,
+        getYAxisLabel(chartType),
+        true,
+      ),
     };
   }
 
   private static createAxisConfig(
     colors: ChartColorPalette,
     titleText: string,
-    display: boolean
+    display: boolean,
   ) {
     return {
       display,
@@ -149,7 +159,7 @@ export class ChartConfigBuilder {
     datasets: ChartDataset[],
     title: string,
     colors: ChartColorPalette,
-    chartType: string
+    chartType: string,
   ): ChartConfiguration {
     return {
       type: "line",
@@ -172,7 +182,7 @@ export class ChartConfigBuilder {
    */
   static styleMainDataset(
     dataset: ChartDataset,
-    colorScheme: ColorScheme
+    colorScheme: ColorScheme,
   ): void {
     dataset.borderColor = colorScheme.main;
     dataset.pointBackgroundColor = colorScheme.point;
@@ -189,7 +199,7 @@ export class ChartConfigBuilder {
    */
   static styleTrendDataset(
     dataset: ChartDataset,
-    colors: ChartColorPalette
+    colors: ChartColorPalette,
   ): void {
     dataset.borderColor = colors.trend.main;
     dataset.backgroundColor = colors.trend.light;
@@ -202,8 +212,12 @@ export class ChartConfigBuilder {
   /**
    * Finds the trend line dataset in an array of datasets
    */
-  static findTrendDataset(datasets: ChartDataset[]): ChartDataset | undefined {
-    return datasets.find((ds) => ds.label === getChartLabels().TREND_LINE);
+  static findTrendDataset(
+    datasets: ChartDataset[],
+  ): ChartDataset | undefined {
+    return datasets.find(
+      (ds) => ds.label === getChartLabels().TREND_LINE,
+    );
   }
 
   /**
@@ -212,7 +226,7 @@ export class ChartConfigBuilder {
   static styleDatasets(
     datasets: ChartDataset[],
     colorScheme: ColorScheme,
-    colors: ChartColorPalette
+    colors: ChartColorPalette,
   ): void {
     if (datasets[0]) {
       this.styleMainDataset(datasets[0], colorScheme);
@@ -227,8 +241,16 @@ export class ChartConfigBuilder {
 
 // Backward-compatible alias
 export const DatasetStyler = {
-  styleMainDataset: ChartConfigBuilder.styleMainDataset.bind(ChartConfigBuilder),
-  styleTrendDataset: ChartConfigBuilder.styleTrendDataset.bind(ChartConfigBuilder),
-  findTrendDataset: ChartConfigBuilder.findTrendDataset.bind(ChartConfigBuilder),
-  styleDatasets: ChartConfigBuilder.styleDatasets.bind(ChartConfigBuilder),
+  styleMainDataset: ChartConfigBuilder.styleMainDataset.bind(
+    ChartConfigBuilder,
+  ),
+  styleTrendDataset: ChartConfigBuilder.styleTrendDataset.bind(
+    ChartConfigBuilder,
+  ),
+  findTrendDataset: ChartConfigBuilder.findTrendDataset.bind(
+    ChartConfigBuilder,
+  ),
+  styleDatasets: ChartConfigBuilder.styleDatasets.bind(
+    ChartConfigBuilder,
+  ),
 };

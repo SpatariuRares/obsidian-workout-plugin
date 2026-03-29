@@ -186,7 +186,9 @@ describe("CodeBlockProcessorService", () => {
         );
       const chartCallback = chartCall[1];
 
-      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockChartView.loadChartData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
@@ -269,7 +271,9 @@ describe("CodeBlockProcessorService", () => {
       const ctx = { addChild: jest.fn(), sourcePath: "test.md" };
 
       (service as any).embeddedDurationView = {
-        createDurationEstimator: jest.fn().mockResolvedValue(undefined),
+        createDurationEstimator: jest
+          .fn()
+          .mockResolvedValue(undefined),
       };
 
       await durationCallback("", el, ctx);
@@ -282,7 +286,9 @@ describe("CodeBlockProcessorService", () => {
 
   describe("handleWorkoutChart", () => {
     it("should render error if data loading fails", async () => {
-      mockChartView.loadChartData.mockRejectedValue(new Error("Data Error"));
+      mockChartView.loadChartData.mockRejectedValue(
+        new Error("Data Error"),
+      );
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -332,20 +338,28 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should create chart when data exists", async () => {
-      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockChartView.loadChartData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutChart("type: volume", el, ctx);
+      await (service as any).handleWorkoutChart(
+        "type: volume",
+        el,
+        ctx,
+      );
 
       expect(mockChartView.createChart).toHaveBeenCalled();
     });
 
     it("should pass params to loadChartData", async () => {
-      mockChartView.loadChartData.mockResolvedValue([{ date: "2023-01-01" }]);
+      mockChartView.loadChartData.mockResolvedValue([
+        { date: "2023-01-01" },
+      ]);
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -415,7 +429,9 @@ describe("CodeBlockProcessorService", () => {
       await (service as any).handleWorkoutLog("limit: 10", el, ctx);
 
       // Should be called without filter params
-      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith();
+      expect(
+        mockDataService.getWorkoutLogData,
+      ).toHaveBeenCalledWith();
       expect(mockTableView.createTable).toHaveBeenCalled();
     });
 
@@ -429,7 +445,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutLog("exercise: Squat", el, ctx);
+      await (service as any).handleWorkoutLog(
+        "exercise: Squat",
+        el,
+        ctx,
+      );
 
       expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -448,7 +468,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutLog("workout: Push Day", el, ctx);
+      await (service as any).handleWorkoutLog(
+        "workout: Push Day",
+        el,
+        ctx,
+      );
 
       expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -458,7 +482,9 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockDataService.getWorkoutLogData.mockRejectedValue("string error");
+      mockDataService.getWorkoutLogData.mockRejectedValue(
+        "string error",
+      );
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -482,7 +508,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutLog("exercise: Squat", el, ctx);
+      await (service as any).handleWorkoutLog(
+        "exercise: Squat",
+        el,
+        ctx,
+      );
 
       expect(mockTableView.createTable).toHaveBeenCalledWith(
         expect.any(HTMLElement),
@@ -521,9 +551,15 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
+      await (service as any).handleWorkoutDashboard(
+        "dateRange: 30",
+        el,
+        ctx,
+      );
 
-      expect(mockDashboardView.loadDashboardData).toHaveBeenCalledWith(
+      expect(
+        mockDashboardView.loadDashboardData,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({ dateRange: 30 }),
       );
       expect(mockDashboardView.createDashboard).toHaveBeenCalled();
@@ -537,10 +573,16 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutDashboard("dateRange: 30", el, ctx);
+      await (service as any).handleWorkoutDashboard(
+        "dateRange: 30",
+        el,
+        ctx,
+      );
 
       expect(LogCallouts.renderCsvNoDataMessage).toHaveBeenCalled();
-      expect(mockDashboardView.createDashboard).not.toHaveBeenCalled();
+      expect(
+        mockDashboardView.createDashboard,
+      ).not.toHaveBeenCalled();
     });
 
     it("should catch errors", async () => {
@@ -559,7 +601,9 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle non-Error exceptions", async () => {
-      mockDashboardView.loadDashboardData.mockRejectedValue("string error");
+      mockDashboardView.loadDashboardData.mockRejectedValue(
+        "string error",
+      );
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -599,9 +643,15 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "duration: 60",
+        el,
+        ctx,
+      );
 
-      expect(runAddMissingBlockIds).toHaveBeenCalledWith(mockPlugin.app);
+      expect(runAddMissingBlockIds).toHaveBeenCalledWith(
+        mockPlugin.app,
+      );
     });
 
     it("should NOT trigger migration if id is present", async () => {
@@ -611,7 +661,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("id: timer123\nduration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "id: timer123\nduration: 60",
+        el,
+        ctx,
+      );
 
       expect(runAddMissingBlockIds).not.toHaveBeenCalled();
     });
@@ -623,7 +677,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "duration: 60",
+        el,
+        ctx,
+      );
 
       expect(ctx.addChild).toHaveBeenCalled();
       expect(activeTimers.size).toBe(1);
@@ -660,7 +718,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "duration: 60",
+        el,
+        ctx,
+      );
 
       expect(activeTimers.size).toBe(1);
       const timerId = Array.from(activeTimers.keys())[0];
@@ -682,7 +744,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "duration: 60",
+        el,
+        ctx,
+      );
 
       // Get the timer view from activeTimers
       const timerId = Array.from(activeTimers.keys())[0];
@@ -727,7 +793,11 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
 
-      await (service as any).handleWorkoutTimer("duration: 60", el, ctx);
+      await (service as any).handleWorkoutTimer(
+        "duration: 60",
+        el,
+        ctx,
+      );
 
       // Manually clear activeTimers before unload
       activeTimers.clear();
@@ -747,7 +817,9 @@ describe("CodeBlockProcessorService", () => {
 
       // Mock internal view
       (service as any).embeddedDurationView = {
-        createDurationEstimator: jest.fn().mockResolvedValue(undefined),
+        createDurationEstimator: jest
+          .fn()
+          .mockResolvedValue(undefined),
       };
 
       await (service as any).handleWorkoutDuration("source", el, ctx);
@@ -781,7 +853,9 @@ describe("CodeBlockProcessorService", () => {
         sourcePath: "test/path.md",
       } as unknown as MarkdownPostProcessorContext;
       (service as any).embeddedDurationView = {
-        createDurationEstimator: jest.fn().mockRejectedValue("string error"),
+        createDurationEstimator: jest
+          .fn()
+          .mockRejectedValue("string error"),
       };
 
       await (service as any).handleWorkoutDuration("source", el, ctx);
@@ -864,7 +938,8 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should ignore lines starting with #", () => {
-      const source = "# This is a comment\nexercise: Squat\n# Another comment";
+      const source =
+        "# This is a comment\nexercise: Squat\n# Another comment";
       const result = (service as any).parseCodeBlockParams(source);
 
       expect(result.exercise).toBe("Squat");
@@ -881,7 +956,8 @@ describe("CodeBlockProcessorService", () => {
     });
 
     it("should handle lines without colons gracefully", () => {
-      const source = "exercise: Squat\ninvalid line without colon\nreps: 5";
+      const source =
+        "exercise: Squat\ninvalid line without colon\nreps: 5";
       const result = (service as any).parseCodeBlockParams(source);
 
       expect(result.exercise).toBe("Squat");
@@ -937,7 +1013,11 @@ workout: `;
       const result = (service as any).parseCodeBlockParams(source);
 
       expect(Array.isArray(result.protocol)).toBe(true);
-      expect(result.protocol).toEqual(["drop_set", "myo_reps", "rest_pause"]);
+      expect(result.protocol).toEqual([
+        "drop_set",
+        "myo_reps",
+        "rest_pause",
+      ]);
     });
 
     it("should trim whitespace from array values", () => {

@@ -1,7 +1,10 @@
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { LogFormValidator } from "@app/features/modals/base/logic/LogFormValidator";
-import { WorkoutProtocol, CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
+import {
+  WorkoutProtocol,
+  CSVWorkoutLogEntry,
+} from "@app/types/WorkoutLogData";
 
 export class LogSubmissionHandler {
   /**
@@ -12,9 +15,13 @@ export class LogSubmissionHandler {
     formElements: LogFormElements,
     currentParameters: ParameterDefinition[],
     currentFileName: string | undefined,
-    currentPageLink: string | undefined
+    currentPageLink: string | undefined,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> | null {
-    const data = this.extractAndValidateData(formElements, currentParameters, currentFileName);
+    const data = this.extractAndValidateData(
+      formElements,
+      currentParameters,
+      currentFileName,
+    );
     if (!data) return null;
     return this.createLogEntry(data, currentPageLink);
   }
@@ -26,17 +33,18 @@ export class LogSubmissionHandler {
   static extractAndValidateData(
     formElements: LogFormElements,
     currentParameters: ParameterDefinition[],
-    currentFileName: string | undefined
+    currentFileName: string | undefined,
   ): LogFormData | null {
     // Extract exercise name
-    const exercise = formElements.exerciseElements.exerciseInput.value.trim();
+    const exercise =
+      formElements.exerciseElements.exerciseInput.value.trim();
 
     // Validate
     if (
       !LogFormValidator.validateDynamicLogData(
         exercise,
         formElements.dynamicFieldInputs,
-        currentParameters
+        currentParameters,
       )
     ) {
       return null;
@@ -46,7 +54,9 @@ export class LogSubmissionHandler {
     const repsInput = formElements.dynamicFieldInputs.get("reps");
     const weightInput = formElements.dynamicFieldInputs.get("weight");
     const reps = repsInput ? parseInt(repsInput.value) || 0 : 0;
-    const weight = weightInput ? parseFloat(weightInput.value) || 0 : 0;
+    const weight = weightInput
+      ? parseFloat(weightInput.value) || 0
+      : 0;
 
     const notes = formElements.notesInput.value.trim();
     let workout = formElements.workoutInput.value.trim();
@@ -54,12 +64,16 @@ export class LogSubmissionHandler {
       WorkoutProtocol.STANDARD) as WorkoutProtocol;
 
     // Handle current workout toggle
-    if (formElements.currentWorkoutToggle?.checked && currentFileName) {
+    if (
+      formElements.currentWorkoutToggle?.checked &&
+      currentFileName
+    ) {
       workout = currentFileName;
     }
 
-     // Build customFields
-    const customFields: Record<string, string | number | boolean> = {};
+    // Build customFields
+    const customFields: Record<string, string | number | boolean> =
+      {};
     for (const [key, input] of formElements.dynamicFieldInputs) {
       if (key === "reps" || key === "weight") {
         continue; // Skip standard fields
@@ -88,7 +102,10 @@ export class LogSubmissionHandler {
       notes,
       date: formElements.dateInput?.value || undefined,
       protocol,
-      customFields: Object.keys(customFields).length > 0 ? customFields : undefined,
+      customFields:
+        Object.keys(customFields).length > 0
+          ? customFields
+          : undefined,
     };
   }
 
@@ -98,19 +115,19 @@ export class LogSubmissionHandler {
    */
   static createLogEntry(
     data: LogFormData,
-    currentPageLink: string | undefined
+    currentPageLink: string | undefined,
   ): Omit<CSVWorkoutLogEntry, "timestamp"> {
-      return {
-          date: data.date || new Date().toISOString(),
-          exercise: data.exercise,
-          reps: data.reps || 0,
-          weight: data.weight || 0,
-          volume: (data.reps || 0) * (data.weight || 0),
-          origine: currentPageLink || "[[Workout Charts Plugin]]",
-          workout: data.workout || undefined,
-          notes: data.notes || undefined,
-          protocol: data.protocol || WorkoutProtocol.STANDARD,
-          customFields: data.customFields,
-      };
+    return {
+      date: data.date || new Date().toISOString(),
+      exercise: data.exercise,
+      reps: data.reps || 0,
+      weight: data.weight || 0,
+      volume: (data.reps || 0) * (data.weight || 0),
+      origine: currentPageLink || "[[Workout Charts Plugin]]",
+      workout: data.workout || undefined,
+      notes: data.notes || undefined,
+      protocol: data.protocol || WorkoutProtocol.STANDARD,
+      customFields: data.customFields,
+    };
   }
 }

@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "운동 블록 추가",
+    "addMissingBlockIds": "코드 블록에 누락된 ID 추가",
     "auditExerciseNames": "감사 훈련 이름",
     "convertExercise": "운동 변환",
     "createCsvLog": "CSV 로그 파일 생성",
@@ -34,12 +35,12 @@
     "generateTagReference": "태그 참조 생성",
     "insertTable": "테이블 삽입",
     "manageMuscleTags": "근육 태그 관리",
-    "migrateExerciseTypes": "운동 유형 마이그레이션",
-    "addMissingBlockIds": "코드 블록에 누락된 ID 추가"
+    "migrateExerciseTypes": "운동 유형 마이그레이션"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "취소",
+    "clear": "지우기",
     "convert": "변환",
     "exercise": "운동",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "사용 불가",
     "sec": "보안",
     "unknown": "알 수 없음",
-    "workout": "운동",
-    "clear": "지우기"
+    "workout": "운동"
   },
   "convert": {
     "currentType": "현재 유형:",
@@ -453,8 +453,8 @@
     "noImbalances": "불균형 없음",
     "noTags": "태그 없음",
     "success": {
-      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",
       "blockIdsAdded": "{files} 파일에 {count} 누락된 ID(들) 추가",
+      "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",
       "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "액션",
     "addTag": "태그 추가",
+    "auditStatusCloseMatch": "유사 일치",
+    "auditStatusExactMatch": "정확히 일치",
+    "auditStatusNoMatch": "일치 없음",
+    "auditStatusPartialMatch": "부분 일치",
     "autocomplete": {
+      "addExercise": "{name} 추가",
       "exactBadge": "★",
       "exactTooltip": "정확히 일치/사전 일치 - 점수: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "부분 일치 - 점수: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "단어 일치 - 점수: {score}",
-      "addExercise": "{name} 추가"
+      "wordTooltip": "단어 일치 - 점수: {score}"
     },
     "buttons": {
       "addParameter": "매개변수 추가",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "액션",
+      "currentFileInfo": "현재 파일: {fileName}",
       "exercise": "운동:",
       "reps": "대표:",
       "targetReps": "목표 대상:",
       "targetWeight": "목표: ({unit}):",
       "volume": "볼륨 ({{unit}}):",
-      "weight": "무게 ({{unit}}):",
-      "currentFileInfo": "현재 파일: {fileName}"
+      "weight": "무게 ({{unit}}):"
     },
     "layoutGrouped": "근육별로 그룹화",
     "layoutHorizontal": "수평 방향 흐름",
@@ -565,17 +569,21 @@
     "notes": "참고 사항 (선택 사항):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "{count}개의 불일치 발견:",
+      "auditNoMatchFound": "일치 항목 없음",
       "auditNoMismatches": "감사 검토 결과 불일치",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "파일 이름 변경 성공",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "스캔 중 오류: {error}",
       "auditScanning": "감사 검사",
       "canvasExportError": "캔버스 내보내기 오류",
       "canvasExported": "캔버스 내 콘텐츠 내보내기",
       "chartInserted": "✅ 차트가 성공적으로 삽입되었습니다!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ 대시보드가 성공적으로 삽입되었습니다!",
+      "dismissAchievement": "업적 닫기",
       "exerciseBlockInserted": "운동 블록 삽입",
       "exerciseNameRequired": "❌ 운동 이름을 입력해주세요",
       "exercisePageCreated": "운동 페이지가 성공적으로 생성되었습니다!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "timerUpdated": "✅ 타이머가 성공적으로 업데이트되었습니다!",
       "validationCombinedMode": "⚠️ '운동 + 운동' 유형의 경우, 두 필드를 모두 채워야 합니다!",
-      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
-      "dismissAchievement": "업적 닫기",
-      "auditScanError": "스캔 중 오류: {error}",
-      "auditMismatchCount": "{count}개의 불일치 발견:",
-      "auditNoMatchFound": "일치 항목 없음"
+      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요."
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -716,11 +720,7 @@
     },
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
-    "workoutNameOptional": "운동 이름 (선택 사항):",
-    "auditStatusNoMatch": "일치 없음",
-    "auditStatusExactMatch": "정확히 일치",
-    "auditStatusCloseMatch": "유사 일치",
-    "auditStatusPartialMatch": "부분 일치"
+    "workoutNameOptional": "운동 이름 (선택 사항):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "생성 중...",
       "overwriting": "덮어쓰기...",
       "regenerateOverwrite": "재생성 (덮어쓰기)",
+      "runAllMaintenance": "모든 유지보수 실행",
       "savePreset": "저장",
-      "saveProtocol": "저장",
-      "runAllMaintenance": "모든 유지보수 실행"
+      "saveProtocol": "저장"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -760,11 +760,11 @@
       "protocolColor": "배지 배경 색상 (16진수 형식, 예: #FF5733)",
       "quickWeightIncrement": "+ / - 버튼에서 사용되는 무게 증가 값 (예: +2.5 / -2.5 단위)",
       "repDuration": "반복 1회 수행에 걸리는 예상 시간. 반복 횟수가 알려진 경우에 사용됩니다 (예: '10회 반복').",
+      "runAllMaintenance": "모든 유지보수 작업을 순차적으로 실행합니다. 여러 번 실행해도 안전합니다.",
       "setDuration": "대리인 정보가 지정되지 않은 경우에 사용됩니다 (기본값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
-      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다.",
-      "runAllMaintenance": "모든 유지보수 작업을 순차적으로 실행합니다. 여러 번 실행해도 안전합니다."
+      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
@@ -786,10 +786,10 @@
       "protocolColor": "뱃지 색",
       "protocolName": "프로토콜 이름",
       "repDuration": "반복 횟수당 지속 시간 (초)",
+      "runAllMaintenance": "모든 유지보수 작업 실행",
       "setDuration": "대체 설정 지속 시간 (초)",
       "setupCSV": "CSV 파일 설정",
-      "weightUnit": "무게 단위",
-      "runAllMaintenance": "모든 유지보수 작업 실행"
+      "weightUnit": "무게 단위"
     },
     "messages": {
       "confirmDeletePreset": "이 프리셋을 삭제하시겠습니까?",
@@ -820,17 +820,17 @@
       "protocolName": "프로토콜 이름을 입력하세요"
     },
     "sections": {
+      "advanced": "고급",
       "csvManagement": "CSV 파일 관리",
       "customProtocols": "사용자 정의 프로토콜",
       "exampleData": "예시 데이터",
       "filtering": "필터링",
+      "maintenance": "유지보수",
       "quickLog": "모바일 로깅",
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 설정",
-      "trainingParameters": "훈련 매개변수",
-      "maintenance": "유지보수",
-      "advanced": "고급"
+      "trainingParameters": "훈련 매개변수"
     },
     "tooltips": {
       "deletePreset": "{preset} 삭제",
@@ -839,21 +839,21 @@
       "editProtocol": "프로토콜 편집"
     },
     "validation": {
-      "mustBePositive": "0보다 커야 합니다",
-      "mustBeNonNegative": "0 또는 그 이상의 값이어야 합니다.",
+      "csvFolderNotFound": "{vault}에 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 설정\"을 실행하십시오.",
       "csvPathEmpty": "경로는 비어 있을 수 없습니다",
-      "csvFolderNotFound": "{vault}에 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 설정\"을 실행하십시오."
+      "mustBeNonNegative": "0 또는 그 이상의 값이어야 합니다.",
+      "mustBePositive": "0보다 커야 합니다"
     }
   },
   "stats": {
     "avgVolume": "평균 부피",
-    "recentTrend": "최근 추세",
-    "sessions": "세션",
     "max": "최대: ",
     "min": "최소: ",
-    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):",
     "recentLast3": " (최근 3회)",
-    "recentVsPrev": " (이전 대비)"
+    "recentTrend": "최근 추세",
+    "recentVsPrev": " (이전 대비)",
+    "sessions": "세션",
+    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):"
   },
   "table": {
     "actions": "액션",

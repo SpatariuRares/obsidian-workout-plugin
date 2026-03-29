@@ -4,7 +4,10 @@
 import { App, Notice } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { CSVWorkoutLogEntry, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  CSVWorkoutLogEntry,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -42,8 +45,12 @@ export abstract class BaseLogModal extends ModalBase {
     super(app);
     this.exerciseName = exerciseName;
     this.currentPageLink = currentPageLink;
-    this.dynamicFieldsRenderer = new DynamicFieldsRenderer(this.plugin);
-    this.recentExercisesService = new RecentExercisesService(this.plugin);
+    this.dynamicFieldsRenderer = new DynamicFieldsRenderer(
+      this.plugin,
+    );
+    this.recentExercisesService = new RecentExercisesService(
+      this.plugin,
+    );
     this.logFormRenderer = new LogFormRenderer(
       this.plugin,
       this.dynamicFieldsRenderer,
@@ -197,7 +204,8 @@ export abstract class BaseLogModal extends ModalBase {
     if (!data) return;
 
     if (data.exercise) {
-      formElements.exerciseElements.exerciseInput.value = data.exercise;
+      formElements.exerciseElements.exerciseInput.value =
+        data.exercise;
       // Trigger change event to load parameters?
       // Actually LogFormRenderer handles initial load.
       // But if we pre-fill a DIFFERENT exercise than initial, we might need to trigger update.
@@ -210,14 +218,19 @@ export abstract class BaseLogModal extends ModalBase {
       if (repsInput) repsInput.value = data.reps.toString();
     }
     if (data.weight !== undefined) {
-      const weightInput = formElements.dynamicFieldInputs.get("weight");
+      const weightInput =
+        formElements.dynamicFieldInputs.get("weight");
       if (weightInput) weightInput.value = data.weight.toString();
     }
 
     if (data.notes) formElements.notesInput.value = data.notes;
     if (data.workout) formElements.workoutInput.value = data.workout;
 
-    if (data.date && formElements.dateInput && this.shouldShowDateField()) {
+    if (
+      data.date &&
+      formElements.dateInput &&
+      this.shouldShowDateField()
+    ) {
       const dateValue = data.date.split("T")[0];
       formElements.dateInput.value = dateValue;
     }
@@ -280,7 +293,9 @@ export abstract class BaseLogModal extends ModalBase {
 
       // Keep recent exercise chips in sync without blocking success flow.
       try {
-        await this.recentExercisesService.trackExercise(data.exercise);
+        await this.recentExercisesService.trackExercise(
+          data.exercise,
+        );
       } catch {
         // Non-critical failure: log entry is already saved.
       }
@@ -289,7 +304,9 @@ export abstract class BaseLogModal extends ModalBase {
       new Notice(this.getSuccessMessage());
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(t("modal.notices.genericError", { error: errorMessage }));
+      new Notice(
+        t("modal.notices.genericError", { error: errorMessage }),
+      );
     }
   }
 
@@ -300,7 +317,9 @@ export abstract class BaseLogModal extends ModalBase {
     if (!this.exerciseName) {
       formElements.exerciseElements.exerciseInput.focus();
     } else {
-      const firstInput = formElements.dynamicFieldInputs.values().next().value;
+      const firstInput = formElements.dynamicFieldInputs
+        .values()
+        .next().value;
       if (firstInput) {
         firstInput.focus();
       }

@@ -17,29 +17,47 @@ import {
   RecentWorkout,
 } from "@app/features/dashboard/widgets/recent-workouts/business/getRecentWorkouts";
 
-export type { SummaryMetrics, PeriodStats, VolumeTrendData, RecentWorkout };
+export type {
+  SummaryMetrics,
+  PeriodStats,
+  VolumeTrendData,
+  RecentWorkout,
+};
 
 /**
  * Utility class for dashboard calculations and data processing
  */
 export class DashboardCalculations {
-  static calculateSummaryMetrics(data: WorkoutLogData[]): SummaryMetrics {
+  static calculateSummaryMetrics(
+    data: WorkoutLogData[],
+  ): SummaryMetrics {
     return calculateSummaryMetrics(data);
   }
 
-  static calculatePeriodStats(data: WorkoutLogData[], days: number): PeriodStats {
+  static calculatePeriodStats(
+    data: WorkoutLogData[],
+    days: number,
+  ): PeriodStats {
     return calculatePeriodStats(data, days);
   }
 
-  static prepareVolumeTrendData(data: WorkoutLogData[], days: number): VolumeTrendData {
+  static prepareVolumeTrendData(
+    data: WorkoutLogData[],
+    days: number,
+  ): VolumeTrendData {
     return prepareVolumeTrendData(data, days);
   }
 
-  static calculateMuscleGroupVolume(data: WorkoutLogData[]): [string, number][] {
+  static calculateMuscleGroupVolume(
+    data: WorkoutLogData[],
+  ): [string, number][] {
     return calculateMuscleGroupVolume(data);
   }
 
-  static getRecentWorkouts(data: WorkoutLogData[], limit: number): RecentWorkout[] {
+  static getRecentWorkouts(
+    data: WorkoutLogData[],
+    limit: number,
+  ): RecentWorkout[] {
     return getRecentWorkouts(data, limit);
   }
 }

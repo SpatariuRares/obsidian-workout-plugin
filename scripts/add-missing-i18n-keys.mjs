@@ -14,7 +14,10 @@ const __dirname = path.dirname(__filename);
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const LOCALES_DIR = path.join(ROOT_DIR, "app/i18n/locales");
-const UI_CONSTANTS_PATH = path.join(ROOT_DIR, "app/constants/ui.constants.ts");
+const UI_CONSTANTS_PATH = path.join(
+  ROOT_DIR,
+  "app/constants/ui.constants.ts",
+);
 
 /**
  * Reads and parses a JSON file
@@ -108,8 +111,12 @@ function deepMerge(target, source) {
   const result = { ...target };
   for (const [key, value] of Object.entries(source)) {
     if (
-      value && typeof value === "object" && !Array.isArray(value) &&
-      result[key] && typeof result[key] === "object" && !Array.isArray(result[key])
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      result[key] &&
+      typeof result[key] === "object" &&
+      !Array.isArray(result[key])
     ) {
       result[key] = deepMerge(result[key], value);
     } else {
@@ -136,8 +143,13 @@ function keyToEnglishPhrase(key) {
 function main() {
   console.log("🔧 Adding missing i18n keys to ALL locales...\n");
 
-  const localeFiles = fs.readdirSync(LOCALES_DIR).filter(f => f.endsWith(".json"));
-  const uiConstantsContent = fs.readFileSync(UI_CONSTANTS_PATH, "utf-8");
+  const localeFiles = fs
+    .readdirSync(LOCALES_DIR)
+    .filter((f) => f.endsWith(".json"));
+  const uiConstantsContent = fs.readFileSync(
+    UI_CONSTANTS_PATH,
+    "utf-8",
+  );
   const usedKeys = extractUsedKeys(uiConstantsContent);
 
   for (const file of localeFiles) {
@@ -155,13 +167,17 @@ function main() {
     if (missingKeys.length > 0) {
       console.log(`📝 ${file}: Adding ${missingKeys.length} keys`);
       createBackup(filePath);
-      
+
       let additions = {};
       for (const key of missingKeys.sort()) {
-        const placeholderValue = file === "en.json" ? keyToEnglishPhrase(key) : "TODO";
-        additions = deepMerge(additions, keyToNestedObject(key, placeholderValue));
+        const placeholderValue =
+          file === "en.json" ? keyToEnglishPhrase(key) : "TODO";
+        additions = deepMerge(
+          additions,
+          keyToNestedObject(key, placeholderValue),
+        );
       }
-      
+
       const updatedData = deepMerge(localeData, additions);
       writeJson(filePath, updatedData);
     } else {

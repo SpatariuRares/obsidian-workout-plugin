@@ -56,7 +56,10 @@ export class FormatUtils {
    * @param dataType The type of data being formatted
    * @returns Formatted string with appropriate formatting for the data type
    */
-  static formatValue(value: number, dataType: CHART_DATA_TYPE): string {
+  static formatValue(
+    value: number,
+    dataType: CHART_DATA_TYPE,
+  ): string {
     switch (dataType) {
       case CHART_DATA_TYPE.DURATION:
         return FormatUtils.formatDuration(value);

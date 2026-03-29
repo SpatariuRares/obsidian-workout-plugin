@@ -37,9 +37,15 @@ export class WorkoutLogRepository {
     const content = `${header}\n${sampleEntry}`;
 
     // Ensure parent folder exists
-    await PathUtils.ensureFolderExists(this.app, this.settings.csvLogFilePath);
+    await PathUtils.ensureFolderExists(
+      this.app,
+      this.settings.csvLogFilePath,
+    );
 
-    await this.app.vault.create(this.settings.csvLogFilePath, content);
+    await this.app.vault.create(
+      this.settings.csvLogFilePath,
+      content,
+    );
     this.cacheService.clearCache();
   }
 
@@ -79,7 +85,8 @@ export class WorkoutLogRepository {
     const csvFile = abstractFile;
 
     // Get existing custom columns to preserve column order
-    const existingCustomColumns = await this.columnService.getCustomColumns();
+    const existingCustomColumns =
+      await this.columnService.getCustomColumns();
 
     let generatedTimestamp = Date.now();
 
@@ -98,9 +105,12 @@ export class WorkoutLogRepository {
     });
 
     this.eventBus.emit({
-      type: 'log:added',
+      type: "log:added",
       payload: {
-        entry: { ...entry, timestamp: generatedTimestamp } as WorkoutLogData,
+        entry: {
+          ...entry,
+          timestamp: generatedTimestamp,
+        } as WorkoutLogData,
         context: { exercise: entry.exercise, workout: entry.workout },
       },
     });
@@ -123,7 +133,9 @@ export class WorkoutLogRepository {
 
     // Ensure any custom field columns exist before writing
     if (updatedEntry.customFields) {
-      for (const columnName of Object.keys(updatedEntry.customFields)) {
+      for (const columnName of Object.keys(
+        updatedEntry.customFields,
+      )) {
         await this.columnService.ensureColumnExists(columnName, () =>
           this.cacheService.clearCache(),
         );
@@ -133,7 +145,8 @@ export class WorkoutLogRepository {
     const csvFile = abstractFile;
 
     // Get existing custom columns to preserve column order
-    const existingCustomColumns = await this.columnService.getCustomColumns();
+    const existingCustomColumns =
+      await this.columnService.getCustomColumns();
 
     await this.app.vault.process(csvFile, (content) => {
       const csvEntries = parseCSVLogFile(content);
@@ -175,10 +188,13 @@ export class WorkoutLogRepository {
     });
 
     this.eventBus.emit({
-      type: 'log:updated',
+      type: "log:updated",
       payload: {
         previous: originalLog,
-        updated: { ...updatedEntry, timestamp: originalLog.timestamp } as WorkoutLogData,
+        updated: {
+          ...updatedEntry,
+          timestamp: originalLog.timestamp,
+        } as WorkoutLogData,
       },
     });
   }
@@ -229,10 +245,13 @@ export class WorkoutLogRepository {
     });
 
     this.eventBus.emit({
-      type: 'log:deleted',
+      type: "log:deleted",
       payload: {
         entry: logToDelete,
-        context: { exercise: logToDelete.exercise, workout: logToDelete.workout },
+        context: {
+          exercise: logToDelete.exercise,
+          workout: logToDelete.workout,
+        },
       },
     });
   }
@@ -265,7 +284,9 @@ export class WorkoutLogRepository {
         const normalizedOldName = StringUtils.normalize(oldName);
 
         csvEntries.forEach((entry) => {
-          const normalizedEntryName = StringUtils.normalize(entry.exercise);
+          const normalizedEntryName = StringUtils.normalize(
+            entry.exercise,
+          );
           if (normalizedEntryName === normalizedOldName) {
             entry.exercise = newName.trim();
             updateCount++;
@@ -276,8 +297,8 @@ export class WorkoutLogRepository {
       });
 
       this.eventBus.emit({
-        type: 'log:bulk-changed',
-        payload: { count: updateCount, operation: 'rename' },
+        type: "log:bulk-changed",
+        payload: { count: updateCount, operation: "rename" },
       });
 
       return updateCount;

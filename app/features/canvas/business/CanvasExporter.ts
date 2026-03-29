@@ -6,7 +6,10 @@
  */
 import { App, TFile } from "obsidian";
 import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
-import { WorkoutPlannerAPI, ExerciseStats } from "@app/api/WorkoutPlannerAPI";
+import {
+  WorkoutPlannerAPI,
+  ExerciseStats,
+} from "@app/api/WorkoutPlannerAPI";
 import { DataService } from "@app/services/data/DataService";
 import type WorkoutChartsPlugin from "main";
 import type {
@@ -124,9 +127,19 @@ export class CanvasExporter {
     private app: App,
     private plugin: WorkoutChartsPlugin,
   ) {
-    const dataService = new DataService(app, plugin.settings, plugin.eventBus);
-    this.api = new WorkoutPlannerAPI(dataService, app, plugin.settings);
-    this.tagMapper = new MuscleTagMapper(plugin.getMuscleTagService());
+    const dataService = new DataService(
+      app,
+      plugin.settings,
+      plugin.eventBus,
+    );
+    this.api = new WorkoutPlannerAPI(
+      dataService,
+      app,
+      plugin.settings,
+    );
+    this.tagMapper = new MuscleTagMapper(
+      plugin.getMuscleTagService(),
+    );
   }
 
   /**
@@ -151,7 +164,9 @@ export class CanvasExporter {
     if (options.includeStats) {
       for (const exercise of exercises) {
         try {
-          const stats = await this.api.getExerciseStats(exercise.name);
+          const stats = await this.api.getExerciseStats(
+            exercise.name,
+          );
           exerciseStats.set(exercise.name, stats);
         } catch {
           // Skip if stats unavailable
@@ -173,7 +188,8 @@ export class CanvasExporter {
       : canvasFileName;
 
     // Check if canvas file already exists
-    const existingFile = this.app.vault.getAbstractFileByPath(canvasPath);
+    const existingFile =
+      this.app.vault.getAbstractFileByPath(canvasPath);
     if (existingFile instanceof TFile) {
       // Overwrite existing canvas file
       await this.app.vault.modify(
@@ -195,7 +211,9 @@ export class CanvasExporter {
    * Extract exercise information from a workout file
    * Looks for workout-timer code blocks and H2/H3 headers
    */
-  private async extractExercises(workoutFile: TFile): Promise<ExerciseInfo[]> {
+  private async extractExercises(
+    workoutFile: TFile,
+  ): Promise<ExerciseInfo[]> {
     const content = await this.app.vault.read(workoutFile);
     const exercises: ExerciseInfo[] = [];
     const exerciseSet = new Set<string>(); // Avoid duplicates
@@ -212,16 +230,22 @@ export class CanvasExporter {
 
       if (exerciseLine) {
         const exerciseName = exerciseLine[1].trim();
-        if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
+        if (
+          exerciseName &&
+          !exerciseSet.has(exerciseName.toLowerCase())
+        ) {
           exerciseSet.add(exerciseName.toLowerCase());
-          const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
-            exerciseName,
-            this.plugin,
-          );
+          const muscleGroups =
+            await this.tagMapper.findMuscleGroupsFromTags(
+              exerciseName,
+              this.plugin,
+            );
           exercises.push({
             name: exerciseName,
             muscleGroups,
-            duration: durationLine ? parseInt(durationLine[1], 10) : undefined,
+            duration: durationLine
+              ? parseInt(durationLine[1], 10)
+              : undefined,
             isSuperset: !!supersetLine,
           });
         }
@@ -238,33 +262,42 @@ export class CanvasExporter {
         !exerciseSet.has(headerText.toLowerCase())
       ) {
         exerciseSet.add(headerText.toLowerCase());
-        const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
-          headerText,
-          this.plugin,
-        );
+        const muscleGroups =
+          await this.tagMapper.findMuscleGroupsFromTags(
+            headerText,
+            this.plugin,
+          );
         exercises.push({ name: headerText, muscleGroups });
       }
     }
 
     // Pattern 3: Extract from markdown links to exercise files [[Exercise Name]]
     const linkRegex = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
-    const exerciseFolderPath = this.plugin.settings.exerciseFolderPath;
+    const exerciseFolderPath =
+      this.plugin.settings.exerciseFolderPath;
     while ((match = linkRegex.exec(content)) !== null) {
       const linkPath = match[1].trim();
       // Check if the link points to an exercise file
-      if (linkPath.startsWith(exerciseFolderPath) || !linkPath.includes("/")) {
+      if (
+        linkPath.startsWith(exerciseFolderPath) ||
+        !linkPath.includes("/")
+      ) {
         const exerciseName = linkPath.split("/").pop() || linkPath;
-        if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
+        if (
+          exerciseName &&
+          !exerciseSet.has(exerciseName.toLowerCase())
+        ) {
           // Verify it's actually an exercise file
           const file = this.app.vault.getFileByPath(
             linkPath.endsWith(".md") ? linkPath : linkPath + ".md",
           );
           if (file || !linkPath.includes("/")) {
             exerciseSet.add(exerciseName.toLowerCase());
-            const muscleGroups = await this.tagMapper.findMuscleGroupsFromTags(
-              exerciseName,
-              this.plugin,
-            );
+            const muscleGroups =
+              await this.tagMapper.findMuscleGroupsFromTags(
+                exerciseName,
+                this.plugin,
+              );
             exercises.push({ name: exerciseName, muscleGroups });
           }
         }
@@ -298,7 +331,8 @@ export class CanvasExporter {
     ];
     const lowerText = text.toLowerCase();
     return !nonExerciseHeaders.some(
-      (header) => lowerText === header || lowerText.startsWith(header + " "),
+      (header) =>
+        lowerText === header || lowerText.startsWith(header + " "),
     );
   }
 
@@ -328,7 +362,9 @@ export class CanvasExporter {
     // Create nodes for each exercise
     exercises.forEach((exercise, index) => {
       const { x, y } = positions[index];
-      const color = this.getColorForMuscleGroups(exercise.muscleGroups);
+      const color = this.getColorForMuscleGroups(
+        exercise.muscleGroups,
+      );
       const stats = exerciseStats.get(exercise.name);
 
       const node: CanvasNode = {
@@ -368,13 +404,22 @@ export class CanvasExporter {
   ): Array<{ x: number; y: number }> {
     switch (layout) {
       case "horizontal":
-        return this.calculateHorizontalLayout(exercises.length, nodeHeight);
+        return this.calculateHorizontalLayout(
+          exercises.length,
+          nodeHeight,
+        );
       case "vertical":
-        return this.calculateVerticalLayout(exercises.length, nodeHeight);
+        return this.calculateVerticalLayout(
+          exercises.length,
+          nodeHeight,
+        );
       case "grouped":
         return this.calculateGroupedLayout(exercises, nodeHeight);
       default:
-        return this.calculateHorizontalLayout(exercises.length, nodeHeight);
+        return this.calculateHorizontalLayout(
+          exercises.length,
+          nodeHeight,
+        );
     }
   }
 
@@ -440,7 +485,11 @@ export class CanvasExporter {
 
     // Assign positions by group
     let groupIndex = 0;
-    const groupedPositions: Array<{ index: number; x: number; y: number }> = [];
+    const groupedPositions: Array<{
+      index: number;
+      x: number;
+      y: number;
+    }> = [];
 
     groups.forEach((indices) => {
       const groupX = groupIndex * (NODE_WIDTH + GROUP_SPACING);

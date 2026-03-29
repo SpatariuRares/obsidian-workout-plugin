@@ -22,17 +22,23 @@ describe("TargetCalculator", () => {
         createLog({ weight: 60, reps: 12 }),
       ];
 
-      expect(TargetCalculator.calculateBestRepsAtWeight(80, data)).toBe(10);
+      expect(
+        TargetCalculator.calculateBestRepsAtWeight(80, data),
+      ).toBe(10);
     });
 
     it("returns 0 when no entries at target weight", () => {
       const data = [createLog({ weight: 60, reps: 12 })];
 
-      expect(TargetCalculator.calculateBestRepsAtWeight(80, data)).toBe(0);
+      expect(
+        TargetCalculator.calculateBestRepsAtWeight(80, data),
+      ).toBe(0);
     });
 
     it("returns 0 for empty data", () => {
-      expect(TargetCalculator.calculateBestRepsAtWeight(80, [])).toBe(0);
+      expect(TargetCalculator.calculateBestRepsAtWeight(80, [])).toBe(
+        0,
+      );
     });
   });
 
@@ -53,7 +59,9 @@ describe("TargetCalculator", () => {
         }),
       ];
 
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(true);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        true,
+      );
     });
 
     it("returns true when latest entry exceeds target reps", () => {
@@ -66,7 +74,9 @@ describe("TargetCalculator", () => {
         }),
       ];
 
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(true);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        true,
+      );
     });
 
     it("returns false when latest entry is below target reps", () => {
@@ -79,17 +89,23 @@ describe("TargetCalculator", () => {
         }),
       ];
 
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(false);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        false,
+      );
     });
 
     it("returns false for empty data", () => {
-      expect(TargetCalculator.checkTargetAchieved(80, 10, [])).toBe(false);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, [])).toBe(
+        false,
+      );
     });
 
     it("returns false when no entries at target weight", () => {
       const data = [createLog({ weight: 60, reps: 12 })];
 
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(false);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        false,
+      );
     });
 
     it("uses timestamp for sorting when available", () => {
@@ -109,7 +125,9 @@ describe("TargetCalculator", () => {
       ];
 
       // Should use the entry with newer timestamp (reps: 5)
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(false);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        false,
+      );
     });
 
     it("falls back to date parsing when no timestamp", () => {
@@ -118,17 +136,23 @@ describe("TargetCalculator", () => {
         createLog({ weight: 80, reps: 5, date: "2024-01-10" }),
       ];
 
-      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(true);
+      expect(TargetCalculator.checkTargetAchieved(80, 10, data)).toBe(
+        true,
+      );
     });
   });
 
   describe("calculateProgressPercent", () => {
     it("calculates correct percentage", () => {
-      expect(TargetCalculator.calculateProgressPercent(5, 10)).toBe(50);
+      expect(TargetCalculator.calculateProgressPercent(5, 10)).toBe(
+        50,
+      );
     });
 
     it("caps at 100%", () => {
-      expect(TargetCalculator.calculateProgressPercent(15, 10)).toBe(100);
+      expect(TargetCalculator.calculateProgressPercent(15, 10)).toBe(
+        100,
+      );
     });
 
     it("returns 0 for zero target reps", () => {
@@ -136,15 +160,21 @@ describe("TargetCalculator", () => {
     });
 
     it("returns 0 for negative target reps", () => {
-      expect(TargetCalculator.calculateProgressPercent(5, -1)).toBe(0);
+      expect(TargetCalculator.calculateProgressPercent(5, -1)).toBe(
+        0,
+      );
     });
 
     it("returns 0 for zero best reps", () => {
-      expect(TargetCalculator.calculateProgressPercent(0, 10)).toBe(0);
+      expect(TargetCalculator.calculateProgressPercent(0, 10)).toBe(
+        0,
+      );
     });
 
     it("returns 100 for exact match", () => {
-      expect(TargetCalculator.calculateProgressPercent(10, 10)).toBe(100);
+      expect(TargetCalculator.calculateProgressPercent(10, 10)).toBe(
+        100,
+      );
     });
   });
 

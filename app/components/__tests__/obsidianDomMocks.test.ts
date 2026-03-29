@@ -54,7 +54,9 @@ describe("obsidianDomMocks", () => {
 
     it("creates element with array of classes", () => {
       const container = createObsidianContainer();
-      const child = container.createEl("div", { cls: ["first", "second"] });
+      const child = container.createEl("div", {
+        cls: ["first", "second"],
+      });
 
       expect(child.classList.contains("first")).toBe(true);
       expect(child.classList.contains("second")).toBe(true);

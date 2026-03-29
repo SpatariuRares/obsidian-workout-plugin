@@ -9,7 +9,10 @@ import { CONSTANTS } from "@app/constants";
  */
 export class TableColumnResolver {
   /** Map of labels to their abbreviated forms for compact display */
-  private static readonly LABEL_ABBREVIATIONS: Record<string, string> = {
+  private static readonly LABEL_ABBREVIATIONS: Record<
+    string,
+    string
+  > = {
     Weight: "Wgt",
     Reps: "Rep",
     Duration: "Dur",
@@ -44,20 +47,25 @@ export class TableColumnResolver {
     plugin: WorkoutChartsPlugin,
   ): Promise<string[] | null> {
     try {
-      const exerciseDefService = plugin.getExerciseDefinitionService();
+      const exerciseDefService =
+        plugin.getExerciseDefinitionService();
       if (!exerciseDefService) {
         return null;
       }
 
       const parameters =
-        await exerciseDefService.getParametersForExercise(exerciseName);
+        await exerciseDefService.getParametersForExercise(
+          exerciseName,
+        );
 
       if (!parameters || parameters.length === 0) {
         return null;
       }
 
       // Start with Date column
-      const columns: string[] = [CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value];
+      const columns: string[] = [
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+      ];
 
       // Track if we have both reps and weight for volume calculation
       let hasReps = false;

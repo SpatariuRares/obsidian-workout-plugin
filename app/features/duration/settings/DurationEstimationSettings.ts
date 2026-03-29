@@ -34,10 +34,11 @@ export class DurationEstimationSettings {
             }
           });
       });
-    const weightIncrementError = weightIncrementSetting.controlEl.createEl("div", {
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBePositive"),
-    });
+    const weightIncrementError =
+      weightIncrementSetting.controlEl.createEl("div", {
+        cls: "workout-setting-error",
+        text: t("settings.validation.mustBePositive"),
+      });
 
     // Duration per Rep
     const repDurationSetting = new Setting(containerEl)
@@ -56,10 +57,13 @@ export class DurationEstimationSettings {
             }
           });
       });
-    const repDurationError = repDurationSetting.controlEl.createEl("div", {
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBePositive"),
-    });
+    const repDurationError = repDurationSetting.controlEl.createEl(
+      "div",
+      {
+        cls: "workout-setting-error",
+        text: t("settings.validation.mustBePositive"),
+      },
+    );
 
     // Default Reps per Set
     const defaultRepsSetting = new Setting(containerEl)
@@ -78,10 +82,13 @@ export class DurationEstimationSettings {
             }
           });
       });
-    const defaultRepsError = defaultRepsSetting.controlEl.createEl("div", {
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBeNonNegative"),
-    });
+    const defaultRepsError = defaultRepsSetting.controlEl.createEl(
+      "div",
+      {
+        cls: "workout-setting-error",
+        text: t("settings.validation.mustBeNonNegative"),
+      },
+    );
 
     const setDurationSetting = new Setting(containerEl)
       .setName(t("settings.labels.setDuration"))
@@ -99,10 +106,12 @@ export class DurationEstimationSettings {
             }
           });
       });
-    const setDurationError = setDurationSetting.controlEl.createEl("div", {
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBePositive"),
-    });
-
+    const setDurationError = setDurationSetting.controlEl.createEl(
+      "div",
+      {
+        cls: "workout-setting-error",
+        text: t("settings.validation.mustBePositive"),
+      },
+    );
   }
 }

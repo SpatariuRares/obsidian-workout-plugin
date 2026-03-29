@@ -66,7 +66,10 @@ export class TrendIndicator {
    * @param props - Trend indicator properties
    * @returns The created trend indicator container
    */
-  static create(parent: HTMLElement, props: TrendIndicatorProps): HTMLElement {
+  static create(
+    parent: HTMLElement,
+    props: TrendIndicatorProps,
+  ): HTMLElement {
     // Create container with direction-based class
     const container = Container.create(parent, {
       className:

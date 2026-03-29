@@ -216,7 +216,8 @@
 .workout-frame-toggle {
   display: flex;
   gap: var(--workout-space-xs);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-xs);
   background: var(--background-secondary);
@@ -314,7 +315,8 @@
   padding: var(--workout-space-sm) var(--workout-space-md);
 
   background: var(--background-secondary);
-  border: var(--workout-border-medium) solid var(--background-modifier-border);
+  border: var(--workout-border-medium) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
 
   color: var(--text-normal);
@@ -366,7 +368,8 @@
   min-width: var(--workout-size-2xl);
   font-size: var(--workout-font-xl);
   background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--button-radius, var(--workout-radius-md));
   color: var(--text-normal);
 

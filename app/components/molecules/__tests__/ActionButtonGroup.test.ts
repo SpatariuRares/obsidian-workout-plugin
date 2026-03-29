@@ -10,27 +10,34 @@ describe("ActionButtonGroup", () => {
   it("renders edit/delete buttons with default icons and labels", () => {
     const parent = createParent();
 
-    const { container, editBtn, deleteBtn } = ActionButtonGroup.create(parent);
+    const { container, editBtn, deleteBtn } =
+      ActionButtonGroup.create(parent);
 
     expect(parent.contains(container)).toBe(true);
     expect(
-      container.classList.contains("workout-table-action-button-group"),
+      container.classList.contains(
+        "workout-table-action-button-group",
+      ),
     ).toBe(true);
 
     const renderedButtons = container.querySelectorAll("button");
     expect(renderedButtons).toHaveLength(2);
 
-    expect(editBtn.classList.contains("workout-table-action-btn-edit")).toBe(
-      true,
-    );
+    expect(
+      editBtn.classList.contains("workout-table-action-btn-edit"),
+    ).toBe(true);
     expect(editBtn.getAttribute("title")).toBe(t("general.edit"));
-    expect(editBtn.getAttribute("aria-label")).toBe(t("general.edit"));
+    expect(editBtn.getAttribute("aria-label")).toBe(
+      t("general.edit"),
+    );
 
     expect(
       deleteBtn.classList.contains("workout-table-action-btn-delete"),
     ).toBe(true);
     expect(deleteBtn.getAttribute("title")).toBe(t("general.delete"));
-    expect(deleteBtn.getAttribute("aria-label")).toBe(t("general.delete"));
+    expect(deleteBtn.getAttribute("aria-label")).toBe(
+      t("general.delete"),
+    );
   });
 
   it("supports overriding titles, icons, and container classes", () => {
@@ -44,13 +51,13 @@ describe("ActionButtonGroup", () => {
       className: "is-floating",
     };
 
-    const { container, editBtn, deleteBtn } = ActionButtonGroup.create(
-      parent,
-      overrides,
-    );
+    const { container, editBtn, deleteBtn } =
+      ActionButtonGroup.create(parent, overrides);
 
     expect(
-      container.classList.contains("workout-table-action-button-group"),
+      container.classList.contains(
+        "workout-table-action-button-group",
+      ),
     ).toBe(true);
     expect(container.classList.contains("is-floating")).toBe(true);
 

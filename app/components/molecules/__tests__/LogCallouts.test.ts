@@ -6,7 +6,10 @@ import {
   attachObsidianHelpers,
 } from "@app/components/__tests__/obsidianDomMocks";
 import type WorkoutChartsPlugin from "main";
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 
 // Mock CreateLogModal
 jest.mock("@app/features/modals/log/CreateLogModal", () => ({
@@ -45,7 +48,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderCsvNoDataMessage(container, plugin, "Squat");
 
-      expect(container.querySelector(".workout-log-no-data")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-log-no-data"),
+      ).toBeTruthy();
       expect(
         container.querySelector(".workout-log-no-data-title"),
       ).toBeTruthy();
@@ -58,7 +63,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderCsvNoDataMessage(container, plugin);
 
-      expect(container.querySelector(".workout-log-no-data")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-log-no-data"),
+      ).toBeTruthy();
       expect(container.querySelector(".add-log-button")).toBeTruthy();
     });
 
@@ -66,7 +73,11 @@ describe("LogCallouts organism", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin({ basename: "TestPage" });
 
-      LogCallouts.renderCsvNoDataMessage(container, plugin, "Deadlift");
+      LogCallouts.renderCsvNoDataMessage(
+        container,
+        plugin,
+        "Deadlift",
+      );
 
       const button = container.querySelector(
         ".add-log-button",
@@ -114,7 +125,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderAddLogButton(container, "Squat", "", plugin);
 
-      expect(container.querySelector(".workout-btn-primary")).toBeNull();
+      expect(
+        container.querySelector(".workout-btn-primary"),
+      ).toBeNull();
     });
 
     it("renders add log button with currentPageLink", () => {
@@ -136,7 +149,12 @@ describe("LogCallouts organism", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();
 
-      LogCallouts.renderAddLogButton(container, "Squat", "[[Page]]", plugin);
+      LogCallouts.renderAddLogButton(
+        container,
+        "Squat",
+        "[[Page]]",
+        plugin,
+      );
 
       const button = container.querySelector(
         ".workout-btn-primary",
@@ -266,7 +284,9 @@ describe("LogCallouts organism", () => {
       expect(
         container.querySelector(".create-log-button-container"),
       ).toBeTruthy();
-      expect(container.querySelector(".create-log-button")).toBeTruthy();
+      expect(
+        container.querySelector(".create-log-button"),
+      ).toBeTruthy();
     });
 
     it("opens CreateLogModal when button is clicked", () => {
@@ -301,7 +321,9 @@ describe("LogCallouts organism", () => {
 
       LogCallouts.renderNoMatchMessage(container);
 
-      expect(container.querySelector(".workout-log-no-match")).toBeTruthy();
+      expect(
+        container.querySelector(".workout-log-no-match"),
+      ).toBeTruthy();
     });
   });
 });

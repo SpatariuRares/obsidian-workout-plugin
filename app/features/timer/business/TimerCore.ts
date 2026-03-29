@@ -52,7 +52,8 @@ export class TimerCore {
     }
 
     if (this.state.timerType === TIMER_TYPE.COUNTDOWN) {
-      const remaining = this.state.duration * 1000 - this.state.elapsedTime;
+      const remaining =
+        this.state.duration * 1000 - this.state.elapsedTime;
       if (remaining <= 0) {
         this.setState({
           elapsedTime: 0,
@@ -69,7 +70,10 @@ export class TimerCore {
 
     // Update start/stop button icon (needed for programmatic start, e.g. auto-start)
     if (this.state.startStopBtn) {
-      TimerControls.updateStartStopButton(this.state.startStopBtn, true);
+      TimerControls.updateStartStopButton(
+        this.state.startStopBtn,
+        true,
+      );
     }
 
     this.state.timerInterval = window.setInterval(() => {
@@ -112,7 +116,11 @@ export class TimerCore {
         0,
         this.state.duration * 1000 - this.state.elapsedTime,
       );
-      if (!this.earlySoundPlayed && remaining <= 2000 && remaining > 0) {
+      if (
+        !this.earlySoundPlayed &&
+        remaining <= 2000 &&
+        remaining > 0
+      ) {
         this.earlySoundPlayed = true;
         TimerAudio.playSound();
         this.callbacks.onSoundPlay?.();
@@ -151,7 +159,10 @@ export class TimerCore {
     }
 
     if (this.state.startStopBtn) {
-      TimerControls.updateStartStopButton(this.state.startStopBtn, false);
+      TimerControls.updateStartStopButton(
+        this.state.startStopBtn,
+        false,
+      );
     }
 
     // Update display to show completion

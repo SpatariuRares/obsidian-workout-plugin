@@ -54,7 +54,9 @@ export class TrendHeader {
       h3.classList.add("trend-color-accent");
     }
 
-    h3.appendText(`${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)}`);
+    h3.appendText(
+      `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)}`,
+    );
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 
     const p = trendHeader.createEl("p", {
@@ -157,7 +159,10 @@ export class TrendHeader {
       lastValue = volumeData[volumeData.length - 1];
       percentChange =
         firstValue !== 0
-          ? (((lastValue - firstValue) / Math.abs(firstValue)) * 100).toFixed(1)
+          ? (
+              ((lastValue - firstValue) / Math.abs(firstValue)) *
+              100
+            ).toFixed(1)
           : lastValue > 0
             ? "Infinity"
             : "0.0";
@@ -200,7 +205,9 @@ export class TrendHeader {
         text:
           percentChange === "Infinity"
             ? t("charts.significantIncrease")
-            : changeSign + percentChange + t("icons.common.percentage"),
+            : changeSign +
+              percentChange +
+              t("icons.common.percentage"),
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {

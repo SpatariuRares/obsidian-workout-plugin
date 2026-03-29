@@ -26,7 +26,12 @@ describe("ParameterUtils", () => {
     },
     { key: "reps", label: "Reps", type: "number", required: true },
     { key: "notes", label: "Notes", type: "string", required: false },
-    { key: "isDropSet", label: "Drop Set", type: "boolean", required: false },
+    {
+      key: "isDropSet",
+      label: "Drop Set",
+      type: "boolean",
+      required: false,
+    },
     {
       key: "duration",
       label: "Duration",
@@ -42,12 +47,21 @@ describe("ParameterUtils", () => {
 
       expect(result).toHaveLength(3);
       expect(result.every((p) => p.type === "number")).toBe(true);
-      expect(result.map((p) => p.key)).toEqual(["weight", "reps", "duration"]);
+      expect(result.map((p) => p.key)).toEqual([
+        "weight",
+        "reps",
+        "duration",
+      ]);
     });
 
     it("should return empty array when no numeric params exist", () => {
       const stringParams: ParameterDefinition[] = [
-        { key: "notes", label: "Notes", type: "string", required: false },
+        {
+          key: "notes",
+          label: "Notes",
+          type: "string",
+          required: false,
+        },
         { key: "tag", label: "Tag", type: "string", required: false },
       ];
 
@@ -83,7 +97,12 @@ describe("ParameterUtils", () => {
 
     it("should return empty array when no numeric params exist", () => {
       const stringParams: ParameterDefinition[] = [
-        { key: "notes", label: "Notes", type: "string", required: false },
+        {
+          key: "notes",
+          label: "Notes",
+          type: "string",
+          required: false,
+        },
       ];
 
       const result = ParameterUtils.getNumericParamKeys(stringParams);
@@ -101,15 +120,21 @@ describe("ParameterUtils", () => {
   describe("isReservedParamKey", () => {
     it("should return true for standard CSV columns", () => {
       expect(ParameterUtils.isReservedParamKey("date")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("exercise")).toBe(true);
+      expect(ParameterUtils.isReservedParamKey("exercise")).toBe(
+        true,
+      );
       expect(ParameterUtils.isReservedParamKey("reps")).toBe(true);
       expect(ParameterUtils.isReservedParamKey("weight")).toBe(true);
       expect(ParameterUtils.isReservedParamKey("volume")).toBe(true);
       expect(ParameterUtils.isReservedParamKey("origine")).toBe(true);
       expect(ParameterUtils.isReservedParamKey("workout")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("timestamp")).toBe(true);
+      expect(ParameterUtils.isReservedParamKey("timestamp")).toBe(
+        true,
+      );
       expect(ParameterUtils.isReservedParamKey("notes")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("protocol")).toBe(true);
+      expect(ParameterUtils.isReservedParamKey("protocol")).toBe(
+        true,
+      );
     });
 
     it("should return true for computed values", () => {
@@ -117,9 +142,15 @@ describe("ParameterUtils", () => {
     });
 
     it("should return true for chart data types", () => {
-      expect(ParameterUtils.isReservedParamKey("duration")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("distance")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("heartRate")).toBe(true);
+      expect(ParameterUtils.isReservedParamKey("duration")).toBe(
+        true,
+      );
+      expect(ParameterUtils.isReservedParamKey("distance")).toBe(
+        true,
+      );
+      expect(ParameterUtils.isReservedParamKey("heartRate")).toBe(
+        true,
+      );
     });
 
     it("should be case-insensitive", () => {
@@ -130,15 +161,27 @@ describe("ParameterUtils", () => {
     });
 
     it("should trim whitespace", () => {
-      expect(ParameterUtils.isReservedParamKey("  date  ")).toBe(true);
-      expect(ParameterUtils.isReservedParamKey("\tvolume\t")).toBe(true);
+      expect(ParameterUtils.isReservedParamKey("  date  ")).toBe(
+        true,
+      );
+      expect(ParameterUtils.isReservedParamKey("\tvolume\t")).toBe(
+        true,
+      );
     });
 
     it("should return false for non-reserved keys", () => {
-      expect(ParameterUtils.isReservedParamKey("customParam")).toBe(false);
-      expect(ParameterUtils.isReservedParamKey("myField")).toBe(false);
-      expect(ParameterUtils.isReservedParamKey("cadence")).toBe(false);
-      expect(ParameterUtils.isReservedParamKey("intensity")).toBe(false);
+      expect(ParameterUtils.isReservedParamKey("customParam")).toBe(
+        false,
+      );
+      expect(ParameterUtils.isReservedParamKey("myField")).toBe(
+        false,
+      );
+      expect(ParameterUtils.isReservedParamKey("cadence")).toBe(
+        false,
+      );
+      expect(ParameterUtils.isReservedParamKey("intensity")).toBe(
+        false,
+      );
     });
   });
 
@@ -240,7 +283,10 @@ describe("ParameterUtils", () => {
     });
 
     it("should format key with custom unit", () => {
-      const result = ParameterUtils.formatKeyWithUnit("weight", "lbs");
+      const result = ParameterUtils.formatKeyWithUnit(
+        "weight",
+        "lbs",
+      );
 
       expect(result).toBe("Weight (lbs)");
     });
@@ -260,7 +306,10 @@ describe("ParameterUtils", () => {
     });
 
     it("should use custom unit even for known keys", () => {
-      const result = ParameterUtils.formatKeyWithUnit("duration", "min");
+      const result = ParameterUtils.formatKeyWithUnit(
+        "duration",
+        "min",
+      );
 
       expect(result).toBe("Duration (min)");
     });
@@ -268,21 +317,27 @@ describe("ParameterUtils", () => {
 
   describe("keyToLabel", () => {
     it("should convert camelCase to spaced title case", () => {
-      expect(ParameterUtils.keyToLabel("heartRate")).toBe("Heart Rate");
+      expect(ParameterUtils.keyToLabel("heartRate")).toBe(
+        "Heart Rate",
+      );
       expect(ParameterUtils.keyToLabel("myCustomParam")).toBe(
         "My Custom Param",
       );
     });
 
     it("should convert snake_case to spaced title case", () => {
-      expect(ParameterUtils.keyToLabel("heart_rate")).toBe("Heart Rate");
+      expect(ParameterUtils.keyToLabel("heart_rate")).toBe(
+        "Heart Rate",
+      );
       expect(ParameterUtils.keyToLabel("my_custom_param")).toBe(
         "My Custom Param",
       );
     });
 
     it("should convert kebab-case to spaced title case", () => {
-      expect(ParameterUtils.keyToLabel("heart-rate")).toBe("Heart Rate");
+      expect(ParameterUtils.keyToLabel("heart-rate")).toBe(
+        "Heart Rate",
+      );
       expect(ParameterUtils.keyToLabel("my-custom-param")).toBe(
         "My Custom Param",
       );
@@ -310,27 +365,51 @@ describe("ParameterUtils", () => {
 
   describe("getColorForDataType", () => {
     it("should return correct colors for known data types", () => {
-      expect(ParameterUtils.getColorForDataType("volume")).toBe("#4CAF50");
-      expect(ParameterUtils.getColorForDataType("weight")).toBe("#FF9800");
-      expect(ParameterUtils.getColorForDataType("reps")).toBe("#FF9800");
-      expect(ParameterUtils.getColorForDataType("duration")).toBe("#2196F3");
-      expect(ParameterUtils.getColorForDataType("distance")).toBe("#9C27B0");
-      expect(ParameterUtils.getColorForDataType("pace")).toBe("#E91E63");
+      expect(ParameterUtils.getColorForDataType("volume")).toBe(
+        "#4CAF50",
+      );
+      expect(ParameterUtils.getColorForDataType("weight")).toBe(
+        "#FF9800",
+      );
+      expect(ParameterUtils.getColorForDataType("reps")).toBe(
+        "#FF9800",
+      );
+      expect(ParameterUtils.getColorForDataType("duration")).toBe(
+        "#2196F3",
+      );
+      expect(ParameterUtils.getColorForDataType("distance")).toBe(
+        "#9C27B0",
+      );
+      expect(ParameterUtils.getColorForDataType("pace")).toBe(
+        "#E91E63",
+      );
       // Note: heartRate lookup is case-insensitive and returns default for mismatches
-      expect(ParameterUtils.getColorForDataType("heartrate")).toBe("#607D8B");
+      expect(ParameterUtils.getColorForDataType("heartrate")).toBe(
+        "#607D8B",
+      );
     });
 
     it("should be case-insensitive for lowercase keys", () => {
-      expect(ParameterUtils.getColorForDataType("VOLUME")).toBe("#4CAF50");
-      expect(ParameterUtils.getColorForDataType("Volume")).toBe("#4CAF50");
+      expect(ParameterUtils.getColorForDataType("VOLUME")).toBe(
+        "#4CAF50",
+      );
+      expect(ParameterUtils.getColorForDataType("Volume")).toBe(
+        "#4CAF50",
+      );
       // HEARTRATE lowercased = heartrate, but color key is heartRate (camelCase)
       // so it falls back to default
-      expect(ParameterUtils.getColorForDataType("HEARTRATE")).toBe("#607D8B");
+      expect(ParameterUtils.getColorForDataType("HEARTRATE")).toBe(
+        "#607D8B",
+      );
     });
 
     it("should return default color for unknown types", () => {
-      expect(ParameterUtils.getColorForDataType("customParam")).toBe("#607D8B");
-      expect(ParameterUtils.getColorForDataType("unknown")).toBe("#607D8B");
+      expect(ParameterUtils.getColorForDataType("customParam")).toBe(
+        "#607D8B",
+      );
+      expect(ParameterUtils.getColorForDataType("unknown")).toBe(
+        "#607D8B",
+      );
     });
   });
 
@@ -388,7 +467,9 @@ describe("ParameterUtils", () => {
       const result = ParameterUtils.validateParam(param);
 
       expect(result.isValid).toBe(false);
-      expect(result.error).toContain('Parameter key "date" is reserved');
+      expect(result.error).toContain(
+        'Parameter key "date" is reserved',
+      );
       expect(result.error).toContain("Reserved keys:");
     });
 
@@ -493,8 +574,18 @@ describe("ParameterUtils", () => {
   describe("validateParams", () => {
     it("should validate array of valid parameters", () => {
       const params: ParameterDefinition[] = [
-        { key: "field1", label: "Field 1", type: "number", required: true },
-        { key: "field2", label: "Field 2", type: "string", required: false },
+        {
+          key: "field1",
+          label: "Field 1",
+          type: "number",
+          required: true,
+        },
+        {
+          key: "field2",
+          label: "Field 2",
+          type: "string",
+          required: false,
+        },
       ];
 
       const result = ParameterUtils.validateParams(params);
@@ -506,7 +597,12 @@ describe("ParameterUtils", () => {
     it("should collect errors from multiple invalid parameters", () => {
       const params: ParameterDefinition[] = [
         { key: "", label: "Field 1", type: "number", required: true },
-        { key: "date", label: "Date", type: "string", required: true },
+        {
+          key: "date",
+          label: "Date",
+          type: "string",
+          required: true,
+        },
       ];
 
       const result = ParameterUtils.validateParams(params);
@@ -519,8 +615,18 @@ describe("ParameterUtils", () => {
 
     it("should detect duplicate keys (case-insensitive)", () => {
       const params: ParameterDefinition[] = [
-        { key: "myField", label: "Field 1", type: "number", required: true },
-        { key: "MYFIELD", label: "Field 2", type: "number", required: true },
+        {
+          key: "myField",
+          label: "Field 1",
+          type: "number",
+          required: true,
+        },
+        {
+          key: "MYFIELD",
+          label: "Field 2",
+          type: "number",
+          required: true,
+        },
       ];
 
       const result = ParameterUtils.validateParams(params);
@@ -539,9 +645,24 @@ describe("ParameterUtils", () => {
 
     it("should combine validation errors and duplicate errors", () => {
       const params: ParameterDefinition[] = [
-        { key: "field", label: "Field 1", type: "number", required: true },
-        { key: "123invalid", label: "Invalid", type: "number", required: true },
-        { key: "FIELD", label: "Duplicate", type: "number", required: true },
+        {
+          key: "field",
+          label: "Field 1",
+          type: "number",
+          required: true,
+        },
+        {
+          key: "123invalid",
+          label: "Invalid",
+          type: "number",
+          required: true,
+        },
+        {
+          key: "FIELD",
+          label: "Duplicate",
+          type: "number",
+          required: true,
+        },
       ];
 
       const result = ParameterUtils.validateParams(params);
@@ -554,7 +675,10 @@ describe("ParameterUtils", () => {
 
   describe("findParamByKey", () => {
     it("should find parameter by exact key", () => {
-      const result = ParameterUtils.findParamByKey(sampleParams, "weight");
+      const result = ParameterUtils.findParamByKey(
+        sampleParams,
+        "weight",
+      );
 
       expect(result).toBeDefined();
       expect(result?.key).toBe("weight");
@@ -562,7 +686,10 @@ describe("ParameterUtils", () => {
     });
 
     it("should find parameter case-insensitively", () => {
-      const result = ParameterUtils.findParamByKey(sampleParams, "WEIGHT");
+      const result = ParameterUtils.findParamByKey(
+        sampleParams,
+        "WEIGHT",
+      );
 
       expect(result).toBeDefined();
       expect(result?.key).toBe("weight");
@@ -578,14 +705,20 @@ describe("ParameterUtils", () => {
         },
       ];
 
-      const result = ParameterUtils.findParamByKey(params, "HEARTRATE");
+      const result = ParameterUtils.findParamByKey(
+        params,
+        "HEARTRATE",
+      );
 
       expect(result).toBeDefined();
       expect(result?.key).toBe("heartRate");
     });
 
     it("should return undefined for non-existent key", () => {
-      const result = ParameterUtils.findParamByKey(sampleParams, "nonExistent");
+      const result = ParameterUtils.findParamByKey(
+        sampleParams,
+        "nonExistent",
+      );
 
       expect(result).toBeUndefined();
     });
@@ -598,8 +731,18 @@ describe("ParameterUtils", () => {
 
     it("should return first match when duplicates exist", () => {
       const params: ParameterDefinition[] = [
-        { key: "field", label: "First", type: "number", required: true },
-        { key: "FIELD", label: "Second", type: "number", required: true },
+        {
+          key: "field",
+          label: "First",
+          type: "number",
+          required: true,
+        },
+        {
+          key: "FIELD",
+          label: "Second",
+          type: "number",
+          required: true,
+        },
       ];
 
       const result = ParameterUtils.findParamByKey(params, "field");

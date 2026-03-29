@@ -162,7 +162,10 @@ describe("DomUtils", () => {
 
       it("should work with input elements", () => {
         const input = document.createElement("input");
-        DomUtils.setCssProps(input, { width: "200px", borderStyle: "none" });
+        DomUtils.setCssProps(input, {
+          width: "200px",
+          borderStyle: "none",
+        });
         expect(input.style.width).toBe("200px");
         expect(input.style.borderStyle).toBe("none");
       });
@@ -176,12 +179,16 @@ describe("DomUtils", () => {
 
     describe("CSS transform and transition", () => {
       it("should set transform property", () => {
-        DomUtils.setCssProps(element, { transform: "translateX(50px)" });
+        DomUtils.setCssProps(element, {
+          transform: "translateX(50px)",
+        });
         expect(element.style.transform).toBe("translateX(50px)");
       });
 
       it("should set transition property", () => {
-        DomUtils.setCssProps(element, { transition: "all 0.3s ease" });
+        DomUtils.setCssProps(element, {
+          transition: "all 0.3s ease",
+        });
         expect(element.style.transition).toBe("all 0.3s ease");
       });
     });
@@ -191,7 +198,9 @@ describe("DomUtils", () => {
         // Note: jsdom doesn't fully support CSS variables, so the value may not persist
         // This test verifies the function executes without error
         expect(() => {
-          DomUtils.setCssProps(element, { color: "var(--text-normal)" });
+          DomUtils.setCssProps(element, {
+            color: "var(--text-normal)",
+          });
         }).not.toThrow();
       });
     });

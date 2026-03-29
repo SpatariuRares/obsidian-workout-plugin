@@ -12,7 +12,9 @@ export class ConversionTypeSelect {
     onTypeChange: (typeId: string) => void,
     onUpdateFrontmatterChange: (update: boolean) => void,
   ) {
-    this.container = parent.createDiv("workout-conversion-type-select");
+    this.container = parent.createDiv(
+      "workout-conversion-type-select",
+    );
     this.onTypeChange = onTypeChange;
     this.onUpdateFrontmatterChange = onUpdateFrontmatterChange;
   }

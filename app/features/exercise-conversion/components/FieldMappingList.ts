@@ -16,7 +16,9 @@ export class FieldMappingList {
     parent: HTMLElement,
     onChange: (mappings: FieldMapping[]) => void,
   ) {
-    this.container = parent.createDiv("workout-convert-mappings-container");
+    this.container = parent.createDiv(
+      "workout-convert-mappings-container",
+    );
     this.onChange = onChange;
   }
 
@@ -56,7 +58,9 @@ export class FieldMappingList {
       return;
     }
 
-    this.container.createEl("h3", { text: t("convert.fieldMapping.title") });
+    this.container.createEl("h3", {
+      text: t("convert.fieldMapping.title"),
+    });
 
     const listContainer = this.container.createDiv(
       "workout-convert-mapping-list",
@@ -85,7 +89,9 @@ export class FieldMappingList {
 
     // Source Select
     const sourceSelect = row.createEl("select");
-    const sourceOptions = this.getSourceFieldOptions(this.sourceType!);
+    const sourceOptions = this.getSourceFieldOptions(
+      this.sourceType!,
+    );
     sourceOptions.forEach((opt) => {
       const option = sourceSelect.createEl("option", {
         text: opt.text,
@@ -127,8 +133,12 @@ export class FieldMappingList {
       const newMapping: FieldMapping = {
         fromField: sourceSelect.value,
         toField: targetSelect.value,
-        fromLabel: sourceSelect.options[sourceSelect.selectedIndex]?.text || "",
-        toLabel: targetSelect.options[targetSelect.selectedIndex]?.text || "",
+        fromLabel:
+          sourceSelect.options[sourceSelect.selectedIndex]?.text ||
+          "",
+        toLabel:
+          targetSelect.options[targetSelect.selectedIndex]?.text ||
+          "",
       };
       this.mappings[index] = newMapping;
       this.onChange(this.mappings);
@@ -169,7 +179,10 @@ export class FieldMappingList {
 
     // Standard fields usage based on type
     if (type.id === EXERCISE_TYPE_IDS.STRENGTH) {
-      options.push({ text: t("convert.fieldMapping.reps"), value: "reps" });
+      options.push({
+        text: t("convert.fieldMapping.reps"),
+        value: "reps",
+      });
       const weightUnit = ParameterUtils.getWeightUnit();
       options.push({
         text: t("convert.fieldMapping.weight", { unit: weightUnit }),
@@ -180,7 +193,9 @@ export class FieldMappingList {
     for (const param of type.parameters) {
       // Avoid duplicates
       if (options.some((o) => o.value === param.key)) continue;
-      const label = param.unit ? `${param.label} (${param.unit})` : param.label;
+      const label = param.unit
+        ? `${param.label} (${param.unit})`
+        : param.label;
       options.push({ text: label, value: param.key });
     }
     return options;

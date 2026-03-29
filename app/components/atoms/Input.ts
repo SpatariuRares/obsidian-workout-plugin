@@ -27,18 +27,25 @@ export class Input {
    * @param props - Input properties
    * @returns The created input element
    */
-  static create(parent: HTMLElement, props?: InputProps): HTMLInputElement {
+  static create(
+    parent: HTMLElement,
+    props?: InputProps,
+  ): HTMLInputElement {
     const input = parent.createEl("input", {
       cls: props?.className || "input",
       attr: {
         type: props?.type || INPUT_TYPE.TEXT,
         ...(props?.placeholder && { placeholder: props.placeholder }),
-        ...(props?.value !== undefined && { value: String(props.value) }),
+        ...(props?.value !== undefined && {
+          value: String(props.value),
+        }),
         ...(props?.disabled && { disabled: "true" }),
         ...(props?.required && { required: "true" }),
         ...(props?.min !== undefined && { min: String(props.min) }),
         ...(props?.max !== undefined && { max: String(props.max) }),
-        ...(props?.step !== undefined && { step: String(props.step) }),
+        ...(props?.step !== undefined && {
+          step: String(props.step),
+        }),
       },
     });
 
@@ -59,7 +66,10 @@ export class Input {
    * @param input - Input element
    * @param value - Value to set
    */
-  static setValue(input: HTMLInputElement, value: string | number): void {
+  static setValue(
+    input: HTMLInputElement,
+    value: string | number,
+  ): void {
     input.value = String(value);
   }
 
@@ -74,6 +84,10 @@ export class Input {
     handler: (e: Event) => void,
     signal?: AbortSignal,
   ): void {
-    input.addEventListener("change", handler, signal ? { signal } : undefined);
+    input.addEventListener(
+      "change",
+      handler,
+      signal ? { signal } : undefined,
+    );
   }
 }

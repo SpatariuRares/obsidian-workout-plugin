@@ -58,7 +58,14 @@ export class MuscleHeatMap {
       info: HTMLElement,
       plg: WorkoutChartsPlugin,
     ): Promise<void> => {
-      await MuscleHeatMap.renderHeatMap(cntr, d, opts, info, plg, calculator);
+      await MuscleHeatMap.renderHeatMap(
+        cntr,
+        d,
+        opts,
+        info,
+        plg,
+        calculator,
+      );
     };
 
     // Create controls inside the pre-positioned container
@@ -123,7 +130,8 @@ export class MuscleHeatMap {
     const maxValue = MuscleDataCalculator.calculateMaxValue(bodyData);
 
     const body = new Body(bodyData, {
-      view: options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
+      view:
+        options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
       showLabels: true,
       maxValue: maxValue,
     });

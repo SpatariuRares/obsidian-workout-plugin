@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "新增運動區塊",
+    "addMissingBlockIds": "將缺少 ID 填入程式碼區塊",
     "auditExerciseNames": "審核運動名稱",
     "convertExercise": "轉換練習",
     "createCsvLog": "建立 CSV 記錄檔",
@@ -34,12 +35,12 @@
     "generateTagReference": "產生標籤參考",
     "insertTable": "插入表格",
     "manageMuscleTags": "管理肌肉標籤",
-    "migrateExerciseTypes": "遷移運動類型",
-    "addMissingBlockIds": "將缺少 ID 填入程式碼區塊"
+    "migrateExerciseTypes": "遷移運動類型"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "取消",
+    "clear": "清除",
     "convert": "轉換",
     "exercise": "運動",
     "km": "公里",
@@ -47,8 +48,7 @@
     "notAvailable": "無法取得",
     "sec": "安全",
     "unknown": "未定",
-    "workout": "運動",
-    "clear": "清除"
+    "workout": "運動"
   },
   "convert": {
     "currentType": "目前類型：",
@@ -453,8 +453,8 @@
     "noImbalances": "沒有任何不平衡",
     "noTags": "沒有標籤",
     "success": {
-      "csvCreated": "CSV 檔案已成功建立！",
       "blockIdsAdded": "已新增 {count} 缺失的 ID(們) 在 {files} 檔案中",
+      "csvCreated": "CSV 檔案已成功建立！",
       "noBlockIdsNeeded": "所有程式碼區塊已經都有 ID"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "動作",
     "addTag": "新增標籤",
+    "auditStatusCloseMatch": "近似匹配",
+    "auditStatusExactMatch": "精確匹配",
+    "auditStatusNoMatch": "無匹配",
+    "auditStatusPartialMatch": "部分匹配",
     "autocomplete": {
+      "addExercise": "新增 \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "完全/前綴匹配 - 準確度：{score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "部分匹配 - 評分：{score}",
       "wordBadge": "◆",
-      "wordTooltip": "匹配結果 - 評分：{score}",
-      "addExercise": "新增 \"{name}\""
+      "wordTooltip": "匹配結果 - 評分：{score}"
     },
     "buttons": {
       "addParameter": "新增參數",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "動作",
+      "currentFileInfo": "目前檔案：{fileName}",
       "exercise": "運動：",
       "reps": "代表：",
       "targetReps": "目標次數：",
       "targetWeight": "目標：({unit})：",
       "volume": "音量：({unit})",
-      "weight": "重量：({unit})",
-      "currentFileInfo": "目前檔案：{fileName}"
+      "weight": "重量：({unit})"
     },
     "layoutGrouped": "按肌肉分類",
     "layoutHorizontal": "水平排列",
@@ -565,17 +569,21 @@
     "notes": "備註（可選）：",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "發現 {count} 個潛在不匹配：",
+      "auditNoMatchFound": "未找到匹配",
       "auditNoMismatches": "審計結果與原資料不符",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "檔案重命名成功",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "掃描文件時出錯：{error}",
       "auditScanning": "審計掃描",
       "canvasExportError": "畫布匯出錯誤",
       "canvasExported": "畫布已匯出",
       "chartInserted": "✅ 圖表已成功插入！",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ 儀表板已成功插入！",
+      "dismissAchievement": "關閉成就",
       "exerciseBlockInserted": "已插入運動區塊",
       "exerciseNameRequired": "❌ 請輸入運動名稱",
       "exercisePageCreated": "運動頁面已成功建立！",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
       "timerUpdated": "✅ 倒計時已成功更新！",
       "validationCombinedMode": "⚠️ 針對「運動 + 訓練」類型，您必須填寫兩個欄位！",
-      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。",
-      "dismissAchievement": "關閉成就",
-      "auditScanError": "掃描文件時出錯：{error}",
-      "auditMismatchCount": "發現 {count} 個潛在不匹配：",
-      "auditNoMatchFound": "未找到匹配"
+      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。"
     },
     "parameterKey": "關鍵：",
     "parameterLabel": "標籤：",
@@ -716,11 +720,7 @@
     },
     "workout": "運動 (可選)：",
     "workoutFile": "運動檔案：",
-    "workoutNameOptional": "運動名稱（可選）：",
-    "auditStatusNoMatch": "無匹配",
-    "auditStatusExactMatch": "精確匹配",
-    "auditStatusCloseMatch": "近似匹配",
-    "auditStatusPartialMatch": "部分匹配"
+    "workoutNameOptional": "運動名稱（可選）："
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "正在生成...",
       "overwriting": "覆蓋...",
       "regenerateOverwrite": "重新生成 (覆蓋)",
+      "runAllMaintenance": "執行全部",
       "savePreset": "儲存",
-      "saveProtocol": "儲存",
-      "runAllMaintenance": "執行全部"
+      "saveProtocol": "儲存"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -760,11 +760,11 @@
       "protocolColor": "徽章背景顏色（十六進位格式，例如：#FF5733）",
       "quickWeightIncrement": "用於「+」和「-」按鈕在建立/編輯運動記錄模態中的重量增減值（例如，2.5 代表增加/減少 2.5 單位）。",
       "repDuration": "預估完成一次重複所需的時間。適用於已知重複次數的情況（例如：「x 10 次」）。",
+      "runAllMaintenance": "依照順序執行所有維護任務。 能夠多次安全執行。",
       "setDuration": "當沒有指定時，使用此選項作為備用。 典型範圍：30-60 秒。",
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "預設的增重幅度，適用於漸進式超負荷（例如，每增加 2.5 單位時，增重幅度為 2.5）。",
-      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。",
-      "runAllMaintenance": "依照順序執行所有維護任務。 能夠多次安全執行。"
+      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -786,10 +786,10 @@
       "protocolColor": "徽章顏色",
       "protocolName": "協定名稱",
       "repDuration": "每次重複的長度（秒）",
+      "runAllMaintenance": "執行所有維護任務",
       "setDuration": "備用設定時長 (秒)",
       "setupCSV": "設定 CSV 檔案",
-      "weightUnit": "重量單位",
-      "runAllMaintenance": "執行所有維護任務"
+      "weightUnit": "重量單位"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",
@@ -820,17 +820,17 @@
       "protocolName": "請輸入協定名稱"
     },
     "sections": {
+      "advanced": "高級",
       "csvManagement": "CSV 檔案管理",
       "customProtocols": "自訂協議",
       "exampleData": "範例資料",
       "filtering": "篩選",
+      "maintenance": "維護",
       "quickLog": "行動裝置記錄",
       "setupAndData": "設定與數據",
       "templates": "範本",
       "timerPresets": "預設計時",
-      "trainingParameters": "訓練參數",
-      "maintenance": "維護",
-      "advanced": "高級"
+      "trainingParameters": "訓練參數"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
@@ -839,21 +839,21 @@
       "editProtocol": "編輯協議"
     },
     "validation": {
-      "mustBePositive": "必須大於 0",
-      "mustBeNonNegative": "必須為 0 或大於 0",
+      "csvFolderNotFound": "找不到資料夾。請執行「建立 CSV 資料夾」以建立它。",
       "csvPathEmpty": "路徑欄位不能為空",
-      "csvFolderNotFound": "找不到資料夾。請執行「建立 CSV 資料夾」以建立它。"
+      "mustBeNonNegative": "必須為 0 或大於 0",
+      "mustBePositive": "必須大於 0"
     }
   },
   "stats": {
     "avgVolume": "平均體積",
-    "recentTrend": "近期趨勢",
-    "sessions": "會計",
     "max": "最大值：",
     "min": "最小值：",
-    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):",
     "recentLast3": " (最近3次)",
-    "recentVsPrev": " (與上次比)"
+    "recentTrend": "近期趨勢",
+    "recentVsPrev": " (與上次比)",
+    "sessions": "會計",
+    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):"
   },
   "table": {
     "actions": "動作",

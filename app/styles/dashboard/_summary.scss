@@ -20,7 +20,8 @@
     padding: var(--workout-space-xl);
     background: var(--background-secondary);
     border-radius: var(--workout-radius-lg);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     transition: var(--workout-transition);
 
     &:hover {
@@ -94,7 +95,8 @@
       var(--background-primary) 100%
     );
     border-radius: var(--workout-radius-xl);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     transition: var(--workout-transition);
     position: relative;
     overflow: hidden;

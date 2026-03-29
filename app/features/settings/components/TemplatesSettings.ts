@@ -32,13 +32,17 @@ export class TemplatesSettings {
               );
               button.setButtonText(t("settings.buttons.generated"));
               setTimeout(() => {
-                button.setButtonText(t("settings.buttons.generateTemplates"));
+                button.setButtonText(
+                  t("settings.buttons.generateTemplates"),
+                );
                 button.setDisabled(false);
               }, 2000);
             } catch {
               button.setButtonText(t("settings.buttons.failed"));
               setTimeout(() => {
-                button.setButtonText(t("settings.buttons.generateTemplates"));
+                button.setButtonText(
+                  t("settings.buttons.generateTemplates"),
+                );
                 button.setDisabled(false);
               }, 2000);
             }

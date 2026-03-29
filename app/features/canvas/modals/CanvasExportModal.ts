@@ -56,7 +56,10 @@ export class CanvasExportModal extends ModalBase {
     const mainContainer = this.createStyledMainContainer(contentEl);
 
     // File info
-    this.createCurrentFileInfo(mainContainer, this.workoutFile.basename);
+    this.createCurrentFileInfo(
+      mainContainer,
+      this.workoutFile.basename,
+    );
 
     // Layout section
     const layoutSection = this.createSection(
@@ -82,20 +85,24 @@ export class CanvasExportModal extends ModalBase {
   private createLayoutOptions(container: HTMLElement): void {
     const formGroup = this.createFormGroup(container);
 
-    this.layoutSelect = this.createSelect(formGroup, t("modal.layoutType"), [
-      {
-        text: t("modal.layoutHorizontal"),
-        value: "horizontal",
-      },
-      {
-        text: t("modal.layoutVertical"),
-        value: "vertical",
-      },
-      {
-        text: t("modal.layoutGrouped"),
-        value: "grouped",
-      },
-    ]);
+    this.layoutSelect = this.createSelect(
+      formGroup,
+      t("modal.layoutType"),
+      [
+        {
+          text: t("modal.layoutHorizontal"),
+          value: "horizontal",
+        },
+        {
+          text: t("modal.layoutVertical"),
+          value: "vertical",
+        },
+        {
+          text: t("modal.layoutGrouped"),
+          value: "grouped",
+        },
+      ],
+    );
   }
 
   /**

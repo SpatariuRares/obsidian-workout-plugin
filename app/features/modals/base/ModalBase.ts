@@ -14,8 +14,13 @@ export abstract class ModalBase extends Modal {
   /**
    * Creates a styled section container
    */
-  public createSection(parent: HTMLElement, title: string): HTMLElement {
-    const section = parent.createEl("div", { cls: "workout-modal-section" });
+  public createSection(
+    parent: HTMLElement,
+    title: string,
+  ): HTMLElement {
+    const section = parent.createEl("div", {
+      cls: "workout-modal-section",
+    });
     section.createEl("h3", { text: title });
     return section;
   }
@@ -42,7 +47,8 @@ export abstract class ModalBase extends Modal {
    * Gets the current file name
    */
   protected getCurrentFileName(): string {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+    const activeView =
+      this.app.workspace.getActiveViewOfType(MarkdownView);
     return activeView?.file?.basename || t("general.currentFile");
   }
 
@@ -53,7 +59,8 @@ export abstract class ModalBase extends Modal {
     code: string,
     successMessage: string = t("messages.codeInserted"),
   ): void {
-    const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+    const activeView =
+      this.app.workspace.getActiveViewOfType(MarkdownView);
     if (activeView) {
       const editor = activeView.editor;
       const cursor = editor.getCursor();
@@ -118,8 +125,13 @@ export abstract class ModalBase extends Modal {
     label: string,
     options: Array<{ text: string; value: string }>,
   ): HTMLSelectElement {
-    container.createEl("label", { text: label, cls: "workout-form-field-label" });
-    const select = container.createEl("select", { cls: "workout-form-field-input" });
+    container.createEl("label", {
+      text: label,
+      cls: "workout-form-field-label",
+    });
+    const select = container.createEl("select", {
+      cls: "workout-form-field-input",
+    });
     options.forEach((option) => {
       select.createEl("option", {
         text: option.text,
@@ -138,7 +150,9 @@ export abstract class ModalBase extends Modal {
     checked: boolean = false,
     id?: string,
   ): HTMLInputElement {
-    const checkbox = Input.create(container, { type: INPUT_TYPE.CHECKBOX });
+    const checkbox = Input.create(container, {
+      type: INPUT_TYPE.CHECKBOX,
+    });
     if (checked) checkbox.checked = true;
     if (id) {
       checkbox.id = id;
@@ -153,7 +167,9 @@ export abstract class ModalBase extends Modal {
   /**
    * Creates a styled main container for modals
    */
-  protected createStyledMainContainer(contentEl: HTMLElement): HTMLElement {
+  protected createStyledMainContainer(
+    contentEl: HTMLElement,
+  ): HTMLElement {
     const mainContainer = contentEl.createEl("div", {
       cls: "workout-charts-form workout-modal",
     });
@@ -170,7 +186,9 @@ export abstract class ModalBase extends Modal {
     const currentFileInfo = parent.createEl("div", {
       cls: "workout-current-file-info",
     });
-    currentFileInfo.textContent = t("modal.labels.currentFileInfo", { fileName: currentFileName });
+    currentFileInfo.textContent = t("modal.labels.currentFileInfo", {
+      fileName: currentFileName,
+    });
     return currentFileInfo;
   }
 

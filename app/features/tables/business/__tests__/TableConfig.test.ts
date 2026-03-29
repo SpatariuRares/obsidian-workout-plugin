@@ -6,7 +6,9 @@ describe("TableConfig", () => {
     it("returns default table parameters", () => {
       const defaults = TableConfig.getDefaults();
 
-      expect(defaults.limit).toBe(CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT);
+      expect(defaults.limit).toBe(
+        CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT,
+      );
       expect(defaults.showAddButton).toBe(true);
       expect(defaults.searchByName).toBe(false);
       expect(defaults.exactMatch).toBe(
@@ -67,7 +69,8 @@ describe("TableConfig", () => {
       });
       expect(errors.length).toBe(1);
       expect(errors[0]).toBe(
-        CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_INVALID_TYPE,
+        CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS
+          .COLUMNS_INVALID_TYPE,
       );
     });
 
@@ -109,7 +112,10 @@ describe("TableConfig", () => {
 
   describe("formatValidationErrors", () => {
     it("joins errors with comma separator", () => {
-      const result = TableConfig.formatValidationErrors(["error1", "error2"]);
+      const result = TableConfig.formatValidationErrors([
+        "error1",
+        "error2",
+      ]);
       expect(result).toBe("error1, error2");
     });
 

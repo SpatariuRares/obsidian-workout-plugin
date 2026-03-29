@@ -167,7 +167,7 @@ export const BUILT_IN_EXERCISE_TYPES: ExerciseTypeDefinition[] = [
  * // Returns undefined
  */
 export function getExerciseTypeById(
-  id: string
+  id: string,
 ): ExerciseTypeDefinition | undefined {
   return BUILT_IN_EXERCISE_TYPES.find((type) => type.id === id);
 }

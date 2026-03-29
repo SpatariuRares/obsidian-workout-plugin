@@ -3,7 +3,10 @@
 import { CONSTANTS } from "@app/constants";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 
@@ -25,10 +28,16 @@ jest.mock("@app/features/tables/ui", () => ({
   },
   TableHeader: {
     render: jest.fn((table: HTMLElement, headers: string[]) => {
-      const thead = table.appendChild(document.createElement("thead"));
-      const headerRow = thead.appendChild(document.createElement("tr"));
+      const thead = table.appendChild(
+        document.createElement("thead"),
+      );
+      const headerRow = thead.appendChild(
+        document.createElement("tr"),
+      );
       headers.forEach((header: string) => {
-        const th = headerRow.appendChild(document.createElement("th"));
+        const th = headerRow.appendChild(
+          document.createElement("th"),
+        );
         th.textContent = header;
       });
       return thead;
@@ -40,7 +49,10 @@ jest.mock("@app/features/tables/ui", () => ({
 jest.mock("@app/components/atoms", () => ({
   SpacerStat: {
     create: jest.fn(
-      (parent: HTMLElement, props: { icon?: string; value: string }) => {
+      (
+        parent: HTMLElement,
+        props: { icon?: string; value: string },
+      ) => {
         const span = document.createElement("span");
         span.className = "spacer-stat";
         span.textContent = `${props.icon || ""} ${props.value}`;
@@ -50,13 +62,15 @@ jest.mock("@app/components/atoms", () => ({
     ),
   },
   ProtocolBadge: {
-    create: jest.fn((parent: HTMLElement, props: { text: string }) => {
-      const span = document.createElement("span");
-      span.className = "workout-protocol-badge";
-      span.textContent = props.text;
-      parent.appendChild(span);
-      return span;
-    }),
+    create: jest.fn(
+      (parent: HTMLElement, props: { text: string }) => {
+        const span = document.createElement("span");
+        span.className = "workout-protocol-badge";
+        span.textContent = props.text;
+        parent.appendChild(span);
+        return span;
+      },
+    ),
   },
 }));
 
@@ -91,9 +105,9 @@ describe("TableRenderer", () => {
 
       const container = TableRenderer.createTableContainer(parent);
 
-      expect(container.classList.contains("workout-table-container")).toBe(
-        true,
-      );
+      expect(
+        container.classList.contains("workout-table-container"),
+      ).toBe(true);
     });
   });
 
@@ -103,7 +117,12 @@ describe("TableRenderer", () => {
       const headers = ["Date", "Reps", "Weight", "Volume", "Actions"];
       const rows = [createRow()];
 
-      const result = TableRenderer.renderTable(container, headers, rows, {});
+      const result = TableRenderer.renderTable(
+        container,
+        headers,
+        rows,
+        {},
+      );
 
       expect(result).toBe(true);
 
@@ -143,7 +162,9 @@ describe("TableRenderer", () => {
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const spacerRows = container.querySelectorAll(".workout-table-spacer");
+      const spacerRows = container.querySelectorAll(
+        ".workout-table-spacer",
+      );
       expect(spacerRows.length).toBe(2); // Two date groups
     });
 
@@ -200,7 +221,12 @@ describe("TableRenderer", () => {
     it("handles empty rows", () => {
       const container = document.createElement("div");
 
-      const result = TableRenderer.renderTable(container, ["Date"], [], {});
+      const result = TableRenderer.renderTable(
+        container,
+        ["Date"],
+        [],
+        {},
+      );
 
       expect(result).toBe(true);
     });
@@ -209,12 +235,17 @@ describe("TableRenderer", () => {
       const container = document.createElement("div");
       const headers = ["Date", "Reps"];
       const rows = [
-        createRow({ dateKey: "2024-01-15", displayRow: ["10:00", "8"] }),
+        createRow({
+          dateKey: "2024-01-15",
+          displayRow: ["10:00", "8"],
+        }),
       ];
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const dataRows = container.querySelectorAll(".workout-same-day-log");
+      const dataRows = container.querySelectorAll(
+        ".workout-same-day-log",
+      );
       expect(dataRows.length).toBe(1);
       expect(
         dataRows[0].classList.contains("group-even") ||
@@ -226,12 +257,17 @@ describe("TableRenderer", () => {
       const container = document.createElement("div");
       const headers = ["Date", "Reps"];
       const rows = [
-        createRow({ dateKey: "2024-01-15", displayRow: ["10:00", "8"] }),
+        createRow({
+          dateKey: "2024-01-15",
+          displayRow: ["10:00", "8"],
+        }),
       ];
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const dateCell = container.querySelector(".workout-table-date-cell");
+      const dateCell = container.querySelector(
+        ".workout-table-date-cell",
+      );
       expect(dateCell).not.toBeNull();
       expect(dateCell!.textContent).toBe("10:00");
     });
@@ -241,18 +277,26 @@ describe("TableRenderer", () => {
       const volCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value;
       const headers = ["Date", volCol];
       const rows = [
-        createRow({ dateKey: "2024-01-15", displayRow: ["10:00", "640"] }),
+        createRow({
+          dateKey: "2024-01-15",
+          displayRow: ["10:00", "640"],
+        }),
       ];
 
       TableRenderer.renderTable(container, headers, rows, {});
 
-      const volumeCell = container.querySelector(".workout-table-volume-cell");
+      const volumeCell = container.querySelector(
+        ".workout-table-volume-cell",
+      );
       expect(volumeCell).not.toBeNull();
     });
 
     it("renders protocol badge for protocol column", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
+      const headers = [
+        "Date",
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
+      ];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -270,7 +314,10 @@ describe("TableRenderer", () => {
 
     it("renders action buttons in actions column", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value];
+      const headers = [
+        "Date",
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
+      ];
       const log: WorkoutLogData = {
         date: "2024-01-15",
         exercise: "Bench",
@@ -308,9 +355,14 @@ describe("TableRenderer", () => {
     it("renders error message using TableErrorMessage", () => {
       const container = createObsidianContainer();
 
-      TableRenderer.renderFallbackMessage(container, "Something went wrong");
+      TableRenderer.renderFallbackMessage(
+        container,
+        "Something went wrong",
+      );
 
-      const { TableErrorMessage } = require("@app/features/tables/ui");
+      const {
+        TableErrorMessage,
+      } = require("@app/features/tables/ui");
       expect(TableErrorMessage.render).toHaveBeenCalledWith(
         container,
         "Something went wrong",
@@ -321,7 +373,10 @@ describe("TableRenderer", () => {
   describe("renderProtocolBadge", () => {
     it("renders badge for built-in protocols", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
+      const headers = [
+        "Date",
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
+      ];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -342,7 +397,10 @@ describe("TableRenderer", () => {
 
     it("does not render badge for standard protocol", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
+      const headers = [
+        "Date",
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
+      ];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -360,7 +418,10 @@ describe("TableRenderer", () => {
 
     it("renders badge for custom protocols from plugin settings", () => {
       const container = document.createElement("div");
-      const headers = ["Date", CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value];
+      const headers = [
+        "Date",
+        CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
+      ];
       const rows = [
         createRow({
           dateKey: "2024-01-15",
@@ -488,7 +549,8 @@ describe("TableRenderer", () => {
 
       const calls = SpacerStat.create.mock.calls;
       const setsCall = calls.find(
-        (call: any[]) => call[1].value && call[1].value.includes("sets"),
+        (call: any[]) =>
+          call[1].value && call[1].value.includes("sets"),
       );
       expect(setsCall).toBeTruthy();
     });

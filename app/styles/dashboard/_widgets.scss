@@ -6,7 +6,8 @@
 
 .workout-dashboard-widget {
   background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-xl);
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
@@ -48,7 +49,6 @@
   align-items: center;
   gap: var(--workout-space-sm);
 }
-
 
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-dashboard-widget {

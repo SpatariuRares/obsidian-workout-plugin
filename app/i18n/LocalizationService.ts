@@ -90,7 +90,9 @@ export class LocalizationService {
 
       // Load fallback (English)
       if (this.currentLocale !== this.DEFAULT_LOCALE) {
-        this.fallbackTranslations = this.loadLocaleFile(this.DEFAULT_LOCALE);
+        this.fallbackTranslations = this.loadLocaleFile(
+          this.DEFAULT_LOCALE,
+        );
       }
     } catch {
       // If loading fails, use fallback
@@ -133,7 +135,10 @@ export class LocalizationService {
       translation === undefined &&
       this.currentLocale !== this.DEFAULT_LOCALE
     ) {
-      translation = this.getNestedValue(this.fallbackTranslations, key);
+      translation = this.getNestedValue(
+        this.fallbackTranslations,
+        key,
+      );
     }
 
     // If still not found, return the key itself (for debugging)
@@ -143,7 +148,9 @@ export class LocalizationService {
 
     // Ensure translation is a string
     const translatedString =
-      typeof translation === "string" ? translation : String(translation);
+      typeof translation === "string"
+        ? translation
+        : String(translation);
 
     // Interpolate parameters if provided
     if (params) {
@@ -180,7 +187,10 @@ export class LocalizationService {
    * @example
    * interpolate("Hello {name}!", { name: "Claude" }) // "Hello Claude!"
    */
-  private interpolate(template: string, params: TranslationParams): string {
+  private interpolate(
+    template: string,
+    params: TranslationParams,
+  ): string {
     return template.replace(/\{(\w+)\}/g, (match, key) => {
       return key in params ? String(params[key]) : match;
     });

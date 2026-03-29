@@ -6,14 +6,18 @@ describe("TrendCalculator", () => {
   describe("getTrendIndicators", () => {
     it("should return insufficient data message when volumeData has less than 2 points", () => {
       const result = TrendCalculator.getTrendIndicators(0, [100]);
-      expect(result.trendDirection).toBe(t("messages.insufficientData"));
+      expect(result.trendDirection).toBe(
+        t("messages.insufficientData"),
+      );
       expect(result.trendColor).toBe("var(--text-muted, #888)");
       expect(result.trendIcon).toBe("·");
     });
 
     it("should return insufficient data message for empty array", () => {
       const result = TrendCalculator.getTrendIndicators(0, []);
-      expect(result.trendDirection).toBe(t("messages.insufficientData"));
+      expect(result.trendDirection).toBe(
+        t("messages.insufficientData"),
+      );
       expect(result.trendColor).toBe("var(--text-muted, #888)");
       expect(result.trendIcon).toBe("·");
     });
@@ -24,7 +28,10 @@ describe("TrendCalculator", () => {
       const slopeThreshold = Math.max(0.05 * averageVolume, 1); // 5.75
       const slope = 10; // Well above threshold
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
       expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       expect(result.trendIcon).toBe("↗️");
@@ -36,7 +43,10 @@ describe("TrendCalculator", () => {
       const slopeThreshold = Math.max(0.05 * averageVolume, 1); // 5.75
       const slope = -10; // Well below -threshold
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.decreasing"));
       expect(result.trendColor).toBe("var(--color-red, #F44336)");
       expect(result.trendIcon).toBe("↘️");
@@ -46,7 +56,10 @@ describe("TrendCalculator", () => {
       const volumeData = [100, 101, 100, 101];
       const slope = 0.5; // Very small slope
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.stableLower"));
       expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
       expect(result.trendIcon).toBe("→");
@@ -56,7 +69,10 @@ describe("TrendCalculator", () => {
       const volumeData = [100, 100, 100, 100];
       const slope = 0;
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.stableLower"));
       expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
       expect(result.trendIcon).toBe("→");
@@ -67,7 +83,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 2.5, 1) = 1
       const slope = 1.5; // Above threshold of 1
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
     });
 
@@ -77,7 +96,10 @@ describe("TrendCalculator", () => {
       const slopeThreshold = Math.max(0.05 * averageVolume, 1); // 57.5
       const slope = 100; // Well above threshold
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
     });
 
@@ -85,7 +107,10 @@ describe("TrendCalculator", () => {
       const volumeData = [-100, -90, -80, -70];
       const slope = 10; // Positive slope
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
     });
 
@@ -94,7 +119,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 150, 1) = 7.5
       const slope = 8; // Above 7.5
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
     });
 
@@ -103,7 +131,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 150, 1) = 7.5
       const slope = 7; // Below 7.5
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
 
@@ -112,7 +143,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 150, 1) = 7.5
       const slope = -7; // Above -7.5
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
 
@@ -120,7 +154,10 @@ describe("TrendCalculator", () => {
       const volumeData = [-50, 0, 50, 100];
       const slope = 50; // Positive trend
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.increasing"));
     });
 
@@ -128,7 +165,10 @@ describe("TrendCalculator", () => {
       const volumeData = [1000, 1000.1, 1000.2, 1000.3];
       const slope = 0.1; // Very small positive slope
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
 
@@ -137,7 +177,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 150, 1) = 7.5
       const slope = -7.5; // Exactly at -threshold (edge case)
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       // The condition is slope < -threshold, so -7.5 < -7.5 is false
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
@@ -147,7 +190,10 @@ describe("TrendCalculator", () => {
       // Threshold = Math.max(0.05 * 150, 1) = 7.5
       const slope = 7.5; // Exactly at threshold (edge case)
 
-      const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
       // The condition is slope > threshold, so 7.5 > 7.5 is false
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
@@ -201,7 +247,10 @@ describe("TrendCalculator", () => {
         const volumeData = [100, 110, 120, 130];
         const slope = 10;
 
-        const result = TrendCalculator.getTrendIndicators(slope, volumeData);
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          volumeData,
+        );
         expect(result.trendDirection).toBe(t("trends.increasing"));
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
       });
@@ -217,7 +266,9 @@ describe("TrendCalculator", () => {
           CHART_DATA_TYPE.PACE,
         );
         expect(result.trendDirection).toBe(t("trends.stableLower"));
-        expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
+        expect(result.trendColor).toBe(
+          "var(--color-accent, #FFC107)",
+        );
       });
 
       it("should maintain default behavior for weight data type", () => {

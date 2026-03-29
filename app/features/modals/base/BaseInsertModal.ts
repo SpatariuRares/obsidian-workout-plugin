@@ -26,7 +26,9 @@ export abstract class BaseInsertModal extends ModalBase {
   protected abstract getModalTitle(): string;
   protected abstract getButtonText(): string;
   protected abstract getSuccessMessage(): string;
-  protected abstract createConfigurationSections(container: HTMLElement): void;
+  protected abstract createConfigurationSections(
+    container: HTMLElement,
+  ): void;
   protected abstract generateCode(): string;
 
   onOpen() {

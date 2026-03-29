@@ -14,7 +14,10 @@ import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
-import { MarkdownPostProcessorContext, MarkdownRenderChild } from "obsidian";
+import {
+  MarkdownPostProcessorContext,
+  MarkdownRenderChild,
+} from "obsidian";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 import { CONSTANTS } from "@app/constants";
@@ -42,22 +45,23 @@ class TimerRenderChild extends MarkdownRenderChild {
 
     // Only auto-start on log:added, not on edit/delete
     this.register(
-      this.eventBus.on('log:added', ({ context }) => {
+      this.eventBus.on("log:added", ({ context }) => {
         if (
           normalizeExercise(context.exercise) === exerciseNorm &&
-          context.workout && normalizeExercise(context.workout) === workoutNorm &&
+          context.workout &&
+          normalizeExercise(context.workout) === workoutNorm &&
           !this.timerView.isTimerRunning()
         ) {
           this.timerView.reset();
           this.timerView.start();
         }
-      })
+      }),
     );
   }
 
   onunload() {
     const timerId = this.timerView.getId();
-    
+
     // If it's a generated temporary ID, clean up.
     // If it's a persistent ID from code block, keep it running in activeTimers
     // but we still need to clear its DOM references since they are being removed.
@@ -101,11 +105,13 @@ export class CodeBlockProcessorService {
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
-      (source, el, ctx) => this.handleWorkoutDashboard(source, el, ctx),
+      (source, el, ctx) =>
+        this.handleWorkoutDashboard(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
       CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
-      (source, el, ctx) => this.handleWorkoutDuration(source, el, ctx),
+      (source, el, ctx) =>
+        this.handleWorkoutDuration(source, el, ctx),
     );
   }
 
@@ -142,12 +148,19 @@ export class CodeBlockProcessorService {
             exactMatch: params.exactMatch as boolean | undefined,
             muscleTagsAware: false,
           },
-          () => this.embeddedChartView.refreshChart(el, params as EmbeddedChartParams),
+          () =>
+            this.embeddedChartView.refreshChart(
+              el,
+              params as EmbeddedChartParams,
+            ),
         ),
       );
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(el, `Error loading chart: ${errorMessage}`);
+      Feedback.renderError(
+        el,
+        `Error loading chart: ${errorMessage}`,
+      );
     }
   }
 
@@ -178,7 +191,11 @@ export class CodeBlockProcessorService {
             exactMatch: params.exactMatch as boolean | undefined,
             muscleTagsAware: false,
           },
-          () => this.embeddedTableView.refreshTable(el, params as EmbeddedTableParams),
+          () =>
+            this.embeddedTableView.refreshTable(
+              el,
+              params as EmbeddedTableParams,
+            ),
         ),
       );
     } catch (error) {
@@ -196,7 +213,9 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(source) as EmbeddedTimerParams;
+      const params = this.parseCodeBlockParams(
+        source,
+      ) as EmbeddedTimerParams;
 
       // If no ID is present, trigger a migration check
       if (!params.id) {
@@ -206,9 +225,13 @@ export class CodeBlockProcessorService {
       this.createEmbeddedTimer(el, params, ctx);
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(el, `Error loading timer: ${errorMessage}`, {
-        className: "workout-timer-error",
-      });
+      Feedback.renderError(
+        el,
+        `Error loading timer: ${errorMessage}`,
+        {
+          className: "workout-timer-error",
+        },
+      );
     }
   }
 
@@ -260,9 +283,10 @@ export class CodeBlockProcessorService {
   ) {
     try {
       const params = this.parseCodeBlockParams(source);
-      const logData = await this.embeddedDashboardView.loadDashboardData(
-        params as EmbeddedDashboardParams,
-      );
+      const logData =
+        await this.embeddedDashboardView.loadDashboardData(
+          params as EmbeddedDashboardParams,
+        );
 
       if (logData.length === 0) {
         this.renderNoDataMessage(el, ctx);
@@ -283,14 +307,22 @@ export class CodeBlockProcessorService {
             // Nessun filtro esercizio/workout = sempre refresh
             muscleTagsAware: true, // Dashboard mostra muscle heat map
           },
-          () => this.embeddedDashboardView.refreshDashboard(el, params as EmbeddedDashboardParams),
+          () =>
+            this.embeddedDashboardView.refreshDashboard(
+              el,
+              params as EmbeddedDashboardParams,
+            ),
         ),
       );
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      Feedback.renderError(el, `Error loading dashboard: ${errorMessage}`, {
-        className: "workout-feedback-error",
-      });
+      Feedback.renderError(
+        el,
+        `Error loading dashboard: ${errorMessage}`,
+        {
+          className: "workout-feedback-error",
+        },
+      );
     }
   }
 
@@ -345,7 +377,8 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ): void {
     const sourcePath = ctx.sourcePath;
-    const basename = sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+    const basename =
+      sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
     const currentPageLink = basename ? `[[${basename}]]` : "";
     LogCallouts.renderCsvNoDataMessage(
       el,
@@ -356,7 +389,9 @@ export class CodeBlockProcessorService {
   }
 
   // Parse code block parameters
-  private parseCodeBlockParams(source: string): Record<string, unknown> {
+  private parseCodeBlockParams(
+    source: string,
+  ): Record<string, unknown> {
     const params: Record<string, unknown> = {};
     const lines = source.split("\n");
 

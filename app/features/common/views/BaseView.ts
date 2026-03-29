@@ -1,6 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
-import { DataFilter, DataFilterParams } from "@app/services/data/DataFilter";
+import {
+  DataFilter,
+  DataFilterParams,
+} from "@app/services/data/DataFilter";
 import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/components/molecules/LogCallouts";
@@ -92,7 +95,9 @@ export abstract class BaseView {
     const isWorkoutView =
       viewType === VIEW_TYPES.CHART
         ? (() => {
-            type ViewCategory = CHART_TYPE.EXERCISE | CHART_TYPE.WORKOUT;
+            type ViewCategory =
+              | CHART_TYPE.EXERCISE
+              | CHART_TYPE.WORKOUT;
             const effectiveChartCategory: ViewCategory =
               "chartType" in params &&
               (params.chartType === CHART_TYPE.EXERCISE ||
@@ -130,7 +135,9 @@ export abstract class BaseView {
   /**
    * Common loading indicator pattern
    */
-  protected showLoadingIndicator(container: HTMLElement): HTMLElement {
+  protected showLoadingIndicator(
+    container: HTMLElement,
+  ): HTMLElement {
     return LoadingSpinner.create(container, {
       message: "Loading data...",
       icon: "⏳",
@@ -141,7 +148,10 @@ export abstract class BaseView {
   /**
    * Common data filtering pattern
    */
-  protected filterData(logData: WorkoutLogData[], params: EmbeddedViewParams) {
+  protected filterData(
+    logData: WorkoutLogData[],
+    params: EmbeddedViewParams,
+  ) {
     return DataFilter.filterData(logData, params as DataFilterParams);
   }
 
@@ -165,7 +175,10 @@ export abstract class BaseView {
   /**
    * Common success message pattern
    */
-  protected showSuccessMessage(container: HTMLElement, message: string): void {
+  protected showSuccessMessage(
+    container: HTMLElement,
+    message: string,
+  ): void {
     Feedback.renderSuccess(container, message);
   }
 }

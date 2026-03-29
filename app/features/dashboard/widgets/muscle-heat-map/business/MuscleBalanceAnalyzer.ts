@@ -16,7 +16,12 @@ export interface ImbalanceAnalysis {
 export class MuscleBalanceAnalyzer {
   private static readonly IMBALANCE_THRESHOLD = 0.3; // 30% difference
 
-  private static readonly FRONT_MUSCLES = ["chest", "abs", "biceps", "quads"];
+  private static readonly FRONT_MUSCLES = [
+    "chest",
+    "abs",
+    "biceps",
+    "quads",
+  ];
   private static readonly BACK_MUSCLES = [
     "back",
     "triceps",
@@ -27,7 +32,9 @@ export class MuscleBalanceAnalyzer {
   /**
    * Analyze muscle balance and detect imbalances
    */
-  static analyze(muscleData: Map<string, MuscleGroupData>): ImbalanceAnalysis {
+  static analyze(
+    muscleData: Map<string, MuscleGroupData>,
+  ): ImbalanceAnalysis {
     const volumes = Array.from(muscleData.values())
       .map((m) => m.volume)
       .filter((v) => v > 0);
@@ -57,7 +64,8 @@ export class MuscleBalanceAnalyzer {
     const maxVolume = Math.max(frontVolume, backVolume);
     if (
       maxVolume > 0 &&
-      Math.abs(frontVolume - backVolume) / maxVolume > this.IMBALANCE_THRESHOLD
+      Math.abs(frontVolume - backVolume) / maxVolume >
+        this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
         `Front-Back imbalance detected (${

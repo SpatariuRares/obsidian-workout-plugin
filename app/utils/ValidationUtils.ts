@@ -1,5 +1,8 @@
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
-import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import {
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+} from "@app/features/charts/types";
 
 /**
  * Utility class for parameter validation operations
@@ -71,7 +74,9 @@ export class ValidationUtils {
     if ("duration" in params && params.duration !== undefined) {
       const duration = Number(params.duration);
       if (isNaN(duration) || duration < 1 || duration > 3600) {
-        errors.push("duration must be a number between 1 and 3600 seconds");
+        errors.push(
+          "duration must be a number between 1 and 3600 seconds",
+        );
       }
     }
 

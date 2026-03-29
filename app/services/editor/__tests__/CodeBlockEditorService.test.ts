@@ -18,7 +18,9 @@ describe("CodeBlockEditorService", () => {
       editor: mockEditor,
       file: mockFile,
     };
-    (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(mockView);
+    (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(
+      mockView,
+    );
     (app.vault.read as jest.Mock).mockResolvedValue("");
     (app.vault.modify as jest.Mock).mockResolvedValue(undefined);
     jest.clearAllMocks();
@@ -48,7 +50,9 @@ targetWeight: 100
     });
 
     it("should return false if no active view", async () => {
-      (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(null);
+      (
+        app.workspace.getActiveViewOfType as jest.Mock
+      ).mockReturnValue(null);
       const result = await CodeBlockEditorService.updateTargetWeight(
         app,
         "Bench Press",
@@ -138,7 +142,9 @@ exercise: Running
     });
 
     it("should return false if no active view", async () => {
-      (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(null);
+      (
+        app.workspace.getActiveViewOfType as jest.Mock
+      ).mockReturnValue(null);
 
       const result = await CodeBlockEditorService.setParameter(
         app,

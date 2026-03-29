@@ -20,13 +20,17 @@ export class TimerDisplay {
       return Math.max(0, state.duration * 1000 - state.elapsedTime);
     }
     if (state.timerType === TIMER_TYPE.INTERVAL) {
-      const intervalElapsed = state.elapsedTime % (state.duration * 1000);
+      const intervalElapsed =
+        state.elapsedTime % (state.duration * 1000);
       return state.duration * 1000 - intervalElapsed;
     }
     return null;
   }
 
-  private static showUrgentOverlay(timerId: string, secondsLeft: number): void {
+  private static showUrgentOverlay(
+    timerId: string,
+    secondsLeft: number,
+  ): void {
     let overlay = this.urgentOverlays.get(timerId);
     if (!overlay) {
       overlay = document.body.createDiv({
@@ -110,7 +114,10 @@ export class TimerDisplay {
     }
   }
 
-  private static updateRoundCounter(state: TimerState, text: string): void {
+  private static updateRoundCounter(
+    state: TimerState,
+    text: string,
+  ): void {
     if (state.roundCounterDisplay) {
       state.roundCounterDisplay.textContent = text;
     }

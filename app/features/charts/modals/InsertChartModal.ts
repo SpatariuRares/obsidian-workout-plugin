@@ -13,7 +13,10 @@ import {
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import {
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+} from "@app/features/charts/types";
 import {
   getAvailableChartDataTypes,
   getDefaultChartDataType,
@@ -62,7 +65,9 @@ export class InsertChartModal extends BaseInsertModal {
     return t("modal.notices.chartInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     // Chart Type Section
     const chartTypeSection = this.createSection(
       container,
@@ -75,7 +80,8 @@ export class InsertChartModal extends BaseInsertModal {
     });
     DomUtils.setCssProps(this.chartTypeSelect, { display: "none" });
 
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
+      .CHART_TYPE) {
       this.chartTypeSelect.createEl("option", {
         text: option.label,
         value: option.value,
@@ -87,7 +93,8 @@ export class InsertChartModal extends BaseInsertModal {
       cls: "workout-table-type-chips",
     });
 
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.CHART_TYPE) {
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
+      .CHART_TYPE) {
       const isDefault = option.value === "workout";
       const chip = Chip.create(chartTypeChipContainer, {
         text: option.label,
@@ -101,7 +108,10 @@ export class InsertChartModal extends BaseInsertModal {
     this.chartTypeSelect.value = "workout";
 
     // Data Type chips section
-    const dataTypeSection = this.createSection(container, t("modal.dataType"));
+    const dataTypeSection = this.createSection(
+      container,
+      t("modal.dataType"),
+    );
 
     // Hidden select as backing store for data type
     this.dataTypeSelect = dataTypeSection.createEl("select", {
@@ -109,7 +119,8 @@ export class InsertChartModal extends BaseInsertModal {
     });
     DomUtils.setCssProps(this.dataTypeSelect, { display: "none" });
 
-    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE) {
+    for (const option of CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS
+      .DATA_TYPE) {
       this.dataTypeSelect.createEl("option", {
         text: option.text,
         value: option.value,
@@ -145,13 +156,20 @@ export class InsertChartModal extends BaseInsertModal {
     this.targetElements = targetElements;
 
     // Listen for exercise changes to update data type options
-    this.targetElements.exerciseInput.addEventListener("change", () => {
-      void this.updateDataTypeOptions(this.targetElements!.exerciseInput.value);
-    });
+    this.targetElements.exerciseInput.addEventListener(
+      "change",
+      () => {
+        void this.updateDataTypeOptions(
+          this.targetElements!.exerciseInput.value,
+        );
+      },
+    );
 
     // Initial update if exercise is already populated
     if (this.targetElements.exerciseInput.value) {
-      void this.updateDataTypeOptions(this.targetElements.exerciseInput.value);
+      void this.updateDataTypeOptions(
+        this.targetElements.exerciseInput.value,
+      );
     }
 
     // Ensure visibility is updated based on initial selection
@@ -233,9 +251,13 @@ export class InsertChartModal extends BaseInsertModal {
     );
 
     // Advanced Options Section using reusable component
-    this.advancedElements = AdvancedOptionsSection.create(this, container, {
-      showTitle: true,
-    });
+    this.advancedElements = AdvancedOptionsSection.create(
+      this,
+      container,
+      {
+        showTitle: true,
+      },
+    );
 
     // Set exact match default based on plugin settings
     this.advancedElements.exactMatchToggle.checked =
@@ -281,7 +303,9 @@ export class InsertChartModal extends BaseInsertModal {
 
     // Determine default selected value
     const currentValue = this.dataTypeSelect.value;
-    const hasCurrentValue = options.some((o) => o.value === currentValue);
+    const hasCurrentValue = options.some(
+      (o) => o.value === currentValue,
+    );
     const defaultValue = hasCurrentValue
       ? currentValue
       : options[0]?.value || "";
@@ -319,7 +343,9 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({ cls: "workout-field-label" });
+    const labelEl = fieldContainer.createDiv({
+      cls: "workout-field-label",
+    });
     labelEl.textContent = labelText;
 
     const inputContainer = fieldContainer.createDiv({
@@ -415,7 +441,9 @@ export class InsertChartModal extends BaseInsertModal {
   /**
    * Updates the data type options based on the selected exercise
    */
-  private async updateDataTypeOptions(exerciseName: string): Promise<void> {
+  private async updateDataTypeOptions(
+    exerciseName: string,
+  ): Promise<void> {
     if (!this.dataTypeSelect || !this.plugin) return;
 
     // If no exercise selected, reset to standard options
@@ -423,10 +451,12 @@ export class InsertChartModal extends BaseInsertModal {
       // Rebuild standard options
       this.dataTypeSelect.empty();
       const standardOptions =
-        CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map((opt) => ({
-          text: opt.text,
-          value: opt.value,
-        }));
+        CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map(
+          (opt) => ({
+            text: opt.text,
+            value: opt.value,
+          }),
+        );
       standardOptions.forEach((opt) => {
         const option = document.createElement("option");
         option.value = opt.value;
@@ -438,16 +468,22 @@ export class InsertChartModal extends BaseInsertModal {
     }
 
     const service = this.plugin.getExerciseDefinitionService();
-    const definition = await service.getExerciseDefinition(exerciseName);
+    const definition =
+      await service.getExerciseDefinition(exerciseName);
 
     // Default to strength if no definition found
     const typeId = definition?.typeId || "strength";
     // Use ParameterUtils to extract numeric parameter keys
     const customParams = definition?.customParameters
-      ? ParameterUtils.getNumericParamKeys(definition.customParameters)
+      ? ParameterUtils.getNumericParamKeys(
+          definition.customParameters,
+        )
       : undefined;
 
-    const availableTypes = getAvailableChartDataTypes(typeId, customParams);
+    const availableTypes = getAvailableChartDataTypes(
+      typeId,
+      customParams,
+    );
 
     // Clear existing options
     this.dataTypeSelect.empty();
@@ -478,7 +514,10 @@ export class InsertChartModal extends BaseInsertModal {
     // Update selected value to default if current is invalid
     const currentVal = this.dataTypeSelect.value;
     if (!isValidChartDataType(typeId, currentVal, customParams)) {
-      this.dataTypeSelect.value = getDefaultChartDataType(typeId, customParams);
+      this.dataTypeSelect.value = getDefaultChartDataType(
+        typeId,
+        customParams,
+      );
     }
 
     // Rebuild data type chips

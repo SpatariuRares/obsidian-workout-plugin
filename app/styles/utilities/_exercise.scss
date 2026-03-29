@@ -1,7 +1,6 @@
 /* Exercise styles */
 .workout-exercise {
   .workout-exercise-status {
-
     .workout-exercise-status-text {
       font-size: var(--workout-font-base);
       font-weight: var(--workout-font-weight-medium);
@@ -24,7 +23,8 @@
       left: 0;
       right: 0;
       background: var(--background-primary);
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      border: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       border-radius: var(--workout-radius-md);
       box-shadow: var(--workout-shadow-lg);
       max-height: var(--workout-size-6xl);
@@ -35,7 +35,8 @@
     .workout-exercise-autocomplete-suggestion {
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
-      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+      border-bottom: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       font-size: var(--workout-font-base);
       transition: var(--workout-transition);
 
@@ -53,7 +54,8 @@
       align-items: center;
       gap: var(--workout-space-sm);
       color: var(--interactive-accent);
-      border-top: var(--workout-border-thin) solid var(--background-modifier-border);
+      border-top: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       font-style: italic;
 
       .workout-exercise-autocomplete-create-icon {
@@ -69,7 +71,8 @@
     .workout-exercise-autocomplete-input {
       width: 100%;
       padding: var(--workout-space-sm) var(--workout-space-md);
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      border: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       border-radius: var(--workout-radius-md);
       background: var(--background-primary);
       color: var(--text-normal);
@@ -81,10 +84,15 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--dropdown-background, var(--background-primary));
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      background: var(
+        --dropdown-background,
+        var(--background-primary)
+      );
+      border: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       border-top: none;
-      border-radius: 0 0 var(--workout-radius-xs) var(--workout-radius-xs);
+      border-radius: 0 0 var(--workout-radius-xs)
+        var(--workout-radius-xs);
       max-height: var(--workout-size-6xl);
       overflow-y: auto;
       z-index: 1000;
@@ -94,7 +102,8 @@
     .workout-exercise-autocomplete-item {
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
-      border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+      border-bottom: var(--workout-border-thin) solid
+        var(--background-modifier-border);
 
       &:hover {
         background: var(--background-modifier-hover);

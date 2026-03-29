@@ -37,13 +37,17 @@ export class MuscleTagTableRenderer {
         text: tag,
         cls: "workout-tag-name workout-tag-clickable",
       });
-      tagCell.addEventListener("click", () => onEdit(tag, muscleGroup));
+      tagCell.addEventListener("click", () =>
+        onEdit(tag, muscleGroup),
+      );
 
       const groupCell = row.createEl("td", {
         text: muscleGroup,
         cls: "workout-tag-group workout-tag-clickable",
       });
-      groupCell.addEventListener("click", () => onEdit(tag, muscleGroup));
+      groupCell.addEventListener("click", () =>
+        onEdit(tag, muscleGroup),
+      );
 
       const actionsCell = row.createEl("td", {
         cls: "workout-tag-actions",

@@ -44,7 +44,11 @@ describe("TableRefresh", () => {
 
     expect(mockPlugin.clearLogDataCache).not.toHaveBeenCalled();
     expect(mockPlugin.getWorkoutLogData).toHaveBeenCalled();
-    expect(renderCallback).toHaveBeenCalledWith(container, freshData, params);
+    expect(renderCallback).toHaveBeenCalledWith(
+      container,
+      freshData,
+      params,
+    );
   });
 
   it("calls onSuccess callback after successful refresh", async () => {
@@ -64,13 +68,17 @@ describe("TableRefresh", () => {
       callbacks,
     );
 
-    expect(callbacks.onSuccess).toHaveBeenCalledWith(t("table.refreshSuccess"));
+    expect(callbacks.onSuccess).toHaveBeenCalledWith(
+      t("table.refreshSuccess"),
+    );
   });
 
   it("calls onError callback on failure", async () => {
     const mockPlugin = {
       clearLogDataCache: jest.fn(),
-      getWorkoutLogData: jest.fn().mockRejectedValue(new Error("load fail")),
+      getWorkoutLogData: jest
+        .fn()
+        .mockRejectedValue(new Error("load fail")),
     } as any;
     const container = document.createElement("div");
     const params = { exercise: "Bench Press" };
@@ -125,7 +133,12 @@ describe("TableRefresh", () => {
     const container = document.createElement("div");
     const renderCallback = jest.fn().mockResolvedValue(undefined);
 
-    await TableRefresh.refreshTable(mockPlugin, container, {}, renderCallback);
+    await TableRefresh.refreshTable(
+      mockPlugin,
+      container,
+      {},
+      renderCallback,
+    );
 
     expect(renderCallback).toHaveBeenCalled();
   });
@@ -133,7 +146,9 @@ describe("TableRefresh", () => {
   it("does not call renderCallback when data loading fails", async () => {
     const mockPlugin = {
       clearLogDataCache: jest.fn(),
-      getWorkoutLogData: jest.fn().mockRejectedValue(new Error("fail")),
+      getWorkoutLogData: jest
+        .fn()
+        .mockRejectedValue(new Error("fail")),
     } as any;
     const renderCallback = jest.fn();
 

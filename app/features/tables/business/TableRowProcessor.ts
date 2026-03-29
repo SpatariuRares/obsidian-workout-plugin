@@ -1,4 +1,7 @@
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
@@ -21,7 +24,8 @@ export class TableRowProcessor {
   ): WorkoutLogData[] {
     if (logData.length <= limit) {
       return [...logData].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        (a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime(),
       );
     }
 
@@ -41,7 +45,10 @@ export class TableRowProcessor {
    * @param headers - Column headers to map data to
    * @returns Array of processed table rows
    */
-  static processRows(logData: WorkoutLogData[], headers: string[]): TableRow[] {
+  static processRows(
+    logData: WorkoutLogData[],
+    headers: string[],
+  ): TableRow[] {
     const rows: TableRow[] = [];
 
     const dateCache = new Map<string, string>();
@@ -68,9 +75,15 @@ export class TableRowProcessor {
         weight: log.weight?.toString() || t("table.notAvailable"),
         volume: log.volume?.toString() || t("table.notAvailable"),
         // Add custom fields for cardio/timed exercises
-        duration: this.formatCustomFieldValue(log.customFields?.duration),
-        distance: this.formatCustomFieldValue(log.customFields?.distance),
-        heartrate: this.formatCustomFieldValue(log.customFields?.heartRate),
+        duration: this.formatCustomFieldValue(
+          log.customFields?.duration,
+        ),
+        distance: this.formatCustomFieldValue(
+          log.customFields?.distance,
+        ),
+        heartrate: this.formatCustomFieldValue(
+          log.customFields?.heartRate,
+        ),
         notes: log.notes || "",
         protocol: log.protocol || WorkoutProtocol.STANDARD,
         actions: "", // Placeholder for actions
@@ -99,7 +112,8 @@ export class TableRowProcessor {
         }
 
         // Try reverse mapping for abbreviated headers (e.g., "wgt" -> "weight")
-        const mappedKey = TableColumnResolver.HEADER_TO_DATA_KEY[headerBase];
+        const mappedKey =
+          TableColumnResolver.HEADER_TO_DATA_KEY[headerBase];
         if (mappedKey && baseDataMap[mappedKey] !== undefined) {
           return baseDataMap[mappedKey];
         }

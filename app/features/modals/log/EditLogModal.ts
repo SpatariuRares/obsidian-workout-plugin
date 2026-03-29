@@ -89,6 +89,9 @@ export class EditLogModal extends BaseLogModal {
     const updatedData = { ...data, date: finalDate };
     const updatedEntry = this.createLogEntryObject(updatedData);
 
-    await this.plugin.updateWorkoutLogEntry(this.originalLog, updatedEntry);
+    await this.plugin.updateWorkoutLogEntry(
+      this.originalLog,
+      updatedEntry,
+    );
   }
 }

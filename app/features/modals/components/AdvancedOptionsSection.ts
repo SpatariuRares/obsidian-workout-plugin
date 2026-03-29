@@ -29,11 +29,14 @@ export class AdvancedOptionsSection {
 
     // Compact mode: wrap checkboxes in a flex row
     const checkboxParent = options.compact
-      ? advancedSection.createDiv({ cls: "workout-table-options-row" })
+      ? advancedSection.createDiv({
+          cls: "workout-table-options-row",
+        })
       : advancedSection;
 
     // Exact match toggle
-    const exactMatchContainer = modal.createCheckboxGroup(checkboxParent);
+    const exactMatchContainer =
+      modal.createCheckboxGroup(checkboxParent);
     const exactMatchToggle = modal.createCheckbox(
       exactMatchContainer,
       t("modal.checkboxes.exactMatch"),
@@ -58,7 +61,8 @@ export class AdvancedOptionsSection {
 
     // Optional search by name toggle
     if (options.showSearchByName) {
-      const searchByNameContainer = modal.createCheckboxGroup(checkboxParent);
+      const searchByNameContainer =
+        modal.createCheckboxGroup(checkboxParent);
       const searchByNameToggle = modal.createCheckbox(
         searchByNameContainer,
         t("modal.checkboxes.searchByName"),
@@ -70,7 +74,8 @@ export class AdvancedOptionsSection {
 
     // Optional add button toggle
     if (options.showAddButton) {
-      const addButtonContainer = modal.createCheckboxGroup(checkboxParent);
+      const addButtonContainer =
+        modal.createCheckboxGroup(checkboxParent);
       const addButtonToggle = modal.createCheckbox(
         addButtonContainer,
         t("modal.checkboxes.showAddButton"),

@@ -3,7 +3,10 @@ import {
   MatchResult,
   ExerciseMatch,
 } from "@app/utils/exercise/ExerciseMatchUtils";
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { FilterResult } from "@app/types/CommonTypes";
 import { StringUtils } from "@app/utils/StringUtils";
@@ -56,7 +59,10 @@ export class DataFilter {
    * @param params - Filter parameters (exercise, workout, protocol, etc.)
    * @returns Filtered data with information about the filtering method used
    */
-  static filterData(logData: WorkoutLogData[], params: DataFilterParams): FilterResult {
+  static filterData(
+    logData: WorkoutLogData[],
+    params: DataFilterParams,
+  ): FilterResult {
     if (!logData || logData.length === 0) {
       return {
         filteredData: [],
@@ -95,7 +101,10 @@ export class DataFilter {
       }
 
       // Then filter the workout results by exercise
-      const exerciseResult = this.filterByExercise(workoutResult.filteredData, params);
+      const exerciseResult = this.filterByExercise(
+        workoutResult.filteredData,
+        params,
+      );
 
       filteredData = exerciseResult.filteredData;
       filterMethodUsed = `${workoutResult.filterMethodUsed} + ${exerciseResult.filterMethodUsed}`;
@@ -114,7 +123,10 @@ export class DataFilter {
 
     // Apply protocol filter (AND logic with existing filters)
     if (hasProtocol) {
-      const protocolResult = this.filterByProtocol(filteredData, params);
+      const protocolResult = this.filterByProtocol(
+        filteredData,
+        params,
+      );
       filteredData = protocolResult.filteredData;
       if (filterMethodUsed === "none") {
         filterMethodUsed = protocolResult.filterMethodUsed;
@@ -129,13 +141,18 @@ export class DataFilter {
   /**
    * Checks if the params contain a protocol filter
    */
-  private static hasProtocolFilter(params: DataFilterParams): boolean {
+  private static hasProtocolFilter(
+    params: DataFilterParams,
+  ): boolean {
     const tableParams = params;
     if (!tableParams.protocol) return false;
     if (Array.isArray(tableParams.protocol)) {
       return tableParams.protocol.length > 0;
     }
-    return typeof tableParams.protocol === "string" && tableParams.protocol.trim() !== "";
+    return (
+      typeof tableParams.protocol === "string" &&
+      tableParams.protocol.trim() !== ""
+    );
   }
 
   /**
@@ -156,9 +173,12 @@ export class DataFilter {
 
         const workoutNameLower = StringUtils.normalize(workoutName);
         filteredData = logData.filter((log) => {
-          const source = StringUtils.normalize(log.workout || log.origine || "", {
-            stripWikiLinks: true,
-          });
+          const source = StringUtils.normalize(
+            log.workout || log.origine || "",
+            {
+              stripWikiLinks: true,
+            },
+          );
           return source.includes(workoutNameLower);
         });
 
@@ -191,7 +211,9 @@ export class DataFilter {
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {
-      const logProtocol = (log.protocol || WorkoutProtocol.STANDARD).toLowerCase();
+      const logProtocol = (
+        log.protocol || WorkoutProtocol.STANDARD
+      ).toLowerCase();
       return protocols.includes(logProtocol);
     });
 
@@ -221,14 +243,23 @@ export class DataFilter {
       titlePrefix = exerciseName;
 
       if (params.exactMatch) {
-        const exerciseNameLower = exerciseName.toLowerCase().replace(/\s+/g, " ").trim();
+        const exerciseNameLower = exerciseName
+          .toLowerCase()
+          .replace(/\s+/g, " ")
+          .trim();
         filteredData = logData.filter((log) => {
-          const exerciseField = (log.exercise || "").toLowerCase().replace(/\s+/g, " ").trim();
+          const exerciseField = (log.exercise || "")
+            .toLowerCase()
+            .replace(/\s+/g, " ")
+            .trim();
           return exerciseField === exerciseNameLower;
         });
         filterMethodUsed = `exact match on exercise field: "${exerciseName}"`;
       } else {
-        const matchesResult = ExerciseMatchUtils.findExerciseMatches(logData, exerciseName);
+        const matchesResult = ExerciseMatchUtils.findExerciseMatches(
+          logData,
+          exerciseName,
+        );
 
         const { bestStrategy, bestPathKey, bestFileMatchesList } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
@@ -272,7 +303,8 @@ export class DataFilter {
     bestFileMatchesList: ExerciseMatch[],
   ): string {
     if (bestStrategy === "field") {
-      const bestPathScore = matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
+      const bestPathScore =
+        matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
     } else if (bestStrategy === "filename") {
       return `file name (score: ${bestFileMatchesList[0]?.score || t("table.notAvailable")})`;
@@ -300,14 +332,20 @@ export class DataFilter {
     const normalizedFilters: NormalizedFilters = {};
 
     if (filterParams.exercise) {
-      normalizedFilters.exerciseName = StringUtils.normalize(filterParams.exercise);
+      normalizedFilters.exerciseName = StringUtils.normalize(
+        filterParams.exercise,
+      );
     }
 
     if (filterParams.workout) {
-      normalizedFilters.workoutName = StringUtils.normalize(filterParams.workout);
+      normalizedFilters.workoutName = StringUtils.normalize(
+        filterParams.workout,
+      );
     }
 
-    return logData.filter((log) => this.matchesEarlyFilter(log, filterParams, normalizedFilters));
+    return logData.filter((log) =>
+      this.matchesEarlyFilter(log, filterParams, normalizedFilters),
+    );
   }
 
   /**
@@ -324,7 +362,8 @@ export class DataFilter {
     // Check exercise filter
     if (filterParams.exercise) {
       const exerciseName =
-        normalizedFilters?.exerciseName || StringUtils.normalize(filterParams.exercise);
+        normalizedFilters?.exerciseName ||
+        StringUtils.normalize(filterParams.exercise);
 
       const logExercise = StringUtils.normalize(log.exercise || "");
 
@@ -342,11 +381,15 @@ export class DataFilter {
     // Check workout filter
     if (filterParams.workout) {
       const workoutName =
-        normalizedFilters?.workoutName || StringUtils.normalize(filterParams.workout);
+        normalizedFilters?.workoutName ||
+        StringUtils.normalize(filterParams.workout);
 
-      const logSource = StringUtils.normalize(log.workout || log.origine || "", {
-        stripWikiLinks: true,
-      });
+      const logSource = StringUtils.normalize(
+        log.workout || log.origine || "",
+        {
+          stripWikiLinks: true,
+        },
+      );
 
       if (filterParams.exactMatch) {
         if (logSource !== workoutName) {

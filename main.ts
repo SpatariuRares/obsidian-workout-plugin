@@ -77,11 +77,14 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Fase 1: inizializza event bus (non ancora usato da altri componenti)
     this.eventBus = new WorkoutEventBus();
-    this.eventBus.on('plugin:error', ({ source, error, recoverable }) => {
-      if (!recoverable) {
-        new Notice(`Workout Plugin [${source}]: ${error.message}`);
-      }
-    });
+    this.eventBus.on(
+      "plugin:error",
+      ({ source, error, recoverable }) => {
+        if (!recoverable) {
+          new Notice(`Workout Plugin [${source}]: ${error.message}`);
+        }
+      },
+    );
 
     // Initialize LocalizationService (must be first - other services may use translations)
     LocalizationService.initialize(this.app);
@@ -95,17 +98,27 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
-    this.dataService = new DataService(this.app, this.settings, this.eventBus);
+    this.dataService = new DataService(
+      this.app,
+      this.settings,
+      this.eventBus,
+    );
     this.exerciseDefinitionService = new ExerciseDefinitionService(
       this.app,
       this.settings,
     );
-    this.muscleTagService = new MuscleTagService(this.app, this.settings);
+    this.muscleTagService = new MuscleTagService(
+      this.app,
+      this.settings,
+    );
     this.templateGeneratorService = new TemplateGeneratorService(
       this.app,
       this,
     );
-    this.commandHandlerService = new CommandHandlerService(this.app, this);
+    this.commandHandlerService = new CommandHandlerService(
+      this.app,
+      this,
+    );
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
       this.dataService,
@@ -223,7 +236,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      await this.loadData(),
+    );
   }
 
   async saveSettings() {
@@ -281,7 +298,10 @@ export default class WorkoutChartsPlugin extends Plugin {
     originalLog: WorkoutLogData,
     updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">,
   ): Promise<void> {
-    return this.dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
+    return this.dataService.updateWorkoutLogEntry(
+      originalLog,
+      updatedEntry,
+    );
   }
 
   /**
@@ -298,7 +318,7 @@ export default class WorkoutChartsPlugin extends Plugin {
    * See DataService.batchOperation for full documentation.
    */
   public async batchOperation(
-    operation: LogBulkChangedPayload['operation'],
+    operation: LogBulkChangedPayload["operation"],
     fn: () => Promise<void>,
   ): Promise<void> {
     return this.dataService.batchOperation(operation, fn);
@@ -333,7 +353,10 @@ export default class WorkoutChartsPlugin extends Plugin {
    * to force a manual refresh.
    */
   public triggerWorkoutLogRefresh(): void {
-    this.eventBus.emit({ type: 'log:bulk-changed', payload: { count: 0, operation: 'other' } });
+    this.eventBus.emit({
+      type: "log:bulk-changed",
+      payload: { count: 0, operation: "other" },
+    });
   }
 
   /**
@@ -346,6 +369,6 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public triggerMuscleTagRefresh(): void {
     this.muscleTagService.clearCache();
-    this.eventBus.emit({ type: 'muscle-tags:changed', payload: {} });
+    this.eventBus.emit({ type: "muscle-tags:changed", payload: {} });
   }
 }

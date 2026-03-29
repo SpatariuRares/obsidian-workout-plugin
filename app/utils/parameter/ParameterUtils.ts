@@ -94,7 +94,9 @@ export class ParameterUtils {
    * @param parameters Array of parameter definitions
    * @returns Array of parameter keys (e.g., ["duration", "distance"])
    */
-  static getNumericParamKeys(parameters: ParameterDefinition[]): string[] {
+  static getNumericParamKeys(
+    parameters: ParameterDefinition[],
+  ): string[] {
     return this.getNumericParams(parameters).map((p) => p.key);
   }
 
@@ -124,7 +126,8 @@ export class ParameterUtils {
    * @returns Formatted string like "Weight (kg)" or "Duration (sec)"
    */
   static formatParamWithUnit(param: ParameterDefinition): string {
-    const unit = param.unit || this.defaultUnits[param.key.toLowerCase()];
+    const unit =
+      param.unit || this.defaultUnits[param.key.toLowerCase()];
     if (unit) {
       return `${param.label} (${unit})`;
     }
@@ -188,7 +191,10 @@ export class ParameterUtils {
   } {
     // Check for empty key
     if (!param.key || param.key.trim() === "") {
-      return { isValid: false, error: "Parameter key cannot be empty" };
+      return {
+        isValid: false,
+        error: "Parameter key cannot be empty",
+      };
     }
 
     // Check for reserved key
@@ -209,7 +215,10 @@ export class ParameterUtils {
 
     // Check for empty label
     if (!param.label || param.label.trim() === "") {
-      return { isValid: false, error: "Parameter label cannot be empty" };
+      return {
+        isValid: false,
+        error: "Parameter label cannot be empty",
+      };
     }
 
     return { isValid: true };
@@ -258,6 +267,8 @@ export class ParameterUtils {
     key: string,
   ): ParameterDefinition | undefined {
     const normalizedKey = key.toLowerCase();
-    return parameters.find((p) => p.key.toLowerCase() === normalizedKey);
+    return parameters.find(
+      (p) => p.key.toLowerCase() === normalizedKey,
+    );
   }
 }

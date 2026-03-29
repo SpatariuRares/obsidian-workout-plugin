@@ -30,7 +30,8 @@ Content without tags.`;
 
   describe("extractFrontmatter", () => {
     it("should extract frontmatter section", () => {
-      const result = FrontmatterParser.extractFrontmatter(validContent);
+      const result =
+        FrontmatterParser.extractFrontmatter(validContent);
 
       expect(result).toContain("nome_esercizio: Squat");
       expect(result).toContain("tags:");
@@ -38,7 +39,9 @@ Content without tags.`;
     });
 
     it("should return null for content without frontmatter", () => {
-      const result = FrontmatterParser.extractFrontmatter(noFrontmatterContent);
+      const result = FrontmatterParser.extractFrontmatter(
+        noFrontmatterContent,
+      );
       expect(result).toBeNull();
     });
 
@@ -61,7 +64,9 @@ Content`;
     });
 
     it("should return empty array for content without frontmatter", () => {
-      const result = FrontmatterParser.parseTags(noFrontmatterContent);
+      const result = FrontmatterParser.parseTags(
+        noFrontmatterContent,
+      );
       expect(result).toEqual([]);
     });
 
@@ -102,7 +107,9 @@ tags:
     });
 
     it("should return false for content without frontmatter", () => {
-      const result = FrontmatterParser.hasFrontmatter(noFrontmatterContent);
+      const result = FrontmatterParser.hasFrontmatter(
+        noFrontmatterContent,
+      );
       expect(result).toBe(false);
     });
   });
@@ -134,12 +141,18 @@ tags:
     });
 
     it("should parse difficulty field", () => {
-      const result = FrontmatterParser.parseField(validContent, "difficulty");
+      const result = FrontmatterParser.parseField(
+        validContent,
+        "difficulty",
+      );
       expect(result).toBe("hard");
     });
 
     it("should return null for non-existent field", () => {
-      const result = FrontmatterParser.parseField(validContent, "nonexistent");
+      const result = FrontmatterParser.parseField(
+        validContent,
+        "nonexistent",
+      );
       expect(result).toBeNull();
     });
 
@@ -169,7 +182,9 @@ tags:
     });
 
     it("should return empty object for content without frontmatter", () => {
-      const result = FrontmatterParser.parseAllFields(noFrontmatterContent);
+      const result = FrontmatterParser.parseAllFields(
+        noFrontmatterContent,
+      );
       expect(result).toEqual({});
     });
 
@@ -187,7 +202,8 @@ field2: value2
 
   describe("validateFrontmatter", () => {
     it("should return empty array for valid frontmatter", () => {
-      const result = FrontmatterParser.validateFrontmatter(validContent);
+      const result =
+        FrontmatterParser.validateFrontmatter(validContent);
       expect(result).toEqual([]);
     });
 
@@ -197,18 +213,21 @@ field2: value2
     });
 
     it("should return error for content without frontmatter", () => {
-      const result =
-        FrontmatterParser.validateFrontmatter(noFrontmatterContent);
+      const result = FrontmatterParser.validateFrontmatter(
+        noFrontmatterContent,
+      );
       expect(result).toContain(t("messages.noFrontmatter"));
     });
 
     it("should return error for frontmatter without tags", () => {
-      const result = FrontmatterParser.validateFrontmatter(noTagsContent);
+      const result =
+        FrontmatterParser.validateFrontmatter(noTagsContent);
       expect(result).toContain(t("messages.noTags"));
     });
 
     it("should return only one error for whitespace content", () => {
-      const result = FrontmatterParser.validateFrontmatter("   \n  \n  ");
+      const result =
+        FrontmatterParser.validateFrontmatter("   \n  \n  ");
       expect(result).toHaveLength(1);
       expect(result[0]).toBe(t("messages.fileEmpty"));
     });

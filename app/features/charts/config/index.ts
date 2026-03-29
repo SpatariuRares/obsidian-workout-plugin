@@ -16,4 +16,7 @@ export {
   getUnitForChartType,
   getYAxisLabel,
 } from "@app/features/charts/config/ChartConstants";
-export { ChartConfigBuilder, DatasetStyler } from "@app/features/charts/config/ChartConfigBuilder";
+export {
+  ChartConfigBuilder,
+  DatasetStyler,
+} from "@app/features/charts/config/ChartConfigBuilder";

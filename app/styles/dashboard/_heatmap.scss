@@ -52,7 +52,8 @@
     top: var(--workout-space-xl);
     right: var(--workout-space-xl);
     background: var(--background-primary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-lg);
     box-shadow: var(--workout-shadow-md);
@@ -101,7 +102,8 @@
 
   &-canvas-container {
     background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-xl);
     margin-bottom: var(--workout-space-xl);
@@ -133,7 +135,8 @@
 
   &-info-panel {
     background: var(--background-secondary);
-    border: var(--workout-border-thin) solid var(--background-modifier-border);
+    border: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-lg);
     margin-top: var(--workout-space-lg);

@@ -14,14 +14,16 @@ const PREVIEW_ROWS_LIMIT = 10;
 const PREVIEW_ERRORS_LIMIT = 3;
 
 export class MuscleTagImportPreviewRenderer {
-  constructor(private readonly container: HTMLElement) { }
+  constructor(private readonly container: HTMLElement) {}
 
   render(options: RenderImportPreviewOptions): void {
     this.container.empty();
     DomUtils.setCssProps(this.container, { display: "block" });
 
     this.container.createEl("h4", {
-      text: t("modal.notices.muscleTagImportPreview", { count: options.tags.size }),
+      text: t("modal.notices.muscleTagImportPreview", {
+        count: options.tags.size,
+      }),
     });
 
     if (options.errors.length > 0) {

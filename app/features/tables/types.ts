@@ -46,13 +46,22 @@ export enum TABLE_TYPE {
  * Extends required fields from EmbeddedTableParams to avoid duplication.
  */
 export interface TableCodeOptions
-  extends Required<
+  extends
+    Required<
+      Pick<
+        EmbeddedTableParams,
+        | "exercise"
+        | "workout"
+        | "limit"
+        | "showAddButton"
+        | "searchByName"
+        | "exactMatch"
+      >
+    >,
     Pick<
       EmbeddedTableParams,
-      "exercise" | "workout" | "limit" | "showAddButton" | "searchByName" | "exactMatch"
-    >
-  >,
-  Pick<EmbeddedTableParams, "dateRange" | "targetWeight" | "targetReps"> {
+      "dateRange" | "targetWeight" | "targetReps"
+    > {
   id: string;
   tableType: TABLE_TYPE;
 }

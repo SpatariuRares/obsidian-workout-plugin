@@ -186,7 +186,8 @@
   td {
     padding: var(--workout-space-sm) var(--workout-space-md);
     text-align: left;
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
   }
 
   th {

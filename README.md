@@ -39,22 +39,22 @@ Go to **Settings → Workout Planner** and click **Create examples** to generate
 
 Access via Command Palette (`Ctrl/Cmd + P`):
 
-| Command | Description |
-|---------|-------------|
-| Create CSV log file | Initialize the CSV file for storing workout logs |
-| Insert workout chart | Insert a `workout-chart` code block |
-| Insert workout table | Insert a `workout-log` code block |
-| Insert workout timer | Insert a `workout-timer` code block |
-| Insert workout dashboard | Insert a `workout-dashboard` code block |
-| Insert workout duration | Insert a workout duration estimator code block |
-| Create exercise page | Create a new exercise page |
-| Create exercise section | Add an exercise block to a note |
-| Add exercise block | Insert an exercise block with autocomplete |
-| Export workout to canvas | Export workout data to Obsidian Canvas |
-| Convert exercise | Convert exercise logs from one type to another |
-| Manage muscle tags | Open the muscle tag manager |
-| Generate tag reference | Create a reference note for all available muscle tags |
-| Audit exercise names | Scan vault for exercise name inconsistencies |
+| Command                  | Description                                           |
+| ------------------------ | ----------------------------------------------------- |
+| Create CSV log file      | Initialize the CSV file for storing workout logs      |
+| Insert workout chart     | Insert a `workout-chart` code block                   |
+| Insert workout table     | Insert a `workout-log` code block                     |
+| Insert workout timer     | Insert a `workout-timer` code block                   |
+| Insert workout dashboard | Insert a `workout-dashboard` code block               |
+| Insert workout duration  | Insert a workout duration estimator code block        |
+| Create exercise page     | Create a new exercise page                            |
+| Create exercise section  | Add an exercise block to a note                       |
+| Add exercise block       | Insert an exercise block with autocomplete            |
+| Export workout to canvas | Export workout data to Obsidian Canvas                |
+| Convert exercise         | Convert exercise logs from one type to another        |
+| Manage muscle tags       | Open the muscle tag manager                           |
+| Generate tag reference   | Create a reference note for all available muscle tags |
+| Audit exercise names     | Scan vault for exercise name inconsistencies          |
 
 ### Code Blocks
 
@@ -73,18 +73,18 @@ height: 400
 
 **Parameters:**
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `exercise` | string | — | Exercise name to filter |
-| `type` | string | `volume` | `volume`, `weight`, `reps`, `duration`, `distance`, `pace`, `heartRate` |
-| `chartType` | string | `exercise` | Group by: `exercise`, `workout`, `combined`, `all` |
-| `dateRange` | number | `30` | Days to include |
-| `showTrendLine` | boolean | `true` | Display trend line |
-| `showStats` | boolean | `false` | Show avg/max/min stats box |
-| `exactMatch` | boolean | `false` | Exact vs. fuzzy exercise name matching |
-| `height` | number | `400` | Chart height in pixels |
-| `title` | string | — | Custom chart title |
-| `limit` | number | — | Maximum number of data points |
+| Parameter       | Type    | Default    | Description                                                             |
+| --------------- | ------- | ---------- | ----------------------------------------------------------------------- |
+| `exercise`      | string  | —          | Exercise name to filter                                                 |
+| `type`          | string  | `volume`   | `volume`, `weight`, `reps`, `duration`, `distance`, `pace`, `heartRate` |
+| `chartType`     | string  | `exercise` | Group by: `exercise`, `workout`, `combined`, `all`                      |
+| `dateRange`     | number  | `30`       | Days to include                                                         |
+| `showTrendLine` | boolean | `true`     | Display trend line                                                      |
+| `showStats`     | boolean | `false`    | Show avg/max/min stats box                                              |
+| `exactMatch`    | boolean | `false`    | Exact vs. fuzzy exercise name matching                                  |
+| `height`        | number  | `400`      | Chart height in pixels                                                  |
+| `title`         | string  | —          | Custom chart title                                                      |
+| `limit`         | number  | —          | Maximum number of data points                                           |
 
 > **Pace charts**: trend logic is inverted — decreasing pace (faster) = Improving (green), increasing pace (slower) = Declining (red).
 
@@ -101,15 +101,15 @@ limit: 50
 
 **Parameters:**
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `exercise` | string | — | Exercise name to filter |
-| `exactMatch` | boolean | `true` | Exact vs. fuzzy matching |
-| `dateRange` | number | — | Days to include |
-| `sortBy` | string | `date` | `date`, `exercise`, `weight`, `reps`, `volume` |
-| `sortOrder` | string | `desc` | `asc` or `desc` |
-| `limit` | number | `50` | Maximum rows to display |
-| `columns` | array | all | Visible columns, e.g. `["date","reps","weight"]` |
+| Parameter    | Type    | Default | Description                                      |
+| ------------ | ------- | ------- | ------------------------------------------------ |
+| `exercise`   | string  | —       | Exercise name to filter                          |
+| `exactMatch` | boolean | `true`  | Exact vs. fuzzy matching                         |
+| `dateRange`  | number  | —       | Days to include                                  |
+| `sortBy`     | string  | `date`  | `date`, `exercise`, `weight`, `reps`, `volume`   |
+| `sortOrder`  | string  | `desc`  | `asc` or `desc`                                  |
+| `limit`      | number  | `50`    | Maximum rows to display                          |
+| `columns`    | array   | all     | Visible columns, e.g. `["date","reps","weight"]` |
 
 #### workout-timer
 
@@ -123,18 +123,19 @@ preset: rest
 
 **Parameters:**
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `type` | string | `countdown` | Timer mode: `countdown`, `interval`, `stopwatch` |
-| `duration` | number | `30` | Duration in seconds (countdown/interval) |
-| `rounds` | number | `1` | Number of rounds (interval mode) |
-| `sound` | boolean | `false` | Play audio on completion |
-| `showControls` | boolean | `true` | Show play/pause/reset buttons |
-| `preset` | string | — | Use a saved preset by name (overridden by explicit params) |
+| Parameter      | Type    | Default     | Description                                                |
+| -------------- | ------- | ----------- | ---------------------------------------------------------- |
+| `type`         | string  | `countdown` | Timer mode: `countdown`, `interval`, `stopwatch`           |
+| `duration`     | number  | `30`        | Duration in seconds (countdown/interval)                   |
+| `rounds`       | number  | `1`         | Number of rounds (interval mode)                           |
+| `sound`        | boolean | `false`     | Play audio on completion                                   |
+| `showControls` | boolean | `true`      | Show play/pause/reset buttons                              |
+| `preset`       | string  | —           | Use a saved preset by name (overridden by explicit params) |
 
 #### workout-dashboard
 
 ```workout-dashboard
+
 ```
 
 No parameters — renders the full dashboard with all widgets.
@@ -145,20 +146,20 @@ No parameters — renders the full dashboard with all widgets.
 
 ### Setup & data
 
-| Setting | Description |
-|---------|-------------|
-| CSV log file path | Folder where `workout_logs.csv` and `muscle-tags.csv` are stored |
-| Exercise folder path | Path to the folder containing exercise pages |
-| Weight unit | `kg` or `lb` — affects all views and new log defaults |
-| Setup CSV files | Creates both CSV files in the configured folder |
-| Generate example data | Creates a demo folder with sample workouts |
+| Setting               | Description                                                      |
+| --------------------- | ---------------------------------------------------------------- |
+| CSV log file path     | Folder where `workout_logs.csv` and `muscle-tags.csv` are stored |
+| Exercise folder path  | Path to the folder containing exercise pages                     |
+| Weight unit           | `kg` or `lb` — affects all views and new log defaults            |
+| Setup CSV files       | Creates both CSV files in the configured folder                  |
+| Generate example data | Creates a demo folder with sample workouts                       |
 
 ### Mobile logging
 
-| Setting | Description |
-|---------|-------------|
-| Default exact match | When enabled, exercise filtering uses exact name matching by default |
-| Quick weight increment | Weight step for +/- buttons in create/edit log modals (e.g., `2.5`) |
+| Setting                | Description                                                          |
+| ---------------------- | -------------------------------------------------------------------- |
+| Default exact match    | When enabled, exercise filtering uses exact name matching by default |
+| Quick weight increment | Weight step for +/- buttons in create/edit log modals (e.g., `2.5`)  |
 
 ### Timer presets
 
@@ -170,19 +171,19 @@ Define custom training techniques beyond the built-in ones. Each protocol has a 
 
 ### Training parameters
 
-| Setting | Description |
-|---------|-------------|
-| Weight increment | Default weight step for progressive overload suggestions |
-| Duration per repetition | Seconds per rep — used when rep count is known |
-| Default reps per set | Assumed reps when not specified (0 = use fallback set duration) |
-| Fallback set duration | Seconds per set when reps are not available (default: 45s) |
+| Setting                 | Description                                                     |
+| ----------------------- | --------------------------------------------------------------- |
+| Weight increment        | Default weight step for progressive overload suggestions        |
+| Duration per repetition | Seconds per rep — used when rep count is known                  |
+| Default reps per set    | Assumed reps when not specified (0 = use fallback set duration) |
+| Fallback set duration   | Seconds per set when reps are not available (default: 45s)      |
 
 ### Advanced
 
-| Setting | Description |
-|---------|-------------|
+| Setting                 | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
 | Exercise block template | Template inserted when creating exercise blocks via modal |
-| Run all maintenance | Runs migration tasks (block IDs, exercise type upgrades) |
+| Run all maintenance     | Runs migration tasks (block IDs, exercise type upgrades)  |
 
 ---
 
@@ -219,18 +220,18 @@ All workout logs are stored in a single CSV file:
 date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 ```
 
-| Column | Description |
-|--------|-------------|
-| `date` | ISO 8601 datetime (`YYYY-MM-DDTHH:mm:ss.sssZ`) |
-| `exercise` | Exercise name |
-| `reps` | Repetitions |
-| `weight` | Weight used |
-| `volume` | Calculated volume (`reps × weight`) |
-| `origine` | Source or workout routine (supports Obsidian links) |
-| `workout` | Workout name |
-| `timestamp` | Unique entry identifier (ms since epoch) |
-| `notes` | Optional notes |
-| `protocol` | Training protocol (e.g., `drop_set`, `standard`) |
+| Column      | Description                                         |
+| ----------- | --------------------------------------------------- |
+| `date`      | ISO 8601 datetime (`YYYY-MM-DDTHH:mm:ss.sssZ`)      |
+| `exercise`  | Exercise name                                       |
+| `reps`      | Repetitions                                         |
+| `weight`    | Weight used                                         |
+| `volume`    | Calculated volume (`reps × weight`)                 |
+| `origine`   | Source or workout routine (supports Obsidian links) |
+| `workout`   | Workout name                                        |
+| `timestamp` | Unique entry identifier (ms since epoch)            |
+| `notes`     | Optional notes                                      |
+| `protocol`  | Training protocol (e.g., `drop_set`, `standard`)    |
 
 Custom exercise types add extra columns automatically (e.g., `duration`, `distance`, `pace`).
 
@@ -254,7 +255,7 @@ The plugin exposes `window.WorkoutPlannerAPI` for use in Dataview queries and ot
 
 ```javascript
 const logs = await WorkoutPlannerAPI.getWorkoutLogs({
-  exercise: "Squat",           // partial match, case-insensitive
+  exercise: "Squat", // partial match, case-insensitive
   workout: "Push Day",
   dateRange: { start: "2025-01-01", end: "2025-01-31" },
   protocol: "drop_set",
@@ -275,7 +276,9 @@ const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
 #### `getExercises(filter?)`
 
 ```javascript
-const exercises = await WorkoutPlannerAPI.getExercises({ tag: "chest" });
+const exercises = await WorkoutPlannerAPI.getExercises({
+  tag: "chest",
+});
 ```
 
 ### Examples

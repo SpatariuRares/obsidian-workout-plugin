@@ -15,7 +15,7 @@
 export function setupWorkoutToggle(
   toggle: HTMLInputElement,
   workoutInput: HTMLInputElement,
-  getFileName: () => string
+  getFileName: () => string,
 ): void {
   const applyToggleState = (checked: boolean): void => {
     if (checked) {
@@ -49,7 +49,7 @@ export function setupWorkoutToggle(
  */
 export function fillDynamicInputsFromCustomFields(
   customFields: Record<string, string | number | boolean> | undefined,
-  inputMap: Map<string, HTMLInputElement>
+  inputMap: Map<string, HTMLInputElement>,
 ): void {
   if (!customFields) {
     return;

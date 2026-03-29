@@ -28,7 +28,9 @@ export class TargetCalculator {
         return 0;
       }
 
-      return Math.max(...entriesAtTargetWeight.map((entry) => entry.reps));
+      return Math.max(
+        ...entriesAtTargetWeight.map((entry) => entry.reps),
+      );
     } catch {
       return 0;
     }
@@ -75,7 +77,10 @@ export class TargetCalculator {
    * @param targetReps - Target reps
    * @returns Progress percentage (0-100, capped at 100)
    */
-  static calculateProgressPercent(bestReps: number, targetReps: number): number {
+  static calculateProgressPercent(
+    bestReps: number,
+    targetReps: number,
+  ): number {
     if (targetReps <= 0) {
       return 0;
     }

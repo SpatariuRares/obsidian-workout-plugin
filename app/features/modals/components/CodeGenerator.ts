@@ -1,8 +1,17 @@
 // Utility class for generating code blocks
 
-import { CHART_TYPE, EmbeddedChartParams } from "@app/features/charts/types";
-import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer/types";
-import { TableCodeOptions, TABLE_TYPE } from "@app/features/tables/types";
+import {
+  CHART_TYPE,
+  EmbeddedChartParams,
+} from "@app/features/charts/types";
+import {
+  EmbeddedTimerParams,
+  TIMER_TYPE,
+} from "@app/features/timer/types";
+import {
+  TableCodeOptions,
+  TABLE_TYPE,
+} from "@app/features/tables/types";
 import { CONSTANTS } from "@app/constants";
 
 export class CodeGenerator {
@@ -24,9 +33,15 @@ export class CodeGenerator {
     if (params.chartType === CHART_TYPE.COMBINED) {
       if (params.exercise) lines.push(`exercise: ${params.exercise}`);
       if (params.workout) lines.push(`workout: ${params.workout}`);
-    } else if (params.chartType === CHART_TYPE.EXERCISE && params.exercise) {
+    } else if (
+      params.chartType === CHART_TYPE.EXERCISE &&
+      params.exercise
+    ) {
       lines.push(`exercise: ${params.exercise}`);
-    } else if (params.chartType === CHART_TYPE.WORKOUT && params.workout) {
+    } else if (
+      params.chartType === CHART_TYPE.WORKOUT &&
+      params.workout
+    ) {
       lines.push(`workout: ${params.workout}`);
     }
 
@@ -65,15 +80,22 @@ export class CodeGenerator {
     } else if (params.tableType === TABLE_TYPE.COMBINED) {
       if (params.exercise) lines.push(`exercise: ${params.exercise}`);
       if (params.workout) lines.push(`workout: ${params.workout}`);
-    } else if (params.tableType === TABLE_TYPE.EXERCISE && params.exercise) {
+    } else if (
+      params.tableType === TABLE_TYPE.EXERCISE &&
+      params.exercise
+    ) {
       lines.push(`exercise: ${params.exercise}`);
-    } else if (params.tableType === TABLE_TYPE.WORKOUT && params.workout) {
+    } else if (
+      params.tableType === TABLE_TYPE.WORKOUT &&
+      params.workout
+    ) {
       lines.push(`workout: ${params.workout}`);
     }
 
     // Add configuration
     lines.push(`limit: ${params.limit}`);
-    if (params.dateRange) lines.push(`dateRange: ${params.dateRange}`);
+    if (params.dateRange)
+      lines.push(`dateRange: ${params.dateRange}`);
 
     // Add display options
     if (!params.showAddButton) lines.push(`showAddButton: false`);
@@ -83,8 +105,10 @@ export class CodeGenerator {
     if (params.exactMatch) lines.push(`exactMatch: true`);
 
     // Add progressive overload targets
-    if (params.targetWeight) lines.push(`targetWeight: ${params.targetWeight}`);
-    if (params.targetReps) lines.push(`targetReps: ${params.targetReps}`);
+    if (params.targetWeight)
+      lines.push(`targetWeight: ${params.targetWeight}`);
+    if (params.targetReps)
+      lines.push(`targetReps: ${params.targetReps}`);
 
     lines.push("```");
 

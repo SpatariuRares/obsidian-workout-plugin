@@ -31,7 +31,8 @@ export class Feedback {
     options: FeedbackOptions = {},
   ): void {
     this.prepareContainer(container, options);
-    const { className = "workout-feedback-error", icon = "⚠️" } = options;
+    const { className = "workout-feedback-error", icon = "⚠️" } =
+      options;
 
     const errorDiv = container.createEl("div", { cls: className });
 

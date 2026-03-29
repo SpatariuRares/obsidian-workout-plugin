@@ -1,7 +1,8 @@
 /* Fallback table styles */
 .workout-charts-table-fallback {
   overflow: auto;
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-lg);
   padding: var(--workout-space-lg);
   background: var(--background-primary);
@@ -14,7 +15,8 @@
 
   th {
     padding: var(--workout-space-md) var(--workout-space-lg);
-    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-medium) solid
+      var(--background-modifier-border);
     text-align: left;
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
@@ -22,7 +24,8 @@
 
   td {
     padding: var(--workout-space-md) var(--workout-space-lg);
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     color: var(--text-normal);
   }
 }
@@ -31,7 +34,8 @@
   .workout-charts-table-fallback {
     .workout-charts-stats,
     .workout-charts-trend-header {
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      border: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       margin: var(--workout-space-md) 0;
       padding: var(--workout-space-lg);
     }

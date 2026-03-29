@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Tambahkan Blok Latihan",
+    "addMissingBlockIds": "Tambahkan ID yang hilang ke blok kode",
     "auditExerciseNames": "Nama Latihan Audit",
     "convertExercise": "Konversi Latihan",
     "createCsvLog": "Buat file log CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Hasilkan Referensi Tag",
     "insertTable": "Sisipkan Tabel",
     "manageMuscleTags": "Kelola Tag Otot",
-    "migrateExerciseTypes": "Migrasikan Jenis Latihan",
-    "addMissingBlockIds": "Tambahkan ID yang hilang ke blok kode"
+    "migrateExerciseTypes": "Migrasikan Jenis Latihan"
   },
   "common": {
     "bpm": "BPM",
     "cancel": "Batalkan",
+    "clear": "Hapus",
     "convert": "Konversi",
     "exercise": "Latihan",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Tidak Tersedia",
     "sec": "keamanan",
     "unknown": "Tidak Diketahui",
-    "workout": "Latihan",
-    "clear": "Hapus"
+    "workout": "Latihan"
   },
   "convert": {
     "currentType": "Jenis saat ini:",
@@ -453,8 +453,8 @@
     "noImbalances": "Tidak ada ketidakseimbangan",
     "noTags": "Tidak ada tag",
     "success": {
-      "csvCreated": "File CSV berhasil dibuat!",
       "blockIdsAdded": "Menambahkan ID yang hilang {count} dalam file {files}.",
+      "csvCreated": "File CSV berhasil dibuat!",
       "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Opsi",
     "addTag": "Tambahkan tag",
+    "auditStatusCloseMatch": "Kecocokan dekat",
+    "auditStatusExactMatch": "Kecocokan tepat",
+    "auditStatusNoMatch": "Tidak ada kecocokan",
+    "auditStatusPartialMatch": "Kecocokan parsial",
     "autocomplete": {
+      "addExercise": "Tambahkan \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Cocok/Cocok dengan awalan - Skor: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Cocok sebagian - Skor: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Pencocokan kata - Skor: {score}",
-      "addExercise": "Tambahkan \"{name}\""
+      "wordTooltip": "Pencocokan kata - Skor: {score}"
     },
     "buttons": {
       "addParameter": "Tambahkan parameter",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Opsi",
+      "currentFileInfo": "File saat ini: {fileName}",
       "exercise": "Latihan:",
       "reps": "Perwakilan:",
       "targetReps": "Target:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
-      "weight": "Berat ({unit}):",
-      "currentFileInfo": "File saat ini: {fileName}"
+      "weight": "Berat ({unit}):"
     },
     "layoutGrouped": "Dikategorikan berdasarkan otot",
     "layoutHorizontal": "Aliran horizontal",
@@ -565,17 +569,21 @@
     "notes": "Catatan (opsional):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "Ditemukan {count} ketidaksesuaian:",
+      "auditNoMatchFound": "Tidak ada kecocokan",
       "auditNoMismatches": "Tidak ada perbedaan hasil audit",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Berhasil mengubah nama file",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Kesalahan saat memindai: {error}",
       "auditScanning": "Pemindaian Audit",
       "canvasExportError": "Kesalahan Ekspor Kanvas",
       "canvasExported": "Gambar berhasil diekspor",
       "chartInserted": "✅ Grafik berhasil ditambahkan!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dasbor berhasil ditambahkan!",
+      "dismissAchievement": "Tutup pencapaian",
       "exerciseBlockInserted": "Blok Latihan Telah Ditambahkan",
       "exerciseNameRequired": "❌ mohon masukkan nama latihan",
       "exercisePageCreated": "Halaman olahraga berhasil dibuat!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Gagal memperbarui timer. Pastikan file tersebut terbuka di dalam editor.",
       "timerUpdated": "✅ Waktu telah diperbarui dengan sukses!",
       "validationCombinedMode": "⚠️ Untuk jenis 'olahraga + latihan', Anda harus mengisi kedua kolom!",
-      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid.",
-      "dismissAchievement": "Tutup pencapaian",
-      "auditScanError": "Kesalahan saat memindai: {error}",
-      "auditMismatchCount": "Ditemukan {count} ketidaksesuaian:",
-      "auditNoMatchFound": "Tidak ada kecocokan"
+      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid."
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -716,11 +720,7 @@
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
-    "workoutNameOptional": "Nama latihan (opsional):",
-    "auditStatusNoMatch": "Tidak ada kecocokan",
-    "auditStatusExactMatch": "Kecocokan tepat",
-    "auditStatusCloseMatch": "Kecocokan dekat",
-    "auditStatusPartialMatch": "Kecocokan parsial"
+    "workoutNameOptional": "Nama latihan (opsional):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Sedang menghasilkan...",
       "overwriting": "Menimpa...",
       "regenerateOverwrite": "Hasilkan ulang (menimpa)",
+      "runAllMaintenance": "Jalankan semua",
       "savePreset": "Simpan",
-      "saveProtocol": "Simpan",
-      "runAllMaintenance": "Jalankan semua"
+      "saveProtocol": "Simpan"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -760,11 +760,11 @@
       "protocolColor": "Warna latar belakang badge (format heksadesimal, contoh: #FF5733)",
       "quickWeightIncrement": "Nilai penambahan berat yang digunakan oleh tombol + dan - pada modal penciptaan/pengeditan log latihan (misalnya, 2,5 untuk penambahan/pengurangan 2,5 unit).",
       "repDuration": "Perkiraan waktu untuk melakukan satu repetisi. Digunakan ketika jumlah repetisi diketahui (misalnya, 'x 10 repetisi').",
+      "runAllMaintenance": "Jalankan semua tugas pemeliharaan secara berurutan. Aman untuk dijalankan beberapa kali.",
       "setDuration": "Digunakan ketika jenis representasi tidak ditentukan (sebagai opsi cadangan). Rentang yang umum: 30-60 detik.",
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat standar untuk latihan bertahap (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
-      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru.",
-      "runAllMaintenance": "Jalankan semua tugas pemeliharaan secara berurutan. Aman untuk dijalankan beberapa kali."
+      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "Warna ikon",
       "protocolName": "Nama protokol",
       "repDuration": "Durasi per pengulangan (detik)",
+      "runAllMaintenance": "Jalankan semua tugas pemeliharaan",
       "setDuration": "Durasi cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
-      "weightUnit": "Satuan berat",
-      "runAllMaintenance": "Jalankan semua tugas pemeliharaan"
+      "weightUnit": "Satuan berat"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -820,17 +820,17 @@
       "protocolName": "Masukkan nama protokol"
     },
     "sections": {
+      "advanced": "Lanjutan",
       "csvManagement": "Manajemen file CSV",
       "customProtocols": "Protokol khusus",
       "exampleData": "Contoh data",
       "filtering": "Penyaringan",
+      "maintenance": "Perawatan",
       "quickLog": "Pencatatan melalui perangkat seluler",
       "setupAndData": "Pengaturan & data",
       "templates": "Templat",
       "timerPresets": "Preset waktu",
-      "trainingParameters": "Parameter pelatihan",
-      "maintenance": "Perawatan",
-      "advanced": "Lanjutan"
+      "trainingParameters": "Parameter pelatihan"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",
@@ -839,21 +839,21 @@
       "editProtocol": "Ubah protokol"
     },
     "validation": {
-      "mustBePositive": "Harus lebih besar dari 0",
-      "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
+      "csvFolderNotFound": "Folder tidak ditemukan di penyimpanan. Jalankan Setup CSV untuk membuatnya.",
       "csvPathEmpty": "Jalur tidak boleh kosong",
-      "csvFolderNotFound": "Folder tidak ditemukan di penyimpanan. Jalankan Setup CSV untuk membuatnya."
+      "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
+      "mustBePositive": "Harus lebih besar dari 0"
     }
   },
   "stats": {
     "avgVolume": "Rata-rata Volume",
-    "recentTrend": "Tren Terkini",
-    "sessions": "Sesi",
     "max": "Maks: ",
     "min": "Min: ",
-    "title": "📈 Statistik {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (3 terakhir)",
-    "recentVsPrev": " (vs sblm.)"
+    "recentTrend": "Tren Terkini",
+    "recentVsPrev": " (vs sblm.)",
+    "sessions": "Sesi",
+    "title": "📈 Statistik {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Opsi",

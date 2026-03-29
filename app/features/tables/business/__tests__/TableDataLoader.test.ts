@@ -26,7 +26,10 @@ describe("TableDataLoader", () => {
         exactMatch: true,
       };
 
-      await TableDataLoader.getOptimizedCSVData(params, mockPlugin as any);
+      await TableDataLoader.getOptimizedCSVData(
+        params,
+        mockPlugin as any,
+      );
 
       expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({
         exercise: "Bench Press",
@@ -38,7 +41,10 @@ describe("TableDataLoader", () => {
       const mockPlugin = createMockPlugin([createLog()]);
       const params: EmbeddedTableParams = { workout: "Push Day" };
 
-      await TableDataLoader.getOptimizedCSVData(params, mockPlugin as any);
+      await TableDataLoader.getOptimizedCSVData(
+        params,
+        mockPlugin as any,
+      );
 
       expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({
         workout: "Push Day",
@@ -53,7 +59,10 @@ describe("TableDataLoader", () => {
         exactMatch: false,
       };
 
-      await TableDataLoader.getOptimizedCSVData(params, mockPlugin as any);
+      await TableDataLoader.getOptimizedCSVData(
+        params,
+        mockPlugin as any,
+      );
 
       expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({
         exercise: "Bench Press",
@@ -66,7 +75,10 @@ describe("TableDataLoader", () => {
       const mockPlugin = createMockPlugin([createLog()]);
       const params: EmbeddedTableParams = {};
 
-      await TableDataLoader.getOptimizedCSVData(params, mockPlugin as any);
+      await TableDataLoader.getOptimizedCSVData(
+        params,
+        mockPlugin as any,
+      );
 
       expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({});
     });
@@ -83,5 +95,4 @@ describe("TableDataLoader", () => {
       expect(result).toEqual(logs);
     });
   });
-
 });

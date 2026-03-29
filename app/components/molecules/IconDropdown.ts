@@ -78,7 +78,9 @@ export class IconDropdown {
           "data-value": opt.value,
         },
       });
-      item.textContent = opt.icon ? `${opt.icon} ${opt.label}` : opt.label;
+      item.textContent = opt.icon
+        ? `${opt.icon} ${opt.label}`
+        : opt.label;
     }
 
     // Toggle open/close
@@ -121,7 +123,9 @@ export class IconDropdown {
 
     // Item click
     wrapper
-      .querySelectorAll<HTMLButtonElement>(".workout-icon-dropdown-item")
+      .querySelectorAll<HTMLButtonElement>(
+        ".workout-icon-dropdown-item",
+      )
       .forEach((item) => {
         item.addEventListener(
           "click",

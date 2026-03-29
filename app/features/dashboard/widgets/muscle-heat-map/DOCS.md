@@ -57,6 +57,7 @@ muscle-heat-map/
 ### business/
 
 **`MuscleDataCalculator.ts`** - Tre responsabilita':
+
 1. `filterDataByTimeFrame()` - delega a `DateUtils` per filtrare i dati CSV per periodo
 2. `calculateMuscleGroupVolumes()` - itera i workout, usa `MuscleTagMapper` per trovare i muscoli coinvolti in ogni esercizio, accumula i volumi, normalizza le intensita' a scala 0-1
 3. `createBodyDataFromMuscleData()` - converte la Map di volumi per muscolo in un oggetto `BodyData` strutturato per il rendering, distribuendo i volumi tra parti bilaterali (left/right) e suddivisioni (upper/middle/lower chest)
@@ -64,6 +65,7 @@ muscle-heat-map/
 **`MuscleBalanceAnalyzer.ts`** - Confronta il volume totale dei muscoli frontali (chest, abs, biceps, quads) vs posteriori (back, triceps, hamstrings, glutes). Se la differenza supera il 30%, mostra un warning nel pannello info. Altrimenti mostra un messaggio di equilibrio.
 
 **`MuscleTagMapper.ts`** - Dato un nome esercizio, trova i gruppi muscolari associati:
+
 1. Cerca il file dell'esercizio nel vault via `ExercisePathResolver`
 2. Legge i tag dal frontmatter via `FrontmatterParser`
 3. Mappa ogni tag al gruppo muscolare canonico via `MUSCLE_TAG_MAP` (supporta tag custom via `DataFilter`)
@@ -79,12 +81,14 @@ muscle-heat-map/
 ### body/renderers/
 
 **`FrontView.ts`** - Contiene `BODY_VIEWS_SVG` con due funzioni template:
+
 - `FRONT(10 colori)` - ritorna stringa SVG con path dettagliati per: collo, piedi, inguine, addominali, polpacci, tibiali, obliqui, quadricipiti, avambracci, bicipiti, petto superiore, petto medio-inferiore, spalle, trapezi
 - `BACK(11 colori)` - ritorna stringa SVG con path per: trapezi, romboidi, dorsali, lombari, tricipiti, avambracci, glutei, femorali, polpacci, spalle posteriori
 
 Ogni gruppo muscolare SVG usa `style="color: ${colorParam}"` con `fill="currentColor"`.
 
 **`ViewDataPrepar.ts`** - Riceve `BodyData`, usa `IntensityCalculator` per normalizzare i valori raw a 0-1, poi `HeatMapColors` per convertire le intensita' in stringhe colore RGB. Due metodi:
+
 - `prepareFrontViewData()` - 10 colori per la vista frontale
 - `prepareBackViewData()` - 11 colori per la vista posteriore
 
@@ -93,6 +97,7 @@ Per muscoli bilaterali (biceps, quads, etc.) prende il max tra left e right.
 ### body/utils/
 
 **`HeatMapColors.ts`** - Genera colori su un gradiente a 4 fasce:
+
 - `0` -> `#e9ecef` (grigio, nessuna attivita')
 - `0 - 0.3` -> grigio chiaro -> arancione chiaro (interpolazione lineare RGB)
 - `0.3 - 0.7` -> arancione chiaro -> rosso vivo

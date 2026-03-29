@@ -142,7 +142,9 @@ export { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
  * - Validates numeric fields for NaN, reps must be > 0, weight must be >= 0
  * - Skips invalid entries with console warnings for debugging
  */
-export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
+export function parseCSVLogFile(
+  content: string,
+): CSVWorkoutLogEntry[] {
   try {
     const lines = content.split("\n").filter((line) => line.trim());
     if (lines.length === 0) {
@@ -156,7 +158,10 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
     const customColumnNames: string[] = [];
     const customColumnIndices: number[] = [];
     header.forEach((col, index) => {
-      if (!STANDARD_CSV_COLUMNS.includes(col as StandardCSVColumn) && col) {
+      if (
+        !STANDARD_CSV_COLUMNS.includes(col as StandardCSVColumn) &&
+        col
+      ) {
         customColumnNames.push(col);
         customColumnIndices.push(index);
       }
@@ -185,12 +190,14 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
       }
 
       // Check if entry has valid custom field data (for non-strength exercises)
-      const hasValidCustomData = customColumnIndices.some((colIndex) => {
-        const value = values[colIndex]?.trim();
-        if (!value) return false;
-        const numValue = parseFloat(value);
-        return !isNaN(numValue) && numValue > 0;
-      });
+      const hasValidCustomData = customColumnIndices.some(
+        (colIndex) => {
+          const value = values[colIndex]?.trim();
+          if (!value) return false;
+          const numValue = parseFloat(value);
+          return !isNaN(numValue) && numValue > 0;
+        },
+      );
 
       // Reject entries where reps <= 0 AND no valid custom field data
       if (reps <= 0 && !hasValidCustomData) {
@@ -211,7 +218,9 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
         : WorkoutProtocol.STANDARD;
 
       // Parse custom fields from dynamic columns
-      let customFields: Record<string, string | number | boolean> | undefined;
+      let customFields:
+        | Record<string, string | number | boolean>
+        | undefined;
       if (customColumnIndices.length > 0) {
         customFields = {};
         customColumnIndices.forEach((colIndex, i) => {
@@ -234,10 +243,19 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
         reps: reps,
         weight: weight,
         volume: volume,
-        origine: values[5] && values[5].trim() ? values[5].trim() : undefined,
-        workout: values[6] && values[6].trim() ? values[6].trim() : undefined,
+        origine:
+          values[5] && values[5].trim()
+            ? values[5].trim()
+            : undefined,
+        workout:
+          values[6] && values[6].trim()
+            ? values[6].trim()
+            : undefined,
         timestamp: isNaN(timestamp) ? Date.now() : timestamp,
-        notes: values[8] && values[8].trim() ? values[8].trim() : undefined,
+        notes:
+          values[8] && values[8].trim()
+            ? values[8].trim()
+            : undefined,
         protocol: protocol,
         customFields: customFields,
       };
@@ -257,7 +275,9 @@ export function parseCSVLogFile(content: string): CSVWorkoutLogEntry[] {
 /**
  * Parses a custom field value, attempting to convert to number or boolean
  */
-function parseCustomFieldValue(value: string): string | number | boolean {
+function parseCustomFieldValue(
+  value: string,
+): string | number | boolean {
   // Check for boolean
   const lowerValue = value.toLowerCase();
   if (lowerValue === "true") return true;
@@ -349,7 +369,9 @@ export function entryToCSVLine(
 /**
  * Collects all unique custom column names from entries
  */
-export function collectCustomColumns(entries: CSVWorkoutLogEntry[]): string[] {
+export function collectCustomColumns(
+  entries: CSVWorkoutLogEntry[],
+): string[] {
   const customColumnSet = new Set<string>();
   for (const entry of entries) {
     if (entry.customFields) {
@@ -379,7 +401,9 @@ export function entriesToCSVContent(
   const customColumns = existingCustomColumns
     ? [
         ...existingCustomColumns,
-        ...newCustomColumns.filter((c) => !existingCustomColumns.includes(c)),
+        ...newCustomColumns.filter(
+          (c) => !existingCustomColumns.includes(c),
+        ),
       ]
     : newCustomColumns;
 

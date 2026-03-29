@@ -1,7 +1,10 @@
 import { CSVCacheService } from "../CSVCacheService";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { App, TFile, Notice } from "obsidian";
-import { WorkoutChartsSettings, WorkoutLogData } from "@app/types/WorkoutLogData";
+import {
+  WorkoutChartsSettings,
+  WorkoutLogData,
+} from "@app/types/WorkoutLogData";
 import * as WorkoutLogDataModule from "@app/types/WorkoutLogData";
 
 // Mock dependencies
@@ -53,12 +56,12 @@ describe("CSVCacheService", () => {
       const mockParsedEntries = [{ some: "entry" }];
       const mockLogData = { date: "2023-01-01", workout: "Test" };
 
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue(
-        mockParsedEntries,
-      );
-      (WorkoutLogDataModule.convertFromCSVEntry as jest.Mock).mockReturnValue(
-        mockLogData,
-      );
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(mockParsedEntries);
+      (
+        WorkoutLogDataModule.convertFromCSVEntry as jest.Mock
+      ).mockReturnValue(mockLogData);
 
       // Execute
       const result = await service.getRawData();
@@ -68,13 +71,12 @@ describe("CSVCacheService", () => {
         "folder/workout_log.csv",
       );
       expect(mockVault.read).toHaveBeenCalledWith(mockFile);
-      expect(WorkoutLogDataModule.parseCSVLogFile).toHaveBeenCalledWith(
-        "header\nentry1",
-      );
-      expect(WorkoutLogDataModule.convertFromCSVEntry).toHaveBeenCalledWith(
-        mockParsedEntries[0],
-        mockFile,
-      );
+      expect(
+        WorkoutLogDataModule.parseCSVLogFile,
+      ).toHaveBeenCalledWith("header\nentry1");
+      expect(
+        WorkoutLogDataModule.convertFromCSVEntry,
+      ).toHaveBeenCalledWith(mockParsedEntries[0], mockFile);
 
       // Verify result
       expect(result).toHaveLength(1);
@@ -86,10 +88,12 @@ describe("CSVCacheService", () => {
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockResolvedValue("content");
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
-      (WorkoutLogDataModule.convertFromCSVEntry as jest.Mock).mockReturnValue(
-        {},
-      );
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{}]);
+      (
+        WorkoutLogDataModule.convertFromCSVEntry as jest.Mock
+      ).mockReturnValue({});
 
       await service.getRawData(); // First call caches data
 
@@ -113,7 +117,9 @@ describe("CSVCacheService", () => {
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockResolvedValue("content");
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{}]);
 
       // First load
       await service.getRawData();
@@ -140,12 +146,12 @@ describe("CSVCacheService", () => {
 
       // Create > 5000 entries
       const largeEntries = Array(5001).fill({});
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue(
-        largeEntries,
-      );
-      (WorkoutLogDataModule.convertFromCSVEntry as jest.Mock).mockReturnValue(
-        {},
-      );
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(largeEntries);
+      (
+        WorkoutLogDataModule.convertFromCSVEntry as jest.Mock
+      ).mockReturnValue({});
 
       // First load
       await service.getRawData();
@@ -170,7 +176,9 @@ describe("CSVCacheService", () => {
         return "content";
       });
 
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{}]);
 
       // Execute two calls in parallel
       const promise1 = service.getRawData();
@@ -209,7 +217,9 @@ describe("CSVCacheService", () => {
         .mockReturnValueOnce(mockFile);
 
       mockVault.read.mockResolvedValue("content");
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{}]);
 
       // Start the loading process
       const loadPromise = service.getRawData();
@@ -223,7 +233,9 @@ describe("CSVCacheService", () => {
       const result = await loadPromise;
 
       // Verify it tried multiple times
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(3);
+      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(
+        3,
+      );
       expect(mockVault.read).toHaveBeenCalledWith(mockFile);
       expect(result).toHaveLength(1);
 
@@ -244,7 +256,9 @@ describe("CSVCacheService", () => {
 
       // Verify gave up
       expect(result).toEqual([]);
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(4); // Initial + 3 retries
+      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(
+        4,
+      ); // Initial + 3 retries
 
       jest.useRealTimers();
     });
@@ -256,7 +270,9 @@ describe("CSVCacheService", () => {
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockResolvedValue("content");
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{}]);
 
       await service.getRawData();
 
@@ -286,8 +302,8 @@ describe("CSVCacheService event integration", () => {
   let mockVault: any;
 
   const mockEntry = {
-    exercise: 'Squat',
-    date: '2025-01-01',
+    exercise: "Squat",
+    date: "2025-01-01",
     reps: 10,
     weight: 100,
     volume: 1000,
@@ -301,14 +317,20 @@ describe("CSVCacheService event integration", () => {
       read: jest.fn(),
     };
     mockApp = { vault: mockVault } as unknown as App;
-    mockSettings = { csvLogFilePath: "workout_log.csv" } as WorkoutChartsSettings;
+    mockSettings = {
+      csvLogFilePath: "workout_log.csv",
+    } as WorkoutChartsSettings;
 
     // Setup vault to return valid data so getRawData() populates cache
     const mockFile = new TFile();
     mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
     mockVault.read.mockResolvedValue("content");
-    (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([{}]);
-    (WorkoutLogDataModule.convertFromCSVEntry as jest.Mock).mockReturnValue(mockEntry);
+    (
+      WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+    ).mockReturnValue([{}]);
+    (
+      WorkoutLogDataModule.convertFromCSVEntry as jest.Mock
+    ).mockReturnValue(mockEntry);
 
     eventBus = new WorkoutEventBus();
     cache = new CSVCacheService(mockApp, mockSettings, eventBus);
@@ -322,7 +344,10 @@ describe("CSVCacheService event integration", () => {
     await cache.getRawData();
     expect(cache.isCacheValid()).toBe(true);
 
-    eventBus.emit({ type: 'log:added', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+    eventBus.emit({
+      type: "log:added",
+      payload: { entry: mockEntry, context: { exercise: "Squat" } },
+    });
 
     expect(cache.isCacheValid()).toBe(false);
   });
@@ -331,7 +356,10 @@ describe("CSVCacheService event integration", () => {
     await cache.getRawData();
     expect(cache.isCacheValid()).toBe(true);
 
-    eventBus.emit({ type: 'log:updated', payload: { previous: mockEntry, updated: mockEntry } });
+    eventBus.emit({
+      type: "log:updated",
+      payload: { previous: mockEntry, updated: mockEntry },
+    });
 
     expect(cache.isCacheValid()).toBe(false);
   });
@@ -340,7 +368,10 @@ describe("CSVCacheService event integration", () => {
     await cache.getRawData();
     expect(cache.isCacheValid()).toBe(true);
 
-    eventBus.emit({ type: 'log:deleted', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+    eventBus.emit({
+      type: "log:deleted",
+      payload: { entry: mockEntry, context: { exercise: "Squat" } },
+    });
 
     expect(cache.isCacheValid()).toBe(false);
   });
@@ -349,7 +380,10 @@ describe("CSVCacheService event integration", () => {
     await cache.getRawData();
     expect(cache.isCacheValid()).toBe(true);
 
-    eventBus.emit({ type: 'log:bulk-changed', payload: { count: 5, operation: 'import' } });
+    eventBus.emit({
+      type: "log:bulk-changed",
+      payload: { count: 5, operation: "import" },
+    });
 
     expect(cache.isCacheValid()).toBe(false);
   });
@@ -358,7 +392,7 @@ describe("CSVCacheService event integration", () => {
     await cache.getRawData();
     expect(cache.isCacheValid()).toBe(true);
 
-    eventBus.emit({ type: 'muscle-tags:changed', payload: {} });
+    eventBus.emit({ type: "muscle-tags:changed", payload: {} });
 
     expect(cache.isCacheValid()).toBe(true);
   });
@@ -369,10 +403,12 @@ describe("CSVCacheService event integration", () => {
 
     cache.destroy();
 
-    eventBus.emit({ type: 'log:added', payload: { entry: mockEntry, context: { exercise: 'Squat' } } });
+    eventBus.emit({
+      type: "log:added",
+      payload: { entry: mockEntry, context: { exercise: "Squat" } },
+    });
 
     // Listener removed — cache should remain valid
     expect(cache.isCacheValid()).toBe(true);
   });
-
 });

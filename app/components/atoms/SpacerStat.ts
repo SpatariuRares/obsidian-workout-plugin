@@ -5,9 +5,9 @@
  */
 
 export interface SpacerStatProps {
-	icon?: string;
-	value: string;
-	className?: string;
+  icon?: string;
+  value: string;
+  className?: string;
 }
 
 /**
@@ -15,23 +15,26 @@ export interface SpacerStatProps {
  * This is an atom - it has no dependencies on other UI components
  */
 export class SpacerStat {
-	/**
-	 * Create a spacer stat element
-	 * @param parent - Parent HTML element
-	 * @param props - SpacerStat properties
-	 * @returns The created span element
-	 */
-	static create(parent: HTMLElement, props: SpacerStatProps): HTMLSpanElement {
-		const span = parent.createEl("span", {
-			cls: props.className || "workout-spacer-stat",
-		});
+  /**
+   * Create a spacer stat element
+   * @param parent - Parent HTML element
+   * @param props - SpacerStat properties
+   * @returns The created span element
+   */
+  static create(
+    parent: HTMLElement,
+    props: SpacerStatProps,
+  ): HTMLSpanElement {
+    const span = parent.createEl("span", {
+      cls: props.className || "workout-spacer-stat",
+    });
 
-		if (props.icon) {
-			span.appendText(props.icon);
-		}
+    if (props.icon) {
+      span.appendText(props.icon);
+    }
 
-		span.createEl("strong", { text: props.value });
+    span.createEl("strong", { text: props.value });
 
-		return span;
-	}
+    return span;
+  }
 }

@@ -122,12 +122,20 @@ describe("MuscleTagService", () => {
 
   describe("constructor", () => {
     it("should compute CSV path based on settings", () => {
-      expect(service.getCsvPath()).toBe("workout-data/muscle-tags.csv");
+      expect(service.getCsvPath()).toBe(
+        "workout-data/muscle-tags.csv",
+      );
     });
 
     it("should handle root-level csvLogFilePath", () => {
-      const rootSettings = { ...mockSettings, csvLogFilePath: "logs.csv" };
-      const rootService = new MuscleTagService(mockApp as any, rootSettings);
+      const rootSettings = {
+        ...mockSettings,
+        csvLogFilePath: "logs.csv",
+      };
+      const rootService = new MuscleTagService(
+        mockApp as any,
+        rootSettings,
+      );
       expect(rootService.getCsvPath()).toBe("muscle-tags.csv");
       rootService.destroy();
     });
@@ -179,7 +187,9 @@ back,back,en`;
 
     it("should include both user language and English tags", async () => {
       // Change user language to Italian
-      (window.localStorage.getItem as jest.Mock).mockReturnValue("it");
+      (window.localStorage.getItem as jest.Mock).mockReturnValue(
+        "it",
+      );
 
       const csvContent = `tag,muscleGroup,language
 petto,chest,it
@@ -204,7 +214,9 @@ spalle,shoulders,it`;
       expect(tags.get("spalle")).toBe("shoulders");
 
       // Reset to English
-      (window.localStorage.getItem as jest.Mock).mockReturnValue("en");
+      (window.localStorage.getItem as jest.Mock).mockReturnValue(
+        "en",
+      );
     });
 
     it("should return default tags when CSV does not exist", async () => {
@@ -507,7 +519,9 @@ petto,chest,en`;
       // Values with special chars should be quoted
       expect(writtenContent).toContain('"petto, alto",chest');
       expect(writtenContent).toContain('"back ""upper""",back');
-      expect(writtenContent).toMatch(/"tag\nwith\nnewlines",shoulders/);
+      expect(writtenContent).toMatch(
+        /"tag\nwith\nnewlines",shoulders/,
+      );
     });
 
     it("should update cache after saving", async () => {
@@ -529,7 +543,9 @@ petto,chest,en`;
 
       const tags = new Map([["petto", "chest"]]);
 
-      await expect(service.saveTags(tags)).rejects.toThrow("Write failed");
+      await expect(service.saveTags(tags)).rejects.toThrow(
+        "Write failed",
+      );
     });
   });
 
@@ -752,7 +768,10 @@ petto,chest,en`;
 
   describe("destroy", () => {
     it("should clear cache on destroy", async () => {
-      const service2 = new MuscleTagService(mockApp as any, mockSettings);
+      const service2 = new MuscleTagService(
+        mockApp as any,
+        mockSettings,
+      );
 
       const csvContent = `tag,muscleGroup,language\nchest,chest,en`;
       const mockFile = new TFile();
@@ -786,7 +805,10 @@ petto,chest,en`;
       service.destroy();
 
       // Re-create service for testing
-      const newService = new MuscleTagService(mockApp as any, mockSettings);
+      const newService = new MuscleTagService(
+        mockApp as any,
+        mockSettings,
+      );
 
       // Should load fresh (not use old cache)
       mockVault.read.mockClear();
@@ -799,7 +821,9 @@ petto,chest,en`;
 
   describe("getCsvPath", () => {
     it("should return the computed CSV path", () => {
-      expect(service.getCsvPath()).toBe("workout-data/muscle-tags.csv");
+      expect(service.getCsvPath()).toBe(
+        "workout-data/muscle-tags.csv",
+      );
     });
   });
 });

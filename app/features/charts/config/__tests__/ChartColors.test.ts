@@ -36,21 +36,23 @@ describe("ChartColors", () => {
     expect(colors.primary.main).toBe("#112233");
     expect(colors.primary.light).toBe("rgba(17, 34, 51, 0.2)");
     expect(colors.grid).toBe("rgba(16, 16, 16, 0.25)");
-    expect(colors.tooltip.background).toBe("rgba(250, 250, 250, 0.95)");
+    expect(colors.tooltip.background).toBe(
+      "rgba(250, 250, 250, 0.95)",
+    );
     expect(colors.text).toBe("#111111");
   });
 
   it("selects the correct color scheme for chart types", () => {
     const colors = ChartColors.getChartColors();
 
-    expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.VOLUME)).toEqual(
-      colors.primary,
-    );
-    expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.WEIGHT)).toEqual(
-      colors.secondary,
-    );
-    expect(ChartColors.getColorSchemeForType(CHART_DATA_TYPE.REPS)).toEqual(
-      colors.accent,
-    );
+    expect(
+      ChartColors.getColorSchemeForType(CHART_DATA_TYPE.VOLUME),
+    ).toEqual(colors.primary);
+    expect(
+      ChartColors.getColorSchemeForType(CHART_DATA_TYPE.WEIGHT),
+    ).toEqual(colors.secondary);
+    expect(
+      ChartColors.getColorSchemeForType(CHART_DATA_TYPE.REPS),
+    ).toEqual(colors.accent);
   });
 });

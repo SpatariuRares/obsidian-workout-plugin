@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
+    "addMissingBlockIds": "Přidejte chybějící ID do bloků kódu",
     "auditExerciseNames": "Kontrola názvů cvičení",
     "convertExercise": "Převést cvičení",
     "createCsvLog": "Vytvořte soubor CSV pro logování",
@@ -34,12 +35,12 @@
     "generateTagReference": "Vygenerovat referenční seznam tagů",
     "insertTable": "Vložit tabulku",
     "manageMuscleTags": "Spravovat značky svalů",
-    "migrateExerciseTypes": "Migruj typ cvičení",
-    "addMissingBlockIds": "Přidejte chybějící ID do bloků kódu"
+    "migrateExerciseTypes": "Migruj typ cvičení"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Zrušit",
+    "clear": "Vymazat",
     "convert": "Převést",
     "exercise": "Cvičení",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Nedostupné",
     "sec": "bezpečnost",
     "unknown": "Neznámé",
-    "workout": "Trénink",
-    "clear": "Vymazat"
+    "workout": "Trénink"
   },
   "convert": {
     "currentType": "Současný typ:",
@@ -453,8 +453,8 @@
     "noImbalances": "Nebyl nalezen žádný nerovnováha",
     "noTags": "Žádné označení",
     "success": {
-      "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
       "blockIdsAdded": "Přidány {count} chybějící ID(y) ve souboru(ech) {files}",
+      "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
       "noBlockIdsNeeded": "Všechny bloky kódu již mají ID."
     },
     "tagReferenceGenerated": "Vytvořeno odkazování na tagy",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Akce",
     "addTag": "Přidat značku",
+    "auditStatusCloseMatch": "Blízká shoda",
+    "auditStatusExactMatch": "Přesná shoda",
+    "auditStatusNoMatch": "Žádná shoda",
+    "auditStatusPartialMatch": "Částečná shoda",
     "autocomplete": {
+      "addExercise": "Přidat \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Přesné/Základní shoda - Skóre: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Částečná shoda - Skóre: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Slovo shoda - Skóre: {score}",
-      "addExercise": "Přidat \"{name}\""
+      "wordTooltip": "Slovo shoda - Skóre: {score}"
     },
     "buttons": {
       "addParameter": "Přidat parametr",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Akce",
+      "currentFileInfo": "Aktuální soubor: {fileName}",
       "exercise": "Trénink:",
       "reps": "Opakování:",
       "targetReps": "Cílový počet opakování:",
       "targetWeight": "Cílová hmotnost ({unit}):",
       "volume": "Hlasitost ({unit}):",
-      "weight": "Váha ({unit}):",
-      "currentFileInfo": "Aktuální soubor: {fileName}"
+      "weight": "Váha ({unit}):"
     },
     "layoutGrouped": "Grupováno podle svalu",
     "layoutHorizontal": "Protilehlý proud",
@@ -565,17 +569,21 @@
     "notes": "Poznámky (volitelné):",
     "notices": {
       "auditConfirmRenameFile": "Audit Potvrdit přejmenování souboru",
+      "auditMismatchCount": "Nalezeno {count} neshod:",
+      "auditNoMatchFound": "Žádná shoda nalezena",
       "auditNoMismatches": "Audit Žádné neshody",
       "auditRenameError": "Audit Chyba přejmenování",
       "auditRenameFileError": "Audit Chyba přejmenování souboru",
       "auditRenameFileSuccess": "Audit Úspěch přejmenování souboru",
       "auditRenameSuccess": "Audit Úspěch přejmenování",
+      "auditScanError": "Chyba při skenování: {error}",
       "auditScanning": "Audit Skenerování",
       "canvasExportError": "Chyba exportu plátna",
       "canvasExported": "Plátno exportováno",
       "chartInserted": "✅ Graf vložen úspěšně!",
       "confirmUpdateTarget": "Potvrďte aktualizaci cíle",
       "dashboardInserted": "✅ Dashboard vložen úspěšně!",
+      "dismissAchievement": "Zavřít úspěch",
       "exerciseBlockInserted": "Vloženo blok cvičení",
       "exerciseNameRequired": "❌ Zadejte název cvičení",
       "exercisePageCreated": "Stránka cvičení vytvořena úspěšně!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Neúspěšné provedení aktualizace časovače. Ujistěte se, že soubor je otevřen v editoru.",
       "timerUpdated": "✅ Časovač byl úspěšně aktualizován!",
       "validationCombinedMode": "⚠️ pro typ 'cvičení + trénink' musíte vyplnit obě pole!",
-      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami",
-      "dismissAchievement": "Zavřít úspěch",
-      "auditScanError": "Chyba při skenování: {error}",
-      "auditMismatchCount": "Nalezeno {count} neshod:",
-      "auditNoMatchFound": "Žádná shoda nalezena"
+      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -716,11 +720,7 @@
     },
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
-    "workoutNameOptional": "Název tréninku (volitelné):",
-    "auditStatusNoMatch": "Žádná shoda",
-    "auditStatusExactMatch": "Přesná shoda",
-    "auditStatusCloseMatch": "Blízká shoda",
-    "auditStatusPartialMatch": "Částečná shoda"
+    "workoutNameOptional": "Název tréninku (volitelné):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Generování...",
       "overwriting": "Přepsání...",
       "regenerateOverwrite": "Obnovit (přepsat)",
+      "runAllMaintenance": "Spustit vše",
       "savePreset": "Uložit",
-      "saveProtocol": "Uložit",
-      "runAllMaintenance": "Spustit vše"
+      "saveProtocol": "Uložit"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Chybící soubor s hmotnostními značkami pro složku již existuje. Chcete přepsat ho výchozími hodnotami? Tím budou odstraněny všechny vlastní značky.",
@@ -760,11 +760,11 @@
       "protocolColor": "Barva pozadavky známky (formát hex, např. #FF5733)",
       "quickWeightIncrement": "Vzrůstný krok používaný tlačítkymi +/- v modálech pro vytvoření/upravování deníku cvičení (např., 2,5 pro +2,5 / -2,5 jednotek)",
       "repDuration": " Odhadovaná doba na provedení jednoho opakování. Používáno při známém počtu opakování (např., 'x 10 opakování').",
+      "runAllMaintenance": "Spusťte všechny úkoly údržby postupně. Bezpečné pro opakované spuštění.",
       "setDuration": "Používáno při nezadaných opakováních (pádback). Obvyklý rozsah: 30-60 sekund.",
       "setupCSV": "Vytvořte oba soubory workout_logs.csv a muscle-tags.csv do konfigurované složky.",
       "weightIncrement": "Výchozí zvětšovací krok pro přetahování (např., 2,5 pro zvětšení o 2,5 jednotek)",
-      "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy.",
-      "runAllMaintenance": "Spusťte všechny úkoly údržby postupně. Bezpečné pro opakované spuštění."
+      "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy."
     },
     "labels": {
       "csvPath": "Cesta k souboru CSV logu",
@@ -786,10 +786,10 @@
       "protocolColor": "Barva ocenění",
       "protocolName": "Název protokolu",
       "repDuration": "Doba na opakování (sekundy)",
+      "runAllMaintenance": "Spustit všechny úkoly údržby",
       "setDuration": "Doba náhrady (sekundy)",
       "setupCSV": "Nastavení souborů CSV",
-      "weightUnit": "Jednotka hmotnosti",
-      "runAllMaintenance": "Spustit všechny úkoly údržby"
+      "weightUnit": "Jednotka hmotnosti"
     },
     "messages": {
       "confirmDeletePreset": "Jste si jisti, že chcete tento přednastavený postup smazat?",
@@ -820,17 +820,17 @@
       "protocolName": "Zadejte název protokolu"
     },
     "sections": {
+      "advanced": "Pokročilé",
       "csvManagement": "Správa CSV souborů",
       "customProtocols": "Vlastní protokoly",
       "exampleData": "UKÁZKOVÉ ÚDaje",
       "filtering": "Filtrování",
+      "maintenance": "Údržba",
       "quickLog": "Mobilní záznamy",
       "setupAndData": "Nastavení a data",
       "templates": "Šablony",
       "timerPresets": "Nastavení časových presetů",
-      "trainingParameters": "Parametry trénování",
-      "maintenance": "Údržba",
-      "advanced": "Pokročilé"
+      "trainingParameters": "Parametry trénování"
     },
     "tooltips": {
       "deletePreset": "Smazat přednastavení",
@@ -839,21 +839,21 @@
       "editProtocol": "Upravit protokol"
     },
     "validation": {
-      "mustBePositive": "Musí být větší než 0",
-      "mustBeNonNegative": "Musí být 0 nebo větší",
+      "csvFolderNotFound": "Seznam nebylo nalezeno ve úložišti. Spusťte nastavení CSV pro jeho vytvoření.",
       "csvPathEmpty": "Cesta nemůže být prázdná",
-      "csvFolderNotFound": "Seznam nebylo nalezeno ve úložišti. Spusťte nastavení CSV pro jeho vytvoření."
+      "mustBeNonNegative": "Musí být 0 nebo větší",
+      "mustBePositive": "Musí být větší než 0"
     }
   },
   "stats": {
     "avgVolume": "Průměrný objem",
-    "recentTrend": "Nový trend",
-    "sessions": "Séance",
     "max": "Max: ",
     "min": "Min: ",
-    "title": "📈 Statistiky {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (poslední 3)",
-    "recentVsPrev": " (vs předch.)"
+    "recentTrend": "Nový trend",
+    "recentVsPrev": " (vs předch.)",
+    "sessions": "Séance",
+    "title": "📈 Statistiky {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Akce",

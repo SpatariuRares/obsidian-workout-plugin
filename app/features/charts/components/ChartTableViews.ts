@@ -91,7 +91,8 @@ export class ChartTableViews {
 
     // Get the main dataset (first dataset, excluding trend line)
     const mainDataset =
-      datasets.find((ds) => ds.label !== t("table.trendLine")) || datasets[0];
+      datasets.find((ds) => ds.label !== t("table.trendLine")) ||
+      datasets[0];
 
     if (mainDataset && mainDataset.data) {
       labels.forEach((label, index) => {

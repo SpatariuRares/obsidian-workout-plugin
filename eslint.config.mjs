@@ -115,7 +115,7 @@ export default [
       // i18next/no-literal-string rule removed from here and moved to a targeted block below
     },
   },
-  
+
   // Targeted rules for UI components (features and components)
   {
     files: [
@@ -131,7 +131,8 @@ export default [
         {
           mode: "all",
           "should-validate-template": true,
-          message: "Use LocalizationService.t() instead of hardcoded strings",
+          message:
+            "Use LocalizationService.t() instead of hardcoded strings",
           callees: {
             exclude: [
               "t",

@@ -254,7 +254,7 @@ describe("entryToCSVLine - CSV Injection Protection", () => {
   test("should protect exercise names starting with formula characters", () => {
     const entry = {
       ...baseEntry,
-      exercise: "=HYPERLINK(\"http://evil.com\",\"Click me\")",
+      exercise: '=HYPERLINK("http://evil.com","Click me")',
     };
 
     const csvLine = entryToCSVLine(entry);
@@ -311,7 +311,7 @@ describe("entryToCSVLine - CSV Injection Protection", () => {
     const csvLine = entryToCSVLine(entry);
 
     // Should prefix with single quote AND escape the quote character
-    expect(csvLine).toContain("'=1+1\"\"test"); // Double quote escaped
+    expect(csvLine).toContain('\'=1+1""test'); // Double quote escaped
   });
 
   test("should protect multiple fields in same entry", () => {
@@ -556,7 +556,10 @@ describe("Custom Fields - Dynamic CSV Columns", () => {
         },
       ];
 
-      const csv = entriesToCSVContent(entries, ["existingField", "duration"]);
+      const csv = entriesToCSVContent(entries, [
+        "existingField",
+        "duration",
+      ]);
       const lines = csv.split("\n");
 
       // Existing columns first, then new columns sorted

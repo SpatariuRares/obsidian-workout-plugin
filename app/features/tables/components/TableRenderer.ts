@@ -1,9 +1,15 @@
-import { TableRow, EmbeddedTableParams } from "@app/features/tables/types";
+import {
+  TableRow,
+  EmbeddedTableParams,
+} from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import { TableErrorMessage, TableHeader } from "@app/features/tables/ui";
+import {
+  TableErrorMessage,
+  TableHeader,
+} from "@app/features/tables/ui";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { ProtocolResolver } from "@app/features/tables/business/ProtocolResolver";
@@ -16,7 +22,9 @@ export class TableRenderer {
    * @returns The table container element
    */
   static createTableContainer(contentDiv: HTMLElement): HTMLElement {
-    return contentDiv.createEl("div", { cls: "workout-table-container" });
+    return contentDiv.createEl("div", {
+      cls: "workout-table-container",
+    });
   }
 
   /**
@@ -42,14 +50,24 @@ export class TableRenderer {
     try {
       const fragment = document.createDocumentFragment();
 
-      const table = fragment.appendChild(document.createElement("table"));
+      const table = fragment.appendChild(
+        document.createElement("table"),
+      );
       table.className = "workout-log-table";
 
       TableHeader.render(table, headers);
 
-      const tbody = table.appendChild(document.createElement("tbody"));
+      const tbody = table.appendChild(
+        document.createElement("tbody"),
+      );
 
-      this.applyRowGroupingOptimized(tbody, rows, headers, plugin, signal);
+      this.applyRowGroupingOptimized(
+        tbody,
+        rows,
+        headers,
+        plugin,
+        signal,
+      );
 
       tableContainer.appendChild(fragment);
 
@@ -64,7 +82,10 @@ export class TableRenderer {
    * @param container - The container element to render the message in
    * @param message - Error message to display
    */
-  static renderFallbackMessage(container: HTMLElement, message: string): void {
+  static renderFallbackMessage(
+    container: HTMLElement,
+    message: string,
+  ): void {
     TableErrorMessage.render(container, message);
   }
 
@@ -102,19 +123,30 @@ export class TableRenderer {
       const groupRows = groupedRows[dateKey];
       const spacerData = SpacerRowCalculator.calculate(groupRows);
 
-      const spacerRow = fragment.appendChild(document.createElement("tr"));
+      const spacerRow = fragment.appendChild(
+        document.createElement("tr"),
+      );
       spacerRow.className = "workout-table-spacer";
 
       // First cell: formatted date
-      const dateCell = spacerRow.appendChild(document.createElement("td"));
+      const dateCell = spacerRow.appendChild(
+        document.createElement("td"),
+      );
       dateCell.className = "workout-table-spacer-date-cell";
-      const formattedDate = DateUtils.toShortDate(groupRows[0].originalDate);
+      const formattedDate = DateUtils.toShortDate(
+        groupRows[0].originalDate,
+      );
       dateCell.textContent = formattedDate;
 
       // Create summary cell for the remaining columns
-      const summaryCell = spacerRow.appendChild(document.createElement("td"));
+      const summaryCell = spacerRow.appendChild(
+        document.createElement("td"),
+      );
       summaryCell.className = "workout-table-spacer-summary-cell";
-      summaryCell.setAttribute("colspan", (columnCount - 1).toString());
+      summaryCell.setAttribute(
+        "colspan",
+        (columnCount - 1).toString(),
+      );
 
       spacerData.stats.forEach((stat) => {
         SpacerStat.create(summaryCell, stat);
@@ -155,7 +187,12 @@ export class TableRenderer {
           td.textContent = cell;
         } else if (cellIndex === actionsColumnIndex) {
           td.className = "workout-table-actions-cell";
-          TableActions.renderActionButtons(td, row.originalLog, plugin, signal);
+          TableActions.renderActionButtons(
+            td,
+            row.originalLog,
+            plugin,
+            signal,
+          );
         } else if (cellIndex === volumeColumnIndex) {
           td.className = "workout-table-volume-cell";
           td.textContent = cell;

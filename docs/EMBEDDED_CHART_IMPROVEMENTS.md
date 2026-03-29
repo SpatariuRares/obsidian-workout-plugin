@@ -4,13 +4,13 @@
 
 Il sistema attualmente supporta questi tipi di esercizi:
 
-| Tipo | Parametri | Chart Data Types Disponibili |
-|------|-----------|------------------------------|
-| **Strength** | reps, weight | volume, weight, reps |
-| **Timed** | duration | duration |
-| **Distance** | distance, duration (opt) | distance, duration, pace |
-| **Cardio** | duration, distance (opt), heartRate (opt) | duration, distance, heartRate |
-| **Custom** | definiti dall'utente | parametri numerici custom |
+| Tipo         | Parametri                                 | Chart Data Types Disponibili  |
+| ------------ | ----------------------------------------- | ----------------------------- |
+| **Strength** | reps, weight                              | volume, weight, reps          |
+| **Timed**    | duration                                  | duration                      |
+| **Distance** | distance, duration (opt)                  | distance, duration, pace      |
+| **Cardio**   | duration, distance (opt), heartRate (opt) | duration, distance, heartRate |
+| **Custom**   | definiti dall'utente                      | parametri numerici custom     |
 
 ---
 
@@ -59,6 +59,7 @@ static getTrendIndicators(
 **File:** `app/features/dashboard/ui/StatsBox.ts:41-53`
 
 **Problema:** Le unità sono hardcoded come "kg":
+
 - Linea 41: `${stats.avgVolume} kg`
 - Linea 46: `${stats.maxVolume} kg`
 - Linea 52: `${stats.minVolume} kg`
@@ -79,6 +80,7 @@ const UNITS_MAP: Record<CHART_DATA_TYPE, string> = {
 ```
 
 **Inoltre:** Il titolo "Volume Statistics" (linea 32) dovrebbe essere dinamico:
+
 ```typescript
 const titleMap = {
   volume: "Volume Statistics",
@@ -135,9 +137,11 @@ private static calculateRecentTrend(
 
 ```typescript
 const direction =
-  percentValue > 0 ? "up" :    // Sempre "up" = positivo
-  percentValue < 0 ? "down" :
-  "neutral";
+  percentValue > 0
+    ? "up" // Sempre "up" = positivo
+    : percentValue < 0
+      ? "down"
+      : "neutral";
 ```
 
 Per pace, `percentValue < 0` (pace diminuito) è un MIGLIORAMENTO.
@@ -173,9 +177,11 @@ static render(
 ```typescript
 headerRow.createEl("th", {
   text:
-    chartType === CHART_DATA_TYPE.VOLUME ? "Volume" :
-    chartType === CHART_DATA_TYPE.WEIGHT ? "Weight" :
-    "Repetitions",  // Fallback per tutto il resto!
+    chartType === CHART_DATA_TYPE.VOLUME
+      ? "Volume"
+      : chartType === CHART_DATA_TYPE.WEIGHT
+        ? "Weight"
+        : "Repetitions", // Fallback per tutto il resto!
 });
 ```
 
@@ -212,11 +218,16 @@ headerRow.createEl("th", {
 const trendIndicators = TrendCalculator.getTrendIndicators(
   slope,
   volumeData,
-  resolvedType // NUOVO
+  resolvedType, // NUOVO
 );
 
 // Linea 279: Passare dataType a TrendHeader
-TrendHeader.render(contentDiv, trendIndicators, volumeData, resolvedType);
+TrendHeader.render(
+  contentDiv,
+  trendIndicators,
+  volumeData,
+  resolvedType,
+);
 
 // Linea 313-319: Passare dataType a StatsBox
 StatsBox.render(
@@ -224,7 +235,7 @@ StatsBox.render(
   labels,
   volumeData,
   params.chartType || CHART_TYPE.EXERCISE,
-  resolvedType // NUOVO
+  resolvedType, // NUOVO
 );
 ```
 
@@ -241,7 +252,8 @@ StatsBox.render(
 ```typescript
 function formatDuration(seconds: number): string {
   if (seconds < 60) return `${seconds}s`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+  if (seconds < 3600)
+    return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
   const hours = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
   return `${hours}h ${mins}m`;
@@ -297,32 +309,32 @@ Attualmente i colori sono definiti in `ChartDataUtils.getChartDataForType()`.
 
 **Proposta di standardizzazione:**
 
-| Tipo | Colore | Hex | Significato |
-|------|--------|-----|-------------|
-| Volume | Verde | #4CAF50 | Forza |
-| Weight | Arancione | #FF9800 | Carico |
-| Reps | Arancione | #FF9800 | Ripetizioni |
-| Duration | Blu | #2196F3 | Tempo |
-| Distance | Viola | #9C27B0 | Distanza |
-| Pace | Rosa | #E91E63 | Velocità |
-| HeartRate | Rosso | #F44336 | Cardio |
+| Tipo      | Colore    | Hex     | Significato |
+| --------- | --------- | ------- | ----------- |
+| Volume    | Verde     | #4CAF50 | Forza       |
+| Weight    | Arancione | #FF9800 | Carico      |
+| Reps      | Arancione | #FF9800 | Ripetizioni |
+| Duration  | Blu       | #2196F3 | Tempo       |
+| Distance  | Viola     | #9C27B0 | Distanza    |
+| Pace      | Rosa      | #E91E63 | Velocità    |
+| HeartRate | Rosso     | #F44336 | Cardio      |
 
 ---
 
 ## Riepilogo Priorità
 
-| # | Miglioria | Impatto | Effort |
-|---|-----------|---------|--------|
-| 1 | TrendCalculator inverso per pace | Alto | Basso |
-| 2 | StatsBox unità dinamiche | Alto | Medio |
-| 3 | StatsBox trend inverso | Alto | Basso |
-| 4 | TrendHeader context type | Alto | Basso |
-| 5 | MobileTable estensione tipi | Medio | Basso |
-| 6 | Propagazione dataType | Alto | Medio |
-| 7 | Formattazione durata | Medio | Basso |
-| 8 | Formattazione pace | Medio | Basso |
-| 9 | Y-Axis labels | Basso | Basso |
-| 10 | Colori standard | Basso | Basso |
+| #   | Miglioria                        | Impatto | Effort |
+| --- | -------------------------------- | ------- | ------ |
+| 1   | TrendCalculator inverso per pace | Alto    | Basso  |
+| 2   | StatsBox unità dinamiche         | Alto    | Medio  |
+| 3   | StatsBox trend inverso           | Alto    | Basso  |
+| 4   | TrendHeader context type         | Alto    | Basso  |
+| 5   | MobileTable estensione tipi      | Medio   | Basso  |
+| 6   | Propagazione dataType            | Alto    | Medio  |
+| 7   | Formattazione durata             | Medio   | Basso  |
+| 8   | Formattazione pace               | Medio   | Basso  |
+| 9   | Y-Axis labels                    | Basso   | Basso  |
+| 10  | Colori standard                  | Basso   | Basso  |
 
 ---
 

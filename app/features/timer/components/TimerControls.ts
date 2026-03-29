@@ -42,26 +42,40 @@ export class TimerControls {
       if (state.isRunning) {
         callbacks.onStop();
         startStopBtn.textContent = t("icons.timer.play");
-        startStopBtn.setAttribute("aria-label", t("timer.controls.startTimer"));
+        startStopBtn.setAttribute(
+          "aria-label",
+          t("timer.controls.startTimer"),
+        );
       } else {
         callbacks.onStart();
         startStopBtn.textContent = t("icons.timer.pause");
-        startStopBtn.setAttribute("aria-label", t("timer.controls.pauseTimer"));
+        startStopBtn.setAttribute(
+          "aria-label",
+          t("timer.controls.pauseTimer"),
+        );
       }
     });
 
     Button.onClick(resetBtn, () => {
       callbacks.onReset();
       startStopBtn.textContent = "▶";
-      startStopBtn.setAttribute("aria-label", t("timer.controls.startTimer"));
+      startStopBtn.setAttribute(
+        "aria-label",
+        t("timer.controls.startTimer"),
+      );
     });
 
     return startStopBtn;
   }
 
-  static updateStartStopButton(button: HTMLButtonElement | undefined, isRunning: boolean): void {
+  static updateStartStopButton(
+    button: HTMLButtonElement | undefined,
+    isRunning: boolean,
+  ): void {
     if (button) {
-      button.textContent = isRunning ? t("icons.timer.pause") : t("icons.timer.play");
+      button.textContent = isRunning
+        ? t("icons.timer.pause")
+        : t("icons.timer.play");
     }
   }
 }

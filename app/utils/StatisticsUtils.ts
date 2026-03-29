@@ -26,11 +26,10 @@ export class StatisticsUtils {
       sumX2 += i * i;
     }
 
-    const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    const slope =
+      (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     const intercept = (sumY - slope * sumX) / n;
 
     return { slope, intercept };
   }
 }
-
- 

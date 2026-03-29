@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Voeg oefenblok toe",
+    "addMissingBlockIds": "Voeg ontbrekende ID's toe aan codeblokken",
     "auditExerciseNames": "Naam van de audit-oefening",
     "convertExercise": "Oefening omzetten",
     "createCsvLog": "Maak een CSV-logbestand",
@@ -34,12 +35,12 @@
     "generateTagReference": "Tag-referentie genereren",
     "insertTable": "Voeg tabel in",
     "manageMuscleTags": "Beheer spieretiketten",
-    "migrateExerciseTypes": "Migreer oefentypen",
-    "addMissingBlockIds": "Voeg ontbrekende ID's toe aan codeblokken"
+    "migrateExerciseTypes": "Migreer oefentypen"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Annuleren",
+    "clear": "Wissen",
     "convert": "Converteren",
     "exercise": "Oefening",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Niet beschikbaar",
     "sec": "common.sec",
     "unknown": "Onbekend",
-    "workout": "Training",
-    "clear": "Wissen"
+    "workout": "Training"
   },
   "convert": {
     "currentType": "Huidige type:",
@@ -453,8 +453,8 @@
     "noImbalances": "Geen onbalans",
     "noTags": "Geen tags",
     "success": {
-      "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
       "blockIdsAdded": "Voegde {count} ontbrekende ID(s) toe in het(de) bestand(en) {files}.",
+      "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
       "noBlockIdsNeeded": "Alle codeblokken hebben al een ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Acties",
     "addTag": "Tag toevoegen",
+    "auditStatusCloseMatch": "Bijna overeenkomst",
+    "auditStatusExactMatch": "Exacte overeenkomst",
+    "auditStatusNoMatch": "Geen overeenkomst",
+    "auditStatusPartialMatch": "Gedeeltelijke overeenkomst",
     "autocomplete": {
+      "addExercise": "Voeg \"{name}\" toe",
       "exactBadge": "★",
       "exactTooltip": "Exacte/Voorloop-match - Score: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Gedeeltelijke overeenkomst - Score: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Exacte overeenkomst - Score: {score}",
-      "addExercise": "Voeg \"{name}\" toe"
+      "wordTooltip": "Exacte overeenkomst - Score: {score}"
     },
     "buttons": {
       "addParameter": "Voeg parameter toe",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Acties",
+      "currentFileInfo": "Huidig bestand: {fileName}",
       "exercise": "Oefening:",
       "reps": "Aantal keren herhaald:",
       "targetReps": "Doelgroep:",
       "targetWeight": "Doel: ({unit}):",
       "volume": "Volume ({{unit}}):",
-      "weight": "Gewicht ({{unit}}):",
-      "currentFileInfo": "Huidig bestand: {fileName}"
+      "weight": "Gewicht ({{unit}}):"
     },
     "layoutGrouped": "Gegroepeerd per spier",
     "layoutHorizontal": "Horizontale lay-out",
@@ -565,17 +569,21 @@
     "notes": "Opmerkingen (optioneel):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "{count} mogelijke afwijkingen gevonden:",
+      "auditNoMatchFound": "Geen overeenkomst gevonden",
       "auditNoMismatches": "Geen discrepanties in de controle",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Succes met hernoemen van bestand",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Fout bij het scannen: {error}",
       "auditScanning": "Auditscan",
       "canvasExportError": "Fout bij exporteren van het canvas",
       "canvasExported": "Canvas is geëxporteerd",
       "chartInserted": "✅ Grafiek succesvol toegevoegd!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dashboard succesvol geïnstalleerd!",
+      "dismissAchievement": "Prestatie sluiten",
       "exerciseBlockInserted": "Oefenblok toegevoegd",
       "exerciseNameRequired": "❌ Gelieve een naam voor de oefening in te voeren",
       "exercisePageCreated": "Oefenpagina succesvol aangemaakt!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "timerUpdated": "✅ Timer is succesvol bijgewerkt!",
       "validationCombinedMode": "⚠️ Voor het type 'oefening + training' moet u beide velden invullen!",
-      "validationFillAll": "Vul al de velden in met geldige waarden.",
-      "dismissAchievement": "Prestatie sluiten",
-      "auditScanError": "Fout bij het scannen: {error}",
-      "auditMismatchCount": "{count} mogelijke afwijkingen gevonden:",
-      "auditNoMatchFound": "Geen overeenkomst gevonden"
+      "validationFillAll": "Vul al de velden in met geldige waarden."
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -716,11 +720,7 @@
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Bestand voor de training:",
-    "workoutNameOptional": "Naam van de workout (optioneel):",
-    "auditStatusNoMatch": "Geen overeenkomst",
-    "auditStatusExactMatch": "Exacte overeenkomst",
-    "auditStatusCloseMatch": "Bijna overeenkomst",
-    "auditStatusPartialMatch": "Gedeeltelijke overeenkomst"
+    "workoutNameOptional": "Naam van de workout (optioneel):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "In bezig...",
       "overwriting": "Overnemen...",
       "regenerateOverwrite": "Herstellen (aanpassen)",
+      "runAllMaintenance": "Alle onderhoud uitvoeren",
       "savePreset": "Opslaan",
-      "saveProtocol": "Opslaan",
-      "runAllMaintenance": "Alle onderhoud uitvoeren"
+      "saveProtocol": "Opslaan"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -760,11 +760,11 @@
       "protocolColor": "Kleur van de achtergrond van het badge (hex-formaat, bijv. #FF5733)",
       "quickWeightIncrement": "Stap in gewicht gebruikt door de + en - knoppen in de modalvensters voor het maken/bewerken van een trainingslogboek (bijv. 2,5 voor +2,5 / -2,5 eenheden)",
       "repDuration": "Geschatte tijd voor één herhaling. Wordt gebruikt wanneer het aantal herhalingen bekend is (bijvoorbeeld: 'x 10 herhalingen').",
+      "runAllMaintenance": "Voer alle onderhoudstaken één voor één uit. Veilig om meerdere keren uit te voeren.",
       "setDuration": "Wordt gebruikt wanneer de vertegenwoordigers niet zijn gespecificeerd (standaardwaarde). Typische duur: 30-60 seconden.",
       "setupCSV": "Maak zowel het bestand `workout_logs.csv` als `muscle-tags.csv` aan in de geconfigureerde map.",
       "weightIncrement": "Standaard toename in gewicht voor progressieve belasting (bijvoorbeeld 2,5 voor toenames van 2,5 eenheden)",
-      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs.",
-      "runAllMaintenance": "Voer alle onderhoudstaken één voor één uit. Veilig om meerdere keren uit te voeren."
+      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -786,10 +786,10 @@
       "protocolColor": "Kleur van het badge",
       "protocolName": "Naam protocol",
       "repDuration": "Duur per herhaling (seconden)",
+      "runAllMaintenance": "Alle onderhoudstaken uitvoeren",
       "setDuration": "Alternatieve duur (seconden)",
       "setupCSV": "Bestanden voor het importeren van CSV-gegevens",
-      "weightUnit": "Eenheid voor gewicht",
-      "runAllMaintenance": "Alle onderhoudstaken uitvoeren"
+      "weightUnit": "Eenheid voor gewicht"
     },
     "messages": {
       "confirmDeletePreset": "Bent u er zeker van dat u deze preset wilt verwijderen?",
@@ -820,17 +820,17 @@
       "protocolName": "Voer de naam van het protocol in"
     },
     "sections": {
+      "advanced": "Geavanceerd",
       "csvManagement": "Beheer van CSV-bestanden",
       "customProtocols": "Aangepaste protocollen",
       "exampleData": "Voorbeeldgegevens",
       "filtering": "Filteren",
+      "maintenance": "Onderhoud",
       "quickLog": "Mobiel loggen",
       "setupAndData": "Instellingen en gegevens",
       "templates": "Templates",
       "timerPresets": "Vooraf ingestelde timers",
-      "trainingParameters": "Parameters voor training",
-      "maintenance": "Onderhoud",
-      "advanced": "Geavanceerd"
+      "trainingParameters": "Parameters voor training"
     },
     "tooltips": {
       "deletePreset": "Preset verwijderen",
@@ -839,21 +839,21 @@
       "editProtocol": "Protocol bewerken"
     },
     "validation": {
-      "mustBePositive": "Moet groter zijn dan 0",
-      "mustBeNonNegative": "Moet 0 of groter zijn",
+      "csvFolderNotFound": "Map niet gevonden in de opslag. Voer de CSV-installatie uit om deze te creëren.",
       "csvPathEmpty": "Het pad mag niet leeg zijn",
-      "csvFolderNotFound": "Map niet gevonden in de opslag. Voer de CSV-installatie uit om deze te creëren."
+      "mustBeNonNegative": "Moet 0 of groter zijn",
+      "mustBePositive": "Moet groter zijn dan 0"
     }
   },
   "stats": {
     "avgVolume": "Gemiddelde volume",
-    "recentTrend": "Recente trend",
-    "sessions": "Sessies",
     "max": "Max: ",
     "min": "Min: ",
-    "title": "📈 {dataTypeLabel} Statistieken ({contextLabel}):",
     "recentLast3": " (laatste 3)",
-    "recentVsPrev": " (vs vorig)"
+    "recentTrend": "Recente trend",
+    "recentVsPrev": " (vs vorig)",
+    "sessions": "Sessies",
+    "title": "📈 {dataTypeLabel} Statistieken ({contextLabel}):"
   },
   "table": {
     "actions": "Acties",

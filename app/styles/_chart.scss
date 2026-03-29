@@ -92,7 +92,8 @@
     .workout-charts-controls,
     .workout-log-table th,
     .workout-log-table td {
-      border: var(--workout-border-thin) solid var(--background-modifier-border);
+      border: var(--workout-border-thin) solid
+        var(--background-modifier-border);
       padding: var(--workout-space-sm);
     }
 

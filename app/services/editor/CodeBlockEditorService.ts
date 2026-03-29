@@ -23,7 +23,8 @@ export class CodeBlockEditorService {
     newWeight: number,
   ): Promise<boolean> {
     try {
-      const activeView = app.workspace.getActiveViewOfType(MarkdownView);
+      const activeView =
+        app.workspace.getActiveViewOfType(MarkdownView);
       if (!activeView?.file) {
         return false;
       }
@@ -139,7 +140,8 @@ export class CodeBlockEditorService {
     newCode: string,
   ): Promise<boolean> {
     try {
-      const activeView = app.workspace.getActiveViewOfType(MarkdownView);
+      const activeView =
+        app.workspace.getActiveViewOfType(MarkdownView);
       if (!activeView?.file) {
         return false;
       }
@@ -167,7 +169,9 @@ export class CodeBlockEditorService {
           if (foundId) {
             const before = lines.slice(0, codeBlockStart);
             const after = lines.slice(i + 1);
-            const newContent = [...before, newCode, ...after].join("\n");
+            const newContent = [...before, newCode, ...after].join(
+              "\n",
+            );
             await app.vault.modify(file, newContent);
             return true;
           }
@@ -199,7 +203,8 @@ export class CodeBlockEditorService {
     value: number | string | boolean,
   ): Promise<boolean> {
     try {
-      const activeView = app.workspace.getActiveViewOfType(MarkdownView);
+      const activeView =
+        app.workspace.getActiveViewOfType(MarkdownView);
       if (!activeView?.file) {
         return false;
       }

@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Legg til treningsblokk",
+    "addMissingBlockIds": "Legg til manglende ID-er i kodeblokker",
     "auditExerciseNames": "Navn på øvelser for revisjon",
     "convertExercise": "Konverter øvelse",
     "createCsvLog": "Opprett CSV-loggfil",
@@ -34,12 +35,12 @@
     "generateTagReference": "Generer referanse for tag",
     "insertTable": "Legg til tabell",
     "manageMuscleTags": "Administrer muskelmerker",
-    "migrateExerciseTypes": "Migrer øvelsetyper",
-    "addMissingBlockIds": "Legg til manglende ID-er i kodeblokker"
+    "migrateExerciseTypes": "Migrer øvelsetyper"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Avbryt",
+    "clear": "Tøm",
     "convert": "Konverter",
     "exercise": "Øvelse",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "Ikke tilgjengelig",
     "sec": "common.sec",
     "unknown": "Ukjent",
-    "workout": "Trening",
-    "clear": "Tøm"
+    "workout": "Trening"
   },
   "convert": {
     "currentType": "Nåværende type:",
@@ -453,8 +453,8 @@
     "noImbalances": "Ingen ubalanser",
     "noTags": "Ingen tagger",
     "success": {
-      "csvCreated": "CSV-filen ble opprettet med suksess!",
       "blockIdsAdded": "Legger til {count} manglende ID(er) i {files} fil(er).",
+      "csvCreated": "CSV-filen ble opprettet med suksess!",
       "noBlockIdsNeeded": "Alle kodeblokker har allerede ID-er."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Handling",
     "addTag": "Legg til tag",
+    "auditStatusCloseMatch": "Nær treff",
+    "auditStatusExactMatch": "Eksakt treff",
+    "auditStatusNoMatch": "Ingen treff",
+    "auditStatusPartialMatch": "Delvis treff",
     "autocomplete": {
+      "addExercise": "Legg til \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Nøyaktig/Prefiks-match – Poeng: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Delvis match – Poeng: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Ordmatch – Poeng: {score}",
-      "addExercise": "Legg til \"{name}\""
+      "wordTooltip": "Ordmatch – Poeng: {score}"
     },
     "buttons": {
       "addParameter": "Legg til parameter",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Handling",
+      "currentFileInfo": "Gjeldende fil: {fileName}",
       "exercise": "Øvelse:",
       "reps": "Antall ganger:",
       "targetReps": "Mål:",
       "targetWeight": "Mål: ({unit}):",
       "volume": "Volum: ({{unit}})",
-      "weight": "Vekt ({{unit}}):",
-      "currentFileInfo": "Gjeldende fil: {fileName}"
+      "weight": "Vekt ({{unit}}):"
     },
     "layoutGrouped": "Gruppert etter muskel",
     "layoutHorizontal": "Horisontal layout",
@@ -565,17 +569,21 @@
     "notes": "Merknader (valgfritt):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "Fant {count} potensielle avvik:",
+      "auditNoMatchFound": "Ingen treff funnet",
       "auditNoMismatches": "Ingen uoverensstemmelser i revisjonen",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Suksess: Fil omdøpt",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Feil ved skanning: {error}",
       "auditScanning": "Revisjonssøk",
       "canvasExportError": "Feil ved eksport fra Canvas",
       "canvasExported": "Bilde eksportert fra lerret",
       "chartInserted": "✅ Diagrammet er lagt inn med suksess!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dashboard er nå lagt til!",
+      "dismissAchievement": "Lukk prestasjon",
       "exerciseBlockInserted": "Øvelsesblokk lagt til",
       "exerciseNameRequired": "❌ Vennligst oppgi et treningsnavn",
       "exercisePageCreated": "Treningsside opprettet med suksess!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Feilet ved oppdatering av tidsinnstilling. Sørg for at filen er åpen i redigeringsprogrammet.",
       "timerUpdated": "✅ Timer oppdatert med suksess!",
       "validationCombinedMode": "⚠️ For 'trening + treningsøkt'-typen må du fylle ut begge feltene!",
-      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier.",
-      "dismissAchievement": "Lukk prestasjon",
-      "auditScanError": "Feil ved skanning: {error}",
-      "auditMismatchCount": "Fant {count} potensielle avvik:",
-      "auditNoMatchFound": "Ingen treff funnet"
+      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier."
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Merknad:",
@@ -716,11 +720,7 @@
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Fil for trening:",
-    "workoutNameOptional": "Navn på treningsøkten (valgfritt):",
-    "auditStatusNoMatch": "Ingen treff",
-    "auditStatusExactMatch": "Eksakt treff",
-    "auditStatusCloseMatch": "Nær treff",
-    "auditStatusPartialMatch": "Delvis treff"
+    "workoutNameOptional": "Navn på treningsøkten (valgfritt):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Genererer...",
       "overwriting": "Overstyre...",
       "regenerateOverwrite": "Generer på nytt (erstatt)",
+      "runAllMaintenance": "Kjør alt",
       "savePreset": "Lagre",
-      "saveProtocol": "Lagre",
-      "runAllMaintenance": "Kjør alt"
+      "saveProtocol": "Lagre"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskelmerker eksisterer allerede. Vil du overskrive den med standardverdier? Dette vil fjerne alle tilpassede merker.",
@@ -760,11 +760,11 @@
       "protocolColor": "Farge på bakgrunn for merket (heksadesimal format, f.eks. #FF5733)",
       "quickWeightIncrement": "Økning i vekt som brukes av + og - knappene i modaler for å opprette/redigere treningslogg (f.eks. 2,5 for å øke/redusere med 2,5 enheter).",
       "repDuration": "Estimert tid for én repetisjon. Brukes når antall repetisjoner er kjent (f.eks. 'x 10 repetisjoner').",
+      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver i rekkefølge. Trygt å kjøre flere ganger.",
       "setDuration": "Brukes når antall representanter ikke er angitt (som standardverdi). Typisk område: 30-60 sekunder.",
       "setupCSV": "Opprett både filer `workout_logs.csv` og `muscle-tags.csv` i den angitte mappen.",
       "weightIncrement": "Standard økning i vekt for gradvis belastning (f.eks. 2,5 for økninger på 2,5 enheter)",
-      "weightUnit": "Velg enheten for vektmålinger (kg/lb). Dette påvirker standardenheten for nye logger.",
-      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver i rekkefølge. Trygt å kjøre flere ganger."
+      "weightUnit": "Velg enheten for vektmålinger (kg/lb). Dette påvirker standardenheten for nye logger."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -786,10 +786,10 @@
       "protocolColor": "Farge på merket",
       "protocolName": "Navn på protokoll",
       "repDuration": "Varighet per repetisjon (sekunder)",
+      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver",
       "setDuration": "Alternativ varighet (sekunder)",
       "setupCSV": "Opprett CSV-filer",
-      "weightUnit": "Enhet for vekt",
-      "runAllMaintenance": "Utfør alle vedlikeholdsoppgaver"
+      "weightUnit": "Enhet for vekt"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -820,17 +820,17 @@
       "protocolName": "Skriv inn protokollnavn"
     },
     "sections": {
+      "advanced": "Avanserte",
       "csvManagement": "Administrasjon av CSV-filer",
       "customProtocols": "Tilpassede protokoller",
       "exampleData": "Eksempeldata",
       "filtering": "Filtrering",
+      "maintenance": "Vedlikehold",
       "quickLog": "Mobillogging",
       "setupAndData": "Oppsett og data",
       "templates": "Mal",
       "timerPresets": "Forhåndsinnstilte tidere",
-      "trainingParameters": "Innstillinger for opplæring",
-      "maintenance": "Vedlikehold",
-      "advanced": "Avanserte"
+      "trainingParameters": "Innstillinger for opplæring"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
@@ -839,21 +839,21 @@
       "editProtocol": "Rediger protokoll"
     },
     "validation": {
-      "mustBePositive": "Må være større enn 0",
-      "mustBeNonNegative": "Må være 0 eller større",
+      "csvFolderNotFound": "Mappe ikke funnet i arkivet. Kjør oppsett for CSV for å opprette den.",
       "csvPathEmpty": "Stien kan ikke være tom",
-      "csvFolderNotFound": "Mappe ikke funnet i arkivet. Kjør oppsett for CSV for å opprette den."
+      "mustBeNonNegative": "Må være 0 eller større",
+      "mustBePositive": "Må være større enn 0"
     }
   },
   "stats": {
     "avgVolume": "Gjennomsnittlig volum",
-    "recentTrend": "Nylig trend",
-    "sessions": "Sesjoner",
     "max": "Maks: ",
     "min": "Min: ",
-    "title": "📈 {dataTypeLabel} Statistikk ({contextLabel}):",
     "recentLast3": " (siste 3)",
-    "recentVsPrev": " (vs forrige)"
+    "recentTrend": "Nylig trend",
+    "recentVsPrev": " (vs forrige)",
+    "sessions": "Sesjoner",
+    "title": "📈 {dataTypeLabel} Statistikk ({contextLabel}):"
   },
   "table": {
     "actions": "Handling",

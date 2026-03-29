@@ -103,7 +103,9 @@ export class CustomProtocolsSettings {
     const fragment = document.createDocumentFragment();
 
     // Create a container for the badge preview and details
-    const container = fragment.appendChild(document.createElement("span"));
+    const container = fragment.appendChild(
+      document.createElement("span"),
+    );
 
     // Add abbreviation badge preview
     ProtocolBadge.create(container, {
@@ -112,7 +114,9 @@ export class CustomProtocolsSettings {
     });
 
     // Add ID info
-    const idText = container.appendChild(document.createElement("span"));
+    const idText = container.appendChild(
+      document.createElement("span"),
+    );
     idText.textContent = `ID: ${protocol.id}`;
 
     return fragment;
@@ -176,7 +180,9 @@ export class CustomProtocolsSettings {
       .addText((text) =>
         text
           .setValue(formState.abbreviation)
-          .setPlaceholder(t("settings.placeholders.protocolAbbreviation"))
+          .setPlaceholder(
+            t("settings.placeholders.protocolAbbreviation"),
+          )
           .onChange((value) => {
             // Limit to 3 characters
             formState.abbreviation = value.slice(0, 3).toUpperCase();
@@ -206,9 +212,11 @@ export class CustomProtocolsSettings {
           }),
       )
       .addButton((button) =>
-        button.setButtonText(t("settings.buttons.cancel")).onClick(() => {
-          editorContainer.remove();
-        }),
+        button
+          .setButtonText(t("settings.buttons.cancel"))
+          .onClick(() => {
+            editorContainer.remove();
+          }),
       );
   }
 
@@ -223,20 +231,28 @@ export class CustomProtocolsSettings {
     }
 
     // Validate abbreviation
-    if (!protocol.abbreviation.trim() || protocol.abbreviation.length > 3) {
+    if (
+      !protocol.abbreviation.trim() ||
+      protocol.abbreviation.length > 3
+    ) {
       new Notice(t("settings.messages.protocolAbbreviationRequired"));
       return;
     }
 
     // Validate color
-    if (!protocol.color.trim() || !/^#[0-9A-Fa-f]{6}$/.test(protocol.color)) {
+    if (
+      !protocol.color.trim() ||
+      !/^#[0-9A-Fa-f]{6}$/.test(protocol.color)
+    ) {
       new Notice(t("settings.messages.protocolColorRequired"));
       return;
     }
 
     const trimmedName = protocol.name.trim();
     protocol.name = trimmedName;
-    protocol.abbreviation = protocol.abbreviation.trim().toUpperCase();
+    protocol.abbreviation = protocol.abbreviation
+      .trim()
+      .toUpperCase();
 
     // Ensure ID is valid
     if (!protocol.id) {
@@ -252,14 +268,16 @@ export class CustomProtocolsSettings {
     }
 
     // Check for duplicate names (unless editing the same protocol)
-    const existingIndex = this.plugin.settings.customProtocols.findIndex(
-      (p) => p.id === protocol.id,
-    );
-    const existingNameIndex = this.plugin.settings.customProtocols.findIndex(
-      (p) =>
-        p.name.toLowerCase() === trimmedName.toLowerCase() &&
-        p.id !== protocol.id,
-    );
+    const existingIndex =
+      this.plugin.settings.customProtocols.findIndex(
+        (p) => p.id === protocol.id,
+      );
+    const existingNameIndex =
+      this.plugin.settings.customProtocols.findIndex(
+        (p) =>
+          p.name.toLowerCase() === trimmedName.toLowerCase() &&
+          p.id !== protocol.id,
+      );
 
     if (existingNameIndex !== -1) {
       new Notice(t("settings.messages.protocolNameExists"));

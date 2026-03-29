@@ -17,7 +17,10 @@ export class MuscleTagSuggestionLogic {
     }
 
     const existingTags = Array.from(allTags.keys());
-    const similarTags = this.findSimilarTagsWithDistance(needle, existingTags);
+    const similarTags = this.findSimilarTagsWithDistance(
+      needle,
+      existingTags,
+    );
 
     return similarTags
       .filter((item) => item.tag.toLowerCase() !== needle)

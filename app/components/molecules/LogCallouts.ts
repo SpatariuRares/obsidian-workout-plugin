@@ -17,7 +17,8 @@ export class LogCallouts {
     plugin: WorkoutChartsPlugin,
     exerciseName?: string,
   ): void {
-    const activeView = plugin.app.workspace.getActiveViewOfType(MarkdownView);
+    const activeView =
+      plugin.app.workspace.getActiveViewOfType(MarkdownView);
     const currentPageLink = activeView?.file
       ? `[[${activeView.file.basename}]]`
       : "";
@@ -39,13 +40,17 @@ export class LogCallouts {
     currentPageLink?: string,
     codeBlockId?: string,
   ): void {
-    Feedback.renderEmpty(container, "", { className: "workout-log-no-data" });
+    Feedback.renderEmpty(container, "", {
+      className: "workout-log-no-data",
+    });
     const noDataDiv = container.querySelector(
       ".workout-log-no-data",
     ) as HTMLElement;
 
     Text.create(noDataDiv, {
-      text: t("logs.noDataTitle", { exerciseName: exerciseName ?? "exercise" }),
+      text: t("logs.noDataTitle", {
+        exerciseName: exerciseName ?? "exercise",
+      }),
       className: "workout-log-no-data-title",
       tag: "strong",
     });
@@ -71,7 +76,9 @@ export class LogCallouts {
       if (!link) {
         const activeView =
           plugin.app.workspace.getActiveViewOfType(MarkdownView);
-        link = activeView?.file ? `[[${activeView.file.basename}]]` : "";
+        link = activeView?.file
+          ? `[[${activeView.file.basename}]]`
+          : "";
       }
 
       new CreateLogModal(
@@ -85,15 +92,15 @@ export class LogCallouts {
     });
 
     if (exerciseName) {
-      ExerciseActionSelect.render(
-        buttonDiv,
-        {
-          exerciseName,
-          app: plugin.app,
-          plugin,
-          params: { exercise: exerciseName, id: codeBlockId } as EmbeddedTableParams,
-        },
-      );
+      ExerciseActionSelect.render(buttonDiv, {
+        exerciseName,
+        app: plugin.app,
+        plugin,
+        params: {
+          exercise: exerciseName,
+          id: codeBlockId,
+        } as EmbeddedTableParams,
+      });
     }
   }
 

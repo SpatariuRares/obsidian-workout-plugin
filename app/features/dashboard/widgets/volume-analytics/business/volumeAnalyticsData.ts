@@ -13,7 +13,9 @@ export function prepareVolumeTrendData(
 ): VolumeTrendData {
   const labels = DateUtils.getDateRangeForDays(days);
   const dailyVolumes = DataAggregation.aggregateDailyVolumes(data);
-  const volumeData = labels.map((dateStr) => dailyVolumes.get(dateStr) || 0);
+  const volumeData = labels.map(
+    (dateStr) => dailyVolumes.get(dateStr) || 0,
+  );
 
   return { labels, data: volumeData };
 }

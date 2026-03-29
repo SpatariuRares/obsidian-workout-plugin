@@ -132,12 +132,18 @@ export class WorkoutPlannerAPI {
 
     // Apply date range filter
     if (filter?.dateRange) {
-      filteredLogs = this.applyDateRangeFilter(filteredLogs, filter.dateRange);
+      filteredLogs = this.applyDateRangeFilter(
+        filteredLogs,
+        filter.dateRange,
+      );
     }
 
     // Apply protocol filter
     if (filter?.protocol) {
-      filteredLogs = this.applyProtocolFilter(filteredLogs, filter.protocol);
+      filteredLogs = this.applyProtocolFilter(
+        filteredLogs,
+        filter.protocol,
+      );
     }
 
     return filteredLogs;
@@ -234,7 +240,10 @@ export class WorkoutPlannerAPI {
    */
   async getExerciseStats(exercise: string): Promise<ExerciseStats> {
     // Get logs for the specific exercise
-    const logs = await this.getWorkoutLogs({ exercise, exactMatch: true });
+    const logs = await this.getWorkoutLogs({
+      exercise,
+      exactMatch: true,
+    });
 
     // Default stats for when no logs exist
     if (logs.length === 0) {
@@ -260,9 +269,15 @@ export class WorkoutPlannerAPI {
     });
 
     // Calculate basic stats
-    const totalVolume = logs.reduce((sum, log) => sum + log.volume, 0);
+    const totalVolume = logs.reduce(
+      (sum, log) => sum + log.volume,
+      0,
+    );
     const totalSets = logs.length;
-    const totalWeight = logs.reduce((sum, log) => sum + log.weight, 0);
+    const totalWeight = logs.reduce(
+      (sum, log) => sum + log.weight,
+      0,
+    );
     const totalReps = logs.reduce((sum, log) => sum + log.reps, 0);
     const averageWeight = totalSets > 0 ? totalWeight / totalSets : 0;
     const averageReps = totalSets > 0 ? totalReps / totalSets : 0;
@@ -333,9 +348,11 @@ export class WorkoutPlannerAPI {
 
     // Compare average weight between periods
     const recentAvgWeight =
-      recentLogs.reduce((sum, l) => sum + l.weight, 0) / recentLogs.length;
+      recentLogs.reduce((sum, l) => sum + l.weight, 0) /
+      recentLogs.length;
     const olderAvgWeight =
-      olderLogs.reduce((sum, l) => sum + l.weight, 0) / olderLogs.length;
+      olderLogs.reduce((sum, l) => sum + l.weight, 0) /
+      olderLogs.length;
 
     // 5% threshold for trend detection
     const percentChange =
@@ -405,10 +422,13 @@ export class WorkoutPlannerAPI {
     if (!filter?.tag) {
       return exerciseFiles
         .map((file) =>
-          "basename" in file ? (file as import("obsidian").TFile).basename : "",
+          "basename" in file
+            ? (file as import("obsidian").TFile).basename
+            : "",
         )
         .filter(
-          (name): name is string => typeof name === "string" && name.length > 0,
+          (name): name is string =>
+            typeof name === "string" && name.length > 0,
         )
         .sort();
     }
@@ -461,7 +481,9 @@ export class WorkoutPlannerAPI {
    */
   private parseFrontmatterTags(content: string): string[] {
     // Extract frontmatter between --- markers
-    const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
+    const frontmatterMatch = content.match(
+      /^---\s*\n([\s\S]*?)\n---/,
+    );
     if (!frontmatterMatch) {
       return [];
     }
@@ -478,7 +500,9 @@ export class WorkoutPlannerAPI {
     }
 
     // Try YAML list format: tags:\n  - tag1\n  - tag2
-    const listMatch = frontmatter.match(/^tags:\s*\n((?:\s+-\s+.+\n?)+)/m);
+    const listMatch = frontmatter.match(
+      /^tags:\s*\n((?:\s+-\s+.+\n?)+)/m,
+    );
     if (listMatch) {
       return listMatch[1]
         .split("\n")

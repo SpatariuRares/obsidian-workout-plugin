@@ -26,7 +26,10 @@ export class WidgetContainer {
    * @param props - Widget container configuration
    * @returns The widget container element (children should be appended to this)
    */
-  static create(parent: HTMLElement, props: WidgetContainerProps): HTMLElement {
+  static create(
+    parent: HTMLElement,
+    props: WidgetContainerProps,
+  ): HTMLElement {
     const classes = ["workout-dashboard-widget"];
     if (props.isWide) classes.push("widget-wide");
     if (props.className) classes.push(props.className);

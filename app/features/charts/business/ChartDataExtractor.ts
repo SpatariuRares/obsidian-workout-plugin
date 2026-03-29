@@ -1,4 +1,7 @@
-import { CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import {
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+} from "@app/features/charts/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
@@ -95,7 +98,9 @@ export class ChartDataExtractor {
       case "reps":
         return {
           data: dataArrays.repsData,
-          label: isAggregate ? t("general.totalReps") : t("general.avgReps"),
+          label: isAggregate
+            ? t("general.totalReps")
+            : t("general.avgReps"),
           color: "#FF9800",
         };
 
@@ -133,7 +138,10 @@ export class ChartDataExtractor {
 
       default:
         // Handle custom parameter keys
-        if (dataArrays.customData && dataArrays.customData.length > 0) {
+        if (
+          dataArrays.customData &&
+          dataArrays.customData.length > 0
+        ) {
           const label =
             customParamLabel || ParameterUtils.keyToLabel(chartType);
           return {

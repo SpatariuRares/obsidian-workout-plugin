@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Додати блок з вправами",
+    "addMissingBlockIds": "Додайте відсутні ID до блоків коду",
     "auditExerciseNames": "Назви вправ для аудиту",
     "convertExercise": "Перетворити вправу",
     "createCsvLog": "Створити файл журналу у форматі CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Згенерувати посилання на тег",
     "insertTable": "Вставити таблицю",
     "manageMuscleTags": "Керування тегами для м'язів",
-    "migrateExerciseTypes": "Мігрувати типи вправ",
-    "addMissingBlockIds": "Додайте відсутні ID до блоків коду"
+    "migrateExerciseTypes": "Мігрувати типи вправ"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Скасувати",
+    "clear": "Очистити",
     "convert": "Перетворити",
     "exercise": "Вправа",
     "km": "км",
@@ -47,8 +48,7 @@
     "notAvailable": "Не доступно",
     "sec": "безпека",
     "unknown": "Невідомо",
-    "workout": "Тренування",
-    "clear": "Очистити"
+    "workout": "Тренування"
   },
   "convert": {
     "currentType": "Поточний тип:",
@@ -453,8 +453,8 @@
     "noImbalances": "Відсутні невідповідності",
     "noTags": "Без тегів",
     "success": {
-      "csvCreated": "Файл CSV успішно створено!",
       "blockIdsAdded": "Додано {{count}} відсутні ID(и) у файлі(ах) {{files}}",
+      "csvCreated": "Файл CSV успішно створено!",
       "noBlockIdsNeeded": "Усі блоки коду вже мають ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Дії",
     "addTag": "Додати тег",
+    "auditStatusCloseMatch": "Близький збіг",
+    "auditStatusExactMatch": "Точний збіг",
+    "auditStatusNoMatch": "Немає збігу",
+    "auditStatusPartialMatch": "Частковий збіг",
     "autocomplete": {
+      "addExercise": "Додати \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Точне/Збіг з префіксом - Оцінка: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Часткове збіг – Оцінка: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Збіг слів - Оцінка: {score}",
-      "addExercise": "Додати \"{name}\""
+      "wordTooltip": "Збіг слів - Оцінка: {score}"
     },
     "buttons": {
       "addParameter": "Додати параметр",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Дії",
+      "currentFileInfo": "Поточний файл: {fileName}",
       "exercise": "Вправа:",
       "reps": "Представники:",
       "targetReps": "Цільові показники:",
       "targetWeight": "Ціль: ({unit}):",
       "volume": "Гучність ({unit}):",
-      "weight": "Вага ({{unit}}):",
-      "currentFileInfo": "Поточний файл: {fileName}"
+      "weight": "Вага ({{unit}}):"
     },
     "layoutGrouped": "Групується за м'язами",
     "layoutHorizontal": "Горизонтальне розташування",
@@ -565,17 +569,21 @@
     "notes": "Примітки (необов'язково):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "Знайдено {count} невідповідностей:",
+      "auditNoMatchFound": "Збігів не знайдено",
       "auditNoMismatches": "Відсутність невідповідностей під час аудиту",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Успішно перейменовано файл за результатами аудиту",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Помилка сканування: {error}",
       "auditScanning": "Сканування для аудиту",
       "canvasExportError": "Помилка експорту на холст",
       "canvasExported": "Експорт на холст",
       "chartInserted": "✅ Графік успішно додано!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Панель керування успішно додана!",
+      "dismissAchievement": "Закрити досягнення",
       "exerciseBlockInserted": "Блок вставлено",
       "exerciseNameRequired": "❌, будь ласка, введіть назву вправи",
       "exercisePageCreated": "Сторінка для вправ успішно створена!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
       "timerUpdated": "✅ Таймер успішно оновлено!",
       "validationCombinedMode": "⚠️ Для типу 'тренування + фітнес' необхідно заповнити обидва поля!",
-      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення.",
-      "dismissAchievement": "Закрити досягнення",
-      "auditScanError": "Помилка сканування: {error}",
-      "auditMismatchCount": "Знайдено {count} невідповідностей:",
-      "auditNoMatchFound": "Збігів не знайдено"
+      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення."
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -716,11 +720,7 @@
     },
     "workout": "Тренування (необов'язково):",
     "workoutFile": "Файл для тренування:",
-    "workoutNameOptional": "Назва тренування (необов'язково):",
-    "auditStatusNoMatch": "Немає збігу",
-    "auditStatusExactMatch": "Точний збіг",
-    "auditStatusCloseMatch": "Близький збіг",
-    "auditStatusPartialMatch": "Частковий збіг"
+    "workoutNameOptional": "Назва тренування (необов'язково):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Генерація...",
       "overwriting": "Перезапис...",
       "regenerateOverwrite": "Повторити (перезаписати)",
+      "runAllMaintenance": "Запустити все",
       "savePreset": "Зберегти",
-      "saveProtocol": "Зберегти",
-      "runAllMaintenance": "Запустити все"
+      "saveProtocol": "Зберегти"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Файл CSV з тегами м'язів вже існує. Чи хочете ви перезаписати його значеннями за замовчуванням? Це видалить будь-які налаштовані теги.",
@@ -760,11 +760,11 @@
       "protocolColor": "Колір фону значка (у форматі шестнадцяткової системи, наприклад, #FF5733)",
       "quickWeightIncrement": "Крок ваги, який використовується кнопками +/- у модальних вікнах для створення/редагування журналу тренувань (наприклад, 2,5 для збільшення на 2,5 / зменшення на 2,5 одиниць).",
       "repDuration": "Орієнтовний час для виконання одного повторення. Використовується, коли відома кількість повторень (наприклад, \"x 10 повторень\").",
+      "runAllMaintenance": "Виконайте всі завдання з обслуговування послідовно. Безпечно можна виконувати кілька разів.",
       "setDuration": "Використовується, коли кількість представників не вказана (за замовчуванням). Типовий діапазон: 30-60 секунд.",
       "setupCSV": "Створіть файли workout_logs.csv та muscle-tags.csv у визначеній папці.",
       "weightIncrement": "Стандартне збільшення ваги для прогресивного навантаження (наприклад, 2,5 для збільшення на 2,5 одиниці)",
-      "weightUnit": "Виберіть одиницю вимірювання ваги (кг/фунти). Це впливає на одиницю за замовчуванням для нових записів.",
-      "runAllMaintenance": "Виконайте всі завдання з обслуговування послідовно. Безпечно можна виконувати кілька разів."
+      "weightUnit": "Виберіть одиницю вимірювання ваги (кг/фунти). Це впливає на одиницю за замовчуванням для нових записів."
     },
     "labels": {
       "csvPath": "Шлях до файлу журналу CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "Колір значка",
       "protocolName": "Назва протоколу",
       "repDuration": "Тривалість на один повтор (секунди)",
+      "runAllMaintenance": "Виконати всі завдання з технічного обслуговування",
       "setDuration": "Тривалість резервного часу (секунди)",
       "setupCSV": "Налаштування файлів CSV",
-      "weightUnit": "Одиниця вимірювання ваги",
-      "runAllMaintenance": "Виконати всі завдання з технічного обслуговування"
+      "weightUnit": "Одиниця вимірювання ваги"
     },
     "messages": {
       "confirmDeletePreset": "Ви впевнені, що хочете видалити цей шаблон?",
@@ -820,17 +820,17 @@
       "protocolName": "Введіть назву протоколу"
     },
     "sections": {
+      "advanced": "Додаткові",
       "csvManagement": "Управління файлами CSV",
       "customProtocols": "Власні протоколи",
       "exampleData": "Приклад даних",
       "filtering": "Фільтрація",
+      "maintenance": "Технічне обслуговування",
       "quickLog": "Мобільний лог",
       "setupAndData": "Налаштування та дані",
       "templates": "Шаблони",
       "timerPresets": "Заздалегідь встановлені таймери",
-      "trainingParameters": "Параметри навчання",
-      "maintenance": "Технічне обслуговування",
-      "advanced": "Додаткові"
+      "trainingParameters": "Параметри навчання"
     },
     "tooltips": {
       "deletePreset": "Видалити попередньо налаштований варіант",
@@ -839,21 +839,21 @@
       "editProtocol": "Редагувати протокол"
     },
     "validation": {
-      "mustBePositive": "Повинен бути більше 0",
-      "mustBeNonNegative": "Має бути 0 або більше",
+      "csvFolderNotFound": "Папка не знайдена в сховищі. Запустіть Setup CSV для її створення.",
       "csvPathEmpty": "Шлях не може бути порожнім",
-      "csvFolderNotFound": "Папка не знайдена в сховищі. Запустіть Setup CSV для її створення."
+      "mustBeNonNegative": "Має бути 0 або більше",
+      "mustBePositive": "Повинен бути більше 0"
     }
   },
   "stats": {
     "avgVolume": "Середній об'єм",
-    "recentTrend": "Недавні тенденції",
-    "sessions": "Сесії",
     "max": "Макс: ",
     "min": "Мін: ",
-    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (останні 3)",
-    "recentVsPrev": " (vs попер.)"
+    "recentTrend": "Недавні тенденції",
+    "recentVsPrev": " (vs попер.)",
+    "sessions": "Сесії",
+    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Дії",

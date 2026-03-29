@@ -39,7 +39,9 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    expect(result!.classList.contains("workout-target-header")).toBe(true);
+    expect(result!.classList.contains("workout-target-header")).toBe(
+      true,
+    );
     expect(result!.textContent).toContain("100kg");
   });
 
@@ -85,7 +87,9 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(".workout-progress-bar");
+    const progressBar = result!.querySelector(
+      ".workout-progress-bar",
+    );
     expect(progressBar).not.toBeNull();
   });
 
@@ -101,7 +105,9 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(".workout-progress-bar");
+    const progressBar = result!.querySelector(
+      ".workout-progress-bar",
+    );
     expect(progressBar).toBeNull();
   });
 
@@ -116,7 +122,9 @@ describe("TargetHeader", () => {
     });
 
     expect(result).not.toBeNull();
-    const progressBar = result!.querySelector(".workout-progress-bar");
+    const progressBar = result!.querySelector(
+      ".workout-progress-bar",
+    );
     expect(progressBar).toBeNull();
   });
 
@@ -131,11 +139,13 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const progressFill = result!.querySelector(".workout-progress-fill");
-    expect(progressFill).not.toBeNull();
-    expect(progressFill!.classList.contains("workout-progress-complete")).toBe(
-      true,
+    const progressFill = result!.querySelector(
+      ".workout-progress-fill",
     );
+    expect(progressFill).not.toBeNull();
+    expect(
+      progressFill!.classList.contains("workout-progress-complete"),
+    ).toBe(true);
   });
 
   it("sets progress bar width as percentage", () => {
@@ -167,7 +177,9 @@ describe("TargetHeader", () => {
       weightUnit: "kg",
     });
 
-    const progressBar = result!.querySelector(".workout-progress-bar");
+    const progressBar = result!.querySelector(
+      ".workout-progress-bar",
+    );
     expect(progressBar).not.toBeNull();
     expect(progressBar!.getAttribute("title")).toBe(
       t("table.target.progressTooltip", { best: 8, target: 10 }),

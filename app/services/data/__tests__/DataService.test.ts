@@ -72,7 +72,11 @@ describe("DataService", () => {
     };
 
     // Create DataService instance
-    dataService = new DataService(mockApp as any, mockSettings, eventBus);
+    dataService = new DataService(
+      mockApp as any,
+      mockSettings,
+      eventBus,
+    );
   });
 
   afterEach(() => {
@@ -166,7 +170,9 @@ describe("DataService", () => {
         notes: "",
       };
 
-      await expect(dataService.addWorkoutLogEntry(entry)).rejects.toThrow(
+      await expect(
+        dataService.addWorkoutLogEntry(entry),
+      ).rejects.toThrow(
         "Failed to create CSV file at path: test/workout_logs.csv",
       );
 
@@ -179,7 +185,9 @@ describe("DataService", () => {
       expect(mockVault.create).toHaveBeenCalledTimes(1);
 
       // Verify getAbstractFileByPath was called 3 times (initial + folder check + 1 retry)
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(3);
+      expect(mockVault.getAbstractFileByPath).toHaveBeenCalledTimes(
+        3,
+      );
     });
 
     it("should not call process when recursion limit is reached", async () => {
@@ -198,7 +206,9 @@ describe("DataService", () => {
         notes: "",
       };
 
-      await expect(dataService.addWorkoutLogEntry(entry)).rejects.toThrow();
+      await expect(
+        dataService.addWorkoutLogEntry(entry),
+      ).rejects.toThrow();
 
       // Verify process was never called since file creation kept failing
       expect(mockVault.process).not.toHaveBeenCalled();
@@ -219,9 +229,9 @@ describe("DataService", () => {
         notes: "",
       };
 
-      await expect(dataService.addWorkoutLogEntry(entry)).rejects.toThrow(
-        /test\/workout_logs\.csv/,
-      );
+      await expect(
+        dataService.addWorkoutLogEntry(entry),
+      ).rejects.toThrow(/test\/workout_logs\.csv/);
     });
   });
 
@@ -271,7 +281,9 @@ describe("DataService", () => {
       // Should match all exercises containing "bench" (case-insensitive)
       expect(result.length).toBe(3);
       expect(
-        result.every((log) => log.exercise.toLowerCase().includes("bench")),
+        result.every((log) =>
+          log.exercise.toLowerCase().includes("bench"),
+        ),
       ).toBe(true);
     });
 
@@ -320,7 +332,9 @@ describe("DataService", () => {
       // Should match all workouts containing "push" (case-insensitive)
       expect(result.length).toBe(2);
       expect(
-        result.every((log) => log.origine?.toLowerCase().includes("push")),
+        result.every((log) =>
+          log.origine?.toLowerCase().includes("push"),
+        ),
       ).toBe(true);
     });
 
@@ -542,12 +556,14 @@ describe("DataService", () => {
         const mockFile = new TFile();
         mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
         mockVault.read.mockResolvedValue(csvContent);
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          const result = callback(csvContent);
-          // Verify the new column was added to the header
-          expect(result).toContain("duration");
-          return result;
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            const result = callback(csvContent);
+            // Verify the new column was added to the header
+            expect(result).toContain("duration");
+            return result;
+          },
+        );
 
         await dataService.ensureColumnExists("duration");
 
@@ -563,10 +579,12 @@ describe("DataService", () => {
         const mockFile = new TFile();
         mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
         mockVault.read.mockResolvedValue(csvContent);
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          callback(csvContent);
-          return "";
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            callback(csvContent);
+            return "";
+          },
+        );
 
         // First, populate cache
         await dataService.getWorkoutLogData();
@@ -612,11 +630,13 @@ describe("DataService", () => {
         mockVault.read.mockResolvedValue(csvContent);
 
         let processCallCount = 0;
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          processCallCount++;
-          const result = callback(csvContent);
-          return result;
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            processCallCount++;
+            const result = callback(csvContent);
+            return result;
+          },
+        );
 
         const entry = {
           date: "2024-01-02T10:00:00.000Z",
@@ -650,10 +670,12 @@ describe("DataService", () => {
         mockVault.read.mockResolvedValue(csvContent);
 
         let writtenContent = "";
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          writtenContent = callback(csvContent);
-          return writtenContent;
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            writtenContent = callback(csvContent);
+            return writtenContent;
+          },
+        );
 
         const entry = {
           date: "2024-01-02T10:00:00.000Z",
@@ -689,11 +711,13 @@ describe("DataService", () => {
         mockVault.read.mockResolvedValue(csvContent);
 
         let processCallCount = 0;
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          processCallCount++;
-          callback(csvContent);
-          return "";
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            processCallCount++;
+            callback(csvContent);
+            return "";
+          },
+        );
 
         const originalLog = {
           date: "2024-01-01T10:00:00.000Z",
@@ -718,7 +742,10 @@ describe("DataService", () => {
           },
         };
 
-        await dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
+        await dataService.updateWorkoutLogEntry(
+          originalLog,
+          updatedEntry,
+        );
 
         // Should have called process multiple times: ensureColumnExists + the actual update
         expect(processCallCount).toBeGreaterThanOrEqual(1);
@@ -735,10 +762,12 @@ describe("DataService", () => {
         mockVault.read.mockResolvedValue(csvContent);
 
         let writtenContent = "";
-        mockVault.process.mockImplementation(async (_file, callback) => {
-          writtenContent = callback(csvContent);
-          return writtenContent;
-        });
+        mockVault.process.mockImplementation(
+          async (_file, callback) => {
+            writtenContent = callback(csvContent);
+            return writtenContent;
+          },
+        );
 
         const originalLog = {
           date: "2024-01-01T10:00:00.000Z",
@@ -764,7 +793,10 @@ describe("DataService", () => {
           },
         };
 
-        await dataService.updateWorkoutLogEntry(originalLog, updatedEntry);
+        await dataService.updateWorkoutLogEntry(
+          originalLog,
+          updatedEntry,
+        );
 
         // Verify column order is preserved (duration before distance)
         const headerLine = writtenContent.split("\n")[0];
@@ -895,10 +927,12 @@ describe("DataService", () => {
           mockVault.read.mockResolvedValue(csvContent);
 
           let writtenContent = "";
-          mockVault.process.mockImplementation(async (_file, callback) => {
-            writtenContent = callback(csvContent);
-            return writtenContent;
-          });
+          mockVault.process.mockImplementation(
+            async (_file, callback) => {
+              writtenContent = callback(csvContent);
+              return writtenContent;
+            },
+          );
 
           const logToDelete = {
             date: "2024-01-01T10:00:00.000Z",
@@ -930,10 +964,12 @@ describe("DataService", () => {
           mockVault.read.mockResolvedValue(csvContent);
 
           let writtenContent = "";
-          mockVault.process.mockImplementation(async (_file, callback) => {
-            writtenContent = callback(csvContent);
-            return writtenContent;
-          });
+          mockVault.process.mockImplementation(
+            async (_file, callback) => {
+              writtenContent = callback(csvContent);
+              return writtenContent;
+            },
+          );
 
           const count = await dataService.renameExercise(
             "Bench Press",
@@ -953,20 +989,22 @@ describe("DataService", () => {
     it("should coalesce multiple emissions into one log:bulk-changed", async () => {
       const bulkHandler = jest.fn();
       const addHandler = jest.fn();
-      eventBus.on('log:bulk-changed', bulkHandler);
-      eventBus.on('log:added', addHandler);
+      eventBus.on("log:bulk-changed", bulkHandler);
+      eventBus.on("log:added", addHandler);
 
       const csvContent =
         "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol\n";
       const mockFile = new (require("obsidian").TFile)();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       mockVault.read.mockResolvedValue(csvContent);
-      mockVault.process.mockImplementation((_file: unknown, fn: (content: string) => string) => {
-        fn(csvContent);
-        return Promise.resolve("");
-      });
+      mockVault.process.mockImplementation(
+        (_file: unknown, fn: (content: string) => string) => {
+          fn(csvContent);
+          return Promise.resolve("");
+        },
+      );
 
-      await dataService.batchOperation('import', async () => {
+      await dataService.batchOperation("import", async () => {
         await dataService.addWorkoutLogEntry({
           date: "2024-01-01",
           exercise: "Squat",
@@ -994,13 +1032,13 @@ describe("DataService", () => {
       expect(addHandler).not.toHaveBeenCalled();
       expect(bulkHandler).toHaveBeenCalledTimes(1);
       expect(bulkHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ count: 2, operation: 'import' }),
+        expect.objectContaining({ count: 2, operation: "import" }),
       );
     });
 
     it("should propagate errors from fn", async () => {
       await expect(
-        dataService.batchOperation('other', async () => {
+        dataService.batchOperation("other", async () => {
           throw new Error("batch failure");
         }),
       ).rejects.toThrow("batch failure");

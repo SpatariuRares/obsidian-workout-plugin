@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
+    "addMissingBlockIds": "कोड ब्लॉकों में गुम आईडी जोड़ें",
     "auditExerciseNames": "ऑडिट एक्सरसाइज के नाम",
     "convertExercise": "अभ्यास रूपांतरित करें",
     "createCsvLog": "CSV लॉग फ़ाइल बनाएँ",
@@ -34,12 +35,12 @@
     "generateTagReference": "टैग संदर्भ उत्पन्न करें",
     "insertTable": "टेबल डालें",
     "manageMuscleTags": "मांस के टैग प्रबंधित करें",
-    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें",
-    "addMissingBlockIds": "कोड ब्लॉकों में गुम आईडी जोड़ें"
+    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें"
   },
   "common": {
     "bpm": "बीपीएम",
     "cancel": "रद्द करें",
+    "clear": "साफ करें",
     "convert": "रूपांतरण",
     "exercise": "अभ्यास",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "उपलब्ध नहीं",
     "sec": "सुर",
     "unknown": "अज्ञात",
-    "workout": "वर्कआउट",
-    "clear": "साफ करें"
+    "workout": "वर्कआउट"
   },
   "convert": {
     "currentType": "वर्तमान प्रकार:",
@@ -453,8 +453,8 @@
     "noImbalances": "कोई असंतुलन नहीं",
     "noTags": "कोई टैग नहीं",
     "success": {
-      "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",
       "blockIdsAdded": "{count} गुम ID(s) को {files} फ़ाइल(s) में जोड़ा गया।",
+      "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",
       "noBlockIdsNeeded": "सभी कोड ब्लॉक में पहले से ही आईडी मौजूद हैं।"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "क्रिया",
     "addTag": "टैग जोड़ें",
+    "auditStatusCloseMatch": "निकट मिलान",
+    "auditStatusExactMatch": "सटीक मिलान",
+    "auditStatusNoMatch": "कोई मिलान नहीं",
+    "auditStatusPartialMatch": "आंशिक मिलान",
     "autocomplete": {
+      "addExercise": "\"{name}\" जोड़ें",
       "exactBadge": "★",
       "exactTooltip": "सटीक/प्रारंभिक मिलान - स्कोर: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "अंश मिलान - स्कोर: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "शब्द मिलान - स्कोर: {score}",
-      "addExercise": "\"{name}\" जोड़ें"
+      "wordTooltip": "शब्द मिलान - स्कोर: {score}"
     },
     "buttons": {
       "addParameter": "पैरामीटर जोड़ें।",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "कार्रवाइयाँ।",
+      "currentFileInfo": "वर्तमान फ़ाइल: {fileName}",
       "exercise": "अभ्यास:",
       "reps": "प्रतिनिधि:",
       "targetReps": "लक्ष्यित प्रतिनिधि:",
       "targetWeight": "लक्ष्यित वजन ({इकाई}):",
       "volume": "वॉल्यूम ({unit}):",
-      "weight": "वजन ({इकाई}):",
-      "currentFileInfo": "वर्तमान फ़ाइल: {fileName}"
+      "weight": "वजन ({इकाई}):"
     },
     "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
     "layoutHorizontal": "क्षैतिज प्रवाह",
@@ -565,17 +569,21 @@
     "notes": "टिप्पणियाँ (वैकल्पिक):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "{count} असंगतियां मिलीं:",
+      "auditNoMatchFound": "कोई मिलान नहीं मिला",
       "auditNoMismatches": "लेखांकन संख्या में विसंगतियां",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "ऑडिट: फ़ाइल का नाम बदलकर सफलता",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "स्कैन में त्रुटि: {error}",
       "auditScanning": "ऑडिट स्कैनिंग",
       "canvasExportError": "कैनवस निर्यात त्रुटि",
       "canvasExported": "कैनवस निर्यात किया गया",
       "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
+      "dismissAchievement": "उपलब्धि खारिज करें",
       "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
       "exerciseNameRequired": "❌ कृपया व्यायाम का नाम दर्ज करें",
       "exercisePageCreated": "व्यायाम पृष्ठ सफलतापूर्वक बनाया गया!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "timerUpdated": "✅ टाइमर सफलतापूर्वक अपडेट हो गया!",
       "validationCombinedMode": "⚠️ 'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड को भरना होगा!",
-      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
-      "dismissAchievement": "उपलब्धि खारिज करें",
-      "auditScanError": "स्कैन में त्रुटि: {error}",
-      "auditMismatchCount": "{count} असंगतियां मिलीं:",
-      "auditNoMatchFound": "कोई मिलान नहीं मिला"
+      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -716,11 +720,7 @@
     },
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
-    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):",
-    "auditStatusNoMatch": "कोई मिलान नहीं",
-    "auditStatusExactMatch": "सटीक मिलान",
-    "auditStatusCloseMatch": "निकट मिलान",
-    "auditStatusPartialMatch": "आंशिक मिलान"
+    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "जनरेटिंग...",
       "overwriting": "अतिरेक...",
       "regenerateOverwrite": "पुनर्जनरेट (ओवरराइट)",
+      "runAllMaintenance": "सभी रखरखाव",
       "savePreset": "सेव करें",
-      "saveProtocol": "सेव करें",
-      "runAllMaintenance": "सभी रखरखाव"
+      "saveProtocol": "सेव करें"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "एक मसल टैग्स CSV फ़ाइल पहले से मौजूद है। क्या आप इसे डिफ़ॉल्ट मानों के साथ ओवरराइट करना चाहते हैं? इससे सभी कस्टम टैग हटा दिए जाएंगे।",
@@ -760,11 +760,11 @@
       "protocolColor": "बैज की पृष्ठभूमि का रंग (हेक्स फॉर्मेट, उदाहरण के लिए, #FF5733)",
       "quickWeightIncrement": "प्लस/माइनस बटनों द्वारा उपयोग की जाने वाली वज़न में वृद्धि (जैसे, +2.5 / -2.5 इकाइयों के लिए)। यह वज़न बढ़ाने/घटाने के लिए उपयोग किया जाता है, जो कि वर्कआउट लॉग के निर्माण/संशोधन मोड में उपलब्ध है।",
       "repDuration": "एक दोहराव को पूरा करने में लगने वाला अनुमानित समय। यह तब उपयोग किया जाता है जब दोहराव की संख्या ज्ञात हो (उदाहरण के लिए, 'x 10 दोहराव')।",
+      "runAllMaintenance": "सभी रखरखाव कार्यों को क्रमानुसार चलाएं। कई बार चलाने के लिए सुरक्षित।",
       "setDuration": "जब प्रतिनिधि निर्दिष्ट नहीं होते हैं (डिफ़ॉल्ट)। सामान्य सीमा: 30-60 सेकंड।",
       "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
       "weightIncrement": "प्रगतिशील भार के लिए डिफ़ॉल्ट भार वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
-      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।",
-      "runAllMaintenance": "सभी रखरखाव कार्यों को क्रमानुसार चलाएं। कई बार चलाने के लिए सुरक्षित।"
+      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -786,10 +786,10 @@
       "protocolColor": "बजह का रंग",
       "protocolName": "प्रोटोकॉल का नाम",
       "repDuration": "प्रति पुनरावृत्ति की अवधि (सेकंड)",
+      "runAllMaintenance": "सभी रखरखाव कार्यों को चलाएं",
       "setDuration": "वैकल्पिक अवधि (सेकंड)",
       "setupCSV": "CSV फ़ाइलों को सेटअप करें",
-      "weightUnit": "वज़न की इकाई",
-      "runAllMaintenance": "सभी रखरखाव कार्यों को चलाएं"
+      "weightUnit": "वज़न की इकाई"
     },
     "messages": {
       "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
@@ -820,17 +820,17 @@
       "protocolName": "प्रोटोकॉल का नाम दर्ज करें"
     },
     "sections": {
+      "advanced": "उन्नत",
       "csvManagement": "CSV फ़ाइल प्रबंधन",
       "customProtocols": "कस्टम प्रोटोकॉल",
       "exampleData": "उदाहरण डेटा",
       "filtering": "फ़िल्टरिंग",
+      "maintenance": "रखरखाव",
       "quickLog": "मोबाइल लॉगिंग",
       "setupAndData": "स्थापना और डेटा",
       "templates": "टेम्प्लेट",
       "timerPresets": "टाइमर की पूर्व निर्धारित सेटिंग्स",
-      "trainingParameters": "प्रशिक्षण पैरामीटर",
-      "maintenance": "रखरखाव",
-      "advanced": "उन्नत"
+      "trainingParameters": "प्रशिक्षण पैरामीटर"
     },
     "tooltips": {
       "deletePreset": "प्रेडसेट हटाएं",
@@ -839,21 +839,21 @@
       "editProtocol": "प्रोटोकॉल संपादित करें"
     },
     "validation": {
-      "mustBePositive": "0 से अधिक होना चाहिए",
-      "mustBeNonNegative": "0 या उससे अधिक होना चाहिए",
+      "csvFolderNotFound": "फ़ोल्डर नहीं मिला। इसे बनाने के लिए सेटअप CSV चलाएं।",
       "csvPathEmpty": "पथ खाली नहीं हो सकता",
-      "csvFolderNotFound": "फ़ोल्डर नहीं मिला। इसे बनाने के लिए सेटअप CSV चलाएं।"
+      "mustBeNonNegative": "0 या उससे अधिक होना चाहिए",
+      "mustBePositive": "0 से अधिक होना चाहिए"
     }
   },
   "stats": {
     "avgVolume": "औसत मात्रा",
-    "recentTrend": "हाल का रुझान",
-    "sessions": "सत्र",
     "max": "अधिकतम: ",
     "min": "न्यूनतम: ",
-    "title": "📈 {dataTypeLabel} सांख्यिकी ({contextLabel}):",
     "recentLast3": " (अंतिम 3)",
-    "recentVsPrev": " (पिछले से)"
+    "recentTrend": "हाल का रुझान",
+    "recentVsPrev": " (पिछले से)",
+    "sessions": "सत्र",
+    "title": "📈 {dataTypeLabel} सांख्यिकी ({contextLabel}):"
   },
   "table": {
     "actions": "क्रियाएं",

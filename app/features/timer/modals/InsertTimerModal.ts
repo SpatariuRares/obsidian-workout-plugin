@@ -36,13 +36,17 @@ export class InsertTimerModal extends BaseInsertModal {
     return t("modal.notices.timerInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     if (!this.plugin) {
       throw new Error("Plugin is required for InsertTimerModal");
     }
 
     // Preset Section (if presets exist) - chips instead of dropdown
-    const presetNames = Object.keys(this.plugin.settings.timerPresets);
+    const presetNames = Object.keys(
+      this.plugin.settings.timerPresets,
+    );
     if (presetNames.length > 0) {
       const presetSection = this.createSection(
         container,
@@ -54,7 +58,8 @@ export class InsertTimerModal extends BaseInsertModal {
       });
 
       for (const name of presetNames) {
-        const isDefault = name === this.plugin.settings.defaultTimerPreset;
+        const isDefault =
+          name === this.plugin.settings.defaultTimerPreset;
         const chip = Chip.create(chipsContainer, {
           text: name,
           selected: isDefault,
@@ -99,7 +104,8 @@ export class InsertTimerModal extends BaseInsertModal {
   }
 
   protected applyPresetValues(presetName: string): void {
-    if (!this.timerElements || !this.timerHandlers || !this.plugin) return;
+    if (!this.timerElements || !this.timerHandlers || !this.plugin)
+      return;
 
     const preset = this.plugin.settings.timerPresets[presetName];
     if (!preset) return;
@@ -107,13 +113,15 @@ export class InsertTimerModal extends BaseInsertModal {
     // Set timer type via handler (updates chips + visibility)
     this.timerHandlers.setTimerType(preset.type);
 
-    this.timerElements.durationInput.value = preset.duration.toString();
+    this.timerElements.durationInput.value =
+      preset.duration.toString();
 
     if (preset.rounds) {
       this.timerElements.roundsInput.value = preset.rounds.toString();
     }
     this.timerElements.exerciseInput.value = preset.name;
-    this.timerElements.showControlsToggle.checked = preset.showControls;
+    this.timerElements.showControlsToggle.checked =
+      preset.showControls;
     this.timerElements.soundToggle.checked = preset.sound;
   }
 
@@ -124,7 +132,9 @@ export class InsertTimerModal extends BaseInsertModal {
 
     // If a preset is selected, include preset reference in generated code
     const presetName = this.selectedPreset;
-    const timerValues = TimerConfigurationSection.getValues(this.timerElements);
+    const timerValues = TimerConfigurationSection.getValues(
+      this.timerElements,
+    );
 
     return CodeGenerator.generateTimerCode({
       id: this.getCodeBlockId(),

@@ -39,12 +39,13 @@ export class LogFormRenderer {
   ): Promise<LogFormElements> {
     // Exercise autocomplete using reusable component
     // We pass 'modal' as it requires the ModalBase instance context for suggestions
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      modal,
-      formContainer,
-      this.plugin,
-      initialExerciseName,
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(
+        modal,
+        formContainer,
+        this.plugin,
+        initialExerciseName,
+      );
 
     const isMobile = Platform.isMobile;
 
@@ -61,14 +62,16 @@ export class LogFormRenderer {
     });
 
     // Load and render parameters for initial exercise
-    const exerciseDefService = this.plugin.getExerciseDefinitionService();
+    const exerciseDefService =
+      this.plugin.getExerciseDefinitionService();
     let parameters: ParameterDefinition[] = [];
     try {
       parameters = await exerciseDefService.getParametersForExercise(
         initialExerciseName || "",
       );
     } catch {
-      parameters = await exerciseDefService.getParametersForExercise("");
+      parameters =
+        await exerciseDefService.getParametersForExercise("");
     }
 
     // Notify parent about initial parameters
@@ -88,10 +91,12 @@ export class LogFormRenderer {
     const builtInProtocols = [
       ...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL,
     ];
-    const customProtocols = this.plugin.settings.customProtocols.map((p) => ({
-      text: p.name,
-      value: p.id,
-    }));
+    const customProtocols = this.plugin.settings.customProtocols.map(
+      (p) => ({
+        text: p.name,
+        value: p.id,
+      }),
+    );
     const allProtocols = [...builtInProtocols, ...customProtocols];
 
     const protocolSelect = modal.createSelectField(
@@ -112,7 +117,12 @@ export class LogFormRenderer {
     // Optional Date input
     let dateInput: HTMLInputElement | undefined;
     if (shouldShowDateField) {
-      dateInput = modal.createTextField(formContainer, "Date", "", "");
+      dateInput = modal.createTextField(
+        formContainer,
+        "Date",
+        "",
+        "",
+      );
       dateInput.type = "date";
     }
 
@@ -211,7 +221,10 @@ export class LogFormRenderer {
     const exerciseFieldGroup = exerciseInput.closest(
       ".workout-charts-form-group",
     );
-    if (exerciseFieldGroup && exerciseFieldGroup.parentElement === container) {
+    if (
+      exerciseFieldGroup &&
+      exerciseFieldGroup.parentElement === container
+    ) {
       container.insertBefore(chipSection, exerciseFieldGroup);
     }
 
@@ -280,13 +293,17 @@ export class LogFormRenderer {
     onExerciseChange: (newParams: ParameterDefinition[]) => void,
     shouldAutoFill: boolean,
   ): Promise<void> {
-    const exerciseDefService = this.plugin.getExerciseDefinitionService();
+    const exerciseDefService =
+      this.plugin.getExerciseDefinitionService();
     let newParameters: ParameterDefinition[];
     try {
       newParameters =
-        await exerciseDefService.getParametersForExercise(exerciseName);
+        await exerciseDefService.getParametersForExercise(
+          exerciseName,
+        );
     } catch {
-      newParameters = await exerciseDefService.getParametersForExercise("");
+      newParameters =
+        await exerciseDefService.getParametersForExercise("");
     }
 
     // Preserve existing values
@@ -298,12 +315,14 @@ export class LogFormRenderer {
     }
 
     // Render new fields
-    const currentWorkoutValue = formElements.workoutInput?.value || "";
-    const newFieldInputs = await this.dynamicFieldsRenderer.renderDynamicFields(
-      parametersContainer,
-      newParameters,
-      { exerciseName, workoutName: currentWorkoutValue },
-    );
+    const currentWorkoutValue =
+      formElements.workoutInput?.value || "";
+    const newFieldInputs =
+      await this.dynamicFieldsRenderer.renderDynamicFields(
+        parametersContainer,
+        newParameters,
+        { exerciseName, workoutName: currentWorkoutValue },
+      );
     formElements.dynamicFieldInputs = newFieldInputs;
 
     // Notify parent
@@ -327,7 +346,8 @@ export class LogFormRenderer {
     exerciseName: string,
     formElements: LogFormElements,
   ): Promise<void> {
-    const lastEntry = await this.plugin.findLastEntryForExercise(exerciseName);
+    const lastEntry =
+      await this.plugin.findLastEntryForExercise(exerciseName);
     if (!lastEntry) return;
 
     // Auto-fill reps and weight

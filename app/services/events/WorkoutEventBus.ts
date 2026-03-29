@@ -8,7 +8,10 @@ import type {
 type Handler<T> = (payload: T) => void;
 
 export class WorkoutEventBus {
-  private listeners = new Map<WorkoutEventType, Set<Handler<unknown>>>();
+  private listeners = new Map<
+    WorkoutEventType,
+    Set<Handler<unknown>>
+  >();
 
   // ---- Batching state ----
   private batchActive = false;
@@ -66,7 +69,7 @@ export class WorkoutEventBus {
    * // Emette: log:bulk-changed { count: N, operation: 'import' }
    */
   async batch(
-    operation: LogBulkChangedPayload['operation'],
+    operation: LogBulkChangedPayload["operation"],
     fn: () => Promise<void>,
   ): Promise<void> {
     this.batchActive = true;
@@ -105,28 +108,38 @@ export class WorkoutEventBus {
       } catch (error) {
         // Gli errori nei handler non devono bloccare gli altri handler
         // Emettiamo un plugin:error se non siamo già in un handler di errore
-        if (event.type !== 'plugin:error') {
+        if (event.type !== "plugin:error") {
           const errPayload = {
             source: `EventBus.dispatch(${event.type})`,
-            error: error instanceof Error ? error : new Error(String(error)),
+            error:
+              error instanceof Error
+                ? error
+                : new Error(String(error)),
             recoverable: true,
           };
-          this.dispatch({ type: 'plugin:error', payload: errPayload });
+          this.dispatch({
+            type: "plugin:error",
+            payload: errPayload,
+          });
         }
       }
     }
   }
 
-  private flushBatch(operation: LogBulkChangedPayload['operation']): void {
-    const logEvents = this.batchQueue.filter(e =>
-      e.type === 'log:added' ||
-      e.type === 'log:updated' ||
-      e.type === 'log:deleted'
+  private flushBatch(
+    operation: LogBulkChangedPayload["operation"],
+  ): void {
+    const logEvents = this.batchQueue.filter(
+      (e) =>
+        e.type === "log:added" ||
+        e.type === "log:updated" ||
+        e.type === "log:deleted",
     );
-    const otherEvents = this.batchQueue.filter(e =>
-      e.type !== 'log:added' &&
-      e.type !== 'log:updated' &&
-      e.type !== 'log:deleted'
+    const otherEvents = this.batchQueue.filter(
+      (e) =>
+        e.type !== "log:added" &&
+        e.type !== "log:updated" &&
+        e.type !== "log:deleted",
     );
 
     // Emetti altri eventi normalmente (muscle-tags:changed, settings:changed)
@@ -137,7 +150,7 @@ export class WorkoutEventBus {
     // Coalesce tutti gli eventi log:* in un unico bulk-changed
     if (logEvents.length > 0) {
       this.dispatch({
-        type: 'log:bulk-changed',
+        type: "log:bulk-changed",
         payload: { count: logEvents.length, operation },
       });
     }

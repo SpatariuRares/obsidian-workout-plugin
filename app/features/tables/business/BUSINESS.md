@@ -30,13 +30,13 @@ EmbeddedTableView (view layer)
 
 **Metodi**:
 
-| Metodo                 | Input                        | Output               | Cosa fa                                           |
-| ---------------------- | ---------------------------- | -------------------- | ------------------------------------------------- |
-| `getDefaults()`        | -                            | `EmbeddedTableParams`| Ritorna i valori default (limit: 50, exactMatch, columns) |
-| `validateParams()`     | `EmbeddedTableParams`        | `string[]`           | Valida limit (range min-max) e columns (tipo corretto). Ritorna array di errori |
-| `hasValidationErrors()`| `string[]`                   | `boolean`            | Controlla se ci sono errori                       |
-| `formatValidationErrors()` | `string[]`               | `string`             | Unisce gli errori in stringa per display           |
-| `mergeWithDefaults()`  | `Partial<EmbeddedTableParams>` | `EmbeddedTableParams` | Merge parametri utente con i defaults            |
+| Metodo                     | Input                          | Output                | Cosa fa                                                                         |
+| -------------------------- | ------------------------------ | --------------------- | ------------------------------------------------------------------------------- |
+| `getDefaults()`            | -                              | `EmbeddedTableParams` | Ritorna i valori default (limit: 50, exactMatch, columns)                       |
+| `validateParams()`         | `EmbeddedTableParams`          | `string[]`            | Valida limit (range min-max) e columns (tipo corretto). Ritorna array di errori |
+| `hasValidationErrors()`    | `string[]`                     | `boolean`             | Controlla se ci sono errori                                                     |
+| `formatValidationErrors()` | `string[]`                     | `string`              | Unisce gli errori in stringa per display                                        |
+| `mergeWithDefaults()`      | `Partial<EmbeddedTableParams>` | `EmbeddedTableParams` | Merge parametri utente con i defaults                                           |
 
 **Consumato da**: `EmbeddedTableView.renderTable()` - prima di ogni render valida i parametri.
 
@@ -49,9 +49,9 @@ EmbeddedTableView (view layer)
 
 **Metodi**:
 
-| Metodo                 | Input                                | Output                    | Cosa fa                                                |
-| ---------------------- | ------------------------------------ | ------------------------- | ------------------------------------------------------ |
-| `getOptimizedCSVData()`| `EmbeddedTableParams`, `plugin`      | `Promise<WorkoutLogData[]>` | Estrae exercise/workout/exactMatch dai params e li passa come filtro early a `plugin.getWorkoutLogData()`. Questo riduce i dati prima del filtraggio complesso in DataFilter |
+| Metodo                  | Input                           | Output                      | Cosa fa                                                                                                                                                                      |
+| ----------------------- | ------------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getOptimizedCSVData()` | `EmbeddedTableParams`, `plugin` | `Promise<WorkoutLogData[]>` | Estrae exercise/workout/exactMatch dai params e li passa come filtro early a `plugin.getWorkoutLogData()`. Questo riduce i dati prima del filtraggio complesso in DataFilter |
 
 **Perche' esiste**: Il plugin (`DataService`) supporta un filtro early opzionale che riduce i dati letti dal CSV. Questo modulo fa da ponte tra i parametri tabella e quel filtro, evitando che la view debba conoscere la firma di `getWorkoutLogData()`.
 
@@ -66,9 +66,9 @@ EmbeddedTableView (view layer)
 
 **Metodi pubblici**:
 
-| Metodo              | Input                                           | Output              | Cosa fa                                                                       |
-| ------------------- | ----------------------------------------------- | ------------------- | ----------------------------------------------------------------------------- |
-| `processTableData()`| `WorkoutLogData[]`, `EmbeddedTableParams`, `plugin?` | `Promise<TableData>` | Ordina per data, limita, determina colonne, genera righe. Entry point principale |
+| Metodo               | Input                                                | Output               | Cosa fa                                                                          |
+| -------------------- | ---------------------------------------------------- | -------------------- | -------------------------------------------------------------------------------- |
+| `processTableData()` | `WorkoutLogData[]`, `EmbeddedTableParams`, `plugin?` | `Promise<TableData>` | Ordina per data, limita, determina colonne, genera righe. Entry point principale |
 
 **Logica interna** (metodi privati):
 
@@ -105,9 +105,9 @@ EmbeddedTableView (view layer)
 
 **Metodi**:
 
-| Metodo           | Input                                                              | Output          | Cosa fa                                                                      |
-| ---------------- | ------------------------------------------------------------------ | --------------- | ---------------------------------------------------------------------------- |
-| `refreshTable()` | `plugin`, `container`, `params`, `renderCallback`, `callbacks?`    | `Promise<void>` | 1. `clearLogDataCache()` 2. `getWorkoutLogData()` 3. Chiama la renderCallback con i dati freschi 4. Notifica success/error via callbacks |
+| Metodo           | Input                                                           | Output          | Cosa fa                                                                                                                                  |
+| ---------------- | --------------------------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `refreshTable()` | `plugin`, `container`, `params`, `renderCallback`, `callbacks?` | `Promise<void>` | 1. `clearLogDataCache()` 2. `getWorkoutLogData()` 3. Chiama la renderCallback con i dati freschi 4. Notifica success/error via callbacks |
 
 **Perche' esiste**: Centralizza la logica di refresh che prima era duplicata inline in `EmbeddedTableView`. Separa il "come ricaricare" dal "come renderizzare" tramite la `renderCallback`.
 
@@ -122,16 +122,17 @@ EmbeddedTableView (view layer)
 
 **Metodi**:
 
-| Metodo                      | Input                                    | Output                                  | Cosa fa                                                                     |
-| --------------------------- | ---------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------- |
-| `calculateBestRepsAtWeight()` | `targetWeight`, `WorkoutLogData[]`       | `number`                                | Trova il massimo reps raggiunto a un peso specifico                         |
-| `checkTargetAchieved()`     | `targetWeight`, `targetReps`, `data[]`   | `boolean`                               | Controlla se l'ultimo allenamento al peso target ha raggiunto le reps target |
-| `calculateProgressPercent()`| `bestReps`, `targetReps`                 | `number` (0-100)                        | Percentuale di progresso (capped a 100)                                     |
-| `getProgressLevel()`        | `progressPercent`                        | `"complete" \| "high" \| "medium" \| "low"` | Classifica il livello: >=100 complete, >=90 high, >=50 medium, <50 low  |
+| Metodo                        | Input                                  | Output                                      | Cosa fa                                                                      |
+| ----------------------------- | -------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------- |
+| `calculateBestRepsAtWeight()` | `targetWeight`, `WorkoutLogData[]`     | `number`                                    | Trova il massimo reps raggiunto a un peso specifico                          |
+| `checkTargetAchieved()`       | `targetWeight`, `targetReps`, `data[]` | `boolean`                                   | Controlla se l'ultimo allenamento al peso target ha raggiunto le reps target |
+| `calculateProgressPercent()`  | `bestReps`, `targetReps`               | `number` (0-100)                            | Percentuale di progresso (capped a 100)                                      |
+| `getProgressLevel()`          | `progressPercent`                      | `"complete" \| "high" \| "medium" \| "low"` | Classifica il livello: >=100 complete, >=90 high, >=50 medium, <50 low       |
 
 **Perche' esiste**: Isola i calcoli dalla UI. Funzioni pure senza side effect, facilmente testabili (14 test).
 
 **Consumato da**:
+
 - `TargetHeader` (UI) - mostra la barra progresso
 - `AchievementBadge` (UI) - mostra il badge di obiettivo raggiunto
 
@@ -170,13 +171,13 @@ EmbeddedTableView.createTable(container, logData, params)
 
 ## Tipi principali
 
-| Tipo                  | File        | Descrizione                                         |
-| --------------------- | ----------- | --------------------------------------------------- |
-| `EmbeddedTableParams` | `types.ts`  | Parametri dal code block YAML (exercise, limit, columns, target...) |
-| `TableData`           | `types.ts`  | Output di processTableData: headers, rows, totalRows, filterResult |
-| `TableRow`            | `types.ts`  | Singola riga: displayRow[], originalDate, dateKey, originalLog |
-| `TableCallbacks`      | `types.ts`  | Callbacks per refresh: onRefresh, onError, onSuccess |
-| `TableCodeOptions`    | `types.ts`  | Parametri per CodeGenerator (extends EmbeddedTableParams + tableType) |
+| Tipo                  | File       | Descrizione                                                           |
+| --------------------- | ---------- | --------------------------------------------------------------------- |
+| `EmbeddedTableParams` | `types.ts` | Parametri dal code block YAML (exercise, limit, columns, target...)   |
+| `TableData`           | `types.ts` | Output di processTableData: headers, rows, totalRows, filterResult    |
+| `TableRow`            | `types.ts` | Singola riga: displayRow[], originalDate, dateKey, originalLog        |
+| `TableCallbacks`      | `types.ts` | Callbacks per refresh: onRefresh, onError, onSuccess                  |
+| `TableCodeOptions`    | `types.ts` | Parametri per CodeGenerator (extends EmbeddedTableParams + tableType) |
 
 ---
 
@@ -184,10 +185,10 @@ EmbeddedTableView.createTable(container, logData, params)
 
 Ogni modulo ha la propria test suite in `__tests__/`:
 
-| Modulo               | Test file                     | Test | Copertura                                          |
-| -------------------- | ----------------------------- | ---- | -------------------------------------------------- |
-| `TableConfig`        | `TableConfig.test.ts`         | 6    | Defaults, validazione limit/columns, merge, errori |
-| `TableDataLoader`    | `TableDataLoader.test.ts`     | 4    | Passaggio filtri a plugin, gestione params vuoti   |
-| `TableDataProcessor` | `TableDataProcessor.test.ts`  | 20+  | Headers dinamici, sorting, limiting, custom fields |
-| `TableRefresh`       | `TableRefresh.test.ts`        | 6    | Cache clear, re-render, callbacks success/error    |
-| `TargetCalculator`   | `TargetCalculator.test.ts`    | 14   | Calcoli best reps, target achieved, progress, edge cases |
+| Modulo               | Test file                    | Test | Copertura                                                |
+| -------------------- | ---------------------------- | ---- | -------------------------------------------------------- |
+| `TableConfig`        | `TableConfig.test.ts`        | 6    | Defaults, validazione limit/columns, merge, errori       |
+| `TableDataLoader`    | `TableDataLoader.test.ts`    | 4    | Passaggio filtri a plugin, gestione params vuoti         |
+| `TableDataProcessor` | `TableDataProcessor.test.ts` | 20+  | Headers dinamici, sorting, limiting, custom fields       |
+| `TableRefresh`       | `TableRefresh.test.ts`       | 6    | Cache clear, re-render, callbacks success/error          |
+| `TargetCalculator`   | `TargetCalculator.test.ts`   | 14   | Calcoli best reps, target achieved, progress, edge cases |

@@ -47,7 +47,9 @@ function parseArgs() {
 function validateArgs(args) {
   if (!args.name) {
     console.error("Error: Component name is required");
-    console.log("Usage: npm run doe:generate-component -- --name=MyComponent --type=atom");
+    console.log(
+      "Usage: npm run doe:generate-component -- --name=MyComponent --type=atom",
+    );
     process.exit(1);
   }
 
@@ -58,7 +60,9 @@ function validateArgs(args) {
 
   // Validate name format (PascalCase)
   if (!/^[A-Z][a-zA-Z0-9]*$/.test(args.name)) {
-    console.error("Error: Component name must be in PascalCase (e.g., MyComponent)");
+    console.error(
+      "Error: Component name must be in PascalCase (e.g., MyComponent)",
+    );
     process.exit(1);
   }
 }
@@ -234,7 +238,11 @@ async function updateBarrelExport(componentDir, name) {
   } catch (error) {
     if (error.code === "ENOENT") {
       // Create index.ts if it doesn't exist
-      await fs.writeFile(indexPath, `export { ${name}, type ${name}Props } from "./${name}";\n`, "utf-8");
+      await fs.writeFile(
+        indexPath,
+        `export { ${name}, type ${name}Props } from "./${name}";\n`,
+        "utf-8",
+      );
       console.log("  ✓ Created index.ts with export");
     } else {
       throw error;
@@ -255,7 +263,12 @@ async function main() {
   console.log("─".repeat(50));
 
   // Determine directory
-  const componentDir = path.join(ROOT_DIR, "app", "components", `${type}s`);
+  const componentDir = path.join(
+    ROOT_DIR,
+    "app",
+    "components",
+    `${type}s`,
+  );
   const componentPath = path.join(componentDir, `${name}.ts`);
   const testDir = path.join(componentDir, "__tests__");
   const testPath = path.join(testDir, `${name}.test.ts`);
@@ -264,7 +277,9 @@ async function main() {
   try {
     await fs.access(componentPath);
     if (!force) {
-      console.error(`\nError: Component ${name} already exists at ${componentPath}`);
+      console.error(
+        `\nError: Component ${name} already exists at ${componentPath}`,
+      );
       console.log("Use --force to overwrite");
       process.exit(1);
     }
@@ -279,12 +294,16 @@ async function main() {
   // Generate component file
   const componentContent = generateComponentContent(name, type);
   await fs.writeFile(componentPath, componentContent, "utf-8");
-  console.log(`  ✓ Created component: ${path.relative(ROOT_DIR, componentPath)}`);
+  console.log(
+    `  ✓ Created component: ${path.relative(ROOT_DIR, componentPath)}`,
+  );
 
   // Generate test file
   const testContent = generateTestContent(name, type);
   await fs.writeFile(testPath, testContent, "utf-8");
-  console.log(`  ✓ Created test: ${path.relative(ROOT_DIR, testPath)}`);
+  console.log(
+    `  ✓ Created test: ${path.relative(ROOT_DIR, testPath)}`,
+  );
 
   // Update barrel export
   await updateBarrelExport(componentDir, name);
@@ -294,7 +313,9 @@ async function main() {
   console.log(`  1. Implement rendering logic in ${name}.ts`);
   console.log(`  2. Write tests in ${name}.test.ts`);
   console.log(`  3. Add CSS styles in styles/components/`);
-  console.log(`  4. Import and use: import { ${name} } from "@app/components/${type}s";`);
+  console.log(
+    `  4. Import and use: import { ${name} } from "@app/components/${type}s";`,
+  );
   console.log("");
 }
 

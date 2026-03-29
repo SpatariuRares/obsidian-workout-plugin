@@ -33,7 +33,9 @@ export class TableErrorMessage {
    * @param container - The container element
    */
   static clear(container: HTMLElement): void {
-    const errorDivs = container.querySelectorAll(".workout-feedback-error");
+    const errorDivs = container.querySelectorAll(
+      ".workout-feedback-error",
+    );
     errorDivs.forEach((div) => div.remove());
   }
 }

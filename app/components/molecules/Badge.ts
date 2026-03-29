@@ -7,10 +7,10 @@
 import { Icon, Text, Container } from "@app/components/atoms";
 
 export interface BadgeProps {
-	text: string;
-	icon?: string;
-	variant?: "default" | "success" | "warning" | "error" | "info";
-	className?: string;
+  text: string;
+  icon?: string;
+  variant?: "default" | "success" | "warning" | "error" | "info";
+  className?: string;
 }
 
 /**
@@ -32,57 +32,58 @@ export interface BadgeProps {
  * ```
  */
 export class Badge {
-	/**
-	 * Create a badge element
-	 * @param parent - Parent HTML element
-	 * @param props - Badge properties
-	 * @returns The created badge container
-	 */
-	static create(parent: HTMLElement, props: BadgeProps): HTMLElement {
-		// Determine variant class
-		const variantClass = props.variant
-			? `badge-${props.variant}`
-			: "badge-default";
+  /**
+   * Create a badge element
+   * @param parent - Parent HTML element
+   * @param props - Badge properties
+   * @returns The created badge container
+   */
+  static create(parent: HTMLElement, props: BadgeProps): HTMLElement {
+    // Determine variant class
+    const variantClass = props.variant
+      ? `badge-${props.variant}`
+      : "badge-default";
 
-		// Create badge container
-		const badge = Container.create(parent, {
-			className: `badge ${variantClass} ${props.className || ""}`.trim(),
-		});
+    // Create badge container
+    const badge = Container.create(parent, {
+      className:
+        `badge ${variantClass} ${props.className || ""}`.trim(),
+    });
 
-		// Add optional icon
-		if (props.icon) {
-			Icon.create(badge, {
-				name: props.icon,
-				className: "badge-icon",
-			});
-		}
+    // Add optional icon
+    if (props.icon) {
+      Icon.create(badge, {
+        name: props.icon,
+        className: "badge-icon",
+      });
+    }
 
-		// Add text
-		Text.create(badge, {
-			text: props.text,
-			className: "badge-text",
-			tag: "span",
-		});
+    // Add text
+    Text.create(badge, {
+      text: props.text,
+      className: "badge-text",
+      tag: "span",
+    });
 
-		return badge;
-	}
+    return badge;
+  }
 
-	/**
-	 * Create a count badge (simple number badge)
-	 * @param parent - Parent HTML element
-	 * @param count - Number to display
-	 * @param className - Optional additional classes
-	 * @returns The created badge container
-	 */
-	static createCount(
-		parent: HTMLElement,
-		count: number,
-		className?: string
-	): HTMLElement {
-		return this.create(parent, {
-			text: String(count),
-			variant: "default",
-			className: `badge-count ${className || ""}`.trim(),
-		});
-	}
+  /**
+   * Create a count badge (simple number badge)
+   * @param parent - Parent HTML element
+   * @param count - Number to display
+   * @param className - Optional additional classes
+   * @returns The created badge container
+   */
+  static createCount(
+    parent: HTMLElement,
+    count: number,
+    className?: string,
+  ): HTMLElement {
+    return this.create(parent, {
+      text: String(count),
+      variant: "default",
+      className: `badge-count ${className || ""}`.trim(),
+    });
+  }
 }

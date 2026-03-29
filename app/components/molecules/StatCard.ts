@@ -7,10 +7,10 @@
 import { Icon, Text, Container } from "@app/components/atoms";
 
 export interface StatCardProps {
-	icon: string;
-	value: string | number;
-	label: string;
-	className?: string;
+  icon: string;
+  value: string | number;
+  label: string;
+  className?: string;
 }
 
 /**
@@ -26,41 +26,41 @@ export interface StatCardProps {
  * ```
  */
 export class StatCard {
-	/**
-	 * Create a stat card element
-	 * @param parent - Parent HTML element
-	 * @param props - Stat card properties
-	 * @returns The created stat card container
-	 */
-	static create(
-		parent: HTMLElement,
-		props: StatCardProps
-	): HTMLElement {
-		// Create card container
-		const card = Container.create(parent, {
-			className: `stat-card ${props.className || ""}`.trim(),
-		});
+  /**
+   * Create a stat card element
+   * @param parent - Parent HTML element
+   * @param props - Stat card properties
+   * @returns The created stat card container
+   */
+  static create(
+    parent: HTMLElement,
+    props: StatCardProps,
+  ): HTMLElement {
+    // Create card container
+    const card = Container.create(parent, {
+      className: `stat-card ${props.className || ""}`.trim(),
+    });
 
-		// Add icon
-		Icon.create(card, {
-			name: props.icon,
-			className: "stat-card-icon",
-		});
+    // Add icon
+    Icon.create(card, {
+      name: props.icon,
+      className: "stat-card-icon",
+    });
 
-		// Add value
-		Text.create(card, {
-			text: String(props.value),
-			className: "stat-card-value",
-			tag: "div",
-		});
+    // Add value
+    Text.create(card, {
+      text: String(props.value),
+      className: "stat-card-value",
+      tag: "div",
+    });
 
-		// Add label
-		Text.create(card, {
-			text: props.label,
-			className: "stat-card-label",
-			tag: "span",
-		});
+    // Add label
+    Text.create(card, {
+      text: props.label,
+      className: "stat-card-label",
+      tag: "span",
+    });
 
-		return card;
-	}
+    return card;
+  }
 }

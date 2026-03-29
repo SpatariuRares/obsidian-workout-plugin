@@ -6,16 +6,17 @@
 
 ```typescript
 interface WorkoutLogData {
-  reps: number;        // campo diretto (sempre presente)
-  weight: number;      // campo diretto (sempre presente)
-  volume: number;      // campo diretto (derivato: reps * weight)
-  customFields?: Record<string, string | number | boolean>;  // tutto il resto
+  reps: number; // campo diretto (sempre presente)
+  weight: number; // campo diretto (sempre presente)
+  volume: number; // campo diretto (derivato: reps * weight)
+  customFields?: Record<string, string | number | boolean>; // tutto il resto
 }
 ```
 
 `reps`, `weight`, `volume` sono parametri specifici degli esercizi di forza, ma sono trattati come campi universali. Tutti gli altri parametri (duration, distance, heartRate, custom) vivono in `customFields`.
 
 Questo crea:
+
 - Due percorsi di aggregazione nei charts (`log.volume` vs `ChartDataExtractor.getCustomFieldNumber(log.customFields, "duration")`)
 - Codice speciale ovunque per skippare reps/weight dai customFields
 - Colonne CSV sempre presenti ma spesso a 0 per esercizi non-strength
@@ -27,28 +28,28 @@ Questo crea:
 
 ### Per layer
 
-| Layer | File coinvolti | Complessita |
-|-------|---------------|-------------|
-| Type definitions | 3 file | Alta - struttura base |
-| CSV parsing/writing | 3 file | Alta - formato dati |
-| Business logic | 10 file | Alta - calcoli e aggregazioni |
-| UI/rendering | 7 file | Media - display e form |
-| Constants/config | 5 file | Bassa - label e opzioni |
-| Tests | 6+ file | Media - aggiornamento test |
-| Public API | 1 file | Alta - breaking change esterna |
+| Layer               | File coinvolti | Complessita                    |
+| ------------------- | -------------- | ------------------------------ |
+| Type definitions    | 3 file         | Alta - struttura base          |
+| CSV parsing/writing | 3 file         | Alta - formato dati            |
+| Business logic      | 10 file        | Alta - calcoli e aggregazioni  |
+| UI/rendering        | 7 file         | Media - display e form         |
+| Constants/config    | 5 file         | Bassa - label e opzioni        |
+| Tests               | 6+ file        | Media - aggiornamento test     |
+| Public API          | 1 file         | Alta - breaking change esterna |
 
 ### File ad alto impatto
 
-| File | Riferimenti | Cosa fa |
-|------|------------|---------|
-| `WorkoutLogData.ts` | ~25 | Interfaccia, CSV parsing, CSV serializzazione |
-| `DataAggregation.ts` | ~8 | Tutte le aggregazioni usano `.volume` |
-| `ChartDataUtils.ts` | ~10 | Aggregazione chart (avg vs sum) |
-| `WorkoutPlannerAPI.ts` | ~12 | API pubblica, stats, trend |
-| `LogSubmissionHandler.ts` | ~6 | Creazione entry da form |
-| `ExerciseConversionService.ts` | ~10 | Conversione tipo esercizio |
-| `TargetCalculator.ts` | ~5 | Progressive overload |
-| `WorkoutLogRepository.ts` | ~4 | CSV I/O, entry matching |
+| File                           | Riferimenti | Cosa fa                                       |
+| ------------------------------ | ----------- | --------------------------------------------- |
+| `WorkoutLogData.ts`            | ~25         | Interfaccia, CSV parsing, CSV serializzazione |
+| `DataAggregation.ts`           | ~8          | Tutte le aggregazioni usano `.volume`         |
+| `ChartDataUtils.ts`            | ~10         | Aggregazione chart (avg vs sum)               |
+| `WorkoutPlannerAPI.ts`         | ~12         | API pubblica, stats, trend                    |
+| `LogSubmissionHandler.ts`      | ~6          | Creazione entry da form                       |
+| `ExerciseConversionService.ts` | ~10         | Conversione tipo esercizio                    |
+| `TargetCalculator.ts`          | ~5          | Progressive overload                          |
+| `WorkoutLogRepository.ts`      | ~4          | CSV I/O, entry matching                       |
 
 ## Strategia: migrazione in 4 fasi
 
@@ -68,7 +69,10 @@ import type { WorkoutLogData } from "@app/types/WorkoutLogData";
  */
 
 /** Get a numeric field value from a workout log entry */
-export function getFieldValue(log: WorkoutLogData, key: string): number {
+export function getFieldValue(
+  log: WorkoutLogData,
+  key: string,
+): number {
   // Phase 1: direct fields take priority
   switch (key) {
     case "reps":
@@ -83,13 +87,18 @@ export function getFieldValue(log: WorkoutLogData, key: string): number {
 }
 
 /** Check if a log entry has meaningful data for a field */
-export function hasFieldValue(log: WorkoutLogData, key: string): boolean {
+export function hasFieldValue(
+  log: WorkoutLogData,
+  key: string,
+): boolean {
   return getFieldValue(log, key) > 0;
 }
 
 /** Check if a log entry is a strength exercise (has reps or weight) */
 export function isStrengthEntry(log: WorkoutLogData): boolean {
-  return getFieldValue(log, "reps") > 0 || getFieldValue(log, "weight") > 0;
+  return (
+    getFieldValue(log, "reps") > 0 || getFieldValue(log, "weight") > 0
+  );
 }
 
 /** Calculate volume (derived field) */
@@ -120,11 +129,11 @@ Ordine consigliato per la migrazione dei consumatori:
 
 ```typescript
 // PRIMA (DataAggregation.ts)
-data.reduce((sum, d) => sum + d.volume, 0)
+data.reduce((sum, d) => sum + d.volume, 0);
 
 // DOPO
 import { getFieldValue } from "@app/utils/data/WorkoutFieldAccessor";
-data.reduce((sum, d) => sum + getFieldValue(d, "volume"), 0)
+data.reduce((sum, d) => sum + getFieldValue(d, "volume"), 0);
 ```
 
 ```typescript
@@ -141,10 +150,12 @@ existing.reps += getFieldValue(log, "reps");
 
 ```typescript
 // PRIMA (TargetCalculator.ts)
-data.filter((entry) => entry.weight === targetWeight)
+data.filter((entry) => entry.weight === targetWeight);
 
 // DOPO
-data.filter((entry) => getFieldValue(entry, "weight") === targetWeight)
+data.filter(
+  (entry) => getFieldValue(entry, "weight") === targetWeight,
+);
 ```
 
 ```typescript
@@ -159,8 +170,11 @@ if (isStrengthEntry(log))
 
 ```typescript
 // PRIMA (ChartDataUtils.ts) - due percorsi diversi
-existing.volume += log.volume || 0;                                    // diretto
-existing.duration += ChartDataExtractor.getCustomFieldNumber(log.customFields, "duration"); // custom
+existing.volume += log.volume || 0; // diretto
+existing.duration += ChartDataExtractor.getCustomFieldNumber(
+  log.customFields,
+  "duration",
+); // custom
 
 // DOPO - un solo percorso
 existing.volume += getFieldValue(log, "volume");
@@ -175,12 +189,12 @@ Questo elimina `ChartDataExtractor.getCustomFieldNumber()` - la sua logica e' gi
 
 ```typescript
 // PRIMA (TableRowProcessor.ts)
-log.reps?.toString() || NOT_AVAILABLE
-log.weight?.toString() || NOT_AVAILABLE
+log.reps?.toString() || NOT_AVAILABLE;
+log.weight?.toString() || NOT_AVAILABLE;
 
 // DOPO
 const reps = getFieldValue(log, "reps");
-reps > 0 ? reps.toString() : NOT_AVAILABLE
+reps > 0 ? reps.toString() : NOT_AVAILABLE;
 ```
 
 **Passo 4 - Forms/Modals**:
@@ -213,6 +227,7 @@ volume: getFieldValue(log, "volume"),
 #### 1.3 Checklist file da migrare
 
 Business logic:
+
 - [ ] `app/utils/data/DataAggregation.ts` (8 ref: volume, weight aggregazioni)
 - [ ] `app/features/charts/business/ChartDataUtils.ts` (10 ref: aggregazione dati chart)
 - [ ] `app/features/charts/business/ChartDataExtractor.ts` (3 ref: switch volume/weight/reps)
@@ -224,6 +239,7 @@ Business logic:
 - [ ] `app/features/exercise-conversion/logic/ExerciseConversionService.ts` (10 ref: reps/weight/volume get/set)
 
 UI/Rendering:
+
 - [ ] `app/features/tables/business/TableRowProcessor.ts` (3 ref: display)
 - [ ] `app/features/modals/base/BaseLogModal.ts` (5 ref: prefill form)
 - [ ] `app/features/modals/base/components/LogFormRenderer.ts` (2 ref: last entry prefill)
@@ -233,14 +249,17 @@ UI/Rendering:
 - [ ] `app/components/organism/LogCallouts.ts` (2 ref: latest entry display)
 
 API:
+
 - [ ] `app/api/WorkoutPlannerAPI.ts` (12 ref: stats, trends, format)
 
 CSV layer (fase 2):
+
 - [ ] `app/types/WorkoutLogData.ts` (25 ref: interface, parsing, serializzazione)
 - [ ] `app/services/data/WorkoutLogRepository.ts` (4 ref: header, entry matching)
 - [ ] `app/services/examples/ExampleGeneratorService.ts` (1 ref: CSV row generation)
 
 Tests:
+
 - [ ] `app/types/__tests__/WorkoutLogData.test.ts`
 - [ ] `app/utils/__tests__/DataAggregation.test.ts`
 - [ ] `app/features/dashboard/__tests__/DashboardCalculations.test.ts`
@@ -289,25 +308,54 @@ export class CSVMigrationService {
 
     // 2. Verificare se gia' migrato
     const columns = header.split(",");
-    const standardCols = ["date", "exercise", "origine", "workout", "timestamp", "notes", "protocol"];
-    if (!columns.includes("reps") || columns.indexOf("reps") > standardCols.length) {
+    const standardCols = [
+      "date",
+      "exercise",
+      "origine",
+      "workout",
+      "timestamp",
+      "notes",
+      "protocol",
+    ];
+    if (
+      !columns.includes("reps") ||
+      columns.indexOf("reps") > standardCols.length
+    ) {
       return { success: true, message: "Already migrated" };
     }
 
     // 3. Backup
-    const backupPath = csvPath.replace(".csv", `_backup_${Date.now()}.csv`);
+    const backupPath = csvPath.replace(
+      ".csv",
+      `_backup_${Date.now()}.csv`,
+    );
     await this.app.vault.create(backupPath, content);
 
     // 4. Ricostruire header
     //    Le colonne standard restano: date, exercise, origine, workout, timestamp, notes, protocol
     //    reps, weight, volume diventano custom columns (in coda)
-    const newStandardCols = ["date", "exercise", "origine", "workout", "timestamp", "notes", "protocol"];
+    const newStandardCols = [
+      "date",
+      "exercise",
+      "origine",
+      "workout",
+      "timestamp",
+      "notes",
+      "protocol",
+    ];
     const oldCustomStart = STANDARD_CSV_COLUMNS.length; // 10
     const existingCustomCols = columns.slice(oldCustomStart);
-    const newCustomCols = ["reps", "weight", "volume", ...existingCustomCols];
+    const newCustomCols = [
+      "reps",
+      "weight",
+      "volume",
+      ...existingCustomCols,
+    ];
 
     // 5. Riscrivere ogni riga con nuovo ordine colonne
-    const newHeader = [...newStandardCols, ...newCustomCols].join(",");
+    const newHeader = [...newStandardCols, ...newCustomCols].join(
+      ",",
+    );
     const newLines = [newHeader];
 
     for (let i = 1; i < lines.length; i++) {
@@ -354,7 +402,10 @@ this.plugin.addCommand({
     ).waitForResult();
 
     if (confirm) {
-      const service = new CSVMigrationService(this.plugin.app, this.plugin.settings);
+      const service = new CSVMigrationService(
+        this.plugin.app,
+        this.plugin.settings,
+      );
       const result = await service.migrateToUnifiedFields();
       new Notice(result.message);
     }
@@ -367,14 +418,27 @@ this.plugin.addCommand({
 ```typescript
 // PRIMA (WorkoutLogData.ts)
 const STANDARD_CSV_COLUMNS = [
-  "date", "exercise", "reps", "weight", "volume",
-  "origine", "workout", "timestamp", "notes", "protocol"
+  "date",
+  "exercise",
+  "reps",
+  "weight",
+  "volume",
+  "origine",
+  "workout",
+  "timestamp",
+  "notes",
+  "protocol",
 ];
 
 // DOPO
 const STANDARD_CSV_COLUMNS = [
-  "date", "exercise",
-  "origine", "workout", "timestamp", "notes", "protocol"
+  "date",
+  "exercise",
+  "origine",
+  "workout",
+  "timestamp",
+  "notes",
+  "protocol",
 ];
 // reps, weight, volume sono ora custom columns
 ```
@@ -385,17 +449,24 @@ Il parser gia' gestisce le custom columns dinamicamente. Dopo la migrazione, `re
 
 ```typescript
 // Fase 2: customFields ha priorita'
-export function getFieldValue(log: WorkoutLogData, key: string): number {
+export function getFieldValue(
+  log: WorkoutLogData,
+  key: string,
+): number {
   // Try customFields first (post-migration format)
   const customValue = getCustomFieldNumber(log.customFields, key);
   if (customValue !== 0) return customValue;
 
   // Fallback to direct fields (pre-migration backward compat)
   switch (key) {
-    case "reps": return log.reps ?? 0;
-    case "weight": return log.weight ?? 0;
-    case "volume": return log.volume ?? 0;
-    default: return 0;
+    case "reps":
+      return log.reps ?? 0;
+    case "weight":
+      return log.weight ?? 0;
+    case "volume":
+      return log.volume ?? 0;
+    default:
+      return 0;
   }
 }
 ```
@@ -442,9 +513,9 @@ interface DataviewWorkoutLog {
 
 // DOPO - breaking change per Dataview users
 interface DataviewWorkoutLog {
-  reps: number;        // estratto da customFields
-  weight: number;      // estratto da customFields
-  volume: number;      // estratto da customFields
+  reps: number; // estratto da customFields
+  weight: number; // estratto da customFields
+  volume: number; // estratto da customFields
   customFields?: Record<string, string | number | boolean>;
 }
 ```
@@ -458,6 +529,7 @@ L'API pubblica puo' continuare a esporre `reps`/`weight`/`volume` come campi di 
 `volume = reps * weight` e' attualmente calcolato in `LogSubmissionHandler.ts:91-93` e in `ExerciseConversionService.ts:111`.
 
 Dopo la migrazione, `volume` resta un campo derivato. Opzioni:
+
 - **A)** Continuare a salvarlo nel CSV (ridondante ma veloce per aggregazioni)
 - **B)** Calcolarlo on-the-fly (elimina ridondanza, ma rallenta aggregazioni)
 
@@ -468,14 +540,16 @@ Dopo la migrazione, `volume` resta un campo derivato. Opzioni:
 `WorkoutLogRepository.ts:148-149` usa `reps/weight` come fallback per identificare entry quando il timestamp non e' disponibile:
 
 ```typescript
-entry.reps === originalLog.reps && entry.weight === originalLog.weight
+entry.reps === originalLog.reps &&
+  entry.weight === originalLog.weight;
 ```
 
 Dopo la migrazione, usare `getFieldValue()`:
 
 ```typescript
 getFieldValue(entry, "reps") === getFieldValue(originalLog, "reps") &&
-getFieldValue(entry, "weight") === getFieldValue(originalLog, "weight")
+  getFieldValue(entry, "weight") ===
+    getFieldValue(originalLog, "weight");
 ```
 
 ### 3. Validazione entry con reps <= 0
@@ -485,7 +559,7 @@ getFieldValue(entry, "weight") === getFieldValue(originalLog, "weight")
 ```typescript
 // Tutti i campi sono custom, verifica che almeno uno abbia un valore > 0
 const hasAnyValue = Object.values(entry.customFields || {}).some(
-  v => typeof v === "number" && v > 0
+  (v) => typeof v === "number" && v > 0,
 );
 ```
 
@@ -510,13 +584,13 @@ Dopo la migrazione, questo diventa la rimozione del campo da customFields (gia' 
 
 ## Rischi e mitigazioni
 
-| Rischio | Probabilita | Impatto | Mitigazione |
-|---------|-------------|---------|-------------|
-| Dati persi durante migrazione CSV | Bassa | Critico | Backup automatico prima della migrazione |
-| Plugin di terze parti che usano API pubblica | Media | Alto | Mantenere campi nell'API, estrarre da customFields |
-| Performance aggregazioni | Bassa | Medio | `getFieldValue` e' O(n) su customFields, ma n e' piccolo (5-10 campi) |
-| Utenti non migrano il CSV | Media | Medio | Backward compat nel parser per entrambi i formati |
-| Test regressions | Alta | Medio | Migrare test insieme ai consumatori |
+| Rischio                                      | Probabilita | Impatto | Mitigazione                                                           |
+| -------------------------------------------- | ----------- | ------- | --------------------------------------------------------------------- |
+| Dati persi durante migrazione CSV            | Bassa       | Critico | Backup automatico prima della migrazione                              |
+| Plugin di terze parti che usano API pubblica | Media       | Alto    | Mantenere campi nell'API, estrarre da customFields                    |
+| Performance aggregazioni                     | Bassa       | Medio   | `getFieldValue` e' O(n) su customFields, ma n e' piccolo (5-10 campi) |
+| Utenti non migrano il CSV                    | Media       | Medio   | Backward compat nel parser per entrambi i formati                     |
+| Test regressions                             | Alta        | Medio   | Migrare test insieme ai consumatori                                   |
 
 ## Sequenza consigliata di implementazione
 

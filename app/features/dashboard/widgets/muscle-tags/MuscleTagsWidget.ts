@@ -22,7 +22,9 @@ function getMuscleGroupEmoji(muscleGroup: string): string {
     rear_delts: t("icons.exercise.rear_delts"),
   };
 
-  return MUSCLE_GROUP_EMOJI[muscleGroup] ?? t("icons.exercise.deadlift");
+  return (
+    MUSCLE_GROUP_EMOJI[muscleGroup] ?? t("icons.exercise.deadlift")
+  );
 }
 
 /**
@@ -67,7 +69,9 @@ export class MuscleTagsWidget {
     });
 
     infoEl.createEl("small", {
-      text: t("dashboard.muscleTags.totalCount", { count: sortedTags.length }),
+      text: t("dashboard.muscleTags.totalCount", {
+        count: sortedTags.length,
+      }),
       cls: "workout-muscle-tags-count",
     });
   }

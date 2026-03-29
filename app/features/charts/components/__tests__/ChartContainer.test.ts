@@ -9,14 +9,21 @@ describe("ChartContainer", () => {
     const container = ChartContainer.create(parent);
 
     expect(parent.contains(container)).toBe(true);
-    expect(container.classList.contains("workout-charts-container")).toBe(true);
+    expect(
+      container.classList.contains("workout-charts-container"),
+    ).toBe(true);
   });
 
   it("creates a container with custom class", () => {
     const parent = createObsidianContainer();
-    const container = ChartContainer.create(parent, "custom-container");
+    const container = ChartContainer.create(
+      parent,
+      "custom-container",
+    );
 
-    expect(container.classList.contains("custom-container")).toBe(true);
+    expect(container.classList.contains("custom-container")).toBe(
+      true,
+    );
   });
 
   it("creates a canvas with default class", () => {
@@ -25,12 +32,17 @@ describe("ChartContainer", () => {
 
     expect(container.contains(canvas)).toBe(true);
     expect(canvas.tagName).toBe("CANVAS");
-    expect(canvas.classList.contains("workout-charts-canvas")).toBe(true);
+    expect(canvas.classList.contains("workout-charts-canvas")).toBe(
+      true,
+    );
   });
 
   it("creates a canvas with custom class", () => {
     const container = createObsidianContainer();
-    const canvas = ChartContainer.createCanvas(container, "custom-canvas");
+    const canvas = ChartContainer.createCanvas(
+      container,
+      "custom-canvas",
+    );
 
     expect(canvas.classList.contains("custom-canvas")).toBe(true);
   });

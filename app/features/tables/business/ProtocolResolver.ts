@@ -1,4 +1,7 @@
-import { WorkoutProtocol, CustomProtocolConfig } from "@app/types/WorkoutLogData";
+import {
+  WorkoutProtocol,
+  CustomProtocolConfig,
+} from "@app/types/WorkoutLogData";
 
 export interface ProtocolBadgeConfig {
   label: string;
@@ -10,7 +13,10 @@ export interface ProtocolBadgeConfig {
 /**
  * Protocol display configuration for built-in protocols
  */
-const PROTOCOL_DISPLAY: Record<string, { label: string; className: string }> = {
+const PROTOCOL_DISPLAY: Record<
+  string,
+  { label: string; className: string }
+> = {
   [WorkoutProtocol.STANDARD]: { label: "", className: "" },
   [WorkoutProtocol.DROP_SET]: {
     label: "Drop",
@@ -67,12 +73,15 @@ export class ProtocolResolver {
 
     // Check custom protocols
     if (customProtocols) {
-      const customProtocol = customProtocols.find((p) => p.id === protocol);
+      const customProtocol = customProtocols.find(
+        (p) => p.id === protocol,
+      );
 
       if (customProtocol) {
         return {
           label: customProtocol.abbreviation,
-          className: "workout-protocol-badge workout-protocol-badge-custom",
+          className:
+            "workout-protocol-badge workout-protocol-badge-custom",
           tooltip: customProtocol.name,
           color: customProtocol.color,
         };

@@ -28,7 +28,6 @@ export class CommandHandlerService {
   ) {}
 
   registerCommands(): void {
-
     this.plugin.addCommand({
       id: "create-csv-log",
       name: t("commands.createCsvLog"),
@@ -126,12 +125,23 @@ export class CommandHandlerService {
             file,
             async (options) => {
               try {
-                const exporter = new CanvasExporter(this.app, this.plugin);
-                const canvasPath = await exporter.exportToCanvas(file, options);
-                new Notice(`${t("modal.notices.canvasExported")} (${canvasPath})`);
+                const exporter = new CanvasExporter(
+                  this.app,
+                  this.plugin,
+                );
+                const canvasPath = await exporter.exportToCanvas(
+                  file,
+                  options,
+                );
+                new Notice(
+                  `${t("modal.notices.canvasExported")} (${canvasPath})`,
+                );
               } catch (error) {
-                const errorMessage = ErrorUtils.getErrorMessage(error);
-                new Notice(`${t("modal.notices.canvasExportError")}${errorMessage}`);
+                const errorMessage =
+                  ErrorUtils.getErrorMessage(error);
+                new Notice(
+                  `${t("modal.notices.canvasExportError")}${errorMessage}`,
+                );
               }
             },
           ).open();
@@ -143,7 +153,9 @@ export class CommandHandlerService {
       id: "migrate-exercise-types",
       name: t("commands.migrateExerciseTypes"),
       callback: async () => {
-        await new ExerciseTypeMigration(this.plugin).migrateExerciseTypes();
+        await new ExerciseTypeMigration(
+          this.plugin,
+        ).migrateExerciseTypes();
       },
     });
 
@@ -168,9 +180,8 @@ export class CommandHandlerService {
       name: t("commands.addMissingBlockIds"),
       callback: async () => {
         try {
-          const { totalAdded, modifiedFiles } = await runAddMissingBlockIds(
-            this.app,
-          );
+          const { totalAdded, modifiedFiles } =
+            await runAddMissingBlockIds(this.app);
           if (totalAdded === 0) {
             new Notice(t("messages.success.noBlockIdsNeeded"));
           } else {
@@ -208,7 +219,9 @@ export class CommandHandlerService {
           new Notice(t("messages.tagReferenceGenerated"));
         } catch (error) {
           const errorMessage = ErrorUtils.getErrorMessage(error);
-          new Notice(`${t("messages.errors.tagReferenceFailed")}${errorMessage}`);
+          new Notice(
+            `${t("messages.errors.tagReferenceFailed")}${errorMessage}`,
+          );
         }
       },
     });

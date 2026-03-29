@@ -57,8 +57,12 @@ export function getUnitsMap(): Record<CHART_DATA_TYPE, string> {
 export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
   const weightUnit = getWeightUnit();
   return {
-    [CHART_DATA_TYPE.VOLUME]: t("table.columns.volumeUnit", { weightUnit }),
-    [CHART_DATA_TYPE.WEIGHT]: t("table.columns.weightUnit", { weightUnit }),
+    [CHART_DATA_TYPE.VOLUME]: t("table.columns.volumeUnit", {
+      weightUnit,
+    }),
+    [CHART_DATA_TYPE.WEIGHT]: t("table.columns.weightUnit", {
+      weightUnit,
+    }),
     [CHART_DATA_TYPE.REPS]: t("table.columns.reps"),
     [CHART_DATA_TYPE.DURATION]: t("table.columns.duration"),
     [CHART_DATA_TYPE.DISTANCE]: t("table.columns.distanceUnit", {
@@ -93,7 +97,9 @@ export function getDynamicModalLabels() {
   const weightUnit = getWeightUnit();
   return {
     WEIGHT: t("modal.labels.weight", { unit: weightUnit }),
-    TARGET_WEIGHT: t("modal.labels.targetWeight", { unit: weightUnit }),
+    TARGET_WEIGHT: t("modal.labels.targetWeight", {
+      unit: weightUnit,
+    }),
   };
 }
 
@@ -105,8 +111,14 @@ export function getDynamicModalLabels() {
 export function getDynamicDataTypeOptions() {
   const weightUnit = getWeightUnit();
   return [
-    { text: t("modal.labels.volume", { unit: weightUnit }), value: "volume" },
-    { text: t("modal.labels.weight", { unit: weightUnit }), value: "weight" },
+    {
+      text: t("modal.labels.volume", { unit: weightUnit }),
+      value: "volume",
+    },
+    {
+      text: t("modal.labels.weight", { unit: weightUnit }),
+      value: "weight",
+    },
     { text: t("modal.labels.reps"), value: "reps" },
   ];
 }
@@ -290,9 +302,12 @@ export function getDynamicSettingsLabels() {
     WEIGHT_INCREMENT: t("charts.labels.weightIncrementUnit", {
       weightIncrementUnit: weightUnit,
     }),
-    QUICK_WEIGHT_INCREMENT: t("charts.labels.quickWeightIncrementUnit", {
-      weightIncrementUnit: weightUnit,
-    }),
+    QUICK_WEIGHT_INCREMENT: t(
+      "charts.labels.quickWeightIncrementUnit",
+      {
+        weightIncrementUnit: weightUnit,
+      },
+    ),
   };
 }
 
@@ -370,7 +385,13 @@ export const TABLE_UI = {
     },
   },
 
-  DEFAULT_VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
+  DEFAULT_VISIBLE_COLUMNS: [
+    "Date",
+    "Reps",
+    "Weight",
+    "Volume",
+    "Notes",
+  ],
 } as const;
 
 /**
@@ -379,7 +400,9 @@ export const TABLE_UI = {
  * @param identifiers - Array of technical column identifiers (e.g., ["Rep", "Wgt (kg)"])
  * @returns Array of translated column labels
  */
-export function mapColumnIdentifiersToLabels(identifiers: string[]): string[] {
+export function mapColumnIdentifiersToLabels(
+  identifiers: string[],
+): string[] {
   const columnDefsMap = new Map<string, string>();
 
   // Build reverse map from value to label
@@ -421,8 +444,10 @@ export const CHARTS_UI = {
     },
 
     /** Dynamic variation display with proper units */
-    VARIATION_FROM_TO_FORMATTED: (startValue: string, endValue: string) =>
-      t("charts.labels.variationFromTo", { startValue, endValue }),
+    VARIATION_FROM_TO_FORMATTED: (
+      startValue: string,
+      endValue: string,
+    ) => t("charts.labels.variationFromTo", { startValue, endValue }),
     /** Dynamic single value display */
     VARIATION_SINGLE_VALUE_FORMATTED: (
       value: string,
@@ -456,8 +481,12 @@ export function getDynamicDashboardLabels() {
   return {
     QUICK_STATS: {
       METRICS: {
-        TOTAL_VOLUME: t("general.labels.totalVolume", { unit: weightUnit }),
-        AVG_VOLUME: t("general.labels.avgVolume", { unit: weightUnit }),
+        TOTAL_VOLUME: t("general.labels.totalVolume", {
+          unit: weightUnit,
+        }),
+        AVG_VOLUME: t("general.labels.avgVolume", {
+          unit: weightUnit,
+        }),
       },
     },
     RECENT_WORKOUTS: {
@@ -467,7 +496,9 @@ export function getDynamicDashboardLabels() {
       TOTAL_VOLUME_SUFFIX: weightUnit,
     },
     VOLUME_ANALYTICS: {
-      DATASET_LABEL: t("general.labels.dailyVolume", { unit: weightUnit }),
+      DATASET_LABEL: t("general.labels.dailyVolume", {
+        unit: weightUnit,
+      }),
       VOLUME_SUFFIX: weightUnit,
     },
   };
@@ -480,16 +511,19 @@ export const DASHBOARD_UI = {
   QUICK_STATS: {
     METRICS: {
       get TOTAL_VOLUME() {
-        return getDynamicDashboardLabels().QUICK_STATS.METRICS.TOTAL_VOLUME;
+        return getDynamicDashboardLabels().QUICK_STATS.METRICS
+          .TOTAL_VOLUME;
       },
       get AVG_VOLUME() {
-        return getDynamicDashboardLabels().QUICK_STATS.METRICS.AVG_VOLUME;
+        return getDynamicDashboardLabels().QUICK_STATS.METRICS
+          .AVG_VOLUME;
       },
     },
   },
   RECENT_WORKOUTS: {
     get VOLUME_SUFFIX() {
-      return getDynamicDashboardLabels().RECENT_WORKOUTS.VOLUME_SUFFIX;
+      return getDynamicDashboardLabels().RECENT_WORKOUTS
+        .VOLUME_SUFFIX;
     },
   },
   SUMMARY: {
@@ -499,10 +533,12 @@ export const DASHBOARD_UI = {
   },
   VOLUME_ANALYTICS: {
     get DATASET_LABEL() {
-      return getDynamicDashboardLabels().VOLUME_ANALYTICS.DATASET_LABEL;
+      return getDynamicDashboardLabels().VOLUME_ANALYTICS
+        .DATASET_LABEL;
     },
     get VOLUME_SUFFIX() {
-      return getDynamicDashboardLabels().VOLUME_ANALYTICS.VOLUME_SUFFIX;
+      return getDynamicDashboardLabels().VOLUME_ANALYTICS
+        .VOLUME_SUFFIX;
     },
   },
 } as const;
@@ -515,9 +551,13 @@ export function getDynamicGeneralLabels() {
   const weightUnit = getWeightUnit();
   return {
     LABELS: {
-      TOTAL_VOLUME: t("general.labels.totalVolume", { unit: weightUnit }),
+      TOTAL_VOLUME: t("general.labels.totalVolume", {
+        unit: weightUnit,
+      }),
       AVG_VOLUME: t("general.labels.avgVolume", { unit: weightUnit }),
-      TOTAL_WEIGHT: t("general.labels.totalWeight", { unit: weightUnit }),
+      TOTAL_WEIGHT: t("general.labels.totalWeight", {
+        unit: weightUnit,
+      }),
       AVG_WEIGHT: t("general.labels.avgWeight", { unit: weightUnit }),
     },
   };

@@ -94,37 +94,40 @@ export class TimerConfigurationSection {
     const durationContainer = parametersContainer.createDiv({
       cls: "workout-field-with-adjust",
     });
-    const durationInput = TimerConfigurationSection.createAdjustFieldInContainer(
-      durationContainer,
-      t("modal.duration"),
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
-      DURATION_INCREMENT,
-      "s",
-    );
+    const durationInput =
+      TimerConfigurationSection.createAdjustFieldInContainer(
+        durationContainer,
+        t("modal.duration"),
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION,
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MIN,
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
+        DURATION_INCREMENT,
+        "s",
+      );
 
     // Rounds field with +/- adjust
     const roundsContainer = parametersContainer.createDiv({
       cls: "workout-field-with-adjust",
     });
-    const roundsInput = TimerConfigurationSection.createAdjustFieldInContainer(
-      roundsContainer,
-      t("modal.rounds"),
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MIN,
-      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MAX,
-      ROUNDS_INCREMENT,
-    );
+    const roundsInput =
+      TimerConfigurationSection.createAdjustFieldInContainer(
+        roundsContainer,
+        t("modal.rounds"),
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS,
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MIN,
+        CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_ROUNDS_MAX,
+        ROUNDS_INCREMENT,
+      );
 
     // Exercise autocomplete
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      modal,
-      timerSection,
-      plugin,
-      undefined,
-      { showCreateButton: false },
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(
+        modal,
+        timerSection,
+        plugin,
+        undefined,
+        { showCreateButton: false },
+      );
 
     // Display options - compact row
     const displaySection = modal.createSection(
@@ -136,7 +139,8 @@ export class TimerConfigurationSection {
       cls: "workout-timer-options-row",
     });
 
-    const showControlsContainer = modal.createCheckboxGroup(optionsRow);
+    const showControlsContainer =
+      modal.createCheckboxGroup(optionsRow);
     const showControlsToggle = modal.createCheckbox(
       showControlsContainer,
       t("modal.checkboxes.showControls"),
@@ -166,8 +170,10 @@ export class TimerConfigurationSection {
 
     // Visibility handler
     const updateVisibility = () => {
-      const isInterval = elements.selectedTimerType === TIMER_TYPE.INTERVAL;
-      const isStopwatch = elements.selectedTimerType === TIMER_TYPE.STOPWATCH;
+      const isInterval =
+        elements.selectedTimerType === TIMER_TYPE.INTERVAL;
+      const isStopwatch =
+        elements.selectedTimerType === TIMER_TYPE.STOPWATCH;
       if (isInterval) {
         roundsContainer.removeClass("workout-display-none");
       } else {
@@ -240,7 +246,9 @@ export class TimerConfigurationSection {
     unit?: string,
   ): HTMLInputElement {
     const labelText = unit ? `${label} (${unit})` : label;
-    const labelEl = fieldContainer.createDiv({ cls: "workout-field-label" });
+    const labelEl = fieldContainer.createDiv({
+      cls: "workout-field-label",
+    });
     labelEl.textContent = labelText;
 
     const inputContainer = fieldContainer.createDiv({
@@ -290,7 +298,9 @@ export class TimerConfigurationSection {
   /**
    * Gets the timer configuration values from the elements
    */
-  static getValues(elements: TimerConfigurationElements): EmbeddedTimerParams {
+  static getValues(
+    elements: TimerConfigurationElements,
+  ): EmbeddedTimerParams {
     const timerType = elements.selectedTimerType;
 
     const values: EmbeddedTimerParams = {

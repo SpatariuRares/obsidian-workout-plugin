@@ -27,7 +27,9 @@ export class RecentWorkouts {
     recentWorkouts.forEach((workout) => {
       ListItem.create(listEl, {
         secondary: workout.date,
-        label: workout.workout || t("dashboard.recentWorkouts.fallbackName"),
+        label:
+          workout.workout ||
+          t("dashboard.recentWorkouts.fallbackName"),
         value: `${workout.totalVolume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.RECENT_WORKOUTS.VOLUME_SUFFIX}`,
         className: "workout-recent-workout-item",
         labelClassName: "workout-recent-name",

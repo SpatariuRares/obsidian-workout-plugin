@@ -68,7 +68,9 @@ export class StringUtils {
     if (allWords1In2 || allWords2In1) return 70;
 
     // Check for partial word matches
-    const commonWords = words1.filter((word) => words2.includes(word));
+    const commonWords = words1.filter((word) =>
+      words2.includes(word),
+    );
     if (commonWords.length > 0) return 60;
 
     // Check for substring match
@@ -110,7 +112,7 @@ export class StringUtils {
         matrix[i][j] = Math.min(
           matrix[i - 1][j] + 1, // deletion
           matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j - 1] + cost // substitution
+          matrix[i - 1][j - 1] + cost, // substitution
         );
       }
     }
@@ -130,7 +132,7 @@ export class StringUtils {
   static findSimilarStrings(
     needle: string,
     haystack: string[],
-    maxDistance: number
+    maxDistance: number,
   ): string[] {
     const matches: Array<{ str: string; distance: number }> = [];
 

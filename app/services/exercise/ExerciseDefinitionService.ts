@@ -36,8 +36,9 @@ export class ExerciseDefinitionService {
   private readonly CACHE_DURATION = 10000;
 
   /** Lock to prevent parallel loading (race condition prevention) */
-  private loadingPromise: Promise<Map<string, ExerciseDefinition>> | null =
-    null;
+  private loadingPromise: Promise<
+    Map<string, ExerciseDefinition>
+  > | null = null;
 
   constructor(
     private app: App,
@@ -60,7 +61,9 @@ export class ExerciseDefinitionService {
     const definitions = await this.loadDefinitions();
 
     for (const [key, definition] of definitions) {
-      if (StringUtils.normalize(key) === StringUtils.normalize(name)) {
+      if (
+        StringUtils.normalize(key) === StringUtils.normalize(name)
+      ) {
         return definition;
       }
     }
@@ -85,12 +88,18 @@ export class ExerciseDefinitionService {
    *
    * @param definition - The exercise definition to save
    */
-  async saveExerciseDefinition(definition: ExerciseDefinition): Promise<void> {
+  async saveExerciseDefinition(
+    definition: ExerciseDefinition,
+  ): Promise<void> {
     const folderPath = this.settings.exerciseFolderPath;
-    const safeExerciseName = definition.name.replace(/[\\/:"*?<>|]/g, "_");
+    const safeExerciseName = definition.name.replace(
+      /[\\/:"*?<>|]/g,
+      "_",
+    );
     const filePath = `${folderPath}/${safeExerciseName}.md`;
 
-    const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
+    const abstractFile =
+      this.app.vault.getAbstractFileByPath(filePath);
 
     if (abstractFile instanceof TFile) {
       // Update existing file's frontmatter
@@ -109,7 +118,10 @@ export class ExerciseDefinitionService {
             delete frontmatter.parameters;
           }
 
-          if (definition.muscleGroups && definition.muscleGroups.length > 0) {
+          if (
+            definition.muscleGroups &&
+            definition.muscleGroups.length > 0
+          ) {
             frontmatter.tags = definition.muscleGroups;
           }
         },
@@ -133,12 +145,16 @@ export class ExerciseDefinitionService {
    * @param name - The exercise name
    * @returns Array of parameter definitions for the exercise
    */
-  async getParametersForExercise(name: string): Promise<ParameterDefinition[]> {
+  async getParametersForExercise(
+    name: string,
+  ): Promise<ParameterDefinition[]> {
     const definition = await this.getExerciseDefinition(name);
 
     if (!definition) {
       // Default to strength type for unknown exercises
-      const strengthType = getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID);
+      const strengthType = getExerciseTypeById(
+        DEFAULT_EXERCISE_TYPE_ID,
+      );
       return strengthType?.parameters || [];
     }
 
@@ -146,7 +162,9 @@ export class ExerciseDefinitionService {
 
     if (!exerciseType) {
       // Unknown type ID, default to strength
-      const strengthType = getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID);
+      const strengthType = getExerciseTypeById(
+        DEFAULT_EXERCISE_TYPE_ID,
+      );
       return strengthType?.parameters || [];
     }
 
@@ -163,13 +181,17 @@ export class ExerciseDefinitionService {
    * @param name - The exercise name
    * @returns The exercise type definition or the default strength type
    */
-  async getExerciseType(name: string): Promise<ExerciseTypeDefinition> {
+  async getExerciseType(
+    name: string,
+  ): Promise<ExerciseTypeDefinition> {
     const definition = await this.getExerciseDefinition(name);
     const typeId = definition?.typeId || DEFAULT_EXERCISE_TYPE_ID;
     const exerciseType = getExerciseTypeById(typeId);
 
     // Fallback to strength type if not found
-    return exerciseType || getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)!;
+    return (
+      exerciseType || getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)!
+    );
   }
 
   /**
@@ -185,11 +207,16 @@ export class ExerciseDefinitionService {
    * Load all exercise definitions from the exercise folder.
    * Uses caching with TTL to avoid repeated file system reads.
    */
-  private async loadDefinitions(): Promise<Map<string, ExerciseDefinition>> {
+  private async loadDefinitions(): Promise<
+    Map<string, ExerciseDefinition>
+  > {
     const now = Date.now();
 
     // Check if cache is valid
-    if (this.cache && now - this.cache.timestamp < this.CACHE_DURATION) {
+    if (
+      this.cache &&
+      now - this.cache.timestamp < this.CACHE_DURATION
+    ) {
       return this.cache.definitions;
     }
 
@@ -219,11 +246,14 @@ export class ExerciseDefinitionService {
   /**
    * Scan the exercise folder and parse exercise definitions from frontmatter.
    */
-  private async scanExerciseFolder(): Promise<Map<string, ExerciseDefinition>> {
+  private async scanExerciseFolder(): Promise<
+    Map<string, ExerciseDefinition>
+  > {
     const definitions = new Map<string, ExerciseDefinition>();
     const folderPath = this.settings.exerciseFolderPath;
 
-    const abstractFolder = this.app.vault.getAbstractFileByPath(folderPath);
+    const abstractFolder =
+      this.app.vault.getAbstractFileByPath(folderPath);
     if (!(abstractFolder instanceof TFolder)) {
       // Exercise folder doesn't exist
       return definitions;
@@ -231,7 +261,8 @@ export class ExerciseDefinitionService {
 
     // Get all markdown files in the folder
     const files = abstractFolder.children.filter(
-      (file): file is TFile => file instanceof TFile && file.extension === "md",
+      (file): file is TFile =>
+        file instanceof TFile && file.extension === "md",
     );
 
     // Parse each file
@@ -259,7 +290,8 @@ export class ExerciseDefinitionService {
     const content = await this.app.vault.read(file);
 
     // Extract frontmatter
-    const frontmatterText = FrontmatterParser.extractFrontmatter(content);
+    const frontmatterText =
+      FrontmatterParser.extractFrontmatter(content);
     if (!frontmatterText) {
       // No frontmatter, create default definition from filename
       return {
@@ -298,7 +330,8 @@ export class ExerciseDefinitionService {
     return {
       name,
       typeId,
-      muscleGroups: muscleGroups.length > 0 ? muscleGroups : undefined,
+      muscleGroups:
+        muscleGroups.length > 0 ? muscleGroups : undefined,
       customParameters:
         customParameters.length > 0 ? customParameters : undefined,
     };
@@ -318,7 +351,10 @@ export class ExerciseDefinitionService {
     }
 
     // Check for type field (alternative)
-    if (typeof frontmatter.type === "string" && frontmatter.type.trim()) {
+    if (
+      typeof frontmatter.type === "string" &&
+      frontmatter.type.trim()
+    ) {
       return StringUtils.normalize(frontmatter.type);
     }
 
@@ -387,7 +423,10 @@ export class ExerciseDefinitionService {
       }
 
       if (paramObj.default !== undefined) {
-        paramDef.default = paramObj.default as number | string | boolean;
+        paramDef.default = paramObj.default as
+          | number
+          | string
+          | boolean;
       }
 
       if (typeof paramObj.min === "number") {
@@ -407,7 +446,9 @@ export class ExerciseDefinitionService {
   /**
    * Parse parameter type, defaulting to 'number' for invalid values.
    */
-  private parseParameterType(value: unknown): "number" | "string" | "boolean" {
+  private parseParameterType(
+    value: unknown,
+  ): "number" | "string" | "boolean" {
     if (value === "string") return "string";
     if (value === "boolean") return "boolean";
     return "number"; // Default
@@ -416,7 +457,9 @@ export class ExerciseDefinitionService {
   /**
    * Parse muscle groups from frontmatter tags.
    */
-  private parseMuscleGroups(frontmatter: Record<string, unknown>): string[] {
+  private parseMuscleGroups(
+    frontmatter: Record<string, unknown>,
+  ): string[] {
     const tags = frontmatter.tags;
 
     if (!Array.isArray(tags)) {
@@ -432,7 +475,9 @@ export class ExerciseDefinitionService {
   /**
    * Generate markdown file content for a new exercise definition.
    */
-  private generateExerciseFileContent(definition: ExerciseDefinition): string {
+  private generateExerciseFileContent(
+    definition: ExerciseDefinition,
+  ): string {
     const frontmatterLines: string[] = ["---"];
 
     // Exercise name
@@ -442,7 +487,10 @@ export class ExerciseDefinitionService {
     frontmatterLines.push(`exercise_type: ${definition.typeId}`);
 
     // Tags (muscle groups)
-    if (definition.muscleGroups && definition.muscleGroups.length > 0) {
+    if (
+      definition.muscleGroups &&
+      definition.muscleGroups.length > 0
+    ) {
       frontmatterLines.push("tags:");
       for (const tag of definition.muscleGroups) {
         frontmatterLines.push(`  - ${tag}`);
@@ -450,7 +498,10 @@ export class ExerciseDefinitionService {
     }
 
     // Custom parameters
-    if (definition.customParameters && definition.customParameters.length > 0) {
+    if (
+      definition.customParameters &&
+      definition.customParameters.length > 0
+    ) {
       frontmatterLines.push("parameters:");
       for (const param of definition.customParameters) {
         frontmatterLines.push(`  - key: ${param.key}`);

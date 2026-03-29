@@ -32,7 +32,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-const SCAN_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".mjs", ".cjs"]);
+const SCAN_EXTENSIONS = new Set([
+  ".ts",
+  ".tsx",
+  ".js",
+  ".mjs",
+  ".cjs",
+]);
 
 const EXCLUDED_DIRS = new Set([
   "node_modules",
@@ -60,7 +66,8 @@ function getArgValue(flag) {
 const outputJson = args.includes("--json");
 const verbose = args.includes("--verbose");
 const outputFile = getArgValue("--output");
-const extraDirs = getArgValue("--include")?.split(",").filter(Boolean) ?? [];
+const extraDirs =
+  getArgValue("--include")?.split(",").filter(Boolean) ?? [];
 const ignorePatternsRaw = getArgValue("--ignore-patterns");
 
 const ignorePatterns = ignorePatternsRaw
@@ -94,7 +101,11 @@ function collectFiles(dir, acc = [], extensions = SCAN_EXTENSIONS) {
     const childStat = fs.statSync(childPath);
 
     if (childStat.isDirectory()) {
-      collectFiles(path.relative(ROOT_DIR, childPath), acc, extensions);
+      collectFiles(
+        path.relative(ROOT_DIR, childPath),
+        acc,
+        extensions,
+      );
     } else if (extensions.has(path.extname(entry))) {
       acc.push(childPath);
     }
@@ -174,7 +185,11 @@ function stripComments(content) {
       result.push(" ", " ");
       i += 2;
       while (i < len) {
-        if (content[i] === "*" && i + 1 < len && content[i + 1] === "/") {
+        if (
+          content[i] === "*" &&
+          i + 1 < len &&
+          content[i + 1] === "/"
+        ) {
           result.push(" ", " ");
           i += 2;
           break;
@@ -230,7 +245,8 @@ function extractTCalls(content, filePath) {
   const lineStarts = buildLineStarts(content);
   const originalLines = content.split("\n");
 
-  const regex = /(?<![.\w])t\(\s*["']([a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)["']\s*[,)]/g;
+  const regex =
+    /(?<![.\w])t\(\s*["']([a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)*)["']\s*[,)]/g;
   let match;
 
   while ((match = regex.exec(stripped)) !== null) {
@@ -318,9 +334,15 @@ function printTextReport(result, totalFiles, localesCount) {
 
   console.log(
     "\n" +
-    "+" + "-".repeat(62) + "+" + "\n" +
-    "|         FIND MISSING i18n KEYS - Codebase Analyzer          |" + "\n" +
-    "+" + "-".repeat(62) + "+"
+      "+" +
+      "-".repeat(62) +
+      "+" +
+      "\n" +
+      "|         FIND MISSING i18n KEYS - Codebase Analyzer          |" +
+      "\n" +
+      "+" +
+      "-".repeat(62) +
+      "+",
   );
 
   console.log(`\n  File scansionati:      ${totalFiles}`);
@@ -330,7 +352,9 @@ function printTextReport(result, totalFiles, localesCount) {
   console.log(`  Chiavi MANCANTI:       ${missing.length}`);
 
   if (missing.length === 0) {
-    console.log("\n  Tutte le chiavi i18n referenziate esistono in tutti i file locale!");
+    console.log(
+      "\n  Tutte le chiavi i18n referenziate esistono in tutti i file locale!",
+    );
     console.log("+" + "-".repeat(62) + "+\n");
     return;
   }
@@ -356,14 +380,20 @@ function printTextReport(result, totalFiles, localesCount) {
   );
 
   for (const [file, refs] of sortedFiles) {
-    console.log(`\n  ${file} (${refs.length} riferimenti problematici)`);
+    console.log(
+      `\n  ${file} (${refs.length} riferimenti problematici)`,
+    );
     for (const ref of refs.sort((a, b) => a.line - b.line)) {
       console.log(`    L${ref.line}:${ref.column}  ${ref.key}`);
       if (ref.missingIn.length > 0) {
-        console.log(`             ❌ Mancante in: ${ref.missingIn.join(", ")}`);
+        console.log(
+          `             ❌ Mancante in: ${ref.missingIn.join(", ")}`,
+        );
       }
       if (ref.intermediateIn.length > 0) {
-        console.log(`             ⚠️  Nodo intermedio in: ${ref.intermediateIn.join(", ")}`);
+        console.log(
+          `             ⚠️  Nodo intermedio in: ${ref.intermediateIn.join(", ")}`,
+        );
       }
     }
   }
@@ -381,17 +411,19 @@ function printTextReport(result, totalFiles, localesCount) {
     bySection.get(section).push({ key, refs });
   }
 
-  for (const [section, items] of [...bySection.entries()].sort((a, b) =>
-    a[0].localeCompare(b[0]),
+  for (const [section, items] of [...bySection.entries()].sort(
+    (a, b) => a[0].localeCompare(b[0]),
   )) {
     console.log(`\n  [${section}] (${items.length} chiavi)`);
     for (const { key, refs } of items) {
       const missingCount = refs[0].missingIn.length;
       const interCount = refs[0].intermediateIn.length;
       let status = "";
-      if (missingCount > 0) status += `❌ mancano ${missingCount} lingue`;
-      if (interCount > 0) status += `${status ? ", " : ""}⚠️ intermedio in ${interCount} lingue`;
-      
+      if (missingCount > 0)
+        status += `❌ mancano ${missingCount} lingue`;
+      if (interCount > 0)
+        status += `${status ? ", " : ""}⚠️ intermedio in ${interCount} lingue`;
+
       console.log(`    - ${key} (${status})`);
     }
   }
@@ -410,13 +442,17 @@ function printTextReport(result, totalFiles, localesCount) {
   console.log(
     `  Riepilogo: ${byKey.size} chiavi problematiche, ${missing.length} riferimenti totali`,
   );
-  console.log(`  in ${byFile.size} file su ${totalFiles} scansionati`);
+  console.log(
+    `  in ${byFile.size} file su ${totalFiles} scansionati`,
+  );
   console.log("=".repeat(64) + "\n");
 }
 
 function buildJsonReport(result, totalFiles, localesCount) {
   const { missing, valid, totalCalls } = result;
-  const uniqueMissing = [...new Set(missing.map((r) => r.key))].sort();
+  const uniqueMissing = [
+    ...new Set(missing.map((r) => r.key)),
+  ].sort();
 
   const missingByKey = {};
   for (const ref of missing) {
@@ -426,7 +462,7 @@ function buildJsonReport(result, totalFiles, localesCount) {
       line: ref.line,
       column: ref.column,
       missingIn: ref.missingIn,
-      intermediateIn: ref.intermediateIn
+      intermediateIn: ref.intermediateIn,
     });
   }
 
@@ -456,7 +492,11 @@ function main() {
     process.exit(2);
   }
 
-  const localeFiles = collectFiles(LOCALES_DIR, [], new Set([".json"]));
+  const localeFiles = collectFiles(
+    LOCALES_DIR,
+    [],
+    new Set([".json"]),
+  );
   const localesMap = new Map();
 
   for (const filePath of localeFiles) {
@@ -465,10 +505,12 @@ function main() {
       const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
       localesMap.set(fileName, {
         leafKeys: extractLeafKeys(data),
-        allKeys: extractAllKeys(data)
+        allKeys: extractAllKeys(data),
       });
     } catch (e) {
-      console.warn(`⚠️  Errore nel parsing di ${fileName}: ${e.message}`);
+      console.warn(
+        `⚠️  Errore nel parsing di ${fileName}: ${e.message}`,
+      );
     }
   }
 
@@ -483,7 +525,9 @@ function main() {
   }
 
   const selfPath = path.resolve(__filename);
-  const filteredFiles = files.filter((f) => path.resolve(f) !== selfPath);
+  const filteredFiles = files.filter(
+    (f) => path.resolve(f) !== selfPath,
+  );
 
   const skipTests = args.includes("--skip-tests");
   const finalFiles = skipTests
@@ -495,11 +539,19 @@ function main() {
   const result = analyze(finalFiles, localesMap);
 
   if (outputJson) {
-    const report = buildJsonReport(result, finalFiles.length, localesMap.size);
+    const report = buildJsonReport(
+      result,
+      finalFiles.length,
+      localesMap.size,
+    );
     const jsonStr = JSON.stringify(report, null, 2);
 
     if (outputFile) {
-      fs.writeFileSync(path.resolve(ROOT_DIR, outputFile), jsonStr, "utf-8");
+      fs.writeFileSync(
+        path.resolve(ROOT_DIR, outputFile),
+        jsonStr,
+        "utf-8",
+      );
       console.log(`Report salvato in: ${outputFile}`);
     } else {
       console.log(jsonStr);
@@ -508,7 +560,11 @@ function main() {
     printTextReport(result, finalFiles.length, localesMap.size);
 
     if (outputFile) {
-      const report = buildJsonReport(result, finalFiles.length, localesMap.size);
+      const report = buildJsonReport(
+        result,
+        finalFiles.length,
+        localesMap.size,
+      );
       fs.writeFileSync(
         path.resolve(ROOT_DIR, outputFile),
         JSON.stringify(report, null, 2),

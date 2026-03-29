@@ -16,12 +16,12 @@ describe("LoadingSpinner molecule", () => {
 
     expect(spinner.className).toContain("loading-spinner");
     expect(spinner.className).toContain("mt-md");
-    expect(spinner.querySelector(".loading-spinner-icon")?.textContent).toBe(
-      "⏳",
-    );
-    expect(spinner.querySelector(".loading-spinner-message")?.textContent).toBe(
-      t("messages.loading"),
-    );
+    expect(
+      spinner.querySelector(".loading-spinner-icon")?.textContent,
+    ).toBe("⏳");
+    expect(
+      spinner.querySelector(".loading-spinner-message")?.textContent,
+    ).toBe(t("messages.loading"));
   });
 
   it("uses default icon when none provided", () => {
@@ -31,9 +31,9 @@ describe("LoadingSpinner molecule", () => {
       message: "Loading data...",
     });
 
-    expect(spinner.querySelector(".loading-spinner-icon")?.textContent).toBe(
-      "⏳",
-    );
+    expect(
+      spinner.querySelector(".loading-spinner-icon")?.textContent,
+    ).toBe("⏳");
   });
 
   it("renders spinner without message", () => {
@@ -43,10 +43,12 @@ describe("LoadingSpinner molecule", () => {
       icon: "🔄",
     });
 
-    expect(spinner.querySelector(".loading-spinner-icon")?.textContent).toBe(
-      "🔄",
-    );
-    expect(spinner.querySelector(".loading-spinner-message")).toBeNull();
+    expect(
+      spinner.querySelector(".loading-spinner-icon")?.textContent,
+    ).toBe("🔄");
+    expect(
+      spinner.querySelector(".loading-spinner-message"),
+    ).toBeNull();
   });
 
   it("renders spinner with no props", () => {
@@ -55,10 +57,12 @@ describe("LoadingSpinner molecule", () => {
     const spinner = LoadingSpinner.create(parent);
 
     expect(spinner.className).toContain("loading-spinner");
-    expect(spinner.querySelector(".loading-spinner-icon")?.textContent).toBe(
-      "⏳",
-    );
-    expect(spinner.querySelector(".loading-spinner-message")).toBeNull();
+    expect(
+      spinner.querySelector(".loading-spinner-icon")?.textContent,
+    ).toBe("⏳");
+    expect(
+      spinner.querySelector(".loading-spinner-message"),
+    ).toBeNull();
   });
 
   it("creates simple spinners and removes them", () => {

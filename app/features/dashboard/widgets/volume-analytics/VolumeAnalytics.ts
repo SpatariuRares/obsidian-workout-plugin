@@ -39,7 +39,8 @@ export class VolumeAnalytics {
       [
         {
           label:
-            CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.DATASET_LABEL,
+            CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS
+              .DATASET_LABEL,
           data: volumeTrendData.data,
         },
       ],

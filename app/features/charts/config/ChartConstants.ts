@@ -52,7 +52,8 @@ export const ChartStyling = {
   TOOLTIP_BORDER_WIDTH: 1,
   TITLE_PADDING_TOP: 10,
   TITLE_PADDING_BOTTOM: 20,
-  FONT_FAMILY: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+  FONT_FAMILY:
+    "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
 } as const;
 
 /**
@@ -151,7 +152,8 @@ export function getAvailableChartDataTypes(
   exerciseTypeId: string,
   customNumericParams?: string[],
 ): string[] {
-  const baseTypes = EXERCISE_TYPE_CHART_DATA_TYPES[exerciseTypeId] ?? [];
+  const baseTypes =
+    EXERCISE_TYPE_CHART_DATA_TYPES[exerciseTypeId] ?? [];
 
   // For custom types, use any numeric parameters defined in the exercise
   if (
@@ -184,7 +186,9 @@ export function getDefaultChartDataType(
     return customNumericParams[0];
   }
 
-  return DEFAULT_CHART_DATA_TYPE_BY_EXERCISE[exerciseTypeId] ?? "volume";
+  return (
+    DEFAULT_CHART_DATA_TYPE_BY_EXERCISE[exerciseTypeId] ?? "volume"
+  );
 }
 
 /**

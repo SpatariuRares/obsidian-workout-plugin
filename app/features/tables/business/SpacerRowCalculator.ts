@@ -60,7 +60,8 @@ export class SpacerRowCalculator {
         }
 
         const heartRate =
-          log.customFields["heartrate"] || log.customFields["heartRate"];
+          log.customFields["heartrate"] ||
+          log.customFields["heartRate"];
         if (typeof heartRate === "number" && heartRate > 0) {
           hasHeartRate = true;
           totalHeartRate += heartRate;
@@ -104,7 +105,9 @@ export class SpacerRowCalculator {
       }
 
       if (hasHeartRate && heartRateCount > 0) {
-        const avgHeartRate = Math.round(totalHeartRate / heartRateCount);
+        const avgHeartRate = Math.round(
+          totalHeartRate / heartRateCount,
+        );
         stats.push({
           icon: t("icons.tables.heartRate"),
           value: `${avgHeartRate}bpm`,

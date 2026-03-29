@@ -22,7 +22,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-const SCAN_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".mjs", ".cjs"]);
+const SCAN_EXTENSIONS = new Set([
+  ".ts",
+  ".tsx",
+  ".js",
+  ".mjs",
+  ".cjs",
+]);
 const EXCLUDED_DIRS = new Set([
   "node_modules",
   ".git",
@@ -50,7 +56,8 @@ const outputJson = args.includes("--json");
 const verbose = args.includes("--verbose");
 const strictMode = args.includes("--strict");
 const outputFile = getArgValue("--output");
-const extraDirs = getArgValue("--include")?.split(",").filter(Boolean) ?? [];
+const extraDirs =
+  getArgValue("--include")?.split(",").filter(Boolean) ?? [];
 
 const DEFAULT_SCAN_DIRS = ["app", "main.ts", ...extraDirs];
 
@@ -102,7 +109,9 @@ function stripComments(content) {
   let result = content.replace(/\/\*[\s\S]*?\*\//g, (match) =>
     match.replace(/[^\n]/g, " "),
   );
-  result = result.replace(/\/\/[^\n]*/g, (match) => " ".repeat(match.length));
+  result = result.replace(/\/\/[^\n]*/g, (match) =>
+    " ".repeat(match.length),
+  );
   return result;
 }
 
@@ -110,7 +119,8 @@ function extractCallSites(content, filePath) {
   const results = [];
   const strippedContent = stripComments(content);
   const lineOf = (pos) => content.slice(0, pos).split("\n").length;
-  const tCallPattern = /\bt\(\s*(['"`])((?:[^'"`\\]|\\.)*?)\1([\s\S]*?)\)/g;
+  const tCallPattern =
+    /\bt\(\s*(['"`])((?:[^'"`\\]|\\.)*?)\1([\s\S]*?)\)/g;
 
   let match;
   while ((match = tCallPattern.exec(strippedContent)) !== null) {
@@ -139,8 +149,17 @@ function extractCallSites(content, filePath) {
         if (params.length === 0) {
           const shorthandPattern = /\b(\w+)\b/g;
           let shortMatch;
-          while ((shortMatch = shorthandPattern.exec(innerObj)) !== null) {
-            const kw = new Set(["true", "false", "null", "undefined", "new", "return"]);
+          while (
+            (shortMatch = shorthandPattern.exec(innerObj)) !== null
+          ) {
+            const kw = new Set([
+              "true",
+              "false",
+              "null",
+              "undefined",
+              "new",
+              "return",
+            ]);
             if (!kw.has(shortMatch[1])) params.push(shortMatch[1]);
           }
         }
@@ -150,7 +169,14 @@ function extractCallSites(content, filePath) {
       }
     }
 
-    results.push({ key, params, hasParams, line, file: filePath, rawSnippet: fullMatch.slice(0, 120).replace(/\n/g, "↵") });
+    results.push({
+      key,
+      params,
+      hasParams,
+      line,
+      file: filePath,
+      rawSnippet: fullMatch.slice(0, 120).replace(/\n/g, "↵"),
+    });
   }
   return results;
 }
@@ -158,7 +184,7 @@ function extractCallSites(content, filePath) {
 function analyzeLocale(callSites, allKeys, localeName) {
   const issues = [];
   const unknownKeys = [];
-  
+
   for (const call of callSites) {
     const keyDef = allKeys.get(call.key);
     if (!keyDef) {
@@ -174,45 +200,102 @@ function analyzeLocale(callSites, allKeys, localeName) {
     const extra = actual.filter((p) => !expected.includes(p));
 
     if (expected.length > 0 && !call.hasParams) {
-      issues.push({ type: "missing_all_params", key: call.key, file: call.file, line: call.line, expected, actual: [], missing, extra: [], locale: localeName });
+      issues.push({
+        type: "missing_all_params",
+        key: call.key,
+        file: call.file,
+        line: call.line,
+        expected,
+        actual: [],
+        missing,
+        extra: [],
+        locale: localeName,
+      });
     } else if (missing.length > 0) {
-      issues.push({ type: "missing_params", key: call.key, file: call.file, line: call.line, expected, actual, missing, extra, locale: localeName });
+      issues.push({
+        type: "missing_params",
+        key: call.key,
+        file: call.file,
+        line: call.line,
+        expected,
+        actual,
+        missing,
+        extra,
+        locale: localeName,
+      });
     } else if (expected.length === 0 && actual.length > 0) {
-      issues.push({ type: "params_on_no_placeholder", key: call.key, file: call.file, line: call.line, expected: [], actual, missing: [], extra, locale: localeName });
+      issues.push({
+        type: "params_on_no_placeholder",
+        key: call.key,
+        file: call.file,
+        line: call.line,
+        expected: [],
+        actual,
+        missing: [],
+        extra,
+        locale: localeName,
+      });
     } else if (strictMode && extra.length > 0) {
-      issues.push({ type: "extra_params", key: call.key, file: call.file, line: call.line, expected, actual, missing: [], extra, locale: localeName });
+      issues.push({
+        type: "extra_params",
+        key: call.key,
+        file: call.file,
+        line: call.line,
+        expected,
+        actual,
+        missing: [],
+        extra,
+        locale: localeName,
+      });
     }
   }
   return { issues, unknownKeys };
 }
 
 function main() {
-  const localeFiles = fs.readdirSync(LOCALES_DIR).filter(f => f.endsWith(".json"));
+  const localeFiles = fs
+    .readdirSync(LOCALES_DIR)
+    .filter((f) => f.endsWith(".json"));
   const sourceFiles = [];
   for (const dir of DEFAULT_SCAN_DIRS) collectFiles(dir, sourceFiles);
-  const filteredFiles = sourceFiles.filter(f => path.resolve(f) !== path.resolve(__filename));
+  const filteredFiles = sourceFiles.filter(
+    (f) => path.resolve(f) !== path.resolve(__filename),
+  );
 
   const allCallSites = [];
   for (const filePath of filteredFiles) {
     try {
       const content = fs.readFileSync(filePath, "utf-8");
-      allCallSites.push(...extractCallSites(content, path.relative(ROOT_DIR, filePath)));
+      allCallSites.push(
+        ...extractCallSites(
+          content,
+          path.relative(ROOT_DIR, filePath),
+        ),
+      );
     } catch {}
   }
 
   const allIssues = [];
   const allUnknown = new Set();
 
-  console.log(`🔍 Validating i18n params across ${localeFiles.length} locales...\n`);
+  console.log(
+    `🔍 Validating i18n params across ${localeFiles.length} locales...\n`,
+  );
 
   for (const file of localeFiles) {
-    const data = JSON.parse(fs.readFileSync(path.join(LOCALES_DIR, file), "utf-8"));
+    const data = JSON.parse(
+      fs.readFileSync(path.join(LOCALES_DIR, file), "utf-8"),
+    );
     const keysMap = extractLeafKeys(data);
-    const { issues, unknownKeys } = analyzeLocale(allCallSites, keysMap, file);
-    
+    const { issues, unknownKeys } = analyzeLocale(
+      allCallSites,
+      keysMap,
+      file,
+    );
+
     allIssues.push(...issues);
-    unknownKeys.forEach(k => allUnknown.add(k.key));
-    
+    unknownKeys.forEach((k) => allUnknown.add(k.key));
+
     if (issues.length > 0) {
       console.log(`❌ ${file}: Found ${issues.length} issues`);
     } else {
@@ -224,16 +307,23 @@ function main() {
     console.log("\n" + "─".repeat(60));
     console.log("  DETTAGLIO ERRORI");
     console.log("─".repeat(60));
-    allIssues.slice(0, 20).forEach(issue => {
-      console.log(`\n  [${issue.locale}] ${issue.file}:${issue.line} - ${issue.key}`);
-      if (issue.missing.length > 0) console.log(`    ❌ Mancanti: ${issue.missing.join(", ")}`);
-      if (issue.extra.length > 0) console.log(`    ➕ Extra: ${issue.extra.join(", ")}`);
+    allIssues.slice(0, 20).forEach((issue) => {
+      console.log(
+        `\n  [${issue.locale}] ${issue.file}:${issue.line} - ${issue.key}`,
+      );
+      if (issue.missing.length > 0)
+        console.log(`    ❌ Mancanti: ${issue.missing.join(", ")}`);
+      if (issue.extra.length > 0)
+        console.log(`    ➕ Extra: ${issue.extra.join(", ")}`);
     });
-    if (allIssues.length > 20) console.log(`\n  ... e altri ${allIssues.length - 20} errori`);
+    if (allIssues.length > 20)
+      console.log(`\n  ... e altri ${allIssues.length - 20} errori`);
   }
 
   console.log("\n" + "=".repeat(60));
-  console.log(`Summary: ${allIssues.length} issues found across all locales`);
+  console.log(
+    `Summary: ${allIssues.length} issues found across all locales`,
+  );
   console.log("=".repeat(60));
 
   process.exit(allIssues.length > 0 ? 1 : 0);

@@ -7,7 +7,8 @@
 
 .workout-duration-card {
   background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-xl);
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
@@ -36,7 +37,8 @@
 .workout-duration-main {
   text-align: center;
   padding: var(--workout-space-lg) 0;
-  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   margin-bottom: var(--workout-space-md);
 }
 
@@ -85,7 +87,8 @@
 .workout-duration-debug {
   margin-top: var(--workout-space-lg);
   padding-top: var(--workout-space-md);
-  border-top: var(--workout-border-thin) dashed var(--background-modifier-border);
+  border-top: var(--workout-border-thin) dashed
+    var(--background-modifier-border);
 }
 
 .workout-duration-debug-title {

@@ -11,7 +11,8 @@
 
   thead tr {
     background: var(--background-secondary);
-    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-medium) solid
+      var(--background-modifier-border);
   }
 
   th {
@@ -20,12 +21,14 @@
     text-align: left;
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     font-size: var(--workout-font-base);
   }
 
   tbody tr {
-    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid
+      var(--background-modifier-border);
     transition: var(--workout-transition);
 
     &:nth-child(even) {

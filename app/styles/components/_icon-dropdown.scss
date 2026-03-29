@@ -43,7 +43,8 @@
   z-index: 100;
   min-width: 160px;
   background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   box-shadow: var(--workout-shadow-md);
   overflow: hidden;

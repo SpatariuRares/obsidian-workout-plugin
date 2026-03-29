@@ -41,7 +41,10 @@ export class WidgetsFileError {
     });
 
     fileErrors.forEach((fileError) => {
-      const itemEl = ListItem.createEmpty(listEl, "workout-file-error-item");
+      const itemEl = ListItem.createEmpty(
+        listEl,
+        "workout-file-error-item",
+      );
 
       // File name as clickable link
       const fileNameEl = itemEl.createEl("div", {
@@ -81,7 +84,8 @@ export class WidgetsFileError {
     const fileErrors: ExerciseFileError[] = [];
 
     // Get all exercise files using the path resolver
-    const exerciseFiles = ExercisePathResolver.findExerciseFiles(plugin);
+    const exerciseFiles =
+      ExercisePathResolver.findExerciseFiles(plugin);
 
     // Validate each exercise file
     for (const file of exerciseFiles) {
@@ -108,7 +112,8 @@ export class WidgetsFileError {
       const content = await plugin.app.vault.read(file);
 
       // Use FrontmatterParser to validate structure
-      const validationErrors = FrontmatterParser.validateFrontmatter(content);
+      const validationErrors =
+        FrontmatterParser.validateFrontmatter(content);
       if (validationErrors.length > 0) {
         return validationErrors.map(
           (err) => `${t("icons.status.warning")} ${err}`,
@@ -134,7 +139,9 @@ export class WidgetsFileError {
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       errors.push(
-        t("dashboard.fileErrors.readError", { message: errorMessage }),
+        t("dashboard.fileErrors.readError", {
+          message: errorMessage,
+        }),
       );
     }
 

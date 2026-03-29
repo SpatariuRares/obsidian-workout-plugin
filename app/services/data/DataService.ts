@@ -7,7 +7,10 @@ import { App } from "obsidian";
 import { CSVCacheService } from "@app/services/data/CSVCacheService";
 import { CSVColumnService } from "@app/services/data/CSVColumnService";
 import { WorkoutLogRepository } from "@app/services/data/WorkoutLogRepository";
-import { DataFilter, EarlyFilterParams } from "@app/services/data/DataFilter";
+import {
+  DataFilter,
+  EarlyFilterParams,
+} from "@app/services/data/DataFilter";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 import { StringUtils } from "@app/utils";
@@ -81,7 +84,7 @@ export class DataService {
    * // Emits: log:bulk-changed { count: N, operation: 'import' }
    */
   public async batchOperation(
-    operation: LogBulkChangedPayload['operation'],
+    operation: LogBulkChangedPayload["operation"],
     fn: () => Promise<void>,
   ): Promise<void> {
     await this.eventBus.batch(operation, fn);
@@ -127,7 +130,10 @@ export class DataService {
     originalLog: WorkoutLogData,
     updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">,
   ): Promise<void> {
-    return this.repository.updateWorkoutLogEntry(originalLog, updatedEntry);
+    return this.repository.updateWorkoutLogEntry(
+      originalLog,
+      updatedEntry,
+    );
   }
 
   /**

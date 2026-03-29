@@ -27,7 +27,9 @@ export class WorkoutFileAnalyzer {
    * @param filePath - Path to the workout file to analyze
    * @returns Analysis result with duration breakdown
    */
-  async analyzeWorkoutFile(filePath: string): Promise<DurationAnalysisResult> {
+  async analyzeWorkoutFile(
+    filePath: string,
+  ): Promise<DurationAnalysisResult> {
     const result: DurationAnalysisResult = {
       totalRestTime: 0,
       restPeriodCount: 0,
@@ -40,7 +42,8 @@ export class WorkoutFileAnalyzer {
 
     try {
       // Get the file
-      const file = this.plugin.app.vault.getAbstractFileByPath(filePath);
+      const file =
+        this.plugin.app.vault.getAbstractFileByPath(filePath);
 
       if (!file || !(file instanceof TFile)) {
         result.error = `File not found: ${filePath}`;
@@ -71,7 +74,8 @@ export class WorkoutFileAnalyzer {
       }
 
       // Calculate total duration (SetTime is already accumulated in analyzeSection)
-      result.totalDuration = result.totalRestTime + result.totalSetTime;
+      result.totalDuration =
+        result.totalRestTime + result.totalSetTime;
 
       // Attempt to calculate historical duration from logs
       await this.calculateHistoricalDuration(filePath, result);
@@ -79,7 +83,9 @@ export class WorkoutFileAnalyzer {
       result.success = true;
     } catch (error) {
       result.error =
-        error instanceof Error ? error.message : "Unknown error occurred";
+        error instanceof Error
+          ? error.message
+          : "Unknown error occurred";
     }
 
     return result;
@@ -95,8 +101,10 @@ export class WorkoutFileAnalyzer {
     try {
       // Use the configured CSV log file path from settings
       const logsPath =
-        this.plugin.settings.csvLogFilePath || "context/workout_logs.csv";
-      const logsFile = this.plugin.app.vault.getAbstractFileByPath(logsPath);
+        this.plugin.settings.csvLogFilePath ||
+        "context/workout_logs.csv";
+      const logsFile =
+        this.plugin.app.vault.getAbstractFileByPath(logsPath);
 
       if (!logsFile || !(logsFile instanceof TFile)) return;
 
@@ -104,7 +112,8 @@ export class WorkoutFileAnalyzer {
       const lines = content.split("\n");
 
       // Extract workout name from file path (basename without extension)
-      const workoutName = filePath.split("/").pop()?.replace(".md", "") || "";
+      const workoutName =
+        filePath.split("/").pop()?.replace(".md", "") || "";
 
       // Map to store timestamps by date
       const sessionTimestamps: Record<string, number[]> = {};
@@ -121,7 +130,8 @@ export class WorkoutFileAnalyzer {
 
         const logWorkout = cols[6]?.trim();
         // Remove quotes if present
-        const cleanedWorkout = logWorkout?.replace(/^["']|["']$/g, "") || "";
+        const cleanedWorkout =
+          logWorkout?.replace(/^["']|["']$/g, "") || "";
 
         if (cleanedWorkout === workoutName) {
           const timestampStr = cols[7]?.trim();
@@ -192,10 +202,19 @@ export class WorkoutFileAnalyzer {
 
     let reps = 0;
     if (repsMatch) {
-      const suffix = repsMatch[3] ? StringUtils.normalize(repsMatch[3]) : "";
+      const suffix = repsMatch[3]
+        ? StringUtils.normalize(repsMatch[3])
+        : "";
       // If suffix looks like time (s, sec, min), ignore it
       // Note: 'reps', 'series', etc. are fine.
-      const isTime = ["s", "sec", "min", "m", "seconds", "secondi"].some(
+      const isTime = [
+        "s",
+        "sec",
+        "min",
+        "m",
+        "seconds",
+        "secondi",
+      ].some(
         (u) =>
           suffix.startsWith(u) &&
           !suffix.startsWith("series") &&
@@ -204,7 +223,9 @@ export class WorkoutFileAnalyzer {
 
       if (!isTime) {
         const minReps = parseInt(repsMatch[1], 10);
-        const maxReps = repsMatch[2] ? parseInt(repsMatch[2], 10) : minReps;
+        const maxReps = repsMatch[2]
+          ? parseInt(repsMatch[2], 10)
+          : minReps;
         reps = (minReps + maxReps) / 2;
       }
     }
@@ -235,7 +256,9 @@ export class WorkoutFileAnalyzer {
     let sectionTimerSum = 0;
     let timersFound = 0;
 
-    while ((timerMatch = timerBlockRegex.exec(sectionContent)) !== null) {
+    while (
+      (timerMatch = timerBlockRegex.exec(sectionContent)) !== null
+    ) {
       const blockContent = timerMatch[1];
       const durationMatch = blockContent.match(/duration:\s*(\d+)/);
 
@@ -267,7 +290,8 @@ export class WorkoutFileAnalyzer {
     const settings = this.plugin.settings;
     const repDuration = settings.repDuration || 5;
     const defaultReps = settings.defaultRepsPerSet || 0;
-    const fallbackSetDuration = settings.setDuration || DEFAULT_SET_DURATION;
+    const fallbackSetDuration =
+      settings.setDuration || DEFAULT_SET_DURATION;
 
     // Prioritize specific reps found in text
     if (reps > 0) {

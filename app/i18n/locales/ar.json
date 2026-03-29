@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "إضافة كتلة التمارين",
+    "addMissingBlockIds": "أضف المعرفات المفقودة إلى كتل التعليمات البرمجية.",
     "auditExerciseNames": "مراجعة أسماء التمارين",
     "convertExercise": "تحويل التمارين",
     "createCsvLog": "إنشاء ملف سجل CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "إنشاء مرجع العلامات",
     "insertTable": "إدراج جدول",
     "manageMuscleTags": "إدارة علامات العضلات",
-    "migrateExerciseTypes": "التحوّل بين أنواع التمارين",
-    "addMissingBlockIds": "أضف المعرفات المفقودة إلى كتل التعليمات البرمجية."
+    "migrateExerciseTypes": "التحوّل بين أنواع التمارين"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "إلغاء",
+    "clear": "مسح",
     "convert": "تحويل",
     "exercise": "تمرين",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "غير متوفر",
     "sec": "common.sec",
     "unknown": "غير معروف",
-    "workout": "تمرين",
-    "clear": "مسح"
+    "workout": "تمرين"
   },
   "convert": {
     "currentType": "النوع الحالي:",
@@ -453,8 +453,8 @@
     "noImbalances": "لا يوجد توازنات",
     "noTags": "لا توجد علامات",
     "success": {
-      "csvCreated": "تم إنشاء ملف CSV بنجاح!",
       "blockIdsAdded": "تمت إضافة معرف(ات) مفقودة(ين) في الملف(ات) {files}",
+      "csvCreated": "تم إنشاء ملف CSV بنجاح!",
       "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات."
     },
     "tagReferenceGenerated": "تم إنشاء مرجع العلامات",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "الإجراءات",
     "addTag": "أضف تاج",
+    "auditStatusCloseMatch": "تطابق قريب",
+    "auditStatusExactMatch": "تطابق تام",
+    "auditStatusNoMatch": "لا تطابق",
+    "auditStatusPartialMatch": "تطابق جزئي",
     "autocomplete": {
+      "addExercise": "أضف \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "مطابق دقيق/مقدّم - الدرجة: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "التوافق الجزئي - الدرجة: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "التوافق في الكلمات - الدرجة: {score}",
-      "addExercise": "أضف \"{name}\""
+      "wordTooltip": "التوافق في الكلمات - الدرجة: {score}"
     },
     "buttons": {
       "addParameter": "أضف معلمة",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "الإجراءات",
+      "currentFileInfo": "الملف الحالي: {fileName}",
       "exercise": "تمرين:",
       "reps": "ر. إ:",
       "targetReps": "الإعادة المستهدفة:",
       "targetWeight": "الوزن المستهدف ({unit}):",
       "volume": "الحجم ({{unit}}):",
-      "weight": "الوزن ({unit}):",
-      "currentFileInfo": "الملف الحالي: {fileName}"
+      "weight": "الوزن ({unit}):"
     },
     "layoutGrouped": "المجموعة حسب العضلات",
     "layoutHorizontal": "التدفق الأفقي",
@@ -565,17 +569,21 @@
     "notes": "ملاحظات (اختياري):",
     "notices": {
       "auditConfirmRenameFile": "مراجعة تأكيد إعادة تسمية الملف",
+      "auditMismatchCount": "تم العثور على {count} تناقض:",
+      "auditNoMatchFound": "لم يُعثر على تطابق",
       "auditNoMismatches": "مراجعة لا اختلافات",
       "auditRenameError": "مراجعة خطأ إعادة التسمية",
       "auditRenameFileError": "مراجعة خطأ إعادة تسمية الملف",
       "auditRenameFileSuccess": "مراجعة نجاح إعادة تسمية الملف",
       "auditRenameSuccess": "مراجعة نجاح إعادة التسمية",
+      "auditScanError": "خطأ أثناء الفحص: {error}",
       "auditScanning": "مراجعة المسح",
       "canvasExportError": "خطأ تصدير القماش",
       "canvasExported": "تم تصدير القماش",
       "chartInserted": "✅ تم إدراج الرسم البياني بنجاح!",
       "confirmUpdateTarget": "تأكيد الهدف بالتحديث",
       "dashboardInserted": "✅ تم إدخال لوحة التحكم بنجاح!",
+      "dismissAchievement": "رفض الإنجاز",
       "exerciseBlockInserted": "تم إدراج khối التمرين",
       "exerciseNameRequired": "❌ الرجاء إدخال اسم تمرين",
       "exercisePageCreated": "تم إنشاء صفحة التمرين بنجاح!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "فشلت عملية تحديث المؤقت. تأكد من أن الملف مفتوح في محرر النصوص.",
       "timerUpdated": "✅ تم تحديث المؤقت بنجاح!",
       "validationCombinedMode": "⚠️ لـ 'exercise + workout' نوع يجب ملء الحقول المذكورة!",
-      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة",
-      "dismissAchievement": "رفض الإنجاز",
-      "auditScanError": "خطأ أثناء الفحص: {error}",
-      "auditMismatchCount": "تم العثور على {count} تناقض:",
-      "auditNoMatchFound": "لم يُعثر على تطابق"
+      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -716,11 +720,7 @@
     },
     "workout": "تمارين (اختياري):",
     "workoutFile": "ملف التدريب:",
-    "workoutNameOptional": "اسم التمارين (اختياري):",
-    "auditStatusNoMatch": "لا تطابق",
-    "auditStatusExactMatch": "تطابق تام",
-    "auditStatusCloseMatch": "تطابق قريب",
-    "auditStatusPartialMatch": "تطابق جزئي"
+    "workoutNameOptional": "اسم التمارين (اختياري):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "قيد الإنشاء...",
       "overwriting": "الكتابة فوق...",
       "regenerateOverwrite": "إعادة إنشاء (الكتابة فوق)",
+      "runAllMaintenance": "تشغيل الكل",
       "savePreset": "حفظ",
-      "saveProtocol": "حفظ",
-      "runAllMaintenance": "تشغيل الكل"
+      "saveProtocol": "حفظ"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "يوجد ملف CSV للتسميات العضلية بالفعل. هل ترغب في استبداله بالقيم الافتراضية؟ هذا سيقوم بإزالة أي تسميات مخصصة.",
@@ -760,11 +760,11 @@
       "protocolColor": "لون خلفية الشارة (تنسيق هكس، مثال: #FF5733)",
       "quickWeightIncrement": "الوزن الذي يتم استخدامه لزيادة/تقليل الوزن في نافذة إنشاء/تعديل سجل التدريب (مثال: 2.5 لزيادة 2.5 / تقليل 2.5 وحدة).",
       "repDuration": "الوقت المقدرة لتنفيذ تكرار واحد. يُستخدم عندما يكون عدد التكرارات معروفًا (مثال: 'x 10 reps').",
+      "runAllMaintenance": "تنفيذ جميع مهام الصيانة بالتسلسل. آمن لتنفيذها عدة مرات.",
       "setDuration": "يُستخدم عندما لا يتم تحديد عدد التكرارات (الخيار الافتراضي). نطاق معتدل: 30-60 ثانية.",
       "setupCSV": "أنشئ كلاً من workout_logs.csv و muscle-tags.csv في المجلد المُحدد.",
       "weightIncrement": "الزيادة الافتراضية في الوزن لزيادة التحميل التدريجي (مثلاً: 2.5 للزيادة بمقدار 2.5 وحدة)",
-      "weightUnit": "اختر الوحدة لقياس الوزن (kg/lb). هذا يؤثر على الوحدة الافتراضية للسجلات الجديدة.",
-      "runAllMaintenance": "تنفيذ جميع مهام الصيانة بالتسلسل. آمن لتنفيذها عدة مرات."
+      "weightUnit": "اختر الوحدة لقياس الوزن (kg/lb). هذا يؤثر على الوحدة الافتراضية للسجلات الجديدة."
     },
     "labels": {
       "csvPath": "مسار ملف سجل CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "لون الشارة",
       "protocolName": "اسم البروتوكول",
       "repDuration": "مدة كل تكرار (ثوانٍ)",
+      "runAllMaintenance": "تنفيذ جميع مهام الصيانة",
       "setDuration": "مدة كل مجموعة (الخيار الاحتياطي) (ثوانٍ)",
       "setupCSV": "إعدادات الملفات (CSV)",
-      "weightUnit": "وحدة الوزن",
-      "runAllMaintenance": "تنفيذ جميع مهام الصيانة"
+      "weightUnit": "وحدة الوزن"
     },
     "messages": {
       "confirmDeletePreset": "هل أنت متأكد من أنك تريد حذف هذا الإعداد؟",
@@ -820,17 +820,17 @@
       "protocolName": "أدخل اسم البروتوكول"
     },
     "sections": {
+      "advanced": "متقدم",
       "csvManagement": "إدارة ملفات CSV",
       "customProtocols": "بروتوكولات مخصصة",
       "exampleData": "بيانات مثال",
       "filtering": "الفلترة",
+      "maintenance": "الصيانة",
       "quickLog": "تسجيل محمول",
       "setupAndData": "الإعداد والبيانات",
       "templates": "القوالب",
       "timerPresets": "الإعدادات المسبقة للساعة",
-      "trainingParameters": "معلمات التدريب",
-      "maintenance": "الصيانة",
-      "advanced": "متقدم"
+      "trainingParameters": "معلمات التدريب"
     },
     "tooltips": {
       "deletePreset": "حذف القالب",
@@ -839,21 +839,21 @@
       "editProtocol": "تحرير البروتوكول"
     },
     "validation": {
-      "mustBePositive": "يجب أن يكون أكبر من 0",
-      "mustBeNonNegative": "يجب أن يكون 0 أو أكبر",
+      "csvFolderNotFound": "لم يتم العثور على المجلد في المستودع. قم بتشغيل إعداد CSV لإنشائه.",
       "csvPathEmpty": "لا يمكن أن يكون المسار فارغًا",
-      "csvFolderNotFound": "لم يتم العثور على المجلد في المستودع. قم بتشغيل إعداد CSV لإنشائه."
+      "mustBeNonNegative": "يجب أن يكون 0 أو أكبر",
+      "mustBePositive": "يجب أن يكون أكبر من 0"
     }
   },
   "stats": {
     "avgVolume": "الحجم المتوسط",
-    "recentTrend": "اتجاه حديث",
-    "sessions": "الجلسات",
     "max": "الحد الأقصى: ",
     "min": "الحد الأدنى: ",
-    "title": "📈 إحصائيات {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (آخر 3)",
-    "recentVsPrev": " (مقابل السابق)"
+    "recentTrend": "اتجاه حديث",
+    "recentVsPrev": " (مقابل السابق)",
+    "sessions": "الجلسات",
+    "title": "📈 إحصائيات {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "الإجراءات",

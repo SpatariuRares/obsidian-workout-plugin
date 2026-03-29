@@ -27,7 +27,9 @@ export class DataAggregation {
   /**
    * Aggregate workout data by exercise name, summing volumes
    */
-  static aggregateExerciseVolumes(data: WorkoutLogData[]): Map<string, number> {
+  static aggregateExerciseVolumes(
+    data: WorkoutLogData[],
+  ): Map<string, number> {
     return this.aggregateByKey(
       data,
       (d) => d.exercise,
@@ -38,7 +40,9 @@ export class DataAggregation {
   /**
    * Aggregate workout data by date, summing volumes
    */
-  static aggregateDailyVolumes(data: WorkoutLogData[]): Map<string, number> {
+  static aggregateDailyVolumes(
+    data: WorkoutLogData[],
+  ): Map<string, number> {
     return this.aggregateByKey(
       data,
       (d) => DateUtils.extractDateOnly(d.date),
@@ -49,7 +53,9 @@ export class DataAggregation {
   /**
    * Aggregate workout data by workout name, summing volumes
    */
-  static aggregateWorkoutVolumes(data: WorkoutLogData[]): Map<string, number> {
+  static aggregateWorkoutVolumes(
+    data: WorkoutLogData[],
+  ): Map<string, number> {
     return this.aggregateByKey(
       data,
       (d) => d.workout || t("common.unknown"),
@@ -90,7 +96,9 @@ export class DataAggregation {
   /**
    * Find maximum weight for each exercise
    */
-  static findMaxWeightsByExercise(data: WorkoutLogData[]): Map<string, number> {
+  static findMaxWeightsByExercise(
+    data: WorkoutLogData[],
+  ): Map<string, number> {
     const maxWeights = new Map<string, number>();
     data.forEach((d) => {
       const currentMax = maxWeights.get(d.exercise) || 0;

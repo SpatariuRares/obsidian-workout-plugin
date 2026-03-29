@@ -17,7 +17,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ERROR_LOG_PATH = path.join(__dirname, "error-log.json");
-const ANALYSIS_OUTPUT_PATH = path.join(__dirname, "error-analysis.md");
+const ANALYSIS_OUTPUT_PATH = path.join(
+  __dirname,
+  "error-analysis.md",
+);
 
 /**
  * Read error log
@@ -28,7 +31,9 @@ async function readErrorLog() {
     return JSON.parse(content);
   } catch (error) {
     if (error.code === "ENOENT") {
-      console.error("Error log not found. Run: node scripts/learning/error-logger.mjs init");
+      console.error(
+        "Error log not found. Run: node scripts/learning/error-logger.mjs init",
+      );
       process.exit(1);
     }
     throw error;
@@ -86,7 +91,9 @@ function analyzePatterns(errors) {
       analysis.errorsByComponent[error.component].resolved++;
     }
     analysis.errorsByComponent[error.component].types[error.type] =
-      (analysis.errorsByComponent[error.component].types[error.type] || 0) + 1;
+      (analysis.errorsByComponent[error.component].types[
+        error.type
+      ] || 0) + 1;
   });
 
   // Recent unresolved errors (last 10)
@@ -120,7 +127,8 @@ function detectPatterns(errors) {
   // Pattern 1: Repeated errors in same component
   const componentCounts = {};
   errors.forEach((error) => {
-    componentCounts[error.component] = (componentCounts[error.component] || 0) + 1;
+    componentCounts[error.component] =
+      (componentCounts[error.component] || 0) + 1;
   });
 
   Object.entries(componentCounts).forEach(([component, count]) => {
@@ -180,7 +188,9 @@ function detectPatterns(errors) {
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
   const oldUnresolvedErrors = errors.filter((error) => {
-    return !error.resolved && new Date(error.timestamp) < sevenDaysAgo;
+    return (
+      !error.resolved && new Date(error.timestamp) < sevenDaysAgo
+    );
   });
 
   if (oldUnresolvedErrors.length > 0) {
@@ -209,7 +219,7 @@ function generateRecommendations(analysis) {
         category: "directive_update",
         title: `Update error handling directive for ${type}`,
         description: `${data.count} ${type} errors with low resolution rate (${Math.round(
-          (data.resolved / data.count) * 100
+          (data.resolved / data.count) * 100,
         )}%). Consider updating directives/maintenance/error-handling.md with specific patterns for this error type.`,
         action: `Review errors of type '${type}' and add edge case to directive`,
       });
@@ -217,17 +227,19 @@ function generateRecommendations(analysis) {
   });
 
   // Recommendation based on component errors
-  Object.entries(analysis.errorsByComponent).forEach(([component, data]) => {
-    if (data.count >= 10) {
-      recommendations.push({
-        priority: "high",
-        category: "refactoring",
-        title: `Refactor ${component}`,
-        description: `${component} has ${data.count} errors. High error count suggests this component needs refactoring or better error handling.`,
-        action: `Review ${component} code and improve error handling`,
-      });
-    }
-  });
+  Object.entries(analysis.errorsByComponent).forEach(
+    ([component, data]) => {
+      if (data.count >= 10) {
+        recommendations.push({
+          priority: "high",
+          category: "refactoring",
+          title: `Refactor ${component}`,
+          description: `${component} has ${data.count} errors. High error count suggests this component needs refactoring or better error handling.`,
+          action: `Review ${component} code and improve error handling`,
+        });
+      }
+    },
+  );
 
   // Recommendation based on patterns
   analysis.patterns.forEach((pattern) => {
@@ -249,7 +261,8 @@ function generateRecommendations(analysis) {
       category: "process",
       title: "Improve error resolution process",
       description: `More unresolved errors (${analysis.unresolvedErrors}) than resolved (${analysis.resolvedErrors}). Errors should be investigated and marked resolved.`,
-      action: "Review unresolved errors and mark as resolved once fixed",
+      action:
+        "Review unresolved errors and mark as resolved once fixed",
     });
   }
 
@@ -284,8 +297,12 @@ function generateMarkdownReport(analysis) {
   lines.push("## Summary");
   lines.push("");
   lines.push(`- **Total Errors**: ${analysis.totalErrors}`);
-  lines.push(`- **Resolved**: ${analysis.resolvedErrors} (${Math.round((analysis.resolvedErrors / analysis.totalErrors) * 100)}%)`);
-  lines.push(`- **Unresolved**: ${analysis.unresolvedErrors} (${Math.round((analysis.unresolvedErrors / analysis.totalErrors) * 100)}%)`);
+  lines.push(
+    `- **Resolved**: ${analysis.resolvedErrors} (${Math.round((analysis.resolvedErrors / analysis.totalErrors) * 100)}%)`,
+  );
+  lines.push(
+    `- **Unresolved**: ${analysis.unresolvedErrors} (${Math.round((analysis.unresolvedErrors / analysis.totalErrors) * 100)}%)`,
+  );
   lines.push("");
 
   // Errors by Type
@@ -297,7 +314,9 @@ function generateMarkdownReport(analysis) {
     .sort((a, b) => b[1].count - a[1].count)
     .forEach(([type, data]) => {
       const rate = Math.round((data.resolved / data.count) * 100);
-      lines.push(`| ${type} | ${data.count} | ${data.resolved} | ${rate}% |`);
+      lines.push(
+        `| ${type} | ${data.count} | ${data.resolved} | ${rate}% |`,
+      );
     });
   lines.push("");
 
@@ -310,8 +329,12 @@ function generateMarkdownReport(analysis) {
     .sort((a, b) => b[1].count - a[1].count)
     .slice(0, 10)
     .forEach(([component, data]) => {
-      const mostCommonType = Object.entries(data.types).sort((a, b) => b[1] - a[1])[0][0];
-      lines.push(`| ${component} | ${data.count} | ${data.resolved} | ${mostCommonType} |`);
+      const mostCommonType = Object.entries(data.types).sort(
+        (a, b) => b[1] - a[1],
+      )[0][0];
+      lines.push(
+        `| ${component} | ${data.count} | ${data.resolved} | ${mostCommonType} |`,
+      );
     });
   lines.push("");
 
@@ -320,7 +343,9 @@ function generateMarkdownReport(analysis) {
     lines.push("## Detected Patterns");
     lines.push("");
     analysis.patterns.forEach((pattern, i) => {
-      lines.push(`### ${i + 1}. ${pattern.type} (${pattern.severity} severity)`);
+      lines.push(
+        `### ${i + 1}. ${pattern.type} (${pattern.severity} severity)`,
+      );
       lines.push("");
       lines.push(pattern.description);
       lines.push("");
@@ -343,7 +368,9 @@ function generateMarkdownReport(analysis) {
     lines.push("");
 
     ["high", "medium", "low"].forEach((priority) => {
-      const recs = analysis.recommendations.filter((r) => r.priority === priority);
+      const recs = analysis.recommendations.filter(
+        (r) => r.priority === priority,
+      );
       if (recs.length > 0) {
         lines.push(`### ${priority.toUpperCase()} Priority`);
         lines.push("");
@@ -367,9 +394,13 @@ function generateMarkdownReport(analysis) {
     lines.push("|----|------|-----------|---------|-----------|");
     analysis.recentErrors.forEach((error) => {
       const shortId = error.id.split("-")[0];
-      const shortMessage = error.message.substring(0, 50) + (error.message.length > 50 ? "..." : "");
+      const shortMessage =
+        error.message.substring(0, 50) +
+        (error.message.length > 50 ? "..." : "");
       const timestamp = new Date(error.timestamp).toLocaleString();
-      lines.push(`| ${shortId} | ${error.type} | ${error.component} | ${shortMessage} | ${timestamp} |`);
+      lines.push(
+        `| ${shortId} | ${error.type} | ${error.component} | ${shortMessage} | ${timestamp} |`,
+      );
     });
     lines.push("");
   }
@@ -381,7 +412,9 @@ function generateMarkdownReport(analysis) {
   lines.push("2. Investigate recent unresolved errors");
   lines.push("3. Update directives based on error patterns");
   lines.push("4. Mark errors as resolved once fixed");
-  lines.push("5. Run analysis again after changes: `npm run doe:analyze-errors`");
+  lines.push(
+    "5. Run analysis again after changes: `npm run doe:analyze-errors`",
+  );
   lines.push("");
 
   return lines.join("\n");
@@ -413,7 +446,9 @@ async function main() {
   if (analysis.patterns.length > 0) {
     console.log("Detected Patterns:");
     analysis.patterns.forEach((pattern) => {
-      console.log(`  - [${pattern.severity.toUpperCase()}] ${pattern.description}`);
+      console.log(
+        `  - [${pattern.severity.toUpperCase()}] ${pattern.description}`,
+      );
     });
     console.log("");
   }
@@ -430,7 +465,9 @@ async function main() {
   const markdown = generateMarkdownReport(analysis);
   await fs.writeFile(ANALYSIS_OUTPUT_PATH, markdown, "utf-8");
 
-  console.log(`✓ Full analysis report written to: ${ANALYSIS_OUTPUT_PATH}`);
+  console.log(
+    `✓ Full analysis report written to: ${ANALYSIS_OUTPUT_PATH}`,
+  );
 }
 
 main().catch((error) => {

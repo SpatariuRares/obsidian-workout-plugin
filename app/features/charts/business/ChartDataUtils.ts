@@ -1,5 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { ChartDataset, CHART_DATA_TYPE, CHART_TYPE } from "@app/features/charts/types";
+import {
+  ChartDataset,
+  CHART_DATA_TYPE,
+  CHART_TYPE,
+} from "@app/features/charts/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ChartDataExtractor } from "@app/features/charts/business/ChartDataExtractor";
 
@@ -32,12 +36,17 @@ export class ChartDataUtils {
 
     // Sort by date
     filteredData.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      (a, b) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
     // Check if chartType is a custom parameter key (not a standard type)
-    const isCustomParam = !ChartDataExtractor.isStandardChartType(chartType as string);
-    const customParamKey = isCustomParam ? (chartType as string) : null;
+    const isCustomParam = !ChartDataExtractor.isStandardChartType(
+      chartType as string,
+    );
+    const customParamKey = isCustomParam
+      ? (chartType as string)
+      : null;
 
     // Group by date and calculate values
     const dateGroups = new Map<
@@ -55,7 +64,10 @@ export class ChartDataUtils {
     >();
 
     filteredData.forEach((log) => {
-      const dateKey = DateUtils.formatDateWithFormat(log.date, dateFormat);
+      const dateKey = DateUtils.formatDateWithFormat(
+        log.date,
+        dateFormat,
+      );
       const existing = dateGroups.get(dateKey) || {
         volume: 0,
         weight: 0,
@@ -134,21 +146,31 @@ export class ChartDataUtils {
         );
       } else {
         // For single exercise: show average
-        volumeData.push(values.count > 0 ? values.volume / values.count : 0);
-        weightData.push(values.count > 0 ? values.weight / values.count : 0);
-        repsData.push(values.count > 0 ? values.reps / values.count : 0);
+        volumeData.push(
+          values.count > 0 ? values.volume / values.count : 0,
+        );
+        weightData.push(
+          values.count > 0 ? values.weight / values.count : 0,
+        );
+        repsData.push(
+          values.count > 0 ? values.reps / values.count : 0,
+        );
         durationData.push(
           values.count > 0 ? values.duration / values.count : 0,
         );
         distanceData.push(
           values.count > 0 ? values.distance / values.count : 0,
         );
-        customData.push(values.count > 0 ? values.custom / values.count : 0);
+        customData.push(
+          values.count > 0 ? values.custom / values.count : 0,
+        );
         const avgDuration =
           values.count > 0 ? values.duration / values.count : 0;
         const avgDistance =
           values.count > 0 ? values.distance / values.count : 0;
-        paceData.push(avgDistance > 0 ? avgDuration / avgDistance : 0);
+        paceData.push(
+          avgDistance > 0 ? avgDuration / avgDistance : 0,
+        );
         heartRateData.push(
           values.count > 0 ? values.heartRate / values.count : 0,
         );
@@ -157,21 +179,22 @@ export class ChartDataUtils {
 
     // Build data array and label based on chart type
     const datasets: ChartDataset[] = [];
-    const { data, label, color } = ChartDataExtractor.getChartDataForType(
-      chartType,
-      displayType,
-      {
-        volumeData,
-        weightData,
-        repsData,
-        durationData,
-        distanceData,
-        paceData,
-        heartRateData,
-        customData,
-      },
-      customParamLabel,
-    );
+    const { data, label, color } =
+      ChartDataExtractor.getChartDataForType(
+        chartType,
+        displayType,
+        {
+          volumeData,
+          weightData,
+          repsData,
+          durationData,
+          distanceData,
+          paceData,
+          heartRateData,
+          customData,
+        },
+        customParamLabel,
+      );
 
     if (data.length > 0) {
       datasets.push({

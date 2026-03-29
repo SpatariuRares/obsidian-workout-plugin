@@ -42,7 +42,9 @@ const defaultSettings: WorkoutChartsSettings = {
 
 // Mock parseCSVLogFile and entriesToCSVContent
 jest.mock("../../../types/WorkoutLogData", () => {
-  const originalModule = jest.requireActual("../../../types/WorkoutLogData");
+  const originalModule = jest.requireActual(
+    "../../../types/WorkoutLogData",
+  );
   return {
     ...originalModule,
     parseCSVLogFile: jest.fn(),
@@ -52,7 +54,7 @@ jest.mock("../../../types/WorkoutLogData", () => {
 
 describe("WorkoutLogRepository", () => {
   let repository: WorkoutLogRepository;
-  let mockEventBus: jest.Mocked<Pick<WorkoutEventBus, 'emit'>>;
+  let mockEventBus: jest.Mocked<Pick<WorkoutEventBus, "emit">>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -91,7 +93,9 @@ describe("WorkoutLogRepository", () => {
       );
 
       // Mock getAbstractFileByPath to return null (folder doesn't exist)
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
 
       await repository.createCSVLogFile();
 
@@ -118,12 +122,18 @@ describe("WorkoutLogRepository", () => {
 
     it("should add an entry to an existing CSV file", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "updated content",
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
       );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("updated content");
 
       await repository.addWorkoutLogEntry(newEntry);
 
@@ -140,21 +150,24 @@ describe("WorkoutLogRepository", () => {
       };
 
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([
-        "RPE",
-      ]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "updated content",
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
       );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue(["RPE"]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("updated content");
 
       await repository.addWorkoutLogEntry(entryWithCustomFields);
 
-      expect(mockColumnService.ensureColumnExists).toHaveBeenCalledWith(
-        "RPE",
-        expect.any(Function),
-      );
+      expect(
+        mockColumnService.ensureColumnExists,
+      ).toHaveBeenCalledWith("RPE", expect.any(Function));
       expect(mockVault.process).toHaveBeenCalled();
     });
 
@@ -164,8 +177,12 @@ describe("WorkoutLogRepository", () => {
         .mockReturnValueOnce(null)
         .mockReturnValueOnce(new TFile());
 
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]);
 
       await repository.addWorkoutLogEntry(newEntry);
 
@@ -174,7 +191,9 @@ describe("WorkoutLogRepository", () => {
     });
 
     it("should throw error if max retries exceeded", async () => {
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
 
       // Mock Notice to avoid actual obsidian dependency issues if any
       jest.mock("obsidian", () => ({
@@ -207,24 +226,33 @@ describe("WorkoutLogRepository", () => {
 
     it("should update an existing entry matched by timestamp", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
 
       const existingEntries = [originalLog];
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue(
-        existingEntries,
-      );
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "updated content",
-      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(existingEntries);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("updated content");
 
-      await repository.updateWorkoutLogEntry(originalLog, updatedEntry);
+      await repository.updateWorkoutLogEntry(
+        originalLog,
+        updatedEntry,
+      );
 
       expect(mockVault.process).toHaveBeenCalled();
     });
 
     it("should throw error if file does not exist", async () => {
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
       await expect(
         repository.updateWorkoutLogEntry(originalLog, updatedEntry),
       ).rejects.toThrow(t("messages.csvNotFound"));
@@ -232,28 +260,41 @@ describe("WorkoutLogRepository", () => {
 
     it("should fallback to matching by properties if timestamp not found", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
 
       // Entry in file has different timestamp but same data
       const fileEntry = { ...originalLog, timestamp: 999999 };
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([
-        fileEntry,
-      ]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "updated content",
-      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([fileEntry]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("updated content");
 
-      await repository.updateWorkoutLogEntry(originalLog, updatedEntry);
+      await repository.updateWorkoutLogEntry(
+        originalLog,
+        updatedEntry,
+      );
 
       expect(mockVault.process).toHaveBeenCalled();
     });
 
     it("should throw error if entry not found", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]); // Empty
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]); // Empty
 
       // We need to implement a fake process to actually execute the callback and trigger the error inside it
       // OR we mock process to just return (which wont trigger error).
@@ -272,22 +313,29 @@ describe("WorkoutLogRepository", () => {
 
     it("should ensure custom columns exist for updated entry", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      const entryWithCustom = { ...updatedEntry, customFields: { RPE: 9 } };
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      const entryWithCustom = {
+        ...updatedEntry,
+        customFields: { RPE: 9 },
+      };
 
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([originalLog]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("updated content");
+
+      await repository.updateWorkoutLogEntry(
         originalLog,
-      ]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "updated content",
+        entryWithCustom,
       );
 
-      await repository.updateWorkoutLogEntry(originalLog, entryWithCustom);
-
-      expect(mockColumnService.ensureColumnExists).toHaveBeenCalledWith(
-        "RPE",
-        expect.any(Function),
-      );
+      expect(
+        mockColumnService.ensureColumnExists,
+      ).toHaveBeenCalledWith("RPE", expect.any(Function));
     });
   });
 
@@ -307,14 +355,16 @@ describe("WorkoutLogRepository", () => {
 
     it("should delete an entry matched by timestamp", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
       const existingEntries = [logToDelete];
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue(
-        existingEntries,
-      );
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "remaining content",
-      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(existingEntries);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("remaining content");
 
       (mockVault.process as jest.Mock).mockImplementation(
         async (file, callback) => {
@@ -329,7 +379,9 @@ describe("WorkoutLogRepository", () => {
     });
 
     it("should throw error if file not found", async () => {
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
+      );
       await expect(
         repository.deleteWorkoutLogEntry(logToDelete),
       ).rejects.toThrow(t("messages.csvNotFound"));
@@ -337,15 +389,17 @@ describe("WorkoutLogRepository", () => {
 
     it("should fallback to matching by properties if timestamp not found", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
       // Entry in file has different timestamp but same data
       const fileEntry = { ...logToDelete, timestamp: 999999 };
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([
-        fileEntry,
-      ]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "content",
-      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([fileEntry]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
 
       (mockVault.process as jest.Mock).mockImplementation(
         async (file, callback) => {
@@ -360,8 +414,12 @@ describe("WorkoutLogRepository", () => {
 
     it("should throw error if entry not found", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]);
 
       (mockVault.process as jest.Mock).mockImplementation(
         async (file, callback) => {
@@ -378,19 +436,21 @@ describe("WorkoutLogRepository", () => {
   describe("renameExercise", () => {
     it("should rename exercises and return valid count", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
 
       const entries = [
         { exercise: "Squat" },
         { exercise: "squat" }, // Case insensitive match
         { exercise: "Bench" },
       ];
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue(
-        entries,
-      );
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "content",
-      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(entries);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
 
       (mockVault.process as jest.Mock).mockImplementation(
         async (file, callback) => {
@@ -398,7 +458,10 @@ describe("WorkoutLogRepository", () => {
         },
       );
 
-      const count = await repository.renameExercise("Squat", "Back Squat");
+      const count = await repository.renameExercise(
+        "Squat",
+        "Back Squat",
+      );
 
       expect(count).toBe(2);
       expect(entries[0].exercise).toBe("Back Squat");
@@ -407,23 +470,27 @@ describe("WorkoutLogRepository", () => {
     });
 
     it("should throw error if file not found", async () => {
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(null);
-      await expect(repository.renameExercise("Old", "New")).rejects.toThrow(
-        t("messages.csvNotFound"),
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        null,
       );
+      await expect(
+        repository.renameExercise("Old", "New"),
+      ).rejects.toThrow(t("messages.csvNotFound"));
     });
 
     it("should handle process errors", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
 
       (mockVault.process as jest.Mock).mockImplementation(() => {
         throw new Error("Process failed");
       });
 
-      await expect(repository.renameExercise("Old", "New")).rejects.toThrow(
-        "Failed to rename exercise: Process failed",
-      );
+      await expect(
+        repository.renameExercise("Old", "New"),
+      ).rejects.toThrow("Failed to rename exercise: Process failed");
     });
   });
 
@@ -446,16 +513,24 @@ describe("WorkoutLogRepository", () => {
 
     it("should emit log:added after addWorkoutLogEntry", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
 
       await repository.addWorkoutLogEntry(baseEntry);
 
       expect(mockEventBus.emit).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'log:added',
+          type: "log:added",
           payload: expect.objectContaining({
             context: { exercise: "Squat", workout: "Leg Day" },
           }),
@@ -464,19 +539,35 @@ describe("WorkoutLogRepository", () => {
     });
 
     it("should emit log:updated after updateWorkoutLogEntry", async () => {
-      const originalLog = { ...baseEntry, timestamp: 123456789 } as WorkoutLogData;
+      const originalLog = {
+        ...baseEntry,
+        timestamp: 123456789,
+      } as WorkoutLogData;
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
-      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(
+        async (_file, callback) => callback(""),
+      );
 
-      await repository.updateWorkoutLogEntry(originalLog, { ...baseEntry, reps: 8 });
+      await repository.updateWorkoutLogEntry(originalLog, {
+        ...baseEntry,
+        reps: 8,
+      });
 
       expect(mockEventBus.emit).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'log:updated',
+          type: "log:updated",
           payload: expect.objectContaining({
             previous: originalLog,
           }),
@@ -485,18 +576,29 @@ describe("WorkoutLogRepository", () => {
     });
 
     it("should emit log:deleted after deleteWorkoutLogEntry", async () => {
-      const logToDelete = { ...baseEntry, timestamp: 123456789 } as WorkoutLogData;
+      const logToDelete = {
+        ...baseEntry,
+        timestamp: 123456789,
+      } as WorkoutLogData;
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
-      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{ ...baseEntry, timestamp: 123456789 }]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(
+        async (_file, callback) => callback(""),
+      );
 
       await repository.deleteWorkoutLogEntry(logToDelete);
 
       expect(mockEventBus.emit).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'log:deleted',
+          type: "log:deleted",
           payload: expect.objectContaining({
             context: { exercise: "Squat", workout: "Leg Day" },
           }),
@@ -506,30 +608,45 @@ describe("WorkoutLogRepository", () => {
 
     it("should emit log:bulk-changed after renameExercise", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (WorkoutLogDataUtils.parseCSVLogFile as jest.Mock).mockReturnValue([{ exercise: "Squat" }]);
-      (WorkoutLogDataUtils.entriesToCSVContent as jest.Mock).mockReturnValue("content");
-      (mockVault.process as jest.Mock).mockImplementation(async (_file, callback) => callback(""));
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{ exercise: "Squat" }]);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(
+        async (_file, callback) => callback(""),
+      );
 
       await repository.renameExercise("Squat", "Back Squat");
 
       expect(mockEventBus.emit).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'log:bulk-changed',
-          payload: expect.objectContaining({ operation: 'rename' }),
+          type: "log:bulk-changed",
+          payload: expect.objectContaining({ operation: "rename" }),
         }),
       );
     });
 
     it("should NOT emit if vault.process throws", async () => {
       const mockFile = new TFile();
-      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(mockFile);
-      (mockColumnService.getCustomColumns as jest.Mock).mockResolvedValue([]);
-      (mockVault.process as jest.Mock).mockRejectedValue(new Error("IO error"));
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFile,
+      );
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      (mockVault.process as jest.Mock).mockRejectedValue(
+        new Error("IO error"),
+      );
 
-      await expect(repository.addWorkoutLogEntry(baseEntry)).rejects.toThrow("IO error");
+      await expect(
+        repository.addWorkoutLogEntry(baseEntry),
+      ).rejects.toThrow("IO error");
       expect(mockEventBus.emit).not.toHaveBeenCalled();
     });
-
   });
 });

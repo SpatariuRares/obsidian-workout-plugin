@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Añadir bloque de ejercicios.",
+    "addMissingBlockIds": "Añadir los IDs faltantes a los bloques de código",
     "auditExerciseNames": "Nombres de ejercicios de auditoría.",
     "convertExercise": "Convertir ejercicio.",
     "createCsvLog": "Crear archivo de registro CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Generar referencia de etiqueta.",
     "insertTable": "Insertar tabla.",
     "manageMuscleTags": "Gestionar las protuberancias musculares.",
-    "migrateExerciseTypes": "Migrar los tipos de ejercicio.",
-    "addMissingBlockIds": "Añadir los IDs faltantes a los bloques de código"
+    "migrateExerciseTypes": "Migrar los tipos de ejercicio."
   },
   "common": {
     "bpm": "bpm",
     "cancel": "Cancelar",
+    "clear": "Borrar",
     "convert": "Convert",
     "exercise": "Ejercicio.",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "No disponible.",
     "sec": "sec",
     "unknown": "Desconocido.",
-    "workout": "Entrenamiento.",
-    "clear": "Borrar"
+    "workout": "Entrenamiento."
   },
   "convert": {
     "currentType": "Tipo actual:",
@@ -453,8 +453,8 @@
     "noImbalances": "Sin desequilibrios.",
     "noTags": "Sin etiquetas.",
     "success": {
-      "csvCreated": "¡El archivo CSV se ha creado correctamente!",
       "blockIdsAdded": "Se han añadido los ID(s) faltantes {count} en el(los) archivo(s) {files}.",
+      "csvCreated": "¡El archivo CSV se ha creado correctamente!",
       "noBlockIdsNeeded": "Todos los bloques de código ya tienen identificadores."
     },
     "tagReferenceGenerated": "Referencia de etiqueta generada.",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Acciones",
     "addTag": "Agregar etiqueta",
+    "auditStatusCloseMatch": "Coincidencia cercana",
+    "auditStatusExactMatch": "Coincidencia exacta",
+    "auditStatusNoMatch": "Sin coincidencia",
+    "auditStatusPartialMatch": "Coincidencia parcial",
     "autocomplete": {
+      "addExercise": "Añadir \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Coincidencia exacta/de prefijo - Puntuación: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Coincidencia parcial - Puntuación: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Coincidencia de palabra - Puntuación: {score}",
-      "addExercise": "Añadir \"{name}\""
+      "wordTooltip": "Coincidencia de palabra - Puntuación: {score}"
     },
     "buttons": {
       "addParameter": "Agregar parámetro",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Acciones",
+      "currentFileInfo": "Archivo actual: {fileName}",
       "exercise": "Ejercicio:",
       "reps": "Repeticiones:",
       "targetReps": "Repeticiones objetivas:",
       "targetWeight": "Peso objetivo ({unit}):",
       "volume": "Volumen ({{unit}}):",
-      "weight": "Peso ({unit}):",
-      "currentFileInfo": "Archivo actual: {fileName}"
+      "weight": "Peso ({unit}):"
     },
     "layoutGrouped": "Agrupado por músculo",
     "layoutHorizontal": "Flujo horizontal",
@@ -565,17 +569,21 @@
     "notes": "Notas (opcional):",
     "notices": {
       "auditConfirmRenameFile": "Confirmar Renombrar Archivo de Auditoría",
+      "auditMismatchCount": "Se encontraron {count} discrepancias:",
+      "auditNoMatchFound": "Sin coincidencia",
       "auditNoMismatches": "Auditoría sin coincidencias",
       "auditRenameError": "Error al renombrar en Auditoría",
       "auditRenameFileError": "Error al renombrar archivo en Auditoría",
       "auditRenameFileSuccess": "Éxito al renombrar archivo en Auditoría",
       "auditRenameSuccess": "Éxito al renombrar en Auditoría",
+      "auditScanError": "Error al escanear archivos: {error}",
       "auditScanning": "Escaneo de auditoría",
       "canvasExportError": "Error de exportación de lienzo",
       "canvasExported": "Lienzo exportado",
       "chartInserted": "✅ Insertado correctamente el gráfico!",
       "confirmUpdateTarget": "Confirmar actualización del destino",
       "dashboardInserted": "✅ Insertado correctamente el panel de control!",
+      "dismissAchievement": "Descartar logro",
       "exerciseBlockInserted": "Bloque de ejercicio insertado",
       "exerciseNameRequired": "❌ Por favor, introduzca un nombre de ejercicio",
       "exercisePageCreated": "Página de ejercicio creada correctamente!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "No se pudo actualizar el temporizador. Asegúrese de que el archivo esté abierto en el editor.",
       "timerUpdated": "✅ Temporizador actualizado correctamente.",
       "validationCombinedMode": "⚠️ Para el tipo 'ejercicio + entrenamiento' es necesario rellenar ambos campos!",
-      "validationFillAll": "Por favor, llena todos los campos con valores válidos",
-      "dismissAchievement": "Descartar logro",
-      "auditScanError": "Error al escanear archivos: {error}",
-      "auditMismatchCount": "Se encontraron {count} discrepancias:",
-      "auditNoMatchFound": "Sin coincidencia"
+      "validationFillAll": "Por favor, llena todos los campos con valores válidos"
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Étiqueta:",
@@ -716,11 +720,7 @@
     },
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
-    "workoutNameOptional": "Nombre del Entrenamiento (opcional):",
-    "auditStatusNoMatch": "Sin coincidencia",
-    "auditStatusExactMatch": "Coincidencia exacta",
-    "auditStatusCloseMatch": "Coincidencia cercana",
-    "auditStatusPartialMatch": "Coincidencia parcial"
+    "workoutNameOptional": "Nombre del Entrenamiento (opcional):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Generando...",
       "overwriting": "Sobreescribir...",
       "regenerateOverwrite": "Recrear (sobrescribir)",
+      "runAllMaintenance": "Ejecutar todas",
       "savePreset": "Guardar.",
-      "saveProtocol": "Guardar.",
-      "runAllMaintenance": "Ejecutar todas"
+      "saveProtocol": "Guardar."
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas de músculos. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
@@ -760,11 +760,11 @@
       "protocolColor": "Color de fondo del distintivo (en formato hexadecimal, por ejemplo, #FF5733).",
       "quickWeightIncrement": "Incremento de peso utilizado por los botones \"+\" y \"-\" en las ventanas de creación/edición de registros de entrenamiento (por ejemplo, 2.5 para aumentar/disminuir 2.5 unidades).",
       "repDuration": "Tiempo estimado para realizar una repetición. Se utiliza cuando se conoce el número de repeticiones (por ejemplo, \"x 10 repeticiones\").",
+      "runAllMaintenance": "Ejecutar todas las tareas de mantenimiento de forma secuencial. Seguro de ejecutar varias veces.",
       "setDuration": "Se utiliza cuando no se especifican las repeticiones (opción por defecto). Rango típico: 30-60 segundos.",
       "setupCSV": "Cree los archivos \"workout_logs.csv\" y \"muscle-tags.csv\" en la carpeta configurada.",
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
-      "weightUnit": "Seleccione la unidad de medida para el peso (kg/lb). Esto afecta la unidad predeterminada para los nuevos registros.",
-      "runAllMaintenance": "Ejecutar todas las tareas de mantenimiento de forma secuencial. Seguro de ejecutar varias veces."
+      "weightUnit": "Seleccione la unidad de medida para el peso (kg/lb). Esto afecta la unidad predeterminada para los nuevos registros."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "Color del distintivo.",
       "protocolName": "Nombre del protocolo",
       "repDuration": "Duración por repetición (segundos).",
+      "runAllMaintenance": "Ejecutar todas las tareas de mantenimiento",
       "setDuration": "Duración predeterminada de la opción de respaldo (segundos).",
       "setupCSV": "Configurar archivos CSV.",
-      "weightUnit": "Unidad de peso.",
-      "runAllMaintenance": "Ejecutar todas las tareas de mantenimiento"
+      "weightUnit": "Unidad de peso."
     },
     "messages": {
       "confirmDeletePreset": "¿Está seguro de que desea eliminar este preset?",
@@ -820,17 +820,17 @@
       "protocolName": "Introduzca el nombre del protocolo"
     },
     "sections": {
+      "advanced": "Avanzado",
       "csvManagement": "Gestión de archivos CSV.",
       "customProtocols": "Protocolos personalizados.",
       "exampleData": "Ejemplo de datos.",
       "filtering": "Filtrado.",
+      "maintenance": "Mantenimiento",
       "quickLog": "Registro móvil.",
       "setupAndData": "Configuración y datos",
       "templates": "Plantillas.",
       "timerPresets": "Temporizadores predefinidos.",
-      "trainingParameters": "Parámetros de entrenamiento",
-      "maintenance": "Mantenimiento",
-      "advanced": "Avanzado"
+      "trainingParameters": "Parámetros de entrenamiento"
     },
     "tooltips": {
       "deletePreset": "Eliminar plantilla",
@@ -839,21 +839,21 @@
       "editProtocol": "Editar protocolo"
     },
     "validation": {
-      "mustBePositive": "Debe ser mayor que 0",
-      "mustBeNonNegative": "Debe ser 0 o un valor positivo.",
+      "csvFolderNotFound": "La carpeta no se encuentra en el almacén. Ejecute la configuración CSV para crearla.",
       "csvPathEmpty": "El campo no puede estar vacío",
-      "csvFolderNotFound": "La carpeta no se encuentra en el almacén. Ejecute la configuración CSV para crearla."
+      "mustBeNonNegative": "Debe ser 0 o un valor positivo.",
+      "mustBePositive": "Debe ser mayor que 0"
     }
   },
   "stats": {
     "avgVolume": "Volumen promedio.",
-    "recentTrend": "Tendencia reciente.",
-    "sessions": "Sesiones.",
     "max": "Máx: ",
     "min": "Mín: ",
-    "title": "📈 Estadísticas {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (últimas 3)",
-    "recentVsPrev": " (vs ant.)"
+    "recentTrend": "Tendencia reciente.",
+    "recentVsPrev": " (vs ant.)",
+    "sessions": "Sesiones.",
+    "title": "📈 Estadísticas {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Acciones",

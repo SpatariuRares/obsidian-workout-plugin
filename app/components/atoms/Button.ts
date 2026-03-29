@@ -35,7 +35,10 @@ export class Button {
     });
   }
 
-  static create(parent: HTMLElement, props: ButtonProps): HTMLButtonElement {
+  static create(
+    parent: HTMLElement,
+    props: ButtonProps,
+  ): HTMLButtonElement {
     const btn = parent.createEl("button", {
       cls: `${props.className || ""} workout-btn workout-btn-${props.variant} workout-btn-${props.size}`,
       attr: {
@@ -45,7 +48,8 @@ export class Button {
       },
     });
 
-    btn.textContent = `${props.icon || ""} ${props.text || ""}`.trim();
+    btn.textContent =
+      `${props.icon || ""} ${props.text || ""}`.trim();
 
     return btn;
   }
@@ -61,7 +65,11 @@ export class Button {
     handler: (e: MouseEvent) => void,
     signal?: AbortSignal,
   ): void {
-    button.addEventListener("click", handler, signal ? { signal } : undefined);
+    button.addEventListener(
+      "click",
+      handler,
+      signal ? { signal } : undefined,
+    );
   }
 
   /**
@@ -69,7 +77,10 @@ export class Button {
    * @param button - Button element
    * @param disabled - Whether to disable
    */
-  static setDisabled(button: HTMLButtonElement, disabled: boolean): void {
+  static setDisabled(
+    button: HTMLButtonElement,
+    disabled: boolean,
+  ): void {
     if (disabled) {
       button.setAttribute("disabled", "true");
       button.addClass("disabled");

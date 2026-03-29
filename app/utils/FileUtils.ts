@@ -27,8 +27,13 @@ export function readTextFile(file: File): Promise<string> {
  * @param csvContent - CSV content string to download
  * @param filename - Desired filename for the download
  */
-export function downloadCsv(csvContent: string, filename: string): void {
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+export function downloadCsv(
+  csvContent: string,
+  filename: string,
+): void {
+  const blob = new Blob([csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement("a");

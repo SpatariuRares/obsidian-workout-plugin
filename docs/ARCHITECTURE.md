@@ -164,7 +164,9 @@ const logs = await WorkoutPlannerAPI.getWorkoutLogs({
 const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
 
 // Get available exercises
-const exercises = await WorkoutPlannerAPI.getExercises({ tag: "chest" });
+const exercises = await WorkoutPlannerAPI.getExercises({
+  tag: "chest",
+});
 ```
 
 ---

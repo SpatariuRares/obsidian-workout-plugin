@@ -64,7 +64,9 @@ export class QuickStatsCards {
     });
 
     // Stats grid using StatCard molecules
-    const statsEl = cardEl.createEl("div", { cls: "workout-card-stats" });
+    const statsEl = cardEl.createEl("div", {
+      cls: "workout-card-stats",
+    });
 
     // Workouts stat using StatCard molecule
     StatCard.create(statsEl, {

@@ -103,7 +103,9 @@ export class ExerciseAutocomplete {
         badge.title = t("modal.autocomplete.wordTooltip", { score });
       } else {
         badge.textContent = t("modal.autocomplete.partialBadge");
-        badge.title = t("modal.autocomplete.partialTooltip", { score });
+        badge.title = t("modal.autocomplete.partialTooltip", {
+          score,
+        });
       }
     }
 
@@ -156,30 +158,32 @@ export class ExerciseAutocomplete {
       }
 
       // Smart ranking: Use semantic matching with scoring
-      const semanticMatches: ExerciseMatch[] = instance.availableExercises
-        .map((exercise) => ({
-          name: exercise,
-          score: StringUtils.getMatchScore(exercise, query),
-          matchType: "semantic" as const,
-        }))
-        .filter((match) => match.score > 0); // Only include matches
+      const semanticMatches: ExerciseMatch[] =
+        instance.availableExercises
+          .map((exercise) => ({
+            name: exercise,
+            score: StringUtils.getMatchScore(exercise, query),
+            matchType: "semantic" as const,
+          }))
+          .filter((match) => match.score > 0); // Only include matches
 
       // Fuzzy matching: Handle typos using Levenshtein distance
       // Max distance of 3 allows for reasonable typos (e.g., "squatt" -> "squat")
-      const fuzzyMatches: ExerciseMatch[] = StringUtils.findSimilarStrings(
-        query,
-        instance.availableExercises,
-        3,
-      )
-        .filter((name) => {
-          // Exclude if already found in semantic matches
-          return !semanticMatches.some((sm) => sm.name === name);
-        })
-        .map((name) => ({
-          name,
-          score: 40, // Lower score than semantic matches
-          matchType: "fuzzy" as const,
-        }));
+      const fuzzyMatches: ExerciseMatch[] =
+        StringUtils.findSimilarStrings(
+          query,
+          instance.availableExercises,
+          3,
+        )
+          .filter((name) => {
+            // Exclude if already found in semantic matches
+            return !semanticMatches.some((sm) => sm.name === name);
+          })
+          .map((name) => ({
+            name,
+            score: 40, // Lower score than semantic matches
+            matchType: "fuzzy" as const,
+          }));
 
       // Combine and sort by score (highest first)
       const allMatches = [...semanticMatches, ...fuzzyMatches].sort(
@@ -234,7 +238,9 @@ export class ExerciseAutocomplete {
           // Mouse hover handlers
           suggestion.addEventListener("mouseenter", () => {
             autocompleteContainer
-              .querySelectorAll(".workout-exercise-autocomplete-suggestion")
+              .querySelectorAll(
+                ".workout-exercise-autocomplete-suggestion",
+              )
               .forEach((s) =>
                 s.classList.remove(
                   "workout-exercise-autocomplete-suggestion-selected",
@@ -268,7 +274,9 @@ export class ExerciseAutocomplete {
           });
           createItem.createEl("span", {
             cls: "workout-autocomplete-text",
-            text: t("modal.autocomplete.addExercise", { name: query }),
+            text: t("modal.autocomplete.addExercise", {
+              name: query,
+            }),
           });
 
           createItem.addEventListener("click", () => {
@@ -286,7 +294,9 @@ export class ExerciseAutocomplete {
 
           createItem.addEventListener("mouseenter", () => {
             autocompleteContainer
-              .querySelectorAll(".workout-exercise-autocomplete-suggestion")
+              .querySelectorAll(
+                ".workout-exercise-autocomplete-suggestion",
+              )
               .forEach((s) =>
                 s.classList.remove(
                   "workout-exercise-autocomplete-suggestion-selected",
@@ -336,7 +346,10 @@ export class ExerciseAutocomplete {
             "workout-exercise-autocomplete-suggestion-selected",
           );
           // Scroll into view if needed
-          suggestion.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          suggestion.scrollIntoView({
+            block: "nearest",
+            behavior: "smooth",
+          });
         } else {
           suggestion.classList.remove(
             "workout-exercise-autocomplete-suggestion-selected",
@@ -357,7 +370,9 @@ export class ExerciseAutocomplete {
         );
 
         if (suggestions[instance.selectedIndex]) {
-          (suggestions[instance.selectedIndex] as HTMLElement).click();
+          (
+            suggestions[instance.selectedIndex] as HTMLElement
+          ).click();
         }
       }
     };
@@ -438,7 +453,6 @@ export class ExerciseAutocomplete {
 
     exerciseInput.addEventListener("blur", hideAutocomplete);
 
-
     return {
       elements,
       handlers,
@@ -452,7 +466,8 @@ export class ExerciseAutocomplete {
   private loadAvailableExercises(plugin: WorkoutChartsPlugin) {
     try {
       // Use ExercisePathResolver to get exercise names
-      this.availableExercises = ExercisePathResolver.getExerciseNames(plugin);
+      this.availableExercises =
+        ExercisePathResolver.getExerciseNames(plugin);
     } catch {
       this.availableExercises = [];
     }

@@ -1,5 +1,12 @@
-import { CONSTANTS, getUnitsMap, getColumnLabels } from "@app/constants";
-import { CHART_TYPE, CHART_DATA_TYPE } from "@app/features/charts/types";
+import {
+  CONSTANTS,
+  getUnitsMap,
+  getColumnLabels,
+} from "@app/constants";
+import {
+  CHART_TYPE,
+  CHART_DATA_TYPE,
+} from "@app/features/charts/types";
 import { ListItem } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
@@ -25,10 +32,15 @@ export class StatsBox {
     chartType: CHART_TYPE,
     dataType: CHART_DATA_TYPE = CHART_DATA_TYPE.VOLUME,
   ): void {
-    const statsDiv = container.createEl("div", { cls: "workout-charts-stats" });
+    const statsDiv = container.createEl("div", {
+      cls: "workout-charts-stats",
+    });
 
     const stats = this.calculateStats(volumeData, labels, dataType);
-    const recentTrendData = this.calculateRecentTrend(volumeData, dataType);
+    const recentTrendData = this.calculateRecentTrend(
+      volumeData,
+      dataType,
+    );
 
     // Get dynamic title from data type (e.g., "Volume (kg)" -> "Volume Statistics")
     const columnLabels = getColumnLabels();
@@ -106,7 +118,8 @@ export class StatsBox {
     labels: string[],
     dataType: CHART_DATA_TYPE,
   ) {
-    const avgValue = volumeData.reduce((s, v) => s + v, 0) / volumeData.length;
+    const avgValue =
+      volumeData.reduce((s, v) => s + v, 0) / volumeData.length;
     const maxV = Math.max(...volumeData);
     const maxVolumeDate = labels[volumeData.indexOf(maxV)];
     const minV = Math.min(...volumeData);
@@ -147,7 +160,9 @@ export class StatsBox {
       default: {
         const unitsMap = getUnitsMap();
         const unit = unitsMap[dataType];
-        return unit ? `${value.toFixed(1)} ${unit}` : value.toFixed(1);
+        return unit
+          ? `${value.toFixed(1)} ${unit}`
+          : value.toFixed(1);
       }
     }
   }
@@ -177,7 +192,9 @@ export class StatsBox {
 
       if (changeRecent > 0.05 * recent[0]) {
         // Value increased
-        const color = isLowerBetter ? "var(--color-red)" : "var(--color-green)";
+        const color = isLowerBetter
+          ? "var(--color-red)"
+          : "var(--color-green)";
         return {
           text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
@@ -185,7 +202,9 @@ export class StatsBox {
         };
       } else if (changeRecent < -0.05 * recent[0]) {
         // Value decreased
-        const color = isLowerBetter ? "var(--color-green)" : "var(--color-red)";
+        const color = isLowerBetter
+          ? "var(--color-green)"
+          : "var(--color-red)";
         return {
           text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
@@ -203,7 +222,9 @@ export class StatsBox {
 
       if (changeRecent > 0) {
         // Value increased
-        const color = isLowerBetter ? "var(--color-red)" : "var(--color-green)";
+        const color = isLowerBetter
+          ? "var(--color-red)"
+          : "var(--color-green)";
         return {
           text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
@@ -211,7 +232,9 @@ export class StatsBox {
         };
       } else if (changeRecent < 0) {
         // Value decreased
-        const color = isLowerBetter ? "var(--color-green)" : "var(--color-red)";
+        const color = isLowerBetter
+          ? "var(--color-green)"
+          : "var(--color-red)";
         return {
           text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
           color,
@@ -249,7 +272,9 @@ export class StatsBox {
       case CHART_DATA_TYPE.REPS:
         return Math.round(value).toString();
       default:
-        return unit ? `${value.toFixed(1)} ${unit}` : value.toFixed(1);
+        return unit
+          ? `${value.toFixed(1)} ${unit}`
+          : value.toFixed(1);
     }
   }
 }

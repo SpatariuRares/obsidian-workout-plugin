@@ -10,7 +10,10 @@ interface RenderMuscleTagFormOptions {
   muscleGroupValue: string;
   isEditing: boolean;
   onCancel: () => void;
-  onSave: (tagInput: HTMLInputElement, groupSelect: HTMLSelectElement) => void;
+  onSave: (
+    tagInput: HTMLInputElement,
+    groupSelect: HTMLSelectElement,
+  ) => void;
   onTagInputChange: (value: string) => void;
   onSuggestionClick: (tag: string, muscleGroup: string) => void;
 }
@@ -52,7 +55,9 @@ export class MuscleTagFormRenderer {
     this.suggestionsContainer = tagFieldContainer.createEl("div", {
       cls: "workout-tag-suggestions",
     });
-    DomUtils.setCssProps(this.suggestionsContainer, { display: "none" });
+    DomUtils.setCssProps(this.suggestionsContainer, {
+      display: "none",
+    });
 
     if (!options.isEditing) {
       tagInput.addEventListener("input", () => {
@@ -107,7 +112,9 @@ export class MuscleTagFormRenderer {
       variant: "primary",
       ariaLabel: t("modal.save"),
     });
-    Button.onClick(saveButton, () => options.onSave(tagInput, groupSelect));
+    Button.onClick(saveButton, () =>
+      options.onSave(tagInput, groupSelect),
+    );
 
     if (options.isEditing) {
       groupSelect.focus();
@@ -129,7 +136,9 @@ export class MuscleTagFormRenderer {
     }
 
     this.suggestionsContainer.empty();
-    DomUtils.setCssProps(this.suggestionsContainer, { display: "none" });
+    DomUtils.setCssProps(this.suggestionsContainer, {
+      display: "none",
+    });
   }
 
   renderSuggestions(
@@ -143,11 +152,15 @@ export class MuscleTagFormRenderer {
     this.suggestionsContainer.empty();
 
     if (suggestions.length === 0) {
-      DomUtils.setCssProps(this.suggestionsContainer, { display: "none" });
+      DomUtils.setCssProps(this.suggestionsContainer, {
+        display: "none",
+      });
       return;
     }
 
-    DomUtils.setCssProps(this.suggestionsContainer, { display: "block" });
+    DomUtils.setCssProps(this.suggestionsContainer, {
+      display: "block",
+    });
 
     const header = this.suggestionsContainer.createEl("div", {
       cls: "workout-tag-suggestions-header",
@@ -170,7 +183,9 @@ export class MuscleTagFormRenderer {
     for (const suggestion of suggestions) {
       const item = list.createEl("div", {
         cls: `workout-tag-suggestion-item${
-          suggestion.isVeryClose ? " workout-tag-suggestion-warning" : ""
+          suggestion.isVeryClose
+            ? " workout-tag-suggestion-warning"
+            : ""
         }`,
       });
 

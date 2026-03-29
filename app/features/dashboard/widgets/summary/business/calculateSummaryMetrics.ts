@@ -9,7 +9,9 @@ export interface SummaryMetrics {
   personalRecords: number;
 }
 
-export function calculateSummaryMetrics(data: WorkoutLogData[]): SummaryMetrics {
+export function calculateSummaryMetrics(
+  data: WorkoutLogData[],
+): SummaryMetrics {
   const totalWorkouts = DataAggregation.countUniqueWorkouts(data);
   const totalVolume = DataAggregation.calculateTotalVolume(data);
 
@@ -26,7 +28,8 @@ export function calculateSummaryMetrics(data: WorkoutLogData[]): SummaryMetrics 
     }
   }
 
-  const exerciseMaxWeights = DataAggregation.findMaxWeightsByExercise(data);
+  const exerciseMaxWeights =
+    DataAggregation.findMaxWeightsByExercise(data);
 
   return {
     totalWorkouts,

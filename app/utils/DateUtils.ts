@@ -36,14 +36,18 @@ export class DateUtils {
   /**
    * Get cutoff date for a specific time frame
    */
-  static getTimeFrameDate(timeFrame: "week" | "month" | "year"): Date {
+  static getTimeFrameDate(
+    timeFrame: "week" | "month" | "year",
+  ): Date {
     const now = new Date();
     const daysMap = {
       week: 7,
       month: 30,
       year: 365,
     };
-    return new Date(now.getTime() - daysMap[timeFrame] * this.MS_PER_DAY);
+    return new Date(
+      now.getTime() - daysMap[timeFrame] * this.MS_PER_DAY,
+    );
   }
 
   /**
@@ -82,7 +86,9 @@ export class DateUtils {
    * Get unique dates from workout data (YYYY-MM-DD format)
    */
   static getUniqueDates(data: WorkoutLogData[]): string[] {
-    const dates = new Set(data.map((d) => this.extractDateOnly(d.date)));
+    const dates = new Set(
+      data.map((d) => this.extractDateOnly(d.date)),
+    );
     return Array.from(dates).sort();
   }
 
@@ -101,7 +107,9 @@ export class DateUtils {
    */
   static groupDatesByWeek(dates: string[]): Set<number> {
     return new Set(
-      dates.map((dateStr) => this.getWeekNumberFromToday(new Date(dateStr))),
+      dates.map((dateStr) =>
+        this.getWeekNumberFromToday(new Date(dateStr)),
+      ),
     );
   }
 

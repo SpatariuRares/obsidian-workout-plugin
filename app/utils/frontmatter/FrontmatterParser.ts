@@ -53,7 +53,10 @@ export class FrontmatterParser {
    * Parse a specific field from frontmatter
    * Case-insensitive field name lookup
    */
-  static parseField(content: string, fieldName: string): string | null {
+  static parseField(
+    content: string,
+    fieldName: string,
+  ): string | null {
     const frontmatter = this.extractFrontmatter(content);
     if (!frontmatter) {
       return null;

@@ -46,7 +46,9 @@ describe("CSVColumnService", () => {
 
       const columns = await service.getCSVColumns();
 
-      expect(columns).toEqual(expect.arrayContaining(STANDARD_CSV_COLUMNS));
+      expect(columns).toEqual(
+        expect.arrayContaining(STANDARD_CSV_COLUMNS),
+      );
     });
 
     it("should return standard columns if file is empty", async () => {
@@ -56,7 +58,9 @@ describe("CSVColumnService", () => {
 
       const columns = await service.getCSVColumns();
 
-      expect(columns).toEqual(expect.arrayContaining(STANDARD_CSV_COLUMNS));
+      expect(columns).toEqual(
+        expect.arrayContaining(STANDARD_CSV_COLUMNS),
+      );
     });
 
     it("should return columns from file header", async () => {
@@ -80,7 +84,11 @@ describe("CSVColumnService", () => {
 
       const columns = await service.getCSVColumns();
 
-      expect(columns).toEqual(["Date", "Exercise name", "Custom,Col"]);
+      expect(columns).toEqual([
+        "Date",
+        "Exercise name",
+        "Custom,Col",
+      ]);
     });
   });
 
@@ -100,7 +108,9 @@ describe("CSVColumnService", () => {
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
       // Mock reading the file to check headers
-      mockVault.read.mockResolvedValue("Date,Exercise,ExistingCol\n...");
+      mockVault.read.mockResolvedValue(
+        "Date,Exercise,ExistingCol\n...",
+      );
 
       await service.ensureColumnExists("ExistingCol");
 
@@ -113,18 +123,20 @@ describe("CSVColumnService", () => {
       mockVault.read.mockResolvedValue("Date,Exercise\nVal1,Val2");
 
       // Mock process implementation to simulate content update
-      mockVault.process.mockImplementation(async (file: any, callback: any) => {
-        const content = "Date,Exercise\nVal1,Val2";
-        const newContent = await callback(content);
-        return newContent;
-      });
-
-      (WorkoutLogDataModule.parseCSVLogFile as jest.Mock).mockReturnValue([
-        { Date: "Val1", Exercise: "Val2" },
-      ]);
-      (WorkoutLogDataModule.entriesToCSVContent as jest.Mock).mockReturnValue(
-        "new content",
+      mockVault.process.mockImplementation(
+        async (file: any, callback: any) => {
+          const content = "Date,Exercise\nVal1,Val2";
+          const newContent = await callback(content);
+          return newContent;
+        },
       );
+
+      (
+        WorkoutLogDataModule.parseCSVLogFile as jest.Mock
+      ).mockReturnValue([{ Date: "Val1", Exercise: "Val2" }]);
+      (
+        WorkoutLogDataModule.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("new content");
 
       const onInvalidate = jest.fn();
       await service.ensureColumnExists("NewCol", onInvalidate);
@@ -136,7 +148,9 @@ describe("CSVColumnService", () => {
       // Actually implementation filters EXISTING Custom cols, and adds new one.
       // Date, Exercise are standard. So existing custom is empty.
 
-      expect(WorkoutLogDataModule.entriesToCSVContent).toHaveBeenCalledWith(
+      expect(
+        WorkoutLogDataModule.entriesToCSVContent,
+      ).toHaveBeenCalledWith(
         expect.anything(),
         expect.arrayContaining(["NewCol"]),
       );
@@ -151,7 +165,11 @@ describe("CSVColumnService", () => {
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
 
       // Header has STANDARD columns + Custom1 + Custom2
-      const header = [...STANDARD_CSV_COLUMNS, "Custom1", "Custom2"].join(",");
+      const header = [
+        ...STANDARD_CSV_COLUMNS,
+        "Custom1",
+        "Custom2",
+      ].join(",");
       mockVault.read.mockResolvedValue(header);
 
       const customCols = await service.getCustomColumns();
@@ -163,7 +181,11 @@ describe("CSVColumnService", () => {
   describe("parseCSVLine", () => {
     it("should parse simple comma-separated values", () => {
       const line = "val1,val2,val3";
-      expect(service.parseCSVLine(line)).toEqual(["val1", "val2", "val3"]);
+      expect(service.parseCSVLine(line)).toEqual([
+        "val1",
+        "val2",
+        "val3",
+      ]);
     });
 
     it("should handle quoted values containing commas", () => {
@@ -177,7 +199,12 @@ describe("CSVColumnService", () => {
 
     it("should handle empty fields", () => {
       const line = "val1,,val3,";
-      expect(service.parseCSVLine(line)).toEqual(["val1", "", "val3", ""]);
+      expect(service.parseCSVLine(line)).toEqual([
+        "val1",
+        "",
+        "val3",
+        "",
+      ]);
     });
   });
 });

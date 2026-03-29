@@ -72,7 +72,8 @@ describe("DataAggregation", () => {
 
   describe("aggregateExerciseVolumes", () => {
     it("should sum volumes by exercise", () => {
-      const result = DataAggregation.aggregateExerciseVolumes(mockData);
+      const result =
+        DataAggregation.aggregateExerciseVolumes(mockData);
 
       expect(result.get("Squat")).toBe(1960);
       expect(result.get("Bench Press")).toBe(800);
@@ -96,7 +97,8 @@ describe("DataAggregation", () => {
 
   describe("aggregateWorkoutVolumes", () => {
     it("should sum volumes by workout name", () => {
-      const result = DataAggregation.aggregateWorkoutVolumes(mockData);
+      const result =
+        DataAggregation.aggregateWorkoutVolumes(mockData);
 
       expect(result.get("Lower A")).toBe(1960);
       expect(result.get("Upper A")).toBe(800);
@@ -111,7 +113,8 @@ describe("DataAggregation", () => {
         },
       ];
 
-      const result = DataAggregation.aggregateWorkoutVolumes(dataWithUndefined);
+      const result =
+        DataAggregation.aggregateWorkoutVolumes(dataWithUndefined);
       expect(result.get(t("common.unknown"))).toBe(1000);
     });
   });
@@ -151,7 +154,10 @@ describe("DataAggregation", () => {
 
   describe("getTopExercisesByVolume", () => {
     it("should return top N exercises by volume", () => {
-      const result = DataAggregation.getTopExercisesByVolume(mockData, 2);
+      const result = DataAggregation.getTopExercisesByVolume(
+        mockData,
+        2,
+      );
 
       expect(result).toHaveLength(2);
       expect(result[0][0]).toBe("Squat");
@@ -161,7 +167,10 @@ describe("DataAggregation", () => {
     });
 
     it("should limit results to N", () => {
-      const result = DataAggregation.getTopExercisesByVolume(mockData, 1);
+      const result = DataAggregation.getTopExercisesByVolume(
+        mockData,
+        1,
+      );
       expect(result).toHaveLength(1);
     });
   });
@@ -180,7 +189,8 @@ describe("DataAggregation", () => {
 
   describe("findMaxWeightsByExercise", () => {
     it("should find maximum weight for each exercise", () => {
-      const result = DataAggregation.findMaxWeightsByExercise(mockData);
+      const result =
+        DataAggregation.findMaxWeightsByExercise(mockData);
 
       expect(result.get("Squat")).toBe(120); // Max of 100 and 120
       expect(result.get("Bench Press")).toBe(80);
@@ -189,7 +199,8 @@ describe("DataAggregation", () => {
 
     it("should handle single entry per exercise", () => {
       const singleData: WorkoutLogData[] = [mockData[2]];
-      const result = DataAggregation.findMaxWeightsByExercise(singleData);
+      const result =
+        DataAggregation.findMaxWeightsByExercise(singleData);
 
       expect(result.get("Bench Press")).toBe(80);
     });
@@ -203,8 +214,16 @@ describe("DataAggregation", () => {
 
     it("should handle same workout on different days", () => {
       const data: WorkoutLogData[] = [
-        { ...mockData[0], date: "2024-01-15T10:00:00", workout: "Lower A" },
-        { ...mockData[0], date: "2024-01-16T10:00:00", workout: "Lower A" },
+        {
+          ...mockData[0],
+          date: "2024-01-15T10:00:00",
+          workout: "Lower A",
+        },
+        {
+          ...mockData[0],
+          date: "2024-01-16T10:00:00",
+          workout: "Lower A",
+        },
       ];
 
       const result = DataAggregation.countUniqueWorkouts(data);
@@ -246,7 +265,8 @@ describe("DataAggregation", () => {
         },
       ];
 
-      const result = DataAggregation.groupByDateAndWorkout(dataWithUndefined);
+      const result =
+        DataAggregation.groupByDateAndWorkout(dataWithUndefined);
       const key = "2024-01-15-default";
       expect(result.has(key)).toBe(true);
     });

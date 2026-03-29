@@ -1,5 +1,8 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { EmbeddedTableParams, TableData } from "@app/features/tables/types";
+import {
+  EmbeddedTableParams,
+  TableData,
+} from "@app/features/tables/types";
 import type WorkoutChartsPlugin from "main";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
@@ -51,15 +54,18 @@ export class TableDataProcessor {
     );
 
     // Get default columns based on mode
-    const defaultVisibleColumns = TableColumnResolver.getDefaultColumns(
-      isShowingAllLogs,
-      showDuration,
-      showDistance,
-      showHeartRate,
-    );
+    const defaultVisibleColumns =
+      TableColumnResolver.getDefaultColumns(
+        isShowingAllLogs,
+        showDuration,
+        showDistance,
+        showHeartRate,
+      );
 
     // Check if notes/protocol columns should be shown (based on visible data)
-    const showNotes = TableDataCheckers.hasNotes(sortedAndLimitedData);
+    const showNotes = TableDataCheckers.hasNotes(
+      sortedAndLimitedData,
+    );
     const showProtocol =
       params.showProtocol !== false &&
       TableDataCheckers.hasNonStandardProtocol(sortedAndLimitedData);
@@ -74,7 +80,10 @@ export class TableDataProcessor {
     );
 
     // Process rows with determined headers
-    const rows = TableRowProcessor.processRows(sortedAndLimitedData, headers);
+    const rows = TableRowProcessor.processRows(
+      sortedAndLimitedData,
+      headers,
+    );
 
     return {
       headers,

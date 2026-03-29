@@ -42,7 +42,10 @@ jest.mock("@app/features/common/views/BaseView", () => ({
       return div;
     }
     handleNoFilteredData() {}
-    validateAndHandleErrors(_container: HTMLElement, errors: string[]) {
+    validateAndHandleErrors(
+      _container: HTMLElement,
+      errors: string[],
+    ) {
       return errors.length === 0;
     }
   },
@@ -67,38 +70,40 @@ jest.mock("@app/features/tables", () => ({
     renderFallbackMessage: jest.fn(),
   },
   TableDataProcessor: {
-    processTableData: jest.fn().mockImplementation(async (_data, params) => ({
-      headers: ["Date", "Reps", "Weight", "Volume", "Actions"],
-      rows: [
-        {
-          displayRow: ["10:00", "8", "80", "640", ""],
-          originalDate: "2024-01-15T10:00:00",
-          dateKey: "2024-01-15",
-          originalLog: {
-            date: "2024-01-15T10:00:00",
-            exercise: "Bench Press",
-            reps: 8,
-            weight: 80,
-            volume: 640,
-          },
-        },
-      ],
-      totalRows: 1,
-      filterResult: {
-        filteredData: [
+    processTableData: jest
+      .fn()
+      .mockImplementation(async (_data, params) => ({
+        headers: ["Date", "Reps", "Weight", "Volume", "Actions"],
+        rows: [
           {
-            date: "2024-01-15T10:00:00",
-            exercise: "Bench Press",
-            reps: 8,
-            weight: 80,
-            volume: 640,
+            displayRow: ["10:00", "8", "80", "640", ""],
+            originalDate: "2024-01-15T10:00:00",
+            dateKey: "2024-01-15",
+            originalLog: {
+              date: "2024-01-15T10:00:00",
+              exercise: "Bench Press",
+              reps: 8,
+              weight: 80,
+              volume: 640,
+            },
           },
         ],
-        filterMethodUsed: "test",
-        titlePrefix: "Workout Log",
-      },
-      params: params || {},
-    })),
+        totalRows: 1,
+        filterResult: {
+          filteredData: [
+            {
+              date: "2024-01-15T10:00:00",
+              exercise: "Bench Press",
+              reps: 8,
+              weight: 80,
+              volume: 640,
+            },
+          ],
+          filterMethodUsed: "test",
+          titlePrefix: "Workout Log",
+        },
+        params: params || {},
+      })),
   },
   TableDataLoader: {
     getOptimizedCSVData: jest.fn().mockResolvedValue([
@@ -237,7 +242,9 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, [createLog()], { limit: 10 });
 
-      expect(TableConfig.validateParams).toHaveBeenCalledWith({ limit: 10 });
+      expect(TableConfig.validateParams).toHaveBeenCalledWith({
+        limit: 10,
+      });
     });
 
     it("stops rendering when validation fails", async () => {
@@ -248,7 +255,9 @@ describe("EmbeddedTableView", () => {
 
       // Need to override validateAndHandleErrors to return false
       const origValidate = (view as any).validateAndHandleErrors;
-      (view as any).validateAndHandleErrors = jest.fn().mockReturnValue(false);
+      (view as any).validateAndHandleErrors = jest
+        .fn()
+        .mockReturnValue(false);
 
       await view.createTable(container, [createLog()], { limit: -1 });
 
@@ -383,7 +392,9 @@ describe("EmbeddedTableView", () => {
     });
 
     it("renders fallback message when table rendering fails", async () => {
-      (TableRenderer.renderTable as jest.Mock).mockReturnValueOnce(false);
+      (TableRenderer.renderTable as jest.Mock).mockReturnValueOnce(
+        false,
+      );
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
@@ -392,9 +403,9 @@ describe("EmbeddedTableView", () => {
     });
 
     it("handles errors during rendering", async () => {
-      (TableDataLoader.getOptimizedCSVData as jest.Mock).mockRejectedValueOnce(
-        new Error("Load failed"),
-      );
+      (
+        TableDataLoader.getOptimizedCSVData as jest.Mock
+      ).mockRejectedValueOnce(new Error("Load failed"));
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
@@ -404,9 +415,9 @@ describe("EmbeddedTableView", () => {
     });
 
     it("handles non-Error exceptions", async () => {
-      (TableDataLoader.getOptimizedCSVData as jest.Mock).mockRejectedValueOnce(
-        "string error",
-      );
+      (
+        TableDataLoader.getOptimizedCSVData as jest.Mock
+      ).mockRejectedValueOnce("string error");
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
@@ -436,8 +447,8 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, [createLog()], {});
 
-      const addLogCall = (LogCallouts.renderAddLogButton as jest.Mock).mock
-        .calls[0];
+      const addLogCall = (LogCallouts.renderAddLogButton as jest.Mock)
+        .mock.calls[0];
       // The 6th argument is latestEntry
       expect(addLogCall[5]).toBeDefined();
     });
@@ -488,7 +499,8 @@ describe("EmbeddedTableView", () => {
       });
 
       // Get the callbacks passed to AchievementBadge.render
-      const renderCall = (AchievementBadge.render as jest.Mock).mock.calls[0];
+      const renderCall = (AchievementBadge.render as jest.Mock).mock
+        .calls[0];
       const callbacks = renderCall[2]; // Third argument is callbacks
 
       // Call onDismiss
@@ -507,7 +519,8 @@ describe("EmbeddedTableView", () => {
         targetReps: 10,
       });
 
-      const renderCall = (AchievementBadge.render as jest.Mock).mock.calls[0];
+      const renderCall = (AchievementBadge.render as jest.Mock).mock
+        .calls[0];
       const callbacks = renderCall[2];
 
       // Call onUpdateTarget
@@ -516,11 +529,9 @@ describe("EmbeddedTableView", () => {
       const {
         CodeBlockEditorService,
       } = require("@app/services/editor/CodeBlockEditorService");
-      expect(CodeBlockEditorService.updateTargetWeight).toHaveBeenCalledWith(
-        plugin.app,
-        "Bench Press",
-        82.5,
-      );
+      expect(
+        CodeBlockEditorService.updateTargetWeight,
+      ).toHaveBeenCalledWith(plugin.app, "Bench Press", 82.5);
     });
 
     it("passes isDismissedForWeight correctly", async () => {
@@ -533,7 +544,8 @@ describe("EmbeddedTableView", () => {
         targetReps: 10,
       });
 
-      const renderCall = (AchievementBadge.render as jest.Mock).mock.calls[0];
+      const renderCall = (AchievementBadge.render as jest.Mock).mock
+        .calls[0];
       const props = renderCall[1]; // Second argument is props
       expect(props.isDismissedForWeight).toBe(true);
     });
@@ -548,7 +560,8 @@ describe("EmbeddedTableView", () => {
         targetReps: 10,
       });
 
-      const renderCall = (AchievementBadge.render as jest.Mock).mock.calls[0];
+      const renderCall = (AchievementBadge.render as jest.Mock).mock
+        .calls[0];
       const props = renderCall[1];
       expect(props.weightIncrement).toBe(5);
     });

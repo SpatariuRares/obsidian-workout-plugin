@@ -36,7 +36,7 @@ export class MuscleDataCalculator {
    */
   static filterDataByTimeFrame(
     data: WorkoutLogData[],
-    timeFrame: "week" | "month" | "year"
+    timeFrame: "week" | "month" | "year",
   ): WorkoutLogData[] {
     // Use DateUtils to filter by time frame
     return DateUtils.filterByTimeFrame(data, timeFrame);
@@ -47,7 +47,7 @@ export class MuscleDataCalculator {
    */
   async calculateMuscleGroupVolumes(
     data: WorkoutLogData[],
-    plugin: WorkoutChartsPlugin
+    plugin: WorkoutChartsPlugin,
   ): Promise<Map<string, MuscleGroupData>> {
     const muscleData = new Map<string, MuscleGroupData>();
 
@@ -64,10 +64,11 @@ export class MuscleDataCalculator {
 
     // Calculate volumes
     for (const entry of data) {
-      const mappedMuscles = await this.tagMapper.findMuscleGroupsFromTags(
-        entry.exercise,
-        plugin
-      );
+      const mappedMuscles =
+        await this.tagMapper.findMuscleGroupsFromTags(
+          entry.exercise,
+          plugin,
+        );
 
       mappedMuscles.forEach((muscle) => {
         const current = muscleData.get(muscle);
@@ -82,7 +83,7 @@ export class MuscleDataCalculator {
 
     // Calculate intensities (normalize to 0-1 scale)
     const maxVolume = Math.max(
-      ...Array.from(muscleData.values()).map((m) => m.volume)
+      ...Array.from(muscleData.values()).map((m) => m.volume),
     );
     if (maxVolume > 0) {
       muscleData.forEach((muscle) => {
@@ -135,13 +136,21 @@ export class MuscleDataCalculator {
    * Convert muscle group data to body visualization data structure
    */
   static createBodyDataFromMuscleData(
-    muscleData: Map<string, MuscleGroupData>
+    muscleData: Map<string, MuscleGroupData>,
   ): BodyData {
     const getVolume = (muscleGroup: string): number => {
       return muscleData.get(muscleGroup)?.volume || 0;
     };
 
-    const { BILATERAL_SPLIT, CHEST_UPPER, CHEST_MIDDLE, CHEST_LOWER, BACK_LOWER_RATIO, TRAPS_MIDDLE_RATIO, OBLIQUES_RATIO } = VOLUME_DISTRIBUTION;
+    const {
+      BILATERAL_SPLIT,
+      CHEST_UPPER,
+      CHEST_MIDDLE,
+      CHEST_LOWER,
+      BACK_LOWER_RATIO,
+      TRAPS_MIDDLE_RATIO,
+      OBLIQUES_RATIO,
+    } = VOLUME_DISTRIBUTION;
 
     const bodyData = {
       shoulders: {

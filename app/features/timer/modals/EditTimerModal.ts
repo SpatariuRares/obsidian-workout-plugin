@@ -44,7 +44,9 @@ export class EditTimerModal extends InsertTimerModal {
     return this.initialParams.id || super.getCodeBlockId();
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
   }
@@ -73,7 +75,8 @@ export class EditTimerModal extends InsertTimerModal {
       this.timerHandlers.setTimerType(params.type);
     }
     if (params.duration !== undefined) {
-      this.timerElements.durationInput.value = params.duration.toString();
+      this.timerElements.durationInput.value =
+        params.duration.toString();
     }
     if (params.rounds !== undefined) {
       this.timerElements.roundsInput.value = params.rounds.toString();
@@ -82,7 +85,8 @@ export class EditTimerModal extends InsertTimerModal {
       this.timerElements.exerciseInput.value = params.exercise;
     }
     if (params.showControls !== undefined) {
-      this.timerElements.showControlsToggle.checked = params.showControls;
+      this.timerElements.showControlsToggle.checked =
+        params.showControls;
     }
     if (params.sound !== undefined) {
       this.timerElements.soundToggle.checked = params.sound;

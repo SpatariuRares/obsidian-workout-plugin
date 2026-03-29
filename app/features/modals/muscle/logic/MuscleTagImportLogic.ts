@@ -7,8 +7,12 @@ import type { ParsedMuscleTagImportResult } from "@app/features/modals/muscle/ty
 import { StringUtils } from "@app/utils";
 
 export class MuscleTagImportLogic {
-  static parseImportFileContent(content: string): ParsedMuscleTagImportResult {
-    const lines = content.split(/\r?\n/).filter((line) => line.trim());
+  static parseImportFileContent(
+    content: string,
+  ): ParsedMuscleTagImportResult {
+    const lines = content
+      .split(/\r?\n/)
+      .filter((line) => line.trim());
     if (lines.length === 0) {
       return {
         validTags: new Map(),
@@ -33,9 +37,13 @@ export class MuscleTagImportLogic {
     }
 
     const headers = this.parseCsvLine(lines[0]);
-    const tagIndex = headers.findIndex((h) => h.toLowerCase() === "tag");
+    const tagIndex = headers.findIndex(
+      (h) => h.toLowerCase() === "tag",
+    );
     const groupIndex = headers.findIndex((h) =>
-      ["musclegroup", "muscle_group", "group"].includes(h.toLowerCase()),
+      ["musclegroup", "muscle_group", "group"].includes(
+        h.toLowerCase(),
+      ),
     );
 
     if (tagIndex === -1 || groupIndex === -1) {
@@ -110,6 +118,8 @@ export class MuscleTagImportLogic {
   }
 
   private static isCanonicalMuscleGroup(value: string): boolean {
-    return CANONICAL_MUSCLE_GROUPS.includes(value as CanonicalMuscleGroup);
+    return CANONICAL_MUSCLE_GROUPS.includes(
+      value as CanonicalMuscleGroup,
+    );
   }
 }

@@ -21,7 +21,7 @@ export class ExerciseConversionService {
    */
   public suggestInitialMappings(
     sourceType: ExerciseTypeDefinition,
-    targetType: ExerciseTypeDefinition
+    targetType: ExerciseTypeDefinition,
   ): Array<{ from: string; to: string }> {
     const suggestions: Array<{ from: string; to: string }> = [];
 
@@ -50,7 +50,7 @@ export class ExerciseConversionService {
   public async convertExerciseData(
     exerciseName: string,
     targetTypeId: string,
-    fieldMappings: FieldMapping[]
+    fieldMappings: FieldMapping[],
   ): Promise<number> {
     // Get all entries for this exercise
     const logData = await this.plugin.getWorkoutLogData({
@@ -60,7 +60,7 @@ export class ExerciseConversionService {
 
     let convertedCount = 0;
 
-    await this.plugin.batchOperation('other', async () => {
+    await this.plugin.batchOperation("other", async () => {
       for (const log of logData) {
         // Build updated entry
         const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
@@ -78,17 +78,24 @@ export class ExerciseConversionService {
 
         // Apply field mappings
         for (const mapping of fieldMappings) {
-          const sourceValue = this.getFieldValue(log, mapping.fromField);
+          const sourceValue = this.getFieldValue(
+            log,
+            mapping.fromField,
+          );
 
           if (sourceValue !== undefined && sourceValue !== null) {
-            this.setFieldValue(updatedEntry, mapping.toField, sourceValue);
+            this.setFieldValue(
+              updatedEntry,
+              mapping.toField,
+              sourceValue,
+            );
           }
         }
 
         // Clear fields that don't belong to the target type
         const targetType = getExerciseTypeById(targetTypeId);
         const targetFieldKeys = new Set(
-          targetType?.parameters.map((p) => p.key) ?? []
+          targetType?.parameters.map((p) => p.key) ?? [],
         );
 
         if (!targetFieldKeys.has("reps")) {
@@ -109,7 +116,8 @@ export class ExerciseConversionService {
 
         // Recalculate volume for strength type
         if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
-          updatedEntry.volume = updatedEntry.reps * updatedEntry.weight;
+          updatedEntry.volume =
+            updatedEntry.reps * updatedEntry.weight;
         } else {
           updatedEntry.volume = 0;
         }
@@ -128,7 +136,7 @@ export class ExerciseConversionService {
    */
   public async updateExerciseFrontmatter(
     exerciseName: string,
-    targetTypeId: string
+    targetTypeId: string,
   ): Promise<void> {
     const definition = await this.plugin
       .getExerciseDefinitionService()
@@ -154,7 +162,7 @@ export class ExerciseConversionService {
       weight: number;
       customFields?: Record<string, string | number | boolean>;
     },
-    fieldKey: string
+    fieldKey: string,
   ): number | string | boolean | undefined {
     // Standard fields
     if (fieldKey === "reps") return log.reps;
@@ -174,16 +182,21 @@ export class ExerciseConversionService {
       customFields?: Record<string, string | number | boolean>;
     },
     fieldKey: string,
-    value: number | string | boolean
+    value: number | string | boolean,
   ): void {
     // Standard fields
     if (fieldKey === "reps") {
-      entry.reps = typeof value === "number" ? value : parseInt(String(value)) || 0;
+      entry.reps =
+        typeof value === "number"
+          ? value
+          : parseInt(String(value)) || 0;
       return;
     }
     if (fieldKey === "weight") {
       entry.weight =
-        typeof value === "number" ? value : parseFloat(String(value)) || 0;
+        typeof value === "number"
+          ? value
+          : parseFloat(String(value)) || 0;
       return;
     }
 

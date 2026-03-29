@@ -18,7 +18,9 @@ describe("SearchBox molecule", () => {
     expect(searchBox.container.className).toContain("search-box");
     expect(searchBox.container.className).toContain("mb-2");
     expect(searchBox.icon.textContent).toBe("🔎");
-    expect(searchBox.input.classList.contains("search-box-input")).toBe(true);
+    expect(
+      searchBox.input.classList.contains("search-box-input"),
+    ).toBe(true);
     expect(searchBox.input.getAttribute("placeholder")).toBe(
       "Search exercises...",
     );

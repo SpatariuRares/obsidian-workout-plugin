@@ -1,6 +1,9 @@
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { FilterResult, TrendIndicators } from "@app/types/CommonTypes";
+import {
+  FilterResult,
+  TrendIndicators,
+} from "@app/types/CommonTypes";
 import {
   EmbeddedChartParams,
   ChartDataset,
@@ -43,7 +46,9 @@ export class EmbeddedChartView extends BaseView {
   /**
    * Load chart data from the plugin, applying exercise/workout filters.
    */
-  async loadChartData(params: EmbeddedChartParams): Promise<WorkoutLogData[]> {
+  async loadChartData(
+    params: EmbeddedChartParams,
+  ): Promise<WorkoutLogData[]> {
     if (params.exercise || params.workout) {
       return (
         (await this.plugin.getWorkoutLogData({
@@ -102,7 +107,10 @@ export class EmbeddedChartView extends BaseView {
       }
 
       // Determine chart data type based on exercise type
-      const resolvedType = await ChartTypeResolver.resolve(this.plugin, params);
+      const resolvedType = await ChartTypeResolver.resolve(
+        this.plugin,
+        params,
+      );
 
       // Validate chart data type is available for the exercise type
       const validationResult = await ChartTypeResolver.validate(
@@ -112,7 +120,10 @@ export class EmbeddedChartView extends BaseView {
       );
       if (!validationResult.isValid) {
         loadingDiv.remove();
-        Feedback.renderError(container, validationResult.errorMessage);
+        Feedback.renderError(
+          container,
+          validationResult.errorMessage,
+        );
         return;
       }
 
@@ -120,7 +131,8 @@ export class EmbeddedChartView extends BaseView {
 
       // Sort data by ascending date
       const sortedData = [...filterResult.filteredData].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+        (a, b) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
       const { labels, datasets } = ChartDataUtils.processChartData(
@@ -132,7 +144,8 @@ export class EmbeddedChartView extends BaseView {
       );
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
-      const { slope } = StatisticsUtils.calculateTrendLine(volumeData);
+      const { slope } =
+        StatisticsUtils.calculateTrendLine(volumeData);
       const trendIndicators = TrendCalculator.getTrendIndicators(
         slope,
         volumeData,
@@ -161,7 +174,8 @@ export class EmbeddedChartView extends BaseView {
     container: HTMLElement,
     params: EmbeddedChartParams,
   ): boolean {
-    const validationErrors = ValidationUtils.validateUserParams(params);
+    const validationErrors =
+      ValidationUtils.validateUserParams(params);
     return this.validateAndHandleErrors(container, validationErrors);
   }
 
@@ -176,13 +190,19 @@ export class EmbeddedChartView extends BaseView {
       params: EmbeddedChartParams;
     },
   ): void {
-    const { labels, datasets, volumeData, trendIndicators, params } = data;
+    const { labels, datasets, volumeData, trendIndicators, params } =
+      data;
 
     container.empty();
     const contentDiv = container.createEl("div");
 
     if (params.showTrend !== false && volumeData.length > 0) {
-      TrendHeader.render(contentDiv, trendIndicators, volumeData, params.type);
+      TrendHeader.render(
+        contentDiv,
+        trendIndicators,
+        volumeData,
+        params.type,
+      );
     }
 
     // Create mobile table (hidden on desktop, shown on mobile)
@@ -194,7 +214,8 @@ export class EmbeddedChartView extends BaseView {
       params,
     );
 
-    const chartContainer = ChartRenderer.createChartContainer(contentDiv);
+    const chartContainer =
+      ChartRenderer.createChartContainer(contentDiv);
 
     if (params.showTrendLine && datasets.length > 0) {
       ChartRenderer.addTrendLineToDatasets(datasets);

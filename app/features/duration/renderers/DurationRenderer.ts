@@ -6,7 +6,6 @@ import { DurationAnalysisResult } from "@app/features/duration/types";
 import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
 
-
 export class DurationRenderer {
   /**
    * Renders the duration info card with the analysis results.
@@ -117,7 +116,8 @@ export class DurationRenderer {
       this.renderBreakdownRow(
         breakdown,
         t("duration.lastSession"),
-        FormatUtils.formatDuration(analysis.historicalDuration) + dateLabel,
+        FormatUtils.formatDuration(analysis.historicalDuration) +
+          dateLabel,
       );
     }
   }

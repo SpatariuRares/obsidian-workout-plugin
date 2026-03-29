@@ -48,14 +48,16 @@ export class TableConfig {
         typeof params.columns !== "string"
       ) {
         errors.push(
-          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_INVALID_TYPE,
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS
+            .COLUMNS_INVALID_TYPE,
         );
       } else if (
         Array.isArray(params.columns) &&
         !params.columns.every((c) => typeof c === "string")
       ) {
         errors.push(
-          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS.COLUMNS_NOT_STRINGS,
+          CONSTANTS.WORKOUT.TABLE.VALIDATION_ERRORS
+            .COLUMNS_NOT_STRINGS,
         );
       }
     }

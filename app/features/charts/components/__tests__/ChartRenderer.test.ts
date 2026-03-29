@@ -4,7 +4,10 @@ import {
   CHART_DATA_TYPE,
   EmbeddedChartParams,
 } from "@app/features/charts/types";
-import { getChartLabels, ChartConfigBuilder } from "@app/features/charts/config";
+import {
+  getChartLabels,
+  ChartConfigBuilder,
+} from "@app/features/charts/config";
 
 // Mock DOM createElement
 const createMockElement = (id?: string): HTMLElement => {
@@ -137,7 +140,12 @@ describe("ChartRenderer", () => {
       const datasets = [{ label: "Weight", data: [100, 105] }];
 
       // Create first chart
-      ChartRenderer.renderChart(mockContainer, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       // Get the mock destroy function from the first chart
       const MockChart = Chart as jest.MockedClass<typeof Chart>;
@@ -145,7 +153,12 @@ describe("ChartRenderer", () => {
       const destroyMock = firstChartInstance.destroy;
 
       // Create second chart with same container (same ID)
-      ChartRenderer.renderChart(mockContainer, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       // Verify destroy was called on the first chart
       expect(destroyMock).toHaveBeenCalledTimes(1);
@@ -158,11 +171,21 @@ describe("ChartRenderer", () => {
 
       // Create first chart
       const container1 = createMockElement("chart-1");
-      ChartRenderer.renderChart(container1, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container1,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       // Create second chart with different container
       const container2 = createMockElement("chart-2");
-      ChartRenderer.renderChart(container2, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container2,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       expect(Chart).toHaveBeenCalledTimes(2);
     });
@@ -175,10 +198,20 @@ describe("ChartRenderer", () => {
 
       // Create multiple charts
       const container1 = createMockElement("chart-1");
-      ChartRenderer.renderChart(container1, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container1,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       const container2 = createMockElement("chart-2");
-      ChartRenderer.renderChart(container2, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container2,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       const MockChart = Chart as jest.MockedClass<typeof Chart>;
       const chart1Destroy = MockChart.mock.results[0].value.destroy;
@@ -197,16 +230,27 @@ describe("ChartRenderer", () => {
       const datasets = [{ label: "Weight", data: [100, 105] }];
 
       // Create a chart
-      ChartRenderer.renderChart(mockContainer, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       // Destroy all charts
       ChartRenderer.destroyAllCharts();
 
       // Create another chart - should not call destroy since Map was cleared
-      ChartRenderer.renderChart(mockContainer, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       const MockChart = Chart as jest.MockedClass<typeof Chart>;
-      const secondChartDestroy = MockChart.mock.results[1].value.destroy;
+      const secondChartDestroy =
+        MockChart.mock.results[1].value.destroy;
 
       // The second chart's destroy should not have been called yet
       expect(secondChartDestroy).not.toHaveBeenCalled();
@@ -222,13 +266,24 @@ describe("ChartRenderer", () => {
       const container2 = createMockElement("unique-id-123"); // Same ID
 
       // Create first chart
-      ChartRenderer.renderChart(container1, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container1,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       const MockChart = Chart as jest.MockedClass<typeof Chart>;
-      const firstChartDestroy = MockChart.mock.results[0].value.destroy;
+      const firstChartDestroy =
+        MockChart.mock.results[0].value.destroy;
 
       // Create second chart with same container ID - should destroy first
-      ChartRenderer.renderChart(container2, labels, datasets, mockParams);
+      ChartRenderer.renderChart(
+        container2,
+        labels,
+        datasets,
+        mockParams,
+      );
 
       expect(firstChartDestroy).toHaveBeenCalledTimes(1);
     });
@@ -251,7 +306,8 @@ describe("ChartRenderer", () => {
   });
   describe("Chart container creation", () => {
     it("should create container via ChartContainer.create", () => {
-      const result = ChartRenderer.createChartContainer(mockContainer);
+      const result =
+        ChartRenderer.createChartContainer(mockContainer);
       expect(result).toBeDefined();
       // Since we mocked ChartContainer.create to return a mock element
       expect(result.id).toBeDefined();
@@ -269,7 +325,9 @@ describe("ChartRenderer", () => {
       const datasets = [{ label: "Weight", data: [100, 110, 120] }];
 
       // Setup mock return
-      (StatisticsUtils.calculateTrendLine as jest.Mock).mockReturnValue({
+      (
+        StatisticsUtils.calculateTrendLine as jest.Mock
+      ).mockReturnValue({
         slope: 10,
         intercept: 90,
       });
@@ -317,10 +375,17 @@ describe("ChartRenderer", () => {
       const labels = ["2024-01-01"];
       const datasets = [{ label: "Weight", data: [100] }];
 
-      ChartRenderer.renderChart(mockContainer, labels, datasets, minimalParams);
+      ChartRenderer.renderChart(
+        mockContainer,
+        labels,
+        datasets,
+        minimalParams,
+      );
 
       // Verify defaults were used via ChartConfigBuilder call
-      expect(ChartConfigBuilder.createChartConfig).toHaveBeenCalledWith(
+      expect(
+        ChartConfigBuilder.createChartConfig,
+      ).toHaveBeenCalledWith(
         expect.anything(),
         expect.anything(),
         "Test Chart", // Default title from mock

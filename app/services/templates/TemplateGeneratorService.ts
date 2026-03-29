@@ -36,7 +36,10 @@ export class TemplateGeneratorService {
       await this.ensureFolderExists(templateFolder);
 
       // Generate exercise page template
-      await this.generateExercisePageTemplate(templateFolder, overwrite);
+      await this.generateExercisePageTemplate(
+        templateFolder,
+        overwrite,
+      );
 
       // Generate tag reference document
       await this.generateTagReference(templateFolder, overwrite);
@@ -55,7 +58,9 @@ export class TemplateGeneratorService {
    */
   public async getExercisePageTemplate(): Promise<string> {
     const templateFolder = this.getTemplateFolderPath();
-    const templatePath = normalizePath(`${templateFolder}/exercise-page.md`);
+    const templatePath = normalizePath(
+      `${templateFolder}/exercise-page.md`,
+    );
     const file = this.app.vault.getAbstractFileByPath(templatePath);
 
     if (file instanceof TFile) {
@@ -167,7 +172,8 @@ exercise: name
     overwrite: boolean,
   ): Promise<void> {
     const filePath = normalizePath(`${folderPath}/${fileName}`);
-    const existingFile = this.app.vault.getAbstractFileByPath(filePath);
+    const existingFile =
+      this.app.vault.getAbstractFileByPath(filePath);
 
     if (existingFile && !overwrite) {
       return;

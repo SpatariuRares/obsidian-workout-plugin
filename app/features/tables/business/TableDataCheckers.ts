@@ -1,4 +1,7 @@
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 
 /**
  * Utility functions to check for presence of specific data fields in workout logs.
@@ -25,7 +28,9 @@ export class TableDataCheckers {
    * @returns true if at least one entry has non-empty notes
    */
   static hasNotes(logData: WorkoutLogData[]): boolean {
-    return logData.some((log) => log.notes && log.notes.trim() !== "");
+    return logData.some(
+      (log) => log.notes && log.notes.trim() !== "",
+    );
   }
 
   /**
@@ -34,10 +39,14 @@ export class TableDataCheckers {
    * @param fieldName - Name of the custom field to check
    * @returns true if at least one entry has this field with a non-zero value
    */
-  static hasCustomField(logData: WorkoutLogData[], fieldName: string): boolean {
+  static hasCustomField(
+    logData: WorkoutLogData[],
+    fieldName: string,
+  ): boolean {
     return logData.some((log) => {
       const value = log.customFields?.[fieldName];
-      if (value === undefined || value === null || value === "") return false;
+      if (value === undefined || value === null || value === "")
+        return false;
       if (typeof value === "number") return value !== 0;
       if (typeof value === "string") {
         const num = parseFloat(value);

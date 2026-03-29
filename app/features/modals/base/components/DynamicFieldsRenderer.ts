@@ -47,7 +47,9 @@ export class DynamicFieldsRenderer {
       cls: "workout-field-with-adjust",
     });
 
-    const label = fieldContainer.createDiv({ cls: "workout-field-label" });
+    const label = fieldContainer.createDiv({
+      cls: "workout-field-label",
+    });
     const labelText = param.unit
       ? `${param.label} (${param.unit})`
       : param.label;
@@ -60,7 +62,10 @@ export class DynamicFieldsRenderer {
       });
 
       // Quick adjust buttons
-      const increment = await this.getIncrementForParameter(param, context);
+      const increment = await this.getIncrementForParameter(
+        param,
+        context,
+      );
 
       const minusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustMinus") + increment,
@@ -91,7 +96,10 @@ export class DynamicFieldsRenderer {
 
       Button.onClick(minusBtn, () => {
         const current = parseFloat(input.value) || 0;
-        const newValue = Math.max(param.min || 0, current - increment);
+        const newValue = Math.max(
+          param.min || 0,
+          current - increment,
+        );
         input.value = this.formatNumericValue(newValue, param);
       });
 
@@ -100,7 +108,10 @@ export class DynamicFieldsRenderer {
         const newValue = current + increment;
         input.value =
           param.max !== undefined
-            ? this.formatNumericValue(Math.min(param.max, newValue), param)
+            ? this.formatNumericValue(
+                Math.min(param.max, newValue),
+                param,
+              )
             : this.formatNumericValue(newValue, param);
       });
 
@@ -127,7 +138,10 @@ export class DynamicFieldsRenderer {
     const input = Input.create(fieldContainer, {
       type: INPUT_TYPE.TEXT,
       className: "workout-charts-input",
-      value: param.default !== undefined ? String(param.default) : undefined,
+      value:
+        param.default !== undefined
+          ? String(param.default)
+          : undefined,
     });
     if (param.required) {
       input.required = true;
@@ -164,8 +178,12 @@ export class DynamicFieldsRenderer {
     if (param.key === "weight") {
       if (context?.exerciseName) {
         try {
-          const allowedIncrements = [1, 1.25, 2, 2.5, 3, 5, 10, 15, 20];
-          const sortedIncrements = [...allowedIncrements].sort((a, b) => b - a);
+          const allowedIncrements = [
+            1, 1.25, 2, 2.5, 3, 5, 10, 15, 20,
+          ];
+          const sortedIncrements = [...allowedIncrements].sort(
+            (a, b) => b - a,
+          );
 
           const allLogs: WorkoutLogData[] =
             await this.plugin.getWorkoutLogData();
@@ -213,14 +231,20 @@ export class DynamicFieldsRenderer {
             for (let i = 1; i < filteredLogs.length; i++) {
               const prev = filteredLogs[i - 1].weight;
               const curr = filteredLogs[i].weight;
-              if (typeof prev === "number" && typeof curr === "number") {
+              if (
+                typeof prev === "number" &&
+                typeof curr === "number"
+              ) {
                 const diff = Math.abs(curr - prev);
                 if (diff > 0) {
                   const match = sortedIncrements.find(
                     (inc) => inc <= diff + 0.001,
                   );
                   if (match) {
-                    diffCounts.set(match, (diffCounts.get(match) || 0) + 1);
+                    diffCounts.set(
+                      match,
+                      (diffCounts.get(match) || 0) + 1,
+                    );
                   }
                 }
               }
@@ -246,7 +270,8 @@ export class DynamicFieldsRenderer {
         }
       }
 
-      const quickIncrement = this.plugin.settings.quickWeightIncrement;
+      const quickIncrement =
+        this.plugin.settings.quickWeightIncrement;
       if (typeof quickIncrement === "number" && quickIncrement > 0) {
         return quickIncrement;
       }
@@ -259,7 +284,8 @@ export class DynamicFieldsRenderer {
 
     // Default based on unit
     if (param.unit?.includes("km")) return 0.5;
-    if (param.unit?.includes("min") || param.unit?.includes("sec")) return 1;
+    if (param.unit?.includes("min") || param.unit?.includes("sec"))
+      return 1;
     return 1;
   }
 

@@ -29,25 +29,26 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     return t("modal.notices.exerciseBlockInserted");
   }
 
-  protected createConfigurationSections(container: HTMLElement): void {
+  protected createConfigurationSections(
+    container: HTMLElement,
+  ): void {
     if (!this.plugin) {
       throw new Error("Plugin is required for AddExerciseBlockModal");
     }
 
     // Exercise selection section with autocomplete
     const exerciseSection = this.createSection(container, "Exercise");
-    const { elements: exerciseElements } = ExerciseAutocomplete.create(
-      this,
-      exerciseSection,
-      this.plugin,
-    );
+    const { elements: exerciseElements } =
+      ExerciseAutocomplete.create(this, exerciseSection, this.plugin);
     this.exerciseElements = exerciseElements;
 
     // Timer configuration section
     const timerSection = this.createSection(container, "Timer");
 
     // Timer preset dropdown (if presets exist)
-    const presetNames = Object.keys(this.plugin.settings.timerPresets);
+    const presetNames = Object.keys(
+      this.plugin.settings.timerPresets,
+    );
     if (presetNames.length > 0) {
       const presetOptions = [
         { text: t("settings.options.none"), value: "" },
@@ -61,7 +62,8 @@ export class AddExerciseBlockModal extends BaseInsertModal {
 
       // Set default preset if configured
       if (this.plugin.settings.defaultTimerPreset) {
-        this.presetSelect.value = this.plugin.settings.defaultTimerPreset;
+        this.presetSelect.value =
+          this.plugin.settings.defaultTimerPreset;
       }
     }
 
@@ -100,13 +102,15 @@ export class AddExerciseBlockModal extends BaseInsertModal {
       throw new Error(t("modal.notices.validationFillAll"));
     }
 
-    const exerciseName = this.exerciseElements.exerciseInput.value.trim();
+    const exerciseName =
+      this.exerciseElements.exerciseInput.value.trim();
     if (!exerciseName) {
       throw new Error(t("modal.notices.exerciseNameRequired"));
     }
 
     const duration = this.durationInput.value || "90";
-    const workout = this.workoutInput.value.trim() || this.getCurrentFileName();
+    const workout =
+      this.workoutInput.value.trim() || this.getCurrentFileName();
     const preset = this.presetSelect?.value || "";
 
     // Get template from settings

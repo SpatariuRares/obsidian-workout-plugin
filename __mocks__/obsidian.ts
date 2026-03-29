@@ -35,64 +35,66 @@ export class AbstractInputSuggest<T> {
   close(): void {}
 }
 
-export const parseYaml = jest.fn((yaml: string): Record<string, any> | null => {
-  if (!yaml || !yaml.trim()) {
-    return null;
-  }
+export const parseYaml = jest.fn(
+  (yaml: string): Record<string, any> | null => {
+    if (!yaml || !yaml.trim()) {
+      return null;
+    }
 
-  const result: Record<string, any> = {};
-  const lines = yaml.split("\n");
-  let currentKey: string | null = null;
-  let currentArray: string[] | null = null;
+    const result: Record<string, any> = {};
+    const lines = yaml.split("\n");
+    let currentKey: string | null = null;
+    let currentArray: string[] | null = null;
 
-  for (const line of lines) {
-    const trimmed = line.trim();
+    for (const line of lines) {
+      const trimmed = line.trim();
 
-    // Skip empty lines
-    if (!trimmed) continue;
+      // Skip empty lines
+      if (!trimmed) continue;
 
-    // Check if it's an array item
-    if (trimmed.startsWith("-")) {
-      if (currentKey && currentArray !== null) {
-        const value = trimmed.slice(1).trim();
+      // Check if it's an array item
+      if (trimmed.startsWith("-")) {
+        if (currentKey && currentArray !== null) {
+          const value = trimmed.slice(1).trim();
+          if (value) {
+            currentArray.push(value);
+          }
+        }
+        continue;
+      }
+
+      // Check if it's a key-value pair
+      const colonIndex = trimmed.indexOf(":");
+      if (colonIndex > 0) {
+        // Save previous array if exists
+        if (currentKey && currentArray !== null) {
+          result[currentKey] = currentArray;
+        }
+
+        const key = trimmed.slice(0, colonIndex).trim();
+        const value = trimmed.slice(colonIndex + 1).trim();
+
         if (value) {
-          currentArray.push(value);
+          // Simple key: value
+          result[key] = value;
+          currentKey = null;
+          currentArray = null;
+        } else {
+          // Key with array value (next lines will have - items)
+          currentKey = key;
+          currentArray = [];
         }
       }
-      continue;
     }
 
-    // Check if it's a key-value pair
-    const colonIndex = trimmed.indexOf(":");
-    if (colonIndex > 0) {
-      // Save previous array if exists
-      if (currentKey && currentArray !== null) {
-        result[currentKey] = currentArray;
-      }
-
-      const key = trimmed.slice(0, colonIndex).trim();
-      const value = trimmed.slice(colonIndex + 1).trim();
-
-      if (value) {
-        // Simple key: value
-        result[key] = value;
-        currentKey = null;
-        currentArray = null;
-      } else {
-        // Key with array value (next lines will have - items)
-        currentKey = key;
-        currentArray = [];
-      }
+    // Don't forget the last array
+    if (currentKey && currentArray !== null) {
+      result[currentKey] = currentArray;
     }
-  }
 
-  // Don't forget the last array
-  if (currentKey && currentArray !== null) {
-    result[currentKey] = currentArray;
-  }
-
-  return Object.keys(result).length > 0 ? result : null;
-});
+    return Object.keys(result).length > 0 ? result : null;
+  },
+);
 
 // Mock other commonly used obsidian exports
 export const Notice = jest.fn();
@@ -161,5 +163,3 @@ export class TFolder {
   name: string = "";
   children: (TFile | TFolder)[] = [];
 }
-
-

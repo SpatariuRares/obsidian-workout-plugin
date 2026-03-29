@@ -93,9 +93,13 @@ describe("TableActions", () => {
       TableActions.renderActionButtons(td, log, plugin as any);
 
       const editBtn = td.querySelector(".edit-btn") as HTMLElement;
-      editBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      editBtn.dispatchEvent(
+        new MouseEvent("click", { bubbles: true }),
+      );
 
-      const { EditLogModal } = require("@app/features/modals/log/EditLogModal");
+      const {
+        EditLogModal,
+      } = require("@app/features/modals/log/EditLogModal");
       expect(EditLogModal).toHaveBeenCalledWith(
         plugin.app,
         plugin,
@@ -111,8 +115,12 @@ describe("TableActions", () => {
 
       TableActions.renderActionButtons(td, log, plugin as any);
 
-      const deleteBtn = td.querySelector(".delete-btn") as HTMLElement;
-      deleteBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      const deleteBtn = td.querySelector(
+        ".delete-btn",
+      ) as HTMLElement;
+      deleteBtn.dispatchEvent(
+        new MouseEvent("click", { bubbles: true }),
+      );
 
       const {
         ConfirmModal,
@@ -144,7 +152,9 @@ describe("TableActions", () => {
       controller.abort();
 
       mockEditModalOpen.mockClear();
-      editBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      editBtn.dispatchEvent(
+        new MouseEvent("click", { bubbles: true }),
+      );
 
       expect(mockEditModalOpen).not.toHaveBeenCalled();
     });

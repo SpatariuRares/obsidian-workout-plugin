@@ -44,7 +44,8 @@ export class EmbeddedDurationView extends BaseView {
         : currentFilePath;
 
       // Analyze the file for duration data
-      const analysis = await this.analyzer.analyzeWorkoutFile(targetPath);
+      const analysis =
+        await this.analyzer.analyzeWorkoutFile(targetPath);
 
       // Render the duration info card
       this.renderer.renderDurationCard(container, analysis);

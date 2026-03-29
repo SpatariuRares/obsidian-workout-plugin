@@ -8,7 +8,7 @@ const createMockLog = (
   volume: number,
   weight: number,
   workout?: string,
-  timestamp?: number
+  timestamp?: number,
 ): WorkoutLogData => ({
   date,
   exercise,
@@ -26,18 +26,33 @@ describe("DashboardCalculations", () => {
     it("should calculate total workouts correctly", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
-        createMockLog(today.toISOString(), "Squat", 1000, 100, "Lower A"),
-        createMockLog(today.toISOString(), "Squat", 1200, 120, "Lower A"),
         createMockLog(
-          new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          today.toISOString(),
+          "Squat",
+          1000,
+          100,
+          "Lower A",
+        ),
+        createMockLog(
+          today.toISOString(),
+          "Squat",
+          1200,
+          120,
+          "Lower A",
+        ),
+        createMockLog(
+          new Date(
+            today.getTime() - 1 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
           80,
-          "Upper A"
+          "Upper A",
         ),
       ];
 
-      const result = DashboardCalculations.calculateSummaryMetrics(data);
+      const result =
+        DashboardCalculations.calculateSummaryMetrics(data);
       expect(result.totalWorkouts).toBe(2);
     });
 
@@ -48,7 +63,8 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Bench", 800, 80),
       ];
 
-      const result = DashboardCalculations.calculateSummaryMetrics(data);
+      const result =
+        DashboardCalculations.calculateSummaryMetrics(data);
       expect(result.totalVolume).toBe(1800);
     });
 
@@ -61,7 +77,8 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Deadlift", 1500, 150),
       ];
 
-      const result = DashboardCalculations.calculateSummaryMetrics(data);
+      const result =
+        DashboardCalculations.calculateSummaryMetrics(data);
       expect(result.personalRecords).toBe(3); // 3 unique exercises
     });
 
@@ -72,26 +89,33 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Squat", 1000, 100),
         // Last week (week 1)
         createMockLog(
-          new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 7 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
-          80
+          80,
         ),
         // 2 weeks ago (week 2)
         createMockLog(
-          new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 14 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Deadlift",
           1500,
-          150
+          150,
         ),
       ];
 
-      const result = DashboardCalculations.calculateSummaryMetrics(data);
+      const result =
+        DashboardCalculations.calculateSummaryMetrics(data);
       expect(result.currentStreak).toBe(3);
     });
 
     it("should handle empty data", () => {
-      const result = DashboardCalculations.calculateSummaryMetrics([]);
+      const result = DashboardCalculations.calculateSummaryMetrics(
+        [],
+      );
       expect(result.totalWorkouts).toBe(0);
       expect(result.totalVolume).toBe(0);
       expect(result.personalRecords).toBe(0);
@@ -106,14 +130,17 @@ describe("DashboardCalculations", () => {
         // Skip week 1
         // 2 weeks ago (week 2)
         createMockLog(
-          new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 14 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
-          80
+          80,
         ),
       ];
 
-      const result = DashboardCalculations.calculateSummaryMetrics(data);
+      const result =
+        DashboardCalculations.calculateSummaryMetrics(data);
       expect(result.currentStreak).toBe(1); // Only current week
     });
   });
@@ -124,38 +151,49 @@ describe("DashboardCalculations", () => {
       const data: WorkoutLogData[] = [
         // 5 days ago
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
           100,
-          "Lower A"
+          "Lower A",
         ),
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
           80,
-          "Lower A"
+          "Lower A",
         ),
         // 3 days ago
         createMockLog(
-          new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 3 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Deadlift",
           1500,
           150,
-          "Upper A"
+          "Upper A",
         ),
         // 60 days ago (outside period)
         createMockLog(
-          new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 60 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Old exercise",
           500,
           50,
-          "Old workout"
+          "Old workout",
         ),
       ];
 
-      const result = DashboardCalculations.calculatePeriodStats(data, 30);
+      const result = DashboardCalculations.calculatePeriodStats(
+        data,
+        30,
+      );
       expect(result.workouts).toBe(2);
       expect(result.volume).toBe(3300);
       expect(result.avgVolume).toBe(1650);
@@ -165,14 +203,19 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 60 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Old exercise",
           500,
-          50
+          50,
         ),
       ];
 
-      const result = DashboardCalculations.calculatePeriodStats(data, 30);
+      const result = DashboardCalculations.calculatePeriodStats(
+        data,
+        30,
+      );
       expect(result.workouts).toBe(0);
       expect(result.volume).toBe(0);
       expect(result.avgVolume).toBe(0);
@@ -182,27 +225,37 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
           100,
-          "Lower A"
+          "Lower A",
         ),
         createMockLog(
-          new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 3 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           2000,
           200,
-          "Upper A"
+          "Upper A",
         ),
       ];
 
-      const result = DashboardCalculations.calculatePeriodStats(data, 30);
+      const result = DashboardCalculations.calculatePeriodStats(
+        data,
+        30,
+      );
       expect(result.avgVolume).toBe(1500); // (1000 + 2000) / 2
     });
 
     it("should handle zero division for avgVolume", () => {
-      const result = DashboardCalculations.calculatePeriodStats([], 30);
+      const result = DashboardCalculations.calculatePeriodStats(
+        [],
+        30,
+      );
       expect(result.avgVolume).toBe(0);
     });
   });
@@ -212,20 +265,27 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 2 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
-          100
+          100,
         ),
         createMockLog(
-          new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 1 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
-          80
+          80,
         ),
       ];
 
-      const result = DashboardCalculations.prepareVolumeTrendData(data, 7);
+      const result = DashboardCalculations.prepareVolumeTrendData(
+        data,
+        7,
+      );
       expect(result.labels.length).toBe(7);
       expect(result.data.length).toBe(7);
     });
@@ -234,14 +294,19 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
-          100
+          100,
         ),
       ];
 
-      const result = DashboardCalculations.prepareVolumeTrendData(data, 7);
+      const result = DashboardCalculations.prepareVolumeTrendData(
+        data,
+        7,
+      );
       // Most days should be 0, only one day should have volume
       const nonZeroDays = result.data.filter((v) => v > 0);
       expect(nonZeroDays.length).toBeLessThanOrEqual(1);
@@ -250,21 +315,27 @@ describe("DashboardCalculations", () => {
     it("should aggregate multiple logs on same day", () => {
       const today = new Date();
       const dateStr = new Date(
-        today.getTime() - 2 * 24 * 60 * 60 * 1000
+        today.getTime() - 2 * 24 * 60 * 60 * 1000,
       ).toISOString();
       const data: WorkoutLogData[] = [
         createMockLog(dateStr, "Squat", 1000, 100),
         createMockLog(dateStr, "Bench", 800, 80),
       ];
 
-      const result = DashboardCalculations.prepareVolumeTrendData(data, 7);
+      const result = DashboardCalculations.prepareVolumeTrendData(
+        data,
+        7,
+      );
       // One of the days should have combined volume
       const maxVolume = Math.max(...result.data);
       expect(maxVolume).toBe(1800);
     });
 
     it("should handle empty data", () => {
-      const result = DashboardCalculations.prepareVolumeTrendData([], 7);
+      const result = DashboardCalculations.prepareVolumeTrendData(
+        [],
+        7,
+      );
       expect(result.labels.length).toBe(7);
       expect(result.data.every((v) => v === 0)).toBe(true);
     });
@@ -282,7 +353,8 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Curl", 1000, 100),
       ];
 
-      const result = DashboardCalculations.calculateMuscleGroupVolume(data);
+      const result =
+        DashboardCalculations.calculateMuscleGroupVolume(data);
       expect(result.length).toBe(5);
       expect(result[0][0]).toBe("Squat");
       expect(result[0][1]).toBe(2000);
@@ -295,7 +367,8 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Bench", 800, 80),
       ];
 
-      const result = DashboardCalculations.calculateMuscleGroupVolume(data);
+      const result =
+        DashboardCalculations.calculateMuscleGroupVolume(data);
       expect(result.length).toBe(2);
     });
 
@@ -306,12 +379,15 @@ describe("DashboardCalculations", () => {
         createMockLog(today.toISOString(), "Squat", 1000, 100),
       ];
 
-      const result = DashboardCalculations.calculateMuscleGroupVolume(data);
+      const result =
+        DashboardCalculations.calculateMuscleGroupVolume(data);
       expect(result[0][1]).toBe(2000);
     });
 
     it("should handle empty data", () => {
-      const result = DashboardCalculations.calculateMuscleGroupVolume([]);
+      const result = DashboardCalculations.calculateMuscleGroupVolume(
+        [],
+      );
       expect(result).toEqual([]);
     });
   });
@@ -321,25 +397,31 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
           100,
-          "Lower A"
+          "Lower A",
         ),
         createMockLog(
-          new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 3 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
           80,
-          "Upper A"
+          "Upper A",
         ),
         createMockLog(
-          new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 1 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Deadlift",
           1500,
           150,
-          "Lower B"
+          "Lower B",
         ),
       ];
 
@@ -352,25 +434,31 @@ describe("DashboardCalculations", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
         createMockLog(
-          new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 5 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Squat",
           1000,
           100,
-          "Lower A"
+          "Lower A",
         ),
         createMockLog(
-          new Date(today.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 3 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Bench",
           800,
           80,
-          "Upper A"
+          "Upper A",
         ),
         createMockLog(
-          new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          new Date(
+            today.getTime() - 1 * 24 * 60 * 60 * 1000,
+          ).toISOString(),
           "Deadlift",
           1500,
           150,
-          "Lower B"
+          "Lower B",
         ),
       ];
 
@@ -381,7 +469,7 @@ describe("DashboardCalculations", () => {
     it("should aggregate volume for same workout on same date", () => {
       const today = new Date();
       const dateStr = new Date(
-        today.getTime() - 1 * 24 * 60 * 60 * 1000
+        today.getTime() - 1 * 24 * 60 * 60 * 1000,
       ).toISOString();
       const data: WorkoutLogData[] = [
         createMockLog(dateStr, "Squat", 1000, 100, "Lower A"),
@@ -419,4 +507,3 @@ describe("DashboardCalculations", () => {
     });
   });
 });
-

@@ -46,14 +46,19 @@ export class FormField {
    * @param props - Form field properties
    * @returns Object with container, label, and input elements
    */
-  static create(parent: HTMLElement, props: FormFieldProps): FormFieldResult {
+  static create(
+    parent: HTMLElement,
+    props: FormFieldProps,
+  ): FormFieldResult {
     // Create field container
     const container = parent.createDiv({
       cls: `workout-form-field${props.className ? ` ${props.className}` : ""}`,
     });
 
     // Create label with required indicator if needed
-    const labelText = props.required ? `${props.label} *` : props.label;
+    const labelText = props.required
+      ? `${props.label} *`
+      : props.label;
 
     const label = Text.create(container, {
       text: labelText,

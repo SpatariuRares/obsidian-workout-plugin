@@ -35,7 +35,9 @@ async function checkRelativeImports(filePath) {
 
   lines.forEach((line, index) => {
     // Match import statements with relative paths going up directories
-    const relativeImportMatch = line.match(/import\s+.*from\s+['"](\.\.\/\.\.\/.*)['"]/);
+    const relativeImportMatch = line.match(
+      /import\s+.*from\s+['"](\.\.\/\.\.\/.*)['"]/,
+    );
 
     if (relativeImportMatch) {
       const importPath = relativeImportMatch[1];
@@ -68,7 +70,8 @@ async function checkBarrelImports(filePath) {
       warnings.push({
         file: path.relative(ROOT_DIR, filePath),
         line: index + 1,
-        message: "Avoid barrel imports for services - import directly from service file",
+        message:
+          "Avoid barrel imports for services - import directly from service file",
         severity: "warning",
       });
     }
@@ -78,7 +81,8 @@ async function checkBarrelImports(filePath) {
       warnings.push({
         file: path.relative(ROOT_DIR, filePath),
         line: index + 1,
-        message: "Avoid barrel imports for utils - import directly from util file",
+        message:
+          "Avoid barrel imports for utils - import directly from util file",
         severity: "warning",
       });
     }
@@ -90,7 +94,10 @@ async function checkBarrelImports(filePath) {
  */
 async function checkHardcodedStrings(filePath) {
   // Skip test files and constant files
-  if (filePath.includes("__tests__") || filePath.includes("constants")) {
+  if (
+    filePath.includes("__tests__") ||
+    filePath.includes("constants")
+  ) {
     return;
   }
 
@@ -141,7 +148,9 @@ async function checkPathAliases(filePath) {
 
   lines.forEach((line, index) => {
     // Match imports from app/ without using @app/
-    const directAppImport = line.match(/import\s+.*from\s+['"]app\/(.*)['"]/);
+    const directAppImport = line.match(
+      /import\s+.*from\s+['"]app\/(.*)['"]/,
+    );
 
     if (directAppImport) {
       errors.push({
@@ -203,7 +212,9 @@ async function main() {
   }
 
   console.log("─".repeat(50));
-  console.log(`Total: ${errors.length} errors, ${warnings.length} warnings\n`);
+  console.log(
+    `Total: ${errors.length} errors, ${warnings.length} warnings\n`,
+  );
 
   // Exit with error code if there are errors
   if (errors.length > 0) {

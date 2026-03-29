@@ -25,13 +25,15 @@ jest.mock("@app/components/atoms", () => ({
     ),
   },
   Text: {
-    createSpan: jest.fn((parent: HTMLElement, text: string, className?: string) => {
-      const span = document.createElement("span");
-      span.textContent = text;
-      if (className) span.className = className;
-      parent.appendChild(span);
-      return span;
-    }),
+    createSpan: jest.fn(
+      (parent: HTMLElement, text: string, className?: string) => {
+        const span = document.createElement("span");
+        span.textContent = text;
+        if (className) span.className = className;
+        parent.appendChild(span);
+        return span;
+      },
+    ),
     create: jest.fn((parent: HTMLElement, opts: any) => {
       const el = document.createElement(opts.tag || "span");
       el.textContent = opts.text || "";
@@ -126,7 +128,9 @@ describe("AchievementBadge", () => {
 
     expect(result).not.toBeNull();
     expect(
-      result!.container.classList.contains("workout-achievement-badge"),
+      result!.container.classList.contains(
+        "workout-achievement-badge",
+      ),
     ).toBe(true);
   });
 
@@ -152,7 +156,9 @@ describe("AchievementBadge", () => {
     const suggestionText = result!.container.querySelector(
       ".workout-suggestion-text",
     );
-    expect(suggestionText?.textContent).toContain("modal.notices.suggestedNextWeight");
+    expect(suggestionText?.textContent).toContain(
+      "modal.notices.suggestedNextWeight",
+    );
   });
 
   it("dismiss button removes badge and calls callback", async () => {
@@ -222,7 +228,9 @@ describe("AchievementBadge", () => {
     // Button.onClick should have been called with signal
     const onClickCalls = (Button.onClick as jest.Mock).mock.calls;
     expect(
-      onClickCalls.some((call: any[]) => call[2] === controller.signal),
+      onClickCalls.some(
+        (call: any[]) => call[2] === controller.signal,
+      ),
     ).toBe(true);
   });
 

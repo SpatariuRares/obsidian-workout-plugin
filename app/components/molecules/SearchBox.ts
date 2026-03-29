@@ -42,7 +42,10 @@ export class SearchBox {
    * @param props - Search box properties
    * @returns Object with container, input, and icon elements
    */
-  static create(parent: HTMLElement, props?: SearchBoxProps): SearchBoxResult {
+  static create(
+    parent: HTMLElement,
+    props?: SearchBoxProps,
+  ): SearchBoxResult {
     // Create container
     const container = Container.create(parent, {
       className: `search-box ${props?.className || ""}`.trim(),

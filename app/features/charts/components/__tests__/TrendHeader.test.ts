@@ -55,7 +55,12 @@ describe("TrendHeader", () => {
   it("treats lower values as improvement for pace data", () => {
     const container = createObsidianContainer();
 
-    TrendHeader.render(container, baseIndicators, [5, 4], CHART_DATA_TYPE.PACE);
+    TrendHeader.render(
+      container,
+      baseIndicators,
+      [5, 4],
+      CHART_DATA_TYPE.PACE,
+    );
 
     const indicatorCreate = TrendIndicator.create as jest.Mock;
     expect(indicatorCreate).toHaveBeenCalledWith(
@@ -121,7 +126,9 @@ describe("TrendHeader", () => {
     );
 
     const expectedVariation =
-      CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED("12.3");
+      CONSTANTS.WORKOUT.LABELS.CHARTS.VARIATION_SINGLE_VALUE_FORMATTED(
+        "12.3",
+      );
 
     const paragraph = container.querySelector(
       ".workout-charts-trend-header-p",

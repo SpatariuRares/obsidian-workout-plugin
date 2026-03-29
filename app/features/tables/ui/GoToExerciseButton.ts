@@ -52,8 +52,13 @@ export class GoToExerciseButton {
    * @param app - Obsidian App instance
    * @param exerciseName - Name of the exercise to navigate to
    */
-  private static navigateToExercise(app: App, exerciseName: string): void {
-    const searchName = exerciseName.toLowerCase().replace(/\.md$/i, "");
+  private static navigateToExercise(
+    app: App,
+    exerciseName: string,
+  ): void {
+    const searchName = exerciseName
+      .toLowerCase()
+      .replace(/\.md$/i, "");
 
     const exerciseFile = app.vault.getFiles().find((file) => {
       return file.basename.toLowerCase() === searchName;

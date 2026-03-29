@@ -14,12 +14,14 @@ Implement consistent, user-friendly error handling across the plugin while loggi
 ## 3. Input Requirements
 
 ### Required Information
+
 - **Error context**: Where the error occurred (service, view, modal, etc.)
 - **Error type**: What kind of error (validation, data fetch, rendering, etc.)
 - **User impact**: How does this error affect the user?
 - **Recovery strategy**: Can the user retry? Should they be notified?
 
 ### Decision Points
+
 - Should this error be shown to the user? (UI errors: yes, background errors: maybe)
 - Should this error be logged for learning? (All errors: yes)
 - Is this error recoverable? (Provide retry mechanism if yes)
@@ -28,6 +30,7 @@ Implement consistent, user-friendly error handling across the plugin while loggi
 ## 4. Execution Scripts
 
 ### Error Analysis
+
 ```bash
 # Analyze error patterns
 npm run doe:analyze-errors
@@ -47,7 +50,11 @@ For embedded views extending `BaseView`:
 
 ```typescript
 export class MyView extends BaseView {
-  async render(container: HTMLElement, source: string, ctx: any): Promise<void> {
+  async render(
+    container: HTMLElement,
+    source: string,
+    ctx: any,
+  ): Promise<void> {
     try {
       // 1. Show loading state
       const spinner = this.renderLoadingSpinner(container);
@@ -77,6 +84,7 @@ export class MyView extends BaseView {
 ```
 
 **BaseView.handleError() does:**
+
 - Renders error UI using `Feedback.renderError()`
 - Logs error to `ErrorCollector` with context
 - Provides consistent error experience
@@ -108,7 +116,7 @@ export class MyService {
 
       // Re-throw with user-friendly message
       throw new Error(
-        `Failed to fetch data: ${(error as Error).message}`
+        `Failed to fetch data: ${(error as Error).message}`,
       );
     }
   }
@@ -137,6 +145,7 @@ export class MyService {
 ```
 
 **Service error patterns:**
+
 - **Critical errors**: Throw and let caller handle
 - **Non-critical errors**: Log and continue with fallback
 - **Always log**: Use ErrorCollector for learning
@@ -187,6 +196,7 @@ export class MyModal extends Modal {
 ```
 
 **Modal error patterns:**
+
 - **Validation errors**: Show inline, no logging (expected user behavior)
 - **Operation errors**: Log and show notice, keep modal open for retry
 - **Success**: Show notice and close modal
@@ -219,6 +229,7 @@ try {
 ```
 
 **Build script patterns:**
+
 - **Always log errors**: Use error-logger.mjs
 - **Fail fast**: Exit with code 1 on error
 - **Clear output**: Use console.log for success, console.error for errors
@@ -261,7 +272,7 @@ export class WorkoutLogRepository {
 
     // All retries failed
     throw new Error(
-      `Failed to add entry after ${maxRetries} attempts: ${lastError?.message}`
+      `Failed to add entry after ${maxRetries} attempts: ${lastError?.message}`,
     );
   }
 
@@ -272,6 +283,7 @@ export class WorkoutLogRepository {
 ```
 
 **Repository patterns:**
+
 - **Retry logic**: For transient errors (file locks, etc.)
 - **Exponential backoff**: Increase delay between retries
 - **Log all attempts**: Track retry patterns for optimization
@@ -280,11 +292,13 @@ export class WorkoutLogRepository {
 ## 6. Edge Cases
 
 ### File System Errors
+
 - **ENOENT**: File doesn't exist
 - **EACCES**: Permission denied
 - **EBUSY**: File is locked by another process
 
 **Handling:**
+
 ```typescript
 try {
   await this.vault.adapter.read(path);
@@ -305,16 +319,20 @@ try {
 ```
 
 ### Network Errors (if using external APIs)
+
 - **Timeout**: Request took too long
 - **Connection refused**: Service unavailable
 - **404**: Resource not found
 
 **Handling:**
+
 ```typescript
 try {
   const response = await fetch(url, { timeout: 5000 });
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    throw new Error(
+      `HTTP ${response.status}: ${response.statusText}`,
+    );
   }
   return await response.json();
 } catch (error) {
@@ -329,11 +347,13 @@ try {
 ```
 
 ### Data Validation Errors
+
 - **Invalid format**: Data doesn't match expected structure
 - **Missing required fields**: Required properties are undefined
 - **Type mismatch**: Wrong data type
 
 **Handling:**
+
 ```typescript
 function validateData(data: unknown): Data {
   if (!data || typeof data !== "object") {
@@ -355,11 +375,13 @@ function validateData(data: unknown): Data {
 ```
 
 ### Chart.js Errors
+
 - **Canvas not found**: DOM element doesn't exist
 - **Invalid data**: Data format not compatible with chart type
 - **Memory leak**: Charts not destroyed properly
 
 **Handling:**
+
 ```typescript
 try {
   const canvas = container.querySelector("canvas");
@@ -382,11 +404,14 @@ try {
     context: { chartId, config },
   });
 
-  throw new Error(`Failed to create chart: ${(error as Error).message}`);
+  throw new Error(
+    `Failed to create chart: ${(error as Error).message}`,
+  );
 }
 ```
 
 ### Async Errors in Event Handlers
+
 ```typescript
 // ❌ Wrong - errors swallowed
 button.addEventListener("click", async () => {
@@ -410,12 +435,14 @@ button.addEventListener("click", async () => {
 ## 7. Validation
 
 ### Manual Testing
+
 1. Trigger each error scenario deliberately
 2. Verify user sees appropriate error message
 3. Check error appears in error-log.json
 4. Verify user can recover (retry, close modal, etc.)
 
 ### Error Scenarios to Test
+
 - [ ] File doesn't exist
 - [ ] File is locked (open in another app)
 - [ ] Invalid CSV format
@@ -427,6 +454,7 @@ button.addEventListener("click", async () => {
 - [ ] Build script fails
 
 ### Automated Testing
+
 ```typescript
 describe("Error handling", () => {
   it("should log errors to ErrorCollector", async () => {
@@ -442,7 +470,7 @@ describe("Error handling", () => {
       expect.objectContaining({
         type: "service_error",
         error: expect.any(Error),
-      })
+      }),
     );
   });
 
@@ -457,6 +485,7 @@ describe("Error handling", () => {
 ```
 
 ### Success Criteria
+
 - [ ] All errors show user-friendly messages
 - [ ] All errors logged to ErrorCollector
 - [ ] Critical errors block execution
@@ -468,6 +497,7 @@ describe("Error handling", () => {
 ## 8. Common Mistakes
 
 ### ❌ Swallowing Errors
+
 ```typescript
 // Wrong
 try {
@@ -488,6 +518,7 @@ try {
 ```
 
 ### ❌ Generic Error Messages
+
 ```typescript
 // Wrong
 throw new Error("Something went wrong");
@@ -499,6 +530,7 @@ throw new Error(`Failed to load exercise data: ${error.message}`);
 ```
 
 ### ❌ Not Logging Context
+
 ```typescript
 // Wrong
 ErrorCollector.logError({ type: "error", error });
@@ -514,6 +546,7 @@ ErrorCollector.logError({
 ```
 
 ### ❌ Logging Validation Errors
+
 ```typescript
 // Wrong - validation errors are expected user behavior
 if (!isValid(input)) {
@@ -530,6 +563,7 @@ if (!isValid(input)) {
 ```
 
 ### ❌ Blocking on Non-Critical Errors
+
 ```typescript
 // Wrong - fails entire operation if enrichment fails
 async render(container, source, ctx) {
@@ -566,17 +600,17 @@ async render(container, source, ctx) {
 
 Standard error types for ErrorCollector:
 
-| Type | When to Use | Example |
-|------|-------------|---------|
-| `view_error` | Error rendering embedded view | Chart fails to render |
-| `service_error` | Error in service method | Data fetch fails |
-| `modal_error` | Error in modal operation | Form submission fails |
-| `repository_error` | Error in data repository | CSV write fails |
-| `build_error` | Error in build script | CSS compilation fails |
-| `validation_error` | **Don't use** - validation is expected behavior | - |
-| `chart_error` | Chart.js specific errors | Canvas not found |
-| `event_handler_error` | Error in async event handler | Button click handler fails |
-| `cache_error` | Error in cache operations | Cache invalidation fails |
+| Type                  | When to Use                                     | Example                    |
+| --------------------- | ----------------------------------------------- | -------------------------- |
+| `view_error`          | Error rendering embedded view                   | Chart fails to render      |
+| `service_error`       | Error in service method                         | Data fetch fails           |
+| `modal_error`         | Error in modal operation                        | Form submission fails      |
+| `repository_error`    | Error in data repository                        | CSV write fails            |
+| `build_error`         | Error in build script                           | CSS compilation fails      |
+| `validation_error`    | **Don't use** - validation is expected behavior | -                          |
+| `chart_error`         | Chart.js specific errors                        | Canvas not found           |
+| `event_handler_error` | Error in async event handler                    | Button click handler fails |
+| `cache_error`         | Error in cache operations                       | Cache invalidation fails   |
 
 ## Version History
 

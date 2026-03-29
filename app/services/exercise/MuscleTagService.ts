@@ -44,7 +44,10 @@ export class MuscleTagService {
    */
   private computeCsvPath(): string {
     return normalizePath(
-      PathUtils.getSiblingPath(this.settings.csvLogFilePath, "muscle-tags.csv"),
+      PathUtils.getSiblingPath(
+        this.settings.csvLogFilePath,
+        "muscle-tags.csv",
+      ),
     );
   }
 
@@ -79,7 +82,8 @@ export class MuscleTagService {
     const userLanguage = this.getUserLanguage();
 
     try {
-      const abstractFile = this.app.vault.getAbstractFileByPath(csvPath);
+      const abstractFile =
+        this.app.vault.getAbstractFileByPath(csvPath);
 
       if (!abstractFile || !(abstractFile instanceof TFile)) {
         // CSV doesn't exist, return defaults
@@ -94,14 +98,19 @@ export class MuscleTagService {
       }
 
       // Check if CSV needs migration (old format without language column)
-      const hasLanguageColumn = lines[0].toLowerCase().includes("language");
+      const hasLanguageColumn = lines[0]
+        .toLowerCase()
+        .includes("language");
 
       if (!hasLanguageColumn && lines.length > 0) {
         // Migrate old CSV to new format
         await this.migrateCsvToNewFormat(abstractFile, content);
         // Reload after migration
         const newContent = await this.app.vault.read(abstractFile);
-        const tags = this.parseTagsFromContent(newContent, userLanguage);
+        const tags = this.parseTagsFromContent(
+          newContent,
+          userLanguage,
+        );
         this.tagCache = tags;
         return tags;
       }
@@ -129,7 +138,9 @@ export class MuscleTagService {
     }
 
     // Skip header line if present
-    const startIndex = lines[0].toLowerCase().startsWith("tag,") ? 1 : 0;
+    const startIndex = lines[0].toLowerCase().startsWith("tag,")
+      ? 1
+      : 0;
 
     for (let i = startIndex; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -140,7 +151,9 @@ export class MuscleTagService {
         const tag = StringUtils.normalize(parsed[0]);
         const muscleGroup = StringUtils.normalize(parsed[1]);
         const language =
-          parsed.length >= 3 ? StringUtils.normalize(parsed[2]) : "en";
+          parsed.length >= 3
+            ? StringUtils.normalize(parsed[2])
+            : "en";
 
         if (
           tag &&
@@ -168,7 +181,9 @@ export class MuscleTagService {
     file: TFile,
     oldContent: string,
   ): Promise<void> {
-    const lines = oldContent.split("\n").filter((line) => line.trim());
+    const lines = oldContent
+      .split("\n")
+      .filter((line) => line.trim());
     if (lines.length === 0) return;
 
     const newLines: string[] = [];
@@ -242,7 +257,10 @@ export class MuscleTagService {
 
     // Filter default entries by user's language or English
     for (const entry of MUSCLE_TAG_ENTRIES) {
-      if (entry.language === userLanguage || entry.language === "en") {
+      if (
+        entry.language === userLanguage ||
+        entry.language === "en"
+      ) {
         tags.set(entry.tag, entry.muscleGroup);
       }
     }
@@ -255,7 +273,10 @@ export class MuscleTagService {
    * @param tags Map of tag -> muscleGroup
    * @param language Optional language code. If not provided, uses user's current language.
    */
-  async saveTags(tags: Map<string, string>, language?: string): Promise<void> {
+  async saveTags(
+    tags: Map<string, string>,
+    language?: string,
+  ): Promise<void> {
     const lines = ["tag,muscleGroup,language"];
     const csvPath = this.computeCsvPath();
     const lang = language || this.getUserLanguage();
@@ -269,7 +290,8 @@ export class MuscleTagService {
 
     const content = lines.join("\n");
 
-    const abstractFile = this.app.vault.getAbstractFileByPath(csvPath);
+    const abstractFile =
+      this.app.vault.getAbstractFileByPath(csvPath);
 
     if (abstractFile && abstractFile instanceof TFile) {
       // File exists, modify it
@@ -289,7 +311,11 @@ export class MuscleTagService {
    */
   private escapeCSVValue(value: string): string {
     // If value contains comma, quote, or newline, wrap in quotes
-    if (value.includes(",") || value.includes('"') || value.includes("\n")) {
+    if (
+      value.includes(",") ||
+      value.includes('"') ||
+      value.includes("\n")
+    ) {
       return `"${value.replace(/"/g, '""')}"`;
     }
     return value;

@@ -1,16 +1,21 @@
 export class TimerAudio {
   static playSound(): void {
     try {
-      const audioContext = new (window.AudioContext ||
-        (window as typeof window & { webkitAudioContext: typeof AudioContext })
-          .webkitAudioContext)();
+      const audioContext = new (
+        window.AudioContext ||
+        (
+          window as typeof window & {
+            webkitAudioContext: typeof AudioContext;
+          }
+        ).webkitAudioContext
+      )();
 
       // Create a more pleasant notification sound with multiple tones
       const playTone = (
         frequency: number,
         startTime: number,
         duration: number,
-        volume: number = 0.15
+        volume: number = 0.15,
       ) => {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
@@ -22,8 +27,14 @@ export class TimerAudio {
         oscillator.type = "sine";
 
         gainNode.gain.setValueAtTime(0, startTime);
-        gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.08);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        gainNode.gain.linearRampToValueAtTime(
+          volume,
+          startTime + 0.08,
+        );
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          startTime + duration,
+        );
 
         oscillator.start(startTime);
         oscillator.stop(startTime + duration);
@@ -45,4 +56,3 @@ export class TimerAudio {
     }
   }
 }
-

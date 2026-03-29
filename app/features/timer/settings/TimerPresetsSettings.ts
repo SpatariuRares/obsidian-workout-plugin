@@ -21,7 +21,9 @@ export class TimerPresetsSettings {
       .setHeading();
 
     // Default timer preset dropdown
-    const presetNames = Object.keys(this.plugin.settings.timerPresets);
+    const presetNames = Object.keys(
+      this.plugin.settings.timerPresets,
+    );
 
     new Setting(containerEl)
       .setName(t("settings.labels.defaultTimerPreset"))
@@ -31,7 +33,9 @@ export class TimerPresetsSettings {
         presetNames.forEach((name) => {
           dropdown.addOption(name, name);
         });
-        dropdown.setValue(this.plugin.settings.defaultTimerPreset || "");
+        dropdown.setValue(
+          this.plugin.settings.defaultTimerPreset || "",
+        );
         dropdown.onChange(async (value) => {
           this.plugin.settings.defaultTimerPreset = value || null;
           await this.plugin.saveSettings();
@@ -122,7 +126,8 @@ export class TimerPresetsSettings {
     }
 
     const options: string[] = [];
-    if (preset.showControls) options.push(t("timer.presets.detailsControls"));
+    if (preset.showControls)
+      options.push(t("timer.presets.detailsControls"));
     if (preset.sound) options.push(t("timer.presets.detailsSound"));
 
     if (options.length > 0) {
@@ -132,7 +137,9 @@ export class TimerPresetsSettings {
     return parts.join(" | ");
   }
 
-  private showPresetEditor(existingPreset: TimerPresetConfig | null): void {
+  private showPresetEditor(
+    existingPreset: TimerPresetConfig | null,
+  ): void {
     if (!this.presetsContainer) return;
 
     // Remove any existing editor
@@ -181,9 +188,15 @@ export class TimerPresetsSettings {
     new Setting(editorContainer)
       .setName(t("settings.labels.presetType"))
       .addDropdown((dropdown) => {
-        dropdown.addOption(TIMER_TYPE.COUNTDOWN, t("timer.countdown"));
+        dropdown.addOption(
+          TIMER_TYPE.COUNTDOWN,
+          t("timer.countdown"),
+        );
         dropdown.addOption(TIMER_TYPE.INTERVAL, t("timer.interval"));
-        dropdown.addOption(TIMER_TYPE.STOPWATCH, t("timer.stopwatch"));
+        dropdown.addOption(
+          TIMER_TYPE.STOPWATCH,
+          t("timer.stopwatch"),
+        );
         dropdown.setValue(formState.type);
         dropdown.onChange((value) => {
           formState.type = value as TIMER_TYPE;
@@ -197,12 +210,14 @@ export class TimerPresetsSettings {
       .setName(t("settings.labels.presetDuration"))
       .setDesc(t("settings.descriptions.presetDurationDesc"))
       .addText((text) =>
-        text.setValue(String(formState.duration)).onChange((value) => {
-          const num = parseInt(value);
-          if (!isNaN(num) && num > 0) {
-            formState.duration = num;
-          }
-        }),
+        text
+          .setValue(String(formState.duration))
+          .onChange((value) => {
+            const num = parseInt(value);
+            if (!isNaN(num) && num > 0) {
+              formState.duration = num;
+            }
+          }),
       );
 
     // Interval-specific options (rounds only)
@@ -211,12 +226,14 @@ export class TimerPresetsSettings {
         .setName(t("settings.labels.presetRounds"))
         .setDesc(t("settings.descriptions.presetRoundsDesc"))
         .addText((text) =>
-          text.setValue(String(formState.rounds || 5)).onChange((value) => {
-            const num = parseInt(value);
-            if (!isNaN(num) && num > 0) {
-              formState.rounds = num;
-            }
-          }),
+          text
+            .setValue(String(formState.rounds || 5))
+            .onChange((value) => {
+              const num = parseInt(value);
+              if (!isNaN(num) && num > 0) {
+                formState.rounds = num;
+              }
+            }),
         );
     }
 
@@ -249,9 +266,11 @@ export class TimerPresetsSettings {
           }),
       )
       .addButton((button) =>
-        button.setButtonText(t("settings.buttons.cancel")).onClick(() => {
-          editorContainer.remove();
-        }),
+        button
+          .setButtonText(t("settings.buttons.cancel"))
+          .onClick(() => {
+            editorContainer.remove();
+          }),
       );
   }
 

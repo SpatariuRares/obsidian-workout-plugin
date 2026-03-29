@@ -27,7 +27,8 @@ describe("ActionButtons", () => {
       deleteBtn: mockDeleteBtn,
     });
 
-    const result = ActionButtons.createActionButtonsContainer(container);
+    const result =
+      ActionButtons.createActionButtonsContainer(container);
 
     expect(ActionButtonGroup.create).toHaveBeenCalledWith(
       container,

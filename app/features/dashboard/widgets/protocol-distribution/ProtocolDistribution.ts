@@ -32,7 +32,10 @@ type PieChart = Chart<"pie", number[], string>;
 /**
  * Protocol display configuration for badges and chart colors
  */
-const PROTOCOL_CONFIG: Record<string, { label: string; color: string }> = {
+const PROTOCOL_CONFIG: Record<
+  string,
+  { label: string; color: string }
+> = {
   [WorkoutProtocol.STANDARD]: {
     label: "Standard",
     color: "rgba(128, 128, 128, 0.7)",
@@ -178,7 +181,10 @@ export class ProtocolDistribution {
 
     data.forEach((entry) => {
       const protocol = entry.protocol || WorkoutProtocol.STANDARD;
-      protocolCounts.set(protocol, (protocolCounts.get(protocol) || 0) + 1);
+      protocolCounts.set(
+        protocol,
+        (protocolCounts.get(protocol) || 0) + 1,
+      );
     });
 
     const totalSets = data.length;
@@ -208,7 +214,8 @@ export class ProtocolDistribution {
               protocol: customProtocol.id,
               label: customProtocol.name,
               count,
-              percentage: totalSets > 0 ? (count / totalSets) * 100 : 0,
+              percentage:
+                totalSets > 0 ? (count / totalSets) * 100 : 0,
               color: this.hexToRgba(customProtocol.color, 0.7),
             });
           }
@@ -329,9 +336,12 @@ export class ProtocolDistribution {
           }
         },
         onHover: (event, elements) => {
-          const canvas = event.native?.target as HTMLCanvasElement | undefined;
+          const canvas = event.native?.target as
+            | HTMLCanvasElement
+            | undefined;
           if (canvas) {
-            canvas.style.cursor = elements.length > 0 ? "pointer" : "default";
+            canvas.style.cursor =
+              elements.length > 0 ? "pointer" : "default";
           }
         },
       },

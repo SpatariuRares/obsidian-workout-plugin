@@ -1,4 +1,7 @@
-import { WorkoutLogData, WorkoutProtocol } from "@app/types/WorkoutLogData";
+import {
+  WorkoutLogData,
+  WorkoutProtocol,
+} from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/features/common/views/BaseView";
 import {
@@ -70,7 +73,9 @@ export class EmbeddedDashboardView extends BaseView {
     let logData = (await this.plugin.getWorkoutLogData()) || [];
     if (params.dateRange) {
       const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - (params.dateRange as number));
+      cutoffDate.setDate(
+        cutoffDate.getDate() - (params.dateRange as number),
+      );
       logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
     }
     return logData;
@@ -147,7 +152,9 @@ export class EmbeddedDashboardView extends BaseView {
    * Re-renders the dashboard with the new filter applied
    * @param protocol - Protocol to filter by, or null to clear filter
    */
-  private handleProtocolFilterChange = (protocol: string | null): void => {
+  private handleProtocolFilterChange = (
+    protocol: string | null,
+  ): void => {
     // Update params with new filter
     const newParams: EmbeddedDashboardParams = {
       ...this.currentParams,
@@ -175,7 +182,8 @@ export class EmbeddedDashboardView extends BaseView {
     protocol: string,
   ): WorkoutLogData[] {
     return data.filter((entry) => {
-      const entryProtocol = entry.protocol || WorkoutProtocol.STANDARD;
+      const entryProtocol =
+        entry.protocol || WorkoutProtocol.STANDARD;
       return entryProtocol.toLowerCase() === protocol.toLowerCase();
     });
   }
@@ -214,7 +222,12 @@ export class EmbeddedDashboardView extends BaseView {
 
     SummaryWidget.render(gridEl, displayData, params);
     QuickStatsCards.render(gridEl, displayData, params);
-    await MuscleHeatMap.render(gridEl, displayData, params, this.plugin);
+    await MuscleHeatMap.render(
+      gridEl,
+      displayData,
+      params,
+      this.plugin,
+    );
     VolumeAnalytics.render(gridEl, displayData, params);
     RecentWorkouts.render(gridEl, displayData, params);
     ProtocolDistribution.render(
@@ -281,29 +294,43 @@ export class EmbeddedDashboardView extends BaseView {
   private applyBentoLayout(gridEl: HTMLElement): void {
     const style = getComputedStyle(gridEl);
     const rowHeight =
-      parseFloat(style.getPropertyValue("--workout-grid-row-height")) || 10;
+      parseFloat(
+        style.getPropertyValue("--workout-grid-row-height"),
+      ) || 10;
     const gap = parseFloat(style.rowGap) || 16;
 
     // Temporarily use auto rows + align-items: start so each widget
     // renders at its natural content height (not stretched to row height)
-    DomUtils.setCssProps(gridEl, { gridAutoRows: "auto", alignItems: "start" });
+    DomUtils.setCssProps(gridEl, {
+      gridAutoRows: "auto",
+      alignItems: "start",
+    });
     void gridEl.offsetHeight;
 
     const widgets = Array.from(
-      gridEl.querySelectorAll<HTMLElement>(".workout-dashboard-widget"),
+      gridEl.querySelectorAll<HTMLElement>(
+        ".workout-dashboard-widget",
+      ),
     );
 
     // Measure natural heights and compute row spans
     const spans: number[] = [];
     for (let i = 0; i < widgets.length; i++) {
       const contentHeight = widgets[i].getBoundingClientRect().height;
-      spans.push(Math.ceil((contentHeight + gap) / (rowHeight + gap)));
+      spans.push(
+        Math.ceil((contentHeight + gap) / (rowHeight + gap)),
+      );
     }
 
     // Restore grid settings and apply spans
-    DomUtils.setCssProps(gridEl, { gridAutoRows: "", alignItems: "" });
+    DomUtils.setCssProps(gridEl, {
+      gridAutoRows: "",
+      alignItems: "",
+    });
     for (let i = 0; i < widgets.length; i++) {
-      DomUtils.setCssProps(widgets[i], { gridRowEnd: `span ${spans[i]}` });
+      DomUtils.setCssProps(widgets[i], {
+        gridRowEnd: `span ${spans[i]}`,
+      });
     }
   }
 }

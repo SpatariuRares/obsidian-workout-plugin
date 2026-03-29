@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Shto Bloke Stërmorr",
+    "addMissingBlockIds": "Shto ID-të e mungueshme në blloqe të kodit",
     "auditExerciseNames": "Emrat e Exercit",
     "convertExercise": "Konvertim",
     "createCsvLog": "Krijo failin e loogut CSV",
@@ -34,12 +35,12 @@
     "generateTagReference": "Krijo Referencë",
     "insertTable": "Shto tabelë",
     "manageMuscleTags": "Menaxhimi i Etiketave të Muskulaturës",
-    "migrateExerciseTypes": "Migro Lojërat",
-    "addMissingBlockIds": "Shto ID-të e mungueshme në blloqe të kodit"
+    "migrateExerciseTypes": "Migro Lojërat"
   },
   "common": {
     "bpm": "BPM",
     "cancel": "Anullo",
+    "clear": "Pastro",
     "convert": "Konvertuj",
     "exercise": "Të kryej",
     "km": "km",
@@ -47,8 +48,7 @@
     "notAvailable": "Nuk është disponues",
     "sec": "sek",
     "unknown": "E panjohur",
-    "workout": "Tregimi",
-    "clear": "Pastro"
+    "workout": "Tregimi"
   },
   "convert": {
     "currentType": "Tipi aktual:",
@@ -453,8 +453,8 @@
     "noImbalances": "Nëse nuk ka disbalancim",
     "noTags": "Pa etiketa",
     "success": {
-      "csvCreated": "Fajla CSV u krijua me sukses!",
       "blockIdsAdded": "U shtuar(a) ID(et) e munguar {count} në fail(et) {files}.",
+      "csvCreated": "Fajla CSV u krijua me sukses!",
       "noBlockIdsNeeded": "Tutte kodet kanë tashmë ID-t"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Akcje",
     "addTag": "Shto etiketën",
+    "auditStatusCloseMatch": "Përputhje e afërt",
+    "auditStatusExactMatch": "Përputhje e saktë",
+    "auditStatusNoMatch": "Pa përputhje",
+    "auditStatusPartialMatch": "Përputhje e pjesshme",
     "autocomplete": {
+      "addExercise": "Shto \"{name}\"",
       "exactBadge": "★",
       "exactTooltip": "Përshatje/Përshatje me prefix - Shën: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Përshtatje e pjësore - Shën: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Përputhje me fjalë - Shën: {score}",
-      "addExercise": "Shto \"{name}\""
+      "wordTooltip": "Përputhje me fjalë - Shën: {score}"
     },
     "buttons": {
       "addParameter": "Shto parametër",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Akcje",
+      "currentFileInfo": "Skedari aktual: {fileName}",
       "exercise": "Të kryejë",
       "reps": "Repetimet:",
       "targetReps": "Shënimet për numrin e përrjeteve:",
       "targetWeight": "Shërbim: ({unit}):",
       "volume": "Shumës (\\{unit}):",
-      "weight": "Pesha ({{unit}}):",
-      "currentFileInfo": "Skedari aktual: {fileName}"
+      "weight": "Pesha ({{unit}}):"
     },
     "layoutGrouped": "Grupuar sipas muskujve",
     "layoutHorizontal": "Rregullore horizontale",
@@ -565,17 +569,21 @@
     "notes": "Shënime (opcional):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "Gjendën {count} mospërputhje:",
+      "auditNoMatchFound": "Nuk u gjet asnjë përputhje",
       "auditNoMismatches": "Nëse nuk ka shkelje",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Sukses në ngjitjen e emrit të failit",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Gabim gjatë skanimit: {error}",
       "auditScanning": "Skanimi i auditimit",
       "canvasExportError": "Gabim në eksportimin e pëlhurës",
       "canvasExported": "Ekspozione e Tavlinës",
       "chartInserted": "✅ Diagrama u krijua me sukses!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Dasbordi u krijua me sukses!",
+      "dismissAchievement": "Hiq arritjen",
       "exerciseBlockInserted": "Bloku stërmë është krijuar",
       "exerciseNameRequired": "❌ ju lutemi, vendosni një emër",
       "exercisePageCreated": "Faqja e stilit u krijua me sukses!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Më nuk u përpohet të përditësohet çorabi. Sigurohuni që dosja është hapur në redaktoren.",
       "timerUpdated": "✅ Koha u përditësoi me sukses!",
       "validationCombinedMode": "⚠️ për tipin 'eksercizim + stërmorë', duhet të mbushni të dy fushat!",
-      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme.",
-      "dismissAchievement": "Hiq arritjen",
-      "auditScanError": "Gabim gjatë skanimit: {error}",
-      "auditMismatchCount": "Gjendën {count} mospërputhje:",
-      "auditNoMatchFound": "Nuk u gjet asnjë përputhje"
+      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme."
     },
     "parameterKey": "Çelë:",
     "parameterLabel": "Etiketa:",
@@ -716,11 +720,7 @@
     },
     "workout": "Tregimi (opcional):",
     "workoutFile": "Fajla e stilit:",
-    "workoutNameOptional": "Emri i stërmorës (opcional):",
-    "auditStatusNoMatch": "Pa përputhje",
-    "auditStatusExactMatch": "Përputhje e saktë",
-    "auditStatusCloseMatch": "Përputhje e afërt",
-    "auditStatusPartialMatch": "Përputhje e pjesshme"
+    "workoutNameOptional": "Emri i stërmorës (opcional):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Në proces...",
       "overwriting": "Zëvendësim...",
       "regenerateOverwrite": "Regjenero (zëvendëso)",
+      "runAllMaintenance": "Zgjidh të kryej të gjitha",
       "savePreset": "Ruaj",
-      "saveProtocol": "Ruaj",
-      "runAllMaintenance": "Zgjidh të kryej të gjitha"
+      "saveProtocol": "Ruaj"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një dosje CSV me etiketat e muskujve tashmë ekziston. A dëshironi të shkrihen me vlerat e parapara? Kjo do të fshirë të gjitha etiketat e personalizuara.",
@@ -760,11 +760,11 @@
       "protocolColor": "Ngjyra e ffonit të badge-it (format heksadecimal, p.sh., #FF5733)",
       "quickWeightIncrement": "Shuma e pesheve që përdoret nga butonat +/- në modalet e krijimit/modifikimit të regjistrimit të ushtrimeve (p.sh., 2.5 për +2.5 / -2.5 unitete).",
       "repDuration": "Koha e shpërfillur për një repetim. Shfrytësohet kur numri i repetimeve është i njohur (p.sh., 'x 10 repetime').",
+      "runAllMaintenance": "Zgjidhni dhe ekzekutoni të gjitha deturat e mirëmbajtjes në një radhë. Sigur, mund të ekzekutohet disa herë.",
       "setDuration": "Shumë përdorur kur nuk janë specifikuar. (version i zëvendësimit). Rrezimi tipik: 30-60 sekonda.",
       "setupCSV": "Kriju të gjithë file-t workout_logs.csv dhe muscle-tags.csv në folderin e konfiguruar.",
       "weightIncrement": "Shuma e parësore e rritjes së pesheve për mbiemërim progresiv (p.sh., 2.5 për rritje me 2.5 unitete)",
-      "weightUnit": "Pëzgjidhni unitetin për matjet e peshës (kg/lb). Kjo ndikon në unitetin e vullnetshëm për regjistrat të reja.",
-      "runAllMaintenance": "Zgjidhni dhe ekzekutoni të gjitha deturat e mirëmbajtjes në një radhë. Sigur, mund të ekzekutohet disa herë."
+      "weightUnit": "Pëzgjidhni unitetin për matjet e peshës (kg/lb). Kjo ndikon në unitetin e vullnetshëm për regjistrat të reja."
     },
     "labels": {
       "csvPath": "Rruga e failit të loogut CSV",
@@ -786,10 +786,10 @@
       "protocolColor": "Ngjyrë e emblemas",
       "protocolName": "Emri i protokollit",
       "repDuration": "Koha për përitë (sekondë)",
+      "runAllMaintenance": "Zgjidhni të gjitha detyrat e mirëmbajtjes",
       "setDuration": "Vlera e parësore (sekonda)",
       "setupCSV": "Konfigurimi i failëve CSV",
-      "weightUnit": "Jedunitë e pesheve",
-      "runAllMaintenance": "Zgjidhni të gjitha detyrat e mirëmbajtjes"
+      "weightUnit": "Jedunitë e pesheve"
     },
     "messages": {
       "confirmDeletePreset": "Sigurisht ke dëshirë të fshirë këtë profil?",
@@ -820,17 +820,17 @@
       "protocolName": "Vendosni emrin e protokollit"
     },
     "sections": {
+      "advanced": "Avancuar",
       "csvManagement": "Menaxhimi i failit CSV",
       "customProtocols": "Protokole të personalizuara",
       "exampleData": "Dëshmi",
       "filtering": "Filtërsim",
+      "maintenance": "Mirëmbajtje",
       "quickLog": "Regjistrim në dispozitive celular",
       "setupAndData": "Konfigurim dhe të dhëna",
       "templates": "Shablonet",
       "timerPresets": "Paraqësit e kohës",
-      "trainingParameters": "Parametrat e trajtimit",
-      "maintenance": "Mirëmbajtje",
-      "advanced": "Avancuar"
+      "trainingParameters": "Parametrat e trajtimit"
     },
     "tooltips": {
       "deletePreset": "Fshrimi i profilit",
@@ -839,21 +839,21 @@
       "editProtocol": "Redakto"
     },
     "validation": {
-      "mustBePositive": "Duhet të jetë më i madh se 0",
-      "mustBeNonNegative": "Duhet të jetë 0 ose më shumë",
+      "csvFolderNotFound": "Dosja nuk u gjua në arkivin. Zgjidhni \"Konfigurim CSV\" për të krijuar atë.",
       "csvPathEmpty": "Rruga nuk mund të jetë e boş",
-      "csvFolderNotFound": "Dosja nuk u gjua në arkivin. Zgjidhni \"Konfigurim CSV\" për të krijuar atë."
+      "mustBeNonNegative": "Duhet të jetë 0 ose më shumë",
+      "mustBePositive": "Duhet të jetë më i madh se 0"
     }
   },
   "stats": {
     "avgVolume": "Vlera mesatare",
-    "recentTrend": "Tendenca e fundit",
-    "sessions": "Sesionet",
     "max": "Maks: ",
     "min": "Min: ",
-    "title": "📈 Statistikat {dataTypeLabel} ({contextLabel}):",
     "recentLast3": " (3 të fundit)",
-    "recentVsPrev": " (vs para.)"
+    "recentTrend": "Tendenca e fundit",
+    "recentVsPrev": " (vs para.)",
+    "sessions": "Sesionet",
+    "title": "📈 Statistikat {dataTypeLabel} ({contextLabel}):"
   },
   "table": {
     "actions": "Akcje",

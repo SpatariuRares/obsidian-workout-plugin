@@ -7,7 +7,9 @@ import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
 export class GeneralSettings {
-  private csvPathValidationTimer: ReturnType<typeof setTimeout> | null = null;
+  private csvPathValidationTimer: ReturnType<
+    typeof setTimeout
+  > | null = null;
 
   constructor(
     private app: App,
@@ -19,7 +21,9 @@ export class GeneralSettings {
     const { containerEl } = this;
 
     // Top-level "Setup & data" heading for the path/unit fields
-    new Setting(containerEl).setName(t("settings.sections.setupAndData")).setHeading();
+    new Setting(containerEl)
+      .setName(t("settings.sections.setupAndData"))
+      .setHeading();
 
     const csvPathSetting = new Setting(containerEl)
       .setName(t("settings.labels.csvPath"))
@@ -28,7 +32,8 @@ export class GeneralSettings {
         new FolderSuggest(this.app, text.inputEl);
         const currentPath = this.plugin.settings.csvLogFilePath;
         const lastSlash = currentPath.lastIndexOf("/");
-        const folderPath = lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
+        const folderPath =
+          lastSlash > 0 ? currentPath.substring(0, lastSlash) : "";
 
         text
           .setPlaceholder(t("forms.enterCsvPath"))
@@ -37,7 +42,10 @@ export class GeneralSettings {
             const folder = normalizePath(value);
             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
             await this.plugin.saveSettings();
-            this.scheduleCsvPathValidation(value.trim(), csvPathWarning);
+            this.scheduleCsvPathValidation(
+              value.trim(),
+              csvPathWarning,
+            );
           });
       });
     const csvPathWarning = csvPathSetting.controlEl.createEl("div", {
@@ -56,7 +64,8 @@ export class GeneralSettings {
           .setPlaceholder(t("forms.enterFolderPath"))
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
-            this.plugin.settings.exerciseFolderPath = normalizePath(value);
+            this.plugin.settings.exerciseFolderPath =
+              normalizePath(value);
             await this.plugin.saveSettings();
           });
       });
@@ -83,60 +92,71 @@ export class GeneralSettings {
       );
 
     // CSV Management Section
-    new Setting(containerEl).setName(t("settings.sections.csvManagement")).setHeading();
+    new Setting(containerEl)
+      .setName(t("settings.sections.csvManagement"))
+      .setHeading();
 
     new Setting(containerEl)
       .setName(t("settings.labels.setupCSV"))
       .setDesc(t("settings.descriptions.setupCSV"))
       .addButton((button) =>
-        button.setButtonText(t("settings.buttons.createFiles")).onClick(async () => {
-          try {
-            // Create workout log CSV
-            await this.plugin.createCSVLogFile();
+        button
+          .setButtonText(t("settings.buttons.createFiles"))
+          .onClick(async () => {
+            try {
+              // Create workout log CSV
+              await this.plugin.createCSVLogFile();
 
-            // Create muscle tags CSV
-            await this.handleCreateMuscleTagsCsv();
+              // Create muscle tags CSV
+              await this.handleCreateMuscleTagsCsv();
 
-            new Notice(t("settings.messages.csvFilesCreated"));
-          } catch (error) {
-            const errorMessage = ErrorUtils.getErrorMessage(error);
-            new Notice(`Error creating CSV files: ${errorMessage}`);
-          }
-        }),
+              new Notice(t("settings.messages.csvFilesCreated"));
+            } catch (error) {
+              const errorMessage = ErrorUtils.getErrorMessage(error);
+              new Notice(`Error creating CSV files: ${errorMessage}`);
+            }
+          }),
       );
 
     // Initial Setup Section
-    new Setting(containerEl).setName(t("settings.sections.exampleData")).setHeading();
+    new Setting(containerEl)
+      .setName(t("settings.sections.exampleData"))
+      .setHeading();
 
     new Setting(containerEl)
       .setName(t("settings.labels.generateExamples"))
       .setDesc(t("settings.descriptions.generateExamples"))
       .addButton((button) =>
-        button.setButtonText(t("settings.buttons.createExamples")).onClick(async () => {
-          const { ExampleGeneratorService } =
-            await import("@app/services/examples/ExampleGeneratorService");
-          const generator = new ExampleGeneratorService(this.app);
+        button
+          .setButtonText(t("settings.buttons.createExamples"))
+          .onClick(async () => {
+            const { ExampleGeneratorService } =
+              await import("@app/services/examples/ExampleGeneratorService");
+            const generator = new ExampleGeneratorService(this.app);
 
-          const folderExists = await this.app.vault.adapter.exists(
-            normalizePath("The gym examples"),
-          );
+            const folderExists = await this.app.vault.adapter.exists(
+              normalizePath("The gym examples"),
+            );
 
-          if (folderExists) {
-            new ConfirmModal(
-              this.app,
-              t("settings.messages.confirmOverwriteExamples"),
-              async () => {
-                await generator.generateExampleFolder(true);
-              },
-            ).open();
-          } else {
-            await generator.generateExampleFolder(false);
-          }
-        }),
+            if (folderExists) {
+              new ConfirmModal(
+                this.app,
+                t("settings.messages.confirmOverwriteExamples"),
+                async () => {
+                  await generator.generateExampleFolder(true);
+                },
+              ).open();
+            } else {
+              await generator.generateExampleFolder(false);
+            }
+          }),
       );
   }
 
-  private scheduleCsvPathValidation(folderValue: string, warningEl: HTMLElement): void {
+  private scheduleCsvPathValidation(
+    folderValue: string,
+    warningEl: HTMLElement,
+  ): void {
     if (this.csvPathValidationTimer !== null) {
       clearTimeout(this.csvPathValidationTimer);
     }
@@ -150,7 +170,9 @@ export class GeneralSettings {
       const folder = normalizePath(folderValue);
       const exists = await this.app.vault.adapter.exists(folder);
       if (!exists) {
-        warningEl.textContent = t("settings.validation.csvFolderNotFound");
+        warningEl.textContent = t(
+          "settings.validation.csvFolderNotFound",
+        );
         warningEl.addClass("is-visible");
       } else {
         warningEl.removeClass("is-visible");
@@ -195,7 +217,8 @@ export class GeneralSettings {
    */
   private async createMuscleTagsCsvWithDefaults(): Promise<void> {
     const muscleTagService = this.plugin.getMuscleTagService();
-    const { MUSCLE_TAG_MAP } = await import("@app/constants/muscles.constants");
+    const { MUSCLE_TAG_MAP } =
+      await import("@app/constants/muscles.constants");
     const defaultTags = new Map(Object.entries(MUSCLE_TAG_MAP));
 
     try {

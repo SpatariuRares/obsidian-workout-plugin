@@ -27,6 +27,7 @@
   },
   "commands": {
     "addExerciseBlock": "Egzersiz Bloğunu Ekle",
+    "addMissingBlockIds": "Kod bloklarına eksik ID'leri ekle",
     "auditExerciseNames": "Denetim Egzersizlerinin Adları",
     "convertExercise": "Eğitimi dönüştür",
     "createCsvLog": "CSV log dosyası oluştur",
@@ -34,12 +35,12 @@
     "generateTagReference": "Etiket Referansını Oluştur",
     "insertTable": "Tablo ekle",
     "manageMuscleTags": "Kas Etiketlerini Yönet",
-    "migrateExerciseTypes": "Egzersiz Türlerini Taşı",
-    "addMissingBlockIds": "Kod bloklarına eksik ID'leri ekle"
+    "migrateExerciseTypes": "Egzersiz Türlerini Taşı"
   },
   "common": {
     "bpm": "bpm",
     "cancel": "İptal et",
+    "clear": "Temizle",
     "convert": "Çevir",
     "exercise": "Egzersiz",
     "km": "common.km",
@@ -47,8 +48,7 @@
     "notAvailable": "Mevcut değil",
     "sec": "sec",
     "unknown": "Bilinmiyor",
-    "workout": "Egzersiz",
-    "clear": "Temizle"
+    "workout": "Egzersiz"
   },
   "convert": {
     "currentType": "Mevcut tür:",
@@ -453,8 +453,8 @@
     "noImbalances": "Dengesizlik Yok",
     "noTags": "Etiket Yok",
     "success": {
-      "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
       "blockIdsAdded": "{count} numaralı eksik ID'ler {files} dosyalarında eklendi.",
+      "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
       "noBlockIdsNeeded": "Tüm kod blokları zaten ID'ye sahip."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
@@ -463,7 +463,12 @@
   "modal": {
     "actions": "Eylemler",
     "addTag": "Etiket ekle",
+    "auditStatusCloseMatch": "Yakın eşleşme",
+    "auditStatusExactMatch": "Tam eşleşme",
+    "auditStatusNoMatch": "Eşleşme yok",
+    "auditStatusPartialMatch": "Kısmi eşleşme",
     "autocomplete": {
+      "addExercise": "\"{name}\"'ı ekle",
       "exactBadge": "★",
       "exactTooltip": "Tam eşleşme/Ön ek eşleşme - Puan: {score}",
       "fuzzyBadge": "~",
@@ -471,8 +476,7 @@
       "partialBadge": "•",
       "partialTooltip": "Kısmi eşleşme - Puan: {score}",
       "wordBadge": "◆",
-      "wordTooltip": "Kelime eşleşmesi - Puan: {score}",
-      "addExercise": "\"{name}\"'ı ekle"
+      "wordTooltip": "Kelime eşleşmesi - Puan: {score}"
     },
     "buttons": {
       "addParameter": "Parametre ekle",
@@ -544,13 +548,13 @@
     },
     "labels": {
       "actions": "Eylemler",
+      "currentFileInfo": "Geçerli dosya: {fileName}",
       "exercise": "Egzersiz:",
       "reps": "Temsilciler:",
       "targetReps": "Hedeflenen satış temsilcileri:",
       "targetWeight": "Hedef: ({{unit}}):",
       "volume": "Ses Seviyesi ({{unit}}):",
-      "weight": "Ağırlık ({{unit}}):",
-      "currentFileInfo": "Geçerli dosya: {fileName}"
+      "weight": "Ağırlık ({{unit}}):"
     },
     "layoutGrouped": "Kas gruplarına göre düzenlenmiş",
     "layoutHorizontal": "Yatay düzen",
@@ -565,17 +569,21 @@
     "notes": "Notlar (isteğe bağlı):",
     "notices": {
       "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
+      "auditNoMatchFound": "Eşleşme bulunamadı",
       "auditNoMismatches": "Denetim Numarası Uyuşmazlıkları",
       "auditRenameError": "Audit Rename Error",
       "auditRenameFileError": "Audit Rename File Error",
       "auditRenameFileSuccess": "Dosya yeniden adlandırıldı, işlem başarılı.",
       "auditRenameSuccess": "Audit Rename Success",
+      "auditScanError": "Tarama hatası: {error}",
       "auditScanning": "Denetim taraması",
       "canvasExportError": "Çizim İhracat Hatası",
       "canvasExported": "Çizim, dışa aktarıldı",
       "chartInserted": "✅ Grafik başarıyla eklendi!",
       "confirmUpdateTarget": "Confirm Update Target",
       "dashboardInserted": "✅ Gösterge paneli başarıyla eklendi!",
+      "dismissAchievement": "Başarıyı kapat",
       "exerciseBlockInserted": "Egzersiz Bloğu Eklendi",
       "exerciseNameRequired": "❌ Lütfen bir egzersiz adı girin",
       "exercisePageCreated": "Egzersiz sayfası başarıyla oluşturuldu!",
@@ -617,11 +625,7 @@
       "timerUpdateFailed": "Zamanlayıcı güncellenmedi. Dosyanın düzenleyici programda açık olduğundan emin olun.",
       "timerUpdated": "✅ Zamanlayıcı başarıyla güncellendi!",
       "validationCombinedMode": "⚠️ \"Egzersiz + Antrenman\" türü için, her iki alanı da doldurmanız gerekmektedir!",
-      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun.",
-      "dismissAchievement": "Başarıyı kapat",
-      "auditScanError": "Tarama hatası: {error}",
-      "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
-      "auditNoMatchFound": "Eşleşme bulunamadı"
+      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun."
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -716,11 +720,7 @@
     },
     "workout": "Egzersiz (isteğe bağlı):",
     "workoutFile": "Egzersiz dosyası:",
-    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):",
-    "auditStatusNoMatch": "Eşleşme yok",
-    "auditStatusExactMatch": "Tam eşleşme",
-    "auditStatusCloseMatch": "Yakın eşleşme",
-    "auditStatusPartialMatch": "Kısmi eşleşme"
+    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):"
   },
   "settings": {
     "buttons": {
@@ -736,9 +736,9 @@
       "generating": "Oluşturuluyor...",
       "overwriting": "Yeniden yazma...",
       "regenerateOverwrite": "Yeniden oluştur (yazıyı geçersiz kıl)",
+      "runAllMaintenance": "Tüm bakımları gerçekleştir",
       "savePreset": "Kaydet",
-      "saveProtocol": "Kaydet",
-      "runAllMaintenance": "Tüm bakımları gerçekleştir"
+      "saveProtocol": "Kaydet"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -760,11 +760,11 @@
       "protocolColor": "Rozet arka plan rengi (heks formatında, örneğin #FF5733)",
       "quickWeightIncrement": "Olustur/düzenle egzersiz günlük modallarinda kullanılan, +/- butonlarinda kullanilan ağırlık artış değeri (örneğin, +2.5 / -2.5 birim için 2.5).",
       "repDuration": "Tek tekrarın tahmini süresi. Tekrar sayısı bilindiğinde kullanılır (örneğin, \"10 tekrar\").",
+      "runAllMaintenance": "Tüm bakım görevlerini ardışık olarak çalıştırın. Tekrar tekrar çalıştırılması güvenlidir.",
       "setDuration": "Kullanılırken temsilciler belirtilmediğinde (varsayılan değer). Tipik aralık: 30-60 saniye.",
       "setupCSV": "Ayarlama klasöründe hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
-      "weightUnit": "Ağırlık ölçümleri için birim seçin (kg/lb). Bu, yeni günlükler için varsayılan birimi etkiler.",
-      "runAllMaintenance": "Tüm bakım görevlerini ardışık olarak çalıştırın. Tekrar tekrar çalıştırılması güvenlidir."
+      "weightUnit": "Ağırlık ölçümleri için birim seçin (kg/lb). Bu, yeni günlükler için varsayılan birimi etkiler."
     },
     "labels": {
       "csvPath": "CSV log dosyası yolu",
@@ -786,10 +786,10 @@
       "protocolColor": "Rozet rengi",
       "protocolName": "Protokol adı",
       "repDuration": "Tekrarlama süresi (saniye)",
+      "runAllMaintenance": "Tüm bakım görevlerini gerçekleştir",
       "setDuration": "Yedekleme süresi (saniye)",
       "setupCSV": "CSV dosyalarını yapılandırın",
-      "weightUnit": "Ağırlık birimi",
-      "runAllMaintenance": "Tüm bakım görevlerini gerçekleştir"
+      "weightUnit": "Ağırlık birimi"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -820,17 +820,17 @@
       "protocolName": "Protokol adını girin"
     },
     "sections": {
+      "advanced": "Gelişmiş",
       "csvManagement": "CSV dosya yönetimi",
       "customProtocols": "Özel protokoller",
       "exampleData": "Örnek veri",
       "filtering": "Filtreleme",
+      "maintenance": "Bakım",
       "quickLog": "Mobil günlük kaydı",
       "setupAndData": "Kurulum ve veri",
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
-      "trainingParameters": "Eğitim parametreleri",
-      "maintenance": "Bakım",
-      "advanced": "Gelişmiş"
+      "trainingParameters": "Eğitim parametreleri"
     },
     "tooltips": {
       "deletePreset": "Önceden ayarlanmış değeri sil",
@@ -839,21 +839,21 @@
       "editProtocol": "Protokolü düzenle"
     },
     "validation": {
-      "mustBePositive": "0'dan büyük olmalıdır",
-      "mustBeNonNegative": "0 veya daha büyük olmalıdır",
+      "csvFolderNotFound": "Klasör, depoda bulunamadı. CSV dosyası oluşturmak için kurulumu başlatın.",
       "csvPathEmpty": "Yol boş olamaz",
-      "csvFolderNotFound": "Klasör, depoda bulunamadı. CSV dosyası oluşturmak için kurulumu başlatın."
+      "mustBeNonNegative": "0 veya daha büyük olmalıdır",
+      "mustBePositive": "0'dan büyük olmalıdır"
     }
   },
   "stats": {
     "avgVolume": "Ortalama Hacim",
-    "recentTrend": "Son Trend",
-    "sessions": "Sessiyonlar",
     "max": "Mak: ",
     "min": "Min: ",
-    "title": "📈 {dataTypeLabel} İstatistikleri ({contextLabel}):",
     "recentLast3": " (son 3)",
-    "recentVsPrev": " (öncekiyle)"
+    "recentTrend": "Son Trend",
+    "recentVsPrev": " (öncekiyle)",
+    "sessions": "Sessiyonlar",
+    "title": "📈 {dataTypeLabel} İstatistikleri ({contextLabel}):"
   },
   "table": {
     "actions": "Eylemler",

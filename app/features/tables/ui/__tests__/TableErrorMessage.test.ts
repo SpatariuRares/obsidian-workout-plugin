@@ -19,7 +19,11 @@ describe("TableErrorMessage", () => {
     it("calls Feedback.renderError with title", () => {
       const container = createObsidianContainer();
 
-      TableErrorMessage.render(container, "Something went wrong", "Error");
+      TableErrorMessage.render(
+        container,
+        "Something went wrong",
+        "Error",
+      );
 
       expect(Feedback.renderError).toHaveBeenCalledWith(
         container,
@@ -70,10 +74,12 @@ describe("TableErrorMessage", () => {
 
       TableErrorMessage.clear(container);
 
-      expect(container.querySelectorAll(".workout-feedback-error").length).toBe(
-        0,
+      expect(
+        container.querySelectorAll(".workout-feedback-error").length,
+      ).toBe(0);
+      expect(container.querySelectorAll(".other-class").length).toBe(
+        1,
       );
-      expect(container.querySelectorAll(".other-class").length).toBe(1);
     });
 
     it("does nothing when no error divs exist", () => {

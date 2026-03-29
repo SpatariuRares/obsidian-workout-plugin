@@ -29,30 +29,39 @@ directives/
 Each directive follows a standardized structure:
 
 ### 1. Objective
+
 Clear statement of what needs to be accomplished.
 
 ### 2. Prerequisites
+
 Required knowledge, tools, or setup before starting.
 
 ### 3. Input Requirements
+
 Information needed to complete the task (parameters, context, decisions).
 
 ### 4. Execution Scripts
+
 Which E-layer scripts to use (references to `scripts/` directory).
 
 ### 5. Step-by-Step Procedure
+
 Detailed instructions with code examples and decision points.
 
 ### 6. Edge Cases
+
 Known issues, special scenarios, and how to handle them.
 
 ### 7. Validation
+
 How to verify the task was completed successfully.
 
 ### 8. Common Mistakes
+
 Anti-patterns and things to avoid.
 
 ### 9. Related Directives
+
 Links to related SOPs for context.
 
 ## How to Use Directives

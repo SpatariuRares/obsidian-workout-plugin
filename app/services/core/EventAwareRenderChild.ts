@@ -40,54 +40,76 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
   onload(): void {
     // log:added — confronta exercise nel nuovo entry
     this.register(
-      this.eventBus.on('log:added', (payload: LogAddedPayload) => {
-        if (this.matchesContext(payload.context.exercise, payload.context.workout)) {
+      this.eventBus.on("log:added", (payload: LogAddedPayload) => {
+        if (
+          this.matchesContext(
+            payload.context.exercise,
+            payload.context.workout,
+          )
+        ) {
           void this.renderFn();
         }
-      })
+      }),
     );
 
     // log:updated — confronta ENTRAMBI old e new exercise
     // Necessario per il caso rename: view su "Squat" deve aggiornarsi
     // quando "Squat" diventa "Leg Press"
     this.register(
-      this.eventBus.on('log:updated', (payload: LogUpdatedPayload) => {
-        const matchesPrevious = this.matchesContext(
-          payload.previous.exercise,
-          payload.previous.workout,
-        );
-        const matchesUpdated = this.matchesContext(
-          payload.updated.exercise,
-          payload.updated.workout,
-        );
-        if (matchesPrevious || matchesUpdated) {
-          void this.renderFn();
-        }
-      })
+      this.eventBus.on(
+        "log:updated",
+        (payload: LogUpdatedPayload) => {
+          const matchesPrevious = this.matchesContext(
+            payload.previous.exercise,
+            payload.previous.workout,
+          );
+          const matchesUpdated = this.matchesContext(
+            payload.updated.exercise,
+            payload.updated.workout,
+          );
+          if (matchesPrevious || matchesUpdated) {
+            void this.renderFn();
+          }
+        },
+      ),
     );
 
     // log:deleted — confronta exercise nell'entry eliminata
     this.register(
-      this.eventBus.on('log:deleted', (payload: LogDeletedPayload) => {
-        if (this.matchesContext(payload.context.exercise, payload.context.workout)) {
-          void this.renderFn();
-        }
-      })
+      this.eventBus.on(
+        "log:deleted",
+        (payload: LogDeletedPayload) => {
+          if (
+            this.matchesContext(
+              payload.context.exercise,
+              payload.context.workout,
+            )
+          ) {
+            void this.renderFn();
+          }
+        },
+      ),
     );
 
     // log:bulk-changed — sempre refresh (rename, import, ecc.)
     this.register(
-      this.eventBus.on('log:bulk-changed', (_payload: LogBulkChangedPayload) => {
-        void this.renderFn();
-      })
+      this.eventBus.on(
+        "log:bulk-changed",
+        (_payload: LogBulkChangedPayload) => {
+          void this.renderFn();
+        },
+      ),
     );
 
     // muscle-tags:changed — solo per view muscleTagsAware (es. dashboard)
     if (this.filter.muscleTagsAware) {
       this.register(
-        this.eventBus.on('muscle-tags:changed', (_payload: MuscleTagsChangedPayload) => {
-          void this.renderFn();
-        })
+        this.eventBus.on(
+          "muscle-tags:changed",
+          (_payload: MuscleTagsChangedPayload) => {
+            void this.renderFn();
+          },
+        ),
       );
     }
   }
@@ -102,7 +124,10 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
    *   - exactMatch=false → confronto parziale normalizzato (substring)
    * - Filtro workout presente → confronto parziale normalizzato
    */
-  private matchesContext(exercise: string, workout?: string): boolean {
+  private matchesContext(
+    exercise: string,
+    workout?: string,
+  ): boolean {
     const hasFilter = this.filter.exercise || this.filter.workout;
 
     // Nessun filtro → view mostra tutto → aggiorna sempre
@@ -117,7 +142,10 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
         if (evtNorm !== filterNorm) return false;
       } else {
         // Partial match: event include filter O filter include event
-        if (!evtNorm.includes(filterNorm) && !filterNorm.includes(evtNorm)) {
+        if (
+          !evtNorm.includes(filterNorm) &&
+          !filterNorm.includes(evtNorm)
+        ) {
           return false;
         }
       }
@@ -127,7 +155,10 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
     if (this.filter.workout && workout) {
       const filterNorm = normalizeExercise(this.filter.workout);
       const evtNorm = normalizeExercise(workout);
-      if (!evtNorm.includes(filterNorm) && !filterNorm.includes(evtNorm)) {
+      if (
+        !evtNorm.includes(filterNorm) &&
+        !filterNorm.includes(evtNorm)
+      ) {
         return false;
       }
     }

@@ -36,7 +36,9 @@ export function generateExampleCSVData(): string {
   const workoutName = t("examples.workouts.lowerBodyA.name");
 
   // Lower body sessions: ~2x per week for 6 weeks (oldest first for proper progression)
-  const lowerBodyOffsets = [40, 37, 33, 30, 26, 23, 19, 16, 12, 9, 5, 2];
+  const lowerBodyOffsets = [
+    40, 37, 33, 30, 26, 23, 19, 16, 12, 9, 5, 2,
+  ];
 
   const baseWeights = {
     squatMultiPower: 70,
@@ -249,7 +251,9 @@ export function generateExampleCSVData(): string {
   }
 
   // Upper Body sessions: ~2x per week for 6 weeks
-  const upperBodyOffsets = [39, 36, 32, 29, 25, 22, 18, 15, 11, 8, 4, 1];
+  const upperBodyOffsets = [
+    39, 36, 32, 29, 25, 22, 18, 15, 11, 8, 4, 1,
+  ];
   const upperWorkoutName = t("examples.workouts.upperBodyPower.name");
 
   const upperBaseWeights = {
@@ -282,13 +286,19 @@ export function generateExampleCSVData(): string {
     // Bench Press: progressive overload
     const benchWeight =
       Math.round(
-        ((upperBaseWeights.benchPress + weeksTraining * 2.5) * dayModifier) /
+        ((upperBaseWeights.benchPress + weeksTraining * 2.5) *
+          dayModifier) /
           2.5,
       ) * 2.5;
     const benchBaseReps = [8, 7, 6, 6];
     for (let set = 1; set <= 4; set++) {
       const reps = benchBaseReps[set - 1] + (isToughDay ? -1 : 0);
-      const protocols = ["standard", "rest-pause", "myo-reps", "dropset"];
+      const protocols = [
+        "standard",
+        "rest-pause",
+        "myo-reps",
+        "dropset",
+      ];
       const protocol =
         set === 4 && sessionIdx % 4 === set - 1
           ? protocols[sessionIdx % 4]
@@ -305,7 +315,8 @@ export function generateExampleCSVData(): string {
     // Squat: progressive overload
     const squatWeight =
       Math.round(
-        ((upperBaseWeights.squat + weeksTraining * 5) * dayModifier) / 5,
+        ((upperBaseWeights.squat + weeksTraining * 5) * dayModifier) /
+          5,
       ) * 5;
     const squatBaseReps = [6, 5, 5, 5];
     for (let set = 1; set <= 4; set++) {
@@ -326,7 +337,11 @@ export function generateExampleCSVData(): string {
   const cardioOffsets = [38, 34, 31, 27, 24, 20, 17, 13, 10, 6, 3];
   const cardioWorkoutName = t("examples.workouts.cardioDay.name");
 
-  for (let sessionIdx = 0; sessionIdx < cardioOffsets.length; sessionIdx++) {
+  for (
+    let sessionIdx = 0;
+    sessionIdx < cardioOffsets.length;
+    sessionIdx++
+  ) {
     const daysAgo = cardioOffsets[sessionIdx];
     const date = new Date(now.getTime() - daysAgo * oneDay);
     const dateStr = date.toISOString();

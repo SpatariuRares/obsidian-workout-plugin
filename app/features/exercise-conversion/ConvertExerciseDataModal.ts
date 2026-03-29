@@ -68,10 +68,13 @@ export class ConvertExerciseDataModal extends ModalBase {
     this.typeSelect.setVisible(false);
 
     // Field Mapping Section
-    this.fieldMappingList = new FieldMappingList(mainContainer, (mappings) => {
-      this.mappings = mappings;
-      this.updateState();
-    });
+    this.fieldMappingList = new FieldMappingList(
+      mainContainer,
+      (mappings) => {
+        this.mappings = mappings;
+        this.updateState();
+      },
+    );
     this.fieldMappingList.setVisible(false);
 
     // Preview Section
@@ -87,8 +90,13 @@ export class ConvertExerciseDataModal extends ModalBase {
     contentEl.empty();
   }
 
-  private async createExerciseSection(parent: HTMLElement): Promise<void> {
-    const section = this.createSection(parent, t("convert.sectionExercise"));
+  private async createExerciseSection(
+    parent: HTMLElement,
+  ): Promise<void> {
+    const section = this.createSection(
+      parent,
+      t("convert.sectionExercise"),
+    );
 
     const { elements } = ExerciseAutocomplete.create(
       this,
@@ -143,7 +151,8 @@ export class ConvertExerciseDataModal extends ModalBase {
       return;
     }
 
-    const exerciseDefService = this.plugin.getExerciseDefinitionService();
+    const exerciseDefService =
+      this.plugin.getExerciseDefinitionService();
     const definition = await exerciseDefService.getExerciseDefinition(
       this.selectedExercise,
     );
@@ -167,7 +176,9 @@ export class ConvertExerciseDataModal extends ModalBase {
     this.typeSelect?.setVisible(true);
   }
 
-  private async handleTargetTypeChange(typeId: string): Promise<void> {
+  private async handleTargetTypeChange(
+    typeId: string,
+  ): Promise<void> {
     this.targetType = typeId;
 
     const targetTypeDef = getExerciseTypeById(typeId);
@@ -242,7 +253,9 @@ export class ConvertExerciseDataModal extends ModalBase {
       new Notice(t("convert.success", { count }));
       this.close();
     } catch (error) {
-      new Notice(t("convert.errors.convertError", { error: String(error) }));
+      new Notice(
+        t("convert.errors.convertError", { error: String(error) }),
+      );
     }
   }
 }

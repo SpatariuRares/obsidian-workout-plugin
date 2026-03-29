@@ -1,5 +1,7 @@
 ```workout-duration
+
 ```
+
 ### grafico
 
 ```workout-chart
@@ -12,7 +14,6 @@ showTrendLine: true
 showTrend: true
 showStats: true
 ```
-
 
 **Obiettivo**: Forza massimale glutei e catena posteriore
 
@@ -169,7 +170,6 @@ workout: Giorno 1 LUNEDÌ - LOWER STRENGTH (Posterior Chain)
 limit: 8
 exactMatch: true
 ```
-
 
 ---
 

@@ -103,8 +103,8 @@ export class CustomProtocolsSettings {
     const fragment = document.createDocumentFragment();
 
     // Create a container for the badge preview and details
-    const container = createEl("span");
-    fragment.appendChild(container);
+    const container = fragment.createEl("span");
+
 
     // Add abbreviation badge preview
     ProtocolBadge.create(container, {

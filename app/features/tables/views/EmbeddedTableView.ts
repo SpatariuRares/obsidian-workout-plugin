@@ -146,7 +146,7 @@ export class EmbeddedTableView extends BaseView {
     const renderChild = new TableRenderChild(container);
     this.renderChildren.push(renderChild);
 
-    const contentDiv = createEl("div", {
+    const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
     });
     const signal = renderChild.getSignal();
@@ -205,7 +205,6 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
-    container.appendChild(contentDiv);
     renderChild.load();
   }
 

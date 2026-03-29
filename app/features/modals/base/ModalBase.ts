@@ -118,8 +118,8 @@ export abstract class ModalBase extends Modal {
     label: string,
     options: Array<{ text: string; value: string }>,
   ): HTMLSelectElement {
-    container.createEl("label", { text: label });
-    const select = container.createEl("select");
+    container.createEl("label", { text: label, cls: "workout-form-field-label" });
+    const select = container.createEl("select", { cls: "workout-form-field-input" });
     options.forEach((option) => {
       select.createEl("option", {
         text: option.text,
@@ -170,7 +170,7 @@ export abstract class ModalBase extends Modal {
     const currentFileInfo = parent.createEl("div", {
       cls: "workout-current-file-info",
     });
-    currentFileInfo.textContent = `Current file: ${currentFileName}`;
+    currentFileInfo.textContent = t("modal.labels.currentFileInfo", { fileName: currentFileName });
     return currentFileInfo;
   }
 

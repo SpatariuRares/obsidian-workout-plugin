@@ -129,7 +129,7 @@ export class AuditExerciseNamesModal extends ModalBase {
           file,
           fileName,
           canonicalName,
-          closestMatch: bestMatch || "No match found",
+          closestMatch: bestMatch,
           score: bestScore,
         });
       }
@@ -138,7 +138,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       this.mismatches.sort((a, b) => a.score - b.score);
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
-      new Notice(`Error scanning exercise files: ${errorMessage}`);
+      new Notice(t("modal.notices.auditScanError", { error: errorMessage }));
     }
   }
 
@@ -161,7 +161,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
     // Show mismatch count
     this.contentContainer.createEl("p", {
-      text: `Found ${this.mismatches.length} potential mismatch${this.mismatches.length !== 1 ? "es" : ""}:`,
+      text: t("modal.notices.auditMismatchCount", { count: this.mismatches.length }),
     });
 
     // Create table
@@ -210,7 +210,7 @@ export class AuditExerciseNamesModal extends ModalBase {
       }
 
       // Closest match
-      row.createEl("td", { text: mismatch.closestMatch });
+      row.createEl("td", { text: mismatch.closestMatch || t("modal.notices.auditNoMatchFound") });
 
       // Similarity score
       row.createEl("td", { text: `${mismatch.score}%` });
@@ -218,17 +218,17 @@ export class AuditExerciseNamesModal extends ModalBase {
       // Status with color coding
       const statusCell = row.createEl("td");
       let statusClass = "workout-audit-status-red";
-      let statusText = "No match";
+      let statusText = t("modal.auditStatusNoMatch");
 
       if (mismatch.score === 100) {
         statusClass = "workout-audit-status-green";
-        statusText = "Exact match";
+        statusText = t("modal.auditStatusExactMatch");
       } else if (mismatch.score >= 70) {
         statusClass = "workout-audit-status-yellow";
-        statusText = "Close match";
+        statusText = t("modal.auditStatusCloseMatch");
       } else if (mismatch.score > 0) {
         statusClass = "workout-audit-status-yellow";
-        statusText = "Partial match";
+        statusText = t("modal.auditStatusPartialMatch");
       }
 
       statusCell.createEl("span", {

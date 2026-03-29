@@ -15,23 +15,15 @@ export class ActionButtons {
    */
   static createActionButtonsContainer(container: HTMLElement): {
     container: HTMLElement;
-    editBtn: HTMLElement;
-    deleteBtn: HTMLElement;
+    editBtn: HTMLButtonElement;
+    deleteBtn: HTMLButtonElement;
   } {
-    // Use ActionButtonGroup molecule for edit + delete buttons
-    const result = ActionButtonGroup.create(container, {
+    return ActionButtonGroup.create(container, {
       editTitle: t("table.editTitle"),
       deleteTitle: t("table.deleteTitle"),
       editIcon: t("icons.tables.edit"),
       deleteIcon: t("icons.tables.delete"),
       className: "workout-table-actions",
     });
-
-    // Return in the expected format (HTMLElement instead of HTMLButtonElement)
-    return {
-      container: result.container,
-      editBtn: result.editBtn as HTMLElement,
-      deleteBtn: result.deleteBtn as HTMLElement,
-    };
   }
 }

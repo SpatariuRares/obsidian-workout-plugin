@@ -47,7 +47,8 @@
     "notAvailable": "Não disponível",
     "sec": "segurança",
     "unknown": "Desconhecido",
-    "workout": "Treino"
+    "workout": "Treino",
+    "clear": "Limpar"
   },
   "convert": {
     "currentType": "Tipo atual:",
@@ -548,7 +549,8 @@
       "targetReps": "Representantes-alvo:",
       "targetWeight": "Objetivo: ({unit}):",
       "volume": "Volume ({{unit}}):",
-      "weight": "Peso ({{unit}}):"
+      "weight": "Peso ({{unit}}):",
+      "currentFileInfo": "Arquivo atual: {fileName}"
     },
     "layoutGrouped": "Agrupado por músculo",
     "layoutHorizontal": "Fluxo horizontal",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Falhou a atualização do temporizador. Verifique se o arquivo está aberto no editor.",
       "timerUpdated": "✅ Temporizador atualizado com sucesso!",
       "validationCombinedMode": "⚠️ Para o tipo 'exercício + treino', você deve preencher ambos os campos!",
-      "validationFillAll": "Por favor, preencha todos os campos com valores válidos."
+      "validationFillAll": "Por favor, preencha todos os campos com valores válidos.",
+      "dismissAchievement": "Descartar conquista",
+      "auditScanError": "Erro ao escanear arquivos: {error}",
+      "auditMismatchCount": "Encontrado(s) {count} discrepância(s):",
+      "auditNoMatchFound": "Nenhuma correspondência"
     },
     "parameterKey": "Chave:",
     "parameterLabel": "Rótulo:",
@@ -710,7 +716,11 @@
     },
     "workout": "Treino (opcional):",
     "workoutFile": "Arquivo de treino:",
-    "workoutNameOptional": "Nome do treino (opcional):"
+    "workoutNameOptional": "Nome do treino (opcional):",
+    "auditStatusNoMatch": "Sem correspondência",
+    "auditStatusExactMatch": "Correspondência exata",
+    "auditStatusCloseMatch": "Correspondência próxima",
+    "auditStatusPartialMatch": "Correspondência parcial"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Volume médio",
     "recentTrend": "Tendência Recente",
-    "sessions": "Sessões"
+    "sessions": "Sessões",
+    "max": "Máx: ",
+    "min": "Mín: ",
+    "title": "📈 Estatísticas {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (últimas 3)",
+    "recentVsPrev": " (vs ant.)"
   },
   "table": {
     "actions": "Ações",

@@ -47,7 +47,8 @@
     "notAvailable": "Не доступно",
     "sec": "безпека",
     "unknown": "Невідомо",
-    "workout": "Тренування"
+    "workout": "Тренування",
+    "clear": "Очистити"
   },
   "convert": {
     "currentType": "Поточний тип:",
@@ -548,7 +549,8 @@
       "targetReps": "Цільові показники:",
       "targetWeight": "Ціль: ({unit}):",
       "volume": "Гучність ({unit}):",
-      "weight": "Вага ({{unit}}):"
+      "weight": "Вага ({{unit}}):",
+      "currentFileInfo": "Поточний файл: {fileName}"
     },
     "layoutGrouped": "Групується за м'язами",
     "layoutHorizontal": "Горизонтальне розташування",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
       "timerUpdated": "✅ Таймер успішно оновлено!",
       "validationCombinedMode": "⚠️ Для типу 'тренування + фітнес' необхідно заповнити обидва поля!",
-      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення."
+      "validationFillAll": "Будь ласка, заповніть усі поля, вказуючи дійсні значення.",
+      "dismissAchievement": "Закрити досягнення",
+      "auditScanError": "Помилка сканування: {error}",
+      "auditMismatchCount": "Знайдено {count} невідповідностей:",
+      "auditNoMatchFound": "Збігів не знайдено"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -710,7 +716,11 @@
     },
     "workout": "Тренування (необов'язково):",
     "workoutFile": "Файл для тренування:",
-    "workoutNameOptional": "Назва тренування (необов'язково):"
+    "workoutNameOptional": "Назва тренування (необов'язково):",
+    "auditStatusNoMatch": "Немає збігу",
+    "auditStatusExactMatch": "Точний збіг",
+    "auditStatusCloseMatch": "Близький збіг",
+    "auditStatusPartialMatch": "Частковий збіг"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Середній об'єм",
     "recentTrend": "Недавні тенденції",
-    "sessions": "Сесії"
+    "sessions": "Сесії",
+    "max": "Макс: ",
+    "min": "Мін: ",
+    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (останні 3)",
+    "recentVsPrev": " (vs попер.)"
   },
   "table": {
     "actions": "Дії",

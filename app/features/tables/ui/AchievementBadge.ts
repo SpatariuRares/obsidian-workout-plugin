@@ -1,4 +1,4 @@
-import { Button } from "@app/components/atoms";
+import { Button, Text } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
@@ -68,8 +68,7 @@ export class AchievementBadge {
     // Create achievement badge
     const badgeDiv = container.createDiv({ cls: "workout-achievement-badge" });
 
-    const badgeText = badgeDiv.createSpan({ cls: "workout-achievement-text" });
-    badgeText.textContent = t("modal.notices.targetAchieved");
+    Text.createSpan(badgeDiv, t("modal.notices.targetAchieved"), "workout-achievement-text");
 
     // Render weight suggestion
     const suggestedWeight = targetWeight + weightIncrement;
@@ -86,7 +85,7 @@ export class AchievementBadge {
       text: "×",
       className: "workout-achievement-dismiss",
       variant: "secondary",
-      ariaLabel: "Dismiss achievement",
+      ariaLabel: t("modal.notices.dismissAchievement"),
     });
 
     Button.onClick(
@@ -119,13 +118,11 @@ export class AchievementBadge {
       cls: "workout-weight-suggestion",
     });
 
-    const suggestionText = suggestionDiv.createSpan({
-      cls: "workout-suggestion-text",
-    });
-    suggestionText.textContent = t("modal.notices.suggestedNextWeight", {
-      suggestedWeight,
-      weightUnit,
-    });
+    Text.createSpan(
+      suggestionDiv,
+      t("modal.notices.suggestedNextWeight", { suggestedWeight, weightUnit }),
+      "workout-suggestion-text",
+    );
 
     const updateButton = Button.create(suggestionDiv, {
       text: t("modal.buttons.updateTargetWeight"),

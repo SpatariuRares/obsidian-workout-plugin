@@ -47,7 +47,8 @@
     "notAvailable": "Tidak Tersedia",
     "sec": "keamanan",
     "unknown": "Tidak Diketahui",
-    "workout": "Latihan"
+    "workout": "Latihan",
+    "clear": "Hapus"
   },
   "convert": {
     "currentType": "Jenis saat ini:",
@@ -548,7 +549,8 @@
       "targetReps": "Target:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
-      "weight": "Berat ({unit}):"
+      "weight": "Berat ({unit}):",
+      "currentFileInfo": "File saat ini: {fileName}"
     },
     "layoutGrouped": "Dikategorikan berdasarkan otot",
     "layoutHorizontal": "Aliran horizontal",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Gagal memperbarui timer. Pastikan file tersebut terbuka di dalam editor.",
       "timerUpdated": "✅ Waktu telah diperbarui dengan sukses!",
       "validationCombinedMode": "⚠️ Untuk jenis 'olahraga + latihan', Anda harus mengisi kedua kolom!",
-      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid."
+      "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid.",
+      "dismissAchievement": "Tutup pencapaian",
+      "auditScanError": "Kesalahan saat memindai: {error}",
+      "auditMismatchCount": "Ditemukan {count} ketidaksesuaian:",
+      "auditNoMatchFound": "Tidak ada kecocokan"
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -710,7 +716,11 @@
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
-    "workoutNameOptional": "Nama latihan (opsional):"
+    "workoutNameOptional": "Nama latihan (opsional):",
+    "auditStatusNoMatch": "Tidak ada kecocokan",
+    "auditStatusExactMatch": "Kecocokan tepat",
+    "auditStatusCloseMatch": "Kecocokan dekat",
+    "auditStatusPartialMatch": "Kecocokan parsial"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Rata-rata Volume",
     "recentTrend": "Tren Terkini",
-    "sessions": "Sesi"
+    "sessions": "Sesi",
+    "max": "Maks: ",
+    "min": "Min: ",
+    "title": "📈 Statistik {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (3 terakhir)",
+    "recentVsPrev": " (vs sblm.)"
   },
   "table": {
     "actions": "Opsi",

@@ -8,16 +8,16 @@ import { Text, Input } from "@app/components/atoms";
 import type { InputProps } from "@app/components/atoms";
 
 export interface FormFieldProps {
-	label: string;
-	inputProps: InputProps;
-	required?: boolean;
-	className?: string;
+  label: string;
+  inputProps: InputProps;
+  required?: boolean;
+  className?: string;
 }
 
 export interface FormFieldResult {
-	container: HTMLElement;
-	label: HTMLElement;
-	input: HTMLInputElement;
+  container: HTMLElement;
+  label: HTMLElement;
+  input: HTMLInputElement;
 }
 
 /**
@@ -40,42 +40,37 @@ export interface FormFieldResult {
  * ```
  */
 export class FormField {
-	/**
-	 * Create a form field element
-	 * @param parent - Parent HTML element
-	 * @param props - Form field properties
-	 * @returns Object with container, label, and input elements
-	 */
-	static create(
-		parent: HTMLElement,
-		props: FormFieldProps
-	): FormFieldResult {
-		// Create field container
-		const container = parent.createDiv({
-			cls: `workout-form-field ${props.className || ""}`.trim(),
-		});
+  /**
+   * Create a form field element
+   * @param parent - Parent HTML element
+   * @param props - Form field properties
+   * @returns Object with container, label, and input elements
+   */
+  static create(parent: HTMLElement, props: FormFieldProps): FormFieldResult {
+    // Create field container
+    const container = parent.createDiv({
+      cls: `workout-form-field${props.className ? ` ${props.className}` : ""}`,
+    });
 
-		// Create label with required indicator if needed
-		const labelText = props.required
-			? `${props.label} *`
-			: props.label;
+    // Create label with required indicator if needed
+    const labelText = props.required ? `${props.label} *` : props.label;
 
-		const label = Text.create(container, {
-			text: labelText,
-			className: "workout-form-field-label",
-			tag: "label",
-		});
+    const label = Text.create(container, {
+      text: labelText,
+      className: "workout-form-field-label",
+      tag: "label",
+    });
 
-		// Create input
-		const input = Input.create(container, {
-			...props.inputProps,
-			className: `workout-form-field-input ${props.inputProps.className || ""}`.trim(),
-		});
+    // Create input
+    const input = Input.create(container, {
+      ...props.inputProps,
+      className: `workout-form-field-input${props.inputProps.className ? ` ${props.inputProps.className}` : ""}`,
+    });
 
-		return {
-			container,
-			label,
-			input,
-		};
-	}
+    return {
+      container,
+      label,
+      input,
+    };
+  }
 }

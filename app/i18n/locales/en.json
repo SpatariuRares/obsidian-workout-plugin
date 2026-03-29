@@ -47,7 +47,8 @@
     "notAvailable": "Not Available",
     "sec": "sec",
     "unknown": "Unknown",
-    "workout": "Workout"
+    "workout": "Workout",
+    "clear": "Clear"
   },
   "convert": {
     "currentType": "Current type:",
@@ -548,7 +549,8 @@
       "targetReps": "Target reps:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
-      "weight": "Weight ({unit}):"
+      "weight": "Weight ({unit}):",
+      "currentFileInfo": "Current file: {fileName}"
     },
     "layoutGrouped": "Grouped by muscle",
     "layoutHorizontal": "Horizontal flow",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
       "timerUpdated": "✅ Timer updated successfully!",
       "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
-      "validationFillAll": "Please fill in all fields with valid values"
+      "validationFillAll": "Please fill in all fields with valid values",
+      "dismissAchievement": "Dismiss achievement",
+      "auditScanError": "Error scanning exercise files: {error}",
+      "auditMismatchCount": "Found {count} potential mismatches:",
+      "auditNoMatchFound": "No match found"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -710,7 +716,11 @@
     },
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):"
+    "workoutNameOptional": "Workout name (optional):",
+    "auditStatusNoMatch": "No match",
+    "auditStatusExactMatch": "Exact match",
+    "auditStatusCloseMatch": "Close match",
+    "auditStatusPartialMatch": "Partial match"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Avg Volume",
     "recentTrend": "Recent Trend",
-    "sessions": "Sessions"
+    "sessions": "Sessions",
+    "max": "Max: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} Statistics ({contextLabel}):",
+    "recentLast3": " (last 3)",
+    "recentVsPrev": " (vs prev.)"
   },
   "table": {
     "actions": "Actions",

@@ -47,7 +47,8 @@
     "notAvailable": "Mevcut değil",
     "sec": "sec",
     "unknown": "Bilinmiyor",
-    "workout": "Egzersiz"
+    "workout": "Egzersiz",
+    "clear": "Temizle"
   },
   "convert": {
     "currentType": "Mevcut tür:",
@@ -548,7 +549,8 @@
       "targetReps": "Hedeflenen satış temsilcileri:",
       "targetWeight": "Hedef: ({{unit}}):",
       "volume": "Ses Seviyesi ({{unit}}):",
-      "weight": "Ağırlık ({{unit}}):"
+      "weight": "Ağırlık ({{unit}}):",
+      "currentFileInfo": "Geçerli dosya: {fileName}"
     },
     "layoutGrouped": "Kas gruplarına göre düzenlenmiş",
     "layoutHorizontal": "Yatay düzen",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Zamanlayıcı güncellenmedi. Dosyanın düzenleyici programda açık olduğundan emin olun.",
       "timerUpdated": "✅ Zamanlayıcı başarıyla güncellendi!",
       "validationCombinedMode": "⚠️ \"Egzersiz + Antrenman\" türü için, her iki alanı da doldurmanız gerekmektedir!",
-      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun."
+      "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun.",
+      "dismissAchievement": "Başarıyı kapat",
+      "auditScanError": "Tarama hatası: {error}",
+      "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
+      "auditNoMatchFound": "Eşleşme bulunamadı"
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -710,7 +716,11 @@
     },
     "workout": "Egzersiz (isteğe bağlı):",
     "workoutFile": "Egzersiz dosyası:",
-    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):"
+    "workoutNameOptional": "Egzersiz adı (isteğe bağlı):",
+    "auditStatusNoMatch": "Eşleşme yok",
+    "auditStatusExactMatch": "Tam eşleşme",
+    "auditStatusCloseMatch": "Yakın eşleşme",
+    "auditStatusPartialMatch": "Kısmi eşleşme"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Ortalama Hacim",
     "recentTrend": "Son Trend",
-    "sessions": "Sessiyonlar"
+    "sessions": "Sessiyonlar",
+    "max": "Mak: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} İstatistikleri ({contextLabel}):",
+    "recentLast3": " (son 3)",
+    "recentVsPrev": " (öncekiyle)"
   },
   "table": {
     "actions": "Eylemler",

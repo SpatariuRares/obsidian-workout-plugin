@@ -47,7 +47,8 @@
     "notAvailable": "Nu este disponibil",
     "sec": "sec",
     "unknown": "Necunoscut",
-    "workout": "Antrenament"
+    "workout": "Antrenament",
+    "clear": "Șterge"
   },
   "convert": {
     "currentType": "Tip curent:",
@@ -548,7 +549,8 @@
       "targetReps": "Reprezentanții țintă:",
       "targetWeight": "Obiectiv: ({unit}):",
       "volume": "Volum ({{unit}}):",
-      "weight": "Greutate ({{unit}}):"
+      "weight": "Greutate ({{unit}}):",
+      "currentFileInfo": "Fișier curent: {fileName}"
     },
     "layoutGrouped": "Grupat după mușchi",
     "layoutHorizontal": "Flux orizontal",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Nu s-a reușit actualizarea temporizatorului. Asigurați-vă că fișierul este deschis în editor.",
       "timerUpdated": "✅ Timpul a fost actualizat cu succes!",
       "validationCombinedMode": "⚠️ Pentru tipul de exerciții 'exerciții + antrenament', trebuie să completați ambele câmpuri!",
-      "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide."
+      "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide.",
+      "dismissAchievement": "Închide realizare",
+      "auditScanError": "Eroare la scanare: {error}",
+      "auditMismatchCount": "S-au găsit {count} nepotriviri:",
+      "auditNoMatchFound": "Nicio potrivire găsită"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -710,7 +716,11 @@
     },
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișier antrenament:",
-    "workoutNameOptional": "Numele antrenamentului (opțional):"
+    "workoutNameOptional": "Numele antrenamentului (opțional):",
+    "auditStatusNoMatch": "Nicio potrivire",
+    "auditStatusExactMatch": "Potrivire exactă",
+    "auditStatusCloseMatch": "Potrivire apropiată",
+    "auditStatusPartialMatch": "Potrivire parțială"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Volum mediu",
     "recentTrend": "Tendința recentă",
-    "sessions": "Sesion"
+    "sessions": "Sesion",
+    "max": "Max: ",
+    "min": "Min: ",
+    "title": "📈 Statistici {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (ultimele 3)",
+    "recentVsPrev": " (vs ant.)"
   },
   "table": {
     "actions": "Acțiuni",

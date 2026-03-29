@@ -47,7 +47,8 @@
     "notAvailable": "غير متوفر",
     "sec": "common.sec",
     "unknown": "غير معروف",
-    "workout": "تمرين"
+    "workout": "تمرين",
+    "clear": "مسح"
   },
   "convert": {
     "currentType": "النوع الحالي:",
@@ -548,7 +549,8 @@
       "targetReps": "الإعادة المستهدفة:",
       "targetWeight": "الوزن المستهدف ({unit}):",
       "volume": "الحجم ({{unit}}):",
-      "weight": "الوزن ({unit}):"
+      "weight": "الوزن ({unit}):",
+      "currentFileInfo": "الملف الحالي: {fileName}"
     },
     "layoutGrouped": "المجموعة حسب العضلات",
     "layoutHorizontal": "التدفق الأفقي",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "فشلت عملية تحديث المؤقت. تأكد من أن الملف مفتوح في محرر النصوص.",
       "timerUpdated": "✅ تم تحديث المؤقت بنجاح!",
       "validationCombinedMode": "⚠️ لـ 'exercise + workout' نوع يجب ملء الحقول المذكورة!",
-      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة"
+      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة",
+      "dismissAchievement": "رفض الإنجاز",
+      "auditScanError": "خطأ أثناء الفحص: {error}",
+      "auditMismatchCount": "تم العثور على {count} تناقض:",
+      "auditNoMatchFound": "لم يُعثر على تطابق"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -710,7 +716,11 @@
     },
     "workout": "تمارين (اختياري):",
     "workoutFile": "ملف التدريب:",
-    "workoutNameOptional": "اسم التمارين (اختياري):"
+    "workoutNameOptional": "اسم التمارين (اختياري):",
+    "auditStatusNoMatch": "لا تطابق",
+    "auditStatusExactMatch": "تطابق تام",
+    "auditStatusCloseMatch": "تطابق قريب",
+    "auditStatusPartialMatch": "تطابق جزئي"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "الحجم المتوسط",
     "recentTrend": "اتجاه حديث",
-    "sessions": "الجلسات"
+    "sessions": "الجلسات",
+    "max": "الحد الأقصى: ",
+    "min": "الحد الأدنى: ",
+    "title": "📈 إحصائيات {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (آخر 3)",
+    "recentVsPrev": " (مقابل السابق)"
   },
   "table": {
     "actions": "الإجراءات",

@@ -47,7 +47,8 @@
     "notAvailable": "Nicht verfügbar",
     "sec": "common.sec",
     "unknown": "Unbekannt",
-    "workout": "Training"
+    "workout": "Training",
+    "clear": "Löschen"
   },
   "convert": {
     "currentType": "Aktueller Typ:",
@@ -548,7 +549,8 @@
       "targetReps": "Ziel-Wiederholungen:",
       "targetWeight": "Zielgewicht ({Unit}):",
       "volume": "Lautstärke ({unit}):",
-      "weight": "Gewicht ({unit}):"
+      "weight": "Gewicht ({unit}):",
+      "currentFileInfo": "Aktuelle Datei: {fileName}"
     },
     "layoutGrouped": "Gruppiert nach Muskel",
     "layoutHorizontal": "Horizontaler Ablauf",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Fehler beim Aktualisieren des Timers. Stellen Sie sicher, dass die Datei im Editor geöffnet ist.",
       "timerUpdated": "✅ Timer erfolgreich aktualisiert!",
       "validationCombinedMode": "⚠️ Für den Typ 'exercise + workout' müssen beide Felder gefüllt werden!",
-      "validationFillAll": "Bitte alle Felder mit gültigen Werten füllen"
+      "validationFillAll": "Bitte alle Felder mit gültigen Werten füllen",
+      "dismissAchievement": "Erfolg schließen",
+      "auditScanError": "Fehler beim Scannen: {error}",
+      "auditMismatchCount": "{count} mögliche Unstimmigkeiten gefunden:",
+      "auditNoMatchFound": "Keine Übereinstimmung gefunden"
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -710,7 +716,11 @@
     },
     "workout": "Training (optional):",
     "workoutFile": "Training-Datei:",
-    "workoutNameOptional": "Trainingstitel (optional):"
+    "workoutNameOptional": "Trainingstitel (optional):",
+    "auditStatusNoMatch": "Keine Übereinstimmung",
+    "auditStatusExactMatch": "Exakte Übereinstimmung",
+    "auditStatusCloseMatch": "Nahe Übereinstimmung",
+    "auditStatusPartialMatch": "Teilweise Übereinstimmung"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Durchschnittlicher Volumen",
     "recentTrend": "aktuelle Trend",
-    "sessions": "Sitzungen"
+    "sessions": "Sitzungen",
+    "max": "Max: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} Statistiken ({contextLabel}):",
+    "recentLast3": " (letzte 3)",
+    "recentVsPrev": " (vs. vorh.)"
   },
   "table": {
     "actions": "Aktionen",

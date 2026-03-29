@@ -47,7 +47,8 @@
     "notAvailable": "Ikke Tilgængelig",
     "sec": "common.sec",
     "unknown": "Ukendt",
-    "workout": "Træning"
+    "workout": "Træning",
+    "clear": "Ryd"
   },
   "convert": {
     "currentType": "Aktuel type:",
@@ -548,7 +549,8 @@
       "targetReps": "Mål gange:",
       "targetWeight": "Målvet ({unit}):",
       "volume": "Volumen ({unit}):",
-      "weight": "Vægt ({unit}):"
+      "weight": "Vægt ({unit}):",
+      "currentFileInfo": "Aktuel fil: {fileName}"
     },
     "layoutGrouped": "Grupperet efter muskel",
     "layoutHorizontal": "Horisontal flød",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Kunne ikke opdatere timeren. Sørg for, at filen er åben i redigeringsprogrammet.",
       "timerUpdated": "✅ Timer er opdateret med succes!",
       "validationCombinedMode": "⚠️ Vær opmærksom på, at du skal udfylde begge felt for 'øvelse + træning'!",
-      "validationFillAll": "Venligst fyld alle felter med gyldige værdier"
+      "validationFillAll": "Venligst fyld alle felter med gyldige værdier",
+      "dismissAchievement": "Luk præstation",
+      "auditScanError": "Fejl ved scanning: {error}",
+      "auditMismatchCount": "Fandt {count} potentielle uoverensstemmelser:",
+      "auditNoMatchFound": "Ingen match fundet"
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",
@@ -710,7 +716,11 @@
     },
     "workout": "Øvelse (valgfrit):",
     "workoutFile": "Træningsfilen:",
-    "workoutNameOptional": "Øvelsesnavn (valgfrit):"
+    "workoutNameOptional": "Øvelsesnavn (valgfrit):",
+    "auditStatusNoMatch": "Ingen match",
+    "auditStatusExactMatch": "Eksakt match",
+    "auditStatusCloseMatch": "Næsten match",
+    "auditStatusPartialMatch": "Delvist match"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Gennemsnitlig Volumen",
     "recentTrend": "Nylig Trend",
-    "sessions": "Sessions"
+    "sessions": "Sessions",
+    "max": "Maks: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} Statistik ({contextLabel}):",
+    "recentLast3": " (seneste 3)",
+    "recentVsPrev": " (vs forrige)"
   },
   "table": {
     "actions": "Handlinger",

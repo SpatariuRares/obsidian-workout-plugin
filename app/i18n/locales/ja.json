@@ -47,7 +47,8 @@
     "notAvailable": "利用できません",
     "sec": "sec",
     "unknown": "不明",
-    "workout": "ワークアウト"
+    "workout": "ワークアウト",
+    "clear": "クリア"
   },
   "convert": {
     "currentType": "現在の種類:",
@@ -548,7 +549,8 @@
       "targetReps": "目標回数：",
       "targetWeight": "目標: ({unit}):",
       "volume": "音量 ({{unit}}):",
-      "weight": "体重 ({{unit}}):"
+      "weight": "体重 ({{unit}}):",
+      "currentFileInfo": "現在のファイル：{fileName}"
     },
     "layoutGrouped": "筋肉ごとにグループ化",
     "layoutHorizontal": "水平方向のレイアウト",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
       "timerUpdated": "✅ タイマーが正常に更新されました！",
       "validationCombinedMode": "⚠️ 「エクササイズ + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "validationFillAll": "すべてのフィールドに有効な値を入力してください。"
+      "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
+      "dismissAchievement": "実績を閉じる",
+      "auditScanError": "スキャン中にエラー：{error}",
+      "auditMismatchCount": "{count} 件の不一致が見つかりました：",
+      "auditNoMatchFound": "一致なし"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -710,7 +716,11 @@
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
-    "workoutNameOptional": "ワークアウト名（任意）："
+    "workoutNameOptional": "ワークアウト名（任意）：",
+    "auditStatusNoMatch": "一致なし",
+    "auditStatusExactMatch": "完全一致",
+    "auditStatusCloseMatch": "近似一致",
+    "auditStatusPartialMatch": "部分一致"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "平均音量",
     "recentTrend": "最近の傾向",
-    "sessions": "セッション"
+    "sessions": "セッション",
+    "max": "最大：",
+    "min": "最小：",
+    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):",
+    "recentLast3": " (直近3回)",
+    "recentVsPrev": " (前回比)"
   },
   "table": {
     "actions": "操作",

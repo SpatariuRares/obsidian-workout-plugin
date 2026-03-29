@@ -47,7 +47,8 @@
     "notAvailable": "Niet beschikbaar",
     "sec": "common.sec",
     "unknown": "Onbekend",
-    "workout": "Training"
+    "workout": "Training",
+    "clear": "Wissen"
   },
   "convert": {
     "currentType": "Huidige type:",
@@ -548,7 +549,8 @@
       "targetReps": "Doelgroep:",
       "targetWeight": "Doel: ({unit}):",
       "volume": "Volume ({{unit}}):",
-      "weight": "Gewicht ({{unit}}):"
+      "weight": "Gewicht ({{unit}}):",
+      "currentFileInfo": "Huidig bestand: {fileName}"
     },
     "layoutGrouped": "Gegroepeerd per spier",
     "layoutHorizontal": "Horizontale lay-out",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "timerUpdated": "✅ Timer is succesvol bijgewerkt!",
       "validationCombinedMode": "⚠️ Voor het type 'oefening + training' moet u beide velden invullen!",
-      "validationFillAll": "Vul al de velden in met geldige waarden."
+      "validationFillAll": "Vul al de velden in met geldige waarden.",
+      "dismissAchievement": "Prestatie sluiten",
+      "auditScanError": "Fout bij het scannen: {error}",
+      "auditMismatchCount": "{count} mogelijke afwijkingen gevonden:",
+      "auditNoMatchFound": "Geen overeenkomst gevonden"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -710,7 +716,11 @@
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Bestand voor de training:",
-    "workoutNameOptional": "Naam van de workout (optioneel):"
+    "workoutNameOptional": "Naam van de workout (optioneel):",
+    "auditStatusNoMatch": "Geen overeenkomst",
+    "auditStatusExactMatch": "Exacte overeenkomst",
+    "auditStatusCloseMatch": "Bijna overeenkomst",
+    "auditStatusPartialMatch": "Gedeeltelijke overeenkomst"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Gemiddelde volume",
     "recentTrend": "Recente trend",
-    "sessions": "Sessies"
+    "sessions": "Sessies",
+    "max": "Max: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} Statistieken ({contextLabel}):",
+    "recentLast3": " (laatste 3)",
+    "recentVsPrev": " (vs vorig)"
   },
   "table": {
     "actions": "Acties",

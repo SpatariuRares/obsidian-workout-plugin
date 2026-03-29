@@ -47,7 +47,8 @@
     "notAvailable": "Nedostupné",
     "sec": "bezpečnost",
     "unknown": "Neznámé",
-    "workout": "Trénink"
+    "workout": "Trénink",
+    "clear": "Vymazat"
   },
   "convert": {
     "currentType": "Současný typ:",
@@ -548,7 +549,8 @@
       "targetReps": "Cílový počet opakování:",
       "targetWeight": "Cílová hmotnost ({unit}):",
       "volume": "Hlasitost ({unit}):",
-      "weight": "Váha ({unit}):"
+      "weight": "Váha ({unit}):",
+      "currentFileInfo": "Aktuální soubor: {fileName}"
     },
     "layoutGrouped": "Grupováno podle svalu",
     "layoutHorizontal": "Protilehlý proud",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Neúspěšné provedení aktualizace časovače. Ujistěte se, že soubor je otevřen v editoru.",
       "timerUpdated": "✅ Časovač byl úspěšně aktualizován!",
       "validationCombinedMode": "⚠️ pro typ 'cvičení + trénink' musíte vyplnit obě pole!",
-      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami"
+      "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami",
+      "dismissAchievement": "Zavřít úspěch",
+      "auditScanError": "Chyba při skenování: {error}",
+      "auditMismatchCount": "Nalezeno {count} neshod:",
+      "auditNoMatchFound": "Žádná shoda nalezena"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -710,7 +716,11 @@
     },
     "workout": "Trénink (volitelné):",
     "workoutFile": "Soubor tréninku:",
-    "workoutNameOptional": "Název tréninku (volitelné):"
+    "workoutNameOptional": "Název tréninku (volitelné):",
+    "auditStatusNoMatch": "Žádná shoda",
+    "auditStatusExactMatch": "Přesná shoda",
+    "auditStatusCloseMatch": "Blízká shoda",
+    "auditStatusPartialMatch": "Částečná shoda"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Průměrný objem",
     "recentTrend": "Nový trend",
-    "sessions": "Séance"
+    "sessions": "Séance",
+    "max": "Max: ",
+    "min": "Min: ",
+    "title": "📈 Statistiky {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (poslední 3)",
+    "recentVsPrev": " (vs předch.)"
   },
   "table": {
     "actions": "Akce",

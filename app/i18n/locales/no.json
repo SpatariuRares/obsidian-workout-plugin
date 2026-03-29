@@ -47,7 +47,8 @@
     "notAvailable": "Ikke tilgjengelig",
     "sec": "common.sec",
     "unknown": "Ukjent",
-    "workout": "Trening"
+    "workout": "Trening",
+    "clear": "Tøm"
   },
   "convert": {
     "currentType": "Nåværende type:",
@@ -548,7 +549,8 @@
       "targetReps": "Mål:",
       "targetWeight": "Mål: ({unit}):",
       "volume": "Volum: ({{unit}})",
-      "weight": "Vekt ({{unit}}):"
+      "weight": "Vekt ({{unit}}):",
+      "currentFileInfo": "Gjeldende fil: {fileName}"
     },
     "layoutGrouped": "Gruppert etter muskel",
     "layoutHorizontal": "Horisontal layout",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Feilet ved oppdatering av tidsinnstilling. Sørg for at filen er åpen i redigeringsprogrammet.",
       "timerUpdated": "✅ Timer oppdatert med suksess!",
       "validationCombinedMode": "⚠️ For 'trening + treningsøkt'-typen må du fylle ut begge feltene!",
-      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier."
+      "validationFillAll": "Vennligst fyll ut alle feltene med gyldige verdier.",
+      "dismissAchievement": "Lukk prestasjon",
+      "auditScanError": "Feil ved skanning: {error}",
+      "auditMismatchCount": "Fant {count} potensielle avvik:",
+      "auditNoMatchFound": "Ingen treff funnet"
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Merknad:",
@@ -710,7 +716,11 @@
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Fil for trening:",
-    "workoutNameOptional": "Navn på treningsøkten (valgfritt):"
+    "workoutNameOptional": "Navn på treningsøkten (valgfritt):",
+    "auditStatusNoMatch": "Ingen treff",
+    "auditStatusExactMatch": "Eksakt treff",
+    "auditStatusCloseMatch": "Nær treff",
+    "auditStatusPartialMatch": "Delvis treff"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Gjennomsnittlig volum",
     "recentTrend": "Nylig trend",
-    "sessions": "Sesjoner"
+    "sessions": "Sesjoner",
+    "max": "Maks: ",
+    "min": "Min: ",
+    "title": "📈 {dataTypeLabel} Statistikk ({contextLabel}):",
+    "recentLast3": " (siste 3)",
+    "recentVsPrev": " (vs forrige)"
   },
   "table": {
     "actions": "Handling",

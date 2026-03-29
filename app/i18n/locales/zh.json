@@ -47,7 +47,8 @@
     "notAvailable": "不可用",
     "sec": "秒",
     "unknown": "未知",
-    "workout": "训练"
+    "workout": "训练",
+    "clear": "清除"
   },
   "convert": {
     "currentType": "当前类型：",
@@ -548,7 +549,8 @@
       "targetReps": "目标次数：",
       "targetWeight": "目标：({unit}):",
       "volume": "训练量：{unit}",
-      "weight": "重量：{unit}"
+      "weight": "重量：{unit}",
+      "currentFileInfo": "当前文件：{fileName}"
     },
     "layoutGrouped": "按肌肉分组",
     "layoutHorizontal": "水平布局",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
       "timerUpdated": "✅ 计时器已成功更新！",
       "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
-      "validationFillAll": "请填写所有字段并使用有效值。"
+      "validationFillAll": "请填写所有字段并使用有效值。",
+      "dismissAchievement": "关闭成就",
+      "auditScanError": "扫描文件时出错：{error}",
+      "auditMismatchCount": "发现 {count} 个潜在不匹配：",
+      "auditNoMatchFound": "未找到匹配"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -710,7 +716,11 @@
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
-    "workoutNameOptional": "训练名称（可选）："
+    "workoutNameOptional": "训练名称（可选）：",
+    "auditStatusNoMatch": "无匹配",
+    "auditStatusExactMatch": "精确匹配",
+    "auditStatusCloseMatch": "近似匹配",
+    "auditStatusPartialMatch": "部分匹配"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "平均训练量",
     "recentTrend": "近期趋势",
-    "sessions": "训练次数"
+    "sessions": "训练次数",
+    "max": "最大值：",
+    "min": "最小值：",
+    "title": "📈 {dataTypeLabel} 统计 ({contextLabel}):",
+    "recentLast3": " (最近3次)",
+    "recentVsPrev": " (与上次比)"
   },
   "table": {
     "actions": "操作",

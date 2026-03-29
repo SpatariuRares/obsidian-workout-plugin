@@ -47,7 +47,8 @@
     "notAvailable": "No disponible.",
     "sec": "sec",
     "unknown": "Desconocido.",
-    "workout": "Entrenamiento."
+    "workout": "Entrenamiento.",
+    "clear": "Borrar"
   },
   "convert": {
     "currentType": "Tipo actual:",
@@ -548,7 +549,8 @@
       "targetReps": "Repeticiones objetivas:",
       "targetWeight": "Peso objetivo ({unit}):",
       "volume": "Volumen ({{unit}}):",
-      "weight": "Peso ({unit}):"
+      "weight": "Peso ({unit}):",
+      "currentFileInfo": "Archivo actual: {fileName}"
     },
     "layoutGrouped": "Agrupado por músculo",
     "layoutHorizontal": "Flujo horizontal",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "No se pudo actualizar el temporizador. Asegúrese de que el archivo esté abierto en el editor.",
       "timerUpdated": "✅ Temporizador actualizado correctamente.",
       "validationCombinedMode": "⚠️ Para el tipo 'ejercicio + entrenamiento' es necesario rellenar ambos campos!",
-      "validationFillAll": "Por favor, llena todos los campos con valores válidos"
+      "validationFillAll": "Por favor, llena todos los campos con valores válidos",
+      "dismissAchievement": "Descartar logro",
+      "auditScanError": "Error al escanear archivos: {error}",
+      "auditMismatchCount": "Se encontraron {count} discrepancias:",
+      "auditNoMatchFound": "Sin coincidencia"
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Étiqueta:",
@@ -710,7 +716,11 @@
     },
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
-    "workoutNameOptional": "Nombre del Entrenamiento (opcional):"
+    "workoutNameOptional": "Nombre del Entrenamiento (opcional):",
+    "auditStatusNoMatch": "Sin coincidencia",
+    "auditStatusExactMatch": "Coincidencia exacta",
+    "auditStatusCloseMatch": "Coincidencia cercana",
+    "auditStatusPartialMatch": "Coincidencia parcial"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Volumen promedio.",
     "recentTrend": "Tendencia reciente.",
-    "sessions": "Sesiones."
+    "sessions": "Sesiones.",
+    "max": "Máx: ",
+    "min": "Mín: ",
+    "title": "📈 Estadísticas {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (últimas 3)",
+    "recentVsPrev": " (vs ant.)"
   },
   "table": {
     "actions": "Acciones",

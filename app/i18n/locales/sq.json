@@ -47,7 +47,8 @@
     "notAvailable": "Nuk është disponues",
     "sec": "sek",
     "unknown": "E panjohur",
-    "workout": "Tregimi"
+    "workout": "Tregimi",
+    "clear": "Pastro"
   },
   "convert": {
     "currentType": "Tipi aktual:",
@@ -548,7 +549,8 @@
       "targetReps": "Shënimet për numrin e përrjeteve:",
       "targetWeight": "Shërbim: ({unit}):",
       "volume": "Shumës (\\{unit}):",
-      "weight": "Pesha ({{unit}}):"
+      "weight": "Pesha ({{unit}}):",
+      "currentFileInfo": "Skedari aktual: {fileName}"
     },
     "layoutGrouped": "Grupuar sipas muskujve",
     "layoutHorizontal": "Rregullore horizontale",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Më nuk u përpohet të përditësohet çorabi. Sigurohuni që dosja është hapur në redaktoren.",
       "timerUpdated": "✅ Koha u përditësoi me sukses!",
       "validationCombinedMode": "⚠️ për tipin 'eksercizim + stërmorë', duhet të mbushni të dy fushat!",
-      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme."
+      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme.",
+      "dismissAchievement": "Hiq arritjen",
+      "auditScanError": "Gabim gjatë skanimit: {error}",
+      "auditMismatchCount": "Gjendën {count} mospërputhje:",
+      "auditNoMatchFound": "Nuk u gjet asnjë përputhje"
     },
     "parameterKey": "Çelë:",
     "parameterLabel": "Etiketa:",
@@ -710,7 +716,11 @@
     },
     "workout": "Tregimi (opcional):",
     "workoutFile": "Fajla e stilit:",
-    "workoutNameOptional": "Emri i stërmorës (opcional):"
+    "workoutNameOptional": "Emri i stërmorës (opcional):",
+    "auditStatusNoMatch": "Pa përputhje",
+    "auditStatusExactMatch": "Përputhje e saktë",
+    "auditStatusCloseMatch": "Përputhje e afërt",
+    "auditStatusPartialMatch": "Përputhje e pjesshme"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Vlera mesatare",
     "recentTrend": "Tendenca e fundit",
-    "sessions": "Sesionet"
+    "sessions": "Sesionet",
+    "max": "Maks: ",
+    "min": "Min: ",
+    "title": "📈 Statistikat {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (3 të fundit)",
+    "recentVsPrev": " (vs para.)"
   },
   "table": {
     "actions": "Akcje",

@@ -47,7 +47,8 @@
     "notAvailable": "사용 불가",
     "sec": "보안",
     "unknown": "알 수 없음",
-    "workout": "운동"
+    "workout": "운동",
+    "clear": "지우기"
   },
   "convert": {
     "currentType": "현재 유형:",
@@ -548,7 +549,8 @@
       "targetReps": "목표 대상:",
       "targetWeight": "목표: ({unit}):",
       "volume": "볼륨 ({{unit}}):",
-      "weight": "무게 ({{unit}}):"
+      "weight": "무게 ({{unit}}):",
+      "currentFileInfo": "현재 파일: {fileName}"
     },
     "layoutGrouped": "근육별로 그룹화",
     "layoutHorizontal": "수평 방향 흐름",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "timerUpdated": "✅ 타이머가 성공적으로 업데이트되었습니다!",
       "validationCombinedMode": "⚠️ '운동 + 운동' 유형의 경우, 두 필드를 모두 채워야 합니다!",
-      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요."
+      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
+      "dismissAchievement": "업적 닫기",
+      "auditScanError": "스캔 중 오류: {error}",
+      "auditMismatchCount": "{count}개의 불일치 발견:",
+      "auditNoMatchFound": "일치 항목 없음"
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -710,7 +716,11 @@
     },
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
-    "workoutNameOptional": "운동 이름 (선택 사항):"
+    "workoutNameOptional": "운동 이름 (선택 사항):",
+    "auditStatusNoMatch": "일치 없음",
+    "auditStatusExactMatch": "정확히 일치",
+    "auditStatusCloseMatch": "유사 일치",
+    "auditStatusPartialMatch": "부분 일치"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "평균 부피",
     "recentTrend": "최근 추세",
-    "sessions": "세션"
+    "sessions": "세션",
+    "max": "최대: ",
+    "min": "최소: ",
+    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):",
+    "recentLast3": " (최근 3회)",
+    "recentVsPrev": " (이전 대비)"
   },
   "table": {
     "actions": "액션",

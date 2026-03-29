@@ -47,7 +47,8 @@
     "notAvailable": "उपलब्ध नहीं",
     "sec": "सुर",
     "unknown": "अज्ञात",
-    "workout": "वर्कआउट"
+    "workout": "वर्कआउट",
+    "clear": "साफ करें"
   },
   "convert": {
     "currentType": "वर्तमान प्रकार:",
@@ -548,7 +549,8 @@
       "targetReps": "लक्ष्यित प्रतिनिधि:",
       "targetWeight": "लक्ष्यित वजन ({इकाई}):",
       "volume": "वॉल्यूम ({unit}):",
-      "weight": "वजन ({इकाई}):"
+      "weight": "वजन ({इकाई}):",
+      "currentFileInfo": "वर्तमान फ़ाइल: {fileName}"
     },
     "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
     "layoutHorizontal": "क्षैतिज प्रवाह",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "timerUpdated": "✅ टाइमर सफलतापूर्वक अपडेट हो गया!",
       "validationCombinedMode": "⚠️ 'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड को भरना होगा!",
-      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।"
+      "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
+      "dismissAchievement": "उपलब्धि खारिज करें",
+      "auditScanError": "स्कैन में त्रुटि: {error}",
+      "auditMismatchCount": "{count} असंगतियां मिलीं:",
+      "auditNoMatchFound": "कोई मिलान नहीं मिला"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -710,7 +716,11 @@
     },
     "workout": "वर्कआउट (वैकल्पिक):",
     "workoutFile": "वर्कआउट फ़ाइल:",
-    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):"
+    "workoutNameOptional": "वर्कआउट का नाम (वैकल्पिक):",
+    "auditStatusNoMatch": "कोई मिलान नहीं",
+    "auditStatusExactMatch": "सटीक मिलान",
+    "auditStatusCloseMatch": "निकट मिलान",
+    "auditStatusPartialMatch": "आंशिक मिलान"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "औसत मात्रा",
     "recentTrend": "हाल का रुझान",
-    "sessions": "सत्र"
+    "sessions": "सत्र",
+    "max": "अधिकतम: ",
+    "min": "न्यूनतम: ",
+    "title": "📈 {dataTypeLabel} सांख्यिकी ({contextLabel}):",
+    "recentLast3": " (अंतिम 3)",
+    "recentVsPrev": " (पिछले से)"
   },
   "table": {
     "actions": "क्रियाएं",

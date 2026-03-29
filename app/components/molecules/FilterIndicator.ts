@@ -5,14 +5,15 @@
  */
 
 import { Button, Text } from "@app/components/atoms";
+import { t } from "@app/i18n";
 
 export interface FilterIndicatorProps {
-	label: string;
-	filterValue: string;
-	color?: string;
-	onClear: () => void;
-	clearText?: string;
-	className?: string;
+  label: string;
+  filterValue: string;
+  color?: string;
+  onClear: () => void;
+  clearText?: string;
+  className?: string;
 }
 
 /**
@@ -31,47 +32,44 @@ export interface FilterIndicatorProps {
  * ```
  */
 export class FilterIndicator {
-	/**
-	 * Create a filter indicator element
-	 * @param parent - Parent HTML element
-	 * @param props - Filter indicator properties
-	 * @returns The created filter indicator container
-	 */
-	static create(
-		parent: HTMLElement,
-		props: FilterIndicatorProps
-	): HTMLElement {
-		const container = parent.createEl("div", {
-			cls: props.className || "workout-filter-indicator",
-		});
+  /**
+   * Create a filter indicator element
+   * @param parent - Parent HTML element
+   * @param props - Filter indicator properties
+   * @returns The created filter indicator container
+   */
+  static create(parent: HTMLElement, props: FilterIndicatorProps): HTMLElement {
+    const container = parent.createEl("div", {
+      cls: props.className || "workout-filter-indicator",
+    });
 
-		// Filter label text
-		Text.create(container, {
-			text: `${props.label} `,
-			className: "workout-filter-indicator-text",
-			tag: "span",
-		});
+    // Filter label text
+    Text.create(container, {
+      text: `${props.label} `,
+      className: "workout-filter-indicator-text",
+      tag: "span",
+    });
 
-		// Filter value badge
-		const badge = Text.create(container, {
-			text: props.filterValue,
-			className: "workout-filter-indicator-badge",
-			tag: "span",
-		});
+    // Filter value badge
+    const badge = Text.create(container, {
+      text: props.filterValue,
+      className: "workout-filter-indicator-badge",
+      tag: "span",
+    });
 
-		if (props.color) {
-			badge.style.backgroundColor = props.color;
-		}
+    if (props.color) {
+      badge.style.backgroundColor = props.color;
+    }
 
-		// Clear button
-		const clearBtn = Button.create(container, {
-			text: props.clearText || "Clear",
-			className: "workout-filter-indicator-clear",
-			ariaLabel: props.clearText || "Clear filter",
-			variant: "secondary",
-		});
-		Button.onClick(clearBtn, props.onClear);
+    // Clear button
+    const clearBtn = Button.create(container, {
+      text: props.clearText || t("common.clear"),
+      className: "workout-filter-indicator-clear",
+      ariaLabel: props.clearText || t("common.clear"),
+      variant: "secondary",
+    });
+    Button.onClick(clearBtn, props.onClear);
 
-		return container;
-	}
+    return container;
+  }
 }

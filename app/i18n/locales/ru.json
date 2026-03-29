@@ -47,7 +47,8 @@
     "notAvailable": "Не доступно",
     "sec": "безопасность",
     "unknown": "Неизвестно",
-    "workout": "Тренировка"
+    "workout": "Тренировка",
+    "clear": "Очистить"
   },
   "convert": {
     "currentType": "Текущий тип:",
@@ -548,7 +549,8 @@
       "targetReps": "Целевые показатели:",
       "targetWeight": "Цель: ({unit}):",
       "volume": "Громкость ({unit}):",
-      "weight": "Вес ({{unit}}):"
+      "weight": "Вес ({{unit}}):",
+      "currentFileInfo": "Текущий файл: {fileName}"
     },
     "layoutGrouped": "Группировано по мышцам",
     "layoutHorizontal": "Горизонтальное расположение",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Не удалось обновить таймер. Убедитесь, что файл открыт в редакторе.",
       "timerUpdated": "✅ Таймер успешно обновлен!",
       "validationCombinedMode": "⚠️ Для типа \"упражнения + тренировка\" необходимо заполнить оба поля!",
-      "validationFillAll": "Пожалуйста, заполните все поля, используя допустимые значения."
+      "validationFillAll": "Пожалуйста, заполните все поля, используя допустимые значения.",
+      "dismissAchievement": "Закрыть достижение",
+      "auditScanError": "Ошибка сканирования: {error}",
+      "auditMismatchCount": "Найдено {count} несоответствий:",
+      "auditNoMatchFound": "Совпадений не найдено"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Метка:",
@@ -710,7 +716,11 @@
     },
     "workout": "Тренировка (необязательно):",
     "workoutFile": "Файл тренировки:",
-    "workoutNameOptional": "Название тренировки (необязательно):"
+    "workoutNameOptional": "Название тренировки (необязательно):",
+    "auditStatusNoMatch": "Нет совпадения",
+    "auditStatusExactMatch": "Точное совпадение",
+    "auditStatusCloseMatch": "Близкое совпадение",
+    "auditStatusPartialMatch": "Частичное совпадение"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Средний объем",
     "recentTrend": "Последняя тенденция",
-    "sessions": "Сеансы"
+    "sessions": "Сеансы",
+    "max": "Макс: ",
+    "min": "Мин: ",
+    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):",
+    "recentLast3": " (последние 3)",
+    "recentVsPrev": " (vs пред.)"
   },
   "table": {
     "actions": "Действия",

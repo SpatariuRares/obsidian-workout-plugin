@@ -22,10 +22,7 @@ export class TargetHeader {
    * @param props - Header properties
    * @returns The created header element, or null if no targets set
    */
-  static render(
-    container: HTMLElement,
-    props: TargetHeaderProps,
-  ): HTMLElement | null {
+  static render(container: HTMLElement, props: TargetHeaderProps): HTMLElement | null {
     const { targetWeight, targetReps, filteredData, weightUnit } = props;
 
     // Only render if at least one target is set
@@ -41,14 +38,12 @@ export class TargetHeader {
       parts.push(`${targetWeight}${weightUnit}`);
     }
     if (targetReps !== undefined) {
-      const separator =
-        targetWeight !== undefined ? t("table.target.separator") : "";
+      const separator = targetWeight !== undefined ? t("table.target.separator") : "";
       parts.push(`${separator}${targetReps} ${t("table.target.repsSuffix")}`);
     }
 
     const targetText = `${t("table.labels.target")} ${parts.join("")}`;
-    const targetTextSpan = targetDiv.createSpan({ cls: "workout-target-text" });
-    targetTextSpan.textContent = targetText;
+    targetDiv.createSpan({ cls: "workout-target-text", text: targetText });
 
     // Render progress bar if both targets are set
     if (targetWeight !== undefined && targetReps !== undefined) {
@@ -67,20 +62,14 @@ export class TargetHeader {
     targetReps: number,
     filteredData: WorkoutLogData[],
   ): void {
-    const bestReps = TargetCalculator.calculateBestRepsAtWeight(
-      targetWeight,
-      filteredData,
-    );
+    const bestReps = TargetCalculator.calculateBestRepsAtWeight(targetWeight, filteredData);
 
     if (bestReps === 0) {
       // No data at target weight yet
       return;
     }
 
-    const progressPercent = TargetCalculator.calculateProgressPercent(
-      bestReps,
-      targetReps,
-    );
+    const progressPercent = TargetCalculator.calculateProgressPercent(bestReps, targetReps);
     const progressLevel = TargetCalculator.getProgressLevel(progressPercent);
 
     // Create progress bar container

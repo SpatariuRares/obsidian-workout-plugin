@@ -47,7 +47,8 @@
     "notAvailable": "Non disponible.",
     "sec": "common.sec",
     "unknown": "Inconnu.",
-    "workout": "Entraînement."
+    "workout": "Entraînement.",
+    "clear": "Effacer"
   },
   "convert": {
     "currentType": "Type actuel:",
@@ -548,7 +549,8 @@
       "targetReps": "Représentants cibles :",
       "targetWeight": "Poids cible ({unité}) :",
       "volume": "Volume ({{unit}}):",
-      "weight": "Poids : ({unité})"
+      "weight": "Poids : ({unité})",
+      "currentFileInfo": "Fichier actuel : {fileName}"
     },
     "layoutGrouped": "Regroupés par muscle.",
     "layoutHorizontal": "Flux horizontal.",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "Échec de la mise à jour du minuteur. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "timerUpdated": "✅ Minuteur mis à jour avec succès !",
       "validationCombinedMode": "⚠️ Pour le type d'activité \"exercice + entraînement\", vous devez remplir les deux champs !",
-      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides."
+      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides.",
+      "dismissAchievement": "Ignorer la réussite",
+      "auditScanError": "Erreur lors du scan : {error}",
+      "auditMismatchCount": "{count} discordances potentielles trouvées :",
+      "auditNoMatchFound": "Aucune correspondance trouvée"
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -710,7 +716,11 @@
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
-    "workoutNameOptional": "Nom de l'entraînement (facultatif) :"
+    "workoutNameOptional": "Nom de l'entraînement (facultatif) :",
+    "auditStatusNoMatch": "Aucune correspondance",
+    "auditStatusExactMatch": "Correspondance exacte",
+    "auditStatusCloseMatch": "Correspondance proche",
+    "auditStatusPartialMatch": "Correspondance partielle"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "Volume moyen.",
     "recentTrend": "Tendances récentes.",
-    "sessions": "Séances."
+    "sessions": "Séances.",
+    "max": "Max : ",
+    "min": "Min : ",
+    "title": "📈 Statistiques {dataTypeLabel} ({contextLabel}) :",
+    "recentLast3": " (3 dernières)",
+    "recentVsPrev": " (vs préc.)"
   },
   "table": {
     "actions": "Actions",

@@ -47,7 +47,8 @@
     "notAvailable": "無法取得",
     "sec": "安全",
     "unknown": "未定",
-    "workout": "運動"
+    "workout": "運動",
+    "clear": "清除"
   },
   "convert": {
     "currentType": "目前類型：",
@@ -548,7 +549,8 @@
       "targetReps": "目標次數：",
       "targetWeight": "目標：({unit})：",
       "volume": "音量：({unit})",
-      "weight": "重量：({unit})"
+      "weight": "重量：({unit})",
+      "currentFileInfo": "目前檔案：{fileName}"
     },
     "layoutGrouped": "按肌肉分類",
     "layoutHorizontal": "水平排列",
@@ -615,7 +617,11 @@
       "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
       "timerUpdated": "✅ 倒計時已成功更新！",
       "validationCombinedMode": "⚠️ 針對「運動 + 訓練」類型，您必須填寫兩個欄位！",
-      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。"
+      "validationFillAll": "請務必填寫所有欄位，並使用有效的值。",
+      "dismissAchievement": "關閉成就",
+      "auditScanError": "掃描文件時出錯：{error}",
+      "auditMismatchCount": "發現 {count} 個潛在不匹配：",
+      "auditNoMatchFound": "未找到匹配"
     },
     "parameterKey": "關鍵：",
     "parameterLabel": "標籤：",
@@ -710,7 +716,11 @@
     },
     "workout": "運動 (可選)：",
     "workoutFile": "運動檔案：",
-    "workoutNameOptional": "運動名稱（可選）："
+    "workoutNameOptional": "運動名稱（可選）：",
+    "auditStatusNoMatch": "無匹配",
+    "auditStatusExactMatch": "精確匹配",
+    "auditStatusCloseMatch": "近似匹配",
+    "auditStatusPartialMatch": "部分匹配"
   },
   "settings": {
     "buttons": {
@@ -838,7 +848,12 @@
   "stats": {
     "avgVolume": "平均體積",
     "recentTrend": "近期趨勢",
-    "sessions": "會計"
+    "sessions": "會計",
+    "max": "最大值：",
+    "min": "最小值：",
+    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):",
+    "recentLast3": " (最近3次)",
+    "recentVsPrev": " (與上次比)"
   },
   "table": {
     "actions": "動作",

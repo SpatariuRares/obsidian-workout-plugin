@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
     "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
     "editItem": "Ndrysho {item}",
-    "deleteItem": "Fshi {item}"
+    "deleteItem": "Fshi {item}",
+    "errors": {
+      "missingElements": "Elemente të mungueshme"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Serit: {sets}\n- Repetime: {reps}\n- Pauza: {restTime}",
+    "noteTemplate": "**Në vëmendje: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Shiko Të gjykën",
     "invalidDate": "Data e ejet",
     "labels": {
-      "target": "Qasja:"
+      "target": "Qasja:",
+      "errors": {
+        "tableElementsNotInitialized": "Elementët e tablos nuk janë inicializuar"
+      }
     },
     "noData": "Nuk ka të dhana",
     "notAvailable": "Nuk është disponues",
@@ -920,7 +928,8 @@
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linja e tendencës"
+    "trendLine": "Linja e tendencës",
+    "refreshingTable": "Rikujsimi tabelës..."
   },
   "timeperiods": {
     "month": "Mjes",

@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "मर्ज करें: केवल नए टैग जोड़ें, मौजूदा रखें",
     "importReplaceAriaLabel": "बदलें: सभी मौजूदा टैग ओवरराइट करें",
     "editItem": "{item} संपादित करें",
-    "deleteItem": "{item} हटाएं"
+    "deleteItem": "{item} हटाएं",
+    "errors": {
+      "missingElements": "गायब तत्व"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड",
+    "noteTemplate": "**ध्यान दें: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "अभ्यास पर जाएं",
     "invalidDate": "अमान्य तिथि",
     "labels": {
-      "target": "लक्ष्य:"
+      "target": "लक्ष्य:",
+      "errors": {
+        "tableElementsNotInitialized": "टेबल के तत्व आरंभ नहीं किए गए"
+      }
     },
     "noData": "कोई डेटा नहीं",
     "notAvailable": "उपलब्ध नहीं",
@@ -920,7 +928,8 @@
       "repsSuffix": "प्रतिनिधि",
       "separator": " × "
     },
-    "trendLine": "ट्रेंड लाइन"
+    "trendLine": "ट्रेंड लाइन",
+    "refreshingTable": "टेबल को रीफ्रेश करना..."
   },
   "timeperiods": {
     "month": "महीना",

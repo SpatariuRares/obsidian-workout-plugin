@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "合併：僅新增標籤，保留現有標籤",
     "importReplaceAriaLabel": "取代：覆蓋所有現有標籤",
     "editItem": "編輯{item}",
-    "deleteItem": "刪除{item}"
+    "deleteItem": "刪除{item}",
+    "errors": {
+      "missingElements": "缺少元件"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - 訓練組數：{sets}\n- 次數：{reps}\n- 休息時間：{restTime} 秒",
+    "noteTemplate": "**請注意：${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "前往練習",
     "invalidDate": "無效日期",
     "labels": {
-      "target": "目標："
+      "target": "目標：",
+      "errors": {
+        "tableElementsNotInitialized": "表格元素未初始化"
+      }
     },
     "noData": "沒有資料",
     "notAvailable": "無法取得",
@@ -920,7 +928,8 @@
       "repsSuffix": "代表",
       "separator": " × "
     },
-    "trendLine": "趨勢線"
+    "trendLine": "趨勢線",
+    "refreshingTable": "重新整理表格..."
   },
   "timeperiods": {
     "month": "月份",

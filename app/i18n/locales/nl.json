@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Samenvoegen: alleen nieuwe tags toevoegen, bestaande bewaren",
     "importReplaceAriaLabel": "Vervangen: alle bestaande tags overschrijven",
     "editItem": "{item} bewerken",
-    "deleteItem": "{item} verwijderen"
+    "deleteItem": "{item} verwijderen",
+    "errors": {
+      "missingElements": "Ontbrekende elementen"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s",
+    "noteTemplate": "**Let op: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Ga naar oefening",
     "invalidDate": "Ongeldige datum",
     "labels": {
-      "target": "Doel:"
+      "target": "Doel:",
+      "errors": {
+        "tableElementsNotInitialized": "De elementen in de tabel zijn niet geïnitialiseerd."
+      }
     },
     "noData": "Geen gegevens",
     "notAvailable": "Niet beschikbaar",
@@ -920,7 +928,8 @@
       "repsSuffix": "representanten",
       "separator": " × "
     },
-    "trendLine": "Trendlijn"
+    "trendLine": "Trendlijn",
+    "refreshingTable": "Tabel opnieuw laden..."
   },
   "timeperiods": {
     "month": "Maand",

@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "병합: 새 태그만 추가, 기존 태그 유지",
     "importReplaceAriaLabel": "대체: 기존 태그 모두 덮어쓰기",
     "editItem": "{item} 편집",
-    "deleteItem": "{item} 삭제"
+    "deleteItem": "{item} 삭제",
+    "errors": {
+      "missingElements": "누락된 요소"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - 세트: {sets}\n- 횟수: {reps}\n- 휴식: {restTime} 초",
+    "noteTemplate": "**참고: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "운동으로 이동",
     "invalidDate": "유효하지 않은 날짜",
     "labels": {
-      "target": "대상:"
+      "target": "대상:",
+      "errors": {
+        "tableElementsNotInitialized": "테이블 요소가 초기화되지 않았습니다."
+      }
     },
     "noData": "데이터 없음",
     "notAvailable": "사용 불가",
@@ -920,7 +928,8 @@
       "repsSuffix": "대표",
       "separator": " × "
     },
-    "trendLine": "추세선"
+    "trendLine": "추세선",
+    "refreshingTable": "테이블 새로 고침..."
   },
   "timeperiods": {
     "month": "월",

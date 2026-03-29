@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "合并：仅添加新标签，保留现有标签",
     "importReplaceAriaLabel": "替换：覆盖所有现有标签",
     "editItem": "编辑{item}",
-    "deleteItem": "删除{item}"
+    "deleteItem": "删除{item}",
+    "errors": {
+      "missingElements": "缺少元素"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息时间：{restTime} 秒",
+    "noteTemplate": "**请注意：${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "跳转到训练",
     "invalidDate": "无效日期",
     "labels": {
-      "target": "目标："
+      "target": "目标：",
+      "errors": {
+        "tableElementsNotInitialized": "表格元素未初始化"
+      }
     },
     "noData": "无数据",
     "notAvailable": "不可用",
@@ -920,7 +928,8 @@
       "repsSuffix": "次",
       "separator": " × "
     },
-    "trendLine": "趋势线"
+    "trendLine": "趋势线",
+    "refreshingTable": "正在刷新表格..."
   },
   "timeperiods": {
     "month": "月",

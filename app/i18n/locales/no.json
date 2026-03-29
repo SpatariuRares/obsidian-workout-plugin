@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Slå sammen: legg til kun nye tagger, behold eksisterende",
     "importReplaceAriaLabel": "Erstatt: overskriv alle eksisterende tagger",
     "editItem": "Rediger {item}",
-    "deleteItem": "Slett {item}"
+    "deleteItem": "Slett {item}",
+    "errors": {
+      "missingElements": "Manglende elementer"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Antall sett: {sets}\n- Antall repetisjoner: {reps}\n- Pause: {restTime} sekunder",
+    "noteTemplate": "**Merk:** ${params.note}"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Gå til øvelse",
     "invalidDate": "Ugyldig dato",
     "labels": {
-      "target": "Mål:"
+      "target": "Mål:",
+      "errors": {
+        "tableElementsNotInitialized": "Tabellens elementer er ikke initialisert."
+      }
     },
     "noData": "Ingen data",
     "notAvailable": "Ikke tilgjengelig",
@@ -920,7 +928,8 @@
       "repsSuffix": "representasjoner",
       "separator": " × "
     },
-    "trendLine": "Trendlinje"
+    "trendLine": "Trendlinje",
+    "refreshingTable": "Oppdatere tabell..."
   },
   "timeperiods": {
     "month": "Måned",

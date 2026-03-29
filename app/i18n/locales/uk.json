@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Об'єднати: додати тільки нові теги, зберегти існуючі",
     "importReplaceAriaLabel": "Замінити: перезаписати всі існуючі теги",
     "editItem": "Редагувати {item}",
-    "deleteItem": "Видалити {item}"
+    "deleteItem": "Видалити {item}",
+    "errors": {
+      "missingElements": "Відсутні елементи"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Підходи: {sets}\n- Повторення: {reps}\n- Відпочинок: {restTime} секунд",
+    "noteTemplate": "**Примітка: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Перейти до вправи",
     "invalidDate": "Неправильна дата",
     "labels": {
-      "target": "Ціль:"
+      "target": "Ціль:",
+      "errors": {
+        "tableElementsNotInitialized": "Елементи таблиці не ініціалізовані"
+      }
     },
     "noData": "Відсутні дані",
     "notAvailable": "Не доступно",
@@ -920,7 +928,8 @@
       "repsSuffix": "репрезентанти",
       "separator": " × "
     },
-    "trendLine": "Лінія тренду"
+    "trendLine": "Лінія тренду",
+    "refreshingTable": "Оновлення таблиці..."
   },
   "timeperiods": {
     "month": "Місяць",

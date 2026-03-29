@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Îmbinare: adaugă doar etichete noi, păstrează existente",
     "importReplaceAriaLabel": "Înlocuire: suprascrie toate etichetele existente",
     "editItem": "Editează {item}",
-    "deleteItem": "Șterge {item}"
+    "deleteItem": "Șterge {item}",
+    "errors": {
+      "missingElements": "Elemente lipsă"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Seturi: {sets}\n- Repetări: {reps}\n- Pauză: {restTime} secunde",
+    "noteTemplate": "**Notă: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Mergi la exercițiu",
     "invalidDate": "Data introdusă este incorectă",
     "labels": {
-      "target": "Țintă:"
+      "target": "Țintă:",
+      "errors": {
+        "tableElementsNotInitialized": "Elementele din tabel nu au fost inițializate"
+      }
     },
     "noData": "Nu există date",
     "notAvailable": "Nu este disponibil",
@@ -920,7 +928,8 @@
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linia de tendință"
+    "trendLine": "Linia de tendință",
+    "refreshingTable": "Reîmprospătează tabelul..."
   },
   "timeperiods": {
     "month": "Luna",

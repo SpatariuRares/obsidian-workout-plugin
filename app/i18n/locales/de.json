@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Zusammenführen: nur neue Tags hinzufügen, bestehende behalten",
     "importReplaceAriaLabel": "Ersetzen: alle vorhandenen Tags überschreiben",
     "editItem": "{item} bearbeiten",
-    "deleteItem": "{item} löschen"
+    "deleteItem": "{item} löschen",
+    "errors": {
+      "missingElements": "Fehlende Elemente"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sätze: {sets}\n- Wiederholungen: {reps}\n- Pause: {restTime}s",
+    "noteTemplate": "**Hinweis: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Gehe zu Übung",
     "invalidDate": "Ungültiger Datum",
     "labels": {
-      "target": "Ziel:"
+      "target": "Ziel:",
+      "errors": {
+        "tableElementsNotInitialized": "Die Tabellenelemente wurden nicht initialisiert."
+      }
     },
     "noData": "Keine Daten",
     "notAvailable": "Nicht verfügbar",
@@ -920,7 +928,8 @@
       "repsSuffix": "Wiederholungen",
       "separator": " × "
     },
-    "trendLine": "Trendlinie"
+    "trendLine": "Trendlinie",
+    "refreshingTable": "Aktualisieren der Tabelle..."
   },
   "timeperiods": {
     "month": "Monat",

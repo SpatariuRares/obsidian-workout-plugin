@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Scal: dodaj tylko nowe tagi, zachowaj istniejące",
     "importReplaceAriaLabel": "Zastąp: nadpisz wszystkie istniejące tagi",
     "editItem": "Edytuj {item}",
-    "deleteItem": "Usuń {item}"
+    "deleteItem": "Usuń {item}",
+    "errors": {
+      "missingElements": "Brakujące elementy"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Serii: {sets}\n- Powtórzeń: {reps}\n- Przerwy: {restTime} sekund",
+    "noteTemplate": "**Uwaga: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Przejdź do ćwiczenia",
     "invalidDate": "Nieprawidłowa data",
     "labels": {
-      "target": "Cel:"
+      "target": "Cel:",
+      "errors": {
+        "tableElementsNotInitialized": "Elementy tabeli nie zostały zainicjalizowane"
+      }
     },
     "noData": "Brak danych",
     "notAvailable": "Nie dostępne",
@@ -920,7 +928,8 @@
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linia trendu"
+    "trendLine": "Linia trendu",
+    "refreshingTable": "Odświeżanie tabeli..."
   },
   "timeperiods": {
     "month": "Miesiąc",

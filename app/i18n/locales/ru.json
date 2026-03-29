@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Объединить: добавить только новые теги, сохранить существующие",
     "importReplaceAriaLabel": "Заменить: перезаписать все существующие теги",
     "editItem": "Изменить {item}",
-    "deleteItem": "Удалить {item}"
+    "deleteItem": "Удалить {item}",
+    "errors": {
+      "missingElements": "Отсутствующие элементы"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Подходы: {sets}\n- Повторения: {reps}\n- Отдых: {restTime} секунд",
+    "noteTemplate": "**Обратите внимание: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Перейти к упражнению",
     "invalidDate": "Неверная дата",
     "labels": {
-      "target": "Цель:"
+      "target": "Цель:",
+      "errors": {
+        "tableElementsNotInitialized": "Элементы таблицы не инициализированы"
+      }
     },
     "noData": "Нет данных",
     "notAvailable": "Не доступно",
@@ -920,7 +928,8 @@
       "repsSuffix": "представления",
       "separator": " × "
     },
-    "trendLine": "Линия тренда"
+    "trendLine": "Линия тренда",
+    "refreshingTable": "Обновление таблицы..."
   },
   "timeperiods": {
     "month": "Месяц",

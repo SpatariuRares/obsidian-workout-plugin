@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "دمج: إضافة علامات جديدة فقط، الاحتفاظ بالموجودة",
     "importReplaceAriaLabel": "استبدال: الكتابة فوق جميع العلامات الموجودة",
     "editItem": "تعديل {item}",
-    "deleteItem": "حذف {item}"
+    "deleteItem": "حذف {item}",
+    "errors": {
+      "missingElements": "العناصر المفقودة"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - مجموعات: {sets}\n- تكرارات: {reps}\n- راحة: {restTime} ثانية",
+    "noteTemplate": "**ملاحظة: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "الذهاب إلى التمرين",
     "invalidDate": "تاريخ غير صحيح",
     "labels": {
-      "target": "الهدف:"
+      "target": "الهدف:",
+      "errors": {
+        "tableElementsNotInitialized": "العناصر الموجودة في الجدول غير مهيأة."
+      }
     },
     "noData": "لا توجد بيانات",
     "notAvailable": "غير متوفر",
@@ -920,7 +928,8 @@
       "repsSuffix": "تكرار",
       "separator": " × "
     },
-    "trendLine": "خط الاتجاه"
+    "trendLine": "خط الاتجاه",
+    "refreshingTable": "تحديث الجدول..."
   },
   "timeperiods": {
     "month": "شهر",

@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "マージ：新しいタグのみ追加、既存を保持",
     "importReplaceAriaLabel": "置換：既存のタグをすべて上書き",
     "editItem": "{item}を編集",
-    "deleteItem": "{item}を削除"
+    "deleteItem": "{item}を削除",
+    "errors": {
+      "missingElements": "欠けている要素"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- 回数: {reps}\n- 休憩: {restTime} 秒",
+    "noteTemplate": "**注: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "エクササイズへ移動",
     "invalidDate": "無効な日付",
     "labels": {
-      "target": "目標:"
+      "target": "目標:",
+      "errors": {
+        "tableElementsNotInitialized": "テーブルの要素が初期化されていません"
+      }
     },
     "noData": "データなし",
     "notAvailable": "利用できません",
@@ -920,7 +928,8 @@
       "repsSuffix": "代表",
       "separator": " × "
     },
-    "trendLine": "トレンドライン"
+    "trendLine": "トレンドライン",
+    "refreshingTable": "テーブルの更新中..."
   },
   "timeperiods": {
     "month": "月",

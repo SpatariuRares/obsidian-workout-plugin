@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Sloučit: přidat pouze nové tagy, zachovat stávající",
     "importReplaceAriaLabel": "Nahradit: přepsat všechny stávající tagy",
     "editItem": "Upravit {item}",
-    "deleteItem": "Smazat {item}"
+    "deleteItem": "Smazat {item}",
+    "errors": {
+      "missingElements": "Chybějící prvky"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sady: {sets}\n- Opakování: {reps}\n- Odpočinek: {restTime} sekund",
+    "noteTemplate": "**Poznámka: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Přejít na cvičení",
     "invalidDate": "Neplatná data",
     "labels": {
-      "target": "Cíl:"
+      "target": "Cíl:",
+      "errors": {
+        "tableElementsNotInitialized": "Prvek tabulky nebyl inicializován"
+      }
     },
     "noData": "Žádná data",
     "notAvailable": "Nedostupné",
@@ -920,7 +928,8 @@
       "repsSuffix": "opakovaní",
       "separator": " × "
     },
-    "trendLine": "Trendová linka"
+    "trendLine": "Trendová linka",
+    "refreshingTable": "Aktualizace tabulky..."
   },
   "timeperiods": {
     "month": "Měsíc",

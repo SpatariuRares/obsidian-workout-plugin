@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Birleştir: yalnızca yeni etiket ekle, mevcutları koru",
     "importReplaceAriaLabel": "Değiştir: tüm mevcut etiketlerin üzerine yaz",
     "editItem": "{item} düzenle",
-    "deleteItem": "{item} sil"
+    "deleteItem": "{item} sil",
+    "errors": {
+      "missingElements": "Eksik öğeler"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} saniye",
+    "noteTemplate": "**Not: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Eseri başlat",
     "invalidDate": "Geçersiz tarih",
     "labels": {
-      "target": "Hedef:"
+      "target": "Hedef:",
+      "errors": {
+        "tableElementsNotInitialized": "Tablodaki öğeler henüz başlatılmamış"
+      }
     },
     "noData": "Veri yok",
     "notAvailable": "Erişilemiyor",
@@ -920,7 +928,8 @@
       "repsSuffix": "temsil",
       "separator": " × "
     },
-    "trendLine": "Trend Hattı"
+    "trendLine": "Trend Hattı",
+    "refreshingTable": "Tablo yenileniyor..."
   },
   "timeperiods": {
     "month": "Ay",

@@ -742,7 +742,12 @@
     "importMergeAriaLabel": "Gabung: tambah hanya tag baru, pertahankan yang ada",
     "importReplaceAriaLabel": "Ganti: timpa semua tag yang ada",
     "editItem": "Edit {item}",
-    "deleteItem": "Hapus {item}"
+    "deleteItem": "Hapus {item}",
+    "errors": {
+      "missingElements": "Elemen yang hilang"
+    },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime}",
+    "noteTemplate": "**Catatan: ${params.note}**"
   },
   "settings": {
     "buttons": {
@@ -910,7 +915,10 @@
     "gotoExercise": "Buka Latihan",
     "invalidDate": "Tanggal Tidak Valid",
     "labels": {
-      "target": "Target:"
+      "target": "Target:",
+      "errors": {
+        "tableElementsNotInitialized": "Elemen tabel belum diinisialisasi"
+      }
     },
     "noData": "Tidak ada data",
     "notAvailable": "Tidak Tersedia",
@@ -920,7 +928,8 @@
       "repsSuffix": "representasi",
       "separator": " × "
     },
-    "trendLine": "Garis Tren"
+    "trendLine": "Garis Tren",
+    "refreshingTable": "Memuat ulang tabel..."
   },
   "timeperiods": {
     "month": "Bulan",

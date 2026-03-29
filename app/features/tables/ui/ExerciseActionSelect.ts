@@ -36,7 +36,6 @@ export class ExerciseActionSelect {
 
     const options = [
       {
-        // eslint-disable-next-line i18next/no-literal-string
         icon: t("icons.tables.goto"),
         label: t("table.gotoExercise"),
         value: "goto",
@@ -46,7 +45,6 @@ export class ExerciseActionSelect {
     // Only show edit option when the code block has an ID
     if (params.id) {
       options.push({
-        // eslint-disable-next-line i18next/no-literal-string
         icon: t("icons.tables.edit"),
         label: t("table.editTable"),
         value: "edit",

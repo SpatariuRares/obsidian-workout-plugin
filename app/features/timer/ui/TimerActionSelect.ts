@@ -35,14 +35,12 @@ export class TimerActionSelect {
     }
 
     const { wrapper } = IconDropdown.create(container, {
-      // eslint-disable-next-line i18next/no-literal-string
       icon: t("icons.timer.menu"),
       ariaLabel: t("table.actions"),
       options: [
         {
           label: t("timer.editTimer"),
           value: "edit",
-          // eslint-disable-next-line i18next/no-literal-string
           icon: t("icons.tables.edit"),
         },
       ],

@@ -17,10 +17,9 @@
   .workout-input-with-adjust {
     --workout-adjust-btn-width: clamp(4ch, 20%, 100px);
     display: grid;
-    grid-template-columns: var(--workout-adjust-btn-width) minmax(
-        0,
-        1fr
-      ) var(--workout-adjust-btn-width);
+    grid-template-columns:
+      var(--workout-adjust-btn-width) minmax(0, 1fr)
+      var(--workout-adjust-btn-width);
     align-items: center;
     gap: var(--workout-space-sm);
     width: 100%;

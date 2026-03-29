@@ -751,15 +751,13 @@ describe("TableDataProcessor", () => {
     it("uses non-abbreviated label when no abbreviation exists", async () => {
       const mockPlugin = {
         getExerciseDefinitionService: jest.fn().mockReturnValue({
-          getParametersForExercise: jest
-            .fn()
-            .mockResolvedValue([
-              {
-                key: "customParam",
-                label: "CustomParam",
-                unit: "units",
-              },
-            ]),
+          getParametersForExercise: jest.fn().mockResolvedValue([
+            {
+              key: "customParam",
+              label: "CustomParam",
+              unit: "units",
+            },
+          ]),
         }),
       } as any;
 

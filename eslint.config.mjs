@@ -22,6 +22,7 @@ export default [
       "build-css.mjs",
       "esbuild.config.mjs",
       "version-bump.mjs",
+      ".claude/**",
       "**/__tests__/**", // Ignore test files for now
     ],
   },
@@ -116,6 +117,7 @@ export default [
     },
   },
 
+  
   // Targeted rules for UI components (features and components)
   {
     files: [

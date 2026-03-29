@@ -1,6 +1,10 @@
 import { TimerState } from "@app/features/timer";
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import {
+  BUTTONVARIANT,
+  BUTTONSIZE,
+} from "@app/components/atoms/Button";
 
 export interface TimerControlCallbacks {
   onStart: () => void;
@@ -22,8 +26,8 @@ export class TimerControls {
     const startStopBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-start-stop",
       text: t("icons.timer.play"),
-      variant: "primary",
-      size: "small",
+      variant: BUTTONVARIANT.PRIMARY,
+      size: BUTTONSIZE.SMALL,
       ariaLabel: t("timer.controls.startTimer"),
     });
 
@@ -31,8 +35,8 @@ export class TimerControls {
     const resetBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-reset",
       text: t("icons.timer.reset"),
-      variant: "secondary",
-      size: "small",
+      variant: BUTTONVARIANT.SECONDARY,
+      size: BUTTONSIZE.SMALL,
       ariaLabel: t("timer.controls.resetTimer"),
     });
 

@@ -6,6 +6,7 @@
 
 import { Button, Text } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "../atoms/Button";
 
 export interface FilterIndicatorProps {
   label: string;
@@ -69,7 +70,7 @@ export class FilterIndicator {
       text: props.clearText || t("common.clear"),
       className: "workout-filter-indicator-clear",
       ariaLabel: props.clearText || t("common.clear"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
     });
     Button.onClick(clearBtn, props.onClear);
 

@@ -2,6 +2,7 @@ import { App } from "obsidian";
 
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * GoToExerciseButton - UI component for exercise file navigation
@@ -32,7 +33,7 @@ export class GoToExerciseButton {
     const gotoBtn = Button.create(container, {
       icon: t("icons.tables.goto"),
       text: t("table.gotoExercise"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("table.gotoExercise"),
     });
 

@@ -4,6 +4,7 @@ import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import { Button } from "@app/components/atoms";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class FieldMappingList {
   private container: HTMLElement;
@@ -72,7 +73,7 @@ export class FieldMappingList {
 
     const addButton = Button.create(this.container, {
       text: t("convert.fieldMapping.addMapping"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("convert.fieldMapping.addMapping"),
     });
     Button.onClick(addButton, () => {
@@ -120,7 +121,7 @@ export class FieldMappingList {
     // Remove Button
     const removeBtn = Button.create(row, {
       text: "×",
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("convert.fieldMapping.removeMapping"),
     });
     Button.onClick(removeBtn, () => {

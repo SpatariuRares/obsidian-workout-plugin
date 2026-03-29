@@ -6,6 +6,7 @@ import type WorkoutChartsPlugin from "main";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * Abstract base class for insert modals.
@@ -61,14 +62,14 @@ export abstract class BaseInsertModal extends ModalBase {
     // Insert button using Button atom
     const insertBtn = Button.create(container, {
       text: this.getButtonText(),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: this.getButtonText(),
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(container, {
       text: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("modal.buttons.cancel"),
     });
 

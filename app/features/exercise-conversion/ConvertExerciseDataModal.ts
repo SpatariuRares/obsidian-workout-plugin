@@ -16,6 +16,7 @@ import { ConversionTypeSelect } from "@app/features/exercise-conversion/componen
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
 import { Button } from "@app/components/atoms";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class ConvertExerciseDataModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -131,7 +132,7 @@ export class ConvertExerciseDataModal extends ModalBase {
 
     const cancelButton = Button.create(buttonsSection, {
       text: t("common.cancel"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("common.cancel"),
     });
     Button.onClick(cancelButton, () => this.close());
@@ -139,7 +140,7 @@ export class ConvertExerciseDataModal extends ModalBase {
     this.convertButton = Button.create(buttonsSection, {
       text: t("common.convert"),
       ariaLabel: t("common.convert"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
     });
     Button.setDisabled(this.convertButton, true);
     Button.onClick(this.convertButton, () => this.handleConvert());

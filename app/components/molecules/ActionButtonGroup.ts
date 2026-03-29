@@ -6,6 +6,7 @@
 
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "../atoms/Button";
 
 export interface ActionButtonGroupProps {
   editTitle?: string;
@@ -62,7 +63,7 @@ export class ActionButtonGroup {
       className:
         "workout-table-action-btn workout-table-action-btn-edit",
       title: props?.editTitle || t("general.edit"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: props?.editTitle || t("general.edit"),
     });
 
@@ -71,7 +72,7 @@ export class ActionButtonGroup {
       icon: props?.deleteIcon || t("icons.actions.delete"),
       className:
         "workout-table-action-btn workout-table-action-btn-delete",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       title: props?.deleteTitle || t("general.delete"),
       ariaLabel: props?.deleteTitle || t("general.delete"),
     });

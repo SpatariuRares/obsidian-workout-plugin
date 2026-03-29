@@ -20,6 +20,10 @@ import { INPUT_TYPE } from "@app/types/InputTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import {
+  BUTTONSIZE,
+  BUTTONVARIANT,
+} from "@app/components/atoms/Button";
 
 interface CustomParameterRow {
   container: HTMLElement;
@@ -97,7 +101,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     const addParamBtn = Button.create(customParamsHeader, {
       text: t("modal.buttons.addParameter"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.buttons.addParameter"),
     });
 
@@ -144,14 +148,14 @@ export class CreateExercisePageModal extends ModalBase {
     // Create button using Button atom
     const createBtn = Button.create(buttonsContainer, {
       text: t("modal.buttons.createExercise"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("modal.buttons.createExercise"),
     });
 
     // Cancel button using Button atom
     const cancelBtn = Button.create(buttonsContainer, {
       text: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("modal.buttons.cancel"),
     });
 
@@ -284,8 +288,8 @@ export class CreateExercisePageModal extends ModalBase {
     const removeBtn = Button.create(rowContainer, {
       text: t("modal.buttons.removeParameter"),
       ariaLabel: t("modal.buttons.removeParameter"),
-      variant: "warning",
-      size: "small",
+      variant: BUTTONVARIANT.WARNING,
+      size: BUTTONSIZE.SMALL,
     });
 
     const row: CustomParameterRow = {

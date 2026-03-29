@@ -12,6 +12,7 @@ import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class CreateExerciseSectionModal extends ModalBase {
   private plugin: WorkoutChartsPlugin;
@@ -128,13 +129,13 @@ export class CreateExerciseSectionModal extends ModalBase {
     const cancelBtn = Button.create(buttonsSection, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
     });
 
     // Create button using Button atom
     const createBtn = Button.create(buttonsSection, {
       text: t("modal.buttons.createSection"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("modal.buttons.createSection"),
     });
 

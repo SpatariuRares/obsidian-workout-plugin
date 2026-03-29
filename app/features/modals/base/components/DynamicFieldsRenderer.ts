@@ -5,6 +5,10 @@ import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
+import {
+  BUTTONVARIANT,
+  BUTTONSIZE,
+} from "@app/components/atoms/Button";
 
 export class DynamicFieldsRenderer {
   constructor(private plugin: WorkoutChartsPlugin) {}
@@ -70,9 +74,12 @@ export class DynamicFieldsRenderer {
       const minusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustMinus") + increment,
         className: "workout-adjust-btn workout-adjust-minus",
-        ariaLabel: t("modal.buttons.decreaseBy", { label: param.label, increment }),
-        variant: "secondary",
-        size: "small",
+        ariaLabel: t("modal.buttons.decreaseBy", {
+          label: param.label,
+          increment,
+        }),
+        variant: BUTTONVARIANT.SECONDARY,
+        size: BUTTONSIZE.SMALL,
       });
       minusBtn.type = "button";
 
@@ -88,9 +95,12 @@ export class DynamicFieldsRenderer {
       const plusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustPlus") + increment,
         className: "workout-adjust-btn workout-adjust-plus",
-        ariaLabel: t("modal.buttons.increaseBy", { label: param.label, increment }),
-        variant: "secondary",
-        size: "small",
+        ariaLabel: t("modal.buttons.increaseBy", {
+          label: param.label,
+          increment,
+        }),
+        variant: BUTTONVARIANT.SECONDARY,
+        size: BUTTONSIZE.SMALL,
       });
       plusBtn.type = "button";
 

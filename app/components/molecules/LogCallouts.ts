@@ -7,6 +7,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "../atoms/Button";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -64,7 +65,7 @@ export class LogCallouts {
       }),
       icon: t("icons.actions.add"),
       className: "add-log-button",
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.createFirstLogButtonAria", {
         exerciseName: exerciseName ?? "exercise",
       }),
@@ -121,7 +122,7 @@ export class LogCallouts {
         exerciseName: exerciseName ?? "Workout",
       }),
       icon: t("icons.actions.add"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.addLogButtonAria", {
         exerciseName: exerciseName ?? "Workout",
       }),
@@ -171,7 +172,7 @@ export class LogCallouts {
       }),
       icon: t("icons.actions.add"),
       className: "create-log-button",
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.createLogButtonAria", {
         exerciseName: exerciseName,
       }),

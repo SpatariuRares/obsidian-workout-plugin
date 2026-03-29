@@ -4,6 +4,7 @@ import { TargetCalculator } from "@app/features/tables/business/TargetCalculator
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * AchievementBadge - UI component for displaying achievement celebrations
@@ -95,7 +96,7 @@ export class AchievementBadge {
     const dismissButton = Button.create(badgeDiv, {
       text: "×",
       className: "workout-achievement-dismiss",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.notices.dismissAchievement"),
     });
 
@@ -142,7 +143,7 @@ export class AchievementBadge {
     const updateButton = Button.create(suggestionDiv, {
       text: t("modal.buttons.updateTargetWeight"),
       ariaLabel: t("modal.buttons.updateTargetWeight"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
     });
 
     Button.onClick(

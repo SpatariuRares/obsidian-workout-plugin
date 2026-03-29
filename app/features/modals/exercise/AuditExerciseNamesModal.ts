@@ -7,6 +7,7 @@ import { StringUtils, ErrorUtils } from "@app/utils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface MismatchEntry {
   file: TFile;
@@ -269,7 +270,7 @@ export class AuditExerciseNamesModal extends ModalBase {
           text: t("modal.buttons.renameInCsv"),
           className: "mod-cta",
           ariaLabel: t("modal.buttons.renameInCsv"),
-          variant: "secondary",
+          variant: BUTTONVARIANT.SECONDARY,
         });
         Button.onClick(renameInCSVButton, () => {
           this.handleRenameInCSV(mismatch);
@@ -277,7 +278,7 @@ export class AuditExerciseNamesModal extends ModalBase {
 
         const renameFileButton = Button.create(actionsCell, {
           text: t("modal.buttons.renameFile"),
-          variant: "secondary",
+          variant: BUTTONVARIANT.SECONDARY,
           ariaLabel: t("modal.buttons.renameFile"),
         });
         Button.onClick(renameFileButton, () => {

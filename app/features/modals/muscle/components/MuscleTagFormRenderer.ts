@@ -3,6 +3,7 @@ import { Button, Input } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import type { MuscleTagSuggestionItem } from "@app/features/modals/muscle/types";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface RenderMuscleTagFormOptions {
   title: string;
@@ -103,13 +104,13 @@ export class MuscleTagFormRenderer {
     const cancelButton = Button.create(buttonContainer, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const saveButton = Button.create(buttonContainer, {
       text: t("modal.save"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("modal.save"),
     });
     Button.onClick(saveButton, () =>

@@ -2,6 +2,7 @@ import { App } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * Simple confirmation modal
@@ -44,7 +45,7 @@ export class ConfirmModal extends ModalBase {
     const cancelBtn = Button.create(buttonContainer, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
     });
     Button.onClick(cancelBtn, () => {
       if (this.onCancel) {
@@ -57,7 +58,7 @@ export class ConfirmModal extends ModalBase {
     const confirmBtn = Button.create(buttonContainer, {
       text: t("modal.buttons.confirm"),
       ariaLabel: t("modal.buttons.confirm"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
     });
     Button.onClick(confirmBtn, () => {
       this.onConfirm();

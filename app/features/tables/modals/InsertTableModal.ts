@@ -15,7 +15,11 @@ import {
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { TABLE_TYPE } from "@app/features/tables/types";
 import { Chip } from "@app/components/atoms/Chip";
-import { Button } from "@app/components/atoms/Button";
+import {
+  Button,
+  BUTTONSIZE,
+  BUTTONVARIANT,
+} from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
@@ -249,8 +253,8 @@ export class InsertTableModal extends BaseInsertModal {
       text: t("modal.buttons.adjustMinus") + increment,
       className: "workout-adjust-btn workout-adjust-minus",
       ariaLabel: t("modal.buttons.decreaseBy", { label, increment }),
-      variant: "secondary",
-      size: "small",
+      variant: BUTTONVARIANT.SECONDARY,
+      size: BUTTONSIZE.SMALL,
     });
     minusBtn.type = "button";
 
@@ -267,8 +271,8 @@ export class InsertTableModal extends BaseInsertModal {
       text: t("modal.buttons.adjustPlus") + increment,
       className: "workout-adjust-btn workout-adjust-plus",
       ariaLabel: t("modal.buttons.increaseBy", { label, increment }),
-      variant: "secondary",
-      size: "small",
+      variant: BUTTONVARIANT.SECONDARY,
+      size: BUTTONSIZE.SMALL,
     });
     plusBtn.type = "button";
 

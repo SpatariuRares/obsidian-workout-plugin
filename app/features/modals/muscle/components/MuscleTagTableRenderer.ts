@@ -1,4 +1,5 @@
 import { Button } from "@app/components/atoms";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
 
 interface MuscleTagTableRendererOptions {
@@ -56,7 +57,7 @@ export class MuscleTagTableRenderer {
       const editButton = Button.create(actionsCell, {
         text: t("modal.editTag"),
         className: "workout-tag-action-btn",
-        variant: "secondary",
+        variant: BUTTONVARIANT.SECONDARY,
         ariaLabel: t("modal.editItem", { item: tag }),
       });
       Button.onClick(editButton, () => onEdit(tag, muscleGroup));
@@ -64,7 +65,7 @@ export class MuscleTagTableRenderer {
       const deleteButton = Button.create(actionsCell, {
         text: t("modal.delete"),
         className: "workout-tag-action-btn",
-        variant: "warning",
+        variant: BUTTONVARIANT.WARNING,
         ariaLabel: t("modal.deleteItem", { item: tag }),
       });
       Button.onClick(deleteButton, () => onDelete(tag));

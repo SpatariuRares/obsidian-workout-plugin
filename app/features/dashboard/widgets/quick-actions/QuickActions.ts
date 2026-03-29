@@ -4,6 +4,7 @@ import type WorkoutChartsPlugin from "main";
 import { Button } from "@app/components/atoms";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export class QuickActions {
   static render(
@@ -22,7 +23,7 @@ export class QuickActions {
     // Add workout log button
     const addLogBtn = Button.create(buttonsEl, {
       text: t("dashboard.quickActions.addWorkoutLog"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("dashboard.quickActions.addWorkoutLog"),
     });
 
@@ -33,7 +34,7 @@ export class QuickActions {
     // View all exercises button
     const viewExercisesBtn = Button.create(buttonsEl, {
       text: t("dashboard.quickActions.viewExercises"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("dashboard.quickActions.viewExercises"),
     });
 

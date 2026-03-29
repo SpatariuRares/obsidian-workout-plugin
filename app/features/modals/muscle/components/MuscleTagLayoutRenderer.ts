@@ -5,6 +5,7 @@ import { DomUtils } from "@app/utils/DomUtils";
 import { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
 import { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 export interface MuscleTagLayoutCallbacks {
   onSearch: (value: string) => void;
@@ -86,21 +87,21 @@ export class MuscleTagLayoutRenderer {
     const addButton = Button.create(buttonContainer, {
       text: t("modal.addTag"),
       ariaLabel: t("modal.addTag"),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
     });
     Button.onClick(addButton, callbacks.onAdd);
 
     const exportButton = Button.create(buttonContainer, {
       text: t("modal.exportTags"),
       ariaLabel: t("modal.exportTags"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
     });
     Button.onClick(exportButton, callbacks.onExport);
 
     const importButton = Button.create(buttonContainer, {
       text: t("modal.importTags"),
       ariaLabel: t("modal.importTags"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
     });
 
     const fileInput = Input.create(buttonContainer, {

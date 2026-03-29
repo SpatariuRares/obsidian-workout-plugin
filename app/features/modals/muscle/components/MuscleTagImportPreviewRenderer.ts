@@ -1,6 +1,7 @@
 import { Button } from "@app/components/atoms";
 import { DomUtils } from "@app/utils/DomUtils";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 interface RenderImportPreviewOptions {
   tags: Map<string, string>;
@@ -110,21 +111,21 @@ export class MuscleTagImportPreviewRenderer {
 
     const cancelButton = Button.create(buttonContainer, {
       text: t("modal.buttons.cancel"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.buttons.cancel"),
     });
     Button.onClick(cancelButton, options.onCancel);
 
     const mergeButton = Button.create(buttonContainer, {
       text: t("modal.importMerge"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.importMergeAriaLabel"),
     });
     Button.onClick(mergeButton, options.onMerge);
 
     const replaceButton = Button.create(buttonContainer, {
       text: t("modal.importReplace"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("modal.importReplaceAriaLabel"),
     });
     Button.onClick(replaceButton, options.onReplace);

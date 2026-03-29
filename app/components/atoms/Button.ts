@@ -3,16 +3,30 @@
  * Basic button component - indivisible UI primitive
  */
 
+export enum BUTTONSIZE {
+  SMALL = "small",
+  MEDIUM = "medium",
+  BIG = "big",
+  GIANT = "giant",
+}
+
+export enum BUTTONVARIANT {
+  PRIMARY = "primary",
+  SECONDARY = "secondary",
+  DANGER = "danger",
+  WARNING = "warning",
+}
+
 export interface ButtonProps {
   text?: string;
   icon?: string;
   className?: string;
-  variant: "primary" | "secondary" | "danger" | "warning";
+  variant: BUTTONVARIANT;
   title?: string;
   disabled?: boolean;
   ariaLabel?: string;
   extraContainerCls?: string;
-  size?: "small" | "medium" | "big" | "giant";
+  size?: BUTTONSIZE;
 }
 
 /**
@@ -40,7 +54,7 @@ export class Button {
     props: ButtonProps,
   ): HTMLButtonElement {
     const btn = parent.createEl("button", {
-      cls: `${props.className || ""} workout-btn workout-btn-${props.variant} workout-btn-${props.size}`,
+      cls: `${props.className || ""} workout-btn workout-btn-${props.variant} workout-btn-${props.size || BUTTONSIZE.MEDIUM}`,
       attr: {
         ...(props.title && { title: props.title }),
         ...(props.disabled && { disabled: "true" }),

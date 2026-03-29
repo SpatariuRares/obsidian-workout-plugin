@@ -15,6 +15,7 @@ import type {
   CanvasLayoutType,
 } from "@app/features/canvas/types";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 /**
  * Modal for configuring canvas export options
@@ -143,7 +144,7 @@ export class CanvasExportModal extends ModalBase {
     // Cancel button
     const cancelButton = Button.create(buttonsSection, {
       text: t("modal.buttons.cancel"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       className: "workout-charts-button",
       ariaLabel: t("modal.buttons.cancel"),
     });
@@ -152,7 +153,7 @@ export class CanvasExportModal extends ModalBase {
     // Export button
     const exportButton = Button.create(buttonsSection, {
       text: t("modal.buttons.export"),
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       className: "workout-charts-button mod-cta",
       ariaLabel: t("modal.buttons.export"),
     });

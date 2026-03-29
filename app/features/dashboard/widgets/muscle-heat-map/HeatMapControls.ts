@@ -3,6 +3,7 @@ import type WorkoutChartsPlugin from "main";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
+import { BUTTONVARIANT } from "@app/components/atoms/Button";
 
 type RenderCallback = (
   _canvasContainer: HTMLElement,
@@ -39,21 +40,21 @@ export class HeatMapControls {
     const weekBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.week"),
       className: "workout-toggle-btn active",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.week"),
     });
 
     const monthBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.month"),
       className: "workout-toggle-btn",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.month"),
     });
 
     const yearBtn = Button.create(timeFrameEl, {
       text: t("timeperiods.year"),
       className: "workout-toggle-btn",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("timeperiods.year"),
     });
 
@@ -65,14 +66,14 @@ export class HeatMapControls {
     const frontBtn = Button.create(viewToggleEl, {
       text: t("general.front"),
       className: "workout-toggle-btn active",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("general.front"),
     });
 
     const backBtn = Button.create(viewToggleEl, {
       text: t("general.back"),
       className: "workout-toggle-btn",
-      variant: "secondary",
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("general.back"),
     });
 

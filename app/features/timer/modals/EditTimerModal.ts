@@ -3,7 +3,7 @@ import type WorkoutChartsPlugin from "main";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
-import { Button } from "@app/components/atoms/Button";
+import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
 
@@ -99,13 +99,13 @@ export class EditTimerModal extends InsertTimerModal {
   protected createButtons(container: HTMLElement): void {
     const updateBtn = Button.create(container, {
       text: this.getButtonText(),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: this.getButtonText(),
     });
 
     const cancelBtn = Button.create(container, {
       text: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("modal.buttons.cancel"),
     });
 

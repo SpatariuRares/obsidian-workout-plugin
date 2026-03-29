@@ -6,7 +6,7 @@ import {
   TABLE_TYPE,
 } from "@app/features/tables/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
-import { Button } from "@app/components/atoms/Button";
+import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
 
 /**
@@ -130,13 +130,13 @@ export class EditTableModal extends InsertTableModal {
   protected createButtons(container: HTMLElement): void {
     const updateBtn = Button.create(container, {
       text: this.getButtonText(),
-      variant: "primary",
+      variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: this.getButtonText(),
     });
 
     const cancelBtn = Button.create(container, {
       text: t("modal.buttons.cancel"),
-      variant: "warning",
+      variant: BUTTONVARIANT.WARNING,
       ariaLabel: t("modal.buttons.cancel"),
     });
 

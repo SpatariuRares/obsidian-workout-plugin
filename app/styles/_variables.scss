@@ -10,6 +10,8 @@ $breakpoint-mobile: 484px;
 
 :root {
   /* Spacing System (8px base scale) */
+  --workout-space-3xs: 1px; /* 0.125x */
+  --workout-space-2xs: 2px; /* 0.25x */
   --workout-space-xs: 4px; /* 0.5x */
   --workout-space-sm: 8px; /* 1x */
   --workout-space-md: 12px; /* 1.5x */
@@ -23,11 +25,20 @@ $breakpoint-mobile: 484px;
   --workout-size-2xl: 32px;
   --workout-size-3xl: 60px;
   --workout-size-4xl: 80px;
+  --workout-size-5xl: 150px;
   --workout-size-6xl: 200px;
   --workout-size-8xl: 300px;
   --workout-size-9xl: 400px;
   --workout-size-10xl: 500px;
   --workout-size-11xl: 600px;
+
+  --workout-chip-min-height: 36px; /* Default chip height (desktop) */
+  --workout-progress-bar-height: 20px; /* Table progress bar height */
+
+  /* Touch Targets & Interactive Sizes */
+  --workout-touch-target-min: 44px; /* WCAG minimum touch target height */
+  --workout-touch-target-width: 56px; /* Minimum width for weight/action buttons */
+  --workout-checkbox-size: 20px; /* Mobile checkbox size */
 
   --workout-widget-min-height: 150px;
   --workout-widget-min-width: 280px;
@@ -36,12 +47,16 @@ $breakpoint-mobile: 484px;
   --workout-tag-min-width: 120px;
 
   /* Border Radius - Using Obsidian native variables with fallbacks */
+  --workout-radius-xs: var(--radius-xs, 2px);
   --workout-radius-sm: var(--radius-s, 4px);
   --workout-radius-md: var(--radius-m, 6px);
   --workout-radius-lg: var(--radius-l, 8px);
   --workout-radius-xl: var(--radius-xl, 12px);
+  --workout-radius-full: 9999px; /* Pill/capsule shape */
+  --workout-radius-round: 50%; /* Perfect circle */
 
   /* Typography - Font Sizes */
+  --workout-font-2xs: 0.65em; /* Very small text (e.g. mobile badges) */
   --workout-font-xs: 0.8em;
   --workout-font-sm: 0.85em;
   --workout-font-base: 0.9em;
@@ -62,6 +77,7 @@ $breakpoint-mobile: 484px;
   /* Border Widths - Using Obsidian native variables with fallbacks */
   --workout-border-thin: var(--border-width, 1px);
   --workout-border-medium: var(--input-border-width, 2px);
+  --workout-border-accent: 4px; /* Thick left border for accent/highlight strips */
 
   /* Transitions */
   --workout-transition: all 0.2s ease;
@@ -71,4 +87,8 @@ $breakpoint-mobile: 484px;
   --workout-color-warning-border: #ffc107;
   --workout-color-warning-text: #856404;
   --workout-color-success: #28a745;
+
+  /* Overlay colors for elements on --interactive-accent background */
+  --workout-autocomplete-on-accent-bg: rgba(255, 255, 255, 0.2);
+  --workout-autocomplete-on-accent-border: rgba(255, 255, 255, 0.3);
 }

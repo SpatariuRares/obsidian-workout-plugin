@@ -30,7 +30,7 @@
   right: 0;
   z-index: 9999;
   background: rgba(var(--color-red-rgb, 220, 53, 69), 0.93);
-  color: #fff;
+  color: var(--text-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +103,7 @@
     cursor: pointer;
     color: var(--text-muted);
     font-size: var(--workout-font-lg);
-    padding: 2px 4px;
+    padding: var(--workout-space-2xs) var(--workout-space-xs);
     line-height: 1;
     border-radius: var(--workout-radius-sm);
 

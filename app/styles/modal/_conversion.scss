@@ -2,6 +2,6 @@
 .workout-convert-mapping-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
 }

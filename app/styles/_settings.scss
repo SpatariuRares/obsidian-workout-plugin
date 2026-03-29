@@ -8,7 +8,7 @@
   display: none;
   color: var(--text-error);
   font-size: var(--font-smallest);
-  margin-top: 4px;
+  margin-top: var(--workout-space-xs);
   width: 100%;
 
   &.is-visible {
@@ -30,14 +30,14 @@
     display: flex;
     align-items: center;
     gap: var(--size-4-2);
-    border-top: 1px solid var(--background-modifier-border);
+    border-top: var(--workout-border-thin) solid var(--background-modifier-border);
     user-select: none;
 
     &::before {
       content: "▶";
       font-size: 0.7em;
       color: var(--text-muted);
-      transition: transform 0.15s ease;
+      transition: var(--workout-transition);
       display: inline-block;
     }
   }

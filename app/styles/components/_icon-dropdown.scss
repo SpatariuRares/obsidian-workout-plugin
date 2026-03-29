@@ -19,9 +19,7 @@
   font-size: var(--workout-font-xl);
   padding: var(--workout-space-xs);
   cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  transition: var(--workout-transition);
   box-shadow: none;
 
   &:hover {
@@ -40,7 +38,7 @@
 .workout-icon-dropdown-panel {
   display: none;
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + var(--workout-space-xs));
   right: 0;
   z-index: 100;
   min-width: 160px;
@@ -72,7 +70,7 @@
   cursor: pointer;
   text-align: left;
   box-shadow: none;
-  transition: background-color 0.1s ease;
+  transition: var(--workout-transition);
 
   &:hover {
     background-color: var(--background-modifier-hover);

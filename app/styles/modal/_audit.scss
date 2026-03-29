@@ -7,7 +7,7 @@
 }
 
 .workout-audit-table-container {
-  max-height: 500px;
+  max-height: var(--workout-size-10xl);
   overflow-y: auto;
   margin-top: var(--workout-space-lg);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -31,7 +31,7 @@
     text-align: left;
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
-    border-bottom: 2px solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
   }
 
   td {

@@ -48,7 +48,7 @@
   margin-top: var(--workout-space-sm);
   padding: var(--workout-space-sm);
   background: var(--background-primary);
-  border: 1px solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
 }
 
@@ -58,7 +58,7 @@
   align-items: center;
   margin-bottom: var(--workout-space-sm);
   padding-bottom: var(--workout-space-xs);
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 
 .workout-tag-suggestions-label {
@@ -76,7 +76,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-xs);
-  max-height: 150px;
+  max-height: var(--workout-size-5xl);
   overflow-y: auto;
 }
 
@@ -96,7 +96,7 @@
 
 .workout-tag-suggestion-warning {
   background: rgba(var(--color-yellow-rgb), 0.1);
-  border: 1px solid rgba(var(--color-yellow-rgb), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-yellow-rgb), 0.3);
 }
 
 .workout-tag-suggestion-warning:hover {
@@ -151,7 +151,7 @@
 .workout-tag-table td {
   padding: var(--workout-space-sm) var(--workout-space-md);
   text-align: left;
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 
 .workout-tag-table th {

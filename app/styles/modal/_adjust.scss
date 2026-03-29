@@ -42,7 +42,7 @@
   .workout-modal {
     .workout-adjust-btn {
       min-width: 4ch;
-      min-height: 44px;
+      min-height: var(--workout-touch-target-min);
     }
   }
 }

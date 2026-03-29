@@ -279,9 +279,7 @@
   @extend %workout-btn-giant;
   @extend %workout-btn-interactive;
   @include workout-btn-press(0.98);
-  transition:
-    transform 0.1s ease,
-    background-color 0.2s ease;
+  transition: var(--workout-transition);
 }
 
 .workout-quick-log-button-container {
@@ -311,18 +309,18 @@
 .workout-quick-log-weight-btn {
   @extend %workout-btn-interactive;
   flex-shrink: 0;
-  min-width: 56px;
-  min-height: 44px;
+  min-width: var(--workout-touch-target-width);
+  min-height: var(--workout-touch-target-min);
   padding: var(--workout-space-sm) var(--workout-space-md);
 
   background: var(--background-secondary);
-  border: 2px solid var(--background-modifier-border);
+  border: var(--workout-border-medium) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
 
   color: var(--text-normal);
   font-size: var(--workout-font-base);
   font-weight: var(--workout-font-weight-bold);
-  transition: all 0.15s ease;
+  transition: var(--workout-transition);
 
   &:hover {
     background: var(--interactive-hover);
@@ -366,7 +364,7 @@
   align-items: center;
   justify-content: center;
   min-width: var(--workout-size-2xl);
-  font-size: var(--workout-size-xl);
+  font-size: var(--workout-font-xl);
   background: var(--background-primary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--button-radius, var(--workout-radius-md));

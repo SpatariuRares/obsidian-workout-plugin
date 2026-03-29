@@ -44,7 +44,7 @@
 
   &-click-area {
     pointer-events: auto;
-    transition: background-color 0.2s ease;
+    transition: var(--workout-transition);
   }
 
   &-details {

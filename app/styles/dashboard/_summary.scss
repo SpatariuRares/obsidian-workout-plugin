@@ -40,14 +40,14 @@
   }
 
   &-icon {
-    font-size: var(--workout-space-2xl);
+    font-size: var(--workout-font-2xl);
     margin-bottom: var(--workout-space-sm);
     display: block;
   }
 
   &-title {
     margin: 0;
-    font-size: var(--workout-space-lg);
+    font-size: var(--workout-font-lg);
     font-weight: var(--workout-font-weight-semibold);
     opacity: 0.8;
     color: var(--text-muted);
@@ -95,7 +95,7 @@
     );
     border-radius: var(--workout-radius-xl);
     border: var(--workout-border-thin) solid var(--background-modifier-border);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--workout-transition);
     position: relative;
     overflow: hidden;
 
@@ -112,7 +112,7 @@
         var(--interactive-accent-hover)
       );
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: var(--workout-transition);
     }
 
     &:hover {
@@ -161,7 +161,7 @@
   }
 
   .workout-card-icon {
-    font-size: var(--workout-space-xl);
+    font-size: var(--workout-font-xl);
   }
 }
 

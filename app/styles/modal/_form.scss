@@ -72,8 +72,8 @@
 
 .workout-log-mobile-summary {
   cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: var(--workout-space-lg);
+  margin-bottom: var(--workout-space-sm);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
 }
@@ -89,25 +89,25 @@
       input[type="number"],
       select,
       textarea {
-        min-height: 44px;
+        min-height: var(--workout-touch-target-min);
         font-size: var(--workout-font-base);
       }
     }
 
     .workout-charts-input {
       min-width: 10ch;
-      min-height: 44px;
+      min-height: var(--workout-touch-target-min);
     }
 
     /* Target section mobile optimizations */
     .workout-charts-checkbox-group {
-      min-height: 44px;
+      min-height: var(--workout-touch-target-min);
       padding: var(--workout-space-sm) 0;
 
       input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        min-width: 20px;
+        width: var(--workout-checkbox-size);
+        height: var(--workout-checkbox-size);
+        min-width: var(--workout-checkbox-size);
       }
 
       label {
@@ -187,7 +187,7 @@
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   background: var(--background-secondary);
-  min-height: 60px;
+  min-height: var(--workout-size-3xl);
   align-items: center;
 }
 
@@ -207,7 +207,7 @@
 
 /* Tag list - chip-based display */
 .workout-muscle-tag-list {
-  max-height: 300px;
+  max-height: var(--workout-size-8xl);
   overflow-y: auto;
   padding: var(--workout-space-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);

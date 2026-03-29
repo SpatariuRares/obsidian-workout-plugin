@@ -70,10 +70,10 @@
       width: 100%;
       padding: var(--workout-space-sm) var(--workout-space-md);
       border: var(--workout-border-thin) solid var(--background-modifier-border);
-      border-radius: var(--workout-radius-sm);
+      border-radius: var(--workout-radius-md);
       background: var(--background-primary);
       color: var(--text-normal);
-      font-size: var(--workout-space-lg);
+      font-size: var(--workout-font-base);
     }
 
     .workout-exercise-autocomplete-dropdown {
@@ -84,7 +84,7 @@
       background: var(--dropdown-background, var(--background-primary));
       border: var(--workout-border-thin) solid var(--background-modifier-border);
       border-top: none;
-      border-radius: 0 0 var(--workout-space-xs) var(--workout-space-xs);
+      border-radius: 0 0 var(--workout-radius-xs) var(--workout-radius-xs);
       max-height: var(--workout-size-6xl);
       overflow-y: auto;
       z-index: 1000;

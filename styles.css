@@ -12,6 +12,8 @@
 /* Breakpoints */
 :root {
   /* Spacing System (8px base scale) */
+  --workout-space-3xs: 1px; /* 0.125x */
+  --workout-space-2xs: 2px; /* 0.25x */
   --workout-space-xs: 4px; /* 0.5x */
   --workout-space-sm: 8px; /* 1x */
   --workout-space-md: 12px; /* 1.5x */
@@ -24,22 +26,33 @@
   --workout-size-2xl: 32px;
   --workout-size-3xl: 60px;
   --workout-size-4xl: 80px;
+  --workout-size-5xl: 150px;
   --workout-size-6xl: 200px;
   --workout-size-8xl: 300px;
   --workout-size-9xl: 400px;
   --workout-size-10xl: 500px;
   --workout-size-11xl: 600px;
+  --workout-chip-min-height: 36px; /* Default chip height (desktop) */
+  --workout-progress-bar-height: 20px; /* Table progress bar height */
+  /* Touch Targets & Interactive Sizes */
+  --workout-touch-target-min: 44px; /* WCAG minimum touch target height */
+  --workout-touch-target-width: 56px; /* Minimum width for weight/action buttons */
+  --workout-checkbox-size: 20px; /* Mobile checkbox size */
   --workout-widget-min-height: 150px;
   --workout-widget-min-width: 280px;
   --workout-grid-row-height: 10px;
   --workout-grid-gap: 16px;
   --workout-tag-min-width: 120px;
   /* Border Radius - Using Obsidian native variables with fallbacks */
+  --workout-radius-xs: var(--radius-xs, 2px);
   --workout-radius-sm: var(--radius-s, 4px);
   --workout-radius-md: var(--radius-m, 6px);
   --workout-radius-lg: var(--radius-l, 8px);
   --workout-radius-xl: var(--radius-xl, 12px);
+  --workout-radius-full: 9999px; /* Pill/capsule shape */
+  --workout-radius-round: 50%; /* Perfect circle */
   /* Typography - Font Sizes */
+  --workout-font-2xs: 0.65em; /* Very small text (e.g. mobile badges) */
   --workout-font-xs: 0.8em;
   --workout-font-sm: 0.85em;
   --workout-font-base: 0.9em;
@@ -57,6 +70,7 @@
   /* Border Widths - Using Obsidian native variables with fallbacks */
   --workout-border-thin: var(--border-width, 1px);
   --workout-border-medium: var(--input-border-width, 2px);
+  --workout-border-accent: 4px; /* Thick left border for accent/highlight strips */
   /* Transitions */
   --workout-transition: all 0.2s ease;
   /* Alert Colors */
@@ -64,6 +78,9 @@
   --workout-color-warning-border: #ffc107;
   --workout-color-warning-text: #856404;
   --workout-color-success: #28a745;
+  /* Overlay colors for elements on --interactive-accent background */
+  --workout-autocomplete-on-accent-bg: rgba(255, 255, 255, 0.2);
+  --workout-autocomplete-on-accent-border: rgba(255, 255, 255, 0.3);
 }
 
 /* Log utility styles */
@@ -150,10 +167,10 @@
   width: 100%;
   padding: var(--workout-space-sm) var(--workout-space-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
+  border-radius: var(--workout-radius-md);
   background: var(--background-primary);
   color: var(--text-normal);
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
 }
 .workout-exercise .workout-exercise-autocomplete .workout-exercise-autocomplete-dropdown {
   position: absolute;
@@ -163,7 +180,7 @@
   background: var(--dropdown-background, var(--background-primary));
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-top: none;
-  border-radius: 0 0 var(--workout-space-xs) var(--workout-space-xs);
+  border-radius: 0 0 var(--workout-radius-xs) var(--workout-radius-xs);
   max-height: var(--workout-size-6xl);
   overflow-y: auto;
   z-index: 1000;
@@ -281,11 +298,11 @@
   color: var(--text-on-accent);
 }
 .workout-exercise-autocomplete-container .workout-exercise-autocomplete-suggestion-selected .workout-autocomplete-badge {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--workout-autocomplete-on-accent-bg);
+  border-color: var(--workout-autocomplete-on-accent-border);
 }
 .workout-exercise-autocomplete-container .workout-exercise-autocomplete-suggestion-selected mark.workout-autocomplete-highlight {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--workout-autocomplete-on-accent-border);
   color: var(--text-on-accent);
 }
 .workout-exercise-autocomplete-wrapper {
@@ -295,10 +312,10 @@
   width: 100%;
   padding: var(--workout-space-sm) var(--workout-space-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-  border-radius: var(--workout-radius-sm);
+  border-radius: var(--workout-radius-md);
   background: var(--background-primary);
   color: var(--text-normal);
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
 }
 .workout-exercise-autocomplete-dropdown {
   position: absolute;
@@ -308,7 +325,7 @@
   background: var(--dropdown-background, var(--background-primary));
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-top: none;
-  border-radius: 0 0 var(--workout-space-xs) var(--workout-space-xs);
+  border-radius: 0 0 var(--workout-radius-xs) var(--workout-radius-xs);
   max-height: var(--workout-size-6xl);
   overflow-y: auto;
   z-index: 1000;
@@ -348,15 +365,15 @@
   color: var(--text-on-accent);
   padding: var(--workout-space-3xs) var(--workout-space-2xs);
   border-radius: var(--workout-radius-xs);
-  font-weight: 600;
+  font-weight: var(--workout-font-weight-semibold);
 }
 .workout-autocomplete-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--workout-space-lg);
-  height: var(--workout-space-lg);
-  padding: var(--workout-space-3xs);
+  min-width: var(--workout-space-xl);
+  height: var(--workout-space-xl);
+  padding: var(--workout-space-2xs);
   border-radius: var(--workout-radius-round);
   font-size: var(--workout-font-xs);
   font-weight: 600;
@@ -553,7 +570,7 @@
   transform: scale(0.98);
 }
 .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn {
-  transition: transform 0.1s ease, background-color 0.2s ease;
+  transition: var(--workout-transition);
 }
 
 .workout-quick-log-button-container {
@@ -574,16 +591,16 @@
    ---------------------------------------------------------------------------- */
 .workout-quick-log-weight-btn {
   flex-shrink: 0;
-  min-width: 56px;
-  min-height: 44px;
+  min-width: var(--workout-touch-target-width);
+  min-height: var(--workout-touch-target-min);
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-secondary);
-  border: 2px solid var(--background-modifier-border);
+  border: var(--workout-border-medium) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   color: var(--text-normal);
   font-size: var(--workout-font-base);
   font-weight: var(--workout-font-weight-bold);
-  transition: all 0.15s ease;
+  transition: var(--workout-transition);
 }
 .workout-quick-log-weight-btn:hover {
   background: var(--interactive-hover);
@@ -618,7 +635,7 @@
   align-items: center;
   justify-content: center;
   min-width: var(--workout-size-2xl);
-  font-size: var(--workout-size-xl);
+  font-size: var(--workout-font-xl);
   background: var(--background-primary);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--button-radius, var(--workout-radius-md));
@@ -719,8 +736,8 @@
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  min-height: 36px;
-  transition: all 0.15s ease;
+  min-height: var(--workout-chip-min-height);
+  transition: var(--workout-transition);
   user-select: none;
 }
 .workout-chip:hover {
@@ -861,7 +878,7 @@
   padding: var(--workout-space-lg) var(--workout-space-xl);
   margin: var(--workout-space-lg) 0;
   border-radius: var(--workout-radius-lg);
-  border-left: var(--workout-space-xs) solid;
+  border-left: var(--workout-border-thin) solid;
   font-weight: var(--workout-font-weight-medium);
 }
 .workout-charts-info.workout-charts-info-info {
@@ -906,7 +923,7 @@
   color: var(--text-normal);
   border: var(--workout-border-thin) solid transparent;
   border-radius: var(--workout-radius-sm);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition: var(--workout-transition);
   /* Hide the native dropdown arrow */
   appearance: none;
   -webkit-appearance: none;
@@ -940,7 +957,7 @@
   font-size: var(--workout-font-xl);
   padding: var(--workout-space-xs);
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: var(--workout-transition);
   box-shadow: none;
 }
 .workout-icon-dropdown-btn:hover {
@@ -956,7 +973,7 @@
 .workout-icon-dropdown-panel {
   display: none;
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + var(--workout-space-xs));
   right: 0;
   z-index: 100;
   min-width: 160px;
@@ -986,7 +1003,7 @@
   cursor: pointer;
   text-align: left;
   box-shadow: none;
-  transition: background-color 0.1s ease;
+  transition: var(--workout-transition);
 }
 .workout-icon-dropdown-item:hover {
   background-color: var(--background-modifier-hover);
@@ -1216,7 +1233,7 @@
 .workout-log-table td a {
   color: var(--text-accent);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: var(--workout-transition);
   font-weight: var(--workout-font-weight-medium);
 }
 .workout-log-table td a:hover {
@@ -1270,7 +1287,7 @@
 
 .workout-progress-bar {
   width: 100%;
-  height: 20px;
+  height: var(--workout-progress-bar-height);
   background: var(--background-modifier-border);
   border-radius: var(--workout-radius-sm);
   overflow: hidden;
@@ -1280,7 +1297,7 @@
 
 .workout-progress-fill {
   height: 100%;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition: var(--workout-transition);
   border-radius: var(--workout-radius-sm);
 }
 
@@ -1312,7 +1329,7 @@
   background: var(--text-success);
   color: var(--text-on-accent);
   border-radius: var(--workout-radius-md);
-  border-left: 4px solid var(--interactive-accent);
+  border-left: var(--workout-border-accent) solid var(--interactive-accent);
   box-shadow: var(--workout-shadow-sm);
   animation: slideIn 0.3s ease-out;
 }
@@ -1327,12 +1344,12 @@
   background: transparent;
   border: none;
   color: var(--text-on-accent);
-  font-size: 24px;
+  font-size: var(--workout-font-2xl);
   line-height: 1;
   cursor: pointer;
   padding: 0 var(--workout-space-sm);
   opacity: 0.7;
-  transition: opacity 0.2s ease;
+  transition: var(--workout-transition);
 }
 .workout-achievement-dismiss:hover {
   opacity: 1;
@@ -1445,7 +1462,7 @@
 /* Protocol badge base */
 .workout-protocol-badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: var(--workout-space-2xs) var(--workout-space-sm);
   border-radius: var(--workout-radius-sm);
   font-size: var(--workout-font-xs);
   font-weight: var(--workout-font-weight-semibold);
@@ -1458,42 +1475,42 @@
 .workout-protocol-badge-drop {
   background: rgba(var(--color-red-rgb, 255, 82, 82), 0.15);
   color: var(--text-error);
-  border: 1px solid rgba(var(--color-red-rgb, 255, 82, 82), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-red-rgb, 255, 82, 82), 0.3);
 }
 
 .workout-protocol-badge-myo {
   background: rgba(var(--color-purple-rgb, 163, 102, 255), 0.15);
   color: var(--text-accent);
-  border: 1px solid rgba(var(--color-purple-rgb, 163, 102, 255), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-purple-rgb, 163, 102, 255), 0.3);
 }
 
 .workout-protocol-badge-rp {
   background: rgba(var(--color-orange-rgb, 255, 153, 0), 0.15);
   color: var(--text-warning);
-  border: 1px solid rgba(var(--color-orange-rgb, 255, 153, 0), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-orange-rgb, 255, 153, 0), 0.3);
 }
 
 .workout-protocol-badge-superset {
   background: rgba(var(--color-blue-rgb, 66, 165, 245), 0.15);
   color: var(--interactive-accent);
-  border: 1px solid rgba(var(--color-blue-rgb, 66, 165, 245), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-blue-rgb, 66, 165, 245), 0.3);
 }
 
 .workout-protocol-badge-21 {
   background: rgba(var(--color-green-rgb, 76, 175, 80), 0.15);
   color: var(--text-success);
-  border: 1px solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-green-rgb, 76, 175, 80), 0.3);
 }
 
 /* Custom protocol badge - uses inline styles for color, inherits base badge structure */
 .workout-protocol-badge-custom {
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: var(--workout-border-thin) solid rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 484px) {
   .workout-protocol-badge {
-    padding: 1px 4px;
-    font-size: 9px;
+    padding: var(--workout-space-3xs) var(--workout-space-xs);
+    font-size: var(--workout-font-2xs);
     letter-spacing: 0;
   }
 }
@@ -1598,7 +1615,7 @@
   .workout-charts-container .workout-log-table {
     border-collapse: collapse;
     width: 100%;
-    font-size: var(--workout-space-md);
+    font-size: var(--workout-font-sm);
   }
   .workout-embedded-chart-debug {
     display: none !important;
@@ -1606,7 +1623,7 @@
   .workout-embedded-chart-table-fallback .workout-log-table {
     border-collapse: collapse;
     width: 100%;
-    font-size: var(--workout-space-md);
+    font-size: var(--workout-font-sm);
   }
 }
 /* ============================================================================
@@ -1643,7 +1660,7 @@
   right: 0;
   z-index: 9999;
   background: rgba(var(--color-red-rgb, 220, 53, 69), 0.93);
-  color: #fff;
+  color: var(--text-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1709,7 +1726,7 @@
   cursor: pointer;
   color: var(--text-muted);
   font-size: var(--workout-font-lg);
-  padding: 2px 4px;
+  padding: var(--workout-space-2xs) var(--workout-space-xs);
   line-height: 1;
   border-radius: var(--workout-radius-sm);
 }
@@ -1955,8 +1972,8 @@
 
 .workout-log-mobile-summary {
   cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: var(--workout-space-lg);
+  margin-bottom: var(--workout-space-sm);
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
 }
@@ -1969,24 +1986,24 @@
   .workout-modal .workout-charts-form-group input[type=number],
   .workout-modal .workout-charts-form-group select,
   .workout-modal .workout-charts-form-group textarea {
-    min-height: 44px;
+    min-height: var(--workout-touch-target-min);
     font-size: var(--workout-font-base);
   }
   .workout-modal .workout-charts-input {
     min-width: 10ch;
-    min-height: 44px;
+    min-height: var(--workout-touch-target-min);
   }
   .workout-modal {
     /* Target section mobile optimizations */
   }
   .workout-modal .workout-charts-checkbox-group {
-    min-height: 44px;
+    min-height: var(--workout-touch-target-min);
     padding: var(--workout-space-sm) 0;
   }
   .workout-modal .workout-charts-checkbox-group input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
+    width: var(--workout-checkbox-size);
+    height: var(--workout-checkbox-size);
+    min-width: var(--workout-checkbox-size);
   }
   .workout-modal .workout-charts-checkbox-group label {
     font-size: var(--workout-font-base);
@@ -2049,7 +2066,7 @@
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   background: var(--background-secondary);
-  min-height: 60px;
+  min-height: var(--workout-size-3xl);
   align-items: center;
 }
 
@@ -2067,7 +2084,7 @@
 
 /* Tag list - chip-based display */
 .workout-muscle-tag-list {
-  max-height: 300px;
+  max-height: var(--workout-size-8xl);
   overflow-y: auto;
   padding: var(--workout-space-md);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -2098,7 +2115,7 @@
 }
 .workout-charts-mode-info p {
   margin: var(--workout-space-xs) 0;
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
   color: var(--text-muted);
 }
 .workout-charts-mode-info strong {
@@ -2124,7 +2141,7 @@
 }
 .workout-csv-mode-info p {
   margin: var(--workout-space-xs) 0;
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
   color: var(--text-muted);
 }
 .workout-csv-mode-info h4 {
@@ -2142,7 +2159,7 @@
 .workout-migration-section p {
   margin: 0 0 var(--workout-space-lg) 0;
   color: var(--text-muted);
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
 }
 .workout-migration-section button {
   background: var(--interactive-warning);
@@ -2150,10 +2167,10 @@
   border: none;
   border-radius: var(--workout-radius-sm);
   padding: var(--workout-space-sm) var(--workout-space-lg);
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-base);
   font-weight: var(--workout-font-weight-medium);
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: var(--workout-transition);
 }
 .workout-migration-section button:hover {
   background: var(--interactive-warning-hover);
@@ -2202,7 +2219,7 @@
 @media (max-width: 768px) {
   .workout-modal .workout-adjust-btn {
     min-width: 4ch;
-    min-height: 44px;
+    min-height: var(--workout-touch-target-min);
   }
 }
 /* Audit modal */
@@ -2214,7 +2231,7 @@
 }
 
 .workout-audit-table-container {
-  max-height: 500px;
+  max-height: var(--workout-size-10xl);
   overflow-y: auto;
   margin-top: var(--workout-space-lg);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
@@ -2237,7 +2254,7 @@
   text-align: left;
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
-  border-bottom: 2px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-medium) solid var(--background-modifier-border);
 }
 .workout-audit-table td {
   padding: var(--workout-space-md);
@@ -2310,7 +2327,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--workout-space-sm) var(--workout-space-lg);
-  border-radius: 9999px;
+  border-radius: var(--workout-radius-full);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   background: var(--background-secondary);
   color: var(--text-normal);
@@ -2319,8 +2336,8 @@
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  min-height: 36px;
-  transition: all 0.15s ease;
+  min-height: var(--workout-chip-min-height);
+  transition: var(--workout-transition);
 }
 .workout-log-recent-chip:hover {
   background: var(--interactive-hover);
@@ -2342,8 +2359,8 @@
 .workout-convert-mapping-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: var(--workout-space-md);
+  margin-bottom: var(--workout-space-md);
 }
 
 /* Tag Manager Modal styles */
@@ -2395,7 +2412,7 @@
   margin-top: var(--workout-space-sm);
   padding: var(--workout-space-sm);
   background: var(--background-primary);
-  border: 1px solid var(--background-modifier-border);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
 }
 
@@ -2405,7 +2422,7 @@
   align-items: center;
   margin-bottom: var(--workout-space-sm);
   padding-bottom: var(--workout-space-xs);
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 
 .workout-tag-suggestions-label {
@@ -2423,7 +2440,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-xs);
-  max-height: 150px;
+  max-height: var(--workout-size-5xl);
   overflow-y: auto;
 }
 
@@ -2443,7 +2460,7 @@
 
 .workout-tag-suggestion-warning {
   background: rgba(var(--color-yellow-rgb), 0.1);
-  border: 1px solid rgba(var(--color-yellow-rgb), 0.3);
+  border: var(--workout-border-thin) solid rgba(var(--color-yellow-rgb), 0.3);
 }
 
 .workout-tag-suggestion-warning:hover {
@@ -2498,7 +2515,7 @@
 .workout-tag-table td {
   padding: var(--workout-space-sm) var(--workout-space-md);
   text-align: left;
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 
 .workout-tag-table th {
@@ -2794,13 +2811,13 @@
   margin-bottom: var(--workout-space-lg);
 }
 .workout-card-icon {
-  font-size: var(--workout-space-2xl);
+  font-size: var(--workout-font-2xl);
   margin-bottom: var(--workout-space-sm);
   display: block;
 }
 .workout-card-title {
   margin: 0;
-  font-size: var(--workout-space-lg);
+  font-size: var(--workout-font-lg);
   font-weight: var(--workout-font-weight-semibold);
   opacity: 0.8;
   color: var(--text-muted);
@@ -2836,7 +2853,7 @@
   background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-primary) 100%);
   border-radius: var(--workout-radius-xl);
   border: var(--workout-border-thin) solid var(--background-modifier-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--workout-transition);
   position: relative;
   overflow: hidden;
 }
@@ -2849,7 +2866,7 @@
   height: var(--workout-space-xs);
   background: linear-gradient(90deg, var(--interactive-accent), var(--interactive-accent-hover));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: var(--workout-transition);
 }
 .workout-stats-card:hover {
   transform: translateY(-4px);
@@ -2888,7 +2905,7 @@
     margin-bottom: var(--workout-space-md);
   }
   .workout-card-icon {
-    font-size: var(--workout-space-xl);
+    font-size: var(--workout-font-xl);
   }
 }
 @media (max-width: 484px) {
@@ -2940,7 +2957,7 @@
 }
 .workout-muscle-click-area {
   pointer-events: auto;
-  transition: background-color 0.2s ease;
+  transition: var(--workout-transition);
 }
 .workout-muscle-details {
   position: absolute;
@@ -3143,7 +3160,7 @@
   border: var(--workout-border-thin) solid var(--background-modifier-border);
   border-radius: var(--workout-radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--workout-transition);
   font-size: var(--workout-font-sm);
   color: var(--text-normal);
 }
@@ -3290,7 +3307,7 @@
   padding: var(--workout-space-xs) var(--workout-space-sm);
   font-size: var(--workout-font-xs);
   background: transparent;
-  border: 1px solid var(--text-muted);
+  border: var(--workout-border-thin) solid var(--text-muted);
   border-radius: var(--workout-radius-sm);
   color: var(--text-muted);
   cursor: pointer;
@@ -3359,7 +3376,7 @@
 .workout-protocol-effectiveness-table td {
   padding: var(--workout-space-sm) var(--workout-space-md);
   text-align: left;
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 .workout-protocol-effectiveness-table th {
   font-weight: var(--workout-font-weight-semibold);
@@ -3434,7 +3451,7 @@
 .workout-duration-comparison-table td {
   padding: var(--workout-space-sm) var(--workout-space-md);
   text-align: left;
-  border-bottom: 1px solid var(--background-modifier-border);
+  border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
 }
 .workout-duration-comparison-table th {
   font-weight: var(--workout-font-weight-semibold);
@@ -3600,7 +3617,7 @@
   display: none;
   color: var(--text-error);
   font-size: var(--font-smallest);
-  margin-top: 4px;
+  margin-top: var(--workout-space-xs);
   width: 100%;
 }
 .workout-setting-error.is-visible {
@@ -3621,14 +3638,14 @@
   display: flex;
   align-items: center;
   gap: var(--size-4-2);
-  border-top: 1px solid var(--background-modifier-border);
+  border-top: var(--workout-border-thin) solid var(--background-modifier-border);
   user-select: none;
 }
 .workout-advanced-section > summary::before {
   content: "▶";
   font-size: 0.7em;
   color: var(--text-muted);
-  transition: transform 0.15s ease;
+  transition: var(--workout-transition);
   display: inline-block;
 }
 .workout-advanced-section[open] > summary::before {

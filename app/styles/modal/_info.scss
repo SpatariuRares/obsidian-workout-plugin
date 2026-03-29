@@ -8,7 +8,7 @@
 
   p {
     margin: var(--workout-space-xs) 0;
-    font-size: var(--workout-space-lg);
+    font-size: var(--workout-font-base);
     color: var(--text-muted);
   }
 
@@ -36,7 +36,7 @@
 
   p {
     margin: var(--workout-space-xs) 0;
-    font-size: var(--workout-space-lg);
+    font-size: var(--workout-font-base);
     color: var(--text-muted);
   }
 
@@ -56,7 +56,7 @@
   p {
     margin: 0 0 var(--workout-space-lg) 0;
     color: var(--text-muted);
-    font-size: var(--workout-space-lg);
+    font-size: var(--workout-font-base);
   }
 
   button {
@@ -65,10 +65,10 @@
     border: none;
     border-radius: var(--workout-radius-sm);
     padding: var(--workout-space-sm) var(--workout-space-lg);
-    font-size: var(--workout-space-lg);
+    font-size: var(--workout-font-base);
     font-weight: var(--workout-font-weight-medium);
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: var(--workout-transition);
 
     &:hover {
       background: var(--interactive-warning-hover);

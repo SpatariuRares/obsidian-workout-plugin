@@ -15,7 +15,7 @@
   color: var(--text-normal);
   border: var(--workout-border-thin) solid transparent;
   border-radius: var(--workout-radius-sm);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition: var(--workout-transition);
 
   /* Hide the native dropdown arrow */
   appearance: none;

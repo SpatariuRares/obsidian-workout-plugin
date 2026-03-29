@@ -39,7 +39,7 @@
   td a {
     color: var(--text-accent);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: var(--workout-transition);
     font-weight: var(--workout-font-weight-medium);
 
     &:hover {

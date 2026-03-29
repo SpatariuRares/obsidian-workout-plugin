@@ -110,7 +110,7 @@
     padding: var(--workout-space-xs) var(--workout-space-sm);
     font-size: var(--workout-font-xs);
     background: transparent;
-    border: 1px solid var(--text-muted);
+    border: var(--workout-border-thin) solid var(--text-muted);
     border-radius: var(--workout-radius-sm);
     color: var(--text-muted);
     cursor: pointer;
@@ -186,7 +186,7 @@
   td {
     padding: var(--workout-space-sm) var(--workout-space-md);
     text-align: left;
-    border-bottom: 1px solid var(--background-modifier-border);
+    border-bottom: var(--workout-border-thin) solid var(--background-modifier-border);
   }
 
   th {

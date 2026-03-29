@@ -32,7 +32,7 @@
     border: var(--workout-border-thin) solid var(--background-modifier-border);
     border-radius: var(--workout-radius-md);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--workout-transition);
     font-size: var(--workout-font-sm);
     color: var(--text-normal);
 

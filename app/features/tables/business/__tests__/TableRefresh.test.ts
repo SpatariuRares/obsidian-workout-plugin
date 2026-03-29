@@ -97,7 +97,7 @@ describe("TableRefresh", () => {
 
     expect(callbacks.onError).toHaveBeenCalledWith(
       expect.any(Error),
-      "refreshing table",
+      "table.refreshingTable",
     );
     expect(renderCallback).not.toHaveBeenCalled();
   });
@@ -124,7 +124,7 @@ describe("TableRefresh", () => {
 
     expect(callbacks.onError).toHaveBeenCalledWith(
       expect.objectContaining({ message: "string error" }),
-      "refreshing table",
+      "table.refreshingTable",
     );
   });
 

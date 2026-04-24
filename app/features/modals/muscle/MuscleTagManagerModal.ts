@@ -13,14 +13,14 @@ import { readTextFile, downloadCsv } from "@app/utils/FileUtils";
 import type { MuscleTagFormRenderer } from "@app/features/modals/muscle/components/MuscleTagFormRenderer";
 import type { MuscleTagImportPreviewRenderer } from "@app/features/modals/muscle/components/MuscleTagImportPreviewRenderer";
 import type { MuscleTagImportMode } from "@app/features/modals/muscle/types";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { StringUtils } from "@app/utils";
 import { t } from "@app/i18n";
 
 const DEBOUNCE_DELAY = 150;
 
 export class MuscleTagManagerModal extends ModalBase {
-  private readonly plugin: WorkoutChartsPlugin;
+  private readonly plugin: WorkoutPluginContext;
   private contentContainer: HTMLElement | null = null;
   private tableBody: HTMLElement | null = null;
   private countDisplay: HTMLElement | null = null;
@@ -35,7 +35,7 @@ export class MuscleTagManagerModal extends ModalBase {
   private debounceTimeout: ReturnType<typeof setTimeout> | null =
     null;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app);
     this.plugin = plugin;
   }

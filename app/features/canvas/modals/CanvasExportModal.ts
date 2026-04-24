@@ -7,7 +7,7 @@
 import { App, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import type {
@@ -21,7 +21,7 @@ import { t } from "@app/i18n";
  */
 export class CanvasExportModal extends ModalBase {
   private workoutFile: TFile;
-  private plugin: WorkoutChartsPlugin;
+  private plugin: WorkoutPluginContext;
   private onSubmit: (options: CanvasExportOptions) => void;
 
   // Form elements
@@ -32,7 +32,7 @@ export class CanvasExportModal extends ModalBase {
 
   constructor(
     app: App,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     workoutFile: TFile,
     onSubmit: (options: CanvasExportOptions) => void,
   ) {

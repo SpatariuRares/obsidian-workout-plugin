@@ -1,5 +1,5 @@
 import { App, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import {
   EmbeddedTableParams,
@@ -20,7 +20,7 @@ export class EditTableModal extends InsertTableModal {
 
   constructor(
     app: App,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     params: EmbeddedTableParams,
   ) {
     super(app, plugin);

@@ -2,7 +2,8 @@
 // Extracts common form creation and validation logic
 
 import { App, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
+import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import {
   CSVWorkoutLogEntry,
@@ -38,7 +39,7 @@ export abstract class BaseLogModal extends ModalBase {
 
   constructor(
     app: App,
-    protected plugin: WorkoutChartsPlugin,
+    protected plugin: WorkoutPluginContext,
     exerciseName?: string,
     currentPageLink?: string,
   ) {
@@ -51,10 +52,14 @@ export abstract class BaseLogModal extends ModalBase {
     this.recentExercisesService = new RecentExercisesService(
       this.plugin,
     );
+    const templatePlugin = this.plugin as WorkoutPluginContext & TemplateGeneratorPort;
     this.logFormRenderer = new LogFormRenderer(
       this.plugin,
       this.dynamicFieldsRenderer,
       this.recentExercisesService,
+      "templateGeneratorService" in templatePlugin
+        ? (name) => new CreateExercisePageModal(this.app, templatePlugin, name).open()
+        : undefined,
     );
   }
 

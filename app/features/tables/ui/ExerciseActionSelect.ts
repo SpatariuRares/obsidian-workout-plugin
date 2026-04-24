@@ -2,7 +2,7 @@ import { App } from "obsidian";
 
 import { IconDropdown } from "@app/components/molecules/IconDropdown";
 import { t } from "@app/i18n";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 
@@ -15,7 +15,7 @@ import { EmbeddedTableParams } from "@app/features/tables/types";
 export interface ExerciseActionSelectProps {
   exerciseName: string;
   app: App;
-  plugin: WorkoutChartsPlugin;
+  plugin: WorkoutPluginContext;
   params: EmbeddedTableParams;
 }
 

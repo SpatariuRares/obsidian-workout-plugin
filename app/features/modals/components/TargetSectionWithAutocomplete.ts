@@ -2,7 +2,7 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { CHART_TYPE } from "@app/features/charts/types";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 
 export interface TargetSectionWithAutocompleteElements {
@@ -31,7 +31,7 @@ export class TargetSectionWithAutocomplete {
     container: HTMLElement,
     typeSelect: HTMLSelectElement,
     currentFileName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): {
     elements: TargetSectionWithAutocompleteElements;
     handlers: TargetSectionWithAutocompleteHandlers;
@@ -45,7 +45,9 @@ export class TargetSectionWithAutocomplete {
     const exerciseContainer = modal.createFormGroup(targetSection);
     exerciseContainer.classList.add("workout-target-exercise");
     const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(modal, exerciseContainer, plugin);
+      ExerciseAutocomplete.create(modal, exerciseContainer, plugin, undefined, {
+        showCreateButton: false,
+      });
 
     // Workout input (for workout charts/tables)
     const workoutContainer = modal.createFormGroup(targetSection);

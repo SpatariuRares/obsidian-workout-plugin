@@ -1,7 +1,7 @@
 // Refactored CreateExerciseSectionModal using reusable components
 
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
@@ -14,9 +14,9 @@ import { CONSTANTS } from "@app/constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export class CreateExerciseSectionModal extends ModalBase {
-  private plugin: WorkoutChartsPlugin;
+  private plugin: WorkoutPluginContext;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app);
     this.plugin = plugin;
   }
@@ -38,7 +38,7 @@ export class CreateExerciseSectionModal extends ModalBase {
 
     // Exercise autocomplete using reusable component
     const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(this, exerciseSection, this.plugin);
+      ExerciseAutocomplete.create(this, exerciseSection, this.plugin, undefined, { showCreateButton: false });
 
     // Workout input for combined filtering
     const workoutInput = this.createTextField(

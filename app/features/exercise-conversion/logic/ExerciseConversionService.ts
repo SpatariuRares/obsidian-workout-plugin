@@ -4,7 +4,7 @@ import {
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
 
 export interface FieldMapping {
@@ -15,7 +15,7 @@ export interface FieldMapping {
 }
 
 export class ExerciseConversionService {
-  constructor(private plugin: WorkoutChartsPlugin) {}
+  constructor(private plugin: WorkoutPluginContext) {}
 
   /**
    * Suggests initial field mappings based on source and target types

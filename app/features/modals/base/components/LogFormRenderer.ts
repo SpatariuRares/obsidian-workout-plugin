@@ -1,4 +1,4 @@
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 import { Platform } from "obsidian";
 import { LogFormElements } from "@app/types/ModalTypes";
@@ -19,9 +19,10 @@ import { CONSTANTS } from "@app/constants";
 
 export class LogFormRenderer {
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private dynamicFieldsRenderer: DynamicFieldsRenderer,
     private recentExercisesService: RecentExercisesService,
+    private onCreateExercise?: (name: string) => void,
   ) {}
 
   /**
@@ -45,6 +46,9 @@ export class LogFormRenderer {
         formContainer,
         this.plugin,
         initialExerciseName,
+        {
+          onCreateExercise: this.onCreateExercise,
+        },
       );
 
     const isMobile = Platform.isMobile;

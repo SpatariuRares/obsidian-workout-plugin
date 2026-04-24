@@ -1,12 +1,12 @@
 import { Notice, TFolder, TFile } from "obsidian";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 
 export class ExerciseTypeMigration {
-  private plugin: WorkoutChartsPlugin;
+  private plugin: WorkoutPluginContext;
 
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutPluginContext) {
     this.plugin = plugin;
   }
 

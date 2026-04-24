@@ -1,11 +1,12 @@
-import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
+import type { AppPort } from "@app/types/PluginPorts";
+
+type MuscleTagMapperContext = AppPort & { settings: { exerciseFolderPath: string } };
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { CANONICAL_MUSCLE_GROUPS, CONSTANTS } from "@app/constants";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { StringUtils } from "@app/utils";
 
-type MuscleTagMapperContext = AppPort & SettingsPort;
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping

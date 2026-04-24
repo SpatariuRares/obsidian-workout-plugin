@@ -10,7 +10,7 @@ import {
 } from "@app/features/timer";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { Chip } from "@app/components/atoms/Chip";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
 
@@ -20,7 +20,7 @@ export class InsertTimerModal extends BaseInsertModal {
   protected selectedPreset?: string;
   protected presetChips: Map<string, HTMLButtonElement> = new Map();
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
   }
 

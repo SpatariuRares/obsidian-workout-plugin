@@ -6,7 +6,10 @@ import {
   DEFAULT_EXERCISE_TYPE_ID,
 } from "@app/constants/exerciseTypes.constants";
 import { App, normalizePath, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type {
+  WorkoutPluginContext,
+  TemplateGeneratorPort,
+} from "@app/types/PluginPorts";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
@@ -42,7 +45,7 @@ export class CreateExercisePageModal extends ModalBase {
 
   constructor(
     app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext & TemplateGeneratorPort,
     exerciseName?: string,
   ) {
     super(app);

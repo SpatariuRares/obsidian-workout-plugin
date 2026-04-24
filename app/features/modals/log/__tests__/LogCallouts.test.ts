@@ -5,7 +5,7 @@ import {
   createObsidianContainer,
   attachObsidianHelpers,
 } from "@app/components/__tests__/obsidianDomMocks";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   WorkoutLogData,
   WorkoutProtocol,
@@ -23,7 +23,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 
 const createMockPlugin = (activeFile?: {
   basename: string;
-}): WorkoutChartsPlugin => {
+}): WorkoutPluginContext => {
   return {
     app: {
       workspace: {
@@ -33,7 +33,7 @@ const createMockPlugin = (activeFile?: {
       },
     },
     triggerWorkoutLogRefresh: jest.fn(),
-  } as unknown as WorkoutChartsPlugin;
+  } as unknown as WorkoutPluginContext;
 };
 
 describe("LogCallouts organism", () => {

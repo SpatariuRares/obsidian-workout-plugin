@@ -1,4 +1,4 @@
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 const MAX_RECENT_EXERCISES = 10;
 const DEFAULT_DISPLAY_RECENT_COUNT = 5;
@@ -8,7 +8,7 @@ const DEFAULT_DISPLAY_RECENT_COUNT = 5;
  * Shared by create/edit flows for mobile-friendly quick selection.
  */
 export class RecentExercisesService {
-  constructor(private plugin: WorkoutChartsPlugin) {}
+  constructor(private plugin: WorkoutPluginContext) {}
 
   /**
    * Returns recent exercises for chip display.

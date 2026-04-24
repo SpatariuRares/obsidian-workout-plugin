@@ -2,7 +2,7 @@
 
 import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import {
   TargetSectionWithAutocomplete,
@@ -52,7 +52,7 @@ export class InsertChartModal extends BaseInsertModal {
   private advancedElements?: AdvancedOptionsElements;
   private currentFileName: string;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
     this.currentFileName = this.getCurrentFileName();
   }

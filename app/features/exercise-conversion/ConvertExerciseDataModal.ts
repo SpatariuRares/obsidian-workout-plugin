@@ -7,7 +7,7 @@ import {
   EXERCISE_TYPE_IDS,
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   ExerciseConversionService,
   FieldMapping,
@@ -19,7 +19,7 @@ import { ConversionPreview } from "@app/features/exercise-conversion/components/
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 
 export class ConvertExerciseDataModal extends ModalBase {
-  private plugin: WorkoutChartsPlugin;
+  private plugin: WorkoutPluginContext;
   private conversionService: ExerciseConversionService;
 
   // Components
@@ -39,7 +39,7 @@ export class ConvertExerciseDataModal extends ModalBase {
   private currentTypeDisplay: HTMLElement | null = null;
   private convertButton: HTMLButtonElement | null = null;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app);
     this.plugin = plugin;
     this.conversionService = new ExerciseConversionService(plugin);
@@ -104,6 +104,7 @@ export class ConvertExerciseDataModal extends ModalBase {
       section,
       this.plugin,
       this.selectedExercise,
+      { showCreateButton: false },
     );
 
     elements.exerciseInput.addEventListener("change", async () => {

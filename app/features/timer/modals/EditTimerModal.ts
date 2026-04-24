@@ -1,5 +1,5 @@
 import { App, Notice } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
@@ -18,7 +18,7 @@ export class EditTimerModal extends InsertTimerModal {
 
   constructor(
     app: App,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     params: EmbeddedTimerParams,
   ) {
     super(app, plugin);

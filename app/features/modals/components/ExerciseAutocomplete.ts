@@ -1,8 +1,7 @@
 // Reusable exercise autocomplete component
 
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import type WorkoutChartsPlugin from "main";
-import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { StringUtils } from "@app/utils/StringUtils";
 import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
@@ -114,9 +113,9 @@ export class ExerciseAutocomplete {
   static create(
     modal: ModalBase,
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     exerciseName?: string,
-    options?: { showCreateButton?: boolean },
+    options?: { showCreateButton?: boolean; onCreateExercise?: (name: string) => void },
   ): {
     elements: ExerciseAutocompleteElements;
     handlers: ExerciseAutocompleteHandlers;
@@ -278,11 +277,7 @@ export class ExerciseAutocomplete {
           createItem.addEventListener("click", () => {
             const exerciseName = exerciseInput.value.trim();
             if (exerciseName) {
-              new CreateExercisePageModal(
-                modal.app,
-                plugin,
-                exerciseName,
-              ).open();
+              options?.onCreateExercise?.(exerciseName);
             }
             autocompleteContainer.className =
               "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
@@ -459,7 +454,7 @@ export class ExerciseAutocomplete {
   /**
    * Loads available exercises from the exercise folder
    */
-  private loadAvailableExercises(plugin: WorkoutChartsPlugin) {
+  private loadAvailableExercises(plugin: WorkoutPluginContext) {
     try {
       // Use ExercisePathResolver to get exercise names
       this.availableExercises =

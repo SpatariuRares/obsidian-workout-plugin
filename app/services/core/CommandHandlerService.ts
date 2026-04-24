@@ -18,13 +18,20 @@ import {
   CanvasExportModal,
 } from "@app/features/canvas";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
-import type WorkoutChartsPlugin from "main";
+import type {
+  WorkoutPluginContext,
+  CommandRegistryPort,
+  WorkoutAPIPort,
+  TemplateGeneratorPort,
+} from "@app/types/PluginPorts";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+
+type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
 
 export class CommandHandlerService {
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: CommandHandlerPlugin,
   ) {}
 
   registerCommands(): void {
@@ -127,7 +134,9 @@ export class CommandHandlerService {
               try {
                 const exporter = new CanvasExporter(
                   this.app,
-                  this.plugin,
+                  this.plugin.getWorkoutPlannerAPI(),
+                  this.plugin.getMuscleTagService(),
+                  this.plugin.settings,
                 );
                 const canvasPath = await exporter.exportToCanvas(
                   file,

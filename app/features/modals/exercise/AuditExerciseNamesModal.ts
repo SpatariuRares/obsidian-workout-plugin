@@ -1,7 +1,7 @@
 import { App, Notice, TFile } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
@@ -21,11 +21,11 @@ interface MismatchEntry {
  * Identifies mismatches and provides fuzzy matching with similarity scores
  */
 export class AuditExerciseNamesModal extends ModalBase {
-  private plugin: WorkoutChartsPlugin;
+  private plugin: WorkoutPluginContext;
   private mismatches: MismatchEntry[] = [];
   private contentContainer: HTMLElement | null = null;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app);
     this.plugin = plugin;
   }

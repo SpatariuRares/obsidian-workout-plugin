@@ -2,7 +2,7 @@ import { App, Setting, normalizePath, Notice } from "obsidian";
 import { t } from "@app/i18n";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
@@ -13,7 +13,7 @@ export class GeneralSettings {
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 
@@ -84,10 +84,7 @@ export class GeneralSettings {
             ParameterUtils.setWeightUnit(value);
             await this.plugin.saveSettings();
             // Trigger global refresh to update all views with new unit
-            this.plugin.eventBus.emit({
-              type: "log:bulk-changed",
-              payload: { count: 0, operation: "other" },
-            });
+            this.plugin.triggerWorkoutLogRefresh();
           }),
       );
 

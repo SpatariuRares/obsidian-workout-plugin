@@ -1,4 +1,4 @@
-import type { App, MarkdownPostProcessorContext } from "obsidian";
+import type { App, Command, MarkdownPostProcessorContext } from "obsidian";
 import type {
   CSVWorkoutLogEntry,
   WorkoutChartsSettings,
@@ -7,6 +7,9 @@ import type {
 import type { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
+import type { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
+import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import type { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 
 export interface AppPort {
   app: App;
@@ -39,6 +42,10 @@ export interface WorkoutDataPort {
   ): Promise<WorkoutLogData | undefined>;
 }
 
+export interface RefreshPort {
+  triggerWorkoutLogRefresh(): void;
+}
+
 export interface ExerciseDefinitionPort {
   getExerciseDefinitionService(): ExerciseDefinitionService;
 }
@@ -46,6 +53,26 @@ export interface ExerciseDefinitionPort {
 export interface MuscleTagPort {
   getMuscleTagService(): MuscleTagService;
   triggerMuscleTagRefresh(): void;
+}
+
+export interface LogModalPort {
+  createLogModalHandler: { openModal(): void };
+}
+
+export interface EventBusPort {
+  eventBus: WorkoutEventBus;
+}
+
+export interface WorkoutAPIPort {
+  getWorkoutPlannerAPI(): WorkoutPlannerAPI;
+}
+
+export interface TemplateGeneratorPort {
+  templateGeneratorService: TemplateGeneratorService;
+}
+
+export interface CommandRegistryPort {
+  addCommand(command: Command): Command;
 }
 
 export interface MarkdownCodeBlockProcessorPort {
@@ -62,5 +89,7 @@ export interface MarkdownCodeBlockProcessorPort {
 export type WorkoutPluginContext = AppPort &
   SettingsPort &
   WorkoutDataPort &
+  RefreshPort &
   ExerciseDefinitionPort &
-  MuscleTagPort;
+  MuscleTagPort &
+  LogModalPort;

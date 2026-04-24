@@ -117,6 +117,8 @@ describe("CommandHandlerService", () => {
           .fn()
           .mockReturnValue(new Map([["chest", "Upper Body"]])),
       }),
+      getWorkoutPlannerAPI: jest.fn().mockReturnValue({}),
+      settings: { exerciseFolderPath: "exercises" },
       triggerWorkoutLogRefresh: jest.fn(),
     };
     service = new CommandHandlerService(app, mockPlugin);

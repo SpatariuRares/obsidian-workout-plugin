@@ -3,7 +3,7 @@ import { t } from "@app/i18n";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
  * MaintenanceSettings - Settings section for vault-wide maintenance migrations.
@@ -14,7 +14,7 @@ import type WorkoutChartsPlugin from "main";
 export class MaintenanceSettings {
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 

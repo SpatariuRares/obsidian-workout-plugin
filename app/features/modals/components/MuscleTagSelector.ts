@@ -6,7 +6,7 @@
 
 import { Input, Chip } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 
 export interface MuscleTagSelectorElements {
@@ -29,7 +29,7 @@ export class MuscleTagSelector {
    */
   static create(
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     initialTags?: string[],
     onSelectionChange?: (tags: string[]) => void,
   ): {

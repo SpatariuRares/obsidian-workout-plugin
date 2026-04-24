@@ -2,14 +2,14 @@ import { Setting, Notice, App } from "obsidian";
 import { t } from "@app/i18n";
 import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class TimerPresetsSettings {
   private presetsContainer: HTMLElement | null = null;
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 

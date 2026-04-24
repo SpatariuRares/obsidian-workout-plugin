@@ -3,14 +3,14 @@ import { t } from "@app/i18n";
 import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class CustomProtocolsSettings {
   private protocolsContainer: HTMLElement | null = null;
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 

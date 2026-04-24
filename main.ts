@@ -339,6 +339,10 @@ export default class WorkoutChartsPlugin extends Plugin {
     return this.dataService.findLastEntryForExercise(exerciseName);
   }
 
+  public getWorkoutPlannerAPI(): WorkoutPlannerAPI {
+    return this.workoutPlannerAPI;
+  }
+
   /**
    * Trigger targeted refresh of workout log views via custom workspace events.
    * Forces a global refresh of all embedded views via the event bus.

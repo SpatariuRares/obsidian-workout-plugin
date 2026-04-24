@@ -2,7 +2,7 @@
 // Extracts common structure and button creation logic
 
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
@@ -15,7 +15,7 @@ import { t } from "@app/i18n";
 export abstract class BaseInsertModal extends ModalBase {
   constructor(
     app: App,
-    protected plugin?: WorkoutChartsPlugin,
+    protected plugin?: WorkoutPluginContext,
   ) {
     super(app);
   }

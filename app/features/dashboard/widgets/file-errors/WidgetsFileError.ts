@@ -1,5 +1,5 @@
 import { Feedback } from "@app/components/atoms/Feedback";
-import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
+import type { AppPort, SettingsPort, MuscleTagPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
@@ -8,7 +8,7 @@ import { ListItem } from "@app/components/molecules";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import { t } from "@app/i18n";
 
-type FileErrorContext = AppPort & SettingsPort;
+type FileErrorContext = AppPort & SettingsPort & MuscleTagPort;
 
 interface ExerciseFileError {
   file: TFile;

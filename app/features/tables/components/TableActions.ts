@@ -1,6 +1,6 @@
 import { Notice } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { ActionButtons } from "@app/features/tables/ui";
@@ -17,7 +17,7 @@ export class TableActions {
    */
   static handleEdit(
     log: WorkoutLogData,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): void {
     const modal = new EditLogModal(plugin.app, plugin, log);
     modal.open();
@@ -28,7 +28,7 @@ export class TableActions {
    */
   static handleDelete(
     log: WorkoutLogData,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): void {
     const modal = new ConfirmModal(
       plugin.app,
@@ -55,7 +55,7 @@ export class TableActions {
   static renderActionButtons(
     td: HTMLElement,
     originalLog: WorkoutLogData | undefined,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: WorkoutPluginContext,
     signal?: AbortSignal,
   ): void {
     if (!originalLog || !plugin) {

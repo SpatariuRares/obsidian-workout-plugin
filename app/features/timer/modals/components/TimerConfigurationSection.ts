@@ -9,7 +9,7 @@ import {
 } from "@app/components/atoms/Button";
 import { Input } from "@app/components/atoms/Input";
 import { INPUT_TYPE } from "@app/types/InputTypes";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
@@ -40,7 +40,7 @@ export class TimerConfigurationSection {
   static create(
     modal: ModalBase,
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;

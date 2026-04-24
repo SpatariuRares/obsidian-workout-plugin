@@ -1,11 +1,11 @@
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import { getDynamicSettingsLabels } from "@app/constants";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class QuickLogSettings {
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 

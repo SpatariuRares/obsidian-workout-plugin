@@ -2,10 +2,9 @@ import { App } from "obsidian";
 
 import { IconDropdown } from "@app/components/molecules/IconDropdown";
 import { t } from "@app/i18n";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
  * TimerActionSelect - Icon button dropdown for timer-level actions
@@ -53,7 +52,7 @@ export class TimerActionSelect {
         if (value === "edit") {
           const modal = new EditTimerModal(
             app,
-            plugin as unknown as WorkoutChartsPlugin,
+            plugin,
             params,
           );
           modal.open();

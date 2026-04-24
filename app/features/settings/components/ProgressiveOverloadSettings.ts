@@ -1,7 +1,7 @@
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import { getDynamicSettingsLabels } from "@app/constants";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
  * @deprecated Content merged into DurationEstimationSettings under "Training parameters" section.
@@ -9,7 +9,7 @@ import WorkoutChartsPlugin from "main";
  */
 export class ProgressiveOverloadSettings {
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext,
     private containerEl: HTMLElement,
   ) {}
 

@@ -1,6 +1,6 @@
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { TFile } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 // Mock TFile class
 class MockTFile {
@@ -17,7 +17,7 @@ class MockTFile {
 const createMockPlugin = (
   exerciseFolderPath: string,
   files: string[],
-): WorkoutChartsPlugin => {
+): WorkoutPluginContext => {
   const mockFiles = files.map((path) => new MockTFile(path));
 
   return {
@@ -29,7 +29,7 @@ const createMockPlugin = (
         getMarkdownFiles: () => mockFiles as TFile[],
       },
     },
-  } as unknown as WorkoutChartsPlugin;
+  } as unknown as WorkoutPluginContext;
 };
 
 describe("ExercisePathResolver", () => {

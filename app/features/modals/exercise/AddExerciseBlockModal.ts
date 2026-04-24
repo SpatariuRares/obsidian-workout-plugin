@@ -3,7 +3,7 @@ import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class AddExerciseBlockModal extends BaseInsertModal {
   private exerciseElements?: ExerciseAutocompleteElements;
@@ -11,7 +11,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
   private presetSelect?: HTMLSelectElement;
   private workoutInput?: HTMLInputElement;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+  constructor(app: App, plugin: WorkoutPluginContext) {
     super(app, plugin);
   }
 
@@ -37,7 +37,7 @@ export class AddExerciseBlockModal extends BaseInsertModal {
     // Exercise selection section with autocomplete
     const exerciseSection = this.createSection(container, "Exercise");
     const { elements: exerciseElements } =
-      ExerciseAutocomplete.create(this, exerciseSection, this.plugin);
+      ExerciseAutocomplete.create(this, exerciseSection, this.plugin, undefined, { showCreateButton: false });
     this.exerciseElements = exerciseElements;
 
     // Timer configuration section

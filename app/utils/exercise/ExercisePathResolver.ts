@@ -1,7 +1,7 @@
 import { TFile } from "obsidian";
-import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
+import type { AppPort } from "@app/types/PluginPorts";
 
-type ExercisePathContext = AppPort & SettingsPort;
+type ExercisePathContext = AppPort & { settings: { exerciseFolderPath: string } };
 
 /**
  * Utility for resolving exercise file paths

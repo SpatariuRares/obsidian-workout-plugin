@@ -10,8 +10,8 @@ import {
   WorkoutPlannerAPI,
   ExerciseStats,
 } from "@app/api/WorkoutPlannerAPI";
-import { DataService } from "@app/services/data/DataService";
-import type WorkoutChartsPlugin from "main";
+import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import type {
   CanvasExportOptions,
   CanvasLayoutType,
@@ -122,24 +122,17 @@ const DEFAULT_OPTIONS: CanvasExportOptions = {
 export class CanvasExporter {
   private api: WorkoutPlannerAPI;
   private tagMapper: MuscleTagMapper;
+  private settings: WorkoutChartsSettings;
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    api: WorkoutPlannerAPI,
+    muscleTagService: MuscleTagService,
+    settings: WorkoutChartsSettings,
   ) {
-    const dataService = new DataService(
-      app,
-      plugin.settings,
-      plugin.eventBus,
-    );
-    this.api = new WorkoutPlannerAPI(
-      dataService,
-      app,
-      plugin.settings,
-    );
-    this.tagMapper = new MuscleTagMapper(
-      plugin.getMuscleTagService(),
-    );
+    this.api = api;
+    this.tagMapper = new MuscleTagMapper(muscleTagService);
+    this.settings = settings;
   }
 
   /**
@@ -238,7 +231,7 @@ export class CanvasExporter {
           const muscleGroups =
             await this.tagMapper.findMuscleGroupsFromTags(
               exerciseName,
-              this.plugin,
+              { app: this.app, settings: this.settings },
             );
           exercises.push({
             name: exerciseName,
@@ -265,7 +258,7 @@ export class CanvasExporter {
         const muscleGroups =
           await this.tagMapper.findMuscleGroupsFromTags(
             headerText,
-            this.plugin,
+            { app: this.app, settings: this.settings },
           );
         exercises.push({ name: headerText, muscleGroups });
       }
@@ -274,7 +267,7 @@ export class CanvasExporter {
     // Pattern 3: Extract from markdown links to exercise files [[Exercise Name]]
     const linkRegex = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
     const exerciseFolderPath =
-      this.plugin.settings.exerciseFolderPath;
+      this.settings.exerciseFolderPath;
     while ((match = linkRegex.exec(content)) !== null) {
       const linkPath = match[1].trim();
       // Check if the link points to an exercise file
@@ -296,7 +289,7 @@ export class CanvasExporter {
             const muscleGroups =
               await this.tagMapper.findMuscleGroupsFromTags(
                 exerciseName,
-                this.plugin,
+                { app: this.app, settings: this.settings },
               );
             exercises.push({ name: exerciseName, muscleGroups });
           }

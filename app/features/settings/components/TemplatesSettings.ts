@@ -1,10 +1,13 @@
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
-import WorkoutChartsPlugin from "main";
+import type {
+  WorkoutPluginContext,
+  TemplateGeneratorPort,
+} from "@app/types/PluginPorts";
 
 export class TemplatesSettings {
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: WorkoutPluginContext & TemplateGeneratorPort,
     private containerEl: HTMLElement,
   ) {}
 

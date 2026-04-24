@@ -1,7 +1,7 @@
 // CreateLogModal - extends BaseLogModal for creating new workout logs
 
 import { App } from "obsidian";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { t } from "@app/i18n";
@@ -12,7 +12,7 @@ export class CreateLogModal extends BaseLogModal {
 
   constructor(
     app: App,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     exerciseName?: string,
     currentPageLink?: string,
     initialValues?: Partial<LogFormData>,

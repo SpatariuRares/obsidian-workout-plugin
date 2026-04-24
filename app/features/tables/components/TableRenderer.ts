@@ -3,7 +3,7 @@ import {
   EmbeddedTableParams,
 } from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
 import {
@@ -44,7 +44,7 @@ export class TableRenderer {
     rows: TableRow[],
     params: EmbeddedTableParams,
     logs?: WorkoutLogData[], // pass the original log objects
-    plugin?: WorkoutChartsPlugin, // pass the plugin for file opening
+    plugin?: WorkoutPluginContext, // pass the plugin for file opening
     signal?: AbortSignal,
   ): boolean {
     try {
@@ -83,7 +83,7 @@ export class TableRenderer {
     tbody: HTMLElement,
     rows: TableRow[],
     headers: string[],
-    plugin?: WorkoutChartsPlugin,
+    plugin?: WorkoutPluginContext,
     signal?: AbortSignal,
   ): void {
     if (rows.length === 0) return;
@@ -182,7 +182,7 @@ export class TableRenderer {
   private static renderProtocolBadge(
     cell: HTMLElement,
     protocol: string,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: WorkoutPluginContext,
   ): void {
     const config = ProtocolResolver.resolve(
       protocol,

@@ -16,7 +16,7 @@ export class TableDataLoader {
       exactMatch?: boolean;
     } = {};
 
-    if (params.exercise) {
+    if (params.exercise && params.exactMatch === true) {
       filterOptions.exercise = params.exercise;
       filterOptions.exactMatch = params.exactMatch;
     }

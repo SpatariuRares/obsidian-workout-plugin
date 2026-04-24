@@ -93,9 +93,13 @@ export class TableRowProcessor {
       if (log.customFields) {
         for (const [key, value] of Object.entries(log.customFields)) {
           const lowerKey = key.toLowerCase();
+          const normalizedKey = this.normalizeHeaderKey(key);
           // Don't overwrite already mapped fields
           if (!(lowerKey in baseDataMap)) {
             baseDataMap[lowerKey] = value?.toString() || "";
+          }
+          if (!(normalizedKey in baseDataMap)) {
+            baseDataMap[normalizedKey] = value?.toString() || "";
           }
         }
       }
@@ -105,15 +109,23 @@ export class TableRowProcessor {
       const displayRow = headers.map((header) => {
         // Extract the base key from the header (before any unit in parentheses)
         const headerBase = header.split(" (")[0].toLowerCase();
+        const normalizedHeaderBase =
+          this.normalizeHeaderKey(headerBase);
 
         // Try direct match first
         if (baseDataMap[headerBase] !== undefined) {
           return baseDataMap[headerBase];
         }
+        if (baseDataMap[normalizedHeaderBase] !== undefined) {
+          return baseDataMap[normalizedHeaderBase];
+        }
 
         // Try reverse mapping for abbreviated headers (e.g., "wgt" -> "weight")
         const mappedKey =
-          TableColumnResolver.HEADER_TO_DATA_KEY[headerBase];
+          TableColumnResolver.HEADER_TO_DATA_KEY[headerBase] ||
+          TableColumnResolver.HEADER_TO_DATA_KEY[
+            normalizedHeaderBase
+          ];
         if (mappedKey && baseDataMap[mappedKey] !== undefined) {
           return baseDataMap[mappedKey];
         }
@@ -150,6 +162,10 @@ export class TableRowProcessor {
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");
+  }
+
+  private static normalizeHeaderKey(value: string): string {
+    return value.toLowerCase().replace(/[\s_-]+/g, "");
   }
 
   /**

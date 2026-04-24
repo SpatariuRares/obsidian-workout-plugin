@@ -54,7 +54,8 @@ class TableRenderChild extends MarkdownRenderChild {
 
 export class EmbeddedTableView extends BaseView {
   private callbacks: TableCallbacks;
-  private renderChildren: TableRenderChild[] = [];
+  private renderChildren: Map<HTMLElement, TableRenderChild> =
+    new Map();
 
   constructor(plugin: WorkoutChartsPlugin) {
     super(plugin);
@@ -141,10 +142,11 @@ export class EmbeddedTableView extends BaseView {
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
+    this.unloadRenderChild(container);
     container.empty();
 
     const renderChild = new TableRenderChild(container);
-    this.renderChildren.push(renderChild);
+    this.renderChildren.set(container, renderChild);
 
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
@@ -338,7 +340,7 @@ export class EmbeddedTableView extends BaseView {
    */
   public cleanup(): void {
     try {
-      for (const renderChild of this.renderChildren) {
+      for (const renderChild of this.renderChildren.values()) {
         try {
           renderChild.unload();
         } catch {
@@ -346,9 +348,21 @@ export class EmbeddedTableView extends BaseView {
         }
       }
 
-      this.renderChildren = [];
+      this.renderChildren.clear();
     } catch {
       // Silently fail cleanup
     }
+  }
+
+  private unloadRenderChild(container: HTMLElement): void {
+    const existingChild = this.renderChildren.get(container);
+    if (!existingChild) return;
+
+    try {
+      existingChild.unload();
+    } catch {
+      // Continue rendering even if cleanup fails
+    }
+    this.renderChildren.delete(container);
   }
 }

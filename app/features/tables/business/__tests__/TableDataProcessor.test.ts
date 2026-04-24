@@ -112,6 +112,31 @@ describe("TableDataProcessor", () => {
       expect(result.totalRows).toBe(5);
     });
 
+    it("applies dateRange before sorting and limiting", async () => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date("2024-01-31T12:00:00"));
+
+      try {
+        const logData = [
+          createLog({ date: "2024-01-30T10:00:00", reps: 10 }),
+          createLog({ date: "2024-01-25T10:00:00", reps: 8 }),
+          createLog({ date: "2024-01-10T10:00:00", reps: 6 }),
+        ];
+
+        const result = await TableDataProcessor.processTableData(
+          logData,
+          { dateRange: 7, limit: 1 },
+        );
+
+        expect(result.totalRows).toBe(1);
+        expect(result.rows[0].originalDate).toBe(
+          "2024-01-30T10:00:00",
+        );
+      } finally {
+        jest.useRealTimers();
+      }
+    });
+
     it("uses default limit of 50 when not specified", async () => {
       const logData = Array.from({ length: 60 }, (_, i) =>
         createLog({
@@ -480,6 +505,32 @@ describe("TableDataProcessor", () => {
       expect(result.headers).toContain("Dist (km)");
     });
 
+    it("uses parameter keys for dynamic heart rate columns", async () => {
+      const mockPlugin = {
+        getExerciseDefinitionService: jest.fn().mockReturnValue({
+          getParametersForExercise: jest.fn().mockResolvedValue([
+            { key: "heartRate", label: "Heart rate", unit: "bpm" },
+          ]),
+        }),
+      } as any;
+
+      const logData = [
+        createLog({
+          customFields: { heartRate: 145 },
+        }),
+      ];
+
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        { exercise: "Running" },
+        mockPlugin,
+      );
+
+      const heartRateIdx = result.headers.indexOf("HR (bpm)");
+      expect(heartRateIdx).toBeGreaterThanOrEqual(0);
+      expect(result.rows[0].displayRow[heartRateIdx]).toBe("145");
+    });
+
     it("handles custom fields with string values in hasCustomField", async () => {
       const logData = [
         createLog({ customFields: { duration: "120" } }),
@@ -658,6 +709,24 @@ describe("TableDataProcessor", () => {
       if (idx >= 0) {
         expect(result.rows[0].displayRow[idx]).toBe("hello");
       }
+    });
+
+    it("maps spaced heart rate headers to camelCase custom fields", async () => {
+      const logData = [
+        createLog({
+          customFields: { heartRate: 152 },
+        }),
+      ];
+
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        {
+          columns: ["Heart rate (bpm)"],
+        },
+      );
+
+      const idx = result.headers.indexOf("Heart rate (bpm)");
+      expect(result.rows[0].displayRow[idx]).toBe("152");
     });
 
     it("returns filter method and title in filterResult", async () => {

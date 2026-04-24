@@ -107,7 +107,7 @@ export abstract class BaseView {
             return effectiveChartCategory === CHART_TYPE.WORKOUT;
           })()
         : !(
-            t("common.exercise") in params &&
+            "exercise" in params &&
             (params as { exercise?: string }).exercise
           );
 

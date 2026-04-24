@@ -10,8 +10,12 @@ jest.mock("obsidian", () => ({
     constructor(containerEl: HTMLElement) {
       this.containerEl = containerEl;
     }
-    load() {}
-    unload() {}
+    load() {
+      (this as any).onload?.();
+    }
+    unload() {
+      (this as any).onunload?.();
+    }
   },
 }));
 
@@ -477,6 +481,21 @@ describe("EmbeddedTableView", () => {
         .mock.calls[0];
       // The 6th argument is latestEntry
       expect(addLogCall[5]).toBeDefined();
+    });
+
+    it("unloads previous render child before rendering into the same container", async () => {
+      const container = document.createElement("div");
+
+      await view.createTable(container, [createLog()], {});
+      const firstSignal = (TableRenderer.renderTable as jest.Mock).mock
+        .calls[0][6] as AbortSignal;
+
+      await view.createTable(container, [createLog()], {});
+      const secondSignal = (TableRenderer.renderTable as jest.Mock).mock
+        .calls[1][6] as AbortSignal;
+
+      expect(firstSignal.aborted).toBe(true);
+      expect(secondSignal.aborted).toBe(false);
     });
   });
 

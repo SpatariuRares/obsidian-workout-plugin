@@ -7,6 +7,7 @@ import type WorkoutChartsPlugin from "main";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
+import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
 
 /**
@@ -33,9 +34,13 @@ export class TableDataProcessor {
     const isShowingAllLogs = !params.exercise;
     const limit = params.limit || 50;
 
-    // Sort and limit data FIRST, then check for optional columns in visible rows only
+    const dateFilteredData = params.dateRange
+      ? DateUtils.filterByDaysAgo(logData, params.dateRange)
+      : logData;
+
+    // Sort and limit data after filtering, then check optional columns in visible rows only
     const sortedAndLimitedData = TableRowProcessor.sortAndLimitData(
-      logData,
+      dateFilteredData,
       limit,
     );
 

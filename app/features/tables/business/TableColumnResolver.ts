@@ -8,6 +8,16 @@ import { CONSTANTS } from "@app/constants";
  * Handles abbreviations, units, and dynamic column determination.
  */
 export class TableColumnResolver {
+  /** Map of parameter keys to their compact technical table headers */
+  private static readonly PARAM_KEY_HEADERS: Record<string, string> = {
+    reps: CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
+    weight: CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
+    duration: CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
+    distance: CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value,
+    heartrate: CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value,
+    volume: CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
+  };
+
   /** Map of labels to their abbreviated forms for compact display */
   private static readonly LABEL_ABBREVIATIONS: Record<
     string,
@@ -30,6 +40,9 @@ export class TableColumnResolver {
     dist: "distance",
     vol: "volume",
     hr: "heartrate",
+    heartrate: "heartrate",
+    "heart rate": "heartrate",
+    heartRate: "heartrate",
     prot: "protocol",
     act: "actions",
   };
@@ -105,12 +118,15 @@ export class TableColumnResolver {
    * @returns Formatted header string (e.g., "Dur (sec)", "Wgt (kg)" or "Wgt (lb)")
    */
   static formatParameterHeader(param: ParameterDefinition): string {
+    const key = param.key.toLowerCase();
     const abbreviatedLabel =
-      this.LABEL_ABBREVIATIONS[param.label] || param.label;
+      this.PARAM_KEY_HEADERS[key] ||
+      this.LABEL_ABBREVIATIONS[param.label] ||
+      param.label;
 
     // Use param.unit if explicitly defined, otherwise get from ParameterUtils
     let unit = param.unit;
-    if (!unit && param.key.toLowerCase() === "weight") {
+    if (!unit && key === "weight") {
       unit = ParameterUtils.getWeightUnit();
     }
 

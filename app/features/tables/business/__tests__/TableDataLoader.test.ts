@@ -51,7 +51,7 @@ describe("TableDataLoader", () => {
       });
     });
 
-    it("loads data with both exercise and workout filters", async () => {
+    it("loads data with workout filter only when exercise matching is fuzzy", async () => {
       const mockPlugin = createMockPlugin([createLog()]);
       const params: EmbeddedTableParams = {
         exercise: "Bench Press",
@@ -65,10 +65,23 @@ describe("TableDataLoader", () => {
       );
 
       expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({
-        exercise: "Bench Press",
-        exactMatch: false,
         workout: "Push Day",
       });
+    });
+
+    it("loads all data for exercise-only fuzzy matching", async () => {
+      const mockPlugin = createMockPlugin([createLog()]);
+      const params: EmbeddedTableParams = {
+        exercise: "Bench",
+        exactMatch: false,
+      };
+
+      await TableDataLoader.getOptimizedCSVData(
+        params,
+        mockPlugin as any,
+      );
+
+      expect(mockPlugin.getWorkoutLogData).toHaveBeenCalledWith({});
     });
 
     it("loads all data when no filters", async () => {

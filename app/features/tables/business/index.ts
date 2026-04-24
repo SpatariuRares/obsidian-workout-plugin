@@ -3,7 +3,6 @@
  * Data processing, loading, validation, and refresh logic
  */
 
-export { TableDataLoader } from "@app/features/tables/business/TableDataLoader";
 export { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 export { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 export { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";

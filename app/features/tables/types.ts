@@ -5,7 +5,7 @@ export interface EmbeddedTableParams {
   id?: string; // Unique identifier for code block replacement
   exercise?: string;
   workout?: string;
-  dateRange?: number; // Days to look back (handled by CodeBlockProcessorService before table render)
+  dateRange?: number; // Days to look back (handled by DataFilter before table processing)
   limit?: number;
   exactMatch?: boolean;
   searchByName?: boolean;

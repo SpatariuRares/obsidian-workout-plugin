@@ -9,8 +9,8 @@ import {
   isValidChartDataType,
   getAvailableChartDataTypes,
 } from "@app/features/charts/config/ChartConstants";
-import WorkoutChartsPlugin from "main";
-import { ParameterUtils } from "@app/utils";
+import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n/LocalizationService";
 
 /**
@@ -24,7 +24,7 @@ export class ChartTypeResolver {
    * Otherwise determines the default type based on the exercise's type definition.
    */
   static async resolve(
-    plugin: WorkoutChartsPlugin,
+    plugin: ExerciseDefinitionPort,
     params: EmbeddedChartParams,
   ): Promise<CHART_DATA_TYPE> {
     // If type is explicitly provided, use it
@@ -61,7 +61,7 @@ export class ChartTypeResolver {
    * for backward compatibility.
    */
   static async validate(
-    plugin: WorkoutChartsPlugin,
+    plugin: ExerciseDefinitionPort,
     params: EmbeddedChartParams,
     chartDataType: CHART_DATA_TYPE,
   ): Promise<{ isValid: boolean; errorMessage: string }> {

@@ -5,13 +5,9 @@ import type WorkoutChartsPlugin from "main";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { StringUtils } from "@app/utils/StringUtils";
+import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 
 import { t } from "@app/i18n";
-
-export interface ExerciseAutocompleteElements {
-  exerciseInput: HTMLInputElement;
-  autocompleteContainer: HTMLElement;
-}
 
 export interface ExerciseAutocompleteHandlers {
   showAutocomplete: (_query: string) => void;

@@ -17,7 +17,7 @@ import {
 } from "@app/features/tables/exampleTableGenerator";
 import { generateDashboardBlock } from "@app/features/dashboard/exampleDashboardGenerator";
 import { generateDurationBlock } from "@app/features/duration/exampleDurationGenerator";
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 
 export function generateGettingStartedContent(): string {
   return `# ${t("examples.gettingStarted.title")}

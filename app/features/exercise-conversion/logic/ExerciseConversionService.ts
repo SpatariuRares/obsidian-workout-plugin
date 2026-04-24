@@ -5,6 +5,7 @@ import {
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
 import type { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import type WorkoutChartsPlugin from "main";
+import { DataFilter } from "@app/services/data/DataFilter";
 
 export interface FieldMapping {
   fromField: string;
@@ -52,8 +53,8 @@ export class ExerciseConversionService {
     targetTypeId: string,
     fieldMappings: FieldMapping[],
   ): Promise<number> {
-    // Get all entries for this exercise
-    const logData = await this.plugin.getWorkoutLogData({
+    const rawLogData = await this.plugin.getWorkoutLogData();
+    const logData = DataFilter.filterRows(rawLogData, {
       exercise: exerciseName,
       exactMatch: true,
     });

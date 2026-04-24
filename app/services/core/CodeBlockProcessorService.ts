@@ -10,10 +10,13 @@ import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
-import type WorkoutChartsPlugin from "main";
 import { DataService } from "@app/services/data/DataService";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
+import type {
+  MarkdownCodeBlockProcessorPort,
+  WorkoutPluginContext,
+} from "@app/types/PluginPorts";
 import {
   MarkdownPostProcessorContext,
   MarkdownRenderChild,
@@ -21,14 +24,15 @@ import {
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
 import { CONSTANTS } from "@app/constants";
-import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
+
+type CodeBlockProcessorPlugin = WorkoutPluginContext &
+  MarkdownCodeBlockProcessorPort;
 
 class TimerRenderChild extends MarkdownRenderChild {
   constructor(
     containerEl: HTMLElement,
     private timerView: EmbeddedTimerView,
     private activeTimers: Map<string, EmbeddedTimerView>,
-    private plugin: WorkoutChartsPlugin,
     private persistentId?: string,
     private exercise?: string,
     private workout?: string,
@@ -78,7 +82,7 @@ export class CodeBlockProcessorService {
   private embeddedDurationView: EmbeddedDurationView;
 
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: CodeBlockProcessorPlugin,
     private dataService: DataService,
     private embeddedChartView: EmbeddedChartView,
     private embeddedTableView: EmbeddedTableView,
@@ -173,8 +177,7 @@ export class CodeBlockProcessorService {
     try {
       const params = this.parseCodeBlockParams(source);
 
-      // Use early filtering if we have specific parameters
-      const logData = await this.loadFilteredLogData(params);
+      const logData = await this.loadLogData();
       await this.embeddedTableView.createTable(
         el,
         logData,
@@ -216,11 +219,6 @@ export class CodeBlockProcessorService {
       const params = this.parseCodeBlockParams(
         source,
       ) as EmbeddedTimerParams;
-
-      // If no ID is present, trigger a migration check
-      if (!params.id) {
-        await runAddMissingBlockIds(this.plugin.app);
-      }
 
       this.createEmbeddedTimer(el, params, ctx);
     } catch (error) {
@@ -264,7 +262,6 @@ export class CodeBlockProcessorService {
         container,
         timerView,
         this.activeTimers,
-        this.plugin,
         params.id, // Pass persistentId for lifecycle management
         timerExercise,
         timerWorkout,
@@ -355,19 +352,10 @@ export class CodeBlockProcessorService {
     }
   }
 
-  // Load workout log data with optional exercise/workout filtering
-  private async loadFilteredLogData(
-    params: Record<string, unknown>,
-  ): Promise<import("@app/types/WorkoutLogData").WorkoutLogData[]> {
-    if (params.exercise || params.workout) {
-      return (
-        (await this.dataService.getWorkoutLogData({
-          exercise: params.exercise as string,
-          workout: params.workout as string,
-          exactMatch: params.exactMatch as boolean,
-        })) || []
-      );
-    }
+  // Load raw workout log data. Filtering is handled inside views via DataFilter.
+  private async loadLogData(): Promise<
+    import("@app/types/WorkoutLogData").WorkoutLogData[]
+  > {
     return (await this.dataService.getWorkoutLogData()) || [];
   }
 

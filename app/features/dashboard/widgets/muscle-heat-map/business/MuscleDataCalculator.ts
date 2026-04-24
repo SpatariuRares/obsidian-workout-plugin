@@ -1,8 +1,10 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import { DateUtils } from "@app/utils/DateUtils";
 import type { BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body";
+
+type MuscleDataContext = AppPort & SettingsPort;
 
 export interface MuscleGroupData {
   name: string;
@@ -47,7 +49,7 @@ export class MuscleDataCalculator {
    */
   async calculateMuscleGroupVolumes(
     data: WorkoutLogData[],
-    plugin: WorkoutChartsPlugin,
+    plugin: MuscleDataContext,
   ): Promise<Map<string, MuscleGroupData>> {
     const muscleData = new Map<string, MuscleGroupData>();
 

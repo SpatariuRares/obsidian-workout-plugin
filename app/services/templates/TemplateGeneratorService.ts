@@ -1,7 +1,7 @@
 import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
-import type WorkoutChartsPlugin from "main";
 import { t } from "@app/i18n";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import type { MuscleTagPort } from "@app/types/PluginPorts";
 
 /**
  * Service for generating and reading template files.
@@ -13,7 +13,7 @@ export class TemplateGeneratorService {
 
   constructor(
     private app: App,
-    private plugin: WorkoutChartsPlugin,
+    private plugin: MuscleTagPort,
   ) {}
 
   /**

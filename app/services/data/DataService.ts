@@ -7,13 +7,9 @@ import { App } from "obsidian";
 import { CSVCacheService } from "@app/services/data/CSVCacheService";
 import { CSVColumnService } from "@app/services/data/CSVColumnService";
 import { WorkoutLogRepository } from "@app/services/data/WorkoutLogRepository";
-import {
-  DataFilter,
-  EarlyFilterParams,
-} from "@app/services/data/DataFilter";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
-import { StringUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /**
  * Facade service for workout data operations.
@@ -41,18 +37,11 @@ export class DataService {
   }
 
   /**
-   * Get workout log data, optionally filtered by exercise/workout.
+   * Get raw workout log data from cache or CSV.
+   * Filtering is centralized in DataFilter and must be applied by callers.
    */
-  async getWorkoutLogData(
-    filterParams?: EarlyFilterParams,
-  ): Promise<WorkoutLogData[]> {
-    const rawData = await this.cacheService.getRawData();
-
-    if (filterParams) {
-      return DataFilter.applyEarlyFiltering(rawData, filterParams);
-    }
-
-    return rawData;
+  async getWorkoutLogData(): Promise<WorkoutLogData[]> {
+    return this.cacheService.getRawData();
   }
 
   /**

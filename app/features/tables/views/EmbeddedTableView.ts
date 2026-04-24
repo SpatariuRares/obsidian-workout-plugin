@@ -3,7 +3,6 @@ import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import {
   TableRenderer,
   TableDataProcessor,
-  TableDataLoader,
   TableConfig,
   TableRefresh,
   ExerciseActionSelect,
@@ -15,9 +14,9 @@ import {
   EmbeddedTableParams,
   TableData,
 } from "@app/features/tables/types";
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { BaseView } from "@app/features/common/views/BaseView";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components";
@@ -57,7 +56,7 @@ export class EmbeddedTableView extends BaseView {
   private renderChildren: Map<HTMLElement, TableRenderChild> =
     new Map();
 
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutPluginContext) {
     super(plugin);
 
     this.callbacks = {
@@ -102,12 +101,7 @@ export class EmbeddedTableView extends BaseView {
         return;
       }
 
-      const dataToProcess = await TableDataLoader.getOptimizedCSVData(
-        params,
-        this.plugin,
-      );
-
-      const filterResult = this.filterData(dataToProcess, params);
+      const filterResult = this.filterData(logData, params);
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();

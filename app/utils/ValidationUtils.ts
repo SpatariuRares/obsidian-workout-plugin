@@ -2,7 +2,7 @@ import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import {
   CHART_DATA_TYPE,
   CHART_TYPE,
-} from "@app/features/charts/types";
+} from "@app/types/WorkoutConfigTypes";
 
 /**
  * Utility class for parameter validation operations

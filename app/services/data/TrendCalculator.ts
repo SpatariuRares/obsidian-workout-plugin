@@ -1,5 +1,5 @@
 import { TrendIndicators } from "@app/types/CommonTypes";
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
 

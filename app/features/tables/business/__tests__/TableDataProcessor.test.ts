@@ -112,29 +112,22 @@ describe("TableDataProcessor", () => {
       expect(result.totalRows).toBe(5);
     });
 
-    it("applies dateRange before sorting and limiting", async () => {
-      jest.useFakeTimers();
-      jest.setSystemTime(new Date("2024-01-31T12:00:00"));
+    it("processes already-filtered data without applying dateRange", async () => {
+      const logData = [
+        createLog({ date: "2024-01-30T10:00:00", reps: 10 }),
+        createLog({ date: "2024-01-25T10:00:00", reps: 8 }),
+        createLog({ date: "2024-01-10T10:00:00", reps: 6 }),
+      ];
 
-      try {
-        const logData = [
-          createLog({ date: "2024-01-30T10:00:00", reps: 10 }),
-          createLog({ date: "2024-01-25T10:00:00", reps: 8 }),
-          createLog({ date: "2024-01-10T10:00:00", reps: 6 }),
-        ];
+      const result = await TableDataProcessor.processTableData(
+        logData,
+        { dateRange: 7, limit: 3 },
+      );
 
-        const result = await TableDataProcessor.processTableData(
-          logData,
-          { dateRange: 7, limit: 1 },
-        );
-
-        expect(result.totalRows).toBe(1);
-        expect(result.rows[0].originalDate).toBe(
-          "2024-01-30T10:00:00",
-        );
-      } finally {
-        jest.useRealTimers();
-      }
+      expect(result.totalRows).toBe(3);
+      expect(result.rows[0].originalDate).toBe(
+        "2024-01-30T10:00:00",
+      );
     });
 
     it("uses default limit of 50 when not specified", async () => {

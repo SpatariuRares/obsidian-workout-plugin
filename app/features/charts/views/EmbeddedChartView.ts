@@ -21,13 +21,13 @@ import {
 } from "@app/features/charts";
 import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 import { BaseView } from "@app/features/common/views/BaseView";
-import WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { StatisticsUtils, ValidationUtils } from "@app/utils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 
 export class EmbeddedChartView extends BaseView {
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutPluginContext) {
     super(plugin);
   }
 
@@ -49,15 +49,6 @@ export class EmbeddedChartView extends BaseView {
   async loadChartData(
     params: EmbeddedChartParams,
   ): Promise<WorkoutLogData[]> {
-    if (params.exercise || params.workout) {
-      return (
-        (await this.plugin.getWorkoutLogData({
-          exercise: params.exercise as string,
-          workout: params.workout as string,
-          exactMatch: params.exactMatch as boolean,
-        })) || []
-      );
-    }
     return (await this.plugin.getWorkoutLogData()) || [];
   }
 

@@ -1,5 +1,4 @@
 // Embedded Timer View for workout timing functionality
-import WorkoutChartsPlugin from "main";
 import {
   TimerCore,
   TimerDisplay,
@@ -14,12 +13,13 @@ import {
 } from "@app/features/timer";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;
   private timerCore: TimerCore;
 
-  constructor(plugin: WorkoutChartsPlugin, id?: string) {
+  constructor(plugin: WorkoutPluginContext, id?: string) {
     super(plugin);
     this.timerId =
       id ||

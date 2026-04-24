@@ -3,9 +3,9 @@
  * Handles parsing of workout-timer and workout-log code blocks.
  */
 import { TFile } from "obsidian";
-import WorkoutChartsPlugin from "main";
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { StringUtils, ErrorUtils } from "@app/utils";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 60;
@@ -20,7 +20,7 @@ const MAX_VALID_DURATION_SECONDS = 18000;
 const MAX_REASONABLE_SETS = 100;
 
 export class WorkoutFileAnalyzer {
-  constructor(private plugin: WorkoutChartsPlugin) {}
+  constructor(private plugin: AppPort & SettingsPort) {}
 
   /**
    * Analyzes a workout file to extract duration components.

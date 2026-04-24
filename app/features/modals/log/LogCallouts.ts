@@ -1,20 +1,38 @@
 import { MarkdownView } from "obsidian";
 import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 
+type CreateLogPlugin = ConstructorParameters<
+  typeof CreateLogModal
+>[1];
+type ExerciseActionPlugin = Parameters<
+  typeof ExerciseActionSelect.render
+>[1]["plugin"];
+
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
- * These organisms live in the logs feature because they trigger log creation flows.
  */
 export class LogCallouts {
+  private static asCreateLogPlugin(
+    plugin: WorkoutPluginContext,
+  ): CreateLogPlugin {
+    return plugin as unknown as CreateLogPlugin;
+  }
+
+  private static asExerciseActionPlugin(
+    plugin: WorkoutPluginContext,
+  ): ExerciseActionPlugin {
+    return plugin as unknown as ExerciseActionPlugin;
+  }
+
   private static openCreateLogModal(
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     exerciseName?: string,
   ): void {
     const activeView =
@@ -25,7 +43,7 @@ export class LogCallouts {
 
     new CreateLogModal(
       plugin.app,
-      plugin,
+      this.asCreateLogPlugin(plugin),
       exerciseName,
       currentPageLink,
       undefined,
@@ -35,7 +53,7 @@ export class LogCallouts {
 
   static renderCsvNoDataMessage(
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     exerciseName?: string,
     currentPageLink?: string,
     codeBlockId?: string,
@@ -71,7 +89,6 @@ export class LogCallouts {
     });
 
     Button.onClick(createButton, () => {
-      // Determine the link: use passed one, or fallback to active view
       let link = currentPageLink;
       if (!link) {
         const activeView =
@@ -83,7 +100,7 @@ export class LogCallouts {
 
       new CreateLogModal(
         plugin.app,
-        plugin,
+        this.asCreateLogPlugin(plugin),
         exerciseName,
         link,
         undefined,
@@ -95,7 +112,7 @@ export class LogCallouts {
       ExerciseActionSelect.render(buttonDiv, {
         exerciseName,
         app: plugin.app,
-        plugin,
+        plugin: this.asExerciseActionPlugin(plugin),
         params: {
           exercise: exerciseName,
           id: codeBlockId,
@@ -108,7 +125,7 @@ export class LogCallouts {
     container: HTMLElement,
     exerciseName: string,
     currentPageLink: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     signal?: AbortSignal,
     latestEntry?: WorkoutLogData,
   ): void {
@@ -130,8 +147,6 @@ export class LogCallouts {
     Button.onClick(
       button,
       () => {
-        // If there's a latest entry, pre-fill the form with those values
-        // Include all fields: reps, weight, protocol, and customFields
         const prefillData = latestEntry
           ? {
               exercise: latestEntry.exercise,
@@ -146,7 +161,7 @@ export class LogCallouts {
 
         new CreateLogModal(
           plugin.app,
-          plugin,
+          this.asCreateLogPlugin(plugin),
           exerciseName,
           currentPageLink,
           prefillData,
@@ -160,7 +175,7 @@ export class LogCallouts {
   static renderCreateLogButtonForExercise(
     container: HTMLElement,
     exerciseName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): void {
     const buttonContainer = Button.createContainer(container);
     buttonContainer.addClass("create-log-button-container");

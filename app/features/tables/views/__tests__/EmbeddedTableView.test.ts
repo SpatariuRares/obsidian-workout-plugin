@@ -109,17 +109,6 @@ jest.mock("@app/features/tables", () => ({
         params: params || {},
       })),
   },
-  TableDataLoader: {
-    getOptimizedCSVData: jest.fn().mockResolvedValue([
-      {
-        date: "2024-01-15T10:00:00",
-        exercise: "Bench Press",
-        reps: 8,
-        weight: 80,
-        volume: 640,
-      },
-    ]),
-  },
   GoToExerciseButton: {
     render: jest.fn(),
   },
@@ -135,7 +124,7 @@ jest.mock("@app/features/tables", () => ({
 }));
 
 // Mock LogCallouts
-jest.mock("@app/components/molecules/LogCallouts", () => ({
+jest.mock("@app/features/modals/log/LogCallouts", () => ({
   LogCallouts: {
     renderAddLogButton: jest.fn(),
   },
@@ -170,13 +159,12 @@ import {
   TableConfig,
   TableRenderer,
   TableDataProcessor,
-  TableDataLoader,
   TableRefresh,
   TargetHeader,
   AchievementBadge,
   ExerciseActionSelect,
 } from "@app/features/tables";
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 
 const createLog = (
   overrides: Partial<WorkoutLogData> = {},
@@ -262,8 +250,11 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, logData, {});
 
-      expect(TableDataLoader.getOptimizedCSVData).toHaveBeenCalled();
-      expect(TableDataProcessor.processTableData).toHaveBeenCalled();
+      expect(TableDataProcessor.processTableData).toHaveBeenCalledWith(
+        logData,
+        {},
+        plugin,
+      );
       expect(TableRenderer.renderTable).toHaveBeenCalled();
     });
 
@@ -434,19 +425,19 @@ describe("EmbeddedTableView", () => {
 
     it("handles errors during rendering", async () => {
       (
-        TableDataLoader.getOptimizedCSVData as jest.Mock
-      ).mockRejectedValueOnce(new Error("Load failed"));
+        TableDataProcessor.processTableData as jest.Mock
+      ).mockRejectedValueOnce(new Error("Process failed"));
       const container = document.createElement("div");
 
       await view.createTable(container, [createLog()], {});
 
       // Should have called handleError
-      expect(container.textContent).toContain("Load failed");
+      expect(container.textContent).toContain("Process failed");
     });
 
     it("handles non-Error exceptions", async () => {
       (
-        TableDataLoader.getOptimizedCSVData as jest.Mock
+        TableDataProcessor.processTableData as jest.Mock
       ).mockRejectedValueOnce("string error");
       const container = document.createElement("div");
 

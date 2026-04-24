@@ -565,5 +565,70 @@ describe("DataFilter", () => {
         expect(result.filterMethodUsed).toBe("none");
       });
     });
+
+    describe("Date Range Filtering", () => {
+      it("should filter by dateRange", () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("2024-02-15T12:00:00"));
+
+        try {
+          const result = DataFilter.filterData(mockLogData, {
+            dateRange: 7,
+          });
+
+          expect(result.filteredData).toHaveLength(2);
+          expect(result.filteredData.map((log) => log.date)).toEqual([
+            "2024-02-10",
+            "2024-02-12",
+          ]);
+          expect(result.filterMethodUsed).toBe(
+            "dateRange: last 7 days",
+          );
+        } finally {
+          jest.useRealTimers();
+        }
+      });
+
+      it("should combine dateRange with protocol filter", () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("2024-02-15T12:00:00"));
+
+        try {
+          const result = DataFilter.filterData(
+            mockLogDataWithProtocol,
+            {
+              dateRange: 7,
+              protocol: "drop_set",
+            },
+          );
+
+          expect(result.filteredData).toHaveLength(1);
+          expect(result.filteredData[0].date).toBe("2024-02-12");
+          expect(result.filterMethodUsed).toContain("protocol");
+          expect(result.filterMethodUsed).toContain("dateRange");
+        } finally {
+          jest.useRealTimers();
+        }
+      });
+    });
+  });
+
+  describe("filterRows", () => {
+    it("should return the same filtered rows as filterData without UI metadata", () => {
+      const params: DataFilterParams = {
+        workout: "Leg Day",
+        protocol: "drop_set",
+      };
+
+      const rows = DataFilter.filterRows(mockLogDataWithProtocol, params);
+      const result = DataFilter.filterData(
+        mockLogDataWithProtocol,
+        params,
+      );
+
+      expect(rows).toEqual(result.filteredData);
+      expect(rows).toHaveLength(1);
+      expect(rows[0].exercise).toBe("Squat");
+    });
   });
 });

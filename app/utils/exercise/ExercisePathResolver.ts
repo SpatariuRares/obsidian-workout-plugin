@@ -1,5 +1,7 @@
-import WorkoutChartsPlugin from "main";
 import { TFile } from "obsidian";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
+
+type ExercisePathContext = AppPort & SettingsPort;
 
 /**
  * Utility for resolving exercise file paths
@@ -52,7 +54,7 @@ export class ExercisePathResolver {
   /**
    * Find all exercise files in the configured exercise folder
    */
-  static findExerciseFiles(plugin: WorkoutChartsPlugin): TFile[] {
+  static findExerciseFiles(plugin: ExercisePathContext): TFile[] {
     const exerciseFolderPath = plugin.settings.exerciseFolderPath;
     if (!exerciseFolderPath) {
       return [];
@@ -70,7 +72,7 @@ export class ExercisePathResolver {
    */
   static findExerciseFile(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: ExercisePathContext,
   ): TFile | undefined {
     const exerciseFolderPath = plugin.settings.exerciseFolderPath;
     if (!exerciseFolderPath) {
@@ -101,7 +103,7 @@ export class ExercisePathResolver {
   /**
    * Get exercise names from all exercise files
    */
-  static getExerciseNames(plugin: WorkoutChartsPlugin): string[] {
+  static getExerciseNames(plugin: ExercisePathContext): string[] {
     const files = this.findExerciseFiles(plugin);
     return files.map((file) => file.basename).sort();
   }

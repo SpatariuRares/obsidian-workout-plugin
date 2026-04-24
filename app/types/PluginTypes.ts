@@ -1,11 +1,11 @@
-import type { EmbeddedChartParams } from "@app/features/charts/types";
-import type { EmbeddedTableParams } from "@app/features/tables/types";
-import type { EmbeddedTimerParams } from "@app/features/timer/types";
-import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import type { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 
 // Common parameter type for all embedded views
-export type EmbeddedViewParams =
-  | EmbeddedChartParams
-  | EmbeddedTableParams
-  | EmbeddedTimerParams
-  | EmbeddedDashboardParams;
+export interface EmbeddedViewParams {
+  exercise?: string;
+  workout?: string;
+  exactMatch?: boolean;
+  dateRange?: number;
+  chartType?: CHART_TYPE;
+  protocol?: string | string[];
+}

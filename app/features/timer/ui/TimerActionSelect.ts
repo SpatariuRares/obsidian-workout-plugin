@@ -5,6 +5,7 @@ import { t } from "@app/i18n";
 import type WorkoutChartsPlugin from "main";
 import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
  * TimerActionSelect - Icon button dropdown for timer-level actions
@@ -14,7 +15,7 @@ import { EmbeddedTimerParams } from "@app/features/timer/types";
  */
 export interface TimerActionSelectProps {
   app: App;
-  plugin: WorkoutChartsPlugin;
+  plugin: WorkoutPluginContext;
   params: EmbeddedTimerParams;
 }
 
@@ -50,7 +51,11 @@ export class TimerActionSelect {
       wrapper,
       (value) => {
         if (value === "edit") {
-          const modal = new EditTimerModal(app, plugin, params);
+          const modal = new EditTimerModal(
+            app,
+            plugin as unknown as WorkoutChartsPlugin,
+            params,
+          );
           modal.open();
         }
       },

@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import {
   createObsidianContainer,
   attachObsidianHelpers,

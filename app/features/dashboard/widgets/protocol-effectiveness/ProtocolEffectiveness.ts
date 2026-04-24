@@ -5,7 +5,7 @@ import {
 } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
-import type WorkoutChartsPlugin from "main";
+import type { SettingsPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 
@@ -76,7 +76,7 @@ export class ProtocolEffectiveness {
     container: HTMLElement,
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: SettingsPort,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.protocolEffectiveness.title"),
@@ -114,7 +114,7 @@ export class ProtocolEffectiveness {
    */
   private static calculateEffectivenessStats(
     data: WorkoutLogData[],
-    plugin?: WorkoutChartsPlugin,
+    plugin?: SettingsPort,
   ): ProtocolEffectivenessStats[] {
     // Group entries by protocol
     const protocolGroups = new Map<string, WorkoutLogData[]>();
@@ -169,7 +169,7 @@ export class ProtocolEffectiveness {
    */
   private static getProtocolConfig(
     protocol: string,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: SettingsPort,
   ): { label: string; color: string } | null {
     // Check built-in protocols
     if (PROTOCOL_CONFIG[protocol]) {

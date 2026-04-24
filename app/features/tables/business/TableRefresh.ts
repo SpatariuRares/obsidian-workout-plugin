@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutDataPort } from "@app/types/PluginPorts";
 import {
   TableCallbacks,
   EmbeddedTableParams,
@@ -16,7 +16,7 @@ export class TableRefresh {
    * @param callbacks - Optional callbacks for success/error reporting
    */
   static async refreshTable(
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutDataPort,
     container: HTMLElement,
     params: EmbeddedTableParams,
     renderCallback: (

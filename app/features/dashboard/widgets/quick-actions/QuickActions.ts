@@ -1,15 +1,21 @@
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import type WorkoutChartsPlugin from "main";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 
+interface QuickActionsContext extends AppPort, SettingsPort {
+  createLogModalHandler: {
+    openModal(): void;
+  };
+}
+
 export class QuickActions {
   static render(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
-    plugin: WorkoutChartsPlugin,
+    plugin: QuickActionsContext,
   ): void {
     const actionsEl = WidgetContainer.create(container, {
       title: t("dashboard.quickActions.title"),

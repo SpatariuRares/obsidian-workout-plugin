@@ -17,7 +17,6 @@ export { TableActions } from "@app/features/tables/components/TableActions";
 
 // Business logic
 export {
-  TableDataLoader,
   TableDataProcessor,
   TableRefresh,
   TableConfig,

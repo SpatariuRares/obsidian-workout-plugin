@@ -1,5 +1,9 @@
-import { ExerciseAutocompleteElements } from "@app/features/modals/components/ExerciseAutocomplete";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
+
+export interface ExerciseAutocompleteElements {
+  exerciseInput: HTMLInputElement;
+  autocompleteContainer: HTMLElement;
+}
 
 export interface LogFormData {
   exercise: string;

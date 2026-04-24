@@ -12,7 +12,7 @@
 
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { STANDARD_CSV_COLUMNS } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /**

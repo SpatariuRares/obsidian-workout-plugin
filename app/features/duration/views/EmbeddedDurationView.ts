@@ -2,12 +2,12 @@
  * Embedded Duration View for workout duration estimation.
  * Orchestrates duration calculation by delegating to specialized modules.
  */
-import WorkoutChartsPlugin from "main";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import { WorkoutFileAnalyzer } from "@app/features/duration/services/WorkoutFileAnalyzer";
 import { DurationRenderer } from "@app/features/duration/renderers/DurationRenderer";
 import { resolveFilePath } from "@app/utils/path-resolver";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
  * Thin orchestrator view for duration estimation.
@@ -17,7 +17,7 @@ export class EmbeddedDurationView extends BaseView {
   private analyzer: WorkoutFileAnalyzer;
   private renderer: DurationRenderer;
 
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutPluginContext) {
     super(plugin);
     this.analyzer = new WorkoutFileAnalyzer(plugin);
     this.renderer = new DurationRenderer();

@@ -7,9 +7,10 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
-import { CHART_TYPE } from "@app/features/charts/types";
+import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { FilterResult } from "@app/types/CommonTypes";
 import { StringUtils } from "@app/utils/StringUtils";
+import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
 
 /**
@@ -24,25 +25,6 @@ export interface DataFilterParams {
   dateRange?: number;
   chartType?: CHART_TYPE;
   protocol?: string | string[];
-}
-
-/**
- * Filter parameters for early filtering in DataService.
- * Used to reduce data processing before more complex filtering operations.
- */
-export interface EarlyFilterParams {
-  exercise?: string;
-  workout?: string;
-  exactMatch?: boolean;
-}
-
-/**
- * Pre-computed normalized filter values for performance optimization.
- * Avoids redundant string operations on every iteration.
- */
-interface NormalizedFilters {
-  exerciseName?: string;
-  workoutName?: string;
 }
 
 /**
@@ -88,6 +70,7 @@ export class DataFilter {
     const hasExercise = params.exercise && params.exercise.trim();
     const hasWorkout = params.workout;
     const hasProtocol = this.hasProtocolFilter(params);
+    const hasDateRange = this.hasDateRangeFilter(params);
 
     if (hasExercise && hasWorkout) {
       // For combined filtering, filter by workout first (usually more restrictive)
@@ -135,7 +118,31 @@ export class DataFilter {
       }
     }
 
+    // Apply date range filter (AND logic with existing filters)
+    if (hasDateRange) {
+      const dateRangeResult = this.filterByDateRange(
+        filteredData,
+        params,
+      );
+      filteredData = dateRangeResult.filteredData;
+      if (filterMethodUsed === "none") {
+        filterMethodUsed = dateRangeResult.filterMethodUsed;
+      } else {
+        filterMethodUsed = `${filterMethodUsed} + ${dateRangeResult.filterMethodUsed}`;
+      }
+    }
+
     return { filteredData, filterMethodUsed, titlePrefix };
+  }
+
+  /**
+   * Filters rows without UI metadata. Use this for API/non-UI flows.
+   */
+  static filterRows(
+    logData: WorkoutLogData[],
+    params: DataFilterParams,
+  ): WorkoutLogData[] {
+    return this.filterData(logData, params).filteredData;
   }
 
   /**
@@ -152,6 +159,16 @@ export class DataFilter {
     return (
       typeof tableParams.protocol === "string" &&
       tableParams.protocol.trim() !== ""
+    );
+  }
+
+  private static hasDateRangeFilter(
+    params: DataFilterParams,
+  ): boolean {
+    return (
+      typeof params.dateRange === "number" &&
+      Number.isFinite(params.dateRange) &&
+      params.dateRange > 0
     );
   }
 
@@ -223,6 +240,18 @@ export class DataFilter {
     return {
       filteredData,
       filterMethodUsed,
+      titlePrefix: t("general.workoutData"),
+    };
+  }
+
+  private static filterByDateRange(
+    logData: WorkoutLogData[],
+    params: DataFilterParams,
+  ): FilterResult {
+    const dateRange = params.dateRange || 0;
+    return {
+      filteredData: DateUtils.filterByDaysAgo(logData, dateRange),
+      filterMethodUsed: `dateRange: last ${dateRange} days`,
       titlePrefix: t("general.workoutData"),
     };
   }
@@ -312,96 +341,4 @@ export class DataFilter {
     return "No match found";
   }
 
-  /**
-   * Apply early filtering to reduce data processing.
-   *
-   * Performance optimization: Pre-compute normalized filter values before the filter loop
-   * to avoid redundant string operations (toLowerCase, replace, trim) on every iteration.
-   * For large datasets (1000+ entries), this reduces O(n * m) operations to O(n),
-   * where n is the number of entries and m is the cost of string normalization.
-   *
-   * @param logData - Array of workout log data to filter
-   * @param filterParams - Filter parameters for exercise and workout
-   * @returns Filtered array of workout log data
-   */
-  static applyEarlyFiltering(
-    logData: WorkoutLogData[],
-    filterParams: EarlyFilterParams,
-  ): WorkoutLogData[] {
-    // Pre-compute normalized filter values outside the loop
-    const normalizedFilters: NormalizedFilters = {};
-
-    if (filterParams.exercise) {
-      normalizedFilters.exerciseName = StringUtils.normalize(
-        filterParams.exercise,
-      );
-    }
-
-    if (filterParams.workout) {
-      normalizedFilters.workoutName = StringUtils.normalize(
-        filterParams.workout,
-      );
-    }
-
-    return logData.filter((log) =>
-      this.matchesEarlyFilter(log, filterParams, normalizedFilters),
-    );
-  }
-
-  /**
-   * Check if a log entry matches early filtering criteria.
-   * @param log The workout log entry to check
-   * @param filterParams The filter parameters
-   * @param normalizedFilters Pre-computed normalized filter values for performance
-   */
-  private static matchesEarlyFilter(
-    log: WorkoutLogData,
-    filterParams: EarlyFilterParams,
-    normalizedFilters?: NormalizedFilters,
-  ): boolean {
-    // Check exercise filter
-    if (filterParams.exercise) {
-      const exerciseName =
-        normalizedFilters?.exerciseName ||
-        StringUtils.normalize(filterParams.exercise);
-
-      const logExercise = StringUtils.normalize(log.exercise || "");
-
-      if (filterParams.exactMatch) {
-        if (logExercise !== exerciseName) {
-          return false;
-        }
-      } else {
-        if (!logExercise.includes(exerciseName)) {
-          return false;
-        }
-      }
-    }
-
-    // Check workout filter
-    if (filterParams.workout) {
-      const workoutName =
-        normalizedFilters?.workoutName ||
-        StringUtils.normalize(filterParams.workout);
-
-      const logSource = StringUtils.normalize(
-        log.workout || log.origine || "",
-        {
-          stripWikiLinks: true,
-        },
-      );
-
-      if (filterParams.exactMatch) {
-        if (logSource !== workoutName) {
-          return false;
-        }
-      } else {
-        if (!logSource.includes(workoutName)) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
 }

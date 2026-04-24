@@ -1,10 +1,8 @@
 import { t } from "@app/i18n";
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
-import {
-  ExerciseAutocomplete,
-  ExerciseAutocompleteElements,
-} from "@app/features/modals/components/ExerciseAutocomplete";
+import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
+import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 import type WorkoutChartsPlugin from "main";
 
 export class AddExerciseBlockModal extends BaseInsertModal {

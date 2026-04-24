@@ -17,7 +17,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import type WorkoutChartsPlugin from "main";
+import type { SettingsPort } from "@app/types/PluginPorts";
 import { Canvas } from "@app/components/atoms";
 import { FilterIndicator } from "@app/components/molecules";
 import { ChartLegendItem } from "@app/features/charts/ui";
@@ -95,7 +95,7 @@ export class ProtocolDistribution {
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: SettingsPort,
     onFilterChange?: ProtocolFilterCallback,
   ): void {
     // Store callback for later use
@@ -174,7 +174,7 @@ export class ProtocolDistribution {
    */
   private static calculateProtocolStats(
     data: WorkoutLogData[],
-    plugin?: WorkoutChartsPlugin,
+    plugin?: SettingsPort,
   ): ProtocolStats[] {
     // Count occurrences of each protocol
     const protocolCounts = new Map<string, number>();

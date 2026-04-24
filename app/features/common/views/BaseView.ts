@@ -1,13 +1,13 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   DataFilter,
   DataFilterParams,
 } from "@app/services/data/DataFilter";
 import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
-import { CHART_TYPE } from "@app/features/charts/types";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
+import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { ErrorCollector } from "@app/orchestration/ErrorCollector";
@@ -18,7 +18,7 @@ import { CONSTANTS } from "@app/constants";
  * and reduces code duplication across Chart, Table, and Timer views.
  */
 export abstract class BaseView {
-  constructor(protected plugin: WorkoutChartsPlugin) {}
+  constructor(protected plugin: WorkoutPluginContext) {}
 
   /**
    * Common error handling pattern for all views

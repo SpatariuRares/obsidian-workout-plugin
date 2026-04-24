@@ -1,21 +1,10 @@
-export enum TIMER_TYPE {
-  COUNTDOWN = "countdown",
-  INTERVAL = "interval",
-  STOPWATCH = "stopwatch",
-}
+import {
+  TIMER_TYPE,
+  type TimerPresetConfig,
+} from "@app/types/WorkoutConfigTypes";
 
-/**
- * Configuration for a reusable timer preset.
- * Presets allow users to save timer configurations and reference them by name.
- */
-export interface TimerPresetConfig {
-  name: string;
-  type: TIMER_TYPE;
-  duration: number; // Duration in seconds (used for all timer types)
-  showControls: boolean;
-  sound: boolean;
-  rounds?: number; // Number of rounds (for interval timer)
-}
+export { TIMER_TYPE };
+export type { TimerPresetConfig };
 
 export interface EmbeddedTimerParams {
   id?: string; // Unique identifier for code block replacement

@@ -247,12 +247,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     await this.saveData(this.settings);
   }
 
-  async getWorkoutLogData(filterParams?: {
-    exercise?: string;
-    workout?: string;
-    exactMatch?: boolean;
-  }): Promise<WorkoutLogData[]> {
-    return this.dataService.getWorkoutLogData(filterParams);
+  async getWorkoutLogData(): Promise<WorkoutLogData[]> {
+    return this.dataService.getWorkoutLogData();
   }
 
   public clearLogDataCache(): void {

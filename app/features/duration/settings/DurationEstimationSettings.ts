@@ -1,11 +1,11 @@
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import { getDynamicSettingsLabels } from "@app/constants";
-import WorkoutChartsPlugin from "main";
+import type { SettingsPort } from "@app/types/PluginPorts";
 
 export class DurationEstimationSettings {
   constructor(
-    private plugin: WorkoutChartsPlugin,
+    private plugin: SettingsPort,
     private containerEl: HTMLElement,
   ) {}
 

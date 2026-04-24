@@ -10,8 +10,9 @@ import {
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
 import { DataService } from "@app/services/data/DataService";
+import { DataFilter } from "@app/services/data/DataFilter";
 import { App, TFolder } from "obsidian";
-import { StringUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -120,12 +121,15 @@ export class WorkoutPlannerAPI {
   async getWorkoutLogs(
     filter?: WorkoutLogsFilter,
   ): Promise<DataviewWorkoutLog[]> {
-    // Get logs from DataService with exercise/workout filter
-    const logs = await this.dataService.getWorkoutLogData({
-      exercise: filter?.exercise,
-      workout: filter?.workout,
-      exactMatch: filter?.exactMatch,
-    });
+    const rawLogs = await this.dataService.getWorkoutLogData();
+    const logs =
+      filter?.exercise || filter?.workout
+        ? DataFilter.filterRows(rawLogs, {
+            exercise: filter.exercise,
+            workout: filter.workout,
+            exactMatch: filter.exactMatch,
+          })
+        : rawLogs;
 
     // Apply additional filters and convert to Dataview-compatible format
     let filteredLogs = this.convertToDataviewFormat(logs);

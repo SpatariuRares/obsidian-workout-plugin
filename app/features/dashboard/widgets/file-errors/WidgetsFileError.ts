@@ -1,5 +1,5 @@
 import { Feedback } from "@app/components/atoms/Feedback";
-import type WorkoutChartsPlugin from "main";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
@@ -7,6 +7,8 @@ import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import { t } from "@app/i18n";
+
+type FileErrorContext = AppPort & SettingsPort;
 
 interface ExerciseFileError {
   file: TFile;
@@ -17,7 +19,7 @@ interface ExerciseFileError {
 export class WidgetsFileError {
   static async render(
     container: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: FileErrorContext,
   ): Promise<void> {
     const errorEl = WidgetContainer.create(container, {
       title: t("dashboard.fileErrors.title"),
@@ -79,7 +81,7 @@ export class WidgetsFileError {
   }
 
   private static async validateExerciseFiles(
-    plugin: WorkoutChartsPlugin,
+    plugin: FileErrorContext,
   ): Promise<ExerciseFileError[]> {
     const fileErrors: ExerciseFileError[] = [];
 
@@ -104,7 +106,7 @@ export class WidgetsFileError {
 
   private static async validateExerciseFile(
     file: TFile,
-    plugin: WorkoutChartsPlugin,
+    plugin: FileErrorContext,
   ): Promise<string[]> {
     const errors: string[] = [];
 

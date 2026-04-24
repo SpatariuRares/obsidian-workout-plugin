@@ -1,9 +1,11 @@
-import type WorkoutChartsPlugin from "main";
+import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { CANONICAL_MUSCLE_GROUPS, CONSTANTS } from "@app/constants";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
 import { StringUtils } from "@app/utils";
+
+type MuscleTagMapperContext = AppPort & SettingsPort;
 
 /**
  * Maps exercise tags to muscle groups using a predefined mapping
@@ -44,7 +46,7 @@ export class MuscleTagMapper {
    */
   async loadExerciseTags(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: MuscleTagMapperContext,
   ): Promise<string[]> {
     // Check cache first
     if (this.exerciseTagsCache.has(exerciseName)) {
@@ -83,7 +85,7 @@ export class MuscleTagMapper {
    */
   async findMuscleGroupsFromTags(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: MuscleTagMapperContext,
   ): Promise<string[]> {
     const tags = await this.loadExerciseTags(exerciseName, plugin);
     const muscleGroups = new Set<string>();

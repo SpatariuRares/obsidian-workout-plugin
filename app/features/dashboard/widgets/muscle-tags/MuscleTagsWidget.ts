@@ -1,6 +1,6 @@
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { CopyableBadge } from "@app/components/molecules";
-import type WorkoutChartsPlugin from "main";
+import type { MuscleTagPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 
@@ -35,7 +35,7 @@ export class MuscleTagsWidget {
   static render(
     container: HTMLElement,
     _params: EmbeddedDashboardParams,
-    plugin: WorkoutChartsPlugin,
+    plugin: MuscleTagPort,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.muscleTags.title"),

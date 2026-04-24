@@ -2,7 +2,7 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseView } from "@app/features/common/views/BaseView";
 import {
   SummaryWidget,
@@ -20,6 +20,7 @@ import {
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
+import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
 
 /**
@@ -39,7 +40,7 @@ export class EmbeddedDashboardView extends BaseView {
   /** Debounce timer for resize recalculation */
   private resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(plugin: WorkoutChartsPlugin) {
+  constructor(plugin: WorkoutPluginContext) {
     super(plugin);
   }
 
@@ -65,20 +66,13 @@ export class EmbeddedDashboardView extends BaseView {
   }
 
   /**
-   * Load dashboard data from the plugin, applying dateRange filter if present.
+   * Load dashboard data from the plugin. Filtering is centralized in DataFilter.
    */
   async loadDashboardData(
     params: EmbeddedDashboardParams,
   ): Promise<WorkoutLogData[]> {
-    let logData = (await this.plugin.getWorkoutLogData()) || [];
-    if (params.dateRange) {
-      const cutoffDate = new Date();
-      cutoffDate.setDate(
-        cutoffDate.getDate() - (params.dateRange as number),
-      );
-      logData = logData.filter((d) => new Date(d.date) >= cutoffDate);
-    }
-    return logData;
+    const logData = (await this.plugin.getWorkoutLogData()) || [];
+    return DataFilter.filterRows(logData, params);
   }
 
   /**

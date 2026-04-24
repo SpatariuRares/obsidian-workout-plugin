@@ -12,6 +12,7 @@ import {
   ExerciseConversionService,
   FieldMapping,
 } from "@app/features/exercise-conversion/logic/ExerciseConversionService";
+import { DataFilter } from "@app/services/data/DataFilter";
 import { ConversionTypeSelect } from "@app/features/exercise-conversion/components/ConversionTypeSelect";
 import { FieldMappingList } from "@app/features/exercise-conversion/components/FieldMappingList";
 import { ConversionPreview } from "@app/features/exercise-conversion/components/ConversionPreview";
@@ -165,8 +166,8 @@ export class ConvertExerciseDataModal extends ModalBase {
       this.currentTypeDisplay.textContent = this.currentType.name;
     }
 
-    // Get entry count
-    const logData = await this.plugin.getWorkoutLogData({
+    const rawLogData = await this.plugin.getWorkoutLogData();
+    const logData = DataFilter.filterRows(rawLogData, {
       exercise: this.selectedExercise,
       exactMatch: true,
     });

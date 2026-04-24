@@ -18,7 +18,7 @@
  * The plugin automatically detects the user's language from Obsidian settings.
  */
 
-import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 

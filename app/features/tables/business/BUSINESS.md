@@ -13,7 +13,6 @@ Tutti i moduli sono classi statiche senza stato interno, consumate principalment
 EmbeddedTableView (view layer)
   |
   |-- TableConfig.validateParams()        --> Valida parametri utente
-  |-- TableDataLoader.getOptimizedCSVData() --> Carica dati CSV dal plugin
   |-- TableDataProcessor.processTableData() --> Trasforma dati in righe/colonne
   |-- TableRefresh.refreshTable()         --> Invalida cache e ri-renderizza
   |-- TargetCalculator.*()                --> Calcoli obiettivi (usato da UI)
@@ -42,24 +41,7 @@ EmbeddedTableView (view layer)
 
 ---
 
-### 2. TableDataLoader
-
-**File**: `TableDataLoader.ts`
-**Scopo**: Caricamento dati CSV con pre-filtraggio ottimizzato.
-
-**Metodi**:
-
-| Metodo                  | Input                           | Output                      | Cosa fa                                                                                                                                                                      |
-| ----------------------- | ------------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getOptimizedCSVData()` | `EmbeddedTableParams`, `plugin` | `Promise<WorkoutLogData[]>` | Estrae exercise/workout/exactMatch dai params e li passa come filtro early a `plugin.getWorkoutLogData()`. Questo riduce i dati prima del filtraggio complesso in DataFilter |
-
-**Perche' esiste**: Il plugin (`DataService`) supporta un filtro early opzionale che riduce i dati letti dal CSV. Questo modulo fa da ponte tra i parametri tabella e quel filtro, evitando che la view debba conoscere la firma di `getWorkoutLogData()`.
-
-**Consumato da**: `EmbeddedTableView.renderTable()` - dopo la validazione, prima del filtraggio.
-
----
-
-### 3. TableDataProcessor
+### 2. TableDataProcessor
 
 **File**: `TableDataProcessor.ts`
 **Scopo**: Trasforma i dati filtrati in struttura `TableData` (headers + rows) pronta per il rendering.
@@ -98,7 +80,7 @@ EmbeddedTableView (view layer)
 
 ---
 
-### 4. TableRefresh
+### 3. TableRefresh
 
 **File**: `TableRefresh.ts`
 **Scopo**: Logica di refresh della tabella: invalida cache, ricarica dati, ri-renderizza.
@@ -115,7 +97,7 @@ EmbeddedTableView (view layer)
 
 ---
 
-### 5. TargetCalculator
+### 4. TargetCalculator
 
 **File**: `TargetCalculator.ts`
 **Scopo**: Calcoli puri per il sistema di progressive overload (obiettivi peso/ripetizioni).
@@ -146,7 +128,7 @@ Code block YAML (workout-log)
        v
 CodeBlockProcessorService
   - Parsa parametri
-  - Applica dateRange (pre-filtro temporale)
+  - Carica dati raw dal DataService
        |
        v
 EmbeddedTableView.createTable(container, logData, params)
@@ -154,17 +136,15 @@ EmbeddedTableView.createTable(container, logData, params)
        v
   1. TableConfig.validateParams(params)           -- valida
        |
-  2. TableDataLoader.getOptimizedCSVData(params)  -- carica con early filter
+  2. BaseView.filterData(logData, params)         -- DataFilter (dateRange/fuzzy/exact/protocol)
        |
-  3. BaseView.filterData(data, params)            -- DataFilter (fuzzy/exact match)
+  3. TableDataProcessor.processTableData(filtered) -- headers + rows
        |
-  4. TableDataProcessor.processTableData(filtered) -- headers + rows
-       |
-  5. TableRenderer.renderTable(tableData)          -- DOM (fuori da business/)
+  4. TableRenderer.renderTable(tableData)          -- DOM (fuori da business/)
        |
   [click refresh]
        |
-  6. TableRefresh.refreshTable(...)                -- invalida + ricarica + re-render
+  5. TableRefresh.refreshTable(...)                -- invalida + ricarica + re-render
 ```
 
 ---
@@ -188,7 +168,6 @@ Ogni modulo ha la propria test suite in `__tests__/`:
 | Modulo               | Test file                    | Test | Copertura                                                |
 | -------------------- | ---------------------------- | ---- | -------------------------------------------------------- |
 | `TableConfig`        | `TableConfig.test.ts`        | 6    | Defaults, validazione limit/columns, merge, errori       |
-| `TableDataLoader`    | `TableDataLoader.test.ts`    | 4    | Passaggio filtri a plugin, gestione params vuoti         |
 | `TableDataProcessor` | `TableDataProcessor.test.ts` | 20+  | Headers dinamici, sorting, limiting, custom fields       |
 | `TableRefresh`       | `TableRefresh.test.ts`       | 6    | Cache clear, re-render, callbacks success/error          |
 | `TargetCalculator`   | `TargetCalculator.test.ts`   | 14   | Calcoli best reps, target achieved, progress, edge cases |

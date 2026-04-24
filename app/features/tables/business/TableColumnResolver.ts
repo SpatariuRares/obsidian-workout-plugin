@@ -1,4 +1,4 @@
-import type WorkoutChartsPlugin from "main";
+import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { CONSTANTS } from "@app/constants";
@@ -57,7 +57,7 @@ export class TableColumnResolver {
    */
   static async determineColumnsForExercise(
     exerciseName: string,
-    plugin: WorkoutChartsPlugin,
+    plugin: ExerciseDefinitionPort,
   ): Promise<string[] | null> {
     try {
       const exerciseDefService =

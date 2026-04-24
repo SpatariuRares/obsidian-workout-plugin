@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
@@ -9,7 +9,7 @@ type RenderCallback = (
   _data: WorkoutLogData[],
   _options: MuscleHeatMapOptions,
   _infoPanel: HTMLElement,
-  _plugin: WorkoutChartsPlugin,
+  _plugin: WorkoutPluginContext,
 ) => Promise<void>;
 
 /**
@@ -24,7 +24,7 @@ export class HeatMapControls {
     data: WorkoutLogData[],
     canvasContainer: HTMLElement,
     infoPanel: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     renderCallback: RenderCallback,
   ): MuscleHeatMapOptions {
     const controlsEl = container.createEl("div", {

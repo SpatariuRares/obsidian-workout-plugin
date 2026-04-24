@@ -3,11 +3,10 @@ import {
   EmbeddedTableParams,
   TableData,
 } from "@app/features/tables/types";
-import type WorkoutChartsPlugin from "main";
+import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
-import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
 
 /**
@@ -28,19 +27,15 @@ export class TableDataProcessor {
   static async processTableData(
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    plugin?: WorkoutChartsPlugin,
+    plugin?: ExerciseDefinitionPort,
   ): Promise<TableData> {
     // Determine if we're showing all logs (no exercise filter)
     const isShowingAllLogs = !params.exercise;
     const limit = params.limit || 50;
 
-    const dateFilteredData = params.dateRange
-      ? DateUtils.filterByDaysAgo(logData, params.dateRange)
-      : logData;
-
-    // Sort and limit data after filtering, then check optional columns in visible rows only
+    // Sort and limit already-filtered data, then check optional columns in visible rows only
     const sortedAndLimitedData = TableRowProcessor.sortAndLimitData(
-      dateFilteredData,
+      logData,
       limit,
     );
 
@@ -111,7 +106,7 @@ export class TableDataProcessor {
    */
   private static async resolveHeaders(
     params: EmbeddedTableParams,
-    plugin: WorkoutChartsPlugin | undefined,
+    plugin: ExerciseDefinitionPort | undefined,
     defaultVisibleColumns: string[],
     showNotes: boolean,
     showProtocol: boolean,

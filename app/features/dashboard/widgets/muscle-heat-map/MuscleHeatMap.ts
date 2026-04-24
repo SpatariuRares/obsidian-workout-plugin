@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import type WorkoutChartsPlugin from "main";
+import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   Body,
   type BodyData,
@@ -25,7 +25,7 @@ export class MuscleHeatMap {
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
   ): Promise<void> {
     const heatMapEl = WidgetContainer.create(container, {
       title: t("general.muscleHeatMap"),
@@ -56,7 +56,7 @@ export class MuscleHeatMap {
       d: WorkoutLogData[],
       opts: MuscleHeatMapOptions,
       info: HTMLElement,
-      plg: WorkoutChartsPlugin,
+      plg: WorkoutPluginContext,
     ): Promise<void> => {
       await MuscleHeatMap.renderHeatMap(
         cntr,
@@ -94,7 +94,7 @@ export class MuscleHeatMap {
     data: WorkoutLogData[],
     options: MuscleHeatMapOptions,
     infoPanel: HTMLElement,
-    plugin: WorkoutChartsPlugin,
+    plugin: WorkoutPluginContext,
     calculator: MuscleDataCalculator,
   ): Promise<void> {
     container.empty();

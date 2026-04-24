@@ -42,7 +42,7 @@ jest.mock("@app/components/atoms/Feedback", () => ({
   },
 }));
 
-jest.mock("@app/components/molecules/LogCallouts", () => ({
+jest.mock("@app/features/modals/log/LogCallouts", () => ({
   LogCallouts: {
     renderCsvNoDataMessage: jest.fn(),
   },
@@ -66,7 +66,7 @@ jest.mock("@app/i18n", () => ({
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
 import { EmbeddedTimerView } from "@app/features/timer";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { LogCallouts } from "@app/components/molecules/LogCallouts";
+import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
@@ -435,7 +435,7 @@ describe("CodeBlockProcessorService", () => {
       expect(mockTableView.createTable).toHaveBeenCalled();
     });
 
-    it("should pass exercise filter to getWorkoutLogData", async () => {
+    it("should load raw data and pass exercise params to table view", async () => {
       mockDataService.getWorkoutLogData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
@@ -451,14 +451,19 @@ describe("CodeBlockProcessorService", () => {
         ctx,
       );
 
-      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+      expect(
+        mockDataService.getWorkoutLogData,
+      ).toHaveBeenCalledWith();
+      expect(mockTableView.createTable).toHaveBeenCalledWith(
+        el,
+        [{ date: "2023-01-01" }],
         expect.objectContaining({
           exercise: "Squat",
         }),
       );
     });
 
-    it("should pass workout filter to getWorkoutLogData", async () => {
+    it("should load raw data and pass workout params to table view", async () => {
       mockDataService.getWorkoutLogData.mockResolvedValue([
         { date: "2023-01-01" },
       ]);
@@ -474,7 +479,12 @@ describe("CodeBlockProcessorService", () => {
         ctx,
       );
 
-      expect(mockDataService.getWorkoutLogData).toHaveBeenCalledWith(
+      expect(
+        mockDataService.getWorkoutLogData,
+      ).toHaveBeenCalledWith();
+      expect(mockTableView.createTable).toHaveBeenCalledWith(
+        el,
+        [{ date: "2023-01-01" }],
         expect.objectContaining({
           workout: "Push Day",
         }),
@@ -636,7 +646,7 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("handleWorkoutTimer", () => {
-    it("should trigger migration if id is missing", async () => {
+    it("should create timer without running migration when id is missing", async () => {
       const el = document.createElement("div");
       const ctx = {
         addChild: jest.fn(),
@@ -649,9 +659,8 @@ describe("CodeBlockProcessorService", () => {
         ctx,
       );
 
-      expect(runAddMissingBlockIds).toHaveBeenCalledWith(
-        mockPlugin.app,
-      );
+      expect(runAddMissingBlockIds).not.toHaveBeenCalled();
+      expect(ctx.addChild).toHaveBeenCalled();
     });
 
     it("should NOT trigger migration if id is present", async () => {

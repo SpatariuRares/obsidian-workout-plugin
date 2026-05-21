@@ -15,20 +15,25 @@
  * These are the normalized muscle group names that tags can map to.
  */
 export const CANONICAL_MUSCLE_GROUPS = [
-  "chest",
-  "back",
-  "shoulders",
+  "upper chest",
+  "mid chest",
+  "rhomboids",
+  "traps",
+  "front_delts",
+  "side_delts",
+  "rear_delts",
   "biceps",
   "triceps",
+  "lats",
+  "abs",
+  "serratus",
+  "obliques",
+  "ql",
   "quads",
   "hamstrings",
   "glutes",
   "calves",
-  "abs",
-  "core",
   "forearms",
-  "traps",
-  "rear_delts",
 ] as const;
 
 export type CanonicalMuscleGroup =
@@ -39,6 +44,9 @@ export type CanonicalMuscleGroup =
  */
 export const BODY_PARTS = {
   UPPER_BODY: "Upper body",
+  BACK: "Back",
+  CHEST: "Chest",
+  LEGS: "Legs",
 } as const;
 
 /**
@@ -49,6 +57,8 @@ export const BODY_PARTS = {
 export const MUSCLE_TAGS = [
   // Main muscle groups - Chest
   "chest",
+  "upper chest",
+  "mid chest",
   "petto",
   "pettorale",
   "pettoralesuperior",
@@ -57,15 +67,24 @@ export const MUSCLE_TAGS = [
 
   // Main muscle groups - Back
   "back",
+  "rhomboids",
+  "traps",
+  "trapezi",
+  "lats",
   "schiena",
   "dorsale",
 
   // Main muscle groups - Shoulders
   "shoulders",
+  "front delts",
+  "side delts",
+  "rear delts",
   "spalle",
   "deltoidi",
   "deltoideanteriore",
   "deltoidilaterale",
+  "deltoidi_posteriori",
+  "deltoidiposteriori",
 
   // Main muscle groups - Arms
   "biceps",
@@ -96,6 +115,9 @@ export const MUSCLE_TAGS = [
 
   // Main muscle groups - Core
   "abs",
+  "serratus",
+  "obliques",
+  "ql",
   "addominali",
   "core",
   "cardio",
@@ -103,11 +125,6 @@ export const MUSCLE_TAGS = [
   // Secondary muscle groups
   "forearms",
   "avambracci",
-  "traps",
-  "trapezi",
-  "rear_delts",
-  "deltoidi_posteriori",
-  "deltoidiposteriori",
 
   // Exercise types that help determine muscle groups
   "push",
@@ -120,6 +137,8 @@ export const MUSCLE_TAGS = [
   "fly",
   "row",
   "spintaanca",
+  "anterior",
+  "posterior"
 ] as const;
 
 /**
@@ -139,6 +158,9 @@ export interface MuscleTagEntry {
 export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   // Main muscle groups - Chest (English)
   { tag: "chest", muscleGroup: "chest", language: "en" },
+  { tag: "upper_chest", muscleGroup: "upper_chest", language: "en" },
+  { tag: "mid_chest", muscleGroup: "mid_chest", language: "en" },
+
   // Main muscle groups - Chest (Italian)
   { tag: "petto", muscleGroup: "chest", language: "it" },
   { tag: "pettorale", muscleGroup: "chest", language: "it" },
@@ -148,29 +170,50 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
 
   // Main muscle groups - Back (English)
   { tag: "back", muscleGroup: "back", language: "en" },
+  { tag: "rhomboids", muscleGroup: "rhomboids", language: "en" },
+  { tag: "traps", muscleGroup: "traps", language: "en" },
+  { tag: "lats", muscleGroup: "back", language: "en" },
+
   // Main muscle groups - Back (Italian)
   { tag: "schiena", muscleGroup: "back", language: "it" },
   { tag: "dorsale", muscleGroup: "back", language: "it" },
+  { tag: "trapezi", muscleGroup: "traps", language: "it" },
 
   // Main muscle groups - Shoulders (English)
   { tag: "shoulders", muscleGroup: "shoulders", language: "en" },
+  { tag: "front delts", muscleGroup: "front delts", language: "en" },
+  { tag: "side delts", muscleGroup: "side delts", language: "en" },
+  { tag: "rear delts", muscleGroup: "rear delts", language: "en" },
+
   // Main muscle groups - Shoulders (Italian)
   { tag: "spalle", muscleGroup: "shoulders", language: "it" },
   { tag: "deltoidi", muscleGroup: "shoulders", language: "it" },
   {
     tag: "deltoideanteriore",
-    muscleGroup: "shoulders",
+    muscleGroup: "front delt",
     language: "it",
   },
   {
     tag: "deltoidilaterale",
-    muscleGroup: "shoulders",
+    muscleGroup: "side delts",
     language: "it",
   },
+  {
+    tag: "deltoidi_posteriori",
+    muscleGroup: "rear delts",
+    language: "it",
+  },
+  {
+    tag: "deltoidiposteriori",
+    muscleGroup: "rear delts",
+    language: "it",
+  },
+
 
   // Main muscle groups - Arms (English)
   { tag: "biceps", muscleGroup: "biceps", language: "en" },
   { tag: "triceps", muscleGroup: "triceps", language: "en" },
+
   // Main muscle groups - Arms (Italian)
   { tag: "bicipiti", muscleGroup: "biceps", language: "it" },
   { tag: "tricipiti", muscleGroup: "triceps", language: "it" },
@@ -179,6 +222,7 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   { tag: "legs", muscleGroup: "quads", language: "en" },
   { tag: "quads", muscleGroup: "quads", language: "en" },
   { tag: "hamstrings", muscleGroup: "hamstrings", language: "en" },
+
   // Main muscle groups - Legs (Italian)
   { tag: "gambe", muscleGroup: "quads", language: "it" },
   { tag: "quadricipiti", muscleGroup: "quads", language: "it" },
@@ -201,6 +245,9 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
 
   // Main muscle groups - Core (English)
   { tag: "abs", muscleGroup: "abs", language: "en" },
+  { tag: "serratus", muscleGroup: "serratus", language: "en" },
+  { tag: "obliques", muscleGroup: "obliques", language: "en" },
+  { tag: "ql", muscleGroup: "ql", language: "en" },
   { tag: "core", muscleGroup: "core", language: "en" },
   { tag: "cardio", muscleGroup: "core", language: "en" },
   // Main muscle groups - Core (Italian)
@@ -208,22 +255,9 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
 
   // Secondary muscle groups (English)
   { tag: "forearms", muscleGroup: "forearms", language: "en" },
-  { tag: "traps", muscleGroup: "traps", language: "en" },
-  { tag: "rear_delts", muscleGroup: "rear_delts", language: "en" },
+
   // Secondary muscle groups (Italian)
   { tag: "avambracci", muscleGroup: "forearms", language: "it" },
-  { tag: "trapezi", muscleGroup: "traps", language: "it" },
-  {
-    tag: "deltoidi_posteriori",
-    muscleGroup: "rear_delts",
-    language: "it",
-  },
-  {
-    tag: "deltoidiposteriori",
-    muscleGroup: "rear_delts",
-    language: "it",
-  },
-
   // Exercise types that help determine muscle groups (English)
   { tag: "push", muscleGroup: "chest", language: "en" },
   { tag: "pull", muscleGroup: "back", language: "en" },

@@ -1,4 +1,11 @@
-import { MUSCLE_TAGS } from "@app/constants/muscles.constants";
+import {
+  CANONICAL_MUSCLE_GROUPS,
+  MUSCLE_PARENT_GROUPS,
+  MUSCLE_TAG_ENTRIES,
+  MUSCLE_TAG_MAP,
+  MUSCLE_TAGS,
+  type CanonicalMuscleGroup,
+} from "@app/constants/muscles.constants";
 import { CONSTANTS } from "@app/constants";
 
 describe("MuscleTags", () => {
@@ -61,10 +68,10 @@ describe("MuscleTags", () => {
     it("should map specific muscle variations", () => {
       expect(
         CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["pettoralesuperior"],
-      ).toBe("chest");
+      ).toBe("upper_chest");
       expect(
         CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["deltoideanteriore"],
-      ).toBe("shoulders");
+      ).toBe("front_delts");
       expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP["ischiocrurali"]).toBe(
         "hamstrings",
       );
@@ -122,5 +129,42 @@ describe("MuscleTags", () => {
         expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP[name]).toBeDefined();
       });
     });
+  });
+});
+
+describe("Muscle group consistency", () => {
+  const canonical = new Set<string>(CANONICAL_MUSCLE_GROUPS);
+
+  it("maps every default tag entry to a canonical muscle group", () => {
+    const orphans = MUSCLE_TAG_ENTRIES.filter(
+      (e) => !canonical.has(e.muscleGroup),
+    ).map((e) => `${e.tag} -> ${e.muscleGroup}`);
+    expect(orphans).toEqual([]);
+  });
+
+  it("maps every legacy TAG_MAP value to a canonical muscle group", () => {
+    const orphans = Object.entries(MUSCLE_TAG_MAP).filter(
+      ([, group]) => !canonical.has(group),
+    );
+    expect(orphans).toEqual([]);
+  });
+
+  it("only links canonical sub-muscles to canonical parents", () => {
+    for (const [child, parent] of Object.entries(MUSCLE_PARENT_GROUPS)) {
+      expect(canonical.has(child)).toBe(true);
+      expect(canonical.has(parent!)).toBe(true);
+      expect(MUSCLE_PARENT_GROUPS[parent as CanonicalMuscleGroup]).toBeUndefined();
+    }
+  });
+
+  it("keeps the broad groups existing tag files rely on", () => {
+    for (const group of ["chest", "back", "shoulders", "core", "rear_delts"]) {
+      expect(canonical.has(group)).toBe(true);
+    }
+  });
+
+  it("maps Italian sub-muscle tags to the specific muscle", () => {
+    expect(MUSCLE_TAG_MAP["pettoralesuperior"]).toBe("upper_chest");
+    expect(MUSCLE_TAG_MAP["deltoidilaterale"]).toBe("side_delts");
   });
 });

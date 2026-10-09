@@ -4,6 +4,7 @@ import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import { MUSCLE_PARENT_GROUPS } from "@app/constants/muscles.constants";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -31,6 +32,23 @@ export class MuscleBalanceAnalyzer {
   ];
 
   /**
+   * Volume of a group plus the specific muscles under it
+   * (e.g. back + lats + rhomboids + lower_back)
+   */
+  private static getGroupTotal(
+    muscleData: Map<string, MuscleGroupData>,
+    group: string,
+  ): number {
+    let total = muscleData.get(group)?.volume || 0;
+    for (const [muscle, parent] of Object.entries(MUSCLE_PARENT_GROUPS)) {
+      if (parent === group) {
+        total += muscleData.get(muscle)?.volume || 0;
+      }
+    }
+    return total;
+  }
+
+  /**
    * Analyze muscle balance and detect imbalances
    */
   static analyze(
@@ -54,11 +72,11 @@ export class MuscleBalanceAnalyzer {
 
     // Check front-back imbalance
     const frontVolume = this.FRONT_MUSCLES.reduce(
-      (sum, muscle) => sum + (muscleData.get(muscle)?.volume || 0),
+      (sum, muscle) => sum + this.getGroupTotal(muscleData, muscle),
       0,
     );
     const backVolume = this.BACK_MUSCLES.reduce(
-      (sum, muscle) => sum + (muscleData.get(muscle)?.volume || 0),
+      (sum, muscle) => sum + this.getGroupTotal(muscleData, muscle),
       0,
     );
 

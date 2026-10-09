@@ -65,3 +65,52 @@ describe("MuscleDataCalculator.calculateMuscleGroupVolumes", () => {
     expect(result.get("chest")!.intensity).toBeCloseTo(2 / 3);
   });
 });
+
+describe("MuscleDataCalculator.createBodyDataFromMuscleData", () => {
+  const bodyFor = async (groups: string[]) => {
+    const mapper = {
+      getAllMuscleGroups: () =>
+        new Set(
+          jest.requireActual("@app/constants/muscles.constants")
+            .CANONICAL_MUSCLE_GROUPS,
+        ),
+      findMuscleGroupsFromTags: async (exercise: string) => [exercise],
+    } as unknown as MuscleTagMapper;
+    const calculator = new MuscleDataCalculator(mapper);
+    const muscleData = await calculator.calculateMuscleGroupVolumes(
+      groups.map((g) => log(g, 10, 10)),
+      {} as never,
+    );
+    return MuscleDataCalculator.createBodyDataFromMuscleData(muscleData);
+  };
+
+  it("still spreads a generic chest tag over the chest zones", async () => {
+    expect((await bodyFor(["chest"])).chest).toEqual({
+      upper: 40,
+      middle: 40,
+      lower: 20,
+    });
+  });
+
+  it("puts a specific chest muscle only in its own zone", async () => {
+    expect((await bodyFor(["upper_chest"])).chest).toEqual({
+      upper: 100,
+      middle: 0,
+      lower: 0,
+    });
+  });
+
+  it("splits side delts between the front and rear shoulder zones", async () => {
+    const { shoulders } = await bodyFor(["side_delts"]);
+    expect(shoulders.frontLeft).toBe(25);
+    expect(shoulders.rearLeft).toBe(25);
+  });
+
+  it("fills the back and core zones from specific muscles", async () => {
+    const body = await bodyFor(["lats", "rhomboids", "lower_back", "obliques", "serratus"]);
+    expect(body.back.lats).toBe(100);
+    expect(body.back.trapsMiddle).toBe(100);
+    expect(body.back.lowerBack).toBe(100);
+    expect(body.core.obliques).toBe(200);
+  });
+});

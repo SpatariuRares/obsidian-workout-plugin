@@ -23,7 +23,9 @@
       "reps": "Representasjoner",
       "volume": "Volum",
       "weight": "Vekt"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "Ingen diagramtyper er tilgjengelige."
   },
   "commands": {
     "addExerciseBlock": "Legg til treningsblokk",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Trend med økende variasjon",
       "varianceTrendStable": "Variasjonstrend: Stabil",
       "varianceTrendTitle": "Tittel for variasjonsutvikling",
-      "avgVarianceStat": "Gj.sn. varians: ±{value}%"
+      "avgVarianceStat": "Gj.sn. varians: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Alle gyldige",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Øvre kropps styrke"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset med knebøy med kroppsvekt",
+      "supersetLunges": "Superset med knebøy"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Alle kodeblokker har allerede ID-er."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Timer er fullført!"
+    "timerCompleted": "Timer er fullført!",
+    "templatesGenerated": "Malene generert i '{folder}'. Du kan nå tilpasse dem."
   },
   "modal": {
     "actions": "Handling",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabil, lavere",
     "up": "Opp"
+  },
+  "canvas": {
+    "duration": "**Varighet:** {duration}",
+    "best": "**Beste:** {weight}{unit} × {reps} repetisjoner"
   }
 }

@@ -23,7 +23,9 @@
       "reps": "Tipos de gráficos",
       "volume": "Volumen",
       "weight": "Peso"
-    }
+    },
+    "defaultTitle": "Tendencia {type}",
+    "noTypesAvailable": "no hay tipos de gráficos disponibles"
   },
   "commands": {
     "addExerciseBlock": "Añadir bloque de ejercicios.",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendencia de variación mejorando",
       "varianceTrendStable": "Tendencia de variación estable",
       "varianceTrendTitle": "Título de la tendencia de la variación",
-      "avgVarianceStat": "Varianza media: ±{value}%"
+      "avgVarianceStat": "Varianza media: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Todos válidos",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Potencia de la parte superior del cuerpo."
       }
+    },
+    "notes": {
+      "supersetCalves": "Ejercicios de superset con elevaciones de pantorrillas utilizando el propio peso corporal.",
+      "supersetLunges": "Ejercicios con mancuernas y sentadillas."
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Todos los bloques de código ya tienen identificadores."
     },
     "tagReferenceGenerated": "Referencia de etiqueta generada.",
-    "timerCompleted": "El temporizador ha finalizado."
+    "timerCompleted": "El temporizador ha finalizado.",
+    "templatesGenerated": "Plantillas generadas en '{folder}'. Ahora puede personalizarlas."
   },
   "modal": {
     "actions": "Acciones",
@@ -974,5 +982,9 @@
     "stable": "Estable.",
     "stableLower": "Estable, nivel inferior.",
     "up": "Arriba."
+  },
+  "canvas": {
+    "duration": "**Duración:** {duration}",
+    "best": "**Mejor:** {weight}{unit} × {reps} repeticiones"
   }
 }

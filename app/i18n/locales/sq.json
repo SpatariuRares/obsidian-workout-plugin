@@ -23,7 +23,9 @@
       "reps": "Repetimet",
       "volume": "Volum",
       "weight": "Pesha"
-    }
+    },
+    "defaultTitle": "Tendenca {type}",
+    "noTypesAvailable": "Nuk janë të disponueshme tipet e çartave"
   },
   "commands": {
     "addExerciseBlock": "Shto Bloke Stërmorr",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendenca e variancës po përmirësohet",
       "varianceTrendStable": "Tendenca e variancës, stabil",
       "varianceTrendTitle": "Titull për Tendencat e Varianseve",
-      "avgVarianceStat": "Variancë mesatare: ±{value}%"
+      "avgVarianceStat": "Variancë mesatare: ±{value}%",
+      "hoursSuffix": "orë"
     },
     "fileErrors": {
       "allValid": "Tüm të sakta",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Forca e trupit të sipërm"
       }
+    },
+    "notes": {
+      "supersetCalves": "Trejnimi me pesë, duke u fokusuar në ngritjen e këmbëve me pesë",
+      "supersetLunges": "Trejnimi me ushtrime me pesë, duke përfshirë ushtrimin \"lunges\""
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Tutte kodet kanë tashmë ID-t"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Trajimi është përfunduar!"
+    "timerCompleted": "Trajimi është përfunduar!",
+    "templatesGenerated": "Shablonet janë krijuar në '{folder}'. Më tani, ju mund të i personalizoni."
   },
   "modal": {
     "actions": "Akcje",
@@ -974,5 +982,9 @@
     "stable": "Stabilitet",
     "stableLower": "Stabilitet e Ulta",
     "up": "Lart"
+  },
+  "canvas": {
+    "duration": "**Koha:** {duration}",
+    "best": "**Më mirë:** {weight}{unit} × {reps}"
   }
 }

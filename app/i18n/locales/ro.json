@@ -23,7 +23,9 @@
       "reps": "Reprezentări",
       "volume": "Volum",
       "weight": "Greutate"
-    }
+    },
+    "defaultTitle": "Tendință {type}",
+    "noTypesAvailable": "Nu sunt disponibile tipuri de grafice."
   },
   "commands": {
     "addExerciseBlock": "Adaugă bloc de exerciții",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendința variației se îmbunătățește",
       "varianceTrendStable": "Tendință stabilă a variației",
       "varianceTrendTitle": "Titlul tendinței variației",
-      "avgVarianceStat": "Varianță medie: ±{value}%"
+      "avgVarianceStat": "Varianță medie: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Toate",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Exerciții pentru forța corpului superior"
       }
+    },
+    "notes": {
+      "supersetCalves": "Exercițiu cu greutatea corpului, ridicări pe vârfuri",
+      "supersetLunges": "Exercițiu cu suprapunere și genuflexiuni"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Toate blocurile de cod au deja ID-uri."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Cronometrul s-a încheiat!"
+    "timerCompleted": "Cronometrul s-a încheiat!",
+    "templatesGenerated": "Șabloanele generate în '{folder}'. Acum puteți personaliza șabloanele."
   },
   "modal": {
     "actions": "Acțiuni",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabilitate, nivel mai mic",
     "up": "În sus"
+  },
+  "canvas": {
+    "duration": "**Durată:** {duration}",
+    "best": "**Cel mai bun:** {weight}{unit} × {reps} repetări"
   }
 }

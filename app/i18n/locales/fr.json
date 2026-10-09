@@ -23,7 +23,9 @@
       "reps": "Représentations",
       "volume": "Volume",
       "weight": "Poids"
-    }
+    },
+    "defaultTitle": "Évolution {type}",
+    "noTypesAvailable": "Aucun type de graphique disponible."
   },
   "commands": {
     "addExerciseBlock": "Ajouter un bloc d'exercices.",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendance à l'amélioration de la variance",
       "varianceTrendStable": "Tendance de la variance stable",
       "varianceTrendTitle": "Titre de l'évolution de la variance",
-      "avgVarianceStat": "Variance moy. : ±{value}%"
+      "avgVarianceStat": "Variance moy. : ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Tous valides",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Force du haut du corps."
       }
+    },
+    "notes": {
+      "supersetCalves": "Exercice de gainage avec levées de jambes en utilisant son propre poids.",
+      "supersetLunges": "Exercice avec des fentes."
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants."
     },
     "tagReferenceGenerated": "Référence de balise générée.",
-    "timerCompleted": "Le compte à rebours est terminé !"
+    "timerCompleted": "Le compte à rebours est terminé !",
+    "templatesGenerated": "Modèles générés dans « {folder} ». Vous pouvez maintenant les personnaliser."
   },
   "modal": {
     "actions": "Actions.",
@@ -974,5 +982,9 @@
     "stable": "Stable.",
     "stableLower": "Stable, niveau inférieur.",
     "up": "Vers le haut."
+  },
+  "canvas": {
+    "duration": "**Durée :** {duration}",
+    "best": "**Meilleur :** {weight}{unit} × {reps} répétitions"
   }
 }

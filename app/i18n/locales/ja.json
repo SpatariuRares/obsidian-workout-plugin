@@ -23,7 +23,9 @@
       "reps": "レップ数",
       "volume": "体積",
       "weight": "重み"
-    }
+    },
+    "defaultTitle": "トレンド {type}",
+    "noTypesAvailable": "利用可能なグラフの種類はありません"
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加する",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "変動傾向の改善",
       "varianceTrendStable": "変動傾向が安定",
       "varianceTrendTitle": "変動傾向のタイトル",
-      "avgVarianceStat": "平均変動: ±{value}%"
+      "avgVarianceStat": "平均変動: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "すべて有効",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "上半身パワー"
       }
+    },
+    "notes": {
+      "supersetCalves": "体幹を使ったカーフレイズでSupersetを行う",
+      "supersetLunges": "スプレセットで、ランジを行う"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "タイマーが終了しました！"
+    "timerCompleted": "タイマーが終了しました！",
+    "templatesGenerated": "{folder} で生成されたテンプレート。今、カスタマイズできます。"
   },
   "modal": {
     "actions": "操作",
@@ -974,5 +982,9 @@
     "stable": "安定",
     "stableLower": "安定した低い",
     "up": "上昇"
+  },
+  "canvas": {
+    "duration": "**期間:** {duration}",
+    "best": "**最適な:** {weight}{unit} × {reps} 回"
   }
 }

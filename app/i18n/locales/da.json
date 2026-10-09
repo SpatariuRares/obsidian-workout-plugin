@@ -23,7 +23,9 @@
       "reps": "Rep",
       "volume": "Volumen",
       "weight": "Vægt"
-    }
+    },
+    "defaultTitle": "Tendens {type}",
+    "noTypesAvailable": "Ingen diagramtyper er tilgængelige"
   },
   "commands": {
     "addExerciseBlock": "Tilføj Øvelsesblok",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendens for reduceret variation",
       "varianceTrendStable": "Variations Trend: Stabil",
       "varianceTrendTitle": "Overskrift for variationstendens",
-      "avgVarianceStat": "Gns. varians: ±{value}%"
+      "avgVarianceStat": "Gns. varians: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Alle gyldige",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Øverkrops Kraft"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset med calf raises med egen kropsvægt",
+      "supersetLunges": "Superset med lunges"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Alle kodeblokke har allerede ID'er."
     },
     "tagReferenceGenerated": "Tag Referens Genereret",
-    "timerCompleted": "Tidslinje fuldført!"
+    "timerCompleted": "Tidslinje fuldført!",
+    "templatesGenerated": "Skabeloner genereret i '{folder}'. Du kan nu tilpasse dem."
   },
   "modal": {
     "actions": "Handlinger",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabil Lavere",
     "up": "Op"
+  },
+  "canvas": {
+    "duration": "**Varighed:** {duration}",
+    "best": "**Bedst:** {weight}{unit} x {reps} gentagelser"
   }
 }

@@ -23,7 +23,9 @@
       "reps": "Графіки: Типи",
       "volume": "Об'єм",
       "weight": "Вага"
-    }
+    },
+    "defaultTitle": "Тенденція {type}",
+    "noTypesAvailable": "Немає доступних типів графіків."
   },
   "commands": {
     "addExerciseBlock": "Додати блок з вправами",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Тенденція зменшення відхилень",
       "varianceTrendStable": "Стабільна тенденція відхилень",
       "varianceTrendTitle": "Заголовок: Тенденція відхилень",
-      "avgVarianceStat": "Сер. відхилення: ±{value}%"
+      "avgVarianceStat": "Сер. відхилення: ±{value}%",
+      "hoursSuffix": "год"
     },
     "fileErrors": {
       "allValid": "Усі дані є дійсними",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Силові вправи для верхньої частини тіла"
       }
+    },
+    "notes": {
+      "supersetCalves": "Тренування з використанням суперсету та підняття ніг у висі",
+      "supersetLunges": "Тренування з використанням присідань у Superset."
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Усі блоки коду вже мають ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Таймер завершено!"
+    "timerCompleted": "Таймер завершено!",
+    "templatesGenerated": "Шаблони, створені в '{folder}'. Тепер ви можете їх налаштувати."
   },
   "modal": {
     "actions": "Дії",
@@ -974,5 +982,9 @@
     "stable": "Стабільний",
     "stableLower": "Стабільний, нижчий рівень",
     "up": "Зростання"
+  },
+  "canvas": {
+    "duration": "**Тривалість:** {duration}",
+    "best": "**Найкращий варіант:** {weight}{unit} × {reps} повторень"
   }
 }

@@ -23,7 +23,9 @@
       "reps": "반복 횟수",
       "volume": "부피",
       "weight": "무게"
-    }
+    },
+    "defaultTitle": "추세 {type}",
+    "noTypesAvailable": "차트 유형이 없습니다."
   },
   "commands": {
     "addExerciseBlock": "운동 블록 추가",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "변동 추세 개선",
       "varianceTrendStable": "변동 추세 안정",
       "varianceTrendTitle": "변동 추세 제목",
-      "avgVarianceStat": "평균 변동: ±{value}%"
+      "avgVarianceStat": "평균 변동: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "모든 항목 유효",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "상체 근력"
       }
+    },
+    "notes": {
+      "supersetCalves": "체중을 이용한 햄스트링 운동 (슈퍼셋)",
+      "supersetLunges": "런지를 포함한 슈퍼셋"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "타이머 완료!"
+    "timerCompleted": "타이머 완료!",
+    "templatesGenerated": "'{folder}에서 생성된 템플릿을 사용할 수 있습니다. 이제 사용자 정의를 할 수 있습니다."
   },
   "modal": {
     "actions": "액션",
@@ -974,5 +982,9 @@
     "stable": "안정적",
     "stableLower": "안정적, 낮은",
     "up": "상승"
+  },
+  "canvas": {
+    "duration": "**기간:** {duration}",
+    "best": "**최고:** {weight}{unit} × {reps} 회"
   }
 }

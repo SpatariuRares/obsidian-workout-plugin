@@ -23,7 +23,9 @@
       "reps": "रेप्स",
       "volume": "मात्रा",
       "weight": "वजन"
-    }
+    },
+    "defaultTitle": "ट्रेंड {type}",
+    "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं"
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "विचलन का प्रवृत्ति में सुधार",
       "varianceTrendStable": "विचलन का रुझान स्थिर",
       "varianceTrendTitle": "विचलन प्रवृत्ति शीर्षक",
-      "avgVarianceStat": "औसत विचरण: ±{value}%"
+      "avgVarianceStat": "औसत विचरण: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "सभी मान्य",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "ऊपरी शरीर की शक्ति"
       }
+    },
+    "notes": {
+      "supersetCalves": "बॉडीवेट के साथ सुपerset में काफ रेज",
+      "supersetLunges": "सुपरसेट जिसमें लंजेस शामिल हों"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "सभी कोड ब्लॉक में पहले से ही आईडी मौजूद हैं।"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "टाइमर समाप्त!"
+    "timerCompleted": "टाइमर समाप्त!",
+    "templatesGenerated": "'{folder} में बनाए गए टेम्प्लेट। अब आप उन्हें अनुकूलित कर सकते हैं।"
   },
   "modal": {
     "actions": "क्रिया",
@@ -974,5 +982,9 @@
     "stable": "स्थिर",
     "stableLower": "स्थिर निचला",
     "up": "ऊपर"
+  },
+  "canvas": {
+    "duration": "**अवधि:** {duration}",
+    "best": "**सर्वोत्तम:** {weight}{unit} × {reps} प्रतिनिधि"
   }
 }

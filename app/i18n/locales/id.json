@@ -23,7 +23,9 @@
       "reps": "Jenis representasi",
       "volume": "Volume",
       "weight": "Berat"
-    }
+    },
+    "defaultTitle": "Tren {type}",
+    "noTypesAvailable": "Tidak ada jenis grafik yang tersedia"
   },
   "commands": {
     "addExerciseBlock": "Tambahkan Blok Latihan",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tren Variansi Meningkat",
       "varianceTrendStable": "Tren Varians Stabil",
       "varianceTrendTitle": "Judul Tren Variasi",
-      "avgVarianceStat": "Var. rata-rata: ±{value}%"
+      "avgVarianceStat": "Var. rata-rata: ±{value}%",
+      "hoursSuffix": "jam"
     },
     "fileErrors": {
       "allValid": "Semua Valid",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Latihan Kekuatan Bagian Atas"
       }
+    },
+    "notes": {
+      "supersetCalves": "Latihan Superset dengan mengangkat kaki menggunakan berat badan",
+      "supersetLunges": "Latihan dengan gerakan lunges"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Timer selesai!"
+    "timerCompleted": "Timer selesai!",
+    "templatesGenerated": "Templat yang dibuat di '{folder}'. Anda sekarang dapat menyesuaikannya."
   },
   "modal": {
     "actions": "Opsi",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabil",
     "up": "Naik"
+  },
+  "canvas": {
+    "duration": "**Durasi:** {duration}",
+    "best": "**Terbaik:** {weight}{unit} × {reps} repetisi"
   }
 }

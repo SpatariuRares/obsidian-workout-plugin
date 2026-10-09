@@ -23,7 +23,9 @@
       "reps": "Typy grafů: Reprezentace",
       "volume": "Objem",
       "weight": "Hmotnost"
-    }
+    },
+    "defaultTitle": "Trendy {type}",
+    "noTypesAvailable": "není dostupných žádných typů grafů"
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Trendy odchylky se zlepšují",
       "varianceTrendStable": "Trend odchylky – stabilní",
       "varianceTrendTitle": "Nadpis trendu odchylek",
-      "avgVarianceStat": "Průměr. odchylka: ±{value}%"
+      "avgVarianceStat": "Průměr. odchylka: ±{value}%",
+      "hoursSuffix": "hodin"
     },
     "fileErrors": {
       "allValid": "Všechny platné",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Horní část těla silnější"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset s cviky s vlastní vahou, zaměřený na zvedání kolen.",
+      "supersetLunges": "Superset s cviky s výskokem"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Všechny bloky kódu již mají ID."
     },
     "tagReferenceGenerated": "Vytvořeno odkazování na tagy",
-    "timerCompleted": "Táimer dokončen!"
+    "timerCompleted": "Táimer dokončen!",
+    "templatesGenerated": "Šablony byly vygenerovány v '{folder}'. Nyní je můžete upravit."
   },
   "modal": {
     "actions": "Akce",
@@ -974,5 +982,9 @@
     "stable": "Stabilní",
     "stableLower": "Stabilní nižší",
     "up": "Nahoru"
+  },
+  "canvas": {
+    "duration": "**Doba trvání:** {duration}",
+    "best": "**Nejlepší:** {weight}{unit} × {reps} opakování"
   }
 }

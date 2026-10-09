@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "Data",
-    "fallbackTableMessage": "Mensagem da tabela de fallback",
     "labels": {
       "quickWeightIncrementUnit": "Botões de peso incrementam {weightIncrementUnit}",
       "reps": "Repetições",
@@ -11,14 +10,10 @@
       "weight": "Peso",
       "weightIncrementUnit": "Incremento de peso {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Prefixo de Variação Geral",
-    "significantIncrease": "Aumento significativo",
-    "trendLine": "Linha de Tendência",
     "typeNotAvailable": "O tipo de gráfico \"{chartDataType}\" não está disponível para exercícios do tipo {exerciseType}. Tipos disponíveis: {typeList}",
     "types": {
       "distance": "Distância",
       "duration": "Duração",
-      "heartRate": "Frequência Cardíaca",
       "pace": "Velocidade",
       "reps": "Representações",
       "volume": "Volume",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "Não existem tipos de gráfico disponíveis."
   },
   "commands": {
-    "addExerciseBlock": "Adicionar bloco de exercícios",
     "addMissingBlockIds": "Adicionar IDs ausentes aos blocos de código",
-    "auditExerciseNames": "Nomes dos exercícios de auditoria",
-    "convertExercise": "Converter Exercício",
-    "createCsvLog": "Criar arquivo de log CSV",
-    "exportWorkoutToCanvas": "Exportar treino para a tela",
-    "generateTagReference": "Gerar referência de tag",
-    "insertTable": "Inserir Tabela",
-    "manageMuscleTags": "Gerenciar etiquetas de músculos",
-    "migrateExerciseTypes": "Migrar Tipos de Exercícios"
+    "createCsvLog": "Criar arquivo de log CSV"
   },
   "common": {
     "bpm": "bpm",
@@ -47,7 +34,6 @@
     "exercise": "Exercício",
     "km": "km",
     "minPerKm": "min/km",
-    "notAvailable": "Não disponível",
     "sec": "segurança",
     "unknown": "Desconhecido",
     "workout": "Treino"
@@ -85,19 +71,12 @@
       "columnVariance": "Variação",
       "columnWorkout": "Treino",
       "minutesSuffix": "min",
-      "noData": "Sem dados",
       "subtitle": "Duração estimada vs. duração real do treino",
       "title": "Comparar duração",
-      "varianceTrendDeclining": "Tendência de variação em declínio",
-      "varianceTrendImproving": "Tendência de variação em melhoria",
-      "varianceTrendStable": "Tendência de Variação Estável",
-      "varianceTrendTitle": "Título da tendência de variação",
       "avgVarianceStat": "Variação média: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
-      "allValid": "Todos válidos",
-      "noTags": "Sem tags",
       "readError": "❌ Erro ao ler o arquivo: {message}",
       "title": "Erros de arquivo",
       "tooManyTags": "Número excessivo de tags de músculos ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "Clique para copiar: {tag}",
       "totalCount": "Total: {count} tags disponíveis"
     },
-    "protocol": {
-      "clickToFilter": "Clique para filtrar",
-      "percentLabel": "Rótulo de porcentagem",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "Limpar filtro",
-      "filterActive": "Filtre para protocolos ativos",
-      "noData": "Sem dados",
       "subtitle": "Detalhamento do protocolo de treinamento (últimos 30 dias)",
       "title": "Distribuição de protocolos"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "Entradas",
       "columnProgression": "Progresso",
       "columnProtocol": "Protocolo",
-      "columnVolumeChange": "Variação de volume",
       "disclaimer": "Isenção de responsabilidade",
-      "noData": "Sem dados",
       "title": "Eficácia do protocolo"
     },
     "quickActions": {
-      "addWorkoutLog": "Adicionar registro de treino",
-      "title": "Ações rápidas",
-      "viewExercises": "Ver exercícios"
+      "title": "Ações rápidas"
     },
     "quickStats": {
       "month": "Mês",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "Exibir tabela de dados do treino",
       "codeBlockWorkoutTimer": "Cronômetro ou temporizador de intervalos",
       "combinedTitle": "Combinado (Exercício + Treino)",
-      "commandsNote": "**Comandos** (Ctrl/Cmd + P): Criar Registro de Treino, Inserir Gráfico, Inserir Temporizador, Criar Página de Exercício",
       "countdownTimerTitle": "Temporizador regressivo",
       "durationEstimatorIntro": "Estima a duração total do treino com base nos exercícios listados na anotação atual.",
       "durationEstimatorTitle": "4. Estimador de Duração",
@@ -281,13 +248,9 @@
       "workouts": "Exercícios"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Página para criar exercício",
       "commandCreateExerciseDesc": "Crie um novo arquivo de exercício",
-      "commandCreateLog": "Criar registro de treino",
       "commandCreateLogDesc": "Adicionar uma nova entrada de treino",
-      "commandInsertChart": "Inserir gráfico de treino",
       "commandInsertChartDesc": "Adicione um gráfico a qualquer anotação",
-      "commandInsertTimer": "Iniciar temporizador de treino",
       "commandInsertTimerDesc": "Adicione um temporizador de descanso",
       "dashboardDesc": "Seus dados de treino de forma resumida",
       "exercisesDesc": "Exemplos de exercícios com logs e gráficos",
@@ -341,15 +304,9 @@
       "supersetLunges": "Superset com agachamentos"
     }
   },
-  "forms": {
-    "enterCsvPath": "Insira o caminho do arquivo CSV",
-    "enterFolderPath": "Insira o caminho da pasta",
-    "workoutName": "Nome do treino"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "Média de repetições",
     "back": "Voltar",
-    "currentFile": "Arquivo atual",
     "dashboard": "Painel de controle",
     "delete": "Excluir",
     "edit": "Editar",
@@ -369,12 +326,7 @@
       "totalVolume": "Volume total ({unit})",
       "totalWeight": "Peso total ({unit})"
     },
-    "muscleHeatMap": "Mapa de calor muscular",
-    "noMatchMessage": "Mensagem de não correspondência",
-    "search": "Pesquisar",
-    "totalReps": "Número total de repetições",
-    "workoutData": "Dados do treino",
-    "workoutLog": "Registro de treino"
+    "search": "Pesquisar"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "Nenhum registro encontrado para {exerciseName}"
   },
   "messages": {
-    "codeInserted": "Código inserido",
-    "csvNotFound": "Arquivo CSV não encontrado",
     "errors": {
       "tagReferenceFailed": "Erro ao gerar referência de tag: {error}",
       "csvLoadError": "Erro ao carregar dados CSV: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "Falha ao criar o arquivo CSV no caminho: {path}. Verifique o caminho nas configurações.",
       "tableRenderError": "Erro ao renderizar a tabela"
     },
-    "fileEmpty": "Arquivo vazio",
-    "imbalanceAlerts": "Alertas de Desequilíbrio",
-    "insufficientData": "Dados insuficientes",
     "noDataPeriod": "Não foram encontradas informações de treino para o período selecionado.",
-    "noFrontmatter": "Sem Frontmatter",
-    "noImbalances": "Sem desequilíbrios",
-    "noTags": "Sem etiquetas",
     "success": {
       "blockIdsAdded": "Adicionados os IDs faltantes {count} nos arquivos {files}",
       "csvCreated": "O arquivo CSV foi criado com sucesso!",
@@ -536,21 +480,7 @@
     "canvasLayout": "Layout",
     "canvasOptions": "Opções",
     "checkboxes": {
-      "connectSupersets": "Conectar supersets",
-      "exactMatch": "Correspondência exata",
-      "includeDurations": "Incluir durações",
-      "includeLog": "Incluir Log",
-      "includeStats": "Incluir estatísticas",
-      "includeTimer": "Incluir temporizador",
-      "showAddButton": "Mostrar botão \"Adicionar\"",
-      "showControls": "Mostrar controles",
-      "showStatistics": "Mostrar estatísticas",
-      "showTrendHeader": "Exibir título da tendência",
-      "showTrendLine": "Mostrar linha de tendência",
-      "sound": "Som",
-      "timerSound": "Som do temporizador",
-      "useCurrentWorkout": "Usar o treino atual",
-      "useCurrentWorkoutFile": "Usar o arquivo de treino atual"
+      "sound": "Som"
     },
     "confirmAction": "Confirmar ação",
     "csvExercise": "Exercício com CSV",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "Renomear este arquivo?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Encontrado(s) {count} discrepância(s):",
       "auditNoMatchFound": "Nenhuma correspondência",
-      "auditNoMismatches": "Ausência de inconsistências na auditoria",
       "auditRenameError": "Não foi possível renomear: {error}",
       "auditRenameFileError": "Não foi possível renomear o arquivo: {error}",
-      "auditRenameFileSuccess": "Sucesso na renomeação do arquivo.",
       "auditRenameSuccess": "Renomeado ({count} arquivos atualizados)",
       "auditScanError": "Erro ao escanear arquivos: {error}",
-      "auditScanning": "Verificação de auditoria",
       "canvasExportError": "Erro na exportação do canvas: {error}",
       "canvasExported": "Imagem do Canvas exportada ({path})",
       "chartInserted": "✅ Gráfico inserido com sucesso!",
       "confirmUpdateTarget": "Atualizar a meta para {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Painel inserido com sucesso!",
       "dismissAchievement": "Descartar conquista",
-      "exerciseBlockInserted": "Bloco de exercícios inserido",
       "exerciseNameRequired": "❌ por favor, insira um nome para o exercício",
       "exercisePageCreated": "Página de exercício criada com sucesso!",
       "exercisePageError": "Erro ao criar a página de exercício: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "Registro de treino atualizado com sucesso!",
       "migrationComplete": "Migração concluída. Arquivos de exercícios {count} atualizados.",
       "migrationError": "Erro de migração: {error}",
-      "migrationNoUpdates": "Sem atualizações de migração",
       "muscleTagCount": "{count} tags encontradas",
       "muscleTagDeleteConfirm": "Você tem certeza de que deseja excluir a etiqueta \"{tag}\"?",
-      "muscleTagDeleted": "Tag de Músculo Excluído",
       "muscleTagExists": "A etiqueta \"{tag}\" já existe",
       "muscleTagExportError": "Erro ao exportar tags de músculos: {error}",
-      "muscleTagExported": "Etiqueta de Músculo Exportada",
       "muscleTagImportError": "Erro ao importar etiquetas de músculos: {error}",
-      "muscleTagImportInvalidFormat": "Formato inválido para importação de etiquetas de músculos",
       "muscleTagImportInvalidGroup": "Grupo muscular \"{group}\" inválido para a tag \"{tag}\". Deve ser um grupo muscular padrão.",
-      "muscleTagImportNoValid": "Importação de Tag de Músculo: Nenhum valor válido",
       "muscleTagImportPreview": "{count} etiquetas para importar",
       "muscleTagImported": "{count} Etiquetas de músculo importadas com sucesso!",
-      "muscleTagLoading": "Carregando etiqueta muscular",
-      "muscleTagNoResults": "Sem resultados para a tag muscular",
       "muscleTagSaveError": "Erro ao salvar a etiqueta muscular: {error}",
-      "muscleTagSaved": "Etiqueta de Músculo Salva",
       "muscleTagSimilarFound": "{count} tags semelhantes encontradas",
-      "muscleTagSimilarWarning": "Aviso: Etiqueta de músculo semelhante",
       "suggestedNextWeight": "Próximo peso sugerido: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabela inserida com sucesso!",
       "tableUpdateFailed": "Falhou ao atualizar a tabela. Verifique se o arquivo está aberto no editor.",
       "tableUpdated": "✅ Tabela atualizada com sucesso!",
-      "targetAchieved": "Objetivo alcançado",
       "timerElementsNotInitialized": "Os elementos do temporizador não foram inicializados",
       "timerInserted": "✅ Temporizador inserido com sucesso!",
       "timerUpdateFailed": "Falhou ao atualizar o temporizador. Verifique se o arquivo está aberto no editor.",
@@ -690,39 +606,23 @@
     "rounds": "Rodadas:",
     "save": "Salvar",
     "sections": {
-      "advancedOptions": "Opções avançadas",
-      "chartType": "Tipo de gráfico",
       "configuration": "Configuração",
-      "displayOptions": "Opções de exibição",
-      "exerciseConfiguration": "Configuração do exercício",
-      "mobileOptions": "Opções para dispositivos móveis",
       "options": "Opções",
       "preset": "Configuração prévia",
-      "progressiveOverload": "Sobrecarga progressiva",
-      "tableType": "Tipo de tabela",
       "target": "Alvo",
-      "timerConfiguration": "Configuração do temporizador",
       "workout": "Treino"
     },
     "selectOptions": {
-      "allLogs": "Todas as entradas",
       "cardio": "Exercícios cardiovasculares",
-      "completeWorkout": "Finalizar treino",
       "custom": "Personalizado",
       "distance": "Distância",
-      "dropSet": "Conjunto de repetições",
-      "exerciseWorkout": "Treino",
-      "myoReps": "Myo reps",
       "number": "Número",
-      "restPause": "Pausa",
-      "specificExercise": "Exercício específico",
       "standard": "Padrão",
       "strength": "Força",
       "superset": "Superset",
       "text": "Texto",
       "timed": "Com tempo definido",
-      "twentyones": "Vinte e um",
-      "yesNo": "Sim Não"
+      "twentyones": "Vinte e um"
     },
     "sets": "Conjuntos:",
     "similarTags": "Tags semelhantes:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "Volume médio",
     "max": "Máx: ",
     "min": "Mín: ",
     "recentLast3": " (últimas 3)",
-    "recentTrend": "Tendência Recente",
     "recentVsPrev": " (vs ant.)",
     "sessions": "Sessões",
     "title": "📈 Estatísticas {dataTypeLabel} ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "Distância",
       "duration": "Duração",
       "exercise": "Exercício",
-      "heartRate": "Frequência Cardíaca",
       "notes": "Observações",
       "protocol": "Protocolo",
       "reps": "Repetições",
@@ -922,29 +819,19 @@
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Peso ({weightUnit})"
     },
-    "deleteConfirm": "Confirmação de exclusão",
     "deleteError": "Erro ao excluir: {error}",
-    "deleteSuccess": "Excluir com sucesso",
-    "deleteTitle": "Título para exclusão",
     "editTable": "Editar tabela",
-    "editTitle": "Título",
-    "gotoExercise": "Ir para o exercício",
-    "invalidDate": "Data inválida",
     "labels": {
       "target": "Alvo:",
       "errors": {
         "tableElementsNotInitialized": "Os elementos da tabela não foram inicializados"
       }
     },
-    "noData": "Sem dados",
-    "notAvailable": "Não disponível",
-    "refreshSuccess": "Atualização bem-sucedida",
     "target": {
       "progressTooltip": "Melhor: {best} repetições / Objetivo: {target} repetições",
       "repsSuffix": "representações",
       "separator": " × "
     },
-    "trendLine": "Linha de Tendência",
     "refreshingTable": "Atualizando tabela...",
     "validation": {
       "sortByInvalid": "sortBy deve ser um de {allowed}, recebido: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "Invariável",
     "neutral": "Neutro",
     "stable": "Estável",
-    "stableLower": "Estável (menor)",
     "up": "Para cima"
   },
   "canvas": {

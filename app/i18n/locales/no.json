@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "Dato",
-    "fallbackTableMessage": "Melding for alternativ tabell",
     "labels": {
       "quickWeightIncrementUnit": "Vektknappene øker {weightIncrementUnit}",
       "reps": "Antall",
@@ -11,14 +10,10 @@
       "weight": "Vekt",
       "weightIncrementUnit": "Økning i vekt {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "For generell variasjon",
-    "significantIncrease": "Betydelig økning",
-    "trendLine": "Trendlinje",
     "typeNotAvailable": "Diagramtype \"{chartDataType}\" er ikke tilgjengelig for {exerciseType} øvelser. Tilgjengelige typer: {typeList}",
     "types": {
       "distance": "Avstand",
       "duration": "Varighet",
-      "heartRate": "Puls",
       "pace": "Tempo",
       "reps": "Representasjoner",
       "volume": "Volum",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "Ingen diagramtyper er tilgjengelige."
   },
   "commands": {
-    "addExerciseBlock": "Legg til treningsblokk",
     "addMissingBlockIds": "Legg til manglende ID-er i kodeblokker",
-    "auditExerciseNames": "Navn på øvelser for revisjon",
-    "convertExercise": "Konverter øvelse",
-    "createCsvLog": "Opprett CSV-loggfil",
-    "exportWorkoutToCanvas": "Eksporter treningsøkten til lerret",
-    "generateTagReference": "Generer referanse for tag",
-    "insertTable": "Legg til tabell",
-    "manageMuscleTags": "Administrer muskelmerker",
-    "migrateExerciseTypes": "Migrer øvelsetyper"
+    "createCsvLog": "Opprett CSV-loggfil"
   },
   "common": {
     "bpm": "bpm",
@@ -47,7 +34,6 @@
     "exercise": "Øvelse",
     "km": "common.km",
     "minPerKm": "min/km",
-    "notAvailable": "Ikke tilgjengelig",
     "sec": "common.sec",
     "unknown": "Ukjent",
     "workout": "Trening"
@@ -85,19 +71,12 @@
       "columnVariance": "Variasjon",
       "columnWorkout": "Trening",
       "minutesSuffix": "min",
-      "noData": "Ingen data",
       "subtitle": "Estimert vs. faktisk treningsvarighet",
       "title": "Sammenligning av varighet",
-      "varianceTrendDeclining": "Trend med synkende variasjon",
-      "varianceTrendImproving": "Trend med økende variasjon",
-      "varianceTrendStable": "Variasjonstrend: Stabil",
-      "varianceTrendTitle": "Tittel for variasjonsutvikling",
       "avgVarianceStat": "Gj.sn. varians: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
-      "allValid": "Alle gyldige",
-      "noTags": "Ingen tagger",
       "readError": "❌ Feil ved lesing av fil: {message}",
       "title": "Feil ved fil",
       "tooManyTags": "For mange muskelmerker ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "Klikk for å kopiere: {tag}",
       "totalCount": "Totalt: {count} tagger tilgjengelige"
     },
-    "protocol": {
-      "clickToFilter": "Klikk for å filtrere",
-      "percentLabel": "Prosentvis merkelapp",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "Tøm filter",
-      "filterActive": "Filtrer aktive",
-      "noData": "Ingen data",
       "subtitle": "Detaljert oversikt over treningsprotokollen (de siste 30 dagene)",
       "title": "Fordeling av protokoller"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "Elementer",
       "columnProgression": "Framgang",
       "columnProtocol": "Protokoll",
-      "columnVolumeChange": "Volumendifferanse",
       "disclaimer": "Ansvarsfraskrivelse",
-      "noData": "Ingen data",
       "title": "Effektivitet av protokollen"
     },
     "quickActions": {
-      "addWorkoutLog": "Legg til treningslogg",
-      "title": "Raske handlinger",
-      "viewExercises": "Vis øvelser"
+      "title": "Raske handlinger"
     },
     "quickStats": {
       "month": "Måned",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "Vis tabell med treningsdata",
       "codeBlockWorkoutTimer": "Tidsur med nedtelling eller intervalltimer",
       "combinedTitle": "Kombinert (trening + treningsprogram)",
-      "commandsNote": "**Kommandoer** (Ctrl/Cmd + P): Opprett treningslogg, Sett inn diagram, Sett inn tidsur, Opprett treningsside",
       "countdownTimerTitle": "Nedtelling",
       "durationEstimatorIntro": "Estimert total treningsvarighet basert på øvelsene i den gjeldende noten.",
       "durationEstimatorTitle": "4. Estimator for tidsbruk",
@@ -281,13 +248,9 @@
       "workouts": "Trening"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Opprett øvelseside",
       "commandCreateExerciseDesc": "Opprett en ny treningsfil",
-      "commandCreateLog": "Opprett treningslogg",
       "commandCreateLogDesc": "Legg til en ny treningsøkt",
-      "commandInsertChart": "Legg til treningsdiagram",
       "commandInsertChartDesc": "Legg til et diagram i en hvilken som helst notat",
-      "commandInsertTimer": "Sett inn trenings-timer",
       "commandInsertTimerDesc": "Legg til en resttimer",
       "dashboardDesc": "Dine treningsstatistikk på et blunk",
       "exercisesDesc": "Eksempler på øvelsesark med logg og diagrammer",
@@ -341,15 +304,9 @@
       "supersetLunges": "Superset med knebøy"
     }
   },
-  "forms": {
-    "enterCsvPath": "Angi CSV-sti",
-    "enterFolderPath": "Angi mappat",
-    "workoutName": "Navn på treningsøkten"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "Gjennomsnittlig antall",
     "back": "Tilbake",
-    "currentFile": "Nåværende fil",
     "dashboard": "Dashboard",
     "delete": "Slett",
     "edit": "Rediger",
@@ -369,12 +326,7 @@
       "totalVolume": "Totalvolum ({unit})",
       "totalWeight": "Totalvekt ({unit})"
     },
-    "muscleHeatMap": "Muskelvarmekart",
-    "noMatchMessage": "Melding når ingen treff finnes",
-    "search": "Søk",
-    "totalReps": "Totalt antall repetisjoner",
-    "workoutData": "Treningdata",
-    "workoutLog": "Treningsoversikt"
+    "search": "Søk"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "Ingen logger funnet for {exerciseName}"
   },
   "messages": {
-    "codeInserted": "Kode lagt inn",
-    "csvNotFound": "CSV-fil ikke funnet",
     "errors": {
       "tagReferenceFailed": "Feil ved generering av tag-referanse: {error}",
       "csvLoadError": "Feil ved lasting av CSV-data: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "Kunne ikke opprette CSV-fil på stien: {path}. Sjekk stien i innstillingene.",
       "tableRenderError": "Feil ved tabellgjengivelse"
     },
-    "fileEmpty": "Filen er tom",
-    "imbalanceAlerts": "Varsler om ubalanse",
-    "insufficientData": "Util tilstrekkelig data",
     "noDataPeriod": "Ingen treningsdata funnet for det valgte tidsperioden.",
-    "noFrontmatter": "Ingen for-matter",
-    "noImbalances": "Ingen ubalanser",
-    "noTags": "Ingen tagger",
     "success": {
       "blockIdsAdded": "Legger til {count} manglende ID(er) i {files} fil(er).",
       "csvCreated": "CSV-filen ble opprettet med suksess!",
@@ -536,21 +480,7 @@
     "canvasLayout": "Layout",
     "canvasOptions": "Alternativer",
     "checkboxes": {
-      "connectSupersets": "Koble sammen supersett",
-      "exactMatch": "Nøyaktig match",
-      "includeDurations": "Inkluder varigheter",
-      "includeLog": "Inkluder logg",
-      "includeStats": "Inkluder statistikk",
-      "includeTimer": "Inkluder tidsur",
-      "showAddButton": "Vis Leggetilknapp",
-      "showControls": "Vis kontroller",
-      "showStatistics": "Vis statistikk",
-      "showTrendHeader": "Vis overskrift for trend",
-      "showTrendLine": "Vis trendlinje",
-      "sound": "Lyd",
-      "timerSound": "Lyden for timeren",
-      "useCurrentWorkout": "Bruk gjeldende treningsøkt",
-      "useCurrentWorkoutFile": "Bruk gjeldende treningsfil"
+      "sound": "Lyd"
     },
     "confirmAction": "Bekreft handling",
     "csvExercise": "Oppgave med CSV-fil",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "Gi nytt navn til denne filen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Fant {count} potensielle avvik:",
       "auditNoMatchFound": "Ingen treff funnet",
-      "auditNoMismatches": "Ingen uoverensstemmelser i revisjonen",
       "auditRenameError": "Kunne ikke gi nytt navn: {error}",
       "auditRenameFileError": "Kunne ikke gi filen nytt navn: {error}",
-      "auditRenameFileSuccess": "Suksess: Fil omdøpt",
       "auditRenameSuccess": "Nytt navn gitt ({count} filer oppdatert)",
       "auditScanError": "Feil ved skanning: {error}",
-      "auditScanning": "Revisjonssøk",
       "canvasExportError": "Feil ved eksport fra Canvas: {error}",
       "canvasExported": "Bilde eksportert fra lerret ({path})",
       "chartInserted": "✅ Diagrammet er lagt inn med suksess!",
       "confirmUpdateTarget": "Oppdater målet til {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard er nå lagt til!",
       "dismissAchievement": "Lukk prestasjon",
-      "exerciseBlockInserted": "Øvelsesblokk lagt til",
       "exerciseNameRequired": "❌ Vennligst oppgi et treningsnavn",
       "exercisePageCreated": "Treningsside opprettet med suksess!",
       "exercisePageError": "Feil ved oppretting av øvelsesside: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "Treningsoppføring oppdatert med suksess!",
       "migrationComplete": "Migrering fullført. Oppdatert {count} treningsfiler.",
       "migrationError": "Feil under migrering: {error}",
-      "migrationNoUpdates": "Ingen oppdateringer",
       "muscleTagCount": "{count} tag(er) funnet",
       "muscleTagDeleteConfirm": "Er du sikker på at du vil slette taggen \"{tag}\"?",
-      "muscleTagDeleted": "Muskelmerket er slettet",
       "muscleTagExists": "Merket \"{tag}\" finnes allerede.",
       "muscleTagExportError": "Feil ved eksport av muskelmerker: {error}",
-      "muscleTagExported": "Muskel-tag eksportert",
       "muscleTagImportError": "Feil ved import av muskelmerker: {error}",
-      "muscleTagImportInvalidFormat": "Feil format for import av muskelmerker",
       "muscleTagImportInvalidGroup": "Ugyldig muskelgruppe \"{group}\" for tag \"{tag}\". Må være en standardisert muskelgruppe.",
-      "muscleTagImportNoValid": "Import av muskelmerker: Ingen gyldige merker",
       "muscleTagImportPreview": "{count} tag(ger) for import",
       "muscleTagImported": "{count} Muskelmerker importert med suksess!",
-      "muscleTagLoading": "Lasting av muskelmerke",
-      "muscleTagNoResults": "Ingen resultater for muskelmerket",
       "muscleTagSaveError": "Feil ved lagring av muskelmerke: {error}",
-      "muscleTagSaved": "Muskelmerke lagret",
       "muscleTagSimilarFound": "{count} lignende tag(ger) funnet",
-      "muscleTagSimilarWarning": "Advarsel: Denne muskelen ligner en annen",
       "suggestedNextWeight": "Foreslått neste vekt: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabellen er lagt til med suksess!",
       "tableUpdateFailed": "Feilet ved oppdatering av tabellen. Sørg for at filen er åpen i redigeringsprogrammet.",
       "tableUpdated": "✅ Tabellen er oppdatert med suksess!",
-      "targetAchieved": "Mål oppnådd",
       "timerElementsNotInitialized": "Tidsmålingskomponentene er ikke initialisert.",
       "timerInserted": "✅ Timer er lagt til med suksess!",
       "timerUpdateFailed": "Feilet ved oppdatering av tidsinnstilling. Sørg for at filen er åpen i redigeringsprogrammet.",
@@ -690,39 +606,23 @@
     "rounds": "Runder:",
     "save": "Lagre",
     "sections": {
-      "advancedOptions": "Avanserte innstillinger",
-      "chartType": "Type av diagram",
       "configuration": "Konfigurasjon",
-      "displayOptions": "Visningsalternativer",
-      "exerciseConfiguration": "Konfigurasjon for øvelse",
-      "mobileOptions": "Mobilalternativer",
       "options": "Alternativer",
       "preset": "Forhåndsdefinert",
-      "progressiveOverload": "Gradvis økning",
-      "tableType": "Tabelltype",
       "target": "Mål",
-      "timerConfiguration": "Innstillinger for timer",
       "workout": "Trening"
     },
     "selectOptions": {
-      "allLogs": "Alle logger",
       "cardio": "Kardio",
-      "completeWorkout": "Fullfør treningsøkten",
       "custom": "Tilpasset",
       "distance": "Avstand",
-      "dropSet": "Sett",
-      "exerciseWorkout": "Trening",
-      "myoReps": "Mine rep-alternativer",
       "number": "Antall",
-      "restPause": "Pause",
-      "specificExercise": "Spesifikk øvelse",
       "standard": "Standard",
       "strength": "Styrke",
       "superset": "Superset",
       "text": "Tekst",
       "timed": "Med tidsbegrensning",
-      "twentyones": "Femtito",
-      "yesNo": "Ja Nei"
+      "twentyones": "Femtito"
     },
     "sets": "Grupper:",
     "similarTags": "Liknende tagger:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "Gjennomsnittlig volum",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (siste 3)",
-    "recentTrend": "Nylig trend",
     "recentVsPrev": " (vs forrige)",
     "sessions": "Sesjoner",
     "title": "📈 {dataTypeLabel} Statistikk ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "Avstand",
       "duration": "Varighet",
       "exercise": "Øvelse",
-      "heartRate": "Puls",
       "notes": "Merknader",
       "protocol": "Protokoll",
       "reps": "Antall",
@@ -922,29 +819,19 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Vekt ({weightUnit})"
     },
-    "deleteConfirm": "Bekreft sletting",
     "deleteError": "Feil ved sletting: {error}",
-    "deleteSuccess": "Suksessfull sletting",
-    "deleteTitle": "Fjern",
     "editTable": "Rediger tabell",
-    "editTitle": "Rediger",
-    "gotoExercise": "Gå til øvelse",
-    "invalidDate": "Ugyldig dato",
     "labels": {
       "target": "Mål:",
       "errors": {
         "tableElementsNotInitialized": "Tabellens elementer er ikke initialisert."
       }
     },
-    "noData": "Ingen data",
-    "notAvailable": "Ikke tilgjengelig",
-    "refreshSuccess": "Oppdatering fullført",
     "target": {
       "progressTooltip": "Best: {best} repetisjoner / Mål: {target} repetisjoner",
       "repsSuffix": "representasjoner",
       "separator": " × "
     },
-    "trendLine": "Trendlinje",
     "refreshingTable": "Oppdaterer tabell...",
     "validation": {
       "sortByInvalid": "sortBy må være en av {allowed}, mottatt: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "Uendret",
     "neutral": "Nøytral",
     "stable": "Stabil",
-    "stableLower": "Stabil, lavere",
     "up": "Opp"
   },
   "canvas": {

@@ -3,11 +3,13 @@ import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import { DateUtils } from "@app/utils/DateUtils";
 import type { BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body";
+import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 
 type MuscleDataContext = AppPort & SettingsPort;
 
 export interface MuscleGroupData {
   name: string;
+  /** Total of the selected heat map metric (volume by default) */
   volume: number;
   exercises: string[];
   intensity: number; // 0-1 scale for heat map coloring
@@ -45,11 +47,29 @@ export class MuscleDataCalculator {
   }
 
   /**
-   * Calculate muscle group volumes from workout data
+   * Value one log entry contributes to its muscles for the given metric
+   */
+  static getMetricValue(
+    entry: WorkoutLogData,
+    metric: HeatMapMetric,
+  ): number {
+    switch (metric) {
+      case "sets":
+        return 1;
+      case "reps":
+        return entry.reps || 0;
+      default:
+        return entry.volume || 0;
+    }
+  }
+
+  /**
+   * Calculate per-muscle totals of the selected metric from workout data
    */
   async calculateMuscleGroupVolumes(
     data: WorkoutLogData[],
     plugin: MuscleDataContext,
+    metric: HeatMapMetric = "volume",
   ): Promise<Map<string, MuscleGroupData>> {
     const muscleData = new Map<string, MuscleGroupData>();
 
@@ -64,8 +84,8 @@ export class MuscleDataCalculator {
       });
     });
 
-    // Calculate volumes
     for (const entry of data) {
+      const value = MuscleDataCalculator.getMetricValue(entry, metric);
       const mappedMuscles =
         await this.tagMapper.findMuscleGroupsFromTags(
           entry.exercise,
@@ -75,7 +95,7 @@ export class MuscleDataCalculator {
       mappedMuscles.forEach((muscle) => {
         const current = muscleData.get(muscle);
         if (current) {
-          current.volume += entry.volume;
+          current.volume += value;
           if (!current.exercises.includes(entry.exercise)) {
             current.exercises.push(entry.exercise);
           }

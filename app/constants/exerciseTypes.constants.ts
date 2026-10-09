@@ -173,6 +173,31 @@ export function getExerciseTypeById(
 }
 
 /**
+ * Common names users write in frontmatter, mapped to built-in type IDs.
+ * Without these, e.g. `type: duration` silently fell back to strength.
+ */
+export const EXERCISE_TYPE_ALIASES: Readonly<Record<string, string>> = {
+  duration: EXERCISE_TYPE_IDS.TIMED,
+  time: EXERCISE_TYPE_IDS.TIMED,
+  timer: EXERCISE_TYPE_IDS.TIMED,
+  interval: EXERCISE_TYPE_IDS.TIMED,
+  hold: EXERCISE_TYPE_IDS.TIMED,
+  isometric: EXERCISE_TYPE_IDS.TIMED,
+  bodyweight: EXERCISE_TYPE_IDS.STRENGTH,
+  weights: EXERCISE_TYPE_IDS.STRENGTH,
+  running: EXERCISE_TYPE_IDS.DISTANCE,
+  run: EXERCISE_TYPE_IDS.DISTANCE,
+};
+
+/**
+ * Resolves a normalized frontmatter type to a type ID, applying aliases.
+ * Unknown values are returned unchanged (they may be custom type IDs).
+ */
+export function resolveExerciseTypeId(typeId: string): string {
+  return EXERCISE_TYPE_ALIASES[typeId] ?? typeId;
+}
+
+/**
  * The default exercise type ID for backward compatibility.
  * Exercises without an explicit type are treated as strength exercises.
  */

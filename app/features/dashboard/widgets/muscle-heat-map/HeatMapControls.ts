@@ -1,6 +1,9 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
+import type {
+  HeatMapMetric,
+  MuscleHeatMapOptions,
+} from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
 
@@ -76,10 +79,27 @@ export class HeatMapControls {
       ariaLabel: t("general.back"),
     });
 
+    // Metric toggle (sets/reps make bodyweight and timed work visible)
+    const metricToggleEl = controlsEl.createEl("div", {
+      cls: "workout-frame-toggle",
+    });
+
+    const metrics: HeatMapMetric[] = ["volume", "sets", "reps"];
+    const metricBtns = metrics.map((metric, index) =>
+      Button.create(metricToggleEl, {
+        text: t(`dashboard.muscleHeatMap.metrics.${metric}`),
+        className:
+          index === 0 ? "workout-toggle-btn active" : "workout-toggle-btn",
+        variant: BUTTONVARIANT.SECONDARY,
+        ariaLabel: t(`dashboard.muscleHeatMap.metrics.${metric}`),
+      }),
+    );
+
     // Current options state
     const currentOptions: MuscleHeatMapOptions = {
       timeFrame: "week",
       view: "front",
+      metric: "volume",
     };
 
     // Setup time frame event listeners
@@ -110,6 +130,22 @@ export class HeatMapControls {
         currentOptions.view = ["front", "back"][index] as
           | "front"
           | "back";
+        void renderCallback(
+          canvasContainer,
+          data,
+          currentOptions,
+          infoPanel,
+          plugin,
+        );
+      });
+    });
+
+    // Setup metric toggle event listeners
+    metricBtns.forEach((btn, index) => {
+      Button.onClick(btn, () => {
+        metricBtns.forEach((b) => b.removeClass("active"));
+        btn.addClass("active");
+        currentOptions.metric = metrics[index];
         void renderCallback(
           canvasContainer,
           data,

@@ -153,6 +153,18 @@
       "chartTitleDays": "Volume trend (last {days} days)",
       "muscleBreakdownTitle": "Top exercises by volume",
       "title": "Volume analytics"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Sets",
+        "reps": "Reps"
+      },
+      "average": {
+        "volume": "Average volume: {value} {unit}",
+        "sets": "Average sets: {value}",
+        "reps": "Average reps: {value}"
+      }
     }
   },
   "duration": {

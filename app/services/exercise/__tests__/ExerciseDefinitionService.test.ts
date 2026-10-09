@@ -6,6 +6,9 @@ import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 jest.mock("@app/constants/exerciseTypes.constants", () => ({
   getExerciseTypeById: jest.fn(),
   DEFAULT_EXERCISE_TYPE_ID: "strength",
+  resolveExerciseTypeId: jest.requireActual(
+    "@app/constants/exerciseTypes.constants",
+  ).resolveExerciseTypeId,
 }));
 import { getExerciseTypeById } from "@app/constants/exerciseTypes.constants";
 
@@ -155,6 +158,30 @@ type: cardio
 
       const result = await service.getExerciseDefinition("Run");
       expect(result?.typeId).toBe("cardio");
+    });
+
+    it.each([
+      ["duration", "timed"],
+      ["Interval", "timed"],
+      ["hold", "timed"],
+      ["bodyweight", "strength"],
+      ["running", "distance"],
+    ])("should map type alias '%s' to '%s'", async (alias, expected) => {
+      const mockFolder = new TFolder();
+      const mockFile = new TFile();
+      mockFile.extension = "md";
+      mockFile.basename = "Plank";
+      mockFolder.children = [mockFile];
+
+      (app.vault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        mockFolder,
+      );
+      (app.vault.read as jest.Mock).mockResolvedValue(`---
+type: ${alias}
+---`);
+
+      const result = await service.getExerciseDefinition("Plank");
+      expect(result?.typeId).toBe(expected);
     });
 
     it("should default to strength if type missing", async () => {

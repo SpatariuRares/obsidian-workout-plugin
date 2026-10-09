@@ -224,3 +224,89 @@ describe("DomUtils", () => {
     });
   });
 });
+
+describe("DomUtils.keepFocusedFieldVisible", () => {
+  let root: HTMLDivElement;
+  let input: HTMLInputElement;
+  let viewport: EventTarget & { height: number; offsetTop: number };
+  let cleanup: () => void;
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+    root = document.createElement("div");
+    input = document.createElement("input");
+    input.scrollIntoView = jest.fn();
+    root.appendChild(input);
+    document.body.appendChild(root);
+    viewport = Object.assign(new EventTarget(), {
+      height: window.innerHeight,
+      offsetTop: 0,
+    });
+    cleanup = DomUtils.keepFocusedFieldVisible(
+      root,
+      viewport as unknown as VisualViewport,
+    );
+  });
+
+  afterEach(() => {
+    cleanup();
+    root.remove();
+    jest.useRealTimers();
+  });
+
+  it("scrolls a focused field into view once the keyboard has opened", () => {
+    input.focus();
+    expect(input.scrollIntoView).not.toHaveBeenCalled();
+
+    jest.runAllTimers();
+
+    expect(input.scrollIntoView).toHaveBeenCalledWith({
+      block: "center",
+    });
+  });
+
+  it("ignores focus on elements that are not form fields", () => {
+    const button = document.createElement("button");
+    button.scrollIntoView = jest.fn();
+    root.appendChild(button);
+
+    button.focus();
+    jest.runAllTimers();
+
+    expect(button.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it("pads the root by the keyboard height and re-scrolls on viewport resize", () => {
+    input.focus();
+    jest.runAllTimers();
+    (input.scrollIntoView as jest.Mock).mockClear();
+
+    viewport.height = window.innerHeight - 300;
+    viewport.dispatchEvent(new Event("resize"));
+
+    expect(root.style.paddingBottom).toBe("300px");
+    expect(input.scrollIntoView).toHaveBeenCalledWith({
+      block: "center",
+    });
+  });
+
+  it("removes the padding when the keyboard closes", () => {
+    viewport.height = window.innerHeight - 300;
+    viewport.dispatchEvent(new Event("resize"));
+    viewport.height = window.innerHeight;
+    viewport.dispatchEvent(new Event("resize"));
+
+    expect(root.style.paddingBottom).toBe("");
+  });
+
+  it("stops reacting and clears padding after cleanup", () => {
+    viewport.height = window.innerHeight - 300;
+    viewport.dispatchEvent(new Event("resize"));
+    cleanup();
+
+    expect(root.style.paddingBottom).toBe("");
+    input.focus();
+    jest.runAllTimers();
+    expect(input.scrollIntoView).not.toHaveBeenCalled();
+  });
+});

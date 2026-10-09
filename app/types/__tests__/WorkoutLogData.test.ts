@@ -642,3 +642,50 @@ describe("Custom Fields - Dynamic CSV Columns", () => {
     });
   });
 });
+
+describe("CSV round-trip of log entries", () => {
+  const entry = (timestamp: number, notes: string) => ({
+    date: "2026-10-01",
+    exercise: "Bench Press",
+    reps: 5,
+    weight: 100,
+    volume: 500,
+    timestamp,
+    notes,
+    protocol: WorkoutProtocol.STANDARD,
+  });
+
+  const roundTrip = (notes: string[]) =>
+    parseCSVLogFile(
+      entriesToCSVContent(notes.map((n, i) => entry(i + 1, n))),
+    ).map((e) => e.notes);
+
+  it("keeps notes that span several lines", () => {
+    expect(roundTrip(["line one\nline two", "next"])).toEqual([
+      "line one\nline two",
+      "next",
+    ]);
+  });
+
+  it("shows formula-like notes as typed, without the stored apostrophe", () => {
+    expect(roundTrip(["- felt heavy", "=1+1"])).toEqual([
+      "- felt heavy",
+      "=1+1",
+    ]);
+  });
+
+  it("still stores formula-like values with the apostrophe", () => {
+    expect(entriesToCSVContent([entry(1, "=1+1")])).toContain(",'=1+1,");
+  });
+
+  it("reads files saved with CRLF line endings", () => {
+    const csv = entriesToCSVContent([entry(1, "a"), entry(2, "b")]).replace(
+      /\n/g,
+      "\r\n",
+    );
+    expect(parseCSVLogFile(csv).map((e) => e.protocol)).toEqual([
+      WorkoutProtocol.STANDARD,
+      WorkoutProtocol.STANDARD,
+    ]);
+  });
+});

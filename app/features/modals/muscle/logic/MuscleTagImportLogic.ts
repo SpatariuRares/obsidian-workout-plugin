@@ -5,15 +5,14 @@ import {
 } from "@app/constants/muscles.constants";
 import type { ParsedMuscleTagImportResult } from "@app/features/modals/muscle/types";
 import { StringUtils } from "@app/utils";
+import { parseCsv } from "@app/utils/data/CsvCodec";
 
 export class MuscleTagImportLogic {
   static parseImportFileContent(
     content: string,
   ): ParsedMuscleTagImportResult {
-    const lines = content
-      .split(/\r?\n/)
-      .filter((line) => line.trim());
-    if (lines.length === 0) {
+    const rows = parseCsv(content);
+    if (rows.length === 0) {
       return {
         validTags: new Map(),
         errors: [],
@@ -21,7 +20,7 @@ export class MuscleTagImportLogic {
       };
     }
 
-    const headerLine = lines[0].toLowerCase();
+    const headerLine = rows[0].join(",").toLowerCase();
     const hasTagColumn = headerLine.includes("tag");
     const hasMuscleGroupColumn =
       headerLine.includes("musclegroup") ||
@@ -36,7 +35,7 @@ export class MuscleTagImportLogic {
       };
     }
 
-    const headers = this.parseCsvLine(lines[0]);
+    const headers = rows[0].map((h) => h.trim());
     const tagIndex = headers.findIndex(
       (h) => h.toLowerCase() === "tag",
     );
@@ -57,8 +56,8 @@ export class MuscleTagImportLogic {
     const validTags = new Map<string, string>();
     const errors: string[] = [];
 
-    for (let i = 1; i < lines.length; i++) {
-      const columns = this.parseCsvLine(lines[i]);
+    for (let i = 1; i < rows.length; i++) {
+      const columns = rows[i];
       if (columns.length <= Math.max(tagIndex, groupIndex)) {
         continue;
       }
@@ -88,33 +87,6 @@ export class MuscleTagImportLogic {
       errors,
       isValidFormat: true,
     };
-  }
-
-  static parseCsvLine(line: string): string[] {
-    const result: string[] = [];
-    let current = "";
-    let inQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === "," && !inQuotes) {
-        result.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
-    }
-
-    result.push(current);
-    return result;
   }
 
   private static isCanonicalMuscleGroup(value: string): boolean {

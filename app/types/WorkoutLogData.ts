@@ -5,6 +5,12 @@ import {
   TimerPresetConfig,
 } from "@app/types/WorkoutConfigTypes";
 import { StringUtils } from "@app/utils/StringUtils";
+import {
+  parseCsv,
+  protectFormula,
+  stringifyCsvValue,
+  unprotectFormula,
+} from "@app/utils/data/CsvCodec";
 
 /**
  * Workout protocol enum for specialized training techniques.
@@ -150,13 +156,13 @@ export function parseCSVLogFile(
   content: string,
 ): CSVWorkoutLogEntry[] {
   try {
-    const lines = content.split("\n").filter((line) => line.trim());
-    if (lines.length === 0) {
+    const rows = parseCsv(content);
+    if (rows.length === 0) {
       return [];
     }
 
     // Parse header to identify columns
-    const header = parseCSVLine(lines[0]).map((h) => h.trim());
+    const header = rows[0].map((h) => h.trim());
 
     // Identify custom columns (columns not in standard set)
     const customColumnNames: string[] = [];
@@ -174,11 +180,8 @@ export function parseCSVLogFile(
     const entries: CSVWorkoutLogEntry[] = [];
 
     // Parse data rows
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-
-      const values = parseCSVLine(line);
+    for (let i = 1; i < rows.length; i++) {
+      const values = rows[i].map(unprotectFormula);
       if (values.length < 6) {
         continue;
       }
@@ -298,37 +301,10 @@ function parseCustomFieldValue(
 }
 
 /**
- * Sanitizes a CSV value for formula injection and proper escaping
+ * Protects a value against spreadsheet formula injection, then escapes it
  */
 function sanitizeCSVValue(value: string): string {
-  /**
-   * CSV Formula Injection Protection
-   *
-   * Prefix values starting with formula characters (=, +, -, @) with a single quote
-   * to prevent formula injection attacks when CSV is opened in spreadsheet applications.
-   *
-   * Without this protection, malicious values like "=1+1" or "@SUM(A1:A10)" would be
-   * executed as formulas in Excel, LibreOffice, Google Sheets, etc., potentially leading
-   * to security issues or data exfiltration.
-   *
-   * The single quote prefix makes spreadsheet applications treat the value as text
-   * rather than a formula.
-   */
-  let sanitized = value;
-  if (/^[=+\-@]/.test(value)) {
-    sanitized = "'" + value;
-  }
-
-  // Escape quotes and wrap in quotes if contains comma, quote, or newline
-  const escaped = sanitized.replace(/"/g, '""');
-  if (
-    escaped.includes(",") ||
-    escaped.includes('"') ||
-    escaped.includes("\n")
-  ) {
-    return `"${escaped}"`;
-  }
-  return escaped;
+  return stringifyCsvValue(protectFormula(value));
 }
 
 /**
@@ -426,41 +402,6 @@ export function entriesToCSVContent(
   });
 
   return lines.join("\n");
-}
-
-/**
- * Parses a single CSV line, handling quoted values
- */
-function parseCSVLine(line: string): string[] {
-  const values: string[] = [];
-  let current = "";
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        // Escaped quote
-        current += '"';
-        i++; // Skip next quote
-      } else {
-        // Toggle quote state
-        inQuotes = !inQuotes;
-      }
-    } else if (char === "," && !inQuotes) {
-      // End of field
-      values.push(current);
-      current = "";
-    } else {
-      current += char;
-    }
-  }
-
-  // Add the last field
-  values.push(current);
-
-  return values;
 }
 
 /**

@@ -5,6 +5,7 @@ import {
   STANDARD_CSV_COLUMNS,
 } from "@app/types/WorkoutLogData";
 import { App, TFile } from "obsidian";
+import { parseCsv } from "@app/utils/data/CsvCodec";
 
 /**
  * Service responsible for CSV column management operations.
@@ -31,13 +32,13 @@ export class CSVColumnService {
 
     const csvFile = abstractFile;
     const content = await this.app.vault.read(csvFile);
-    const lines = content.split("\n").filter((line) => line.trim());
+    const [headerRow] = parseCsv(content);
 
-    if (lines.length === 0) {
+    if (!headerRow) {
       return [...STANDARD_CSV_COLUMNS];
     }
 
-    const header = this.parseCSVLine(lines[0]).map((h) => h.trim());
+    const header = headerRow.map((h) => h.trim());
     return header.filter((col) => col);
   }
 
@@ -96,33 +97,4 @@ export class CSVColumnService {
     );
   }
 
-  /**
-   * Parse a single CSV line, handling quoted values
-   */
-  public parseCSVLine(line: string): string[] {
-    const values: string[] = [];
-    let current = "";
-    let inQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === "," && !inQuotes) {
-        values.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
-    }
-
-    values.push(current);
-    return values;
-  }
 }

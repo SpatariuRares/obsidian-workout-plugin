@@ -5,6 +5,7 @@ import {
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
 import { t } from "@app/i18n";
+import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
 
 /**
  * Table-based representations of chart data.
@@ -66,9 +67,7 @@ export class ChartTableViews {
       cls: "workout-chart-mobile-table",
     });
 
-    const title =
-      params.title ||
-      `Trend ${chartType.charAt(0).toUpperCase() + chartType.slice(1)}`;
+    const title = params.title || getDefaultChartTitle(chartType);
 
     mobileTableContainer.createEl("h3", {
       text: title,

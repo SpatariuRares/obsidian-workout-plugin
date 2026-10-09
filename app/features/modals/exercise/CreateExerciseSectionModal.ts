@@ -225,6 +225,7 @@ export class CreateExerciseSectionModal extends ModalBase {
         showControls: true,
         sound: params.timerSound,
       });
+      // eslint-disable-next-line i18next/no-literal-string -- markdown code block
       sectionCode += `${timerCode}\n\n`;
     }
 

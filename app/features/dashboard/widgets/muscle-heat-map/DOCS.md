@@ -6,12 +6,11 @@ Widget del dashboard che visualizza una mappa termica del corpo umano colorata i
 
 ```
 WorkoutLogData[]
-  -> MuscleDataCalculator.filterDataByTimeFrame()    filtra per settimana/mese/anno
-  -> MuscleDataCalculator.calculateMuscleGroupVolumes()  somma volumi per muscolo
+  -> MuscleDataCalculator.filterDataByTimeFrame()        filtra per settimana/mese/anno
+  -> MuscleDataCalculator.calculateMuscleGroupVolumes()  somma la metrica (volume/sets/reps) per muscolo
   -> MuscleTagMapper.findMuscleGroupsFromTags()          mappa esercizio -> muscoli (via tag frontmatter)
-  -> MuscleDataCalculator.createBodyDataFromMuscleData()  converte in BodyData (plain object)
-  -> ViewDataPreparer                                     normalizza intensita' e calcola colori RGB
-  -> Body.render()                                        inietta colori nel template SVG
+  -> MuscleDataCalculator.calculateZoneValues()          valore di ogni zona da HEAT_MAP_ZONES
+  -> Body.render()                                       disegna l'SVG e colora ogni [data-muscle]
 ```
 
 ## Struttura File
@@ -19,90 +18,70 @@ WorkoutLogData[]
 ```
 muscle-heat-map/
 ├── MuscleHeatMap.ts          # Orchestratore principale
-├── HeatMapControls.ts        # Bottoni toggle (timeframe + view)
-├── types.ts                  # MuscleHeatMapOptions
+├── HeatMapControls.ts        # Bottoni toggle (timeframe, view, metrica)
+├── types.ts                  # MuscleHeatMapOptions, HeatMapMetric
 ├── index.ts                  # Barrel export
 │
 ├── business/                 # Logica dati
-│   ├── MuscleDataCalculator.ts   # Filtraggio, calcolo volumi, conversione BodyData
-│   ├── MuscleBalanceAnalyzer.ts  # Analisi sbilanciamenti front/back
+│   ├── MuscleDataCalculator.ts   # Filtraggio, totali per muscolo, valori delle zone
+│   ├── MuscleBalanceAnalyzer.ts  # Analisi sbilanciamenti front/back (somma i sottogruppi nel padre)
 │   ├── MuscleTagMapper.ts        # Mapping tag esercizio -> gruppo muscolare
 │   └── index.ts
 │
 └── body/                     # Rendering SVG
-    ├── Body.ts               # Classe principale: crea SVG, delega colori, parsa template
-    ├── index.ts              # Barrel export + interfacce dati (BodyData, ArmsData, etc.)
-    │
-    ├── renderers/
-    │   ├── FrontView.ts      # Template SVG (path del corpo) per vista frontale e posteriore
-    │   └── ViewDataPrepar.ts # Prepara colori per ogni muscolo da BodyData
-    │
-    └── utils/
-        ├── HeatMapColors.ts      # Gradiente colori: grigio -> arancione -> rosso -> rosso scuro
-        ├── IntensityCalculator.ts # Normalizzazione valori a scala 0-1
-        ├── SVGBuilder.ts         # Helper per creare elementi SVG con namespace
-        └── index.ts
+    ├── zones.ts              # HEAT_MAP_ZONES: zona -> { gruppo muscolare: peso }
+    ├── Body.ts               # Disegna l'SVG e applica i colori per zona
+    ├── BodyViewSvg.ts        # Markup SVG fronte/retro con attributi data-muscle
+    ├── HeatMapColors.ts      # Gradiente colori: grigio -> arancione -> rosso -> rosso scuro
+    ├── SVGBuilder.ts         # Helper per creare elementi SVG con namespace
+    └── index.ts              # Barrel export (Body, VIEW_TYPE, zone)
 ```
+
+## Aggiungere o modificare una zona
+
+1. Nell'SVG (`BodyViewSvg.ts`) dai al gruppo `data-muscle="<zoneId>"`. Se la zona è una parte di una forma esistente, duplica il path e taglialo con un `clipPath` (vedi petto, romboidi, serrato); gli id dei clip usano il prefisso `${uid}-` per essere unici per istanza.
+2. In `zones.ts` aggiungi `<zoneId>: { <gruppo canonico>: peso, ... }`.
+
+I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca nel registro o viceversa. `__tests__/HeatMapColors.characterization.test.ts` fissa i colori di ogni zona per dati di prova: se cambi pesi o zone di proposito, aggiorna lo snapshot (`npm test -- -u <file>`).
 
 ## Dettaglio File
 
 ### Root
 
-**`MuscleHeatMap.ts`** - Entry point del widget. Metodo statico `render()` chiamato da `EmbeddedDashboardView`. Crea il container HTML, istanzia i controls, lancia il rendering iniziale. `renderHeatMap()` coordina il pipeline completo: filtro dati -> calcolo volumi -> creazione BodyData -> rendering Body -> analisi sbilanciamenti.
+**`MuscleHeatMap.ts`** - Entry point del widget. Metodo statico `render()` chiamato da `EmbeddedDashboardView`. Crea il container HTML, istanzia i controls, lancia il rendering iniziale. `renderHeatMap()` coordina il pipeline: filtro dati -> totali per muscolo -> valori delle zone -> rendering Body -> analisi sbilanciamenti.
 
-**`HeatMapControls.ts`** - Crea due gruppi di toggle button: timeframe (week/month/year) e view (front/back). Al click aggiorna `MuscleHeatMapOptions` e invoca la callback di re-render. Ritorna l'oggetto options mutabile usato dal render iniziale.
-
-**`types.ts`** - Unica interfaccia `MuscleHeatMapOptions` con `timeFrame` e `view`.
+**`HeatMapControls.ts`** - Tre gruppi di toggle: timeframe (week/month/year), view (front/back) e metrica (volume/sets/reps). Al click aggiorna `MuscleHeatMapOptions` e invoca la callback di re-render.
 
 ### business/
 
-**`MuscleDataCalculator.ts`** - Tre responsabilita':
+**`MuscleDataCalculator.ts`**
 
-1. `filterDataByTimeFrame()` - delega a `DateUtils` per filtrare i dati CSV per periodo
-2. `calculateMuscleGroupVolumes()` - itera i workout, usa `MuscleTagMapper` per trovare i muscoli coinvolti in ogni esercizio, accumula i volumi, normalizza le intensita' a scala 0-1
-3. `createBodyDataFromMuscleData()` - converte la Map di volumi per muscolo in un oggetto `BodyData` strutturato per il rendering, distribuendo i volumi tra parti bilaterali (left/right) e suddivisioni (upper/middle/lower chest)
+1. `filterDataByTimeFrame()` - delega a `DateUtils` per filtrare i dati per periodo
+2. `calculateMuscleGroupVolumes()` - usa `MuscleTagMapper` per trovare i muscoli di ogni esercizio e somma la metrica scelta
+3. `calculateZoneValues()` - converte i totali per muscolo nei valori delle zone tramite `HEAT_MAP_ZONES`
 
-**`MuscleBalanceAnalyzer.ts`** - Confronta il volume totale dei muscoli frontali (chest, abs, biceps, quads) vs posteriori (back, triceps, hamstrings, glutes). Se la differenza supera il 30%, mostra un warning nel pannello info. Altrimenti mostra un messaggio di equilibrio.
+**`MuscleBalanceAnalyzer.ts`** - Confronta il volume dei muscoli frontali (chest, abs, biceps, quads) con quelli posteriori (back, triceps, hamstrings, glutes), contando i sottogruppi (es. `lats`, `upper_chest`) nel gruppo padre. Oltre il 30% di differenza mostra un warning.
 
-**`MuscleTagMapper.ts`** - Dato un nome esercizio, trova i gruppi muscolari associati:
+**`MuscleTagMapper.ts`** - Dato un nome esercizio, trova i gruppi muscolari:
 
-1. Cerca il file dell'esercizio nel vault via `ExercisePathResolver`
+1. Cerca il file dell'esercizio via `ExercisePathResolver`
 2. Legge i tag dal frontmatter via `FrontmatterParser`
-3. Mappa ogni tag al gruppo muscolare canonico via `MUSCLE_TAG_MAP` (supporta tag custom via `DataFilter`)
+3. Mappa ogni tag con la mappa dell'utente (`muscle-tags.csv`) o quella predefinita; un tag uguale all'id di un gruppo canonico (`upper_chest`, "Upper chest") vale sempre
 4. Fallback: se nessun tag matcha, cerca pattern nel nome dell'esercizio
-5. Cache statica per performance (persiste per la vita del plugin, `clearCache()` disponibile)
 
 ### body/
 
-**`Body.ts`** - Classe che gestisce il rendering SVG del corpo. Riceve `BodyData` e opzioni (view, maxValue). `render()` crea un elemento `<svg>` con viewBox fisso, delega a `ViewDataPreparer` per calcolare i colori, ottiene la stringa SVG da `BODY_VIEWS_SVG.FRONT/BACK`, la parsa con `DOMParser` e la appende al SVG. Supporta `updateBodyData()` e `setView()` per re-render.
+**`zones.ts`** - `HEAT_MAP_ZONES` dice per ogni zona da quali gruppi muscolari prende il valore e con che peso (es. `upperChest: { chest: 0.4, upper_chest: 1 }`). Le zone di arti e spalle hanno peso 0.5 perché ogni lato mostra metà del volume.
 
-**`index.ts`** - Barrel export di `Body`, `VIEW_TYPE`, `BodyVisualizationOptions`. Definisce tutte le interfacce dati: `ArmsData`, `BackData`, `ChestData`, `CoreData`, `LegsData`, `ShoulderData`, `BodyData`.
+**`Body.ts`** - Riceve i valori delle zone e la view. `render()` crea l'`<svg>`, inserisce il markup di `BODY_VIEWS_SVG.FRONT/BACK(uid)` e colora ogni elemento `[data-muscle]` con `HeatMapColors.getColor(valore / max)`.
 
-### body/renderers/
+**`BodyViewSvg.ts`** - `BODY_VIEWS_SVG.FRONT(uid)` / `BACK(uid)` restituiscono il markup del corpo. Ogni gruppo muscolare ha `data-muscle` e `fill="currentColor"`.
 
-**`FrontView.ts`** - Contiene `BODY_VIEWS_SVG` con due funzioni template:
+**`HeatMapColors.ts`** - Gradiente a 4 fasce:
 
-- `FRONT(10 colori)` - ritorna stringa SVG con path dettagliati per: collo, piedi, inguine, addominali, polpacci, tibiali, obliqui, quadricipiti, avambracci, bicipiti, petto superiore, petto medio-inferiore, spalle, trapezi
-- `BACK(11 colori)` - ritorna stringa SVG con path per: trapezi, romboidi, dorsali, lombari, tricipiti, avambracci, glutei, femorali, polpacci, spalle posteriori
-
-Ogni gruppo muscolare SVG usa `style="color: ${colorParam}"` con `fill="currentColor"`.
-
-**`ViewDataPrepar.ts`** - Riceve `BodyData`, usa `IntensityCalculator` per normalizzare i valori raw a 0-1, poi `HeatMapColors` per convertire le intensita' in stringhe colore RGB. Due metodi:
-
-- `prepareFrontViewData()` - 10 colori per la vista frontale
-- `prepareBackViewData()` - 11 colori per la vista posteriore
-
-Per muscoli bilaterali (biceps, quads, etc.) prende il max tra left e right.
-
-### body/utils/
-
-**`HeatMapColors.ts`** - Genera colori su un gradiente a 4 fasce:
-
-- `0` -> `#e9ecef` (grigio, nessuna attivita')
-- `0 - 0.3` -> grigio chiaro -> arancione chiaro (interpolazione lineare RGB)
+- `0` -> `#e9ecef` (grigio, nessuna attività)
+- `0 - 0.3` -> grigio chiaro -> arancione chiaro
 - `0.3 - 0.7` -> arancione chiaro -> rosso vivo
 - `0.7 - 1` -> rosso vivo -> rosso scuro (#9b0000)
 
-**`IntensityCalculator.ts`** - Normalizza valori numerici raw a scala 0-1 dato un maxValue. Metodi: `normalize()` singolo, `normalizeBilateral()` prende max di due lati, `normalizeAverage()` media di array, `normalizeMultiple()` batch.
-
-**`SVGBuilder.ts`** - Wrapper per `document.createElementNS()` con namespace SVG. Metodi helper: `createElement()`, `createElementWithAttributes()`, `createPath()`, `createRect()`, `createCircle()`, `createEllipse()`, `createGroup()`, `createDefs()`, `createRadialGradient()`, `createLinearGradient()`, `createStop()`, `appendChildren()`. Usato da `Body.ts` per creare l'elemento `<svg>` root.
+**`SVGBuilder.ts`** - Wrapper per `document.createElementNS()` con namespace SVG, usato da `Body.ts` per l'elemento `<svg>` radice.

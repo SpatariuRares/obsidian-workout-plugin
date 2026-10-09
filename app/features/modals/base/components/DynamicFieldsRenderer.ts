@@ -275,7 +275,7 @@ export class DynamicFieldsRenderer {
               return bestIncrement;
             }
           }
-        } catch (e) {
+        } catch {
           // Fallback to defaults on error
         }
       }

@@ -91,6 +91,11 @@ export default [
               message:
                 "Use @app/* path aliases instead of relative imports across directories. Example: import { MyClass } from '@app/components/MyClass'",
             },
+            {
+              regex: "^@app/features/[^/]+$",
+              message:
+                "Import from the file, not the feature barrel. Example: import { EmbeddedTimerView } from '@app/features/timer/views/EmbeddedTimerView'",
+            },
           ],
         },
       ],
@@ -177,6 +182,9 @@ export default [
               "setIcon",
               "normalizePath",
               "TextDecoder",
+              "Event",
+              "RegExp",
+              "parseFromString",
               "AgentConfigError",
               "PermissionError",
               ".*\\.trigger",

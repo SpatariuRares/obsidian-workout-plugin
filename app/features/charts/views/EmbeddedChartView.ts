@@ -46,10 +46,10 @@ export class EmbeddedChartView extends BaseView {
   }
 
   /**
-   * Load chart data from the plugin, applying exercise/workout filters.
+   * Load all log rows; the view filters them with DataFilter afterwards.
    */
   async loadChartData(
-    params: EmbeddedChartParams,
+    _params: EmbeddedChartParams,
   ): Promise<WorkoutLogData[]> {
     return (await this.plugin.getWorkoutLogData()) || [];
   }

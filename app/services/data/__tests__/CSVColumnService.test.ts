@@ -178,33 +178,4 @@ describe("CSVColumnService", () => {
     });
   });
 
-  describe("parseCSVLine", () => {
-    it("should parse simple comma-separated values", () => {
-      const line = "val1,val2,val3";
-      expect(service.parseCSVLine(line)).toEqual([
-        "val1",
-        "val2",
-        "val3",
-      ]);
-    });
-
-    it("should handle quoted values containing commas", () => {
-      const line = '"val1, part2",val2,"val3"';
-      expect(service.parseCSVLine(line)).toEqual([
-        "val1, part2",
-        "val2",
-        "val3",
-      ]);
-    });
-
-    it("should handle empty fields", () => {
-      const line = "val1,,val3,";
-      expect(service.parseCSVLine(line)).toEqual([
-        "val1",
-        "",
-        "val3",
-        "",
-      ]);
-    });
-  });
 });

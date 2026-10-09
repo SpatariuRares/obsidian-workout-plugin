@@ -1,4 +1,4 @@
-import { TimerState } from "@app/features/timer";
+import { TimerState } from "@app/features/timer/types";
 import { Button } from "@app/components/atoms";
 import { t } from "@app/i18n";
 import {

@@ -42,10 +42,6 @@ export interface WorkoutDataPort {
   ): Promise<WorkoutLogData | undefined>;
 }
 
-export interface RefreshPort {
-  triggerWorkoutLogRefresh(): void;
-}
-
 export interface ExerciseDefinitionPort {
   getExerciseDefinitionService(): ExerciseDefinitionService;
 }
@@ -93,7 +89,6 @@ export interface MarkdownCodeBlockProcessorPort {
 export type WorkoutPluginContext = AppPort &
   SettingsPort &
   WorkoutDataPort &
-  RefreshPort &
   ExerciseDefinitionPort &
   MuscleTagPort &
   LogModalPort;

@@ -66,8 +66,8 @@ describe("MuscleDataCalculator.calculateMuscleGroupVolumes", () => {
   });
 });
 
-describe("MuscleDataCalculator.createBodyDataFromMuscleData", () => {
-  const bodyFor = async (groups: string[]) => {
+describe("MuscleDataCalculator.calculateZoneValues", () => {
+  const zonesFor = async (groups: string[]) => {
     const mapper = {
       getAllMuscleGroups: () =>
         new Set(
@@ -81,51 +81,56 @@ describe("MuscleDataCalculator.createBodyDataFromMuscleData", () => {
       groups.map((g) => log(g, 10, 10)),
       {} as never,
     );
-    return MuscleDataCalculator.createBodyDataFromMuscleData(muscleData);
+    return MuscleDataCalculator.calculateZoneValues(muscleData);
   };
 
   it("still spreads a generic chest tag over the chest zones", async () => {
-    expect((await bodyFor(["chest"])).chest).toEqual({
-      upper: 40,
-      middle: 40,
-      lower: 20,
-    });
+    const zones = await zonesFor(["chest"]);
+    expect([zones.upperChest, zones.middleChest, zones.lowerChest]).toEqual([
+      40, 40, 20,
+    ]);
   });
 
   it("puts a specific chest muscle only in its own zone", async () => {
-    expect((await bodyFor(["upper_chest"])).chest).toEqual({
-      upper: 100,
-      middle: 0,
-      lower: 0,
-    });
+    const zones = await zonesFor(["upper_chest"]);
+    expect([zones.upperChest, zones.middleChest, zones.lowerChest]).toEqual([
+      100, 0, 0,
+    ]);
   });
 
   it("puts side delts only in the lateral deltoid zone", async () => {
-    const { shoulders } = await bodyFor(["side_delts"]);
-    expect(shoulders).toEqual({
-      frontLeft: 0,
-      frontRight: 0,
-      lateralLeft: 50,
-      lateralRight: 50,
-      rearLeft: 0,
-      rearRight: 0,
-    });
+    const zones = await zonesFor(["side_delts"]);
+    expect([
+      zones.frontShoulders,
+      zones.sideShoulders,
+      zones.rearShoulders,
+    ]).toEqual([0, 50, 0]);
   });
 
   it("still lights the lateral deltoid for a generic shoulders tag", async () => {
-    const { shoulders } = await bodyFor(["shoulders"]);
-    expect(shoulders.frontLeft).toBe(50);
-    expect(shoulders.lateralLeft).toBe(50);
-    expect(shoulders.rearLeft).toBe(0);
+    const zones = await zonesFor(["shoulders"]);
+    expect([
+      zones.frontShoulders,
+      zones.sideShoulders,
+      zones.rearShoulders,
+    ]).toEqual([50, 50, 0]);
   });
 
   it("fills the back and core zones from specific muscles", async () => {
-    const body = await bodyFor(["lats", "rhomboids", "lower_back", "obliques", "serratus"]);
-    expect(body.back.lats).toBe(100);
-    expect(body.back.rhomboids).toBe(100);
-    expect(body.back.trapsMiddle).toBe(0);
-    expect(body.back.lowerBack).toBe(100);
-    expect(body.core.obliques).toBe(100);
-    expect(body.core.serratus).toBe(100);
+    const zones = await zonesFor([
+      "lats",
+      "rhomboids",
+      "lower_back",
+      "obliques",
+      "serratus",
+    ]);
+    expect(zones).toMatchObject({
+      lats: 100,
+      rhomboids: 100,
+      trapsMiddle: 0,
+      lowerBack: 100,
+      obliques: 100,
+      serratus: 100,
+    });
   });
 });

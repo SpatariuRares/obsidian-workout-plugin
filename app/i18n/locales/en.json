@@ -23,7 +23,9 @@
       "reps": "Reps",
       "volume": "Volume",
       "weight": "Weight"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "no chart types available"
   },
   "commands": {
     "addExerciseBlock": "Add Exercise Block",
@@ -90,7 +92,8 @@
       "varianceTrendDeclining": "Variance Trend Declining",
       "varianceTrendImproving": "Variance Trend Improving",
       "varianceTrendStable": "Variance Trend Stable",
-      "varianceTrendTitle": "Variance Trend Title"
+      "varianceTrendTitle": "Variance Trend Title",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "All Valid",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Upper Body Power"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset with bodyweight calf raises",
+      "supersetLunges": "Superset with lunges"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "All code blocks already have IDs"
     },
     "tagReferenceGenerated": "Tag reference generated successfully!",
-    "timerCompleted": "Timer completed!"
+    "timerCompleted": "Timer completed!",
+    "templatesGenerated": "Templates generated in '{folder}'. You can now customize them."
   },
   "modal": {
     "actions": "Actions",
@@ -971,5 +979,9 @@
     "stable": "Stable",
     "stableLower": "Stable Lower",
     "up": "Up"
+  },
+  "canvas": {
+    "duration": "**Duration:** {duration}",
+    "best": "**Best:** {weight}{unit} × {reps} reps"
   }
 }

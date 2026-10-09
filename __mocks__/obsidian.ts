@@ -136,7 +136,7 @@ export class App {
 export class Plugin {}
 export class PluginSettingTab {}
 export class Modal {
-  constructor(app: App) {}
+  constructor(_app: App) {}
   open() {}
   close() {}
 }

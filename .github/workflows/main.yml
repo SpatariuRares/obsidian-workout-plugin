@@ -31,8 +31,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Tests
-        run: npm test
+      - name: Tests (with coverage thresholds)
+        run: npm run test:coverage
 
   translate:
     name: Translate
@@ -43,7 +43,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Sync manifest.json version with tag
+      - name: Sync manifest.json and package versions with tag
         run: |
           TAG="${{ github.ref_name }}"
           CURRENT=$(jq -r '.version' manifest.json)
@@ -53,6 +53,8 @@ jobs:
           else
             echo "manifest.json already at $TAG"
           fi
+          jq --arg v "$TAG" '.version = $v' package.json > package.tmp && mv package.tmp package.json
+          jq --arg v "$TAG" '.version = $v | .packages[""].version = $v' package-lock.json > package-lock.tmp && mv package-lock.tmp package-lock.json
 
       - name: Check if translation needed
         id: check_translations
@@ -136,9 +138,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add manifest.json app/i18n/locales/
+          git add manifest.json package.json package-lock.json app/i18n/locales/
           git diff --staged --quiet && echo "Nothing to commit" || (
-            git commit -m "chore: release ${{ github.ref_name }} — sync manifest and translations"
+            git commit -m "chore: release ${{ github.ref_name }} — sync versions and translations"
             git push origin HEAD:main
           )
 

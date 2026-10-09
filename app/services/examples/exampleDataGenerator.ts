@@ -1,4 +1,10 @@
 import { t } from "@app/i18n";
+import { stringifyCsvRow } from "@app/utils/data/CsvCodec";
+
+/** One CSV row; values are quoted when a translation contains a comma */
+function csvRow(values: (string | number)[]): string {
+  return stringifyCsvRow(values.map(String));
+}
 
 interface LogEntryData {
   date: string;
@@ -21,8 +27,23 @@ function addLogEntry(rows: string[], data: LogEntryData): void {
       36000000;
   const protocol = data.protocol || "standard";
   const origine = data.origine || "";
-  const row = `${data.date},${data.exercise},${data.reps},${data.weight},${data.volume},${origine},${data.workout},${timestamp},${data.notes || ""},${protocol},,,`;
-  rows.push(row);
+  rows.push(
+    csvRow([
+      data.date,
+      data.exercise,
+      data.reps,
+      data.weight,
+      data.volume,
+      origine,
+      data.workout,
+      timestamp,
+      data.notes || "",
+      protocol,
+      "",
+      "",
+      "",
+    ]),
+  );
 }
 
 export function generateExampleCSVData(): string {
@@ -228,7 +249,8 @@ export function generateExampleCSVData(): string {
         weight: calfWeight,
         volume: reps * calfWeight,
         workout: workoutName,
-        notes: protocol === "superset" ? "SS con calf BW" : "",
+        notes:
+          protocol === "superset" ? t("examples.notes.supersetCalves") : "",
         protocol,
         timestamp: exerciseTime.getTime(),
         origine: `[[${workoutName}]]`,
@@ -244,7 +266,21 @@ export function generateExampleCSVData(): string {
       const duration =
         basePlankDuration + (3 - set) * 10 - (isToughDay ? 10 : 0);
       rows.push(
-        `${dateStr},${t("examples.exercises.plank.name")},0,0,0,[[${workoutName}]],${workoutName},${exerciseTime.getTime()},,standard,${duration},,`,
+        csvRow([
+          dateStr,
+          t("examples.exercises.plank.name"),
+          0,
+          0,
+          0,
+          `[[${workoutName}]]`,
+          workoutName,
+          exerciseTime.getTime(),
+          "",
+          "standard",
+          duration,
+          "",
+          "",
+        ]),
       );
       exerciseTime = new Date(exerciseTime.getTime() + 90000);
     }
@@ -305,7 +341,21 @@ export function generateExampleCSVData(): string {
           : "standard";
       const notes = protocol !== "standard" ? `${protocol}` : "";
       rows.push(
-        `${dateStr},${t("examples.exercises.benchPress.name")},${reps},${benchWeight},${reps * benchWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
+        csvRow([
+          dateStr,
+          t("examples.exercises.benchPress.name"),
+          reps,
+          benchWeight,
+          reps * benchWeight,
+          `[[${upperWorkoutName}]]`,
+          upperWorkoutName,
+          exerciseTime.getTime(),
+          notes,
+          protocol,
+          "",
+          "",
+          "",
+        ]),
       );
       exerciseTime = new Date(
         exerciseTime.getTime() + 180000 + Math.random() * 60000,
@@ -323,9 +373,24 @@ export function generateExampleCSVData(): string {
       const reps = squatBaseReps[set - 1] + (isToughDay ? -1 : 0);
       const protocol =
         sessionIdx % 3 === 0 && set === 4 ? "superset" : "standard";
-      const notes = protocol === "superset" ? "SS con lunges" : "";
+      const notes =
+        protocol === "superset" ? t("examples.notes.supersetLunges") : "";
       rows.push(
-        `${dateStr},Squat,${reps},${squatWeight},${reps * squatWeight},[[${upperWorkoutName}]],${upperWorkoutName},${exerciseTime.getTime()},${notes},${protocol},,,`,
+        csvRow([
+          dateStr,
+          t("examples.exercises.squat.name"),
+          reps,
+          squatWeight,
+          reps * squatWeight,
+          `[[${upperWorkoutName}]]`,
+          upperWorkoutName,
+          exerciseTime.getTime(),
+          notes,
+          protocol,
+          "",
+          "",
+          "",
+        ]),
       );
       exerciseTime = new Date(
         exerciseTime.getTime() + 180000 + Math.random() * 60000,
@@ -367,7 +432,21 @@ export function generateExampleCSVData(): string {
     const runHeartRate =
       150 - weeksTraining * 2 + Math.floor(Math.random() * 10);
     rows.push(
-      `${dateStr},${t("examples.exercises.running.name")},0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${runDuration},${runDistance},${runHeartRate}`,
+      csvRow([
+        dateStr,
+        t("examples.exercises.running.name"),
+        0,
+        0,
+        0,
+        `[[${cardioWorkoutName}]]`,
+        cardioWorkoutName,
+        exerciseTime.getTime(),
+        "",
+        "standard",
+        runDuration,
+        runDistance,
+        runHeartRate,
+      ]),
     );
 
     exerciseTime = new Date(
@@ -385,7 +464,21 @@ export function generateExampleCSVData(): string {
     const cycleHeartRate =
       135 - weeksTraining + Math.floor(Math.random() * 8);
     rows.push(
-      `${dateStr},Cycling,0,0,0,[[${cardioWorkoutName}]],${cardioWorkoutName},${exerciseTime.getTime()},,standard,${cycleDuration},${cycleDistance},${cycleHeartRate}`,
+      csvRow([
+        dateStr,
+        t("examples.exercises.cycling.name"),
+        0,
+        0,
+        0,
+        `[[${cardioWorkoutName}]]`,
+        cardioWorkoutName,
+        exerciseTime.getTime(),
+        "",
+        "standard",
+        cycleDuration,
+        cycleDistance,
+        cycleHeartRate,
+      ]),
     );
   }
 

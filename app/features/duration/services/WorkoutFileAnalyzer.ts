@@ -3,6 +3,8 @@
  * Handles parsing of workout-timer and workout-log code blocks.
  */
 import { TFile } from "obsidian";
+import { parseCsv } from "@app/utils/data/CsvCodec";
+import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
@@ -108,14 +110,14 @@ export class WorkoutFileAnalyzer {
       // Use the configured CSV log file path from settings
       const logsPath =
         this.plugin.settings.csvLogFilePath ||
-        "context/workout_logs.csv";
+        DEFAULT_SETTINGS.csvLogFilePath;
       const logsFile =
         this.plugin.app.vault.getAbstractFileByPath(logsPath);
 
       if (!logsFile || !(logsFile instanceof TFile)) return;
 
       const content = await this.plugin.app.vault.read(logsFile);
-      const lines = content.split("\n");
+      const rows = parseCsv(content);
 
       // Extract workout name from file path (basename without extension)
       const workoutName =
@@ -125,13 +127,10 @@ export class WorkoutFileAnalyzer {
       const sessionTimestamps: Record<string, number[]> = {};
 
       // Skip header row
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i];
+      for (let i = 1; i < rows.length; i++) {
         // CSV format: date,exercise,reps,weight,volume,origin,workout,timestamp,...
         // We need 'workout' (col index 6) and 'timestamp' (col index 7)
-        // Simple CSV parsing (assuming no commas in fields for now, or simple split)
-        // The file seems to use standard CSV.
-        const cols = line.split(",");
+        const cols = rows[i];
         if (cols.length < 8) continue;
 
         const logWorkout = cols[6]?.trim();

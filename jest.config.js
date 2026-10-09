@@ -16,23 +16,19 @@ module.exports = {
 
   // Coverage configuration
   collectCoverageFrom: [
-    "app/utils/**/*.ts",
-    "app/api/**/*.ts",
-    "app/constants/**/*.ts",
-    "app/components/**/*.ts",
-    "app/services/**/*.ts",
-    "app/features/charts/**/*.ts",
-    "app/features/tables/**/*.ts",
+    "app/**/*.ts",
     "!app/**/*.d.ts",
     "!app/**/__tests__/**",
     "!app/**/index.ts",
   ],
+  // Floor at the real whole-app level (measured over all of app/), so
+  // coverage cannot drop. Raise these when you add tests; never lower them.
   coverageThreshold: {
     global: {
-      statements: 90,
-      branches: 90,
-      functions: 90,
-      lines: 90,
+      statements: 55,
+      branches: 56,
+      functions: 51,
+      lines: 55,
     },
   },
 

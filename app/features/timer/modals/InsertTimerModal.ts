@@ -6,8 +6,8 @@ import {
   TimerConfigurationSection,
   TimerConfigurationElements,
   TimerConfigurationHandlers,
-  TIMER_TYPE,
-} from "@app/features/timer";
+} from "@app/features/timer/modals/components/TimerConfigurationSection";
+import { TIMER_TYPE } from "@app/features/timer/types";
 import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { Chip } from "@app/components/atoms/Chip";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";

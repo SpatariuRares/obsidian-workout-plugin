@@ -1,4 +1,4 @@
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { WorkoutPlannerAPI } from "../WorkoutPlannerAPI";
 import {
   WorkoutProtocol,

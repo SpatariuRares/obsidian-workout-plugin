@@ -13,6 +13,11 @@
 import { App, TFile, normalizePath } from "obsidian";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
+import {
+  parseCsv,
+  stringifyCsvRow,
+  stringifyCsvValue,
+} from "@app/utils/data/CsvCodec";
 import { StringUtils, PathUtils, LanguageUtils } from "@app/utils";
 
 /**
@@ -91,18 +96,18 @@ export class MuscleTagService {
       }
 
       const content = await this.app.vault.read(abstractFile);
-      const lines = content.split("\n").filter((line) => line.trim());
+      const [headerRow] = parseCsv(content);
 
-      if (lines.length === 0) {
+      if (!headerRow) {
         return this.getDefaultTags();
       }
 
       // Check if CSV needs migration (old format without language column)
-      const hasLanguageColumn = lines[0]
-        .toLowerCase()
-        .includes("language");
+      const hasLanguageColumn = headerRow.some(
+        (col) => col.trim().toLowerCase() === "language",
+      );
 
-      if (!hasLanguageColumn && lines.length > 0) {
+      if (!hasLanguageColumn) {
         // Migrate old CSV to new format
         await this.migrateCsvToNewFormat(abstractFile, content);
         // Reload after migration
@@ -131,22 +136,10 @@ export class MuscleTagService {
     userLanguage: string,
   ): Map<string, string> {
     const tags = new Map<string, string>();
-    const lines = content.split("\n").filter((line) => line.trim());
+    const rows = parseCsv(content);
 
-    if (lines.length === 0) {
-      return tags;
-    }
-
-    // Skip header line if present
-    const startIndex = lines[0].toLowerCase().startsWith("tag,")
-      ? 1
-      : 0;
-
-    for (let i = startIndex; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-
-      const parsed = this.parseCSVLine(line);
+    for (const [index, parsed] of rows.entries()) {
+      if (index === 0 && this.isHeaderRow(parsed)) continue;
       if (parsed.length >= 2) {
         const tag = StringUtils.normalize(parsed[0]);
         const muscleGroup = StringUtils.normalize(parsed[1]);
@@ -181,35 +174,17 @@ export class MuscleTagService {
     file: TFile,
     oldContent: string,
   ): Promise<void> {
-    const lines = oldContent
-      .split("\n")
-      .filter((line) => line.trim());
-    if (lines.length === 0) return;
+    const rows = parseCsv(oldContent);
+    if (rows.length === 0) return;
 
-    const newLines: string[] = [];
-    const hasHeader = lines[0].toLowerCase().startsWith("tag,");
+    // New header with language column
+    const newLines: string[] = ["tag,muscleGroup,language"];
 
-    // Add new header with language column
-    newLines.push("tag,muscleGroup,language");
-
-    // Start from index 1 if header exists, 0 otherwise
-    const startIndex = hasHeader ? 1 : 0;
-
-    for (let i = startIndex; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-
-      const parsed = this.parseCSVLine(line);
+    for (const [index, parsed] of rows.entries()) {
+      if (index === 0 && this.isHeaderRow(parsed)) continue;
       if (parsed.length >= 2) {
-        const tag = parsed[0];
-        const muscleGroup = parsed[1];
-
         // Add language column with default "en"
-        const escapedTag = this.escapeCSVValue(tag);
-        const escapedGroup = this.escapeCSVValue(muscleGroup);
-        const escapedLang = this.escapeCSVValue("en");
-
-        newLines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
+        newLines.push(stringifyCsvRow([parsed[0], parsed[1], "en"]));
       }
     }
 
@@ -219,33 +194,10 @@ export class MuscleTagService {
   }
 
   /**
-   * Parses a single CSV line, handling quoted values.
+   * True for the optional "tag,muscleGroup[,language]" header row.
    */
-  private parseCSVLine(line: string): string[] {
-    const values: string[] = [];
-    let current = "";
-    let inQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === "," && !inQuotes) {
-        values.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
-    }
-
-    values.push(current);
-    return values;
+  private isHeaderRow(row: string[]): boolean {
+    return row[0]?.trim().toLowerCase() === "tag";
   }
 
   /**
@@ -282,9 +234,9 @@ export class MuscleTagService {
     const lang = language || this.getUserLanguage();
 
     for (const [tag, muscleGroup] of tags) {
-      const escapedTag = this.escapeCSVValue(tag);
-      const escapedGroup = this.escapeCSVValue(muscleGroup);
-      const escapedLang = this.escapeCSVValue(lang);
+      const escapedTag = stringifyCsvValue(tag);
+      const escapedGroup = stringifyCsvValue(muscleGroup);
+      const escapedLang = stringifyCsvValue(lang);
       lines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
     }
 
@@ -304,21 +256,6 @@ export class MuscleTagService {
 
     // Update cache
     this.tagCache = new Map(tags);
-  }
-
-  /**
-   * Escapes a CSV value for safe writing.
-   */
-  private escapeCSVValue(value: string): string {
-    // If value contains comma, quote, or newline, wrap in quotes
-    if (
-      value.includes(",") ||
-      value.includes('"') ||
-      value.includes("\n")
-    ) {
-      return `"${value.replace(/"/g, '""')}"`;
-    }
-    return value;
   }
 
   /**
@@ -399,9 +336,9 @@ export class MuscleTagService {
     );
 
     for (const entry of sortedEntries) {
-      const escapedTag = this.escapeCSVValue(entry.tag);
-      const escapedGroup = this.escapeCSVValue(entry.muscleGroup);
-      const escapedLang = this.escapeCSVValue(entry.language);
+      const escapedTag = stringifyCsvValue(entry.tag);
+      const escapedGroup = stringifyCsvValue(entry.muscleGroup);
+      const escapedLang = stringifyCsvValue(entry.language);
       lines.push(`${escapedTag},${escapedGroup},${escapedLang}`);
     }
 
@@ -435,7 +372,7 @@ export class MuscleTagService {
 
     for (const [tag, muscleGroup] of sortedTags) {
       csvLines.push(
-        `${this.escapeCSVValue(tag)},${this.escapeCSVValue(muscleGroup)},${this.escapeCSVValue(lang)}`,
+        `${stringifyCsvValue(tag)},${stringifyCsvValue(muscleGroup)},${stringifyCsvValue(lang)}`,
       );
     }
 

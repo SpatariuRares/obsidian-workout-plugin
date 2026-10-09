@@ -3,7 +3,6 @@ import type { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   Body,
-  type BodyData,
   VIEW_TYPE,
 } from "@app/features/dashboard/widgets/muscle-heat-map/body";
 import {
@@ -112,12 +111,10 @@ export class MuscleHeatMap {
       options.metric,
     );
 
-    // Create body data from muscle volumes
-    const bodyData =
-      MuscleDataCalculator.createBodyDataFromMuscleData(muscleData);
-
     // Render body visualization
-    this.renderBodyVisualization(container, bodyData, options);
+    new Body(MuscleDataCalculator.calculateZoneValues(muscleData), {
+      view: options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
+    }).render(container);
 
     // Update info panel with imbalance analysis
     MuscleBalanceAnalyzer.renderToInfoPanel(
@@ -125,23 +122,5 @@ export class MuscleHeatMap {
       muscleData,
       options.metric,
     );
-  }
-
-  private static renderBodyVisualization(
-    container: HTMLElement,
-    bodyData: BodyData,
-    options: MuscleHeatMapOptions,
-  ): void {
-    const maxValue = MuscleDataCalculator.calculateMaxValue(bodyData);
-
-    const body = new Body(bodyData, {
-      view:
-        options.view === "back" ? VIEW_TYPE.BACK : VIEW_TYPE.FRONT,
-      showLabels: true,
-      maxValue: maxValue,
-    });
-
-    // Render the body visualization
-    body.render(container);
   }
 }

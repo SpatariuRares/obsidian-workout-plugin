@@ -30,7 +30,8 @@ export class ChartContainer {
   ): boolean {
     const raw = String(height ?? "").trim();
     const value = /^\d+(\.\d+)?$/.test(raw)
-      ? `${raw}px`
+      ? // eslint-disable-next-line i18next/no-literal-string -- CSS unit
+        `${raw}px`
       : /^\d+(\.\d+)?(px|em|rem|vh|%)$/.test(raw)
         ? raw
         : "";

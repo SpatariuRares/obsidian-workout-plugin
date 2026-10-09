@@ -93,34 +93,39 @@ export class ExerciseConversionService {
           }
         }
 
-        // Clear fields that don't belong to the target type
+        // Clear fields that don't belong to the target type. A type with no
+        // parameters of its own (custom: defined per exercise) clears
+        // nothing, and fields the user mapped are always kept.
         const targetType = getExerciseTypeById(targetTypeId);
-        const targetFieldKeys = new Set(
-          targetType?.parameters.map((p) => p.key) ?? [],
-        );
+        const targetParams = targetType?.parameters ?? [];
+        if (targetParams.length > 0) {
+          const keptKeys = new Set([
+            ...targetParams.map((p) => p.key),
+            ...fieldMappings.map((m) => m.toField),
+          ]);
 
-        if (!targetFieldKeys.has("reps")) {
-          updatedEntry.reps = 0;
-        }
-        if (!targetFieldKeys.has("weight")) {
-          updatedEntry.weight = 0;
-        }
+          if (!keptKeys.has("reps")) {
+            updatedEntry.reps = 0;
+          }
+          if (!keptKeys.has("weight")) {
+            updatedEntry.weight = 0;
+          }
 
-        // Remove custom fields not defined in the target type
-        if (updatedEntry.customFields) {
-          for (const key of Object.keys(updatedEntry.customFields)) {
-            if (!targetFieldKeys.has(key)) {
-              delete updatedEntry.customFields[key];
+          if (updatedEntry.customFields) {
+            for (const key of Object.keys(updatedEntry.customFields)) {
+              if (!keptKeys.has(key)) {
+                delete updatedEntry.customFields[key];
+              }
             }
           }
-        }
 
-        // Recalculate volume for strength type
-        if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
-          updatedEntry.volume =
-            updatedEntry.reps * updatedEntry.weight;
-        } else {
-          updatedEntry.volume = 0;
+          // Recalculate volume for strength type
+          if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
+            updatedEntry.volume =
+              updatedEntry.reps * updatedEntry.weight;
+          } else {
+            updatedEntry.volume = 0;
+          }
         }
 
         // Update entry

@@ -17,6 +17,7 @@ import type {
   CanvasLayoutType,
 } from "@app/features/canvas/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { t } from "@app/i18n";
 
 /**
  * Canvas node types as defined by JSON Canvas spec
@@ -275,7 +276,9 @@ export class CanvasExporter {
         linkPath.startsWith(exerciseFolderPath) ||
         !linkPath.includes("/")
       ) {
-        const exerciseName = linkPath.split("/").pop() || linkPath;
+        const exerciseName = (
+          linkPath.split("/").pop() || linkPath
+        ).replace(/\.md$/i, "");
         if (
           exerciseName &&
           !exerciseSet.has(exerciseName.toLowerCase())
@@ -564,14 +567,14 @@ export class CanvasExporter {
     options: CanvasExportOptions,
     stats?: ExerciseStats,
   ): string {
-    let text = `## ${exercise.name}`;
+    const sections = [`## ${exercise.name}`];
 
     // Add muscle groups
     if (exercise.muscleGroups.length > 0) {
       const muscleText = exercise.muscleGroups
         .map((g) => g.charAt(0).toUpperCase() + g.slice(1))
         .join(", ");
-      text += `\n\n*${muscleText}*`;
+      sections.push(`*${muscleText}*`);
     }
 
     // Add duration if available and enabled
@@ -580,20 +583,24 @@ export class CanvasExporter {
       const seconds = exercise.duration % 60;
       const durationText =
         minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-      text += `\n\n**Duration:** ${durationText}`;
+      sections.push(t("canvas.duration", { duration: durationText }));
     }
 
     // Add stats if available and enabled
     if (options.includeStats && stats && stats.totalSets > 0) {
-      const weightUnit = ParameterUtils.getWeightUnit();
-      text += `\n\n**Last:** ${stats.prWeight}${weightUnit} × ${stats.prReps} reps`;
+      // Shows the personal record, so it is labelled "Best"
+      let statsText = t("canvas.best", {
+        weight: stats.prWeight,
+        unit: ParameterUtils.getWeightUnit(),
+        reps: stats.prReps,
+      });
       if (stats.trend !== "stable") {
-        const trendEmoji = stats.trend === "up" ? "📈" : "📉";
-        text += ` ${trendEmoji}`;
+        statsText += stats.trend === "up" ? " 📈" : " 📉";
       }
+      sections.push(statsText);
     }
 
-    return text;
+    return sections.join("\n\n");
   }
 
   /**

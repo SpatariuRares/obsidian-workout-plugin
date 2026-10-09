@@ -375,14 +375,17 @@ export class CreateExercisePageModal extends ModalBase {
       customParameters &&
       customParameters.length > 0
     ) {
+      // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
       customParametersYaml = "\nparameters:";
       for (const param of customParameters) {
+        // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
         customParametersYaml += `
   - key: ${param.key}
     label: ${param.label}
     type: ${param.type}
     required: ${param.required}`;
         if (param.unit) {
+          // eslint-disable-next-line i18next/no-literal-string -- YAML frontmatter
           customParametersYaml += `
     unit: ${param.unit}`;
         }

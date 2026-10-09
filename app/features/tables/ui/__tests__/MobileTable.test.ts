@@ -4,6 +4,7 @@ import { MobileTable } from "@app/features/charts/components/ChartTableViews";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { t } from "@app/i18n";
+import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
 
 describe("MobileTable", () => {
   it("renders a mobile table with data", () => {
@@ -83,7 +84,9 @@ describe("MobileTable", () => {
     const title = container.querySelector(
       ".workout-mobile-table-title",
     );
-    expect(title?.textContent).toContain("Weight");
+    expect(title?.textContent).toBe(
+      getDefaultChartTitle(CHART_DATA_TYPE.WEIGHT),
+    );
   });
 
   it("skips null/undefined data values", () => {

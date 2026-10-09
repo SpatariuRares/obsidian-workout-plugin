@@ -24,11 +24,23 @@ export class FrontmatterParser {
     }
 
     const parsed = parseYaml(frontmatter);
-    if (!parsed || !parsed.tags) {
-      return [];
-    }
+    return this.toTagList(parsed?.tags);
+  }
 
-    return Array.isArray(parsed.tags) ? parsed.tags : [];
+  /**
+   * Normalizes a frontmatter `tags` value into a list of tag names.
+   * Accepts a YAML list, a single tag or a comma/space separated string
+   * ("chest", "chest, back", "[chest, back]"), and drops leading "#".
+   */
+  static toTagList(raw: unknown): string[] {
+    const items: unknown[] = Array.isArray(raw)
+      ? raw
+      : typeof raw === "string"
+        ? raw.replace(/^\[|\]$/g, "").split(/[,\s]+/)
+        : [];
+    return items
+      .map((tag) => String(tag).trim().replace(/^#/, ""))
+      .filter((tag) => tag.length > 0);
   }
 
   /**

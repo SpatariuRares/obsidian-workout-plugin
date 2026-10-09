@@ -1,7 +1,7 @@
 import { MuscleTagService } from "../MuscleTagService";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 // Mock Obsidian module
 

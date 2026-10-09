@@ -1,4 +1,4 @@
-import { TimerState, TIMER_TYPE } from "@app/features/timer";
+import { TimerState, TIMER_TYPE } from "@app/features/timer/types";
 import { t } from "@app/i18n";
 
 const URGENT_THRESHOLD_MS = 10000;

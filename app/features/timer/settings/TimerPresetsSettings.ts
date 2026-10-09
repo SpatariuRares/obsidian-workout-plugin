@@ -1,6 +1,6 @@
 import { Setting, Notice, App } from "obsidian";
 import { t } from "@app/i18n";
-import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer";
+import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer/types";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 

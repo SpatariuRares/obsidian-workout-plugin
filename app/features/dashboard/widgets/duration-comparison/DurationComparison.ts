@@ -131,7 +131,7 @@ export class DurationComparison {
 
     const sessions: WorkoutSession[] = [];
 
-    sessionGroups.forEach((entries, key) => {
+    sessionGroups.forEach((entries) => {
       // Need at least 2 entries to calculate actual duration
       if (entries.length < MIN_ENTRIES_FOR_SESSION) {
         return;
@@ -173,7 +173,10 @@ export class DurationComparison {
             100
           : 0;
 
-      const [workout, date] = key.split("|");
+      // Read names from the entries: splitting the key would cut a
+      // workout name that contains "|"
+      const workout = entries[0].workout ?? "";
+      const date = entries[0].date;
 
       sessions.push({
         workout,
@@ -265,10 +268,12 @@ export class DurationComparison {
     }
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
+    const hoursText = `${hours}${t("dashboard.durationComparison.hoursSuffix")}`;
     if (remainingMinutes === 0) {
-      return `${hours}h`;
+      return hoursText;
     }
-    return `${hours}h ${remainingMinutes} ${t("dashboard.durationComparison.minutesSuffix")}`;
+    // minutesSuffix carries its own leading space (" min")
+    return `${hoursText} ${remainingMinutes}${t("dashboard.durationComparison.minutesSuffix")}`;
   }
 
   /**

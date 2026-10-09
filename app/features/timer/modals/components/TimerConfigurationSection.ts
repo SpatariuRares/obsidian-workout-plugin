@@ -1,5 +1,5 @@
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer";
+import { EmbeddedTimerParams, TIMER_TYPE } from "@app/features/timer/types";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
 import { Chip } from "@app/components/atoms/Chip";
 import {

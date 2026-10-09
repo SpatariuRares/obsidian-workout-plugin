@@ -28,16 +28,16 @@
     "noTypesAvailable": "no chart types available"
   },
   "commands": {
-    "addExerciseBlock": "Add Exercise Block",
+    "addExerciseBlock": "Add exercise block",
     "addMissingBlockIds": "Add missing IDs to code blocks",
-    "auditExerciseNames": "Audit Exercise Names",
-    "convertExercise": "Convert Exercise",
+    "auditExerciseNames": "Audit exercise names",
+    "convertExercise": "Convert exercise",
     "createCsvLog": "Create CSV log file",
-    "exportWorkoutToCanvas": "Export Workout To Canvas",
-    "generateTagReference": "Generate Tag Reference",
-    "insertTable": "Insert Table",
-    "manageMuscleTags": "Manage Muscle Tags",
-    "migrateExerciseTypes": "Migrate Exercise Types"
+    "exportWorkoutToCanvas": "Export workout to canvas",
+    "generateTagReference": "Generate tag reference",
+    "insertTable": "Insert workout table",
+    "manageMuscleTags": "Manage muscle tags",
+    "migrateExerciseTypes": "Migrate exercise types"
   },
   "common": {
     "bpm": "bpm",
@@ -242,7 +242,7 @@
       "codeBlockWorkoutLog": "Display workout data table",
       "codeBlockWorkoutTimer": "Countdown or interval timer",
       "combinedTitle": "Combined (Exercise + Workout)",
-      "commandsNote": "**Commands** (Ctrl/Cmd + P): Create Workout Log, Insert Chart, Insert Timer, Create Exercise Page",
+      "commandsNote": "**Commands** (Ctrl/Cmd + P): Create workout log, Insert workout chart, Insert workout timer, Create exercise page",
       "countdownTimerTitle": "Countdown Timer",
       "durationEstimatorIntro": "Estimates total workout duration based on the current note's exercises.",
       "durationEstimatorTitle": "4. Duration Estimator",
@@ -281,13 +281,13 @@
       "workouts": "Workouts"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Create Exercise Page",
+      "commandCreateExercise": "Create exercise page",
       "commandCreateExerciseDesc": "Create a new exercise file",
-      "commandCreateLog": "Create Workout Log",
+      "commandCreateLog": "Create workout log",
       "commandCreateLogDesc": "Add a new workout entry",
-      "commandInsertChart": "Insert Workout Chart",
+      "commandInsertChart": "Insert workout chart",
       "commandInsertChartDesc": "Add a chart to any note",
-      "commandInsertTimer": "Insert Workout Timer",
+      "commandInsertTimer": "Insert workout timer",
       "commandInsertTimerDesc": "Add a rest timer",
       "dashboardDesc": "Your workout stats at a glance",
       "exercisesDesc": "Example exercise pages with logs and charts",
@@ -983,5 +983,12 @@
   "canvas": {
     "duration": "**Duration:** {duration}",
     "best": "**Best:** {weight}{unit} × {reps} reps"
+  },
+  "templates": {
+    "tagReference": {
+      "title": "Muscle tags reference",
+      "description": "This file lists all available muscle tags from your muscle-tags.csv file.",
+      "note": "**Note**: This file is auto-generated. To add or change tags, use the '{command}' command."
+    }
   }
 }

@@ -6,7 +6,7 @@
       "quickWeightIncrementUnit": "重量按钮增量 {weightIncrementUnit}",
       "reps": "次数",
       "trendType": "趋势 {type}：",
-      "variationFromTo": "从 {startValue} 到 {endValue}",
+      "variationFromTo": " 从 {startValue} 到 {endValue}",
       "volume": "训练量",
       "weight": "重量",
       "weightIncrementUnit": "重量增量 {weightIncrementUnit}"
@@ -14,7 +14,7 @@
     "overallVariationPrefix": "总体变化: ",
     "significantIncrease": "从零开始增长",
     "trendLine": "趋势线",
-    "typeNotAvailable": "图表类型 '{chartDataType}' 不适用于 {exerciseType} 类型的训练。可用类型：{typeList}",
+    "typeNotAvailable": "图表类型 '{chartDataType}' 不适用于 {exerciseType} 类型的训练动作。可用类型：{typeList}",
     "types": {
       "distance": "距离",
       "duration": "时长",
@@ -44,7 +44,7 @@
     "cancel": "取消",
     "clear": "清除",
     "convert": "转换",
-    "exercise": "训练",
+    "exercise": "训练动作",
     "km": "公里",
     "minPerKm": "分钟/公里",
     "notAvailable": "不可用",
@@ -65,12 +65,12 @@
       "weight": "重量 ({unit})"
     },
     "preview": {
-      "noEntries": "未找到此训练的记录",
+      "noEntries": "未找到此训练动作的记录",
       "title": "预览",
       "willConvertMany": "{count} 条记录将被转换",
       "willConvertOne": "1 条记录将被转换"
     },
-    "sectionExercise": "训练",
+    "sectionExercise": "训练动作",
     "success": "成功转换 {count} 条记录",
     "title": "转换训练数据",
     "typeSelect": {
@@ -152,19 +152,19 @@
       "totalWorkouts": "总训练次数"
     },
     "volumeAnalytics": {
-      "muscleBreakdownTitle": "按训练量排序的主要训练",
+      "muscleBreakdownTitle": "训练量最高的训练动作",
       "title": "训练量分析",
       "chartTitleDays": "训练量趋势（最近 {days} 天）"
     },
     "muscleHeatMap": {
       "metrics": {
-        "volume": "体积",
-        "sets": "训练次数",
+        "volume": "训练量",
+        "sets": "组数",
         "reps": "次数"
       },
       "average": {
-        "volume": "平均体积：{value} {unit}",
-        "sets": "平均次数：{value}",
+        "volume": "平均训练量：{value} {unit}",
+        "sets": "平均组数：{value}",
         "reps": "平均次数：{value}"
       }
     }
@@ -173,7 +173,7 @@
     "estimatedDuration": "预估时长",
     "lastSession": "上次训练",
     "restTime": "休息时间",
-    "setTime": "组间时间",
+    "setTime": "每组时间",
     "unableToAnalyze": "无法分析训练文件"
   },
   "examples": {
@@ -225,34 +225,34 @@
         "name": "深蹲"
       },
       "squatMultiPower": {
-        "name": "深蹲多组训练"
+        "name": "史密斯机深蹲"
       }
     },
     "featureShowcase": {
       "allDataChartTitle": "所有数据图表",
-      "byExerciseTitle": "按训练",
+      "byExerciseTitle": "按训练动作",
       "byWorkoutTitle": "按训练计划",
       "cardioExerciseTitle": "有氧运动（距离 + 配速）",
       "chartsIntro": "图表可以直观展示您的进度随时间的变化。可用类型：`volume`（训练量）、`weight`（重量）、`reps`（次数）、`duration`（时长）、`distance`（距离）、`heartRate`（心率）、`pace`（配速）。",
       "chartsTitle": "1. 图表",
-      "codeBlockWorkoutChart": "可视化时间进度",
+      "codeBlockWorkoutChart": "可视化进度随时间的变化",
       "codeBlockWorkoutDashboard": "完整统计概览",
       "codeBlockWorkoutDuration": "估算训练时长",
       "codeBlockWorkoutLog": "显示训练数据表格",
       "codeBlockWorkoutTimer": "倒计时或间歇计时器",
-      "combinedTitle": "组合（训练 + 计划）",
-      "commandsNote": "**命令** (Ctrl/Cmd + P)：创建训练记录、插入训练图表、插入训练计时器、创建训练页面",
+      "combinedTitle": "组合（训练动作 + 训练计划）",
+      "commandsNote": "**命令** (Ctrl/Cmd + P)：创建训练记录、插入训练图表、插入训练计时器、创建训练动作页面",
       "countdownTimerTitle": "倒计时",
       "durationEstimatorIntro": "根据当前笔记中列出的训练，估算总训练时长。",
       "durationEstimatorTitle": "4. 时长估算",
       "intervalTimerTitle": "间歇计时器",
       "intro": "训练插件中所有代码块类型的完整参考。",
-      "protocol21s": "21次训练",
-      "protocolDropset": "降组训练",
-      "protocolMyoReps": "肌动重复训练",
-      "protocolRestPause": "休息暂停训练",
+      "protocol21s": "7+7+7 部分次数",
+      "protocolDropset": "减轻重量，继续完成次数",
+      "protocolMyoReps": "激活组 + 迷你组",
+      "protocolRestPause": "短暂休息，继续至力竭",
       "protocolStandard": "标准组",
-      "protocolSuperset": "超级组训练",
+      "protocolSuperset": "成对的训练动作",
       "quickReferenceTitle": "快速参考",
       "strengthExerciseTitle": "力量训练（训练量 + 重量）",
       "tablesIntro": "表格显示您的训练记录，并提供排序和编辑功能。",
@@ -263,7 +263,7 @@
       "title": "功能展示",
       "trainingProtocolsIntro": "插件支持在记录中显示以下训练方案徽章：",
       "trainingProtocolsTitle": "5. 训练方案",
-      "workoutChartTitle": "训练图表（所有训练组合）"
+      "workoutChartTitle": "训练图表（所有训练动作合并）"
     },
     "fileNames": {
       "dashboard": "仪表盘",
@@ -275,12 +275,12 @@
     "folderCreatedSuccess": "示例文件夹{folder}已成功创建！",
     "folderNames": {
       "base": "训练示例",
-      "exercises": "训练",
+      "exercises": "训练动作",
       "log": "记录",
       "workouts": "训练计划"
     },
     "gettingStarted": {
-      "commandCreateExercise": "创建训练页面",
+      "commandCreateExercise": "创建训练动作页面",
       "commandCreateExerciseDesc": "创建新的训练文件",
       "commandCreateLog": "创建训练记录",
       "commandCreateLogDesc": "添加新的训练记录",
@@ -301,7 +301,7 @@
       "step1": "打开 [[{dashboard}]] 查看您的统计数据",
       "step2": "查看 [[{featureShowcase}]] 了解所有可用功能",
       "step3": "尝试从 **{workouts}** 文件夹中选择一个训练计划。",
-      "step4": "在 **{exercises}** 中创建您自己的训练",
+      "step4": "在 **{exercises}** 中创建您自己的训练动作",
       "tableHeaderDescription": "描述",
       "tableHeaderFileFolder": "文件/文件夹",
       "title": "开始使用训练插件",
@@ -311,9 +311,9 @@
     },
     "hiit": {
       "cyclingCooldownTitle": "骑行放松",
-      "intro": "高强度间歇训练，包含间歇计时器和心率监测。",
+      "intro": "高强度间歇训练，包含间歇计时器和有氧训练追踪。",
       "runningProgressTitle": "跑步进度",
-      "sprintIntervalsTitle": "冲刺间歇 (30秒 × 8组)",
+      "sprintIntervalsTitle": "冲刺间歇 (30秒 × 8轮)",
       "title": "高强度间歇训练（HIIT）有氧训练",
       "warmupTitle": "热身 (5 分钟)"
     },
@@ -336,8 +336,8 @@
       }
     },
     "notes": {
-      "supersetCalves": "使用自身体重进行小腿抬高训练",
-      "supersetLunges": "使用超级套训练，配合深蹲动作"
+      "supersetCalves": "与自重提踵组成超级组",
+      "supersetLunges": "与弓步蹲组成超级组"
     }
   },
   "forms": {
@@ -481,13 +481,13 @@
     "noImbalances": "未发现失衡",
     "noTags": "frontmatter 中没有标签",
     "success": {
-      "blockIdsAdded": "已在 {files} 文件中添加了缺失的 ID(s)：{count}",
+      "blockIdsAdded": "已在 {files} 个文件中添加 {count} 个缺失的 ID",
       "csvCreated": "CSV 文件已成功创建！",
       "noBlockIdsNeeded": "所有代码块都已经有ID。"
     },
     "tagReferenceGenerated": "标签参考已生成",
     "timerCompleted": "计时器已完成！",
-    "templatesGenerated": "在“{folder}”中生成的模板。现在您可以对其进行自定义。",
+    "templatesGenerated": "已在“{folder}”中生成模板。现在您可以对其进行自定义。",
     "exerciseFolderNotSet": "请先在设置中指定训练动作文件夹。"
   },
   "modal": {
@@ -515,7 +515,7 @@
       "cancel": "取消",
       "confirm": "确认",
       "create": "创建记录",
-      "createExercise": "创建训练页面",
+      "createExercise": "创建训练动作页面",
       "createSection": "创建部分",
       "export": "导出",
       "insertChart": "插入图表",
@@ -553,7 +553,7 @@
       "useCurrentWorkoutFile": "使用当前训练文件"
     },
     "confirmAction": "确认操作",
-    "csvExercise": "CSV 训练",
+    "csvExercise": "CSV 训练动作",
     "customParameters": "自定义参数：",
     "customTitle": "自定义标题：",
     "dataLimit": "数据限制：",
@@ -563,7 +563,7 @@
     "delete": "删除",
     "duration": "时长（秒）：",
     "editTag": "编辑标签",
-    "exerciseType": "训练类型：",
+    "exerciseType": "训练动作类型：",
     "exportTags": "导出标签",
     "fileName": "文件名",
     "folderPath": "文件夹路径（可选）：",
@@ -576,12 +576,12 @@
     "labels": {
       "actions": "操作",
       "currentFileInfo": "当前文件：{fileName}",
-      "exercise": "训练：",
+      "exercise": "训练动作：",
       "reps": "次数：",
       "targetReps": "目标次数：",
       "targetWeight": "目标：({unit}):",
-      "volume": "训练量：{unit}",
-      "weight": "重量：{unit}"
+      "volume": "训练量（{unit}）：",
+      "weight": "重量（{unit}）："
     },
     "layoutGrouped": "按肌肉分组",
     "layoutHorizontal": "水平布局",
@@ -612,16 +612,16 @@
       "dashboardInserted": "✅ 仪表盘已成功插入！",
       "dismissAchievement": "关闭成就",
       "exerciseBlockInserted": "已插入训练动作块",
-      "exerciseNameRequired": "❌ 请输入训练名称",
+      "exerciseNameRequired": "❌ 请输入训练动作名称",
       "exercisePageCreated": "训练页面已成功创建！",
       "exercisePageError": "创建训练页面时出错：{error}",
-      "exercisePageNameRequired": "请输入训练名称",
+      "exercisePageNameRequired": "请输入训练动作名称",
       "exerciseSectionCreated": "✅ 训练板块已成功创建！",
       "genericError": "错误：{error}",
       "insertCodeNoFile": "请打开一个 Markdown 文件以插入代码",
       "logCreated": "训练记录已成功创建！",
       "logUpdated": "训练记录已成功更新！",
-      "migrationComplete": "迁移完成。已更新 {count} 个训练文件。",
+      "migrationComplete": "迁移完成。已更新 {count} 个训练动作文件。",
       "migrationError": "迁移错误: {error}",
       "muscleTagCount": "找到 {count} 个标签",
       "muscleTagDeleteConfirm": "确定要删除标签 '{tag}' 吗？",
@@ -650,14 +650,14 @@
       "timerInserted": "✅ 计时器已成功插入！",
       "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
       "timerUpdated": "✅ 计时器已成功更新！",
-      "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
+      "validationCombinedMode": "⚠️ 对于“训练动作 + 训练计划”类型，必须同时填写两个字段！",
       "validationFillAll": "请填写所有字段并使用有效值。",
       "validMissingField": "缺少必填字段：{field}",
       "validMustBeNumber": "{field}必须是有效数字",
       "validMinValue": "{field}至少为{min}",
       "validMaxValue": "{field}最多为{max}",
       "validFieldRequired": "{field}为必填项",
-      "migrationFolderNotFound": "未找到练习文件夹：{path}",
+      "migrationFolderNotFound": "未找到训练动作文件夹：{path}",
       "migrationNoUpdates": "所有训练页面均已是最新"
     },
     "parameterKey": "键：",
@@ -668,7 +668,7 @@
     "placeholders": {
       "customTitle": "留空以自动生成标题",
       "enterTagName": "请输入标签名称（例如：胸部、胸肌）",
-      "exerciseAutocomplete": "开始输入以查看可用的训练...",
+      "exerciseAutocomplete": "开始输入以查看可用的训练动作...",
       "folderPath": "例如：输入训练文件夹，或留空选择根目录",
       "note": "用力完成。这是你的基础训练。",
       "notes": "例如：状态良好，感觉有力",
@@ -734,10 +734,10 @@
     "timerPreset": "预设计时器：",
     "timerType": "计时器类型：",
     "titles": {
-      "addExerciseBlock": "添加训练块",
-      "auditExerciseNames": "审核训练名称",
-      "canvasExport": "将训练计划导出到画布",
-      "createExercisePage": "创建训练页面",
+      "addExerciseBlock": "添加训练动作块",
+      "auditExerciseNames": "检查训练动作名称",
+      "canvasExport": "将训练导出到画布",
+      "createExercisePage": "创建训练动作页面",
       "createExerciseSection": "创建训练板块",
       "createLog": "创建训练记录",
       "editLog": "编辑训练记录",
@@ -759,7 +759,7 @@
     "deleteItem": "删除{item}",
     "errors": {
       "missingElements": "缺少元素",
-      "validationCombinedMode": "对于“训练 + 计划”类型，请填写两个字段"
+      "validationCombinedMode": "对于“训练动作 + 训练计划”类型，请填写两个字段"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息：{restTime} 秒\n\n",
     "noteTemplate": "**备注：{note}**\n"
@@ -802,7 +802,7 @@
       "protocolColor": "徽章背景颜色（十六进制格式，例如：#FF5733）",
       "quickWeightIncrement": "创建/编辑训练记录模态框中 +/- 按钮的重量增量（例如：2.5 表示增加/减少 2.5 单位）",
       "repDuration": "完成一次重复的估计时间。当已知重复次数时使用（例如：'x 10 次'）。",
-      "runAllMaintenance": "依次执行所有维护任务。 可以在多次执行，且安全。",
+      "runAllMaintenance": "依次执行所有维护任务。可安全地多次运行。",
       "setDuration": "当未指定次数时使用（备用）。典型范围：30-60秒。",
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
@@ -882,7 +882,7 @@
       "editProtocol": "编辑训练方案"
     },
     "validation": {
-      "csvFolderNotFound": "找不到文件夹。请运行“创建 CSV 文件夹”设置。",
+      "csvFolderNotFound": "在仓库中找不到文件夹。请运行“设置 CSV 文件”来创建它。",
       "csvPathEmpty": "路径不能为空",
       "mustBeNonNegative": "必须为 0 或以上",
       "mustBePositive": "必须大于 0"
@@ -905,7 +905,7 @@
       "date": "日期",
       "distance": "距离",
       "duration": "时长",
-      "exercise": "训练",
+      "exercise": "训练动作",
       "heartRate": "心率",
       "notes": "备注",
       "protocol": "训练方案",

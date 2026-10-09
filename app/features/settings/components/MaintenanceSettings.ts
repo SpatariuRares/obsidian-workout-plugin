@@ -52,6 +52,18 @@ export class MaintenanceSettings {
               await new ExerciseTypeMigration(
                 this.plugin,
               ).migrateExerciseTypes();
+
+              // Older logs have no weight unit: freeze them in the current one
+              const stamped = await this.plugin.stampMissingWeightUnits(
+                this.plugin.settings.weightUnit,
+              );
+              if (stamped > 0) {
+                new Notice(
+                  t("messages.success.weightUnitsStamped", {
+                    count: stamped,
+                  }),
+                );
+              }
             } catch (error) {
               const errorMessage = ErrorUtils.getErrorMessage(error);
               new Notice(t("modal.notices.genericError", { error: errorMessage }));

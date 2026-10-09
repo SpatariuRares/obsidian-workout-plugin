@@ -805,7 +805,6 @@
       "setDuration": "Utilizat atunci când repetările nu sunt specificate (alternativă). Interval tipic: 30-60 secunde.",
       "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
-      "weightUnit": "Selectați unitatea de măsură pentru greutate (kg/lb). Aceasta influențează unitatea implicită pentru noile înregistrări.",
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament"
     },
     "labels": {

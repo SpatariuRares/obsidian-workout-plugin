@@ -141,6 +141,8 @@
   .workout-modal {
     .workout-parameters-container {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      // Labels can differ in height (Weight has a unit picker); keep inputs on one line
+      align-items: end;
     }
   }
 }

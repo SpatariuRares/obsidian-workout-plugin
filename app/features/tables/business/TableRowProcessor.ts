@@ -10,6 +10,7 @@ import {
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { t } from "@app/i18n";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
 /**
  * Processes workout log data into table rows.
@@ -51,6 +52,31 @@ export class TableRowProcessor {
   }
 
   /**
+   * Weight as entered. Rows logged in the other unit keep their unit
+   * ("220 lb" when settings are in kg) so the plates are readable.
+   */
+  private static getWeightDisplay(log: WorkoutLogData): string {
+    if (this.isConverted(log) && log.enteredWeight !== undefined) {
+      return `${log.enteredWeight} ${log.enteredUnit}`;
+    }
+    return log.weight?.toString() || t("table.notAvailable");
+  }
+
+  /** Converted volume has meaningless decimals (1388.94); show whole units */
+  private static getVolumeDisplay(log: WorkoutLogData): string {
+    if (log.volume === undefined) return t("table.notAvailable");
+    if (this.isConverted(log)) return Math.round(log.volume).toString();
+    return log.volume.toString() || t("table.notAvailable");
+  }
+
+  private static isConverted(log: WorkoutLogData): boolean {
+    return (
+      !!log.enteredUnit &&
+      log.enteredUnit !== ParameterUtils.getWeightUnit()
+    );
+  }
+
+  /**
    * Process rows efficiently with pre-computed values.
    * @param logData - Array of workout log data
    * @param headers - Column headers to map data to
@@ -83,8 +109,8 @@ export class TableRowProcessor {
         date: formattedDate,
         exercise: this.getExerciseDisplay(log.exercise),
         reps: log.reps?.toString() || t("table.notAvailable"),
-        weight: log.weight?.toString() || t("table.notAvailable"),
-        volume: log.volume?.toString() || t("table.notAvailable"),
+        weight: this.getWeightDisplay(log),
+        volume: this.getVolumeDisplay(log),
         // Add custom fields for cardio/timed exercises
         duration: this.formatCustomFieldValue(
           log.customFields?.duration,

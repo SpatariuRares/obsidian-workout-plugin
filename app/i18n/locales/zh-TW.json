@@ -805,7 +805,6 @@
       "setDuration": "未指定次數時使用（備用值）。典型範圍：30-60 秒。",
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
-      "weightUnit": "選擇重量測量的單位（公斤/磅）。這會影響新記錄的預設單位。",
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單"
     },
     "labels": {

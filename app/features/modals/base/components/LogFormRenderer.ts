@@ -362,7 +362,11 @@ export class LogFormRenderer {
 
     const weightInput = formElements.dynamicFieldInputs.get("weight");
     if (weightInput && lastEntry.weight >= 0) {
-      weightInput.value = String(lastEntry.weight);
+      DynamicFieldsRenderer.setWeightValue(
+        weightInput,
+        lastEntry.enteredWeight ?? lastEntry.weight,
+        lastEntry.enteredUnit,
+      );
     }
 
     // Auto-fill custom fields

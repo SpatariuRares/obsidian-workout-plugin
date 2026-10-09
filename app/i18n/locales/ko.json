@@ -805,7 +805,6 @@
       "setDuration": "반복 횟수가 지정되지 않은 경우에 사용됩니다 (대체값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
-      "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다.",
       "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다"
     },
     "labels": {

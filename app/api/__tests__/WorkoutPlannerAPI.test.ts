@@ -76,6 +76,30 @@ describe("WorkoutPlannerAPI", () => {
     expect(logs[0].timestamp).toBe(123);
   });
 
+  it("keeps weight in the settings unit and adds what was entered", async () => {
+    const dataService = {
+      getWorkoutLogData: jest.fn().mockResolvedValue([
+        {
+          date: "2026-01-10",
+          exercise: "Squat",
+          reps: 5,
+          weight: 102.06,
+          volume: 510.3,
+          enteredWeight: 225,
+          enteredUnit: "lb",
+        },
+      ]),
+    };
+
+    const api = new WorkoutPlannerAPI(dataService as any);
+    const [log] = await api.getWorkoutLogs();
+
+    expect(log.weight).toBe(102.06);
+    expect(log.volume).toBe(510.3);
+    expect(log.enteredWeight).toBe(225);
+    expect(log.enteredUnit).toBe("lb");
+  });
+
   it("defaults missing fields when mapping workout logs", async () => {
     const dataService = {
       getWorkoutLogData: jest.fn().mockResolvedValue([

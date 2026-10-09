@@ -14,6 +14,7 @@ import { DataFilter } from "@app/services/data/DataFilter";
 import { App, TFolder } from "obsidian";
 import { StringUtils } from "@app/utils/StringUtils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -48,6 +49,9 @@ export interface DataviewWorkoutLog {
   notes: string;
   timestamp: number;
   protocol: string;
+  /** Weight as typed, in `enteredUnit`; `weight`/`volume` are in the settings unit */
+  enteredWeight?: number;
+  enteredUnit?: WeightUnit;
 }
 
 /**
@@ -171,6 +175,8 @@ export class WorkoutPlannerAPI {
       notes: log.notes || "",
       timestamp: log.timestamp || 0,
       protocol: log.protocol || WorkoutProtocol.STANDARD,
+      enteredWeight: log.enteredWeight,
+      enteredUnit: log.enteredUnit,
     }));
   }
 

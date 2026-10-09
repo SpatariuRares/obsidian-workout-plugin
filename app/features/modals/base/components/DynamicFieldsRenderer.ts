@@ -6,6 +6,12 @@ import { INPUT_TYPE } from "@app/types/InputTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 import {
+  convertWeight,
+  isWeightUnit,
+  WEIGHT_UNITS,
+  type WeightUnit,
+} from "@app/utils/WeightUnitUtils";
+import {
   BUTTONVARIANT,
   BUTTONSIZE,
 } from "@app/components/atoms/Button";
@@ -129,6 +135,11 @@ export class DynamicFieldsRenderer {
         input.required = true;
       }
 
+      if (param.key === "weight") {
+        label.textContent = param.label;
+        this.renderWeightUnitSelect(label, input);
+      }
+
       return input;
     }
 
@@ -157,6 +168,57 @@ export class DynamicFieldsRenderer {
       input.required = true;
     }
     return input;
+  }
+
+  /**
+   * Fills the weight field with a stored value in its own unit (edit modal,
+   * last-entry autofill), keeping the unit picker in sync.
+   */
+  static setWeightValue(
+    input: HTMLInputElement,
+    value: number,
+    unit?: WeightUnit,
+  ): void {
+    input.value = String(value);
+    if (!unit) return;
+    input.dataset.weightUnit = unit;
+    const select = input
+      .closest(".workout-field-with-adjust")
+      ?.querySelector<HTMLSelectElement>(".workout-weight-unit-select");
+    if (select) select.value = unit;
+  }
+
+  /**
+   * Adds a kg/lb picker for this entry only. It starts at the settings unit;
+   * switching converts the value already in the field. LogSubmissionHandler
+   * saves the value as typed with this unit (read from `data-weight-unit`).
+   */
+  private renderWeightUnitSelect(
+    label: HTMLElement,
+    input: HTMLInputElement,
+  ): void {
+    const settingsUnit = this.plugin.settings.weightUnit;
+    input.dataset.weightUnit = settingsUnit;
+
+    const select = label.createEl("select", {
+      cls: "dropdown workout-weight-unit-select",
+      attr: { "aria-label": t("modal.weightUnitToggle") },
+    });
+    for (const unit of WEIGHT_UNITS) {
+      select.createEl("option", { text: unit, value: unit });
+    }
+    select.value = settingsUnit;
+
+    select.addEventListener("change", () => {
+      const from = input.dataset.weightUnit;
+      const to = select.value;
+      if (!isWeightUnit(from) || !isWeightUnit(to)) return;
+      const current = parseFloat(input.value);
+      if (!isNaN(current)) {
+        input.value = String(convertWeight(current, from, to));
+      }
+      input.dataset.weightUnit = to;
+    });
   }
 
   /**

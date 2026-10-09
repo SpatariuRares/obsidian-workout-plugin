@@ -805,7 +805,6 @@
       "setDuration": "Tekrar sayısı belirtilmediğinde kullanılır (yedek değer). Tipik aralık: 30-60 saniye.",
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
-      "weightUnit": "Ağırlık ölçümleri için birim seçin (kg/lb). Bu, yeni kayıtlar için varsayılan birimi etkiler.",
       "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster"
     },
     "labels": {

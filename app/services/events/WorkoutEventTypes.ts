@@ -38,7 +38,12 @@ export interface LogDeletedPayload {
 
 export interface LogBulkChangedPayload {
   count: number;
-  operation: "import" | "rename" | "bulk-delete" | "other";
+  operation:
+    | "import"
+    | "rename"
+    | "bulk-delete"
+    | "migrate-unit"
+    | "other";
 }
 
 export interface MuscleTagsChangedPayload {

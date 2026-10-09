@@ -4,6 +4,7 @@ import {
   entryToCSVLine,
   entriesToCSVContent,
   collectCustomColumns,
+  convertFromCSVEntry,
   WorkoutProtocol,
 } from "../WorkoutLogData";
 
@@ -687,5 +688,107 @@ describe("CSV round-trip of log entries", () => {
       WorkoutProtocol.STANDARD,
       WorkoutProtocol.STANDARD,
     ]);
+  });
+});
+
+describe("weightUnit column", () => {
+  const header =
+    "date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol";
+
+  it("should read the unit by header name, not into customFields", () => {
+    const [entry] = parseCSVLogFile(
+      `${header},distance,weightUnit\n2024-01-24,Squat,5,220,1100,,,1,,standard,,lb`,
+    );
+
+    expect(entry.weightUnit).toBe("lb");
+    expect(entry.weight).toBe(220);
+    expect(entry.customFields).toBeUndefined();
+  });
+
+  it("should leave the unit undefined when empty, missing or unknown", () => {
+    const entries = parseCSVLogFile(
+      `${header},weightUnit\n2024-01-24,Squat,5,100,500,,,1,,standard,\n2024-01-24,Squat,5,100,500,,,2,,standard,lbs`,
+    );
+    const [legacy] = parseCSVLogFile(
+      `${header}\n2024-01-24,Squat,5,100,500,,,1,,standard`,
+    );
+
+    expect(entries.map((e) => e.weightUnit)).toEqual([undefined, undefined]);
+    expect(legacy.weightUnit).toBeUndefined();
+  });
+
+  it("should write the column only when some entry has a unit", () => {
+    const base: CSVWorkoutLogEntry = {
+      date: "2024-01-24",
+      exercise: "Squat",
+      reps: 5,
+      weight: 100,
+      volume: 500,
+      timestamp: 1,
+      protocol: WorkoutProtocol.STANDARD,
+    };
+
+    expect(entriesToCSVContent([base])).not.toContain("weightUnit");
+
+    const content = entriesToCSVContent([
+      base,
+      { ...base, timestamp: 2, weightUnit: "lb", customFields: { distance: 3 } },
+    ]);
+    const [head, legacyLine, lbLine] = content.split("\n");
+
+    expect(head).toBe(`${header},distance,weightUnit`);
+    expect(legacyLine.endsWith(",,")).toBe(true);
+    expect(lbLine.endsWith(",3,lb")).toBe(true);
+  });
+
+  it("should round-trip the unit", () => {
+    const content = `${header},weightUnit\n2024-01-24,Squat,5,220,1100,,,1,,standard,lb`;
+    const entries = parseCSVLogFile(content);
+
+    expect(parseCSVLogFile(entriesToCSVContent(entries))[0].weightUnit).toBe(
+      "lb",
+    );
+  });
+});
+
+describe("convertFromCSVEntry weight unit", () => {
+  const file = {} as never;
+  const entry: CSVWorkoutLogEntry = {
+    date: "2024-01-24",
+    exercise: "Squat",
+    reps: 5,
+    weight: 220,
+    volume: 1100,
+    timestamp: 1,
+    weightUnit: "lb",
+  };
+
+  it("should convert to the settings unit and keep what was entered", () => {
+    const log = convertFromCSVEntry(entry, file, "kg");
+
+    expect(log.weight).toBe(99.79);
+    expect(log.volume).toBe(498.95);
+    expect(log.enteredWeight).toBe(220);
+    expect(log.enteredUnit).toBe("lb");
+  });
+
+  it("should leave rows in the settings unit untouched", () => {
+    const log = convertFromCSVEntry(entry, file, "lb");
+
+    expect(log.weight).toBe(220);
+    expect(log.volume).toBe(1100);
+    expect(log.enteredUnit).toBe("lb");
+  });
+
+  it("should read legacy rows in the settings unit", () => {
+    const log = convertFromCSVEntry(
+      { ...entry, weightUnit: undefined },
+      file,
+      "kg",
+    );
+
+    expect(log.weight).toBe(220);
+    expect(log.enteredWeight).toBe(220);
+    expect(log.enteredUnit).toBe("kg");
   });
 });

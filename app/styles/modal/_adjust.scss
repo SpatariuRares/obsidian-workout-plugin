@@ -13,6 +13,11 @@
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
     font-size: var(--workout-font-base);
+    align-items: center;
+    gap: var(--workout-space-sm);
+  }
+  .workout-weight-unit-select {
+    font-weight: normal;
   }
   .workout-input-with-adjust {
     --workout-adjust-btn-width: clamp(4ch, 20%, 100px);

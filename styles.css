@@ -2214,6 +2214,7 @@ body.theme-dark {
 @media (min-width: 768px) {
   .workout-modal .workout-parameters-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
   }
 }
 @media (min-width: 1200px) {
@@ -2391,6 +2392,11 @@ body.theme-dark {
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
   font-size: var(--workout-font-base);
+  align-items: center;
+  gap: var(--workout-space-sm);
+}
+.workout-field-with-adjust .workout-weight-unit-select {
+  font-weight: normal;
 }
 .workout-field-with-adjust .workout-input-with-adjust {
   --workout-adjust-btn-width: clamp(4ch, 20%, 100px);

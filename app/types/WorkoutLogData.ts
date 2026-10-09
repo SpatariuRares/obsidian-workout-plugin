@@ -11,6 +11,11 @@ import {
   stringifyCsvValue,
   unprotectFormula,
 } from "@app/utils/data/CsvCodec";
+import {
+  convertWeightAndVolume,
+  isWeightUnit,
+  type WeightUnit,
+} from "@app/utils/WeightUnitUtils";
 
 /**
  * Workout protocol enum for specialized training techniques.
@@ -57,6 +62,12 @@ export interface WorkoutLogData {
   protocol?: WorkoutProtocol;
   /** Custom fields for dynamic exercise type parameters */
   customFields?: Record<string, string | number | boolean>;
+  /**
+   * Weight as typed by the user, in `enteredUnit`. `weight`/`volume` are
+   * converted to the settings unit when the CSV is read.
+   */
+  enteredWeight?: number;
+  enteredUnit?: WeightUnit;
 }
 
 /**
@@ -75,7 +86,15 @@ export interface CSVWorkoutLogEntry {
   protocol?: WorkoutProtocol;
   /** Custom fields for dynamic exercise type parameters */
   customFields?: Record<string, string | number | boolean>;
+  /** Unit of `weight`/`volume` in this row; undefined for legacy rows (settings unit) */
+  weightUnit?: WeightUnit;
 }
+
+/**
+ * Column holding each row's weight unit. Read by header name and appended
+ * after custom columns, since standard columns are positional.
+ */
+export const WEIGHT_UNIT_COLUMN = "weightUnit";
 
 /**
  * Standard column names that are always present in the CSV
@@ -130,7 +149,7 @@ export interface WorkoutChartsSettings {
   /** Weight increment for +/- buttons in create/edit log forms */
   quickWeightIncrement: number;
   /** Weight unit for the application (kg or lb) */
-  weightUnit: "kg" | "lb";
+  weightUnit: WeightUnit;
   /** Show the dumbbell ribbon icon that opens the create log modal */
   showRibbonIcon: boolean;
 }
@@ -167,9 +186,11 @@ export function parseCSVLogFile(
     // Identify custom columns (columns not in standard set)
     const customColumnNames: string[] = [];
     const customColumnIndices: number[] = [];
+    const weightUnitIndex = header.indexOf(WEIGHT_UNIT_COLUMN);
     header.forEach((col, index) => {
       if (
         !STANDARD_CSV_COLUMNS.includes(col as StandardCSVColumn) &&
+        col !== WEIGHT_UNIT_COLUMN &&
         col
       ) {
         customColumnNames.push(col);
@@ -244,6 +265,9 @@ export function parseCSVLogFile(
         }
       }
 
+      const unitValue =
+        weightUnitIndex >= 0 ? values[weightUnitIndex]?.trim() : undefined;
+
       const entry: CSVWorkoutLogEntry = {
         date: values[0]?.trim() || "",
         exercise: values[1]?.trim() || "",
@@ -266,6 +290,9 @@ export function parseCSVLogFile(
         protocol: protocol,
         customFields: customFields,
       };
+      if (isWeightUnit(unitValue)) {
+        entry.weightUnit = unitValue;
+      }
 
       // Validate required fields
       if (entry.exercise) {
@@ -332,7 +359,10 @@ export function entryToCSVLine(
   // Add custom field values in the order specified by customColumns
   if (customColumns && customColumns.length > 0) {
     for (const colName of customColumns) {
-      const value = entry.customFields?.[colName];
+      const value =
+        colName === WEIGHT_UNIT_COLUMN
+          ? entry.weightUnit
+          : entry.customFields?.[colName];
       if (value === undefined || value === null) {
         values.push("");
       } else if (typeof value === "boolean") {
@@ -360,8 +390,12 @@ export function collectCustomColumns(
       }
     }
   }
-  // Return sorted for consistent ordering
-  return Array.from(customColumnSet).sort();
+  // Return sorted for consistent ordering; the unit column goes last
+  const columns = Array.from(customColumnSet).sort();
+  if (entries.some((entry) => entry.weightUnit)) {
+    columns.push(WEIGHT_UNIT_COLUMN);
+  }
+  return columns;
 }
 
 /**
@@ -405,18 +439,30 @@ export function entriesToCSVContent(
 }
 
 /**
- * Converts CSVWorkoutLogEntry to WorkoutLogData (for backward compatibility)
+ * Converts CSVWorkoutLogEntry to WorkoutLogData, with weight and volume in
+ * the settings unit
  */
 export function convertFromCSVEntry(
   entry: CSVWorkoutLogEntry,
   file: TFile,
+  settingsUnit: WeightUnit,
 ): WorkoutLogData {
+  const enteredUnit = entry.weightUnit ?? settingsUnit;
+  const { weight, volume } = convertWeightAndVolume(
+    entry.reps,
+    entry.weight,
+    entry.volume,
+    enteredUnit,
+    settingsUnit,
+  );
   return {
     date: entry.date,
     exercise: entry.exercise,
     reps: entry.reps,
-    weight: entry.weight,
-    volume: entry.volume,
+    weight,
+    volume,
+    enteredWeight: entry.weight,
+    enteredUnit,
     file: file,
     origine: entry.origine,
     workout: entry.workout,

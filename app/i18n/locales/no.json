@@ -805,7 +805,6 @@
       "setDuration": "Brukes når antall repetisjoner ikke er angitt (reserveverdi). Typisk område: 30-60 sekunder.",
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
-      "weightUnit": "Velg enheten for vektmålinger (kg/lb). Dette påvirker standardenheten for nye logger.",
       "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen"
     },
     "labels": {

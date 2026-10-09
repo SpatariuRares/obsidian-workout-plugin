@@ -6,8 +6,9 @@ import type {
   EventBusPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { isWeightUnit } from "@app/utils/WeightUnitUtils";
+import { changeWeightUnit } from "@app/features/settings/business/changeWeightUnit";
 
 export class GeneralSettings {
   private csvPathValidationTimer: ReturnType<
@@ -83,15 +84,17 @@ export class GeneralSettings {
           .setValue(this.plugin.settings.weightUnit)
           .onChange(async (value) => {
             const previousValue = this.plugin.settings.weightUnit;
-            this.plugin.settings.weightUnit = value as "kg" | "lb";
-            // Update ParameterUtils with new weight unit
-            ParameterUtils.setWeightUnit(value);
-            await this.plugin.saveSettings();
-            // Views re-render with the new unit label
-            this.plugin.eventBus.emit({
-              type: "settings:changed",
-              payload: { key: "weightUnit", previousValue, newValue: value },
-            });
+            if (!isWeightUnit(value) || value === previousValue) return;
+            try {
+              await changeWeightUnit(this.plugin, previousValue, value);
+            } catch (error) {
+              dropdown.setValue(previousValue);
+              new Notice(
+                t("settings.messages.weightUnitChangeFailed", {
+                  error: ErrorUtils.getErrorMessage(error),
+                }),
+              );
+            }
           }),
       );
 

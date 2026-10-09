@@ -805,7 +805,6 @@
       "setDuration": "Bruges, når gentagelser ikke er angivet (reserve). Typisk interval: 30-60 sekunder.",
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
-      "weightUnit": "Vælg enhed for vægt (kg/lb). Det påvirker standardenheden for nye logs.",
       "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen"
     },
     "labels": {

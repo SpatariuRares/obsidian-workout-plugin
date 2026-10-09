@@ -805,7 +805,6 @@
       "setDuration": "Digunakan ketika jumlah repetisi tidak ditentukan (sebagai cadangan). Rentang yang umum: 30-60 detik.",
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
-      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru.",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan"
     },
     "labels": {

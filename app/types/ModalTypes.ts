@@ -1,4 +1,5 @@
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 export interface ExerciseAutocompleteElements {
   exerciseInput: HTMLInputElement;
@@ -9,6 +10,8 @@ export interface LogFormData {
   exercise: string;
   reps?: number; // Optional - only for strength type exercises
   weight?: number; // Optional - only for strength type exercises
+  /** Unit picked next to the weight field; undefined means the settings unit */
+  weightUnit?: WeightUnit;
   workout: string;
   notes: string;
   date?: string;

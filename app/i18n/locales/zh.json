@@ -805,7 +805,6 @@
       "setDuration": "当未指定次数时使用（备用）。典型范围：30-60秒。",
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
-      "weightUnit": "选择重量测量单位（千克/磅）。这会影响新记录的默认单位。",
       "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标"
     },
     "labels": {

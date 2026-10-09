@@ -13,6 +13,7 @@ import { DataService } from "@app/services/data/DataService";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { App, TFolder } from "obsidian";
 import { StringUtils } from "@app/utils/StringUtils";
+import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -446,7 +447,7 @@ export class WorkoutPlannerAPI {
       try {
         const tFile = file as import("obsidian").TFile;
         const content = await this.app.vault.cachedRead(tFile);
-        const tags = this.parseFrontmatterTags(content);
+        const tags = FrontmatterParser.parseTags(content);
 
         // Check if any tag matches (case-insensitive)
         const hasMatchingTag = tags.some(
@@ -503,58 +504,8 @@ export class WorkoutPlannerAPI {
     if (!file) {
       return [];
     }
-    const raw: unknown =
-      this.app?.metadataCache.getFileCache(file)?.frontmatter?.tags;
-    const tags: unknown[] = Array.isArray(raw)
-      ? raw
-      : typeof raw === "string"
-        ? raw.split(/[,\s]+/)
-        : [];
-    return tags
-      .map((tag) => String(tag).replace(/^#/, "").trim().toLowerCase())
-      .filter((tag) => tag.length > 0);
-  }
-
-  /**
-   * Parse tags from file frontmatter.
-   */
-  private parseFrontmatterTags(content: string): string[] {
-    // Extract frontmatter between --- markers
-    const frontmatterMatch = content.match(
-      /^---\s*\n([\s\S]*?)\n---/,
-    );
-    if (!frontmatterMatch) {
-      return [];
-    }
-
-    const frontmatter = frontmatterMatch[1];
-
-    // Try array format: tags: [tag1, tag2]
-    const arrayMatch = frontmatter.match(/^tags:\s*\[([^\]]*)\]/m);
-    if (arrayMatch) {
-      return arrayMatch[1]
-        .split(",")
-        .map((tag) => tag.trim().replace(/^['"]|['"]$/g, ""))
-        .filter((tag) => tag.length > 0);
-    }
-
-    // Try YAML list format: tags:\n  - tag1\n  - tag2
-    const listMatch = frontmatter.match(
-      /^tags:\s*\n((?:\s+-\s+.+\n?)+)/m,
-    );
-    if (listMatch) {
-      return listMatch[1]
-        .split("\n")
-        .map((line) => line.replace(/^\s+-\s+/, "").trim())
-        .filter((tag) => tag.length > 0);
-    }
-
-    // Try single tag format: tags: tag1
-    const singleMatch = frontmatter.match(/^tags:\s+(\S+)/m);
-    if (singleMatch) {
-      return [singleMatch[1].trim()];
-    }
-
-    return [];
+    return FrontmatterParser.toTagList(
+      this.app?.metadataCache.getFileCache(file)?.frontmatter?.tags,
+    ).map((tag) => tag.toLowerCase());
   }
 }

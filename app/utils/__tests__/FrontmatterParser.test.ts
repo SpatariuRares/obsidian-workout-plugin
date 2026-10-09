@@ -56,7 +56,27 @@ Content`;
     });
   });
 
+  describe("toTagList", () => {
+    it.each([
+      [["Chest", "#back", " "], ["Chest", "back"]],
+      ["chest", ["chest"]],
+      ["chest, back #core", ["chest", "back", "core"]],
+      ["[chest, back]", ["chest", "back"]],
+      [undefined, []],
+      [42, []],
+    ])("normalizes %p", (raw, expected) => {
+      expect(FrontmatterParser.toTagList(raw)).toEqual(expected);
+    });
+  });
+
   describe("parseTags", () => {
+    it("should accept a single tag written as a string", () => {
+      expect(FrontmatterParser.parseTags("---\ntags: chest\n---")).toEqual([
+        "chest",
+      ]);
+    });
+
+
     it("should parse tags from frontmatter", () => {
       const result = FrontmatterParser.parseTags(validContent);
 

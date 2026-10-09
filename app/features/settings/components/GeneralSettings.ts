@@ -1,4 +1,4 @@
-import { App, Setting, normalizePath, Notice } from "obsidian";
+import { App, Setting, normalizePath, Notice, TFolder } from "obsidian";
 import { t } from "@app/i18n";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
@@ -131,11 +131,7 @@ export class GeneralSettings {
               await import("@app/services/examples/ExampleGeneratorService");
             const generator = new ExampleGeneratorService(this.app);
 
-            const folderExists = await this.app.vault.adapter.exists(
-              normalizePath("The gym examples"),
-            );
-
-            if (folderExists) {
+            if (generator.exampleFolderExists()) {
               new ConfirmModal(
                 this.app,
                 t("settings.messages.confirmOverwriteExamples"),
@@ -157,7 +153,7 @@ export class GeneralSettings {
     if (this.csvPathValidationTimer !== null) {
       clearTimeout(this.csvPathValidationTimer);
     }
-    this.csvPathValidationTimer = setTimeout(async () => {
+    this.csvPathValidationTimer = setTimeout(() => {
       this.csvPathValidationTimer = null;
       if (!folderValue) {
         warningEl.textContent = t("settings.validation.csvPathEmpty");
@@ -165,7 +161,8 @@ export class GeneralSettings {
         return;
       }
       const folder = normalizePath(folderValue);
-      const exists = await this.app.vault.adapter.exists(folder);
+      const exists =
+        this.app.vault.getAbstractFileByPath(folder) instanceof TFolder;
       if (!exists) {
         warningEl.textContent = t(
           "settings.validation.csvFolderNotFound",

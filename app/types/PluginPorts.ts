@@ -59,6 +59,10 @@ export interface LogModalPort {
   createLogModalHandler: { openModal(): void };
 }
 
+export interface QuickLogRibbonPort {
+  updateQuickLogRibbon(): void;
+}
+
 export interface EventBusPort {
   eventBus: WorkoutEventBus;
 }

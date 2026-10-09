@@ -150,7 +150,7 @@
       "totalWorkouts": "Total workouts"
     },
     "volumeAnalytics": {
-      "chartTitle": "Volume trend (last 30 days)",
+      "chartTitleDays": "Volume trend (last {days} days)",
       "muscleBreakdownTitle": "Top exercises by volume",
       "title": "Volume analytics"
     }
@@ -522,7 +522,6 @@
       "includeLog": "Include Log",
       "includeStats": "Include Stats",
       "includeTimer": "Include Timer",
-      "searchByName": "Search By Name",
       "showAddButton": "Show Add Button",
       "showControls": "Show Controls",
       "showStatistics": "Show Statistics",
@@ -547,13 +546,10 @@
     "editItem": "Edit {item}",
     "editTag": "Edit tag",
     "errors": {
-      "missingElements": "Missing elements"
+      "missingElements": "Missing elements",
+      "validationCombinedMode": "For the exercise + workout type, fill in both fields"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Reps: {reps}\n- Rest: {restTime}s\n\n",
-    "exerciseStatus": {
-      "createPage": "Create Page",
-      "notFound": "Not Found"
-    },
     "exerciseType": "Exercise type:",
     "exportTags": "Export tags",
     "fileName": "File name",
@@ -586,23 +582,23 @@
     "noTagsFound": "No tags match your search",
     "noTagsSelected": "No tags selected. Click on tags below to add them.",
     "note": "Note:",
-    "noteTemplate": "**Note: ${params.note}**\n",
+    "noteTemplate": "**Note: {note}**\n",
     "notes": "Notes (optional):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File \n\n {oldName} -> {newName}",
+      "auditConfirmRenameFile": "Rename this file?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Found {count} potential mismatches:",
       "auditNoMatchFound": "No match found",
       "auditNoMismatches": "Audit No Mismatches",
-      "auditRenameError": "Audit Rename Error: {error}",
-      "auditRenameFileError": "Audit Rename File Error: {error}",
+      "auditRenameError": "Could not rename: {error}",
+      "auditRenameFileError": "Could not rename the file: {error}",
       "auditRenameFileSuccess": "Audit Rename File Success",
-      "auditRenameSuccess": "Audit Rename Success ({count} files updated)",
+      "auditRenameSuccess": "Renamed ({count} files updated)",
       "auditScanError": "Error scanning exercise files: {error}",
       "auditScanning": "Audit Scanning",
       "canvasExportError": "Canvas Export Error: {error}",
       "canvasExported": "Canvas Exported ({path})",
       "chartInserted": "✅ Chart inserted successfully!",
-      "confirmUpdateTarget": "Confirm Update Target {targetWeight}{weightUnit}?",
+      "confirmUpdateTarget": "Update the target to {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard inserted successfully!",
       "dismissAchievement": "Dismiss achievement",
       "exerciseBlockInserted": "Exercise Block Inserted",
@@ -637,7 +633,7 @@
       "muscleTagSaved": "Muscle Tag Saved",
       "muscleTagSimilarFound": "{count} similar tag(s) found",
       "muscleTagSimilarWarning": "Muscle Tag Similar Warning",
-      "suggestedNextWeight": "Suggested Next Weight {suggestedWeight}{weightUnit}",
+      "suggestedNextWeight": "Suggested next weight: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Table inserted successfully!",
       "tableUpdateFailed": "Failed to update table. Make sure the file is open in the editor.",
       "tableUpdated": "✅ Table updated successfully!",
@@ -734,7 +730,6 @@
       "createExercisePage": "Create exercise page",
       "createExerciseSection": "Create exercise section",
       "createLog": "Create workout log",
-      "create_log": "Create workout log",
       "editLog": "Edit workout log",
       "editTable": "Edit table parameters",
       "editTimer": "Edit timer parameters",
@@ -790,6 +785,7 @@
       "runAllMaintenance": "Run all maintenance tasks sequentially. Safe to run multiple times.",
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
+      "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
     },
@@ -816,6 +812,7 @@
       "runAllMaintenance": "Run all maintenance tasks",
       "setDuration": "Fallback set duration (seconds)",
       "setupCSV": "Setup CSV files",
+      "showRibbonIcon": "Show quick log icon",
       "weightUnit": "Weight unit"
     },
     "messages": {
@@ -851,7 +848,6 @@
       "csvManagement": "CSV file management",
       "customProtocols": "Custom protocols",
       "exampleData": "Example data",
-      "filtering": "Filtering",
       "maintenance": "Maintenance",
       "quickLog": "Mobile logging",
       "setupAndData": "Setup & data",
@@ -915,9 +911,6 @@
     "gotoExercise": "Goto Exercise",
     "invalidDate": "Invalid Date",
     "labels": {
-      "errors": {
-        "tableElementsNotInitialized": "Table elements not initialized"
-      },
       "target": "Target:"
     },
     "noData": "No Data",
@@ -929,7 +922,11 @@
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Trend Line"
+    "trendLine": "Trend Line",
+    "validation": {
+      "sortByInvalid": "sortBy must be one of {allowed}, received: \"{value}\"",
+      "sortOrderInvalid": "sortOrder must be asc or desc, received: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Month",
@@ -940,8 +937,7 @@
     "controls": {
       "pauseTimer": "Pause timer",
       "resetTimer": "Reset timer",
-      "startTimer": "Start timer",
-      "timerMenu": "Timer menu"
+      "startTimer": "Start timer"
     },
     "countdown": "Countdown",
     "editTimer": "Edit timer",

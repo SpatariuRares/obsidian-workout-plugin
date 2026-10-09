@@ -14,7 +14,6 @@ export function generateExerciseLogBlock(
     workout,
     limit: opts?.limit ?? 12,
     showAddButton: true,
-    searchByName: false,
     exactMatch: opts?.exactMatch ?? true,
   });
 }
@@ -30,7 +29,6 @@ export function generateExerciseOnlyLogBlock(
     workout: "",
     limit,
     showAddButton: true,
-    searchByName: false,
     exactMatch: false,
   });
 }
@@ -46,7 +44,6 @@ export function generateWorkoutLogBlock(
     workout,
     limit,
     showAddButton: true,
-    searchByName: false,
     exactMatch: false,
   });
 }
@@ -63,7 +60,6 @@ export function generateCombinedLogBlock(
     workout,
     limit,
     showAddButton: true,
-    searchByName: false,
     exactMatch: true,
   });
 }

@@ -1,7 +1,7 @@
 import {
   ExerciseMatchUtils,
+  ExerciseFilterStrategy,
   MatchResult,
-  ExerciseMatch,
 } from "@app/utils/exercise/ExerciseMatchUtils";
 import {
   WorkoutLogData,
@@ -249,8 +249,11 @@ export class DataFilter {
     params: DataFilterParams,
   ): FilterResult {
     const dateRange = params.dateRange || 0;
+    // Count the whole boundary day ("today and the previous N days")
+    const cutoff = DateUtils.getDaysAgo(dateRange);
+    cutoff.setHours(0, 0, 0, 0);
     return {
-      filteredData: DateUtils.filterByDaysAgo(logData, dateRange),
+      filteredData: DateUtils.filterByDateRange(logData, cutoff),
       filterMethodUsed: `dateRange: last ${dateRange} days`,
       titlePrefix: t("general.workoutData"),
     };
@@ -290,11 +293,10 @@ export class DataFilter {
           exerciseName,
         );
 
-        const { bestStrategy, bestPathKey, bestFileMatchesList } =
+        const { bestStrategy, bestPathKey } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
-            matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
-            params.exactMatch || false,
+            false,
             exerciseName,
           );
 
@@ -302,14 +304,12 @@ export class DataFilter {
           logData,
           bestStrategy,
           bestPathKey,
-          bestFileMatchesList,
         );
 
         filterMethodUsed = this.getFilterMethodDescription(
           bestStrategy,
           bestPathKey,
           matchesResult,
-          bestFileMatchesList,
         );
       }
     }
@@ -319,24 +319,20 @@ export class DataFilter {
 
   /**
    * Generates a human-readable description of the filtering method used.
-   * @param bestStrategy - The strategy used for filtering (field, filename, etc.)
+   * @param bestStrategy - The strategy used for filtering
    * @param bestPathKey - The key used for filtering
    * @param matchesResult - Results from the matching process
-   * @param bestFileMatchesList - List of best file matches
    * @returns Human-readable description of the filtering method
    */
   private static getFilterMethodDescription(
-    bestStrategy: string,
+    bestStrategy: ExerciseFilterStrategy,
     bestPathKey: string,
     matchesResult: MatchResult,
-    bestFileMatchesList: ExerciseMatch[],
   ): string {
-    if (bestStrategy === "field") {
+    if (bestStrategy === "exercise_field") {
       const bestPathScore =
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
-    } else if (bestStrategy === "filename") {
-      return `file name (score: ${bestFileMatchesList[0]?.score || t("table.notAvailable")})`;
     }
     return "No match found";
   }

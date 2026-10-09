@@ -12,17 +12,19 @@ import {
 } from "@app/features/charts/types";
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
 import { StatsBox } from "@app/features/dashboard/ui/StatsBox";
-import { MobileTable } from "@app/features/charts/components";
 import {
-  ChartRenderer,
-  TrendHeader,
+  MobileTable,
   ChartFallbackTable,
-  ChartDataUtils,
-} from "@app/features/charts";
+} from "@app/features/charts/components/ChartTableViews";
+import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
+import { TrendHeader } from "@app/features/charts/components/TrendHeader";
+import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
+import { getElementScopedId } from "@app/utils/IdUtils";
 import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 import { BaseView } from "@app/features/common/views/BaseView";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { StatisticsUtils, ValidationUtils } from "@app/utils";
+import { StatisticsUtils } from "@app/utils/StatisticsUtils";
+import { ValidationUtils } from "@app/utils/ValidationUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 
@@ -126,12 +128,17 @@ export class EmbeddedChartView extends BaseView {
           new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
-      const { labels, datasets } = ChartDataUtils.processChartData(
+      const chartData = ChartDataUtils.processChartData(
         sortedData,
         resolvedType,
         params.dateRange || 30,
         "DD/MM/YYYY",
         params.chartType || CHART_TYPE.EXERCISE,
+      );
+      const { labels, datasets } = ChartDataUtils.limitToLatest(
+        chartData.labels,
+        chartData.datasets,
+        params.limit,
       );
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
@@ -207,6 +214,9 @@ export class EmbeddedChartView extends BaseView {
 
     const chartContainer =
       ChartRenderer.createChartContainer(contentDiv);
+    // Stable per-block ID: re-renders replace this block's chart only, and
+    // two blocks with the same exercise/type no longer destroy each other
+    chartContainer.id = `workout-chart-${getElementScopedId(container)}`;
 
     if (params.showTrendLine && datasets.length > 0) {
       ChartRenderer.addTrendLineToDatasets(datasets);

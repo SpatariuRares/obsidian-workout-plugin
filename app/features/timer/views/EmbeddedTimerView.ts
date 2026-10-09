@@ -1,16 +1,16 @@
 // Embedded Timer View for workout timing functionality
+import { TimerCore } from "@app/features/timer/business/TimerCore";
+import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import {
-  TimerCore,
-  TimerDisplay,
   TimerControls,
   TimerControlCallbacks,
-} from "@app/features/timer";
+} from "@app/features/timer/components/TimerControls";
 import {
   TimerState,
   TimerPresetConfig,
   EmbeddedTimerParams,
   TIMER_TYPE,
-} from "@app/features/timer";
+} from "@app/features/timer/types";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -18,6 +18,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 export class EmbeddedTimerView extends BaseView {
   private timerId: string;
   private timerCore: TimerCore;
+  private autoStarted = false;
 
   constructor(plugin: WorkoutPluginContext, id?: string) {
     super(plugin);
@@ -76,7 +77,15 @@ export class EmbeddedTimerView extends BaseView {
         });
       }
 
+      this.timerCore.setSoundEnabled(resolvedParams.sound !== false);
+
       this.renderTimerContent(container, resolvedParams, params);
+
+      // autoStart fires once per timer, not on every re-render
+      if (resolvedParams.autoStart && !this.autoStarted) {
+        this.autoStarted = true;
+        this.timerCore.start();
+      }
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));

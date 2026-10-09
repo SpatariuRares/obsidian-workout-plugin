@@ -1,14 +1,12 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView, MarkdownRenderChild } from "obsidian";
-import {
-  TableRenderer,
-  TableDataProcessor,
-  TableConfig,
-  TableRefresh,
-  ExerciseActionSelect,
-  TargetHeader,
-  AchievementBadge,
-} from "@app/features/tables";
+import { TableRenderer } from "@app/features/tables/components/TableRenderer";
+import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
+import { TableConfig } from "@app/features/tables/business/TableConfig";
+import { TableRefresh } from "@app/features/tables/business/TableRefresh";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
+import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import {
   TableCallbacks,
   EmbeddedTableParams,
@@ -65,18 +63,24 @@ export class EmbeddedTableView extends BaseView {
     };
   }
 
+  /**
+   * @param pageLink - Wiki link to the note containing the code block,
+   * used as the origin of logs added from this table
+   */
   async createTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
+    pageLink = "",
   ): Promise<void> {
-    await this.renderTable(container, logData, params);
+    await this.renderTable(container, logData, params, pageLink);
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
+    pageLink: string,
   ): Promise<void> {
     try {
       const validationErrors = TableConfig.validateParams(params);
@@ -93,7 +97,7 @@ export class EmbeddedTableView extends BaseView {
           container,
           logData,
           params.exercise,
-          undefined,
+          pageLink || undefined,
           params.id,
         )
       ) {
@@ -101,7 +105,11 @@ export class EmbeddedTableView extends BaseView {
         return;
       }
 
-      const filterResult = this.filterData(logData, params);
+      // Defaults apply to the data path only; the UI (edit action) keeps the
+      // block's own params so defaults are never written back into the block
+      const dataParams = TableConfig.mergeWithDefaults(params);
+
+      const filterResult = this.filterData(logData, dataParams);
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
@@ -118,11 +126,15 @@ export class EmbeddedTableView extends BaseView {
 
       const tableData = await TableDataProcessor.processTableData(
         filterResult.filteredData,
-        params,
+        dataParams,
         this.plugin,
       );
 
-      this.renderTableContentOptimized(container, tableData);
+      this.renderTableContentOptimized(
+        container,
+        { ...tableData, params },
+        pageLink,
+      );
     } catch (error) {
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -133,6 +145,7 @@ export class EmbeddedTableView extends BaseView {
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
+    pageLink: string,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -154,6 +167,7 @@ export class EmbeddedTableView extends BaseView {
         params,
         filterResult,
         signal,
+        pageLink,
       );
     }
 
@@ -178,6 +192,7 @@ export class EmbeddedTableView extends BaseView {
         container,
         signal,
         this.plugin.settings.weightUnit,
+        pageLink,
       );
     }
 
@@ -212,12 +227,9 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams,
     filterResult: { filteredData: WorkoutLogData[] },
     signal: AbortSignal,
+    pageLink: string,
   ): void {
-    const activeView =
-      this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
-    const currentPageLink = activeView?.file
-      ? `[[${activeView.file.basename}]]`
-      : "";
+    const currentPageLink = pageLink || this.getActivePageLink();
     const exerciseName =
       params.exercise || t("modal.sections.workout");
 
@@ -262,6 +274,7 @@ export class EmbeddedTableView extends BaseView {
     tableContainer: HTMLElement,
     signal: AbortSignal,
     weightUnit: string,
+    pageLink: string,
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
@@ -303,10 +316,11 @@ export class EmbeddedTableView extends BaseView {
               newWeight,
             );
           if (success) {
-            await this.refreshTable(tableContainer, {
-              ...params,
-              targetWeight: newWeight,
-            });
+            await this.refreshTable(
+              tableContainer,
+              { ...params, targetWeight: newWeight },
+              pageLink,
+            );
           }
         },
       },
@@ -317,16 +331,24 @@ export class EmbeddedTableView extends BaseView {
   public async refreshTable(
     container: HTMLElement,
     params: EmbeddedTableParams,
+    pageLink = "",
   ): Promise<void> {
     await TableRefresh.refreshTable(
       this.plugin,
       container,
       params,
       async (c, logData, p) => {
-        await this.renderTable(c, logData, p);
+        await this.renderTable(c, logData, p, pageLink);
       },
       this.callbacks,
     );
+  }
+
+  // Fallback for callers that don't know the source note
+  private getActivePageLink(): string {
+    const activeView =
+      this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
+    return activeView?.file ? `[[${activeView.file.basename}]]` : "";
   }
 
   /**

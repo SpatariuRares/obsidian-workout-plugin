@@ -55,14 +55,25 @@ jest.mock("@app/features/common/views/BaseView", () => ({
   },
 }));
 
-// Mock tables barrel
-jest.mock("@app/features/tables", () => ({
-  TableConfig: {
-    validateParams: jest.fn().mockReturnValue([]),
-  },
+// Mock tables modules
+jest.mock("@app/features/tables/business/TableConfig", () => {
+  const actual = jest.requireActual(
+    "@app/features/tables/business/TableConfig",
+  );
+  return {
+    TableConfig: {
+      validateParams: jest.fn().mockReturnValue([]),
+      mergeWithDefaults: (p: object) =>
+        actual.TableConfig.mergeWithDefaults(p),
+    },
+  };
+});
+jest.mock("@app/features/tables/business/TableRefresh", () => ({
   TableRefresh: {
     refreshTable: jest.fn().mockResolvedValue(undefined),
   },
+}));
+jest.mock("@app/features/tables/components/TableRenderer", () => ({
   TableRenderer: {
     createTableContainer: jest.fn((parent: HTMLElement) => {
       const div = document.createElement("div");
@@ -73,6 +84,8 @@ jest.mock("@app/features/tables", () => ({
     renderTable: jest.fn().mockReturnValue(true),
     renderFallbackMessage: jest.fn(),
   },
+}));
+jest.mock("@app/features/tables/business/TableDataProcessor", () => ({
   TableDataProcessor: {
     processTableData: jest
       .fn()
@@ -109,18 +122,15 @@ jest.mock("@app/features/tables", () => ({
         params: params || {},
       })),
   },
-  GoToExerciseButton: {
-    render: jest.fn(),
-  },
-  ExerciseActionSelect: {
-    render: jest.fn(),
-  },
-  TargetHeader: {
-    render: jest.fn(),
-  },
-  AchievementBadge: {
-    render: jest.fn(),
-  },
+}));
+jest.mock("@app/features/tables/ui/ExerciseActionSelect", () => ({
+  ExerciseActionSelect: { render: jest.fn() },
+}));
+jest.mock("@app/features/tables/ui/TargetHeader", () => ({
+  TargetHeader: { render: jest.fn() },
+}));
+jest.mock("@app/features/tables/ui/AchievementBadge", () => ({
+  AchievementBadge: { render: jest.fn() },
 }));
 
 // Mock LogCallouts
@@ -155,15 +165,13 @@ jest.mock("@app/services/editor/CodeBlockEditorService", () => ({
 }));
 
 import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
-import {
-  TableConfig,
-  TableRenderer,
-  TableDataProcessor,
-  TableRefresh,
-  TargetHeader,
-  AchievementBadge,
-  ExerciseActionSelect,
-} from "@app/features/tables";
+import { TableRenderer } from "@app/features/tables/components/TableRenderer";
+import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
+import { TableConfig } from "@app/features/tables/business/TableConfig";
+import { TableRefresh } from "@app/features/tables/business/TableRefresh";
+import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
+import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
+import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 
 const createLog = (
@@ -252,7 +260,7 @@ describe("EmbeddedTableView", () => {
 
       expect(TableDataProcessor.processTableData).toHaveBeenCalledWith(
         logData,
-        {},
+        expect.any(Object),
         plugin,
       );
       expect(TableRenderer.renderTable).toHaveBeenCalled();
@@ -600,6 +608,73 @@ describe("EmbeddedTableView", () => {
         .calls[0];
       const props = renderCall[1];
       expect(props.weightIncrement).toBe(5);
+    });
+  });
+
+  describe("defaults", () => {
+    it("applies table defaults when loading and processing data", async () => {
+      const filterSpy = jest.spyOn(view as any, "filterData");
+
+      await view.createTable(document.createElement("div"), [createLog()], {
+        exercise: "Bench",
+      });
+
+      expect(filterSpy).toHaveBeenCalledWith(
+        expect.any(Array),
+        expect.objectContaining({ exactMatch: false }),
+      );
+      expect(TableDataProcessor.processTableData).toHaveBeenCalledWith(
+        expect.any(Array),
+        expect.objectContaining({ sortBy: "date", sortOrder: "desc" }),
+        plugin,
+      );
+    });
+
+    it("passes the block's own params (without defaults) to the edit action", async () => {
+      const params = { id: "t1", exercise: "Bench" };
+
+      await view.createTable(
+        document.createElement("div"),
+        [createLog()],
+        params,
+      );
+
+      const props = (ExerciseActionSelect.render as jest.Mock).mock
+        .calls[0][1];
+      expect(props.params).toEqual(params);
+    });
+  });
+
+  describe("source note link", () => {
+    it("uses the code block's source note, not the active view", async () => {
+      plugin.app.workspace.getActiveViewOfType.mockReturnValue({
+        file: { basename: "Other Note" },
+      });
+      const container = document.createElement("div");
+
+      await view.createTable(container, [createLog()], {}, "[[Leg Day]]");
+
+      expect(LogCallouts.renderAddLogButton).toHaveBeenCalledWith(
+        expect.any(HTMLElement),
+        expect.any(String),
+        "[[Leg Day]]",
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+      );
+    });
+
+    it("keeps the source note link on refresh", async () => {
+      const container = document.createElement("div");
+
+      await view.refreshTable(container, {}, "[[Leg Day]]");
+      const renderCallback = (TableRefresh.refreshTable as jest.Mock)
+        .mock.calls[0][3];
+      await renderCallback(container, [createLog()], {});
+
+      const call = (LogCallouts.renderAddLogButton as jest.Mock).mock
+        .calls[0];
+      expect(call[2]).toBe("[[Leg Day]]");
     });
   });
 

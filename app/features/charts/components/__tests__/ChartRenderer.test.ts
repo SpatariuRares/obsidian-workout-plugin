@@ -41,6 +41,7 @@ jest.mock("@app/features/charts/components/ChartContainer", () => ({
       const container = createMockElement();
       return container;
     }),
+    applyHeight: jest.fn(() => false),
     createCanvas: jest.fn(() => {
       return {
         getContext: jest.fn().mockReturnValue({}),
@@ -188,6 +189,64 @@ describe("ChartRenderer", () => {
       );
 
       expect(Chart).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe("height param", () => {
+    it("stops keeping the aspect ratio when a fixed height is applied", () => {
+      const { ChartContainer } = jest.requireMock(
+        "@app/features/charts/components/ChartContainer",
+      );
+      ChartContainer.applyHeight.mockReturnValueOnce(true);
+
+      ChartRenderer.renderChart(
+        mockContainer,
+        ["2024-01-01"],
+        [{ label: "Weight", data: [100] }],
+        { ...mockParams, height: 300 },
+      );
+
+      const config = (Chart as unknown as jest.Mock).mock.calls.at(-1)[1];
+      expect(config.options.maintainAspectRatio).toBe(false);
+    });
+  });
+
+  describe("renderConfiguredChart", () => {
+    const canvas = {} as HTMLCanvasElement;
+    const config = { type: "pie", data: { datasets: [] } } as never;
+
+    it("tracks the chart so destroyAllCharts destroys it", () => {
+      const chart = ChartRenderer.renderConfiguredChart(
+        "pie-1",
+        canvas,
+        config,
+      );
+
+      ChartRenderer.destroyAllCharts();
+
+      expect(chart?.destroy).toHaveBeenCalled();
+    });
+
+    it("destroys the previous chart with the same id", () => {
+      const first = ChartRenderer.renderConfiguredChart(
+        "pie-1",
+        canvas,
+        config,
+      );
+      ChartRenderer.renderConfiguredChart("pie-1", canvas, config);
+
+      expect(first?.destroy).toHaveBeenCalled();
+    });
+
+    it("keeps charts with different ids independent", () => {
+      const first = ChartRenderer.renderConfiguredChart(
+        "pie-1",
+        canvas,
+        config,
+      );
+      ChartRenderer.renderConfiguredChart("pie-2", canvas, config);
+
+      expect(first?.destroy).not.toHaveBeenCalled();
     });
   });
 

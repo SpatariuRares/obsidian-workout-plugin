@@ -101,7 +101,6 @@ export class CodeGenerator {
     if (!params.showAddButton) lines.push(`showAddButton: false`);
 
     // Add advanced options
-    if (params.searchByName) lines.push(`searchByName: true`);
     if (params.exactMatch) lines.push(`exactMatch: true`);
 
     // Add progressive overload targets

@@ -360,3 +360,37 @@ describe("ChartDataUtils", () => {
     });
   });
 });
+
+describe("ChartDataUtils.limitToLatest", () => {
+  const labels = ["d1", "d2", "d3", "d4"];
+  const datasets = [
+    { label: "Volume", data: [1, 2, 3, 4] },
+    { label: "Weight", data: [10, 20, 30, 40] },
+  ];
+
+  it("keeps only the latest N points in labels and every dataset", () => {
+    const result = ChartDataUtils.limitToLatest(labels, datasets, 2);
+
+    expect(result.labels).toEqual(["d3", "d4"]);
+    expect(result.datasets.map((d) => d.data)).toEqual([
+      [3, 4],
+      [30, 40],
+    ]);
+  });
+
+  it("returns data unchanged without a limit or when under the limit", () => {
+    expect(ChartDataUtils.limitToLatest(labels, datasets).labels).toEqual(
+      labels,
+    );
+    expect(
+      ChartDataUtils.limitToLatest(labels, datasets, 10).labels,
+    ).toEqual(labels);
+  });
+
+  it("does not mutate the input datasets", () => {
+    ChartDataUtils.limitToLatest(labels, datasets, 1);
+
+    expect(datasets[0].data).toEqual([1, 2, 3, 4]);
+  });
+});
+

@@ -460,6 +460,7 @@ describe("CodeBlockProcessorService", () => {
         expect.objectContaining({
           exercise: "Squat",
         }),
+        expect.any(String),
       );
     });
 
@@ -488,6 +489,7 @@ describe("CodeBlockProcessorService", () => {
         expect.objectContaining({
           workout: "Push Day",
         }),
+        expect.any(String),
       );
     });
 
@@ -528,6 +530,7 @@ describe("CodeBlockProcessorService", () => {
         expect.any(HTMLElement),
         [],
         expect.any(Object),
+        "[[path]]",
       );
     });
 
@@ -546,6 +549,7 @@ describe("CodeBlockProcessorService", () => {
         expect.any(HTMLElement),
         [],
         expect.any(Object),
+        "[[path]]",
       );
     });
   });
@@ -878,6 +882,24 @@ describe("CodeBlockProcessorService", () => {
   });
 
   describe("parseCodeBlockParams", () => {
+    it.each([
+      ['columns: ["date", "reps", "weight"]'],
+      ["columns: ['date', 'reps', 'weight']"],
+      ["columns: [date, reps, weight]"],
+    ])("should parse array %s without quotes", (source) => {
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(result.columns).toEqual(["date", "reps", "weight"]);
+    });
+
+    it("should strip wrapping quotes from string values", () => {
+      const source = 'title: "Squat volume"\nexercise: \'Bench Press\'';
+      const result = (service as any).parseCodeBlockParams(source);
+
+      expect(result.title).toBe("Squat volume");
+      expect(result.exercise).toBe("Bench Press");
+    });
+
     it("should parse valid number parameters correctly", () => {
       const source = "duration: 60\nreps: 10";
       const result = (service as any).parseCodeBlockParams(source);

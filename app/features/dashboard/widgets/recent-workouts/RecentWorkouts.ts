@@ -10,15 +10,17 @@ export class RecentWorkouts {
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
   ): void {
     const recentEl = WidgetContainer.create(container, {
       title: t("dashboard.recentWorkouts.title"),
       className: "workout-recent-workouts",
     });
 
-    // Get recent workouts (last 5)
-    const recentWorkouts = getRecentWorkouts(data, 5);
+    const recentWorkouts = getRecentWorkouts(
+      data,
+      params.recentWorkoutsLimit ?? 5,
+    );
 
     const listEl = ListItem.createList(recentEl, {
       className: "workout-recent-workouts-list",

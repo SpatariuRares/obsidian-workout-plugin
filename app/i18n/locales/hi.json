@@ -4,7 +4,7 @@
     "fallbackTableMessage": "बैकअप टेबल संदेश",
     "labels": {
       "quickWeightIncrementUnit": "वज़न बटन {weightIncrementUnit} से बढ़ जाते हैं",
-      "reps": "प्रतिनिधियाँ",
+      "reps": "रेप्स",
       "trendType": "ट्रेंड {type}:",
       "variationFromTo": "{startValue} से {endValue} तक",
       "volume": "मात्रा",
@@ -20,7 +20,7 @@
       "duration": "अवधि",
       "heartRate": "हृदय गति",
       "pace": "गति",
-      "reps": "प्रतिनिधित्व",
+      "reps": "रेप्स",
       "volume": "मात्रा",
       "weight": "वजन"
     }
@@ -58,7 +58,7 @@
     "fieldMapping": {
       "addMapping": "फ़ील्ड मैपिंग जोड़ें",
       "removeMapping": "मैपिंग हटाएं",
-      "reps": "प्रतिनिधियाँ",
+      "reps": "रेप्स",
       "title": "फ़ील्ड मैपिंग",
       "weight": "वज़न ({unit})"
     },
@@ -103,7 +103,7 @@
       "description": "विवरण",
       "title": "मांस के टैग",
       "tooltip": "कॉपी करने के लिए क्लिक करें: {tag}",
-      "totalCount": "कुल: {{count}} टैग उपलब्ध"
+      "totalCount": "कुल: {count} टैग उपलब्ध"
     },
     "protocol": {
       "clickToFilter": "फ़िल्टर करने के लिए क्लिक करें",
@@ -143,16 +143,16 @@
     },
     "summary": {
       "currentStreak": "वर्तमानStreak",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} सप्ताह",
       "personalRecords": "व्यक्तिगत रिकॉर्ड",
       "title": "सारांश",
       "totalVolume": "कुल मात्रा",
       "totalWorkouts": "कुल वर्कआउट"
     },
     "volumeAnalytics": {
-      "chartTitle": "मात्रा का रुझान (पिछले 30 दिन)",
       "muscleBreakdownTitle": "मात्रा के अनुसार शीर्ष व्यायाम",
-      "title": "मात्रा विश्लेषण"
+      "title": "मात्रा विश्लेषण",
+      "chartTitleDays": "वॉल्यूम ट्रेंड (पिछले {days} दिन)"
     }
   },
   "duration": {
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "आपके वर्कआउट आँकड़े एक नज़र में। सभी उपलब्ध कंपोनेंट के लिए [[{featureShowcase}]] देखें।",
       "title": "डैशबोर्ड"
     },
     "exercise": {
@@ -233,7 +233,7 @@
       "durationEstimatorTitle": "4. अवधि अनुमानक",
       "intervalTimerTitle": "इंतर्वल टाइमर",
       "intro": "वर्कआउट प्लगइन में उपलब्ध सभी कोड ब्लॉक प्रकारों का संपूर्ण संदर्भ।",
-      "protocol21s": "7+7+7 आंशिक प्रतिनिधि",
+      "protocol21s": "7+7+7 आंशिक रेप्स",
       "protocolDropset": "वजन कम करें, दोहराव जारी रखें",
       "protocolMyoReps": "सक्रिय सेट + छोटे सेट",
       "protocolRestPause": "थोड़ा आराम करें, फिर विफल होने तक जारी रखें।",
@@ -245,7 +245,7 @@
       "tablesTitle": "2. टेबल",
       "timedExerciseTitle": "समयबद्ध व्यायाम (अवधि)",
       "timersTitle": "3. टाइमर",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**सुझाव**: अपने व्यक्तिगत डैशबोर्ड के लिए [[{dashboard}]] देखें",
       "title": "विशेषता प्रदर्शन",
       "trainingProtocolsIntro": "यह प्लगइन आपके लॉग में इन प्रोटोकॉल बैज का समर्थन करता है:",
       "trainingProtocolsTitle": "5. प्रशिक्षण प्रोटोकॉल",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "अगले कदम",
       "quickActionsIntro": "इन कमांड्स (Ctrl/Cmd + P) का उपयोग करें:",
       "quickActionsTitle": "त्वरित क्रियाएं",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "अपने आँकड़े देखने के लिए [[{dashboard}]] खोलें",
+      "step2": "सभी उपलब्ध सुविधाएँ जानने के लिए [[{featureShowcase}]] देखें",
       "step3": "**{workouts}** फ़ोल्डर से एक वर्कआउट आज़माएं।",
       "step4": "**{exercises}** में अपने स्वयं के व्यायाम बनाएँ।",
       "tableHeaderDescription": "विवरण",
@@ -328,7 +328,7 @@
     "workoutName": "वर्कआउट का नाम"
   },
   "general": {
-    "avgReps": "औसत प्रतिनिधि",
+    "avgReps": "औसत रेप्स",
     "back": "वापस",
     "currentFile": "वर्तमान फ़ाइल",
     "dashboard": "डैशबोर्ड",
@@ -438,7 +438,7 @@
     "createFirstLogButtonAria": "{exerciseName} के लिए पहली लॉग बनाएं",
     "createLogButtonAria": "{exerciseName} के लिए लॉग बनाएं:",
     "createLogButtonText": "{exerciseName} के लिए लॉग बनाएं:",
-    "noDataTitle": "[{{exerciseName}} के लिए कोई लॉग नहीं मिला"
+    "noDataTitle": "[{exerciseName} के लिए कोई लॉग नहीं मिला"
   },
   "messages": {
     "codeInserted": "कोड डाला गया",
@@ -522,7 +522,6 @@
       "includeLog": "लॉग शामिल करें",
       "includeStats": "आंकड़े शामिल करें",
       "includeTimer": "टाइमर शामिल करें",
-      "searchByName": "नाम से खोजें",
       "showAddButton": "'जोड़ें' बटन दिखाएं",
       "showControls": "नियंत्रण दिखाएं",
       "showStatistics": "सांख्यिकीय डेटा दिखाएं",
@@ -544,10 +543,6 @@
     "delete": "हटाएं",
     "duration": "अवधि (सेकंड):",
     "editTag": "टैग संपादित करें",
-    "exerciseStatus": {
-      "createPage": "पृष्ठ बनाए",
-      "notFound": "नहीं मिला"
-    },
     "exerciseType": "व्यायाम का प्रकार:",
     "exportTags": "टैग निर्यात करें",
     "fileName": "फ़ाइल का नाम",
@@ -562,11 +557,11 @@
       "actions": "कार्रवाइयाँ।",
       "currentFileInfo": "वर्तमान फ़ाइल: {fileName}",
       "exercise": "अभ्यास:",
-      "reps": "प्रतिनिधि:",
-      "targetReps": "लक्ष्यित प्रतिनिधि:",
-      "targetWeight": "लक्ष्यित वजन ({इकाई}):",
+      "reps": "रेप्स:",
+      "targetReps": "लक्ष्य रेप्स:",
+      "targetWeight": "लक्ष्य: ({unit}):",
       "volume": "वॉल्यूम ({unit}):",
-      "weight": "वजन ({इकाई}):"
+      "weight": "वजन ({unit}):"
     },
     "layoutGrouped": "मांसपेशियों के अनुसार समूहीकृत",
     "layoutHorizontal": "क्षैतिज प्रवाह",
@@ -580,29 +575,29 @@
     "note": "ध्यान दें:",
     "notes": "टिप्पणियाँ (वैकल्पिक):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "क्या इस फ़ाइल का नाम बदलें?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} असंगतियां मिलीं:",
       "auditNoMatchFound": "कोई मिलान नहीं मिला",
       "auditNoMismatches": "लेखांकन संख्या में विसंगतियां",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "नाम नहीं बदला जा सका: {error}",
+      "auditRenameFileError": "फ़ाइल का नाम नहीं बदला जा सका: {error}",
       "auditRenameFileSuccess": "ऑडिट: फ़ाइल का नाम बदलकर सफलता",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "नाम बदला गया ({count} फ़ाइलें अपडेट हुईं)",
       "auditScanError": "स्कैन में त्रुटि: {error}",
       "auditScanning": "ऑडिट स्कैनिंग",
       "canvasExportError": "कैनवस निर्यात त्रुटि: {error}",
       "canvasExported": "कैनवस निर्यात किया गया ({path})",
       "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "क्या लक्ष्य को {targetWeight}{weightUnit} पर अपडेट करें?",
       "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
       "dismissAchievement": "उपलब्धि खारिज करें",
       "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
       "exerciseNameRequired": "❌ कृपया व्यायाम का नाम दर्ज करें",
       "exercisePageCreated": "व्यायाम पृष्ठ सफलतापूर्वक बनाया गया!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "व्यायाम पृष्ठ बनाने में त्रुटि: {error}",
       "exercisePageNameRequired": "कृपया व्यायाम का नाम दर्ज करें",
       "exerciseSectionCreated": "✅ व्यायाम अनुभाग सफलतापूर्वक बनाया गया!",
-      "genericError": "Error: ",
+      "genericError": "त्रुटि: {error}",
       "insertCodeNoFile": "कोड डालने के लिए एक मार्कडाउन फ़ाइल खोलें।",
       "logCreated": "वर्कआउट लॉग सफलतापूर्वक बनाया गया!",
       "logUpdated": "वर्कआउट लॉग सफलतापूर्वक अपडेट किया गया!",
@@ -627,7 +622,7 @@
       "muscleTagSaved": "मांस के टैग को सफलतापूर्वक सहेज लिया गया",
       "muscleTagSimilarFound": "{count} समान टैग(ओं) मिल गए",
       "muscleTagSimilarWarning": "मांस टैग के समान चेतावनी",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "सुझाया गया अगला वजन: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ तालिका सफलतापूर्वक डाली गई!",
       "tableUpdateFailed": "टेबल को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "tableUpdated": "✅ तालिका सफलतापूर्वक अपडेट की गई!",
@@ -725,7 +720,6 @@
       "createExercisePage": "अभ्यास पृष्ठ बनाएं।",
       "createExerciseSection": "अभ्यास अनुभाग बनाएं।",
       "createLog": "एक व्यायाम लॉग बनाएं।",
-      "create_log": "वर्कआउट लॉग बनाएं",
       "editLog": "कसरत के रिकॉर्ड को संपादित करें।",
       "editTable": "टेबल के मापदंडों को संपादित करें",
       "editTimer": "टाइमर पैरामीटर संपादित करें",
@@ -744,10 +738,11 @@
     "editItem": "{item} संपादित करें",
     "deleteItem": "{item} हटाएं",
     "errors": {
-      "missingElements": "गायब तत्व"
+      "missingElements": "तत्व गायब हैं",
+      "validationCombinedMode": "व्यायाम + वर्कआउट प्रकार के लिए दोनों फ़ील्ड भरें"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड",
-    "noteTemplate": "**ध्यान दें: ${params.note}**"
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड\n\n",
+    "noteTemplate": "**नोट: {note}**\n"
   },
   "settings": {
     "buttons": {
@@ -788,10 +783,11 @@
       "quickWeightIncrement": "प्लस/माइनस बटनों द्वारा उपयोग की जाने वाली वज़न में वृद्धि (जैसे, +2.5 / -2.5 इकाइयों के लिए)। यह वज़न बढ़ाने/घटाने के लिए उपयोग किया जाता है, जो कि वर्कआउट लॉग के निर्माण/संशोधन मोड में उपलब्ध है।",
       "repDuration": "एक दोहराव को पूरा करने में लगने वाला अनुमानित समय। यह तब उपयोग किया जाता है जब दोहराव की संख्या ज्ञात हो (उदाहरण के लिए, 'x 10 दोहराव')।",
       "runAllMaintenance": "सभी रखरखाव कार्यों को क्रमानुसार चलाएं। कई बार चलाने के लिए सुरक्षित।",
-      "setDuration": "जब प्रतिनिधि निर्दिष्ट नहीं होते हैं (डिफ़ॉल्ट)। सामान्य सीमा: 30-60 सेकंड।",
+      "setDuration": "जब रेप्स निर्दिष्ट नहीं होते, तब उपयोग होता है (फ़ॉलबैक)। सामान्य सीमा: 30-60 सेकंड।",
       "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
       "weightIncrement": "प्रगतिशील भार के लिए डिफ़ॉल्ट भार वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
-      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।"
+      "weightUnit": "वज़न के माप के लिए इकाई का चयन करें (किलोग्राम/पाउंड)। यह नए लॉग के लिए डिफ़ॉल्ट इकाई को प्रभावित करता है।",
+      "showRibbonIcon": "रिबन में डंबल आइकन दिखाएँ जो वर्कआउट लॉग फ़ॉर्म खोलता है"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -816,7 +812,8 @@
       "runAllMaintenance": "सभी रखरखाव कार्यों को चलाएं",
       "setDuration": "वैकल्पिक अवधि (सेकंड)",
       "setupCSV": "CSV फ़ाइलों को सेटअप करें",
-      "weightUnit": "वज़न की इकाई"
+      "weightUnit": "वज़न की इकाई",
+      "showRibbonIcon": "क्विक लॉग आइकन दिखाएँ"
     },
     "messages": {
       "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
@@ -851,7 +848,6 @@
       "csvManagement": "CSV फ़ाइल प्रबंधन",
       "customProtocols": "कस्टम प्रोटोकॉल",
       "exampleData": "उदाहरण डेटा",
-      "filtering": "फ़िल्टरिंग",
       "maintenance": "रखरखाव",
       "quickLog": "मोबाइल लॉगिंग",
       "setupAndData": "स्थापना और डेटा",
@@ -893,7 +889,7 @@
       "heartRate": "हृदय गति",
       "notes": "टिप्पणियाँ",
       "protocol": "प्रोटोकॉल",
-      "reps": "प्रतिनिधियाँ",
+      "reps": "रेप्स",
       "volume": "मात्रा",
       "weight": "वजन"
     },
@@ -902,7 +898,7 @@
       "duration": "दूरी",
       "heartRate": "एचआर",
       "pace": "गति",
-      "reps": "प्रतिनिधि",
+      "reps": "रेप",
       "volumeUnit": "मात्रा ({weightUnit})",
       "weightUnit": "वज़न ({weightUnit})"
     },
@@ -924,12 +920,16 @@
     "notAvailable": "उपलब्ध नहीं",
     "refreshSuccess": "सफलतापूर्वक रिफ्रेश",
     "target": {
-      "progressTooltip": "सर्वश्रेष्ठ: {best} प्रतिनिधि / लक्ष्य: {target} प्रतिनिधि",
-      "repsSuffix": "प्रतिनिधि",
+      "progressTooltip": "सर्वश्रेष्ठ: {best} रेप्स / लक्ष्य: {target} रेप्स",
+      "repsSuffix": "रेप्स",
       "separator": " × "
     },
     "trendLine": "ट्रेंड लाइन",
-    "refreshingTable": "टेबल को रीफ्रेश करना..."
+    "refreshingTable": "तालिका रीफ़्रेश हो रही है...",
+    "validation": {
+      "sortByInvalid": "sortBy {allowed} में से एक होना चाहिए, प्राप्त: \"{value}\"",
+      "sortOrderInvalid": "sortOrder asc या desc होना चाहिए, प्राप्त: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "महीना",
@@ -940,8 +940,7 @@
     "controls": {
       "pauseTimer": "टाइमर को रोकें",
       "resetTimer": "टाइमर को रीसेट करें",
-      "startTimer": "टाइमर शुरू करें",
-      "timerMenu": "Timer menu"
+      "startTimer": "टाइमर शुरू करें"
     },
     "countdown": "काउंटडाउन",
     "editTimer": "टाइमर संपादित करें",

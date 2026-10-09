@@ -9,25 +9,13 @@ import {
   ProtocolFilterCallback,
 } from "@app/features/dashboard/types";
 import { DateUtils } from "@app/utils/DateUtils";
-import {
-  Chart,
-  ChartConfiguration,
-  ArcElement,
-  PieController,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import type { ChartConfiguration } from "chart.js";
 import type { SettingsPort } from "@app/types/PluginPorts";
+import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { Canvas } from "@app/components/atoms";
 import { FilterIndicator } from "@app/components/molecules";
 import { ChartLegendItem } from "@app/features/charts/ui";
 import { t } from "@app/i18n";
-
-// Register required Chart.js components for pie charts
-Chart.register(ArcElement, PieController, Tooltip, Legend);
-
-// Type alias for pie chart instance
-type PieChart = Chart<"pie", number[], string>;
 
 /**
  * Protocol display configuration for badges and chart colors
@@ -74,32 +62,37 @@ interface ProtocolStats {
 }
 
 /**
+ * Options tying a widget render to one dashboard instance
+ */
+interface ProtocolDistributionOptions {
+  /** Stable per-dashboard ID, so re-renders replace this dashboard's chart only */
+  chartId: string;
+  onFilterChange?: ProtocolFilterCallback;
+}
+
+/**
  * Widget for displaying protocol usage distribution in the dashboard.
  * Shows a pie chart with protocol usage for the last 30 days.
  * Supports click filtering to filter dashboard by protocol.
  */
 export class ProtocolDistribution {
-  private static chartInstance: PieChart | null = null;
-  private static currentStats: ProtocolStats[] = [];
-  private static onFilterChange: ProtocolFilterCallback | null = null;
-
   /**
    * Renders the protocol distribution widget
    * @param container - The container element to render in
    * @param data - Workout log data
    * @param params - Dashboard parameters
    * @param plugin - Plugin instance for accessing custom protocols
-   * @param onFilterChange - Callback when protocol filter changes
+   * @param options - Chart ID and filter callback of the owning dashboard
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
-    plugin?: SettingsPort,
-    onFilterChange?: ProtocolFilterCallback,
+    plugin: SettingsPort | undefined,
+    options: ProtocolDistributionOptions,
   ): void {
-    // Store callback for later use
-    this.onFilterChange = onFilterChange || null;
+    const onFilterChange = (protocol: string | null) =>
+      options.onFilterChange?.(protocol);
 
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.protocolDistribution.title"),
@@ -113,7 +106,6 @@ export class ProtocolDistribution {
 
     // Calculate protocol statistics
     const stats = this.calculateProtocolStats(filteredData, plugin);
-    this.currentStats = stats;
 
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
@@ -127,7 +119,12 @@ export class ProtocolDistribution {
     // Render active filter indicator if filter is set
     const activeFilter = params.activeProtocolFilter;
     if (activeFilter) {
-      this.renderActiveFilterIndicator(widgetEl, activeFilter, stats);
+      this.renderActiveFilterIndicator(
+        widgetEl,
+        activeFilter,
+        stats,
+        onFilterChange,
+      );
     }
 
     // Create chart container
@@ -136,10 +133,16 @@ export class ProtocolDistribution {
     });
 
     // Render pie chart with click handling
-    this.renderPieChart(chartContainer, stats, activeFilter);
+    this.renderPieChart(
+      chartContainer,
+      stats,
+      options.chartId,
+      onFilterChange,
+      activeFilter,
+    );
 
     // Render legend with counts and percentages (clickable)
-    this.renderLegend(widgetEl, stats, activeFilter);
+    this.renderLegend(widgetEl, stats, onFilterChange, activeFilter);
   }
 
   /**
@@ -152,6 +155,7 @@ export class ProtocolDistribution {
     container: HTMLElement,
     activeFilter: string,
     stats: ProtocolStats[],
+    onFilterChange: ProtocolFilterCallback,
   ): void {
     const activeStat = stats.find((s) => s.protocol === activeFilter);
     const filterLabel = activeStat?.label || activeFilter;
@@ -162,7 +166,7 @@ export class ProtocolDistribution {
       color: activeStat?.color,
       clearText: t("dashboard.protocolDistribution.clearFilter"),
       className: "workout-protocol-filter-indicator",
-      onClear: () => this.handleFilterChange(null),
+      onClear: () => onFilterChange(null),
     });
   }
 
@@ -245,22 +249,20 @@ export class ProtocolDistribution {
    * Renders the pie chart with click handling for filtering
    * @param container - Container element for the chart
    * @param stats - Protocol statistics
+   * @param chartId - Stable chart ID of the owning dashboard
+   * @param onFilterChange - Filter callback of the owning dashboard
    * @param activeFilter - Currently active filter (for visual highlighting)
    */
   private static renderPieChart(
     container: HTMLElement,
     stats: ProtocolStats[],
+    chartId: string,
+    onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
   ): void {
     const canvas = Canvas.create(container, {
       className: "workout-protocol-chart-canvas",
     });
-
-    // Destroy existing chart if present
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-      this.chartInstance = null;
-    }
 
     // Adjust colors based on active filter (dim non-active slices)
     const backgroundColors = stats.map((s) => {
@@ -328,47 +330,35 @@ export class ProtocolDistribution {
             const clickedProtocol = stats[index].protocol;
 
             // Toggle filter: if clicking same protocol, clear filter
-            if (activeFilter === clickedProtocol) {
-              this.handleFilterChange(null);
-            } else {
-              this.handleFilterChange(clickedProtocol);
-            }
+            onFilterChange(
+              activeFilter === clickedProtocol ? null : clickedProtocol,
+            );
           }
         },
-        onHover: (event, elements) => {
-          const canvas = event.native?.target as
-            | HTMLCanvasElement
-            | undefined;
-          if (canvas) {
-            canvas.style.cursor =
-              elements.length > 0 ? "pointer" : "default";
-          }
+        onHover: (_event, elements) => {
+          canvas.toggleClass("is-clickable", elements.length > 0);
         },
       },
     };
 
-    this.chartInstance = new Chart(canvas, config);
-  }
-
-  /**
-   * Handles filter change and triggers callback
-   * @param protocol - Protocol to filter by, or null to clear
-   */
-  private static handleFilterChange(protocol: string | null): void {
-    if (this.onFilterChange) {
-      this.onFilterChange(protocol);
-    }
+    ChartRenderer.renderConfiguredChart(
+      chartId,
+      canvas,
+      config as ChartConfiguration,
+    );
   }
 
   /**
    * Renders the legend with counts and percentages (clickable for filtering)
    * @param container - Container element
    * @param stats - Protocol statistics
+   * @param onFilterChange - Filter callback of the owning dashboard
    * @param activeFilter - Currently active filter (for visual highlighting)
    */
   private static renderLegend(
     container: HTMLElement,
     stats: ProtocolStats[],
+    onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
   ): void {
     const legendEl = container.createEl("div", {
@@ -389,23 +379,9 @@ export class ProtocolDistribution {
         isDimmed,
         onClick: () => {
           // Toggle filter: if clicking same protocol, clear filter
-          if (isActive) {
-            this.handleFilterChange(null);
-          } else {
-            this.handleFilterChange(stat.protocol);
-          }
+          onFilterChange(isActive ? null : stat.protocol);
         },
       });
     });
-  }
-
-  /**
-   * Destroys the chart instance to prevent memory leaks
-   */
-  static cleanup(): void {
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-      this.chartInstance = null;
-    }
   }
 }

@@ -164,6 +164,50 @@ describe("WorkoutEventBus", () => {
       });
     });
 
+    it("should merge a log:bulk-changed emitted inside the batch into the single final one", async () => {
+      const bulkHandler = jest.fn();
+      bus.on("log:bulk-changed", bulkHandler);
+
+      await bus.batch("import", async () => {
+        bus.emit({
+          type: "log:added",
+          payload: {
+            entry: makeEntry("Squat"),
+            context: { exercise: "Squat" },
+          },
+        });
+        bus.emit({
+          type: "log:bulk-changed",
+          payload: { count: 4, operation: "rename" },
+        });
+      });
+
+      expect(bulkHandler).toHaveBeenCalledTimes(1);
+      expect(bulkHandler).toHaveBeenCalledWith({
+        count: 5,
+        operation: "import",
+      });
+    });
+
+    it("should dispatch plugin:error immediately, even inside a batch", async () => {
+      const errorHandler = jest.fn();
+      bus.on("plugin:error", errorHandler);
+
+      await bus.batch("import", async () => {
+        bus.emit({
+          type: "plugin:error",
+          payload: {
+            source: "test",
+            error: new Error("boom"),
+            recoverable: true,
+          },
+        });
+        expect(errorHandler).toHaveBeenCalledTimes(1);
+      });
+
+      expect(errorHandler).toHaveBeenCalledTimes(1);
+    });
+
     it("should emit muscle-tags:changed normally during batch", async () => {
       const muscleHandler = jest.fn();
       const bulkHandler = jest.fn();

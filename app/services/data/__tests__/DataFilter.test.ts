@@ -313,15 +313,11 @@ describe("DataFilter", () => {
 
         // Setup mocks
         const mockMatchesResult = {
-          fileNameMatches: [],
           allExercisePathsAndScores: new Map([["Squat", 90]]),
-          bestStrategy: "",
-          bestPathKey: "",
         };
         const mockStrategy = {
-          bestStrategy: "field",
+          bestStrategy: "exercise_field" as const,
           bestPathKey: "Squat",
-          bestFileMatchesList: [],
         };
         const filteredByUtil = [mockLogData[0]];
 
@@ -345,9 +341,8 @@ describe("DataFilter", () => {
         ).toHaveBeenCalled();
         expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
           mockLogData,
-          "field",
+          "exercise_field",
           "Squat",
-          [],
         );
         expect(result.filteredData).toEqual(filteredByUtil);
         expect(result.filterMethodUsed).toBe(
@@ -355,63 +350,16 @@ describe("DataFilter", () => {
         );
       });
 
-      it("should use filename strategy when determined", () => {
-        const params: Partial<EmbeddedChartParams> = {
-          exercise: "bench",
-        };
-        const mockMatchesResult = {
-          fileNameMatches: [],
-          allExercisePathsAndScores: new Map(),
-          bestStrategy: "",
-          bestPathKey: "",
-        };
-        const mockFileMatch: any = {
-          file: {} as TFile,
-          score: 85,
-          exerciseName: "log2.md",
-          strategy: "filename",
-        };
-        const mockStrategy = {
-          bestStrategy: "filename",
-          bestPathKey: "",
-          bestFileMatchesList: [mockFileMatch],
-        };
-
-        mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
-        mockDetermineExerciseFilterStrategy.mockReturnValue(
-          mockStrategy,
-        );
-        mockFilterLogDataByExercise.mockReturnValue([mockLogData[1]]);
-
-        const result = DataFilter.filterData(
-          mockLogData,
-          params as EmbeddedChartParams,
-        );
-
-        expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
-          mockLogData,
-          "filename",
-          "",
-          [mockFileMatch],
-        );
-        expect(result.filteredData).toHaveLength(1);
-        expect(result.filterMethodUsed).toBe("file name (score: 85)");
-      });
-
       it("should handle no match found", () => {
         const params: Partial<EmbeddedChartParams> = {
           exercise: "nonexistent",
         };
         const mockMatchesResult = {
-          fileNameMatches: [],
           allExercisePathsAndScores: new Map(),
-          bestStrategy: "",
-          bestPathKey: "",
         };
         const mockStrategy = {
           bestStrategy: "none",
           bestPathKey: "",
-          bestFileMatchesList: [],
         };
 
         mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
@@ -629,6 +577,34 @@ describe("DataFilter", () => {
       expect(rows).toEqual(result.filteredData);
       expect(rows).toHaveLength(1);
       expect(rows[0].exercise).toBe("Squat");
+    });
+  });
+
+  describe("dateRange", () => {
+    const daysAgo = (n: number) => {
+      const d = new Date();
+      d.setDate(d.getDate() - n);
+      d.setHours(9, 0, 0, 0);
+      return d.toISOString();
+    };
+    const logs = [
+      { date: daysAgo(1), exercise: "Squat" },
+      { date: daysAgo(3), exercise: "Bench" },
+      { date: daysAgo(20), exercise: "Deadlift" },
+    ].map((l) => ({ ...l, reps: 5, weight: 100, volume: 500 })) as WorkoutLogData[];
+
+    it("keeps only logs within dateRange days, including the boundary day", () => {
+      expect(
+        DataFilter.filterData(logs, { dateRange: 3 }).filteredData.map(
+          (l) => l.exercise,
+        ),
+      ).toEqual(["Squat", "Bench"]);
+    });
+
+    it("does not filter by date with dateRange 0", () => {
+      expect(
+        DataFilter.filterData(logs, { dateRange: 0 }).filteredData,
+      ).toHaveLength(3);
     });
   });
 });

@@ -6,7 +6,7 @@
       "quickWeightIncrementUnit": "Botões de peso incrementam {weightIncrementUnit}",
       "reps": "Representações",
       "trendType": "Tendência {type}:",
-      "variationFromTo": "de {{startValue}} a {{endValue}}",
+      "variationFromTo": "de {startValue} a {endValue}",
       "volume": "Volume",
       "weight": "Peso",
       "weightIncrementUnit": "Incremento de peso {weightIncrementUnit}"
@@ -108,7 +108,7 @@
     "protocol": {
       "clickToFilter": "Clique para filtrar",
       "percentLabel": "Rótulo da porcentagem",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "Limpar filtro",
@@ -143,16 +143,16 @@
     },
     "summary": {
       "currentStreak": "Streak atual",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} semanas",
       "personalRecords": "Registos pessoais",
       "title": "Resumo",
       "totalVolume": "Volume total",
       "totalWorkouts": "Número total de treinos"
     },
     "volumeAnalytics": {
-      "chartTitle": "Tendência de volume (últimos 30 dias)",
       "muscleBreakdownTitle": "Exercícios mais eficazes, por volume",
-      "title": "Análise de volume"
+      "title": "Análise de volume",
+      "chartTitleDays": "Tendência de volume (últimos {days} dias)"
     }
   },
   "duration": {
@@ -164,12 +164,12 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "As suas estatísticas de treino num relance. Consulte [[{featureShowcase}]] para ver todos os componentes disponíveis.",
       "title": "Painel de controle"
     },
     "exercise": {
       "chartTitle": "Gráfico",
-      "descriptionTemplate": "Descrição de exemplo para {{name}}.",
+      "descriptionTemplate": "Descrição de exemplo para {name}.",
       "descriptionTitle": "Descrição",
       "distanceChartTitle": "Gráfico de Distância",
       "durationChartTitle": "Gráfico de duração",
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Tabelas",
       "timedExerciseTitle": "Exercício com Tempo Limite (Duração)",
       "timersTitle": "3. Cronômetros",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Dica**: para o seu painel pessoal, consulte [[{dashboard}]]",
       "title": "Exemplos de funcionalidades",
       "trainingProtocolsIntro": "Este plugin suporta estes selos de protocolo nos seus logs:",
       "trainingProtocolsTitle": "5. Protocolos de Treino",
@@ -284,9 +284,9 @@
       "nextStepsTitle": "Próximos passos",
       "quickActionsIntro": "Utilize estes comandos (Ctrl/Cmd + P):",
       "quickActionsTitle": "Ações Rápidas",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
-      "step3": "Experimente um treino do(a) {name}",
+      "step1": "Abra [[{dashboard}]] para ver as suas estatísticas",
+      "step2": "Consulte [[{featureShowcase}]] para conhecer todas as funcionalidades disponíveis",
+      "step3": "Experimente um treino da pasta **{workouts}**",
       "step4": "Crie seus próprios exercícios em **{exercises}**",
       "tableHeaderDescription": "Descrição",
       "tableHeaderFileFolder": "Arquivo/Pasta",
@@ -307,7 +307,7 @@
       "chart": "gráfico",
       "duration": "Duração",
       "note": "Observação: esforce-se",
-      "recoverySuffix": "(Recuperação: {count} s)",
+      "recoverySuffix": "(Recuperação: {seconds}s)",
       "setsReps": "{sets} séries x {reps} repetições"
     },
     "workouts": {
@@ -342,9 +342,9 @@
       "avgHeartRate": "Frequência cardíaca média (bpm)",
       "avgVolume": "Volume médio ({unit})",
       "avgWeight": "Peso médio ({unit})",
-      "dailyVolume": "Volume diário ({{unit}})",
+      "dailyVolume": "Volume diário ({unit})",
       "pace": "Velocidade (min/km)",
-      "totalCustom": "Total: {{label}}",
+      "totalCustom": "Total: {label}",
       "totalDistance": "Distância total (km)",
       "totalDuration": "Duração total (seg)",
       "totalVolume": "Volume total ({unit})",
@@ -434,10 +434,10 @@
   "logs": {
     "addLogButtonAria": "Adicionar log para {exerciseName}",
     "addLogButtonText": "Adicionar log para {exerciseName}",
-    "createFirstLogButton": "Criar o primeiro log para {{exerciseName}}",
-    "createFirstLogButtonAria": "Criar o primeiro log para {{exerciseName}}",
-    "createLogButtonAria": "Criar log para: {{exerciseName}}",
-    "createLogButtonText": "Criar log para: {{exerciseName}}",
+    "createFirstLogButton": "Criar o primeiro log para {exerciseName}",
+    "createFirstLogButtonAria": "Criar o primeiro log para {exerciseName}",
+    "createLogButtonAria": "Criar log para: {exerciseName}",
+    "createLogButtonText": "Criar log para: {exerciseName}",
     "noDataTitle": "Não foram encontrados logs para {exerciseName}"
   },
   "messages": {
@@ -522,7 +522,6 @@
       "includeLog": "Incluir Log",
       "includeStats": "Incluir estatísticas",
       "includeTimer": "Incluir temporizador",
-      "searchByName": "Pesquisar por nome",
       "showAddButton": "Mostrar botão \"Adicionar\"",
       "showControls": "Mostrar controles",
       "showStatistics": "Mostrar estatísticas",
@@ -544,10 +543,6 @@
     "delete": "Excluir",
     "duration": "Duração (segundos):",
     "editTag": "Editar tag",
-    "exerciseStatus": {
-      "createPage": "Criar Página",
-      "notFound": "Não encontrado"
-    },
     "exerciseType": "Tipo de exercício:",
     "exportTags": "Exportar etiquetas",
     "fileName": "Nome do arquivo",
@@ -562,11 +557,11 @@
       "actions": "Ações",
       "currentFileInfo": "Arquivo atual: {fileName}",
       "exercise": "Exercício:",
-      "reps": "Representantes:",
-      "targetReps": "Representantes-alvo:",
+      "reps": "Repetições:",
+      "targetReps": "Repetições-alvo:",
       "targetWeight": "Objetivo: ({unit}):",
-      "volume": "Volume ({{unit}}):",
-      "weight": "Peso ({{unit}}):"
+      "volume": "Volume ({unit}):",
+      "weight": "Peso ({unit}):"
     },
     "layoutGrouped": "Agrupado por músculo",
     "layoutHorizontal": "Fluxo horizontal",
@@ -580,29 +575,29 @@
     "note": "Observação:",
     "notes": "Observações (opcional):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "Mudar o nome deste ficheiro?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Encontrado(s) {count} discrepância(s):",
       "auditNoMatchFound": "Nenhuma correspondência",
       "auditNoMismatches": "Ausência de correspondências nas auditorias",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Não foi possível mudar o nome: {error}",
+      "auditRenameFileError": "Não foi possível mudar o nome do ficheiro: {error}",
       "auditRenameFileSuccess": "Confirmação de renomeação de arquivo bem-sucedida",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "Nome alterado ({count} ficheiros atualizados)",
       "auditScanError": "Erro ao escanear arquivos: {error}",
       "auditScanning": "Verificação de auditoria",
       "canvasExportError": "Erro na exportação do canvas: {error}",
       "canvasExported": "Imagem do Canvas exportada ({path})",
       "chartInserted": "✅ Gráfico inserido com sucesso!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Atualizar o objetivo para {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Painel inserido com sucesso!",
       "dismissAchievement": "Descartar conquista",
       "exerciseBlockInserted": "Bloco de Exercícios Inserido",
       "exerciseNameRequired": "❌, por favor, insira um nome para o exercício",
       "exercisePageCreated": "Página de exercício criada com sucesso!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Erro ao criar a página de exercício: {error}",
       "exercisePageNameRequired": "Por favor, insira o nome do exercício",
       "exerciseSectionCreated": "✅ Seção de exercícios criada com sucesso!",
-      "genericError": "Error: ",
+      "genericError": "Erro: {error}",
       "insertCodeNoFile": "Abra um arquivo Markdown para inserir o código",
       "logCreated": "Registro de treino criado com sucesso!",
       "logUpdated": "Registro de treino atualizado com sucesso!",
@@ -627,7 +622,7 @@
       "muscleTagSaved": "Etiqueta de Músculo Salva",
       "muscleTagSimilarFound": "{count} tags semelhantes encontradas",
       "muscleTagSimilarWarning": "Aviso: Etiqueta de Músculo Semelhante",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Próximo peso sugerido: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabela inserida com sucesso!",
       "tableUpdateFailed": "Falhou a atualização da tabela. Verifique se o arquivo está aberto no editor.",
       "tableUpdated": "✅ Tabela atualizada com sucesso!",
@@ -697,7 +692,7 @@
       "distance": "Distância",
       "dropSet": "Conjunto de repetições",
       "exerciseWorkout": "Treino",
-      "myoReps": "Representantes do Myo",
+      "myoReps": "Myo reps",
       "number": "Número",
       "restPause": "Pausa",
       "specificExercise": "Exercício específico",
@@ -725,7 +720,6 @@
       "createExercisePage": "Página para criar exercício",
       "createExerciseSection": "Criar seção de exercícios",
       "createLog": "Criar registo de treino",
-      "create_log": "Criar registro de treino",
       "editLog": "Editar histórico de treino",
       "editTable": "Parâmetros da tabela",
       "editTimer": "Editar parâmetros do temporizador",
@@ -744,10 +738,11 @@
     "editItem": "Editar {item}",
     "deleteItem": "Excluir {item}",
     "errors": {
-      "missingElements": "Elementos ausentes"
+      "missingElements": "Elementos em falta",
+      "validationCombinedMode": "Para o tipo exercício + treino, preencha ambos os campos"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Séries: {sets}\n- Repetições: {reps}\n- Descanso: {restTime}s",
-    "noteTemplate": "**Observação: ${params.note}**"
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Séries: {sets}\n- Repetições: {reps}\n- Descanso: {restTime}s\n\n",
+    "noteTemplate": "**Observação: {note}**\n"
   },
   "settings": {
     "buttons": {
@@ -791,7 +786,8 @@
       "setDuration": "Utilizado quando o tipo de representação não é especificado (opção padrão). Faixa típica: 30-60 segundos.",
       "setupCSV": "Crie os arquivos workout_logs.csv e muscle-tags.csv na pasta configurada.",
       "weightIncrement": "Incremento padrão de peso para sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
-      "weightUnit": "Selecione a unidade para medições de peso (kg/lb). Isso afeta a unidade padrão para novos registros."
+      "weightUnit": "Selecione a unidade para medições de peso (kg/lb). Isso afeta a unidade padrão para novos registros.",
+      "showRibbonIcon": "Mostrar na barra lateral o ícone de haltere que abre o formulário de registo de treino"
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
@@ -816,7 +812,8 @@
       "runAllMaintenance": "Executar todas as tarefas de manutenção",
       "setDuration": "Duração padrão (segundos)",
       "setupCSV": "Configurar ficheiros CSV",
-      "weightUnit": "Unidade de peso"
+      "weightUnit": "Unidade de peso",
+      "showRibbonIcon": "Mostrar ícone de registo rápido"
     },
     "messages": {
       "confirmDeletePreset": "Tem certeza de que deseja excluir este preset?",
@@ -851,7 +848,6 @@
       "csvManagement": "Gerenciamento de arquivos CSV",
       "customProtocols": "Protocolos personalizados",
       "exampleData": "Dados de exemplo",
-      "filtering": "Filtro",
       "maintenance": "Manutenção",
       "quickLog": "Registro móvel",
       "setupAndData": "Configuração e dados",
@@ -893,7 +889,7 @@
       "heartRate": "Frequência Cardíaca",
       "notes": "Observações",
       "protocol": "Protocolo",
-      "reps": "Representantes",
+      "reps": "Repetições",
       "volume": "Volume",
       "weight": "Peso"
     },
@@ -924,12 +920,16 @@
     "notAvailable": "Não disponível",
     "refreshSuccess": "Atualização bem-sucedida",
     "target": {
-      "progressTooltip": "Melhor: {{best}} repetições / Objetivo: {{target}} repetições",
+      "progressTooltip": "Melhor: {best} repetições / Objetivo: {target} repetições",
       "repsSuffix": "representações",
       "separator": " × "
     },
     "trendLine": "Linha de Tendência",
-    "refreshingTable": "Atualizando a tabela..."
+    "refreshingTable": "A atualizar a tabela...",
+    "validation": {
+      "sortByInvalid": "sortBy tem de ser um de {allowed}, recebido: \"{value}\"",
+      "sortOrderInvalid": "sortOrder tem de ser asc ou desc, recebido: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Mês",
@@ -940,8 +940,7 @@
     "controls": {
       "pauseTimer": "Pausar temporizador",
       "resetTimer": "Reiniciar temporizador",
-      "startTimer": "Iniciar temporizador",
-      "timerMenu": "Timer menu"
+      "startTimer": "Iniciar temporizador"
     },
     "countdown": "Contagem regressiva",
     "editTimer": "Editar temporizador",

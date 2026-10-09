@@ -2,7 +2,11 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
-import { TableRow } from "@app/features/tables/types";
+import {
+  TableRow,
+  TableSortField,
+  TableSortOrder,
+} from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { t } from "@app/i18n";
@@ -13,30 +17,37 @@ import { t } from "@app/i18n";
  */
 export class TableRowProcessor {
   /**
-   * Efficiently sorts and limits data in one operation.
+   * Sorts data by the given field and order, then keeps the first `limit` rows.
+   * Ties fall back to the most recent date first.
    * @param logData - Array of workout log data
    * @param limit - Maximum number of rows to return
+   * @param sortBy - Field to sort by (default "date")
+   * @param sortOrder - "asc" or "desc" (default "desc")
    * @returns Sorted and limited array of workout log data
    */
   static sortAndLimitData(
     logData: WorkoutLogData[],
     limit: number,
+    sortBy: TableSortField = "date",
+    sortOrder: TableSortOrder = "desc",
   ): WorkoutLogData[] {
-    if (logData.length <= limit) {
-      return [...logData].sort(
-        (a, b) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-    }
-
-    const dataWithDates = logData.map((log) => ({
+    const direction = sortOrder === "asc" ? 1 : -1;
+    const rows = logData.map((log) => ({
       log,
       timestamp: new Date(log.date).getTime(),
     }));
 
-    dataWithDates.sort((a, b) => b.timestamp - a.timestamp);
+    rows.sort((a, b) => {
+      const primary =
+        sortBy === "date"
+          ? a.timestamp - b.timestamp
+          : sortBy === "exercise"
+            ? a.log.exercise.localeCompare(b.log.exercise)
+            : (a.log[sortBy] ?? 0) - (b.log[sortBy] ?? 0);
+      return primary * direction || b.timestamp - a.timestamp;
+    });
 
-    return dataWithDates.slice(0, limit).map((item) => item.log);
+    return rows.slice(0, limit).map((row) => row.log);
   }
 
   /**

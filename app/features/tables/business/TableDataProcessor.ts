@@ -37,6 +37,8 @@ export class TableDataProcessor {
     const sortedAndLimitedData = TableRowProcessor.sortAndLimitData(
       logData,
       limit,
+      params.sortBy,
+      params.sortOrder,
     );
 
     // Check which optional data columns should be shown (based on visible data)

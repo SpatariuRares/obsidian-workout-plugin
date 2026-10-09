@@ -147,27 +147,22 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   /**
-   * Updates the ribbon icon visibility. The ribbon opens CreateLogModal.
+   * Updates the ribbon icon visibility (settings.showRibbonIcon).
+   * The ribbon opens CreateLogModal.
    */
   public updateQuickLogRibbon(): void {
     if (this.quickLogRibbonIcon) {
       this.quickLogRibbonIcon.remove();
       this.quickLogRibbonIcon = null;
     }
+    if (!this.settings.showRibbonIcon) {
+      return;
+    }
 
     this.quickLogRibbonIcon = this.addRibbonIcon(
       "dumbbell",
-      t("modal.titles.create_log"),
-      () => {
-        new CreateLogModal(
-          this.app,
-          this,
-          undefined,
-          undefined,
-          undefined,
-          true,
-        ).open();
-      },
+      t("modal.titles.createLog"),
+      () => this.createLogModalHandler.openModal(),
     );
   }
 

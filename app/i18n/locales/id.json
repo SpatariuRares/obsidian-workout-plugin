@@ -4,9 +4,9 @@
     "fallbackTableMessage": "Pesan Tabel Cadangan",
     "labels": {
       "quickWeightIncrementUnit": "Tombol berat menambah {weightIncrementUnit}",
-      "reps": "Perwakilan",
+      "reps": "Repetisi",
       "trendType": "Tren {type}:",
-      "variationFromTo": "dari {{startValue}} hingga {{endValue}}",
+      "variationFromTo": "dari {startValue} hingga {endValue}",
       "volume": "Volume",
       "weight": "Berat",
       "weightIncrementUnit": "Penambahan berat {weightIncrementUnit}"
@@ -143,16 +143,16 @@
     },
     "summary": {
       "currentStreak": "Streak saat ini",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} minggu",
       "personalRecords": "Rekam-rekam pribadi",
       "title": "Ringkasan",
       "totalVolume": "Total volume",
       "totalWorkouts": "Total latihan"
     },
     "volumeAnalytics": {
-      "chartTitle": "Tren volume (30 hari terakhir)",
       "muscleBreakdownTitle": "Latihan terpopuler berdasarkan volume",
-      "title": "Analisis volume"
+      "title": "Analisis volume",
+      "chartTitleDays": "Tren volume ({days} hari terakhir)"
     }
   },
   "duration": {
@@ -164,12 +164,12 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "Statistik latihan Anda secara sekilas. Lihat [[{featureShowcase}]] untuk semua komponen yang tersedia.",
       "title": "Dasbor"
     },
     "exercise": {
       "chartTitle": "Grafik",
-      "descriptionTemplate": "Contoh deskripsi untuk {{name}}.",
+      "descriptionTemplate": "Contoh deskripsi untuk {name}.",
       "descriptionTitle": "Deskripsi",
       "distanceChartTitle": "Grafik Jarak",
       "durationChartTitle": "Grafik Durasi",
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Tabel",
       "timedExerciseTitle": "Latihan dengan Batas Waktu (Durasi)",
       "timersTitle": "3. Timer",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Tips**: Untuk dasbor pribadi Anda, lihat [[{dashboard}]]",
       "title": "Contoh-contoh Fitur",
       "trainingProtocolsIntro": "Plugin ini mendukung tanda protokol berikut di log Anda:",
       "trainingProtocolsTitle": "5. Protokol Pelatihan",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "Langkah Selanjutnya",
       "quickActionsIntro": "Gunakan perintah-perintah ini (Ctrl/Cmd + P):",
       "quickActionsTitle": "Tindakan Cepat",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "Buka [[{dashboard}]] untuk melihat statistik Anda",
+      "step2": "Lihat [[{featureShowcase}]] untuk mempelajari semua fitur yang tersedia",
       "step3": "Coba latihan dari folder **{workouts}**.",
       "step4": "Buat latihan Anda sendiri di **{exercises}**",
       "tableHeaderDescription": "Deskripsi",
@@ -344,7 +344,7 @@
       "avgWeight": "Berat rata-rata ({unit})",
       "dailyVolume": "Volume harian ({unit})",
       "pace": "Kecepatan (menit/km)",
-      "totalCustom": "Total {{label}}",
+      "totalCustom": "Total {label}",
       "totalDistance": "Total jarak (km)",
       "totalDuration": "Durasi total (detik)",
       "totalVolume": "Total volume ({unit})",
@@ -522,7 +522,6 @@
       "includeLog": "Sertakan Log",
       "includeStats": "Sertakan Statistik",
       "includeTimer": "Sertakan Timer",
-      "searchByName": "Cari berdasarkan nama",
       "showAddButton": "Tampilkan Tombol Tambah",
       "showControls": "Tampilkan Kontrol",
       "showStatistics": "Tampilkan Statistik",
@@ -544,10 +543,6 @@
     "delete": "Hapus",
     "duration": "Durasi (detik):",
     "editTag": "Edit tag",
-    "exerciseStatus": {
-      "createPage": "Buat Halaman",
-      "notFound": "Tidak Ditemukan"
-    },
     "exerciseType": "Jenis latihan:",
     "exportTags": "Ekspor tag",
     "fileName": "Nama berkas",
@@ -562,7 +557,7 @@
       "actions": "Opsi",
       "currentFileInfo": "File saat ini: {fileName}",
       "exercise": "Latihan:",
-      "reps": "Perwakilan:",
+      "reps": "Repetisi:",
       "targetReps": "Target:",
       "targetWeight": "Target: ({unit}):",
       "volume": "Volume ({unit}):",
@@ -580,29 +575,29 @@
     "note": "Catatan:",
     "notes": "Catatan (opsional):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "Ganti nama file ini?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Ditemukan {count} ketidaksesuaian:",
       "auditNoMatchFound": "Tidak ada kecocokan",
       "auditNoMismatches": "Tidak ada perbedaan hasil audit",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Tidak dapat mengganti nama: {error}",
+      "auditRenameFileError": "Tidak dapat mengganti nama file: {error}",
       "auditRenameFileSuccess": "Berhasil mengubah nama file",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "Nama diganti ({count} file diperbarui)",
       "auditScanError": "Kesalahan saat memindai: {error}",
       "auditScanning": "Pemindaian Audit",
       "canvasExportError": "Kesalahan Ekspor Kanvas: {error}",
       "canvasExported": "Gambar berhasil diekspor ({path})",
       "chartInserted": "✅ Grafik berhasil ditambahkan!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Perbarui target menjadi {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dasbor berhasil ditambahkan!",
       "dismissAchievement": "Tutup pencapaian",
       "exerciseBlockInserted": "Blok Latihan Telah Ditambahkan",
       "exerciseNameRequired": "❌ mohon masukkan nama latihan",
       "exercisePageCreated": "Halaman olahraga berhasil dibuat!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Kesalahan saat membuat halaman latihan: {error}",
       "exercisePageNameRequired": "Mohon masukkan nama latihan",
       "exerciseSectionCreated": "✅ Bagian latihan berhasil dibuat!",
-      "genericError": "Error: ",
+      "genericError": "Kesalahan: {error}",
       "insertCodeNoFile": "Buka file Markdown untuk memasukkan kode",
       "logCreated": "Catatan latihan berhasil dibuat!",
       "logUpdated": "Catatan latihan berhasil diperbarui!",
@@ -627,7 +622,7 @@
       "muscleTagSaved": "Tag Otot Telah Disimpan",
       "muscleTagSimilarFound": "{count} tag serupa ditemukan",
       "muscleTagSimilarWarning": "Peringatan: Tag Otot Mirip",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Beban berikutnya yang disarankan: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabel berhasil ditambahkan!",
       "tableUpdateFailed": "Gagal memperbarui tabel. Pastikan file tersebut terbuka di editor.",
       "tableUpdated": "✅ Tabel berhasil diperbarui!",
@@ -725,7 +720,6 @@
       "createExercisePage": "Buat halaman latihan",
       "createExerciseSection": "Buat bagian latihan",
       "createLog": "Buat catatan latihan",
-      "create_log": "Buat catatan latihan",
       "editLog": "Sunting catatan latihan",
       "editTable": "Parameter tabel",
       "editTimer": "Ubah parameter timer",
@@ -744,10 +738,11 @@
     "editItem": "Edit {item}",
     "deleteItem": "Hapus {item}",
     "errors": {
-      "missingElements": "Elemen yang hilang"
+      "missingElements": "Elemen tidak ditemukan",
+      "validationCombinedMode": "Untuk jenis latihan + sesi latihan, isi kedua kolom"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime}",
-    "noteTemplate": "**Catatan: ${params.note}**"
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime} dtk\n\n",
+    "noteTemplate": "**Catatan: {note}**\n"
   },
   "settings": {
     "buttons": {
@@ -791,7 +786,8 @@
       "setDuration": "Digunakan ketika jenis representasi tidak ditentukan (sebagai opsi cadangan). Rentang yang umum: 30-60 detik.",
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat standar untuk latihan bertahap (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
-      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru."
+      "weightUnit": "Pilih satuan untuk pengukuran berat (kg/lb). Ini akan memengaruhi satuan default untuk log baru.",
+      "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan"
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -816,7 +812,8 @@
       "runAllMaintenance": "Jalankan semua tugas pemeliharaan",
       "setDuration": "Durasi cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
-      "weightUnit": "Satuan berat"
+      "weightUnit": "Satuan berat",
+      "showRibbonIcon": "Tampilkan ikon catatan cepat"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -851,7 +848,6 @@
       "csvManagement": "Manajemen file CSV",
       "customProtocols": "Protokol khusus",
       "exampleData": "Contoh data",
-      "filtering": "Penyaringan",
       "maintenance": "Perawatan",
       "quickLog": "Pencatatan melalui perangkat seluler",
       "setupAndData": "Pengaturan & data",
@@ -893,7 +889,7 @@
       "heartRate": "Detak Jantung",
       "notes": "Catatan",
       "protocol": "Protokol",
-      "reps": "Perwakilan",
+      "reps": "Repetisi",
       "volume": "Volume",
       "weight": "Berat"
     },
@@ -902,7 +898,7 @@
       "duration": "Dur",
       "heartRate": "Detak Jantung",
       "pace": "Kecepatan",
-      "reps": "Perwakilan",
+      "reps": "Rep",
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Berat ({weightUnit})"
     },
@@ -929,7 +925,11 @@
       "separator": " × "
     },
     "trendLine": "Garis Tren",
-    "refreshingTable": "Memuat ulang tabel..."
+    "refreshingTable": "Menyegarkan tabel...",
+    "validation": {
+      "sortByInvalid": "sortBy harus salah satu dari {allowed}, diterima: \"{value}\"",
+      "sortOrderInvalid": "sortOrder harus asc atau desc, diterima: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Bulan",
@@ -940,8 +940,7 @@
     "controls": {
       "pauseTimer": "Jeda timer",
       "resetTimer": "Mulai ulang timer",
-      "startTimer": "Mulai timer",
-      "timerMenu": "Timer menu"
+      "startTimer": "Mulai timer"
     },
     "countdown": "Menghitung mundur",
     "editTimer": "Ubah waktu",

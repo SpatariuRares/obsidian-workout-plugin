@@ -1,7 +1,7 @@
 // Base class for log modals (Create and Edit)
 // Extracts common form creation and validation logic
 
-import { App, Notice } from "obsidian";
+import { App, Notice, Platform } from "obsidian";
 import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
@@ -12,6 +12,7 @@ import {
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { DomUtils } from "@app/utils/DomUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
@@ -36,6 +37,7 @@ export abstract class BaseLogModal extends ModalBase {
   // Track current parameters for dynamic validation
   protected currentParameters: ParameterDefinition[] = [];
   protected formElements?: LogFormElements;
+  private stopKeepingFieldVisible?: () => void;
 
   constructor(
     app: App,
@@ -94,6 +96,12 @@ export abstract class BaseLogModal extends ModalBase {
     const { contentEl } = this;
     contentEl.addClass("workout-modal");
 
+    // iOS overlays the keyboard on the modal, hiding fields like notes
+    if (Platform.isMobile) {
+      this.stopKeepingFieldVisible =
+        DomUtils.keepFocusedFieldVisible(contentEl);
+    }
+
     // Add modal title
     contentEl.createEl("h2", {
       text: this.getModalTitle(),
@@ -132,6 +140,8 @@ export abstract class BaseLogModal extends ModalBase {
 
   onClose() {
     const { contentEl } = this;
+    this.stopKeepingFieldVisible?.();
+    this.stopKeepingFieldVisible = undefined;
     contentEl.empty();
   }
 

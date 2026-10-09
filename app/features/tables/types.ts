@@ -1,14 +1,25 @@
 import { FilterResult } from "@app/types/CommonTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
+export const TABLE_SORT_FIELDS = [
+  "date",
+  "exercise",
+  "weight",
+  "reps",
+  "volume",
+] as const;
+export type TableSortField = (typeof TABLE_SORT_FIELDS)[number];
+export type TableSortOrder = "asc" | "desc";
+
 export interface EmbeddedTableParams {
   id?: string; // Unique identifier for code block replacement
   exercise?: string;
   workout?: string;
-  dateRange?: number; // Days to look back (handled by DataFilter before table processing)
+  dateRange?: number; // Days to look back, including the boundary day (applied by DataFilter; 0 = no limit)
   limit?: number;
+  sortBy?: TableSortField; // default "date"
+  sortOrder?: TableSortOrder; // default "desc"
   exactMatch?: boolean;
-  searchByName?: boolean;
   showAddButton?: boolean;
   columns?: string[] | string;
   targetWeight?: number;
@@ -54,7 +65,6 @@ export interface TableCodeOptions
         | "workout"
         | "limit"
         | "showAddButton"
-        | "searchByName"
         | "exactMatch"
       >
     >,

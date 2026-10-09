@@ -240,7 +240,6 @@ export class CreateExerciseSectionModal extends ModalBase {
         workout: params.workoutName,
         limit: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
         showAddButton: true,
-        searchByName: false,
         exactMatch: true,
       });
       sectionCode += logCode;

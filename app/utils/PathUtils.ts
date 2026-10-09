@@ -15,6 +15,17 @@ export class PathUtils {
   }
 
   /**
+   * Builds a wiki link to a note from its vault path.
+   * @param notePath - Note path (e.g., "Workouts/Leg Day.md")
+   * @returns Wiki link (e.g., "[[Leg Day]]") or empty string if no path
+   */
+  static toWikiLink(notePath: string): string {
+    const basename =
+      notePath.split("/").pop()?.replace(/\.md$/i, "") || "";
+    return basename ? `[[${basename}]]` : "";
+  }
+
+  /**
    * Computes a sibling file path in the same folder as the given file.
    * @param filePath - Reference file path (e.g., "folder/workout_logs.csv")
    * @param siblingName - Name of the sibling file (e.g., "muscle-tags.csv")

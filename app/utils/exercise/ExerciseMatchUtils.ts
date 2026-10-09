@@ -1,27 +1,23 @@
-import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { StringUtils } from "@app/utils/StringUtils";
 
 // Constants
 const PATH_MATCH_THRESHOLD = 70; // Minimum score for path matching
 
-export interface ExerciseMatch {
-  file: TFile;
-  score: number;
-  exerciseName: string;
-  strategy: string;
-}
+export type ExerciseFilterStrategy =
+  | "exercise_field_exact"
+  | "exercise_field"
+  | "none";
 
 export interface MatchResult {
-  fileNameMatches: ExerciseMatch[];
+  /** Score of every distinct exercise name in the logs against the query */
   allExercisePathsAndScores: Map<string, number>;
-  bestStrategy: string;
-  bestPathKey: string;
 }
 
 /**
- * Utility class for exercise matching operations
- * Handles fuzzy matching, filtering strategies, and exercise data filtering
+ * Utility class for exercise matching operations.
+ * Matching uses the exercise field of each log only: every log comes from
+ * the same CSV file, so its file name says nothing about the exercise.
  */
 export class ExerciseMatchUtils {
   static readonly PATH_MATCH_THRESHOLD = PATH_MATCH_THRESHOLD;
@@ -35,33 +31,22 @@ export class ExerciseMatchUtils {
   }
 
   /**
+   * Whether a log's exercise passes the fuzzy threshold for the query.
+   */
+  static isFuzzyMatch(exercise: string, query: string): boolean {
+    return this.getMatchScore(exercise, query) >= PATH_MATCH_THRESHOLD;
+  }
+
+  /**
    * Find exercise matches in log data
    */
   static findExerciseMatches(
     logData: WorkoutLogData[],
     exerciseName: string,
   ): MatchResult {
-    const fileNameMatches: ExerciseMatch[] = [];
     const allExercisePathsAndScores = new Map<string, number>();
 
     for (const log of logData) {
-      // Check filename strategy
-      const fileName = log.file?.basename || "";
-      const fileNameScore = this.getMatchScore(
-        fileName,
-        exerciseName,
-      );
-
-      if (fileNameScore > 0 && log.file) {
-        fileNameMatches.push({
-          file: log.file,
-          score: fileNameScore,
-          exerciseName: fileName,
-          strategy: "filename",
-        });
-      }
-
-      // Check exercise field strategy
       const exerciseField = log.exercise || "";
       const exerciseScore = this.getMatchScore(
         exerciseField,
@@ -73,37 +58,22 @@ export class ExerciseMatchUtils {
       }
     }
 
-    return {
-      fileNameMatches,
-      allExercisePathsAndScores,
-      bestStrategy: "",
-      bestPathKey: "",
-    };
+    return { allExercisePathsAndScores };
   }
 
   /**
    * Determine the best filtering strategy
    */
   static determineExerciseFilterStrategy(
-    fileNameMatches: ExerciseMatch[],
     allExercisePathsAndScores: Map<string, number>,
     exactMatch: boolean = false,
     exerciseName: string = "",
   ): {
-    bestStrategy: string;
+    bestStrategy: ExerciseFilterStrategy;
     bestPathKey: string;
-    bestFileMatchesList: ExerciseMatch[];
   } {
-    let bestStrategy = "none";
-    let bestPathKey = "";
-    let bestFileMatchesList: ExerciseMatch[] = [];
-
-    // Robust exact match logic
     if (exactMatch && exerciseName) {
-      // Prefer exact match on exercise field
-      for (const [
-        exerciseField,
-      ] of allExercisePathsAndScores.entries()) {
+      for (const exerciseField of allExercisePathsAndScores.keys()) {
         if (
           StringUtils.normalize(exerciseField) ===
           StringUtils.normalize(exerciseName)
@@ -111,75 +81,23 @@ export class ExerciseMatchUtils {
           return {
             bestStrategy: "exercise_field_exact",
             bestPathKey: exerciseField,
-            bestFileMatchesList: [],
           };
         }
       }
-      // Fallback: exact match on filename
-      const exactFileMatches = fileNameMatches.filter(
-        (m) =>
-          StringUtils.normalize(m.exerciseName) ===
-          StringUtils.normalize(exerciseName),
-      );
-      if (exactFileMatches.length > 0) {
-        return {
-          bestStrategy: "filename_exact",
-          bestPathKey: "",
-          bestFileMatchesList: exactFileMatches,
-        };
-      }
-      // No exact match found
-      return {
-        bestStrategy: "none",
-        bestPathKey: "",
-        bestFileMatchesList: [],
-      };
+      return { bestStrategy: "none", bestPathKey: "" };
     }
 
-    // Check filename strategy
-    if (fileNameMatches.length > 0) {
-      const bestFileNameMatch = fileNameMatches.reduce(
-        (best, current) =>
-          current.score > best.score ? current : best,
-      );
-
-      if (
-        bestFileNameMatch.score >=
-        (exactMatch ? 90 : PATH_MATCH_THRESHOLD)
-      ) {
-        bestStrategy = "filename";
-        bestFileMatchesList = fileNameMatches.filter(
-          (match) =>
-            match.score >= (exactMatch ? 90 : PATH_MATCH_THRESHOLD),
-        );
-      }
-    }
-
-    // Check exercise field strategy
     if (allExercisePathsAndScores.size > 0) {
-      const bestExercisePath = Array.from(
+      const [bestPath, bestScore] = Array.from(
         allExercisePathsAndScores.entries(),
-      ).reduce((best, [path, score]) =>
-        score > best[1] ? [path, score] : best,
-      );
+      ).reduce((best, entry) => (entry[1] > best[1] ? entry : best));
 
-      if (
-        bestExercisePath[1] >=
-        (exactMatch ? 90 : PATH_MATCH_THRESHOLD)
-      ) {
-        if (
-          bestExercisePath[1] >
-          (bestFileMatchesList.length > 0
-            ? bestFileMatchesList[0].score
-            : 0)
-        ) {
-          bestStrategy = "exercise_field";
-          bestPathKey = bestExercisePath[0];
-        }
+      if (bestScore >= PATH_MATCH_THRESHOLD) {
+        return { bestStrategy: "exercise_field", bestPathKey: bestPath };
       }
     }
 
-    return { bestStrategy, bestPathKey, bestFileMatchesList };
+    return { bestStrategy: "none", bestPathKey: "" };
   }
 
   /**
@@ -187,9 +105,8 @@ export class ExerciseMatchUtils {
    */
   static filterLogDataByExercise(
     logData: WorkoutLogData[],
-    strategy: string,
+    strategy: ExerciseFilterStrategy,
     pathKey: string,
-    fileMatches: ExerciseMatch[],
   ): WorkoutLogData[] {
     if (strategy === "exercise_field_exact") {
       return logData.filter(
@@ -198,30 +115,10 @@ export class ExerciseMatchUtils {
           StringUtils.normalize(pathKey),
       );
     }
-    if (strategy === "filename_exact") {
-      const fileNames = fileMatches.map((m) =>
-        StringUtils.normalize(m.exerciseName),
-      );
-      return logData.filter((log) =>
-        fileNames.includes(
-          StringUtils.normalize(log.file?.basename || ""),
-        ),
-      );
-    }
-    if (strategy === "filename") {
-      const filePaths = fileMatches.map((match) => match.file.path);
-      return logData.filter(
-        (log) => log.file && filePaths.includes(log.file.path),
-      );
-    }
     if (strategy === "exercise_field") {
-      return logData.filter((log) => {
-        const exerciseField = log.exercise || "";
-        return (
-          this.getMatchScore(exerciseField, pathKey) >=
-          PATH_MATCH_THRESHOLD
-        );
-      });
+      return logData.filter((log) =>
+        this.isFuzzyMatch(log.exercise || "", pathKey),
+      );
     }
     return [];
   }

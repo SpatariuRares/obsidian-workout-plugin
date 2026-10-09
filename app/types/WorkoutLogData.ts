@@ -125,6 +125,8 @@ export interface WorkoutChartsSettings {
   quickWeightIncrement: number;
   /** Weight unit for the application (kg or lb) */
   weightUnit: "kg" | "lb";
+  /** Show the dumbbell ribbon icon that opens the create log modal */
+  showRibbonIcon: boolean;
 }
 
 /**

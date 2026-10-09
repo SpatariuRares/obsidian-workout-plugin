@@ -199,7 +199,6 @@ export class InsertTableModal extends BaseInsertModal {
       this,
       container,
       {
-        showSearchByName: true,
         showAddButton: true,
         compact: true,
       },
@@ -363,7 +362,6 @@ export class InsertTableModal extends BaseInsertModal {
       limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
       showAddButton,
-      searchByName: advancedValues.searchByName || false,
       exactMatch: advancedValues.exactMatch,
       targetWeight: targetWeight > 0 ? targetWeight : undefined,
       targetReps: targetReps > 0 ? targetReps : undefined,

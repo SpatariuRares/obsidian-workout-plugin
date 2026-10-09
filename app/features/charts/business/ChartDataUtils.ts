@@ -13,6 +13,24 @@ import { ChartDataExtractor } from "@app/features/charts/business/ChartDataExtra
  */
 export class ChartDataUtils {
   /**
+   * Keep only the latest `limit` points (the `limit` code block param).
+   * Labels must be in ascending date order. Returns new arrays.
+   */
+  static limitToLatest(
+    labels: string[],
+    datasets: ChartDataset[],
+    limit?: number,
+  ): { labels: string[]; datasets: ChartDataset[] } {
+    if (!limit || limit <= 0 || labels.length <= limit) {
+      return { labels, datasets };
+    }
+    return {
+      labels: labels.slice(-limit),
+      datasets: datasets.map((d) => ({ ...d, data: d.data.slice(-limit) })),
+    };
+  }
+
+  /**
    * Process log data for chart visualization.
    * Extended to support dynamic exercise types (timed, distance, cardio, custom).
    * Custom parameter keys can be passed as chartType for custom exercise types.

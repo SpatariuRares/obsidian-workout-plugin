@@ -74,6 +74,8 @@ workout: {{workout}}
   quickWeightIncrement: 2.5,
   /** Default weight unit */
   weightUnit: "kg",
+  /** Show the dumbbell ribbon icon that opens the create log modal */
+  showRibbonIcon: true,
 };
 
 /**
@@ -90,7 +92,7 @@ export const DEFAULT_TABLE_CONFIG = {
   /** Default columns visible in workout log tables */
   VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
   /** Default exact match setting for table filtering */
-  EXACT_MATCH: true,
+  EXACT_MATCH: false,
   /** Default limit specifically for modal inserts (12 rows) */
   MODAL_INSERT_LIMIT: 12,
 } as const;

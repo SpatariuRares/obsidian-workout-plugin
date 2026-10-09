@@ -1,11 +1,14 @@
 import { Setting } from "obsidian";
 import { t } from "@app/i18n";
 import { getDynamicSettingsLabels } from "@app/constants";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import type {
+  QuickLogRibbonPort,
+  WorkoutPluginContext,
+} from "@app/types/PluginPorts";
 
 export class QuickLogSettings {
   constructor(
-    private plugin: WorkoutPluginContext,
+    private plugin: WorkoutPluginContext & QuickLogRibbonPort,
     private containerEl: HTMLElement,
   ) {}
 
@@ -25,6 +28,19 @@ export class QuickLogSettings {
           .onChange(async (value) => {
             this.plugin.settings.defaultExactMatch = value;
             await this.plugin.saveSettings();
+          }),
+      );
+
+    new Setting(containerEl)
+      .setName(t("settings.labels.showRibbonIcon"))
+      .setDesc(t("settings.descriptions.showRibbonIcon"))
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.showRibbonIcon)
+          .onChange(async (value) => {
+            this.plugin.settings.showRibbonIcon = value;
+            await this.plugin.saveSettings();
+            this.plugin.updateQuickLogRibbon();
           }),
       );
 

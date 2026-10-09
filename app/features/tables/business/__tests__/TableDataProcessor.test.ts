@@ -855,3 +855,51 @@ describe("TableDataProcessor", () => {
     });
   });
 });
+
+describe("TableDataProcessor sorting", () => {
+  const daysAgo = (n: number) => {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    d.setHours(9, 0, 0, 0);
+    return d.toISOString();
+  };
+  const logs = [
+    createLog({ date: daysAgo(1), exercise: "Squat", weight: 100, reps: 5, volume: 500 }),
+    createLog({ date: daysAgo(3), exercise: "Bench", weight: 80, reps: 8, volume: 640 }),
+    createLog({ date: daysAgo(20), exercise: "Deadlift", weight: 140, reps: 3, volume: 420 }),
+  ];
+  const visible = async (params: EmbeddedTableParams) =>
+    (await TableDataProcessor.processTableData(logs, params)).filterResult
+      .filteredData;
+
+  it("sorts by date descending by default", async () => {
+    expect((await visible({})).map((l) => l.exercise)).toEqual([
+      "Squat",
+      "Bench",
+      "Deadlift",
+    ]);
+  });
+
+  it.each([
+    ["weight", "asc", ["Bench", "Squat", "Deadlift"]],
+    ["weight", "desc", ["Deadlift", "Squat", "Bench"]],
+    ["reps", "desc", ["Bench", "Squat", "Deadlift"]],
+    ["volume", "asc", ["Deadlift", "Squat", "Bench"]],
+    ["exercise", "asc", ["Bench", "Deadlift", "Squat"]],
+    ["date", "asc", ["Deadlift", "Bench", "Squat"]],
+  ] as const)("sorts by %s %s", async (sortBy, sortOrder, expected) => {
+    expect(
+      (await visible({ sortBy, sortOrder })).map((l) => l.exercise),
+    ).toEqual(expected);
+  });
+
+  it("applies the limit after sorting", async () => {
+    expect(
+      (await visible({ sortBy: "weight", sortOrder: "desc", limit: 1 })).map(
+        (l) => l.exercise,
+      ),
+    ).toEqual(["Deadlift"]);
+  });
+
+});
+

@@ -4,20 +4,22 @@ import {
 } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseView } from "@app/features/common/views/BaseView";
+import { SummaryWidget } from "@app/features/dashboard/widgets/summary/SummaryWidget";
+import { QuickStatsCards } from "@app/features/dashboard/widgets/quick-stats/QuickStatsCards";
+import { VolumeAnalytics } from "@app/features/dashboard/widgets/volume-analytics/VolumeAnalytics";
+import { RecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/RecentWorkouts";
+import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
+import { MuscleTagsWidget } from "@app/features/dashboard/widgets/muscle-tags/MuscleTagsWidget";
+import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
+import { ProtocolDistribution } from "@app/features/dashboard/widgets/protocol-distribution/ProtocolDistribution";
+import { ProtocolEffectiveness } from "@app/features/dashboard/widgets/protocol-effectiveness/ProtocolEffectiveness";
+import { DurationComparison } from "@app/features/dashboard/widgets/duration-comparison/DurationComparison";
+import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
 import {
-  SummaryWidget,
-  QuickStatsCards,
-  VolumeAnalytics,
-  RecentWorkouts,
-  QuickActions,
-  MuscleTagsWidget,
-  WidgetsFileError,
-  ProtocolDistribution,
-  ProtocolEffectiveness,
-  DurationComparison,
-  MuscleHeatMap,
-} from "@app/features/dashboard/widgets";
-import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+  EmbeddedDashboardParams,
+  ProtocolFilterCallback,
+} from "@app/features/dashboard/types";
+import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { DataFilter } from "@app/services/data/DataFilter";
@@ -29,12 +31,6 @@ import { t } from "@app/i18n";
  * Supports protocol filtering via click interaction on pie chart
  */
 export class EmbeddedDashboardView extends BaseView {
-  /** Container element for re-rendering */
-  private currentContainer: HTMLElement | null = null;
-  /** Original unfiltered data for re-rendering */
-  private currentData: WorkoutLogData[] = [];
-  /** Current dashboard parameters */
-  private currentParams: EmbeddedDashboardParams = {};
   /** ResizeObserver for bento layout recalculation */
   private resizeObserver: ResizeObserver | null = null;
   /** Debounce timer for resize recalculation */
@@ -52,14 +48,6 @@ export class EmbeddedDashboardView extends BaseView {
     try {
       // Clean up resize observer
       this.destroyResizeObserver();
-
-      // Clear stored state to prevent memory leaks
-      this.currentContainer = null;
-      this.currentData = [];
-      this.currentParams = {};
-
-      // Clean up protocol distribution chart
-      ProtocolDistribution.cleanup();
     } catch {
       return;
     }
@@ -98,11 +86,6 @@ export class EmbeddedDashboardView extends BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
   ): Promise<void> {
-    // Store state for potential re-rendering (e.g., protocol filter changes)
-    this.currentContainer = container;
-    this.currentData = logData;
-    this.currentParams = params;
-
     try {
       // Clear container
       container.empty();
@@ -135,35 +118,24 @@ export class EmbeddedDashboardView extends BaseView {
       loadingIndicator.remove();
 
       // Create dashboard layout
-      await this.renderDashboard(container, filteredData, params);
+      // Re-render this dashboard (and only this one) on pie chart clicks
+      const onProtocolFilterChange = (protocol: string | null) => {
+        void this.createDashboard(container, logData, {
+          ...params,
+          activeProtocolFilter: protocol,
+        });
+      };
+
+      await this.renderDashboard(
+        container,
+        filteredData,
+        params,
+        onProtocolFilterChange,
+      );
     } catch (error) {
       this.handleError(container, error as Error);
     }
   }
-
-  /**
-   * Handles protocol filter change from pie chart click
-   * Re-renders the dashboard with the new filter applied
-   * @param protocol - Protocol to filter by, or null to clear filter
-   */
-  private handleProtocolFilterChange = (
-    protocol: string | null,
-  ): void => {
-    // Update params with new filter
-    const newParams: EmbeddedDashboardParams = {
-      ...this.currentParams,
-      activeProtocolFilter: protocol,
-    };
-
-    // Re-render dashboard with updated filter
-    if (this.currentContainer && this.currentData.length > 0) {
-      void this.createDashboard(
-        this.currentContainer,
-        this.currentData,
-        newParams,
-      );
-    }
-  };
 
   /**
    * Filters data by protocol
@@ -189,6 +161,7 @@ export class EmbeddedDashboardView extends BaseView {
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
+    onProtocolFilterChange: ProtocolFilterCallback,
   ): Promise<void> {
     // Create main dashboard container
     const dashboardEl = container.createEl("div", {
@@ -214,26 +187,38 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
-    SummaryWidget.render(gridEl, displayData, params);
-    QuickStatsCards.render(gridEl, displayData, params);
+    const dashboardId = getElementScopedId(container);
+
+    // show* flags hide optional widgets; every widget is shown by default
+    if (params.showSummary !== false) {
+      SummaryWidget.render(gridEl, displayData, params);
+    }
+    if (params.showQuickStats !== false) {
+      QuickStatsCards.render(gridEl, displayData, params);
+    }
     await MuscleHeatMap.render(
       gridEl,
       displayData,
       params,
       this.plugin,
     );
-    VolumeAnalytics.render(gridEl, displayData, params);
-    RecentWorkouts.render(gridEl, displayData, params);
-    ProtocolDistribution.render(
-      gridEl,
-      data,
-      params,
-      this.plugin,
-      this.handleProtocolFilterChange,
-    );
+    if (params.showVolumeAnalytics !== false) {
+      VolumeAnalytics.render(gridEl, displayData, params, {
+        chartId: `volume-analytics-${dashboardId}`,
+      });
+    }
+    if (params.showRecentWorkouts !== false) {
+      RecentWorkouts.render(gridEl, displayData, params);
+    }
+    ProtocolDistribution.render(gridEl, data, params, this.plugin, {
+      chartId: `protocol-distribution-${dashboardId}`,
+      onFilterChange: onProtocolFilterChange,
+    });
     ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
     DurationComparison.render(gridEl, data, params);
-    QuickActions.render(gridEl, params, this.plugin);
+    if (params.showQuickActions !== false) {
+      QuickActions.render(gridEl, params, this.plugin);
+    }
     await WidgetsFileError.render(gridEl, this.plugin);
     MuscleTagsWidget.render(gridEl, params, this.plugin);
 

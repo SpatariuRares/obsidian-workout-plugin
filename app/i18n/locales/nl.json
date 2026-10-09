@@ -5,7 +5,7 @@
     "labels": {
       "quickWeightIncrementUnit": "De knoppen voor gewicht verhogen met {weightIncrementUnit}",
       "reps": "Aantal",
-      "trendType": "Trend: {{type}}",
+      "trendType": "Trend: {type}",
       "variationFromTo": "van {startValue} tot {endValue}",
       "volume": "Volume",
       "weight": "Gewicht",
@@ -108,7 +108,7 @@
     "protocol": {
       "clickToFilter": "Klik om te filteren",
       "percentLabel": "Label voor percentage",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "Filter reset",
@@ -143,16 +143,16 @@
     },
     "summary": {
       "currentStreak": "Huidige reeks",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} weken",
       "personalRecords": "Persoonlijke gegevens",
       "title": "Samenvatting",
       "totalVolume": "Totale hoeveelheid",
       "totalWorkouts": "Totaal aantal trainingen"
     },
     "volumeAnalytics": {
-      "chartTitle": "Trend van het volume (laatste 30 dagen)",
       "muscleBreakdownTitle": "Beste oefeningen, gerangschikt op basis van het aantal herhalingen",
-      "title": "Analyse van het volume"
+      "title": "Analyse van het volume",
+      "chartTitleDays": "Volumetrend (laatste {days} dagen)"
     }
   },
   "duration": {
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "Je trainingsstatistieken in één oogopslag. Zie [[{featureShowcase}]] voor alle beschikbare onderdelen.",
       "title": "Dashboard"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Tabellen",
       "timedExerciseTitle": "Oefening met tijdslimiet (duur)",
       "timersTitle": "3. Timers",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Tip**: Zie [[{dashboard}]] voor je persoonlijke dashboard",
       "title": "Voorbeelden",
       "trainingProtocolsIntro": "Dit plugin ondersteunt deze protocol-badges in uw logs:",
       "trainingProtocolsTitle": "5. Trainingsprotocollen",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "Volgende stappen",
       "quickActionsIntro": "Gebruik deze commando's (Ctrl/Cmd + P):",
       "quickActionsTitle": "Snelle acties",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "Open [[{dashboard}]] om je statistieken te bekijken",
+      "step2": "Bekijk [[{featureShowcase}]] om alle beschikbare functies te leren kennen",
       "step3": "Probeer een workout uit de **{workouts}** map.",
       "step4": "Maak zelf oefeningen aan in **{exercises}**",
       "tableHeaderDescription": "Beschrijving",
@@ -342,9 +342,9 @@
       "avgHeartRate": "Gemiddelde hartslag (slagen per minuut)",
       "avgVolume": "Gemiddelde volume ({unit})",
       "avgWeight": "Gemiddelde gewicht ({unit})",
-      "dailyVolume": "Dagelijkse hoeveelheid ({{unit}})",
+      "dailyVolume": "Dagelijkse hoeveelheid ({unit})",
       "pace": "Snelheid (min/km)",
-      "totalCustom": "Totaal: {{label}}",
+      "totalCustom": "Totaal: {label}",
       "totalDistance": "Totale afstand (km)",
       "totalDuration": "Totale duur (sec)",
       "totalVolume": "Totale hoeveelheid ({unit})",
@@ -436,9 +436,9 @@
     "addLogButtonText": "Log toevoegen voor {exerciseName}",
     "createFirstLogButton": "Maak het eerste log voor {exerciseName}",
     "createFirstLogButtonAria": "Maak het eerste log voor {exerciseName}",
-    "createLogButtonAria": "Maak een logboek aan voor: {{exerciseName}}",
+    "createLogButtonAria": "Maak een logboek aan voor: {exerciseName}",
     "createLogButtonText": "Maak een log voor: {exerciseName}",
-    "noDataTitle": "Geen logs gevonden voor {{exerciseName}}"
+    "noDataTitle": "Geen logs gevonden voor {exerciseName}"
   },
   "messages": {
     "codeInserted": "Code is ingevoerd",
@@ -522,7 +522,6 @@
       "includeLog": "Loggegevens bevatten",
       "includeStats": "Statistieken opnemen",
       "includeTimer": "Timer toevoegen",
-      "searchByName": "Zoeken op naam",
       "showAddButton": "Toon knop \"Toevoegen\"",
       "showControls": "Toon knoppen",
       "showStatistics": "Toon statistieken",
@@ -544,10 +543,6 @@
     "delete": "Verwijderen",
     "duration": "Duur (seconden):",
     "editTag": "Tag bewerken",
-    "exerciseStatus": {
-      "createPage": "Nieuwe pagina",
-      "notFound": "Niet gevonden"
-    },
     "exerciseType": "Type oefening:",
     "exportTags": "Exporteer tags",
     "fileName": "Naam bestand",
@@ -565,8 +560,8 @@
       "reps": "Aantal keren herhaald:",
       "targetReps": "Doelgroep:",
       "targetWeight": "Doel: ({unit}):",
-      "volume": "Volume ({{unit}}):",
-      "weight": "Gewicht ({{unit}}):"
+      "volume": "Volume ({unit}):",
+      "weight": "Gewicht ({unit}):"
     },
     "layoutGrouped": "Gegroepeerd per spier",
     "layoutHorizontal": "Horizontale lay-out",
@@ -580,29 +575,29 @@
     "note": "Opmerking:",
     "notes": "Opmerkingen (optioneel):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "Dit bestand hernoemen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} mogelijke afwijkingen gevonden:",
       "auditNoMatchFound": "Geen overeenkomst gevonden",
       "auditNoMismatches": "Geen discrepanties in de controle",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Kon niet hernoemen: {error}",
+      "auditRenameFileError": "Kon het bestand niet hernoemen: {error}",
       "auditRenameFileSuccess": "Succes met hernoemen van bestand",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "Hernoemd ({count} bestanden bijgewerkt)",
       "auditScanError": "Fout bij het scannen: {error}",
       "auditScanning": "Auditscan",
       "canvasExportError": "Fout bij exporteren van het canvas: {error}",
       "canvasExported": "Canvas is geëxporteerd ({path})",
       "chartInserted": "✅ Grafiek succesvol toegevoegd!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Doel bijwerken naar {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard succesvol geïnstalleerd!",
       "dismissAchievement": "Prestatie sluiten",
       "exerciseBlockInserted": "Oefenblok toegevoegd",
       "exerciseNameRequired": "❌ Gelieve een naam voor de oefening in te voeren",
       "exercisePageCreated": "Oefenpagina succesvol aangemaakt!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Fout bij het aanmaken van de oefeningspagina: {error}",
       "exercisePageNameRequired": "Geef een naam voor de oefening",
       "exerciseSectionCreated": "✅ Oefenmodule succesvol aangemaakt!",
-      "genericError": "Error: ",
+      "genericError": "Fout: {error}",
       "insertCodeNoFile": "Open een Markdown-bestand om de code in te voegen.",
       "logCreated": "Trainingstraject succesvol opgeslagen!",
       "logUpdated": "Trainingstraject succesvol bijgewerkt!",
@@ -627,7 +622,7 @@
       "muscleTagSaved": "Spieretiket opgeslagen",
       "muscleTagSimilarFound": "{count} soortgelijke tag(s) gevonden",
       "muscleTagSimilarWarning": "Waarschuwing: Vergelijkbare spiergroep",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Voorgesteld volgend gewicht: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabel succesvol toegevoegd!",
       "tableUpdateFailed": "Update van de tabel is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "tableUpdated": "✅ Tabel succesvol bijgewerkt!",
@@ -725,7 +720,6 @@
       "createExercisePage": "Pagina aanmaken voor oefeningen",
       "createExerciseSection": "Oefenmodule aanmaken",
       "createLog": "Maak een trainingslog",
-      "create_log": "Maak een trainingslog",
       "editLog": "Bewerk trainingslog",
       "editTable": "Parameters voor tabel bewerken",
       "editTimer": "Wijzig de instellingen van de timer",
@@ -744,10 +738,11 @@
     "editItem": "{item} bewerken",
     "deleteItem": "{item} verwijderen",
     "errors": {
-      "missingElements": "Ontbrekende elementen"
+      "missingElements": "Ontbrekende elementen",
+      "validationCombinedMode": "Vul voor het type oefening + training beide velden in"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s",
-    "noteTemplate": "**Let op: ${params.note}**"
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
+    "noteTemplate": "**Opmerking: {note}**\n"
   },
   "settings": {
     "buttons": {
@@ -788,10 +783,11 @@
       "quickWeightIncrement": "Stap in gewicht gebruikt door de + en - knoppen in de modalvensters voor het maken/bewerken van een trainingslogboek (bijv. 2,5 voor +2,5 / -2,5 eenheden)",
       "repDuration": "Geschatte tijd voor één herhaling. Wordt gebruikt wanneer het aantal herhalingen bekend is (bijvoorbeeld: 'x 10 herhalingen').",
       "runAllMaintenance": "Voer alle onderhoudstaken één voor één uit. Veilig om meerdere keren uit te voeren.",
-      "setDuration": "Wordt gebruikt wanneer de vertegenwoordigers niet zijn gespecificeerd (standaardwaarde). Typische duur: 30-60 seconden.",
+      "setDuration": "Wordt gebruikt wanneer het aantal herhalingen niet is opgegeven (standaardwaarde). Typische duur: 30-60 seconden.",
       "setupCSV": "Maak zowel het bestand `workout_logs.csv` als `muscle-tags.csv` aan in de geconfigureerde map.",
       "weightIncrement": "Standaard toename in gewicht voor progressieve belasting (bijvoorbeeld 2,5 voor toenames van 2,5 eenheden)",
-      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs."
+      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs.",
+      "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent"
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -816,7 +812,8 @@
       "runAllMaintenance": "Alle onderhoudstaken uitvoeren",
       "setDuration": "Alternatieve duur (seconden)",
       "setupCSV": "Bestanden voor het importeren van CSV-gegevens",
-      "weightUnit": "Eenheid voor gewicht"
+      "weightUnit": "Eenheid voor gewicht",
+      "showRibbonIcon": "Pictogram voor snel loggen tonen"
     },
     "messages": {
       "confirmDeletePreset": "Bent u er zeker van dat u deze preset wilt verwijderen?",
@@ -851,7 +848,6 @@
       "csvManagement": "Beheer van CSV-bestanden",
       "customProtocols": "Aangepaste protocollen",
       "exampleData": "Voorbeeldgegevens",
-      "filtering": "Filteren",
       "maintenance": "Onderhoud",
       "quickLog": "Mobiel loggen",
       "setupAndData": "Instellingen en gegevens",
@@ -924,12 +920,16 @@
     "notAvailable": "Niet beschikbaar",
     "refreshSuccess": "Succesvol vernieuwen",
     "target": {
-      "progressTooltip": "Beste: {{best}} herhalingen / Doel: {{target}} herhalingen",
+      "progressTooltip": "Beste: {best} herhalingen / Doel: {target} herhalingen",
       "repsSuffix": "representanten",
       "separator": " × "
     },
     "trendLine": "Trendlijn",
-    "refreshingTable": "Tabel opnieuw laden..."
+    "refreshingTable": "Tabel vernieuwen...",
+    "validation": {
+      "sortByInvalid": "sortBy moet een van {allowed} zijn, ontvangen: \"{value}\"",
+      "sortOrderInvalid": "sortOrder moet asc of desc zijn, ontvangen: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Maand",
@@ -940,8 +940,7 @@
     "controls": {
       "pauseTimer": "Timer pauzeren",
       "resetTimer": "Timer opnieuw starten",
-      "startTimer": "Start timer",
-      "timerMenu": "Timer menu"
+      "startTimer": "Start timer"
     },
     "countdown": "Tijdsaanduiding",
     "editTimer": "Timer bewerken",

@@ -1,7 +1,4 @@
-import {
-  ExerciseMatchUtils,
-  ExerciseMatch,
-} from "@app/utils/exercise/ExerciseMatchUtils";
+import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ValidationUtils } from "@app/utils/ValidationUtils";
@@ -137,7 +134,7 @@ describe("Utility Classes", () => {
         1000,
         100,
         10,
-        "Squat.md",
+        "workout_logs.csv",
       ),
       createMockLog(
         "Barbell Squat",
@@ -145,7 +142,7 @@ describe("Utility Classes", () => {
         1200,
         120,
         10,
-        "Squat Barbell.md",
+        "workout_logs.csv",
       ),
       createMockLog(
         "Bench Press",
@@ -153,40 +150,19 @@ describe("Utility Classes", () => {
         800,
         80,
         10,
-        "Bench Press.md",
+        "workout_logs.csv",
       ),
     ];
 
-    it("should find filename matches", () => {
+    it("should score exercise field matches", () => {
       const result = ExerciseMatchUtils.findExerciseMatches(
         mockData,
         "Squat",
       );
-      expect(result.fileNameMatches.length).toBeGreaterThan(0);
-      expect(result.fileNameMatches[0].strategy).toBe("filename");
-    });
-
-    it("should find exercise field matches", () => {
-      const result = ExerciseMatchUtils.findExerciseMatches(
-        mockData,
-        "Squat",
-      );
-      expect(result.allExercisePathsAndScores.size).toBeGreaterThan(
-        0,
-      );
-      expect(result.allExercisePathsAndScores.has("Squat")).toBe(
-        true,
-      );
-    });
-
-    it("should calculate scores for matches", () => {
-      const result = ExerciseMatchUtils.findExerciseMatches(
-        mockData,
-        "Squat",
-      );
-      const squatScore =
-        result.allExercisePathsAndScores.get("Squat");
-      expect(squatScore).toBe(100); // Exact match
+      expect(result.allExercisePathsAndScores.get("Squat")).toBe(100);
+      expect(
+        result.allExercisePathsAndScores.has("Barbell Squat"),
+      ).toBe(true);
     });
 
     it("should handle no matches", () => {
@@ -194,7 +170,6 @@ describe("Utility Classes", () => {
         mockData,
         "Deadlift",
       );
-      expect(result.fileNameMatches.length).toBe(0);
       expect(result.allExercisePathsAndScores.size).toBe(0);
     });
 
@@ -210,115 +185,53 @@ describe("Utility Classes", () => {
   });
 
   describe("ExerciseMatchUtils.determineExerciseFilterStrategy", () => {
-    const mockMatches: ExerciseMatch[] = [
-      {
-        file: new MockTFile("Squat.md") as TFile,
-        score: 100,
-        exerciseName: "Squat",
-        strategy: "filename",
-      },
-    ];
-
-    const mockScores = new Map<string, number>([
+    const scores = new Map<string, number>([
       ["Squat", 100],
-      ["Barbell Squat", 90],
+      ["Barbell Squat", 80],
     ]);
 
-    it("should return exercise_field_exact for exact match on exercise field", () => {
+    it("should return exercise_field_exact for an exact match in exact mode", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
-          mockMatches,
-          mockScores,
+          scores,
           true,
-          "Squat",
+          "squat",
         );
-      expect(result.bestStrategy).toBe("exercise_field_exact");
-      expect(result.bestPathKey).toBe("Squat");
+      expect(result).toEqual({
+        bestStrategy: "exercise_field_exact",
+        bestPathKey: "Squat",
+      });
     });
 
-    it("should return filename_exact for exact match on filename", () => {
-      const scoresNoExact = new Map<string, number>([
-        ["Barbell Squat", 90],
-      ]);
+    it("should return none in exact mode without an exact match", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
-          mockMatches,
-          scoresNoExact,
+          new Map([["Barbell Squat", 80]]),
           true,
           "Squat",
-        );
-      expect(result.bestStrategy).toBe("filename_exact");
-      expect(result.bestFileMatchesList.length).toBeGreaterThan(0);
-    });
-
-    it("should return none when no exact match found in exact mode", () => {
-      const result =
-        ExerciseMatchUtils.determineExerciseFilterStrategy(
-          [],
-          new Map(),
-          true,
-          "Nonexistent",
         );
       expect(result.bestStrategy).toBe("none");
     });
 
-    it("should use filename strategy when score is above threshold", () => {
-      const highScoreMatches: ExerciseMatch[] = [
-        {
-          file: new MockTFile("Squat.md") as TFile,
-          score: 90,
-          exerciseName: "Squat",
-          strategy: "filename",
-        },
-      ];
+    it("should pick the best scoring field in fuzzy mode", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
-          highScoreMatches,
-          new Map(),
+          scores,
           false,
           "Squat",
         );
-      expect(result.bestStrategy).toBe("filename");
+      expect(result).toEqual({
+        bestStrategy: "exercise_field",
+        bestPathKey: "Squat",
+      });
     });
 
-    it("should use exercise_field strategy when score is higher than filename", () => {
-      const lowScoreMatches: ExerciseMatch[] = [
-        {
-          file: new MockTFile("Squat.md") as TFile,
-          score: 70,
-          exerciseName: "Squat",
-          strategy: "filename",
-        },
-      ];
-      const highScores = new Map<string, number>([
-        ["Barbell Squat", 90],
-      ]);
+    it("should return none when every score is below the threshold", () => {
       const result =
         ExerciseMatchUtils.determineExerciseFilterStrategy(
-          lowScoreMatches,
-          highScores,
+          new Map([["Leg Press", 60]]),
           false,
-          "Barbell Squat",
-        );
-      expect(result.bestStrategy).toBe("exercise_field");
-      expect(result.bestPathKey).toBe("Barbell Squat");
-    });
-
-    it("should return none when scores are below threshold", () => {
-      const lowScoreMatches: ExerciseMatch[] = [
-        {
-          file: new MockTFile("Squat.md") as TFile,
-          score: 50,
-          exerciseName: "Squat",
-          strategy: "filename",
-        },
-      ];
-      const result =
-        ExerciseMatchUtils.determineExerciseFilterStrategy(
-          lowScoreMatches,
-          new Map(),
-          false,
-          "Squat",
+          "Bench Press",
         );
       expect(result.bestStrategy).toBe("none");
     });
@@ -332,7 +245,7 @@ describe("Utility Classes", () => {
         1000,
         100,
         10,
-        "Squat.md",
+        "workout_logs.csv",
       ),
       createMockLog(
         "Barbell Squat",
@@ -340,7 +253,7 @@ describe("Utility Classes", () => {
         1200,
         120,
         10,
-        "Squat Barbell.md",
+        "workout_logs.csv",
       ),
       createMockLog(
         "Bench Press",
@@ -348,7 +261,7 @@ describe("Utility Classes", () => {
         800,
         80,
         10,
-        "Bench Press.md",
+        "workout_logs.csv",
       ),
     ];
 
@@ -357,47 +270,8 @@ describe("Utility Classes", () => {
         mockData,
         "exercise_field_exact",
         "Squat",
-        [],
       );
-      expect(result.length).toBe(1);
-      expect(result[0].exercise).toBe("Squat");
-    });
-
-    it("should filter by filename_exact strategy", () => {
-      const matches: ExerciseMatch[] = [
-        {
-          file: new MockTFile("Squat.md") as TFile,
-          score: 100,
-          exerciseName: "Squat",
-          strategy: "filename",
-        },
-      ];
-      const result = ExerciseMatchUtils.filterLogDataByExercise(
-        mockData,
-        "filename_exact",
-        "",
-        matches,
-      );
-      expect(result.length).toBe(1);
-      expect(result[0].file?.basename).toBe("Squat");
-    });
-
-    it("should filter by filename strategy", () => {
-      const matches: ExerciseMatch[] = [
-        {
-          file: new MockTFile("Squat.md") as TFile,
-          score: 90,
-          exerciseName: "Squat",
-          strategy: "filename",
-        },
-      ];
-      const result = ExerciseMatchUtils.filterLogDataByExercise(
-        mockData,
-        "filename",
-        "",
-        matches,
-      );
-      expect(result.length).toBe(1);
+      expect(result.map((l) => l.exercise)).toEqual(["Squat"]);
     });
 
     it("should filter by exercise_field strategy", () => {
@@ -405,17 +279,35 @@ describe("Utility Classes", () => {
         mockData,
         "exercise_field",
         "Squat",
-        [],
       );
-      expect(result.length).toBeGreaterThan(0);
+      expect(result.map((l) => l.exercise)).toEqual([
+        "Squat",
+        "Barbell Squat",
+      ]);
     });
 
-    it("should return empty array for unknown strategy", () => {
+    it("should return empty array for none", () => {
+      expect(
+        ExerciseMatchUtils.filterLogDataByExercise(
+          mockData,
+          "none",
+          "Squat",
+        ),
+      ).toEqual([]);
+    });
+
+    it("should never select every row because they share the CSV file name", () => {
       const result = ExerciseMatchUtils.filterLogDataByExercise(
         mockData,
-        "unknown",
-        "Squat",
-        [],
+        ExerciseMatchUtils.determineExerciseFilterStrategy(
+          ExerciseMatchUtils.findExerciseMatches(
+            mockData,
+            "Workout logs",
+          ).allExercisePathsAndScores,
+          false,
+          "Workout logs",
+        ).bestStrategy,
+        "",
       );
       expect(result).toEqual([]);
     });

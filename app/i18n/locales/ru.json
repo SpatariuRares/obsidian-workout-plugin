@@ -4,9 +4,9 @@
     "fallbackTableMessage": "Сообщение для таблицы резервного копирования",
     "labels": {
       "quickWeightIncrementUnit": "Кнопки изменения веса увеличивают {weightIncrementUnit}",
-      "reps": "Представления",
+      "reps": "Повторения",
       "trendType": "Динамика {type}:",
-      "variationFromTo": "от {{startValue}} до {{endValue}}",
+      "variationFromTo": "от {startValue} до {endValue}",
       "volume": "Объем",
       "weight": "Вес",
       "weightIncrementUnit": "Увеличение веса {weightIncrementUnit}"
@@ -58,7 +58,7 @@
     "fieldMapping": {
       "addMapping": "Добавить соответствие полей",
       "removeMapping": "Удалить соответствие",
-      "reps": "Представления",
+      "reps": "Повторения",
       "title": "Сопоставление полей",
       "weight": "Вес ({unit})"
     },
@@ -108,7 +108,7 @@
     "protocol": {
       "clickToFilter": "Нажмите, чтобы отфильтровать",
       "percentLabel": "Метка для отображения процента",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "Очистить фильтр",
@@ -143,16 +143,16 @@
     },
     "summary": {
       "currentStreak": "Текущая серия",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} нед.",
       "personalRecords": "Личные записи",
       "title": "Краткое изложение",
       "totalVolume": "Общий объем",
       "totalWorkouts": "Общее количество тренировок"
     },
     "volumeAnalytics": {
-      "chartTitle": "Динамика объема (последние 30 дней)",
       "muscleBreakdownTitle": "Лучшие упражнения по объему",
-      "title": "Анализ объема"
+      "title": "Анализ объема",
+      "chartTitleDays": "Динамика объёма (последние {days} дн.)"
     }
   },
   "duration": {
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "Ваша статистика тренировок с первого взгляда. Все доступные компоненты смотрите в [[{featureShowcase}]].",
       "title": "Панель управления"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Таблицы",
       "timedExerciseTitle": "Упражнение с таймером (продолжительность)",
       "timersTitle": "3. Таймеры",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Совет**: личная панель находится в [[{dashboard}]]",
       "title": "Демонстрация возможностей",
       "trainingProtocolsIntro": "Этот плагин поддерживает следующие значки протоколов в ваших логах:",
       "trainingProtocolsTitle": "5. Протоколы обучения",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "Следующие шаги",
       "quickActionsIntro": "Используйте эти команды (Ctrl/Cmd + P):",
       "quickActionsTitle": "Быстрые действия",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "Откройте [[{dashboard}]], чтобы увидеть статистику",
+      "step2": "Загляните в [[{featureShowcase}]], чтобы узнать обо всех возможностях",
       "step3": "Попробуйте тренировку из папки **{workouts}**.",
       "step4": "Создайте свои собственные упражнения в **{exercises}**",
       "tableHeaderDescription": "Описание",
@@ -342,7 +342,7 @@
       "avgHeartRate": "Средняя частота сердечных сокращений (ударов в минуту)",
       "avgVolume": "Средний объем ({unit})",
       "avgWeight": "Средний вес ({unit})",
-      "dailyVolume": "Ежедневный объем ({{unit}})",
+      "dailyVolume": "Ежедневный объем ({unit})",
       "pace": "Темп (мин/км)",
       "totalCustom": "Общая сумма {label}",
       "totalDistance": "Общая дистанция (км)",
@@ -437,7 +437,7 @@
     "createFirstLogButton": "Создать первый журнал для {exerciseName}",
     "createFirstLogButtonAria": "Создать первый журнал для {exerciseName}",
     "createLogButtonAria": "Создать журнал для: {exerciseName}",
-    "createLogButtonText": "Создать журнал для: {{exerciseName}}",
+    "createLogButtonText": "Создать журнал для: {exerciseName}",
     "noDataTitle": "Не найдено журналов для {exerciseName}"
   },
   "messages": {
@@ -522,7 +522,6 @@
       "includeLog": "Включить журнал",
       "includeStats": "Включить статистику",
       "includeTimer": "Включить таймер",
-      "searchByName": "Поиск по имени",
       "showAddButton": "Показать кнопку \"Добавить\"",
       "showControls": "Показать элементы управления",
       "showStatistics": "Отобразить статистику",
@@ -544,10 +543,6 @@
     "delete": "Удалить",
     "duration": "Продолжительность (секунды):",
     "editTag": "Редактировать тег",
-    "exerciseStatus": {
-      "createPage": "Создать страницу",
-      "notFound": "Не найдено"
-    },
     "exerciseType": "Тип упражнения:",
     "exportTags": "Экспорт тегов",
     "fileName": "Имя файла",
@@ -562,11 +557,11 @@
       "actions": "Действия",
       "currentFileInfo": "Текущий файл: {fileName}",
       "exercise": "Упражнение:",
-      "reps": "Представители:",
+      "reps": "Повторения:",
       "targetReps": "Целевые показатели:",
       "targetWeight": "Цель: ({unit}):",
       "volume": "Громкость ({unit}):",
-      "weight": "Вес ({{unit}}):"
+      "weight": "Вес ({unit}):"
     },
     "layoutGrouped": "Группировано по мышцам",
     "layoutHorizontal": "Горизонтальное расположение",
@@ -580,29 +575,29 @@
     "note": "Обратите внимание:",
     "notes": "Примечания (необязательно):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "Переименовать этот файл?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Найдено {count} несоответствий:",
       "auditNoMatchFound": "Совпадений не найдено",
       "auditNoMismatches": "Отсутствие несоответствий в ходе аудита",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Не удалось переименовать: {error}",
+      "auditRenameFileError": "Не удалось переименовать файл: {error}",
       "auditRenameFileSuccess": "Успешно переименовано файл в рамках аудита",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "Переименовано (обновлено файлов: {count})",
       "auditScanError": "Ошибка сканирования: {error}",
       "auditScanning": "Сканирование для аудита",
       "canvasExportError": "Ошибка при экспорте на холст: {error}",
       "canvasExported": "Экспорт на холст ({path})",
       "chartInserted": "✅ График успешно добавлен!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Обновить цель до {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Панель управления успешно добавлена!",
       "dismissAchievement": "Закрыть достижение",
       "exerciseBlockInserted": "Блок упражнений добавлен",
       "exerciseNameRequired": "❌, пожалуйста, введите название упражнения",
       "exercisePageCreated": "Страница для тренировок успешно создана!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Ошибка при создании страницы упражнения: {error}",
       "exercisePageNameRequired": "Пожалуйста, введите название упражнения",
       "exerciseSectionCreated": "✅ Успешно создана секция для тренировок!",
-      "genericError": "Error: ",
+      "genericError": "Ошибка: {error}",
       "insertCodeNoFile": "Откройте файл в формате Markdown, чтобы вставить код.",
       "logCreated": "Журнал тренировок успешно создан!",
       "logUpdated": "Журнал тренировок успешно обновлен!",
@@ -627,7 +622,7 @@
       "muscleTagSaved": "Тег \"Мышечная группа\" сохранен",
       "muscleTagSimilarFound": "{count} Найдены похожие теги",
       "muscleTagSimilarWarning": "Предупреждение: Похожий результат для упражнения «Мышцы»",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Рекомендуемый следующий вес: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Таблица успешно добавлена!",
       "tableUpdateFailed": "Не удалось обновить таблицу. Убедитесь, что файл открыт в редакторе.",
       "tableUpdated": "✅ Таблица успешно обновлена!",
@@ -725,7 +720,6 @@
       "createExercisePage": "Создать страницу для упражнений",
       "createExerciseSection": "Создать раздел с упражнениями",
       "createLog": "Создать журнал тренировок",
-      "create_log": "Создать журнал тренировок",
       "editLog": "Редактировать журнал тренировок",
       "editTable": "Изменить параметры таблицы",
       "editTimer": "Изменить параметры таймера",
@@ -744,10 +738,11 @@
     "editItem": "Изменить {item}",
     "deleteItem": "Удалить {item}",
     "errors": {
-      "missingElements": "Отсутствующие элементы"
+      "missingElements": "Отсутствуют элементы",
+      "validationCombinedMode": "Для типа «упражнение + тренировка» заполните оба поля"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - Подходы: {sets}\n- Повторения: {reps}\n- Отдых: {restTime} секунд",
-    "noteTemplate": "**Обратите внимание: ${params.note}**"
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Подходы: {sets}\n- Повторения: {reps}\n- Отдых: {restTime} с\n\n",
+    "noteTemplate": "**Примечание: {note}**\n"
   },
   "settings": {
     "buttons": {
@@ -788,10 +783,11 @@
       "quickWeightIncrement": "Размер увеличения веса, используемый кнопками \"+\" и \"-\" в модальных окнах для создания/редактирования записи тренировки (например, 2,5 для увеличения на 2,5 / уменьшения на 2,5 единиц).",
       "repDuration": "Ожидаемое время для выполнения одной повторения. Используется, когда известно количество повторений (например, «x 10 повторений»).",
       "runAllMaintenance": "Выполняйте все задачи обслуживания последовательно. Безопасно можно выполнять несколько раз.",
-      "setDuration": "Используется в случае, когда тип представителя не указан (в качестве резервного варианта). Типичный диапазон: 30-60 секунд.",
+      "setDuration": "Используется, когда количество повторений не указано (резервное значение). Типичный диапазон: 30-60 секунд.",
       "setupCSV": "Создайте файлы workout_logs.csv и muscle-tags.csv в указанной папке.",
       "weightIncrement": "Стандартное увеличение веса для прогрессивной нагрузки (например, 2,5 для увеличения на 2,5 единицы)",
-      "weightUnit": "Выберите единицу измерения для веса (кг/фунт). Это влияет на единицу по умолчанию для новых записей."
+      "weightUnit": "Выберите единицу измерения для веса (кг/фунт). Это влияет на единицу по умолчанию для новых записей.",
+      "showRibbonIcon": "Показывать значок гантели на боковой панели, открывающий форму записи тренировки"
     },
     "labels": {
       "csvPath": "Путь к файлу журнала в формате CSV",
@@ -816,7 +812,8 @@
       "runAllMaintenance": "Выполнить все задачи по обслуживанию",
       "setDuration": "Длительность резервного времени (секунды)",
       "setupCSV": "Настройка файлов CSV",
-      "weightUnit": "Единица измерения веса"
+      "weightUnit": "Единица измерения веса",
+      "showRibbonIcon": "Показывать значок быстрой записи"
     },
     "messages": {
       "confirmDeletePreset": "Вы уверены, что хотите удалить этот шаблон?",
@@ -851,7 +848,6 @@
       "csvManagement": "Управление файлами CSV",
       "customProtocols": "Настраиваемые протоколы",
       "exampleData": "Пример данных",
-      "filtering": "Фильтрация",
       "maintenance": "Обслуживание",
       "quickLog": "Логирование на мобильных устройствах",
       "setupAndData": "Настройка и данные",
@@ -893,7 +889,7 @@
       "heartRate": "Частота сердечных сокращений",
       "notes": "Примечания",
       "protocol": "Протокол",
-      "reps": "Представители",
+      "reps": "Повторения",
       "volume": "Объем",
       "weight": "Вес"
     },
@@ -902,7 +898,7 @@
       "duration": "Продолжительность",
       "heartRate": "ЧСС",
       "pace": "Темп",
-      "reps": "Представление",
+      "reps": "Повт.",
       "volumeUnit": "Объем ({weightUnit})",
       "weightUnit": "Вес ({weightUnit})"
     },
@@ -925,11 +921,15 @@
     "refreshSuccess": "Успешно обновлено",
     "target": {
       "progressTooltip": "Лучший вариант: {best} повторений / Цель: {target} повторений",
-      "repsSuffix": "представления",
+      "repsSuffix": "повт.",
       "separator": " × "
     },
     "trendLine": "Линия тренда",
-    "refreshingTable": "Обновление таблицы..."
+    "refreshingTable": "Обновление таблицы...",
+    "validation": {
+      "sortByInvalid": "sortBy должен быть одним из {allowed}, получено: \"{value}\"",
+      "sortOrderInvalid": "sortOrder должен быть asc или desc, получено: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Месяц",
@@ -940,8 +940,7 @@
     "controls": {
       "pauseTimer": "Приостановить таймер",
       "resetTimer": "Сбросить таймер",
-      "startTimer": "Начать таймер",
-      "timerMenu": "Timer menu"
+      "startTimer": "Начать таймер"
     },
     "countdown": "Счет от обратного отсчета",
     "editTimer": "Редактировать таймер",

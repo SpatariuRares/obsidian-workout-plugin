@@ -8,7 +8,7 @@
 .workout-duration-card {
   background: var(--background-primary);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-xl);
   padding: var(--workout-space-lg);
   box-shadow: var(--workout-shadow-sm);
@@ -38,14 +38,14 @@
   text-align: center;
   padding: var(--workout-space-lg) 0;
   border-bottom: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-subtle);
   margin-bottom: var(--workout-space-md);
 }
 
 .workout-duration-value {
   font-size: 2.5em;
   font-weight: var(--workout-font-weight-bold);
-  color: var(--interactive-accent);
+  color: var(--workout-text-accent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .workout-duration-error {
-  color: var(--text-error);
+  color: var(--workout-text-error);
   font-size: var(--workout-font-sm);
   padding: var(--workout-space-md);
   background: rgba(var(--color-red-rgb), 0.1);
@@ -88,7 +88,7 @@
   margin-top: var(--workout-space-lg);
   padding-top: var(--workout-space-md);
   border-top: var(--workout-border-thin) dashed
-    var(--background-modifier-border);
+    var(--workout-border-subtle);
 }
 
 .workout-duration-debug-title {

@@ -9,7 +9,8 @@
       overflow-x: auto;
       margin-top: var(--workout-space-lg);
       border-radius: var(--workout-radius-lg);
-      background: var(--background-primary);
+      background: var(--background-secondary);
+      border: var(--workout-border-thin) solid var(--workout-border-color);
 
       .workout-log-table {
         td {
@@ -18,18 +19,28 @@
           white-space: nowrap;
         }
 
+        /* Every row sits on --background-secondary so the table always stands
+           out from the page (--background-primary); even day groups add the
+           theme's hover tint on top to keep groups apart in every theme */
         tr {
-          &.group-even {
+          &.group-odd {
             background: var(--background-secondary);
           }
-          &.group-odd {
-            background: var(--background-primary);
+          &.group-even {
+            background:
+              linear-gradient(
+                var(--background-modifier-hover),
+                var(--background-modifier-hover)
+              ),
+              var(--background-secondary);
           }
         }
       }
 
       .workout-table-spacer {
-        background: var(--background-modifier-border);
+        background: var(--workout-table-day-bg);
+        border-bottom: var(--workout-border-medium) solid
+          var(--interactive-accent);
         height: auto;
         font-size: var(--workout-font-sm);
         font-weight: 500;
@@ -39,17 +50,17 @@
     &-link {
       cursor: pointer;
       font-weight: var(--workout-font-weight-medium);
-      color: var(--text-accent);
+      color: var(--workout-text-accent);
     }
 
     &-date-cell {
       font-weight: var(--workout-font-weight-semibold);
-      color: var(--text-accent);
+      color: var(--workout-text-accent);
     }
 
     &-volume-cell {
       font-weight: var(--workout-font-weight-bold);
-      color: var(--text-accent-hover);
+      color: var(--workout-text-accent);
     }
 
     &-actions {
@@ -69,13 +80,14 @@
         padding: var(--workout-space-xs) var(--workout-space-sm);
         text-align: center;
         font-weight: 600;
-        color: var(--text-muted);
-        background: var(--background-primary-alt);
+        color: var(--workout-text-accent);
+        /* The row's accent tint marks the day; cells stay transparent */
+        background: transparent;
       }
       &-summary-cell {
         padding: var(--workout-space-xs) var(--workout-space-md);
         text-align: left;
-        background: var(--background-secondary);
+        background: transparent;
 
         .workout-spacer-stat {
           display: inline-block;
@@ -83,7 +95,7 @@
           color: var(--text-normal);
 
           strong {
-            color: var(--text-accent);
+            color: var(--workout-text-accent);
             font-weight: 600;
           }
         }
@@ -97,26 +109,6 @@
       padding: var(--workout-space-sm);
       background-color: var(--background-secondary);
       border-radius: var(--workout-radius-sm);
-    }
-  }
-
-  @media (max-width: variables.$breakpoint-mobile) {
-    .workout-table-spacer-summary-cell {
-      padding: var(--workout-space-xs) var(--workout-space-sm);
-
-      .workout-spacer-stat {
-        margin-right: var(--workout-space-sm);
-        font-size: var(--workout-font-xs);
-      }
-    }
-
-    .workout-table-spacer-date-cell {
-      padding: var(--workout-space-xs) var(--workout-space-xs);
-      font-size: var(--workout-font-xs);
-    }
-
-    .workout-table-actions {
-      gap: var(--workout-space-xs);
     }
   }
 }

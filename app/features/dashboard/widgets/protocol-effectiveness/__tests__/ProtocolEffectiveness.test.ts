@@ -126,7 +126,7 @@ describe("ProtocolEffectiveness", () => {
       const badge = c.querySelector(
         ".workout-protocol-effectiveness-badge",
       ) as HTMLElement;
-      expect(badge.style.backgroundColor).toBe("rgba(239, 68, 68, 0.7)");
+      expect(badge.style.backgroundColor).toBe("rgb(239, 68, 68)");
     });
   });
 
@@ -168,7 +168,7 @@ describe("ProtocolEffectiveness", () => {
       const badge = r.querySelector(
         ".workout-protocol-effectiveness-badge",
       ) as HTMLElement;
-      expect(badge.style.backgroundColor).toBe("rgba(128, 128, 128, 0.7)");
+      expect(badge.style.backgroundColor).toBe("rgb(128, 128, 128)");
     });
 
     it("should report a negative volume change with a minus sign", () => {
@@ -245,7 +245,7 @@ describe("ProtocolEffectiveness", () => {
         ".workout-protocol-effectiveness-badge",
       ) as HTMLElement;
       expect(badge.textContent).toBe("Tempo Work");
-      expect(badge.style.backgroundColor).toBe("rgba(255, 0, 0, 0.7)");
+      expect(badge.style.backgroundColor).toBe("rgb(255, 0, 0)");
     });
 
     it("should accept custom colours without a leading hash", () => {
@@ -258,7 +258,7 @@ describe("ProtocolEffectiveness", () => {
       const badge = rows(c)[0].querySelector(
         ".workout-protocol-effectiveness-badge",
       ) as HTMLElement;
-      expect(badge.style.backgroundColor).toBe("rgba(0, 255, 0, 0.7)");
+      expect(badge.style.backgroundColor).toBe("rgb(0, 255, 0)");
     });
 
     it("should sort protocols by progression rate descending", () => {

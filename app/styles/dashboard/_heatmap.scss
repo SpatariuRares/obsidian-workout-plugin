@@ -13,7 +13,7 @@
     margin-top: var(--workout-space-xl);
     padding-top: var(--workout-space-xl);
     border-top: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
 
     h4 {
       margin: 0 0 var(--workout-space-md) 0;
@@ -35,7 +35,7 @@
     align-items: center;
     padding: var(--workout-space-sm) 0;
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
 
     &:last-child {
       border-bottom: none;
@@ -53,7 +53,7 @@
     right: var(--workout-space-xl);
     background: var(--background-primary);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-lg);
     box-shadow: var(--workout-shadow-md);
@@ -67,7 +67,7 @@
       font-size: var(--workout-font-base);
       font-weight: var(--workout-font-weight-semibold);
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
       padding-bottom: var(--workout-space-sm);
     }
 
@@ -103,7 +103,7 @@
   &-canvas-container {
     background: var(--background-secondary);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-xl);
     margin-bottom: var(--workout-space-xl);
@@ -136,7 +136,7 @@
   &-info-panel {
     background: var(--background-secondary);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-lg);
     padding: var(--workout-space-lg);
     margin-top: var(--workout-space-lg);

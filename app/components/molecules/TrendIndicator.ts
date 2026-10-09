@@ -5,11 +5,12 @@
  */
 
 import { Icon, Text, Container } from "@app/components/atoms";
-import { t } from "@app/i18n";
+
+export type TrendDirection = "up" | "down" | "neutral";
 
 export interface TrendIndicatorProps {
   percentage: number;
-  direction: string;
+  direction: TrendDirection;
   label?: string;
   className?: string;
 }
@@ -22,32 +23,24 @@ export interface TrendIndicatorProps {
  * ```typescript
  * TrendIndicator.create(container, {
  *   percentage: 15.5,
- *   direction: CONSTANTS.WORKOUT.TRENDS.DIRECTIONS.UP,
+ *   direction: "up",
  * });
  * ```
  */
 export class TrendIndicator {
-  // Direction arrows
-  private static readonly ARROW_UP = "↑";
-  private static readonly ARROW_DOWN = "↓";
-  private static readonly ARROW_NEUTRAL = "→";
+  private static readonly ARROWS: Record<TrendDirection, string> = {
+    up: "↑",
+    down: "↓",
+    neutral: "→",
+  };
 
   /**
    * Get arrow icon based on direction
    * @param direction - Trend direction
-   * @returns Arrow emoji
+   * @returns Arrow character
    */
-  private static getArrow(direction: string): string {
-    switch (direction) {
-      case t("trends.up"):
-        return this.ARROW_UP;
-      case t("trends.down"):
-        return this.ARROW_DOWN;
-      case t("trends.neutral"):
-        return this.ARROW_NEUTRAL;
-      default:
-        return this.ARROW_NEUTRAL;
-    }
+  private static getArrow(direction: TrendDirection): string {
+    return this.ARROWS[direction] ?? this.ARROWS.neutral;
   }
 
   /**

@@ -12,7 +12,7 @@
   thead tr {
     background: var(--background-secondary);
     border-bottom: var(--workout-border-medium) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
   }
 
   th {
@@ -22,34 +22,43 @@
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     font-size: var(--workout-font-base);
   }
 
   tbody tr {
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     transition: var(--workout-transition);
 
     &:nth-child(even) {
       background: var(--background-secondary);
     }
-    &:hover {
-      background: var(--background-modifier-hover);
+    /* Inset shadow tints the row without replacing its background */
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: inset 0 0 0 100vmax var(--background-modifier-hover);
+      }
     }
   }
 
   td a {
-    color: var(--text-accent);
+    color: var(--workout-text-accent);
     text-decoration: none;
     transition: var(--workout-transition);
     font-weight: var(--workout-font-weight-medium);
 
     &:hover {
-      color: var(--text-accent-hover);
+      color: var(--workout-text-accent);
       text-decoration: underline;
     }
   }
+}
+
+/* Obsidian gives tables a 16px block margin (.markdown-rendered table): inside
+   the outlined container it showed as empty bands above and below the rows */
+.markdown-rendered .workout-table-container table.workout-log-table {
+  margin: 0;
 }
 
 .workout-same-day-log {
@@ -60,17 +69,118 @@
   background: transparent;
 }
 
-@media (max-width: variables.$breakpoint-mobile) {
-  .workout-log-table {
-    font-size: var(--workout-font-xs);
+/* Phones: each log row becomes a compact card (no horizontal scroll, actions
+   always reachable). Labels come from data-label set by TableRenderer. */
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-table-content-container .workout-table-container {
+    overflow-x: visible;
 
-    th {
-      padding: var(--workout-space-xs) var(--workout-space-xs);
-      font-size: var(--workout-font-xs);
-    }
+    .workout-log-table {
+      display: block;
+      font-size: var(--font-ui-medium, 1em);
 
-    td {
-      padding: var(--workout-space-xs) var(--workout-space-xs);
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: block;
+      }
+
+      tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--workout-space-sm) var(--workout-space-xs);
+        padding: var(--workout-space-sm);
+      }
+
+      td {
+        display: block;
+        padding: 0;
+        border: none;
+        white-space: normal;
+
+        &:empty {
+          display: none;
+        }
+
+        /* Value cells share the row; long labels wrap at spaces instead of
+           pushing the action buttons onto a second line */
+        &[data-label] {
+          flex: 1 1 0;
+          min-width: 0;
+        }
+
+        &[data-label]::before {
+          content: attr(data-label);
+          display: block;
+          font-size: var(--workout-font-xs);
+          font-weight: normal;
+          color: var(--text-muted);
+        }
+      }
+
+      .workout-table-date-cell {
+        font-size: var(--workout-font-sm);
+        font-weight: normal;
+        color: var(--text-muted);
+      }
+
+      .workout-table-date-cell,
+      .workout-table-actions-cell {
+        flex: none;
+      }
+
+      /* Protocol badge and notes go on a second line under the numbers:
+         squeezed into the first line they broke words letter by letter.
+         The ::after item is a full-width line break, added only to rows
+         that have something to show there. */
+      tr:has(
+          > td.workout-table-notes-cell:not(:empty),
+          > td.workout-table-protocol-cell:not(:empty)
+        )::after {
+        content: "";
+        order: 1;
+        flex-basis: 100%;
+        height: 0;
+      }
+
+      td.workout-table-protocol-cell {
+        order: 2;
+        flex: none;
+      }
+
+      td.workout-table-notes-cell {
+        order: 3;
+        flex: 1 1 auto;
+      }
+
+      .workout-table-actions {
+        gap: var(--workout-space-xs);
+      }
+
+      .workout-table-spacer {
+        flex-wrap: wrap;
+        gap: var(--workout-space-md);
+
+        .workout-table-spacer-date-cell {
+          background: none;
+          font-size: var(--workout-font-base);
+          font-weight: var(--workout-font-weight-semibold);
+          color: var(--workout-text-accent);
+        }
+
+        .workout-table-spacer-summary-cell {
+          background: none;
+          font-size: var(--workout-font-sm);
+        }
+      }
     }
+  }
+
+  .workout-table-action-btn {
+    min-width: var(--workout-touch-target-min);
+    height: var(--workout-touch-target-min);
   }
 }

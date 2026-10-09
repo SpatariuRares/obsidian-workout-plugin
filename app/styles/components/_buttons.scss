@@ -55,11 +55,11 @@
 
 %workout-btn-primary {
   @extend %workout-btn-interactive;
-  background: var(--interactive-accent);
+  background: var(--workout-accent-fill);
   color: var(--text-on-accent);
 
   &:hover {
-    background: var(--interactive-accent-hover);
+    background: var(--workout-accent-fill-hover);
     color: var(--text-on-accent);
   }
 }
@@ -217,7 +217,7 @@
   display: flex;
   gap: var(--workout-space-xs);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-xs);
   background: var(--background-secondary);
@@ -263,11 +263,11 @@
   }
 
   &.workout-adjust-plus {
-    @include workout-btn-outlined(var(--text-success));
+    @include workout-btn-outlined(var(--workout-text-success));
   }
 
   &.workout-adjust-minus {
-    @include workout-btn-outlined(var(--text-error));
+    @include workout-btn-outlined(var(--workout-text-error));
   }
 }
 
@@ -316,7 +316,7 @@
 
   background: var(--background-secondary);
   border: var(--workout-border-medium) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
 
   color: var(--text-normal);
@@ -331,14 +331,14 @@
 
   &:active {
     transform: scale(0.95);
-    background: var(--interactive-accent);
+    background: var(--workout-accent-fill);
     color: var(--text-on-accent);
     border-color: var(--interactive-accent);
   }
 
   // Decrement variant (red)
   &-decrement {
-    @include workout-btn-outlined(var(--text-error));
+    @include workout-btn-outlined(var(--workout-text-error));
 
     &:hover {
       background: rgba(var(--color-red-rgb), 0.1);
@@ -347,7 +347,7 @@
 
   // Increment variant (green)
   &-increment {
-    @include workout-btn-outlined(var(--text-success));
+    @include workout-btn-outlined(var(--workout-text-success));
 
     &:hover {
       background: rgba(var(--color-green-rgb), 0.1);
@@ -369,7 +369,7 @@
   font-size: var(--workout-font-xl);
   background: var(--background-primary);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--button-radius, var(--workout-radius-md));
   color: var(--text-normal);
 
@@ -406,10 +406,13 @@
 
 // Shared hover effect for table actions
 @mixin workout-table-action-hover($bg-color) {
-  &:hover {
-    background: $bg-color;
-    color: var(--text-on-accent);
-    transform: scale(1.1);
+  // Touch devices keep :hover after a tap; only enlarge on real pointers
+  @media (hover: hover) {
+    &:hover {
+      background: $bg-color;
+      color: var(--text-on-accent);
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -420,12 +423,23 @@
   height: var(--workout-size-2xl);
 }
 
-.workout-table-action-btn-edit {
-  @include workout-table-action-hover(var(--interactive-accent));
+/* Own surface + border: rows use --background-secondary, so a button with
+   the same fill looked like a bare icon. Qualified with the tag to beat
+   Obsidian's mobile `button` rule (--interactive-normal, no border). */
+.workout-table-actions button.workout-table-action-btn {
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid var(--workout-border-color);
 }
 
-.workout-table-action-btn-delete {
-  @include workout-table-action-hover(var(--text-error));
+.workout-table-actions button.workout-table-action-btn-edit {
+  @include workout-table-action-hover(var(--workout-accent-fill));
+}
+
+.workout-table-actions button.workout-table-action-btn-delete {
+  // Raw --text-error gives white text ~3.3:1
+  @include workout-table-action-hover(
+    color-mix(in srgb, var(--text-error) 75%, black)
+  );
 }
 
 @media print {

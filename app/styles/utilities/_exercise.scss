@@ -7,13 +7,13 @@
     }
 
     .workout-exercise-status-success {
-      color: var(--text-success);
+      color: var(--workout-text-success);
     }
     .workout-exercise-status-accent {
-      color: var(--text-accent);
+      color: var(--workout-text-accent);
     }
     .workout-exercise-status-warning {
-      color: var(--text-warning);
+      color: var(--workout-text-warning);
     }
   }
   .workout-exercise-autocomplete {
@@ -24,7 +24,7 @@
       right: 0;
       background: var(--background-primary);
       border: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-color);
       border-radius: var(--workout-radius-md);
       box-shadow: var(--workout-shadow-lg);
       max-height: var(--workout-size-6xl);
@@ -36,7 +36,7 @@
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
       font-size: var(--workout-font-base);
       transition: var(--workout-transition);
 
@@ -53,9 +53,9 @@
       display: flex;
       align-items: center;
       gap: var(--workout-space-sm);
-      color: var(--interactive-accent);
+      color: var(--workout-text-accent);
       border-top: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
       font-style: italic;
 
       .workout-exercise-autocomplete-create-icon {
@@ -72,7 +72,7 @@
       width: 100%;
       padding: var(--workout-space-sm) var(--workout-space-md);
       border: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-color);
       border-radius: var(--workout-radius-md);
       background: var(--background-primary);
       color: var(--text-normal);
@@ -89,7 +89,7 @@
         var(--background-primary)
       );
       border: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-color);
       border-top: none;
       border-radius: 0 0 var(--workout-radius-xs)
         var(--workout-radius-xs);
@@ -103,7 +103,7 @@
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
 
       &:hover {
         background: var(--background-modifier-hover);
@@ -113,7 +113,7 @@
       }
 
       &.selected {
-        background: var(--interactive-accent);
+        background: var(--workout-accent-fill);
         color: var(--text-on-accent);
       }
     }

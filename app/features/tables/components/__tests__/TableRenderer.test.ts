@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 
 import {
@@ -315,6 +315,53 @@ describe("TableRenderer", () => {
       );
       expect(dateCell).not.toBeNull();
       expect(dateCell!.textContent).toBe("10:00");
+    });
+
+    it("labels value cells with their column name for the mobile card layout", () => {
+      const container = document.createElement("div");
+      const repsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value;
+      const actionsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value;
+      const headers = ["Date", repsCol, actionsCol];
+      const rows = [
+        createRow({
+          dateKey: "2024-01-15",
+          displayRow: ["10:00", "8", ""],
+        }),
+      ];
+
+      TableRenderer.renderTable(container, headers, rows, {});
+
+      const cells = container.querySelectorAll(
+        "tr.workout-same-day-log td",
+      );
+      expect(cells[1].getAttribute("data-label")).toBe(
+        mapColumnIdentifiersToLabels([repsCol])[0],
+      );
+      // The time and action cells explain themselves: no label
+      expect(cells[0].hasAttribute("data-label")).toBe(false);
+      expect(cells[2].hasAttribute("data-label")).toBe(false);
+    });
+
+    it("marks the notes column so it can wrap under the row on phones", () => {
+      const container = document.createElement("div");
+      const notesCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value;
+      const headers = ["Date", notesCol];
+      const rows = [
+        createRow({
+          dateKey: "2024-01-15",
+          displayRow: ["10:00", "Felt strong"],
+        }),
+      ];
+
+      TableRenderer.renderTable(container, headers, rows, {});
+
+      const notesCell = container.querySelector(
+        ".workout-table-notes-cell",
+      );
+      expect(notesCell?.textContent).toBe("Felt strong");
+      expect(notesCell?.getAttribute("data-label")).toBe(
+        mapColumnIdentifiersToLabels([notesCol])[0],
+      );
     });
 
     it("applies volume cell class to volume column", () => {

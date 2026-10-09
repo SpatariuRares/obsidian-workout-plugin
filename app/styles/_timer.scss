@@ -64,7 +64,7 @@
     .workout-timer-time-display {
       font-size: var(--workout-font-xl);
       font-weight: var(--workout-font-weight-semibold);
-      color: var(--text-accent);
+      color: var(--workout-text-accent);
       font-family: monospace;
       min-width: var(--workout-size-3xl);
       text-align: center;
@@ -73,7 +73,7 @@
     .workout-timer-complete {
       font-size: var(--workout-font-xl);
       font-weight: var(--workout-font-weight-bold);
-      color: var(--text-success);
+      color: var(--workout-text-success);
     }
   }
 
@@ -117,7 +117,7 @@
 .workout-timer-error {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-modifier-error);
-  color: var(--text-error);
+  color: var(--workout-text-error);
   border-radius: var(--workout-radius-sm);
   margin: var(--workout-space-sm) 0;
   border: var(--workout-border-thin) solid

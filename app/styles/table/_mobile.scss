@@ -20,7 +20,7 @@
     padding: var(--workout-space-md) var(--workout-space-sm);
     text-align: left;
     border-bottom: var(--workout-border-medium) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
     font-size: var(--workout-font-sm);
@@ -29,7 +29,7 @@
   td {
     padding: var(--workout-space-sm) var(--workout-space-sm);
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     color: var(--text-normal);
     font-size: var(--workout-font-sm);
   }
@@ -51,17 +51,17 @@
   font-weight: var(--workout-font-weight-semibold);
   color: var(--text-normal);
   border-bottom: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-subtle);
   background: var(--background-secondary);
 }
 
 .workout-date-group-header {
   background: var(--background-secondary-alt);
   font-weight: var(--workout-font-weight-semibold);
-  color: var(--text-accent);
+  color: var(--workout-text-accent);
   padding: var(--workout-space-sm) var(--workout-space-sm);
   border-bottom: var(--workout-border-medium) solid
-    var(--background-modifier-border);
+    var(--workout-border-subtle);
 }
 
 @media (max-width: variables.$breakpoint-tablet) {

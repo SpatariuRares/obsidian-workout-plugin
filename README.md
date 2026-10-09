@@ -76,7 +76,7 @@ Open the log form in any of these ways:
 - the dumbbell icon in the ribbon
 - the **Create workout log** command
 
-The form shows recent exercises as one-tap chips and has **+/−** buttons for weight, which helps on a phone. It asks for the fields that fit the exercise: reps and weight for a squat, seconds for a plank, distance and time for a run (see [Exercise pages](#exercise-pages)).
+The form fills in the reps and weight of your last set, has **+/−** buttons for both, and shows recent exercises as one-tap chips (on a phone they sit under **Recent exercises and workout**, at the bottom of the form). It asks for the fields that fit the exercise: reps and weight for a squat, seconds for a plank, distance and time for a run (see [Exercise pages](#exercise-pages)).
 
 Each set can also carry:
 
@@ -84,6 +84,20 @@ Each set can also carry:
 - a protocol, the training technique shown as a badge: standard, drop set, myo-reps, rest-pause, superset, 21s, or [your own](#settings)
 
 To change or delete a set, use the buttons on its row in a table.
+
+### On your phone
+
+The plugin is built to be used between sets. On a phone:
+
+- each set in a `workout-log` table becomes a compact row with its edit and delete buttons always in reach, with no sideways scrolling
+- the dashboard puts **Quick actions** first and shows the summary as a 2 × 2 grid
+- charts are replaced by a table of their values, which is easier to read on a small screen
+
+<p align="center">
+  <img src="assets/mobile-log.png" width="260" alt="Workout note on a phone: rest timer, add button and the log table as one row per set">
+  <img src="assets/mobile-log-form.png" width="260" alt="Log form on a phone, prefilled with the last set, with +/− buttons for reps and weight">
+  <img src="assets/mobile-dashboard.png" width="260" alt="Dashboard on a phone: quick actions on top, then a 2 × 2 summary">
+</p>
 
 ## Seeing your progress
 
@@ -105,7 +119,9 @@ Every parameter is optional. Exercise names match loosely by default ("squat" fi
 
 ### workout-log
 
-A table of sets, newest first, with edit and delete buttons.
+A table of sets, newest first, with edit and delete buttons. Sets from the same day are grouped under a row with that day's totals.
+
+![Rest timer and log table for one exercise](assets/tables.png)
 
 ```workout-log
 exercise: Bench Press
@@ -161,11 +177,15 @@ showTrendLine: true
 | `combined`  | sets of `exercise` within `workout` | total            |
 | `all`       | every set (filters ignored)         | total            |
 
-For pace, lower is better, so a falling line is shown as improving.
+The header above the chart calls the trend **Increasing**, **Decreasing** or **Stable**. It is stable when the trend line moves by less than 5% of the average across the whole period, so steady small gains still count as increasing. For pace, lower is better, so a falling line is shown as improving.
+
+On a phone the chart is replaced by a table of the same values.
 
 ### workout-dashboard
 
 Summary cards, quick stats, volume trend, recent workouts, a muscle heat map, protocol usage and effectiveness, and planned vs. actual workout length.
+
+![Dashboard with summary cards, quick stats and the muscle heat map](assets/dashboard.png)
 
 ```workout-dashboard
 title: Last three months
@@ -205,6 +225,8 @@ On a phone, the browser only allows sound after you've tapped **Start** once, so
 ### workout-duration
 
 Estimates how long a workout note takes: rest from its `workout-timer` blocks plus time for each set.
+
+![Estimated duration card with rest time, set time and the last session](assets/duration.png)
 
 ```workout-duration
 workout: Workouts/Push Day.md

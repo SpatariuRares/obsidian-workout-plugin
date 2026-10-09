@@ -31,7 +31,11 @@ export class TrendCalculator {
 
     const averageVolume =
       volumeData.reduce((a, b) => a + b, 0) / volumeData.length;
-    const slopeThreshold = Math.max(0.05 * averageVolume, 1);
+    // Compare the change across the whole range of the fitted line with 5% of
+    // the average: a steady +4% per session is a trend, not "stable".
+    const slopeThreshold =
+      (0.05 * Math.abs(averageVolume)) / (volumeData.length - 1) ||
+      Number.EPSILON;
 
     // For pace, lower values are better (faster), so invert the logic
     const isLowerBetter = dataType

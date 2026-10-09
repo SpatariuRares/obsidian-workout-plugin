@@ -23,7 +23,7 @@
   input[type="number"],
   select {
     border: var(--input-border-width, var(--workout-border-thin))
-      solid var(--background-modifier-border);
+      solid var(--workout-border-color);
     border-radius: var(--input-radius, var(--workout-radius-md));
     background: var(--background-primary);
     color: var(--text-normal);
@@ -99,6 +99,18 @@
       min-height: var(--workout-touch-target-min);
     }
 
+    /* Obsidian mobile drops input borders: on the white modal, text fields and
+       selects looked like plain labels instead of editable fields */
+    input.workout-form-field-input,
+    select.workout-form-field-input,
+    textarea.workout-form-field-input {
+      min-height: var(--workout-touch-target-min);
+      background: var(--background-modifier-form-field);
+      border: var(--workout-border-thin) solid
+        var(--workout-border-color);
+      border-radius: var(--workout-radius-md);
+    }
+
     /* Target section mobile optimizations */
     .workout-charts-checkbox-group {
       min-height: var(--workout-touch-target-min);
@@ -158,7 +170,7 @@
     width: 100%;
     padding: var(--workout-space-sm) var(--workout-space-md);
     border: var(--input-border-width, var(--workout-border-thin))
-      solid var(--background-modifier-border);
+      solid var(--workout-border-color);
     border-radius: var(--input-radius, var(--workout-radius-md));
     background: var(--background-primary);
     color: var(--text-normal);
@@ -185,7 +197,7 @@
   gap: var(--workout-space-sm);
   padding: var(--workout-space-md);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   background: var(--background-secondary);
   min-height: var(--workout-size-3xl);
@@ -212,7 +224,7 @@
   overflow-y: auto;
   padding: var(--workout-space-md);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   background: var(--background-primary);
   display: flex;

@@ -85,10 +85,88 @@ $breakpoint-mobile: 484px;
   /* Alert Colors */
   --workout-color-warning-bg: rgba(255, 193, 7, 0.1);
   --workout-color-warning-border: #ffc107;
-  --workout-color-warning-text: #856404;
   --workout-color-success: #28a745;
 
   /* Overlay colors for elements on --interactive-accent background */
   --workout-autocomplete-on-accent-bg: rgba(255, 255, 255, 0.2);
   --workout-autocomplete-on-accent-border: rgba(255, 255, 255, 0.3);
+}
+
+/* Tokens built from Obsidian theme variables must be declared on body:
+   Obsidian defines --text-accent, --interactive-accent etc. on
+   body.theme-light / body.theme-dark, and a custom property is resolved where
+   it is declared. On :root they would be invalid (transparent fills). */
+body {
+  /* Accessible text colors (WCAG AA, 4.5:1). The theme's accent, green, red
+     and orange are too light on white (2-3.4:1). Mixing them with
+     --text-normal darkens them in light themes and lightens them in dark
+     ones, so contrast rises everywhere and the hue stays recognisable.
+     Measured on the default theme against primary, secondary and border
+     backgrounds: light >= 4.98, dark >= 4.88. Use these, never the raw
+     theme colors, for text. */
+  --workout-text-accent: color-mix(
+    in srgb,
+    var(--text-accent) 70%,
+    var(--text-normal)
+  );
+  --workout-text-success: color-mix(
+    in srgb,
+    var(--text-success) 50%,
+    var(--text-normal)
+  );
+  --workout-text-error: color-mix(
+    in srgb,
+    var(--text-error) 60%,
+    var(--text-normal)
+  );
+  --workout-text-warning: color-mix(
+    in srgb,
+    var(--text-warning) 50%,
+    var(--text-normal)
+  );
+
+  /* Borders. Obsidian's --background-modifier-border is ~1.2:1 against the
+     surfaces, so components and rows blurred together.
+     --workout-border-color outlines components (inputs, buttons, cards,
+     tables) at ~3:1, the WCAG 1.4.11 target for control boundaries;
+     --workout-border-subtle separates rows and sections inside them. */
+  --workout-border-color: color-mix(
+    in srgb,
+    var(--text-muted) 70%,
+    var(--background-secondary)
+  );
+  --workout-border-subtle: color-mix(
+    in srgb,
+    var(--text-muted) 40%,
+    var(--background-secondary)
+  );
+
+  /* Day header row in log tables: an accent tint, so it differs in hue from
+     both row shades (a grey header matched the tinted rows at 1.02:1) */
+  --workout-table-day-bg: color-mix(
+    in srgb,
+    var(--interactive-accent) 20%,
+    var(--background-secondary)
+  );
+
+  /* Fill behind --text-on-accent: the raw accent gives white text 3.4:1 */
+  --workout-accent-fill: color-mix(
+    in srgb,
+    var(--interactive-accent) 80%,
+    black
+  );
+  --workout-accent-fill-hover: color-mix(
+    in srgb,
+    var(--interactive-accent-hover) 80%,
+    black
+  );
+}
+
+/* Dark themes need less mixing to reach ~3:1 */
+body.theme-dark {
+  --workout-border-color: color-mix(
+    in srgb,
+    var(--text-muted) 50%,
+    var(--background-secondary)
+  );
 }

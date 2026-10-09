@@ -45,7 +45,7 @@
   min-width: 160px;
   background: var(--background-primary);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   box-shadow: var(--workout-shadow-md);
   overflow: hidden;
@@ -87,7 +87,7 @@
   // Checkmark for active item (left side)
   &[aria-checked="true"]::before {
     content: "✓";
-    color: var(--interactive-accent);
+    color: var(--workout-text-accent);
     font-size: var(--workout-font-sm);
   }
 }

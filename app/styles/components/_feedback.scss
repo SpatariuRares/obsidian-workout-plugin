@@ -35,14 +35,14 @@
   padding: var(--workout-space-xl);
   border-color: var(--text-error);
   border-radius: var(--workout-radius-lg);
-  color: var(--text-error);
+  color: var(--workout-text-error);
   gap: var(--workout-space-sm);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-feedback-success {
   @extend %feedback-container;
-  color: var(--text-success);
+  color: var(--workout-text-success);
   border-color: var(--text-success);
   font-weight: var(--workout-font-weight-medium);
 }
@@ -58,7 +58,7 @@
 .workout-feedback-warning {
   @extend %feedback-container;
   border-color: var(--workout-color-warning-border);
-  color: var(--workout-color-warning-text);
+  color: var(--workout-text-warning);
 
   .workout-alert-title {
     margin: 0 0 var(--workout-space-sm) 0;
@@ -74,5 +74,5 @@
   @extend %feedback-container;
   color: var(--text-muted);
   font-style: italic;
-  border-color: var(--background-modifier-border);
+  border-color: var(--workout-border-color);
 }

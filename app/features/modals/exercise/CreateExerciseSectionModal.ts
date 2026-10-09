@@ -128,7 +128,7 @@ export class CreateExerciseSectionModal extends ModalBase {
     const cancelBtn = Button.create(buttonsSection, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.WARNING,
+      variant: BUTTONVARIANT.SECONDARY,
     });
 
     // Create button using Button atom

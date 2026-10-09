@@ -8,7 +8,7 @@
   .workout-file-error-item {
     padding: var(--workout-space-md) 0;
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     margin: 0;
 
     &:last-child {
@@ -20,14 +20,14 @@
     }
 
     .workout-file-error-link {
-      color: var(--text-accent);
+      color: var(--workout-text-accent);
       font-weight: var(--workout-font-weight-semibold);
       text-decoration: none;
       cursor: pointer;
       transition: var(--workout-transition);
 
       &:hover {
-        color: var(--text-accent-hover);
+        color: var(--workout-text-accent);
         text-decoration: underline;
       }
     }
@@ -39,7 +39,7 @@
     }
 
     .workout-file-error-message {
-      color: var(--text-warning);
+      color: var(--workout-text-warning);
       font-size: var(--workout-font-sm);
       padding: var(--workout-space-xs) 0;
       display: flex;

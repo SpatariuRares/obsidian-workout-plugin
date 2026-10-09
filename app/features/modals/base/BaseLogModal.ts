@@ -276,7 +276,7 @@ export abstract class BaseLogModal extends ModalBase {
     const cancelBtn = Button.create(container, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.WARNING,
+      variant: BUTTONVARIANT.SECONDARY,
     });
 
     Button.onClick(cancelBtn, () => this.close());

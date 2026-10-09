@@ -123,7 +123,7 @@ export class LogFormRenderer {
     if (shouldShowDateField) {
       dateInput = modal.createTextField(
         formContainer,
-        "Date",
+        t("modal.date"),
         "",
         "",
       );

@@ -191,7 +191,7 @@
     padding: var(--workout-space-sm) var(--workout-space-md);
     text-align: left;
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
   }
 
   th {
@@ -228,12 +228,12 @@
 }
 
 .workout-protocol-effectiveness-positive {
-  color: var(--text-success);
+  color: var(--workout-text-success);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-protocol-effectiveness-negative {
-  color: var(--text-error);
+  color: var(--workout-text-error);
   font-weight: var(--workout-font-weight-medium);
 }
 

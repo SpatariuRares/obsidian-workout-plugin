@@ -55,7 +55,7 @@ export class TrendHeader {
     }
 
     h3.appendText(
-      `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)}`,
+      `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)} `,
     );
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 

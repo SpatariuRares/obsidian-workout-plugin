@@ -6,7 +6,7 @@
 /* Inline validation error text shown below numeric/text fields */
 .workout-setting-error {
   display: none;
-  color: var(--text-error);
+  color: var(--workout-text-error);
   font-size: var(--font-smallest);
   margin-top: var(--workout-space-xs);
   width: 100%;
@@ -31,7 +31,7 @@
     align-items: center;
     gap: var(--size-4-2);
     border-top: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     user-select: none;
 
     &::before {

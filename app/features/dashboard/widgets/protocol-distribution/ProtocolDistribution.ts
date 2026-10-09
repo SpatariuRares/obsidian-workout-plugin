@@ -310,12 +310,10 @@ export class ProtocolDistribution {
             callbacks: {
               label: (context) => {
                 const stat = stats[context.dataIndex];
-                return t("dashboard.protocol.setsLabel", {
+                return t("dashboard.protocol.tooltip", {
                   label: stat.label,
                   count: stat.count,
-                  setsLabel: t("dashboard.protocol.setsLabel"),
                   percentage: stat.percentage.toFixed(1),
-                  percentLabel: t("dashboard.protocol.percentLabel"),
                 });
               },
               afterLabel: () => {

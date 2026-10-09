@@ -137,7 +137,8 @@
       "month": "Luna",
       "week": "Săptămână",
       "workouts": "Antrenamente",
-      "year": "An"
+      "year": "An",
+      "title": "Statistici rapide"
     },
     "recentWorkouts": {
       "fallbackName": "Antrenament",
@@ -701,7 +702,8 @@
       "tableType": "Tip de tabel",
       "target": "Obiectiv",
       "timerConfiguration": "Configurarea temporizatorului",
-      "workout": "Antrenament"
+      "workout": "Antrenament",
+      "mobileOptions": "Exercițiile și antrenamentele recente"
     },
     "selectOptions": {
       "allLogs": "Toate înregistrările",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Pentru tipul exercițiu + antrenament, completează ambele câmpuri"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seturi: {sets}\n- Repetări: {reps}\n- Pauză: {restTime}s\n\n",
-    "noteTemplate": "**Notă: {note}**\n"
+    "noteTemplate": "**Notă: {note}**\n",
+    "date": "Data"
   },
   "settings": {
     "buttons": {

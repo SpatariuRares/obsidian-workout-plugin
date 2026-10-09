@@ -137,7 +137,8 @@
       "month": "월",
       "week": "이번 주",
       "workouts": "운동",
-      "year": "연"
+      "year": "연",
+      "title": "빠른 통계"
     },
     "recentWorkouts": {
       "fallbackName": "운동",
@@ -701,7 +702,8 @@
       "tableType": "표 유형",
       "target": "목표",
       "timerConfiguration": "타이머 설정",
-      "workout": "운동"
+      "workout": "운동",
+      "mobileOptions": "최근 운동 및 운동 루틴"
     },
     "selectOptions": {
       "allLogs": "모든 기록",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "운동 종목 + 운동 루틴 유형에서는 두 필드를 모두 입력하세요"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 세트: {sets}\n- 반복: {reps}\n- 휴식: {restTime}초\n\n",
-    "noteTemplate": "**메모: {note}**\n"
+    "noteTemplate": "**메모: {note}**\n",
+    "date": "날짜"
   },
   "settings": {
     "buttons": {

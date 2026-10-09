@@ -137,7 +137,8 @@
       "month": "月",
       "week": "週",
       "workouts": "ワークアウト",
-      "year": "年"
+      "year": "年",
+      "title": "クイックな統計"
     },
     "recentWorkouts": {
       "fallbackName": "ワークアウト",
@@ -701,7 +702,8 @@
       "tableType": "表の種類",
       "target": "目標",
       "timerConfiguration": "タイマーの設定",
-      "workout": "ワークアウト"
+      "workout": "ワークアウト",
+      "mobileOptions": "最近のトレーニングとワークアウト"
     },
     "selectOptions": {
       "allLogs": "すべての記録",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "エクササイズ + ワークアウトのタイプでは、両方のフィールドを入力してください"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- 回数: {reps}\n- 休憩: {restTime}秒\n\n",
-    "noteTemplate": "**メモ: {note}**\n"
+    "noteTemplate": "**メモ: {note}**\n",
+    "date": "日付"
   },
   "settings": {
     "buttons": {

@@ -137,7 +137,8 @@
       "month": "Mois",
       "week": "Semaine",
       "workouts": "Séances d'entraînement",
-      "year": "Année"
+      "year": "Année",
+      "title": "Statistiques rapides"
     },
     "recentWorkouts": {
       "fallbackName": "Entraînement",
@@ -701,7 +702,8 @@
       "tableType": "Type de tableau",
       "target": "Cible",
       "timerConfiguration": "Configuration du minuteur",
-      "workout": "Entraînement"
+      "workout": "Entraînement",
+      "mobileOptions": "Exercices et séances d'entraînement récents"
     },
     "selectOptions": {
       "allLogs": "Toutes les entrées",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Pour le type exercice + entraînement, remplissez les deux champs"
     },
     "exerciseSectionTemplate": "## {exerciseName} :\n### - Séries : {sets}\n- Répétitions : {reps}\n- Repos : {restTime}s\n\n",
-    "noteTemplate": "**Note : {note}**\n"
+    "noteTemplate": "**Note : {note}**\n",
+    "date": "Date"
   },
   "settings": {
     "buttons": {

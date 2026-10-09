@@ -137,7 +137,8 @@
       "month": "Месяц",
       "week": "Неделя",
       "workouts": "Тренировки",
-      "year": "Год"
+      "year": "Год",
+      "title": "Основные показатели"
     },
     "recentWorkouts": {
       "fallbackName": "Тренировка",
@@ -701,7 +702,8 @@
       "tableType": "Тип таблицы",
       "target": "Цель",
       "timerConfiguration": "Настройка таймера",
-      "workout": "Тренировка"
+      "workout": "Тренировка",
+      "mobileOptions": "Недавние тренировки и программа упражнений"
     },
     "selectOptions": {
       "allLogs": "Все записи",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Для типа «упражнение + тренировка» заполните оба поля"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Подходы: {sets}\n- Повторения: {reps}\n- Отдых: {restTime} с\n\n",
-    "noteTemplate": "**Примечание: {note}**\n"
+    "noteTemplate": "**Примечание: {note}**\n",
+    "date": "Дата"
   },
   "settings": {
     "buttons": {

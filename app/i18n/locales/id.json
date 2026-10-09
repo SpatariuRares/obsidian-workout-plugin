@@ -137,7 +137,8 @@
       "month": "Bulan",
       "week": "Minggu",
       "workouts": "Latihan",
-      "year": "Tahun"
+      "year": "Tahun",
+      "title": "Statistik cepat"
     },
     "recentWorkouts": {
       "fallbackName": "Latihan",
@@ -701,7 +702,8 @@
       "tableType": "Jenis tabel",
       "target": "Target",
       "timerConfiguration": "Konfigurasi timer",
-      "workout": "Latihan"
+      "workout": "Latihan",
+      "mobileOptions": "Latihan dan program olahraga terbaru"
     },
     "selectOptions": {
       "allLogs": "Semua catatan",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Untuk jenis latihan + sesi latihan, isi kedua kolom"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime} dtk\n\n",
-    "noteTemplate": "**Catatan: {note}**\n"
+    "noteTemplate": "**Catatan: {note}**\n",
+    "date": "Tanggal"
   },
   "settings": {
     "buttons": {

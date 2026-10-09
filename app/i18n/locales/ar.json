@@ -137,7 +137,8 @@
       "month": "الشهر",
       "week": "الأسبوع",
       "workouts": "التدريبات",
-      "year": "السنة"
+      "year": "السنة",
+      "title": "إحصائيات سريعة"
     },
     "recentWorkouts": {
       "fallbackName": "تدريب",
@@ -701,7 +702,8 @@
       "tableType": "نوع الجدول",
       "target": "الهدف",
       "timerConfiguration": "إعدادات المؤقت",
-      "workout": "التدريب"
+      "workout": "التدريب",
+      "mobileOptions": "تمارين ومواجب رياضية حديثة"
     },
     "selectOptions": {
       "allLogs": "كل السجلات",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "لنوع التمرين + الجلسة، املأ كلا الحقلين"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - المجموعات: {sets}\n- التكرارات: {reps}\n- الراحة: {restTime} ث\n\n",
-    "noteTemplate": "**ملاحظة: {note}**\n"
+    "noteTemplate": "**ملاحظة: {note}**\n",
+    "date": "التاريخ"
   },
   "settings": {
     "buttons": {

@@ -137,7 +137,8 @@
       "month": "Měsíc",
       "week": "Týden",
       "workouts": "Tréninky",
-      "year": "Rok"
+      "year": "Rok",
+      "title": "Rychlé statistiky"
     },
     "recentWorkouts": {
       "fallbackName": "Trénink",
@@ -701,7 +702,8 @@
       "tableType": "Typ tabulky",
       "target": "Cíl",
       "timerConfiguration": "Nastavení časovače",
-      "workout": "Trénink"
+      "workout": "Trénink",
+      "mobileOptions": "Nedávné cvičení a trénink"
     },
     "selectOptions": {
       "allLogs": "Všechny záznamy",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "U typu cvičení + trénink vyplňte obě pole"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Série: {sets}\n- Opakování: {reps}\n- Pauza: {restTime}s\n\n",
-    "noteTemplate": "**Poznámka: {note}**\n"
+    "noteTemplate": "**Poznámka: {note}**\n",
+    "date": "Datum"
   },
   "settings": {
     "buttons": {

@@ -137,7 +137,8 @@
       "month": "Місяць",
       "week": "Тиждень",
       "workouts": "Тренування",
-      "year": "Рік"
+      "year": "Рік",
+      "title": "Швидкі показники"
     },
     "recentWorkouts": {
       "fallbackName": "Тренування",
@@ -701,7 +702,8 @@
       "tableType": "Тип таблиці",
       "target": "Ціль",
       "timerConfiguration": "Налаштування таймера",
-      "workout": "Тренування"
+      "workout": "Тренування",
+      "mobileOptions": "Нещодавні тренування та програма для фізичних навантажень"
     },
     "selectOptions": {
       "allLogs": "Усі записи",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Для типу «вправа + тренування» заповніть обидва поля"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Підходи: {sets}\n- Повторення: {reps}\n- Відпочинок: {restTime} с\n\n",
-    "noteTemplate": "**Примітка: {note}**\n"
+    "noteTemplate": "**Примітка: {note}**\n",
+    "date": "Дата"
   },
   "settings": {
     "buttons": {

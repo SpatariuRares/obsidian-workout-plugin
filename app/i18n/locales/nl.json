@@ -137,7 +137,8 @@
       "month": "Maand",
       "week": "Week",
       "workouts": "Trainingen",
-      "year": "Jaar"
+      "year": "Jaar",
+      "title": "Snelle statistieken"
     },
     "recentWorkouts": {
       "fallbackName": "Training",
@@ -701,7 +702,8 @@
       "tableType": "Tabeltype",
       "target": "Doel",
       "timerConfiguration": "Timerconfiguratie",
-      "workout": "Training"
+      "workout": "Training",
+      "mobileOptions": "Recente oefeningen en trainingsschema's"
     },
     "selectOptions": {
       "allLogs": "Alle logs",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Vul voor het type oefening + training beide velden in"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
-    "noteTemplate": "**Opmerking: {note}**\n"
+    "noteTemplate": "**Opmerking: {note}**\n",
+    "date": "Datum"
   },
   "settings": {
     "buttons": {

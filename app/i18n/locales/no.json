@@ -137,7 +137,8 @@
       "month": "Måned",
       "week": "Uke",
       "workouts": "Økter",
-      "year": "År"
+      "year": "År",
+      "title": "Raske statistikker"
     },
     "recentWorkouts": {
       "fallbackName": "Trening",
@@ -701,7 +702,8 @@
       "tableType": "Tabelltype",
       "target": "Mål",
       "timerConfiguration": "Timerkonfigurasjon",
-      "workout": "Trening"
+      "workout": "Trening",
+      "mobileOptions": "Nylige treningsøkter og treningsplaner"
     },
     "selectOptions": {
       "allLogs": "Alle loggføringer",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "For typen øvelse + trening må begge feltene fylles ut"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sett: {sets}\n- Repetisjoner: {reps}\n- Pause: {restTime}s\n\n",
-    "noteTemplate": "**Merk: {note}**\n"
+    "noteTemplate": "**Merk: {note}**\n",
+    "date": "Dato"
   },
   "settings": {
     "buttons": {

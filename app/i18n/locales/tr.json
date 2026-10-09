@@ -137,7 +137,8 @@
       "month": "Ay",
       "week": "Hafta",
       "workouts": "Antrenmanlar",
-      "year": "Yıl"
+      "year": "Yıl",
+      "title": "Hızlı istatistikler"
     },
     "recentWorkouts": {
       "fallbackName": "Antrenman",
@@ -701,7 +702,8 @@
       "tableType": "Tablo türü",
       "target": "Hedef",
       "timerConfiguration": "Zamanlayıcı yapılandırması",
-      "workout": "Antrenman"
+      "workout": "Antrenman",
+      "mobileOptions": "Son egzersizler ve antrenman"
     },
     "selectOptions": {
       "allLogs": "Tüm kayıtlar",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Egzersiz + antrenman türü için her iki alanı da doldurun"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} sn\n\n",
-    "noteTemplate": "**Not: {note}**\n"
+    "noteTemplate": "**Not: {note}**\n",
+    "date": "Tarih"
   },
   "settings": {
     "buttons": {

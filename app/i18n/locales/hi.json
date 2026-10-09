@@ -137,7 +137,8 @@
       "month": "महीना",
       "week": "सप्ताह",
       "workouts": "वर्कआउट",
-      "year": "वर्ष"
+      "year": "वर्ष",
+      "title": "त्वरित आँकड़े"
     },
     "recentWorkouts": {
       "fallbackName": "वर्कआउट",
@@ -701,7 +702,8 @@
       "tableType": "तालिका का प्रकार",
       "target": "लक्ष्य",
       "timerConfiguration": "टाइमर कॉन्फ़िगरेशन",
-      "workout": "वर्कआउट"
+      "workout": "वर्कआउट",
+      "mobileOptions": "हाल के व्यायाम और वर्कआउट"
     },
     "selectOptions": {
       "allLogs": "सभी लॉग",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "व्यायाम + वर्कआउट प्रकार के लिए दोनों फ़ील्ड भरें"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड\n\n",
-    "noteTemplate": "**नोट: {note}**\n"
+    "noteTemplate": "**नोट: {note}**\n",
+    "date": "तिथि"
   },
   "settings": {
     "buttons": {

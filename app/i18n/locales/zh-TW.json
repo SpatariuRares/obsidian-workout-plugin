@@ -137,7 +137,8 @@
       "month": "月份",
       "week": "本週",
       "workouts": "運動",
-      "year": "年份"
+      "year": "年份",
+      "title": "快速統計"
     },
     "recentWorkouts": {
       "fallbackName": "運動",
@@ -701,7 +702,8 @@
       "tableType": "表格類型",
       "target": "目標",
       "timerConfiguration": "計時器設定",
-      "workout": "運動"
+      "workout": "運動",
+      "mobileOptions": "最近的運動和訓練"
     },
     "selectOptions": {
       "allLogs": "所有紀錄",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "對於「動作 + 運動」類型，請填寫兩個欄位"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 組數：{sets}\n- 次數：{reps}\n- 休息：{restTime} 秒\n\n",
-    "noteTemplate": "**備註：{note}**\n"
+    "noteTemplate": "**備註：{note}**\n",
+    "date": "日期"
   },
   "settings": {
     "buttons": {

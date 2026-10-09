@@ -137,7 +137,8 @@
       "month": "Måned",
       "week": "Uge",
       "workouts": "Træninger",
-      "year": "År"
+      "year": "År",
+      "title": "Hurtige statistikker"
     },
     "recentWorkouts": {
       "fallbackName": "Træning",
@@ -701,7 +702,8 @@
       "tableType": "Tabeltype",
       "target": "Mål",
       "timerConfiguration": "Timerkonfiguration",
-      "workout": "Træning"
+      "workout": "Træning",
+      "mobileOptions": "Seneste træninger og træningsprogrammer"
     },
     "selectOptions": {
       "allLogs": "Alle logposter",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "For typen øvelse + træning skal begge felter udfyldes"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sæt: {sets}\n- Gentagelser: {reps}\n- Pause: {restTime}s\n\n",
-    "noteTemplate": "**Bemærk: {note}**\n"
+    "noteTemplate": "**Bemærk: {note}**\n",
+    "date": "Dato"
   },
   "settings": {
     "buttons": {

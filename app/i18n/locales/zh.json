@@ -137,7 +137,8 @@
       "month": "本月",
       "week": "本周",
       "workouts": "训练",
-      "year": "本年"
+      "year": "本年",
+      "title": "快速统计"
     },
     "recentWorkouts": {
       "fallbackName": "训练",
@@ -701,7 +702,8 @@
       "tableType": "表格类型",
       "target": "目标",
       "timerConfiguration": "计时器配置",
-      "workout": "训练"
+      "workout": "训练",
+      "mobileOptions": "最近的锻炼和训练"
     },
     "selectOptions": {
       "allLogs": "所有记录",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，请填写两个字段"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息：{restTime} 秒\n\n",
-    "noteTemplate": "**备注：{note}**\n"
+    "noteTemplate": "**备注：{note}**\n",
+    "date": "日期"
   },
   "settings": {
     "buttons": {

@@ -137,7 +137,8 @@
       "month": "Muaj",
       "week": "Javë",
       "workouts": "Stërvitje",
-      "year": "Vit"
+      "year": "Vit",
+      "title": "Statistikat e shpejta"
     },
     "recentWorkouts": {
       "fallbackName": "Stërvitje",
@@ -701,7 +702,8 @@
       "tableType": "Lloji i tabelës",
       "target": "Objektivi",
       "timerConfiguration": "Konfigurimi i timerit",
-      "workout": "Stërvitja"
+      "workout": "Stërvitja",
+      "mobileOptions": "Trajnimet dhe programet e ushtrimeve të fundit"
     },
     "selectOptions": {
       "allLogs": "Të gjitha regjistrimet",
@@ -761,7 +763,8 @@
       "validationCombinedMode": "Për llojin ushtrim + stërvitje, plotësoni të dyja fushat"
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seri: {sets}\n- Përsëritje: {reps}\n- Pushim: {restTime}s\n\n",
-    "noteTemplate": "**Shënim: {note}**\n"
+    "noteTemplate": "**Shënim: {note}**\n",
+    "date": "Data"
   },
   "settings": {
     "buttons": {

@@ -3,10 +3,10 @@ import { App, PluginSettingTab } from "obsidian";
 import { t } from "@app/i18n";
 import WorkoutChartsPlugin from "main";
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
-import { TimerPresetsSettings } from "@app/features/timer";
+import { TimerPresetsSettings } from "@app/features/timer/settings/TimerPresetsSettings";
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
 import { TemplatesSettings } from "@app/features/settings/components/TemplatesSettings";
-import { DurationEstimationSettings } from "@app/features/duration";
+import { DurationEstimationSettings } from "@app/features/duration/settings/DurationEstimationSettings";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 import { MaintenanceSettings } from "@app/features/settings/components/MaintenanceSettings";
 

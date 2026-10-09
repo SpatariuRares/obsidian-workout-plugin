@@ -1,8 +1,8 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import { ChartRenderer } from "@app/features/charts";
+import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import {
   prepareVolumeTrendData,
   calculateMuscleGroupVolume,

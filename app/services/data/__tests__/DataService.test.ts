@@ -1,6 +1,6 @@
 import { DataService } from "../DataService";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 // Mock i18n to interpolate {key} placeholders, mirroring LocalizationService behaviour

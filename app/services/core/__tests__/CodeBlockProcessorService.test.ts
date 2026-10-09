@@ -64,7 +64,7 @@ jest.mock("@app/i18n", () => ({
 }));
 
 import { CodeBlockProcessorService } from "../CodeBlockProcessorService";
-import { EmbeddedTimerView } from "@app/features/timer";
+import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import { MarkdownPostProcessorContext } from "obsidian";

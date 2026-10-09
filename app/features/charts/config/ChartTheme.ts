@@ -3,7 +3,7 @@
  * Provides theme-aware colors using Obsidian CSS variables with fallbacks.
  */
 
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 /**
  * Represents a complete color scheme for a chart element

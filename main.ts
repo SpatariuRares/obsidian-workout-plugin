@@ -7,9 +7,9 @@ import {
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
-import { EmbeddedChartView } from "@app/features/charts";
-import { EmbeddedTableView } from "@app/features/tables";
-import { EmbeddedTimerView } from "@app/features/timer";
+import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
+import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
+import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
 import { DataService } from "@app/services/data/DataService";

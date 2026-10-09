@@ -1,5 +1,5 @@
 import { TrendCalculator } from "@app/services/data/TrendCalculator";
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { t } from "@app/i18n";
 
 describe("TrendCalculator", () => {

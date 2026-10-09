@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 
 import { ChartColors } from "@app/features/charts/config/ChartTheme";
-import { CHART_DATA_TYPE } from "@app/features/charts";
+import { CHART_DATA_TYPE } from "@app/features/charts/types";
 
 describe("ChartColors", () => {
   const cssVars: Record<string, string> = {

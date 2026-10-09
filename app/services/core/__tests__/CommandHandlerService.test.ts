@@ -3,11 +3,9 @@ import { CommandHandlerService } from "../CommandHandlerService";
 import { App, TFile } from "obsidian";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
-import {
-  WorkoutFileSuggestModal,
-  CanvasExportModal,
-  CanvasExporter,
-} from "@app/features/canvas";
+import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
+import { WorkoutFileSuggestModal } from "@app/features/canvas/modals/WorkoutFileSuggestModal";
+import { CanvasExportModal } from "@app/features/canvas/modals/CanvasExportModal";
 
 // Mocks
 jest.mock("@app/features/modals/log/CreateLogModal", () => ({
@@ -86,13 +84,17 @@ jest.mock(
       .mockImplementation(() => ({ open: jest.fn() })),
   }),
 );
-jest.mock("@app/features/canvas", () => ({
+jest.mock("@app/features/canvas/modals/WorkoutFileSuggestModal", () => ({
   WorkoutFileSuggestModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
+}));
+jest.mock("@app/features/canvas/modals/CanvasExportModal", () => ({
   CanvasExportModal: jest
     .fn()
     .mockImplementation(() => ({ open: jest.fn() })),
+}));
+jest.mock("@app/features/canvas/business/CanvasExporter", () => ({
   CanvasExporter: jest
     .fn()
     .mockImplementation(() => ({ exportToCanvas: jest.fn() })),

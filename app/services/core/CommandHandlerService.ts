@@ -12,11 +12,9 @@ import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
 import { MuscleTagManagerModal } from "@app/features/modals/muscle/MuscleTagManagerModal";
-import {
-  CanvasExporter,
-  WorkoutFileSuggestModal,
-  CanvasExportModal,
-} from "@app/features/canvas";
+import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
+import { WorkoutFileSuggestModal } from "@app/features/canvas/modals/WorkoutFileSuggestModal";
+import { CanvasExportModal } from "@app/features/canvas/modals/CanvasExportModal";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
 import type {
   WorkoutPluginContext,

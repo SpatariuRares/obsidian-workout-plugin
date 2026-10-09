@@ -112,10 +112,6 @@ export class LogCallouts {
     signal?: AbortSignal,
     latestEntry?: WorkoutLogData,
   ): void {
-    if (!currentPageLink) {
-      return;
-    }
-
     const button = Button.create(container, {
       text: t("logs.addLogButtonText", {
         exerciseName: exerciseName ?? "Workout",
@@ -150,7 +146,7 @@ export class LogCallouts {
           exerciseName,
           currentPageLink,
           prefillData,
-          false,
+          !currentPageLink,
         ).open();
       },
       signal,

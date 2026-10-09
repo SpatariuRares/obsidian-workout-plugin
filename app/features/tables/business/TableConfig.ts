@@ -1,5 +1,9 @@
 import { CONSTANTS } from "@app/constants";
-import { EmbeddedTableParams } from "@app/features/tables/types";
+import {
+  EmbeddedTableParams,
+  TABLE_SORT_FIELDS,
+} from "@app/features/tables/types";
+import { t } from "@app/i18n";
 
 /**
  * Configuration and validation for table parameters.
@@ -10,12 +14,13 @@ export class TableConfig {
    * Get default table parameters
    */
   static getDefaults(): EmbeddedTableParams {
+    // columns stays unset: headers are resolved per exercise type
     return {
       limit: CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT,
       showAddButton: true,
-      searchByName: false,
       exactMatch: CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH,
-      columns: [...CONSTANTS.WORKOUT.TABLE.DEFAULT_VISIBLE_COLUMNS],
+      sortBy: "date",
+      sortOrder: "desc",
     };
   }
 
@@ -40,6 +45,30 @@ export class TableConfig {
           ),
         );
       }
+    }
+
+    if (
+      params.sortBy !== undefined &&
+      !TABLE_SORT_FIELDS.includes(params.sortBy)
+    ) {
+      errors.push(
+        t("table.validation.sortByInvalid", {
+          value: String(params.sortBy),
+          allowed: TABLE_SORT_FIELDS.join(", "),
+        }),
+      );
+    }
+
+    if (
+      params.sortOrder !== undefined &&
+      params.sortOrder !== "asc" &&
+      params.sortOrder !== "desc"
+    ) {
+      errors.push(
+        t("table.validation.sortOrderInvalid", {
+          value: String(params.sortOrder),
+        }),
+      );
     }
 
     if (params.columns) {
@@ -85,9 +114,12 @@ export class TableConfig {
   static mergeWithDefaults(
     params: Partial<EmbeddedTableParams>,
   ): EmbeddedTableParams {
+    const defined = Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined),
+    );
     return {
       ...this.getDefaults(),
-      ...params,
+      ...defined,
     };
   }
 }

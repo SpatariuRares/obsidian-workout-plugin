@@ -8,6 +8,7 @@ import { TableDataCheckers } from "@app/features/tables/business/TableDataChecke
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 import { t } from "@app/i18n";
+import { DateUtils } from "@app/utils/DateUtils";
 
 /**
  * Orchestrates the processing of workout log data for table display.
@@ -33,10 +34,12 @@ export class TableDataProcessor {
     const isShowingAllLogs = !params.exercise;
     const limit = params.limit || 50;
 
-    // Sort and limit data FIRST, then check for optional columns in visible rows only
+    // Date range, sort and limit FIRST, then check for optional columns in visible rows only
     const sortedAndLimitedData = TableRowProcessor.sortAndLimitData(
-      logData,
+      this.filterByDateRange(logData, params.dateRange),
       limit,
+      params.sortBy,
+      params.sortOrder,
     );
 
     // Check which optional data columns should be shown (based on visible data)
@@ -96,6 +99,22 @@ export class TableDataProcessor {
       },
       params,
     };
+  }
+
+  /**
+   * Keeps logs from the last `days` days, counting the whole boundary day.
+   * No filter when days is missing or 0.
+   */
+  private static filterByDateRange(
+    logData: WorkoutLogData[],
+    days?: number,
+  ): WorkoutLogData[] {
+    if (!days || days <= 0) {
+      return logData;
+    }
+    const cutoff = DateUtils.getDaysAgo(days);
+    cutoff.setHours(0, 0, 0, 0);
+    return DateUtils.filterByDateRange(logData, cutoff);
   }
 
   /**

@@ -4,7 +4,6 @@ import { t } from "@app/i18n";
 export interface AdvancedOptionsElements {
   exactMatchToggle: HTMLInputElement;
   titleInput?: HTMLInputElement;
-  searchByNameToggle?: HTMLInputElement;
   addButtonToggle?: HTMLInputElement;
 }
 
@@ -17,7 +16,6 @@ export class AdvancedOptionsSection {
     container: HTMLElement,
     options: {
       showTitle?: boolean;
-      showSearchByName?: boolean;
       showAddButton?: boolean;
       compact?: boolean;
     } = {},
@@ -59,19 +57,6 @@ export class AdvancedOptionsSection {
       elements.titleInput = titleInput;
     }
 
-    // Optional search by name toggle
-    if (options.showSearchByName) {
-      const searchByNameContainer =
-        modal.createCheckboxGroup(checkboxParent);
-      const searchByNameToggle = modal.createCheckbox(
-        searchByNameContainer,
-        t("modal.checkboxes.searchByName"),
-        false,
-        "searchByName",
-      );
-      elements.searchByNameToggle = searchByNameToggle;
-    }
-
     // Optional add button toggle
     if (options.showAddButton) {
       const addButtonContainer =
@@ -94,22 +79,16 @@ export class AdvancedOptionsSection {
   static getValues(elements: AdvancedOptionsElements): {
     exactMatch: boolean;
     title?: string;
-    searchByName?: boolean;
   } {
     const values: {
       exactMatch: boolean;
       title?: string;
-      searchByName?: boolean;
     } = {
       exactMatch: elements.exactMatchToggle.checked,
     };
 
     if (elements.titleInput) {
       values.title = elements.titleInput.value.trim();
-    }
-
-    if (elements.searchByNameToggle) {
-      values.searchByName = elements.searchByNameToggle.checked;
     }
 
     return values;

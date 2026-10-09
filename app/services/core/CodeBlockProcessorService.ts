@@ -1,9 +1,10 @@
 import { Feedback } from "@app/components/atoms/Feedback";
-import { EmbeddedChartView } from "@app/features/charts";
-import { EmbeddedTableView } from "@app/features/tables";
-import { EmbeddedTimerView } from "@app/features/timer";
+import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
+import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
+import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
+import { PathUtils } from "@app/utils/PathUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
@@ -173,12 +174,15 @@ export class CodeBlockProcessorService {
     try {
       const params = this.parseCodeBlockParams(source);
 
+      const pageLink = PathUtils.toWikiLink(ctx.sourcePath);
+
       // Use early filtering if we have specific parameters
       const logData = await this.loadFilteredLogData(params);
       await this.embeddedTableView.createTable(
         el,
         logData,
         params as EmbeddedTableParams,
+        pageLink,
       );
 
       ctx.addChild(
@@ -195,6 +199,7 @@ export class CodeBlockProcessorService {
             this.embeddedTableView.refreshTable(
               el,
               params as EmbeddedTableParams,
+              pageLink,
             ),
         ),
       );
@@ -376,15 +381,11 @@ export class CodeBlockProcessorService {
     el: HTMLElement,
     ctx: MarkdownPostProcessorContext,
   ): void {
-    const sourcePath = ctx.sourcePath;
-    const basename =
-      sourcePath.split("/").pop()?.replace(/\.md$/i, "") || "";
-    const currentPageLink = basename ? `[[${basename}]]` : "";
     LogCallouts.renderCsvNoDataMessage(
       el,
       this.plugin,
       undefined,
-      currentPageLink,
+      PathUtils.toWikiLink(ctx.sourcePath),
     );
   }
 
@@ -408,7 +409,7 @@ export class CodeBlockProcessorService {
             const arrayStr = value.slice(1, -1);
             params[key] = arrayStr
               .split(",")
-              .map((v) => v.trim())
+              .map((v) => this.unquote(v.trim()))
               .filter((v) => v.length > 0);
           } else if (value === "true" || value === "false") {
             // Try to parse as boolean
@@ -418,12 +419,25 @@ export class CodeBlockProcessorService {
             // Empty strings convert to 0 with Number(""), which is undesirable
             params[key] = Number(value);
           } else {
-            params[key] = value;
+            params[key] = this.unquote(value);
           }
         }
       }
     });
 
     return params;
+  }
+
+  // Strip one pair of matching wrapping quotes ("x" or 'x')
+  private unquote(value: string): string {
+    const first = value.charAt(0);
+    if (
+      value.length >= 2 &&
+      (first === '"' || first === "'") &&
+      value.endsWith(first)
+    ) {
+      return value.slice(1, -1).trim();
+    }
+    return value;
   }
 }

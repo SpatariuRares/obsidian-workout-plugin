@@ -119,7 +119,7 @@ describe("LogCallouts organism", () => {
   });
 
   describe("renderAddLogButton", () => {
-    it("does not render button when currentPageLink is empty", () => {
+    it("renders button even when currentPageLink is empty", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();
 
@@ -127,7 +127,7 @@ describe("LogCallouts organism", () => {
 
       expect(
         container.querySelector(".workout-btn-primary"),
-      ).toBeNull();
+      ).toBeTruthy();
     });
 
     it("renders add log button with currentPageLink", () => {

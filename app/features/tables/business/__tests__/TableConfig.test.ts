@@ -1,5 +1,6 @@
 import { TableConfig } from "@app/features/tables/business/TableConfig";
 import { CONSTANTS } from "@app/constants";
+import { t } from "@app/i18n";
 
 describe("TableConfig", () => {
   describe("getDefaults", () => {
@@ -10,21 +11,32 @@ describe("TableConfig", () => {
         CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT,
       );
       expect(defaults.showAddButton).toBe(true);
-      expect(defaults.searchByName).toBe(false);
-      expect(defaults.exactMatch).toBe(
-        CONSTANTS.WORKOUT.TABLE.DEFAULTS.EXACT_MATCH,
-      );
-      expect(defaults.columns).toEqual(
-        CONSTANTS.WORKOUT.TABLE.DEFAULT_VISIBLE_COLUMNS,
-      );
+      expect(defaults.exactMatch).toBe(false);
+      expect(defaults.sortBy).toBe("date");
+      expect(defaults.sortOrder).toBe("desc");
     });
 
-    it("returns a new columns array each time (no shared reference)", () => {
-      const defaults1 = TableConfig.getDefaults();
-      const defaults2 = TableConfig.getDefaults();
+    it("leaves columns unset so they are resolved per exercise type", () => {
+      expect(TableConfig.getDefaults().columns).toBeUndefined();
+    });
+  });
 
-      expect(defaults1.columns).not.toBe(defaults2.columns);
-      expect(defaults1.columns).toEqual(defaults2.columns);
+  describe("mergeWithDefaults", () => {
+    it("lets explicit params win over defaults", () => {
+      const merged = TableConfig.mergeWithDefaults({
+        exactMatch: true,
+        sortOrder: "asc",
+      });
+
+      expect(merged.exactMatch).toBe(true);
+      expect(merged.sortOrder).toBe("asc");
+      expect(merged.sortBy).toBe("date");
+    });
+
+    it("ignores explicitly undefined params", () => {
+      const merged = TableConfig.mergeWithDefaults({ limit: undefined });
+
+      expect(merged.limit).toBe(CONSTANTS.WORKOUT.TABLE.LIMITS.DEFAULT);
     });
   });
 
@@ -36,6 +48,29 @@ describe("TableConfig", () => {
       });
 
       expect(errors).toEqual([]);
+    });
+
+    it("rejects an unknown sortBy", () => {
+      const errors = TableConfig.validateParams({
+        sortBy: "color" as never,
+      });
+
+      expect(errors).toEqual([
+        t("table.validation.sortByInvalid", {
+          value: "color",
+          allowed: "date, exercise, weight, reps, volume",
+        }),
+      ]);
+    });
+
+    it("rejects an unknown sortOrder", () => {
+      const errors = TableConfig.validateParams({
+        sortOrder: "up" as never,
+      });
+
+      expect(errors).toEqual([
+        t("table.validation.sortOrderInvalid", { value: "up" }),
+      ]);
     });
 
     it("returns empty array for params with no optional fields", () => {

@@ -98,13 +98,6 @@ export class EditTableModal extends InsertTableModal {
           params.exactMatch;
       }
       if (
-        params.searchByName !== undefined &&
-        this.advancedElements.searchByNameToggle
-      ) {
-        this.advancedElements.searchByNameToggle.checked =
-          params.searchByName;
-      }
-      if (
         params.showAddButton !== undefined &&
         this.advancedElements.addButtonToggle
       ) {

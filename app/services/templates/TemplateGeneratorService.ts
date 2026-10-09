@@ -47,7 +47,9 @@ export class TemplateGeneratorService {
       await this.generateTagReference(templateFolder, overwrite);
 
       new Notice(
-        `Templates generated successfully in '${this.defaultTemplateFolder}'! You can now customize them.`,
+        t("messages.templatesGenerated", {
+          folder: this.defaultTemplateFolder,
+        }),
       );
     } catch (error) {
       new Notice(t("messages.errors.templateGenError", { error: ErrorUtils.getErrorMessage(error) }));

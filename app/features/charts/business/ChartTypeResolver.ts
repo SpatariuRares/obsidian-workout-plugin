@@ -106,7 +106,7 @@ export class ChartTypeResolver {
       const typeList =
         availableTypes.length > 0
           ? availableTypes.join(", ")
-          : "no chart types available";
+          : t("charts.noTypesAvailable");
       return {
         isValid: false,
         //        errorMessage: `Chart type "${chartDataType}" is not available for ${exerciseType.name} exercises. Available types: ${typeList}`,

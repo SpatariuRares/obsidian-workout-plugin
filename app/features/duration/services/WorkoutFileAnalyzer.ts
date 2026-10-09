@@ -4,6 +4,7 @@
  */
 import { TFile } from "obsidian";
 import { parseCsv } from "@app/utils/data/CsvCodec";
+import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { StringUtils, ErrorUtils } from "@app/utils";
 import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
@@ -109,7 +110,7 @@ export class WorkoutFileAnalyzer {
       // Use the configured CSV log file path from settings
       const logsPath =
         this.plugin.settings.csvLogFilePath ||
-        "context/workout_logs.csv";
+        DEFAULT_SETTINGS.csvLogFilePath;
       const logsFile =
         this.plugin.app.vault.getAbstractFileByPath(logsPath);
 

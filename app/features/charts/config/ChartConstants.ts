@@ -73,7 +73,7 @@ export const ChartInteraction = {
 export function getDefaultChartTitle(chartType: string): string {
   const capitalizedType =
     chartType.charAt(0).toUpperCase() + chartType.slice(1);
-  return `Trend ${capitalizedType}`;
+  return t("charts.defaultTitle", { type: capitalizedType });
 }
 
 /**

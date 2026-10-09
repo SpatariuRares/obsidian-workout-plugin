@@ -2,7 +2,10 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
 import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import { DateUtils } from "@app/utils/DateUtils";
-import type { BodyData } from "@app/features/dashboard/widgets/muscle-heat-map/body";
+import {
+  calculateZoneValues,
+  type ZoneValues,
+} from "@app/features/dashboard/widgets/muscle-heat-map/body/zones";
 import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 
 type MuscleDataContext = AppPort & SettingsPort;
@@ -15,15 +18,6 @@ export interface MuscleGroupData {
   intensity: number; // 0-1 scale for heat map coloring
 }
 
-const VOLUME_DISTRIBUTION = {
-  BILATERAL_SPLIT: 0.5,
-  CHEST_UPPER: 0.4,
-  CHEST_MIDDLE: 0.4,
-  CHEST_LOWER: 0.2,
-  BACK_LOWER_RATIO: 0.3,
-  TRAPS_MIDDLE_RATIO: 0.5,
-  OBLIQUES_RATIO: 0.5,
-} as const;
 
 /**
  * Handles data processing and calculations for muscle heat maps
@@ -117,122 +111,13 @@ export class MuscleDataCalculator {
   }
 
   /**
-   * Calculate the maximum value across all body data fields.
-   * Returns at least 1 to avoid division by zero.
+   * Value of every heat map zone (see HEAT_MAP_ZONES) for these totals
    */
-  static calculateMaxValue(bodyData: BodyData): number {
-    const allValues = [
-      bodyData.shoulders.frontLeft,
-      bodyData.shoulders.frontRight,
-      bodyData.shoulders.lateralLeft ?? 0,
-      bodyData.shoulders.lateralRight ?? 0,
-      bodyData.shoulders.rearLeft,
-      bodyData.shoulders.rearRight,
-      bodyData.chest.upper,
-      bodyData.chest.middle,
-      bodyData.chest.lower,
-      bodyData.back.traps,
-      bodyData.back.lats,
-      bodyData.back.lowerBack,
-      bodyData.back.trapsMiddle,
-      bodyData.back.rhomboids ?? 0,
-      bodyData.arms.bicepsLeft,
-      bodyData.arms.bicepsRight,
-      bodyData.arms.tricepsLeft,
-      bodyData.arms.tricepsRight,
-      bodyData.arms.forearmsLeft,
-      bodyData.arms.forearmsRight,
-      bodyData.legs.quadsLeft,
-      bodyData.legs.quadsRight,
-      bodyData.legs.hamstringsLeft,
-      bodyData.legs.hamstringsRight,
-      bodyData.legs.glutesLeft,
-      bodyData.legs.glutesRight,
-      bodyData.legs.calvesLeft,
-      bodyData.legs.calvesRight,
-      bodyData.core.abs,
-      bodyData.core.obliques,
-      bodyData.core.serratus ?? 0,
-    ];
-
-    return Math.max(...allValues, 1);
-  }
-
-  /**
-   * Convert muscle group data to body visualization data structure
-   */
-  static createBodyDataFromMuscleData(
+  static calculateZoneValues(
     muscleData: Map<string, MuscleGroupData>,
-  ): BodyData {
-    const getVolume = (muscleGroup: string): number => {
-      return muscleData.get(muscleGroup)?.volume || 0;
-    };
-
-    const {
-      BILATERAL_SPLIT,
-      CHEST_UPPER,
-      CHEST_MIDDLE,
-      CHEST_LOWER,
-      BACK_LOWER_RATIO,
-      TRAPS_MIDDLE_RATIO,
-      OBLIQUES_RATIO,
-    } = VOLUME_DISTRIBUTION;
-
-    // A generic shoulders tag lights the front and lateral deltoid
-    const frontDelts = getVolume("shoulders") + getVolume("front_delts");
-    const sideDelts = getVolume("shoulders") + getVolume("side_delts");
-    const rearDelts = getVolume("rear_delts");
-
-    const bodyData = {
-      shoulders: {
-        frontLeft: frontDelts * BILATERAL_SPLIT,
-        frontRight: frontDelts * BILATERAL_SPLIT,
-        lateralLeft: sideDelts * BILATERAL_SPLIT,
-        lateralRight: sideDelts * BILATERAL_SPLIT,
-        rearLeft: rearDelts * BILATERAL_SPLIT,
-        rearRight: rearDelts * BILATERAL_SPLIT,
-      },
-      chest: {
-        upper:
-          getVolume("chest") * CHEST_UPPER + getVolume("upper_chest"),
-        middle:
-          getVolume("chest") * CHEST_MIDDLE + getVolume("mid_chest"),
-        lower:
-          getVolume("chest") * CHEST_LOWER + getVolume("lower_chest"),
-      },
-      back: {
-        traps: getVolume("traps"),
-        lats: getVolume("back") + getVolume("lats"),
-        lowerBack:
-          getVolume("back") * BACK_LOWER_RATIO + getVolume("lower_back"),
-        trapsMiddle: getVolume("traps") * TRAPS_MIDDLE_RATIO,
-        rhomboids: getVolume("rhomboids"),
-      },
-      arms: {
-        bicepsLeft: getVolume("biceps") * BILATERAL_SPLIT,
-        bicepsRight: getVolume("biceps") * BILATERAL_SPLIT,
-        tricepsLeft: getVolume("triceps") * BILATERAL_SPLIT,
-        tricepsRight: getVolume("triceps") * BILATERAL_SPLIT,
-        forearmsLeft: getVolume("forearms") * BILATERAL_SPLIT,
-        forearmsRight: getVolume("forearms") * BILATERAL_SPLIT,
-      },
-      legs: {
-        quadsLeft: getVolume("quads") * BILATERAL_SPLIT,
-        quadsRight: getVolume("quads") * BILATERAL_SPLIT,
-        hamstringsLeft: getVolume("hamstrings") * BILATERAL_SPLIT,
-        hamstringsRight: getVolume("hamstrings") * BILATERAL_SPLIT,
-        glutesLeft: getVolume("glutes") * BILATERAL_SPLIT,
-        glutesRight: getVolume("glutes") * BILATERAL_SPLIT,
-        calvesLeft: getVolume("calves") * BILATERAL_SPLIT,
-        calvesRight: getVolume("calves") * BILATERAL_SPLIT,
-      },
-      core: {
-        abs: getVolume("abs"),
-        obliques: getVolume("core") * OBLIQUES_RATIO + getVolume("obliques"),
-        serratus: getVolume("serratus"),
-      },
-    };
-
-    return bodyData;
+  ): ZoneValues {
+    return calculateZoneValues(
+      (group) => muscleData.get(group)?.volume || 0,
+    );
   }
 }

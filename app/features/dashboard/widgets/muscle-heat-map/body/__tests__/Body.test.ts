@@ -2,50 +2,74 @@
 
 import {
   Body,
+  HEAT_MAP_ZONES,
   VIEW_TYPE,
-  type BodyData,
+  type HeatMapZoneId,
+  type ZoneValues,
 } from "@app/features/dashboard/widgets/muscle-heat-map/body";
+import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/BodyViewSvg";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 
-const emptyBody = (): BodyData => ({
-  shoulders: { frontLeft: 0, frontRight: 0, rearLeft: 0, rearRight: 0 },
-  chest: { upper: 0, middle: 0, lower: 0 },
-  back: { traps: 0, lats: 0, lowerBack: 0, trapsMiddle: 0 },
-  arms: {
-    bicepsLeft: 0,
-    bicepsRight: 0,
-    tricepsLeft: 0,
-    tricepsRight: 0,
-    forearmsLeft: 0,
-    forearmsRight: 0,
-  },
-  legs: {
-    quadsLeft: 0,
-    quadsRight: 0,
-    hamstringsLeft: 0,
-    hamstringsRight: 0,
-    glutesLeft: 0,
-    glutesRight: 0,
-    calvesLeft: 0,
-    calvesRight: 0,
-  },
-  core: { abs: 0, obliques: 0 },
-});
+const zones = (values: Partial<ZoneValues> = {}): ZoneValues =>
+  Object.fromEntries(
+    Object.keys(HEAT_MAP_ZONES).map((zone) => [
+      zone,
+      values[zone as HeatMapZoneId] ?? 0,
+    ]),
+  ) as ZoneValues;
+
+const render = (values: Partial<ZoneValues>, view: VIEW_TYPE) => {
+  const container = createObsidianContainer();
+  new Body(zones(values), { view, maxValue: 100 }).render(container);
+  return container;
+};
 
 const colorOf = (container: HTMLElement, id: string) =>
   container.querySelector(`g#${id}`)?.getAttribute("style");
+
+const clipOf = (container: HTMLElement, id: string) =>
+  container.querySelector(`g#${id}`)?.getAttribute("clip-path");
+
+describe("Body SVG and zone registry", () => {
+  const zoneIdsIn = (svg: string) =>
+    new Set([...svg.matchAll(/data-muscle="([^"]+)"/g)].map((m) => m[1]));
+  const drawn = new Set([
+    ...zoneIdsIn(BODY_VIEWS_SVG.FRONT("x")),
+    ...zoneIdsIn(BODY_VIEWS_SVG.BACK("x")),
+  ]);
+
+  it("only uses zones that exist in HEAT_MAP_ZONES", () => {
+    expect([...drawn].filter((zone) => !(zone in HEAT_MAP_ZONES))).toEqual(
+      [],
+    );
+  });
+
+  it("draws every zone of HEAT_MAP_ZONES in at least one view", () => {
+    expect(Object.keys(HEAT_MAP_ZONES).filter((z) => !drawn.has(z))).toEqual(
+      [],
+    );
+  });
+
+  it("gives each rendered body its own clip-path ids", () => {
+    const first = render({}, VIEW_TYPE.FRONT);
+    const second = render({}, VIEW_TYPE.FRONT);
+    const clipIds = (c: HTMLElement) =>
+      [...c.querySelectorAll("clipPath")].map((el) => el.id);
+
+    expect(clipIds(first).length).toBeGreaterThan(0);
+    expect(clipIds(first)).not.toEqual(clipIds(second));
+    expect(clipOf(first, "mid-pectoralis")).toBe(
+      `url(#${clipIds(first).find((id) => id.endsWith("pec-mid-clip"))})`,
+    );
+  });
+});
 
 describe.each([
   [VIEW_TYPE.FRONT, "anterior-deltoid"],
   [VIEW_TYPE.BACK, "posterior-deltoid"],
 ])("Body %s view", (view, otherDeltoid) => {
   it("colors the lateral deltoid from side delt volume alone", () => {
-    const data = emptyBody();
-    data.shoulders.lateralLeft = 50;
-    data.shoulders.lateralRight = 50;
-    const container = createObsidianContainer();
-
-    new Body(data, { view, maxValue: 100 }).render(container);
+    const container = render({ sideShoulders: 50 }, view);
 
     expect(colorOf(container, "lateral-deltoid")).toBeTruthy();
     expect(colorOf(container, "lateral-deltoid")).not.toBe(
@@ -54,68 +78,35 @@ describe.each([
   });
 });
 
-describe("Body front view chest sections", () => {
-  const render = (chest: BodyData["chest"]) => {
-    const data = emptyBody();
-    data.chest = chest;
-    const container = createObsidianContainer();
-    new Body(data, { view: VIEW_TYPE.FRONT, maxValue: 100 }).render(container);
-    return container;
-  };
-
-  it("colors the lower chest independently from the mid chest", () => {
-    const container = render({ upper: 0, middle: 0, lower: 100 });
-
-    expect(colorOf(container, "lower-pectoralis")).toBeTruthy();
-    expect(colorOf(container, "lower-pectoralis")).not.toBe(
-      colorOf(container, "mid-pectoralis"),
-    );
-  });
-
-  it("clips the shared pectoral shape into a mid and a lower section", () => {
-    const container = render({ upper: 0, middle: 100, lower: 0 });
-    const clipOf = (id: string) =>
-      container.querySelector(`g#${id}`)?.getAttribute("clip-path");
-
-    expect(clipOf("mid-pectoralis")).toMatch(/url\(#.+\)/);
-    expect(clipOf("lower-pectoralis")).toMatch(/url\(#.+\)/);
-    expect(clipOf("mid-pectoralis")).not.toBe(clipOf("lower-pectoralis"));
-  });
-});
-
 describe.each([
+  {
+    view: VIEW_TYPE.FRONT,
+    zone: "lower-pectoralis",
+    sibling: "mid-pectoralis",
+    values: { lowerChest: 100 },
+  },
   {
     view: VIEW_TYPE.BACK,
     zone: "rhomboids",
     sibling: "traps-middle",
-    set: (d: BodyData) => (d.back.rhomboids = 100),
+    values: { rhomboids: 100 },
   },
   {
     view: VIEW_TYPE.FRONT,
     zone: "serratus",
     sibling: "obliques",
-    set: (d: BodyData) => (d.core.serratus = 100),
+    values: { serratus: 100 },
   },
-])("Body $zone section", ({ view, zone, sibling, set }) => {
-  const render = () => {
-    const data = emptyBody();
-    set(data);
-    const container = createObsidianContainer();
-    new Body(data, { view, maxValue: 100 }).render(container);
-    return container;
-  };
-  const clipOf = (container: HTMLElement, id: string) =>
-    container.querySelector(`g#${id}`)?.getAttribute("clip-path");
-
+])("Body $zone section", ({ view, zone, sibling, values }) => {
   it(`colors ${zone} independently from ${sibling}`, () => {
-    const container = render();
+    const container = render(values, view);
 
     expect(colorOf(container, zone)).toBeTruthy();
     expect(colorOf(container, zone)).not.toBe(colorOf(container, sibling));
   });
 
   it(`clips ${zone} and ${sibling} out of the same shape`, () => {
-    const container = render();
+    const container = render(values, view);
 
     expect(clipOf(container, zone)).toMatch(/url\(#.+\)/);
     expect(clipOf(container, sibling)).toMatch(/url\(#.+\)/);

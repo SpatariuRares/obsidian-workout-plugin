@@ -23,7 +23,9 @@
       "reps": "Ripetizioni",
       "volume": "Volume",
       "weight": "Peso"
-    }
+    },
+    "defaultTitle": "Andamento {type}",
+    "noTypesAvailable": "nessun tipo di grafico disponibile"
   },
   "commands": {
     "addExerciseBlock": "Aggiungi blocco esercizio",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendenza alla diminuzione della varianza",
       "varianceTrendStable": "Tendenza alla stabilità",
       "varianceTrendTitle": "Titolo: Andamento della varianza",
-      "avgVarianceStat": "Varianza media: ±{value}%"
+      "avgVarianceStat": "Varianza media: ±{value}%",
+      "hoursSuffix": "ore"
     },
     "fileErrors": {
       "allValid": "Tutti validi",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Potenziamento del corpo superiore"
       }
+    },
+    "notes": {
+      "supersetCalves": "Esercizio di potatura con sollevamento delle gambe usando il peso del corpo.",
+      "supersetLunges": "Esercizio con Superset e affondi"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Tutti i blocchi di codice hanno già un ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Timer completato!"
+    "timerCompleted": "Timer completato!",
+    "templatesGenerated": "Modelli generati in '{folder}'. Ora è possibile personalizzarli."
   },
   "modal": {
     "actions": "Azioni",
@@ -974,5 +982,9 @@
     "stable": "Stabile",
     "stableLower": "Stabile, inferiore",
     "up": "Su"
+  },
+  "canvas": {
+    "duration": "**Durata:** {duration}",
+    "best": "**Migliore:** {weight}{unit} × {reps} ripetizioni"
   }
 }

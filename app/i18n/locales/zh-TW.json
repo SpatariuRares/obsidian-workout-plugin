@@ -23,7 +23,9 @@
       "reps": "次數",
       "volume": "訓練量",
       "weight": "權重"
-    }
+    },
+    "defaultTitle": "趨勢 {type}",
+    "noTypesAvailable": "沒有可用的圖表類型"
   },
   "commands": {
     "addExerciseBlock": "新增運動區塊",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "變異趨勢趨向改善",
       "varianceTrendStable": "變異趨勢穩定",
       "varianceTrendTitle": "變異趨勢標題",
-      "avgVarianceStat": "平均差異：±{value}%"
+      "avgVarianceStat": "平均差異：±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "全部有效",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "上肢力量"
       }
+    },
+    "notes": {
+      "supersetCalves": "使用自身體重的訓練，進行小腿抬高運動",
+      "supersetLunges": "使用超級運動，包含深蹲運動"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "所有程式碼區塊已經都有 ID"
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "計時已完成！"
+    "timerCompleted": "計時已完成！",
+    "templatesGenerated": "在「{folder}」中已產生模板。現在您可以自定義它們。"
   },
   "modal": {
     "actions": "動作",
@@ -974,5 +982,9 @@
     "stable": "穩定",
     "stableLower": "穩定較低",
     "up": "上"
+  },
+  "canvas": {
+    "duration": "**時間長度：** {duration}",
+    "best": "**最佳：** {weight} {unit} × {reps} 次"
   }
 }

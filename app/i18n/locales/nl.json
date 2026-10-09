@@ -23,7 +23,9 @@
       "reps": "Representaties",
       "volume": "Volume",
       "weight": "Gewicht"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "Geen beschikbare grafiektypen"
   },
   "commands": {
     "addExerciseBlock": "Voeg oefenblok toe",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Trend van variatie: verbeterend",
       "varianceTrendStable": "Trend met stabiele variantie",
       "varianceTrendTitle": "Titel: Trend van de variatie",
-      "avgVarianceStat": "Gem. variantie: ±{value}%"
+      "avgVarianceStat": "Gem. variantie: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Alle velden zijn correct ingevuld",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Kracht voor het bovenlichaam"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset met calf raises met eigen lichaamsgewicht",
+      "supersetLunges": "Superset met lunges"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Alle codeblokken hebben al een ID."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Timer voltooid!"
+    "timerCompleted": "Timer voltooid!",
+    "templatesGenerated": "Templates zijn gegenereerd in '{folder}'. U kunt ze nu aanpassen."
   },
   "modal": {
     "actions": "Acties",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabiliseren, lager",
     "up": "Omhoog"
+  },
+  "canvas": {
+    "duration": "**Duur:** {duration}",
+    "best": "**Beste:** {weight}{unit} x {reps} herhalingen"
   }
 }

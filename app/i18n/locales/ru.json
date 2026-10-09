@@ -23,7 +23,9 @@
       "reps": "Типы графиков: отображение",
       "volume": "Объем",
       "weight": "Вес"
-    }
+    },
+    "defaultTitle": "Тенденция {type}",
+    "noTypesAvailable": "Нет доступных типов графиков."
   },
   "commands": {
     "addExerciseBlock": "Добавить блок упражнений",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Тенденция к уменьшению изменчивости",
       "varianceTrendStable": "Стабильный тренд отклонений",
       "varianceTrendTitle": "Заголовок: Тенденция изменения",
-      "avgVarianceStat": "Сред. отклонение: ±{value}%"
+      "avgVarianceStat": "Сред. отклонение: ±{value}%",
+      "hoursSuffix": "ч"
     },
     "fileErrors": {
       "allValid": "Все корректно",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Силовая тренировка для верхней части тела"
       }
+    },
+    "notes": {
+      "supersetCalves": "Тренировка с использованием веса собственного тела для подъема на носки.",
+      "supersetLunges": "Тренировка с использованием упражнений \"выпады\" в Superset."
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Все блоки кода уже имеют идентификаторы."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Таймер завершен!"
+    "timerCompleted": "Таймер завершен!",
+    "templatesGenerated": "Шаблоны созданы в '{folder}'. Теперь вы можете их настроить."
   },
   "modal": {
     "actions": "Действия",
@@ -974,5 +982,9 @@
     "stable": "Стабильный",
     "stableLower": "Стабильный, нижний уровень",
     "up": "Вверх"
+  },
+  "canvas": {
+    "duration": "**Продолжительность:** {duration}",
+    "best": "**Лучший:** {weight}{unit} × {reps} повторений"
   }
 }

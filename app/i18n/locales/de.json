@@ -23,7 +23,9 @@
       "reps": "Darstellungen",
       "volume": "Volumen",
       "weight": "Gewicht"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "Keine verfügbaren Diagrammtypen"
   },
   "commands": {
     "addExerciseBlock": "Hinzufügen Ausübungsblock",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Trend der Varianz verbessert",
       "varianceTrendStable": "Konstante Varianz",
       "varianceTrendTitle": "Überschrift für die Darstellung der Varianzentwicklung",
-      "avgVarianceStat": "Ø Abweichung: ±{value}%"
+      "avgVarianceStat": "Ø Abweichung: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Alle gültig",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Oberkörper Kraftleistung"
       }
+    },
+    "notes": {
+      "supersetCalves": "Superset mit Kniebeugen mit eigenem Körpergewicht",
+      "supersetLunges": "Superset mit Ausfallschritten"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs."
     },
     "tagReferenceGenerated": "Tag Referenz erzeugt",
-    "timerCompleted": "Timer abgelaufen!"
+    "timerCompleted": "Timer abgelaufen!",
+    "templatesGenerated": "Vorlagen wurden in '{folder}' generiert. Sie können diese jetzt anpassen."
   },
   "modal": {
     "actions": "Aktionen",
@@ -974,5 +982,9 @@
     "stable": "Stabil",
     "stableLower": "Stabil niedriger",
     "up": "Oben"
+  },
+  "canvas": {
+    "duration": "**Dauer:** {duration}",
+    "best": "**Optimal:** {weight}{unit} × {reps} Wiederholungen"
   }
 }

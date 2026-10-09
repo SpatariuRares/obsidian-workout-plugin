@@ -23,7 +23,9 @@
       "reps": "次数",
       "volume": "训练量",
       "weight": "重量"
-    }
+    },
+    "defaultTitle": "趋势 {type}",
+    "noTypesAvailable": "没有可用的图表类型"
   },
   "commands": {
     "addExerciseBlock": "添加训练块",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "差异趋势正在改善",
       "varianceTrendStable": "差异趋势稳定",
       "varianceTrendTitle": "差异趋势",
-      "avgVarianceStat": "平均差异：±{value}%"
+      "avgVarianceStat": "平均差异：±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "全部有效",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "上肢力量训练"
       }
+    },
+    "notes": {
+      "supersetCalves": "使用自身体重进行小腿抬高训练",
+      "supersetLunges": "使用超级套训练，配合深蹲动作"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "所有代码块都已经有ID。"
     },
     "tagReferenceGenerated": "标签参考已生成",
-    "timerCompleted": "计时器已完成！"
+    "timerCompleted": "计时器已完成！",
+    "templatesGenerated": "在“{folder}”中生成的模板。现在您可以对其进行自定义。"
   },
   "modal": {
     "actions": "操作",
@@ -974,5 +982,9 @@
     "stable": "稳定",
     "stableLower": "稳定较低",
     "up": "上升"
+  },
+  "canvas": {
+    "duration": "**时长：** {duration}",
+    "best": "**最佳：** {weight} {unit} × {reps} 次"
   }
 }

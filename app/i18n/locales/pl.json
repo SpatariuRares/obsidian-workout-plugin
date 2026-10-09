@@ -23,7 +23,9 @@
       "reps": "Reprezentacje",
       "volume": "Objętość",
       "weight": "Waga"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "Brak dostępnych typów wykresów"
   },
   "commands": {
     "addExerciseBlock": "Dodaj blok ćwiczeń",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Trend różnic się poprawia",
       "varianceTrendStable": "Trend wariancji stabilny",
       "varianceTrendTitle": "Tytuł trendu wariancji",
-      "avgVarianceStat": "Śred. wariancja: ±{value}%"
+      "avgVarianceStat": "Śred. wariancja: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Wszystkie poprawne",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Ćwiczenia wzmacniające górną część ciała"
       }
+    },
+    "notes": {
+      "supersetCalves": "Ćwiczenie w Superset z podnoszeniem nóg w pozycji stojącej, wykorzystujące własną wagę ciała.",
+      "supersetLunges": "Trening z użyciem sztang i ćwiczeń typu \"lunges\" (wykroki) w programie Superset."
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Wszystkie bloki kodu już posiadają identyfikatory."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Timer zakończony!"
+    "timerCompleted": "Timer zakończony!",
+    "templatesGenerated": "Szablony zostały wygenerowane w '{folder}'. Teraz możesz je dostosować."
   },
   "modal": {
     "actions": "Akcje",
@@ -974,5 +982,9 @@
     "stable": "Stabilny",
     "stableLower": "Stabilny, niższy",
     "up": "W górę"
+  },
+  "canvas": {
+    "duration": "**Czas trwania:** {duration}",
+    "best": "**Najlepsza:** {weight}{unit} × {reps} powtórzeń"
   }
 }

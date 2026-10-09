@@ -23,7 +23,9 @@
       "reps": "أنواع المخططات",
       "volume": "الحجم",
       "weight": "الوزن"
-    }
+    },
+    "defaultTitle": "الاتجاه {type}",
+    "noTypesAvailable": "لا توجد أنواع مخططات متاحة."
   },
   "commands": {
     "addExerciseBlock": "إضافة كتلة التمارين",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "اتجاه التباين يتحسن",
       "varianceTrendStable": "اتجاه التباين: مستقر",
       "varianceTrendTitle": "عنوان اتجاه التباين",
-      "avgVarianceStat": "متوسط التباين: ±{value}%"
+      "avgVarianceStat": "متوسط التباين: ±{value}%",
+      "hoursSuffix": "ساعة"
     },
     "fileErrors": {
       "allValid": "كلها صحيحة",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "القوة العلوية"
       }
+    },
+    "notes": {
+      "supersetCalves": "تمارين رفع الساق باستخدام وزن الجسم",
+      "supersetLunges": "تمارين سوبرست مع تمارين الضغط"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات."
     },
     "tagReferenceGenerated": "تم إنشاء مرجع العلامات",
-    "timerCompleted": "تم إكمال العداد!"
+    "timerCompleted": "تم إكمال العداد!",
+    "templatesGenerated": "القوالب التي تم إنشاؤها في '{folder}'. يمكنك الآن تخصيصها."
   },
   "modal": {
     "actions": "الإجراءات",
@@ -974,5 +982,9 @@
     "stable": "مُستقر",
     "stableLower": "ثابت أقل",
     "up": "أعلى"
+  },
+  "canvas": {
+    "duration": "**المدة:** {duration}",
+    "best": "**الأفضل:** {weight}{unit} × {reps} تكرارات"
   }
 }

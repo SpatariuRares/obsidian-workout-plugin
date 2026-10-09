@@ -23,7 +23,9 @@
       "reps": "Representações",
       "volume": "Volume",
       "weight": "Peso"
-    }
+    },
+    "defaultTitle": "Tendência {type}",
+    "noTypesAvailable": "Nenhum tipo de gráfico disponível"
   },
   "commands": {
     "addExerciseBlock": "Adicionar bloco de exercícios",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Tendência de variação em melhoria",
       "varianceTrendStable": "Tendência de Variação Estável",
       "varianceTrendTitle": "Título da tendência de variação",
-      "avgVarianceStat": "Variação média: ±{value}%"
+      "avgVarianceStat": "Variação média: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Todos válidos",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Força do Superior do Corpo"
       }
+    },
+    "notes": {
+      "supersetCalves": "Exercício de Superset com elevação de panturrilha com peso corporal",
+      "supersetLunges": "Exercício com Superset: agachamentos"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Todos os blocos de código já possuem IDs."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Cronômetro finalizado!"
+    "timerCompleted": "Cronômetro finalizado!",
+    "templatesGenerated": "Modelos gerados em '{folder}'. Agora você pode personalizá-los."
   },
   "modal": {
     "actions": "Ações",
@@ -974,5 +982,9 @@
     "stable": "Estável",
     "stableLower": "Estável (menor)",
     "up": "Para cima"
+  },
+  "canvas": {
+    "duration": "**Duração:** {duration}",
+    "best": "**Melhor:** {weight}{unit} × {reps} repetições"
   }
 }

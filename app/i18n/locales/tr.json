@@ -23,7 +23,9 @@
       "reps": "Grafik türleri: Göstergeler",
       "volume": "Hacim",
       "weight": "Ağırlık"
-    }
+    },
+    "defaultTitle": "Trend {type}",
+    "noTypesAvailable": "Mevcut grafik türlerinden hiçbiri yok"
   },
   "commands": {
     "addExerciseBlock": "Egzersiz Bloğunu Ekle",
@@ -90,7 +92,8 @@
       "varianceTrendImproving": "Değer Farkı Eğilimi İyileşiyor",
       "varianceTrendStable": "Değişim Trendi: İstikrarlı",
       "varianceTrendTitle": "Değişim Trendi Başlığı",
-      "avgVarianceStat": "Ort. varyans: ±{value}%"
+      "avgVarianceStat": "Ort. varyans: ±{value}%",
+      "hoursSuffix": "h"
     },
     "fileErrors": {
       "allValid": "Tüm geçerli",
@@ -332,6 +335,10 @@
       "upperBodyPower": {
         "name": "Üst Vücut Gücü"
       }
+    },
+    "notes": {
+      "supersetCalves": "Vücut ağırlığı ile yapılan bacak kalkış egzersizi",
+      "supersetLunges": "Superset egzersizi (lunges ile)"
     }
   },
   "forms": {
@@ -480,7 +487,8 @@
       "noBlockIdsNeeded": "Tüm kod blokları zaten ID'ye sahip."
     },
     "tagReferenceGenerated": "Tag Reference Generated",
-    "timerCompleted": "Zamanlayıcı tamamlandı!"
+    "timerCompleted": "Zamanlayıcı tamamlandı!",
+    "templatesGenerated": "'{folder}' içinde oluşturulan şablonları artık özelleştirebilirsiniz."
   },
   "modal": {
     "actions": "Eylemler",
@@ -974,5 +982,9 @@
     "stable": "Kararlı",
     "stableLower": "Kararlı Düşük",
     "up": "Yukarı"
+  },
+  "canvas": {
+    "duration": "**Süre:** {duration}",
+    "best": "**En İyi:** {weight}{unit} tekrar × {reps} tekrar"
   }
 }

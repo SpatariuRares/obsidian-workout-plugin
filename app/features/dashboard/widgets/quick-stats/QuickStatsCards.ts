@@ -16,7 +16,7 @@ export class QuickStatsCards {
     _params: EmbeddedDashboardParams,
   ): void {
     const cardsEl = WidgetContainer.create(container, {
-      title: t("dashboard.summary.title"),
+      title: t("dashboard.quickStats.title"),
       className: "workout-stats-cards",
     });
 

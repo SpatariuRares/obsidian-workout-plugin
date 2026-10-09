@@ -105,7 +105,7 @@ export class EditTimerModal extends InsertTimerModal {
 
     const cancelBtn = Button.create(container, {
       text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.WARNING,
+      variant: BUTTONVARIANT.SECONDARY,
       ariaLabel: t("modal.buttons.cancel"),
     });
 

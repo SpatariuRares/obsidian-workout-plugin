@@ -52,7 +52,9 @@
 
 @media (max-width: variables.$breakpoint-tablet) {
   .workout-dashboard .workout-dashboard-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, …): a plain 1fr track grows to the widest widget's min-content
+       (wide tables), pushing every widget off-screen */
+    grid-template-columns: minmax(0, 1fr);
     grid-auto-rows: auto;
   }
 
@@ -63,6 +65,11 @@
     .workout-dashboard-widget {
       grid-column: 1 / -1 !important;
       grid-row: auto !important;
+    }
+
+    /* At the gym the actions matter more than the stats: show them first */
+    .workout-quick-actions {
+      order: -1;
     }
 
     .workout-dashboard-title {

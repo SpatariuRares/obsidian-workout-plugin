@@ -135,6 +135,7 @@
     },
     "quickStats": {
       "month": "Month",
+      "title": "Quick stats",
       "week": "Week",
       "workouts": "Workouts",
       "year": "Year"
@@ -558,6 +559,7 @@
     "customTitle": "Custom title:",
     "dataLimit": "Data limit:",
     "dataType": "Data type:",
+    "date": "Date",
     "dateRange": "Date range (days):",
     "daysRange": "Days range:",
     "delete": "Delete",
@@ -705,7 +707,7 @@
       "configuration": "Configuration",
       "displayOptions": "Display options",
       "exerciseConfiguration": "Exercise configuration",
-      "mobileOptions": "Mobile options",
+      "mobileOptions": "Recent exercises and workout",
       "options": "Options",
       "preset": "Preset",
       "progressiveOverload": "Progressive overload",

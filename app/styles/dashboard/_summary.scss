@@ -21,12 +21,14 @@
     background: var(--background-secondary);
     border-radius: var(--workout-radius-lg);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     transition: var(--workout-transition);
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--workout-shadow-md);
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--workout-shadow-md);
+      }
     }
   }
 }
@@ -50,7 +52,6 @@
     margin: 0;
     font-size: var(--workout-font-lg);
     font-weight: var(--workout-font-weight-semibold);
-    opacity: 0.8;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -65,7 +66,7 @@
   &-value {
     font-size: var(--workout-font-2xl);
     font-weight: var(--workout-font-weight-bold);
-    color: var(--interactive-accent);
+    color: var(--workout-text-accent);
     margin-bottom: var(--workout-space-xs);
   }
 }
@@ -96,7 +97,7 @@
     );
     border-radius: var(--workout-radius-xl);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     transition: var(--workout-transition);
     position: relative;
     overflow: hidden;
@@ -144,9 +145,24 @@
 }
 
 @media (max-width: variables.$breakpoint-tablet) {
+  /* 2x2 KPI tiles: four stacked cards filled a whole phone screen */
   .workout-summary-grid {
-    grid-template-columns: 1fr;
-    gap: var(--workout-space-md);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--workout-space-sm);
+  }
+
+  .workout-summary-card {
+    padding: var(--workout-space-md) var(--workout-space-sm);
+
+    .workout-card-icon {
+      font-size: var(--workout-font-lg);
+      margin-bottom: var(--workout-space-2xs);
+    }
+
+    .workout-card-title {
+      font-size: var(--workout-font-xs);
+      letter-spacing: normal;
+    }
   }
 
   .workout-stats-grid {

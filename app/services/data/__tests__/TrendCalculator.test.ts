@@ -78,10 +78,10 @@ describe("TrendCalculator", () => {
       expect(result.trendIcon).toBe("→");
     });
 
-    it("should use minimum threshold of 1 for small average volumes", () => {
+    it("should scale the threshold for small average values", () => {
       const volumeData = [2, 3, 2, 3]; // Average = 2.5
-      // Threshold = Math.max(0.05 * 2.5, 1) = 1
-      const slope = 1.5; // Above threshold of 1
+      // Threshold per step = 0.05 * 2.5 / 3 ≈ 0.04
+      const slope = 1.5;
 
       const result = TrendCalculator.getTrendIndicators(
         slope,
@@ -198,7 +198,42 @@ describe("TrendCalculator", () => {
       expect(result.trendDirection).toBe(t("trends.stableLower"));
     });
 
+    it("should return increasing for steady progressive overload (+25% over 6 sessions)", () => {
+      // ~4.4% per session: below 5% per step, but a clear upward trend overall
+      const volumeData = [400, 420, 440, 460, 480, 500];
+      const slope = 20;
+
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
+      expect(result.trendDirection).toBe(t("trends.increasing"));
+    });
+
+    it("should return stable when the change over the whole range is under 5%", () => {
+      const volumeData = [450, 452, 448, 455, 451, 456];
+      const slope = 1; // 5 kg over the range, ~1% of the average
+
+      const result = TrendCalculator.getTrendIndicators(
+        slope,
+        volumeData,
+      );
+      expect(result.trendDirection).toBe(t("trends.stableLower"));
+    });
+
     describe("dataType parameter for inverted logic", () => {
+      it("should detect a realistic pace improvement (5:30 to 5:00 min/km)", () => {
+        const paceData = [5.5, 5.4, 5.3, 5.2, 5.1, 5.0];
+        const slope = -0.1;
+
+        const result = TrendCalculator.getTrendIndicators(
+          slope,
+          paceData,
+          CHART_DATA_TYPE.PACE,
+        );
+        expect(result.trendDirection).toBe(t("trends.improving"));
+      });
+
       it("should return Improving/green for pace with negative slope (getting faster)", () => {
         const paceData = [6.0, 5.5, 5.0, 4.5]; // Average = 5.25 min/km
         // Threshold = Math.max(0.05 * 5.25, 1) = 1

@@ -11,7 +11,7 @@
     right: 0;
     background: var(--background-primary);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-md);
     box-shadow: var(--workout-shadow-lg);
     max-height: var(--workout-size-6xl);
@@ -25,7 +25,7 @@
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
       font-size: var(--workout-font-base);
       transition: var(--workout-transition);
 
@@ -39,7 +39,7 @@
       }
 
       &-selected {
-        background: var(--interactive-accent);
+        background: var(--workout-accent-fill);
         color: var(--text-on-accent);
 
         .workout-autocomplete-badge {
@@ -63,7 +63,7 @@
     width: 100%;
     padding: var(--workout-space-sm) var(--workout-space-md);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-md);
     background: var(--background-primary);
     color: var(--text-normal);
@@ -77,7 +77,7 @@
     right: 0;
     background: var(--dropdown-background, var(--background-primary));
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-top: none;
     border-radius: 0 0 var(--workout-radius-xs)
       var(--workout-radius-xs);
@@ -90,7 +90,7 @@
       padding: var(--workout-space-sm) var(--workout-space-md);
       cursor: pointer;
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
 
       &:hover {
         background: var(--background-modifier-hover);
@@ -100,7 +100,7 @@
       }
 
       &.selected {
-        background: var(--interactive-accent);
+        background: var(--workout-accent-fill);
         color: var(--text-on-accent);
       }
     }
@@ -147,13 +147,13 @@
     &-semantic {
       background: var(--background-modifier-success);
       border-color: var(--color-green);
-      color: var(--color-green);
+      color: var(--workout-text-success);
     }
 
     &-fuzzy {
       background: var(--background-modifier-message);
       border-color: var(--color-orange);
-      color: var(--color-orange);
+      color: var(--workout-text-warning);
     }
   }
 }

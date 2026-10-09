@@ -7,7 +7,8 @@
   padding: var(--workout-space-md) var(--workout-space-lg);
   margin-top: var(--workout-space-sm);
   margin-bottom: var(--workout-space-md);
-  background: var(--text-success);
+  /* Raw --text-success gives white text ~2.5:1 */
+  background: color-mix(in srgb, var(--text-success) 60%, black);
   color: var(--text-on-accent);
   border-radius: var(--workout-radius-md);
   border-left: var(--workout-border-accent) solid

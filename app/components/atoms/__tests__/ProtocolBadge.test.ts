@@ -65,7 +65,20 @@ describe("ProtocolBadge atom", () => {
       });
 
       expect(badge.style.backgroundColor).toBe("rgb(255, 0, 0)");
-      expect(badge.style.color).toBe("white");
+      // White on pure red is 4.0:1 (fails AA), black is 5.25:1
+      expect(badge.style.color).toBe("black");
+    });
+
+    it("renders translucent colors opaque so the text contrast is predictable", () => {
+      const parent = createObsidianContainer();
+
+      const badge = ProtocolBadge.create(parent, {
+        text: "Superset",
+        color: "rgba(59, 130, 246, 0.7)",
+      });
+
+      expect(badge.style.backgroundColor).toBe("rgb(59, 130, 246)");
+      expect(badge.style.color).toBe("black");
     });
 
     it("applies black text for light background", () => {
@@ -89,10 +102,21 @@ describe("ProtocolBadge atom", () => {
         expect(ProtocolBadge.getContrastColor("#1a1a1a")).toBe(
           "white",
         );
-        expect(ProtocolBadge.getContrastColor("#ff0000")).toBe(
+        expect(ProtocolBadge.getContrastColor("#0000ff")).toBe(
           "white",
         );
-        expect(ProtocolBadge.getContrastColor("#0000ff")).toBe(
+      });
+
+      it("picks the text color with the higher WCAG contrast for mid-tones", () => {
+        // Saturated mid-tones read better with black: red 5.25 vs 4.0,
+        // the protocol purple 5.3 vs 3.96
+        expect(ProtocolBadge.getContrastColor("#ff0000")).toBe(
+          "black",
+        );
+        expect(ProtocolBadge.getContrastColor("#a855f7")).toBe(
+          "black",
+        );
+        expect(ProtocolBadge.getContrastColor("#7c3aed")).toBe(
           "white",
         );
       });
@@ -126,9 +150,6 @@ describe("ProtocolBadge atom", () => {
       it("returns white for dark rgba colors", () => {
         expect(
           ProtocolBadge.getContrastColor("rgba(0, 0, 0, 1)"),
-        ).toBe("white");
-        expect(
-          ProtocolBadge.getContrastColor("rgba(255, 0, 0, 0.8)"),
         ).toBe("white");
         expect(ProtocolBadge.getContrastColor("rgb(0, 0, 255)")).toBe(
           "white",

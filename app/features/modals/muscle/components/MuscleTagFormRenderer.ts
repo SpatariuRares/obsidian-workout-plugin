@@ -103,7 +103,7 @@ export class MuscleTagFormRenderer {
     const cancelButton = Button.create(buttonContainer, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.WARNING,
+      variant: BUTTONVARIANT.SECONDARY,
     });
     Button.onClick(cancelButton, options.onCancel);
 

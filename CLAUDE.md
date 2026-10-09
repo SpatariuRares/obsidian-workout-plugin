@@ -593,6 +593,8 @@ Feature folders have no top-level barrel. ESLint (`no-restricted-imports`) rejec
 6. **Service Dependencies**: Services initialized in order - DataService must exist before ExerciseDefinitionService
 7. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
 8. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
+9. **Grid tracks on mobile**: use `minmax(0, 1fr)`, never a bare `1fr`. A `1fr` track grows to its widest child's min-content (e.g. a widget table), pushing the whole dashboard off-screen
+10. **Mobile layouts**: on phones `workout-log` rows become cards (CSS reads each cell's `data-label`, set by `TableRenderer`), and `workout-chart` deliberately shows a table instead of the chart. Use `@media (hover: hover)` for hover effects that move or resize elements, since touch keeps `:hover` after a tap. Check changes live with `app.emulateMobile(true)` plus a 390px viewport (see "Live Debugging")
 
 ## CSS Organization
 
@@ -611,6 +613,8 @@ app/styles/
 **Never edit `styles.css` or `main.js` directly.** They are build outputs and get overwritten. `styles.css` is committed because releases ship it.
 
 **Usage**: Import Obsidian CSS variables, never hardcode values
+
+**Color contrast (WCAG AA)**: for text use `--workout-text-accent`, `--workout-text-success`, `--workout-text-error`, `--workout-text-warning`, never the raw `--text-accent` / `--text-success` / `--color-*` (2–3.4:1 on white). Fills behind `--text-on-accent` use `--workout-accent-fill`. These tokens live on `body`, not `:root`: Obsidian defines its theme variables on `body.theme-*`, and a custom property that references them resolves where it is declared (on `:root` it becomes invalid and fills turn transparent). Surfaces that must stand out from the page use `--background-secondary`, never `--background-primary` (that is the page color).
 
 ## Live Debugging in Obsidian
 

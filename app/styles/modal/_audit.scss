@@ -1,6 +1,6 @@
 /* Audit modal */
 .workout-audit-success {
-  color: var(--text-success);
+  color: var(--workout-text-success);
   font-weight: var(--workout-font-weight-semibold);
   text-align: center;
   padding: var(--workout-space-2xl);
@@ -11,7 +11,7 @@
   overflow-y: auto;
   margin-top: var(--workout-space-lg);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
 }
 
@@ -33,13 +33,13 @@
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
     border-bottom: var(--workout-border-medium) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
   }
 
   td {
     padding: var(--workout-space-md);
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     color: var(--text-normal);
 
     a {
@@ -59,16 +59,16 @@
 }
 
 .workout-audit-status-green {
-  color: var(--text-success);
+  color: var(--workout-text-success);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-audit-status-yellow {
-  color: var(--text-warning);
+  color: var(--workout-text-warning);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-audit-status-red {
-  color: var(--text-error);
+  color: var(--workout-text-error);
   font-weight: var(--workout-font-weight-medium);
 }

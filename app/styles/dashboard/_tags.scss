@@ -29,7 +29,7 @@
     padding: var(--workout-space-sm) var(--workout-space-md);
     background: var(--background-secondary);
     border: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-color);
     border-radius: var(--workout-radius-md);
     cursor: pointer;
     transition: var(--workout-transition);
@@ -44,7 +44,7 @@
     }
 
     &.workout-copied {
-      background: var(--interactive-accent);
+      background: var(--workout-accent-fill);
       color: var(--text-on-accent);
       border-color: var(--interactive-accent);
       animation: pulse 0.3s ease;
@@ -67,7 +67,7 @@
   &-tags-info {
     padding-top: var(--workout-space-md);
     border-top: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     text-align: center;
   }
 

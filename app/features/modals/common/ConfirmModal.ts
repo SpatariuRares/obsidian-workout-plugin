@@ -44,7 +44,7 @@ export class ConfirmModal extends ModalBase {
     const cancelBtn = Button.create(buttonContainer, {
       text: t("modal.buttons.cancel"),
       ariaLabel: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.WARNING,
+      variant: BUTTONVARIANT.SECONDARY,
     });
     Button.onClick(cancelBtn, () => {
       if (this.onCancel) {

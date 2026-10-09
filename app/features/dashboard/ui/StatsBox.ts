@@ -83,7 +83,7 @@ export class StatsBox {
 
     if (recentTrendData.text !== t("table.notAvailable")) {
       const li5 = ListItem.createEmpty(ul);
-      li5.appendText(t("stats.recentTrend"));
+      li5.appendText(`${t("stats.recentTrend")} `);
       const span = li5.createEl("span", {
         cls: "workout-charts-trend-variation",
         text: recentTrendData.text,

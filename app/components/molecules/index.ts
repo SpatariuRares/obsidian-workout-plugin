@@ -16,6 +16,7 @@ export {
 export {
   TrendIndicator,
   type TrendIndicatorProps,
+  type TrendDirection,
 } from "@app/components/molecules/TrendIndicator";
 
 // Priority 2 Molecules

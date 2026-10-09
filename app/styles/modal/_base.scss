@@ -17,7 +17,7 @@
       margin-bottom: var(--workout-space-lg);
       color: var(--text-normal);
       border-bottom: var(--workout-border-thin) solid
-        var(--background-modifier-border);
+        var(--workout-border-subtle);
       padding-bottom: var(--workout-space-xs);
     }
 
@@ -32,7 +32,7 @@
   background-color: var(--background-secondary);
   border-radius: var(--workout-radius-lg);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   display: flex;
   flex-direction: column;
   gap: var(--workout-space-lg);
@@ -42,7 +42,7 @@
     font-size: var(--workout-font-lg);
     color: var(--text-normal);
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     padding-bottom: var(--workout-space-sm);
   }
 }

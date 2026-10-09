@@ -13,7 +13,7 @@
   padding: var(--workout-space-sm) var(--workout-space-lg);
   border-radius: var(--workout-radius-full, 9999px);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   background: var(--background-secondary);
   color: var(--text-normal);
   font-size: var(--workout-font-sm);
@@ -36,12 +36,12 @@
 
   // Selected state - uses primary button colors
   &-selected {
-    background: var(--interactive-accent);
+    background: var(--workout-accent-fill);
     color: var(--text-on-accent);
     border-color: var(--interactive-accent);
 
     &:hover {
-      background: var(--interactive-accent-hover);
+      background: var(--workout-accent-fill-hover);
       border-color: var(--interactive-accent-hover);
     }
   }

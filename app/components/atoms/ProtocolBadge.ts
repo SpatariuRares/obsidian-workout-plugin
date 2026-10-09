@@ -36,7 +36,12 @@ export class ProtocolBadge {
     }
 
     if (props.color) {
-      badge.style.backgroundColor = props.color;
+      const rgb = this.parseRgb(props.color);
+      // Translucent colors would blend with an unknown page background, so
+      // the chosen text color could fail contrast: render them opaque
+      badge.style.backgroundColor = rgb
+        ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+        : props.color;
       badge.style.color = this.getContrastColor(props.color);
     }
 
@@ -44,36 +49,39 @@ export class ProtocolBadge {
   }
 
   /**
-   * Calculates whether black or white text should be used based on background color.
-   * Uses relative luminance formula for accessibility.
-   * Supports both hex colors (#ff0000) and rgba colors (rgba(255, 0, 0, 1))
-   * @param color - Color string (hex or rgba format)
-   * @returns "black" or "white"
+   * Returns the text color (black or white) with the higher WCAG contrast
+   * ratio against the given background. Supports hex (#ff0000, ff0000) and
+   * rgb/rgba strings; alpha is ignored because badges render opaque.
+   * @param color - Background color string
+   * @returns "black" or "white" ("white" when the color can't be parsed)
    */
   static getContrastColor(color: string): string {
-    let r: number, g: number, b: number;
+    const rgb = this.parseRgb(color);
+    if (!rgb) return "white";
 
-    if (color.startsWith("rgba") || color.startsWith("rgb")) {
-      // Parse rgba/rgb format: rgba(255, 0, 0, 1) or rgb(255, 0, 0)
+    const [r, g, b] = rgb.map((channel) => {
+      const c = channel / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+    const contrastWithWhite = 1.05 / (luminance + 0.05);
+    const contrastWithBlack = (luminance + 0.05) / 0.05;
+    return contrastWithBlack >= contrastWithWhite ? "black" : "white";
+  }
+
+  private static parseRgb(color: string): [number, number, number] | null {
+    let channels: number[];
+    if (color.startsWith("rgb")) {
       const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-      if (!match) {
-        return "white"; // Default fallback
-      }
-      r = parseInt(match[1], 10);
-      g = parseInt(match[2], 10);
-      b = parseInt(match[3], 10);
+      if (!match) return null;
+      channels = [match[1], match[2], match[3]].map((v) => parseInt(v, 10));
     } else {
-      // Parse hex format: #ff0000 or ff0000
       const hex = color.replace("#", "");
-      r = parseInt(hex.substring(0, 2), 16);
-      g = parseInt(hex.substring(2, 4), 16);
-      b = parseInt(hex.substring(4, 6), 16);
+      channels = [0, 2, 4].map((i) => parseInt(hex.substring(i, i + 2), 16));
     }
-
-    // Calculate relative luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return black for light backgrounds, white for dark backgrounds
-    return luminance > 0.5 ? "black" : "white";
+    return channels.some((v) => Number.isNaN(v))
+      ? null
+      : [channels[0], channels[1], channels[2]];
   }
 }

@@ -13,7 +13,7 @@ import {
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { ProtocolResolver } from "@app/features/tables/business/ProtocolResolver";
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
 
 export class TableRenderer {
   /**
@@ -139,6 +139,15 @@ export class TableRenderer {
     const actionsColumnIndex = headers.indexOf(
       CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
     );
+    const notesColumnIndex = headers.indexOf(
+      CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
+    );
+    // On phones the header row is hidden and each row becomes a card, so
+    // value cells carry their column name (rendered via CSS attr())
+    const columnLabels = mapColumnIdentifiersToLabels(headers);
+    const labelAttr = (cellIndex: number) => ({
+      "data-label": columnLabels[cellIndex] ?? "",
+    });
 
     rows.forEach((row) => {
       const dateKey = row.dateKey;
@@ -161,12 +170,22 @@ export class TableRenderer {
           const td = tr.createEl("td", { cls: "workout-table-actions-cell" });
           TableActions.renderActionButtons(td, row.originalLog, plugin, signal);
         } else if (cellIndex === volumeColumnIndex) {
-          tr.createEl("td", { cls: "workout-table-volume-cell", text: cell });
+          tr.createEl("td", {
+            cls: "workout-table-volume-cell",
+            text: cell,
+            attr: labelAttr(cellIndex),
+          });
         } else if (cellIndex === protocolColumnIndex) {
           const td = tr.createEl("td", { cls: "workout-table-protocol-cell" });
           this.renderProtocolBadge(td, cell, plugin);
+        } else if (cellIndex === notesColumnIndex) {
+          tr.createEl("td", {
+            cls: "workout-table-notes-cell",
+            text: cell,
+            attr: labelAttr(cellIndex),
+          });
         } else {
-          tr.createEl("td", { text: cell });
+          tr.createEl("td", { text: cell, attr: labelAttr(cellIndex) });
         }
       });
     });

@@ -27,7 +27,7 @@
     padding: var(--workout-space-sm) var(--workout-space-md);
     text-align: left;
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
   }
 
   th {
@@ -70,17 +70,17 @@
 
 /* Variance indicators */
 .workout-duration-comparison-variance-good {
-  color: var(--text-success);
+  color: var(--workout-text-success);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-duration-comparison-variance-moderate {
-  color: var(--text-warning);
+  color: var(--workout-text-warning);
   font-weight: var(--workout-font-weight-medium);
 }
 
 .workout-duration-comparison-variance-poor {
-  color: var(--text-error);
+  color: var(--workout-text-error);
   font-weight: var(--workout-font-weight-medium);
 }
 
@@ -127,18 +127,18 @@
 
 /* Trend direction colors */
 .workout-duration-comparison-trend-improving {
-  color: var(--text-success);
+  color: var(--workout-text-success);
 
   .workout-duration-comparison-trend-icon {
-    color: var(--text-success);
+    color: var(--workout-text-success);
   }
 }
 
 .workout-duration-comparison-trend-declining {
-  color: var(--text-error);
+  color: var(--workout-text-error);
 
   .workout-duration-comparison-trend-icon {
-    color: var(--text-error);
+    color: var(--workout-text-error);
   }
 }
 

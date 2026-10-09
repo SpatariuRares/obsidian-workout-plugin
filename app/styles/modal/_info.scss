@@ -2,7 +2,7 @@
 .workout-charts-mode-info {
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-md);
   margin-bottom: var(--workout-space-xl);
@@ -14,7 +14,7 @@
   }
 
   strong {
-    color: var(--text-accent);
+    color: var(--workout-text-accent);
   }
 }
 
@@ -31,7 +31,7 @@
 .workout-csv-mode-info {
   background: var(--background-secondary);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-md);
   margin-bottom: var(--workout-space-xl);
@@ -44,14 +44,14 @@
 
   h4 {
     margin: 0 0 var(--workout-space-sm) 0;
-    color: var(--interactive-accent);
+    color: var(--workout-text-accent);
   }
 }
 
 .workout-migration-section {
   background: var(--background-secondary-alt);
   border: var(--workout-border-thin) solid
-    var(--background-modifier-border);
+    var(--workout-border-color);
   border-radius: var(--workout-radius-md);
   padding: var(--workout-space-lg);
   margin-top: var(--workout-space-md);

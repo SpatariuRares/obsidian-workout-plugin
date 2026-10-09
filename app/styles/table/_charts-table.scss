@@ -14,7 +14,7 @@
     padding: var(--workout-space-md) var(--workout-space-lg);
     text-align: left;
     border-bottom: var(--workout-border-medium) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     font-weight: var(--workout-font-weight-semibold);
     color: var(--text-normal);
     font-size: var(--workout-font-base);
@@ -23,7 +23,7 @@
   td {
     padding: var(--workout-space-md) var(--workout-space-lg);
     border-bottom: var(--workout-border-thin) solid
-      var(--background-modifier-border);
+      var(--workout-border-subtle);
     color: var(--text-normal);
     transition: var(--workout-transition);
   }

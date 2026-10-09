@@ -40,6 +40,7 @@ export class ViewDataPreparer {
       lowerBack: this.intensityCalc.normalize(backData.lowerBack),
       traps: this.intensityCalc.normalize(backData.traps),
       trapsMiddle: this.intensityCalc.normalize(backData.trapsMiddle),
+      rhomboids: this.intensityCalc.normalize(backData.rhomboids ?? 0),
       lats: this.intensityCalc.normalize(backData.lats),
       triceps: this.intensityCalc.normalizeBilateral(
         armsData.tricepsLeft,
@@ -113,6 +114,7 @@ export class ViewDataPreparer {
       ),
       abs: this.intensityCalc.normalize(coreData.abs),
       obliques: this.intensityCalc.normalize(coreData.obliques),
+      serratus: this.intensityCalc.normalize(coreData.serratus ?? 0),
       frontShoulders: this.intensityCalc.normalizeBilateral(
         shouldersData.frontLeft,
         shouldersData.frontRight,
@@ -122,10 +124,8 @@ export class ViewDataPreparer {
         shouldersData.lateralRight ?? 0,
       ),
       upperChest: this.intensityCalc.normalize(chestData.upper),
-      middleChest: this.intensityCalc.normalizeAverage([
-        chestData.middle,
-        chestData.lower,
-      ]),
+      middleChest: this.intensityCalc.normalize(chestData.middle),
+      lowerChest: this.intensityCalc.normalize(chestData.lower),
     };
 
     // Convert intensities to colors

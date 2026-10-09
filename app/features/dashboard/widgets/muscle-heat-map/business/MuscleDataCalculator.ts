@@ -135,6 +135,7 @@ export class MuscleDataCalculator {
       bodyData.back.lats,
       bodyData.back.lowerBack,
       bodyData.back.trapsMiddle,
+      bodyData.back.rhomboids ?? 0,
       bodyData.arms.bicepsLeft,
       bodyData.arms.bicepsRight,
       bodyData.arms.tricepsLeft,
@@ -151,6 +152,7 @@ export class MuscleDataCalculator {
       bodyData.legs.calvesRight,
       bodyData.core.abs,
       bodyData.core.obliques,
+      bodyData.core.serratus ?? 0,
     ];
 
     return Math.max(...allValues, 1);
@@ -203,8 +205,8 @@ export class MuscleDataCalculator {
         lats: getVolume("back") + getVolume("lats"),
         lowerBack:
           getVolume("back") * BACK_LOWER_RATIO + getVolume("lower_back"),
-        trapsMiddle:
-          getVolume("traps") * TRAPS_MIDDLE_RATIO + getVolume("rhomboids"),
+        trapsMiddle: getVolume("traps") * TRAPS_MIDDLE_RATIO,
+        rhomboids: getVolume("rhomboids"),
       },
       arms: {
         bicepsLeft: getVolume("biceps") * BILATERAL_SPLIT,
@@ -226,11 +228,8 @@ export class MuscleDataCalculator {
       },
       core: {
         abs: getVolume("abs"),
-        // No serratus zone: it sits on the obliques zone
-        obliques:
-          getVolume("core") * OBLIQUES_RATIO +
-          getVolume("obliques") +
-          getVolume("serratus"),
+        obliques: getVolume("core") * OBLIQUES_RATIO + getVolume("obliques"),
+        serratus: getVolume("serratus"),
       },
     };
 

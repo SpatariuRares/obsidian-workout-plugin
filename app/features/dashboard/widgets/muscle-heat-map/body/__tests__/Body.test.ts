@@ -53,3 +53,72 @@ describe.each([
     );
   });
 });
+
+describe("Body front view chest sections", () => {
+  const render = (chest: BodyData["chest"]) => {
+    const data = emptyBody();
+    data.chest = chest;
+    const container = createObsidianContainer();
+    new Body(data, { view: VIEW_TYPE.FRONT, maxValue: 100 }).render(container);
+    return container;
+  };
+
+  it("colors the lower chest independently from the mid chest", () => {
+    const container = render({ upper: 0, middle: 0, lower: 100 });
+
+    expect(colorOf(container, "lower-pectoralis")).toBeTruthy();
+    expect(colorOf(container, "lower-pectoralis")).not.toBe(
+      colorOf(container, "mid-pectoralis"),
+    );
+  });
+
+  it("clips the shared pectoral shape into a mid and a lower section", () => {
+    const container = render({ upper: 0, middle: 100, lower: 0 });
+    const clipOf = (id: string) =>
+      container.querySelector(`g#${id}`)?.getAttribute("clip-path");
+
+    expect(clipOf("mid-pectoralis")).toMatch(/url\(#.+\)/);
+    expect(clipOf("lower-pectoralis")).toMatch(/url\(#.+\)/);
+    expect(clipOf("mid-pectoralis")).not.toBe(clipOf("lower-pectoralis"));
+  });
+});
+
+describe.each([
+  {
+    view: VIEW_TYPE.BACK,
+    zone: "rhomboids",
+    sibling: "traps-middle",
+    set: (d: BodyData) => (d.back.rhomboids = 100),
+  },
+  {
+    view: VIEW_TYPE.FRONT,
+    zone: "serratus",
+    sibling: "obliques",
+    set: (d: BodyData) => (d.core.serratus = 100),
+  },
+])("Body $zone section", ({ view, zone, sibling, set }) => {
+  const render = () => {
+    const data = emptyBody();
+    set(data);
+    const container = createObsidianContainer();
+    new Body(data, { view, maxValue: 100 }).render(container);
+    return container;
+  };
+  const clipOf = (container: HTMLElement, id: string) =>
+    container.querySelector(`g#${id}`)?.getAttribute("clip-path");
+
+  it(`colors ${zone} independently from ${sibling}`, () => {
+    const container = render();
+
+    expect(colorOf(container, zone)).toBeTruthy();
+    expect(colorOf(container, zone)).not.toBe(colorOf(container, sibling));
+  });
+
+  it(`clips ${zone} and ${sibling} out of the same shape`, () => {
+    const container = render();
+
+    expect(clipOf(container, zone)).toMatch(/url\(#.+\)/);
+    expect(clipOf(container, sibling)).toMatch(/url\(#.+\)/);
+    expect(clipOf(container, zone)).not.toBe(clipOf(container, sibling));
+  });
+});

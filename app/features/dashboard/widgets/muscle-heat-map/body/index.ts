@@ -16,6 +16,7 @@ export interface ArmsData {
 export interface BackData {
   traps: number;
   trapsMiddle: number;
+  rhomboids?: number;
   lats: number;
   lowerBack: number;
 }
@@ -29,6 +30,7 @@ export interface ChestData {
 export interface CoreData {
   abs: number;
   obliques: number;
+  serratus?: number;
 }
 
 export interface LegsData {

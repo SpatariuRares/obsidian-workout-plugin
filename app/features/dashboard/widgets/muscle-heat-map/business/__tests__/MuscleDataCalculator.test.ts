@@ -122,8 +122,10 @@ describe("MuscleDataCalculator.createBodyDataFromMuscleData", () => {
   it("fills the back and core zones from specific muscles", async () => {
     const body = await bodyFor(["lats", "rhomboids", "lower_back", "obliques", "serratus"]);
     expect(body.back.lats).toBe(100);
-    expect(body.back.trapsMiddle).toBe(100);
+    expect(body.back.rhomboids).toBe(100);
+    expect(body.back.trapsMiddle).toBe(0);
     expect(body.back.lowerBack).toBe(100);
-    expect(body.core.obliques).toBe(200);
+    expect(body.core.obliques).toBe(100);
+    expect(body.core.serratus).toBe(100);
   });
 });

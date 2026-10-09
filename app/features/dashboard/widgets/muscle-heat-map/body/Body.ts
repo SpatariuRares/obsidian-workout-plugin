@@ -73,6 +73,7 @@ export class Body {
     targetSvg: SVGSVGElement,
   ): void {
     const parser = new DOMParser();
+    // eslint-disable-next-line i18next/no-literal-string -- SVG markup
     const wrappedSvg = `<svg xmlns="http://www.w3.org/2000/svg">${svgString}</svg>`;
     const doc = parser.parseFromString(wrappedSvg, "image/svg+xml");
 

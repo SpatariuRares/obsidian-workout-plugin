@@ -26,7 +26,7 @@ node scripts/find-hardcoded-strings.mjs  # Strict scan for literals that should 
 
 **Release**: push a `X.Y.Z` tag (use `/release`). CI syncs `manifest.json` to the tag, translates locales, commits both back to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow.
 
-**Husky pre-push** runs typecheck → lint → test → build, so a failing check blocks `git push`.
+**Husky pre-push** runs typecheck → lint → `test:coverage` → build, so a failing check (including a coverage drop) blocks `git push`. CI runs the same lint and coverage checks.
 
 **Run single test**: `npm test -- app/utils/__tests__/DateUtils.test.ts`
 
@@ -478,7 +478,7 @@ Code blocks written by the insert/edit modals also carry an `id` used to replace
 ## Testing
 
 **Framework**: Jest with ts-jest
-**Coverage Target**: 90% (statements, branches, functions, lines)
+**Coverage**: measured over all of `app/`; `jest.config.js` thresholds are a floor at the current real level (~55%). Raise them when you add tests, never lower them. Prioritize logic that writes or transforms user data.
 
 ```bash
 npm test                 # Run all tests
@@ -495,7 +495,7 @@ npm test -- path/to/file.test.ts  # Single file
 
 - Default env is `node`; DOM tests need `/** @jest-environment jsdom */` as the first line
 
-**Coverage scope** (`jest.config.js` → `collectCoverageFrom`): utils, api, constants, components, services, `features/charts`, `features/tables`. `features/dashboard`, `modals`, `settings`, `timer` are **not** measured, so pass `--collectCoverageFrom` explicitly when working there.
+**Lint**: `npm run lint` must stay at zero warnings. For a string that is not UI text (YAML, SVG/HTML markup, CSS units), use `// eslint-disable-next-line i18next/no-literal-string -- <reason>`; user-visible text goes in `en.json`.
 
 **Test Patterns:**
 

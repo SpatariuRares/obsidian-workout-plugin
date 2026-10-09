@@ -19,14 +19,20 @@ npm run test:watch   # Jest in watch mode
 npm run test:coverage # Jest with coverage report
 npm run lint         # ESLint
 npm run lint:fix     # ESLint with auto-fix
-npm run version      # Bump version in manifest.json and versions.json
+npm run typecheck    # tsc only, no emit
+npm run doe:validate # Import-convention check (@app aliases, barrels, circular deps)
+node scripts/find-hardcoded-strings.mjs  # Strict scan for literals that should use t()
 ```
+
+**Release**: push a `X.Y.Z` tag (use `/release`). CI syncs `manifest.json` to the tag, translates locales, commits both back to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow.
+
+**Husky pre-push** runs typecheck → lint → test → build, so a failing check blocks `git push`.
 
 **Run single test**: `npm test -- app/utils/__tests__/DateUtils.test.ts`
 
 ## Build System
 
-1. **CSS**: `node build-css.mjs` - PostCSS bundles `styles/` → `styles.css`
+1. **CSS**: `node build-css.mjs` - Sass compiles `styles.source.scss` (which `@use`s partials in `app/styles/`) → `styles.css`
 2. **TypeScript**: `tsc -noEmit -skipLibCheck` - Type checking only (no emit)
 3. **Bundle**: esbuild bundles `main.ts` → `main.js` with Obsidian externals
 
@@ -114,18 +120,15 @@ Manages custom muscle tag mappings (e.g., `petto` → `chest`) from CSV file. Ca
 
 ### Embedded Views (BaseView Pattern)
 
-All embedded views extend `BaseView` for consistent error handling, loading states, and empty data handling:
+All embedded views extend `BaseView` (`app/features/common/views/BaseView.ts`) for consistent error handling, loading states, and empty data handling:
 
 ```typescript
 abstract class BaseView {
   protected handleError(container, error): void;
-  protected handleEmptyData(
-    container,
-    data,
-    exercise?,
-    pageLink?,
-  ): boolean;
-  protected renderLoadingSpinner(container): HTMLElement;
+  protected handleEmptyData(container, logData, exerciseName?, currentPageLink?, codeBlockId?): boolean;
+  protected handleNoFilteredData(container, params, titlePrefix, viewType): void;
+  protected showLoadingIndicator(container): HTMLElement;
+  protected filterData(...); validateAndHandleErrors(...); showSuccessMessage(...);
 }
 ```
 
@@ -182,44 +185,53 @@ These stay in feature directories because they're domain-specific, not general-p
 
 ```
 app/features/
+├── common/
+│   ├── views/           # BaseView (parent of all embedded views)
+│   └── suggest/         # FileSuggest, FolderSuggest
+│
 ├── charts/
 │   ├── components/      # ChartRenderer, TrendHeader
 │   ├── config/          # Chart.js configuration
 │   ├── business/        # ChartDataUtils (data transformation)
+│   ├── modals/          # InsertChartModal
 │   ├── ui/              # Chart-specific UI helpers
 │   └── views/           # EmbeddedChartView
 │
 ├── tables/
 │   ├── components/      # TableActions, TableDataProcessor
 │   ├── business/        # TargetCalculator (progressive overload)
+│   ├── modals/          # InsertTableModal, EditTableModal
 │   ├── ui/              # ActionButtons, TargetHeader, TableErrorMessage
 │   └── views/           # EmbeddedTableView
 │
 ├── dashboard/
 │   ├── ui/              # DashboardCard, StatsBox
-│   ├── widgets/         # QuickStatsCards, VolumeAnalytics, MuscleHeatMap,
-│   │                    # ProtocolDistribution, ProtocolEffectiveness, RecentWorkouts, SummaryWidget
+│   ├── widgets/         # one folder per widget (quick-stats, volume-analytics, muscle-heat-map,
+│   │                    # protocol-*, recent-workouts, summary, duration-comparison, ...)
 │   ├── business/        # Dashboard calculation utilities
+│   ├── modals/          # InsertDashboardModal
 │   └── views/           # EmbeddedDashboardView
 │
 ├── timer/
-│   ├── components/      # TimerCore, TimerControls, TimerDisplay, TimerAudio
+│   ├── business/        # TimerCore
+│   ├── components/      # TimerControls, TimerDisplay, TimerAudio
+│   ├── modals/          # InsertTimerModal, EditTimerModal, components/TimerConfigurationSection
 │   └── views/           # EmbeddedTimerView
 │
-├── modals/
+├── modals/              # Cross-feature modals (feature insert/edit modals live in their feature)
 │   ├── base/            # ModalBase, BaseInsertModal
 │   │   ├── logic/       # LogFormValidator
 │   │   └── services/    # RecentExercisesService
-│   ├── components/      # ExerciseAutocomplete, TimerConfigurationSection, CodeGenerator
-│   ├── log/             # CreateLogModal, QuickLogModal, EditLogModal
-│   ├── exercise/        # CreateExerciseModal, AddExerciseBlockModal
-│   ├── muscle/          # MuscleTagManagerModal, components, logic
-│   └── ...              # InsertChartModal, InsertTableModal, InsertTimerModal, etc.
+│   ├── components/      # ExerciseAutocomplete, CodeGenerator
+│   ├── log/             # CreateLogModal, EditLogModal
+│   ├── exercise/        # AddExerciseBlockModal, CreateExercisePageModal,
+│   │                    # CreateExerciseSectionModal, AuditExerciseNamesModal
+│   └── muscle/          # MuscleTagManagerModal, components, logic
 │
 ├── settings/
 │   ├── WorkoutChartsSettings.ts              # Main settings tab
-│   └── components/                           # Settings sections (QuickLogSettings,
-│                                             # CustomProtocolsSettings, ProgressiveOverloadSettings, etc.)
+│   └── components/                           # General, QuickLog, CustomProtocols,
+│                                             # ProgressiveOverload, Templates, Maintenance
 │
 ├── canvas/              # Canvas export functionality
 ├── duration/            # Workout duration estimation
@@ -239,7 +251,7 @@ app/features/
 ```
 app/constants/
 ├── index.ts                    # Barrel export + backward-compatible CONSTANTS object
-├── ui.constants.ts             # All user-facing strings (MODAL_UI, SETTINGS_UI, TABLE_UI, CHARTS_UI, etc.)
+├── ui.constants.ts             # UI label groups (MODAL_UI, SETTINGS_UI, …) backed by t(), icons, emoji, unit maps
 ├── defaults.constants.ts       # Default configs (DEFAULT_SETTINGS, DEFAULT_CHART_CONFIG, etc.)
 ├── muscles.constants.ts        # Muscle definitions (MUSCLE_TAGS, MUSCLE_GROUPS, MUSCLE_POSITIONS)
 ├── validation.constants.ts     # Error messages, validation rules
@@ -264,12 +276,19 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 **When adding constants:**
 
-- User-facing strings → `ui.constants.ts`
+- User-facing strings → a key in `app/i18n/locales/en.json`, read with `t()` (not a literal in `ui.constants.ts`)
 - Default configurations → `defaults.constants.ts`
 - Validation/errors → `validation.constants.ts`
 - Muscle/exercise data → `muscles.constants.ts` or `exerciseTypes.constants.ts`
 
 **NEVER hardcode user-facing strings in components!**
+
+### Internationalization
+
+- `import { t } from "@app/i18n";` then `t("common.clear")`. Keys are nested JSON paths in `app/i18n/locales/en.json`.
+- **Only edit `en.json`.** The other 23 locales are filled by the CI `translate` job (Ollama, `AI translate/`) when a release tag is pushed, and committed back to `main`.
+- ESLint (`i18next/no-literal-string`) warns on literals. `node scripts/find-hardcoded-strings.mjs` is the stricter scan. Use the `i18n` skill for audits (missing/unused keys, param mismatches).
+- In tests, assert against `t("key")`, not English text.
 
 ### Refresh Architecture (Event-Driven)
 
@@ -338,44 +357,65 @@ Views (Chart, Table, Dashboard) or Public API
 
 ### Code Block Syntax
 
+Source of truth: the `Embedded*Params` interfaces in `app/features/{charts,tables,timer,dashboard}/types.ts`. All params are optional.
+
 #### workout-chart
 
 ```yaml
 exercise: Squat
+workout: Push Day
 type: volume # volume, weight, reps, duration, distance, pace, heartRate
+chartType: exercise # scope: exercise, workout, combined, all
 dateRange: 30
+limit: 50
+exactMatch: false
 showTrendLine: true
 showStats: true
-height: 400
+title: Squat volume
+height: "400px"
 ```
 
 #### workout-log
 
 ```yaml
 exercise: Bench Press
+workout: Push Day
 exactMatch: false
+searchByName: false
 dateRange: 14
-sortBy: date # date, exercise, weight, reps, volume
-sortOrder: desc # asc, desc
 limit: 50
 columns: ["date", "reps", "weight", "volume"]
+showAddButton: true
+showProtocol: true
+targetWeight: 100 # with targetReps: progressive overload header
+targetReps: 8
 ```
 
 #### workout-timer
 
 ```yaml
-duration: 90
-label: Rest Period
-autoStart: false
+type: countdown # countdown, interval, stopwatch
+duration: 90 # seconds
+rounds: 8 # interval only
+showControls: true
 sound: true
-preset: rest # Use saved preset
+preset: rest # saved preset used as base config
+exercise: Squat
+workout: Leg Day
 ```
 
 #### workout-dashboard
 
 ```yaml
-# No parameters - shows full dashboard with all widgets
+title: Training overview
+dateRange: 30
+showSummary: true # also showQuickStats, showVolumeAnalytics,
+showRecentWorkouts: true #      showQuickActions
+recentWorkoutsLimit: 5
+volumeTrendDays: 7
 ```
+
+Code blocks written by the insert/edit modals also carry an `id` used to replace the block in place.
 
 ## Key Development Patterns
 
@@ -393,7 +433,7 @@ preset: rest # Use saved preset
 2. Implement abstract methods: `getModalTitle()`, `createFormElements()`, etc.
 3. For insert modals: implement `generateCode()` to return code block string
 4. Register command in `CommandHandlerService.registerCommands()`
-5. Add modal UI strings to `ui.constants.ts` → `MODAL_UI`
+5. Add modal UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
 
 ### Adding New Components
 
@@ -417,7 +457,7 @@ preset: rest # Use saved preset
 2. Create business logic in `business/` subdirectory
 3. Use `DashboardCard` component from `app/features/dashboard/ui/`
 4. Register widget in `EmbeddedDashboardView.render()`
-5. Add widget UI strings to `ui.constants.ts` → `DASHBOARD_UI`
+5. Add widget UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
 
 ### Modifying Constants
 
@@ -444,21 +484,9 @@ npm test -- path/to/file.test.ts  # Single file
 - Use `obsidianDomMocks.ts` for DOM API mocks (`createEl`, `createDiv`, etc.)
 - Mock Obsidian API: `__mocks__/obsidian.ts`
 
-**Coverage Configuration:**
+- Default env is `node`; DOM tests need `/** @jest-environment jsdom */` as the first line
 
-```javascript
-collectCoverageFrom: [
-  "app/utils/**/*.ts",
-  "app/api/**/*.ts",
-  "app/constants/**/*.ts",
-  "app/components/**/*.ts",
-  "app/services/**/*.ts",
-  "app/features/charts/**/*.ts",
-  "app/features/tables/**/*.ts",
-  "!app/**/__tests__/**",
-  "!app/**/index.ts", // Barrel files excluded
-];
-```
+**Coverage scope** (`jest.config.js` → `collectCoverageFrom`): utils, api, constants, components, services, `features/charts`, `features/tables`. `features/dashboard`, `modals`, `settings`, `timer` are **not** measured, so pass `--collectCoverageFrom` explicitly when working there.
 
 **Test Patterns:**
 
@@ -482,6 +510,8 @@ collectCoverageFrom: [
 - Types (import directly from specific files)
 
 **Rationale**: Barrel files add indirection and can cause circular dependency issues. Only use where they provide genuine organizational value (component APIs, constants re-exports).
+
+**Known debt**: every `app/features/*/` still has an `index.ts`, and ~30 existing imports use them (`from "@app/features/timer"`, `"@app/features/charts"`, `tables`, `canvas`, `duration`). Don't add new feature-barrel imports. When touching a file that uses one, switch it to a direct import (e.g. `@app/features/timer/views/EmbeddedTimerView`).
 
 ## Obsidian Plugin Best Practices
 
@@ -539,48 +569,13 @@ collectCoverageFrom: [
 
 ## Public API (Dataview Integration)
 
-The plugin exposes `window.WorkoutPlannerAPI` for Dataview and other plugins:
-
-```typescript
-// Get workout logs with optional filtering
-const logs = await WorkoutPlannerAPI.getWorkoutLogs({
-  exercise: "Squat", // Partial match, case-insensitive
-  workout: "Push Day",
-  dateRange: { start: "2025-01-01", end: "2025-01-31" },
-  protocol: "drop_set",
-  exactMatch: false,
-});
-
-// Get exercise statistics
-const stats = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
-// Returns: { totalVolume, maxWeight, prWeight, prReps, prDate, totalSets,
-//            averageWeight, averageReps, lastWorkoutDate, trend }
-
-// Get list of exercises
-const exercises = await WorkoutPlannerAPI.getExercises({
-  tag: "chest",
-});
-```
-
-**Example Dataview Query:**
-
-```dataviewjs
-const logs = await WorkoutPlannerAPI.getWorkoutLogs({
-  exercise: "Squat",
-  dateRange: { start: "2025-01-01" }
-});
-
-dv.table(
-  ["Date", "Reps", "Weight", "Volume"],
-  logs.map(l => [l.date.split("T")[0], l.reps, l.weight + " kg", l.volume])
-);
-```
+`window.WorkoutPlannerAPI` (`app/api/WorkoutPlannerAPI.ts`) exposes `getWorkoutLogs(filter)`, `getExerciseStats(exercise)`, `getExercises(filter)`. It is a public contract for users' Dataview scripts, so don't change signatures or return shapes without a deprecation path. User-facing examples are in `README.md`.
 
 ## Common Gotchas
 
-1. **Cache Invalidation**: Use `plugin.triggerWorkoutLogRefresh(ctx)` after modifying workout CSV data, or `plugin.triggerMuscleTagRefresh()` after modifying muscle tags. Do NOT call `clearLogDataCache()` directly — the trigger methods handle it.
+1. **Cache Invalidation**: Workout log mutations through the repository emit events that clear the cache and re-render views automatically. Don't call `triggerWorkoutLogRefresh()` (deprecated, kept for external callers) or `clearLogDataCache()`. After modifying muscle tags, call `plugin.triggerMuscleTagRefresh()`.
 2. **Double Refresh**: Never pass local `onRefresh` callbacks through table components. The global event system handles refresh. Adding local callbacks causes double-rendering.
-3. **Chart.js Memory Leaks**: Ensure `ChartRenderer.destroyChart(chartId)` is called before creating new chart with same ID
+3. **Chart.js Memory Leaks**: Always create charts via `ChartRenderer.renderChart()`, which destroys any tracked chart with the same ID first. Never call `new Chart()` directly, because untracked instances escape `destroyAllCharts()` on unload.
 4. **Modal Cleanup**: Always call `modal.close()` after success, avoid leaving modals open
 5. **Timer Cleanup**: Active timers stored in `plugin.activeTimers` Map must be destroyed in `onunload()`
 6. **Service Dependencies**: Services initialized in order - DataService must exist before ExerciseDefinitionService
@@ -590,14 +585,27 @@ dv.table(
 ## CSS Organization
 
 ```
-styles/
-├── source.css          # Entry point (imports all modules)
-├── base.css            # Base styles, CSS variables
-├── components/         # Component-specific styles
-├── features/           # Feature-specific styles (charts, tables, dashboard, etc.)
-└── themes/             # Theme overrides
+styles.source.scss      # Entry point: @use's every partial below
+app/styles/
+├── _variables.scss     # Shared variables
+├── utilities/          # Utility classes (index partial)
+├── components/         # Shared component styles (index partial)
+├── dashboard/          # Dashboard + widget styles (index partial)
+└── _chart.scss, _table.scss, _timer.scss, _modal.scss, _settings.scss, _duration.scss
 ```
 
-**Build**: `node build-css.mjs` processes with PostCSS → outputs `styles.css`
+**Build**: `node build-css.mjs` compiles with Sass → outputs `styles.css`
+
+**Never edit `styles.css` or `main.js` directly.** They are build outputs and get overwritten. `styles.css` is committed because releases ship it.
 
 **Usage**: Import Obsidian CSS variables, never hardcode values
+
+## Live Debugging in Obsidian
+
+`.mcp.json` defines an `obsidian-devtools` MCP server (chrome-devtools-mcp attached to `127.0.0.1:9222`). To use it, quit Obsidian and relaunch it with remote debugging:
+
+```bash
+open -a Obsidian --args --remote-debugging-port=9222
+```
+
+Claude can then read console errors, screenshot rendered code blocks, run JS in the app (e.g. `app.plugins.disablePlugin("workout-planner").then(() => app.plugins.enablePlugin("workout-planner"))` to reload after `npm run build`), and take heap snapshots to check for Chart.js leaks.

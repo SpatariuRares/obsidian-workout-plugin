@@ -1,3 +1,4 @@
+import { t } from "@app/i18n";
 import { CommandHandlerService } from "../CommandHandlerService";
 import { App, TFile } from "obsidian";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
@@ -118,6 +119,7 @@ describe("CommandHandlerService", () => {
           .mockReturnValue(new Map([["chest", "Upper Body"]])),
       }),
       triggerWorkoutLogRefresh: jest.fn(),
+      createLogModalHandler: { openModal: jest.fn() },
     };
     service = new CommandHandlerService(app, mockPlugin);
     jest.clearAllMocks();
@@ -146,6 +148,38 @@ describe("CommandHandlerService", () => {
         await commandDef.callback();
       }
     }
+  });
+
+  it("should open the create log modal from the create-workout-log command", () => {
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "create-workout-log",
+    )[0];
+
+    cmd.callback();
+
+    expect(cmd.name).toBe(t("modal.titles.createLog"));
+    expect(cmd.hotkeys).toBeUndefined();
+    expect(mockPlugin.createLogModalHandler.openModal).toHaveBeenCalled();
+  });
+
+  it("should insert a workout-duration block at the cursor", () => {
+    service.registerCommands();
+    const durationCmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "insert-workout-duration",
+    )[0];
+    const cursor = { line: 3, ch: 0 };
+    const editor = {
+      getCursor: jest.fn().mockReturnValue(cursor),
+      replaceRange: jest.fn(),
+    };
+
+    durationCmd.editorCallback(editor);
+
+    expect(editor.replaceRange).toHaveBeenCalledWith(
+      "```workout-duration\n```\n\n",
+      cursor,
+    );
   });
 
   it("should handle error in create-csv-log", async () => {

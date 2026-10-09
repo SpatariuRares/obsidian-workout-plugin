@@ -3,7 +3,7 @@ import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { t } from "@app/i18n";
 import { InsertChartModal } from "@app/features/charts/modals/InsertChartModal";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
-import { InsertTimerModal } from "@app/features/timer";
+import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { InsertDashboardModal } from "@app/features/dashboard/modals/InsertDashboardModal";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { CreateExerciseSectionModal } from "@app/features/modals/exercise/CreateExerciseSectionModal";
@@ -28,6 +28,14 @@ export class CommandHandlerService {
   ) {}
 
   registerCommands(): void {
+    this.plugin.addCommand({
+      id: "create-workout-log",
+      name: t("modal.titles.createLog"),
+      callback: () => {
+        this.plugin.createLogModalHandler.openModal();
+      },
+    });
+
     this.plugin.addCommand({
       id: "create-csv-log",
       name: t("commands.createCsvLog"),
@@ -93,8 +101,12 @@ export class CommandHandlerService {
     this.plugin.addCommand({
       id: "insert-workout-duration",
       name: t("modal.titles.insertDuration"),
-      callback: () => {
-        CodeGenerator.generateDurationCode();
+      editorCallback: (editor) => {
+        editor.replaceRange(
+          CodeGenerator.generateDurationCode() + "\n\n",
+          editor.getCursor(),
+        );
+        new Notice(t("messages.codeInserted"));
       },
     });
 

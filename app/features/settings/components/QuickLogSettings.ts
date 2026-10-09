@@ -28,6 +28,19 @@ export class QuickLogSettings {
           }),
       );
 
+    new Setting(containerEl)
+      .setName(t("settings.labels.showRibbonIcon"))
+      .setDesc(t("settings.descriptions.showRibbonIcon"))
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.showRibbonIcon)
+          .onChange(async (value) => {
+            this.plugin.settings.showRibbonIcon = value;
+            await this.plugin.saveSettings();
+            this.plugin.updateQuickLogRibbon();
+          }),
+      );
+
     // TODO: this will be default in future — add a system to control data from csv to decide what to show
     const quickWeightSetting = new Setting(containerEl)
       .setName(getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT)

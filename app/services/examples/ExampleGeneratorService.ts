@@ -13,6 +13,15 @@ import { generateExampleCSVData } from "@app/services/examples/exampleDataGenera
 export class ExampleGeneratorService {
   constructor(private app: App) {}
 
+  /** Whether the (localized) example folder already exists in the vault */
+  public exampleFolderExists(): boolean {
+    return (
+      this.app.vault.getAbstractFileByPath(
+        normalizePath(t("examples.folderNames.base")),
+      ) instanceof TFolder
+    );
+  }
+
   public async generateExampleFolder(
     overwrite: boolean = false,
   ): Promise<void> {

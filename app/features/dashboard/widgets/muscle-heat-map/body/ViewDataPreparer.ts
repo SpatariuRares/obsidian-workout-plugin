@@ -69,6 +69,10 @@ export class ViewDataPreparer {
         shouldersData.rearLeft,
         shouldersData.rearRight,
       ),
+      sideShoulders: this.intensityCalc.normalizeBilateral(
+        shouldersData.lateralLeft ?? 0,
+        shouldersData.lateralRight ?? 0,
+      ),
     };
 
     // Convert intensities to colors
@@ -112,6 +116,10 @@ export class ViewDataPreparer {
       frontShoulders: this.intensityCalc.normalizeBilateral(
         shouldersData.frontLeft,
         shouldersData.frontRight,
+      ),
+      sideShoulders: this.intensityCalc.normalizeBilateral(
+        shouldersData.lateralLeft ?? 0,
+        shouldersData.lateralRight ?? 0,
       ),
       upperChest: this.intensityCalc.normalize(chestData.upper),
       middleChest: this.intensityCalc.normalizeAverage([

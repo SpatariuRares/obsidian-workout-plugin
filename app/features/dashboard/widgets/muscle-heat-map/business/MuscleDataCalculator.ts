@@ -124,6 +124,8 @@ export class MuscleDataCalculator {
     const allValues = [
       bodyData.shoulders.frontLeft,
       bodyData.shoulders.frontRight,
+      bodyData.shoulders.lateralLeft ?? 0,
+      bodyData.shoulders.lateralRight ?? 0,
       bodyData.shoulders.rearLeft,
       bodyData.shoulders.rearRight,
       bodyData.chest.upper,
@@ -174,16 +176,17 @@ export class MuscleDataCalculator {
       OBLIQUES_RATIO,
     } = VOLUME_DISTRIBUTION;
 
-    // No side-delt zone: split it between the front and rear shoulder zones
-    const sideDelts = getVolume("side_delts") * BILATERAL_SPLIT;
-    const frontDelts =
-      getVolume("shoulders") + getVolume("front_delts") + sideDelts;
-    const rearDelts = getVolume("rear_delts") + sideDelts;
+    // A generic shoulders tag lights the front and lateral deltoid
+    const frontDelts = getVolume("shoulders") + getVolume("front_delts");
+    const sideDelts = getVolume("shoulders") + getVolume("side_delts");
+    const rearDelts = getVolume("rear_delts");
 
     const bodyData = {
       shoulders: {
         frontLeft: frontDelts * BILATERAL_SPLIT,
         frontRight: frontDelts * BILATERAL_SPLIT,
+        lateralLeft: sideDelts * BILATERAL_SPLIT,
+        lateralRight: sideDelts * BILATERAL_SPLIT,
         rearLeft: rearDelts * BILATERAL_SPLIT,
         rearRight: rearDelts * BILATERAL_SPLIT,
       },

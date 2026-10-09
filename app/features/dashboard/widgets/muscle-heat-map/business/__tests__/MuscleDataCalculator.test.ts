@@ -100,10 +100,23 @@ describe("MuscleDataCalculator.createBodyDataFromMuscleData", () => {
     });
   });
 
-  it("splits side delts between the front and rear shoulder zones", async () => {
+  it("puts side delts only in the lateral deltoid zone", async () => {
     const { shoulders } = await bodyFor(["side_delts"]);
-    expect(shoulders.frontLeft).toBe(25);
-    expect(shoulders.rearLeft).toBe(25);
+    expect(shoulders).toEqual({
+      frontLeft: 0,
+      frontRight: 0,
+      lateralLeft: 50,
+      lateralRight: 50,
+      rearLeft: 0,
+      rearRight: 0,
+    });
+  });
+
+  it("still lights the lateral deltoid for a generic shoulders tag", async () => {
+    const { shoulders } = await bodyFor(["shoulders"]);
+    expect(shoulders.frontLeft).toBe(50);
+    expect(shoulders.lateralLeft).toBe(50);
+    expect(shoulders.rearLeft).toBe(0);
   });
 
   it("fills the back and core zones from specific muscles", async () => {

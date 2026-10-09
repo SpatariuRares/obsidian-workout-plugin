@@ -16,6 +16,11 @@
   box-shadow: var(--workout-shadow-md);
   margin-top: var(--workout-space-lg);
 
+  &.has-fixed-height {
+    height: var(--workout-chart-height);
+    padding-bottom: 0;
+  }
+
   .workout-charts-canvas {
     position: absolute;
     top: 0;

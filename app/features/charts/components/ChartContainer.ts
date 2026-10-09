@@ -19,6 +19,30 @@ export class ChartContainer {
   }
 
   /**
+   * Applies the `height` code block param: a number or digits are pixels,
+   * a value with a CSS unit is used as is. Invalid values keep the default
+   * aspect ratio.
+   * @returns true if a fixed height was applied
+   */
+  static applyHeight(
+    container: HTMLElement,
+    height?: string | number,
+  ): boolean {
+    const raw = String(height ?? "").trim();
+    const value = /^\d+(\.\d+)?$/.test(raw)
+      ? `${raw}px`
+      : /^\d+(\.\d+)?(px|em|rem|vh|%)$/.test(raw)
+        ? raw
+        : "";
+    if (!value || parseFloat(value) <= 0) {
+      return false;
+    }
+    container.addClass("has-fixed-height");
+    container.style.setProperty("--workout-chart-height", value);
+    return true;
+  }
+
+  /**
    * Creates a canvas element for the chart rendering.
    * @param container - The container element to append the canvas to
    * @param className - Optional CSS class name

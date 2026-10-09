@@ -28,7 +28,7 @@ export interface EmbeddedChartParams {
   showTrend?: boolean;
   showStats?: boolean;
   title?: string;
-  height?: string;
+  height?: string | number; // e.g. 300 (px) or "50vh"; default 4:3 aspect ratio
   limit?: number;
   exactMatch?: boolean;
 }

@@ -33,6 +33,10 @@
 .workout-protocol-chart-canvas {
   max-width: 100%;
   max-height: 200px;
+
+  &.is-clickable {
+    cursor: pointer;
+  }
 }
 
 /* Protocol Legend Styles */

@@ -13,11 +13,18 @@ import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
 
 export class VolumeAnalytics {
+  /**
+   * @param options.chartId - Stable per-dashboard ID, so two dashboards
+   * don't replace each other's volume chart
+   */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    _params: EmbeddedDashboardParams,
+    params: EmbeddedDashboardParams,
+    options: { chartId?: string } = {},
   ): void {
+    const trendDays = params.volumeTrendDays ?? 30;
+
     const analyticsEl = WidgetContainer.create(container, {
       title: t("dashboard.volumeAnalytics.title"),
       className: "workout-volume-analytics",
@@ -28,9 +35,12 @@ export class VolumeAnalytics {
     const chartContainer = analyticsEl.createEl("div", {
       cls: "workout-dashboard-chart-container",
     });
+    if (options.chartId) {
+      chartContainer.id = options.chartId;
+    }
 
     // Prepare volume trend data
-    const volumeTrendData = prepareVolumeTrendData(data, 30); // Last 30 days
+    const volumeTrendData = prepareVolumeTrendData(data, trendDays);
 
     // Create volume trend chart
     ChartRenderer.renderChart(
@@ -46,7 +56,9 @@ export class VolumeAnalytics {
       ],
       {
         type: CHART_DATA_TYPE.VOLUME,
-        title: t("dashboard.volumeAnalytics.chartTitle"),
+        title: t("dashboard.volumeAnalytics.chartTitleDays", {
+          days: trendDays,
+        }),
       },
     );
 

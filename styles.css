@@ -1537,6 +1537,10 @@
   box-shadow: var(--workout-shadow-md);
   margin-top: var(--workout-space-lg);
 }
+.workout-charts-container.has-fixed-height {
+  height: var(--workout-chart-height);
+  padding-bottom: 0;
+}
 .workout-charts-container .workout-charts-canvas {
   position: absolute;
   top: 0;
@@ -3235,6 +3239,9 @@
 .workout-protocol-chart-canvas {
   max-width: 100%;
   max-height: 200px;
+}
+.workout-protocol-chart-canvas.is-clickable {
+  cursor: pointer;
 }
 
 /* Protocol Legend Styles */

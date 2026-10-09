@@ -135,6 +135,10 @@ export class ChartRenderer {
     datasets: ChartDataset[],
     params: EmbeddedChartParams,
   ): boolean {
+    const hasFixedHeight = ChartContainer.applyHeight(
+      chartContainer,
+      params.height,
+    );
     const canvas = ChartContainer.createCanvas(chartContainer);
     const chartConfig = this.createChartConfig(
       labels,
@@ -142,6 +146,10 @@ export class ChartRenderer {
       params.type || CHART_DATA_TYPE.VOLUME,
       params,
     );
+    if (hasFixedHeight && chartConfig.options) {
+      // Fill the fixed-height container instead of keeping the aspect ratio
+      chartConfig.options.maintainAspectRatio = false;
+    }
 
     // Generate unique chart ID for tracking
     const chartId = this.generateChartId(chartContainer, params);
@@ -161,6 +169,29 @@ export class ChartRenderer {
     } catch {
       // Chart.js not available, rendering fallback table
       return false;
+    }
+  }
+
+  /**
+   * Renders a chart from a ready-made Chart.js configuration (e.g. pie charts
+   * built by dashboard widgets) and tracks it like renderChart does.
+   * @param chartId - Stable ID; an existing chart with this ID is destroyed first
+   * @returns The chart instance, or null if Chart.js failed to render
+   */
+  static renderConfiguredChart(
+    chartId: string,
+    canvas: HTMLCanvasElement,
+    config: ChartConfiguration,
+  ): Chart | null {
+    this.chartInstances.get(chartId)?.destroy();
+    this.chartInstances.delete(chartId);
+
+    try {
+      const chart = new Chart(canvas, config);
+      this.chartInstances.set(chartId, chart);
+      return chart;
+    } catch {
+      return null;
     }
   }
 

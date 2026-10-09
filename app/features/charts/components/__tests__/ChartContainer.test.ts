@@ -46,4 +46,40 @@ describe("ChartContainer", () => {
 
     expect(canvas.classList.contains("custom-canvas")).toBe(true);
   });
+
+  describe("applyHeight", () => {
+    it.each([
+      [300, "300px"],
+      ["300", "300px"],
+      ["300px", "300px"],
+      ["50vh", "50vh"],
+    ])("sets a fixed height for %p", (height, expected) => {
+      const container = createObsidianContainer();
+
+      const applied = ChartContainer.applyHeight(container, height);
+
+      expect(applied).toBe(true);
+      expect(container.classList.contains("has-fixed-height")).toBe(true);
+      expect(
+        container.style.getPropertyValue("--workout-chart-height"),
+      ).toBe(expected);
+    });
+
+    it.each([[undefined], [""], ["tall"], [0]])(
+      "keeps the default aspect ratio for %p",
+      (height) => {
+        const container = createObsidianContainer();
+
+        const applied = ChartContainer.applyHeight(
+          container,
+          height as string | number | undefined,
+        );
+
+        expect(applied).toBe(false);
+        expect(container.classList.contains("has-fixed-height")).toBe(
+          false,
+        );
+      },
+    );
+  });
 });

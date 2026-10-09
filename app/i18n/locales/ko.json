@@ -4,7 +4,7 @@
     "fallbackTableMessage": "대체 테이블 메시지",
     "labels": {
       "quickWeightIncrementUnit": "무게 버튼은 {weightIncrementUnit} 단위로 증가합니다.",
-      "reps": "대표",
+      "reps": "반복 횟수",
       "trendType": "추세 {type}:",
       "variationFromTo": "{startValue}에서 {endValue}까지",
       "volume": "볼륨",
@@ -20,7 +20,7 @@
       "duration": "기간",
       "heartRate": "심박수",
       "pace": "속도",
-      "reps": "대표",
+      "reps": "반복 횟수",
       "volume": "부피",
       "weight": "무게"
     }
@@ -58,7 +58,7 @@
     "fieldMapping": {
       "addMapping": "필드 매핑 추가",
       "removeMapping": "매핑 제거",
-      "reps": "대표",
+      "reps": "반복 횟수",
       "title": "필드 매핑",
       "weight": "무게 ({unit})"
     },
@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "평균 변동: ±{value}%",
       "columnActual": "실제",
       "columnEstimated": "예상",
       "columnVariance": "변동",
@@ -89,8 +90,7 @@
       "varianceTrendDeclining": "변동 추세 감소",
       "varianceTrendImproving": "변동 추세 개선",
       "varianceTrendStable": "변동 추세 안정",
-      "varianceTrendTitle": "변동 추세 제목",
-      "avgVarianceStat": "평균 변동: ±{value}%"
+      "varianceTrendTitle": "변동 추세 제목"
     },
     "fileErrors": {
       "allValid": "모든 항목 유효",
@@ -103,12 +103,12 @@
       "description": "설명",
       "title": "근육 태그",
       "tooltip": "복사하려면 클릭: {tag}",
-      "totalCount": "총: {{count}}개의 태그 사용 가능"
+      "totalCount": "총: {count}개의 태그 사용 가능"
     },
     "protocol": {
       "clickToFilter": "필터링",
       "percentLabel": "퍼센트 레이블",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "필터 지우기",
@@ -143,14 +143,14 @@
     },
     "summary": {
       "currentStreak": "현재 연속",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count}주",
       "personalRecords": "개인 기록",
       "title": "요약",
       "totalVolume": "총 거래량",
       "totalWorkouts": "총 운동 횟수"
     },
     "volumeAnalytics": {
-      "chartTitle": "볼륨 추이 (지난 30일)",
+      "chartTitleDays": "볼륨 추이 (최근 {days}일)",
       "muscleBreakdownTitle": "볼륨 기준으로 인기 운동",
       "title": "볼륨 분석"
     }
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "운동 통계를 한눈에 확인하세요. 사용 가능한 모든 구성 요소는 [[{featureShowcase}]]에서 확인하세요.",
       "title": "대시보드"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. 테이블",
       "timedExerciseTitle": "타이머 기반 운동 (시간)",
       "timersTitle": "3. 타이머",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**팁**: 개인 대시보드는 [[{dashboard}]]에서 확인하세요",
       "title": "특징 소개",
       "trainingProtocolsIntro": "이 플러그인은 다음과 같은 프로토콜 배지를 로그에 표시할 수 있습니다:",
       "trainingProtocolsTitle": "5. 훈련 프로토콜",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "다음 단계",
       "quickActionsIntro": "다음 명령 (Ctrl/Cmd + P)을 사용하세요:",
       "quickActionsTitle": "빠른 실행",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "[[{dashboard}]]을(를) 열어 통계를 확인하세요",
+      "step2": "[[{featureShowcase}]]에서 사용 가능한 모든 기능을 알아보세요",
       "step3": "**{workouts}** 폴더의 운동 프로그램을 시도해 보세요.",
       "step4": "**{exercises}**에서 자신만의 운동 루틴을 만들어 보세요.",
       "tableHeaderDescription": "설명",
@@ -336,19 +336,19 @@
     "edit": "수정",
     "front": "전면",
     "labels": {
-      "avgCustom": "평균 {{label}}",
+      "avgCustom": "평균 {label}",
       "avgDistance": "평균 거리 (km)",
       "avgDuration": "평균 지속 시간 (초)",
       "avgHeartRate": "평균 심박수 (bpm)",
       "avgVolume": "평균 부피 ({unit})",
       "avgWeight": "평균 무게 ({unit})",
-      "dailyVolume": "하루 거래량 ({{unit}})",
+      "dailyVolume": "하루 거래량 ({unit})",
       "pace": "속도 (분/km)",
-      "totalCustom": "총 {{label}}",
+      "totalCustom": "총 {label}",
       "totalDistance": "총 거리 (km)",
       "totalDuration": "총 소요 시간 (초)",
       "totalVolume": "총 용량 ({unit})",
-      "totalWeight": "총 무게 ({{unit}})"
+      "totalWeight": "총 무게 ({unit})"
     },
     "muscleHeatMap": "근육 온도 맵",
     "noMatchMessage": "일치하는 항목이 없습니다",
@@ -444,16 +444,16 @@
     "codeInserted": "코드 삽입",
     "csvNotFound": "CSV 파일을 찾을 수 없습니다.",
     "errors": {
-      "tagReferenceFailed": "태그 참조 생성 오류: {error}",
-      "csvLoadError": "CSV 데이터 로드 오류: {error}",
-      "csvCreateError": "CSV 파일 생성 오류: {error}",
       "blockIdsError": "블록 ID 추가 오류: {error}",
+      "csvCreateError": "CSV 파일 생성 오류: {error}",
       "csvFilesError": "CSV 파일 생성 오류: {error}",
+      "csvLoadError": "CSV 데이터 로드 오류: {error}",
       "muscleTagsCsvError": "근육 태그 CSV 생성 오류: {error}",
       "muscleTagsLoadError": "근육 태그 로드 오류: {error}",
+      "tableRenderError": "테이블 렌더링 오류",
+      "tagReferenceFailed": "태그 참조 생성 오류: {error}",
       "templateGenError": "템플릿 생성 실패: {error}",
-      "workoutLogCreateError": "경로 {path}에 CSV 파일을 만들 수 없습니다. 설정에서 경로를 확인하세요.",
-      "tableRenderError": "테이블 렌더링 오류"
+      "workoutLogCreateError": "경로 {path}에 CSV 파일을 만들 수 없습니다. 설정에서 경로를 확인하세요."
     },
     "fileEmpty": "파일이 비어 있습니다",
     "imbalanceAlerts": "불균형 알림",
@@ -497,7 +497,9 @@
       "create": "로그 생성",
       "createExercise": "운동 생성 페이지",
       "createSection": "섹션 생성",
+      "decreaseBy": "{label}을(를) {increment} 줄이기",
       "export": "내보내기",
+      "increaseBy": "{label}을(를) {increment} 늘리기",
       "insertChart": "차트 삽입",
       "insertDashboard": "대시보드 추가",
       "insertExerciseBlock": "삽입",
@@ -509,9 +511,7 @@
       "update": "업데이트 기록",
       "updateTable": "테이블 업데이트",
       "updateTargetWeight": "대상 업데이트",
-      "updateTimer": "타이머 업데이트",
-      "decreaseBy": "{label}을(를) {increment} 줄이기",
-      "increaseBy": "{label}을(를) {increment} 늘리기"
+      "updateTimer": "타이머 업데이트"
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
@@ -522,7 +522,6 @@
       "includeLog": "로그 포함",
       "includeStats": "통계 포함",
       "includeTimer": "타이머 포함",
-      "searchByName": "이름으로 검색",
       "showAddButton": "추가 버튼 표시",
       "showControls": "컨트롤 표시",
       "showStatistics": "통계 표시",
@@ -542,18 +541,23 @@
     "dateRange": "날짜 범위 (일):",
     "daysRange": "일 범위:",
     "delete": "삭제",
+    "deleteItem": "{item} 삭제",
     "duration": "기간 (초):",
+    "editItem": "{item} 편집",
     "editTag": "태그 편집",
-    "exerciseStatus": {
-      "createPage": "새 페이지 만들기",
-      "notFound": "찾을 수 없음"
+    "errors": {
+      "missingElements": "누락된 요소",
+      "validationCombinedMode": "운동 + 운동 루틴 유형에서는 두 필드를 모두 입력하세요"
     },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - 세트: {sets}\n- 반복: {reps}\n- 휴식: {restTime}초\n\n",
     "exerciseType": "운동 종류:",
     "exportTags": "태그 내보내기",
     "fileName": "파일 이름",
     "folderPath": "폴더 경로 (선택 사항):",
     "importMerge": "병합",
+    "importMergeAriaLabel": "병합: 새 태그만 추가, 기존 태그 유지",
     "importReplace": "모든 것을 대체",
+    "importReplaceAriaLabel": "대체: 기존 태그 모두 덮어쓰기",
     "importTags": "태그 가져오기",
     "info": {
       "dashboardDescription": "이 기능을 통해 포괄적인 운동 대시보드를 생성할 수 있으며, 여기에는 통계, 차트, 그리고 빠른 실행 기능이 포함됩니다."
@@ -562,11 +566,11 @@
       "actions": "액션",
       "currentFileInfo": "현재 파일: {fileName}",
       "exercise": "운동:",
-      "reps": "대표:",
+      "reps": "반복 횟수:",
       "targetReps": "목표 대상:",
       "targetWeight": "목표: ({unit}):",
-      "volume": "볼륨 ({{unit}}):",
-      "weight": "무게 ({{unit}}):"
+      "volume": "볼륨 ({unit}):",
+      "weight": "무게 ({unit}):"
     },
     "layoutGrouped": "근육별로 그룹화",
     "layoutHorizontal": "수평 방향 흐름",
@@ -578,36 +582,38 @@
     "noTagsFound": "검색 결과에 일치하는 태그가 없습니다.",
     "noTagsSelected": "태그가 선택되지 않았습니다. 아래 태그를 클릭하여 추가하세요.",
     "note": "참고:",
+    "noteTemplate": "**메모: {note}**\n",
     "notes": "참고 사항 (선택 사항):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "이 파일의 이름을 변경하시겠습니까?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count}개의 불일치 발견:",
       "auditNoMatchFound": "일치 항목 없음",
       "auditNoMismatches": "감사 검토 결과 불일치",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "이름을 변경할 수 없습니다: {error}",
+      "auditRenameFileError": "파일 이름을 변경할 수 없습니다: {error}",
       "auditRenameFileSuccess": "파일 이름 변경 성공",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "이름 변경 완료 ({count}개 파일 업데이트됨)",
       "auditScanError": "스캔 중 오류: {error}",
       "auditScanning": "감사 검사",
       "canvasExportError": "캔버스 내보내기 오류: {error}",
       "canvasExported": "캔버스 내 콘텐츠 내보내기 ({path})",
       "chartInserted": "✅ 차트가 성공적으로 삽입되었습니다!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "목표를 {targetWeight}{weightUnit}(으)로 업데이트하시겠습니까?",
       "dashboardInserted": "✅ 대시보드가 성공적으로 삽입되었습니다!",
       "dismissAchievement": "업적 닫기",
       "exerciseBlockInserted": "운동 블록 삽입",
       "exerciseNameRequired": "❌ 운동 이름을 입력해주세요",
       "exercisePageCreated": "운동 페이지가 성공적으로 생성되었습니다!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "운동 페이지 생성 중 오류: {error}",
       "exercisePageNameRequired": "운동 이름을 입력해 주세요",
       "exerciseSectionCreated": "✅ 운동 섹션이 성공적으로 생성되었습니다!",
-      "genericError": "Error: ",
+      "genericError": "오류: {error}",
       "insertCodeNoFile": "코드를 삽입하려면 마크다운 파일을 엽니다.",
       "logCreated": "운동 기록이 성공적으로 생성되었습니다!",
       "logUpdated": "운동 기록이 성공적으로 업데이트되었습니다!",
       "migrationComplete": "마이그레이션 완료. {count} 훈련 파일 업데이트 완료.",
       "migrationError": "이동 오류: {error}",
+      "migrationFolderNotFound": "운동 폴더를 찾을 수 없습니다: {path}",
       "migrationNoUpdates": "마이그레이션 업데이트 없음",
       "muscleTagCount": "{count} 태그(들) 발견",
       "muscleTagDeleteConfirm": "{tag} 태그를 삭제하시겠습니까?",
@@ -627,7 +633,7 @@
       "muscleTagSaved": "근육 태그 저장",
       "muscleTagSimilarFound": "{count} 유사한 태그가 발견되었습니다",
       "muscleTagSimilarWarning": "근육 태그와 유사한 내용에 대한 경고",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "다음 추천 무게: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ 테이블이 성공적으로 삽입되었습니다!",
       "tableUpdateFailed": "테이블 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "tableUpdated": "✅ 테이블이 성공적으로 업데이트되었습니다!",
@@ -636,14 +642,13 @@
       "timerInserted": "✅ 타이머가 성공적으로 삽입되었습니다!",
       "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "timerUpdated": "✅ 타이머가 성공적으로 업데이트되었습니다!",
-      "validationCombinedMode": "⚠️ '운동 + 운동' 유형의 경우, 두 필드를 모두 채워야 합니다!",
-      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
+      "validFieldRequired": "{field}은(는) 필수입니다",
+      "validMaxValue": "{field}은(는) 최대 {max}이어야 합니다",
+      "validMinValue": "{field}은(는) 최소 {min}이어야 합니다",
       "validMissingField": "필수 필드 없음: {field}",
       "validMustBeNumber": "{field}은(는) 유효한 숫자여야 합니다",
-      "validMinValue": "{field}은(는) 최소 {min}이어야 합니다",
-      "validMaxValue": "{field}은(는) 최대 {max}이어야 합니다",
-      "validFieldRequired": "{field}은(는) 필수입니다",
-      "migrationFolderNotFound": "운동 폴더를 찾을 수 없습니다: {path}"
+      "validationCombinedMode": "⚠️ '운동 + 운동' 유형의 경우, 두 필드를 모두 채워야 합니다!",
+      "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요."
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -725,7 +730,6 @@
       "createExercisePage": "운동 페이지 만들기",
       "createExerciseSection": "운동 섹션 만들기",
       "createLog": "운동 기록 만들기",
-      "create_log": "운동 기록 만들기",
       "editLog": "운동 기록 편집",
       "editTable": "테이블 설정 편집",
       "editTimer": "타이머 설정 수정",
@@ -738,11 +742,7 @@
     },
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
-    "workoutNameOptional": "운동 이름 (선택 사항):",
-    "importMergeAriaLabel": "병합: 새 태그만 추가, 기존 태그 유지",
-    "importReplaceAriaLabel": "대체: 기존 태그 모두 덮어쓰기",
-    "editItem": "{item} 편집",
-    "deleteItem": "{item} 삭제"
+    "workoutNameOptional": "운동 이름 (선택 사항):"
   },
   "settings": {
     "buttons": {
@@ -775,7 +775,7 @@
       "generateExamples": "예제 운동 및 워크아웃이 포함된 폴더를 만들어 시작하는 데 도움을 받으세요.",
       "noCustomProtocols": "사용자 정의 프로토콜이 구성되지 않았습니다. '프로토콜 추가'를 클릭하여 새 프로토콜을 생성하십시오.",
       "noPresets": "타이머 프리셋이 설정되지 않았습니다. '프리셋 추가'를 클릭하여 새 프리셋을 만드세요.",
-      "presetDurationDesc": "{시간} (예: 90초, 90초 타이머의 경우)",
+      "presetDurationDesc": "초 단위 시간 (예: 90초 타이머의 경우 90).",
       "presetNameDesc": "이 타이머 프리셋에 고유한 이름을 지정합니다 (예: '휴식 90초', 'HIIT 30/10').",
       "presetRoundsDesc": "중지하기 전에 반복할 간격 라운드의 수를 지정합니다.",
       "protocolAbbreviation": "뱃지(최대 3자)에 표시되는 짧은 약어",
@@ -785,6 +785,7 @@
       "runAllMaintenance": "모든 유지보수 작업을 순차적으로 실행합니다. 여러 번 실행해도 안전합니다.",
       "setDuration": "대리인 정보가 지정되지 않은 경우에 사용됩니다 (기본값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
+      "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
       "weightUnit": "무게 측정 단위 (kg/lb)를 선택합니다. 이는 새로운 로그의 기본 단위를 결정합니다."
     },
@@ -811,6 +812,7 @@
       "runAllMaintenance": "모든 유지보수 작업 실행",
       "setDuration": "대체 설정 지속 시간 (초)",
       "setupCSV": "CSV 파일 설정",
+      "showRibbonIcon": "빠른 기록 아이콘 표시",
       "weightUnit": "무게 단위"
     },
     "messages": {
@@ -837,7 +839,7 @@
       }
     },
     "placeholders": {
-      "presetName": "{presetName} 입력",
+      "presetName": "프리셋 이름 입력",
       "protocolAbbreviation": "예: gs",
       "protocolName": "프로토콜 이름을 입력하세요"
     },
@@ -846,7 +848,6 @@
       "csvManagement": "CSV 파일 관리",
       "customProtocols": "사용자 정의 프로토콜",
       "exampleData": "예시 데이터",
-      "filtering": "필터링",
       "maintenance": "유지보수",
       "quickLog": "모바일 로깅",
       "setupAndData": "설정 및 데이터",
@@ -855,13 +856,13 @@
       "trainingParameters": "훈련 매개변수"
     },
     "tooltips": {
-      "deletePreset": "{preset} 삭제",
+      "deletePreset": "프리셋 삭제",
       "deleteProtocol": "프로토콜 삭제",
-      "editPreset": "{preset} 편집",
+      "editPreset": "프리셋 편집",
       "editProtocol": "프로토콜 편집"
     },
     "validation": {
-      "csvFolderNotFound": "{vault}에 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 설정\"을 실행하십시오.",
+      "csvFolderNotFound": "보관소에서 폴더를 찾을 수 없습니다. 폴더를 생성하려면 \"CSV 파일 설정\"을 실행하세요.",
       "csvPathEmpty": "경로는 비어 있을 수 없습니다",
       "mustBeNonNegative": "0 또는 그 이상의 값이어야 합니다.",
       "mustBePositive": "0보다 커야 합니다"
@@ -888,16 +889,16 @@
       "heartRate": "심박수",
       "notes": "참고사항",
       "protocol": "프로토콜",
-      "reps": "대표",
+      "reps": "반복 횟수",
       "volume": "볼륨",
       "weight": "무게"
     },
     "columns": {
       "distanceUnit": "거리 ({distanceUnit})",
-      "duration": "{duration}",
+      "duration": "시간",
       "heartRate": "심박수",
       "pace": "속도",
-      "reps": "대표",
+      "reps": "반복",
       "volumeUnit": "볼륨 ({weightUnit})",
       "weightUnit": "무게 ({weightUnit})"
     },
@@ -915,12 +916,17 @@
     "noData": "데이터 없음",
     "notAvailable": "사용 불가",
     "refreshSuccess": "갱신 성공",
+    "refreshingTable": "테이블 새로 고치는 중...",
     "target": {
       "progressTooltip": "최적: {best} 회 / 목표: {target} 회",
-      "repsSuffix": "대표",
+      "repsSuffix": "회",
       "separator": " × "
     },
-    "trendLine": "추세선"
+    "trendLine": "추세선",
+    "validation": {
+      "sortByInvalid": "sortBy는 {allowed} 중 하나여야 합니다. 받은 값: \"{value}\"",
+      "sortOrderInvalid": "sortOrder는 asc 또는 desc여야 합니다. 받은 값: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "월",
@@ -931,14 +937,13 @@
     "controls": {
       "pauseTimer": "타이머 일시 중지",
       "resetTimer": "타이머 재설정",
-      "startTimer": "타이머 시작",
-      "timerMenu": "Timer menu"
+      "startTimer": "타이머 시작"
     },
     "countdown": "시간 카운트다운",
     "editTimer": "타이머 편집",
     "interval": "간격",
     "presets": {
-      "detailsControls": "{name} 제어",
+      "detailsControls": "컨트롤",
       "detailsSound": "음향"
     },
     "stopwatch": "스톱워치"

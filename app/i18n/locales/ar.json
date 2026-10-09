@@ -6,7 +6,7 @@
       "quickWeightIncrementUnit": "أزرار الوزن تزيد بمقدار {weightIncrementUnit}",
       "reps": "الإعادة",
       "trendType": "اتجاه {type}:",
-      "variationFromTo": "من {{startValue}} إلى {{endValue}}",
+      "variationFromTo": "من {startValue} إلى {endValue}",
       "volume": "الحجم",
       "weight": "الوزن",
       "weightIncrementUnit": "زيادة الوزن {weightIncrementUnit}"
@@ -60,7 +60,7 @@
       "removeMapping": "إزالة الخريطة",
       "reps": "التمثيلات",
       "title": "تحديد العلاقة بين الحقول",
-      "weight": "الوزن ({{unit}})"
+      "weight": "الوزن ({unit})"
     },
     "preview": {
       "noEntries": "لم يتم العثور على أي سجلات لهذا التمرين.",
@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "متوسط التباين: ±{value}%",
       "columnActual": "الواقعي",
       "columnEstimated": "المقدر",
       "columnVariance": "التباين",
@@ -89,15 +90,14 @@
       "varianceTrendDeclining": "اتجاه التباين في الانخفاض",
       "varianceTrendImproving": "اتجاه التباين يتحسن",
       "varianceTrendStable": "اتجاه التباين: مستقر",
-      "varianceTrendTitle": "عنوان اتجاه التباين",
-      "avgVarianceStat": "متوسط التباين: ±{value}%"
+      "varianceTrendTitle": "عنوان اتجاه التباين"
     },
     "fileErrors": {
       "allValid": "كلها صحيحة",
       "noTags": "لا توجد علامات",
       "readError": "❌ خطأ في قراءة الملف: {message}",
       "title": "أخطاء الملفات",
-      "tooManyTags": "عدد كبير من علامات العضلات ({{count}})"
+      "tooManyTags": "عدد كبير من علامات العضلات ({count})"
     },
     "muscleTags": {
       "description": "وصف",
@@ -108,7 +108,7 @@
     "protocol": {
       "clickToFilter": "انقر لتصفية",
       "percentLabel": "تسمية النسبة المئوية",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "مسح الفلتر",
@@ -143,14 +143,14 @@
     },
     "summary": {
       "currentStreak": "السلسلة الحالية",
-      "currentStreakSuffix": "أسابيع",
+      "currentStreakSuffix": "{count} أسابيع",
       "personalRecords": "السجلات الشخصية",
       "title": "الملخص",
       "totalVolume": "الحجم الإجمالي",
       "totalWorkouts": "التمارين الإجمالية"
     },
     "volumeAnalytics": {
-      "chartTitle": "اتجاه الكمية (الـ 30 يومًا الماضية)",
+      "chartTitleDays": "اتجاه الحجم (آخر {days} يومًا)",
       "muscleBreakdownTitle": "التمارين الأعلى بحسب الكمية",
       "title": "تحليل الحجم"
     }
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "إحصائيات تمارينك في ملخص. راجع [[Feature Showcase]] لمعرفة جميع المكونات المتاحة.",
+      "description": "إحصائيات تمارينك في لمحة. راجع [[{featureShowcase}]] لمعرفة جميع المكونات المتاحة.",
       "title": "اللوحة الرئيسية"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. الجداول",
       "timedExerciseTitle": "تمرين مُحدد الزمن (Duration)",
       "timersTitle": "3. الساعات",
-      "tip": "**نصيحة**: لمضلعك الشخصي، راجع [[Dashboard]]",
+      "tip": "**نصيحة**: للوحتك الشخصية، راجع [[{dashboard}]]",
       "title": "عرض الميزات",
       "trainingProtocolsIntro": "يدعم البرنامج هذه العلامات البروتوكولات في سجلاتك:",
       "trainingProtocolsTitle": "5. بروتوكولات التدريب",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "الخطوات التالية",
       "quickActionsIntro": "استخدم هذه الأوامر (Ctrl/Cmd + P):",
       "quickActionsTitle": "الإجراءات السريعة",
-      "step1": "افتح [[Dashboard]] لرؤية إحصائياتك",
-      "step2": "تحقق من [[Feature Showcase]] لمعرفة جميع الميزات المتاحة",
+      "step1": "افتح [[{dashboard}]] لرؤية إحصائياتك",
+      "step2": "راجع [[{featureShowcase}]] للتعرّف على جميع الميزات المتاحة",
       "step3": "حاول تمارين من المجلد **{workouts}**",
       "step4": "أنشئ تمارينك الخاصة في **{exercises}**",
       "tableHeaderDescription": "وصف",
@@ -342,7 +342,7 @@
       "avgHeartRate": "متوسط معدل ضربات القلب (نبضات في الدقيقة)",
       "avgVolume": "الحجم المتوسط ({unit})",
       "avgWeight": "الوزن المتوسط ({unit})",
-      "dailyVolume": "حجم اليوم ({{unit}})",
+      "dailyVolume": "حجم اليوم ({unit})",
       "pace": "السرعة (م/كم)",
       "totalCustom": "المجموع: {label}",
       "totalDistance": "المسافة الإجمالية (كم)",
@@ -444,16 +444,16 @@
     "codeInserted": "تم إدراج الكود",
     "csvNotFound": "لم يتم العثور على ملف CSV",
     "errors": {
-      "tagReferenceFailed": "خطأ في إنشاء مرجع العلامة: {error}",
-      "csvLoadError": "خطأ في تحميل بيانات CSV: {error}",
-      "csvCreateError": "خطأ في إنشاء ملف CSV: {error}",
       "blockIdsError": "خطأ في إضافة معرفات الكتل: {error}",
+      "csvCreateError": "خطأ في إنشاء ملف CSV: {error}",
       "csvFilesError": "خطأ في إنشاء ملفات CSV: {error}",
+      "csvLoadError": "خطأ في تحميل بيانات CSV: {error}",
       "muscleTagsCsvError": "خطأ في إنشاء CSV لعلامات العضلات: {error}",
       "muscleTagsLoadError": "خطأ في تحميل علامات العضلات: {error}",
+      "tableRenderError": "خطأ في عرض الجدول",
+      "tagReferenceFailed": "خطأ في إنشاء مرجع العلامة: {error}",
       "templateGenError": "فشل توليد القوالب: {error}",
-      "workoutLogCreateError": "فشل إنشاء ملف CSV في المسار: {path}. يرجى التحقق من المسار في الإعدادات.",
-      "tableRenderError": "خطأ في عرض الجدول"
+      "workoutLogCreateError": "فشل إنشاء ملف CSV في المسار: {path}. يرجى التحقق من المسار في الإعدادات."
     },
     "fileEmpty": "الملف فارغ",
     "imbalanceAlerts": "تحذيرات عدم التوازن",
@@ -463,7 +463,7 @@
     "noImbalances": "لا يوجد توازنات",
     "noTags": "لا توجد علامات",
     "success": {
-      "blockIdsAdded": "تمت إضافة معرف(ات) مفقودة(ين) في الملف(ات) {files}",
+      "blockIdsAdded": "تمت إضافة {count} معرّف(ات) مفقود(ة) في {files} ملف(ات)",
       "csvCreated": "تم إنشاء ملف CSV بنجاح!",
       "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات."
     },
@@ -497,7 +497,9 @@
       "create": "إنشاء سجل",
       "createExercise": "إنشاء صفحة التمرين",
       "createSection": "إنشاء قسم",
+      "decreaseBy": "تقليل {label} بمقدار {increment}",
       "export": "التصدير",
+      "increaseBy": "زيادة {label} بمقدار {increment}",
       "insertChart": "أدخل الرسم البياني",
       "insertDashboard": "أدخل لوحة التحكم",
       "insertExerciseBlock": "أدخل",
@@ -509,9 +511,7 @@
       "update": "سجل التحديثات",
       "updateTable": "تحديث الجدول",
       "updateTargetWeight": "تحديث الهدف",
-      "updateTimer": "تحديث المؤقت",
-      "decreaseBy": "تقليل {label} بمقدار {increment}",
-      "increaseBy": "زيادة {label} بمقدار {increment}"
+      "updateTimer": "تحديث المؤقت"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -522,7 +522,6 @@
       "includeLog": "تضمين سجل",
       "includeStats": "تضمين الإحصائيات",
       "includeTimer": "تضمين مؤقت",
-      "searchByName": "البحث بالاسم",
       "showAddButton": "عرض زر الإضافة",
       "showControls": "عرض التحكم",
       "showStatistics": "عرض الإحصائيات",
@@ -542,18 +541,23 @@
     "dateRange": "نطاق التواريخ (أيام):",
     "daysRange": "نطاق الأيام:",
     "delete": "حذف",
+    "deleteItem": "حذف {item}",
     "duration": "المدة (الثواني):",
+    "editItem": "تعديل {item}",
     "editTag": "عدل تاج",
-    "exerciseStatus": {
-      "createPage": "أنشئ صفحة",
-      "notFound": "غير موجود"
+    "errors": {
+      "missingElements": "عناصر مفقودة",
+      "validationCombinedMode": "لنوع التمرين + الجلسة، املأ كلا الحقلين"
     },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - المجموعات: {sets}\n- التكرارات: {reps}\n- الراحة: {restTime} ث\n\n",
     "exerciseType": "نوع التمرين:",
     "exportTags": "تصدير تاجات",
     "fileName": "اسم الملف",
     "folderPath": "مسار المجلد (اختياري):",
     "importMerge": "دمج",
+    "importMergeAriaLabel": "دمج: إضافة علامات جديدة فقط، الاحتفاظ بالموجودة",
     "importReplace": "استبدال جميع",
+    "importReplaceAriaLabel": "استبدال: الكتابة فوق جميع العلامات الموجودة",
     "importTags": "استيراد تاجات",
     "info": {
       "dashboardDescription": "سيقوم هذا بإضافة لوحة معلومات شاملة للتمارين الرياضية تتضمن إحصائيات ورسوم بيانية وإجراءات سريعة."
@@ -565,7 +569,7 @@
       "reps": "ر. إ:",
       "targetReps": "الإعادة المستهدفة:",
       "targetWeight": "الوزن المستهدف ({unit}):",
-      "volume": "الحجم ({{unit}}):",
+      "volume": "الحجم ({unit}):",
       "weight": "الوزن ({unit}):"
     },
     "layoutGrouped": "المجموعة حسب العضلات",
@@ -578,36 +582,38 @@
     "noTagsFound": "لا توجد علامات تطابق بحثك",
     "noTagsSelected": "لم يتم اختيار أي علامات. انقر على العلامات أدناه لإضافتها.",
     "note": "ملاحظة:",
+    "noteTemplate": "**ملاحظة: {note}**\n",
     "notes": "ملاحظات (اختياري):",
     "notices": {
-      "auditConfirmRenameFile": "مراجعة تأكيد إعادة تسمية الملف",
+      "auditConfirmRenameFile": "هل تريد إعادة تسمية هذا الملف؟\n\n{oldName} → {newName}",
       "auditMismatchCount": "تم العثور على {count} تناقض:",
       "auditNoMatchFound": "لم يُعثر على تطابق",
       "auditNoMismatches": "مراجعة لا اختلافات",
-      "auditRenameError": "مراجعة خطأ إعادة التسمية",
-      "auditRenameFileError": "مراجعة خطأ إعادة تسمية الملف",
+      "auditRenameError": "تعذّرت إعادة التسمية: {error}",
+      "auditRenameFileError": "تعذّرت إعادة تسمية الملف: {error}",
       "auditRenameFileSuccess": "مراجعة نجاح إعادة تسمية الملف",
-      "auditRenameSuccess": "مراجعة نجاح إعادة التسمية",
+      "auditRenameSuccess": "تمت إعادة التسمية (تم تحديث {count} ملفات)",
       "auditScanError": "خطأ أثناء الفحص: {error}",
       "auditScanning": "مراجعة المسح",
       "canvasExportError": "خطأ تصدير القماش: {error}",
       "canvasExported": "تم تصدير القماش ({path})",
       "chartInserted": "✅ تم إدراج الرسم البياني بنجاح!",
-      "confirmUpdateTarget": "تأكيد الهدف بالتحديث",
+      "confirmUpdateTarget": "هل تريد تحديث الهدف إلى {targetWeight}{weightUnit}؟",
       "dashboardInserted": "✅ تم إدخال لوحة التحكم بنجاح!",
       "dismissAchievement": "رفض الإنجاز",
       "exerciseBlockInserted": "تم إدراج khối التمرين",
       "exerciseNameRequired": "❌ الرجاء إدخال اسم تمرين",
       "exercisePageCreated": "تم إنشاء صفحة التمرين بنجاح!",
-      "exercisePageError": "خطأ في إنشاء صفحة التمرين: ",
+      "exercisePageError": "خطأ في إنشاء صفحة التمرين: {error}",
       "exercisePageNameRequired": "الرجاء إدخال اسم تمرين",
       "exerciseSectionCreated": "✅ قسم التمرين تم إنشاؤه بنجاح!",
-      "genericError": "خطأ: ",
+      "genericError": "خطأ: {error}",
       "insertCodeNoFile": "افتح ملف markdown لإدراج الكود",
       "logCreated": "تم إنشاء سجل التدريب بنجاح!",
       "logUpdated": "تم تحديث سجل التدريب بنجاح!",
       "migrationComplete": "اكتملت عملية الترحيل. تم تحديث ملفات التمرين {count}.",
       "migrationError": "خطأ الهجرة: {error}",
+      "migrationFolderNotFound": "لم يتم العثور على مجلد التمرين: {path}",
       "migrationNoUpdates": "هجرة بدون تحديثات",
       "muscleTagCount": "{count} علامة (علامات) تم العثور عليها",
       "muscleTagDeleteConfirm": "هل أنت متأكد من أنك تريد حذف العلامة \"{tag}\"؟",
@@ -627,7 +633,7 @@
       "muscleTagSaved": "تم حفظ تسمية العضلة",
       "muscleTagSimilarFound": "{count} تم العثور على علامات مماثلة",
       "muscleTagSimilarWarning": "تحذير: تسمية العضلة مماثلة",
-      "suggestedNextWeight": "الوزن المقترح التالي",
+      "suggestedNextWeight": "الوزن التالي المقترح: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ تم إدخال الجدول بنجاح!",
       "tableUpdateFailed": "فشلت عملية تحديث الجدول. تأكد من أن الملف مفتوح في محرر النصوص.",
       "tableUpdated": "✅ تم تحديث الجدول بنجاح!",
@@ -636,14 +642,13 @@
       "timerInserted": "✅ تم إدخال المؤقت بنجاح!",
       "timerUpdateFailed": "فشلت عملية تحديث المؤقت. تأكد من أن الملف مفتوح في محرر النصوص.",
       "timerUpdated": "✅ تم تحديث المؤقت بنجاح!",
-      "validationCombinedMode": "⚠️ لـ 'exercise + workout' نوع يجب ملء الحقول المذكورة!",
-      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة",
+      "validFieldRequired": "{field} مطلوب",
+      "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
+      "validMinValue": "{field} يجب أن يكون على الأقل {min}",
       "validMissingField": "حقل مطلوب مفقود: {field}",
       "validMustBeNumber": "{field} يجب أن يكون رقماً صحيحاً",
-      "validMinValue": "{field} يجب أن يكون على الأقل {min}",
-      "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
-      "validFieldRequired": "{field} مطلوب",
-      "migrationFolderNotFound": "لم يتم العثور على مجلد التمرين: {path}"
+      "validationCombinedMode": "⚠️ لـ 'exercise + workout' نوع يجب ملء الحقول المذكورة!",
+      "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -725,7 +730,6 @@
       "createExercisePage": "إنشاء صفحة التمرين",
       "createExerciseSection": "إنشاء قسم التمارين",
       "createLog": "إنشاء سجل تدريب",
-      "create_log": "إنشاء سجل التمرين",
       "editLog": "تعديل سجل التمارين",
       "editTable": "تعديل معلمات الجدول",
       "editTimer": "تعديل معلمات المؤقت",
@@ -738,11 +742,7 @@
     },
     "workout": "تمارين (اختياري):",
     "workoutFile": "ملف التدريب:",
-    "workoutNameOptional": "اسم التمارين (اختياري):",
-    "importMergeAriaLabel": "دمج: إضافة علامات جديدة فقط، الاحتفاظ بالموجودة",
-    "importReplaceAriaLabel": "استبدال: الكتابة فوق جميع العلامات الموجودة",
-    "editItem": "تعديل {item}",
-    "deleteItem": "حذف {item}"
+    "workoutNameOptional": "اسم التمارين (اختياري):"
   },
   "settings": {
     "buttons": {
@@ -785,6 +785,7 @@
       "runAllMaintenance": "تنفيذ جميع مهام الصيانة بالتسلسل. آمن لتنفيذها عدة مرات.",
       "setDuration": "يُستخدم عندما لا يتم تحديد عدد التكرارات (الخيار الافتراضي). نطاق معتدل: 30-60 ثانية.",
       "setupCSV": "أنشئ كلاً من workout_logs.csv و muscle-tags.csv في المجلد المُحدد.",
+      "showRibbonIcon": "إظهار أيقونة الدمبل في الشريط الجانبي لفتح نموذج سجل التدريب",
       "weightIncrement": "الزيادة الافتراضية في الوزن لزيادة التحميل التدريجي (مثلاً: 2.5 للزيادة بمقدار 2.5 وحدة)",
       "weightUnit": "اختر الوحدة لقياس الوزن (kg/lb). هذا يؤثر على الوحدة الافتراضية للسجلات الجديدة."
     },
@@ -811,6 +812,7 @@
       "runAllMaintenance": "تنفيذ جميع مهام الصيانة",
       "setDuration": "مدة كل مجموعة (الخيار الاحتياطي) (ثوانٍ)",
       "setupCSV": "إعدادات الملفات (CSV)",
+      "showRibbonIcon": "إظهار أيقونة التسجيل السريع",
       "weightUnit": "وحدة الوزن"
     },
     "messages": {
@@ -846,7 +848,6 @@
       "csvManagement": "إدارة ملفات CSV",
       "customProtocols": "بروتوكولات مخصصة",
       "exampleData": "بيانات مثال",
-      "filtering": "الفلترة",
       "maintenance": "الصيانة",
       "quickLog": "تسجيل محمول",
       "setupAndData": "الإعداد والبيانات",
@@ -899,7 +900,7 @@
       "pace": "الوتيرة",
       "reps": "تكرار",
       "volumeUnit": "الحجم ({weightUnit})",
-      "weightUnit": "وزن ({{weightUnit}})"
+      "weightUnit": "وزن ({weightUnit})"
     },
     "deleteConfirm": "تأكيد الحذف",
     "deleteError": "خطأ الحذف: {error}",
@@ -915,12 +916,17 @@
     "noData": "لا توجد بيانات",
     "notAvailable": "غير متوفر",
     "refreshSuccess": "تحديث ناجح",
+    "refreshingTable": "جارٍ تحديث الجدول...",
     "target": {
       "progressTooltip": "أفضل: {best} تكرار / الهدف: {target} تكرار",
       "repsSuffix": "تكرار",
       "separator": " × "
     },
-    "trendLine": "خط الاتجاه"
+    "trendLine": "خط الاتجاه",
+    "validation": {
+      "sortByInvalid": "يجب أن تكون قيمة sortBy إحدى {allowed}، القيمة المستلمة: \"{value}\"",
+      "sortOrderInvalid": "يجب أن تكون قيمة sortOrder إما asc أو desc، القيمة المستلمة: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "شهر",
@@ -931,8 +937,7 @@
     "controls": {
       "pauseTimer": "إيقاف المؤقت",
       "resetTimer": "إعادة تعيين المؤقت",
-      "startTimer": "ابدأ المؤقت",
-      "timerMenu": "Timer menu"
+      "startTimer": "ابدأ المؤقت"
     },
     "countdown": "تقويم",
     "editTimer": "تحرير المؤقت",

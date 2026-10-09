@@ -4,9 +4,9 @@
     "fallbackTableMessage": "Message de repli.",
     "labels": {
       "quickWeightIncrementUnit": "Les boutons de poids incrémentent de {weightIncrementUnit}",
-      "reps": "Représentants.",
+      "reps": "Répétitions",
       "trendType": "Tendance {type}:",
-      "variationFromTo": "de {{startValue}} à {{endValue}}",
+      "variationFromTo": "de {startValue} à {endValue}",
       "volume": "Volume",
       "weight": "Poids",
       "weightIncrementUnit": "Augmentation du poids {weightIncrementUnit}"
@@ -69,7 +69,7 @@
       "willConvertOne": "1 entrée sera convertie"
     },
     "sectionExercise": "Exercice",
-    "success": "Conversion réussie des [{{count}}] entrées de journal",
+    "success": "Conversion réussie des [{count}] entrées de journal",
     "title": "Convertir les données d'exercice",
     "typeSelect": {
       "convertTo": "Convertir en :",
@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "Variance moy. : ±{value}%",
       "columnActual": "Réel",
       "columnEstimated": "Prévision",
       "columnVariance": "Écart",
@@ -89,15 +90,14 @@
       "varianceTrendDeclining": "Tendance à la diminution de la variance",
       "varianceTrendImproving": "Tendance à l'amélioration de la variance",
       "varianceTrendStable": "Tendance de la variance stable",
-      "varianceTrendTitle": "Titre de l'évolution de la variance",
-      "avgVarianceStat": "Variance moy. : ±{value}%"
+      "varianceTrendTitle": "Titre de l'évolution de la variance"
     },
     "fileErrors": {
       "allValid": "Tous valides",
       "noTags": "Aucune balise",
       "readError": "❌ Erreur lors de la lecture du fichier : {message}",
       "title": "Erreurs de fichier",
-      "tooManyTags": "Trop de balises musculaires ({{count}})"
+      "tooManyTags": "Trop de balises musculaires ({count})"
     },
     "muscleTags": {
       "description": "Description",
@@ -108,7 +108,7 @@
     "protocol": {
       "clickToFilter": "Cliquez pour filtrer",
       "percentLabel": "Étiquette pour le pourcentage",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "Effacer le filtre",
@@ -143,14 +143,14 @@
     },
     "summary": {
       "currentStreak": "Série actuelle.",
-      "currentStreakSuffix": "semaines",
+      "currentStreakSuffix": "{count} semaines",
       "personalRecords": "Dossiers personnels.",
       "title": "Résumé.",
       "totalVolume": "Volume total.",
       "totalWorkouts": "Nombre total de séances d'entraînement."
     },
     "volumeAnalytics": {
-      "chartTitle": "Tendances du volume (30 derniers jours).",
+      "chartTitleDays": "Évolution du volume ({days} derniers jours)",
       "muscleBreakdownTitle": "Exercices les plus populaires en termes de volume.",
       "title": "Analyse des volumes."
     }
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Vos statistiques d'entraînement en un coup d'œil. Consultez la section « Présentation des fonctionnalités » pour découvrir tous les éléments disponibles.",
+      "description": "Vos statistiques d'entraînement en un coup d'œil. Consultez [[{featureShowcase}]] pour découvrir tous les composants disponibles.",
       "title": "Tableau de bord."
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Tableaux.",
       "timedExerciseTitle": "Exercice chronométré (durée).",
       "timersTitle": "3. Minuteries.",
-      "tip": "**Conseil :** Pour accéder à votre tableau de bord personnel, consultez la page [[Tableau de bord]].",
+      "tip": "**Conseil** : pour votre tableau de bord personnel, consultez [[{dashboard}]]",
       "title": "Présentation des fonctionnalités.",
       "trainingProtocolsIntro": "Le plugin prend en charge les badges de protocole suivants dans vos journaux :",
       "trainingProtocolsTitle": "5. Protocoles de formation.",
@@ -276,16 +276,16 @@
       "commandInsertTimerDesc": "Ajouter un minuteur de pause.",
       "dashboardDesc": "Vos statistiques d'entraînement, en un coup d'œil.",
       "exercisesDesc": "Exemples de pages d'exercices avec tableaux et graphiques.",
-      "exercisesFolder": "{dossier}/",
+      "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Référence complète de tous les blocs de code.",
       "folderStructureTitle": "Structure des dossiers.",
       "logDesc": "Vos données d'entraînement au format CSV.",
-      "logFolder": "{dossier}/",
+      "logFolder": "**{folder}/**",
       "nextStepsTitle": "Prochaines étapes.",
       "quickActionsIntro": "Utilisez ces commandes (Ctrl/Cmd + P) :",
       "quickActionsTitle": "Actions rapides.",
-      "step1": "Ouvrez le tableau de bord pour consulter vos statistiques.",
-      "step2": "Consultez la section « Présentation des fonctionnalités » pour découvrir toutes les fonctionnalités disponibles.",
+      "step1": "Ouvrez [[{dashboard}]] pour consulter vos statistiques",
+      "step2": "Consultez [[{featureShowcase}]] pour découvrir toutes les fonctionnalités disponibles",
       "step3": "Essayez un entraînement provenant du dossier **{workouts}**.",
       "step4": "Créez vos propres exercices dans la section **{exercises}**.",
       "tableHeaderDescription": "Description.",
@@ -293,7 +293,7 @@
       "title": "Comment démarrer avec le plugin \"The Gym\".",
       "welcome": "Bienvenue ! Ce dossier contient des fichiers d'exemple qui vous aideront à découvrir toutes les fonctionnalités.",
       "workoutsDesc": "Exemples de modèles d'entraînement.",
-      "workoutsFolder": "{dossier}/"
+      "workoutsFolder": "**{folder}/**"
     },
     "hiit": {
       "cyclingCooldownTitle": "Refroidissement après une sortie à vélo.",
@@ -340,15 +340,15 @@
       "avgDistance": "Distance moyenne (km)",
       "avgDuration": "Durée moyenne (sec)",
       "avgHeartRate": "Rythme cardiaque moyen (battements par minute)",
-      "avgVolume": "Volume moyen ({unité}).",
-      "avgWeight": "Poids moyen ({unité}).",
-      "dailyVolume": "Volume quotidien ({{unit}})",
+      "avgVolume": "Volume moyen ({unit})",
+      "avgWeight": "Poids moyen ({unit})",
+      "dailyVolume": "Volume quotidien ({unit})",
       "pace": "Rythme (min/km)",
       "totalCustom": "Total {label}",
       "totalDistance": "Distance totale (km)",
       "totalDuration": "Durée totale (sec)",
-      "totalVolume": "Volume total ({unité}).",
-      "totalWeight": "Poids total (unité)."
+      "totalVolume": "Volume total ({unit})",
+      "totalWeight": "Poids total ({unit})"
     },
     "muscleHeatMap": "Carte thermique de l'activité musculaire.",
     "noMatchMessage": "Message de non-correspondance.",
@@ -436,7 +436,7 @@
     "addLogButtonText": "Ajouter un enregistrement pour {exerciseName}",
     "createFirstLogButton": "Créer le premier journal pour {exerciseName}",
     "createFirstLogButtonAria": "Créer le premier journal pour {exerciseName}",
-    "createLogButtonAria": "Créer un journal pour : {{exerciseName}}",
+    "createLogButtonAria": "Créer un journal pour : {exerciseName}",
     "createLogButtonText": "Créer un journal pour : {exerciseName}",
     "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}"
   },
@@ -444,16 +444,16 @@
     "codeInserted": "Code inséré.",
     "csvNotFound": "Fichier CSV introuvable.",
     "errors": {
-      "tagReferenceFailed": "Erreur lors de la génération de la référence de balise: {error}",
-      "csvLoadError": "Erreur de chargement des données CSV : {error}",
-      "csvCreateError": "Erreur de création du fichier CSV : {error}",
       "blockIdsError": "Erreur d'ajout des IDs de blocs : {error}",
+      "csvCreateError": "Erreur de création du fichier CSV : {error}",
       "csvFilesError": "Erreur de création des fichiers CSV : {error}",
+      "csvLoadError": "Erreur de chargement des données CSV : {error}",
       "muscleTagsCsvError": "Erreur de création du CSV des tags musculaires : {error}",
       "muscleTagsLoadError": "Erreur de chargement des tags musculaires : {error}",
+      "tableRenderError": "Erreur lors du rendu du tableau",
+      "tagReferenceFailed": "Erreur lors de la génération de la référence de balise: {error}",
       "templateGenError": "Échec de la génération des modèles : {error}",
-      "workoutLogCreateError": "Impossible de créer le fichier CSV au chemin: {path}. Veuillez vérifier le chemin dans les paramètres.",
-      "tableRenderError": "Erreur lors du rendu du tableau"
+      "workoutLogCreateError": "Impossible de créer le fichier CSV au chemin: {path}. Veuillez vérifier le chemin dans les paramètres."
     },
     "fileEmpty": "Fichier vide.",
     "imbalanceAlerts": "Alertes de déséquilibre.",
@@ -497,7 +497,9 @@
       "create": "Créer un journal.",
       "createExercise": "Créer une page d'exercices.",
       "createSection": "Créer une section.",
+      "decreaseBy": "Diminuer {label} de {increment}",
       "export": "Exportation.",
+      "increaseBy": "Augmenter {label} de {increment}",
       "insertChart": "Insérer le graphique.",
       "insertDashboard": "Insérer le tableau de bord.",
       "insertExerciseBlock": "Insérer.",
@@ -509,9 +511,7 @@
       "update": "Journal des modifications.",
       "updateTable": "Mettre à jour la table",
       "updateTargetWeight": "Mettre à jour la cible.",
-      "updateTimer": "Mettre à jour le minuteur",
-      "decreaseBy": "Diminuer {label} de {increment}",
-      "increaseBy": "Augmenter {label} de {increment}"
+      "updateTimer": "Mettre à jour le minuteur"
     },
     "canvasLayout": "Mise en page.",
     "canvasOptions": "Options.",
@@ -522,7 +522,6 @@
       "includeLog": "Inclure le journal des opérations.",
       "includeStats": "Veuillez inclure les statistiques.",
       "includeTimer": "Inclure le minuteur.",
-      "searchByName": "Recherche par nom.",
       "showAddButton": "Afficher le bouton \"Ajouter\".",
       "showControls": "Contrôles de l'affichage.",
       "showStatistics": "Afficher les statistiques.",
@@ -542,18 +541,23 @@
     "dateRange": "Période (en jours) :",
     "daysRange": "Durée :",
     "delete": "Supprimer.",
+    "deleteItem": "Supprimer {item}",
     "duration": "Durée (en secondes) :",
+    "editItem": "Modifier {item}",
     "editTag": "Modifier l'étiquette.",
-    "exerciseStatus": {
-      "createPage": "Créer une page.",
-      "notFound": "Non trouvé."
+    "errors": {
+      "missingElements": "Éléments manquants",
+      "validationCombinedMode": "Pour le type exercice + entraînement, remplissez les deux champs"
     },
+    "exerciseSectionTemplate": "## {exerciseName} :\n### - Séries : {sets}\n- Répétitions : {reps}\n- Repos : {restTime}s\n\n",
     "exerciseType": "Type d'exercice :",
     "exportTags": "Étiquettes d'exportation.",
     "fileName": "Nom du fichier.",
     "folderPath": "Chemin du dossier (facultatif) :",
     "importMerge": "Fusionner.",
+    "importMergeAriaLabel": "Fusionner : ajouter uniquement les nouveaux tags, conserver les existants",
     "importReplace": "Remplacez tout.",
+    "importReplaceAriaLabel": "Remplacer : écraser tous les tags existants",
     "importTags": "Importer des balises.",
     "info": {
       "dashboardDescription": "Cela permettra d'insérer un tableau de bord complet pour l'entraînement, comprenant des statistiques, des graphiques et des actions rapides."
@@ -562,11 +566,11 @@
       "actions": "Actions.",
       "currentFileInfo": "Fichier actuel : {fileName}",
       "exercise": "Exercice :",
-      "reps": "Représentants :",
-      "targetReps": "Représentants cibles :",
-      "targetWeight": "Poids cible ({unité}) :",
-      "volume": "Volume ({{unit}}):",
-      "weight": "Poids : ({unité})"
+      "reps": "Répétitions :",
+      "targetReps": "Répétitions cibles :",
+      "targetWeight": "Cible ({unit}) :",
+      "volume": "Volume ({unit}):",
+      "weight": "Poids ({unit}) :"
     },
     "layoutGrouped": "Regroupés par muscle.",
     "layoutHorizontal": "Flux horizontal.",
@@ -578,36 +582,38 @@
     "noTagsFound": "Aucune étiquette ne correspond à votre recherche.",
     "noTagsSelected": "Aucune étiquette sélectionnée. Cliquez sur les étiquettes ci-dessous pour les ajouter.",
     "note": "Note :",
+    "noteTemplate": "**Note : {note}**\n",
     "notes": "Notes (facultatif) :",
     "notices": {
-      "auditConfirmRenameFile": "Vérification, confirmation, renommer le fichier.",
+      "auditConfirmRenameFile": "Renommer ce fichier ?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} discordances potentielles trouvées :",
       "auditNoMatchFound": "Aucune correspondance trouvée",
       "auditNoMismatches": "Vérification des incohérences.",
-      "auditRenameError": "Erreur de renommage lors de l'audit.",
-      "auditRenameFileError": "Audit : Renommage de fichier : erreur.",
+      "auditRenameError": "Impossible de renommer : {error}",
+      "auditRenameFileError": "Impossible de renommer le fichier : {error}",
       "auditRenameFileSuccess": "Audit : Renommage du fichier réussi.",
-      "auditRenameSuccess": "Audit : Renommage réussi.",
+      "auditRenameSuccess": "Renommé ({count} fichiers mis à jour)",
       "auditScanError": "Erreur lors du scan : {error}",
       "auditScanning": "Analyse de sécurité.",
       "canvasExportError": "Erreur lors de l'exportation depuis Canvas: {error}",
       "canvasExported": "Exportation vers Canvas ({path})",
       "chartInserted": "✅ Le graphique a été inséré avec succès !",
-      "confirmUpdateTarget": "Confirmer la cible de la mise à jour.",
+      "confirmUpdateTarget": "Mettre à jour l'objectif à {targetWeight}{weightUnit} ?",
       "dashboardInserted": "✅ Le tableau de bord a été inséré avec succès !",
       "dismissAchievement": "Ignorer la réussite",
       "exerciseBlockInserted": "Bloc d'exercices inséré.",
       "exerciseNameRequired": "❌ Veuillez saisir le nom de l'exercice.",
       "exercisePageCreated": "La page de l'exercice a été créée avec succès !",
-      "exercisePageError": "Erreur lors de la création de la page d'exercice :",
+      "exercisePageError": "Erreur lors de la création de la page d'exercice : {error}",
       "exercisePageNameRequired": "Veuillez saisir le nom de l'exercice.",
       "exerciseSectionCreated": "✅ La section d'exercices a été créée avec succès !",
-      "genericError": "Erreur :",
+      "genericError": "Erreur : {error}",
       "insertCodeNoFile": "Ouvrez un fichier Markdown pour y insérer le code.",
       "logCreated": "Journal d'entraînement créé avec succès !",
       "logUpdated": "Votre journal d'entraînement a été mis à jour avec succès !",
       "migrationComplete": "Migration terminée. Fichiers d'exercice {count} mis à jour.",
       "migrationError": "Erreur de migration: {error}",
+      "migrationFolderNotFound": "Dossier d'exercices introuvable: {path}",
       "migrationNoUpdates": "Migration : Aucune mise à jour.",
       "muscleTagCount": "{count} étiquettes trouvées",
       "muscleTagDeleteConfirm": "Êtes-vous sûr de vouloir supprimer l'étiquette \"{tag}\" ?",
@@ -627,7 +633,7 @@
       "muscleTagSaved": "Étiquette de suivi musculaire : enregistrée.",
       "muscleTagSimilarFound": "{count} balises similaires trouvées",
       "muscleTagSimilarWarning": "Avertissement similaire concernant les étiquettes musculaires.",
-      "suggestedNextWeight": "Poids suggéré pour la prochaine étape.",
+      "suggestedNextWeight": "Prochain poids suggéré : {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Le tableau a été inséré avec succès !",
       "tableUpdateFailed": "Échec de la mise à jour de la table. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "tableUpdated": "✅ La table a été mise à jour avec succès !",
@@ -636,14 +642,13 @@
       "timerInserted": "✅ Le minuteur a été configuré avec succès !",
       "timerUpdateFailed": "Échec de la mise à jour du minuteur. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "timerUpdated": "✅ Minuteur mis à jour avec succès !",
-      "validationCombinedMode": "⚠️ Pour le type d'activité \"exercice + entraînement\", vous devez remplir les deux champs !",
-      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides.",
+      "validFieldRequired": "{field} est obligatoire",
+      "validMaxValue": "{field} doit être au maximum {max}",
+      "validMinValue": "{field} doit être au moins {min}",
       "validMissingField": "Champ obligatoire manquant : {field}",
       "validMustBeNumber": "{field} doit être un nombre valide",
-      "validMinValue": "{field} doit être au moins {min}",
-      "validMaxValue": "{field} doit être au maximum {max}",
-      "validFieldRequired": "{field} est obligatoire",
-      "migrationFolderNotFound": "Dossier d'exercices introuvable: {path}"
+      "validationCombinedMode": "⚠️ Pour le type d'activité \"exercice + entraînement\", vous devez remplir les deux champs !",
+      "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides."
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -725,7 +730,6 @@
       "createExercisePage": "Créer une page d'exercices.",
       "createExerciseSection": "Créer une section d'exercices.",
       "createLog": "Créer un registre d'entraînement.",
-      "create_log": "Créer un journal d'entraînement",
       "editLog": "Modifier le journal d'entraînement.",
       "editTable": "Paramètres de la table",
       "editTimer": "Modifier les paramètres du minuteur",
@@ -738,11 +742,7 @@
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
-    "workoutNameOptional": "Nom de l'entraînement (facultatif) :",
-    "importMergeAriaLabel": "Fusionner : ajouter uniquement les nouveaux tags, conserver les existants",
-    "importReplaceAriaLabel": "Remplacer : écraser tous les tags existants",
-    "editItem": "Modifier {item}",
-    "deleteItem": "Supprimer {item}"
+    "workoutNameOptional": "Nom de l'entraînement (facultatif) :"
   },
   "settings": {
     "buttons": {
@@ -785,6 +785,7 @@
       "runAllMaintenance": "Exécuter toutes les tâches de maintenance de manière séquentielle. Sécurisé pour être exécuté plusieurs fois.",
       "setDuration": "Utilisé lorsque le nombre de répétitions n'est pas précisé (solution de repli). Plage typique : 30 à 60 secondes.",
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
+      "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements."
     },
@@ -811,6 +812,7 @@
       "runAllMaintenance": "Exécuter toutes les tâches de maintenance",
       "setDuration": "Durée de la période de repli (en secondes).",
       "setupCSV": "Configurer les fichiers CSV.",
+      "showRibbonIcon": "Afficher l'icône de saisie rapide",
       "weightUnit": "Unité de mesure de masse."
     },
     "messages": {
@@ -846,7 +848,6 @@
       "csvManagement": "Gestion des fichiers CSV.",
       "customProtocols": "Protocoles personnalisés.",
       "exampleData": "Exemple de données.",
-      "filtering": "Filtrage.",
       "maintenance": "Maintenance",
       "quickLog": "Journalisation mobile.",
       "setupAndData": "Configuration et données",
@@ -888,7 +889,7 @@
       "heartRate": "Fréquence cardiaque.",
       "notes": "Notes.",
       "protocol": "Protocole.",
-      "reps": "Représentants.",
+      "reps": "Répétitions",
       "volume": "Volume.",
       "weight": "Poids."
     },
@@ -915,12 +916,17 @@
     "noData": "Aucune donnée disponible.",
     "notAvailable": "Non disponible.",
     "refreshSuccess": "Renouveler le succès.",
+    "refreshingTable": "Actualisation du tableau...",
     "target": {
       "progressTooltip": "Meilleur résultat : {best} répétitions / Objectif : {target} répétitions.",
-      "repsSuffix": "représentants",
+      "repsSuffix": "répétitions",
       "separator": " × "
     },
-    "trendLine": "Ligne de tendance."
+    "trendLine": "Ligne de tendance.",
+    "validation": {
+      "sortByInvalid": "sortBy doit être l'une des valeurs {allowed}, reçu : \"{value}\"",
+      "sortOrderInvalid": "sortOrder doit être asc ou desc, reçu : \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Mois.",
@@ -931,8 +937,7 @@
     "controls": {
       "pauseTimer": "Mettre le minuteur en pause",
       "resetTimer": "Réinitialiser le minuteur",
-      "startTimer": "Démarrer le minuteur",
-      "timerMenu": "Timer menu"
+      "startTimer": "Démarrer le minuteur"
     },
     "countdown": "Compte à rebours.",
     "editTimer": "Modifier le minuteur",

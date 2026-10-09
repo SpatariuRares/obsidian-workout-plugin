@@ -6,7 +6,7 @@
       "quickWeightIncrementUnit": "Butonat e pesheve rritin {weightIncrementUnit}",
       "reps": "Repetimet",
       "trendType": "Tendenca {type}:",
-      "variationFromTo": "nga {{startValue}} në {{endValue}}",
+      "variationFromTo": "nga {startValue} në {endValue}",
       "volume": "Volum",
       "weight": "Pesha",
       "weightIncrementUnit": "Shkallëzim i pesheve {weightIncrementUnit}"
@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "Variancë mesatare: ±{value}%",
       "columnActual": "Faktore",
       "columnEstimated": "Projekto",
       "columnVariance": "Variança",
@@ -89,8 +90,7 @@
       "varianceTrendDeclining": "Tendenca e variancës që rëndon",
       "varianceTrendImproving": "Tendenca e variancës po përmirësohet",
       "varianceTrendStable": "Tendenca e variancës, stabil",
-      "varianceTrendTitle": "Titull për Tendencat e Varianseve",
-      "avgVarianceStat": "Variancë mesatare: ±{value}%"
+      "varianceTrendTitle": "Titull për Tendencat e Varianseve"
     },
     "fileErrors": {
       "allValid": "Tüm të sakta",
@@ -103,12 +103,12 @@
       "description": "Shpjegim",
       "title": "Etiketat për muskuj",
       "tooltip": "Klikoni për të kopjuar: {tag}",
-      "totalCount": "Total: {{count}} etiketa të disponueshme"
+      "totalCount": "Total: {count} etiketa të disponueshme"
     },
     "protocol": {
       "clickToFilter": "Klikoni për të filtruar",
       "percentLabel": "Etiketa për përqindjen",
-      "setsLabel": "{label}: {count} {setsLabel} ({{percentage}}{{percentLabel}})"
+      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
     },
     "protocolDistribution": {
       "clearFilter": "Shëmbull",
@@ -143,14 +143,14 @@
     },
     "summary": {
       "currentStreak": "Seria e vazhduar",
-      "currentStreakSuffix": "weeks",
+      "currentStreakSuffix": "{count} javë",
       "personalRecords": "Rekordet personale",
       "title": "Shëmbull",
       "totalVolume": "Vlera totale",
       "totalWorkouts": "Numri total i stërdhimeve"
     },
     "volumeAnalytics": {
-      "chartTitle": "Tendenca e volumit (30 ditët e fundit)",
+      "chartTitleDays": "Tendenca e volumit ({days} ditët e fundit)",
       "muscleBreakdownTitle": "Trajnimet më të mira sipas volumit",
       "title": "Analizë e volumit"
     }
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "Your workout stats at a glance. See [[Feature Showcase]] for all available components.",
+      "description": "Statistikat e stërvitjes me një shikim. Shihni [[{featureShowcase}]] për të gjithë komponentët e disponueshëm.",
       "title": "Dasbord"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. Tabele",
       "timedExerciseTitle": "Të gjitha ushtrimeve me kohë (Koha)",
       "timersTitle": "3. Timerët",
-      "tip": "**Tip**: For your personal dashboard, see [[Dashboard]]",
+      "tip": "**Këshillë**: Për panelin tuaj personal, shihni [[{dashboard}]]",
       "title": "Shfaqja e veprimeve",
       "trainingProtocolsIntro": "Përparësia e kësaj funksioni mbështet në këto emblema të protokollit në regjistrat tuaj:",
       "trainingProtocolsTitle": "5. Protokolët e trajtimit",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "Haprat tjerë",
       "quickActionsIntro": "Zgjeroni këto komande (Ctrl/Cmd + P):",
       "quickActionsTitle": "Akcje të shpejta",
-      "step1": "Open [[Dashboard]] to see your stats",
-      "step2": "Check [[Feature Showcase]] to learn all available features",
+      "step1": "Hapni [[{dashboard}]] për të parë statistikat tuaja",
+      "step2": "Shikoni [[{featureShowcase}]] për të mësuar të gjitha veçoritë e disponueshme",
       "step3": "Provoni një stërvitje nga ​​folderi **{workouts}**",
       "step4": "Krijuja vetë stëmbët në **{exercises}**",
       "tableHeaderDescription": "Shpjegim",
@@ -342,13 +342,13 @@
       "avgHeartRate": "Rregullore mesatare e ritmit të zemrës (bpm)",
       "avgVolume": "Volumi mesatër ({unit})",
       "avgWeight": "Pesha mesatare ({unit})",
-      "dailyVolume": "Volumi ditore ({{unit}})",
+      "dailyVolume": "Volumi ditore ({unit})",
       "pace": "Shpejtësia (min/km)",
-      "totalCustom": "Total {{label}}",
+      "totalCustom": "Total {label}",
       "totalDistance": "Distancë totale (km)",
       "totalDuration": "Trajtës totale (sekondë)",
       "totalVolume": "Sasia totale ({unit})",
-      "totalWeight": "Pesha totale ({{unit}})"
+      "totalWeight": "Pesha totale ({unit})"
     },
     "muscleHeatMap": "Χάρτης të temperaturës së muskujve",
     "noMatchMessage": "Mesazhi kur nuk gjendet asgjë",
@@ -444,16 +444,16 @@
     "codeInserted": "Kodi është i ëndosur",
     "csvNotFound": "CSV nuk u gjua",
     "errors": {
-      "tagReferenceFailed": "Gabim në krijimin e referencës për etiketën: {error}",
-      "csvLoadError": "Gabim gjatë ngarkimit të CSV: {error}",
-      "csvCreateError": "Gabim gjatë krijimit të skedarit CSV: {error}",
       "blockIdsError": "Gabim gjatë shtimit të ID-ve të bllokut: {error}",
+      "csvCreateError": "Gabim gjatë krijimit të skedarit CSV: {error}",
       "csvFilesError": "Gabim gjatë krijimit të skedarëve CSV: {error}",
+      "csvLoadError": "Gabim gjatë ngarkimit të CSV: {error}",
       "muscleTagsCsvError": "Gabim gjatë krijimit të CSV për etiketat e muskujve: {error}",
       "muscleTagsLoadError": "Gabim gjatë ngarkimit të etiketave të muskujve: {error}",
+      "tableRenderError": "Gabim në paraqitjen e tabelës",
+      "tagReferenceFailed": "Gabim në krijimin e referencës për etiketën: {error}",
       "templateGenError": "Dështoi gjenerimi i shablloneve: {error}",
-      "workoutLogCreateError": "Dështoi krijimi i skedarit CSV në rrugën: {path}. Kontrolloni rrugën në cilësimet.",
-      "tableRenderError": "Gabim në paraqitjen e tabelës"
+      "workoutLogCreateError": "Dështoi krijimi i skedarit CSV në rrugën: {path}. Kontrolloni rrugën në cilësimet."
     },
     "fileEmpty": "Fajla është bosh",
     "imbalanceAlerts": "Alarmi për disbalancë",
@@ -497,7 +497,9 @@
       "create": "Krijo lojën",
       "createExercise": "Për të krijuar një veprim",
       "createSection": "Krijo seksion",
+      "decreaseBy": "Ul {label} me {increment}",
       "export": "Ekspor",
+      "increaseBy": "Rrit {label} me {increment}",
       "insertChart": "Shto diagram",
       "insertDashboard": "Shto panelin",
       "insertExerciseBlock": "Shto",
@@ -509,9 +511,7 @@
       "update": "Loja e përditësimit",
       "updateTable": "Përpunoj tabelën",
       "updateTargetWeight": "Ndryshojë synimin",
-      "updateTimer": "Përpunoj orën",
-      "decreaseBy": "Ul {label} me {increment}",
-      "increaseBy": "Rrit {label} me {increment}"
+      "updateTimer": "Përpunoj orën"
     },
     "canvasLayout": "Dispozitimi",
     "canvasOptions": "Opsion",
@@ -522,7 +522,6 @@
       "includeLog": "Trajto si log",
       "includeStats": "Paraqitja e statistikave",
       "includeTimer": "Paraqitni Timer",
-      "searchByName": "Kërko me emër",
       "showAddButton": "Paraqit Butonin \"Shto\"",
       "showControls": "Shfaq Kontrollimet",
       "showStatistics": "Shfaq Statistikat",
@@ -542,18 +541,23 @@
     "dateRange": "Shumë datore (ditë):",
     "daysRange": "Shumë ditë:",
     "delete": "Fshij",
+    "deleteItem": "Fshi {item}",
     "duration": "Vlera (sekonda):",
+    "editItem": "Ndrysho {item}",
     "editTag": "Redakto etiketen",
-    "exerciseStatus": {
-      "createPage": "Krijo faqe",
-      "notFound": "Nuk u gjua"
+    "errors": {
+      "missingElements": "Mungojnë elemente",
+      "validationCombinedMode": "Për llojin ushtrim + stërvitje, plotësoni të dyja fushat"
     },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - Sete: {sets}\n- Përsëritje: {reps}\n- Pushim: {restTime}s\n\n",
     "exerciseType": "Lloj ushtrime:",
     "exportTags": "Ekspor etiketave",
     "fileName": "Emri i dosjes",
     "folderPath": "Rruga e folderit (opcional):",
     "importMerge": "Fus",
+    "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
     "importReplace": "Zëvendëso të gjithë",
+    "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
     "importTags": "Importo kategoriat",
     "info": {
       "dashboardDescription": "Kjo do të krijojë një panellë e kompletuar për stërvitjen, me statistika, grafikë dhe veprime të shpejtë."
@@ -566,7 +570,7 @@
       "targetReps": "Shënimet për numrin e përrjeteve:",
       "targetWeight": "Shërbim: ({unit}):",
       "volume": "Shumës (\\{unit}):",
-      "weight": "Pesha ({{unit}}):"
+      "weight": "Pesha ({unit}):"
     },
     "layoutGrouped": "Grupuar sipas muskujve",
     "layoutHorizontal": "Rregullore horizontale",
@@ -578,36 +582,38 @@
     "noTagsFound": "Nuk u gjuan asnjë etiketë që korrespondojnë me kërsimin tuaj",
     "noTagsSelected": "Nuk janë zgjedhur asnjë etikë. Kliko në etikët më poshtë për të shtuar.",
     "note": "Vëre:",
+    "noteTemplate": "**Shënim: {note}**\n",
     "notes": "Shënime (opcional):",
     "notices": {
-      "auditConfirmRenameFile": "Audit Confirm Rename File",
+      "auditConfirmRenameFile": "Të riemërtohet ky skedar?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Gjendën {count} mospërputhje:",
       "auditNoMatchFound": "Nuk u gjet asnjë përputhje",
       "auditNoMismatches": "Nëse nuk ka shkelje",
-      "auditRenameError": "Audit Rename Error",
-      "auditRenameFileError": "Audit Rename File Error",
+      "auditRenameError": "Riemërtimi dështoi: {error}",
+      "auditRenameFileError": "Skedari nuk mund të riemërtohej: {error}",
       "auditRenameFileSuccess": "Sukses në ngjitjen e emrit të failit",
-      "auditRenameSuccess": "Audit Rename Success",
+      "auditRenameSuccess": "U riemërtua ({count} skedarë u përditësuan)",
       "auditScanError": "Gabim gjatë skanimit: {error}",
       "auditScanning": "Skanimi i auditimit",
       "canvasExportError": "Gabim në eksportimin e pëlhurës: {error}",
       "canvasExported": "Ekspozione e Tavlinës ({path})",
       "chartInserted": "✅ Diagrama u krijua me sukses!",
-      "confirmUpdateTarget": "Confirm Update Target",
+      "confirmUpdateTarget": "Të përditësohet objektivi në {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dasbordi u krijua me sukses!",
       "dismissAchievement": "Hiq arritjen",
       "exerciseBlockInserted": "Bloku stërmë është krijuar",
       "exerciseNameRequired": "❌ ju lutemi, vendosni një emër",
       "exercisePageCreated": "Faqja e stilit u krijua me sukses!",
-      "exercisePageError": "Error creating exercise page: ",
+      "exercisePageError": "Gabim gjatë krijimit të faqes së ushtrimit: {error}",
       "exercisePageNameRequired": "Ju lutemi, vendosni emrin e ushtrimit",
       "exerciseSectionCreated": "✅ Sekrecioni i ushtrimit u krijua me sukses!",
-      "genericError": "Error: ",
+      "genericError": "Gabim: {error}",
       "insertCodeNoFile": "Hapni një dosje Markdown për të vendosur kodin",
       "logCreated": "Shënimi i ushtrimit u krijua me sukses!",
       "logUpdated": "Dëshifrimi i ushtrimit u përdithes suksesfully!",
       "migrationComplete": "Migracioni është përfunduar. Arkivat e stilit {count} janë përditësuar.",
       "migrationError": "Gabim në migrim: {error}",
+      "migrationFolderNotFound": "Dosja e ushtrimeve nuk u gjet: {path}",
       "migrationNoUpdates": "Nuk ka më shumë përditshme",
       "muscleTagCount": "{count} etiket(a) janë gjetur",
       "muscleTagDeleteConfirm": "Sigurisht që dëshironi të fshini etiketën \"{tag}\"?",
@@ -627,7 +633,7 @@
       "muscleTagSaved": "Etiketa e muskullit është ruajtur",
       "muscleTagSimilarFound": "{count} u janë gjetur etiketat të ngjashme",
       "muscleTagSimilarWarning": "Avizo: Këto janë të ngjashme me \"Muscle Tag\".",
-      "suggestedNextWeight": "Suggested Next Weight",
+      "suggestedNextWeight": "Pesha e sugjeruar e radhës: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabela u krijua me sukses!",
       "tableUpdateFailed": "Më nuk u mori për të përditësuar tablen. Sigurohuni se dosja është hapur në redaktoren.",
       "tableUpdated": "✅ Tabloja u përditësoi me sukses!",
@@ -636,14 +642,13 @@
       "timerInserted": "✅ Timeri u vendos suksesfully!",
       "timerUpdateFailed": "Më nuk u përpohet të përditësohet çorabi. Sigurohuni që dosja është hapur në redaktoren.",
       "timerUpdated": "✅ Koha u përditësoi me sukses!",
-      "validationCombinedMode": "⚠️ për tipin 'eksercizim + stërmorë', duhet të mbushni të dy fushat!",
-      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme.",
+      "validFieldRequired": "{field} është e detyrueshme",
+      "validMaxValue": "{field} duhet të jetë më shumë se {max}",
+      "validMinValue": "{field} duhet të jetë të paktën {min}",
       "validMissingField": "Mungon fusha e detyrueshme: {field}",
       "validMustBeNumber": "{field} duhet të jetë numër i vlefshëm",
-      "validMinValue": "{field} duhet të jetë të paktën {min}",
-      "validMaxValue": "{field} duhet të jetë më shumë se {max}",
-      "validFieldRequired": "{field} është e detyrueshme",
-      "migrationFolderNotFound": "Dosja e ushtrimeve nuk u gjet: {path}"
+      "validationCombinedMode": "⚠️ për tipin 'eksercizim + stërmorë', duhet të mbushni të dy fushat!",
+      "validationFillAll": "Ju lutemi, kompleto të gjitha fushat me vlera të vlefshme."
     },
     "parameterKey": "Çelë:",
     "parameterLabel": "Etiketa:",
@@ -725,7 +730,6 @@
       "createExercisePage": "Krijo faqen për stërmorë",
       "createExerciseSection": "Krijo seksionin e ushtrimeve",
       "createLog": "Krijo regjistrimin e stilit",
-      "create_log": "Krijo regjistrimin e stilit",
       "editLog": "Redakto historiën e antrenimit",
       "editTable": "Parimet e tabelës",
       "editTimer": "Redaktojeni parametrat e timerit",
@@ -738,11 +742,7 @@
     },
     "workout": "Tregimi (opcional):",
     "workoutFile": "Fajla e stilit:",
-    "workoutNameOptional": "Emri i stërmorës (opcional):",
-    "importMergeAriaLabel": "Bashko: shto vetëm etiketa të reja, ruaj ato ekzistuese",
-    "importReplaceAriaLabel": "Zëvendëso: mbishkruaj të gjitha etiketat ekzistuese",
-    "editItem": "Ndrysho {item}",
-    "deleteItem": "Fshi {item}"
+    "workoutNameOptional": "Emri i stërmorës (opcional):"
   },
   "settings": {
     "buttons": {
@@ -785,6 +785,7 @@
       "runAllMaintenance": "Zgjidhni dhe ekzekutoni të gjitha deturat e mirëmbajtjes në një radhë. Sigur, mund të ekzekutohet disa herë.",
       "setDuration": "Shumë përdorur kur nuk janë specifikuar. (version i zëvendësimit). Rrezimi tipik: 30-60 sekonda.",
       "setupCSV": "Kriju të gjithë file-t workout_logs.csv dhe muscle-tags.csv në folderin e konfiguruar.",
+      "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
       "weightIncrement": "Shuma e parësore e rritjes së pesheve për mbiemërim progresiv (p.sh., 2.5 për rritje me 2.5 unitete)",
       "weightUnit": "Pëzgjidhni unitetin për matjet e peshës (kg/lb). Kjo ndikon në unitetin e vullnetshëm për regjistrat të reja."
     },
@@ -811,6 +812,7 @@
       "runAllMaintenance": "Zgjidhni të gjitha detyrat e mirëmbajtjes",
       "setDuration": "Vlera e parësore (sekonda)",
       "setupCSV": "Konfigurimi i failëve CSV",
+      "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
       "weightUnit": "Jedunitë e pesheve"
     },
     "messages": {
@@ -846,7 +848,6 @@
       "csvManagement": "Menaxhimi i failit CSV",
       "customProtocols": "Protokole të personalizuara",
       "exampleData": "Dëshmi",
-      "filtering": "Filtërsim",
       "maintenance": "Mirëmbajtje",
       "quickLog": "Regjistrim në dispozitive celular",
       "setupAndData": "Konfigurim dhe të dhëna",
@@ -915,12 +916,17 @@
     "noData": "Nuk ka të dhana",
     "notAvailable": "Nuk është disponues",
     "refreshSuccess": "Sukses në rikthimin",
+    "refreshingTable": "Po rifreskohet tabela...",
     "target": {
       "progressTooltip": "Më mirë: {best} serija / Objektiv: {target} serija",
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Linja e tendencës"
+    "trendLine": "Linja e tendencës",
+    "validation": {
+      "sortByInvalid": "sortBy duhet të jetë një nga {allowed}, u mor: \"{value}\"",
+      "sortOrderInvalid": "sortOrder duhet të jetë asc ose desc, u mor: \"{value}\""
+    }
   },
   "timeperiods": {
     "month": "Mjes",
@@ -931,8 +937,7 @@
     "controls": {
       "pauseTimer": "Përpake kohorin",
       "resetTimer": "Resetimi i timerit",
-      "startTimer": "Përshpejto",
-      "timerMenu": "Timer menu"
+      "startTimer": "Përshpejto"
     },
     "countdown": "Trajtimi",
     "editTimer": "Redakto kohën",

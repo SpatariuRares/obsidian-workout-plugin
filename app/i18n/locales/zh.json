@@ -78,6 +78,7 @@
   },
   "dashboard": {
     "durationComparison": {
+      "avgVarianceStat": "平均差异：±{value}%",
       "columnActual": "实际",
       "columnEstimated": "预计",
       "columnVariance": "差异",
@@ -89,8 +90,7 @@
       "varianceTrendDeclining": "差异趋势：下降",
       "varianceTrendImproving": "差异趋势正在改善",
       "varianceTrendStable": "差异趋势稳定",
-      "varianceTrendTitle": "差异趋势",
-      "avgVarianceStat": "平均差异：±{value}%"
+      "varianceTrendTitle": "差异趋势"
     },
     "fileErrors": {
       "allValid": "全部有效",
@@ -143,14 +143,14 @@
     },
     "summary": {
       "currentStreak": "当前连续训练",
-      "currentStreakSuffix": "周",
+      "currentStreakSuffix": "{count} 周",
       "personalRecords": "个人记录",
       "title": "摘要",
       "totalVolume": "总训练量",
       "totalWorkouts": "总训练次数"
     },
     "volumeAnalytics": {
-      "chartTitle": "训练量趋势（最近30天）",
+      "chartTitleDays": "训练量趋势（最近 {days} 天）",
       "muscleBreakdownTitle": "按训练量排序的主要训练",
       "title": "训练量分析"
     }
@@ -164,7 +164,7 @@
   },
   "examples": {
     "dashboard": {
-      "description": "一览您的训练统计数据。查看 [[功能展示]] 获取所有可用组件。",
+      "description": "一览您的训练统计数据。查看 [[{featureShowcase}]] 获取所有可用组件。",
       "title": "仪表盘"
     },
     "exercise": {
@@ -245,7 +245,7 @@
       "tablesTitle": "2. 表格",
       "timedExerciseTitle": "计时训练（时长）",
       "timersTitle": "3. 计时器",
-      "tip": "**提示**：个人仪表盘请查看 [[仪表盘]]",
+      "tip": "**提示**：个人仪表盘请查看 [[{dashboard}]]",
       "title": "功能展示",
       "trainingProtocolsIntro": "插件支持在记录中显示以下训练方案徽章：",
       "trainingProtocolsTitle": "5. 训练方案",
@@ -284,8 +284,8 @@
       "nextStepsTitle": "下一步",
       "quickActionsIntro": "使用这些命令（Ctrl/Cmd + P）：",
       "quickActionsTitle": "快速操作",
-      "step1": "打开 [[仪表盘]] 查看您的统计数据",
-      "step2": "查看 [[功能展示]] 了解所有可用功能",
+      "step1": "打开 [[{dashboard}]] 查看您的统计数据",
+      "step2": "查看 [[{featureShowcase}]] 了解所有可用功能",
       "step3": "尝试从 **{workouts}** 文件夹中选择一个训练计划。",
       "step4": "在 **{exercises}** 中创建您自己的训练",
       "tableHeaderDescription": "描述",
@@ -444,16 +444,16 @@
     "codeInserted": "代码已插入",
     "csvNotFound": "未找到 CSV 文件",
     "errors": {
-      "tagReferenceFailed": "生成标签参考时出错: {error}",
-      "csvLoadError": "加载CSV数据时出错：{error}",
-      "csvCreateError": "创建CSV文件时出错：{error}",
       "blockIdsError": "添加块ID时出错：{error}",
+      "csvCreateError": "创建CSV文件时出错：{error}",
       "csvFilesError": "创建CSV文件时出错：{error}",
+      "csvLoadError": "加载CSV数据时出错：{error}",
       "muscleTagsCsvError": "创建肌肉标签CSV时出错：{error}",
       "muscleTagsLoadError": "加载肌肉标签时出错：{error}",
+      "tableRenderError": "表格渲染错误",
+      "tagReferenceFailed": "生成标签参考时出错: {error}",
       "templateGenError": "生成模板失败：{error}",
-      "workoutLogCreateError": "无法在路径 {path} 创建 CSV 文件，请检查设置中的路径。",
-      "tableRenderError": "表格渲染错误"
+      "workoutLogCreateError": "无法在路径 {path} 创建 CSV 文件，请检查设置中的路径。"
     },
     "fileEmpty": "文件为空",
     "imbalanceAlerts": "不平衡警报",
@@ -497,7 +497,9 @@
       "create": "创建记录",
       "createExercise": "创建训练页面",
       "createSection": "创建部分",
+      "decreaseBy": "将{label}减少{increment}",
       "export": "导出",
+      "increaseBy": "将{label}增加{increment}",
       "insertChart": "插入图表",
       "insertDashboard": "插入仪表盘",
       "insertExerciseBlock": "插入",
@@ -509,9 +511,7 @@
       "update": "更新记录",
       "updateTable": "更新表格",
       "updateTargetWeight": "更新目标",
-      "updateTimer": "更新计时器",
-      "decreaseBy": "将{label}减少{increment}",
-      "increaseBy": "将{label}增加{increment}"
+      "updateTimer": "更新计时器"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -522,7 +522,6 @@
       "includeLog": "包含记录",
       "includeStats": "包含统计数据",
       "includeTimer": "包含计时器",
-      "searchByName": "按名称搜索",
       "showAddButton": "显示添加按钮",
       "showControls": "显示控件",
       "showStatistics": "显示统计信息",
@@ -542,18 +541,23 @@
     "dateRange": "日期范围（天）：",
     "daysRange": "日期范围：",
     "delete": "删除",
+    "deleteItem": "删除{item}",
     "duration": "时长（秒）：",
+    "editItem": "编辑{item}",
     "editTag": "编辑标签",
-    "exerciseStatus": {
-      "createPage": "创建页面",
-      "notFound": "未找到"
+    "errors": {
+      "missingElements": "缺少元素",
+      "validationCombinedMode": "对于“训练 + 计划”类型，请填写两个字段"
     },
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息：{restTime} 秒\n\n",
     "exerciseType": "训练类型：",
     "exportTags": "导出标签",
     "fileName": "文件名",
     "folderPath": "文件夹路径（可选）：",
     "importMerge": "合并",
+    "importMergeAriaLabel": "合并：仅添加新标签，保留现有标签",
     "importReplace": "替换所有",
+    "importReplaceAriaLabel": "替换：覆盖所有现有标签",
     "importTags": "导入标签",
     "info": {
       "dashboardDescription": "这将插入一个全面的训练仪表盘，包含统计数据、图表和快速操作。"
@@ -578,36 +582,38 @@
     "noTagsFound": "未找到与搜索匹配的标签",
     "noTagsSelected": "未选择任何标签。点击下方标签添加。",
     "note": "备注：",
+    "noteTemplate": "**备注：{note}**\n",
     "notes": "备注（可选）：",
     "notices": {
-      "auditConfirmRenameFile": "审核确认重命名文件",
+      "auditConfirmRenameFile": "要重命名此文件吗？\n\n{oldName} → {newName}",
       "auditMismatchCount": "发现 {count} 个潜在不匹配：",
       "auditNoMatchFound": "未找到匹配",
       "auditNoMismatches": "审核未发现不匹配",
-      "auditRenameError": "审核重命名错误",
-      "auditRenameFileError": "审核重命名文件错误",
+      "auditRenameError": "无法重命名：{error}",
+      "auditRenameFileError": "无法重命名文件：{error}",
       "auditRenameFileSuccess": "文件重命名成功",
-      "auditRenameSuccess": "审核重命名成功",
+      "auditRenameSuccess": "已重命名（更新了 {count} 个文件）",
       "auditScanError": "扫描文件时出错：{error}",
       "auditScanning": "正在审核扫描",
       "canvasExportError": "画布导出错误: {error}",
       "canvasExported": "画布已导出 ({path})",
       "chartInserted": "✅ 图表已成功插入！",
-      "confirmUpdateTarget": "确认更新目标",
+      "confirmUpdateTarget": "将目标更新为 {targetWeight}{weightUnit}？",
       "dashboardInserted": "✅ 仪表盘已成功插入！",
       "dismissAchievement": "关闭成就",
       "exerciseBlockInserted": "训练块已插入",
       "exerciseNameRequired": "❌ 请输入训练名称",
       "exercisePageCreated": "训练页面已成功创建！",
-      "exercisePageError": "创建训练页面时出错：",
+      "exercisePageError": "创建训练页面时出错：{error}",
       "exercisePageNameRequired": "请输入训练名称",
       "exerciseSectionCreated": "✅ 训练板块已成功创建！",
-      "genericError": "错误：",
+      "genericError": "错误：{error}",
       "insertCodeNoFile": "请打开一个 Markdown 文件以插入代码",
       "logCreated": "训练记录已成功创建！",
       "logUpdated": "训练记录已成功更新！",
       "migrationComplete": "迁移完成。已更新 {count} 个训练文件。",
       "migrationError": "迁移错误: {error}",
+      "migrationFolderNotFound": "未找到练习文件夹：{path}",
       "migrationNoUpdates": "迁移无更新",
       "muscleTagCount": "找到 {count} 个标签",
       "muscleTagDeleteConfirm": "确定要删除标签 '{tag}' 吗？",
@@ -627,7 +633,7 @@
       "muscleTagSaved": "肌肉标签已保存",
       "muscleTagSimilarFound": "找到 {count} 个相似标签",
       "muscleTagSimilarWarning": "肌肉标签相似警告",
-      "suggestedNextWeight": "建议下一次重量",
+      "suggestedNextWeight": "建议下次重量：{suggestedWeight}{weightUnit}",
       "tableInserted": "✅ 表格已成功插入！",
       "tableUpdateFailed": "更新表格失败。请确保文件已在编辑器中打开。",
       "tableUpdated": "✅ 表格已成功更新！",
@@ -636,14 +642,13 @@
       "timerInserted": "✅ 计时器已成功插入！",
       "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
       "timerUpdated": "✅ 计时器已成功更新！",
-      "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
-      "validationFillAll": "请填写所有字段并使用有效值。",
+      "validFieldRequired": "{field}为必填项",
+      "validMaxValue": "{field}最多为{max}",
+      "validMinValue": "{field}至少为{min}",
       "validMissingField": "缺少必填字段：{field}",
       "validMustBeNumber": "{field}必须是有效数字",
-      "validMinValue": "{field}至少为{min}",
-      "validMaxValue": "{field}最多为{max}",
-      "validFieldRequired": "{field}为必填项",
-      "migrationFolderNotFound": "未找到练习文件夹：{path}"
+      "validationCombinedMode": "⚠️ 对于'训练 + 锻炼'类型，必须同时填写两个字段！",
+      "validationFillAll": "请填写所有字段并使用有效值。"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -725,7 +730,6 @@
       "createExercisePage": "创建训练页面",
       "createExerciseSection": "创建训练板块",
       "createLog": "创建训练记录",
-      "create_log": "创建训练记录",
       "editLog": "编辑训练记录",
       "editTable": "编辑表格参数",
       "editTimer": "编辑计时器参数",
@@ -738,11 +742,7 @@
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
-    "workoutNameOptional": "训练名称（可选）：",
-    "importMergeAriaLabel": "合并：仅添加新标签，保留现有标签",
-    "importReplaceAriaLabel": "替换：覆盖所有现有标签",
-    "editItem": "编辑{item}",
-    "deleteItem": "删除{item}"
+    "workoutNameOptional": "训练名称（可选）："
   },
   "settings": {
     "buttons": {
@@ -785,6 +785,7 @@
       "runAllMaintenance": "依次执行所有维护任务。 可以在多次执行，且安全。",
       "setDuration": "当未指定次数时使用（备用）。典型范围：30-60秒。",
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
+      "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
       "weightUnit": "选择重量测量单位（千克/磅）。这会影响新记录的默认单位。"
     },
@@ -811,6 +812,7 @@
       "runAllMaintenance": "执行所有维护任务",
       "setDuration": "备用组时长（秒）",
       "setupCSV": "设置 CSV 文件",
+      "showRibbonIcon": "显示快速记录图标",
       "weightUnit": "重量单位"
     },
     "messages": {
@@ -819,7 +821,7 @@
       "confirmOverwriteExamples": "示例文件夹已存在。是否要覆盖？",
       "csvFilesCreated": "CSV 文件已成功创建！",
       "presetDeleted": "预设已删除",
-      "presetNameExists": "已存在名为 {name} 的预设",
+      "presetNameExists": "已存在同名预设",
       "presetNameRequired": "预设名称为必填项",
       "presetSaved": "预设已保存",
       "protocolAbbreviationRequired": "必须填写缩写（最多 3 个字符）",
@@ -846,7 +848,6 @@
       "csvManagement": "CSV 文件管理",
       "customProtocols": "自定义训练方案",
       "exampleData": "示例数据",
-      "filtering": "筛选",
       "maintenance": "维护",
       "quickLog": "移动记录",
       "setupAndData": "设置与数据",
@@ -915,12 +916,17 @@
     "noData": "无数据",
     "notAvailable": "不可用",
     "refreshSuccess": "刷新成功",
+    "refreshingTable": "正在刷新表格...",
     "target": {
       "progressTooltip": "最佳：{best} 次 / 目标：{target} 次",
       "repsSuffix": "次",
       "separator": " × "
     },
-    "trendLine": "趋势线"
+    "trendLine": "趋势线",
+    "validation": {
+      "sortByInvalid": "sortBy 必须是 {allowed} 之一，收到的值：\"{value}\"",
+      "sortOrderInvalid": "sortOrder 必须是 asc 或 desc，收到的值：\"{value}\""
+    }
   },
   "timeperiods": {
     "month": "月",
@@ -931,8 +937,7 @@
     "controls": {
       "pauseTimer": "暂停计时器",
       "resetTimer": "重置计时器",
-      "startTimer": "开始计时",
-      "timerMenu": "Timer menu"
+      "startTimer": "开始计时"
     },
     "countdown": "倒计时",
     "editTimer": "编辑计时器",

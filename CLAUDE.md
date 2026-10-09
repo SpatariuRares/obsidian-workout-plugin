@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Follow established patterns** — use "Key Development Patterns" section before implementing features
 - **Delegate to tools** — use build system, Jest, ESLint; don't manually validate what tools can check
-- **Use services, not ad-hoc logic** — e.g., use `DataService` for CSV operations, not inline parsing
+- **Use services, not ad-hoc logic** — e.g., use `DataService` for CSV operations, not inline parsing. Any CSV reading/writing goes through `app/utils/data/CsvCodec.ts` (RFC 4180: quoted commas, quotes, newlines, CRLF); never `split("\n")`/`split(",")` CSV content
 - **Update this file** — when discovering new patterns or solving complex problems, document them here
 
 ## Development Commands
@@ -253,7 +253,7 @@ app/constants/
 ├── index.ts                    # Barrel export + backward-compatible CONSTANTS object
 ├── ui.constants.ts             # UI label groups (MODAL_UI, SETTINGS_UI, …) backed by t(), icons, emoji, unit maps
 ├── defaults.constants.ts       # Default configs (DEFAULT_SETTINGS, DEFAULT_CHART_CONFIG, etc.)
-├── muscles.constants.ts        # Muscle definitions (MUSCLE_TAGS, MUSCLE_GROUPS, MUSCLE_POSITIONS)
+├── muscles.constants.ts        # CANONICAL_MUSCLE_GROUPS, MUSCLE_PARENT_GROUPS, MUSCLE_TAG_ENTRIES (single source; MUSCLE_TAGS/MUSCLE_TAG_MAP are derived)
 ├── validation.constants.ts     # Error messages, validation rules
 └── exerciseTypes.constants.ts  # Exercise type definitions (STRENGTH, CARDIO, FLEXIBILITY)
 ```
@@ -312,6 +312,13 @@ plugin.triggerMuscleTagRefresh()
   → EventAwareRenderChild with muscleTagsAware=true re-renders (dashboards)
 ```
 
+**Display settings (e.g. weight unit):**
+
+```
+eventBus.emit(settings:changed { key, previousValue, newValue })
+  → every EventAwareRenderChild re-renders (cache is not cleared)
+```
+
 **Bulk operations (e.g. exercise conversion, import):**
 
 ```
@@ -326,7 +333,7 @@ dataService.batchOperation('import', async () => { ... N mutations ... })
 - `WorkoutEventBus` (`app/services/events/WorkoutEventBus.ts`) — Typed internal event bus; `batch()` coalesces N events into one `log:bulk-changed`
 - `EventAwareRenderChild` (`app/services/core/EventAwareRenderChild.ts`) — Replaces the old `DataAwareRenderChild`; filters by `exercise`, `workout`, `exactMatch`, `muscleTagsAware`
 - `WorkoutEventTypes.ts` — Discriminated union `WorkoutEvent`, `normalizeExercise()` for case/whitespace-insensitive comparison
-- `triggerWorkoutLogRefresh()` in `main.ts` — **Deprecated** public method; emits `log:bulk-changed` for backward compat with external callers
+- `triggerWorkoutLogRefresh()` in `main.ts` — **Deprecated** public method kept only for external callers (Dataview scripts); not part of any port and not used internally
 
 **Important:** Do NOT pass `onRefresh` callbacks through modal or table components. The event bus handles all refresh logic automatically after every repository mutation.
 
@@ -513,7 +520,7 @@ npm test -- path/to/file.test.ts  # Single file
 
 **Rationale**: Barrel files add indirection and can cause circular dependency issues. Only use where they provide genuine organizational value (component APIs, constants re-exports).
 
-**Known debt**: every `app/features/*/` still has an `index.ts`, and ~30 existing imports use them (`from "@app/features/timer"`, `"@app/features/charts"`, `tables`, `canvas`, `duration`). Don't add new feature-barrel imports. When touching a file that uses one, switch it to a direct import (e.g. `@app/features/timer/views/EmbeddedTimerView`).
+Feature folders have no top-level barrel. ESLint (`no-restricted-imports`) rejects `from "@app/features/<feature>"`; import the file instead (e.g. `@app/features/timer/views/EmbeddedTimerView`). Code under `app/` depends on the ports in `app/types/PluginPorts.ts`, never on `main.ts`.
 
 ## Obsidian Plugin Best Practices
 

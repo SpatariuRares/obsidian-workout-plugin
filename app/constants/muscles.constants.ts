@@ -75,100 +75,6 @@ export const BODY_PARTS = {
 } as const;
 
 /**
- * All recognized muscle tags that can be used in exercise frontmatter.
- * Includes both English and Italian variants for bilingual support.
- * Tags are organized by muscle group for clarity.
- */
-export const MUSCLE_TAGS = [
-  // Main muscle groups - Chest
-  "chest",
-  "petto",
-  "pettorale",
-  "pettoralesuperior",
-  "pettoraleinferior",
-  "pettoralemedio",
-
-  // Main muscle groups - Back
-  "back",
-  "schiena",
-  "dorsale",
-
-  // Main muscle groups - Shoulders
-  "shoulders",
-  "spalle",
-  "deltoidi",
-  "deltoideanteriore",
-  "deltoidilaterale",
-
-  // Main muscle groups - Arms
-  "biceps",
-  "bicipiti",
-  "triceps",
-  "tricipiti",
-
-  // Main muscle groups - Legs
-  "legs",
-  "gambe",
-  "quads",
-  "quadricipiti",
-  "hamstrings",
-  "ischiocrurali",
-  "femorali",
-
-  // Main muscle groups - Glutes
-  "glutes",
-  "glutei",
-  "gluteo",
-  "grandegluteo",
-  "abduttori",
-  "adduttori",
-
-  // Main muscle groups - Calves
-  "calves",
-  "polpacci",
-
-  // Main muscle groups - Core
-  "abs",
-  "addominali",
-  "core",
-  "cardio",
-
-  // Secondary muscle groups
-  "forearms",
-  "avambracci",
-  "traps",
-  "trapezi",
-  "rear_delts",
-  "deltoidi_posteriori",
-  "deltoidiposteriori",
-
-  // Specific muscles
-  "upper_chest",
-  "mid_chest",
-  "lower_chest",
-  "front_delts",
-  "side_delts",
-  "lats",
-  "rhomboids",
-  "lower_back",
-  "ql",
-  "obliques",
-  "serratus",
-
-  // Exercise types that help determine muscle groups
-  "push",
-  "pull",
-  "squat",
-  "deadlift",
-  "press",
-  "curl",
-  "extension",
-  "fly",
-  "row",
-  "spintaanca",
-] as const;
-
-/**
  * Extended muscle tag entry with language information
  */
 export interface MuscleTagEntry {
@@ -298,97 +204,18 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
 ];
 
 /**
- * Maps individual muscle tags to their normalized muscle group.
- * Used to categorize exercises consistently regardless of the
- * specific tag variant used. Supports both English and Italian tags.
+ * Every default tag name, derived from MUSCLE_TAG_ENTRIES.
+ */
+export const MUSCLE_TAGS: readonly string[] = [
+  ...new Set(MUSCLE_TAG_ENTRIES.map((entry) => entry.tag)),
+];
+
+/**
+ * Default tag -> muscle group map (all languages), derived from
+ * MUSCLE_TAG_ENTRIES. Used when the user has no muscle-tags.csv.
  *
  * @deprecated Use MUSCLE_TAG_ENTRIES for language-aware tag handling
  */
-export const MUSCLE_TAG_MAP: Record<string, string> = {
-  // Main muscle groups - Chest
-  chest: "chest",
-  petto: "chest",
-  pettorale: "chest",
-  pettoralesuperior: "upper_chest",
-  pettoraleinferior: "lower_chest",
-  pettoralemedio: "mid_chest",
-
-  // Main muscle groups - Back
-  back: "back",
-  schiena: "back",
-  dorsale: "back",
-
-  // Main muscle groups - Shoulders
-  shoulders: "shoulders",
-  spalle: "shoulders",
-  deltoidi: "shoulders",
-  deltoideanteriore: "front_delts",
-  deltoidilaterale: "side_delts",
-
-  // Main muscle groups - Arms
-  biceps: "biceps",
-  bicipiti: "biceps",
-  triceps: "triceps",
-  tricipiti: "triceps",
-
-  // Main muscle groups - Legs
-  legs: "quads",
-  gambe: "quads",
-  quads: "quads",
-  quadricipiti: "quads",
-  hamstrings: "hamstrings",
-  ischiocrurali: "hamstrings",
-  femorali: "hamstrings",
-
-  // Main muscle groups - Glutes
-  glutes: "glutes",
-  glutei: "glutes",
-  gluteo: "glutes",
-  grandegluteo: "glutes",
-  abduttori: "glutes",
-  adduttori: "glutes",
-
-  // Main muscle groups - Calves
-  calves: "calves",
-  polpacci: "calves",
-
-  // Main muscle groups - Core
-  abs: "abs",
-  addominali: "abs",
-  core: "core",
-  cardio: "core",
-
-  // Secondary muscle groups
-  forearms: "forearms",
-  avambracci: "forearms",
-  traps: "traps",
-  trapezi: "traps",
-  rear_delts: "rear_delts",
-  deltoidi_posteriori: "rear_delts",
-  deltoidiposteriori: "rear_delts",
-
-  // Specific muscles
-  upper_chest: "upper_chest",
-  mid_chest: "mid_chest",
-  lower_chest: "lower_chest",
-  front_delts: "front_delts",
-  side_delts: "side_delts",
-  lats: "lats",
-  rhomboids: "rhomboids",
-  lower_back: "lower_back",
-  ql: "lower_back",
-  obliques: "obliques",
-  serratus: "serratus",
-
-  // Exercise types that help determine muscle groups
-  push: "chest",
-  pull: "back",
-  squat: "quads",
-  deadlift: "back",
-  press: "shoulders",
-  curl: "biceps",
-  extension: "triceps",
-  fly: "chest",
-  row: "back",
-  spintaanca: "glutes",
-};
+export const MUSCLE_TAG_MAP: Record<string, string> = Object.fromEntries(
+  MUSCLE_TAG_ENTRIES.map((entry) => [entry.tag, entry.muscleGroup]),
+);

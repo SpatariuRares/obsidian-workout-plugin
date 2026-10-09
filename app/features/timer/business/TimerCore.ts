@@ -3,10 +3,10 @@ import {
   TimerState,
   TimerCallbacks,
   TIMER_TYPE,
-  TimerAudio,
-  TimerDisplay,
-  TimerControls,
-} from "@app/features/timer";
+} from "@app/features/timer/types";
+import { TimerAudio } from "@app/features/timer/components/TimerAudio";
+import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
+import { TimerControls } from "@app/features/timer/components/TimerControls";
 import { t } from "@app/i18n";
 
 export class TimerCore {
@@ -14,6 +14,8 @@ export class TimerCore {
   private timerId: string;
   private callbacks: TimerCallbacks;
   private earlySoundPlayed = false;
+  private soundEnabled = true;
+  private audio = new TimerAudio();
 
   constructor(timerId: string, callbacks: TimerCallbacks = {}) {
     this.timerId = timerId;
@@ -38,6 +40,10 @@ export class TimerCore {
     return { ...this.state };
   }
 
+  setSoundEnabled(enabled: boolean): void {
+    this.soundEnabled = enabled;
+  }
+
   setState(newState: Partial<TimerState>): void {
     this.state = { ...this.state, ...newState };
     this.callbacks.onStateChange?.(this.state);
@@ -60,6 +66,11 @@ export class TimerCore {
           currentRound: 1,
         });
       }
+    }
+
+    // Resume audio while still inside the user's tap (required on mobile)
+    if (this.soundEnabled) {
+      this.audio.unlock();
     }
 
     this.earlySoundPlayed = false;
@@ -122,8 +133,7 @@ export class TimerCore {
         remaining > 0
       ) {
         this.earlySoundPlayed = true;
-        TimerAudio.playSound();
-        this.callbacks.onSoundPlay?.();
+        this.playSound();
       }
       if (remaining <= 0) {
         this.handleTimerComplete();
@@ -139,12 +149,17 @@ export class TimerCore {
           this.handleTimerComplete();
           return;
         }
-        TimerAudio.playSound();
-        this.callbacks.onSoundPlay?.();
+        this.playSound();
       }
     }
 
     this.updateDisplay();
+  }
+
+  private playSound(): void {
+    if (!this.soundEnabled) return;
+    this.audio.play();
+    this.callbacks.onSoundPlay?.();
   }
 
   private updateDisplay(): void {
@@ -155,7 +170,7 @@ export class TimerCore {
     this.stop();
     TimerDisplay.cleanupOverlay(this.timerId);
     if (!this.earlySoundPlayed) {
-      TimerAudio.playSound();
+      this.playSound();
     }
 
     if (this.state.startStopBtn) {
@@ -186,5 +201,6 @@ export class TimerCore {
   destroy(): void {
     this.stop();
     TimerDisplay.cleanupOverlay(this.timerId);
+    this.audio.close();
   }
 }

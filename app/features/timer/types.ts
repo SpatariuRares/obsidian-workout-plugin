@@ -25,7 +25,8 @@ export interface EmbeddedTimerParams {
   exercise?: string;
   workout?: string;
   rounds?: number; // Number of rounds (for interval timer)
-  sound?: boolean;
+  sound?: boolean; // Play the notification sound (default true)
+  autoStart?: boolean; // Start the timer as soon as the block renders
   preset?: string; // Name of a saved timer preset to use as base configuration
 }
 

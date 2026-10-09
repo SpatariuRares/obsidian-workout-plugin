@@ -1,6 +1,7 @@
 {
   "charts": {
     "date": "Datum",
+    "fallbackTableMessage": "De grafiek kon niet worden getekend, daarom worden de gegevens als tabel getoond.",
     "labels": {
       "quickWeightIncrementUnit": "De knoppen voor gewicht verhogen met {weightIncrementUnit}",
       "reps": "Aantal",
@@ -10,10 +11,14 @@
       "weight": "Gewicht",
       "weightIncrementUnit": "Toename in gewicht {weightIncrementUnit}"
     },
+    "overallVariationPrefix": "Totale verandering: ",
+    "significantIncrease": "Gestegen vanaf nul",
+    "trendLine": "Trendlijn",
     "typeNotAvailable": "Het type grafiek \"{chartDataType}\" is niet beschikbaar voor oefeningen van het type {exerciseType}. Beschikbare types: {typeList}",
     "types": {
       "distance": "Afstand",
       "duration": "Duur",
+      "heartRate": "Hartslag",
       "pace": "Tempo",
       "reps": "Representaties",
       "volume": "Volume",
@@ -23,8 +28,16 @@
     "noTypesAvailable": "Geen beschikbare grafiektypen"
   },
   "commands": {
+    "addExerciseBlock": "Oefeningsblok toevoegen",
     "addMissingBlockIds": "Voeg ontbrekende ID's toe aan codeblokken",
-    "createCsvLog": "Maak een CSV-logbestand"
+    "auditExerciseNames": "Oefeningsnamen controleren",
+    "convertExercise": "Oefening omzetten",
+    "createCsvLog": "Maak een CSV-logbestand",
+    "exportWorkoutToCanvas": "Training exporteren naar canvas",
+    "generateTagReference": "Labeloverzicht genereren",
+    "insertTable": "Trainingstabel invoegen",
+    "manageMuscleTags": "Spierlabels beheren",
+    "migrateExerciseTypes": "Oefeningstypen migreren"
   },
   "common": {
     "bpm": "bpm",
@@ -34,6 +47,7 @@
     "exercise": "Oefening",
     "km": "km",
     "minPerKm": "min/km",
+    "notAvailable": "Niet beschikbaar",
     "sec": "common.sec",
     "unknown": "Onbekend",
     "workout": "Training"
@@ -71,12 +85,19 @@
       "columnVariance": "Variatie",
       "columnWorkout": "Training",
       "minutesSuffix": "min",
+      "noData": "Nog niet genoeg sessies om te vergelijken.",
       "subtitle": "Geschatte vs. daadwerkelijke duur van de training",
       "title": "Vergelijking van duur",
+      "varianceTrendDeclining": "Schattingen wijken steeds verder af van je echte sessies",
+      "varianceTrendImproving": "Schattingen komen steeds dichter bij je echte sessies",
+      "varianceTrendStable": "De nauwkeurigheid van de schattingen is stabiel",
+      "varianceTrendTitle": "Nauwkeurigheid van schattingen",
       "avgVarianceStat": "Gem. variantie: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
+      "allValid": "Alle oefenpagina's zijn geldig",
+      "noTags": "Geen spierlabels in de frontmatter",
       "readError": "❌ Fout bij het lezen van bestand: {message}",
       "title": "Foutmeldingen bij bestanden",
       "tooManyTags": "Te veel spierlabels ({count})"
@@ -87,8 +108,14 @@
       "tooltip": "Klik om te kopiëren: {tag}",
       "totalCount": "Totaal: {count} tags beschikbaar"
     },
-    "protocol": {},
+    "protocol": {
+      "clickToFilter": "Klik om te filteren",
+      "tooltip": "{label}: {count} sets ({percentage}%)"
+    },
     "protocolDistribution": {
+      "clearFilter": "Filter wissen",
+      "filterActive": "Gefilterd op",
+      "noData": "Geen sets gelogd in de afgelopen 30 dagen",
       "subtitle": "Overzicht van de trainingsprotocollen (laatste 30 dagen)",
       "title": "Verdeling van protocollen"
     },
@@ -96,11 +123,15 @@
       "columnEntries": "Kolommen",
       "columnProgression": "Vooruitgang",
       "columnProtocol": "Protocol",
+      "columnVolumeChange": "Volumeverandering",
       "disclaimer": "Aan deze informatie kunnen geen garanties worden gegeven.",
+      "noData": "Nog niet genoeg gegevens: elk protocol heeft minstens 5 gelogde sets nodig.",
       "title": "Effectiviteit van het protocol"
     },
     "quickActions": {
-      "title": "Snelle acties"
+      "addWorkoutLog": "Training loggen",
+      "title": "Snelle acties",
+      "viewExercises": "Oefeningen bekijken"
     },
     "quickStats": {
       "month": "Maand",
@@ -210,6 +241,7 @@
       "codeBlockWorkoutLog": "Toon de tabel met trainingsgegevens",
       "codeBlockWorkoutTimer": "Tijdsmeting met aftellen of intervallen",
       "combinedTitle": "Gecombineerd (Oefening + Training)",
+      "commandsNote": "**Opdrachten** (Ctrl/Cmd + P): Maak een trainingslog, Voeg trainingsdiagram toe, Voeg een trainings-timer toe, Pagina om een oefening aan te maken",
       "countdownTimerTitle": "Timer voor aftellen",
       "durationEstimatorIntro": "De geschatte totale duur van de training is gebaseerd op de oefeningen in de huidige notatie.",
       "durationEstimatorTitle": "4. Schatting van de duur",
@@ -248,13 +280,17 @@
       "workouts": "Voorbeelden van bestandsnamen"
     },
     "gettingStarted": {
+      "commandCreateExercise": "Pagina om een oefening aan te maken",
       "commandCreateExerciseDesc": "Maak een nieuw oefenbestand",
+      "commandCreateLog": "Maak een trainingslog",
       "commandCreateLogDesc": "Voeg een nieuwe trainingssessie toe",
+      "commandInsertChart": "Voeg trainingsdiagram toe",
       "commandInsertChartDesc": "Voeg een grafiek toe aan elke notitie",
+      "commandInsertTimer": "Voeg een trainings-timer toe",
       "commandInsertTimerDesc": "Voeg een pauze-timer toe",
       "dashboardDesc": "Uw trainingsgegevens op een rijtje",
       "exercisesDesc": "Voorbeeld oefenpagina's met logs en grafieken",
-      "exercisesFolder": "**{folder}**/**",
+      "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Volledige referentie van alle codeblokken",
       "folderStructureTitle": "Bestandsstructuur",
       "logDesc": "Uw CSV-gegevens voor uw trainingsschema",
@@ -271,7 +307,7 @@
       "title": "Beginnen met het Gym-plugin",
       "welcome": "Welkom! Deze map bevat voorbeeldbestanden om u te helpen alle functies te leren.",
       "workoutsDesc": "Voorbeeld trainingsschema's",
-      "workoutsFolder": "**{folder}**/**"
+      "workoutsFolder": "**{folder}/**"
     },
     "hiit": {
       "cyclingCooldownTitle": "Koersafbouwen",
@@ -304,9 +340,15 @@
       "supersetLunges": "Superset met lunges"
     }
   },
-  "forms": {},
+  "forms": {
+    "enterCsvPath": "Map voor de CSV-bestanden",
+    "enterFolderPath": "Mappad",
+    "workoutName": "Naam van de training"
+  },
   "general": {
+    "avgReps": "Gem. herhalingen",
     "back": "Terug",
+    "currentFile": "Huidig bestand",
     "dashboard": "Dashboard",
     "delete": "Verwijderen",
     "edit": "Bewerk",
@@ -326,7 +368,12 @@
       "totalVolume": "Totale hoeveelheid ({unit})",
       "totalWeight": "Tot gewicht ({unit})"
     },
-    "search": "Zoeken"
+    "muscleHeatMap": "Spierheatmap",
+    "noMatchMessage": "Nog geen logs die aan dit filter voldoen.",
+    "search": "Zoeken",
+    "totalReps": "Totaal herhalingen",
+    "workoutData": "Trainingsgegevens",
+    "workoutLog": "Trainingslog"
   },
   "icons": {
     "actions": {
@@ -412,6 +459,8 @@
     "noDataTitle": "Geen logs gevonden voor {exerciseName}"
   },
   "messages": {
+    "codeInserted": "Codeblok ingevoegd",
+    "csvNotFound": "CSV van het trainingslog niet gevonden. Controleer de CSV-map in de instellingen.",
     "errors": {
       "tagReferenceFailed": "Fout bij het genereren van de referentie: {error}",
       "csvLoadError": "Fout bij laden CSV-gegevens: {error}",
@@ -424,7 +473,13 @@
       "workoutLogCreateError": "Kan CSV-bestand niet maken op pad: {path}. Controleer het pad in de instellingen.",
       "tableRenderError": "Fout bij het renderen van de tabel"
     },
+    "fileEmpty": "Het bestand is leeg",
+    "imbalanceAlerts": "Waarschuwingen voor disbalans",
+    "insufficientData": "Niet genoeg gegevens",
     "noDataPeriod": "Geen trainingsgegevens gevonden voor de geselecteerde periode.",
+    "noFrontmatter": "Geen frontmatter",
+    "noImbalances": "Geen disbalans gevonden",
+    "noTags": "Geen labels in de frontmatter",
     "success": {
       "blockIdsAdded": "Voegde {count} ontbrekende ID(s) toe in het(de) bestand(en) {files}.",
       "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
@@ -432,7 +487,8 @@
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Timer voltooid!",
-    "templatesGenerated": "Templates zijn gegenereerd in '{folder}'. U kunt ze nu aanpassen."
+    "templatesGenerated": "Templates zijn gegenereerd in '{folder}'. U kunt ze nu aanpassen.",
+    "exerciseFolderNotSet": "Stel eerst de oefeningenmap in bij de instellingen."
   },
   "modal": {
     "actions": "Acties",
@@ -480,7 +536,21 @@
     "canvasLayout": "Lay-out",
     "canvasOptions": "Opties",
     "checkboxes": {
-      "sound": "Geluid"
+      "connectSupersets": "Supersets koppelen",
+      "exactMatch": "Exacte overeenkomst",
+      "includeDurations": "Duur opnemen",
+      "includeLog": "Log opnemen",
+      "includeStats": "Statistieken opnemen",
+      "includeTimer": "Timer opnemen",
+      "showAddButton": "Toevoegknop tonen",
+      "showControls": "Bediening tonen",
+      "showStatistics": "Statistieken tonen",
+      "showTrendHeader": "Trendkop tonen",
+      "showTrendLine": "Trendlijn tonen",
+      "sound": "Geluid",
+      "timerSound": "Timergeluid",
+      "useCurrentWorkout": "Huidige training gebruiken",
+      "useCurrentWorkoutFile": "Huidig trainingsbestand gebruiken"
     },
     "confirmAction": "Bevestig actie",
     "csvExercise": "Oefening met CSV",
@@ -528,16 +598,20 @@
       "auditConfirmRenameFile": "Dit bestand hernoemen?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} mogelijke afwijkingen gevonden:",
       "auditNoMatchFound": "Geen overeenkomst gevonden",
+      "auditNoMismatches": "Elk oefeningsbestand komt overeen met de naam in het log.",
       "auditRenameError": "Kon niet hernoemen: {error}",
       "auditRenameFileError": "Kon het bestand niet hernoemen: {error}",
+      "auditRenameFileSuccess": "Bestand hernoemd",
       "auditRenameSuccess": "Hernoemd ({count} bestanden bijgewerkt)",
       "auditScanError": "Fout bij het scannen: {error}",
+      "auditScanning": "Oefeningsbestanden scannen...",
       "canvasExportError": "Fout bij exporteren van het canvas: {error}",
       "canvasExported": "Canvas is geëxporteerd ({path})",
       "chartInserted": "✅ Grafiek succesvol toegevoegd!",
       "confirmUpdateTarget": "Doel bijwerken naar {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard succesvol geïnstalleerd!",
       "dismissAchievement": "Prestatie sluiten",
+      "exerciseBlockInserted": "Oefeningsblok ingevoegd",
       "exerciseNameRequired": "❌ Gelieve een naam voor de oefening in te voeren",
       "exercisePageCreated": "Oefenpagina succesvol aangemaakt!",
       "exercisePageError": "Fout bij het aanmaken van de oefeningspagina: {error}",
@@ -551,18 +625,27 @@
       "migrationError": "Fout bij migratie: {error}",
       "muscleTagCount": "{count} tag(s) gevonden",
       "muscleTagDeleteConfirm": "Bent u er zeker van dat u het label \"{tag}\" wilt verwijderen?",
+      "muscleTagDeleted": "Label verwijderd",
       "muscleTagExists": "De tag \"{tag}\" bestaat al",
       "muscleTagExportError": "Fout bij het exporteren van spierlabels: {error}",
+      "muscleTagExported": "Labels geëxporteerd naar muscle-tags-export.csv",
       "muscleTagImportError": "Fout bij het importeren van spierlabels: {error}",
+      "muscleTagImportInvalidFormat": "Dit bestand heeft een kolom 'tag' en een kolom 'muscleGroup' nodig",
       "muscleTagImportInvalidGroup": "Ongeldige spiergroep \"{group}\" voor tag \"{tag}\". Moet een standaard spiergroep zijn.",
+      "muscleTagImportNoValid": "Geen geldige labels gevonden in het bestand",
       "muscleTagImportPreview": "{count} tag(s) selecteren om te importeren",
       "muscleTagImported": "{count} Spieretiket(ten) succesvol geïmporteerd!",
+      "muscleTagLoading": "Labels laden...",
+      "muscleTagNoResults": "Geen labels gevonden voor je zoekopdracht",
       "muscleTagSaveError": "Fout bij opslaan van de spier-tag: {error}",
+      "muscleTagSaved": "Label opgeslagen",
       "muscleTagSimilarFound": "{count} soortgelijke tag(s) gevonden",
+      "muscleTagSimilarWarning": "Er bestaat al een vergelijkbaar label",
       "suggestedNextWeight": "Voorgesteld volgend gewicht: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabel succesvol toegevoegd!",
       "tableUpdateFailed": "Update van de tabel is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "tableUpdated": "✅ Tabel succesvol bijgewerkt!",
+      "targetAchieved": "Doel bereikt!",
       "timerElementsNotInitialized": "Timer-elementen zijn niet geïnitialiseerd",
       "timerInserted": "✅ Timer succesvol toegevoegd!",
       "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
@@ -574,7 +657,8 @@
       "validMinValue": "{field} moet minimaal {min} zijn",
       "validMaxValue": "{field} mag maximaal {max} zijn",
       "validFieldRequired": "{field} is verplicht",
-      "migrationFolderNotFound": "Oefenmap niet gevonden: {path}"
+      "migrationFolderNotFound": "Oefenmap niet gevonden: {path}",
+      "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt"
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -606,23 +690,39 @@
     "rounds": "Rondes:",
     "save": "Opslaan",
     "sections": {
+      "advancedOptions": "Geavanceerde opties",
+      "chartType": "Grafiektype",
       "configuration": "Configuratie",
+      "displayOptions": "Weergaveopties",
+      "exerciseConfiguration": "Oefeningsconfiguratie",
+      "mobileOptions": "Mobiele opties",
       "options": "Opties",
       "preset": "Voorgedefinieerd",
+      "progressiveOverload": "Progressieve overbelasting",
+      "tableType": "Tabeltype",
       "target": "Doel",
+      "timerConfiguration": "Timerconfiguratie",
       "workout": "Training"
     },
     "selectOptions": {
+      "allLogs": "Alle logs",
       "cardio": "Cardio",
+      "completeWorkout": "Volledige training",
       "custom": "Aangepast",
       "distance": "Afstand",
+      "dropSet": "Drop set",
+      "exerciseWorkout": "Oefening in een training",
+      "myoReps": "Myo-reps",
       "number": "Aantal",
+      "restPause": "Rest-pause",
+      "specificExercise": "Specifieke oefening",
       "standard": "Standaard",
       "strength": "Sterkte",
       "superset": "Superset",
       "text": "Tekst",
       "timed": "Met tijdslimiet",
-      "twentyones": "Opties"
+      "twentyones": "Opties",
+      "yesNo": "Ja/Nee"
     },
     "sets": "Sets:",
     "similarTags": "Vergelijkbare tags:",
@@ -704,7 +804,7 @@
       "repDuration": "Geschatte tijd voor één herhaling. Wordt gebruikt wanneer het aantal herhalingen bekend is (bijvoorbeeld: 'x 10 herhalingen').",
       "runAllMaintenance": "Voer alle onderhoudstaken één voor één uit. Veilig om meerdere keren uit te voeren.",
       "setDuration": "Wordt gebruikt wanneer het aantal herhalingen niet is opgegeven (standaardwaarde). Typische duur: 30-60 seconden.",
-      "setupCSV": "Maak zowel het bestand `workout_logs.csv` als `muscle-tags.csv` aan in de geconfigureerde map.",
+      "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard toename in gewicht voor progressieve belasting (bijvoorbeeld 2,5 voor toenames van 2,5 eenheden)",
       "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs.",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent"
@@ -755,7 +855,7 @@
       "none": "Geen",
       "weightUnit": {
         "kg": "Kilogrammen (kg)",
-        "lb": "Pounds (lb)"
+        "lb": "Pond (lb)"
       }
     },
     "placeholders": {
@@ -789,9 +889,11 @@
     }
   },
   "stats": {
+    "avgVolume": "Gem. volume",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (laatste 3)",
+    "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
     "sessions": "Sessies",
     "title": "📈 {dataTypeLabel} Statistieken ({contextLabel}):"
@@ -804,6 +906,7 @@
       "distance": "Afstand",
       "duration": "Duur",
       "exercise": "Oefening",
+      "heartRate": "Hartslag",
       "notes": "Opmerkingen",
       "protocol": "Protocol",
       "reps": "Aantal",
@@ -819,19 +922,26 @@
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Gewicht ({weightUnit})"
     },
+    "deleteConfirm": "Deze logregel verwijderen?",
     "deleteError": "Fout bij verwijderen: {error}",
+    "deleteSuccess": "Logregel verwijderd",
+    "deleteTitle": "Verwijderen",
     "editTable": "Tabel bewerken",
+    "editTitle": "Bewerken",
+    "gotoExercise": "Naar oefening",
+    "invalidDate": "Ongeldige datum",
     "labels": {
-      "target": "Doel:",
-      "errors": {
-        "tableElementsNotInitialized": "De elementen in de tabel zijn niet geïnitialiseerd."
-      }
+      "target": "Doel:"
     },
+    "noData": "Geen gegevens",
+    "notAvailable": "n.v.t.",
+    "refreshSuccess": "Tabel vernieuwd",
     "target": {
       "progressTooltip": "Beste: {best} herhalingen / Doel: {target} herhalingen",
       "repsSuffix": "representanten",
       "separator": " × "
     },
+    "trendLine": "Trendlijn",
     "refreshingTable": "Tabel vernieuwen...",
     "validation": {
       "sortByInvalid": "sortBy moet een van {allowed} zijn, ontvangen: \"{value}\"",
@@ -847,7 +957,7 @@
     "controls": {
       "pauseTimer": "Timer pauzeren",
       "resetTimer": "Timer opnieuw starten",
-      "startTimer": "Start timer"
+      "startTimer": "Timer starten"
     },
     "countdown": "Tijdsaanduiding",
     "editTimer": "Timer bewerken",
@@ -867,10 +977,18 @@
     "invariant": "Onveranderlijk",
     "neutral": "Neutraal",
     "stable": "Stabil",
+    "stableLower": "Stabiel",
     "up": "Omhoog"
   },
   "canvas": {
     "duration": "**Duur:** {duration}",
     "best": "**Beste:** {weight}{unit} x {reps} herhalingen"
+  },
+  "templates": {
+    "tagReference": {
+      "title": "Overzicht van spierlabels",
+      "description": "Dit bestand toont alle beschikbare spierlabels uit je bestand muscle-tags.csv.",
+      "note": "**Let op**: dit bestand wordt automatisch gegenereerd. Gebruik de opdracht '{command}' om labels toe te voegen of te wijzigen."
+    }
   }
 }

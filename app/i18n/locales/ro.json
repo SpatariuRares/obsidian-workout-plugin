@@ -1,6 +1,7 @@
 {
   "charts": {
     "date": "Data",
+    "fallbackTableMessage": "Graficul nu a putut fi afișat, așa că datele sunt prezentate într-un tabel.",
     "labels": {
       "quickWeightIncrementUnit": "Butoanele de greutate cresc cu {weightIncrementUnit}",
       "reps": "Reprezentări",
@@ -10,10 +11,14 @@
       "weight": "Greutate",
       "weightIncrementUnit": "Creștere a greutății {weightIncrementUnit}"
     },
+    "overallVariationPrefix": "Variație totală: ",
+    "significantIncrease": "Creștere de la zero",
+    "trendLine": "Linie de tendință",
     "typeNotAvailable": "Tipul de grafic \"{chartDataType}\" nu este disponibil pentru exercițiile de tip {exerciseType}. Tipuri disponibile: {typeList}",
     "types": {
       "distance": "Distanță",
       "duration": "Durată",
+      "heartRate": "Puls",
       "pace": "Ritm",
       "reps": "Reprezentări",
       "volume": "Volum",
@@ -23,8 +28,16 @@
     "noTypesAvailable": "Nu sunt disponibile tipuri de grafice."
   },
   "commands": {
+    "addExerciseBlock": "Adaugă bloc de exercițiu",
     "addMissingBlockIds": "Adăugați ID-urile lipsă în blocuri de cod",
-    "createCsvLog": "Creează fișier de jurnal CSV"
+    "auditExerciseNames": "Verifică numele exercițiilor",
+    "convertExercise": "Convertește exercițiul",
+    "createCsvLog": "Creează fișier de jurnal CSV",
+    "exportWorkoutToCanvas": "Exportă antrenamentul în canvas",
+    "generateTagReference": "Generează referința etichetelor",
+    "insertTable": "Adaugă tabel de antrenament",
+    "manageMuscleTags": "Gestionează etichetele pentru mușchi",
+    "migrateExerciseTypes": "Migrează tipurile de exerciții"
   },
   "common": {
     "bpm": "bpm",
@@ -34,6 +47,7 @@
     "exercise": "Exercițiu",
     "km": "km",
     "minPerKm": "minim/km",
+    "notAvailable": "Indisponibil",
     "sec": "sec",
     "unknown": "Necunoscut",
     "workout": "Antrenament"
@@ -71,12 +85,19 @@
       "columnVariance": "Variație",
       "columnWorkout": "Antrenament",
       "minutesSuffix": "min",
+      "noData": "Nu sunt încă destule sesiuni pentru comparație.",
       "subtitle": "Durata estimată comparativ cu durata reală a antrenamentului",
       "title": "Comparație de durată",
+      "varianceTrendDeclining": "Estimările se îndepărtează tot mai mult de sesiunile tale reale",
+      "varianceTrendImproving": "Estimările se apropie de sesiunile tale reale",
+      "varianceTrendStable": "Precizia estimărilor este constantă",
+      "varianceTrendTitle": "Precizia estimărilor",
       "avgVarianceStat": "Varianță medie: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
+      "allValid": "Toate paginile de exerciții sunt valide",
+      "noTags": "Nicio etichetă pentru mușchi în frontmatter",
       "readError": "❌ Eroare la citirea fișierului: {message}",
       "title": "Erori în fișiere",
       "tooManyTags": "Prea multe etichete pentru mușchi ({count})"
@@ -87,8 +108,14 @@
       "tooltip": "Dați clic pentru a copia: {tag}",
       "totalCount": "Total: {count} etichete disponibile"
     },
-    "protocol": {},
+    "protocol": {
+      "clickToFilter": "Click pentru filtrare",
+      "tooltip": "{label}: {count} serii ({percentage}%)"
+    },
     "protocolDistribution": {
+      "clearFilter": "Șterge filtrul",
+      "filterActive": "Filtrat după",
+      "noData": "Nicio serie înregistrată în ultimele 30 de zile",
       "subtitle": "Detalii despre protocoalele de instruire (ultimele 30 de zile)",
       "title": "Distribuția protocoalelor"
     },
@@ -96,11 +123,15 @@
       "columnEntries": "Intrări",
       "columnProgression": "Progres",
       "columnProtocol": "Protocol",
+      "columnVolumeChange": "Variația volumului",
       "disclaimer": "Atenție",
+      "noData": "Nu sunt încă destule date: fiecare protocol are nevoie de cel puțin 5 serii înregistrate.",
       "title": "Eficiența protocolului"
     },
     "quickActions": {
-      "title": "Acțiuni rapide"
+      "addWorkoutLog": "Adaugă înregistrare de antrenament",
+      "title": "Acțiuni rapide",
+      "viewExercises": "Vezi exercițiile"
     },
     "quickStats": {
       "month": "Luna",
@@ -210,6 +241,7 @@
       "codeBlockWorkoutLog": "Afișează tabelul cu datele antrenamentului",
       "codeBlockWorkoutTimer": "Cronometru pentru numărare inversă sau intervale",
       "combinedTitle": "Combinat (exerciții + antrenament)",
+      "commandsNote": "**Comenzi** (Ctrl/Cmd + P): Creează jurnal de antrenament, Adaugă graficul antrenamentului, Adaugă cronometrul pentru antrenament, Pagina pentru crearea exercițiilor",
       "countdownTimerTitle": "Cronometru invers (timer)",
       "durationEstimatorIntro": "Estimează durata totală a antrenamentului, pe baza exercițiilor din nota curentă.",
       "durationEstimatorTitle": "4. Estimarea duratei",
@@ -248,9 +280,13 @@
       "workouts": "Exemple de nume de foldere pentru antrenamente"
     },
     "gettingStarted": {
+      "commandCreateExercise": "Pagina pentru crearea exercițiilor",
       "commandCreateExerciseDesc": "Creați un nou fișier pentru exercițiu",
+      "commandCreateLog": "Creează jurnal de antrenament",
       "commandCreateLogDesc": "Adaugă o nouă intrare pentru antrenament",
+      "commandInsertChart": "Adaugă graficul antrenamentului",
       "commandInsertChartDesc": "Adăugați un grafic oricărei note",
+      "commandInsertTimer": "Adaugă cronometrul pentru antrenament",
       "commandInsertTimerDesc": "Adaugă un cronometru pentru pauză",
       "dashboardDesc": "Statistici despre antrenamentul dumneavoastră, într-un singur loc",
       "exercisesDesc": "Exemple de pagini cu exerciții, incluzând înregistrări și grafice",
@@ -304,9 +340,15 @@
       "supersetLunges": "Exercițiu cu suprapunere și genuflexiuni"
     }
   },
-  "forms": {},
+  "forms": {
+    "enterCsvPath": "Folderul pentru fișierele CSV",
+    "enterFolderPath": "Calea folderului",
+    "workoutName": "Numele antrenamentului"
+  },
   "general": {
+    "avgReps": "Repetări medii",
     "back": "Înapoi",
+    "currentFile": "Fișierul curent",
     "dashboard": "Panou de control",
     "delete": "Șterge",
     "edit": "Modifică",
@@ -326,7 +368,12 @@
       "totalVolume": "Volum total ({unit})",
       "totalWeight": "Greutate totală ({unit})"
     },
-    "search": "Caută"
+    "muscleHeatMap": "Hartă termică a mușchilor",
+    "noMatchMessage": "Încă nicio înregistrare nu corespunde acestui filtru.",
+    "search": "Caută",
+    "totalReps": "Total repetări",
+    "workoutData": "Date de antrenament",
+    "workoutLog": "Jurnal de antrenament"
   },
   "icons": {
     "actions": {
@@ -412,6 +459,8 @@
     "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}"
   },
   "messages": {
+    "codeInserted": "Bloc de cod inserat",
+    "csvNotFound": "Fișierul CSV al jurnalului de antrenament nu a fost găsit. Verifică folderul CSV în setări.",
     "errors": {
       "tagReferenceFailed": "Eroare la generarea referinței etichetă: {error}",
       "csvLoadError": "Eroare la încărcarea datelor CSV: {error}",
@@ -424,7 +473,13 @@
       "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verificați calea în setări.",
       "tableRenderError": "Eroare la redarea tabelului"
     },
+    "fileEmpty": "Fișierul este gol",
+    "imbalanceAlerts": "Alerte de dezechilibru",
+    "insufficientData": "Date insuficiente",
     "noDataPeriod": "Nu au fost găsite date despre antrenament pentru perioada selectată.",
+    "noFrontmatter": "Fără frontmatter",
+    "noImbalances": "Nu s-au găsit dezechilibre",
+    "noTags": "Nicio etichetă în frontmatter",
     "success": {
       "blockIdsAdded": "Au fost adăugate ID-urile lipsă {count} în fișierul(ele) {files}.",
       "csvCreated": "Fișierul CSV a fost creat cu succes!",
@@ -432,7 +487,8 @@
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Cronometrul s-a încheiat!",
-    "templatesGenerated": "Șabloanele generate în '{folder}'. Acum puteți personaliza șabloanele."
+    "templatesGenerated": "Șabloanele generate în '{folder}'. Acum puteți personaliza șabloanele.",
+    "exerciseFolderNotSet": "Setează mai întâi folderul de exerciții în setări."
   },
   "modal": {
     "actions": "Acțiuni",
@@ -480,7 +536,21 @@
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
     "checkboxes": {
-      "sound": "Sunet"
+      "connectSupersets": "Conectează superseturile",
+      "exactMatch": "Potrivire exactă",
+      "includeDurations": "Include duratele",
+      "includeLog": "Include jurnalul",
+      "includeStats": "Include statisticile",
+      "includeTimer": "Include cronometrul",
+      "showAddButton": "Afișează butonul de adăugare",
+      "showControls": "Afișează comenzile",
+      "showStatistics": "Afișează statisticile",
+      "showTrendHeader": "Afișează antetul de tendință",
+      "showTrendLine": "Afișează linia de tendință",
+      "sound": "Sunet",
+      "timerSound": "Sunetul cronometrului",
+      "useCurrentWorkout": "Folosește antrenamentul curent",
+      "useCurrentWorkoutFile": "Folosește fișierul antrenamentului curent"
     },
     "confirmAction": "Confirmă acțiunea",
     "csvExercise": "Exercițiu cu fișier CSV",
@@ -528,16 +598,20 @@
       "auditConfirmRenameFile": "Redenumești acest fișier?\n\n{oldName} → {newName}",
       "auditMismatchCount": "S-au găsit {count} nepotriviri:",
       "auditNoMatchFound": "Nicio potrivire găsită",
+      "auditNoMismatches": "Fiecare fișier de exercițiu corespunde numelui său din jurnal.",
       "auditRenameError": "Nu s-a putut redenumi: {error}",
       "auditRenameFileError": "Nu s-a putut redenumi fișierul: {error}",
+      "auditRenameFileSuccess": "Fișier redenumit",
       "auditRenameSuccess": "Redenumit ({count} fișiere actualizate)",
       "auditScanError": "Eroare la scanare: {error}",
+      "auditScanning": "Se scanează fișierele de exerciții...",
       "canvasExportError": "Eroare la exportarea pe canvas: {error}",
       "canvasExported": "Exportarea pe pânză ({path})",
       "chartInserted": "✅ Graficul a fost inserat cu succes!",
       "confirmUpdateTarget": "Actualizezi obiectivul la {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Panoul de control a fost inserat cu succes!",
       "dismissAchievement": "Închide realizare",
+      "exerciseBlockInserted": "Bloc de exercițiu inserat",
       "exerciseNameRequired": "❌ vă rugăm să introduceți un nume pentru exercițiu",
       "exercisePageCreated": "Pagina de exerciții a fost creată cu succes!",
       "exercisePageError": "Eroare la crearea paginii exercițiului: {error}",
@@ -551,18 +625,27 @@
       "migrationError": "Eroare la migrare: {error}",
       "muscleTagCount": "{count} etichete găsite",
       "muscleTagDeleteConfirm": "Sunteți sigur(ă) că doriți să ștergeți eticheta \"{tag}\"?",
+      "muscleTagDeleted": "Etichetă ștearsă",
       "muscleTagExists": "Eticheta \"{tag}\" există deja",
       "muscleTagExportError": "Eroare la exportul etichetelor pentru mușchi: {error}",
+      "muscleTagExported": "Etichete exportate în muscle-tags-export.csv",
       "muscleTagImportError": "Eroare la importul etichetelor pentru mușchi: {error}",
+      "muscleTagImportInvalidFormat": "Fișierul trebuie să aibă o coloană 'tag' și o coloană 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Grupul muscular \"{group}\" este invalid pentru eticheta \"{tag}\". Trebuie să fie un grup muscular standard.",
+      "muscleTagImportNoValid": "Nu s-au găsit etichete valide în fișier",
       "muscleTagImportPreview": "{count} etichete pentru import",
       "muscleTagImported": "{count} Etichetele pentru mușchi au fost importate cu succes!",
+      "muscleTagLoading": "Se încarcă etichetele...",
+      "muscleTagNoResults": "Nicio etichetă nu corespunde căutării",
       "muscleTagSaveError": "Eroare la salvarea etichetei pentru mușchi: {error}",
+      "muscleTagSaved": "Etichetă salvată",
       "muscleTagSimilarFound": "{count} etichete similare găsite",
+      "muscleTagSimilarWarning": "Există deja o etichetă similară",
       "suggestedNextWeight": "Următoarea greutate sugerată: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabelul a fost inserat cu succes!",
       "tableUpdateFailed": "Nu s-a putut actualiza tabelul. Asigurați-vă că fișierul este deschis în editor.",
       "tableUpdated": "✅ Tabloul a fost actualizat cu succes!",
+      "targetAchieved": "Obiectiv atins!",
       "timerElementsNotInitialized": "Elementele temporizatorului nu au fost inițializate",
       "timerInserted": "✅ Timpul a fost introdus cu succes!",
       "timerUpdateFailed": "Nu s-a reușit actualizarea temporizatorului. Asigurați-vă că fișierul este deschis în editor.",
@@ -574,7 +657,8 @@
       "validMinValue": "{field} trebuie să fie cel puțin {min}",
       "validMaxValue": "{field} trebuie să fie cel mult {max}",
       "validFieldRequired": "{field} este obligatoriu",
-      "migrationFolderNotFound": "Dosarul de exerciții nu a fost găsit: {path}"
+      "migrationFolderNotFound": "Dosarul de exerciții nu a fost găsit: {path}",
+      "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -606,23 +690,39 @@
     "rounds": "Runde:",
     "save": "Salva",
     "sections": {
+      "advancedOptions": "Opțiuni avansate",
+      "chartType": "Tip de grafic",
       "configuration": "Configurare",
+      "displayOptions": "Opțiuni de afișare",
+      "exerciseConfiguration": "Configurarea exercițiului",
+      "mobileOptions": "Opțiuni pentru mobil",
       "options": "Opțiuni",
       "preset": "Prezentare predefinită",
+      "progressiveOverload": "Supraîncărcare progresivă",
+      "tableType": "Tip de tabel",
       "target": "Obiectiv",
+      "timerConfiguration": "Configurarea cronometrului",
       "workout": "Antrenament"
     },
     "selectOptions": {
+      "allLogs": "Toate înregistrările",
       "cardio": "Activități cardio",
+      "completeWorkout": "Antrenament complet",
       "custom": "Personalizat",
       "distance": "Distanță",
+      "dropSet": "Drop set",
+      "exerciseWorkout": "Exercițiu dintr-un antrenament",
+      "myoReps": "Myo reps",
       "number": "Număr",
+      "restPause": "Rest-pause",
+      "specificExercise": "Exercițiu anume",
       "standard": "Standard",
       "strength": "Putere",
       "superset": "Superset",
       "text": "Text",
       "timed": "Cu interval de timp",
-      "twentyones": "Optuna"
+      "twentyones": "Optuna",
+      "yesNo": "Da/Nu"
     },
     "sets": "Seturi:",
     "similarTags": "Etichete similare:",
@@ -789,9 +889,11 @@
     }
   },
   "stats": {
+    "avgVolume": "Volum mediu",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (ultimele 3)",
+    "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
     "sessions": "Sesion",
     "title": "📈 Statistici {dataTypeLabel} ({contextLabel}):"
@@ -804,6 +906,7 @@
       "distance": "Distanță",
       "duration": "Durată",
       "exercise": "Exercițiu",
+      "heartRate": "Puls",
       "notes": "Note",
       "protocol": "Protocol",
       "reps": "Reprezentări",
@@ -819,19 +922,26 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Greutate ({weightUnit})"
     },
+    "deleteConfirm": "Ștergi această înregistrare?",
     "deleteError": "Eroare la ștergere: {error}",
+    "deleteSuccess": "Înregistrare ștearsă",
+    "deleteTitle": "Șterge",
     "editTable": "Modifică tabelul",
+    "editTitle": "Editează",
+    "gotoExercise": "Mergi la exercițiu",
+    "invalidDate": "Dată invalidă",
     "labels": {
-      "target": "Țintă:",
-      "errors": {
-        "tableElementsNotInitialized": "Elementele din tabel nu au fost inițializate"
-      }
+      "target": "Țintă:"
     },
+    "noData": "Nu există date",
+    "notAvailable": "N/A",
+    "refreshSuccess": "Tabel reîmprospătat",
     "target": {
       "progressTooltip": "Ideal: {best} repetări / Obiectiv: {target} repetări",
       "repsSuffix": "reps",
       "separator": " × "
     },
+    "trendLine": "Linie de tendință",
     "refreshingTable": "Se reîmprospătează tabelul...",
     "validation": {
       "sortByInvalid": "sortBy trebuie să fie una dintre valorile {allowed}, primit: \"{value}\"",
@@ -867,10 +977,18 @@
     "invariant": "Imut",
     "neutral": "Neutru",
     "stable": "Stabil",
+    "stableLower": "Stabil",
     "up": "În sus"
   },
   "canvas": {
     "duration": "**Durată:** {duration}",
     "best": "**Cel mai bun:** {weight}{unit} × {reps} repetări"
+  },
+  "templates": {
+    "tagReference": {
+      "title": "Referința etichetelor pentru mușchi",
+      "description": "Acest fișier listează toate etichetele pentru mușchi disponibile în fișierul tău muscle-tags.csv.",
+      "note": "**Notă**: Acest fișier este generat automat. Pentru a adăuga sau modifica etichete, folosește comanda '{command}'."
+    }
   }
 }

@@ -1,6 +1,7 @@
 {
   "charts": {
     "date": "Дата",
+    "fallbackTableMessage": "Не вдалося побудувати графік, тому дані показано у вигляді таблиці.",
     "labels": {
       "quickWeightIncrementUnit": "Кнопки зміни ваги збільшують {weightIncrementUnit}",
       "reps": "Кількість",
@@ -10,10 +11,14 @@
       "weight": "Вага",
       "weightIncrementUnit": "Крок збільшення ваги {weightIncrementUnit}"
     },
+    "overallVariationPrefix": "Загальна зміна: ",
+    "significantIncrease": "Зростання з нуля",
+    "trendLine": "Лінія тренду",
     "typeNotAvailable": "Тип діаграми \"{chartDataType}\" недоступний для вправ типу {exerciseType}. Доступні типи: {typeList}",
     "types": {
       "distance": "Відстань",
       "duration": "Тривалість",
+      "heartRate": "Пульс",
       "pace": "Темп",
       "reps": "Графіки: Типи",
       "volume": "Об'єм",
@@ -23,8 +28,16 @@
     "noTypesAvailable": "Немає доступних типів графіків."
   },
   "commands": {
+    "addExerciseBlock": "Додати блок вправи",
     "addMissingBlockIds": "Додайте відсутні ID до блоків коду",
-    "createCsvLog": "Створити файл журналу у форматі CSV"
+    "auditExerciseNames": "Перевірити назви вправ",
+    "convertExercise": "Перетворити вправу",
+    "createCsvLog": "Створити файл журналу у форматі CSV",
+    "exportWorkoutToCanvas": "Експортувати тренування на полотно",
+    "generateTagReference": "Створити довідник тегів",
+    "insertTable": "Додати таблицю тренувань",
+    "manageMuscleTags": "Керування тегами м'язів",
+    "migrateExerciseTypes": "Перенести типи вправ"
   },
   "common": {
     "bpm": "bpm",
@@ -34,6 +47,7 @@
     "exercise": "Вправа",
     "km": "км",
     "minPerKm": "мінімальна відстань/км",
+    "notAvailable": "Недоступно",
     "sec": "безпека",
     "unknown": "Невідомо",
     "workout": "Тренування"
@@ -71,12 +85,19 @@
       "columnVariance": "Різниця",
       "columnWorkout": "Тренування",
       "minutesSuffix": "хв",
+      "noData": "Поки недостатньо тренувань для порівняння.",
       "subtitle": "Орієнтовна тривалість тренування проти фактичної",
       "title": "Порівняння тривалості",
+      "varianceTrendDeclining": "Оцінки дедалі більше розходяться з реальними тренуваннями",
+      "varianceTrendImproving": "Оцінки дедалі ближчі до реальних тренувань",
+      "varianceTrendStable": "Точність оцінок стабільна",
+      "varianceTrendTitle": "Точність оцінок",
       "avgVarianceStat": "Сер. відхилення: ±{value}%",
       "hoursSuffix": "год"
     },
     "fileErrors": {
+      "allValid": "Усі сторінки вправ коректні",
+      "noTags": "У frontmatter немає тегів м'язів",
       "readError": "❌ Помилка при читанні файлу: {message}",
       "title": "Помилки при роботі з файлами",
       "tooManyTags": "Занадто багато тегів для м'язів ({count})"
@@ -87,8 +108,14 @@
       "tooltip": "Натисніть, щоб скопіювати: {tag}",
       "totalCount": "Загальна кількість: {count} тегів доступно"
     },
-    "protocol": {},
+    "protocol": {
+      "clickToFilter": "Натисніть, щоб відфільтрувати",
+      "tooltip": "{label}: підходів — {count} ({percentage}%)"
+    },
     "protocolDistribution": {
+      "clearFilter": "Скинути фільтр",
+      "filterActive": "Фільтр:",
+      "noData": "За останні 30 днів немає записаних підходів",
       "subtitle": "Розбивка протоколу навчання (останні 30 днів)",
       "title": "Розподіл протоколів"
     },
@@ -96,11 +123,15 @@
       "columnEntries": "Елементи",
       "columnProgression": "Прогрес",
       "columnProtocol": "Протокол",
+      "columnVolumeChange": "Зміна об'єму",
       "disclaimer": "Відмова від відповідальності",
+      "noData": "Поки недостатньо даних: для кожного протоколу потрібно щонайменше 5 записаних підходів.",
       "title": "Ефективність протоколу"
     },
     "quickActions": {
-      "title": "Швидкі дії"
+      "addWorkoutLog": "Додати запис тренування",
+      "title": "Швидкі дії",
+      "viewExercises": "Переглянути вправи"
     },
     "quickStats": {
       "month": "Місяць",
@@ -210,6 +241,7 @@
       "codeBlockWorkoutLog": "Відобразити таблицю з даними тренувань",
       "codeBlockWorkoutTimer": "Таймер відрахування або таймер з інтервалами",
       "combinedTitle": "Комбінований (тренування + фітнес)",
+      "commandsNote": "**Команди** (Ctrl/Cmd + P): Створити журнал тренувань, Додати графік тренувань, Додати таймер для тренування, Сторінка для створення вправи",
       "countdownTimerTitle": "Таймер відрахування",
       "durationEstimatorIntro": "Оцінює загальну тривалість тренування на основі вправ, зазначених у поточному записі.",
       "durationEstimatorTitle": "4. Оцінювач тривалості",
@@ -248,13 +280,17 @@
       "workouts": "Тренування"
     },
     "gettingStarted": {
+      "commandCreateExercise": "Сторінка для створення вправи",
       "commandCreateExerciseDesc": "Створити новий файл з вправою",
+      "commandCreateLog": "Створити журнал тренувань",
       "commandCreateLogDesc": "Додати нову вказівку для тренування",
+      "commandInsertChart": "Додати графік тренувань",
       "commandInsertChartDesc": "Додайте діаграму до будь-якого нота",
+      "commandInsertTimer": "Додати таймер для тренування",
       "commandInsertTimerDesc": "Додати таймер відпочинку",
       "dashboardDesc": "Ваші показники тренувань у зручному форматі",
       "exercisesDesc": "Приклади вправ з журналами та графіками",
-      "exercisesFolder": "**{folder}**/**",
+      "exercisesFolder": "**{folder}/**",
       "featureShowcaseDesc": "Повний перелік усіх фрагментів коду",
       "folderStructureTitle": "Структура папок",
       "logDesc": "Ваші дані тренувань у форматі CSV",
@@ -271,7 +307,7 @@
       "title": "Початок роботи з плагіном The Gym",
       "welcome": "Вітаємо! У цьому каталозі містяться приклади файлів, які допоможуть вам ознайомитися з усіма функціями.",
       "workoutsDesc": "Приклади шаблонів тренувань",
-      "workoutsFolder": "**{folder}**/**"
+      "workoutsFolder": "**{folder}/**"
     },
     "hiit": {
       "cyclingCooldownTitle": "Розминка після їзди на велосипеді",
@@ -304,9 +340,15 @@
       "supersetLunges": "Тренування з використанням присідань у Superset."
     }
   },
-  "forms": {},
+  "forms": {
+    "enterCsvPath": "Папка для CSV-файлів",
+    "enterFolderPath": "Шлях до папки",
+    "workoutName": "Назва тренування"
+  },
   "general": {
+    "avgReps": "Сер. повторення",
     "back": "Назад",
+    "currentFile": "Поточний файл",
     "dashboard": "Головний екран",
     "delete": "Видалити",
     "edit": "Редагувати",
@@ -326,7 +368,12 @@
       "totalVolume": "Загальний об'єм ({unit})",
       "totalWeight": "Загальна вага ({unit})"
     },
-    "search": "Пошук"
+    "muscleHeatMap": "Теплова карта м'язів",
+    "noMatchMessage": "Під цей фільтр поки не підходить жоден запис.",
+    "search": "Пошук",
+    "totalReps": "Усього повторень",
+    "workoutData": "Дані тренування",
+    "workoutLog": "Журнал тренувань"
   },
   "icons": {
     "actions": {
@@ -412,6 +459,8 @@
     "noDataTitle": "Не знайдено жодних записів для {exerciseName}"
   },
   "messages": {
+    "codeInserted": "Блок коду вставлено",
+    "csvNotFound": "CSV журналу тренувань не знайдено. Перевірте папку CSV у налаштуваннях.",
     "errors": {
       "tagReferenceFailed": "Помилка при створенні посилання на тег: {error}",
       "csvLoadError": "Помилка завантаження CSV: {error}",
@@ -424,7 +473,13 @@
       "workoutLogCreateError": "Не вдалося створити CSV-файл за шляхом: {path}. Перевірте шлях у налаштуваннях.",
       "tableRenderError": "Помилка рендерингу таблиці"
     },
+    "fileEmpty": "Файл порожній",
+    "imbalanceAlerts": "Попередження про дисбаланс",
+    "insufficientData": "Недостатньо даних",
     "noDataPeriod": "Не знайдено даних про тренування за вибраний період.",
+    "noFrontmatter": "Немає frontmatter",
+    "noImbalances": "Дисбалансу не виявлено",
+    "noTags": "У frontmatter немає тегів",
     "success": {
       "blockIdsAdded": "Додано {count} відсутні ID(и) у файлі(ах) {files}",
       "csvCreated": "Файл CSV успішно створено!",
@@ -432,7 +487,8 @@
     },
     "tagReferenceGenerated": "Tag Reference Generated",
     "timerCompleted": "Таймер завершено!",
-    "templatesGenerated": "Шаблони, створені в '{folder}'. Тепер ви можете їх налаштувати."
+    "templatesGenerated": "Шаблони, створені в '{folder}'. Тепер ви можете їх налаштувати.",
+    "exerciseFolderNotSet": "Спочатку вкажіть папку вправ у налаштуваннях."
   },
   "modal": {
     "actions": "Дії",
@@ -480,7 +536,21 @@
     "canvasLayout": "Макет",
     "canvasOptions": "Варіанти",
     "checkboxes": {
-      "sound": "Звук"
+      "connectSupersets": "Пов'язати суперсети",
+      "exactMatch": "Точний збіг",
+      "includeDurations": "Включити тривалість",
+      "includeLog": "Включити журнал",
+      "includeStats": "Включити статистику",
+      "includeTimer": "Включити таймер",
+      "showAddButton": "Показувати кнопку додавання",
+      "showControls": "Показувати елементи керування",
+      "showStatistics": "Показувати статистику",
+      "showTrendHeader": "Показувати заголовок тренду",
+      "showTrendLine": "Показувати лінію тренду",
+      "sound": "Звук",
+      "timerSound": "Звук таймера",
+      "useCurrentWorkout": "Використати поточне тренування",
+      "useCurrentWorkoutFile": "Використати файл поточного тренування"
     },
     "confirmAction": "Підтвердити дію",
     "csvExercise": "Вправа з файлом CSV",
@@ -528,16 +598,20 @@
       "auditConfirmRenameFile": "Перейменувати цей файл?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Знайдено {count} невідповідностей:",
       "auditNoMatchFound": "Збігів не знайдено",
+      "auditNoMismatches": "Кожен файл вправи збігається зі своєю назвою в журналі.",
       "auditRenameError": "Не вдалося перейменувати: {error}",
       "auditRenameFileError": "Не вдалося перейменувати файл: {error}",
+      "auditRenameFileSuccess": "Файл перейменовано",
       "auditRenameSuccess": "Перейменовано (оновлено файлів: {count})",
       "auditScanError": "Помилка сканування: {error}",
+      "auditScanning": "Сканування файлів вправ...",
       "canvasExportError": "Помилка експорту на холст: {error}",
       "canvasExported": "Експорт на холст ({path})",
       "chartInserted": "✅ Графік успішно додано!",
       "confirmUpdateTarget": "Оновити ціль до {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Панель керування успішно додана!",
       "dismissAchievement": "Закрити досягнення",
+      "exerciseBlockInserted": "Блок вправи вставлено",
       "exerciseNameRequired": "❌, будь ласка, введіть назву вправи",
       "exercisePageCreated": "Сторінка для вправ успішно створена!",
       "exercisePageError": "Помилка під час створення сторінки вправи: {error}",
@@ -551,18 +625,27 @@
       "migrationError": "Помилка міграції: {error}",
       "muscleTagCount": "{count} тег(и) знайдено",
       "muscleTagDeleteConfirm": "Ви впевнені, що хочете видалити мітку \"{tag}\"?",
+      "muscleTagDeleted": "Тег видалено",
       "muscleTagExists": "Тег \"{tag}\" вже існує",
       "muscleTagExportError": "Помилка при експорті тегів для м'язів: {error}",
+      "muscleTagExported": "Теги експортовано в muscle-tags-export.csv",
       "muscleTagImportError": "Помилка при імпорті тегів для м'язів: {error}",
+      "muscleTagImportInvalidFormat": "У цьому файлі мають бути стовпці 'tag' і 'muscleGroup'",
       "muscleTagImportInvalidGroup": "Недопустима група м'язів \"{group}\" для тегу \"{tag}\". Має бути стандартною групою м'язів.",
+      "muscleTagImportNoValid": "У файлі не знайдено коректних тегів",
       "muscleTagImportPreview": "{count} тег(и) для імпорту",
       "muscleTagImported": "{count} Теги для м'язів успішно імпортовано!",
+      "muscleTagLoading": "Завантаження тегів...",
+      "muscleTagNoResults": "Немає тегів, що відповідають запиту",
       "muscleTagSaveError": "Помилка при збереженні тегу для м'язів: {error}",
+      "muscleTagSaved": "Тег збережено",
       "muscleTagSimilarFound": "{count} знайдено схожі теги",
+      "muscleTagSimilarWarning": "Схожий тег уже існує",
       "suggestedNextWeight": "Рекомендована наступна вага: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Таблиця успішно додана!",
       "tableUpdateFailed": "Не вдалося оновити таблицю. Переконайтеся, що файл відкритий у редакторі.",
       "tableUpdated": "✅ Таблиця успішно оновлена!",
+      "targetAchieved": "Ціль досягнуто!",
       "timerElementsNotInitialized": "Елементи таймера не були ініціалізовані",
       "timerInserted": "✅ Таймер успішно встановлено!",
       "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
@@ -574,7 +657,8 @@
       "validMinValue": "{field} повинно бути не менше {min}",
       "validMaxValue": "{field} повинно бути не більше {max}",
       "validFieldRequired": "{field} обов'язкове",
-      "migrationFolderNotFound": "Папку вправ не знайдено: {path}"
+      "migrationFolderNotFound": "Папку вправ не знайдено: {path}",
+      "migrationNoUpdates": "Усі сторінки вправ уже актуальні"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -606,23 +690,39 @@
     "rounds": "Раунди:",
     "save": "Зберегти",
     "sections": {
+      "advancedOptions": "Додаткові параметри",
+      "chartType": "Тип графіка",
       "configuration": "Налаштування",
+      "displayOptions": "Параметри відображення",
+      "exerciseConfiguration": "Налаштування вправи",
+      "mobileOptions": "Параметри для мобільних",
       "options": "Варіанти",
       "preset": "За замовчуванням",
+      "progressiveOverload": "Прогресія навантаження",
+      "tableType": "Тип таблиці",
       "target": "Ціль",
+      "timerConfiguration": "Налаштування таймера",
       "workout": "Тренування"
     },
     "selectOptions": {
+      "allLogs": "Усі записи",
       "cardio": "Кардіо",
+      "completeWorkout": "Усе тренування",
       "custom": "Налаштовані",
       "distance": "Відстань",
+      "dropSet": "Дроп-сет",
+      "exerciseWorkout": "Вправа в тренуванні",
+      "myoReps": "Міо-повторення",
       "number": "Кількість",
+      "restPause": "Відпочинок-пауза",
+      "specificExercise": "Конкретна вправа",
       "standard": "Стандарт",
       "strength": "Сила",
       "superset": "Superset",
       "text": "Текст",
       "timed": "З обмеженим часом",
-      "twentyones": "Двадцять один"
+      "twentyones": "Двадцять один",
+      "yesNo": "Так/Ні"
     },
     "sets": "Набори:",
     "similarTags": "Подібні теги:",
@@ -789,9 +889,11 @@
     }
   },
   "stats": {
+    "avgVolume": "Сер. об'єм",
     "max": "Макс: ",
     "min": "Мін: ",
     "recentLast3": " (останні 3)",
+    "recentTrend": "Останній тренд",
     "recentVsPrev": " (vs попер.)",
     "sessions": "Сесії",
     "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
@@ -804,6 +906,7 @@
       "distance": "Відстань",
       "duration": "Тривалість",
       "exercise": "Вправа",
+      "heartRate": "Пульс",
       "notes": "Примітки",
       "protocol": "Протокол",
       "reps": "Кількість",
@@ -819,19 +922,26 @@
       "volumeUnit": "Об'єм ({weightUnit})",
       "weightUnit": "Вага ({weightUnit})"
     },
+    "deleteConfirm": "Видалити цей запис?",
     "deleteError": "Помилка при видаленні: {error}",
+    "deleteSuccess": "Запис видалено",
+    "deleteTitle": "Видалити",
     "editTable": "Редагувати таблицю",
+    "editTitle": "Редагувати",
+    "gotoExercise": "Перейти до вправи",
+    "invalidDate": "Недійсна дата",
     "labels": {
-      "target": "Ціль:",
-      "errors": {
-        "tableElementsNotInitialized": "Елементи таблиці не ініціалізовані"
-      }
+      "target": "Ціль:"
     },
+    "noData": "Немає даних",
+    "notAvailable": "Н/Д",
+    "refreshSuccess": "Таблицю оновлено",
     "target": {
       "progressTooltip": "Найкраще: {best} повторень / Мета: {target} повторень",
       "repsSuffix": "репрезентанти",
       "separator": " × "
     },
+    "trendLine": "Лінія тренду",
     "refreshingTable": "Оновлення таблиці...",
     "validation": {
       "sortByInvalid": "sortBy має бути одним із {allowed}, отримано: \"{value}\"",
@@ -867,10 +977,18 @@
     "invariant": "Незмінність",
     "neutral": "Нейтральний",
     "stable": "Стабільний",
+    "stableLower": "Стабільно",
     "up": "Зростання"
   },
   "canvas": {
     "duration": "**Тривалість:** {duration}",
     "best": "**Найкращий варіант:** {weight}{unit} × {reps} повторень"
+  },
+  "templates": {
+    "tagReference": {
+      "title": "Довідник тегів м'язів",
+      "description": "У цьому файлі перелічено всі доступні теги м'язів із файлу muscle-tags.csv.",
+      "note": "**Примітка**: цей файл створюється автоматично. Щоб додати або змінити теги, скористайтеся командою '{command}'."
+    }
   }
 }

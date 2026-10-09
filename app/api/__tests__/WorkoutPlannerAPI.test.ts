@@ -292,4 +292,67 @@ describe("WorkoutPlannerAPI", () => {
     const exercises = await api.getExercises();
     expect(exercises).toEqual(["Deadlift"]);
   });
+
+  describe("getExercises tag filter on the logs fallback", () => {
+    const logs = ["Bench Press", "Squat", "Deadlift"].map((exercise) => ({
+      date: "2026-01-10",
+      exercise,
+      reps: 5,
+      weight: 100,
+      volume: 500,
+    }));
+    const dataService = {
+      getWorkoutLogData: jest.fn().mockResolvedValue(logs),
+    };
+    const tagsByExercise: Record<string, unknown> = {
+      "Bench Press": ["chest", "push"],
+      Squat: "#legs, compound",
+    };
+    const app = {
+      vault: { getAbstractFileByPath: jest.fn().mockReturnValue(null) },
+      metadataCache: {
+        getFirstLinkpathDest: jest.fn((name: string) =>
+          name in tagsByExercise ? { basename: name } : null,
+        ),
+        getFileCache: jest.fn((file: { basename: string }) => ({
+          frontmatter: { tags: tagsByExercise[file.basename] },
+        })),
+      },
+    } as any;
+
+    it("filters by the tags of each exercise's note when no folder is set", async () => {
+      const api = new WorkoutPlannerAPI(dataService as any, app, {
+        exerciseFolderPath: "",
+      } as any);
+
+      expect(await api.getExercises({ tag: "chest" })).toEqual([
+        "Bench Press",
+      ]);
+      expect(await api.getExercises({ tag: "LEGS" })).toEqual(["Squat"]);
+      expect(await api.getExercises({ tag: "compound" })).toEqual([
+        "Squat",
+      ]);
+    });
+
+    it("filters the same way when the configured folder is missing", async () => {
+      const api = new WorkoutPlannerAPI(dataService as any, app, {
+        exerciseFolderPath: "Missing",
+      } as any);
+
+      expect(await api.getExercises({ tag: "push" })).toEqual([
+        "Bench Press",
+      ]);
+    });
+
+    it("returns an empty list, not every exercise, when tags can't be read", async () => {
+      const api = new WorkoutPlannerAPI(dataService as any);
+
+      expect(await api.getExercises({ tag: "chest" })).toEqual([]);
+      expect(await api.getExercises()).toEqual([
+        "Bench Press",
+        "Deadlift",
+        "Squat",
+      ]);
+    });
+  });
 });

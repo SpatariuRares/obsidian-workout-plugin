@@ -1,7 +1,7 @@
 import {
   ExerciseMatchUtils,
+  ExerciseFilterStrategy,
   MatchResult,
-  ExerciseMatch,
 } from "@app/utils/exercise/ExerciseMatchUtils";
 import {
   WorkoutLogData,
@@ -43,6 +43,8 @@ export interface EarlyFilterParams {
 interface NormalizedFilters {
   exerciseName?: string;
   workoutName?: string;
+  /** Logs the fuzzy exercise strategy selects (non-exact mode only) */
+  fuzzyExerciseMatches?: Set<WorkoutLogData>;
 }
 
 /**
@@ -261,11 +263,10 @@ export class DataFilter {
           exerciseName,
         );
 
-        const { bestStrategy, bestPathKey, bestFileMatchesList } =
+        const { bestStrategy, bestPathKey } =
           ExerciseMatchUtils.determineExerciseFilterStrategy(
-            matchesResult.fileNameMatches,
             matchesResult.allExercisePathsAndScores,
-            params.exactMatch || false,
+            false,
             exerciseName,
           );
 
@@ -273,14 +274,12 @@ export class DataFilter {
           logData,
           bestStrategy,
           bestPathKey,
-          bestFileMatchesList,
         );
 
         filterMethodUsed = this.getFilterMethodDescription(
           bestStrategy,
           bestPathKey,
           matchesResult,
-          bestFileMatchesList,
         );
       }
     }
@@ -290,24 +289,20 @@ export class DataFilter {
 
   /**
    * Generates a human-readable description of the filtering method used.
-   * @param bestStrategy - The strategy used for filtering (field, filename, etc.)
+   * @param bestStrategy - The strategy used for filtering
    * @param bestPathKey - The key used for filtering
    * @param matchesResult - Results from the matching process
-   * @param bestFileMatchesList - List of best file matches
    * @returns Human-readable description of the filtering method
    */
   private static getFilterMethodDescription(
-    bestStrategy: string,
+    bestStrategy: ExerciseFilterStrategy,
     bestPathKey: string,
     matchesResult: MatchResult,
-    bestFileMatchesList: ExerciseMatch[],
   ): string {
-    if (bestStrategy === "field") {
+    if (bestStrategy === "exercise_field") {
       const bestPathScore =
         matchesResult.allExercisePathsAndScores.get(bestPathKey) || 0;
       return `Exercise field:: "${bestPathKey}" (score: ${bestPathScore})`;
-    } else if (bestStrategy === "filename") {
-      return `file name (score: ${bestFileMatchesList[0]?.score || t("table.notAvailable")})`;
     }
     return "No match found";
   }
@@ -335,6 +330,13 @@ export class DataFilter {
       normalizedFilters.exerciseName = StringUtils.normalize(
         filterParams.exercise,
       );
+      if (!filterParams.exactMatch) {
+        normalizedFilters.fuzzyExerciseMatches =
+          this.getFuzzyExerciseMatches(
+            logData,
+            filterParams.exercise,
+          );
+      }
     }
 
     if (filterParams.workout) {
@@ -345,6 +347,30 @@ export class DataFilter {
 
     return logData.filter((log) =>
       this.matchesEarlyFilter(log, filterParams, normalizedFilters),
+    );
+  }
+
+  /**
+   * Logs selected by the same fuzzy strategy filterByExercise uses.
+   */
+  private static getFuzzyExerciseMatches(
+    logData: WorkoutLogData[],
+    exercise: string,
+  ): Set<WorkoutLogData> {
+    const { allExercisePathsAndScores } =
+      ExerciseMatchUtils.findExerciseMatches(logData, exercise);
+    const { bestStrategy, bestPathKey } =
+      ExerciseMatchUtils.determineExerciseFilterStrategy(
+        allExercisePathsAndScores,
+        false,
+        exercise,
+      );
+    return new Set(
+      ExerciseMatchUtils.filterLogDataByExercise(
+        logData,
+        bestStrategy,
+        bestPathKey,
+      ),
     );
   }
 
@@ -371,10 +397,13 @@ export class DataFilter {
         if (logExercise !== exerciseName) {
           return false;
         }
-      } else {
-        if (!logExercise.includes(exerciseName)) {
-          return false;
-        }
+      } else if (
+        // Also keep what the fuzzy strategy in filterData picks, so this
+        // pre-filter never overrides it (e.g. "Squats" → "Squat …")
+        !logExercise.includes(exerciseName) &&
+        !normalizedFilters?.fuzzyExerciseMatches?.has(log)
+      ) {
+        return false;
       }
     }
 

@@ -44,7 +44,7 @@ export class WorkoutEventBus {
    * Se siamo in modalità batch, accoda l'evento senza dispatch immediato.
    */
   emit<T extends WorkoutEvent>(event: T): void {
-    if (this.batchActive) {
+    if (this.batchActive && event.type !== "plugin:error") {
       this.batchQueue.push(event);
       return;
     }
@@ -57,7 +57,8 @@ export class WorkoutEventBus {
    * Raggruppa più mutazioni in un unico evento coalesced.
    *
    * Regole di coalescing:
-   * - Tutti gli eventi log:* accumulati → 1 solo log:bulk-changed con count
+   * - Tutti gli eventi log:* accumulati (anche log:bulk-changed annidati)
+   *   → 1 solo log:bulk-changed con count totale
    * - muscle-tags:changed → emesso normalmente (non coalesced con log:*)
    * - plugin:error → emesso immediatamente, mai accodato
    * - settings:changed → emesso normalmente
@@ -129,17 +130,18 @@ export class WorkoutEventBus {
   private flushBatch(
     operation: LogBulkChangedPayload["operation"],
   ): void {
-    const logEvents = this.batchQueue.filter(
-      (e) =>
-        e.type === "log:added" ||
-        e.type === "log:updated" ||
-        e.type === "log:deleted",
-    );
-    const otherEvents = this.batchQueue.filter(
-      (e) =>
-        e.type !== "log:added" &&
-        e.type !== "log:updated" &&
-        e.type !== "log:deleted",
+    const isLogEvent = (e: WorkoutEvent) =>
+      e.type === "log:added" ||
+      e.type === "log:updated" ||
+      e.type === "log:deleted" ||
+      e.type === "log:bulk-changed";
+    const logEvents = this.batchQueue.filter(isLogEvent);
+    const otherEvents = this.batchQueue.filter((e) => !isLogEvent(e));
+    // A nested bulk-changed counts as all the mutations it stands for
+    const count = logEvents.reduce(
+      (sum, e) =>
+        sum + (e.type === "log:bulk-changed" ? e.payload.count : 1),
+      0,
     );
 
     // Emetti altri eventi normalmente (muscle-tags:changed, settings:changed)
@@ -151,7 +153,7 @@ export class WorkoutEventBus {
     if (logEvents.length > 0) {
       this.dispatch({
         type: "log:bulk-changed",
-        payload: { count: logEvents.length, operation },
+        payload: { count, operation },
       });
     }
 

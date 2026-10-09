@@ -313,15 +313,11 @@ describe("DataFilter", () => {
 
         // Setup mocks
         const mockMatchesResult = {
-          fileNameMatches: [],
           allExercisePathsAndScores: new Map([["Squat", 90]]),
-          bestStrategy: "",
-          bestPathKey: "",
         };
         const mockStrategy = {
-          bestStrategy: "field",
+          bestStrategy: "exercise_field" as const,
           bestPathKey: "Squat",
-          bestFileMatchesList: [],
         };
         const filteredByUtil = [mockLogData[0]];
 
@@ -345,9 +341,8 @@ describe("DataFilter", () => {
         ).toHaveBeenCalled();
         expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
           mockLogData,
-          "field",
+          "exercise_field",
           "Squat",
-          [],
         );
         expect(result.filteredData).toEqual(filteredByUtil);
         expect(result.filterMethodUsed).toBe(
@@ -355,63 +350,16 @@ describe("DataFilter", () => {
         );
       });
 
-      it("should use filename strategy when determined", () => {
-        const params: Partial<EmbeddedChartParams> = {
-          exercise: "bench",
-        };
-        const mockMatchesResult = {
-          fileNameMatches: [],
-          allExercisePathsAndScores: new Map(),
-          bestStrategy: "",
-          bestPathKey: "",
-        };
-        const mockFileMatch: any = {
-          file: {} as TFile,
-          score: 85,
-          exerciseName: "log2.md",
-          strategy: "filename",
-        };
-        const mockStrategy = {
-          bestStrategy: "filename",
-          bestPathKey: "",
-          bestFileMatchesList: [mockFileMatch],
-        };
-
-        mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
-        mockDetermineExerciseFilterStrategy.mockReturnValue(
-          mockStrategy,
-        );
-        mockFilterLogDataByExercise.mockReturnValue([mockLogData[1]]);
-
-        const result = DataFilter.filterData(
-          mockLogData,
-          params as EmbeddedChartParams,
-        );
-
-        expect(mockFilterLogDataByExercise).toHaveBeenCalledWith(
-          mockLogData,
-          "filename",
-          "",
-          [mockFileMatch],
-        );
-        expect(result.filteredData).toHaveLength(1);
-        expect(result.filterMethodUsed).toBe("file name (score: 85)");
-      });
-
       it("should handle no match found", () => {
         const params: Partial<EmbeddedChartParams> = {
           exercise: "nonexistent",
         };
         const mockMatchesResult = {
-          fileNameMatches: [],
           allExercisePathsAndScores: new Map(),
-          bestStrategy: "",
-          bestPathKey: "",
         };
         const mockStrategy = {
           bestStrategy: "none",
           bestPathKey: "",
-          bestFileMatchesList: [],
         };
 
         mockFindExerciseMatches.mockReturnValue(mockMatchesResult);
@@ -564,6 +512,61 @@ describe("DataFilter", () => {
         );
         expect(result.filterMethodUsed).toBe("none");
       });
+    });
+  });
+
+  describe("applyEarlyFiltering (fuzzy)", () => {
+    beforeEach(() => {
+      const actual = jest.requireActual(
+        "@app/utils/exercise/ExerciseMatchUtils",
+      ).ExerciseMatchUtils;
+      for (const fn of [
+        "findExerciseMatches",
+        "determineExerciseFilterStrategy",
+        "filterLogDataByExercise",
+      ] as const) {
+        (ExerciseMatchUtils[fn] as jest.Mock).mockImplementation(
+          (...args: unknown[]) => actual[fn](...args),
+        );
+      }
+    });
+
+    const logs = [
+      "Squat",
+      "Squat Multi Power",
+      "Leg Press",
+      "Bench Press",
+    ].map((exercise) => ({
+      date: "2024-01-01",
+      exercise,
+      reps: 5,
+      weight: 100,
+      volume: 500,
+    })) as WorkoutLogData[];
+
+    it("keeps names the fuzzy strategy would match even without a substring match", () => {
+      expect(
+        DataFilter.applyEarlyFiltering(logs, {
+          exercise: "Squats",
+        }).map((l) => l.exercise),
+      ).toEqual(["Squat", "Squat Multi Power"]);
+    });
+
+    it("still drops unrelated exercises", () => {
+      expect(
+        DataFilter.applyEarlyFiltering(logs, {
+          exercise: "Bench Press",
+        }).map((l) => l.exercise),
+      ).toEqual(["Bench Press"]);
+    });
+
+    it("stays exact in exact mode", () => {
+      expect(
+        DataFilter.applyEarlyFiltering(logs, {
+          exercise: "Squat",
+          exactMatch: true,
+        }).map((l) => l.exercise),
+      ).toEqual(["Squat"]);
     });
   });
 });

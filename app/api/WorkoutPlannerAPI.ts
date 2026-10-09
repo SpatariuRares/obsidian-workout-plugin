@@ -392,7 +392,7 @@ export class WorkoutPlannerAPI {
     }
 
     // Fallback: get unique exercises from workout logs
-    return this.getExercisesFromLogs();
+    return this.getExercisesFromLogs(filter);
   }
 
   /**
@@ -410,7 +410,7 @@ export class WorkoutPlannerAPI {
     );
     if (!folder || !(folder instanceof TFolder)) {
       // Fallback to logs if folder doesn't exist
-      return this.getExercisesFromLogs();
+      return this.getExercisesFromLogs(filter);
     }
 
     // Get all markdown files in the folder
@@ -462,8 +462,12 @@ export class WorkoutPlannerAPI {
 
   /**
    * Get unique exercises from workout logs.
+   * A tag filter is matched against the frontmatter tags of each exercise's
+   * note; when notes can't be resolved the result is empty, never unfiltered.
    */
-  private async getExercisesFromLogs(): Promise<string[]> {
+  private async getExercisesFromLogs(
+    filter?: ExercisesFilter,
+  ): Promise<string[]> {
     const logs = await this.getWorkoutLogs();
     const exerciseSet = new Set<string>();
 
@@ -473,7 +477,38 @@ export class WorkoutPlannerAPI {
       }
     }
 
-    return Array.from(exerciseSet).sort();
+    const exercises = Array.from(exerciseSet).sort();
+    if (!filter?.tag) {
+      return exercises;
+    }
+    const tag = filter.tag.toLowerCase();
+    return exercises.filter((name) =>
+      this.getExerciseNoteTags(name).includes(tag),
+    );
+  }
+
+  /**
+   * Lower-cased frontmatter tags (without "#") of the note named like the
+   * exercise, or [] if there is no such note.
+   */
+  private getExerciseNoteTags(exercise: string): string[] {
+    const file = this.app?.metadataCache.getFirstLinkpathDest(
+      exercise,
+      "",
+    );
+    if (!file) {
+      return [];
+    }
+    const raw: unknown =
+      this.app?.metadataCache.getFileCache(file)?.frontmatter?.tags;
+    const tags: unknown[] = Array.isArray(raw)
+      ? raw
+      : typeof raw === "string"
+        ? raw.split(/[,\s]+/)
+        : [];
+    return tags
+      .map((tag) => String(tag).replace(/^#/, "").trim().toLowerCase())
+      .filter((tag) => tag.length > 0);
   }
 
   /**

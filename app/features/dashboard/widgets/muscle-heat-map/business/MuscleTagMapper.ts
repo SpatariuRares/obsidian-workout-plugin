@@ -82,6 +82,15 @@ export class MuscleTagMapper {
   }
 
   /**
+   * A tag naming a muscle group directly ("upper_chest", "Upper chest",
+   * "upper-chest") always maps to it, even if the user's tag file predates it.
+   */
+  private toCanonicalGroup(normalizedTag: string): string | undefined {
+    const id = normalizedTag.replace(/[\s-]+/g, "_");
+    return this.getAllMuscleGroups().has(id) ? id : undefined;
+  }
+
+  /**
    * Maps exercise tags to muscle groups
    */
   async findMuscleGroupsFromTags(
@@ -95,7 +104,8 @@ export class MuscleTagMapper {
     // Map tags to muscle groups
     tags.forEach((tag) => {
       const normalizedTag = StringUtils.normalize(tag);
-      const mappedMuscle = tagMap.get(normalizedTag);
+      const mappedMuscle =
+        tagMap.get(normalizedTag) ?? this.toCanonicalGroup(normalizedTag);
 
       if (mappedMuscle) {
         muscleGroups.add(mappedMuscle);

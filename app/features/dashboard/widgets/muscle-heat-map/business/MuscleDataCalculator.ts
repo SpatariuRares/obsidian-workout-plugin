@@ -174,23 +174,34 @@ export class MuscleDataCalculator {
       OBLIQUES_RATIO,
     } = VOLUME_DISTRIBUTION;
 
+    // No side-delt zone: split it between the front and rear shoulder zones
+    const sideDelts = getVolume("side_delts") * BILATERAL_SPLIT;
+    const frontDelts =
+      getVolume("shoulders") + getVolume("front_delts") + sideDelts;
+    const rearDelts = getVolume("rear_delts") + sideDelts;
+
     const bodyData = {
       shoulders: {
-        frontLeft: getVolume("shoulders") * BILATERAL_SPLIT,
-        frontRight: getVolume("shoulders") * BILATERAL_SPLIT,
-        rearLeft: getVolume("rear_delts") * BILATERAL_SPLIT,
-        rearRight: getVolume("rear_delts") * BILATERAL_SPLIT,
+        frontLeft: frontDelts * BILATERAL_SPLIT,
+        frontRight: frontDelts * BILATERAL_SPLIT,
+        rearLeft: rearDelts * BILATERAL_SPLIT,
+        rearRight: rearDelts * BILATERAL_SPLIT,
       },
       chest: {
-        upper: getVolume("chest") * CHEST_UPPER,
-        middle: getVolume("chest") * CHEST_MIDDLE,
-        lower: getVolume("chest") * CHEST_LOWER,
+        upper:
+          getVolume("chest") * CHEST_UPPER + getVolume("upper_chest"),
+        middle:
+          getVolume("chest") * CHEST_MIDDLE + getVolume("mid_chest"),
+        lower:
+          getVolume("chest") * CHEST_LOWER + getVolume("lower_chest"),
       },
       back: {
         traps: getVolume("traps"),
-        lats: getVolume("back"),
-        lowerBack: getVolume("back") * BACK_LOWER_RATIO,
-        trapsMiddle: getVolume("traps") * TRAPS_MIDDLE_RATIO,
+        lats: getVolume("back") + getVolume("lats"),
+        lowerBack:
+          getVolume("back") * BACK_LOWER_RATIO + getVolume("lower_back"),
+        trapsMiddle:
+          getVolume("traps") * TRAPS_MIDDLE_RATIO + getVolume("rhomboids"),
       },
       arms: {
         bicepsLeft: getVolume("biceps") * BILATERAL_SPLIT,
@@ -212,7 +223,11 @@ export class MuscleDataCalculator {
       },
       core: {
         abs: getVolume("abs"),
-        obliques: getVolume("core") * OBLIQUES_RATIO,
+        // No serratus zone: it sits on the obliques zone
+        obliques:
+          getVolume("core") * OBLIQUES_RATIO +
+          getVolume("obliques") +
+          getVolume("serratus"),
       },
     };
 

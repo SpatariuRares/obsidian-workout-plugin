@@ -272,6 +272,17 @@ spalle,shoulders
 
 `chest`, `back`, `shoulders`, `biceps`, `triceps`, `quads`, `hamstrings`, `glutes`, `calves`, `abs`, `core`, `forearms`, `traps`, `rear_delts`
 
+Specific muscles are drawn in their own heat map zone and count toward their group in the balance analysis. A broad tag like `chest` is still spread over all of the group's zones.
+
+| Group       | Specific muscles                                         |
+| ----------- | -------------------------------------------------------- |
+| `chest`     | `upper_chest`, `mid_chest`, `lower_chest`                |
+| `shoulders` | `front_delts`, `side_delts`, `rear_delts`                |
+| `back`      | `lats`, `rhomboids`, `lower_back` (also `ql`)            |
+| `core`      | `obliques`, `serratus`                                   |
+
+A tag that names a muscle group directly (`upper_chest`, `Upper chest`, `upper-chest`) always works, even if your `muscle-tags.csv` was created before that group existed.
+
 ---
 
 ## Data Format

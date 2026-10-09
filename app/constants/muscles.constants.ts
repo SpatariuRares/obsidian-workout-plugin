@@ -29,10 +29,43 @@ export const CANONICAL_MUSCLE_GROUPS = [
   "forearms",
   "traps",
   "rear_delts",
+  // Specific muscles (see MUSCLE_PARENT_GROUPS)
+  "upper_chest",
+  "mid_chest",
+  "lower_chest",
+  "front_delts",
+  "side_delts",
+  "lats",
+  "rhomboids",
+  "lower_back",
+  "obliques",
+  "serratus",
 ] as const;
 
 export type CanonicalMuscleGroup =
   (typeof CANONICAL_MUSCLE_GROUPS)[number];
+
+/**
+ * Specific muscles and the broad group they belong to.
+ * The heat map draws a specific muscle in its own zone, while a broad tag
+ * (e.g. "chest") is still spread over all of that group's zones.
+ * Balance analysis adds specific muscles to their parent's total.
+ */
+export const MUSCLE_PARENT_GROUPS: Partial<
+  Record<CanonicalMuscleGroup, CanonicalMuscleGroup>
+> = {
+  upper_chest: "chest",
+  mid_chest: "chest",
+  lower_chest: "chest",
+  front_delts: "shoulders",
+  side_delts: "shoulders",
+  rear_delts: "shoulders",
+  lats: "back",
+  rhomboids: "back",
+  lower_back: "back",
+  obliques: "core",
+  serratus: "core",
+};
 
 /**
  * Body part regions for exercise categorization.
@@ -109,6 +142,19 @@ export const MUSCLE_TAGS = [
   "deltoidi_posteriori",
   "deltoidiposteriori",
 
+  // Specific muscles
+  "upper_chest",
+  "mid_chest",
+  "lower_chest",
+  "front_delts",
+  "side_delts",
+  "lats",
+  "rhomboids",
+  "lower_back",
+  "ql",
+  "obliques",
+  "serratus",
+
   // Exercise types that help determine muscle groups
   "push",
   "pull",
@@ -142,9 +188,9 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   // Main muscle groups - Chest (Italian)
   { tag: "petto", muscleGroup: "chest", language: "it" },
   { tag: "pettorale", muscleGroup: "chest", language: "it" },
-  { tag: "pettoralesuperior", muscleGroup: "chest", language: "it" },
-  { tag: "pettoraleinferior", muscleGroup: "chest", language: "it" },
-  { tag: "pettoralemedio", muscleGroup: "chest", language: "it" },
+  { tag: "pettoralesuperior", muscleGroup: "upper_chest", language: "it" },
+  { tag: "pettoraleinferior", muscleGroup: "lower_chest", language: "it" },
+  { tag: "pettoralemedio", muscleGroup: "mid_chest", language: "it" },
 
   // Main muscle groups - Back (English)
   { tag: "back", muscleGroup: "back", language: "en" },
@@ -159,12 +205,12 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
   { tag: "deltoidi", muscleGroup: "shoulders", language: "it" },
   {
     tag: "deltoideanteriore",
-    muscleGroup: "shoulders",
+    muscleGroup: "front_delts",
     language: "it",
   },
   {
     tag: "deltoidilaterale",
-    muscleGroup: "shoulders",
+    muscleGroup: "side_delts",
     language: "it",
   },
 
@@ -224,6 +270,19 @@ export const MUSCLE_TAG_ENTRIES: MuscleTagEntry[] = [
     language: "it",
   },
 
+  // Specific muscles (English)
+  { tag: "upper_chest", muscleGroup: "upper_chest", language: "en" },
+  { tag: "mid_chest", muscleGroup: "mid_chest", language: "en" },
+  { tag: "lower_chest", muscleGroup: "lower_chest", language: "en" },
+  { tag: "front_delts", muscleGroup: "front_delts", language: "en" },
+  { tag: "side_delts", muscleGroup: "side_delts", language: "en" },
+  { tag: "lats", muscleGroup: "lats", language: "en" },
+  { tag: "rhomboids", muscleGroup: "rhomboids", language: "en" },
+  { tag: "lower_back", muscleGroup: "lower_back", language: "en" },
+  { tag: "ql", muscleGroup: "lower_back", language: "en" },
+  { tag: "obliques", muscleGroup: "obliques", language: "en" },
+  { tag: "serratus", muscleGroup: "serratus", language: "en" },
+
   // Exercise types that help determine muscle groups (English)
   { tag: "push", muscleGroup: "chest", language: "en" },
   { tag: "pull", muscleGroup: "back", language: "en" },
@@ -250,9 +309,9 @@ export const MUSCLE_TAG_MAP: Record<string, string> = {
   chest: "chest",
   petto: "chest",
   pettorale: "chest",
-  pettoralesuperior: "chest",
-  pettoraleinferior: "chest",
-  pettoralemedio: "chest",
+  pettoralesuperior: "upper_chest",
+  pettoraleinferior: "lower_chest",
+  pettoralemedio: "mid_chest",
 
   // Main muscle groups - Back
   back: "back",
@@ -263,8 +322,8 @@ export const MUSCLE_TAG_MAP: Record<string, string> = {
   shoulders: "shoulders",
   spalle: "shoulders",
   deltoidi: "shoulders",
-  deltoideanteriore: "shoulders",
-  deltoidilaterale: "shoulders",
+  deltoideanteriore: "front_delts",
+  deltoidilaterale: "side_delts",
 
   // Main muscle groups - Arms
   biceps: "biceps",
@@ -307,6 +366,19 @@ export const MUSCLE_TAG_MAP: Record<string, string> = {
   rear_delts: "rear_delts",
   deltoidi_posteriori: "rear_delts",
   deltoidiposteriori: "rear_delts",
+
+  // Specific muscles
+  upper_chest: "upper_chest",
+  mid_chest: "mid_chest",
+  lower_chest: "lower_chest",
+  front_delts: "front_delts",
+  side_delts: "side_delts",
+  lats: "lats",
+  rhomboids: "rhomboids",
+  lower_back: "lower_back",
+  ql: "lower_back",
+  obliques: "obliques",
+  serratus: "serratus",
 
   // Exercise types that help determine muscle groups
   push: "chest",

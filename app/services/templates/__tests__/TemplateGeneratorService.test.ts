@@ -146,7 +146,7 @@ describe("TemplateGeneratorService", () => {
         "tags:\n  - abs\n  - gambe\n  - petto\n---",
       );
       expect(content).toContain("title: Muscle Tags Reference");
-      expect(content).toContain("# Muscle Tags Reference");
+      expect(content).toContain(`# ${t("templates.tagReference.title")}`);
     });
 
     it("should write an empty tag list when there are no tags", async () => {

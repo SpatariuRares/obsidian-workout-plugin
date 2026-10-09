@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "Datum",
-    "fallbackTableMessage": "Záložní zpráva pro tabulku",
     "labels": {
       "quickWeightIncrementUnit": "Tlačítka pro váhu zvyšují hodnotu o {weightIncrementUnit}",
       "reps": "Opakovaní",
@@ -11,14 +10,10 @@
       "weight": "Hmotnost",
       "weightIncrementUnit": "Zvýšení váhy {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Celková variace předpona",
-    "significantIncrease": "Významný nárůst",
-    "trendLine": "Trendová linka",
     "typeNotAvailable": "Typ grafu \"{chartDataType}\" není pro cvičení typu {exerciseType} dostupný. Dostupné typy: {typeList}",
     "types": {
       "distance": "Vzdálenost",
       "duration": "Doba",
-      "heartRate": "Srdeční frekvence",
       "pace": "Rychlost",
       "reps": "Typy grafů: Reprezentace",
       "volume": "Objem",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "není dostupných žádných typů grafů"
   },
   "commands": {
-    "addExerciseBlock": "Přidat blok cvičení",
     "addMissingBlockIds": "Přidejte chybějící ID do bloků kódu",
-    "auditExerciseNames": "Kontrola názvů cvičení",
-    "convertExercise": "Převést cvičení",
-    "createCsvLog": "Vytvořte soubor CSV pro logování",
-    "exportWorkoutToCanvas": "Exportovat trénink do Canvasu",
-    "generateTagReference": "Vygenerovat referenční seznam tagů",
-    "insertTable": "Vložit tabulku",
-    "manageMuscleTags": "Spravovat značky svalů",
-    "migrateExerciseTypes": "Migruj typ cvičení"
+    "createCsvLog": "Vytvořte soubor CSV pro logování"
   },
   "common": {
     "bpm": "bpm",
@@ -47,7 +34,6 @@
     "exercise": "Cvičení",
     "km": "km",
     "minPerKm": "minimální/km",
-    "notAvailable": "Nedostupné",
     "sec": "bezpečnost",
     "unknown": "Neznámé",
     "workout": "Trénink"
@@ -85,19 +71,12 @@
       "columnVariance": "Rozptyl",
       "columnWorkout": "Trénink",
       "minutesSuffix": "min",
-      "noData": "Žádná data",
       "subtitle": "Odhadnutá vs. skutečná délka tréninku",
       "title": "Srovnání trvání",
-      "varianceTrendDeclining": "Trendy odchylky klesají",
-      "varianceTrendImproving": "Trendy odchylky se zlepšují",
-      "varianceTrendStable": "Trend odchylky – stabilní",
-      "varianceTrendTitle": "Nadpis trendu odchylek",
       "avgVarianceStat": "Průměr. odchylka: ±{value}%",
       "hoursSuffix": "hodin"
     },
     "fileErrors": {
-      "allValid": "Všechny platné",
-      "noTags": "Žádné štítky",
       "readError": "❌ Chyba při čtení souboru: {message}",
       "title": "Chyby související se soubory",
       "tooManyTags": "Příliš mnoho štítků svalů ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "Klikněte pro kopírování: {tag}",
       "totalCount": "Celkem: {count} tagů k dispozici"
     },
-    "protocol": {
-      "clickToFilter": "Klikněte pro filtrování",
-      "percentLabel": "Popis procenta",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "Vymazat filtr",
-      "filterActive": "Filtrovat aktivní",
-      "noData": "Žádná data",
       "subtitle": "Rozpis protokolu tréninku (posledních 30 dní)",
       "title": "Rozdělení protokolů"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "Záznamy",
       "columnProgression": "Postup",
       "columnProtocol": "Protokol",
-      "columnVolumeChange": "Změna objemu",
       "disclaimer": "Upozornění",
-      "noData": "Žádná data",
       "title": "Účinnost protokolu"
     },
     "quickActions": {
-      "addWorkoutLog": "Přidat záznam o tréninku",
-      "title": "Rychlé akce",
-      "viewExercises": "Zobrazit cvičení"
+      "title": "Rychlé akce"
     },
     "quickStats": {
       "month": "Měsíc",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "Zobrazit tabulku dat tréninku",
       "codeBlockWorkoutTimer": "Časovač nebo intervalový časovač",
       "combinedTitle": "Spojené (Cvičení + Trénink)",
-      "commandsNote": "**Příkazy** (Ctrl/Cmd + P): Vytvořit Záznam cvičení, Vložit graf, Vložit časový zákazník, Vytvořit stránku s cvičením",
       "countdownTimerTitle": "Časovač odpočtu",
       "durationEstimatorIntro": "Ocení celkové trvání cvičení podle současného cvičení.",
       "durationEstimatorTitle": "Časový čidlo",
@@ -281,13 +248,9 @@
       "workouts": "Cvičení"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Vytvořit stránku s cvičením",
       "commandCreateExerciseDesc": "Vytvořte nový soubor s cvičením",
-      "commandCreateLog": "Vytvořit záznam cvičení",
       "commandCreateLogDesc": "Přidat nový záznam cvičení",
-      "commandInsertChart": "Vložit graf cvičení",
       "commandInsertChartDesc": "Přidat graf do libovolné poznámky",
-      "commandInsertTimer": "Vložit časovač cvičení",
       "commandInsertTimerDesc": "Přidat časovač odpočinku",
       "dashboardDesc": "Vaše statistiky tréninku v přehledu",
       "exercisesDesc": "Stránky s příklady cvičení s protokoly a grafy",
@@ -341,15 +304,9 @@
       "supersetLunges": "Superset s cviky s výskokem"
     }
   },
-  "forms": {
-    "enterCsvPath": "Zadejte cestu k CSV",
-    "enterFolderPath": "Zadejte cestu k složce",
-    "workoutName": "Název tréninku"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "Průměrná opakování",
     "back": "Zad",
-    "currentFile": "Aktuální soubor",
     "dashboard": "Pašelna",
     "delete": "Smazat",
     "edit": "Upravit",
@@ -369,12 +326,7 @@
       "totalVolume": "Celkový objem ({unit})",
       "totalWeight": "Celková hmotnost ({unit})"
     },
-    "muscleHeatMap": "Hmotový mapa svalů",
-    "noMatchMessage": "Žádný shoda zpráva",
-    "search": "Hledat",
-    "totalReps": "Celkové opakování",
-    "workoutData": "Databáze cvičení",
-    "workoutLog": "Záznamy cvičení"
+    "search": "Hledat"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "Nenašlo se žádných záznamů pro {exerciseName}"
   },
   "messages": {
-    "codeInserted": "Kód vložen",
-    "csvNotFound": "Csv nebyl nalezen",
     "errors": {
       "tagReferenceFailed": "Chyba při vytváření odkaz na tag: {error}",
       "csvLoadError": "Chyba načítání CSV: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "Nepodařilo se vytvořit soubor CSV na cestě: {path}. Zkontrolujte cestu v nastavení.",
       "tableRenderError": "Chyba při vykreslování tabulky"
     },
-    "fileEmpty": "Soubor prázdný",
-    "imbalanceAlerts": "Nedostatek informací",
-    "insufficientData": "Chybí data pro zpracování",
     "noDataPeriod": "Pro vybraný časový úsek nebylo nalezeno žádné tréninkové data.",
-    "noFrontmatter": "Záhlaví nebylo nalezeno",
-    "noImbalances": "Nebyl nalezen žádný nerovnováha",
-    "noTags": "Žádné označení",
     "success": {
       "blockIdsAdded": "Přidány {count} chybějící ID(y) ve souboru(ech) {files}",
       "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
@@ -536,21 +480,7 @@
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
     "checkboxes": {
-      "connectSupersets": "Připojit supersady",
-      "exactMatch": "Precizní shoda",
-      "includeDurations": "Zahrnout trvání",
-      "includeLog": "Zahrnout záznamy",
-      "includeStats": "Zahrnout statistiky",
-      "includeTimer": "Zahrnout časovač",
-      "showAddButton": "Zobrazit tlačítko pro přidání",
-      "showControls": "Zobrazit ovládací prvky",
-      "showStatistics": "Zobrazit statistiky",
-      "showTrendHeader": "Zobrazit hlavičku trendu",
-      "showTrendLine": "Zobrazit řádek trendu",
-      "sound": "Zvuk",
-      "timerSound": "Zvuk časovače",
-      "useCurrentWorkout": "Použít současný trénink",
-      "useCurrentWorkoutFile": "Použít soubor práce v účtu"
+      "sound": "Zvuk"
     },
     "confirmAction": "Potvrdit akci",
     "csvExercise": "CSV cvičení",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "Přejmenovat tento soubor?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Nalezeno {count} neshod:",
       "auditNoMatchFound": "Žádná shoda nalezena",
-      "auditNoMismatches": "Audit Žádné neshody",
       "auditRenameError": "Nelze přejmenovat: {error}",
       "auditRenameFileError": "Soubor nelze přejmenovat: {error}",
-      "auditRenameFileSuccess": "Audit Úspěch přejmenování souboru",
       "auditRenameSuccess": "Přejmenováno (aktualizované soubory: {count})",
       "auditScanError": "Chyba při skenování: {error}",
-      "auditScanning": "Audit Skenerování",
       "canvasExportError": "Chyba exportu plátna: {error}",
       "canvasExported": "Plátno exportováno ({path})",
       "chartInserted": "✅ Graf vložen úspěšně!",
       "confirmUpdateTarget": "Aktualizovat cíl na {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Dashboard vložen úspěšně!",
       "dismissAchievement": "Zavřít úspěch",
-      "exerciseBlockInserted": "Vloženo blok cvičení",
       "exerciseNameRequired": "❌ Zadejte název cvičení",
       "exercisePageCreated": "Stránka cvičení vytvořena úspěšně!",
       "exercisePageError": "Chyba při vytváření stránky cvičení: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "Záznam tréninku aktualizován úspěšně!",
       "migrationComplete": "Migrace dokončena. Aktualizovány soubory cvičení {count}.",
       "migrationError": "Chyba migrace: {error}",
-      "migrationNoUpdates": "Migrace žádná aktualizace",
       "muscleTagCount": "{count} tag(ů) nalezeno",
       "muscleTagDeleteConfirm": "Jste si jisti, že chcete smazat štítek \"{tag}\"?",
-      "muscleTagDeleted": "Muscle značka odstraněna",
       "muscleTagExists": "Označení \"{tag}\" již existuje",
       "muscleTagExportError": "Chyba při exportu značek svalů: {error}",
-      "muscleTagExported": "Muscle značka exportována",
       "muscleTagImportError": "Chyba při importu značek svalů: {error}",
-      "muscleTagImportInvalidFormat": "Formát Muscle značky neplatný při importu",
       "muscleTagImportInvalidGroup": "Neplatná skupina svalů \"{group}\" pro tag \"{tag}\". Musí se jednat o standardní skupinu svalů.",
-      "muscleTagImportNoValid": "Import Muscle značky bez platného formátu",
       "muscleTagImportPreview": "{count} značek pro import",
       "muscleTagImported": "{count} Úspěšně importovány štítky pro svaly!",
-      "muscleTagLoading": "Načítání Muscle značky",
-      "muscleTagNoResults": "Muscle značka žádná výsledků",
       "muscleTagSaveError": "Chyba při ukládání štítku svalové skupiny: {error}",
-      "muscleTagSaved": "Muscle značka uložena",
       "muscleTagSimilarFound": "{count} nalezeny podobné štítky",
-      "muscleTagSimilarWarning": "Varování: Podobná Muscle značka",
       "suggestedNextWeight": "Navrhovaná další váha: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tabulka vložena úspěšně!",
       "tableUpdateFailed": "Neúspěšné provedení aktualizace tabulky. Ujistěte se, že soubor je otevřen v editoru.",
       "tableUpdated": "✅ Tabulka byla úspěšně aktualizována!",
-      "targetAchieved": "Cíl dosažen",
       "timerElementsNotInitialized": "Prvky časovače nebyly inicializovány",
       "timerInserted": "✅ Časovač vložen úspěšně!",
       "timerUpdateFailed": "Neúspěšné provedení aktualizace časovače. Ujistěte se, že soubor je otevřen v editoru.",
@@ -690,39 +606,23 @@
     "rounds": "Koleje:",
     "save": "Uložit",
     "sections": {
-      "advancedOptions": "Pokročilé možnosti",
-      "chartType": "Grafický typ",
       "configuration": "Konfigurace",
-      "displayOptions": "Zobrazení možností",
-      "exerciseConfiguration": "Konfigurace cvičení",
-      "mobileOptions": "Možnosti mobilu",
       "options": "Možnosti",
       "preset": "Nastavení",
-      "progressiveOverload": "Postupné přetahování",
-      "tableType": "Typ tabulky",
       "target": "Cíl",
-      "timerConfiguration": "Nastavení časovače",
       "workout": "Cvičení"
     },
     "selectOptions": {
-      "allLogs": "Všechny záznamy",
       "cardio": "Kardio",
-      "completeWorkout": "Dokončit cvičení",
       "custom": "Vlastní",
       "distance": "Vzdálenost",
-      "dropSet": "Drobná série",
-      "exerciseWorkout": "Cvičení tréninku",
-      "myoReps": "Mojové opakování",
       "number": "Číslo",
-      "restPause": "Pausa odpočinku",
-      "specificExercise": "Konkrétní cvičení",
       "standard": "Standard",
       "strength": "Silná",
       "superset": "Supsest",
       "text": "Text",
       "timed": "Časované",
-      "twentyones": "Dvacetjedenky",
-      "yesNo": "Ano Ne"
+      "twentyones": "Dvacetjedenky"
     },
     "sets": "Sady:",
     "similarTags": "Podobné značky:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "Průměrný objem",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (poslední 3)",
-    "recentTrend": "Nový trend",
     "recentVsPrev": " (vs předch.)",
     "sessions": "Séance",
     "title": "📈 Statistiky {dataTypeLabel} ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "Vzdálenost",
       "duration": "Doba",
       "exercise": "Cvičení",
-      "heartRate": "Srdeční frekvence",
       "notes": "Poznámky",
       "protocol": "Protokol",
       "reps": "Opakovaní",
@@ -922,29 +819,19 @@
       "volumeUnit": "Vol ({weightUnit})",
       "weightUnit": "Hmotnost ({weightUnit})"
     },
-    "deleteConfirm": "Potvrzení smazání",
     "deleteError": "Chyba při smazání: {error}",
-    "deleteSuccess": "Smazání úspěšné",
-    "deleteTitle": "Název smazání",
     "editTable": "Upravit tabulku",
-    "editTitle": "Upravit název",
-    "gotoExercise": "Přejít na cvičení",
-    "invalidDate": "Neplatná data",
     "labels": {
       "target": "Cíl:",
       "errors": {
         "tableElementsNotInitialized": "Prvek tabulky nebyl inicializován"
       }
     },
-    "noData": "Žádná data",
-    "notAvailable": "Nedostupné",
-    "refreshSuccess": "Obnovení úspěšné",
     "target": {
       "progressTooltip": "Nejlepší: {best} opakování / Cíl: {target} opakování",
       "repsSuffix": "opakovaní",
       "separator": " × "
     },
-    "trendLine": "Trendová linka",
     "refreshingTable": "Obnovování tabulky...",
     "validation": {
       "sortByInvalid": "sortBy musí být jedna z hodnot {allowed}, přijato: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "Nezměněno",
     "neutral": "Neutrální",
     "stable": "Stabilní",
-    "stableLower": "Stabilní nižší",
     "up": "Nahoru"
   },
   "canvas": {

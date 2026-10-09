@@ -97,11 +97,11 @@ export class TemplateGeneratorService {
       content += `  - ${tag}\n`;
     }
     content += "---\n\n";
-    content += "# Muscle Tags Reference\n\n";
-    content +=
-      "This file lists all available muscle tags from your muscle-tags.csv file.\n\n";
-    content +=
-      "**Note**: This file is auto-generated. To add or modify tags, use command 'Manage Muscle Tags'.\n";
+    content += `# ${t("templates.tagReference.title")}\n\n`;
+    content += `${t("templates.tagReference.description")}\n\n`;
+    content += `${t("templates.tagReference.note", {
+      command: t("commands.manageMuscleTags"),
+    })}\n`;
 
     await this.createOrUpdateFile(
       folderPath,

@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "तिथि",
-    "fallbackTableMessage": "बैकअप टेबल संदेश",
     "labels": {
       "quickWeightIncrementUnit": "वज़न बटन {weightIncrementUnit} से बढ़ जाते हैं",
       "reps": "रेप्स",
@@ -11,14 +10,10 @@
       "weight": "वजन",
       "weightIncrementUnit": "वज़न में वृद्धि {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "कुल भिन्नता उपसर्ग",
-    "significantIncrease": "महत्वपूर्ण वृद्धि",
-    "trendLine": "ट्रेंड लाइन",
     "typeNotAvailable": "\"{chartDataType}\" प्रकार का चार्ट {exerciseType} व्यायाम के लिए उपलब्ध नहीं है। उपलब्ध प्रकार: {typeList}",
     "types": {
       "distance": "दूरी",
       "duration": "अवधि",
-      "heartRate": "हृदय गति",
       "pace": "गति",
       "reps": "रेप्स",
       "volume": "मात्रा",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं"
   },
   "commands": {
-    "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
     "addMissingBlockIds": "कोड ब्लॉकों में गुम आईडी जोड़ें",
-    "auditExerciseNames": "ऑडिट एक्सरसाइज के नाम",
-    "convertExercise": "अभ्यास रूपांतरित करें",
-    "createCsvLog": "CSV लॉग फ़ाइल बनाएँ",
-    "exportWorkoutToCanvas": "वर्कआउट को कैनवास पर निर्यात करें",
-    "generateTagReference": "टैग संदर्भ उत्पन्न करें",
-    "insertTable": "टेबल डालें",
-    "manageMuscleTags": "मांस के टैग प्रबंधित करें",
-    "migrateExerciseTypes": "व्यायाम प्रकारों को माइग्रेट करें"
+    "createCsvLog": "CSV लॉग फ़ाइल बनाएँ"
   },
   "common": {
     "bpm": "बीपीएम",
@@ -47,7 +34,6 @@
     "exercise": "अभ्यास",
     "km": "km",
     "minPerKm": "प्रति किलोमीटर न्यूनतम",
-    "notAvailable": "उपलब्ध नहीं",
     "sec": "सुर",
     "unknown": "अज्ञात",
     "workout": "वर्कआउट"
@@ -85,19 +71,12 @@
       "columnVariance": "विचलन",
       "columnWorkout": "वर्कआउट",
       "minutesSuffix": "मिन",
-      "noData": "कोई डेटा नहीं",
       "subtitle": "अनुमानित बनाम वास्तविक कसरत की अवधि",
       "title": "अवधि की तुलना",
-      "varianceTrendDeclining": "विचलन का प्रवृत्ति घट रही है",
-      "varianceTrendImproving": "विचलन का प्रवृत्ति में सुधार",
-      "varianceTrendStable": "विचलन का रुझान स्थिर",
-      "varianceTrendTitle": "विचलन प्रवृत्ति शीर्षक",
       "avgVarianceStat": "औसत विचरण: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
-      "allValid": "सभी मान्य",
-      "noTags": "कोई टैग नहीं",
       "readError": "❌ फ़ाइल पढ़ने में त्रुटि: {message}",
       "title": "फ़ाइल त्रुटियाँ",
       "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "कॉपी करने के लिए क्लिक करें: {tag}",
       "totalCount": "कुल: {count} टैग उपलब्ध"
     },
-    "protocol": {
-      "clickToFilter": "फ़िल्टर करने के लिए क्लिक करें",
-      "percentLabel": "प्रतिशत लेबल",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "फ़िल्टर साफ़ करें",
-      "filterActive": "सक्रिय फ़िल्टर",
-      "noData": "कोई डेटा नहीं",
       "subtitle": "प्रशिक्षण प्रोटोकॉल का विवरण (अंतिम 30 दिन)",
       "title": "प्रोटोकॉल वितरण"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "प्रविष्ट",
       "columnProgression": "प्रगति",
       "columnProtocol": "प्रोटोकॉल",
-      "columnVolumeChange": "मात्रा में परिवर्तन",
       "disclaimer": "अस्वीकरण",
-      "noData": "कोई डेटा नहीं",
       "title": "प्रोटोकॉल की प्रभावशीलता"
     },
     "quickActions": {
-      "addWorkoutLog": "वर्कआउट लॉग जोड़ें",
-      "title": "त्वरित क्रियाएं",
-      "viewExercises": "व्यायाम देखें"
+      "title": "त्वरित क्रियाएं"
     },
     "quickStats": {
       "month": "महीना",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "वर्कआउट डेटा तालिका प्रदर्शित करें",
       "codeBlockWorkoutTimer": "काउंटडाउन या अंतराल टाइमर",
       "combinedTitle": "संयुक्त (व्यायाम + कसरत)",
-      "commandsNote": "**कमांड्स** (Ctrl/Cmd + P): वर्कआउट लॉग बनाएं, चार्ट डालें, टाइमर डालें, एक्सरसाइज पेज बनाएं",
       "countdownTimerTitle": "काउंटडाउन टाइमर",
       "durationEstimatorIntro": "वर्तमान नोट में दिए गए अभ्यासों के आधार पर, कुल वर्कआउट की अवधि का अनुमान लगाया जाता है।",
       "durationEstimatorTitle": "4. अवधि अनुमानक",
@@ -281,13 +248,9 @@
       "workouts": "वर्कआउट"
     },
     "gettingStarted": {
-      "commandCreateExercise": "अभ्यास पृष्ठ बनाएँ",
       "commandCreateExerciseDesc": "एक नई एक्सरसाइज फ़ाइल बनाएँ",
-      "commandCreateLog": "वर्कआउट लॉग बनाएं",
       "commandCreateLogDesc": "एक नया वर्कआउट एंट्री जोड़ें",
-      "commandInsertChart": "वर्कआउट चार्ट डालें",
       "commandInsertChartDesc": "किसी भी नोट में एक चार्ट जोड़ें",
-      "commandInsertTimer": "वर्कआउट टाइमर डालें",
       "commandInsertTimerDesc": "एक आराम टाइमर जोड़ें",
       "dashboardDesc": "आपकी वर्कआउट आँकड़े एक नज़र में",
       "exercisesDesc": "उदाहरण अभ्यास पृष्ठ, जिनमें लॉग और चार्ट शामिल हैं",
@@ -341,15 +304,9 @@
       "supersetLunges": "सुपरसेट जिसमें लंजेस शामिल हों"
     }
   },
-  "forms": {
-    "enterCsvPath": "CSV पथ दर्ज करें",
-    "enterFolderPath": "फ़ोल्डर का पथ दर्ज करें",
-    "workoutName": "वर्कआउट का नाम"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "औसत रेप्स",
     "back": "वापस",
-    "currentFile": "वर्तमान फ़ाइल",
     "dashboard": "डैशबोर्ड",
     "delete": "हटाएं",
     "edit": "संपादित करें",
@@ -369,12 +326,7 @@
       "totalVolume": "कुल मात्रा ({unit})",
       "totalWeight": "कुल वजन ({unit})"
     },
-    "muscleHeatMap": "मांसपेशियों का हीट मैप",
-    "noMatchMessage": "कोई मिलान नहीं",
-    "search": "खोज",
-    "totalReps": "कुल पुनरावृत्तियाँ",
-    "workoutData": "वर्कआउट डेटा",
-    "workoutLog": "वर्कआउट लॉग"
+    "search": "खोज"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "[{exerciseName} के लिए कोई लॉग नहीं मिला"
   },
   "messages": {
-    "codeInserted": "कोड डाला गया",
-    "csvNotFound": "CSV फाइल नहीं मिली",
     "errors": {
       "tagReferenceFailed": "टैग संदर्भ उत्पन्न करने में त्रुटि: {error}",
       "csvLoadError": "CSV डेटा लोड करने में त्रुटि: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "पथ {path} पर CSV फ़ाइल बनाने में विफल। कृपया सेटिंग्स में पथ जाँचें।",
       "tableRenderError": "तालिका रेंडरिंग त्रुटि"
     },
-    "fileEmpty": "फ़ाइल खाली",
-    "imbalanceAlerts": "असंतुलन की सूचनाएं",
-    "insufficientData": "अपर्याप्त डेटा",
     "noDataPeriod": "चुने गए समय अवधि के लिए कोई वर्कआउट डेटा नहीं मिला।",
-    "noFrontmatter": "कोई फ्रंटमेट",
-    "noImbalances": "कोई असंतुलन नहीं",
-    "noTags": "कोई टैग नहीं",
     "success": {
       "blockIdsAdded": "{count} गुम ID(s) को {files} फ़ाइल(s) में जोड़ा गया।",
       "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",
@@ -536,21 +480,7 @@
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
     "checkboxes": {
-      "connectSupersets": "सुपरसेट्स से कनेक्ट करें",
-      "exactMatch": "सटीक मिलान",
-      "includeDurations": "अवधि शामिल करें",
-      "includeLog": "लॉग शामिल करें",
-      "includeStats": "आंकड़े शामिल करें",
-      "includeTimer": "टाइमर शामिल करें",
-      "showAddButton": "'जोड़ें' बटन दिखाएं",
-      "showControls": "नियंत्रण दिखाएं",
-      "showStatistics": "सांख्यिकीय डेटा दिखाएं",
-      "showTrendHeader": "ट्रेंड शीर्षक दिखाएं",
-      "showTrendLine": "ट्रेंड लाइन दिखाएं",
-      "sound": "ध्वनि",
-      "timerSound": "टाइमर ध्वनि",
-      "useCurrentWorkout": "वर्तमान वर्कआउट का उपयोग करें",
-      "useCurrentWorkoutFile": "वर्तमान वर्कआउट फ़ाइल का उपयोग करें"
+      "sound": "ध्वनि"
     },
     "confirmAction": "कार्य को पुष्टिकरण करें",
     "csvExercise": "CSV अभ्यास",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "क्या इस फ़ाइल का नाम बदलें?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} असंगतियां मिलीं:",
       "auditNoMatchFound": "कोई मिलान नहीं मिला",
-      "auditNoMismatches": "लेखांकन संख्या में विसंगतियां",
       "auditRenameError": "नाम नहीं बदला जा सका: {error}",
       "auditRenameFileError": "फ़ाइल का नाम नहीं बदला जा सका: {error}",
-      "auditRenameFileSuccess": "ऑडिट: फ़ाइल का नाम बदलकर सफलता",
       "auditRenameSuccess": "नाम बदला गया ({count} फ़ाइलें अपडेट हुईं)",
       "auditScanError": "स्कैन में त्रुटि: {error}",
-      "auditScanning": "ऑडिट स्कैनिंग",
       "canvasExportError": "कैनवस निर्यात त्रुटि: {error}",
       "canvasExported": "कैनवस निर्यात किया गया ({path})",
       "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
       "confirmUpdateTarget": "क्या लक्ष्य को {targetWeight}{weightUnit} पर अपडेट करें?",
       "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
       "dismissAchievement": "उपलब्धि खारिज करें",
-      "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
       "exerciseNameRequired": "❌ कृपया व्यायाम का नाम दर्ज करें",
       "exercisePageCreated": "व्यायाम पृष्ठ सफलतापूर्वक बनाया गया!",
       "exercisePageError": "व्यायाम पृष्ठ बनाने में त्रुटि: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "वर्कआउट लॉग सफलतापूर्वक अपडेट किया गया!",
       "migrationComplete": "स्थानांतरण पूर्ण। {count} व्यायाम फ़ाइलों को अपडेट किया गया।",
       "migrationError": "प्रवासन त्रुटि: {error}",
-      "migrationNoUpdates": "प्रवासन के लिए कोई अपडेट नहीं",
       "muscleTagCount": "{count} टैग(स) मिले",
       "muscleTagDeleteConfirm": "क्या आप निश्चित रूप से टैग \"{tag}\" को हटाना चाहते हैं?",
-      "muscleTagDeleted": "मांस टैग हटा दिया गया",
       "muscleTagExists": "टैग \"{tag}\" पहले से मौजूद है",
       "muscleTagExportError": "मांस टैग निर्यात में त्रुटि: {error}",
-      "muscleTagExported": "मांस टैग निर्यात किया गया",
       "muscleTagImportError": "मांस टैग आयात करने में त्रुटि: {error}",
-      "muscleTagImportInvalidFormat": "मांस टैग आयात: अमान्य प्रारूप",
       "muscleTagImportInvalidGroup": "अमान्य मांसपेशी समूह \"{group}\" को टैग \"{tag}\" के लिए उपयोग नहीं किया जा सकता। यह एक मानक मांसपेशी समूह होना चाहिए।",
-      "muscleTagImportNoValid": "मांस टैग आयात: मान्य नहीं",
       "muscleTagImportPreview": "{count} टैग(स) आयात करने के लिए",
       "muscleTagImported": "{count} मांसपेशियों के टैग सफलतापूर्वक आयात किए गए!",
-      "muscleTagLoading": "मांस के टैग का लोडिंग",
-      "muscleTagNoResults": "मांस टैग के लिए कोई परिणाम नहीं",
       "muscleTagSaveError": "मांस टैग को सेव करने में त्रुटि: {error}",
-      "muscleTagSaved": "मांस के टैग को सफलतापूर्वक सहेज लिया गया",
       "muscleTagSimilarFound": "{count} समान टैग(ओं) मिल गए",
-      "muscleTagSimilarWarning": "मांस टैग के समान चेतावनी",
       "suggestedNextWeight": "सुझाया गया अगला वजन: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ तालिका सफलतापूर्वक डाली गई!",
       "tableUpdateFailed": "टेबल को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "tableUpdated": "✅ तालिका सफलतापूर्वक अपडेट की गई!",
-      "targetAchieved": "लक्ष्य प्राप्त",
       "timerElementsNotInitialized": "टाइमर के तत्व अभी तक शुरू नहीं किए गए हैं",
       "timerInserted": "✅ टाइमर सफलतापूर्वक डाला गया!",
       "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
@@ -690,39 +606,23 @@
     "rounds": "राउंड:",
     "save": "सेव",
     "sections": {
-      "advancedOptions": "उन्नत विकल्प",
-      "chartType": "चार्ट का प्रकार",
       "configuration": "कॉन्फ़िगरेशन",
-      "displayOptions": "प्रदर्शन विकल्प",
-      "exerciseConfiguration": "व्यायाम कॉन्फ़िगरेशन",
-      "mobileOptions": "मोबाइल विकल्प",
       "options": "विकल्प",
       "preset": "पहले से निर्धारित",
-      "progressiveOverload": "प्रगतिशील अधिभार",
-      "tableType": "टेबल का प्रकार",
       "target": "लक्ष्य",
-      "timerConfiguration": "टाइमर कॉन्फ़िगरेशन",
       "workout": "वर्कआउट"
     },
     "selectOptions": {
-      "allLogs": "सभी लॉग",
       "cardio": "कार्डियो",
-      "completeWorkout": "पूरा वर्कआउट",
       "custom": "कस्टम",
       "distance": "दूरी",
-      "dropSet": "ड्रॉप सेट",
-      "exerciseWorkout": "व्यायाम",
-      "myoReps": "माय ओ रेप्स",
       "number": "संख्या",
-      "restPause": "विश्राम ब्रेक",
-      "specificExercise": "विशिष्ट व्यायाम",
       "standard": "मानक",
       "strength": "शक्ति",
       "superset": "सुपरसेट",
       "text": "टेक्स्ट",
       "timed": "समयबद्ध",
-      "twentyones": "21",
-      "yesNo": "हाँ नहीं"
+      "twentyones": "21"
     },
     "sets": "सेट्स:",
     "similarTags": "समान टैग:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "औसत मात्रा",
     "max": "अधिकतम: ",
     "min": "न्यूनतम: ",
     "recentLast3": " (अंतिम 3)",
-    "recentTrend": "हाल का रुझान",
     "recentVsPrev": " (पिछले से)",
     "sessions": "सत्र",
     "title": "📈 {dataTypeLabel} सांख्यिकी ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "दूरी",
       "duration": "अवधि",
       "exercise": "व्यायाम",
-      "heartRate": "हृदय गति",
       "notes": "टिप्पणियाँ",
       "protocol": "प्रोटोकॉल",
       "reps": "रेप्स",
@@ -922,29 +819,19 @@
       "volumeUnit": "मात्रा ({weightUnit})",
       "weightUnit": "वज़न ({weightUnit})"
     },
-    "deleteConfirm": "पुष्टि करें",
     "deleteError": "डिलीट त्रुट: {error}",
-    "deleteSuccess": "सफलतापूर्वक हटा दिया गया",
-    "deleteTitle": "हटाएं",
     "editTable": "टेबल संपादित करें",
-    "editTitle": "संपादित शीर्षक",
-    "gotoExercise": "अभ्यास पर जाएं",
-    "invalidDate": "अमान्य तिथि",
     "labels": {
       "target": "लक्ष्य:",
       "errors": {
         "tableElementsNotInitialized": "टेबल के तत्व आरंभ नहीं किए गए"
       }
     },
-    "noData": "कोई डेटा नहीं",
-    "notAvailable": "उपलब्ध नहीं",
-    "refreshSuccess": "सफलतापूर्वक रिफ्रेश",
     "target": {
       "progressTooltip": "सर्वश्रेष्ठ: {best} रेप्स / लक्ष्य: {target} रेप्स",
       "repsSuffix": "रेप्स",
       "separator": " × "
     },
-    "trendLine": "ट्रेंड लाइन",
     "refreshingTable": "तालिका रीफ़्रेश हो रही है...",
     "validation": {
       "sortByInvalid": "sortBy {allowed} में से एक होना चाहिए, प्राप्त: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "स्थिर",
     "neutral": "तटस्थ",
     "stable": "स्थिर",
-    "stableLower": "स्थिर निचला",
     "up": "ऊपर"
   },
   "canvas": {

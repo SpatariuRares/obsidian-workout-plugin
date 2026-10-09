@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "Tarih",
-    "fallbackTableMessage": "Alternatif Tablo Mesajı",
     "labels": {
       "quickWeightIncrementUnit": "Ağırlık butonları, {weightIncrementUnit} kadar artırır",
       "reps": "Tekrarlar",
@@ -11,14 +10,10 @@
       "weight": "Ağırlık",
       "weightIncrementUnit": "Ağırlık artışı {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Genel Değişim Ön Eklemi",
-    "significantIncrease": "Önemli Artış",
-    "trendLine": "Trend Hattı",
     "typeNotAvailable": "\"{chartDataType}\" türündeki grafik, {exerciseType} türündeki egzersizler için kullanılabilir değildir. Kullanılabilir türler: {typeList}",
     "types": {
       "distance": "Mesafe",
       "duration": "Süre",
-      "heartRate": "Nabız",
       "pace": "Hız",
       "reps": "Grafik türleri: Göstergeler",
       "volume": "Hacim",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "Mevcut grafik türlerinden hiçbiri yok"
   },
   "commands": {
-    "addExerciseBlock": "Egzersiz Bloğunu Ekle",
     "addMissingBlockIds": "Kod bloklarına eksik ID'leri ekle",
-    "auditExerciseNames": "Denetim Egzersizlerinin Adları",
-    "convertExercise": "Eğitimi dönüştür",
-    "createCsvLog": "CSV log dosyası oluştur",
-    "exportWorkoutToCanvas": "Egzersizi Çizime Aktar",
-    "generateTagReference": "Etiket Referansını Oluştur",
-    "insertTable": "Tablo ekle",
-    "manageMuscleTags": "Kas Etiketlerini Yönet",
-    "migrateExerciseTypes": "Egzersiz Türlerini Taşı"
+    "createCsvLog": "CSV log dosyası oluştur"
   },
   "common": {
     "bpm": "bpm",
@@ -47,7 +34,6 @@
     "exercise": "Egzersiz",
     "km": "common.km",
     "minPerKm": "dakika/km",
-    "notAvailable": "Mevcut değil",
     "sec": "sec",
     "unknown": "Bilinmiyor",
     "workout": "Egzersiz"
@@ -85,19 +71,12 @@
       "columnVariance": "Değişim",
       "columnWorkout": "Egzersiz",
       "minutesSuffix": "dakika",
-      "noData": "Veri yok",
       "subtitle": "Tahmini vs. gerçek antrenman süresi",
       "title": "Süre karşılaştırması",
-      "varianceTrendDeclining": "Değer Farkı Eğilimi Azalıyor",
-      "varianceTrendImproving": "Değer Farkı Eğilimi İyileşiyor",
-      "varianceTrendStable": "Değişim Trendi: İstikrarlı",
-      "varianceTrendTitle": "Değişim Trendi Başlığı",
       "avgVarianceStat": "Ort. varyans: ±{value}%",
       "hoursSuffix": "h"
     },
     "fileErrors": {
-      "allValid": "Tüm geçerli",
-      "noTags": "Etiket Yok",
       "readError": "❌ Dosya okuma hatası: {message}",
       "title": "Dosya hataları",
       "tooManyTags": "Çok fazla kas etiketi ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "Kopyalamak için tıklayın: {tag}",
       "totalCount": "Toplam: {count} adet etiket mevcut"
     },
-    "protocol": {
-      "clickToFilter": "Filtrelemek için tıklayın",
-      "percentLabel": "Yüzde Etiketi",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "Filtreyi Temizle",
-      "filterActive": "Aktifleri Filtrele",
-      "noData": "Veri yok",
       "subtitle": "Eğitim protokolü detayları (son 30 gün)",
       "title": "Protokol dağılımı"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "Girdiler",
       "columnProgression": "İlerleme",
       "columnProtocol": "Protokol",
-      "columnVolumeChange": "Hacim Değişimi",
       "disclaimer": "Uyarı",
-      "noData": "Veri yok",
       "title": "Protokol etkinliği"
     },
     "quickActions": {
-      "addWorkoutLog": "Egzersiz Günlüğünü Ekle",
-      "title": "Hızlı eylemler",
-      "viewExercises": "Egzersizleri görüntüle"
+      "title": "Hızlı eylemler"
     },
     "quickStats": {
       "month": "Ay",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "Egzersiz verilerini gösteren tablo",
       "codeBlockWorkoutTimer": "Zamanlayıcı veya aralıklayıcı",
       "combinedTitle": "Birleşik (Egzersiz + Antrenman)",
-      "commandsNote": "**Komutlar** (Ctrl/Cmd + P): Antrenman Günlüğünü Oluştur, Grafik Ekle, Zamanlayıcı Ekle, Egzersiz Sayfası Oluştur",
       "countdownTimerTitle": "Zamanlayıcı",
       "durationEstimatorIntro": "Mevcut nottaki egzersizlere göre toplam antrenman süresini tahmin eder.",
       "durationEstimatorTitle": "4. Süre Tahmini",
@@ -281,13 +248,9 @@
       "workouts": "Egzersizler"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Egzersiz Oluştur Sayfası",
       "commandCreateExerciseDesc": "Yeni bir egzersiz dosyası oluşturun",
-      "commandCreateLog": "Egzersiz Günlüğünü Oluştur",
       "commandCreateLogDesc": "Yeni bir antrenman girişi ekle",
-      "commandInsertChart": "Çalışma Grafiğini Ekle",
       "commandInsertChartDesc": "Her not'a bir grafik ekleyin",
-      "commandInsertTimer": "Egzersiz Zamanlayıcısını Ekleyin",
       "commandInsertTimerDesc": "Bir dinlenme zamanlayıcısı ekleyin",
       "dashboardDesc": "Egzersiz geçmişinizdeki istatistikleri tek bakışta görüntüleyin",
       "exercisesDesc": "Örnek egzersiz sayfaları, günlükler ve grafiklerle",
@@ -341,15 +304,9 @@
       "supersetLunges": "Superset egzersizi (lunges ile)"
     }
   },
-  "forms": {
-    "enterCsvPath": "CSV yolunu girin",
-    "enterFolderPath": "Klasör yolunu girin",
-    "workoutName": "Egzersiz Adı"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "Ortalama tekrar sayısı",
     "back": "Geri",
-    "currentFile": "Mevcut Dosya",
     "dashboard": "Gösterge",
     "delete": "Sil",
     "edit": "Düzenle",
@@ -369,12 +326,7 @@
       "totalVolume": "Toplam hacim ({unit})",
       "totalWeight": "Toplam ağırlık ({unit})"
     },
-    "muscleHeatMap": "Kas Isı Haritası",
-    "noMatchMessage": "Eşleşme Bulunamadı",
-    "search": "Arama",
-    "totalReps": "Toplam Tekrar Sayısı",
-    "workoutData": "Egzersiz Verileri",
-    "workoutLog": "Egzersiz Günlüğü"
+    "search": "Arama"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "{exerciseName} için herhangi bir log bulunamadı."
   },
   "messages": {
-    "codeInserted": "Kod Eklendi",
-    "csvNotFound": "CSV dosyası bulunamadı",
     "errors": {
       "tagReferenceFailed": "Etiket referansını oluşturma hatası: {error}",
       "csvLoadError": "CSV verisi yüklenirken hata: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "{path} yolunda CSV dosyası oluşturulamadı. Lütfen ayarlardaki yolu kontrol edin.",
       "tableRenderError": "Tablo oluşturma hatası"
     },
-    "fileEmpty": "Dosya Boş",
-    "imbalanceAlerts": "Dengesizlik Uyarıları",
-    "insufficientData": "Yetersiz Veri",
     "noDataPeriod": "Belirtilen zaman aralığı için herhangi bir antrenman verisi bulunamadı.",
-    "noFrontmatter": "Ön başlık yok",
-    "noImbalances": "Dengesizlik Yok",
-    "noTags": "Etiket Yok",
     "success": {
       "blockIdsAdded": "{count} numaralı eksik ID'ler {files} dosyalarında eklendi.",
       "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
@@ -536,21 +480,7 @@
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
     "checkboxes": {
-      "connectSupersets": "Supersetleri Bağla",
-      "exactMatch": "Tam Eşleşme",
-      "includeDurations": "Süreleri dahil et",
-      "includeLog": "Günlükleri Dahil Et",
-      "includeStats": "İstatistikleri dahil et",
-      "includeTimer": "Zamanlayıcıyı Dahil Et",
-      "showAddButton": "Ekle Butonunu Göster",
-      "showControls": "Kontrolleri Göster",
-      "showStatistics": "İstatistikleri göster",
-      "showTrendHeader": "Trend Başlığı Göster",
-      "showTrendLine": "Trend çizgisini göster",
-      "sound": "Ses",
-      "timerSound": "Zamanlayıcı sesi",
-      "useCurrentWorkout": "Mevcut Egzersizi Kullan",
-      "useCurrentWorkoutFile": "Mevcut Egzersiz Dosyasını Kullan"
+      "sound": "Ses"
     },
     "confirmAction": "Eylemi onayla",
     "csvExercise": "CSV egzersizi",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "Bu dosya yeniden adlandırılsın mı?\n\n{oldName} → {newName}",
       "auditMismatchCount": "{count} olası uyuşmazlık bulundu:",
       "auditNoMatchFound": "Eşleşme bulunamadı",
-      "auditNoMismatches": "Denetim Numarası Uyuşmazlıkları",
       "auditRenameError": "Yeniden adlandırılamadı: {error}",
       "auditRenameFileError": "Dosya yeniden adlandırılamadı: {error}",
-      "auditRenameFileSuccess": "Dosya yeniden adlandırıldı, işlem başarılı.",
       "auditRenameSuccess": "Yeniden adlandırıldı ({count} dosya güncellendi)",
       "auditScanError": "Tarama hatası: {error}",
-      "auditScanning": "Denetim taraması",
       "canvasExportError": "Çizim İhracat Hatası: {error}",
       "canvasExported": "Çizim, dışa aktarıldı ({path})",
       "chartInserted": "✅ Grafik başarıyla eklendi!",
       "confirmUpdateTarget": "Hedef {targetWeight}{weightUnit} olarak güncellensin mi?",
       "dashboardInserted": "✅ Gösterge paneli başarıyla eklendi!",
       "dismissAchievement": "Başarıyı kapat",
-      "exerciseBlockInserted": "Egzersiz Bloğu Eklendi",
       "exerciseNameRequired": "❌ Lütfen bir egzersiz adı girin",
       "exercisePageCreated": "Egzersiz sayfası başarıyla oluşturuldu!",
       "exercisePageError": "Egzersiz sayfası oluşturulurken hata: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "Egzersiz kaydı başarıyla güncellendi!",
       "migrationComplete": "Göç tamamlandı. Güncellenmiş {count} egzersiz dosyaları.",
       "migrationError": "Göç İşlemi Hatası: {error}",
-      "migrationNoUpdates": "Göç için güncellemeler mevcut değil",
       "muscleTagCount": "{count} etiket(ler) bulundu",
       "muscleTagDeleteConfirm": "\"{tag}\" etiketini silmekten emin misiniz?",
-      "muscleTagDeleted": "Kas Etiketi Silindi",
       "muscleTagExists": "\"{tag}\" etiketi zaten mevcut",
       "muscleTagExportError": "Kas etiketlerini dışa aktarırken hata oluştu: {error}",
-      "muscleTagExported": "Kas Etiketi Dışa Aktarıldı",
       "muscleTagImportError": "Kas etiketlerini içe aktarırken hata oluştu: {error}",
-      "muscleTagImportInvalidFormat": "Kas Etiketini İthal Etme: Geçerli Format Değil",
       "muscleTagImportInvalidGroup": "Geçersiz kas grubu \"{group}\", etiket \"{tag}\" için. Geçerli bir kas grubu olmalıdır.",
-      "muscleTagImportNoValid": "Kas Etiketini İthal Et: Geçerli Değil",
       "muscleTagImportPreview": "{count} etiketini(leri) içe aktar",
       "muscleTagImported": "{count} Kas etiketleri başarıyla içe aktarıldı!",
-      "muscleTagLoading": "Kas Etiketinin Yüklenmesi",
-      "muscleTagNoResults": "Kas Etiketinde Sonuç Bulunamadı",
       "muscleTagSaveError": "Kas etiketini kaydetme hatası: {error}",
-      "muscleTagSaved": "Kas Etiketi Kaydedildi",
       "muscleTagSimilarFound": "{count} Benzer etiket(ler) bulundu",
-      "muscleTagSimilarWarning": "Kas Etiketine Benzer Uyarı",
       "suggestedNextWeight": "Önerilen sonraki ağırlık: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Tablo başarıyla eklendi!",
       "tableUpdateFailed": "Tablo güncellenirken hata oluştu. Dosyanın düzenleyici programda açık olduğundan emin olun.",
       "tableUpdated": "✅ Tablo başarıyla güncellendi!",
-      "targetAchieved": "Hedef Başarıldı",
       "timerElementsNotInitialized": "Zamanlayıcı öğeleri henüz başlatılmamış",
       "timerInserted": "✅ Zamanlayıcı başarıyla eklendi!",
       "timerUpdateFailed": "Zamanlayıcı güncellenmedi. Dosyanın düzenleyici programda açık olduğundan emin olun.",
@@ -690,39 +606,23 @@
     "rounds": "Rondlar:",
     "save": "Kaydet",
     "sections": {
-      "advancedOptions": "Gelişmiş Seçenekler",
-      "chartType": "Grafik Türü",
       "configuration": "Yapılandırma",
-      "displayOptions": "Görüntüleme Seçenekleri",
-      "exerciseConfiguration": "Egzersiz Ayarı",
-      "mobileOptions": "Mobil Seçenekler",
       "options": "Seçenekler",
       "preset": "Önceden ayarlanmış",
-      "progressiveOverload": "Aşamalı Yüklenme",
-      "tableType": "Tablo Türü",
       "target": "Hedef",
-      "timerConfiguration": "Zamanlayıcı Ayarları",
       "workout": "Egzersiz"
     },
     "selectOptions": {
-      "allLogs": "Tüm günlükler",
       "cardio": "Kardiyo",
-      "completeWorkout": "Tamamlanan Antrenman",
       "custom": "Özel",
       "distance": "Mesafe",
-      "dropSet": "Düşük Set",
-      "exerciseWorkout": "Egzersiz Programı",
-      "myoReps": "Oyuncuların listesi",
       "number": "Sayı",
-      "restPause": "Dinlenme ve Devam",
-      "specificExercise": "Belirli Egzersiz",
       "standard": "Standart",
       "strength": "Güç",
       "superset": "Superset",
       "text": "Metin",
       "timed": "Zamanla sınırlı",
-      "twentyones": "Yirmi bir",
-      "yesNo": "Evet Hayır"
+      "twentyones": "Yirmi bir"
     },
     "sets": "Kategoriler:",
     "similarTags": "Benzer etiketler:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "Ortalama Hacim",
     "max": "Mak: ",
     "min": "Min: ",
     "recentLast3": " (son 3)",
-    "recentTrend": "Son Trend",
     "recentVsPrev": " (öncekiyle)",
     "sessions": "Sessiyonlar",
     "title": "📈 {dataTypeLabel} İstatistikleri ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "Mesafe",
       "duration": "Süre",
       "exercise": "Egzersiz",
-      "heartRate": "Nabız",
       "notes": "Notlar",
       "protocol": "Protokol",
       "reps": "Tekrarlar",
@@ -922,29 +819,19 @@
       "volumeUnit": "Hacim ({weightUnit})",
       "weightUnit": "Ağırlık ({weightUnit})"
     },
-    "deleteConfirm": "Onaylamak",
     "deleteError": "Silme Hatası: {error}",
-    "deleteSuccess": "Silme Başarılı",
-    "deleteTitle": "Silme",
     "editTable": "Tabloyu düzenle",
-    "editTitle": "Düzenle",
-    "gotoExercise": "Eseri başlat",
-    "invalidDate": "Geçersiz tarih",
     "labels": {
       "target": "Hedef:",
       "errors": {
         "tableElementsNotInitialized": "Tablodaki öğeler henüz başlatılmamış"
       }
     },
-    "noData": "Veri yok",
-    "notAvailable": "Erişilemiyor",
-    "refreshSuccess": "Yenileme Başarılı",
     "target": {
       "progressTooltip": "En İyi: {best} tekrar / Hedef: {target} tekrar",
       "repsSuffix": "temsil",
       "separator": " × "
     },
-    "trendLine": "Trend Hattı",
     "refreshingTable": "Tablo yenileniyor...",
     "validation": {
       "sortByInvalid": "sortBy şunlardan biri olmalıdır: {allowed}, alınan: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "Sabit",
     "neutral": "Tarafsız",
     "stable": "Kararlı",
-    "stableLower": "Kararlı Düşük",
     "up": "Yukarı"
   },
   "canvas": {

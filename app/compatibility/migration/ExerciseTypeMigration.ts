@@ -15,7 +15,7 @@ export class ExerciseTypeMigration {
       const exerciseFolderPath =
         this.plugin.settings.exerciseFolderPath;
       if (!exerciseFolderPath) {
-        new Notice(t("messages.fileEmpty")); // Using generic error or specific if available
+        new Notice(t("messages.exerciseFolderNotSet"));
         return;
       }
 

@@ -1,7 +1,6 @@
 {
   "charts": {
     "date": "Дата",
-    "fallbackTableMessage": "Сообщение для таблицы резервного копирования",
     "labels": {
       "quickWeightIncrementUnit": "Кнопки изменения веса увеличивают {weightIncrementUnit}",
       "reps": "Повторения",
@@ -11,14 +10,10 @@
       "weight": "Вес",
       "weightIncrementUnit": "Увеличение веса {weightIncrementUnit}"
     },
-    "overallVariationPrefix": "Префикс для общей вариации",
-    "significantIncrease": "Значительный рост",
-    "trendLine": "Линия тренда",
     "typeNotAvailable": "Тип диаграммы \"{chartDataType}\" недоступен для упражнений типа {exerciseType}. Доступные типы: {typeList}",
     "types": {
       "distance": "Расстояние",
       "duration": "Продолжительность",
-      "heartRate": "Частота сердечных сокращений",
       "pace": "Темп",
       "reps": "Типы графиков: отображение",
       "volume": "Объем",
@@ -28,16 +23,8 @@
     "noTypesAvailable": "Нет доступных типов графиков."
   },
   "commands": {
-    "addExerciseBlock": "Добавить блок упражнений",
     "addMissingBlockIds": "Добавьте отсутствующие идентификаторы в блоки кода",
-    "auditExerciseNames": "Названия упражнений для аудита",
-    "convertExercise": "Преобразовать упражнение",
-    "createCsvLog": "Создать файл журнала в формате CSV",
-    "exportWorkoutToCanvas": "Экспортировать тренировку на холст",
-    "generateTagReference": "Создать ссылку на тег",
-    "insertTable": "Добавить таблицу",
-    "manageMuscleTags": "Управление тегами для мышц",
-    "migrateExerciseTypes": "Перенос типов упражнений"
+    "createCsvLog": "Создать файл журнала в формате CSV"
   },
   "common": {
     "bpm": "bpm",
@@ -47,7 +34,6 @@
     "exercise": "Упражнение",
     "km": "common.km",
     "minPerKm": "минуты/км",
-    "notAvailable": "Не доступно",
     "sec": "безопасность",
     "unknown": "Неизвестно",
     "workout": "Тренировка"
@@ -85,19 +71,12 @@
       "columnVariance": "Разброс",
       "columnWorkout": "Тренировка",
       "minutesSuffix": "мин",
-      "noData": "Нет данных",
       "subtitle": "Ожидаемая продолжительность тренировки против фактической",
       "title": "Сравнение по продолжительности",
-      "varianceTrendDeclining": "Тенденция: уменьшение дисперсии",
-      "varianceTrendImproving": "Тенденция к уменьшению изменчивости",
-      "varianceTrendStable": "Стабильный тренд отклонений",
-      "varianceTrendTitle": "Заголовок: Тенденция изменения",
       "avgVarianceStat": "Сред. отклонение: ±{value}%",
       "hoursSuffix": "ч"
     },
     "fileErrors": {
-      "allValid": "Все корректно",
-      "noTags": "Нет тегов",
       "readError": "❌ Ошибка при чтении файла: {message}",
       "title": "Ошибки при работе с файлами",
       "tooManyTags": "Слишком много меток для мышц ({count})"
@@ -108,15 +87,8 @@
       "tooltip": "Нажмите, чтобы скопировать: {tag}",
       "totalCount": "Всего: {count} тегов доступно"
     },
-    "protocol": {
-      "clickToFilter": "Нажмите, чтобы отфильтровать",
-      "percentLabel": "Метка для отображения процента",
-      "setsLabel": "{label}: {count} {setsLabel} ({percentage}{percentLabel})"
-    },
+    "protocol": {},
     "protocolDistribution": {
-      "clearFilter": "Очистить фильтр",
-      "filterActive": "Фильтровать активные",
-      "noData": "Нет данных",
       "subtitle": "Разбивка по протоколам обучения (последние 30 дней)",
       "title": "Распределение протоколов"
     },
@@ -124,15 +96,11 @@
       "columnEntries": "Элементы",
       "columnProgression": "Прогресс",
       "columnProtocol": "Протокол",
-      "columnVolumeChange": "Изменение объема",
       "disclaimer": "Отказ от ответственности",
-      "noData": "Нет данных",
       "title": "Эффективность протокола"
     },
     "quickActions": {
-      "addWorkoutLog": "Добавить запись о тренировке",
-      "title": "Быстрые действия",
-      "viewExercises": "Просмотр упражнений"
+      "title": "Быстрые действия"
     },
     "quickStats": {
       "month": "Месяц",
@@ -242,7 +210,6 @@
       "codeBlockWorkoutLog": "Отображение таблицы с данными тренировок",
       "codeBlockWorkoutTimer": "Таймер обратного отсчета или таймер интервалов",
       "combinedTitle": "Сочетание (упражнения + тренировка)",
-      "commandsNote": "**Команды** (Ctrl/Cmd + P): Создать запись тренировки, Вставить график, Вставить таймер, Создать страницу упражнений",
       "countdownTimerTitle": "Таймер обратного отсчета",
       "durationEstimatorIntro": "Оценивает общую продолжительность тренировки на основе упражнений, указанных в текущей заметке.",
       "durationEstimatorTitle": "4. Оценка продолжительности",
@@ -281,13 +248,9 @@
       "workouts": "Примеры"
     },
     "gettingStarted": {
-      "commandCreateExercise": "Страница для создания упражнения",
       "commandCreateExerciseDesc": "Создать новый файл упражнения",
-      "commandCreateLog": "Создать журнал тренировок",
       "commandCreateLogDesc": "Добавить новую запись о тренировке",
-      "commandInsertChart": "Добавить график тренировки",
       "commandInsertChartDesc": "Добавьте диаграмму к любому заметке",
-      "commandInsertTimer": "Добавить таймер для тренировки",
       "commandInsertTimerDesc": "Добавьте таймер для отдыха",
       "dashboardDesc": "Ваши показатели тренировок в одном месте",
       "exercisesDesc": "Примеры упражнений с журналами и графиками",
@@ -341,15 +304,9 @@
       "supersetLunges": "Тренировка с использованием упражнений \"выпады\" в Superset."
     }
   },
-  "forms": {
-    "enterCsvPath": "Введите путь к файлу CSV",
-    "enterFolderPath": "Введите путь к папке",
-    "workoutName": "Название тренировки"
-  },
+  "forms": {},
   "general": {
-    "avgReps": "Среднее количество повторений",
     "back": "Назад",
-    "currentFile": "Текущий файл",
     "dashboard": "Панель управления",
     "delete": "Удалить",
     "edit": "Редактировать",
@@ -369,12 +326,7 @@
       "totalVolume": "Общий объем ({unit})",
       "totalWeight": "Общий вес ({unit})"
     },
-    "muscleHeatMap": "Карта тепловой активности мышц",
-    "noMatchMessage": "Сообщение о несовпадении",
-    "search": "Поиск",
-    "totalReps": "Общее количество повторений",
-    "workoutData": "Данные тренировок",
-    "workoutLog": "Журнал тренировок"
+    "search": "Поиск"
   },
   "icons": {
     "actions": {
@@ -460,8 +412,6 @@
     "noDataTitle": "Не найдено журналов для {exerciseName}"
   },
   "messages": {
-    "codeInserted": "Код добавлен",
-    "csvNotFound": "Файл CSV не найден",
     "errors": {
       "tagReferenceFailed": "Ошибка при создании ссылки на тег: {error}",
       "csvLoadError": "Ошибка загрузки CSV: {error}",
@@ -474,13 +424,7 @@
       "workoutLogCreateError": "Не удалось создать CSV-файл по пути: {path}. Проверьте путь в настройках.",
       "tableRenderError": "Ошибка рендеринга таблицы"
     },
-    "fileEmpty": "Файл пуст",
-    "imbalanceAlerts": "Предупреждения о дисбалансе",
-    "insufficientData": "Недостаточно данных",
     "noDataPeriod": "Данные тренировок не найдены для выбранного периода времени.",
-    "noFrontmatter": "Нет информации о структуре",
-    "noImbalances": "Отсутствуют несовпадения",
-    "noTags": "Нет тегов",
     "success": {
       "blockIdsAdded": "Добавлены отсутствующие идентификаторы {count} в файлах {files}.",
       "csvCreated": "Файл CSV успешно создан!",
@@ -536,21 +480,7 @@
     "canvasLayout": "Макет",
     "canvasOptions": "Варианты",
     "checkboxes": {
-      "connectSupersets": "Соединить суперсеты",
-      "exactMatch": "Точное соответствие",
-      "includeDurations": "Включить периоды",
-      "includeLog": "Включить журнал",
-      "includeStats": "Включить статистику",
-      "includeTimer": "Включить таймер",
-      "showAddButton": "Показать кнопку \"Добавить\"",
-      "showControls": "Показать элементы управления",
-      "showStatistics": "Отобразить статистику",
-      "showTrendHeader": "Отобразить заголовок для отображения тренда",
-      "showTrendLine": "Показать линию тренда",
-      "sound": "Звук",
-      "timerSound": "Звук таймера",
-      "useCurrentWorkout": "Использовать текущую тренировку",
-      "useCurrentWorkoutFile": "Использовать текущий файл тренировки"
+      "sound": "Звук"
     },
     "confirmAction": "Подтвердить действие",
     "csvExercise": "Упражнение с использованием формата CSV",
@@ -598,20 +528,16 @@
       "auditConfirmRenameFile": "Переименовать этот файл?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Найдено {count} несоответствий:",
       "auditNoMatchFound": "Совпадений не найдено",
-      "auditNoMismatches": "Отсутствие несоответствий в ходе аудита",
       "auditRenameError": "Не удалось переименовать: {error}",
       "auditRenameFileError": "Не удалось переименовать файл: {error}",
-      "auditRenameFileSuccess": "Успешно переименовано файл в рамках аудита",
       "auditRenameSuccess": "Переименовано (обновлено файлов: {count})",
       "auditScanError": "Ошибка сканирования: {error}",
-      "auditScanning": "Сканирование для аудита",
       "canvasExportError": "Ошибка при экспорте на холст: {error}",
       "canvasExported": "Экспорт на холст ({path})",
       "chartInserted": "✅ График успешно добавлен!",
       "confirmUpdateTarget": "Обновить цель до {targetWeight}{weightUnit}?",
       "dashboardInserted": "✅ Панель управления успешно добавлена!",
       "dismissAchievement": "Закрыть достижение",
-      "exerciseBlockInserted": "Блок упражнений добавлен",
       "exerciseNameRequired": "❌, пожалуйста, введите название упражнения",
       "exercisePageCreated": "Страница для тренировок успешно создана!",
       "exercisePageError": "Ошибка при создании страницы упражнения: {error}",
@@ -623,30 +549,20 @@
       "logUpdated": "Журнал тренировок успешно обновлен!",
       "migrationComplete": "Миграция завершена. Обновлены файлы упражнений {count}.",
       "migrationError": "Ошибка миграции: {error}",
-      "migrationNoUpdates": "Отсутствуют обновления миграции",
       "muscleTagCount": "{count} тегов найдено",
       "muscleTagDeleteConfirm": "Вы уверены, что хотите удалить метку \"{tag}\"?",
-      "muscleTagDeleted": "Тег \"Мышечная группа\" удален",
       "muscleTagExists": "Тег \"{tag}\" уже существует",
       "muscleTagExportError": "Ошибка при экспорте тегов для мышц: {error}",
-      "muscleTagExported": "Экспорт тегов для мышц",
       "muscleTagImportError": "Ошибка при импорте меток для мышц: {error}",
-      "muscleTagImportInvalidFormat": "Неверный формат для импорта тегов мышц",
       "muscleTagImportInvalidGroup": "Неверная группа мышц \"{group}\" для тега \"{tag}\". Должна быть стандартной группой мышц.",
-      "muscleTagImportNoValid": "Импорт тегов для мышц: недействительные данные",
       "muscleTagImportPreview": "{count} тег(ов) для импорта",
       "muscleTagImported": "{count} Успешно импортированы метки для мышц!",
-      "muscleTagLoading": "Загрузка тегов для мышц",
-      "muscleTagNoResults": "Результаты не найдены",
       "muscleTagSaveError": "Ошибка при сохранении метки для мышц: {error}",
-      "muscleTagSaved": "Тег \"Мышечная группа\" сохранен",
       "muscleTagSimilarFound": "{count} Найдены похожие теги",
-      "muscleTagSimilarWarning": "Предупреждение: Похожий результат для упражнения «Мышцы»",
       "suggestedNextWeight": "Рекомендуемый следующий вес: {suggestedWeight}{weightUnit}",
       "tableInserted": "✅ Таблица успешно добавлена!",
       "tableUpdateFailed": "Не удалось обновить таблицу. Убедитесь, что файл открыт в редакторе.",
       "tableUpdated": "✅ Таблица успешно обновлена!",
-      "targetAchieved": "Цель достигнута",
       "timerElementsNotInitialized": "Элементы таймера не инициализированы",
       "timerInserted": "✅ Таймер успешно добавлен!",
       "timerUpdateFailed": "Не удалось обновить таймер. Убедитесь, что файл открыт в редакторе.",
@@ -690,39 +606,23 @@
     "rounds": "Раунды:",
     "save": "Сохранить",
     "sections": {
-      "advancedOptions": "Расширенные параметры",
-      "chartType": "Тип графика",
       "configuration": "Настройка",
-      "displayOptions": "Варианты отображения",
-      "exerciseConfiguration": "Настройка упражнения",
-      "mobileOptions": "Настройки для мобильных устройств",
       "options": "Варианты",
       "preset": "Предустановленный",
-      "progressiveOverload": "Постепенное увеличение нагрузки",
-      "tableType": "Тип таблицы",
       "target": "Цель",
-      "timerConfiguration": "Настройка таймера",
       "workout": "Тренировка"
     },
     "selectOptions": {
-      "allLogs": "Все записи",
       "cardio": "Кардио",
-      "completeWorkout": "Завершить тренировку",
       "custom": "Пользовательские",
       "distance": "Расстояние",
-      "dropSet": "Набор упражнений",
-      "exerciseWorkout": "Тренировка",
-      "myoReps": "Список моих спортивных заведений",
       "number": "Количество",
-      "restPause": "Пауза для отдыха",
-      "specificExercise": "Конкретное упражнение",
       "standard": "Стандарт",
       "strength": "Уровень",
       "superset": "Superset",
       "text": "Текст",
       "timed": "Ограниченное по времени",
-      "twentyones": "Двадцать один",
-      "yesNo": "Да Нет"
+      "twentyones": "Двадцать один"
     },
     "sets": "Наборы:",
     "similarTags": "Похожие теги:",
@@ -889,11 +789,9 @@
     }
   },
   "stats": {
-    "avgVolume": "Средний объем",
     "max": "Макс: ",
     "min": "Мин: ",
     "recentLast3": " (последние 3)",
-    "recentTrend": "Последняя тенденция",
     "recentVsPrev": " (vs пред.)",
     "sessions": "Сеансы",
     "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
@@ -906,7 +804,6 @@
       "distance": "Расстояние",
       "duration": "Продолжительность",
       "exercise": "Упражнение",
-      "heartRate": "Частота сердечных сокращений",
       "notes": "Примечания",
       "protocol": "Протокол",
       "reps": "Повторения",
@@ -922,29 +819,19 @@
       "volumeUnit": "Объем ({weightUnit})",
       "weightUnit": "Вес ({weightUnit})"
     },
-    "deleteConfirm": "Подтвердить удаление",
     "deleteError": "Ошибка при удалении: {error}",
-    "deleteSuccess": "Успешно удалено",
-    "deleteTitle": "Заголовок для удаления",
     "editTable": "Редактировать таблицу",
-    "editTitle": "Заголовок для редактирования",
-    "gotoExercise": "Перейти к упражнению",
-    "invalidDate": "Неверная дата",
     "labels": {
       "target": "Цель:",
       "errors": {
         "tableElementsNotInitialized": "Элементы таблицы не инициализированы"
       }
     },
-    "noData": "Нет данных",
-    "notAvailable": "Не доступно",
-    "refreshSuccess": "Успешно обновлено",
     "target": {
       "progressTooltip": "Лучший вариант: {best} повторений / Цель: {target} повторений",
       "repsSuffix": "повт.",
       "separator": " × "
     },
-    "trendLine": "Линия тренда",
     "refreshingTable": "Обновление таблицы...",
     "validation": {
       "sortByInvalid": "sortBy должен быть одним из {allowed}, получено: \"{value}\"",
@@ -980,7 +867,6 @@
     "invariant": "Неизменяемость",
     "neutral": "Нейтральный",
     "stable": "Стабильный",
-    "stableLower": "Стабильный, нижний уровень",
     "up": "Вверх"
   },
   "canvas": {

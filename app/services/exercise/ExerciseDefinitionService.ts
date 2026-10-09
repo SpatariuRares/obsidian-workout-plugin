@@ -15,6 +15,7 @@ import type {
 import {
   getExerciseTypeById,
   DEFAULT_EXERCISE_TYPE_ID,
+  resolveExerciseTypeId,
 } from "@app/constants/exerciseTypes.constants";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
@@ -347,7 +348,9 @@ export class ExerciseDefinitionService {
       typeof frontmatter.exercise_type === "string" &&
       frontmatter.exercise_type.trim()
     ) {
-      return StringUtils.normalize(frontmatter.exercise_type);
+      return resolveExerciseTypeId(
+        StringUtils.normalize(frontmatter.exercise_type),
+      );
     }
 
     // Check for type field (alternative)
@@ -355,7 +358,7 @@ export class ExerciseDefinitionService {
       typeof frontmatter.type === "string" &&
       frontmatter.type.trim()
     ) {
-      return StringUtils.normalize(frontmatter.type);
+      return resolveExerciseTypeId(StringUtils.normalize(frontmatter.type));
     }
 
     // Default to strength for backward compatibility

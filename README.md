@@ -170,6 +170,37 @@ All parameters are optional; without any, the full dashboard is shown.
 | `recentWorkoutsLimit` | number  | `5`     | Number of recent workouts listed              |
 | `volumeTrendDays`     | number  | `30`    | Days covered by the volume trend chart        |
 
+The muscle heat map has a **Volume / Sets / Reps** toggle. Volume is reps × weight, so bodyweight and timed exercises (weight 0) only show up under **Sets** (one per logged set) or **Reps**.
+
+### Exercise types
+
+Each exercise page in the exercise folder can set its type in the frontmatter. The log modal then asks for the matching fields instead of reps and weight:
+
+| `exercise_type` | Fields logged                    | Aliases accepted                                     |
+| --------------- | -------------------------------- | ---------------------------------------------------- |
+| `strength`      | reps, weight (default)           | `bodyweight`, `weights`                              |
+| `timed`         | duration (sec)                   | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
+| `distance`      | distance, optional duration      | `running`, `run`                                     |
+| `cardio`        | duration, optional distance, HR  | —                                                    |
+| `custom`        | only the `parameters` you define | —                                                    |
+
+`type:` works as a shorthand for `exercise_type:`. Extra fields go in `parameters`, for example rounds for jump rope:
+
+```yaml
+---
+exercise_type: timed
+parameters:
+  - key: rounds
+    label: Rounds
+    type: number
+    required: false
+tags:
+  - calves
+---
+```
+
+Chart them with `workout-chart` `type: duration` or `type: reps`.
+
 ---
 
 ## Settings

@@ -105,10 +105,11 @@ export class MuscleHeatMap {
       options.timeFrame,
     );
 
-    // Calculate muscle group volumes
+    // Calculate per-muscle totals for the selected metric
     const muscleData = await calculator.calculateMuscleGroupVolumes(
       filteredData,
       plugin,
+      options.metric,
     );
 
     // Create body data from muscle volumes
@@ -119,7 +120,11 @@ export class MuscleHeatMap {
     this.renderBodyVisualization(container, bodyData, options);
 
     // Update info panel with imbalance analysis
-    MuscleBalanceAnalyzer.renderToInfoPanel(infoPanel, muscleData);
+    MuscleBalanceAnalyzer.renderToInfoPanel(
+      infoPanel,
+      muscleData,
+      options.metric,
+    );
   }
 
   private static renderBodyVisualization(

@@ -1,5 +1,6 @@
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { MuscleGroupData } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
+import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
@@ -87,6 +88,7 @@ export class MuscleBalanceAnalyzer {
   static renderToInfoPanel(
     infoPanel: HTMLElement,
     muscleData: Map<string, MuscleGroupData>,
+    metric: HeatMapMetric = "volume",
   ): void {
     infoPanel.empty();
 
@@ -102,9 +104,11 @@ export class MuscleBalanceAnalyzer {
       text: CONSTANTS.WORKOUT.UI.LABELS.TRAINING_ANALYSIS,
     });
 
-    const weightUnit = ParameterUtils.getWeightUnit();
     infoPanel.createEl("p", {
-      text: `Average volume: ${analysis.avgVolume.toFixed(0)} ${weightUnit}`,
+      text: t(`dashboard.muscleHeatMap.average.${metric}`, {
+        value: analysis.avgVolume.toFixed(0),
+        unit: ParameterUtils.getWeightUnit(),
+      }),
     });
 
     // Display imbalance alerts or success message

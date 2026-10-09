@@ -808,7 +808,6 @@
       "setDuration": "Utilisé lorsque le nombre de répétitions n'est pas précisé (solution de repli). Plage typique : 30 à 60 secondes.",
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
-      "weightUnit": "Sélectionnez l'unité de mesure pour le poids (kg/lb). Cela affecte l'unité par défaut utilisée pour les nouveaux enregistrements.",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement"
     },
     "labels": {

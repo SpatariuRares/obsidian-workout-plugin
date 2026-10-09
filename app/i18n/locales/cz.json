@@ -808,7 +808,6 @@
       "setDuration": "Používá se, když nejsou zadána opakování (záložní hodnota). Obvyklý rozsah: 30-60 sekund.",
       "setupCSV": "Vytvoří soubory workout_logs.csv i muscle-tags.csv v nastavené složce.",
       "weightIncrement": "Výchozí krok zvýšení váhy pro progresivní přetížení (např. 2,5 pro kroky po 2,5 jednotky)",
-      "weightUnit": "Zvolte jednotku pro měření hmotnosti (kg/lb). Tím je určená výchozí jednotka pro nové záznamy.",
       "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku"
     },
     "labels": {

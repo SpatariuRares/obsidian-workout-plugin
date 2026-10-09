@@ -808,7 +808,6 @@
       "setDuration": "Utilizado quando as repetições não são especificadas (alternativa). Faixa típica: 30-60 segundos.",
       "setupCSV": "Crie os arquivos workout_logs.csv e muscle-tags.csv na pasta configurada.",
       "weightIncrement": "Incremento padrão de peso para sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
-      "weightUnit": "Selecione a unidade para medições de peso (kg/lb). Isso afeta a unidade padrão para novos registros.",
       "showRibbonIcon": "Mostrar na barra lateral o ícone de halter que abre o formulário de registro de treino"
     },
     "labels": {

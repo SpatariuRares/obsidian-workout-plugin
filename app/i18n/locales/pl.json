@@ -808,7 +808,6 @@
       "setDuration": "Używane, gdy nie podano liczby powtórzeń (wartość zapasowa). Typowy zakres: 30-60 sekund.",
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
-      "weightUnit": "Wybierz jednostkę dla pomiarów wagi (kg/lb). To wpływa na domyślną jednostkę dla nowych wpisów.",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego"
     },
     "labels": {

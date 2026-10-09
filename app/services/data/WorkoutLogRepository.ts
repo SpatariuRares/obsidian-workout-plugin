@@ -11,6 +11,7 @@ import type { CSVCacheService } from "@app/services/data/CSVCacheService";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { StringUtils, ErrorUtils, PathUtils } from "@app/utils";
 import { t } from "@app/i18n";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 /**
  * Repository for workout log CRUD operations.
@@ -18,6 +19,7 @@ import { t } from "@app/i18n";
  */
 export class WorkoutLogRepository {
   private readonly MAX_RETRIES = 1;
+  private readonly MAX_BACKUPS = 3;
 
   constructor(
     private app: App,
@@ -96,6 +98,7 @@ export class WorkoutLogRepository {
       generatedTimestamp = Date.now();
       const newEntry: CSVWorkoutLogEntry = {
         ...entry,
+        weightUnit: entry.weightUnit ?? this.settings.weightUnit,
         timestamp: generatedTimestamp,
       };
 
@@ -163,7 +166,7 @@ export class WorkoutLogRepository {
             entry.date === originalLog.date &&
             entry.exercise === originalLog.exercise &&
             entry.reps === originalLog.reps &&
-            entry.weight === originalLog.weight
+            entry.weight === (originalLog.enteredWeight ?? originalLog.weight)
           );
         });
 
@@ -179,6 +182,7 @@ export class WorkoutLogRepository {
       // Update the entry while preserving the original timestamp
       const updatedEntryWithTimestamp: CSVWorkoutLogEntry = {
         ...updatedEntry,
+        weightUnit: updatedEntry.weightUnit ?? this.settings.weightUnit,
         timestamp: csvEntries[entryIndex].timestamp,
       };
 
@@ -230,7 +234,7 @@ export class WorkoutLogRepository {
             entry.date === logToDelete.date &&
             entry.exercise === logToDelete.exercise &&
             entry.reps === logToDelete.reps &&
-            entry.weight === logToDelete.weight
+            entry.weight === (logToDelete.enteredWeight ?? logToDelete.weight)
           );
         });
       }
@@ -305,6 +309,84 @@ export class WorkoutLogRepository {
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       throw new Error(`Failed to rename exercise: ${errorMessage}`);
+    }
+  }
+
+  /**
+   * Give rows without a weight unit (written before units were stored per
+   * row) the given unit, so later setting changes don't relabel them.
+   * Numbers are not touched. Backs up the CSV first; idempotent.
+   * @returns The count of stamped entries
+   */
+  public async stampMissingWeightUnits(unit: WeightUnit): Promise<number> {
+    const abstractFile = this.app.vault.getAbstractFileByPath(
+      this.settings.csvLogFilePath,
+    );
+
+    // No log file yet: nothing to stamp
+    if (!abstractFile || !(abstractFile instanceof TFile)) return 0;
+
+    const csvFile = abstractFile;
+    const hasMissing = parseCSVLogFile(
+      await this.app.vault.read(csvFile),
+    ).some((entry) => !entry.weightUnit);
+    if (!hasMissing) return 0;
+
+    await this.backupCSVFile(csvFile);
+
+    // Preserve column order and columns that are empty in every row
+    const existingCustomColumns =
+      await this.columnService.getCustomColumns();
+
+    let updateCount = 0;
+    await this.app.vault.process(csvFile, (content) => {
+      const csvEntries = parseCSVLogFile(content);
+
+      csvEntries.forEach((entry) => {
+        if (entry.weightUnit) return;
+        entry.weightUnit = unit;
+        updateCount++;
+      });
+
+      return entriesToCSVContent(csvEntries, existingCustomColumns);
+    });
+
+    this.eventBus.emit({
+      type: "log:bulk-changed",
+      payload: { count: updateCount, operation: "migrate-unit" },
+    });
+
+    return updateCount;
+  }
+
+  /**
+   * Copy the CSV to `<name>.backup-<ISO timestamp>.csv` in the same folder,
+   * then trash older backups beyond MAX_BACKUPS.
+   */
+  private async backupCSVFile(csvFile: TFile): Promise<void> {
+    const prefix = `${csvFile.basename}.backup-`;
+    const existingBackups = (csvFile.parent?.children ?? [])
+      .filter(
+        (file): file is TFile =>
+          file instanceof TFile && file.name.startsWith(prefix),
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    const folderPath = csvFile.parent?.path;
+    const dir = folderPath && folderPath !== "/" ? `${folderPath}/` : "";
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const content = await this.app.vault.read(csvFile);
+    await this.app.vault.create(
+      `${dir}${prefix}${stamp}.${csvFile.extension}`,
+      content,
+    );
+
+    const toTrash = existingBackups.slice(
+      0,
+      Math.max(0, existingBackups.length - (this.MAX_BACKUPS - 1)),
+    );
+    for (const file of toTrash) {
+      await this.app.fileManager.trashFile(file);
     }
   }
 }

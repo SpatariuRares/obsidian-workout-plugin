@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Added {count} missing ID(s) in {files} file(s)",
       "csvCreated": "CSV file created successfully!",
-      "noBlockIdsNeeded": "All code blocks already have IDs"
+      "noBlockIdsNeeded": "All code blocks already have IDs",
+      "weightUnitsStamped": "Saved the weight unit on {count} older logs"
     },
     "tagReferenceGenerated": "Tag reference generated successfully!",
     "timerCompleted": "Timer completed!",
@@ -764,7 +765,8 @@
     },
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):"
+    "workoutNameOptional": "Workout name (optional):",
+    "weightUnitToggle": "Unit for this entry"
   },
   "settings": {
     "buttons": {
@@ -809,7 +811,7 @@
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
-      "weightUnit": "Select the unit for weight measurements (kg/lb). This affects the default unit for new logs."
+      "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -851,7 +853,8 @@
       "protocolDeleted": "Protocol deleted",
       "protocolNameExists": "A protocol with this name already exists",
       "protocolNameRequired": "Protocol name is required",
-      "protocolSaved": "Protocol saved"
+      "protocolSaved": "Protocol saved",
+      "weightUnitChangeFailed": "Could not change the weight unit: {error}"
     },
     "options": {
       "none": "None",

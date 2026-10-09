@@ -808,7 +808,6 @@
       "setDuration": "Utilizzato quando le ripetizioni non sono specificate (fallback). Intervallo tipico: 30-60 secondi.",
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
-      "weightUnit": "Seleziona l'unità di misura per le misurazioni del peso (kg/lb). Questo influisce sull'unità predefinita per i nuovi registri.",
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento"
     },
     "labels": {

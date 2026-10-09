@@ -235,7 +235,13 @@ export abstract class BaseLogModal extends ModalBase {
     if (data.weight !== undefined) {
       const weightInput =
         formElements.dynamicFieldInputs.get("weight");
-      if (weightInput) weightInput.value = data.weight.toString();
+      if (weightInput) {
+        DynamicFieldsRenderer.setWeightValue(
+          weightInput,
+          data.weight,
+          data.weightUnit,
+        );
+      }
     }
 
     if (data.notes) formElements.notesInput.value = data.notes;

@@ -808,7 +808,6 @@
       "setDuration": "Përdoret kur përsëritjet nuk janë specifikuar (rezervë). Intervali tipik: 30-60 sekonda.",
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
-      "weightUnit": "Zgjidhni njësinë për matjet e peshës (kg/lb). Kjo ndikon në njësinë e parazgjedhur për regjistrimet e reja.",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes"
     },
     "labels": {

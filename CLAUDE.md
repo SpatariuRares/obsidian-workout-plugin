@@ -358,6 +358,7 @@ Views (Chart, Table, Dashboard) or Public API
 
 - `date`, `exercise`, `reps`, `weight`, `volume`, `origine`, `workout`, `timestamp`, `notes`, `protocol`
 - Custom fields for exercise type-specific parameters (duration, distance, pace, etc.)
+- `weightUnit` (`kg`/`lb`, last column, read by header name): unit of that row's `weight`/`volume`, empty = settings unit. `convertFromCSVEntry` converts `weight`/`volume` to `settings.weightUnit` on load and keeps the raw value in `enteredWeight`/`enteredUnit`; everything that does maths reads `weight`, only the table cell and the edit/autofill prefill show `enteredWeight`. Conversions go through `app/utils/WeightUnitUtils.ts` (2 decimals, 1.25 plates)
 
 **Filtering strategies** (exercise field only; every row comes from the same CSV, so file names are not used):
 

@@ -333,7 +333,7 @@ Open the command palette (`Ctrl/Cmd + P`) and type the name.
 | Training parameters | Weight step for overload targets, seconds per rep, default reps per set, seconds per set when reps are unknown (used by `workout-duration`) |
 | Advanced            | The block inserted by **Create exercise section**, template generation, and **Run all** maintenance                                         |
 
-Changing the weight unit only changes the label; numbers already logged are not converted.
+Each set keeps the unit it was logged in. The weight field in the log form has a kg/lb picker, so you can log 225 lb even if the setting is kg; the table shows that set as "225 lb". Charts, volume, stats and the API convert every set to the unit in the settings. Changing that setting doesn't relabel old sets: sets logged before this version get the previous unit saved first (a copy of the CSV is kept next to it, last 3 copies). **Run all** maintenance does the same with the current unit.
 
 ## Your data
 
@@ -353,7 +353,7 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 | `timestamp`                | Unique ID of the row (milliseconds) |
 | `notes`, `protocol`        | Free text and training technique    |
 
-Exercise types with their own fields (`duration`, `distance`, `heartRate`, or your `parameters`) add columns at the end.
+Exercise types with their own fields (`duration`, `distance`, `heartRate`, or your `parameters`) add columns at the end. The last column, `weightUnit`, is `kg` or `lb`: the unit of that row's `weight` and `volume`. An empty value means the unit in the settings.
 
 If you edit the file by hand, keep the header row, and wrap any value that contains a comma, quote or line break in double quotes. Notes starting with `=`, `+`, `-` or `@` are stored with a leading `'` so spreadsheets don't run them as formulas; the plugin hides it again.
 
@@ -363,7 +363,7 @@ The plugin exposes `WorkoutPlannerAPI` (also `window.WorkoutPlannerAPI`) once it
 
 | Method                       | Returns                                                                                                                                                                  |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`                                                              |
+| `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` and `volume` are in the settings unit; `enteredWeight` and `enteredUnit` are what was logged |
 | `getExerciseStats(exercise)` | `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                      |
 | `getExercises(filter?)`      | Exercise names, sorted. From your exercise pages if you set an exercise folder, otherwise from your log. `{ tag: "chest" }` keeps the exercises whose page has that tag. |
 

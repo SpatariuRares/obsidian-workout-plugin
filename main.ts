@@ -24,6 +24,7 @@ import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { LocalizationService, t } from "@app/i18n";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -323,6 +324,13 @@ export default class WorkoutChartsPlugin extends Plugin {
     newName: string,
   ): Promise<number> {
     return this.dataService.renameExercise(oldName, newName);
+  }
+
+  /**
+   * Give logs without a weight unit the given unit
+   */
+  public async stampMissingWeightUnits(unit: WeightUnit): Promise<number> {
+    return this.dataService.stampMissingWeightUnits(unit);
   }
 
   /**

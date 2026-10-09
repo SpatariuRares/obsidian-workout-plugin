@@ -9,6 +9,7 @@ import { CSVColumnService } from "@app/services/data/CSVColumnService";
 import { WorkoutLogRepository } from "@app/services/data/WorkoutLogRepository";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /**
@@ -143,6 +144,14 @@ export class DataService {
     newName: string,
   ): Promise<number> {
     return this.repository.renameExercise(oldName, newName);
+  }
+
+  /**
+   * Give rows without a weight unit the given unit (backs up the CSV first).
+   * @returns The count of stamped entries
+   */
+  public async stampMissingWeightUnits(unit: WeightUnit): Promise<number> {
+    return this.repository.stampMissingWeightUnits(unit);
   }
 
   /**

@@ -808,7 +808,6 @@
       "setDuration": "Wird verwendet, wenn keine Wiederholungen angegeben sind (Fallback). Typischer Bereich: 30-60 Sekunden.",
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
-      "weightUnit": "Wähle die Einheit für Gewichtsangaben (kg/lb). Sie bestimmt die Standardeinheit für neue Einträge.",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet"
     },
     "labels": {

@@ -46,6 +46,10 @@ export class CSVCacheService {
       eventBus.on("log:updated", () => this.clearCache()),
       eventBus.on("log:deleted", () => this.clearCache()),
       eventBus.on("log:bulk-changed", () => this.clearCache()),
+      // Weights are converted to the settings unit on load
+      eventBus.on("settings:changed", (payload) => {
+        if (payload.key === "weightUnit") this.clearCache();
+      }),
     );
   }
 
@@ -129,7 +133,11 @@ export class CSVCacheService {
       const csvEntries = parseCSVLogFile(content);
 
       csvEntries.forEach((entry) => {
-        const logEntry = convertFromCSVEntry(entry, csvFile);
+        const logEntry = convertFromCSVEntry(
+          entry,
+          csvFile,
+          this.settings.weightUnit,
+        );
         logData.push(logEntry);
       });
 

@@ -1,5 +1,5 @@
 import { WorkoutLogRepository } from "../WorkoutLogRepository";
-import { App, TFile, Notice } from "obsidian";
+import { App, TFile, TFolder, Notice } from "obsidian";
 import { CSVCacheService } from "../CSVCacheService";
 import { CSVColumnService } from "../CSVColumnService";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
@@ -19,10 +19,16 @@ const mockVault = {
   create: jest.fn(),
   createFolder: jest.fn(),
   process: jest.fn(),
+  read: jest.fn(),
+};
+
+const mockFileManager = {
+  trashFile: jest.fn(),
 };
 
 const mockApp = {
   vault: mockVault,
+  fileManager: mockFileManager,
 } as unknown as App;
 
 // Mock Services
@@ -37,6 +43,7 @@ const mockCacheService = {
 
 const defaultSettings: WorkoutChartsSettings = {
   csvLogFilePath: "workout-log.csv",
+  weightUnit: "kg",
   // Add other required settings as needed (mocked minimally)
 } as WorkoutChartsSettings;
 
@@ -491,6 +498,180 @@ describe("WorkoutLogRepository", () => {
       await expect(
         repository.renameExercise("Old", "New"),
       ).rejects.toThrow("Failed to rename exercise: Process failed");
+    });
+  });
+
+  describe("weight unit", () => {
+    const makeFile = (name: string, parent?: TFolder): TFile => {
+      const file = new TFile();
+      file.name = name;
+      file.basename = name.replace(/\.csv$/, "");
+      file.extension = "csv";
+      file.path = parent ? `${parent.path}/${name}` : name;
+      (file as TFile & { parent: TFolder | null }).parent =
+        parent ?? null;
+      return file;
+    };
+
+    let folder: TFolder;
+    let csvFile: TFile;
+    let entries: CSVWorkoutLogEntry[];
+
+    const row = (
+      timestamp: number,
+      weight: number,
+      weightUnit?: "kg" | "lb",
+    ): CSVWorkoutLogEntry => ({
+      date: "2024-01-01",
+      exercise: "Squat",
+      reps: 5,
+      weight,
+      volume: weight * 5,
+      timestamp,
+      weightUnit,
+    });
+
+    beforeEach(() => {
+      folder = new TFolder();
+      folder.path = "data";
+      csvFile = makeFile("workout_logs.csv", folder);
+      folder.children = [csvFile];
+
+      (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+        csvFile,
+      );
+      (mockVault.read as jest.Mock).mockResolvedValue("raw csv");
+      (
+        mockColumnService.getCustomColumns as jest.Mock
+      ).mockResolvedValue([]);
+      entries = [row(1, 100), row(2, 220, "lb"), row(3, 60, "kg")];
+      (
+        WorkoutLogDataUtils.parseCSVLogFile as jest.Mock
+      ).mockReturnValue(entries);
+      (
+        WorkoutLogDataUtils.entriesToCSVContent as jest.Mock
+      ).mockReturnValue("content");
+      (mockVault.process as jest.Mock).mockImplementation(
+        async (_file, callback) => callback(""),
+      );
+    });
+
+    it("should stamp the settings unit on new entries without one", async () => {
+      const { timestamp: _t, ...entry } = row(0, 80);
+      await repository.addWorkoutLogEntry(entry);
+
+      expect(entries[3]).toMatchObject({ weight: 80, weightUnit: "kg" });
+    });
+
+    it("should keep the unit chosen for a new entry", async () => {
+      const { timestamp: _t, ...entry } = row(0, 225, "lb");
+      await repository.addWorkoutLogEntry(entry);
+
+      expect(entries[3]).toMatchObject({ weight: 225, weightUnit: "lb" });
+    });
+
+    it("should stamp the settings unit on updates without one", async () => {
+      const original = { ...row(3, 60, "kg") } as WorkoutLogData;
+      const { timestamp: _t, weightUnit: _u, ...updated } = row(3, 62.5);
+
+      await repository.updateWorkoutLogEntry(original, updated);
+
+      expect(entries[2]).toMatchObject({ weight: 62.5, weightUnit: "kg" });
+    });
+
+    it("should match the fallback on the entered weight", async () => {
+      // Timestamp unknown; the log shows 99.79 kg but the row says 220 lb
+      const original = {
+        ...row(99, 99.79),
+        enteredWeight: 220,
+        enteredUnit: "lb",
+      } as WorkoutLogData;
+
+      await repository.deleteWorkoutLogEntry(original);
+
+      expect(entries.map((e) => e.timestamp)).not.toContain(2);
+    });
+
+    describe("stampMissingWeightUnits", () => {
+      it("should stamp only rows without a unit", async () => {
+        const count = await repository.stampMissingWeightUnits("lb");
+
+        expect(count).toBe(1);
+        expect(entries.map((e) => e.weightUnit)).toEqual([
+          "lb",
+          "lb",
+          "kg",
+        ]);
+        expect(entries.map((e) => e.weight)).toEqual([100, 220, 60]);
+        expect(mockEventBus.emit).toHaveBeenCalledWith({
+          type: "log:bulk-changed",
+          payload: { count: 1, operation: "migrate-unit" },
+        });
+      });
+
+      it("should not write or back up when every row has a unit", async () => {
+        entries.splice(0, 1);
+
+        const count = await repository.stampMissingWeightUnits("kg");
+
+        expect(count).toBe(0);
+        expect(mockVault.create).not.toHaveBeenCalled();
+        expect(mockVault.process).not.toHaveBeenCalled();
+        expect(mockEventBus.emit).not.toHaveBeenCalled();
+      });
+
+      it("should write a backup next to the CSV before stamping", async () => {
+        await repository.stampMissingWeightUnits("kg");
+
+        expect(mockVault.create).toHaveBeenCalledWith(
+          expect.stringMatching(
+            /^data\/workout_logs\.backup-[\d-]+T[\d-]+Z\.csv$/,
+          ),
+          "raw csv",
+        );
+        const createOrder = (mockVault.create as jest.Mock).mock
+          .invocationCallOrder[0];
+        const processOrder = (mockVault.process as jest.Mock).mock
+          .invocationCallOrder[0];
+        expect(createOrder).toBeLessThan(processOrder);
+      });
+
+      it("should keep only the 3 most recent backups", async () => {
+        const old = [
+          "workout_logs.backup-2026-01-01T00-00-00-000Z.csv",
+          "workout_logs.backup-2026-02-01T00-00-00-000Z.csv",
+          "workout_logs.backup-2026-03-01T00-00-00-000Z.csv",
+        ].map((name) => makeFile(name, folder));
+        const unrelated = makeFile("other.backup-2020.csv", folder);
+        folder.children = [csvFile, unrelated, ...old];
+
+        await repository.stampMissingWeightUnits("kg");
+
+        // New backup + 2 newest old ones = 3
+        expect(mockFileManager.trashFile).toHaveBeenCalledTimes(1);
+        expect(mockFileManager.trashFile).toHaveBeenCalledWith(old[0]);
+      });
+
+      it("should not stamp if the backup fails", async () => {
+        (mockVault.create as jest.Mock).mockRejectedValueOnce(
+          new Error("disk full"),
+        );
+
+        await expect(
+          repository.stampMissingWeightUnits("kg"),
+        ).rejects.toThrow("disk full");
+        expect(mockVault.process).not.toHaveBeenCalled();
+      });
+
+      it("should do nothing when there is no CSV file yet", async () => {
+        (mockVault.getAbstractFileByPath as jest.Mock).mockReturnValue(
+          null,
+        );
+        await expect(
+          repository.stampMissingWeightUnits("kg"),
+        ).resolves.toBe(0);
+        expect(mockVault.create).not.toHaveBeenCalled();
+      });
     });
   });
 

@@ -47,7 +47,9 @@ export class EditLogModal extends BaseLogModal {
     return {
       exercise: this.originalLog.exercise || "",
       reps: this.originalLog.reps,
-      weight: this.originalLog.weight,
+      // What was typed, in its own unit (weight is in the settings unit)
+      weight: this.originalLog.enteredWeight ?? this.originalLog.weight,
+      weightUnit: this.originalLog.enteredUnit,
       notes: this.originalLog.notes || "",
       workout: this.originalLog.workout || "",
       date: this.originalLog.date,

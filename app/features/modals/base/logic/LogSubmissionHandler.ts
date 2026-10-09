@@ -5,6 +5,7 @@ import {
   WorkoutProtocol,
   CSVWorkoutLogEntry,
 } from "@app/types/WorkoutLogData";
+import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 
 export class LogSubmissionHandler {
   /**
@@ -57,6 +58,8 @@ export class LogSubmissionHandler {
     const weight = weightInput
       ? parseFloat(weightInput.value) || 0
       : 0;
+    const enteredUnit = weightInput?.dataset.weightUnit;
+    const weightUnit = isWeightUnit(enteredUnit) ? enteredUnit : undefined;
 
     const notes = formElements.notesInput.value.trim();
     let workout = formElements.workoutInput.value.trim();
@@ -98,6 +101,7 @@ export class LogSubmissionHandler {
       exercise,
       reps,
       weight,
+      weightUnit,
       workout,
       notes,
       date: formElements.dateInput?.value || undefined,
@@ -123,6 +127,7 @@ export class LogSubmissionHandler {
       reps: data.reps || 0,
       weight: data.weight || 0,
       volume: (data.reps || 0) * (data.weight || 0),
+      weightUnit: data.weightUnit,
       origine: currentPageLink || "[[Workout Charts Plugin]]",
       workout: data.workout || undefined,
       notes: data.notes || undefined,

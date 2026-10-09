@@ -10,6 +10,7 @@ import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTyp
 import type { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
+import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 export interface AppPort {
   app: App;
@@ -37,6 +38,7 @@ export interface WorkoutDataPort {
     fn: () => Promise<void>,
   ): Promise<void>;
   renameExercise(oldName: string, newName: string): Promise<number>;
+  stampMissingWeightUnits(unit: WeightUnit): Promise<number>;
   findLastEntryForExercise(
     exerciseName: string,
   ): Promise<WorkoutLogData | undefined>;

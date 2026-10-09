@@ -37,6 +37,7 @@ describe("CSVCacheService", () => {
 
     mockSettings = {
       csvLogFilePath: "folder/workout_log.csv",
+      weightUnit: "kg",
     } as WorkoutChartsSettings;
 
     service = new CSVCacheService(mockApp, mockSettings, eventBus);
@@ -76,7 +77,7 @@ describe("CSVCacheService", () => {
       ).toHaveBeenCalledWith("header\nentry1");
       expect(
         WorkoutLogDataModule.convertFromCSVEntry,
-      ).toHaveBeenCalledWith(mockParsedEntries[0], mockFile);
+      ).toHaveBeenCalledWith(mockParsedEntries[0], mockFile, "kg");
 
       // Verify result
       expect(result).toHaveLength(1);
@@ -386,6 +387,29 @@ describe("CSVCacheService event integration", () => {
     });
 
     expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should clear cache when the weight unit changes", async () => {
+    await cache.getRawData();
+    expect(cache.isCacheValid()).toBe(true);
+
+    eventBus.emit({
+      type: "settings:changed",
+      payload: { key: "weightUnit", previousValue: "kg", newValue: "lb" },
+    });
+
+    expect(cache.isCacheValid()).toBe(false);
+  });
+
+  it("should NOT clear cache when another setting changes", async () => {
+    await cache.getRawData();
+
+    eventBus.emit({
+      type: "settings:changed",
+      payload: { key: "showRibbonIcon", previousValue: true, newValue: false },
+    });
+
+    expect(cache.isCacheValid()).toBe(true);
   });
 
   it("should NOT clear cache on muscle-tags:changed", async () => {

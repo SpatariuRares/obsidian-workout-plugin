@@ -808,7 +808,6 @@
       "setDuration": "Wordt gebruikt wanneer het aantal herhalingen niet is opgegeven (terugvaloptie). Typische duur: 30-60 seconden.",
       "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
-      "weightUnit": "Selecteer de eenheid voor gewichtsmetingen (kg/lb). Dit heeft invloed op de standaardeenheid voor nieuwe logs.",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent"
     },
     "labels": {

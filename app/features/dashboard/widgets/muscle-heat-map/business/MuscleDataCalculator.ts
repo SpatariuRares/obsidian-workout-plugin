@@ -124,6 +124,8 @@ export class MuscleDataCalculator {
     const allValues = [
       bodyData.shoulders.frontLeft,
       bodyData.shoulders.frontRight,
+      bodyData.shoulders.lateralLeft ?? 0,
+      bodyData.shoulders.lateralRight ?? 0,
       bodyData.shoulders.rearLeft,
       bodyData.shoulders.rearRight,
       bodyData.chest.upper,
@@ -133,6 +135,7 @@ export class MuscleDataCalculator {
       bodyData.back.lats,
       bodyData.back.lowerBack,
       bodyData.back.trapsMiddle,
+      bodyData.back.rhomboids ?? 0,
       bodyData.arms.bicepsLeft,
       bodyData.arms.bicepsRight,
       bodyData.arms.tricepsLeft,
@@ -149,6 +152,7 @@ export class MuscleDataCalculator {
       bodyData.legs.calvesRight,
       bodyData.core.abs,
       bodyData.core.obliques,
+      bodyData.core.serratus ?? 0,
     ];
 
     return Math.max(...allValues, 1);
@@ -174,16 +178,17 @@ export class MuscleDataCalculator {
       OBLIQUES_RATIO,
     } = VOLUME_DISTRIBUTION;
 
-    // No side-delt zone: split it between the front and rear shoulder zones
-    const sideDelts = getVolume("side_delts") * BILATERAL_SPLIT;
-    const frontDelts =
-      getVolume("shoulders") + getVolume("front_delts") + sideDelts;
-    const rearDelts = getVolume("rear_delts") + sideDelts;
+    // A generic shoulders tag lights the front and lateral deltoid
+    const frontDelts = getVolume("shoulders") + getVolume("front_delts");
+    const sideDelts = getVolume("shoulders") + getVolume("side_delts");
+    const rearDelts = getVolume("rear_delts");
 
     const bodyData = {
       shoulders: {
         frontLeft: frontDelts * BILATERAL_SPLIT,
         frontRight: frontDelts * BILATERAL_SPLIT,
+        lateralLeft: sideDelts * BILATERAL_SPLIT,
+        lateralRight: sideDelts * BILATERAL_SPLIT,
         rearLeft: rearDelts * BILATERAL_SPLIT,
         rearRight: rearDelts * BILATERAL_SPLIT,
       },
@@ -200,8 +205,8 @@ export class MuscleDataCalculator {
         lats: getVolume("back") + getVolume("lats"),
         lowerBack:
           getVolume("back") * BACK_LOWER_RATIO + getVolume("lower_back"),
-        trapsMiddle:
-          getVolume("traps") * TRAPS_MIDDLE_RATIO + getVolume("rhomboids"),
+        trapsMiddle: getVolume("traps") * TRAPS_MIDDLE_RATIO,
+        rhomboids: getVolume("rhomboids"),
       },
       arms: {
         bicepsLeft: getVolume("biceps") * BILATERAL_SPLIT,
@@ -223,11 +228,8 @@ export class MuscleDataCalculator {
       },
       core: {
         abs: getVolume("abs"),
-        // No serratus zone: it sits on the obliques zone
-        obliques:
-          getVolume("core") * OBLIQUES_RATIO +
-          getVolume("obliques") +
-          getVolume("serratus"),
+        obliques: getVolume("core") * OBLIQUES_RATIO + getVolume("obliques"),
+        serratus: getVolume("serratus"),
       },
     };
 

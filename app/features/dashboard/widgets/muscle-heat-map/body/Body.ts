@@ -76,6 +76,9 @@ export class Body {
       colors.frontShoulders,
       colors.upperChest,
       colors.middleChest,
+      colors.sideShoulders,
+      colors.lowerChest,
+      colors.serratus,
     );
 
     this.appendSvgContent(svgContent, svg);
@@ -98,6 +101,8 @@ export class Body {
       colors.hamstrings,
       colors.calves,
       colors.rearShoulders,
+      colors.sideShoulders,
+      colors.rhomboids,
     );
 
     this.appendSvgContent(svgContent, svg);

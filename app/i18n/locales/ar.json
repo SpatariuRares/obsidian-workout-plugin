@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "التمارين الأعلى بحسب الكمية",
       "title": "تحليل الحجم",
       "chartTitleDays": "اتجاه الحجم (آخر {days} يومًا)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "الحجم",
+        "sets": "المجموعات",
+        "reps": "عدد التكرارات"
+      },
+      "average": {
+        "volume": "المتوسط: {value} {unit}",
+        "sets": "متوسط التمارين: {value}",
+        "reps": "متوسط التكرارات: {value}"
+      }
     }
   },
   "duration": {

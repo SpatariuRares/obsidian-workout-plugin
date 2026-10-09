@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Лучшие упражнения по объему",
       "title": "Анализ объема",
       "chartTitleDays": "Динамика объёма (последние {days} дн.)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Объем",
+        "sets": "Количество",
+        "reps": "Количество повторений"
+      },
+      "average": {
+        "volume": "Средний объем: {value} {unit}",
+        "sets": "Среднее количество подходов: {value}",
+        "reps": "Среднее количество повторений: {value}"
+      }
     }
   },
   "duration": {

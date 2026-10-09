@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Esercizi principali per volume",
       "title": "Analisi volume",
       "chartTitleDays": "Andamento del volume (ultimi {days} giorni)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Serie",
+        "reps": "Serie"
+      },
+      "average": {
+        "volume": "Volume medio: {value} {unit}",
+        "sets": "Numero medio di serie: {value}",
+        "reps": "Numero medio di ripetizioni: {value}"
+      }
     }
   },
   "duration": {

@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "मात्रा के अनुसार शीर्ष व्यायाम",
       "title": "मात्रा विश्लेषण",
       "chartTitleDays": "वॉल्यूम ट्रेंड (पिछले {days} दिन)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "मात्रा",
+        "sets": "सेट्स",
+        "reps": "पुनरावृत्त"
+      },
+      "average": {
+        "volume": "औसत मात्रा: {value} {unit}",
+        "sets": "औसत सेट: {value}",
+        "reps": "औसत रेप्स: {value}"
+      }
     }
   },
   "duration": {

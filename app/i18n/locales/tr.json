@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Hacımıza göre en popüler egzersizler",
       "title": "Hacim analizi",
       "chartTitleDays": "Hacim trendi (son {days} gün)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Hacim",
+        "sets": "Setler",
+        "reps": "Tekrar sayısı"
+      },
+      "average": {
+        "volume": "Ortalama hacim: {value} {unit}",
+        "sets": "Ortalama tekrar sayısı: {value}",
+        "reps": "Ortalama tekrar sayısı: {value}"
+      }
     }
   },
   "duration": {

@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Top-øvelser efter volumen",
       "title": "Volumestatistik",
       "chartTitleDays": "Volumentendens (seneste {days} dage)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volumen",
+        "sets": "Sæt",
+        "reps": "Gentagelser"
+      },
+      "average": {
+        "volume": "Gennemsnitlig volumen: {value} {unit}",
+        "sets": "Gennemsnitlige sæt: {value}",
+        "reps": "Gennemsnitlige gentagelser: {value}"
+      }
     }
   },
   "duration": {

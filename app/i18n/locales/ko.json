@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "볼륨 기준으로 인기 운동",
       "title": "볼륨 분석",
       "chartTitleDays": "볼륨 추이 (최근 {days}일)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "부피",
+        "sets": "세트",
+        "reps": "반복 횟수"
+      },
+      "average": {
+        "volume": "평균 부피: {value} {unit}",
+        "sets": "평균 세트 수: {value}",
+        "reps": "평균 횟수: {value}"
+      }
     }
   },
   "duration": {

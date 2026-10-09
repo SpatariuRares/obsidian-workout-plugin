@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "De mest utførte øvelsene etter volum",
       "title": "Volumanalyse",
       "chartTitleDays": "Volumtrend (siste {days} dager)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volum",
+        "sets": "Antall",
+        "reps": "Antall repetisjoner"
+      },
+      "average": {
+        "volume": "Gjennomsnittlig volum: {value} {unit}",
+        "sets": "Gjennomsnittlig antall: {value}",
+        "reps": "Gjennomsnittlig antall repetisjoner: {value}"
+      }
     }
   },
   "duration": {

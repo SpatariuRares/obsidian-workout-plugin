@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Exercițiile cele mai eficiente, în funcție de volum",
       "title": "Analiza volumului",
       "chartTitleDays": "Evoluția volumului (ultimele {days} zile)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volum",
+        "sets": "Serii",
+        "reps": "Număr de repetări"
+      },
+      "average": {
+        "volume": "Volum mediu: {value} {unit}",
+        "sets": "Număr mediu de serii: {value}",
+        "reps": "Număr mediu de repetări: {value}"
+      }
     }
   },
   "duration": {

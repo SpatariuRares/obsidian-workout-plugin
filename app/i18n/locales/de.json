@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Top-Übungen nach Volumen",
       "title": "Volumenanalytik",
       "chartTitleDays": "Volumentrend (letzte {days} Tage)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volumen",
+        "sets": "Sätze",
+        "reps": "Wiederholungen"
+      },
+      "average": {
+        "volume": "Durchschnittlicher Volumenwert: {value} {unit}",
+        "sets": "Durchschnittliche Anzahl Sätze: {value}",
+        "reps": "Durchschnittliche Wiederholungen: {value}"
+      }
     }
   },
   "duration": {

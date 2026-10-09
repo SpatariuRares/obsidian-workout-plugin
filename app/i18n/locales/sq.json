@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Trajnimet më të mira sipas volumit",
       "title": "Analizë e volumit",
       "chartTitleDays": "Tendenca e volumit ({days} ditët e fundit)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volum",
+        "sets": "Serit",
+        "reps": "Repetimet"
+      },
+      "average": {
+        "volume": "Volume mesatare: {value} {unit}",
+        "sets": "Numri mesatër i serive: {value}",
+        "reps": "Numri mesatër i repave: {value}"
+      }
     }
   },
   "duration": {

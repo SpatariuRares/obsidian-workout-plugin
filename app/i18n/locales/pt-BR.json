@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Exercícios mais eficazes por volume",
       "title": "Análise de volume",
       "chartTitleDays": "Tendência de volume (últimos {days} dias)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Séries",
+        "reps": "Número de repetições"
+      },
+      "average": {
+        "volume": "Volume médio: {value} {unit}",
+        "sets": "Número médio de séries: {value}",
+        "reps": "Número médio de repetições: {value}"
+      }
     }
   },
   "duration": {

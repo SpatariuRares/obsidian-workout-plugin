@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Najpopularniejsze ćwiczenia według objętości",
       "title": "Analiza wolumenu",
       "chartTitleDays": "Trend objętości (ostatnie {days} dni)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Objętość",
+        "sets": "Serie",
+        "reps": "Powtórzenia"
+      },
+      "average": {
+        "volume": "Średnia objętość: {value} {unit}",
+        "sets": "Średnia liczba serii: {value}",
+        "reps": "Średnia liczba powtórzeń: {value}"
+      }
     }
   },
   "duration": {

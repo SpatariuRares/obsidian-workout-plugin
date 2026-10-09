@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Найпопулярніші вправи за обсягом",
       "title": "Аналітика обсягів",
       "chartTitleDays": "Динаміка об'єму (останні {days} дн.)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Об'єм",
+        "sets": "Сети",
+        "reps": "Підрахунки"
+      },
+      "average": {
+        "volume": "Середній об'єм: {value} {unit}",
+        "sets": "Середнє число підходів: {value}",
+        "reps": "Середнє число повторень: {value}"
+      }
     }
   },
   "duration": {

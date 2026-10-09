@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Latihan terpopuler berdasarkan volume",
       "title": "Analisis volume",
       "chartTitleDays": "Tren volume ({days} hari terakhir)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Jumlah",
+        "reps": "Jumlah repetisi"
+      },
+      "average": {
+        "volume": "Volume rata-rata: {value} {unit}",
+        "sets": "Rata-rata set: {value}",
+        "reps": "Rata-rata repetisi: {value}"
+      }
     }
   },
   "duration": {

@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Beste oefeningen, gerangschikt op basis van het aantal herhalingen",
       "title": "Analyse van het volume",
       "chartTitleDays": "Volumetrend (laatste {days} dagen)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Sets",
+        "reps": "Herhalingen"
+      },
+      "average": {
+        "volume": "Gemiddelde volume: {value} {unit}",
+        "sets": "Gemiddelde aantal sets: {value}",
+        "reps": "Gemiddeld aantal herhalingen: {value}"
+      }
     }
   },
   "duration": {

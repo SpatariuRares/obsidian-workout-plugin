@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "ボリューム別の人気エクササイズ",
       "title": "ボリューム分析",
       "chartTitleDays": "ボリュームの推移（過去{days}日間）"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "体積",
+        "sets": "セット",
+        "reps": "セット数"
+      },
+      "average": {
+        "volume": "平均体積: {value} {unit}",
+        "sets": "平均セット数: {value}",
+        "reps": "平均回数: {value}"
+      }
     }
   },
   "duration": {

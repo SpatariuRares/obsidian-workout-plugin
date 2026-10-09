@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Nejčastější cvičení podle objemu",
       "title": "Volumová analýza",
       "chartTitleDays": "Trend objemu (posledních {days} dní)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Objem",
+        "sets": "Sady",
+        "reps": "Počet opakování"
+      },
+      "average": {
+        "volume": "Průměrný objem: {value} {unit}",
+        "sets": "Průměrný počet sérií: {value}",
+        "reps": "Průměrný počet opakování: {value}"
+      }
     }
   },
   "duration": {

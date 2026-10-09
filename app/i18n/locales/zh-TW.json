@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "按訓練量排序的運動",
       "title": "訓練量分析",
       "chartTitleDays": "訓練量趨勢（最近 {days} 天）"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "體積",
+        "sets": "組",
+        "reps": "次數"
+      },
+      "average": {
+        "volume": "平均體積：{value} {unit}",
+        "sets": "平均次數：{value}",
+        "reps": "平均次數：{value}"
+      }
     }
   },
   "duration": {

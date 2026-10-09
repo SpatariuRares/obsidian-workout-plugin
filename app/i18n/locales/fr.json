@@ -153,6 +153,18 @@
       "muscleBreakdownTitle": "Exercices les plus populaires en termes de volume.",
       "title": "Analyse des volumes.",
       "chartTitleDays": "Évolution du volume ({days} derniers jours)"
+    },
+    "muscleHeatMap": {
+      "metrics": {
+        "volume": "Volume",
+        "sets": "Séries",
+        "reps": "Nombre de répétitions"
+      },
+      "average": {
+        "volume": "Volume moyen : {value} {unit}",
+        "sets": "Nombre moyen de séries : {value}",
+        "reps": "Nombre moyen de répétitions : {value}"
+      }
     }
   },
   "duration": {

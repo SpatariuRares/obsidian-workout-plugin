@@ -225,6 +225,19 @@ describe("EventAwareRenderChild", () => {
     });
   });
 
+  // ---- settings:changed ----
+
+  describe("settings:changed", () => {
+    it("should refresh every view when a display setting changes", () => {
+      makeChild({ exercise: "Squat", exactMatch: true });
+      bus.emit({
+        type: "settings:changed",
+        payload: { key: "weightUnit", previousValue: "kg", newValue: "lb" },
+      });
+      expect(renderFn).toHaveBeenCalledTimes(1);
+    });
+  });
+
   // ---- muscle-tags:changed ----
 
   describe("muscle-tags:changed", () => {

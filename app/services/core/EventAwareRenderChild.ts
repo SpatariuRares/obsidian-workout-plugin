@@ -7,6 +7,7 @@ import {
   type LogDeletedPayload,
   type LogBulkChangedPayload,
   type MuscleTagsChangedPayload,
+  type SettingsChangedPayload,
 } from "@app/services/events/WorkoutEventTypes";
 
 export interface ViewFilter {
@@ -96,6 +97,16 @@ export class EventAwareRenderChild extends MarkdownRenderChild {
       this.eventBus.on(
         "log:bulk-changed",
         (_payload: LogBulkChangedPayload) => {
+          void this.renderFn();
+        },
+      ),
+    );
+
+    // settings:changed — display settings (e.g. weight unit) affect every view
+    this.register(
+      this.eventBus.on(
+        "settings:changed",
+        (_payload: SettingsChangedPayload) => {
           void this.renderFn();
         },
       ),

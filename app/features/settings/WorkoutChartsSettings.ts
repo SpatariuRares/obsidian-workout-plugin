@@ -1,7 +1,12 @@
 // Settings tab for the Workout Charts plugin
-import { App, PluginSettingTab } from "obsidian";
+import { App, Plugin, PluginSettingTab } from "obsidian";
 import { t } from "@app/i18n";
-import WorkoutChartsPlugin from "main";
+import type {
+  EventBusPort,
+  QuickLogRibbonPort,
+  TemplateGeneratorPort,
+  WorkoutPluginContext,
+} from "@app/types/PluginPorts";
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
 import { TimerPresetsSettings } from "@app/features/timer/settings/TimerPresetsSettings";
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
@@ -10,10 +15,17 @@ import { DurationEstimationSettings } from "@app/features/duration/settings/Dura
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
 import { MaintenanceSettings } from "@app/features/settings/components/MaintenanceSettings";
 
-export class WorkoutChartsSettingTab extends PluginSettingTab {
-  plugin: WorkoutChartsPlugin;
+/** What the settings sections need from the plugin */
+type SettingsTabContext = Plugin &
+  WorkoutPluginContext &
+  EventBusPort &
+  QuickLogRibbonPort &
+  TemplateGeneratorPort;
 
-  constructor(app: App, plugin: WorkoutChartsPlugin) {
+export class WorkoutChartsSettingTab extends PluginSettingTab {
+  plugin: SettingsTabContext;
+
+  constructor(app: App, plugin: SettingsTabContext) {
     super(app, plugin);
     this.plugin = plugin;
   }

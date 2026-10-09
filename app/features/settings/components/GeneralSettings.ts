@@ -2,7 +2,10 @@ import { App, Setting, normalizePath, Notice, TFolder } from "obsidian";
 import { t } from "@app/i18n";
 import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import type {
+  EventBusPort,
+  WorkoutPluginContext,
+} from "@app/types/PluginPorts";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 
@@ -13,7 +16,7 @@ export class GeneralSettings {
 
   constructor(
     private app: App,
-    private plugin: WorkoutPluginContext,
+    private plugin: WorkoutPluginContext & EventBusPort,
     private containerEl: HTMLElement,
   ) {}
 
@@ -79,12 +82,16 @@ export class GeneralSettings {
           .addOption("lb", t("settings.options.weightUnit.lb"))
           .setValue(this.plugin.settings.weightUnit)
           .onChange(async (value) => {
+            const previousValue = this.plugin.settings.weightUnit;
             this.plugin.settings.weightUnit = value as "kg" | "lb";
             // Update ParameterUtils with new weight unit
             ParameterUtils.setWeightUnit(value);
             await this.plugin.saveSettings();
-            // Trigger global refresh to update all views with new unit
-            this.plugin.triggerWorkoutLogRefresh();
+            // Views re-render with the new unit label
+            this.plugin.eventBus.emit({
+              type: "settings:changed",
+              payload: { key: "weightUnit", previousValue, newValue: value },
+            });
           }),
       );
 

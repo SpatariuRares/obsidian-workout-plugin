@@ -26,7 +26,7 @@ Go to **Settings → Workout Planner** and click **Create examples** to generate
 - **Exercise Conversion** — Convert exercises between types with field mapping
 - **Custom Muscle Tags** — Map tags in any language to canonical muscle groups
 - **Dataview Integration** — Public API for querying logs and stats from Dataview queries
-- **Templater Integration** — Use workout data in templates
+- **Templater** — Use the same public API inside Templater templates ([example](#templater))
 - **Responsive Design** — Works on desktop and mobile
 
 ![Volume Trend](assets/charts.png)
@@ -41,6 +41,7 @@ Access via Command Palette (`Ctrl/Cmd + P`):
 
 | Command                  | Description                                           |
 | ------------------------ | ----------------------------------------------------- |
+| Create workout log       | Open the form to log a set                            |
 | Create CSV log file      | Initialize the CSV file for storing workout logs      |
 | Insert workout chart     | Insert a `workout-chart` code block                   |
 | Insert workout table     | Insert a `workout-log` code block                     |
@@ -77,14 +78,23 @@ height: 400
 | --------------- | ------- | ---------- | ----------------------------------------------------------------------- |
 | `exercise`      | string  | —          | Exercise name to filter                                                 |
 | `type`          | string  | `volume`   | `volume`, `weight`, `reps`, `duration`, `distance`, `pace`, `heartRate` |
-| `chartType`     | string  | `exercise` | Group by: `exercise`, `workout`, `combined`, `all`                      |
+| `chartType`     | string  | `exercise` | What each point shows, see below                                         |
 | `dateRange`     | number  | `30`       | Days to include                                                         |
-| `showTrendLine` | boolean | `true`     | Display trend line                                                      |
-| `showStats`     | boolean | `false`    | Show avg/max/min stats box                                              |
+| `showTrendLine` | boolean | `false`    | Display trend line                                                      |
+| `showStats`     | boolean | `true`     | Show avg/max/min stats box                                              |
 | `exactMatch`    | boolean | `false`    | Exact vs. fuzzy exercise name matching                                  |
-| `height`        | number  | `400`      | Chart height in pixels                                                  |
+| `height`        | number  | 4:3 ratio  | Fixed chart height: pixels (`300`) or a CSS length (`50vh`)             |
 | `title`         | string  | —          | Custom chart title                                                      |
-| `limit`         | number  | —          | Maximum number of data points                                           |
+| `limit`         | number  | —          | Show only the latest N data points                                      |
+
+`chartType` decides which logs are used and how each day's point is computed. It always draws a single line:
+
+| `chartType` | Logs used                                     | Point per day |
+| ----------- | --------------------------------------------- | ------------- |
+| `exercise`  | logs of `exercise`                            | average       |
+| `workout`   | logs of `workout`                             | total         |
+| `combined`  | logs of `exercise` inside `workout`           | total         |
+| `all`       | every log (`exercise`/`workout` are ignored)  | total         |
 
 > **Pace charts**: trend logic is inverted — decreasing pace (faster) = Improving (green), increasing pace (slower) = Declining (red).
 
@@ -104,8 +114,8 @@ limit: 50
 | Parameter    | Type    | Default | Description                                      |
 | ------------ | ------- | ------- | ------------------------------------------------ |
 | `exercise`   | string  | —       | Exercise name to filter                          |
-| `exactMatch` | boolean | `true`  | Exact vs. fuzzy matching                         |
-| `dateRange`  | number  | —       | Days to include                                  |
+| `exactMatch` | boolean | `false` | Exact vs. fuzzy matching                         |
+| `dateRange`  | number  | —       | Days to include (today and the previous N days)  |
 | `sortBy`     | string  | `date`  | `date`, `exercise`, `weight`, `reps`, `volume`   |
 | `sortOrder`  | string  | `desc`  | `asc` or `desc`                                  |
 | `limit`      | number  | `50`    | Maximum rows to display                          |
@@ -128,17 +138,37 @@ preset: rest
 | `type`         | string  | `countdown` | Timer mode: `countdown`, `interval`, `stopwatch`           |
 | `duration`     | number  | `30`        | Duration in seconds (countdown/interval)                   |
 | `rounds`       | number  | `1`         | Number of rounds (interval mode)                           |
-| `sound`        | boolean | `false`     | Play audio on completion                                   |
+| `sound`        | boolean | `true`      | Play audio on completion                                   |
+| `autoStart`    | boolean | `false`     | Start the timer as soon as the block is shown              |
 | `showControls` | boolean | `true`      | Show play/pause/reset buttons                              |
 | `preset`       | string  | —           | Use a saved preset by name (overridden by explicit params) |
+| `exercise`     | string  | —           | Restart the timer when a log for this exercise is added    |
+| `workout`      | string  | note name   | Restart the timer when a log for this workout is added     |
+
+> On mobile, sound only plays after you've tapped Start at least once, because browsers block audio until the user interacts. A timer started by `autoStart` stays silent until then.
 
 #### workout-dashboard
 
 ```workout-dashboard
-
+title: Training overview
+dateRange: 90
+showQuickActions: false
+recentWorkoutsLimit: 3
 ```
 
-No parameters — renders the full dashboard with all widgets.
+All parameters are optional; without any, the full dashboard is shown.
+
+| Parameter             | Type    | Default | Description                                   |
+| --------------------- | ------- | ------- | --------------------------------------------- |
+| `title`               | string  | —       | Heading shown above the dashboard             |
+| `dateRange`           | number  | all     | Only use logs from the last N days            |
+| `showSummary`         | boolean | `true`  | Show the summary widget                       |
+| `showQuickStats`      | boolean | `true`  | Show the quick stats cards                    |
+| `showVolumeAnalytics` | boolean | `true`  | Show the volume trend and top exercises       |
+| `showRecentWorkouts`  | boolean | `true`  | Show the recent workouts list                 |
+| `showQuickActions`    | boolean | `true`  | Show the quick action buttons                 |
+| `recentWorkoutsLimit` | number  | `5`     | Number of recent workouts listed              |
+| `volumeTrendDays`     | number  | `30`    | Days covered by the volume trend chart        |
 
 ---
 
@@ -159,6 +189,7 @@ No parameters — renders the full dashboard with all widgets.
 | Setting                | Description                                                          |
 | ---------------------- | -------------------------------------------------------------------- |
 | Default exact match    | When enabled, exercise filtering uses exact name matching by default |
+| Show quick log icon    | Show the dumbbell ribbon icon that opens the workout log form        |
 | Quick weight increment | Weight step for +/- buttons in create/edit log modals (e.g., `2.5`)  |
 
 ### Timer presets
@@ -281,6 +312,8 @@ const exercises = await WorkoutPlannerAPI.getExercises({
 });
 ```
 
+Returns exercise names, sorted. Exercises come from the notes in the exercise folder set in the settings. Without that folder, they come from the names in your logs. `tag` matches the `tags` in each exercise note's frontmatter (case-insensitive). An exercise with no note never matches a tag.
+
 ### Examples
 
 **Recent logs table:**
@@ -317,6 +350,28 @@ dv.paragraph(`**This week:** ${volume.toLocaleString()} kg total volume`);
 ```
 
 > The API is available after the plugin loads. Access as `WorkoutPlannerAPI` or `window.WorkoutPlannerAPI`.
+
+### Templater
+
+The API also works in [Templater](https://github.com/SilentVoid13/Templater) JavaScript blocks (`<%* … %>`), so a template can pull in your latest numbers when it creates a note:
+
+```markdown
+## Squat
+<%*
+const stats = await WorkoutPlannerAPI.getExerciseStats("Squat");
+tR += stats.totalSets
+  ? `PR ${stats.prWeight} kg × ${stats.prReps} (${stats.prDate}), last session ${stats.lastWorkoutDate}`
+  : "No squat logs yet";
+%>
+
+### Last 3 sets
+<%*
+const logs = await WorkoutPlannerAPI.getWorkoutLogs({ exercise: "Squat" });
+for (const log of logs.slice(-3)) {
+  tR += `- ${log.date.slice(0, 10)}: ${log.reps} × ${log.weight} kg\n`;
+}
+%>
+```
 
 ---
 

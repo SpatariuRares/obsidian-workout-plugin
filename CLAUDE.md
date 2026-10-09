@@ -349,11 +349,11 @@ Views (Chart, Table, Dashboard) or Public API
 - `date`, `exercise`, `reps`, `weight`, `volume`, `origine`, `workout`, `timestamp`, `notes`, `protocol`
 - Custom fields for exercise type-specific parameters (duration, distance, pace, etc.)
 
-**Filtering strategies:**
+**Filtering strategies** (exercise field only; every row comes from the same CSV, so file names are not used):
 
-1. Filename matching
-2. Exercise field matching (exact, fuzzy, partial)
-3. Automatic strategy selection based on confidence scores
+1. `exactMatch: true` → case/whitespace-insensitive equality on the exercise field
+2. Fuzzy (default) → pick the best-scoring exercise name (`StringUtils.getMatchScore`, threshold 70), then keep logs scoring ≥70 against it
+3. `DataFilter.applyEarlyFiltering` (used by `getWorkoutLogData(filter)`) keeps substring matches **plus** whatever the fuzzy strategy selects, so it never narrows what views show
 
 ### Code Block Syntax
 
@@ -365,12 +365,12 @@ Source of truth: the `Embedded*Params` interfaces in `app/features/{charts,table
 exercise: Squat
 workout: Push Day
 type: volume # volume, weight, reps, duration, distance, pace, heartRate
-chartType: exercise # scope: exercise, workout, combined, all
+chartType: exercise # exercise = daily average; workout/combined/all = daily total (all ignores filters)
 dateRange: 30
 limit: 50
 exactMatch: false
-showTrendLine: true
-showStats: true
+showTrendLine: false # default false
+showStats: true # default true
 title: Squat volume
 height: "400px"
 ```
@@ -381,9 +381,10 @@ height: "400px"
 exercise: Bench Press
 workout: Push Day
 exactMatch: false
-searchByName: false
 dateRange: 14
 limit: 50
+sortBy: date # date, exercise, weight, reps, volume
+sortOrder: desc # asc, desc
 columns: ["date", "reps", "weight", "volume"]
 showAddButton: true
 showProtocol: true
@@ -398,7 +399,8 @@ type: countdown # countdown, interval, stopwatch
 duration: 90 # seconds
 rounds: 8 # interval only
 showControls: true
-sound: true
+sound: true # default true
+autoStart: false # start as soon as the block renders (once per timer)
 preset: rest # saved preset used as base config
 exercise: Squat
 workout: Leg Day

@@ -132,7 +132,16 @@ jobs:
         if: steps.check_translations.outputs.needs_translation == 'true'
         run: |
           cd "AI translate"
+          python -m unittest test_placeholders
           python translate.py
+
+      # Same rules as app/i18n/__tests__/locales.consistency.test.ts: stops a
+      # broken placeholder ({count} -> {{count}}) from reaching main and the release
+      - name: Check translated locales
+        if: steps.check_translations.outputs.needs_translation == 'true'
+        run: |
+          cd "AI translate"
+          python check_locales.py
 
       - name: Commit manifest and translations to main
         run: |

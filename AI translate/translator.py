@@ -14,6 +14,8 @@ import time
 
 from llama_index.llms.ollama import Ollama
 
+from placeholders import fix_placeholders
+
 from config import (
     DEFAULT_MODEL,
     LANGUAGE_CODES,
@@ -97,7 +99,10 @@ Respond with ONLY the translated JSON object:"""
                 missing_count = 0
                 for key in expected_keys:
                     if key in parsed:
-                        result[key] = str(parsed[key])
+                        fixed = fix_placeholders(chunk[key], str(parsed[key]))
+                        if fixed is None:
+                            print(f"    ⚠️  Placeholders changed in '{key}', using original")
+                        result[key] = fixed if fixed is not None else chunk[key]
                     else:
                         result[key] = chunk[key]
                         missing_count += 1
@@ -165,7 +170,12 @@ Respond with ONLY the translated JSON object:"""
                     translated = translated.replace(f"[VAR_{i}]", var)
                     # Also try without brackets in case model removed them
                     translated = translated.replace(f"VAR_{i}", var)
-                    
+
+                translated = fix_placeholders(value, translated)
+                if translated is None:
+                    print(f"    ⚠️  Placeholders changed in '{key}', using original")
+                    translated = value
+
                 result[key] = translated
             except Exception as e:
                 print(f"    ⚠️  Error translating '{key}': {e}, using original")

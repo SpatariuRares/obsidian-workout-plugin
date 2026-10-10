@@ -287,6 +287,7 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 
 - `import { t } from "@app/i18n";` then `t("common.clear")`. Keys are nested JSON paths in `app/i18n/locales/en.json`.
 - **Only edit `en.json`.** The other 23 locales are filled by the CI `translate` job (Ollama, `AI translate/`) when a release tag is pushed, and committed back to `main`.
+- The translator repairs or rejects placeholder changes (`AI translate/placeholders.py`, e.g. the model turning `{count}` into `{{count}}`), and `AI translate/check_locales.py` fails the job before the locales are committed if any locale still breaks a placeholder, code span or `**bold**` of en.json. Python tests: `cd "AI translate" && venv/bin/python -m unittest test_placeholders`.
 - The job only translates **missing** keys. When you change the English text of an existing key (or remove a key), delete that key from every other locale too, otherwise the old translation stays. Untranslated keys fall back to English at runtime.
 - Write real UI text, never the key name spelled out ("Delete this log entry?", not "Delete Confirm"), in sentence case.
 - `app/i18n/__tests__/locales.consistency.test.ts` fails if a locale has keys en.json doesn't, or changes a `{placeholder}`, `{{template}}`, `**bold**` marker or a `` `code` `` identifier. Some values need their leading space (e.g. `charts.labels.variationFromTo`, `dashboard.durationComparison.minutesSuffix`) because the code appends them to a number or text.

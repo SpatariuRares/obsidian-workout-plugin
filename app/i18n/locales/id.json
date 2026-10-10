@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Menambahkan {count} ID yang hilang di {files} file",
       "csvCreated": "File CSV berhasil dibuat!",
-      "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID."
+      "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID.",
+      "weightUnitsStamped": "Menyimpan satuan berat pada {count} log yang lebih lama."
     },
     "tagReferenceGenerated": "Referensi tag berhasil dibuat!",
     "timerCompleted": "Timer selesai!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Set: {sets}\n- Repetisi: {reps}\n- Istirahat: {restTime} dtk\n\n",
     "noteTemplate": "**Catatan: {note}**\n",
-    "date": "Tanggal"
+    "date": "Tanggal",
+    "weightUnitToggle": "Satuan untuk entri ini"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Digunakan ketika jumlah repetisi tidak ditentukan (sebagai cadangan). Rentang yang umum: 30-60 detik.",
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
-      "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan"
+      "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
+      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokol telah dihapus",
       "protocolNameExists": "Ada protokol dengan nama ini yang sudah ada.",
       "protocolNameRequired": "Nama protokol diperlukan",
-      "protocolSaved": "Protokol tersimpan"
+      "protocolSaved": "Protokol tersimpan",
+      "weightUnitChangeFailed": "Gagal mengubah satuan berat: {error}"
     },
     "options": {
       "none": "Tidak ada",

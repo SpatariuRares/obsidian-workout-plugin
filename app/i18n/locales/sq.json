@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "U shtuan {count} ID që mungonin në {files} skedar(ë)",
       "csvCreated": "Skedari CSV u krijua me sukses!",
-      "noBlockIdsNeeded": "Të gjitha blloqet e kodit kanë tashmë ID"
+      "noBlockIdsNeeded": "Të gjitha blloqet e kodit kanë tashmë ID",
+      "weightUnitsStamped": "Ruajtën unitari i pesheve në {count} regjistra të vjetra."
     },
     "tagReferenceGenerated": "Referenca e etiketave u gjenerua me sukses!",
     "timerCompleted": "Timeri përfundoi!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seri: {sets}\n- Përsëritje: {reps}\n- Pushim: {restTime}s\n\n",
     "noteTemplate": "**Shënim: {note}**\n",
-    "date": "Data"
+    "date": "Data",
+    "weightUnitToggle": "Jedunitë për këtë element"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Përdoret kur përsëritjet nuk janë specifikuar (rezervë). Intervali tipik: 30-60 sekonda.",
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
-      "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes"
+      "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokoli është fshitur",
       "protocolNameExists": "Një protokol me këtë emër tashmë ekziston",
       "protocolNameRequired": "Emri i protokollit është i detyrueshëm",
-      "protocolSaved": "Protokoli është ruajtur"
+      "protocolSaved": "Protokoli është ruajtur",
+      "weightUnitChangeFailed": "Nuk ishte e mundur të ndryshonte unitetin e peshe: {error}"
     },
     "options": {
       "none": "Asnjë",

@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{count} ID manquant(s) ajouté(s) dans {files} fichier(s)",
       "csvCreated": "Le fichier CSV a été créé avec succès !",
-      "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants."
+      "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants.",
+      "weightUnitsStamped": "Enregisté l'unité de poids dans les anciens journaux {count}."
     },
     "tagReferenceGenerated": "Référence des tags générée avec succès !",
     "timerCompleted": "Minuteur terminé !",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName} :\n### - Séries : {sets}\n- Répétitions : {reps}\n- Repos : {restTime}s\n\n",
     "noteTemplate": "**Note : {note}**\n",
-    "date": "Date"
+    "date": "Date",
+    "weightUnitToggle": "Unité pour cette entrée"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Utilisé lorsque le nombre de répétitions n'est pas précisé (solution de repli). Plage typique : 30 à 60 secondes.",
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
-      "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement"
+      "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
+      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocole supprimé",
       "protocolNameExists": "Un protocole portant ce nom existe déjà.",
       "protocolNameRequired": "Le nom du protocole est obligatoire.",
-      "protocolSaved": "Protocole enregistré"
+      "protocolSaved": "Protocole enregistré",
+      "weightUnitChangeFailed": "Impossible de modifier l'unité de mesure : {error}"
     },
     "options": {
       "none": "Aucun",

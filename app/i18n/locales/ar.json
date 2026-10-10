@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "تمت إضافة {count} معرّف(ات) مفقود(ة) في {files} ملف(ات)",
       "csvCreated": "تم إنشاء ملف CSV بنجاح!",
-      "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات."
+      "noBlockIdsNeeded": "جميع كتل الشفرة لديها بالفعل معرفات.",
+      "weightUnitsStamped": "تم حفظ وحدة الوزن في سجلات {count} القديمة."
     },
     "tagReferenceGenerated": "تم إنشاء مرجع العلامات",
     "timerCompleted": "انتهى المؤقت!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - المجموعات: {sets}\n- التكرارات: {reps}\n- الراحة: {restTime} ث\n\n",
     "noteTemplate": "**ملاحظة: {note}**\n",
-    "date": "التاريخ"
+    "date": "التاريخ",
+    "weightUnitToggle": "وحدة القياس لهذا العنصر"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "يُستخدم عندما لا يتم تحديد عدد التكرارات (كخيار احتياطي). النطاق المعتاد: 30-60 ثانية.",
       "setupCSV": "أنشئ كلاً من workout_logs.csv و muscle-tags.csv في المجلد المُحدد.",
       "weightIncrement": "الزيادة الافتراضية في الوزن لزيادة التحميل التدريجي (مثلاً: 2.5 للزيادة بمقدار 2.5 وحدة)",
-      "showRibbonIcon": "إظهار أيقونة الدمبل في الشريط الجانبي لفتح نموذج سجل التدريب"
+      "showRibbonIcon": "إظهار أيقونة الدمبل في الشريط الجانبي لفتح نموذج سجل التدريب",
+      "weightUnit": "وحدة للرسوم البيانية، والمجموعات، والسجلات الجديدة. تحتفظ كل سجل بالوحدة التي تم إدخاله فيها."
     },
     "labels": {
       "csvPath": "مسار ملف سجل CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "تم حذف البروتوكول",
       "protocolNameExists": "هناك بروتوكول بهذا الاسم موجود بالفعل.",
       "protocolNameRequired": "يجب تحديد اسم البروتوكول.",
-      "protocolSaved": "تم حفظ البروتوكول"
+      "protocolSaved": "تم حفظ البروتوكول",
+      "weightUnitChangeFailed": "لم يتم تغيير وحدة الوزن: {error}"
     },
     "options": {
       "none": "لا شيء",

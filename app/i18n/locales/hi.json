@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{files} फ़ाइलों में {count} गुम ID जोड़ी गईं",
       "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",
-      "noBlockIdsNeeded": "सभी कोड ब्लॉक में पहले से ही आईडी मौजूद हैं।"
+      "noBlockIdsNeeded": "सभी कोड ब्लॉक में पहले से ही आईडी मौजूद हैं।",
+      "weightUnitsStamped": "{count} पुराने लॉग में वज़न की इकाई को सहेज लिया।"
     },
     "tagReferenceGenerated": "टैग संदर्भ सफलतापूर्वक बनाया गया!",
     "timerCompleted": "टाइमर समाप्त!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड\n\n",
     "noteTemplate": "**नोट: {note}**\n",
-    "date": "तिथि"
+    "date": "तिथि",
+    "weightUnitToggle": "इस प्रविष्टि के लिए इकाई"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "जब रेप्स निर्दिष्ट नहीं होते, तब उपयोग होता है (फ़ॉलबैक)। सामान्य सीमा: 30-60 सेकंड।",
       "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
       "weightIncrement": "प्रोग्रेसिव ओवरलोड के लिए डिफ़ॉल्ट वज़न वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
-      "showRibbonIcon": "रिबन में डंबल आइकन दिखाएँ जो वर्कआउट लॉग फ़ॉर्म खोलता है"
+      "showRibbonIcon": "रिबन में डंबल आइकन दिखाएँ जो वर्कआउट लॉग फ़ॉर्म खोलता है",
+      "weightUnit": "चार्ट, कुल और नए लॉग के लिए इकाई। प्रत्येक लॉग में वह इकाई दर्ज की गई थी।"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -850,7 +853,8 @@
       "protocolDeleted": "प्रोटोकॉल हटा दिया गया",
       "protocolNameExists": "इस नाम के साथ एक प्रोटोकॉल पहले से मौजूद है।",
       "protocolNameRequired": "प्रोटोकॉल का नाम आवश्यक है",
-      "protocolSaved": "प्रोटोकॉल सहेजा गया"
+      "protocolSaved": "प्रोटोकॉल सहेजा गया",
+      "weightUnitChangeFailed": "वजन की इकाई बदलने में असमर्थ: {error}"
     },
     "options": {
       "none": "कोई नहीं",

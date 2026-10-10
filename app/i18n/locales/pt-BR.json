@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Adicionados {count} ID(s) ausente(s) em {files} arquivo(s)",
       "csvCreated": "O arquivo CSV foi criado com sucesso!",
-      "noBlockIdsNeeded": "Todos os blocos de código já possuem IDs."
+      "noBlockIdsNeeded": "Todos os blocos de código já possuem IDs.",
+      "weightUnitsStamped": "Salvou a unidade de peso em {{count}} registros mais antigos."
     },
     "tagReferenceGenerated": "Referência de tags gerada com sucesso!",
     "timerCompleted": "Temporizador concluído!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Séries: {sets}\n- Repetições: {reps}\n- Descanso: {restTime}s\n\n",
     "noteTemplate": "**Observação: {note}**\n",
-    "date": "Data"
+    "date": "Data",
+    "weightUnitToggle": "Unidade para esta entrada"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Utilizado quando as repetições não são especificadas (alternativa). Faixa típica: 30-60 segundos.",
       "setupCSV": "Crie os arquivos workout_logs.csv e muscle-tags.csv na pasta configurada.",
       "weightIncrement": "Incremento padrão de peso para sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
-      "showRibbonIcon": "Mostrar na barra lateral o ícone de halter que abre o formulário de registro de treino"
+      "showRibbonIcon": "Mostrar na barra lateral o ícone de halter que abre o formulário de registro de treino",
+      "weightUnit": "Unidade para gráficos, totais e novos registros. Cada registro mantém a unidade em que foi inserido."
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocolo excluído",
       "protocolNameExists": "Um protocolo com este nome já existe.",
       "protocolNameRequired": "O nome do protocolo é obrigatório",
-      "protocolSaved": "Protocolo salvo"
+      "protocolSaved": "Protocolo salvo",
+      "weightUnitChangeFailed": "Não foi possível alterar a unidade de medida: {error}"
     },
     "options": {
       "none": "Nenhum",

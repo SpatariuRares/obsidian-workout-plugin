@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "La til {count} manglende ID(er) i {files} fil(er)",
       "csvCreated": "CSV-filen ble opprettet med suksess!",
-      "noBlockIdsNeeded": "Alle kodeblokker har allerede ID-er"
+      "noBlockIdsNeeded": "Alle kodeblokker har allerede ID-er",
+      "weightUnitsStamped": "Lagret enheten for vekt på {count} eldre logger."
     },
     "tagReferenceGenerated": "Tag-referanse generert!",
     "timerCompleted": "Timer er fullført!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sett: {sets}\n- Repetisjoner: {reps}\n- Pause: {restTime}s\n\n",
     "noteTemplate": "**Merk: {note}**\n",
-    "date": "Dato"
+    "date": "Dato",
+    "weightUnitToggle": "Enhet for denne oppføringen"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Brukes når antall repetisjoner ikke er angitt (reserveverdi). Typisk område: 30-60 sekunder.",
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
-      "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen"
+      "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
+      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokoll slettet",
       "protocolNameExists": "En protokoll med dette navnet finnes allerede",
       "protocolNameRequired": "Navn på protokollen er påkrevd",
-      "protocolSaved": "Protokoll lagret"
+      "protocolSaved": "Protokoll lagret",
+      "weightUnitChangeFailed": "Kunne ikke endre enhetsen for vekt: {error}"
     },
     "options": {
       "none": "Ingen",

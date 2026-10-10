@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Dodano brakujące identyfikatory: {count} (pliki: {files})",
       "csvCreated": "Plik CSV został pomyślnie utworzony!",
-      "noBlockIdsNeeded": "Wszystkie bloki kodu już mają identyfikatory"
+      "noBlockIdsNeeded": "Wszystkie bloki kodu już mają identyfikatory",
+      "weightUnitsStamped": "Zapisano jednostkę wagi w {count} starszych logach."
     },
     "tagReferenceGenerated": "Spis tagów został wygenerowany!",
     "timerCompleted": "Timer zakończony!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Serie: {sets}\n- Powtórzenia: {reps}\n- Odpoczynek: {restTime}s\n\n",
     "noteTemplate": "**Uwaga: {note}**\n",
-    "date": "Data"
+    "date": "Data",
+    "weightUnitToggle": "Jednostka dla tego wpisu"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Używane, gdy nie podano liczby powtórzeń (wartość zapasowa). Typowy zakres: 30-60 sekund.",
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
-      "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego"
+      "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
+      "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokół usunięto",
       "protocolNameExists": "Istnieje już protokół o tej nazwie",
       "protocolNameRequired": "Nazwa protokołu jest wymagana",
-      "protocolSaved": "Protokół został zapisany"
+      "protocolSaved": "Protokół został zapisany",
+      "weightUnitChangeFailed": "Nie udało się zmienić jednostki wagi: {error}"
     },
     "options": {
       "none": "Brak",

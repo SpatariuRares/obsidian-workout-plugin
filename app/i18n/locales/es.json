@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Se han añadido {count} ID faltantes en {files} archivo(s)",
       "csvCreated": "¡El archivo CSV se ha creado correctamente!",
-      "noBlockIdsNeeded": "Todos los bloques de código ya tienen identificadores."
+      "noBlockIdsNeeded": "Todos los bloques de código ya tienen identificadores.",
+      "weightUnitsStamped": "Guardó la unidad de peso en los registros anteriores {count}."
     },
     "tagReferenceGenerated": "¡Referencia de etiquetas generada correctamente!",
     "timerCompleted": "El temporizador ha finalizado.",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Series: {sets}\n- Repeticiones: {reps}\n- Descanso: {restTime}s\n\n",
     "noteTemplate": "**Nota: {note}**\n",
-    "date": "Fecha"
+    "date": "Fecha",
+    "weightUnitToggle": "Unidad para esta entrada"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Se utiliza cuando no se especifican las repeticiones (opción por defecto). Rango típico: 30-60 segundos.",
       "setupCSV": "Cree los archivos \"workout_logs.csv\" y \"muscle-tags.csv\" en la carpeta configurada.",
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
-      "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento"
+      "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento",
+      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocolo eliminado",
       "protocolNameExists": "Ya existe un protocolo con este nombre.",
       "protocolNameRequired": "El nombre del protocolo es obligatorio.",
-      "protocolSaved": "Protocolo guardado"
+      "protocolSaved": "Protocolo guardado",
+      "weightUnitChangeFailed": "No se pudo cambiar la unidad de medida: {error}"
     },
     "options": {
       "none": "Ninguno",

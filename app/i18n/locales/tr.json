@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{files} dosyada {count} eksik ID eklendi",
       "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
-      "noBlockIdsNeeded": "Tüm kod bloklarında zaten ID var"
+      "noBlockIdsNeeded": "Tüm kod bloklarında zaten ID var",
+      "weightUnitsStamped": "{count} önceki loglara ağırlık birimini kaydetti."
     },
     "tagReferenceGenerated": "Etiket başvurusu başarıyla oluşturuldu!",
     "timerCompleted": "Zamanlayıcı tamamlandı!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} sn\n\n",
     "noteTemplate": "**Not: {note}**\n",
-    "date": "Tarih"
+    "date": "Tarih",
+    "weightUnitToggle": "Bu girdinin birim değeri"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Tekrar sayısı belirtilmediğinde kullanılır (yedek değer). Tipik aralık: 30-60 saniye.",
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
-      "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster"
+      "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
+      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokol silindi",
       "protocolNameExists": "Bu adda bir protokol zaten mevcut",
       "protocolNameRequired": "Protokol adı gereklidir",
-      "protocolSaved": "Protokol kaydedildi"
+      "protocolSaved": "Protokol kaydedildi",
+      "weightUnitChangeFailed": "Ağırlık birimini değiştiremedim: {error}"
     },
     "options": {
       "none": "Yok",

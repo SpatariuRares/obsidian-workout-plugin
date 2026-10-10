@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{count} ontbrekende ID('s) toegevoegd in {files} bestand(en)",
       "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
-      "noBlockIdsNeeded": "Alle codeblokken hebben al een ID."
+      "noBlockIdsNeeded": "Alle codeblokken hebben al een ID.",
+      "weightUnitsStamped": "De gewichtseenheid is opgeslagen in {count} oudere logs."
     },
     "tagReferenceGenerated": "Labeloverzicht succesvol gegenereerd!",
     "timerCompleted": "Timer voltooid!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
     "noteTemplate": "**Opmerking: {note}**\n",
-    "date": "Datum"
+    "date": "Datum",
+    "weightUnitToggle": "Eenheid voor deze vermelding"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Wordt gebruikt wanneer het aantal herhalingen niet is opgegeven (terugvaloptie). Typische duur: 30-60 seconden.",
       "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
-      "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent"
+      "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
+      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocol verwijderd",
       "protocolNameExists": "Een protocol met deze naam bestaat al.",
       "protocolNameRequired": "Naam van het protocol is verplicht",
-      "protocolSaved": "Protocol is opgeslagen"
+      "protocolSaved": "Protocol is opgeslagen",
+      "weightUnitChangeFailed": "Kon de geweeindeheid niet veranderen: {error}"
     },
     "options": {
       "none": "Geen",

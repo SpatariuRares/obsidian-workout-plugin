@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "파일 {files}개에 누락된 ID {count}개를 추가했습니다",
       "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",
-      "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다."
+      "noBlockIdsNeeded": "현재 모든 코드 블록에는 이미 ID가 할당되어 있습니다.",
+      "weightUnitsStamped": "{count} 이전 로그에 무게 단위를 저장했습니다."
     },
     "tagReferenceGenerated": "태그 참조가 생성되었습니다!",
     "timerCompleted": "타이머 완료!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 세트: {sets}\n- 반복: {reps}\n- 휴식: {restTime}초\n\n",
     "noteTemplate": "**메모: {note}**\n",
-    "date": "날짜"
+    "date": "날짜",
+    "weightUnitToggle": "이 항목의 단위"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "반복 횟수가 지정되지 않은 경우에 사용됩니다 (대체값). 일반적인 범위: 30-60초.",
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
-      "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다"
+      "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다",
+      "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
@@ -850,7 +853,8 @@
       "protocolDeleted": "프로토콜을 삭제했습니다",
       "protocolNameExists": "이 이름의 프로토콜이 이미 존재합니다.",
       "protocolNameRequired": "프로토콜 이름은 필수입니다",
-      "protocolSaved": "프로토콜을 저장했습니다"
+      "protocolSaved": "프로토콜을 저장했습니다",
+      "weightUnitChangeFailed": "무게 단위를 변경할 수 없습니다: {error}"
     },
     "options": {
       "none": "없음",

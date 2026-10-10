@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Tilføjede {count} manglende ID(er) i {files} fil(er)",
       "csvCreated": "CSV-filen er oprettet med succes!",
-      "noBlockIdsNeeded": "Alle kodeblokke har allerede ID'er"
+      "noBlockIdsNeeded": "Alle kodeblokke har allerede ID'er",
+      "weightUnitsStamped": "Gemt vægtenheden på {count} ældre logfiler."
     },
     "tagReferenceGenerated": "Tag-reference genereret!",
     "timerCompleted": "Timeren er færdig!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sæt: {sets}\n- Gentagelser: {reps}\n- Pause: {restTime}s\n\n",
     "noteTemplate": "**Bemærk: {note}**\n",
-    "date": "Dato"
+    "date": "Dato",
+    "weightUnitToggle": "Enhed for denne post"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Bruges, når gentagelser ikke er angivet (reserve). Typisk interval: 30-60 sekunder.",
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
-      "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen"
+      "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen",
+      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokol slettet",
       "protocolNameExists": "Der findes allerede en protokol med dette navn",
       "protocolNameRequired": "Navn på protokollen er påkrævet",
-      "protocolSaved": "Protokol gemt"
+      "protocolSaved": "Protokol gemt",
+      "weightUnitChangeFailed": "Kunne ikke ændre vægtenheden: {error}"
     },
     "options": {
       "none": "Ingen",

@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Au fost adăugate {count} ID-uri lipsă în {files} fișier(e)",
       "csvCreated": "Fișierul CSV a fost creat cu succes!",
-      "noBlockIdsNeeded": "Toate blocurile de cod au deja ID-uri."
+      "noBlockIdsNeeded": "Toate blocurile de cod au deja ID-uri.",
+      "weightUnitsStamped": "A salvat unitatea de măsurare a greutății în {{count}} înregistrări anterioare."
     },
     "tagReferenceGenerated": "Referința etichetelor a fost generată cu succes!",
     "timerCompleted": "Temporizatorul s-a încheiat!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seturi: {sets}\n- Repetări: {reps}\n- Pauză: {restTime}s\n\n",
     "noteTemplate": "**Notă: {note}**\n",
-    "date": "Data"
+    "date": "Data",
+    "weightUnitToggle": "Unitate pentru această înregistrare"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Utilizat atunci când repetările nu sunt specificate (alternativă). Interval tipic: 30-60 secunde.",
       "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
-      "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament"
+      "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
+      "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocolul a fost șters",
       "protocolNameExists": "Un protocol cu acest nume există deja.",
       "protocolNameRequired": "Numele protocolului este obligatoriu",
-      "protocolSaved": "Protocol salvat"
+      "protocolSaved": "Protocol salvat",
+      "weightUnitChangeFailed": "Nu a fost posibilă modificarea unității de măsură a greutății: {error}"
     },
     "options": {
       "none": "Niciunul",

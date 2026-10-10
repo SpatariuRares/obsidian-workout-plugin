@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "已在 {files} 個檔案中新增 {count} 個缺少的 ID",
       "csvCreated": "CSV 檔案已成功建立！",
-      "noBlockIdsNeeded": "所有程式碼區塊已經都有 ID"
+      "noBlockIdsNeeded": "所有程式碼區塊已經都有 ID",
+      "weightUnitsStamped": "已將重量單位儲存到 {count} 舊記錄中"
     },
     "tagReferenceGenerated": "已成功產生標籤參考！",
     "timerCompleted": "計時已完成！",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 組數：{sets}\n- 次數：{reps}\n- 休息：{restTime} 秒\n\n",
     "noteTemplate": "**備註：{note}**\n",
-    "date": "日期"
+    "date": "日期",
+    "weightUnitToggle": "此欄位所使用的單位"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "未指定次數時使用（備用值）。典型範圍：30-60 秒。",
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
-      "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單"
+      "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
+      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -850,7 +853,8 @@
       "protocolDeleted": "訓練法已刪除",
       "protocolNameExists": "已存在同名的訓練法",
       "protocolNameRequired": "訓練法名稱必填",
-      "protocolSaved": "訓練法已儲存"
+      "protocolSaved": "訓練法已儲存",
+      "weightUnitChangeFailed": "無法更改重量單位：{error}"
     },
     "options": {
       "none": "無",

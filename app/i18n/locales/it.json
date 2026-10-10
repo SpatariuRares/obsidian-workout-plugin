@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Aggiunti {count} ID mancanti in {files} file",
       "csvCreated": "Il file CSV è stato creato correttamente!",
-      "noBlockIdsNeeded": "Tutti i blocchi di codice hanno già un ID."
+      "noBlockIdsNeeded": "Tutti i blocchi di codice hanno già un ID.",
+      "weightUnitsStamped": "Salvati le unità di misura del peso nei log più vecchi ({count})."
     },
     "tagReferenceGenerated": "Riferimento dei tag generato correttamente!",
     "timerCompleted": "Timer completato!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Serie: {sets}\n- Ripetizioni: {reps}\n- Riposo: {restTime}s\n\n",
     "noteTemplate": "**Nota: {note}**\n",
-    "date": "Data"
+    "date": "Data",
+    "weightUnitToggle": "Unità per questo elemento"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Utilizzato quando le ripetizioni non sono specificate (fallback). Intervallo tipico: 30-60 secondi.",
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
-      "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento"
+      "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
+      "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protocollo eliminato",
       "protocolNameExists": "Esiste già un protocollo con questo nome.",
       "protocolNameRequired": "Il nome del protocollo è obbligatorio",
-      "protocolSaved": "Protocollo salvato"
+      "protocolSaved": "Protocollo salvato",
+      "weightUnitChangeFailed": "Impossibile modificare l'unità di misura del peso: {error}"
     },
     "options": {
       "none": "Nessuno",

@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{count} の欠落した ID を {files} ファイルに登録しました。",
       "csvCreated": "CSVファイルが正常に作成されました！",
-      "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。"
+      "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。",
+      "weightUnitsStamped": "{count} の古いログに、重量単位を保存しました。"
     },
     "tagReferenceGenerated": "タグ一覧を生成しました！",
     "timerCompleted": "タイマーが終了しました！",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- 回数: {reps}\n- 休憩: {restTime}秒\n\n",
     "noteTemplate": "**メモ: {note}**\n",
-    "date": "日付"
+    "date": "日付",
+    "weightUnitToggle": "このエントリの単位"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "レップ数が指定されていない場合に使用します（代替値）。一般的な範囲：30～60秒。",
       "setupCSV": "設定したフォルダに workout_logs.csv と muscle-tags.csv の両方を作成します。",
       "weightIncrement": "漸進性過負荷で使うデフォルトの重量増分（例：2.5 単位ずつ増やすなら 2.5）",
-      "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します"
+      "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
+      "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -850,7 +853,8 @@
       "protocolDeleted": "プロトコルを削除しました",
       "protocolNameExists": "同じ名前のプロトコルはすでに存在しています",
       "protocolNameRequired": "プロトコルの名前が必要です",
-      "protocolSaved": "プロトコルを保存しました"
+      "protocolSaved": "プロトコルを保存しました",
+      "weightUnitChangeFailed": "重量単位の変更に失敗しました: {error}"
     },
     "options": {
       "none": "なし",

@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "{count} fehlende ID(s) in {files} Datei(en) hinzugefügt",
       "csvCreated": "CSV-Datei erfolgreich erstellt!",
-      "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs"
+      "noBlockIdsNeeded": "Alle Codeblöcke haben bereits IDs",
+      "weightUnitsStamped": "Das Gewichtseinheit wurde in den älteren Protokollen unter {count} gespeichert."
     },
     "tagReferenceGenerated": "Tag-Referenz erfolgreich erstellt!",
     "timerCompleted": "Timer abgelaufen!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sätze: {sets}\n- Wiederholungen: {reps}\n- Pause: {restTime}s\n\n",
     "noteTemplate": "**Hinweis: {note}**\n",
-    "date": "Datum"
+    "date": "Datum",
+    "weightUnitToggle": "Einheit für diesen Eintrag"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Wird verwendet, wenn keine Wiederholungen angegeben sind (Fallback). Typischer Bereich: 30-60 Sekunden.",
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
-      "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet"
+      "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
+      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokoll gelöscht",
       "protocolNameExists": "Ein Protokoll mit diesem Namen existiert bereits",
       "protocolNameRequired": "Der Protokollname ist erforderlich",
-      "protocolSaved": "Protokoll gespeichert"
+      "protocolSaved": "Protokoll gespeichert",
+      "weightUnitChangeFailed": "Es konnte die Gewichtseinheit nicht geändert werden: {error}"
     },
     "options": {
       "none": "Keine",

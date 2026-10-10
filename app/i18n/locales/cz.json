@@ -484,7 +484,8 @@
     "success": {
       "blockIdsAdded": "Přidáno chybějících ID: {count} (souborů: {files})",
       "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
-      "noBlockIdsNeeded": "Všechny bloky kódu už mají ID"
+      "noBlockIdsNeeded": "Všechny bloky kódu už mají ID",
+      "weightUnitsStamped": "Uloženo jednotkové měření váhy v {count} starších záznamech."
     },
     "tagReferenceGenerated": "Přehled štítků byl úspěšně vygenerován!",
     "timerCompleted": "Časovač dokončen!",
@@ -764,7 +765,8 @@
     },
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Série: {sets}\n- Opakování: {reps}\n- Pauza: {restTime}s\n\n",
     "noteTemplate": "**Poznámka: {note}**\n",
-    "date": "Datum"
+    "date": "Datum",
+    "weightUnitToggle": "Jednotka pro tento záznam"
   },
   "settings": {
     "buttons": {
@@ -808,7 +810,8 @@
       "setDuration": "Používá se, když nejsou zadána opakování (záložní hodnota). Obvyklý rozsah: 30-60 sekund.",
       "setupCSV": "Vytvoří soubory workout_logs.csv i muscle-tags.csv v nastavené složce.",
       "weightIncrement": "Výchozí krok zvýšení váhy pro progresivní přetížení (např. 2,5 pro kroky po 2,5 jednotky)",
-      "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku"
+      "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku",
+      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -850,7 +853,8 @@
       "protocolDeleted": "Protokol smazán",
       "protocolNameExists": "Protokol s tímto názvem už existuje",
       "protocolNameRequired": "Název protokolu je povinný",
-      "protocolSaved": "Protokol uložen"
+      "protocolSaved": "Protokol uložen",
+      "weightUnitChangeFailed": "Nebylo možné změnit jednotku pro váhu: {error}"
     },
     "options": {
       "none": "Žádný",

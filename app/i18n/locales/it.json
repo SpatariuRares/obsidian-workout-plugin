@@ -485,7 +485,7 @@
       "blockIdsAdded": "Aggiunti {count} ID mancanti in {files} file",
       "csvCreated": "Il file CSV è stato creato correttamente!",
       "noBlockIdsNeeded": "Tutti i blocchi di codice hanno già un ID.",
-      "weightUnitsStamped": "Salvati le unità di misura del peso nei log più vecchi ({count})."
+      "weightUnitsStamped": "Salvata l'unità di peso su {count} log più vecchi"
     },
     "tagReferenceGenerated": "Riferimento dei tag generato correttamente!",
     "timerCompleted": "Timer completato!",

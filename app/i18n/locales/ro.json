@@ -485,7 +485,7 @@
       "blockIdsAdded": "Au fost adăugate {count} ID-uri lipsă în {files} fișier(e)",
       "csvCreated": "Fișierul CSV a fost creat cu succes!",
       "noBlockIdsNeeded": "Toate blocurile de cod au deja ID-uri.",
-      "weightUnitsStamped": "A salvat unitatea de măsurare a greutății în {{count}} înregistrări anterioare."
+      "weightUnitsStamped": "Unitatea de greutate a fost salvată pentru {count} înregistrări mai vechi"
     },
     "tagReferenceGenerated": "Referința etichetelor a fost generată cu succes!",
     "timerCompleted": "Temporizatorul s-a încheiat!",

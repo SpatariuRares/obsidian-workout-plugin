@@ -1,4 +1,5 @@
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { StringUtils } from "@app/utils/StringUtils";
 
 /** Session durations outside this window are logging gaps, not training. */
 const MIN_SESSION_SECONDS = 5 * 60;
@@ -11,6 +12,7 @@ const MAX_SESSION_SECONDS = 5 * 60 * 60;
 export function trainingDay(date: string): string {
   if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
   const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return date.split("T")[0];
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${d.getFullYear()}-${month}-${day}`;
@@ -30,8 +32,16 @@ export interface Session {
   duration?: number;
 }
 
+/** An exercise's heaviest set. See "Personal record" in CONTEXT.md. */
+export interface PersonalRecord {
+  weight: number;
+  reps: number;
+  day: string;
+  set: WorkoutLogData;
+}
+
 /**
- * Reads logged sets back as training: training days and sessions.
+ * Reads logged sets back as training: training days, sessions and PRs.
  * Pure: give it the rows (already filtered if needed), ask it questions.
  */
 export class TrainingHistory {
@@ -56,6 +66,57 @@ export class TrainingHistory {
     return Array.from(groups.values())
       .map(toSession)
       .sort((a, b) => sortTime(a) - sortTime(b));
+  }
+
+  /**
+   * The exercise's heaviest set; on a tie the one with most reps, then the
+   * earliest. Undefined when the exercise was never logged with weight.
+   */
+  personalRecord(exercise: string): PersonalRecord | undefined {
+    const wanted = StringUtils.normalize(exercise);
+    let best: WorkoutLogData | undefined;
+    for (const log of this.chronological()) {
+      if (!(log.weight > 0)) continue;
+      if (StringUtils.normalize(log.exercise) !== wanted) continue;
+      if (
+        !best ||
+        log.weight > best.weight ||
+        (log.weight === best.weight && log.reps > best.reps)
+      ) {
+        best = log;
+      }
+    }
+    return best
+      ? {
+          weight: best.weight,
+          reps: best.reps,
+          day: trainingDay(best.date),
+          set: best,
+        }
+      : undefined;
+  }
+
+  /**
+   * Sets that set a new PR: strictly heavier than every earlier weighted set
+   * of the same exercise. An exercise's first weighted set has nothing to beat.
+   */
+  newRecordSets(): WorkoutLogData[] {
+    const best = new Map<string, number>();
+    const records: WorkoutLogData[] = [];
+    for (const log of this.chronological()) {
+      if (!(log.weight > 0)) continue;
+      const exercise = StringUtils.normalize(log.exercise);
+      const previous = best.get(exercise);
+      if (previous !== undefined && log.weight > previous) records.push(log);
+      if (previous === undefined || log.weight > previous) {
+        best.set(exercise, log.weight);
+      }
+    }
+    return records;
+  }
+
+  private chronological(): WorkoutLogData[] {
+    return [...this.logs].sort((a, b) => setTime(a) - setTime(b));
   }
 }
 

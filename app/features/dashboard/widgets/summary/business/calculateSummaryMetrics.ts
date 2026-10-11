@@ -46,38 +46,18 @@ export function calculateSummaryMetrics(
 }
 
 /**
- * A set is a record when its weight beats every earlier set of the same
- * exercise. Counts the exercises with at least one record among `shown`;
- * a first session (nothing to beat) and bodyweight sets never count.
+ * Counts the exercises with at least one new PR among `shown`, judged
+ * against every earlier set in `history` (see "Personal record" in CONTEXT.md).
  */
 function countExercisesWithNewRecord(
   shown: WorkoutLogData[],
   history: WorkoutLogData[],
 ): number {
   const shownSets = new Set(shown);
-  const best = new Map<string, number>();
-  const withRecord = new Set<string>();
-
-  const chronological = [...new Set([...history, ...shown])].sort(
-    (a, b) => setTime(a) - setTime(b),
-  );
-  for (const set of chronological) {
-    const exercise = StringUtils.normalize(set.exercise);
-    const previousBest = best.get(exercise);
-    if (
-      previousBest !== undefined &&
-      set.weight > previousBest &&
-      shownSets.has(set)
-    ) {
-      withRecord.add(exercise);
-    }
-    if (previousBest === undefined || set.weight > previousBest) {
-      best.set(exercise, set.weight);
-    }
-  }
-  return withRecord.size;
-}
-
-function setTime(set: WorkoutLogData): number {
-  return set.timestamp ?? new Date(set.date).getTime();
+  const all = [...new Set([...history, ...shown])];
+  const exercises = new TrainingHistory(all)
+    .newRecordSets()
+    .filter((set) => shownSets.has(set))
+    .map((set) => StringUtils.normalize(set.exercise));
+  return new Set(exercises).size;
 }

@@ -163,3 +163,83 @@ describe("Session duration", () => {
     ).toBe(1800);
   });
 });
+
+describe("TrainingHistory.personalRecord", () => {
+  const lift = (iso: string, exercise: string, weight: number, reps = 5) =>
+    set(iso, "Push", { exercise, weight, reps, volume: weight * reps });
+
+  it("should be the heaviest set of the exercise", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-01T17:00:00.000Z", "Bench", 80),
+      lift("2024-01-08T17:00:00.000Z", "Bench", 90),
+      lift("2024-01-15T17:00:00.000Z", "Bench", 85),
+    ]);
+
+    expect(history.personalRecord("Bench")).toMatchObject({
+      weight: 90,
+      reps: 5,
+      day: "2024-01-08",
+    });
+  });
+
+  it("should prefer the set with most reps when the weight ties, then the earliest", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-01T17:00:00.000Z", "Bench", 100, 5),
+      lift("2024-01-08T17:00:00.000Z", "Bench", 100, 8),
+      lift("2024-01-15T17:00:00.000Z", "Bench", 100, 8),
+    ]);
+
+    expect(history.personalRecord("Bench")).toMatchObject({
+      reps: 8,
+      day: "2024-01-08",
+    });
+  });
+
+  it("should match the exercise name ignoring case and spacing", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-01T17:00:00.000Z", " bench  press", 80),
+    ]);
+
+    expect(history.personalRecord("Bench Press")?.weight).toBe(80);
+  });
+
+  it("should be undefined for an exercise logged without weight", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-01T17:00:00.000Z", "Pull up", 0, 10),
+    ]);
+
+    expect(history.personalRecord("Pull up")).toBeUndefined();
+  });
+
+  it("should date the record by its training day", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-15T23:30:00.000Z", "Bench", 80),
+    ]);
+
+    expect(history.personalRecord("Bench")?.day).toBe("2024-01-16");
+  });
+});
+
+describe("TrainingHistory.newRecordSets", () => {
+  const lift = (iso: string, exercise: string, weight: number) =>
+    set(iso, "Push", { exercise, weight, volume: weight * 5 });
+
+  it("should list sets strictly heavier than every earlier set of the exercise", () => {
+    const first = lift("2024-01-01T17:00:00.000Z", "Bench", 80);
+    const heavier = lift("2024-01-08T17:00:00.000Z", "Bench", 90);
+    const tie = lift("2024-01-15T17:00:00.000Z", "Bench", 90);
+
+    expect(new TrainingHistory([tie, first, heavier]).newRecordSets()).toEqual([
+      heavier,
+    ]);
+  });
+
+  it("should not count the first weighted set after bodyweight-only sets", () => {
+    const sets = [
+      lift("2024-01-01T17:00:00.000Z", "Dip", 0),
+      lift("2024-01-08T17:00:00.000Z", "Dip", 10),
+    ];
+
+    expect(new TrainingHistory(sets).newRecordSets()).toEqual([]);
+  });
+});

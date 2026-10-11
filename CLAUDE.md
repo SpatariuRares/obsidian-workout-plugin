@@ -116,7 +116,7 @@ The only place that knows what a protocol looks like: `new ProtocolCatalog(setti
 
 #### TrainingHistory (`app/services/history/TrainingHistory.ts`)
 
-The only place that reads logged sets back as training (see "Training History" in `CONTEXT.md`). Pure: `new TrainingHistory(rows)`, no vault, no mocks in tests. `trainingDay(date)` is the one day rule (local day, never `date.split("T")[0]`); `sessions({ workout? })` groups sets by training day + workout name (case, spacing, quotes ignored; sets without a workout form their own unnamed session) and gives each session's plausible `duration`. Never group sets by day or session anywhere else.
+The only place that reads logged sets back as training (see "Training History" in `CONTEXT.md`). Pure: `new TrainingHistory(rows)`, no vault, no mocks in tests. `trainingDay(date)` is the one day rule (local day, never `date.split("T")[0]`); `sessions({ workout? })` groups sets by training day + workout name (case, spacing, quotes ignored; sets without a workout form their own unnamed session) and gives each session's plausible `duration`. `personalRecord(exercise)` and `newRecordSets()` are the one PR definition. Never group sets by day or session, or compute a PR, anywhere else.
 
 #### ExerciseDefinitionService
 

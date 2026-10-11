@@ -14,6 +14,10 @@ import { App, TFolder } from "obsidian";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import {
+  TrainingHistory,
+  trainingDay,
+} from "@app/services/history/TrainingHistory";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -287,20 +291,15 @@ export class WorkoutPlannerAPI {
     const averageWeight = totalSets > 0 ? totalWeight / totalSets : 0;
     const averageReps = totalSets > 0 ? totalReps / totalSets : 0;
 
-    // Find PR (max weight)
-    let prWeight = 0;
-    let prReps = 0;
-    let prDate: string | null = null;
-    for (const log of logs) {
-      if (log.weight > prWeight) {
-        prWeight = log.weight;
-        prReps = log.reps;
-        prDate = log.date.split("T")[0];
-      }
-    }
+    const pr = new TrainingHistory(logs).personalRecord(exercise);
+    const prWeight = pr?.weight ?? 0;
+    const prReps = pr?.reps ?? 0;
+    const prDate = pr?.day ?? null;
 
     // Get last workout date
-    const lastWorkoutDate = sortedLogs[0]?.date.split("T")[0] || null;
+    const lastWorkoutDate = sortedLogs[0]
+      ? trainingDay(sortedLogs[0].date)
+      : null;
 
     // Calculate trend by comparing recent performance (last 30 days) vs older
     const trend = this.calculateTrend(sortedLogs);

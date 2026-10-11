@@ -55,6 +55,12 @@ describe("personal records in the summary", () => {
     expect(records(period, [...before, ...period])).toBe(0);
   });
 
+  it("doesn't count the first weighted set after bodyweight-only sets", () => {
+    const period = [set("03-01", "Dip", 0), set("03-08", "Dip", 10)];
+
+    expect(records(period, [...before, ...period])).toBe(0);
+  });
+
   it("matches exercise names ignoring case and spaces", () => {
     const period = [set("03-01", " squat ", 105)];
 

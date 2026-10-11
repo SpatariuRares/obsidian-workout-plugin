@@ -195,6 +195,23 @@ describe("WorkoutPlannerAPI", () => {
     }
   });
 
+  it("reports the PR set with most reps when the top weight ties, on its local day", async () => {
+    const dataService = {
+      getWorkoutLogData: jest.fn().mockResolvedValue([
+        { date: "2026-01-10T17:00:00.000Z", exercise: "Bench Press", reps: 5, weight: 100, volume: 500 },
+        // 00:30 in Rome on 21 Jan
+        { date: "2026-01-20T23:30:00.000Z", exercise: "Bench Press", reps: 8, weight: 100, volume: 800 },
+      ]),
+    };
+
+    const stats = await new WorkoutPlannerAPI(dataService as any).getExerciseStats("Bench Press");
+
+    expect(stats.prWeight).toBe(100);
+    expect(stats.prReps).toBe(8);
+    expect(stats.prDate).toBe("2026-01-21");
+    expect(stats.lastWorkoutDate).toBe("2026-01-21");
+  });
+
   it("returns unique sorted exercises when no app is provided", async () => {
     const dataService = {
       getWorkoutLogData: jest.fn().mockResolvedValue([

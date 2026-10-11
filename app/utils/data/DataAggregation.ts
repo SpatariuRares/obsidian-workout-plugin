@@ -92,20 +92,4 @@ export class DataAggregation {
   static calculateTotalVolume(data: WorkoutLogData[]): number {
     return data.reduce((sum, d) => sum + d.volume, 0);
   }
-
-  /**
-   * Find maximum weight for each exercise
-   */
-  static findMaxWeightsByExercise(
-    data: WorkoutLogData[],
-  ): Map<string, number> {
-    const maxWeights = new Map<string, number>();
-    data.forEach((d) => {
-      const currentMax = maxWeights.get(d.exercise) || 0;
-      if (d.weight > currentMax) {
-        maxWeights.set(d.exercise, d.weight);
-      }
-    });
-    return maxWeights;
-  }
 }

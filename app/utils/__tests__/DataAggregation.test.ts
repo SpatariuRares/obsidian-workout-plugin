@@ -186,23 +186,4 @@ describe("DataAggregation", () => {
       expect(result).toBe(0);
     });
   });
-
-  describe("findMaxWeightsByExercise", () => {
-    it("should find maximum weight for each exercise", () => {
-      const result =
-        DataAggregation.findMaxWeightsByExercise(mockData);
-
-      expect(result.get("Squat")).toBe(120); // Max of 100 and 120
-      expect(result.get("Bench Press")).toBe(80);
-      expect(result.get("Deadlift")).toBe(150);
-    });
-
-    it("should handle single entry per exercise", () => {
-      const singleData: WorkoutLogData[] = [mockData[2]];
-      const result =
-        DataAggregation.findMaxWeightsByExercise(singleData);
-
-      expect(result.get("Bench Press")).toBe(80);
-    });
-  });
 });

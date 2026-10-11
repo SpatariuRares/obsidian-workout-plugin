@@ -12,7 +12,6 @@
 
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { STANDARD_CSV_COLUMNS } from "@app/services/data/WorkoutLogCodec";
-import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /**
@@ -25,8 +24,8 @@ const RESERVED_PARAMETER_KEYS: readonly string[] = [
   // Computed/internal values
   "volume",
   "pace",
-  // Chart data types (to avoid confusion)
-  ...Object.values(CHART_DATA_TYPE),
+  // duration, distance and heartRate are NOT reserved: they are the shared
+  // exercise fields, and a custom exercise may declare them too
 ] as const;
 
 /**

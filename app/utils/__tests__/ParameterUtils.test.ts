@@ -141,16 +141,10 @@ describe("ParameterUtils", () => {
       expect(ParameterUtils.isReservedParamKey("pace")).toBe(true);
     });
 
-    it("should return true for chart data types", () => {
-      expect(ParameterUtils.isReservedParamKey("duration")).toBe(
-        true,
-      );
-      expect(ParameterUtils.isReservedParamKey("distance")).toBe(
-        true,
-      );
-      expect(ParameterUtils.isReservedParamKey("heartRate")).toBe(
-        true,
-      );
+    it("should let a custom exercise declare the shared duration, distance and heart rate fields", () => {
+      expect(ParameterUtils.isReservedParamKey("duration")).toBe(false);
+      expect(ParameterUtils.isReservedParamKey("distance")).toBe(false);
+      expect(ParameterUtils.isReservedParamKey("heartRate")).toBe(false);
     });
 
     it("should be case-insensitive", () => {

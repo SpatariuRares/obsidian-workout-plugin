@@ -1,5 +1,6 @@
 import { generateExampleCSVData } from "@app/services/examples/exampleDataGenerator";
-import { parseCSVLogFile } from "@app/types/WorkoutLogData";
+import { parseLog } from "@app/services/data/WorkoutLogCodec";
+import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 
 const HEADER =
@@ -42,15 +43,15 @@ describe("generateExampleCSVData", () => {
     });
   });
 
-  describe("parsing back with parseCSVLogFile", () => {
+  describe("parsing back with parseLog", () => {
     it("should parse every generated row", () => {
-      const entries = parseCSVLogFile(csv);
+      const entries = parseLog(csv).entries;
 
       expect(entries).toHaveLength(lines.length - 1);
     });
 
     it("should have consistent volume for strength rows", () => {
-      const entries = parseCSVLogFile(csv).filter((e) => e.reps > 0);
+      const entries = parseLog(csv).entries.filter((e) => e.reps > 0);
 
       expect(entries.length).toBeGreaterThan(0);
       for (const e of entries) {
@@ -60,7 +61,7 @@ describe("generateExampleCSVData", () => {
     });
 
     it("should include the localized exercise names", () => {
-      const names = new Set(parseCSVLogFile(csv).map((e) => e.exercise));
+      const names = new Set(parseLog(csv).entries.map((e) => e.exercise));
 
       for (const key of [
         "squatMultiPower",
@@ -79,7 +80,7 @@ describe("generateExampleCSVData", () => {
     });
 
     it("should use the three localized workout names", () => {
-      const workouts = new Set(parseCSVLogFile(csv).map((e) => e.workout));
+      const workouts = new Set(parseLog(csv).entries.map((e) => e.workout));
 
       expect(workouts).toEqual(
         new Set([
@@ -91,27 +92,28 @@ describe("generateExampleCSVData", () => {
     });
 
     it("should link origine to the workout note", () => {
-      for (const e of parseCSVLogFile(csv)) {
+      for (const e of parseLog(csv).entries) {
         expect(e.origine).toBe(`[[${e.workout}]]`);
       }
     });
 
     it("should produce valid numeric timestamps", () => {
-      for (const e of parseCSVLogFile(csv)) {
+      for (const e of parseLog(csv).entries) {
         expect(Number.isFinite(e.timestamp)).toBe(true);
         expect(e.timestamp).toBeGreaterThan(0);
       }
     });
 
-    it("should cover several protocols besides standard", () => {
-      const protocols = new Set(parseCSVLogFile(csv).map((e) => e.protocol));
+    it("should use every built-in protocol, stored so it reads back", () => {
+      const protocols = new Set(parseLog(csv).entries.map((e) => e.protocol));
 
-      expect(protocols.size).toBeGreaterThan(1);
-      expect(protocols).toContain("standard");
+      expect([...protocols].sort()).toEqual(
+        Object.values(WorkoutProtocol).sort(),
+      );
     });
 
     it("should expose duration, distance and heart rate as custom fields for cardio and timed rows", () => {
-      const entries = parseCSVLogFile(csv);
+      const entries = parseLog(csv).entries;
       const running = entries.filter(
         (e) => e.exercise === t("examples.exercises.running.name"),
       );
@@ -134,7 +136,7 @@ describe("generateExampleCSVData", () => {
 
   describe("progression", () => {
     it("should increase bench press weight from the first to the last session", () => {
-      const bench = parseCSVLogFile(csv)
+      const bench = parseLog(csv).entries
         .filter((e) => e.exercise === t("examples.exercises.benchPress.name"))
         .sort((a, b) => a.timestamp - b.timestamp);
 
@@ -157,13 +159,13 @@ describe("generateExampleCSVData with translations containing commas", () => {
       const { generateExampleCSVData: generate } = jest.requireActual(
         "@app/services/examples/exampleDataGenerator",
       ) as typeof import("@app/services/examples/exampleDataGenerator");
-      const { parseCSVLogFile: parse } = jest.requireActual(
-        "@app/types/WorkoutLogData",
-      ) as typeof import("@app/types/WorkoutLogData");
+      const { parseLog } = jest.requireActual(
+        "@app/services/data/WorkoutLogCodec",
+      ) as typeof import("@app/services/data/WorkoutLogCodec");
 
       const csv = generate();
       const rowCount = csv.trim().split("\n").length - 1;
-      const entries = parse(csv);
+      const { entries } = parseLog(csv);
 
       expect(entries).toHaveLength(rowCount);
       expect(entries.map((e) => e.exercise)).toContain("Squat, high bar");

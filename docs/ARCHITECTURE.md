@@ -38,7 +38,6 @@ app/
 │   └── timer/                  # Workout timer
 │
 ├── services/               # Business logic services
-│   ├── DataService.ts          # Facade for data operations
 │   ├── CodeBlockProcessorService.ts
 │   ├── CommandHandlerService.ts
 │   ├── ExerciseDefinitionService.ts
@@ -46,9 +45,9 @@ app/
 │   ├── CodeBlockEditorService.ts
 │   ├── ExampleGeneratorService.ts
 │   ├── data/                   # Data layer
-│   │   ├── CSVCacheService.ts
-│   │   ├── CSVColumnService.ts
-│   │   ├── WorkoutLogRepository.ts
+│   │   ├── WorkoutLogFile.ts       # The workout log CSV: format, cache, mutations
+│   │   ├── WorkoutLogCodec.ts      # CSV text ⇄ entries (internal to WorkoutLogFile)
+│   │   ├── LogStorage.ts           # Seam: VaultLogStorage (prod), InMemoryLogStorage (tests)
 │   │   ├── DataFilter.ts
 │   │   └── TrendCalculator.ts
 │   └── suggest/                # Autocomplete suggestions
@@ -83,21 +82,20 @@ app/
 
 ## Architectural Patterns
 
-### 1. Facade Pattern
+### 1. One module for the workout log
 
-`DataService.ts` acts as a facade, delegating to specialized services:
+`WorkoutLogFile.ts` is the only module that knows the CSV. Behind a small interface (`read`, `add`, `update`, `delete`, `renameExercise`, `stampMissingWeightUnits`) it owns:
 
-- `CSVCacheService` - caching
-- `WorkoutLogRepository` - CRUD operations
-- `CSVColumnService` - column management
+- The header and the column order rule (existing columns keep their order, `weightUnit` last)
+- Row ⇄ entry conversion in both directions, including the entered weight unit
+- Volume (`reps × weight`)
+- The 5-second cache and the `log:*` events
 
-### 2. Repository Pattern
+It sits on a `LogStorage` seam with two adapters: the vault in production and an in-memory string in tests.
 
-`WorkoutLogRepository.ts` handles CSV file operations with:
+### 2. Atomic writes
 
-- Retry logic for file conflicts
-- Cache invalidation on writes
-- Transaction-like behavior
+Every mutation goes through one `rewrite()` that runs inside `vault.process()`, so a write is one read-modify-write of the whole file.
 
 ### 3. Template Method Pattern
 

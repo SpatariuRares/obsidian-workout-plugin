@@ -27,7 +27,7 @@ describe("LogSubmissionHandler", () => {
     ).mockReturnValue(true);
   });
 
-  it("should leave the unit to the repository when the field has none", () => {
+  it("should leave the unit to the log file when the field has none", () => {
     const entry = LogSubmissionHandler.extractValidateAndCreateEntry(
       makeForm(makeInput("100")),
       [],
@@ -36,7 +36,6 @@ describe("LogSubmissionHandler", () => {
     );
 
     expect(entry?.weight).toBe(100);
-    expect(entry?.volume).toBe(500);
     expect(entry?.weightUnit).toBeUndefined();
   });
 
@@ -49,7 +48,6 @@ describe("LogSubmissionHandler", () => {
     );
 
     expect(entry?.weight).toBe(225);
-    expect(entry?.volume).toBe(1125);
     expect(entry?.weightUnit).toBe("lb");
   });
 

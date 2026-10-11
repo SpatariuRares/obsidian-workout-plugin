@@ -130,6 +130,10 @@ date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 
 Custom columns added dynamically per exercise type (duration, distance, heartRate, pace, etc.). Stored in `customFields`.
 
+**Workout log file** (`WorkoutLogFile`): the module that owns this CSV. It is the only place that knows the header, the column order, the row ⇄ entry conversion (both directions, including the entered weight unit) and volume. Everything else reads entries from it or asks it to add/update/delete/rename.
+
+**Column order rule**: standard columns in fixed order, then custom columns in the order the existing header has them, new custom columns appended, `weightUnit` always last. A column already in the header is never dropped, even when every row leaves it empty.
+
 ### Exercise Types
 
 | Type     | Primary Fields | Optional Fields     |

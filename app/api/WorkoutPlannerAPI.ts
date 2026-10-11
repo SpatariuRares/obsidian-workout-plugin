@@ -9,7 +9,7 @@ import {
   WorkoutProtocol,
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
-import { DataService } from "@app/services/data/DataService";
+import type { WorkoutDataPort } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { App, TFolder } from "obsidian";
 import { StringUtils } from "@app/utils/StringUtils";
@@ -94,7 +94,7 @@ export interface ExerciseStats {
  */
 export class WorkoutPlannerAPI {
   constructor(
-    private dataService: DataService,
+    private dataService: Pick<WorkoutDataPort, "getWorkoutLogData">,
     private app?: App,
     private settings?: WorkoutChartsSettings,
   ) {}

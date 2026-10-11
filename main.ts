@@ -4,7 +4,7 @@ import {
   WorkoutChartsSettings,
   DEFAULT_SETTINGS,
   WorkoutLogData,
-  CSVWorkoutLogEntry,
+  LogEntryInput,
 } from "@app/types/WorkoutLogData";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
@@ -12,7 +12,8 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
-import { DataService } from "@app/services/data/DataService";
+import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
+import { VaultLogStorage } from "@app/services/data/LogStorage";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
@@ -45,7 +46,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
   // Services
   private commandHandlerService!: CommandHandlerService;
-  private dataService!: DataService;
+  private workoutLogFile!: WorkoutLogFile;
   private codeBlockProcessorService!: CodeBlockProcessorService;
   private exerciseDefinitionService!: ExerciseDefinitionService;
   private muscleTagService!: MuscleTagService;
@@ -99,8 +100,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedDashboardView = new EmbeddedDashboardView(this);
 
     // Initialize services
-    this.dataService = new DataService(
-      this.app,
+    this.workoutLogFile = new WorkoutLogFile(
+      new VaultLogStorage(this.app, this.settings),
       this.settings,
       this.eventBus,
     );
@@ -122,7 +123,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     );
     this.codeBlockProcessorService = new CodeBlockProcessorService(
       this,
-      this.dataService,
+      this,
       this.embeddedChartView,
       this.embeddedTableView,
       this.embeddedDashboardView,
@@ -131,7 +132,7 @@ export default class WorkoutChartsPlugin extends Plugin {
     );
     // Initialize and expose WorkoutPlannerAPI for Dataview integration
     this.workoutPlannerAPI = new WorkoutPlannerAPI(
-      this.dataService,
+      this,
       this.app,
       this.settings,
     );
@@ -199,8 +200,8 @@ export default class WorkoutChartsPlugin extends Plugin {
     this.embeddedTableView?.cleanup();
     this.embeddedDashboardView?.cleanup();
 
-    // 3. Destroy data service (de-registers cache event listeners, clears cache)
-    this.dataService?.destroy();
+    // 3. Release the log file (de-registers cache event listeners, clears cache)
+    this.workoutLogFile?.destroy();
 
     // 3b. Clear exercise definition service cache
     this.exerciseDefinitionService?.clearCache();
@@ -244,11 +245,11 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async getWorkoutLogData(): Promise<WorkoutLogData[]> {
-    return this.dataService.getWorkoutLogData();
+    return this.workoutLogFile.read();
   }
 
   public clearLogDataCache(): void {
-    this.dataService.clearLogDataCache();
+    this.workoutLogFile.clearCache();
   }
 
   /**
@@ -271,16 +272,16 @@ export default class WorkoutChartsPlugin extends Plugin {
    * Create a new CSV log file with header
    */
   public async createCSVLogFile(): Promise<void> {
-    return this.dataService.createCSVLogFile();
+    return this.workoutLogFile.create();
   }
 
   /**
    * Add a new workout log entry to the CSV file
    */
   public async addWorkoutLogEntry(
-    entry: Omit<CSVWorkoutLogEntry, "timestamp">,
+    entry: LogEntryInput,
   ): Promise<void> {
-    return this.dataService.addWorkoutLogEntry(entry);
+    return this.workoutLogFile.add(entry);
   }
 
   /**
@@ -288,12 +289,9 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public async updateWorkoutLogEntry(
     originalLog: WorkoutLogData,
-    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">,
+    updatedEntry: LogEntryInput,
   ): Promise<void> {
-    return this.dataService.updateWorkoutLogEntry(
-      originalLog,
-      updatedEntry,
-    );
+    return this.workoutLogFile.update(originalLog, updatedEntry);
   }
 
   /**
@@ -302,18 +300,18 @@ export default class WorkoutChartsPlugin extends Plugin {
   public async deleteWorkoutLogEntry(
     logToDelete: WorkoutLogData,
   ): Promise<void> {
-    return this.dataService.deleteWorkoutLogEntry(logToDelete);
+    return this.workoutLogFile.delete(logToDelete);
   }
 
   /**
-   * Groups multiple mutations into a single coalesced event.
-   * See DataService.batchOperation for full documentation.
+   * Groups multiple mutations into a single coalesced event: log:* events
+   * emitted inside fn() are suppressed, then one log:bulk-changed is emitted.
    */
   public async batchOperation(
     operation: LogBulkChangedPayload["operation"],
     fn: () => Promise<void>,
   ): Promise<void> {
-    return this.dataService.batchOperation(operation, fn);
+    return this.eventBus.batch(operation, fn);
   }
 
   /**
@@ -323,14 +321,14 @@ export default class WorkoutChartsPlugin extends Plugin {
     oldName: string,
     newName: string,
   ): Promise<number> {
-    return this.dataService.renameExercise(oldName, newName);
+    return this.workoutLogFile.renameExercise(oldName, newName);
   }
 
   /**
    * Give logs without a weight unit the given unit
    */
   public async stampMissingWeightUnits(unit: WeightUnit): Promise<number> {
-    return this.dataService.stampMissingWeightUnits(unit);
+    return this.workoutLogFile.stampMissingWeightUnits(unit);
   }
 
   /**
@@ -339,7 +337,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   public async findLastEntryForExercise(
     exerciseName: string,
   ): Promise<WorkoutLogData | undefined> {
-    return this.dataService.findLastEntryForExercise(exerciseName);
+    return this.workoutLogFile.findLastForExercise(exerciseName);
   }
 
   public getWorkoutPlannerAPI(): WorkoutPlannerAPI {

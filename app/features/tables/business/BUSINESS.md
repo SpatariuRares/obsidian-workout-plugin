@@ -128,7 +128,7 @@ Code block YAML (workout-log)
        v
 CodeBlockProcessorService
   - Parsa parametri
-  - Carica dati raw dal DataService
+  - Carica dati raw da WorkoutLogFile (via `plugin.getWorkoutLogData()`)
        |
        v
 EmbeddedTableView.createTable(container, logData, params)

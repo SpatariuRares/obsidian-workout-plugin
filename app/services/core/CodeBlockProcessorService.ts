@@ -11,11 +11,11 @@ import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
-import { DataService } from "@app/services/data/DataService";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import type {
   MarkdownCodeBlockProcessorPort,
+  WorkoutDataPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import {
@@ -84,7 +84,7 @@ export class CodeBlockProcessorService {
 
   constructor(
     private plugin: CodeBlockProcessorPlugin,
-    private dataService: DataService,
+    private dataService: Pick<WorkoutDataPort, "getWorkoutLogData">,
     private embeddedChartView: EmbeddedChartView,
     private embeddedTableView: EmbeddedTableView,
     private embeddedDashboardView: EmbeddedDashboardView,

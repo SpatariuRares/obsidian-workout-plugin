@@ -6,7 +6,7 @@ import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/Plu
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import {
-  CSVWorkoutLogEntry,
+  LogEntryInput,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
@@ -151,7 +151,7 @@ export abstract class BaseLogModal extends ModalBase {
    */
   protected createLogEntryObject(
     data: LogFormData,
-  ): Omit<CSVWorkoutLogEntry, "timestamp">;
+  ): LogEntryInput;
 
   /**
    * Helper method to create log entry object from individual parameters.
@@ -167,7 +167,7 @@ export abstract class BaseLogModal extends ModalBase {
     date?: string,
     protocol?: WorkoutProtocol,
     customFields?: Record<string, string | number | boolean>,
-  ): Omit<CSVWorkoutLogEntry, "timestamp">;
+  ): LogEntryInput;
 
   protected createLogEntryObject(
     dataOrExercise: LogFormData | string,
@@ -178,7 +178,7 @@ export abstract class BaseLogModal extends ModalBase {
     date?: string,
     protocol?: WorkoutProtocol,
     customFields?: Record<string, string | number | boolean>,
-  ): Omit<CSVWorkoutLogEntry, "timestamp"> {
+  ): LogEntryInput {
     if (typeof dataOrExercise === "string") {
       // Old signature: individual parameters
       return LogSubmissionHandler.createLogEntry(

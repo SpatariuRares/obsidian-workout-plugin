@@ -1,6 +1,6 @@
 import type { App, Command, MarkdownPostProcessorContext } from "obsidian";
 import type {
-  CSVWorkoutLogEntry,
+  LogEntryInput,
   WorkoutChartsSettings,
   WorkoutLogData,
 } from "@app/types/WorkoutLogData";
@@ -25,12 +25,10 @@ export interface WorkoutDataPort {
   getWorkoutLogData(): Promise<WorkoutLogData[]>;
   clearLogDataCache(): void;
   createCSVLogFile(): Promise<void>;
-  addWorkoutLogEntry(
-    entry: Omit<CSVWorkoutLogEntry, "timestamp">,
-  ): Promise<void>;
+  addWorkoutLogEntry(entry: LogEntryInput): Promise<void>;
   updateWorkoutLogEntry(
     originalLog: WorkoutLogData,
-    updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp">,
+    updatedEntry: LogEntryInput,
   ): Promise<void>;
   deleteWorkoutLogEntry(logToDelete: WorkoutLogData): Promise<void>;
   batchOperation(

@@ -25,10 +25,10 @@ module.exports = {
   // coverage cannot drop. Raise these when you add tests; never lower them.
   coverageThreshold: {
     global: {
-      statements: 55,
-      branches: 56,
-      functions: 51,
-      lines: 55,
+      statements: 56,
+      branches: 58,
+      functions: 53,
+      lines: 56,
     },
   },
 

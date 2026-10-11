@@ -3,7 +3,7 @@ import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { LogFormValidator } from "@app/features/modals/base/logic/LogFormValidator";
 import {
   WorkoutProtocol,
-  CSVWorkoutLogEntry,
+  type LogEntryInput,
 } from "@app/types/WorkoutLogData";
 import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 
@@ -17,7 +17,7 @@ export class LogSubmissionHandler {
     currentParameters: ParameterDefinition[],
     currentFileName: string | undefined,
     currentPageLink: string | undefined,
-  ): Omit<CSVWorkoutLogEntry, "timestamp"> | null {
+  ): LogEntryInput | null {
     const data = this.extractAndValidateData(
       formElements,
       currentParameters,
@@ -120,13 +120,12 @@ export class LogSubmissionHandler {
   static createLogEntry(
     data: LogFormData,
     currentPageLink: string | undefined,
-  ): Omit<CSVWorkoutLogEntry, "timestamp"> {
+  ): LogEntryInput {
     return {
       date: data.date || new Date().toISOString(),
       exercise: data.exercise,
       reps: data.reps || 0,
       weight: data.weight || 0,
-      volume: (data.reps || 0) * (data.weight || 0),
       weightUnit: data.weightUnit,
       origine: currentPageLink || "[[Workout Charts Plugin]]",
       workout: data.workout || undefined,

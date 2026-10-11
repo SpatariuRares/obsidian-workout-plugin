@@ -126,7 +126,8 @@
       "columnVolumeChange": "Variação de volume",
       "disclaimer": "Aviso",
       "noData": "Ainda não há dados suficientes: cada protocolo precisa de pelo menos 5 séries registadas.",
-      "title": "Eficácia do protocolo"
+      "title": "Eficácia do protocolo",
+      "subtitle": "Como cada protocolo funcionou em todos os conjuntos registrados."
     },
     "quickActions": {
       "addWorkoutLog": "Adicionar registo de treino",
@@ -990,6 +991,16 @@
       "title": "Referência de tags musculares",
       "description": "Este ficheiro lista todas as tags musculares disponíveis no seu ficheiro muscle-tags.csv.",
       "note": "**Nota**: este ficheiro é gerado automaticamente. Para adicionar ou alterar tags, use o comando '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Parâmetros inválidos:",
+      "notANumber": "{key} deve ser um número, mas é \"{value}\"",
+      "tooSmall": "{key} deve ser {min} ou mais, mas está {value}",
+      "outOfRange": "{key} deve estar entre {min} e {max}, mas está {value}",
+      "notABoolean": "{key} deve ser verdadeiro ou falso, mas é \"{value}\"",
+      "notOneOf": "{key} deve ser uma das opções listadas em {allowed}, mas é \"{value}\""
     }
   }
 }

@@ -126,7 +126,8 @@
       "columnVolumeChange": "Endring i volum",
       "disclaimer": "Ansvarsfraskrivelse",
       "noData": "Ikke nok data ennå: hver protokoll trenger minst 5 loggførte sett.",
-      "title": "Effektivitet av protokollen"
+      "title": "Effektivitet av protokollen",
+      "subtitle": "Hvordan hvert protokoll har fungert i alle registrerte sett"
     },
     "quickActions": {
       "addWorkoutLog": "Legg til treningslogg",
@@ -990,6 +991,16 @@
       "title": "Oversikt over muskeltagger",
       "description": "Denne filen viser alle tilgjengelige muskeltagger fra muscle-tags.csv-filen din.",
       "note": "**Merk**: Denne filen genereres automatisk. Bruk kommandoen '{command}' for å legge til eller endre tagger."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Ugyldige parametere:",
+      "notANumber": "{key} må være et tall, men det er \"{value}\"",
+      "tooSmall": "{key} må være {min} eller mer, men det er {value}",
+      "outOfRange": "{key} må være mellom {min} og {max}, men det er {value}.",
+      "notABoolean": "{key} må være sant eller usant, men det er \"{value}\"",
+      "notOneOf": "{key} må være en av {allowed}, men det er \"{value}\"."
     }
   }
 }

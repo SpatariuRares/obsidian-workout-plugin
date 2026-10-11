@@ -126,7 +126,8 @@
       "columnVolumeChange": "Variația volumului",
       "disclaimer": "Atenție",
       "noData": "Nu sunt încă destule date: fiecare protocol are nevoie de cel puțin 5 serii înregistrate.",
-      "title": "Eficiența protocolului"
+      "title": "Eficiența protocolului",
+      "subtitle": "Cum a funcționat fiecare protocol în toate seturile înregistrate"
     },
     "quickActions": {
       "addWorkoutLog": "Adaugă înregistrare de antrenament",
@@ -990,6 +991,16 @@
       "title": "Referința etichetelor pentru mușchi",
       "description": "Acest fișier listează toate etichetele pentru mușchi disponibile în fișierul tău muscle-tags.csv.",
       "note": "**Notă**: Acest fișier este generat automat. Pentru a adăuga sau modifica etichete, folosește comanda '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Parametri incorecti:",
+      "notANumber": "{key} trebuie să fie un număr, dar este \"{value}\"",
+      "tooSmall": "{key} trebuie să fie {min} sau mai mare, dar este {value}",
+      "outOfRange": "{key} trebuie să se situeze între {min} și {max}, dar este {value}",
+      "notABoolean": "{key} trebuie să fie adevărat sau fals, dar este \"{value}\"",
+      "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\""
     }
   }
 }

@@ -126,7 +126,8 @@
       "columnVolumeChange": "Volumenänderung",
       "disclaimer": "Haftungsausschluss",
       "noData": "Noch nicht genug Daten: Jedes Protokoll braucht mindestens 5 erfasste Sätze.",
-      "title": "Wirksamkeit des Protokolls"
+      "title": "Wirksamkeit des Protokolls",
+      "subtitle": "Wie jeder Protokoll-Ansatz in allen erfassten Datensätzen funktioniert hat"
     },
     "quickActions": {
       "addWorkoutLog": "Trainingseintrag hinzufügen",
@@ -990,6 +991,16 @@
       "title": "Muskel-Tag-Referenz",
       "description": "Diese Datei listet alle verfügbaren Muskel-Tags aus deiner Datei muscle-tags.csv auf.",
       "note": "**Hinweis**: Diese Datei wird automatisch erstellt. Um Tags hinzuzufügen oder zu ändern, nutze den Befehl '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Ungültige Parameter:",
+      "notANumber": "{key} muss eine Zahl sein, aber es ist \"{value}\"",
+      "tooSmall": "{key} muss mindestens {min} sein, aber es ist {value}",
+      "outOfRange": "{key} muss zwischen {min} und {max} liegen, aber es ist {value}.",
+      "notABoolean": "{key} muss entweder wahr oder falsch sein, aber es ist \"{value}\"",
+      "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\""
     }
   }
 }

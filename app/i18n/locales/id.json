@@ -126,7 +126,8 @@
       "columnVolumeChange": "Perubahan volume",
       "disclaimer": "Pernyataan",
       "noData": "Data belum cukup: setiap protokol perlu minimal 5 set yang dicatat.",
-      "title": "Efektivitas protokol"
+      "title": "Efektivitas protokol",
+      "subtitle": "Bagaimana setiap protokol telah bekerja pada semua set yang tercatat"
     },
     "quickActions": {
       "addWorkoutLog": "Tambah catatan latihan",
@@ -990,6 +991,16 @@
       "title": "Referensi tag otot",
       "description": "File ini berisi daftar semua tag otot yang tersedia dari file muscle-tags.csv Anda.",
       "note": "**Catatan**: File ini dibuat otomatis. Untuk menambah atau mengubah tag, gunakan perintah '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Parameter tidak valid:",
+      "notANumber": "{key} harus berupa angka, tetapi sekarang \"{value}\"",
+      "tooSmall": "{key} harus berupa {min} atau lebih, tetapi saat ini {value}",
+      "outOfRange": "{key} harus berada di antara {min} dan {max}, tetapi nilainya adalah {value}.",
+      "notABoolean": "{key} harus berupa benar atau salah, tetapi saat ini bernilai \"{value}\"",
+      "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\""
     }
   }
 }

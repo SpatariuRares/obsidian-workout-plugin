@@ -126,7 +126,8 @@
       "columnVolumeChange": "Hacim değişimi",
       "disclaimer": "Uyarı",
       "noData": "Henüz yeterli veri yok: her protokol için en az 5 kayıtlı set gerekir.",
-      "title": "Protokol etkinliği"
+      "title": "Protokol etkinliği",
+      "subtitle": "Her protokolün, kaydedilen tüm veri kümeleri üzerinde nasıl çalıştığı"
     },
     "quickActions": {
       "addWorkoutLog": "Antrenman kaydı ekle",
@@ -990,6 +991,16 @@
       "title": "Kas etiketleri başvurusu",
       "description": "Bu dosya, muscle-tags.csv dosyanızdaki tüm kullanılabilir kas etiketlerini listeler.",
       "note": "**Not**: Bu dosya otomatik olarak oluşturulur. Etiket eklemek veya değiştirmek için '{command}' komutunu kullanın."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Geçersiz parametreler:",
+      "notANumber": "{key} bir sayı olmalıdır, ancak \"{value}\" olarak girilmiştir.",
+      "tooSmall": "{key} değeri {min} veya daha büyük olmalıdır, ancak şu anda {value} değerindedir.",
+      "outOfRange": "{key} değeri, {min} ile {max} arasında olmalıdır, ancak {value} değerindedir.",
+      "notABoolean": "{key} ya doğru ya da yanlış olmalıdır, ancak şu anda \"{value}\" değerindedir.",
+      "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir."
     }
   }
 }

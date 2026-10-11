@@ -126,7 +126,8 @@
       "columnVolumeChange": "Volumeverandering",
       "disclaimer": "Disclaimer",
       "noData": "Nog niet genoeg gegevens: elk protocol heeft minstens 5 gelogde sets nodig.",
-      "title": "Effectiviteit van het protocol"
+      "title": "Effectiviteit van het protocol",
+      "subtitle": "Hoe elk protocol heeft gewerkt over alle geregistreerde sets."
     },
     "quickActions": {
       "addWorkoutLog": "Training loggen",
@@ -990,6 +991,16 @@
       "title": "Overzicht van spierlabels",
       "description": "Dit bestand toont alle beschikbare spierlabels uit je bestand muscle-tags.csv.",
       "note": "**Let op**: dit bestand wordt automatisch gegenereerd. Gebruik de opdracht '{command}' om labels toe te voegen of te wijzigen."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Ongeldige parameters:",
+      "notANumber": "{key} moet een getal zijn, maar het is \"{value}\"",
+      "tooSmall": "{key} moet {min} of meer zijn, maar het is {value}",
+      "outOfRange": "{key} moet tussen {min} en {max} liggen, maar het is {value}.",
+      "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\".",
+      "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\""
     }
   }
 }

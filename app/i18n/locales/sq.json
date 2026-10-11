@@ -126,7 +126,8 @@
       "columnVolumeChange": "Ndryshimi i volumit",
       "disclaimer": "Mohim përgjegjësie",
       "noData": "Ende nuk ka mjaftueshëm të dhëna: çdo protokoll ka nevojë për të paktën 5 seri të regjistruara.",
-      "title": "Efektiviteti i protokollit"
+      "title": "Efektiviteti i protokollit",
+      "subtitle": "Si është funksionuar çdo protokol në të gjitha setet e regjistruara"
     },
     "quickActions": {
       "addWorkoutLog": "Shto regjistrim stërvitjeje",
@@ -990,6 +991,16 @@
       "title": "Referenca e etiketave të muskujve",
       "description": "Ky skedar rendit të gjitha etiketat e muskujve të disponueshme nga skedari juaj muscle-tags.csv.",
       "note": "**Shënim**: Ky skedar gjenerohet automatikisht. Për të shtuar ose ndryshuar etiketa, përdorni komandën '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Parametrat e vullnetshme:",
+      "notANumber": "{key} duhet të jetë një numër, por është \"{value}\"",
+      "tooSmall": "{key} duhet të jetë {min} ose më shumë, por është {value}",
+      "outOfRange": "{key} duhet të jetë mes {min} dhe {max}, por është {value}.",
+      "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
+      "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\""
     }
   }
 }

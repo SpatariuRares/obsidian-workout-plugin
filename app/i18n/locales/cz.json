@@ -126,7 +126,8 @@
       "columnVolumeChange": "Změna objemu",
       "disclaimer": "Upozornění",
       "noData": "Zatím není dost dat: každý protokol potřebuje alespoň 5 zaznamenaných sérií.",
-      "title": "Účinnost protokolu"
+      "title": "Účinnost protokolu",
+      "subtitle": "Jak každý protokol fungoval ve všech zaznamenaných sadách."
     },
     "quickActions": {
       "addWorkoutLog": "Přidat záznam tréninku",
@@ -990,6 +991,16 @@
       "title": "Přehled štítků svalů",
       "description": "Tento soubor obsahuje všechny dostupné štítky svalů ze souboru muscle-tags.csv.",
       "note": "**Poznámka**: Tento soubor je generován automaticky. Chcete-li štítky přidat nebo změnit, použijte příkaz '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Neplatné parametry:",
+      "notANumber": "Hodnota {key} musí být číslo, ale je \"{value}\"",
+      "tooSmall": "Hodnota {key} musí být {min} nebo vyšší, ale je {value}.",
+      "outOfRange": "Hodnota {key} musí být mezi {min} a {max}, ale je {value}.",
+      "notABoolean": "Hodnota {key} musí být buď pravda, nebo nepravda, ale je \"{value}\"",
+      "notOneOf": "{key} musí být jedním z {allowed}, ale je \"{value}\""
     }
   }
 }

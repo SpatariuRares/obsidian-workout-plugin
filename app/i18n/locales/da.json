@@ -126,7 +126,8 @@
       "columnVolumeChange": "Ændring i volumen",
       "disclaimer": "Ansvarsfraskrivelse",
       "noData": "Ikke nok data endnu: hver protokol skal have mindst 5 loggede sæt.",
-      "title": "Effektivitet af protokollen"
+      "title": "Effektivitet af protokollen",
+      "subtitle": "Hvordan hvert protokoll har fungeret på tværs af alle registrerede sæt"
     },
     "quickActions": {
       "addWorkoutLog": "Tilføj træningslog",
@@ -990,6 +991,16 @@
       "title": "Oversigt over muskeltags",
       "description": "Denne fil viser alle tilgængelige muskeltags fra din muscle-tags.csv-fil.",
       "note": "**Bemærk**: Denne fil genereres automatisk. Brug kommandoen '{command}' for at tilføje eller ændre tags."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Ugyldige parametre:",
+      "notANumber": "{key} skal være et tal, men det er \"{value}\"",
+      "tooSmall": "{key} skal være {min} eller mere, men det er {value}",
+      "outOfRange": "{key} skal være mellem {min} og {max}, men det er {value}",
+      "notABoolean": "{key} skal være enten sand eller falsk, men det er \"{value}\"",
+      "notOneOf": "{key} skal være en af {allowed}, men det er \"{value}\""
     }
   }
 }

@@ -126,7 +126,8 @@
       "columnVolumeChange": "訓練量變化",
       "disclaimer": "免責聲明",
       "noData": "資料不足：每種訓練法至少需要記錄 5 組。",
-      "title": "訓練法成效"
+      "title": "訓練法成效",
+      "subtitle": "每個協議在所有記錄的集合中是如何運作的"
     },
     "quickActions": {
       "addWorkoutLog": "新增運動紀錄",
@@ -990,6 +991,16 @@
       "title": "肌肉標籤參考",
       "description": "此檔案列出 muscle-tags.csv 檔案中所有可用的肌肉標籤。",
       "note": "**注意**：此檔案為自動產生。若要新增或修改標籤，請使用「{command}」指令。"
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "無效參數：",
+      "notANumber": "{key} 必須為數字，但目前為 \"{value}\"",
+      "tooSmall": "{key} 必須大於或等於 {min}，但目前為 {value}。",
+      "outOfRange": "{key} 必須在 {min} 和 {max} 之間，但目前是 {value}。",
+      "notABoolean": "{key} 必須為「真」或「假」，但目前為「{value}」",
+      "notOneOf": "{key} 必須是 {allowed} 中的一種，但目前是 \"{value}\"。"
     }
   }
 }

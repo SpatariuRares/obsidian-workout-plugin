@@ -126,7 +126,8 @@
       "columnVolumeChange": "训练量变化",
       "disclaimer": "免责声明",
       "noData": "数据不足：每种训练方案至少需要记录 5 组。",
-      "title": "训练方案效果"
+      "title": "训练方案效果",
+      "subtitle": "每个协议在所有记录的集合中是如何发挥作用的"
     },
     "quickActions": {
       "addWorkoutLog": "添加训练记录",
@@ -990,6 +991,16 @@
       "title": "肌肉标签参考",
       "description": "此文件列出了 muscle-tags.csv 文件中所有可用的肌肉标签。",
       "note": "**注意**：此文件为自动生成。如需添加或修改标签，请使用“{command}”命令。"
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "无效参数：",
+      "notANumber": "{key} 必须是一个数字，但它却是 \"{value}\"",
+      "tooSmall": "{key} 必须大于或等于 {min}，但目前是 {value}",
+      "outOfRange": "{key} 的值必须在 {min} 和 {max} 之间，但实际上是 {value}。",
+      "notABoolean": "{key} 必须是真或假，但现在是 \"{value}\"。",
+      "notOneOf": "{key} 必须是 {allowed} 中的一个，但实际上是 \"{value}\"。"
     }
   }
 }

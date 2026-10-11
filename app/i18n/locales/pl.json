@@ -126,7 +126,8 @@
       "columnVolumeChange": "Zmiana objętości",
       "disclaimer": "Zastrzeżenie",
       "noData": "Za mało danych: każdy protokół wymaga co najmniej 5 zapisanych serii.",
-      "title": "Skuteczność protokołu"
+      "title": "Skuteczność protokołu",
+      "subtitle": "Jak każdy protokół sprawdził się w różnych zestawach, które zostały zarejestrowane."
     },
     "quickActions": {
       "addWorkoutLog": "Dodaj wpis treningowy",
@@ -990,6 +991,16 @@
       "title": "Spis tagów mięśni",
       "description": "Ten plik zawiera wszystkie dostępne tagi mięśni z Twojego pliku muscle-tags.csv.",
       "note": "**Uwaga**: Ten plik jest generowany automatycznie. Aby dodać lub zmienić tagi, użyj polecenia '{command}'."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Nieprawidłowe parametry:",
+      "notANumber": "{key} musi być liczbą, ale jest \"{value}\"",
+      "tooSmall": "{key} musi mieć co najmniej {min} znaków, ale jest {value}",
+      "outOfRange": "{key} musi mieścić się w przedziale od {min} do {max}, ale jest {value}.",
+      "notABoolean": "{key} musi być wartością prawdy lub fałszu, ale jest \"{value}\"",
+      "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\""
     }
   }
 }

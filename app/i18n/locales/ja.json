@@ -126,7 +126,8 @@
       "columnVolumeChange": "ボリュームの変化",
       "disclaimer": "免責事項",
       "noData": "データがまだ足りません。各プロトコルに最低5セットの記録が必要です。",
-      "title": "プロトコルの有効性"
+      "title": "プロトコルの有効性",
+      "subtitle": "各プロトコルが、記録されたすべてのセットでどのように機能したか"
     },
     "quickActions": {
       "addWorkoutLog": "ワークアウト記録を追加",
@@ -990,6 +991,16 @@
       "title": "筋肉タグ一覧",
       "description": "このファイルには、muscle-tags.csv ファイルにある利用可能な筋肉タグがすべて記載されています。",
       "note": "**注**: このファイルは自動生成されます。タグを追加・変更するには「{command}」コマンドを使用してください。"
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "無効なパラメータ:",
+      "notANumber": "{key} は数値である必要がありますが、現在は \"{value}\" です。",
+      "tooSmall": "{key} は {min} 文字以上である必要がありますが、現在は {value} です。",
+      "outOfRange": "{key} は {min} と {max} の範囲内である必要がありますが、{value} です。",
+      "notABoolean": "{key} は真または偽の値である必要がありますが、実際には「{value}」となっています。",
+      "notOneOf": "{key} は、{allowed} のいずれかである必要がありますが、実際には \"{value}\" です。"
     }
   }
 }

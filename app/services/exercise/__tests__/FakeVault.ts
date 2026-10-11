@@ -9,7 +9,10 @@ type Listener = { source: "vault" | "metadataCache"; name: string; cb: (...args:
  * does, so modules that watch the vault can be tested through it.
  */
 export class FakeVault {
-  private readonly notes = new Map<string, { file: TFile; frontmatter: Frontmatter }>();
+  private readonly notes = new Map<
+    string,
+    { file: TFile; frontmatter: Frontmatter; content?: string }
+  >();
   private readonly listeners: Listener[] = [];
 
   readonly app = {
@@ -20,6 +23,27 @@ export class FakeVault {
         this.notes.get(path)?.file ?? null,
       on: (name: string, cb: (...args: unknown[]) => void) =>
         this.listen("vault", name, cb),
+      /** Stores the text; its frontmatter is not parsed (read it with `content`) */
+      create: async (path: string, content: string): Promise<TFile> => {
+        if (this.notes.has(path)) throw new Error(`File already exists: ${path}`);
+        const file = makeFile(path);
+        this.notes.set(path, { file, frontmatter: undefined, content });
+        this.emit("vault", "create", file);
+        return file;
+      },
+    },
+    fileManager: {
+      processFrontMatter: async (
+        file: TFile,
+        fn: (frontmatter: Record<string, unknown>) => void,
+      ): Promise<void> => {
+        const note = this.notes.get(file.path);
+        if (!note) throw new Error(`No note at ${file.path}`);
+        const frontmatter = structuredClone(note.frontmatter ?? {});
+        fn(frontmatter);
+        note.frontmatter = frontmatter;
+        this.emit("metadataCache", "changed", file);
+      },
     },
     metadataCache: {
       getFileCache: (file: TFile) => {
@@ -61,6 +85,20 @@ export class FakeVault {
     Object.assign(note.file, describe(to));
     this.notes.set(to, note);
     this.emit("vault", "rename", note.file, from);
+  }
+
+  /** Paths of every note, sorted */
+  paths(): string[] {
+    return Array.from(this.notes.keys()).sort();
+  }
+
+  frontmatter(path: string): Frontmatter {
+    return this.notes.get(path)?.frontmatter;
+  }
+
+  /** Text given to `vault.create` */
+  content(path: string): string | undefined {
+    return this.notes.get(path)?.content;
   }
 
   file(path: string): TFile {

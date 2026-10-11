@@ -5,7 +5,8 @@
  * and define what parameters should be tracked when logging.
  */
 
-import { App, TFile, TFolder, parseYaml } from "obsidian";
+import { normalizePath } from "obsidian";
+import type { App } from "obsidian";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import type {
   ExerciseDefinition,
@@ -17,40 +18,24 @@ import {
   DEFAULT_EXERCISE_TYPE_ID,
   resolveExerciseTypeId,
 } from "@app/constants/exerciseTypes.constants";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
-import { StringUtils } from "@app/utils";
-
-/**
- * Cache entry for exercise definitions with timestamp for TTL management.
- */
-interface CacheEntry {
-  definitions: Map<string, ExerciseDefinition>;
-  timestamp: number;
-}
+import type {
+  ExerciseLibrary,
+  ExercisePage,
+} from "@app/services/exercise/ExerciseLibrary";
+import { StringUtils } from "@app/utils/StringUtils";
 
 export class ExerciseDefinitionService {
-  /** Cache for exercise definitions */
-  private cache: CacheEntry | null = null;
-
-  /** Cache TTL in milliseconds (10 seconds) */
-  private readonly CACHE_DURATION = 10000;
-
-  /** Lock to prevent parallel loading (race condition prevention) */
-  private loadingPromise: Promise<
-    Map<string, ExerciseDefinition>
-  > | null = null;
-
   constructor(
-    private app: App,
-    private settings: WorkoutChartsSettings,
+    private app: Pick<App, "vault" | "fileManager">,
+    private settings: Pick<WorkoutChartsSettings, "exerciseFolderPath">,
+    private exercises: ExerciseLibrary,
   ) {}
 
   /**
    * Get an exercise definition by name.
    *
-   * @param name - The exercise name (case-insensitive match against filename)
-   * @returns The exercise definition or undefined if not found
+   * @param name - The exercise name, found like ExerciseLibrary.find
+   * @returns The exercise definition or undefined if it has no page
    *
    * @example
    * const benchPress = await service.getExerciseDefinition("Bench Press");
@@ -59,53 +44,31 @@ export class ExerciseDefinitionService {
   async getExerciseDefinition(
     name: string,
   ): Promise<ExerciseDefinition | undefined> {
-    const definitions = await this.loadDefinitions();
-
-    for (const [key, definition] of definitions) {
-      if (
-        StringUtils.normalize(key) === StringUtils.normalize(name)
-      ) {
-        return definition;
-      }
-    }
-
-    return undefined;
+    const page = this.exercises.find(name);
+    return page ? toDefinition(page) : undefined;
   }
 
   /**
-   * Get all exercise definitions from the exercise folder.
-   *
-   * @returns Array of all exercise definitions
+   * Get a definition for every exercise page.
    */
   async getAllExerciseDefinitions(): Promise<ExerciseDefinition[]> {
-    const definitions = await this.loadDefinitions();
-    return Array.from(definitions.values());
+    return this.exercises.pages().map(toDefinition);
   }
 
   /**
-   * Save an exercise definition to the corresponding exercise file's frontmatter.
-   *
-   * Creates the file if it doesn't exist, or updates the frontmatter if it does.
+   * Save an exercise definition into its exercise page's frontmatter, or
+   * create a page in the exercise folder when the exercise has none.
    *
    * @param definition - The exercise definition to save
    */
   async saveExerciseDefinition(
     definition: ExerciseDefinition,
   ): Promise<void> {
-    const folderPath = this.settings.exerciseFolderPath;
-    const safeExerciseName = definition.name.replace(
-      /[\\/:"*?<>|]/g,
-      "_",
-    );
-    const filePath = `${folderPath}/${safeExerciseName}.md`;
+    const page = this.exercises.find(definition.name);
 
-    const abstractFile =
-      this.app.vault.getAbstractFileByPath(filePath);
-
-    if (abstractFile instanceof TFile) {
-      // Update existing file's frontmatter
+    if (page) {
       await this.app.fileManager.processFrontMatter(
-        abstractFile,
+        page.file,
         (frontmatter) => {
           frontmatter.exercise_type = definition.typeId;
 
@@ -127,14 +90,21 @@ export class ExerciseDefinitionService {
           }
         },
       );
-    } else {
-      // Create new file with frontmatter
-      const content = this.generateExerciseFileContent(definition);
-      await this.app.vault.create(filePath, content);
+      return;
     }
 
-    // Clear cache to reflect changes
-    this.clearCache();
+    const safeExerciseName = definition.name.replace(
+      /[\\/:"*?<>|]/g,
+      "_",
+    );
+    const folder = this.settings.exerciseFolderPath.trim();
+    const filePath = normalizePath(
+      folder ? `${folder}/${safeExerciseName}.md` : `${safeExerciseName}.md`,
+    );
+    await this.app.vault.create(
+      filePath,
+      this.generateExerciseFileContent(definition),
+    );
   }
 
   /**
@@ -150,30 +120,16 @@ export class ExerciseDefinitionService {
     name: string,
   ): Promise<ParameterDefinition[]> {
     const definition = await this.getExerciseDefinition(name);
+    const exerciseType = getExerciseTypeById(
+      definition?.typeId ?? DEFAULT_EXERCISE_TYPE_ID,
+    );
 
-    if (!definition) {
-      // Default to strength type for unknown exercises
-      const strengthType = getExerciseTypeById(
-        DEFAULT_EXERCISE_TYPE_ID,
-      );
-      return strengthType?.parameters || [];
+    if (!definition || !exerciseType) {
+      // No page or unknown type ID: default to strength
+      return getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)?.parameters || [];
     }
 
-    const exerciseType = getExerciseTypeById(definition.typeId);
-
-    if (!exerciseType) {
-      // Unknown type ID, default to strength
-      const strengthType = getExerciseTypeById(
-        DEFAULT_EXERCISE_TYPE_ID,
-      );
-      return strengthType?.parameters || [];
-    }
-
-    // Combine type parameters with custom parameters
-    const typeParams = exerciseType.parameters;
-    const customParams = definition.customParameters || [];
-
-    return [...typeParams, ...customParams];
+    return [...exerciseType.parameters, ...(definition.customParameters || [])];
   }
 
   /**
@@ -193,286 +149,6 @@ export class ExerciseDefinitionService {
     return (
       exerciseType || getExerciseTypeById(DEFAULT_EXERCISE_TYPE_ID)!
     );
-  }
-
-  /**
-   * Clear the definition cache.
-   * Call this after modifying exercise files or when settings change.
-   */
-  clearCache(): void {
-    this.cache = null;
-    this.loadingPromise = null;
-  }
-
-  /**
-   * Load all exercise definitions from the exercise folder.
-   * Uses caching with TTL to avoid repeated file system reads.
-   */
-  private async loadDefinitions(): Promise<
-    Map<string, ExerciseDefinition>
-  > {
-    const now = Date.now();
-
-    // Check if cache is valid
-    if (
-      this.cache &&
-      now - this.cache.timestamp < this.CACHE_DURATION
-    ) {
-      return this.cache.definitions;
-    }
-
-    // If already loading, wait for that promise (race condition prevention)
-    if (this.loadingPromise) {
-      return this.loadingPromise;
-    }
-
-    // Start loading with lock
-    this.loadingPromise = this.scanExerciseFolder();
-
-    try {
-      const definitions = await this.loadingPromise;
-
-      // Update cache
-      this.cache = {
-        definitions,
-        timestamp: Date.now(),
-      };
-
-      return definitions;
-    } finally {
-      this.loadingPromise = null;
-    }
-  }
-
-  /**
-   * Scan the exercise folder and parse exercise definitions from frontmatter.
-   */
-  private async scanExerciseFolder(): Promise<
-    Map<string, ExerciseDefinition>
-  > {
-    const definitions = new Map<string, ExerciseDefinition>();
-    const folderPath = this.settings.exerciseFolderPath;
-
-    const abstractFolder =
-      this.app.vault.getAbstractFileByPath(folderPath);
-    if (!(abstractFolder instanceof TFolder)) {
-      // Exercise folder doesn't exist
-      return definitions;
-    }
-
-    // Get all markdown files in the folder
-    const files = abstractFolder.children.filter(
-      (file): file is TFile =>
-        file instanceof TFile && file.extension === "md",
-    );
-
-    // Parse each file
-    for (const file of files) {
-      try {
-        const definition = await this.parseExerciseFile(file);
-        if (definition) {
-          definitions.set(definition.name, definition);
-        }
-      } catch {
-        // Skip files that can't be parsed
-        continue;
-      }
-    }
-
-    return definitions;
-  }
-
-  /**
-   * Parse an exercise definition from a markdown file's frontmatter.
-   */
-  private async parseExerciseFile(
-    file: TFile,
-  ): Promise<ExerciseDefinition | null> {
-    const content = await this.app.vault.read(file);
-
-    // Extract frontmatter
-    const frontmatterText =
-      FrontmatterParser.extractFrontmatter(content);
-    if (!frontmatterText) {
-      // No frontmatter, create default definition from filename
-      return {
-        name: file.basename,
-        typeId: DEFAULT_EXERCISE_TYPE_ID,
-      };
-    }
-
-    // Parse frontmatter YAML
-    const frontmatter = parseYaml(frontmatterText);
-    if (!frontmatter) {
-      return {
-        name: file.basename,
-        typeId: DEFAULT_EXERCISE_TYPE_ID,
-      };
-    }
-
-    // Extract exercise type (default to strength for backward compatibility)
-    const typeId = this.parseTypeId(frontmatter);
-
-    // Extract custom parameters
-    const customParameters = this.parseCustomParameters(frontmatter);
-
-    // Extract muscle groups from tags
-    const muscleGroups = this.parseMuscleGroups(frontmatter);
-
-    // Use filename as exercise name (with backward compatibility)
-    // Priority: exercise_name (new) -> nome_esercizio (legacy Italian) -> filename
-    const name =
-      typeof frontmatter.exercise_name === "string"
-        ? frontmatter.exercise_name
-        : typeof frontmatter.nome_esercizio === "string"
-          ? frontmatter.nome_esercizio
-          : file.basename;
-
-    return {
-      name,
-      typeId,
-      muscleGroups:
-        muscleGroups.length > 0 ? muscleGroups : undefined,
-      customParameters:
-        customParameters.length > 0 ? customParameters : undefined,
-    };
-  }
-
-  /**
-   * Parse the exercise type ID from frontmatter.
-   * Supports both `exercise_type` and `type` fields for flexibility.
-   */
-  private parseTypeId(frontmatter: Record<string, unknown>): string {
-    // Check for exercise_type field (primary)
-    if (
-      typeof frontmatter.exercise_type === "string" &&
-      frontmatter.exercise_type.trim()
-    ) {
-      return resolveExerciseTypeId(
-        StringUtils.normalize(frontmatter.exercise_type),
-      );
-    }
-
-    // Check for type field (alternative)
-    if (
-      typeof frontmatter.type === "string" &&
-      frontmatter.type.trim()
-    ) {
-      return resolveExerciseTypeId(StringUtils.normalize(frontmatter.type));
-    }
-
-    // Default to strength for backward compatibility
-    return DEFAULT_EXERCISE_TYPE_ID;
-  }
-
-  /**
-   * Parse custom parameters from frontmatter.
-   * Expects a YAML array of parameter definitions.
-   * Validates parameters and skips reserved/invalid keys.
-   *
-   * @example
-   * ```yaml
-   * parameters:
-   *   - key: incline
-   *     label: Incline
-   *     type: number
-   *     unit: "%"
-   *     required: false
-   * ```
-   */
-  private parseCustomParameters(
-    frontmatter: Record<string, unknown>,
-  ): ParameterDefinition[] {
-    const parametersField = frontmatter.parameters;
-
-    if (!Array.isArray(parametersField)) {
-      return [];
-    }
-
-    const parameters: ParameterDefinition[] = [];
-
-    for (const param of parametersField) {
-      if (!param || typeof param !== "object") {
-        continue;
-      }
-
-      const paramObj = param as Record<string, unknown>;
-
-      // Validate required fields
-      if (typeof paramObj.key !== "string" || !paramObj.key.trim()) {
-        continue;
-      }
-
-      const paramDef: ParameterDefinition = {
-        key: paramObj.key.trim(),
-        label:
-          typeof paramObj.label === "string"
-            ? paramObj.label.trim()
-            : paramObj.key.trim(),
-        type: this.parseParameterType(paramObj.type),
-        required: paramObj.required === true,
-      };
-
-      // Validate the parameter using ParameterUtils
-      // Skip reserved keys and invalid parameters
-      const validation = ParameterUtils.validateParam(paramDef);
-      if (!validation.isValid) {
-        continue;
-      }
-
-      // Optional fields
-      if (typeof paramObj.unit === "string" && paramObj.unit.trim()) {
-        paramDef.unit = paramObj.unit.trim();
-      }
-
-      if (paramObj.default !== undefined) {
-        paramDef.default = paramObj.default as
-          | number
-          | string
-          | boolean;
-      }
-
-      if (typeof paramObj.min === "number") {
-        paramDef.min = paramObj.min;
-      }
-
-      if (typeof paramObj.max === "number") {
-        paramDef.max = paramObj.max;
-      }
-
-      parameters.push(paramDef);
-    }
-
-    return parameters;
-  }
-
-  /**
-   * Parse parameter type, defaulting to 'number' for invalid values.
-   */
-  private parseParameterType(
-    value: unknown,
-  ): "number" | "string" | "boolean" {
-    if (value === "string") return "string";
-    if (value === "boolean") return "boolean";
-    return "number"; // Default
-  }
-
-  /**
-   * Parse muscle groups from frontmatter tags.
-   */
-  private parseMuscleGroups(
-    frontmatter: Record<string, unknown>,
-  ): string[] {
-    const tags = frontmatter.tags;
-
-    if (!Array.isArray(tags)) {
-      return [];
-    }
-
-    return tags
-      .filter((tag): tag is string => typeof tag === "string")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
   }
 
   /**
@@ -552,4 +228,18 @@ exercise: ${definition.name}
 
     return content;
   }
+}
+
+/** The definition an exercise page gives; type defaults to strength */
+function toDefinition(page: ExercisePage): ExerciseDefinition {
+  return {
+    // exercise_name / nome_esercizio when set, else the file name
+    name: page.names[1] ?? page.names[0],
+    typeId: page.type
+      ? resolveExerciseTypeId(StringUtils.normalize(page.type))
+      : DEFAULT_EXERCISE_TYPE_ID,
+    muscleGroups: page.tags.length > 0 ? page.tags : undefined,
+    customParameters:
+      page.parameters.length > 0 ? page.parameters : undefined,
+  };
 }

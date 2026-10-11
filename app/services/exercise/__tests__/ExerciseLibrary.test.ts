@@ -136,6 +136,40 @@ describe("ExerciseLibrary", () => {
     });
   });
 
+  describe("declared parameters", () => {
+    it("should read the parameters a page declares", () => {
+      const { lib } = library({
+        "Gym/Exercises/Treadmill.md": {
+          parameters: [
+            { key: "incline", label: "Incline", type: "number", unit: "%", min: 0, max: 15, default: 1 },
+            { key: "notes2", type: "string", required: true },
+          ],
+        },
+      });
+
+      expect(lib.find("Treadmill")?.parameters).toEqual([
+        { key: "incline", label: "Incline", type: "number", required: false, unit: "%", min: 0, max: 15, default: 1 },
+        { key: "notes2", label: "notes2", type: "string", required: true },
+      ]);
+    });
+
+    it("should skip parameters that are not objects, have no key or use a reserved key", () => {
+      const { lib } = library({
+        "Gym/Exercises/Treadmill.md": {
+          parameters: ["incline", { label: "No key" }, { key: "  " }, { key: "weight" }, { key: "speed" }],
+        },
+      });
+
+      expect(lib.find("Treadmill")?.parameters.map((p) => p.key)).toEqual(["speed"]);
+    });
+
+    it("should have no parameters when none are declared", () => {
+      const { lib } = library({ "Gym/Exercises/Squat.md": {} });
+
+      expect(lib.find("Squat")?.parameters).toEqual([]);
+    });
+  });
+
   describe("pagesSharingAName", () => {
     it("should list the other pages that answer to one of the page's names", () => {
       const { lib } = library({

@@ -107,12 +107,13 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.settings,
       this.eventBus,
     );
+    this.exerciseLibrary = new ExerciseLibrary(this.app, this.settings);
+    this.exerciseLibrary.watch((ref) => this.registerEvent(ref));
     this.exerciseDefinitionService = new ExerciseDefinitionService(
       this.app,
       this.settings,
+      this.exerciseLibrary,
     );
-    this.exerciseLibrary = new ExerciseLibrary(this.app, this.settings);
-    this.exerciseLibrary.watch((ref) => this.registerEvent(ref));
     this.muscleTagService = new MuscleTagService(
       this.app,
       this.settings,
@@ -207,9 +208,6 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // 3. Release the log file (de-registers cache event listeners, clears cache)
     this.workoutLogFile?.destroy();
-
-    // 3b. Clear exercise definition service cache
-    this.exerciseDefinitionService?.clearCache();
 
     // 3c. Destroy muscle tag service (unregister file watcher, clear cache)
     this.muscleTagService?.destroy();

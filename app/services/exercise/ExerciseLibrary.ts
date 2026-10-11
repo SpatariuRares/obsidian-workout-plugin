@@ -3,6 +3,8 @@ import type { App, EventRef, TFile } from "obsidian";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { StringUtils } from "@app/utils/StringUtils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 
 /** Frontmatter keys that name an exercise page, besides its file name */
 const NAME_KEYS = ["exercise_name", "nome_esercizio"] as const;
@@ -16,6 +18,8 @@ export interface ExercisePage {
   type?: string;
   /** Tags without "#", from a YAML list or a comma separated string */
   tags: string[];
+  /** Valid `parameters` the page declares beyond its type's */
+  parameters: ParameterDefinition[];
 }
 
 type LibraryApp = {
@@ -131,8 +135,54 @@ export class ExerciseLibrary {
       names,
       type: text(frontmatter.exercise_type) ?? text(frontmatter.type),
       tags: FrontmatterParser.toTagList(frontmatter.tags),
+      parameters: parseParameters(frontmatter.parameters),
     };
   }
+}
+
+/**
+ * Parameters from a `parameters:` YAML list. Entries without a valid key
+ * (missing, reserved, malformed) are skipped.
+ *
+ * @example
+ * ```yaml
+ * parameters:
+ *   - key: incline
+ *     label: Incline
+ *     type: number
+ *     unit: "%"
+ * ```
+ */
+function parseParameters(raw: unknown): ParameterDefinition[] {
+  if (!Array.isArray(raw)) return [];
+  const parameters: ParameterDefinition[] = [];
+  for (const item of raw) {
+    if (!item || typeof item !== "object") continue;
+    const entry = item as Record<string, unknown>;
+    const key = text(entry.key);
+    if (!key) continue;
+
+    const parameter: ParameterDefinition = {
+      key,
+      label: text(entry.label) ?? key,
+      type:
+        entry.type === "string" || entry.type === "boolean"
+          ? entry.type
+          : "number",
+      required: entry.required === true,
+    };
+    if (!ParameterUtils.validateParam(parameter).isValid) continue;
+
+    const unit = text(entry.unit);
+    if (unit) parameter.unit = unit;
+    if (entry.default !== undefined) {
+      parameter.default = entry.default as number | string | boolean;
+    }
+    if (typeof entry.min === "number") parameter.min = entry.min;
+    if (typeof entry.max === "number") parameter.max = entry.max;
+    parameters.push(parameter);
+  }
+  return parameters;
 }
 
 function normalizeFolder(folder: string | undefined): string {

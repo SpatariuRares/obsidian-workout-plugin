@@ -57,6 +57,7 @@ async function openModal() {
     saveSettings: jest.fn(),
     getWorkoutLogData: async () => [],
     findLastEntryForExercise: async () => undefined,
+    getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
       getParametersForExercise: async () =>
         getExerciseTypeById("strength")!.parameters,

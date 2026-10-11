@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Alle Übungsseiten sind gültig",
       "noTags": "Keine Muskel-Tags im Frontmatter",
-      "readError": "❌ Fehler beim Lesen der Datei: {message}",
       "title": "Dateifehler",
       "tooManyTags": "Zu viele Muskel-Tags ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "CSV-Datei konnte nicht erstellt werden unter: {path}. Bitte überprüfe den Pfad in den Einstellungen.",
       "tableRenderError": "Fehler beim Tabellenrendering"
     },
-    "fileEmpty": "Die Datei ist leer",
     "imbalanceAlerts": "Ungleichgewichtswarnungen",
     "insufficientData": "Nicht genug Daten",
     "noDataPeriod": "Für den ausgewählten Zeitraum wurden keine Trainingsdaten gefunden.",
-    "noFrontmatter": "Kein Frontmatter",
     "noImbalances": "Keine Ungleichgewichte gefunden",
-    "noTags": "Keine Tags im Frontmatter",
     "success": {
       "blockIdsAdded": "{count} fehlende ID(s) in {files} Datei(en) hinzugefügt",
       "csvCreated": "CSV-Datei erfolgreich erstellt!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} muss mindestens {min} sein",
       "validMaxValue": "{field} darf höchstens {max} sein",
       "validFieldRequired": "{field} ist erforderlich",
-      "migrationFolderNotFound": "Übungsordner nicht gefunden: {path}",
       "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell"
     },
     "parameterKey": "Schlüssel:",

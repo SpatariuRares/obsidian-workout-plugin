@@ -8,14 +8,11 @@ function makePlugin() {
   const raw = {
     settings: { csvLogFilePath: "New/workout_logs.csv", exerciseFolderPath: "Exercises" },
     triggerMuscleTagRefresh: jest.fn(),
-    getExerciseDefinitionService: () => definitions,
     eventBus: { emit: jest.fn() },
   };
-  const definitions = { clearCache: jest.fn() };
   return {
     plugin: raw as unknown as WorkoutPluginContext & EventBusPort,
     raw,
-    definitions,
   };
 }
 
@@ -24,14 +21,13 @@ describe("announceDataPathChange", () => {
     ["csvLogFilePath", "Old/workout_logs.csv", "New/workout_logs.csv"],
     ["exerciseFolderPath", "Old exercises", "Exercises"],
   ] as const)(
-    "reloads muscle tags and exercise types, then tells views that %s changed",
+    "reloads muscle tags, then tells views that %s changed",
     (key, previousValue, newValue) => {
-      const { plugin, raw, definitions } = makePlugin();
+      const { plugin, raw } = makePlugin();
 
       announceDataPathChange(plugin, key, previousValue);
 
       expect(raw.triggerMuscleTagRefresh).toHaveBeenCalled();
-      expect(definitions.clearCache).toHaveBeenCalled();
       expect(raw.eventBus.emit).toHaveBeenCalledWith({
         type: "settings:changed",
         payload: { key, previousValue, newValue },

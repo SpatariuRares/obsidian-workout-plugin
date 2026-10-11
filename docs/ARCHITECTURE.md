@@ -42,6 +42,7 @@ app/
 │   ├── CommandHandlerService.ts
 │   ├── ExerciseDefinitionService.ts
 │   ├── MuscleTagService.ts        # Muscle tag mappings (CSV-backed, cached)
+│   ├── exercise/ExerciseLibrary.ts # Exercise pages, found by exercise name
 │   ├── CodeBlockEditorService.ts
 │   ├── ExampleGeneratorService.ts
 │   ├── data/                   # Data layer
@@ -65,7 +66,6 @@ app/
 │   ├── ExerciseMatchUtils.ts
 │   ├── FormUtils.ts
 │   ├── FormatUtils.ts
-│   ├── FrontmatterParser.ts
 │   ├── ParameterUtils.ts
 │   ├── StringUtils.ts
 │

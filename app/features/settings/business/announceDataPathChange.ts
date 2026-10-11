@@ -8,7 +8,8 @@ type DataPathKey = "csvLogFilePath" | "exerciseFolderPath";
 /**
  * After the log file or exercise folder moves: drop what was read from the
  * old place and re-render open views. muscle-tags.csv sits next to the log
- * file and muscle tags come from the exercise notes, so both reload.
+ * file, so the tag map reloads; the exercise library follows the folder
+ * setting by itself.
  */
 export function announceDataPathChange(
   plugin: WorkoutPluginContext & EventBusPort,
@@ -19,7 +20,6 @@ export function announceDataPathChange(
   if (newValue === previousValue) return;
 
   plugin.triggerMuscleTagRefresh();
-  plugin.getExerciseDefinitionService().clearCache();
   plugin.eventBus.emit({
     type: "settings:changed",
     payload: { key, previousValue, newValue },

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Toate paginile de exerciții sunt valide",
       "noTags": "Nicio etichetă pentru mușchi în frontmatter",
-      "readError": "❌ Eroare la citirea fișierului: {message}",
       "title": "Erori în fișiere",
       "tooManyTags": "Prea multe etichete pentru mușchi ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verificați calea în setări.",
       "tableRenderError": "Eroare la redarea tabelului"
     },
-    "fileEmpty": "Fișierul este gol",
     "imbalanceAlerts": "Alerte de dezechilibru",
     "insufficientData": "Date insuficiente",
     "noDataPeriod": "Nu au fost găsite date despre antrenament pentru perioada selectată.",
-    "noFrontmatter": "Fără frontmatter",
     "noImbalances": "Nu s-au găsit dezechilibre",
-    "noTags": "Nicio etichetă în frontmatter",
     "success": {
       "blockIdsAdded": "Au fost adăugate {count} ID-uri lipsă în {files} fișier(e)",
       "csvCreated": "Fișierul CSV a fost creat cu succes!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} trebuie să fie cel puțin {min}",
       "validMaxValue": "{field} trebuie să fie cel mult {max}",
       "validFieldRequired": "{field} este obligatoriu",
-      "migrationFolderNotFound": "Dosarul de exerciții nu a fost găsit: {path}",
       "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate"
     },
     "parameterKey": "Cheie:",

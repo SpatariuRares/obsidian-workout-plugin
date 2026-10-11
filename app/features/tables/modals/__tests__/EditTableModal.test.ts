@@ -51,6 +51,7 @@ function openModal() {
     app,
     settings: { defaultExactMatch: false, recentExercises: [] },
     getWorkoutLogData: async () => [],
+    getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
       getExerciseNames: async () => [],
       getExerciseDefinitions: async () => [],

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Alle øvelsessider er gyldige",
       "noTags": "Ingen muskeltags i frontmatter",
-      "readError": "❌ Fejl ved læsning af fil: {message}",
       "title": "Filfejl",
       "tooManyTags": "For mange muskeltags ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Kunne ikke oprette CSV-fil på stien: {path}. Kontroller stien i indstillingerne.",
       "tableRenderError": "Fejl ved tabelgengivelse"
     },
-    "fileEmpty": "Filen er tom",
     "imbalanceAlerts": "Advarsler om ubalance",
     "insufficientData": "Ikke nok data",
     "noDataPeriod": "Ingen træningsdata fundet for den valgte tidsperiode.",
-    "noFrontmatter": "Ingen frontmatter",
     "noImbalances": "Ingen ubalancer fundet",
-    "noTags": "Ingen tags i frontmatter",
     "success": {
       "blockIdsAdded": "Tilføjede {count} manglende ID(er) i {files} fil(er)",
       "csvCreated": "CSV-filen er oprettet med succes!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} skal være mindst {min}",
       "validMaxValue": "{field} må højst være {max}",
       "validFieldRequired": "{field} er obligatorisk",
-      "migrationFolderNotFound": "Øvelsesmappe ikke fundet: {path}",
       "migrationNoUpdates": "Alle øvelsessider er allerede opdaterede"
     },
     "parameterKey": "Nøgle:",

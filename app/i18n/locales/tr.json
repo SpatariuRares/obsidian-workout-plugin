@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Tüm egzersiz sayfaları geçerli",
       "noTags": "Frontmatter'da kas etiketi yok",
-      "readError": "❌ Dosya okuma hatası: {message}",
       "title": "Dosya hataları",
       "tooManyTags": "Çok fazla kas etiketi ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "{path} yolunda CSV dosyası oluşturulamadı. Lütfen ayarlardaki yolu kontrol edin.",
       "tableRenderError": "Tablo oluşturma hatası"
     },
-    "fileEmpty": "Dosya boş",
     "imbalanceAlerts": "Dengesizlik uyarıları",
     "insufficientData": "Yeterli veri yok",
     "noDataPeriod": "Belirtilen zaman aralığı için herhangi bir antrenman verisi bulunamadı.",
-    "noFrontmatter": "Frontmatter yok",
     "noImbalances": "Dengesizlik bulunamadı",
-    "noTags": "Frontmatter'da etiket yok",
     "success": {
       "blockIdsAdded": "{files} dosyada {count} eksik ID eklendi",
       "csvCreated": "CSV dosyası başarıyla oluşturuldu!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} en az {min} olmalıdır",
       "validMaxValue": "{field} en fazla {max} olmalıdır",
       "validFieldRequired": "{field} zorunludur",
-      "migrationFolderNotFound": "Egzersiz klasörü bulunamadı: {path}",
       "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel"
     },
     "parameterKey": "Anahtar:",

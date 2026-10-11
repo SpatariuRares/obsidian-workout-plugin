@@ -98,7 +98,7 @@
     "fileErrors": {
       "allValid": "All exercise pages are valid",
       "noTags": "No muscle tags in the frontmatter",
-      "readError": "❌ Error reading file: {message}",
+      "sharedName": "Same exercise name as {pages}: logs go to only one of them",
       "title": "File errors",
       "tooManyTags": "Too many muscle tags ({count})"
     },
@@ -475,13 +475,10 @@
       "templateGenError": "Failed to generate templates: {error}",
       "workoutLogCreateError": "Failed to create CSV file at path: {path}. Please check the path in settings."
     },
-    "fileEmpty": "The file is empty",
     "imbalanceAlerts": "Imbalance alerts",
     "insufficientData": "Not enough data",
     "noDataPeriod": "No workout data found for the selected time period.",
-    "noFrontmatter": "No frontmatter",
     "noImbalances": "No imbalances found",
-    "noTags": "No tags in the frontmatter",
     "success": {
       "blockIdsAdded": "Added {count} missing ID(s) in {files} file(s)",
       "csvCreated": "CSV file created successfully!",
@@ -637,7 +634,6 @@
       "logUpdated": "Workout log updated successfully!",
       "migrationComplete": "Migration complete. Updated {count} exercise files.",
       "migrationError": "Migration Error: {error}",
-      "migrationFolderNotFound": "Exercise folder not found: {path}",
       "migrationNoUpdates": "All exercise pages are already up to date",
       "muscleTagCount": "{count} tag(s) found",
       "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",

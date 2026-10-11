@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Alle oefenpagina's zijn geldig",
       "noTags": "Geen spierlabels in de frontmatter",
-      "readError": "❌ Fout bij het lezen van bestand: {message}",
       "title": "Foutmeldingen bij bestanden",
       "tooManyTags": "Te veel spierlabels ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Kan CSV-bestand niet maken op pad: {path}. Controleer het pad in de instellingen.",
       "tableRenderError": "Fout bij het renderen van de tabel"
     },
-    "fileEmpty": "Het bestand is leeg",
     "imbalanceAlerts": "Waarschuwingen voor disbalans",
     "insufficientData": "Niet genoeg gegevens",
     "noDataPeriod": "Geen trainingsgegevens gevonden voor de geselecteerde periode.",
-    "noFrontmatter": "Geen frontmatter",
     "noImbalances": "Geen disbalans gevonden",
-    "noTags": "Geen labels in de frontmatter",
     "success": {
       "blockIdsAdded": "{count} ontbrekende ID('s) toegevoegd in {files} bestand(en)",
       "csvCreated": "Het CSV-bestand is succesvol gemaakt!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} moet minimaal {min} zijn",
       "validMaxValue": "{field} mag maximaal {max} zijn",
       "validFieldRequired": "{field} is verplicht",
-      "migrationFolderNotFound": "Oefenmap niet gevonden: {path}",
       "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt"
     },
     "parameterKey": "Sleutel:",

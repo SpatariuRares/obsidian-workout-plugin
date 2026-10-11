@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Wszystkie strony ćwiczeń są poprawne",
       "noTags": "Brak tagów mięśni we frontmatter",
-      "readError": "❌ Błąd odczytu pliku: {message}",
       "title": "Błędy w plikach",
       "tooManyTags": "Zbyt wiele tagów mięśni ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Nie udało się utworzyć pliku CSV pod ścieżką: {path}. Sprawdź ścieżkę w ustawieniach.",
       "tableRenderError": "Błąd renderowania tabeli"
     },
-    "fileEmpty": "Plik jest pusty",
     "imbalanceAlerts": "Ostrzeżenia o dysproporcjach",
     "insufficientData": "Za mało danych",
     "noDataPeriod": "Brak danych dotyczących treningu dla wybranego okresu.",
-    "noFrontmatter": "Brak frontmatter",
     "noImbalances": "Nie wykryto dysproporcji",
-    "noTags": "Brak tagów we frontmatter",
     "success": {
       "blockIdsAdded": "Dodano brakujące identyfikatory: {count} (pliki: {files})",
       "csvCreated": "Plik CSV został pomyślnie utworzony!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} musi wynosić co najmniej {min}",
       "validMaxValue": "{field} może wynosić co najwyżej {max}",
       "validFieldRequired": "{field} jest wymagane",
-      "migrationFolderNotFound": "Folder ćwiczeń nie znaleziony: {path}",
       "migrationNoUpdates": "Wszystkie strony ćwiczeń są już aktualne"
     },
     "parameterKey": "Klucz:",

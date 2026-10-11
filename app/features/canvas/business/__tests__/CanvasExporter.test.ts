@@ -2,6 +2,8 @@ import { TFile, TFolder } from "obsidian";
 import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
 import type { CanvasExportOptions } from "@app/features/canvas/types";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 
 const mockFindGroups = jest.fn();
 // t() echoes key and params, so tests can check the formatted values
@@ -67,11 +69,16 @@ describe("CanvasExporter.exportToCanvas", () => {
       getFileByPath: jest.fn().mockReturnValue(null),
     };
     api = { getExerciseStats: jest.fn() };
+    const pages = new FakeVault(
+      Object.fromEntries(
+        ["Pull Up", "Dip", "Row", "Squat"].map((name) => [`Exercises/${name}.md`, {}]),
+      ),
+    );
     exporter = new CanvasExporter(
       { vault } as any,
       api as any,
       { musclesForExercise: (name: string) => mockFindGroups(name) },
-      { exerciseFolderPath: "Exercises" } as any,
+      new ExerciseLibrary(pages.app as never, { exerciseFolderPath: "Exercises" }),
     );
   });
 
@@ -230,7 +237,7 @@ describe("CanvasExporter.exportToCanvas", () => {
       expect(written().nodes).toHaveLength(1);
     });
 
-    it("should extract wiki links without folders as exercises", async () => {
+    it("should extract wiki links to exercise pages as exercises", async () => {
       setContent("Do [[Pull Up]] and [[Dip|dips]].");
 
       await exporter.exportToCanvas(makeFile("W"), baseOptions);
@@ -241,17 +248,22 @@ describe("CanvasExporter.exportToCanvas", () => {
       ]);
     });
 
-    it("should include links inside the exercise folder only when the file exists", async () => {
+    it("should include links inside the exercise folder only when the page exists", async () => {
       setContent("[[Exercises/Row]] [[Exercises/Missing]]");
-      vault.getFileByPath.mockImplementation((p: string) =>
-        p === "Exercises/Row.md" ? new TFile() : null,
-      );
 
       await exporter.exportToCanvas(makeFile("W"), baseOptions);
 
       const nodes = written().nodes;
       expect(nodes).toHaveLength(1);
       expect(nodes[0].text).toContain("## Row");
+    });
+
+    it("should ignore links to notes that are not exercise pages", async () => {
+      setContent("See [[Weekly plan]] and [[Notes/Ideas]].");
+
+      await expect(
+        exporter.exportToCanvas(makeFile("W"), baseOptions),
+      ).rejects.toThrow("No exercises found");
     });
 
     it("should ignore links to folders outside the exercise folder", async () => {
@@ -264,11 +276,9 @@ describe("CanvasExporter.exportToCanvas", () => {
 
     it("should not append .md twice when the link already has it", async () => {
       setContent("[[Exercises/Row.md]]");
-      vault.getFileByPath.mockReturnValue(new TFile());
 
       await exporter.exportToCanvas(makeFile("W"), baseOptions);
 
-      expect(vault.getFileByPath).toHaveBeenCalledWith("Exercises/Row.md");
       expect(written().nodes[0].text).toContain("## Row");
       expect(written().nodes[0].text).not.toContain("Row.md");
     });

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Všechny stránky cvičení jsou v pořádku",
       "noTags": "Ve frontmatteru nejsou žádné štítky svalů",
-      "readError": "❌ Chyba při čtení souboru: {message}",
       "title": "Chyby související se soubory",
       "tooManyTags": "Příliš mnoho štítků svalů ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Nepodařilo se vytvořit soubor CSV na cestě: {path}. Zkontrolujte cestu v nastavení.",
       "tableRenderError": "Chyba při vykreslování tabulky"
     },
-    "fileEmpty": "Soubor je prázdný",
     "imbalanceAlerts": "Upozornění na nerovnováhu",
     "insufficientData": "Nedostatek dat",
     "noDataPeriod": "Pro vybrané období nebyla nalezena žádná data tréninků.",
-    "noFrontmatter": "Žádný frontmatter",
     "noImbalances": "Nebyla nalezena žádná nerovnováha",
-    "noTags": "Ve frontmatteru nejsou žádné štítky",
     "success": {
       "blockIdsAdded": "Přidáno chybějících ID: {count} (souborů: {files})",
       "csvCreated": "Soubor CSV byl úspěšně vytvořen!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} musí být alespoň {min}",
       "validMaxValue": "{field} musí být nejvýše {max}",
       "validFieldRequired": "{field} je povinné",
-      "migrationFolderNotFound": "Složka cvičení nenalezena: {path}",
       "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální"
     },
     "parameterKey": "Klíč:",

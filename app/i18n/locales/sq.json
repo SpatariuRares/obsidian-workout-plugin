@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
-      "readError": "❌ Gabim gjatë leximit të skedarit: {message}",
       "title": "Gabime në skedarë",
       "tooManyTags": "Shumë etiketa muskujsh ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Dështoi krijimi i skedarit CSV në shtegun: {path}. Kontrolloni shtegun te cilësimet.",
       "tableRenderError": "Gabim në paraqitjen e tabelës"
     },
-    "fileEmpty": "Skedari është bosh",
     "imbalanceAlerts": "Sinjalizime për çekuilibër",
     "insufficientData": "Të dhëna të pamjaftueshme",
     "noDataPeriod": "Nuk u gjetën të dhëna stërvitjeje për periudhën e zgjedhur.",
-    "noFrontmatter": "Pa frontmatter",
     "noImbalances": "Nuk u gjet asnjë çekuilibër",
-    "noTags": "Nuk ka etiketa në frontmatter",
     "success": {
       "blockIdsAdded": "U shtuan {count} ID që mungonin në {files} skedar(ë)",
       "csvCreated": "Skedari CSV u krijua me sukses!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} duhet të jetë të paktën {min}",
       "validMaxValue": "{field} duhet të jetë më së shumti {max}",
       "validFieldRequired": "{field} është e detyrueshme",
-      "migrationFolderNotFound": "Dosja e ushtrimeve nuk u gjet: {path}",
       "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara"
     },
     "parameterKey": "Çelësi:",

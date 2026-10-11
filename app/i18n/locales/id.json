@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Semua halaman latihan valid",
       "noTags": "Tidak ada tag otot di frontmatter",
-      "readError": "❌ Terjadi kesalahan saat membaca file: {message}",
       "title": "Kesalahan pada file",
       "tooManyTags": "Terlalu banyak tag otot ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Gagal membuat file CSV di jalur: {path}. Periksa jalur di pengaturan.",
       "tableRenderError": "Kesalahan saat merender tabel"
     },
-    "fileEmpty": "File kosong",
     "imbalanceAlerts": "Peringatan ketidakseimbangan",
     "insufficientData": "Data tidak cukup",
     "noDataPeriod": "Tidak ada data latihan yang ditemukan untuk periode waktu yang dipilih.",
-    "noFrontmatter": "Tidak ada frontmatter",
     "noImbalances": "Tidak ditemukan ketidakseimbangan",
-    "noTags": "Tidak ada tag di frontmatter",
     "success": {
       "blockIdsAdded": "Menambahkan {count} ID yang hilang di {files} file",
       "csvCreated": "File CSV berhasil dibuat!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} harus minimal {min}",
       "validMaxValue": "{field} harus paling banyak {max}",
       "validFieldRequired": "{field} wajib diisi",
-      "migrationFolderNotFound": "Folder latihan tidak ditemukan: {path}",
       "migrationNoUpdates": "Semua halaman latihan sudah yang terbaru"
     },
     "parameterKey": "Kunci:",

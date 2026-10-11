@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "所有動作頁面皆有效",
       "noTags": "frontmatter 中沒有肌肉標籤",
-      "readError": "❌ 檔案讀取錯誤：{message}",
       "title": "檔案錯誤",
       "tooManyTags": "過多的肌肉標籤（{count}）"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "無法在路徑 {path} 建立 CSV 檔案，請檢查設定中的路徑。",
       "tableRenderError": "表格渲染錯誤"
     },
-    "fileEmpty": "檔案是空的",
     "imbalanceAlerts": "失衡警示",
     "insufficientData": "資料不足",
     "noDataPeriod": "找不到所選時段內的運動資料。",
-    "noFrontmatter": "沒有 frontmatter",
     "noImbalances": "未發現失衡",
-    "noTags": "frontmatter 中沒有標籤",
     "success": {
       "blockIdsAdded": "已在 {files} 個檔案中新增 {count} 個缺少的 ID",
       "csvCreated": "CSV 檔案已成功建立！",
@@ -660,7 +656,6 @@
       "validMinValue": "{field}至少為{min}",
       "validMaxValue": "{field}最多為{max}",
       "validFieldRequired": "{field}為必填",
-      "migrationFolderNotFound": "找不到動作資料夾：{path}",
       "migrationNoUpdates": "所有動作頁面皆已是最新狀態"
     },
     "parameterKey": "鍵：",

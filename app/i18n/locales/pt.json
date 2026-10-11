@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Todas as páginas de exercício são válidas",
       "noTags": "Nenhuma tag muscular no frontmatter",
-      "readError": "❌ Erro ao ler o arquivo: {message}",
       "title": "Erros de arquivo",
       "tooManyTags": "Número excessivo de tags de músculos ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Falha ao criar o arquivo CSV no caminho: {path}. Verifique o caminho nas configurações.",
       "tableRenderError": "Erro ao renderizar a tabela"
     },
-    "fileEmpty": "O ficheiro está vazio",
     "imbalanceAlerts": "Alertas de desequilíbrio",
     "insufficientData": "Dados insuficientes",
     "noDataPeriod": "Não foram encontradas informações de treino para o período selecionado.",
-    "noFrontmatter": "Sem frontmatter",
     "noImbalances": "Nenhum desequilíbrio encontrado",
-    "noTags": "Nenhuma tag no frontmatter",
     "success": {
       "blockIdsAdded": "Adicionados {count} ID(s) em falta em {files} ficheiro(s)",
       "csvCreated": "O arquivo CSV foi criado com sucesso!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} deve ser pelo menos {min}",
       "validMaxValue": "{field} deve ser no máximo {max}",
       "validFieldRequired": "{field} é obrigatório",
-      "migrationFolderNotFound": "Pasta de exercícios não encontrada: {path}",
       "migrationNoUpdates": "Todas as páginas de exercício já estão atualizadas"
     },
     "parameterKey": "Chave:",

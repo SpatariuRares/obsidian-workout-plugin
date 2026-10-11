@@ -1,20 +1,14 @@
-import { App, Notice, TFile } from "obsidian";
+import { App, Notice } from "obsidian";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { StringUtils, ErrorUtils } from "@app/utils";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import {
+  findNameMismatches,
+  type MismatchEntry,
+} from "@app/features/modals/exercise/logic/findNameMismatches";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { t } from "@app/i18n";
-
-interface MismatchEntry {
-  file: TFile;
-  fileName: string;
-  canonicalName: string;
-  closestMatch: string;
-  score: number;
-}
 
 /**
  * Modal for auditing exercise file names against CSV entries
@@ -63,86 +57,17 @@ export class AuditExerciseNamesModal extends ModalBase {
   }
 
   /**
-   * Scans exercise files and compares against CSV entries
+   * Compares the exercise pages with the exercise names in the log
    */
   private async scanExerciseFiles(): Promise<void> {
     this.mismatches = [];
 
     try {
       const logData = await this.plugin.getWorkoutLogData();
-      const csvExerciseOriginals = [
-        ...new Map(
-          logData
-            .filter((log) => log.exercise)
-            .map((log) => [
-              StringUtils.normalize(log.exercise),
-              log.exercise,
-            ]),
-        ).values(),
-      ];
-      const csvExercisesNormalized = new Set(
-        csvExerciseOriginals.map((e) => StringUtils.normalize(e)),
+      this.mismatches = findNameMismatches(
+        this.plugin.getExerciseLibrary().pages(),
+        logData.map((log) => log.exercise),
       );
-
-      // Get all exercise files from the exercise folder
-      const exerciseFolder = this.plugin.settings.exerciseFolderPath;
-      const files = this.app.vault.getMarkdownFiles();
-      const exerciseFiles = files.filter((file) =>
-        file.path.startsWith(exerciseFolder),
-      );
-
-      // Check each file for mismatches
-      for (const file of exerciseFiles) {
-        const fileName = file.basename;
-
-        // Resolve canonical name: exercise_name → nome_esercizio → basename
-        let canonicalName = fileName;
-        try {
-          const content = await this.app.vault.read(file);
-          const frontmatterName =
-            FrontmatterParser.parseField(content, "exercise_name") ??
-            FrontmatterParser.parseField(content, "nome_esercizio");
-          if (frontmatterName) {
-            canonicalName = frontmatterName;
-          }
-        } catch {
-          // fallback to basename
-        }
-
-        const canonicalNameLower =
-          StringUtils.normalize(canonicalName);
-
-        if (csvExercisesNormalized.has(canonicalNameLower)) {
-          continue; // Perfect match, skip
-        }
-
-        // Find closest match using fuzzy matching, keeping original casing
-        let bestMatch = "";
-        let bestScore = 0;
-
-        for (const csvExercise of csvExerciseOriginals) {
-          const score = ExerciseMatchUtils.getMatchScore(
-            canonicalNameLower,
-            StringUtils.normalize(csvExercise),
-          );
-          if (score > bestScore) {
-            bestScore = score;
-            bestMatch = csvExercise;
-          }
-        }
-
-        // Add to mismatches (even if no close match found)
-        this.mismatches.push({
-          file,
-          fileName,
-          canonicalName,
-          closestMatch: bestMatch,
-          score: bestScore,
-        });
-      }
-
-      // Sort by score (lowest first - worst matches first)
-      this.mismatches.sort((a, b) => a.score - b.score);
     } catch (error) {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(

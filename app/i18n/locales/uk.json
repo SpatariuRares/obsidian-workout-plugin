@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Усі сторінки вправ коректні",
       "noTags": "У frontmatter немає тегів м'язів",
-      "readError": "❌ Помилка при читанні файлу: {message}",
       "title": "Помилки при роботі з файлами",
       "tooManyTags": "Занадто багато тегів м'язів ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Не вдалося створити CSV-файл за шляхом: {path}. Перевірте шлях у налаштуваннях.",
       "tableRenderError": "Помилка рендерингу таблиці"
     },
-    "fileEmpty": "Файл порожній",
     "imbalanceAlerts": "Попередження про дисбаланс",
     "insufficientData": "Недостатньо даних",
     "noDataPeriod": "Не знайдено даних про тренування за вибраний період.",
-    "noFrontmatter": "Немає frontmatter",
     "noImbalances": "Дисбалансу не виявлено",
-    "noTags": "У frontmatter немає тегів",
     "success": {
       "blockIdsAdded": "Додано відсутніх ID: {count} (файлів: {files})",
       "csvCreated": "Файл CSV успішно створено!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} повинно бути не менше {min}",
       "validMaxValue": "{field} повинно бути не більше {max}",
       "validFieldRequired": "{field} обов'язкове",
-      "migrationFolderNotFound": "Папку вправ не знайдено: {path}",
       "migrationNoUpdates": "Усі сторінки вправ уже актуальні"
     },
     "parameterKey": "Ключ:",

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "جميع صفحات التمارين صالحة",
       "noTags": "لا توجد علامات عضلات في البيانات الوصفية (frontmatter)",
-      "readError": "❌ خطأ في قراءة الملف: {message}",
       "title": "أخطاء الملفات",
       "tooManyTags": "عدد كبير من علامات العضلات ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "فشل إنشاء ملف CSV في المسار: {path}. يرجى التحقق من المسار في الإعدادات.",
       "tableRenderError": "خطأ في عرض الجدول"
     },
-    "fileEmpty": "الملف فارغ",
     "imbalanceAlerts": "تنبيهات عدم التوازن",
     "insufficientData": "لا توجد بيانات كافية",
     "noDataPeriod": "لا توجد بيانات تدريبية متوفرة للوقت المحدد.",
-    "noFrontmatter": "لا توجد بيانات وصفية (frontmatter)",
     "noImbalances": "لم يتم العثور على أي عدم توازن",
-    "noTags": "لا توجد علامات في البيانات الوصفية (frontmatter)",
     "success": {
       "blockIdsAdded": "تمت إضافة {count} معرّف(ات) مفقود(ة) في {files} ملف(ات)",
       "csvCreated": "تم إنشاء ملف CSV بنجاح!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} يجب أن يكون على الأقل {min}",
       "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
       "validFieldRequired": "{field} مطلوب",
-      "migrationFolderNotFound": "لم يتم العثور على مجلد التمرين: {path}",
       "migrationNoUpdates": "جميع صفحات التمارين محدّثة بالفعل"
     },
     "parameterKey": "المفتاح:",

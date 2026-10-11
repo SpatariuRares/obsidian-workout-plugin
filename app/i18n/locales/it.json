@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Tutte le pagine esercizio sono valide",
       "noTags": "Nessun tag muscolare nel frontmatter",
-      "readError": "❌ Errore durante la lettura del file: {message}",
       "title": "Errori relativi ai file",
       "tooManyTags": "Troppi tag muscolari ({count})"
     },
@@ -475,13 +474,10 @@
       "workoutLogCreateError": "Impossibile creare il file CSV al percorso: {path}. Controlla il percorso nelle impostazioni.",
       "tableRenderError": "Errore durante il rendering della tabella"
     },
-    "fileEmpty": "Il file è vuoto",
     "imbalanceAlerts": "Avvisi di squilibrio",
     "insufficientData": "Dati insufficienti",
     "noDataPeriod": "Nessun dato allenamento trovato per il periodo selezionato.",
-    "noFrontmatter": "Nessun frontmatter",
     "noImbalances": "Nessuno squilibrio rilevato",
-    "noTags": "Nessun tag nel frontmatter",
     "success": {
       "blockIdsAdded": "Aggiunti {count} ID mancanti in {files} file",
       "csvCreated": "Il file CSV è stato creato correttamente!",
@@ -660,7 +656,6 @@
       "validMinValue": "{field} deve essere almeno {min}",
       "validMaxValue": "{field} deve essere al massimo {max}",
       "validFieldRequired": "{field} è obbligatorio",
-      "migrationFolderNotFound": "Cartella degli esercizi non trovata: {path}",
       "migrationNoUpdates": "Tutte le pagine esercizio sono già aggiornate"
     },
     "parameterKey": "Chiave:",

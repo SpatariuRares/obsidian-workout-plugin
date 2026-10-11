@@ -118,9 +118,13 @@ The only place that knows what a protocol looks like: `new ProtocolCatalog(setti
 
 The only place that reads logged sets back as training (see "Training History" in `CONTEXT.md`). Pure: `new TrainingHistory(rows)`, no vault, no mocks in tests. `trainingDay(date)` is the one day rule (local day, never `date.split("T")[0]`); `sessions({ workout? })` groups sets by training day + workout name (case, spacing, quotes ignored; sets without a workout form their own unnamed session) and gives each session's plausible `duration`. `personalRecord(exercise)` and `newRecordSets()` are the one PR definition. `trendOf(values)` is the one trend (regression line, stable within 5% of the mean); the chart label (`TrendCalculator`), `TrendHeader`, the chart trend line and the API all read it, and the API's series is `heaviestPerDay(exercise)`. `streak(today?)` (calendar weeks from Monday), `totalVolume()`, `volumeByDay()` and `topExercisesByVolume(n)` feed the dashboard. Never group sets by day or session, compute a PR or a trend anywhere else.
 
+#### ExerciseLibrary (`app/services/exercise/ExerciseLibrary.ts`)
+
+The only place that finds an exercise's page (see "Exercise Pages" in `CONTEXT.md`): notes in the exercise folder and its subfolders, found by file name, `exercise_name` or `nome_esercizio`, ignoring case and spacing, never partially. `find(name)` gives an `ExercisePage` (file, names, type, tags as a list); `pages()` lists them; `pagesSharingAName(page)` finds duplicates. It reads frontmatter from `metadataCache` and stays current through `watch()` (vault/metadata events, registered in `main.ts`) and the folder setting, so there is no cache to clear. Get it with `plugin.getExerciseLibrary()` (`ExerciseLibraryPort`). Tests use the shared `FakeVault` (`app/services/exercise/__tests__/FakeVault.ts`), not hand-made vault mocks.
+
 #### ExerciseDefinitionService
 
-Manages exercise type definitions (Strength, Cardio, Flexibility, custom types) with field definitions. Cached with `clearCache()` method.
+Turns an exercise page (from `ExerciseLibrary`) into a definition: type (`exercise_type`, then `type`, aliases resolved, default strength), muscle tags and declared parameters, and the fields to log (`getParametersForExercise`). `saveExerciseDefinition` writes into the page the library finds and creates `folder/name.md` only when there is none. No cache of its own.
 
 #### MuscleTagService
 
@@ -603,7 +607,7 @@ Feature folders have no top-level barrel. ESLint (`no-restricted-imports`) rejec
 3. **Chart.js Memory Leaks**: Always create charts via `ChartRenderer.renderChart()`, which destroys any tracked chart with the same ID first. Never call `new Chart()` directly, because untracked instances escape `destroyAllCharts()` on unload.
 4. **Modal Cleanup**: Always call `modal.close()` after success, avoid leaving modals open
 5. **Timer Cleanup**: Active timers stored in `plugin.activeTimers` Map must be destroyed in `onunload()`
-6. **Service Dependencies**: Services initialized in order - WorkoutLogFile must exist before ExerciseDefinitionService
+6. **Service Dependencies**: Services initialized in order - ExerciseLibrary must exist before ExerciseDefinitionService and MuscleTagService
 7. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
 8. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
 9. **Grid tracks on mobile**: use `minmax(0, 1fr)`, never a bare `1fr`. A `1fr` track grows to its widest child's min-content (e.g. a widget table), pushing the whole dashboard off-screen

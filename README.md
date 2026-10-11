@@ -366,7 +366,7 @@ The plugin exposes `WorkoutPlannerAPI` (also `window.WorkoutPlannerAPI`) once it
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` and `volume` are in the settings unit; `enteredWeight` and `enteredUnit` are what was logged |
 | `getExerciseStats(exercise)` | `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                      |
-| `getExercises(filter?)`      | Exercise names, sorted. From your exercise pages if you set an exercise folder, otherwise from your log. `{ tag: "chest" }` keeps the exercises whose page has that tag. |
+| `getExercises(filter?)`      | Exercise names, sorted: the file names of your exercise pages (subfolders included), or the names in your log when you have no exercise pages. `{ tag: "chest" }` keeps the exercises whose page has that tag, so it is empty without exercise pages. |
 
 `getWorkoutLogs` accepts `exercise` (partial, case-insensitive), `workout`, `dateRange: { start, end }`, `protocol` and `exactMatch`.
 

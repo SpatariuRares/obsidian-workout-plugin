@@ -5,11 +5,13 @@ import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
 import { EmbeddedTableParams } from "@app/features/tables/types";
+import { openExercisePage } from "@app/features/modals/exercise/openExercisePage";
 
 /**
  * ExerciseActionSelect - Icon button dropdown for exercise-level actions
  *
- * Offers "Goto exercise" and (when an ID is set) "Edit table" actions
+ * Offers "Go to exercise" (its page, or creating one) and, when an ID is
+ * set, "Edit table" actions
  * via a custom dropdown panel triggered by an icon-only button.
  */
 export interface ExerciseActionSelectProps {
@@ -61,7 +63,7 @@ export class ExerciseActionSelect {
       wrapper,
       (value) => {
         if (value === "goto") {
-          this.navigateToExercise(app, exerciseName);
+          openExercisePage(plugin, exerciseName);
         } else if (value === "edit") {
           const modal = new EditTableModal(app, plugin, params);
           modal.open();
@@ -71,25 +73,5 @@ export class ExerciseActionSelect {
     );
 
     return wrapper;
-  }
-
-  /**
-   * Navigates to the exercise file in the vault
-   */
-  private static navigateToExercise(
-    app: App,
-    exerciseName: string,
-  ): void {
-    const searchName = exerciseName
-      .toLowerCase()
-      .replace(/\.md$/i, "");
-
-    const exerciseFile = app.vault.getFiles().find((file) => {
-      return file.basename.toLowerCase() === searchName;
-    });
-
-    if (exerciseFile) {
-      void app.workspace.getLeaf(false).openFile(exerciseFile);
-    }
   }
 }

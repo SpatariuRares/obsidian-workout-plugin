@@ -2,32 +2,9 @@ import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { WorkoutPlannerAPI } from "../WorkoutPlannerAPI";
 import {
   WorkoutProtocol,
-  WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
-import { TFolder } from "obsidian";
-
-const createSettings = (): WorkoutChartsSettings => ({
-  csvLogFilePath: "logs.csv",
-  exerciseFolderPath: "exercises",
-  defaultExercise: "",
-  weightUnit: "kg",
-  chartType: CHART_DATA_TYPE.VOLUME,
-  dateRange: 30,
-  showTrendLine: false,
-  chartHeight: 300,
-  defaultExactMatch: false,
-  timerPresets: {},
-  defaultTimerPreset: null,
-  exerciseBlockTemplate: "",
-  weightIncrement: 2.5,
-  achievedTargets: {},
-  customProtocols: [],
-  setDuration: 45,
-  recentExercises: [],
-  quickWeightIncrement: 2.5,
-  repDuration: 5,
-  defaultRepsPerSet: 0,
-});
+import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 
 describe("WorkoutPlannerAPI", () => {
   it("maps workout logs with defaults and applies filters", async () => {
@@ -264,155 +241,68 @@ describe("WorkoutPlannerAPI", () => {
     expect(exercises).toEqual(["Bench Press", "Squat"]);
   });
 
-  it("reads exercises from folder and supports tag filtering", async () => {
-    const dataService = {
-      getWorkoutLogData: jest.fn().mockResolvedValue([]),
+  describe("getExercises from exercise pages", () => {
+    const noLogs = { getWorkoutLogData: jest.fn().mockResolvedValue([]) };
+    const withPages = (
+      notes: ConstructorParameters<typeof FakeVault>[0],
+      logs: unknown[] = [],
+    ) => {
+      const vault = new FakeVault(notes);
+      const library = new ExerciseLibrary(vault.app as never, {
+        exerciseFolderPath: "exercises",
+      });
+      return new WorkoutPlannerAPI(
+        { getWorkoutLogData: jest.fn().mockResolvedValue(logs) },
+        library,
+      );
     };
 
-    const folder = new TFolder();
-    folder.children = [
-      {
-        path: "exercises/bench.md",
-        basename: "Bench Press",
-        extension: "md",
-      } as any,
-      {
-        path: "exercises/pushup.md",
-        basename: "Push Up",
-        extension: "md",
-      } as any,
-      {
-        path: "exercises/squat.md",
-        basename: "Squat",
-        extension: "md",
-      } as any,
-      { name: "notes", extension: "txt" } as any,
-    ];
+    it("lists the file names of the exercise pages, subfolders included", async () => {
+      const api = withPages({
+        "exercises/Squat.md": {},
+        "exercises/QA/Push Up.md": {},
+        "exercises/Bench Press.md": { exercise_name: "Bench press (barbell)" },
+        "notes/Other.md": {},
+      });
 
-    const app = {
-      vault: {
-        getAbstractFileByPath: jest.fn().mockReturnValue(folder),
-        cachedRead: jest.fn((file: { path: string }) => {
-          if (file.path.includes("bench")) {
-            return Promise.resolve(
-              "---\ntags: [chest, compound]\n---",
-            );
-          }
-          if (file.path.includes("pushup")) {
-            return Promise.resolve("---\ntags: chest\n---");
-          }
-          if (file.path.includes("squat")) {
-            return Promise.resolve(
-              "---\ntags:\n  - legs\n  - compound\n---",
-            );
-          }
-          return Promise.resolve("");
-        }),
-      },
-    } as any;
-
-    const api = new WorkoutPlannerAPI(
-      dataService as any,
-      app,
-      createSettings(),
-    );
-
-    const allExercises = await api.getExercises();
-    expect(allExercises).toEqual(["Bench Press", "Push Up", "Squat"]);
-
-    const filtered = await api.getExercises({ tag: "chest" });
-    expect(filtered).toEqual(["Bench Press", "Push Up"]);
-  });
-
-  it("falls back to logs when folder is missing", async () => {
-    const dataService = {
-      getWorkoutLogData: jest.fn().mockResolvedValue([
-        {
-          date: "2026-01-10",
-          exercise: "Deadlift",
-          reps: 3,
-          weight: 140,
-          volume: 420,
-        },
-      ]),
-    };
-
-    const app = {
-      vault: {
-        getAbstractFileByPath: jest.fn().mockReturnValue(null),
-      },
-    } as any;
-
-    const api = new WorkoutPlannerAPI(
-      dataService as any,
-      app,
-      createSettings(),
-    );
-
-    const exercises = await api.getExercises();
-    expect(exercises).toEqual(["Deadlift"]);
-  });
-
-  describe("getExercises tag filter on the logs fallback", () => {
-    const logs = ["Bench Press", "Squat", "Deadlift"].map((exercise) => ({
-      date: "2026-01-10",
-      exercise,
-      reps: 5,
-      weight: 100,
-      volume: 500,
-    }));
-    const dataService = {
-      getWorkoutLogData: jest.fn().mockResolvedValue(logs),
-    };
-    const tagsByExercise: Record<string, unknown> = {
-      "Bench Press": ["chest", "push"],
-      Squat: "#legs, compound",
-    };
-    const app = {
-      vault: { getAbstractFileByPath: jest.fn().mockReturnValue(null) },
-      metadataCache: {
-        getFirstLinkpathDest: jest.fn((name: string) =>
-          name in tagsByExercise ? { basename: name } : null,
-        ),
-        getFileCache: jest.fn((file: { basename: string }) => ({
-          frontmatter: { tags: tagsByExercise[file.basename] },
-        })),
-      },
-    } as any;
-
-    it("filters by the tags of each exercise's note when no folder is set", async () => {
-      const api = new WorkoutPlannerAPI(dataService as any, app, {
-        exerciseFolderPath: "",
-      } as any);
-
-      expect(await api.getExercises({ tag: "chest" })).toEqual([
-        "Bench Press",
-      ]);
-      expect(await api.getExercises({ tag: "LEGS" })).toEqual(["Squat"]);
-      expect(await api.getExercises({ tag: "compound" })).toEqual([
-        "Squat",
-      ]);
+      expect(await api.getExercises()).toEqual(["Bench Press", "Push Up", "Squat"]);
     });
 
-    it("filters the same way when the configured folder is missing", async () => {
-      const api = new WorkoutPlannerAPI(dataService as any, app, {
-        exerciseFolderPath: "Missing",
-      } as any);
+    it("keeps the pages with the tag, however the tags are written", async () => {
+      const api = withPages({
+        "exercises/Bench Press.md": { tags: ["chest", "compound"] },
+        "exercises/QA/Push Up.md": { tags: "#Chest" },
+        "exercises/Squat.md": { tags: "legs, compound" },
+      });
 
-      expect(await api.getExercises({ tag: "push" })).toEqual([
-        "Bench Press",
-      ]);
+      expect(await api.getExercises({ tag: "chest" })).toEqual(["Bench Press", "Push Up"]);
+      expect(await api.getExercises({ tag: "COMPOUND" })).toEqual(["Bench Press", "Squat"]);
     });
 
-    it("returns an empty list, not every exercise, when tags can't be read", async () => {
-      const api = new WorkoutPlannerAPI(dataService as any);
+    it("lists a file name once when two pages share it", async () => {
+      const api = withPages({
+        "exercises/A/Squat.md": {},
+        "exercises/B/Squat.md": {},
+      });
+
+      expect(await api.getExercises()).toEqual(["Squat"]);
+    });
+
+    it("falls back to the exercises in the log when there are no pages", async () => {
+      const api = withPages({ "notes/Squat.md": { tags: ["legs"] } }, [
+        { date: "2026-01-10", exercise: "Deadlift", reps: 3, weight: 140, volume: 420 },
+        { date: "2026-01-11", exercise: "Squat", reps: 3, weight: 140, volume: 420 },
+      ]);
+
+      expect(await api.getExercises()).toEqual(["Deadlift", "Squat"]);
+      // Without pages there are no tags to match: empty, never unfiltered
+      expect(await api.getExercises({ tag: "legs" })).toEqual([]);
+    });
+
+    it("falls back to the log without a library", async () => {
+      const api = new WorkoutPlannerAPI(noLogs);
 
       expect(await api.getExercises({ tag: "chest" })).toEqual([]);
-      expect(await api.getExercises()).toEqual([
-        "Bench Press",
-        "Deadlift",
-        "Squat",
-      ]);
     });
   });
 });

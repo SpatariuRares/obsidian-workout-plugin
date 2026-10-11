@@ -6,6 +6,14 @@ import { TFile } from "obsidian";
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { StringUtils } from "@app/utils/StringUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import {
+  readWorkoutNote,
+  type NoteSection,
+} from "@app/services/notes/WorkoutNote";
+import { tableBlock } from "@app/features/tables/tableBlock";
+import { timerBlock } from "@app/features/timer/timerBlock";
+import { resolveTimer } from "@app/features/timer/business/resolveTimer";
+import { TIMER_TYPE } from "@app/features/timer/types";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import type {
   AppPort,
@@ -26,13 +34,6 @@ export class WorkoutFileAnalyzer {
       Pick<WorkoutDataPort, "getWorkoutLogData">,
   ) {}
 
-  /**
-   * Analyzes a workout file to extract duration components.
-   * Scans for workout-timer blocks to sum rest times and
-   * counts sets from workout-log blocks.
-   * @param filePath - Path to the workout file to analyze
-   * @returns Analysis result with duration breakdown
-   */
   /**
    * Analyzes a workout file to extract duration components.
    * Scans for workout-timer and workout-log blocks within exercise sections.
@@ -66,24 +67,9 @@ export class WorkoutFileAnalyzer {
       // Read file content
       const content = await this.plugin.app.vault.read(file);
 
-      // Split content into sections by H2 headers to process exercises independently
-      const sections = content.split(/^##\s+/m);
-
-      for (const section of sections) {
-        // Skip empty sections
-        if (!section.trim()) continue;
+      // Each level-2 section is one exercise
+      for (const section of readWorkoutNote(content).sections) {
         this.analyzeSection(section, result);
-      }
-
-      // If no sets found but we analyzed something, ensure consistency
-      if (result.setCount === 0 && result.totalDuration === 0) {
-        // If absolutely nothing found, success might be false or true with 0?
-        // Let's assume minimum 1 set if we didn't error out,
-        // similar to previous logic, but only if we failed to find specific sets
-        // Actually, if sections were empty, result is 0.
-        // Let's keep 0 if 0.
-      } else if (result.setCount === 0) {
-        result.setCount = 1;
       }
 
       // Calculate total duration (SetTime is already accumulated in analyzeSection)
@@ -129,18 +115,33 @@ export class WorkoutFileAnalyzer {
     }
   }
 
+  /** Seconds a workout-timer block runs for; 0 for stopwatches and broken blocks */
+  private timerSeconds(body: string): number {
+    const parsed = timerBlock.parse(body);
+    if (parsed.errors.length > 0) return 0;
+    const { params, error } = resolveTimer(parsed.params, this.plugin.settings);
+    if (error || params.type === TIMER_TYPE.STOPWATCH) return 0;
+    const duration = params.duration ?? 0;
+    return params.type === TIMER_TYPE.INTERVAL
+      ? duration * (params.rounds ?? 1)
+      : duration;
+  }
+
   /**
    * Analyzes a single section for sets, timers, and logs.
    */
   private analyzeSection(
-    sectionContent: string,
+    section: NoteSection,
     result: DurationAnalysisResult,
   ): void {
-    const hasTimer = /```workout-timer/.test(sectionContent);
-    const hasLog = /```workout-log/.test(sectionContent);
+    const timers = section.blocks.filter((b) => b.type === timerBlock.type);
+    const logs = section.blocks.filter((b) => b.type === tableBlock.type);
 
     // Skip parsing if section has no workout components
-    if (!hasTimer && !hasLog) return;
+    if (timers.length === 0 && logs.length === 0) return;
+
+    // Sets and reps are read from the heading and prose, never from code blocks
+    const sectionContent = [section.heading ?? "", section.text].join("\n");
 
     let sets = 0;
 
@@ -192,10 +193,10 @@ export class WorkoutFileAnalyzer {
 
     // 2. Fallback to workout-log limit if sets not found
     if (sets === 0) {
-      const limitMatch = sectionContent.match(/limit:\s*(\d+)/);
-      if (limitMatch) {
-        sets = parseInt(limitMatch[1], 10);
-      }
+      const limit = logs
+        .map((log) => tableBlock.parse(log.body).params.limit)
+        .find((value) => value !== undefined);
+      if (limit) sets = limit;
     }
 
     // 3. Default to 1 set if nothing found
@@ -206,24 +207,16 @@ export class WorkoutFileAnalyzer {
 
     result.setCount += sets;
 
-    // 4. Sum rest timers in this section
-    const timerBlockRegex = /```workout-timer\s*([\s\S]*?)```/g;
-    let timerMatch;
+    // 4. Sum rest timers in this section, as each timer runs (preset,
+    // defaults, rounds); a block with invalid values shows an error instead
+    // of a timer, so it doesn't count
     let sectionTimerSum = 0;
     let timersFound = 0;
-
-    while (
-      (timerMatch = timerBlockRegex.exec(sectionContent)) !== null
-    ) {
-      const blockContent = timerMatch[1];
-      const durationMatch = blockContent.match(/duration:\s*(\d+)/);
-
-      if (durationMatch) {
-        const duration = parseInt(durationMatch[1], 10);
-        if (!isNaN(duration) && duration > 0) {
-          sectionTimerSum += duration;
-          timersFound++;
-        }
+    for (const block of timers) {
+      const seconds = this.timerSeconds(block.body);
+      if (seconds > 0) {
+        sectionTimerSum += seconds;
+        timersFound++;
       }
     }
 

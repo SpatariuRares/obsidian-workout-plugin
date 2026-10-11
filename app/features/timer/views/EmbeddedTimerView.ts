@@ -7,13 +7,12 @@ import {
 } from "@app/features/timer/components/TimerControls";
 import {
   TimerState,
-  TimerPresetConfig,
   EmbeddedTimerParams,
   TIMER_TYPE,
 } from "@app/features/timer/types";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
-import { timerBlock } from "@app/features/timer/timerBlock";
+import { resolveTimer } from "@app/features/timer/business/resolveTimer";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class EmbeddedTimerView extends BaseView {
@@ -41,7 +40,7 @@ export class EmbeddedTimerView extends BaseView {
   ): void {
     try {
       // Resolve parameters from preset and defaults
-      const resolveResult = this.resolveTimerParams(params);
+      const resolveResult = resolveTimer(params, this.plugin.settings);
       if (resolveResult.error) {
         this.renderPresetError(container, resolveResult.error);
         return;
@@ -88,79 +87,6 @@ export class EmbeddedTimerView extends BaseView {
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
     }
-  }
-
-  /**
-   * Resolves timer parameters using the following priority order:
-   * 1. Explicit parameters from the code block
-   * 2. Parameters from the specified preset (if any)
-   * 3. Parameters from the default preset (if configured)
-   * 4. The timerBlock defaults
-   */
-  private resolveTimerParams(params: EmbeddedTimerParams): {
-    params: EmbeddedTimerParams;
-    error?: string;
-  } {
-    const settings = this.plugin.settings;
-    let baseParams: Partial<EmbeddedTimerParams> = {};
-
-    // Check for explicitly specified preset
-    if (params.preset) {
-      const preset = settings.timerPresets[params.preset];
-      if (!preset) {
-        return {
-          params,
-          error: `Timer preset "${params.preset}" not found. Available presets: ${Object.keys(settings.timerPresets).join(", ") || "none"}`,
-        };
-      }
-      baseParams = this.presetToParams(preset);
-    }
-    // Check for default preset if no explicit preset specified
-    else if (settings.defaultTimerPreset) {
-      const defaultPreset =
-        settings.timerPresets[settings.defaultTimerPreset];
-      if (defaultPreset) {
-        baseParams = this.presetToParams(defaultPreset);
-      }
-    }
-
-    // Merge: the preset overrides the defaults, the block overrides both
-    const resolvedParams: EmbeddedTimerParams = {
-      ...timerBlock.defaults,
-      ...baseParams,
-      ...this.filterUndefined(params),
-    };
-
-    // Remove the preset key from resolved params (it's not needed for timer operation)
-    delete resolvedParams.preset;
-
-    return { params: resolvedParams };
-  }
-
-  /**
-   * Converts a TimerPresetConfig to EmbeddedTimerParams format
-   */
-  private presetToParams(
-    preset: TimerPresetConfig,
-  ): Partial<EmbeddedTimerParams> {
-    return {
-      type: preset.type,
-      duration: preset.duration,
-      showControls: preset.showControls,
-      sound: preset.sound,
-      rounds: preset.rounds,
-    };
-  }
-
-  /**
-   * Filters out undefined values from params to ensure proper merging
-   */
-  private filterUndefined(
-    params: EmbeddedTimerParams,
-  ): Partial<EmbeddedTimerParams> {
-    return Object.fromEntries(
-      Object.entries(params).filter(([, value]) => value !== undefined),
-    ) as Partial<EmbeddedTimerParams>;
   }
 
   /**

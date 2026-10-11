@@ -283,6 +283,22 @@ describe("CanvasExporter.exportToCanvas", () => {
       expect(written().nodes[0].text).not.toContain("Row.md");
     });
 
+    it("should ignore timer blocks shown as examples inside a longer fence", async () => {
+      setContent("````markdown\n" + timerBlock(["exercise: Example"]) + "````\n## Squat\n");
+
+      await exporter.exportToCanvas(makeFile("W"), baseOptions);
+
+      expect(written().nodes.map((n) => n.text.split("\n")[0])).toEqual(["## Squat"]);
+    });
+
+    it("should read timer blocks written with Windows line endings", async () => {
+      setContent("```workout-timer\r\nexercise: Plank\r\nduration: 60\r\n```\r\n");
+
+      await exporter.exportToCanvas(makeFile("W"), baseOptions);
+
+      expect(written().nodes[0].text).toContain("## Plank");
+    });
+
     it("should skip timer blocks with no exercise line", async () => {
       setContent(timerBlock(["duration: 30"]) + "## Squat");
 

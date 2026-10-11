@@ -126,6 +126,10 @@ The only place that finds an exercise's page (see "Exercise Pages" in `CONTEXT.m
 
 The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the canonical key however it is written ("Rep", "Wgt (kg)", "HR", "heart rate"), `fieldFor(param)` adds whether it takes whole numbers, its step and quick increment, `readField(field, raw)` reads and checks a typed value (limits apply to every filled-in field), `formatFieldNumber` and `durationSeconds(unit, value)`. The log form and the table use it; never switch on `param.key === "reps"` or compare header strings elsewhere.
 
+#### WorkoutNote (`app/services/notes/WorkoutNote.ts`)
+
+`readWorkoutNote(content)` is the only place that finds the plugin's code blocks in a note's text: each block's type, body and line range (to rewrite it in place), and the note's level-2 sections with their prose. It skips blocks shown inside a longer fence (a ````markdown example) and copes with CRLF. Parse a block's body with its schema (`tableBlock.parse(block.body)`), never with a regex. Used by the duration estimate, canvas export, the block editor and the block-id migration. The timer a `workout-timer` block runs (preset, default preset, defaults) comes from `resolveTimer` (`app/features/timer/business/resolveTimer.ts`).
+
 #### ExerciseDefinitionService
 
 Turns an exercise page (from `ExerciseLibrary`) into a definition: type (`exercise_type`, then `type`, aliases resolved, default strength), muscle tags and declared parameters, and the fields to log (`getParametersForExercise`). `saveExerciseDefinition` writes into the page the library finds and creates `folder/name.md` only when there is none. No cache of its own.

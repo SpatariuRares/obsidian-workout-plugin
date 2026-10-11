@@ -5,6 +5,8 @@
  * with each exercise represented as a node colored by muscle group.
  */
 import { App, TFile } from "obsidian";
+import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import {
   WorkoutPlannerAPI,
   ExerciseStats,
@@ -209,34 +211,24 @@ export class CanvasExporter {
     const exercises: ExerciseInfo[] = [];
     const exerciseSet = new Set<string>(); // Avoid duplicates
 
-    // Pattern 1: Extract exercises from workout-timer code blocks
-    const timerBlockRegex = /```workout-timer\n([\s\S]*?)```/g;
-    let match;
-
-    while ((match = timerBlockRegex.exec(content)) !== null) {
-      const blockContent = match[1];
-      const exerciseLine = blockContent.match(/exercise:\s*(.+)/i);
-      const durationLine = blockContent.match(/duration:\s*(\d+)/i);
-      const supersetLine = blockContent.match(/superset:\s*true/i);
-
-      if (exerciseLine) {
-        const exerciseName = exerciseLine[1].trim();
-        if (
-          exerciseName &&
-          !exerciseSet.has(exerciseName.toLowerCase())
-        ) {
-          exerciseSet.add(exerciseName.toLowerCase());
-          const muscleGroups =
-            await this.muscleTags.musclesForExercise(exerciseName);
-          exercises.push({
-            name: exerciseName,
-            muscleGroups,
-            duration: durationLine
-              ? parseInt(durationLine[1], 10)
-              : undefined,
-            isSuperset: !!supersetLine,
-          });
-        }
+    // Pattern 1: exercises named in workout-timer blocks
+    let match: RegExpExecArray | null;
+    const timers = readWorkoutNote(content).blocks.filter(
+      (block) => block.type === timerBlock.type,
+    );
+    for (const block of timers) {
+      const { exercise, duration, superset } = timerBlock.parse(block.body).params;
+      const exerciseName = exercise?.trim();
+      if (exerciseName && !exerciseSet.has(exerciseName.toLowerCase())) {
+        exerciseSet.add(exerciseName.toLowerCase());
+        const muscleGroups =
+          await this.muscleTags.musclesForExercise(exerciseName);
+        exercises.push({
+          name: exerciseName,
+          muscleGroups,
+          duration,
+          isSuperset: superset === true,
+        });
       }
     }
 

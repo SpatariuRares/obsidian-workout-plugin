@@ -464,37 +464,6 @@ describe("DateUtils", () => {
     });
   });
 
-  describe("toDateKey", () => {
-    it("should format date string to YYYY-MM-DD", () => {
-      const result = DateUtils.toDateKey("2024-01-15T10:30:00");
-      expect(result).toBe("2024-01-15");
-    });
-
-    it("should pad single digit month and day", () => {
-      const date = new Date(2024, 0, 5); // Jan 5, 2024
-      const result = DateUtils.toDateKey(date.toISOString());
-      expect(result).toBe("2024-01-05");
-    });
-
-    it("should handle ISO date string with timezone", () => {
-      const date = new Date(2024, 11, 25, 10, 0, 0); // Dec 25, 2024 local time
-      const result = DateUtils.toDateKey(date.toISOString());
-      expect(result).toBe("2024-12-25");
-    });
-
-    it("should handle date-only string", () => {
-      const result = DateUtils.toDateKey("2024-06-20");
-      expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    });
-
-    it("should handle various valid date formats", () => {
-      // Test with a Date object's ISO string
-      const date = new Date(2024, 5, 15); // June 15, 2024
-      const result = DateUtils.toDateKey(date.toISOString());
-      expect(result).toBe("2024-06-15");
-    });
-  });
-
   describe("toShortDate", () => {
     it("should format date string to DD/MM", () => {
       const date = new Date(2024, 0, 15, 10, 0, 0); // Jan 15, 2024

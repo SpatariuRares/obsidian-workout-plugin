@@ -1,6 +1,7 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
 import { DataAggregation } from "@app/utils/data/DataAggregation";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { StringUtils } from "@app/utils/StringUtils";
 
 export interface SummaryMetrics {
@@ -20,7 +21,7 @@ export function calculateSummaryMetrics(
   data: WorkoutLogData[],
   history: WorkoutLogData[] = data,
 ): SummaryMetrics {
-  const totalWorkouts = DataAggregation.countUniqueWorkouts(data);
+  const totalWorkouts = new TrainingHistory(data).sessions().length;
   const totalVolume = DataAggregation.calculateTotalVolume(data);
 
   const uniqueDates = DateUtils.getUniqueDates(data);

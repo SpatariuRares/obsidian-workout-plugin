@@ -2,17 +2,12 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 
 /**
  * Number of recent workouts to display in the comparison
  */
 const RECENT_WORKOUT_COUNT = 5;
-
-/**
- * Minimum number of entries needed to consider a workout session
- * (need at least 2 entries to calculate actual duration)
- */
-const MIN_ENTRIES_FOR_SESSION = 2;
 
 /** Default estimated duration per set in seconds */
 const DEFAULT_SET_DURATION_SECONDS = 45;
@@ -106,61 +101,25 @@ export class DurationComparison {
   }
 
   /**
-   * Calculates workout sessions from log data
-   * Groups entries by workout name and date, then calculates durations
+   * Named sessions with a plausible duration, compared with their estimate
    * @param data - Workout log data
    * @returns Array of workout sessions with duration data
    */
   private static calculateWorkoutSessions(
     data: WorkoutLogData[],
   ): WorkoutSession[] {
-    // Group entries by workout and date
-    const sessionGroups = new Map<string, WorkoutLogData[]>();
-
-    data.forEach((entry) => {
-      if (!entry.timestamp || !entry.workout) {
-        return;
-      }
-
-      // Create a key combining workout name and date
-      const sessionKey = `${entry.workout}|${entry.date}`;
-      const group = sessionGroups.get(sessionKey) || [];
-      group.push(entry);
-      sessionGroups.set(sessionKey, group);
-    });
-
     const sessions: WorkoutSession[] = [];
 
-    sessionGroups.forEach((entries) => {
-      // Need at least 2 entries to calculate actual duration
-      if (entries.length < MIN_ENTRIES_FOR_SESSION) {
+    new TrainingHistory(data).sessions().forEach((session) => {
+      if (!session.workout || session.duration === undefined) {
         return;
       }
 
-      // Sort entries by timestamp
-      const sortedEntries = entries.sort(
-        (a, b) => (a.timestamp || 0) - (b.timestamp || 0),
-      );
-
-      const firstEntry = sortedEntries[0];
-      const lastEntry = sortedEntries[sortedEntries.length - 1];
-
-      const startTimestamp = firstEntry.timestamp || 0;
-      const endTimestamp = lastEntry.timestamp || 0;
-
-      // Calculate actual duration in seconds
-      const actualDuration = Math.round(
-        (endTimestamp - startTimestamp) / 1000,
-      );
-
-      // Skip if actual duration is 0 or negative (invalid data)
-      if (actualDuration <= 0) {
-        return;
-      }
+      const actualDuration = session.duration;
 
       // Calculate estimated duration
       // Estimate: setCount * 45 seconds per set + (setCount - 1) * 90 seconds rest between sets
-      const setCount = entries.length;
+      const setCount = session.sets.length;
       const estimatedDuration =
         setCount * DEFAULT_SET_DURATION_SECONDS +
         Math.max(0, setCount - 1) * DEFAULT_REST_BETWEEN_SETS_SECONDS;
@@ -173,19 +132,14 @@ export class DurationComparison {
             100
           : 0;
 
-      // Read names from the entries: splitting the key would cut a
-      // workout name that contains "|"
-      const workout = entries[0].workout ?? "";
-      const date = entries[0].date;
-
       sessions.push({
-        workout,
-        date,
+        workout: session.workout,
+        date: session.day,
         actualDuration,
         estimatedDuration,
         variancePercent,
-        startTimestamp,
-        endTimestamp,
+        startTimestamp: session.start ?? 0,
+        endTimestamp: session.end ?? 0,
         setCount,
       });
     });

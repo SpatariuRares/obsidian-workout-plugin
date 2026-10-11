@@ -1,5 +1,5 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { DataAggregation } from "@app/utils/data/DataAggregation";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 
 export interface RecentWorkout {
   date: string;
@@ -7,17 +7,18 @@ export interface RecentWorkout {
   totalVolume: number;
 }
 
+/** The latest sessions, most recent first, with their total volume. */
 export function getRecentWorkouts(
   data: WorkoutLogData[],
   limit: number,
 ): RecentWorkout[] {
-  const workoutMap = DataAggregation.groupByDateAndWorkout(data);
-
-  return Array.from(workoutMap.values())
-    .sort(
-      (a, b) =>
-        new Date(b.timestamp).getTime() -
-        new Date(a.timestamp).getTime(),
-    )
-    .slice(0, limit);
+  return new TrainingHistory(data)
+    .sessions()
+    .reverse()
+    .slice(0, limit)
+    .map((session) => ({
+      date: session.day,
+      workout: session.workout,
+      totalVolume: session.sets.reduce((sum, s) => sum + s.volume, 0),
+    }));
 }

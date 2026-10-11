@@ -6,6 +6,7 @@ import { TFile } from "obsidian";
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { StringUtils } from "@app/utils/StringUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import type {
   AppPort,
   SettingsPort,
@@ -14,12 +15,6 @@ import type {
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 60;
-
-/** Minimum valid workout duration in seconds (5 minutes) */
-const MIN_VALID_DURATION_SECONDS = 300;
-
-/** Maximum valid workout duration in seconds (5 hours) */
-const MAX_VALID_DURATION_SECONDS = 18000;
 
 /** Maximum reasonable set count (guards against parsing years like 2023 as sets) */
 const MAX_REASONABLE_SETS = 100;
@@ -120,39 +115,14 @@ export class WorkoutFileAnalyzer {
       const workoutName =
         filePath.split("/").pop()?.replace(".md", "") || "";
 
-      // Map to store timestamps by date
-      const sessionTimestamps: Record<string, number[]> = {};
-      for (const log of logs) {
-        // Hand-edited CSVs sometimes wrap the name in stray quotes
-        const logWorkout = log.workout?.replace(/^["']|["']$/g, "");
-        if (logWorkout !== workoutName) continue;
-        const timestamp = log.timestamp ?? 0;
-        if (timestamp <= 0) continue;
-        const dateStr = log.date.split("T")[0]; // ISO format YYYY-MM-DD
-        if (!dateStr) continue;
-        (sessionTimestamps[dateStr] ??= []).push(timestamp);
-      }
-
-      // Find the most recent session with valid duration
-      const dates = Object.keys(sessionTimestamps).sort().reverse();
-
-      for (const date of dates) {
-        const stamps = sessionTimestamps[date];
-        if (stamps.length < 2) continue; // Need at least start and end
-
-        const min = Math.min(...stamps);
-        const max = Math.max(...stamps);
-        const duration = (max - min) / 1000; // Convert ms to seconds
-
-        // Basic validation: duration > 5 mins (300s) and < 5 hours (18000s)
-        if (
-          duration > MIN_VALID_DURATION_SECONDS &&
-          duration < MAX_VALID_DURATION_SECONDS
-        ) {
-          result.historicalDuration = duration;
-          result.lastSessionDate = date;
-          break;
-        }
+      // Most recent session with a plausible duration
+      const latest = new TrainingHistory(logs)
+        .sessions({ workout: workoutName })
+        .filter((session) => session.duration !== undefined)
+        .pop();
+      if (latest) {
+        result.historicalDuration = latest.duration;
+        result.lastSessionDate = latest.day;
       }
     } catch {
       return;

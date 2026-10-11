@@ -1,6 +1,7 @@
 import { CONSTANTS } from "@app/constants";
 import { t } from "@app/i18n";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { trainingDay } from "@app/services/history/TrainingHistory";
 
 /**
  * Utility class for date operations and time period calculations
@@ -18,10 +19,10 @@ export class DateUtils {
   }
 
   /**
-   * Format a Date object to ISO date string (YYYY-MM-DD)
+   * The training day (local YYYY-MM-DD) of a Date
    */
   static formatDate(date: Date): string {
-    return date.toISOString().split("T")[0];
+    return trainingDay(date.toISOString());
   }
 
   /**
@@ -145,22 +146,6 @@ export class DateUtils {
       return `${hours}:${minutes}`;
     } catch {
       return t("table.notAvailable");
-    }
-  }
-
-  /**
-   * Format date as key (YYYY-MM-DD)
-   * Used for grouping rows by date
-   */
-  static toDateKey(dateString: string): string {
-    try {
-      const date = new Date(dateString);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const day = date.getDate().toString().padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    } catch {
-      return CONSTANTS.WORKOUT.TABLE.DATE_KEYS.INVALID;
     }
   }
 

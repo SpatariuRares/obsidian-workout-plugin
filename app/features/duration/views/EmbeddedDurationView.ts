@@ -6,7 +6,7 @@ import { BaseView } from "@app/features/common/views/BaseView";
 import { EmbeddedDurationParams } from "@app/features/duration/types";
 import { WorkoutFileAnalyzer } from "@app/features/duration/services/WorkoutFileAnalyzer";
 import { DurationRenderer } from "@app/features/duration/renderers/DurationRenderer";
-import { resolveFilePath } from "@app/utils/path-resolver";
+import { resolveWorkoutPath } from "@app/utils/path-resolver";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 /**
@@ -40,7 +40,11 @@ export class EmbeddedDurationView extends BaseView {
 
       // Determine which file to analyze
       const targetPath = params.workout
-        ? resolveFilePath(params.workout, currentFilePath)
+        ? resolveWorkoutPath(
+            params.workout,
+            currentFilePath,
+            this.plugin.app.metadataCache,
+          )
         : currentFilePath;
 
       // Analyze the file for duration data

@@ -26,3 +26,5 @@ strings_found/*
 
 # Temp files for execution scripts
 .tmp/
+# Local issue tracker (agent skills)
+.scratch/

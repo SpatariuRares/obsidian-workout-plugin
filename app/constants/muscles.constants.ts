@@ -10,62 +10,61 @@
  * @module muscles.constants
  */
 
-/**
- * Canonical muscle groups for tag mapping.
- * These are the normalized muscle group names that tags can map to.
- */
-export const CANONICAL_MUSCLE_GROUPS = [
-  "chest",
-  "back",
-  "shoulders",
-  "biceps",
-  "triceps",
-  "quads",
-  "hamstrings",
-  "glutes",
-  "calves",
-  "abs",
-  "core",
-  "forearms",
-  "traps",
-  "rear_delts",
-  // Specific muscles (see MUSCLE_PARENT_GROUPS)
-  "upper_chest",
-  "mid_chest",
-  "lower_chest",
-  "front_delts",
-  "side_delts",
-  "lats",
-  "rhomboids",
-  "lower_back",
-  "obliques",
-  "serratus",
-] as const;
-
-export type CanonicalMuscleGroup =
-  (typeof CANONICAL_MUSCLE_GROUPS)[number];
+/** Side of the body a muscle is on, for front/back balance ("both": counted on neither) */
+export type BodySide = "front" | "back" | "both";
 
 /**
- * Specific muscles and the broad group they belong to.
- * The heat map draws a specific muscle in its own zone, while a broad tag
- * (e.g. "chest") is still spread over all of that group's zones.
- * Balance analysis adds specific muscles to their parent's total.
+ * Every muscle group tags can map to: one entry per muscle. A specific
+ * muscle names the broad group it belongs to (`parent`): the heat map draws
+ * it in its own zone, while a broad tag (e.g. "chest") is spread over all of
+ * that group's zones. Adding a muscle = an entry here, a zone in
+ * HEAT_MAP_ZONES and a `data-muscle` group in BodyViewSvg.
  */
+export const MUSCLE_GROUPS = [
+  { id: "chest", side: "front" },
+  { id: "back", side: "back" },
+  { id: "shoulders", side: "both" },
+  { id: "biceps", side: "front" },
+  { id: "triceps", side: "back" },
+  { id: "quads", side: "front" },
+  { id: "hamstrings", side: "back" },
+  { id: "glutes", side: "back" },
+  { id: "calves", side: "back" },
+  { id: "abs", side: "front" },
+  { id: "core", side: "front" },
+  { id: "forearms", side: "both" },
+  { id: "traps", side: "back" },
+  { id: "rear_delts", parent: "shoulders", side: "back" },
+  { id: "upper_chest", parent: "chest", side: "front" },
+  { id: "mid_chest", parent: "chest", side: "front" },
+  { id: "lower_chest", parent: "chest", side: "front" },
+  { id: "front_delts", parent: "shoulders", side: "front" },
+  { id: "side_delts", parent: "shoulders", side: "both" },
+  { id: "lats", parent: "back", side: "back" },
+  { id: "rhomboids", parent: "back", side: "back" },
+  { id: "lower_back", parent: "back", side: "back" },
+  { id: "obliques", parent: "core", side: "front" },
+  { id: "serratus", parent: "core", side: "front" },
+] as const satisfies readonly {
+  id: string;
+  parent?: string;
+  side: BodySide;
+}[];
+
+export type CanonicalMuscleGroup = (typeof MUSCLE_GROUPS)[number]["id"];
+
+/** Ids of every muscle group, in MUSCLE_GROUPS order */
+export const CANONICAL_MUSCLE_GROUPS: readonly CanonicalMuscleGroup[] =
+  MUSCLE_GROUPS.map((group) => group.id);
+
+/** Specific muscles and the broad group they belong to (from MUSCLE_GROUPS) */
 export const MUSCLE_PARENT_GROUPS: Partial<
   Record<CanonicalMuscleGroup, CanonicalMuscleGroup>
-> = {
-  upper_chest: "chest",
-  mid_chest: "chest",
-  lower_chest: "chest",
-  front_delts: "shoulders",
-  side_delts: "shoulders",
-  rear_delts: "shoulders",
-  lats: "back",
-  rhomboids: "back",
-  lower_back: "back",
-  obliques: "core",
-  serratus: "core",
-};
+> = Object.fromEntries(
+  MUSCLE_GROUPS.flatMap((group) =>
+    "parent" in group ? [[group.id, group.parent]] : [],
+  ),
+);
 
 /**
  * Body part regions for exercise categorization.

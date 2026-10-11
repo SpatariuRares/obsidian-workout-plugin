@@ -4,7 +4,10 @@ import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
-import { MUSCLE_PARENT_GROUPS } from "@app/constants/muscles.constants";
+import {
+  MUSCLE_GROUPS,
+  type BodySide,
+} from "@app/constants/muscles.constants";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -18,34 +21,15 @@ export interface ImbalanceAnalysis {
 export class MuscleBalanceAnalyzer {
   private static readonly IMBALANCE_THRESHOLD = 0.3; // 30% difference
 
-  private static readonly FRONT_MUSCLES = [
-    "chest",
-    "abs",
-    "biceps",
-    "quads",
-  ];
-  private static readonly BACK_MUSCLES = [
-    "back",
-    "triceps",
-    "hamstrings",
-    "glutes",
-  ];
-
-  /**
-   * Volume of a group plus the specific muscles under it
-   * (e.g. back + lats + rhomboids + lower_back)
-   */
-  private static getGroupTotal(
+  /** Total of every muscle group on one side of the body (see MUSCLE_GROUPS) */
+  private static sideTotal(
     muscleData: Map<string, MuscleGroupData>,
-    group: string,
+    side: BodySide,
   ): number {
-    let total = muscleData.get(group)?.volume || 0;
-    for (const [muscle, parent] of Object.entries(MUSCLE_PARENT_GROUPS)) {
-      if (parent === group) {
-        total += muscleData.get(muscle)?.volume || 0;
-      }
-    }
-    return total;
+    return MUSCLE_GROUPS.filter((group) => group.side === side).reduce(
+      (sum, group) => sum + (muscleData.get(group.id)?.total || 0),
+      0,
+    );
   }
 
   /**
@@ -55,7 +39,7 @@ export class MuscleBalanceAnalyzer {
     muscleData: Map<string, MuscleGroupData>,
   ): ImbalanceAnalysis {
     const volumes = Array.from(muscleData.values())
-      .map((m) => m.volume)
+      .map((m) => m.total)
       .filter((v) => v > 0);
 
     if (volumes.length === 0) {
@@ -71,14 +55,8 @@ export class MuscleBalanceAnalyzer {
     const imbalances: string[] = [];
 
     // Check front-back imbalance
-    const frontVolume = this.FRONT_MUSCLES.reduce(
-      (sum, muscle) => sum + this.getGroupTotal(muscleData, muscle),
-      0,
-    );
-    const backVolume = this.BACK_MUSCLES.reduce(
-      (sum, muscle) => sum + this.getGroupTotal(muscleData, muscle),
-      0,
-    );
+    const frontVolume = this.sideTotal(muscleData, "front");
+    const backVolume = this.sideTotal(muscleData, "back");
 
     const maxVolume = Math.max(frontVolume, backVolume);
     if (
@@ -87,9 +65,9 @@ export class MuscleBalanceAnalyzer {
         this.IMBALANCE_THRESHOLD
     ) {
       imbalances.push(
-        `Front-Back imbalance detected (${
-          frontVolume > backVolume ? "Front" : "Back"
-        } dominant)`,
+        frontVolume > backVolume
+          ? t("dashboard.muscleHeatMap.imbalance.frontDominant")
+          : t("dashboard.muscleHeatMap.imbalance.backDominant"),
       );
     }
 

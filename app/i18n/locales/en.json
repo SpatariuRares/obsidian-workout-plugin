@@ -159,6 +159,10 @@
       "title": "Volume analytics"
     },
     "muscleHeatMap": {
+      "imbalance": {
+        "backDominant": "Front-back imbalance: your back works much more than your front",
+        "frontDominant": "Front-back imbalance: your front works much more than your back"
+      },
       "metrics": {
         "volume": "Volume",
         "sets": "Sets",

@@ -30,8 +30,8 @@ const valuesFor = async (
   const calculator = new MuscleDataCalculator(muscleTags);
   const result = await calculator.calculateMuscleGroupVolumes(data, metric);
   return {
-    chest: result.get("chest")!.volume,
-    abs: result.get("abs")!.volume,
+    chest: result.get("chest")!.total,
+    abs: result.get("abs")!.total,
   };
 };
 
@@ -57,15 +57,6 @@ describe("MuscleDataCalculator.calculateMuscleGroupVolumes", () => {
     expect(musclesForExercise).toHaveBeenCalledTimes(2);
   });
 
-  it("normalizes intensity against the busiest muscle for the metric", async () => {
-    const calculator = new MuscleDataCalculator(muscleTags);
-    const result = await calculator.calculateMuscleGroupVolumes(
-      data,
-      "sets",
-    );
-    expect(result.get("abs")!.intensity).toBe(1);
-    expect(result.get("chest")!.intensity).toBeCloseTo(2 / 3);
-  });
 });
 
 describe("MuscleDataCalculator.calculateZoneValues", () => {

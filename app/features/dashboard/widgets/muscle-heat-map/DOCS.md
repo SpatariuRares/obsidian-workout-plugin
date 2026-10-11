@@ -24,7 +24,7 @@ muscle-heat-map/
 │
 ├── business/                 # Logica dati
 │   ├── MuscleDataCalculator.ts   # Filtraggio, totali per muscolo, valori delle zone
-│   ├── MuscleBalanceAnalyzer.ts  # Analisi sbilanciamenti front/back (somma i sottogruppi nel padre)
+│   ├── MuscleBalanceAnalyzer.ts  # Analisi sbilanciamenti front/back (lato da MUSCLE_GROUPS)
 │   └── index.ts
 │
 └── body/                     # Rendering SVG
@@ -40,7 +40,7 @@ muscle-heat-map/
 1. Nell'SVG (`BodyViewSvg.ts`) dai al gruppo `data-muscle="<zoneId>"`. Se la zona è una parte di una forma esistente, duplica il path e taglialo con un `clipPath` (vedi petto, romboidi, serrato); gli id dei clip usano il prefisso `${uid}-` per essere unici per istanza.
 2. In `zones.ts` aggiungi `<zoneId>: { <gruppo canonico>: peso, ... }`.
 
-I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca nel registro o viceversa. `__tests__/HeatMapColors.characterization.test.ts` fissa i colori di ogni zona per dati di prova: se cambi pesi o zone di proposito, aggiorna lo snapshot (`npm test -- -u <file>`).
+Un muscolo nuovo va prima in `MUSCLE_GROUPS` (`app/constants/muscles.constants.ts`), con il gruppo padre se è specifico e il lato del corpo; `app/constants/__tests__/muscleRegistry.test.ts` fallisce se non è disegnato in nessuna zona. I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca nel registro o viceversa. `__tests__/HeatMapColors.characterization.test.ts` fissa i colori di ogni zona per dati di prova: se cambi pesi o zone di proposito, aggiorna lo snapshot (`npm test -- -u <file>`).
 
 ## Dettaglio File
 
@@ -58,7 +58,7 @@ I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca ne
 2. `calculateMuscleGroupVolumes()` - usa `MuscleTagService.musclesForExercise()` (una volta per esercizio) per trovare i muscoli e somma la metrica scelta
 3. `calculateZoneValues()` - converte i totali per muscolo nei valori delle zone tramite `HEAT_MAP_ZONES`
 
-**`MuscleBalanceAnalyzer.ts`** - Confronta il volume dei muscoli frontali (chest, abs, biceps, quads) con quelli posteriori (back, triceps, hamstrings, glutes), contando i sottogruppi (es. `lats`, `upper_chest`) nel gruppo padre. Oltre il 30% di differenza mostra un warning.
+**`MuscleBalanceAnalyzer.ts`** - Somma il totale dei muscoli di ciascun lato del corpo secondo il campo `side` di `MUSCLE_GROUPS` (`app/constants/muscles.constants.ts`); i muscoli `both` (spalle, deltoidi laterali, avambracci) non contano. Oltre il 30% di differenza mostra un warning tradotto (`dashboard.muscleHeatMap.imbalance.*`).
 
 **Da esercizio a muscoli** (`app/services/exercise/MuscleTagService.ts`, `musclesForExercise()`):
 

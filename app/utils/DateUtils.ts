@@ -11,14 +11,6 @@ export class DateUtils {
   private static readonly MS_PER_DAY = 24 * 60 * 60 * 1000;
 
   /**
-   * Extract date only (YYYY-MM-DD) from ISO datetime string
-   * Handles both full ISO strings and date-only strings
-   */
-  static extractDateOnly(isoDate: string): string {
-    return isoDate.split("T")[0];
-  }
-
-  /**
    * The training day (local YYYY-MM-DD) of a Date
    */
   static formatDate(date: Date): string {
@@ -81,37 +73,6 @@ export class DateUtils {
   ): WorkoutLogData[] {
     const cutoffDate = this.getTimeFrameDate(timeFrame);
     return this.filterByDateRange(data, cutoffDate);
-  }
-
-  /**
-   * Get unique dates from workout data (YYYY-MM-DD format)
-   */
-  static getUniqueDates(data: WorkoutLogData[]): string[] {
-    const dates = new Set(
-      data.map((d) => this.extractDateOnly(d.date)),
-    );
-    return Array.from(dates).sort();
-  }
-
-  /**
-   * Calculate week number relative to today (0 = current week)
-   */
-  static getWeekNumberFromToday(date: Date): number {
-    const today = new Date();
-    const diffTime = today.getTime() - date.getTime();
-    const diffDays = Math.floor(diffTime / this.MS_PER_DAY);
-    return Math.round(diffDays / 7);
-  }
-
-  /**
-   * Group dates by week number (0 = current week, 1 = last week, etc.)
-   */
-  static groupDatesByWeek(dates: string[]): Set<number> {
-    return new Set(
-      dates.map((dateStr) =>
-        this.getWeekNumberFromToday(new Date(dateStr)),
-      ),
-    );
   }
 
   /**

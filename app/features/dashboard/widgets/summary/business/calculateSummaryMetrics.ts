@@ -1,6 +1,4 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import { DateUtils } from "@app/utils/DateUtils";
-import { DataAggregation } from "@app/utils/data/DataAggregation";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { StringUtils } from "@app/utils/StringUtils";
 
@@ -21,26 +19,12 @@ export function calculateSummaryMetrics(
   data: WorkoutLogData[],
   history: WorkoutLogData[] = data,
 ): SummaryMetrics {
-  const totalWorkouts = new TrainingHistory(data).sessions().length;
-  const totalVolume = DataAggregation.calculateTotalVolume(data);
-
-  const uniqueDates = DateUtils.getUniqueDates(data);
-  const weeks = DateUtils.groupDatesByWeek(uniqueDates);
-  const sortedWeeks = Array.from(weeks).sort((a, b) => a - b);
-
-  let currentStreak = 0;
-  for (let i = 0; i < sortedWeeks.length; i++) {
-    if (sortedWeeks[i] === i) {
-      currentStreak++;
-    } else {
-      break;
-    }
-  }
+  const shown = new TrainingHistory(data);
 
   return {
-    totalWorkouts,
-    currentStreak,
-    totalVolume: Math.round(totalVolume),
+    totalWorkouts: shown.sessions().length,
+    currentStreak: shown.streak(),
+    totalVolume: Math.round(shown.totalVolume()),
     personalRecords: countExercisesWithNewRecord(data, history),
   };
 }

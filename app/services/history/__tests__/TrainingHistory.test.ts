@@ -287,3 +287,92 @@ describe("TrainingHistory.heaviestPerDay", () => {
     expect(history.heaviestPerDay("Bench")).toEqual([80, 90]);
   });
 });
+
+describe("TrainingHistory.streak", () => {
+  // Wednesday 17 January 2024, local time
+  const today = new Date(2024, 0, 17, 12, 0);
+  const at = (iso: string) => set(iso, "Push");
+
+  it("should count consecutive calendar weeks with a session, starting this week", () => {
+    const history = new TrainingHistory([
+      at("2024-01-15T17:00:00.000Z"), // Mon, this week
+      at("2024-01-14T17:00:00.000Z"), // Sun, last week
+      at("2024-01-03T17:00:00.000Z"), // Wed, two weeks ago
+    ]);
+
+    expect(history.streak(today)).toBe(3);
+  });
+
+  it("should not break while the current week has no session yet", () => {
+    const history = new TrainingHistory([
+      at("2024-01-10T17:00:00.000Z"),
+      at("2024-01-03T17:00:00.000Z"),
+    ]);
+
+    expect(history.streak(today)).toBe(2);
+  });
+
+  it("should stop at the first week without a session", () => {
+    const history = new TrainingHistory([
+      at("2024-01-16T17:00:00.000Z"),
+      at("2024-01-03T17:00:00.000Z"),
+    ]);
+
+    expect(history.streak(today)).toBe(1);
+  });
+
+  it("should start weeks on Monday in local time", () => {
+    const history = new TrainingHistory([
+      at("2024-01-14T23:30:00.000Z"), // Mon 00:30 in Rome: this week
+      at("2024-01-07T12:00:00.000Z"), // Sun: two weeks ago
+    ]);
+
+    expect(history.streak(today)).toBe(1);
+  });
+
+  it("should be zero without sessions", () => {
+    expect(new TrainingHistory([]).streak(today)).toBe(0);
+  });
+});
+
+describe("TrainingHistory volume", () => {
+  const lift = (iso: string, exercise: string, volume: number) =>
+    set(iso, "Push", { exercise, volume });
+
+  it("should total the volume of every set", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-15T17:00:00.000Z", "Squat", 500),
+      lift("2024-01-16T17:00:00.000Z", "Bench", 300),
+    ]);
+
+    expect(history.totalVolume()).toBe(800);
+  });
+
+  it("should sum volume per training day", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-15T17:00:00.000Z", "Squat", 500),
+      lift("2024-01-15T23:30:00.000Z", "Squat", 300), // 16 Jan in Rome
+    ]);
+
+    expect(history.volumeByDay()).toEqual(
+      new Map([
+        ["2024-01-15", 500],
+        ["2024-01-16", 300],
+      ]),
+    );
+  });
+
+  it("should rank exercises by volume, matching names ignoring case and spacing", () => {
+    const history = new TrainingHistory([
+      lift("2024-01-15T17:00:00.000Z", "Squat", 500),
+      lift("2024-01-15T17:10:00.000Z", " squat", 400),
+      lift("2024-01-15T17:20:00.000Z", "Bench", 600),
+      lift("2024-01-15T17:30:00.000Z", "Curl", 100),
+    ]);
+
+    expect(history.topExercisesByVolume(2)).toEqual([
+      ["Squat", 900],
+      ["Bench", 600],
+    ]);
+  });
+});

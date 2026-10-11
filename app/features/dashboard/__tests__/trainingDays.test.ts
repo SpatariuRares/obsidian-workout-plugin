@@ -71,4 +71,20 @@ describe("dashboard training days and sessions", () => {
 
     expect(trend.data[trend.data.length - 1]).toBe(500);
   });
+
+  it("should keep the streak while this week has no workout yet", () => {
+    const daysAgo = (n: number) => {
+      const d = new Date();
+      d.setDate(d.getDate() - n);
+      d.setHours(12, 0, 0, 0);
+      return d;
+    };
+
+    const metrics = calculateSummaryMetrics([
+      set(daysAgo(7), "Push"),
+      set(daysAgo(14), "Push"),
+    ]);
+
+    expect(metrics.currentStreak).toBe(2);
+  });
 });

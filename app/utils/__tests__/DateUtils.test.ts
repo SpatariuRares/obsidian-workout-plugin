@@ -2,25 +2,6 @@ import { DateUtils } from "@app/utils/DateUtils";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 describe("DateUtils", () => {
-  describe("extractDateOnly", () => {
-    it("should extract date from ISO datetime string", () => {
-      const result = DateUtils.extractDateOnly("2024-01-15T10:30:00");
-      expect(result).toBe("2024-01-15");
-    });
-
-    it("should handle date-only strings", () => {
-      const result = DateUtils.extractDateOnly("2024-01-15");
-      expect(result).toBe("2024-01-15");
-    });
-
-    it("should handle ISO strings with timezone", () => {
-      const result = DateUtils.extractDateOnly(
-        "2024-01-15T10:30:00.000Z",
-      );
-      expect(result).toBe("2024-01-15");
-    });
-  });
-
   describe("formatDate", () => {
     it("should format Date object to YYYY-MM-DD", () => {
       const date = new Date("2024-01-15T10:30:00");
@@ -272,53 +253,6 @@ describe("DateUtils", () => {
     });
   });
 
-  describe("getUniqueDates", () => {
-    const mockData: WorkoutLogData[] = [
-      {
-        date: "2024-01-15T10:00:00",
-        exercise: "Squat",
-        reps: 10,
-        weight: 100,
-        volume: 1000,
-        origine: "test",
-        workout: "Lower A",
-        timestamp: new Date("2024-01-15T10:00:00").getTime(),
-      },
-      {
-        date: "2024-01-15T14:00:00",
-        exercise: "Leg Press",
-        reps: 12,
-        weight: 200,
-        volume: 2400,
-        origine: "test",
-        workout: "Lower A",
-        timestamp: new Date("2024-01-15T14:00:00").getTime(),
-      },
-      {
-        date: "2024-01-16T10:00:00",
-        exercise: "Bench Press",
-        reps: 8,
-        weight: 80,
-        volume: 640,
-        origine: "test",
-        workout: "Upper A",
-        timestamp: new Date("2024-01-16T10:00:00").getTime(),
-      },
-    ];
-
-    it("should return unique dates sorted", () => {
-      const result = DateUtils.getUniqueDates(mockData);
-
-      expect(result).toHaveLength(2);
-      expect(result).toEqual(["2024-01-15", "2024-01-16"]);
-    });
-
-    it("should handle empty data", () => {
-      const result = DateUtils.getUniqueDates([]);
-      expect(result).toEqual([]);
-    });
-  });
-
   describe("isSameDay", () => {
     it("should return true for same day", () => {
       const date1 = new Date("2024-01-15T10:00:00");
@@ -361,72 +295,6 @@ describe("DateUtils", () => {
       expect(result).toHaveLength(1);
       const today = new Date();
       expect(result[0]).toBe(DateUtils.formatDate(today));
-    });
-  });
-
-  describe("getWeekNumberFromToday", () => {
-    it("should return 0 for current week", () => {
-      const today = new Date();
-      const result = DateUtils.getWeekNumberFromToday(today);
-
-      expect(result).toBe(0);
-    });
-
-    it("should return 1 for last week", () => {
-      const lastWeek = new Date();
-      lastWeek.setDate(lastWeek.getDate() - 7);
-      const result = DateUtils.getWeekNumberFromToday(lastWeek);
-
-      expect(result).toBe(1);
-    });
-
-    it("should return 4 for 4 weeks ago", () => {
-      const fourWeeksAgo = new Date();
-      fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28);
-      const result = DateUtils.getWeekNumberFromToday(fourWeeksAgo);
-
-      expect(result).toBe(4);
-    });
-  });
-
-  describe("groupDatesByWeek", () => {
-    it("should group dates by week number", () => {
-      const today = new Date();
-      const dates = [
-        DateUtils.formatDate(today),
-        DateUtils.formatDate(
-          new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-        ),
-        DateUtils.formatDate(
-          new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-        ),
-      ];
-
-      const result = DateUtils.groupDatesByWeek(dates);
-
-      expect(result.size).toBe(3);
-      expect(result.has(0)).toBe(true); // Current week
-      expect(result.has(1)).toBe(true); // Last week
-      expect(result.has(2)).toBe(true); // 2 weeks ago
-    });
-
-    it("should deduplicate same week", () => {
-      const today = new Date();
-      const dates = [
-        DateUtils.formatDate(today),
-        DateUtils.formatDate(
-          new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
-        ), // Yesterday
-        DateUtils.formatDate(
-          new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-        ), // 2 days ago
-      ];
-
-      const result = DateUtils.groupDatesByWeek(dates);
-
-      // All should be in current week (week 0)
-      expect(result.size).toBe(1);
-      expect(result.has(0)).toBe(true);
     });
   });
 

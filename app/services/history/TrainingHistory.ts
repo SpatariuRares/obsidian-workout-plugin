@@ -13,9 +13,25 @@ export function trainingDay(date: string): string {
   if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
   const d = new Date(date);
   if (Number.isNaN(d.getTime())) return date.split("T")[0];
+  return localDay(d);
+}
+
+function localDay(d: Date): string {
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${d.getFullYear()}-${month}-${day}`;
+}
+
+/** Monday (local YYYY-MM-DD) of the calendar week containing `d`. */
+function weekStart(d: Date): string {
+  const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  return localDay(monday);
+}
+
+function previousWeek(monday: string): string {
+  const [y, m, d] = monday.split("-").map(Number);
+  return localDay(new Date(y, m - 1, d - 7));
 }
 
 /** All sets of one workout on one training day. See "Session" in CONTEXT.md. */
@@ -93,8 +109,8 @@ export interface PersonalRecord {
 }
 
 /**
- * Reads logged sets back as training: training days, sessions, PRs and
- * the daily series trends are read from.
+ * Reads logged sets back as training: training days, sessions, PRs, streak,
+ * volume and the daily series trends are read from.
  * Pure: give it the rows (already filtered if needed), ask it questions.
  */
 export class TrainingHistory {
@@ -166,6 +182,58 @@ export class TrainingHistory {
       }
     }
     return records;
+  }
+
+  /**
+   * Consecutive calendar weeks (Monday to Sunday) with a session, counting
+   * back from `today`'s week; that week only breaks the streak once over.
+   */
+  streak(today: Date = new Date()): number {
+    const weeks = new Set(
+      this.sessions().map((session) => {
+        const [y, m, d] = session.day.split("-").map(Number);
+        return weekStart(new Date(y, m - 1, d));
+      }),
+    );
+    let week = weekStart(today);
+    if (!weeks.has(week)) week = previousWeek(week);
+    let count = 0;
+    while (weeks.has(week)) {
+      count++;
+      week = previousWeek(week);
+    }
+    return count;
+  }
+
+  totalVolume(): number {
+    return this.logs.reduce((sum, log) => sum + (log.volume || 0), 0);
+  }
+
+  /** Total volume of each training day */
+  volumeByDay(): Map<string, number> {
+    const byDay = new Map<string, number>();
+    for (const log of this.logs) {
+      const day = trainingDay(log.date);
+      byDay.set(day, (byDay.get(day) ?? 0) + (log.volume || 0));
+    }
+    return byDay;
+  }
+
+  /**
+   * The `n` exercises with most volume, names matched ignoring case and
+   * spacing and shown as first logged.
+   */
+  topExercisesByVolume(n: number): [string, number][] {
+    const byExercise = new Map<string, [string, number]>();
+    for (const log of this.chronological()) {
+      const key = StringUtils.normalize(log.exercise);
+      const entry = byExercise.get(key) ?? [log.exercise.trim(), 0];
+      entry[1] += log.volume || 0;
+      byExercise.set(key, entry);
+    }
+    return Array.from(byExercise.values())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, n);
   }
 
   /** The heaviest set of each training day for the exercise, oldest first. */

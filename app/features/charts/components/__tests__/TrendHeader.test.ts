@@ -52,6 +52,19 @@ describe("TrendHeader", () => {
     );
   });
 
+  it("takes the variation from the trend line so it agrees with the trend label", () => {
+    const container = createObsidianContainer();
+
+    // Last value is below the first, but the trend line rises 5.4%
+    TrendHeader.render(container, baseIndicators, [100, 150, 160, 170, 99]);
+
+    const indicatorCreate = TrendIndicator.create as jest.Mock;
+    expect(indicatorCreate).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ direction: "up", percentage: 5.4 }),
+    );
+  });
+
   it("treats lower values as improvement for pace data", () => {
     const container = createObsidianContainer();
 

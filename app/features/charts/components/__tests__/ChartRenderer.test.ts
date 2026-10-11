@@ -87,14 +87,6 @@ jest.mock("@app/features/charts/config", () => ({
   },
 }));
 
-// Mock StatisticsUtils
-jest.mock("@app/utils/StatisticsUtils", () => ({
-  StatisticsUtils: {
-    calculateTrendLine: jest.fn(() => ({ slope: 1, intercept: 0 })),
-  },
-}));
-
-import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 
 describe("ChartRenderer", () => {
   let mockContainer: HTMLElement;
@@ -381,26 +373,14 @@ describe("ChartRenderer", () => {
     });
 
     it("should add trend line if multiple data points exist", () => {
-      const datasets = [{ label: "Weight", data: [100, 110, 120] }];
-
-      // Setup mock return
-      (
-        StatisticsUtils.calculateTrendLine as jest.Mock
-      ).mockReturnValue({
-        slope: 10,
-        intercept: 90,
-      });
+      const datasets = [{ label: "Weight", data: [100, 120, 110] }];
 
       ChartRenderer.addTrendLineToDatasets(datasets);
 
       expect(datasets.length).toBe(2);
       expect(datasets[1].label).toBe(getChartLabels().TREND_LINE);
-      // Data should be [90+0, 90+10, 90+20] = [90, 100, 110]
-      // Note: usage is slope * index + intercept
-      // Index 0: 10 * 0 + 90 = 90
-      // Index 1: 10 * 1 + 90 = 100
-      // Index 2: 10 * 2 + 90 = 110
-      expect(datasets[1].data).toEqual([90, 100, 110]);
+      // Regression line of [100, 120, 110]: slope 5, intercept 105
+      expect(datasets[1].data).toEqual([105, 110, 115]);
     });
   });
 

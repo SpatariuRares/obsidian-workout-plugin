@@ -1,6 +1,7 @@
 import {
   TrainingHistory,
   trainingDay,
+  trendOf,
 } from "@app/services/history/TrainingHistory";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 
@@ -241,5 +242,48 @@ describe("TrainingHistory.newRecordSets", () => {
     ];
 
     expect(new TrainingHistory(sets).newRecordSets()).toEqual([]);
+  });
+});
+
+describe("trendOf", () => {
+  it("should be undefined with fewer than two values", () => {
+    expect(trendOf([100])).toBeUndefined();
+  });
+
+  it("should read the direction from the regression line, not the first and last value", () => {
+    // Last value is below the first, but the fitted line rises by more than 5% of the mean
+    const trend = trendOf([100, 150, 160, 170, 99]);
+
+    expect(trend?.direction).toBe("up");
+    expect(trend?.start).toBeCloseTo(132.2);
+    expect(trend?.end).toBeCloseTo(139.4);
+    expect(trend?.percentChange).toBeCloseTo(5.45, 1);
+  });
+
+  it("should be stable when the line moves less than 5% of the mean", () => {
+    expect(trendOf([100, 102, 101, 103])?.direction).toBe("stable");
+  });
+
+  it("should be down when the line falls more than 5% of the mean", () => {
+    expect(trendOf([130, 120, 110, 100])?.direction).toBe("down");
+  });
+
+  it("should leave the percentage undefined when the line starts at zero", () => {
+    expect(trendOf([0, 10])?.percentChange).toBeUndefined();
+  });
+});
+
+describe("TrainingHistory.heaviestPerDay", () => {
+  it("should give the heaviest set of each training day, oldest first", () => {
+    const lift = (iso: string, exercise: string, weight: number) =>
+      set(iso, "Push", { exercise, weight });
+    const history = new TrainingHistory([
+      lift("2024-01-08T17:00:00.000Z", "Bench", 40),
+      lift("2024-01-08T17:10:00.000Z", "Bench", 90),
+      lift("2024-01-01T17:00:00.000Z", "bench", 80),
+      lift("2024-01-01T17:00:00.000Z", "Squat", 140),
+    ]);
+
+    expect(history.heaviestPerDay("Bench")).toEqual([80, 90]);
   });
 });

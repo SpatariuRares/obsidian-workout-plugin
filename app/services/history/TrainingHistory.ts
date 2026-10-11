@@ -32,6 +32,58 @@ export interface Session {
   duration?: number;
 }
 
+/** A series' direction from its regression line. See "Trend" in CONTEXT.md. */
+export interface Trend {
+  direction: "up" | "down" | "stable";
+  /** Fitted line value at the first and last point */
+  start: number;
+  end: number;
+  /** Change from start to end in % of start; undefined when start is 0 */
+  percentChange?: number;
+  slope: number;
+  intercept: number;
+}
+
+/**
+ * Trend of a series, read from its linear regression line: stable while the
+ * line moves less than 5% of the mean. Undefined with fewer than two values.
+ * Callers decide what "up" means for them (for pace, lower is better).
+ */
+export function trendOf(values: number[]): Trend | undefined {
+  const n = values.length;
+  if (n < 2) return undefined;
+
+  let sumX = 0;
+  let sumY = 0;
+  let sumXY = 0;
+  let sumX2 = 0;
+  for (let i = 0; i < n; i++) {
+    sumX += i;
+    sumY += values[i];
+    sumXY += i * values[i];
+    sumX2 += i * i;
+  }
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  const start = intercept;
+  const end = intercept + slope * (n - 1);
+  const threshold = 0.05 * Math.abs(sumY / n) || Number.EPSILON;
+  const change = end - start;
+  const direction =
+    change > threshold ? "up" : change < -threshold ? "down" : "stable";
+
+  return {
+    direction,
+    start,
+    end,
+    percentChange:
+      start !== 0 ? (change / Math.abs(start)) * 100 : undefined,
+    slope,
+    intercept,
+  };
+}
+
 /** An exercise's heaviest set. See "Personal record" in CONTEXT.md. */
 export interface PersonalRecord {
   weight: number;
@@ -41,7 +93,8 @@ export interface PersonalRecord {
 }
 
 /**
- * Reads logged sets back as training: training days, sessions and PRs.
+ * Reads logged sets back as training: training days, sessions, PRs and
+ * the daily series trends are read from.
  * Pure: give it the rows (already filtered if needed), ask it questions.
  */
 export class TrainingHistory {
@@ -113,6 +166,20 @@ export class TrainingHistory {
       }
     }
     return records;
+  }
+
+  /** The heaviest set of each training day for the exercise, oldest first. */
+  heaviestPerDay(exercise: string): number[] {
+    const wanted = StringUtils.normalize(exercise);
+    const byDay = new Map<string, number>();
+    for (const log of this.logs) {
+      if (StringUtils.normalize(log.exercise) !== wanted) continue;
+      const day = trainingDay(log.date);
+      byDay.set(day, Math.max(byDay.get(day) ?? -Infinity, log.weight));
+    }
+    return Array.from(byDay.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([, weight]) => weight);
   }
 
   private chronological(): WorkoutLogData[] {

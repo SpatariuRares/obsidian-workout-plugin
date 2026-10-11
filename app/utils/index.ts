@@ -3,7 +3,6 @@
  */
 export * from "@app/utils/DomUtils";
 export * from "@app/utils/exercise/ExerciseMatchUtils";
-export * from "@app/utils/StatisticsUtils";
 export * from "@app/utils/exercise/ExercisePathResolver";
 export * from "@app/utils/frontmatter/FrontmatterParser";
 export * from "@app/utils/DateUtils";

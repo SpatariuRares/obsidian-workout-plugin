@@ -2,26 +2,25 @@ import { TrendIndicators } from "@app/types/CommonTypes";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
+import { trendOf } from "@app/services/history/TrainingHistory";
 
 /**
  * Calculates trend indicators for workout data.
- * Analyzes the slope of data points to determine if the trend is increasing,
- * decreasing, or stable, and provides appropriate visual indicators.
+ * Turns the trend of a series (trendOf) into a label, color and icon.
  */
 export class TrendCalculator {
   /**
-   * Calculates trend indicators based on the slope of the data.
-   * @param slope - The calculated slope from linear regression
-   * @param volumeData - Array of numerical data points used for trend calculation
+   * Trend label, color and icon for a series, from its trend line.
+   * @param volumeData - Array of numerical data points
    * @param dataType - Optional data type to determine trend interpretation (e.g., pace uses inverted logic)
    * @returns Object containing trend direction, color, and icon
    */
   static getTrendIndicators(
-    slope: number,
     volumeData: number[],
     dataType?: CHART_DATA_TYPE,
   ): TrendIndicators {
-    if (volumeData.length < 2) {
+    const trend = trendOf(volumeData);
+    if (!trend) {
       return {
         trendDirection: t("messages.insufficientData"),
         trendColor: "var(--text-muted, #888)",
@@ -29,20 +28,12 @@ export class TrendCalculator {
       };
     }
 
-    const averageVolume =
-      volumeData.reduce((a, b) => a + b, 0) / volumeData.length;
-    // Compare the change across the whole range of the fitted line with 5% of
-    // the average: a steady +4% per session is a trend, not "stable".
-    const slopeThreshold =
-      (0.05 * Math.abs(averageVolume)) / (volumeData.length - 1) ||
-      Number.EPSILON;
-
     // For pace, lower values are better (faster), so invert the logic
     const isLowerBetter = dataType
       ? FormatUtils.isLowerBetter(dataType)
       : false;
 
-    if (slope > slopeThreshold) {
+    if (trend.direction === "up") {
       if (isLowerBetter) {
         // Positive slope for pace means getting slower = declining
         return {
@@ -56,7 +47,7 @@ export class TrendCalculator {
         trendColor: "var(--color-green, #4CAF50)",
         trendIcon: "↗️",
       };
-    } else if (slope < -slopeThreshold) {
+    } else if (trend.direction === "down") {
       if (isLowerBetter) {
         // Negative slope for pace means getting faster = improving
         return {

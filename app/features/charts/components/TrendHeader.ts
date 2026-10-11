@@ -3,6 +3,7 @@ import { CHART_DATA_TYPE } from "@app/features/charts/types";
 import { TrendIndicator } from "@app/components/molecules";
 import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
+import { trendOf } from "@app/services/history/TrainingHistory";
 import { CONSTANTS } from "@app/constants";
 
 /**
@@ -28,7 +29,7 @@ export class TrendHeader {
       cls: "workout-charts-trend-header",
     });
 
-    const { firstValue, lastValue, percentChange } =
+    const { firstValue, lastValue, percentChange, direction: lineDirection } =
       this.calculateVariation(volumeData);
     const variationData = this.formatVariationData(
       firstValue,
@@ -79,14 +80,13 @@ export class TrendHeader {
       // For inverted types (pace), negative change = improvement (up arrow)
       // For normal types, positive change = improvement (up arrow)
       let direction: "up" | "down" | "neutral";
-      if (percentValue === 0) {
+      if (lineDirection === "stable") {
         direction = "neutral";
       } else if (isLowerBetter) {
-        // Pace: negative % = improving (faster), positive % = declining (slower)
-        direction = percentValue < 0 ? "up" : "down";
+        // Pace: a falling line = improving (faster)
+        direction = lineDirection === "down" ? "up" : "down";
       } else {
-        // Default: positive % = improving, negative % = declining
-        direction = percentValue > 0 ? "up" : "down";
+        direction = lineDirection;
       }
 
       // Use TrendIndicator molecule for variation display
@@ -145,24 +145,22 @@ export class TrendHeader {
   }
 
   /**
-   * Calculates the variation between first and last data points.
+   * Variation along the trend line, so it agrees with the trend label.
    * @param volumeData - Array of numerical data points
-   * @returns Object containing first value, last value, and percentage change
+   * @returns Line start and end values, percentage change and direction
    */
   private static calculateVariation(volumeData: number[]) {
     let firstValue: number | undefined,
       lastValue: number | undefined,
       percentChange: string = t("table.notAvailable");
+    const trend = trendOf(volumeData);
 
-    if (volumeData.length >= 2) {
-      firstValue = volumeData[0];
-      lastValue = volumeData[volumeData.length - 1];
+    if (trend) {
+      firstValue = trend.start;
+      lastValue = trend.end;
       percentChange =
-        firstValue !== 0
-          ? (
-              ((lastValue - firstValue) / Math.abs(firstValue)) *
-              100
-            ).toFixed(1)
+        trend.percentChange !== undefined
+          ? trend.percentChange.toFixed(1)
           : lastValue > 0
             ? "Infinity"
             : "0.0";
@@ -171,7 +169,12 @@ export class TrendHeader {
       percentChange = "0.0";
     }
 
-    return { firstValue, lastValue, percentChange };
+    return {
+      firstValue,
+      lastValue,
+      percentChange,
+      direction: trend?.direction ?? "stable",
+    };
   }
 
   /**

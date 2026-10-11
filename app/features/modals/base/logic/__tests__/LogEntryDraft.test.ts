@@ -162,6 +162,7 @@ describe("LogEntryDraft", () => {
       { key: "weight", label: "Weight", type: "number", required: true, min: 0, max: 500 },
       { key: "band", label: "Band", type: "string", required: true },
       { key: "rpe", label: "RPE", type: "number", required: false },
+      { key: "heartRate", label: "Heart rate", type: "number", required: false, max: 250 },
     ] as ParameterDefinition[];
     const fields = (values: Record<string, string>) =>
       new Map(Object.entries({ reps: "5", weight: "100", band: "red", ...values }));
@@ -176,6 +177,8 @@ describe("LogEntryDraft", () => {
       ["below the minimum", "Squat", { reps: "0" }, t("modal.notices.validMinValue", { field: "Reps", min: 1 })],
       ["above the maximum", "Squat", { weight: "600" }, t("modal.notices.validMaxValue", { field: "Weight", max: 500 })],
       ["an empty required text", "Squat", { band: "  " }, t("modal.notices.validFieldRequired", { field: "Band" })],
+      ["decimal reps", "Squat", { reps: "8.5" }, t("modal.notices.validMustBeWholeNumber", { field: "Reps" })],
+      ["an optional field out of its limits", "Squat", { heartRate: "300" }, t("modal.notices.validMaxValue", { field: "Heart rate", max: 250 })],
     ])("rejects %s", (_case, exercise, values, message) => {
       expect(validate(exercise, fields(values), params)).toBe(message);
     });

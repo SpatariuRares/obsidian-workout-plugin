@@ -1,4 +1,8 @@
 import { ParameterDefinition } from "@app/types/ExerciseTypes";
+import {
+  fieldFor,
+  formatFieldNumber,
+} from "@app/services/exercise/ExerciseFields";
 
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, Input } from "@app/components/atoms";
@@ -67,15 +71,16 @@ export class DynamicFieldsRenderer {
 
     // For numeric fields, add adjust buttons
     if (param.type === "number") {
+      const field = fieldFor(param);
       const inputContainer = fieldContainer.createDiv({
         cls: "workout-input-with-adjust",
       });
 
       // Quick adjust buttons
-      const increment = await this.getIncrementForParameter(
-        param,
-        context,
-      );
+      const increment =
+        param.key === "weight"
+          ? await this.getWeightIncrement(context)
+          : field.increment;
 
       const minusBtn = Button.create(inputContainer, {
         text: t("modal.buttons.adjustMinus") + increment,
@@ -94,7 +99,7 @@ export class DynamicFieldsRenderer {
         className: "workout-charts-input",
         min: param.min ?? 0,
         max: param.max,
-        step: this.getStepForParameter(param),
+        step: field.step,
         placeholder: param.default?.toString() || "",
       });
 
@@ -116,19 +121,18 @@ export class DynamicFieldsRenderer {
           param.min || 0,
           current - increment,
         );
-        input.value = this.formatNumericValue(newValue, param);
+        input.value = formatFieldNumber(field, newValue);
       });
 
       Button.onClick(plusBtn, () => {
         const current = parseFloat(input.value) || 0;
         const newValue = current + increment;
-        input.value =
+        input.value = formatFieldNumber(
+          field,
           param.max !== undefined
-            ? this.formatNumericValue(
-                Math.min(param.max, newValue),
-                param,
-              )
-            : this.formatNumericValue(newValue, param);
+            ? Math.min(param.max, newValue)
+            : newValue,
+        );
       });
 
       if (param.required) {
@@ -171,6 +175,25 @@ export class DynamicFieldsRenderer {
   }
 
   /**
+   * After the exercise changes, copies what was typed or ticked into the
+   * fields the new exercise shares; empty fields keep the new defaults.
+   */
+  static carryOver(
+    from: Map<string, HTMLInputElement>,
+    to: Map<string, HTMLInputElement>,
+  ): void {
+    for (const [key, old] of from) {
+      const input = to.get(key);
+      if (!input) continue;
+      if (old.type === "checkbox") {
+        input.checked = old.checked;
+      } else if (old.value) {
+        input.value = old.value;
+      }
+    }
+  }
+
+  /**
    * Fills the weight field with a stored value in its own unit (edit modal,
    * last-entry autofill), keeping the unit picker in sync.
    */
@@ -184,12 +207,16 @@ export class DynamicFieldsRenderer {
     input.dataset.weightUnit = unit;
     const select = input
       .closest(".workout-field-with-adjust")
-      ?.querySelector<HTMLSelectElement>(".workout-weight-unit-select");
+      ?.querySelector<HTMLSelectElement>(
+        ".workout-weight-unit-select",
+      );
     if (select) select.value = unit;
   }
 
   /** The unit picked next to a weight field, if it is a known one */
-  static getWeightUnit(input: HTMLInputElement): WeightUnit | undefined {
+  static getWeightUnit(
+    input: HTMLInputElement,
+  ): WeightUnit | undefined {
     const unit = input.dataset.weightUnit;
     return isWeightUnit(unit) ? unit : undefined;
   }
@@ -228,157 +255,109 @@ export class DynamicFieldsRenderer {
   }
 
   /**
-   * Formats a numeric value based on parameter type (integer vs decimal).
+   * Weight step for the quick buttons: the most common jump between this
+   * exercise's recent sets, else the quick increment from settings.
    */
-  private formatNumericValue(
-    value: number,
-    param: ParameterDefinition,
-  ): string {
-    // Use integer format for reps, duration in seconds
-    if (param.key === "reps" || param.key === "heartRate") {
-      return Math.round(value).toString();
-    }
-    if (param.key === "duration" && param.unit === "sec") {
-      return Math.round(value).toString();
-    }
-    // Use decimal for weight, distance
-    return value.toFixed(1);
-  }
+  private async getWeightIncrement(context?: {
+    workoutName?: string;
+    exerciseName?: string;
+  }): Promise<number> {
+    if (context?.exerciseName) {
+      try {
+        const allowedIncrements = [1, 1.25, 2, 2.5, 3, 5, 10, 15, 20];
+        const sortedIncrements = [...allowedIncrements].sort(
+          (a, b) => b - a,
+        );
 
-  /**
-   * Determines increment value for quick-adjust buttons based on parameter key.
-   */
-  private async getIncrementForParameter(
-    param: ParameterDefinition,
-    context?: { workoutName?: string; exerciseName?: string },
-  ): Promise<number> {
-    if (param.key === "reps") return 1;
-    if (param.key === "weight") {
-      if (context?.exerciseName) {
-        try {
-          const allowedIncrements = [
-            1, 1.25, 2, 2.5, 3, 5, 10, 15, 20,
-          ];
-          const sortedIncrements = [...allowedIncrements].sort(
-            (a, b) => b - a,
+        const allLogs: WorkoutLogData[] =
+          await this.plugin.getWorkoutLogData();
+
+        const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+
+        let filteredLogs = allLogs.filter((log: WorkoutLogData) => {
+          const logTimestamp =
+            typeof log.timestamp === "string"
+              ? new Date(log.timestamp).getTime()
+              : log.timestamp || 0;
+
+          return (
+            log.exercise.toLowerCase() ===
+              context.exerciseName?.toLowerCase() &&
+            logTimestamp >= thirtyDaysAgo
           );
+        });
 
-          const allLogs: WorkoutLogData[] =
-            await this.plugin.getWorkoutLogData();
-
-          const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-
-          let filteredLogs = allLogs.filter((log: WorkoutLogData) => {
-            const logTimestamp =
-              typeof log.timestamp === "string"
-                ? new Date(log.timestamp).getTime()
-                : log.timestamp || 0;
-
-            return (
-              log.exercise.toLowerCase() ===
-                context.exerciseName?.toLowerCase() &&
-              logTimestamp >= thirtyDaysAgo
-            );
-          });
-
-          if (context.workoutName) {
-            const workoutFiltered = filteredLogs.filter(
-              (log: WorkoutLogData) =>
-                log.workout?.toLowerCase() ===
-                context.workoutName?.toLowerCase(),
-            );
-            if (workoutFiltered.length >= 2) {
-              filteredLogs = workoutFiltered;
-            }
+        if (context.workoutName) {
+          const workoutFiltered = filteredLogs.filter(
+            (log: WorkoutLogData) =>
+              log.workout?.toLowerCase() ===
+              context.workoutName?.toLowerCase(),
+          );
+          if (workoutFiltered.length >= 2) {
+            filteredLogs = workoutFiltered;
           }
+        }
 
-          if (filteredLogs.length > 1) {
-            filteredLogs.sort((a, b) => {
-              const timeA =
-                typeof a.timestamp === "string"
-                  ? new Date(a.timestamp).getTime()
-                  : a.timestamp || 0;
-              const timeB =
-                typeof b.timestamp === "string"
-                  ? new Date(b.timestamp).getTime()
-                  : b.timestamp || 0;
-              return timeA - timeB;
-            });
-            const diffCounts = new Map<number, number>();
+        if (filteredLogs.length > 1) {
+          filteredLogs.sort((a, b) => {
+            const timeA =
+              typeof a.timestamp === "string"
+                ? new Date(a.timestamp).getTime()
+                : a.timestamp || 0;
+            const timeB =
+              typeof b.timestamp === "string"
+                ? new Date(b.timestamp).getTime()
+                : b.timestamp || 0;
+            return timeA - timeB;
+          });
+          const diffCounts = new Map<number, number>();
 
-            for (let i = 1; i < filteredLogs.length; i++) {
-              const prev = filteredLogs[i - 1].weight;
-              const curr = filteredLogs[i].weight;
-              if (
-                typeof prev === "number" &&
-                typeof curr === "number"
-              ) {
-                const diff = Math.abs(curr - prev);
-                if (diff > 0) {
-                  const match = sortedIncrements.find(
-                    (inc) => inc <= diff + 0.001,
+          for (let i = 1; i < filteredLogs.length; i++) {
+            const prev = filteredLogs[i - 1].weight;
+            const curr = filteredLogs[i].weight;
+            if (
+              typeof prev === "number" &&
+              typeof curr === "number"
+            ) {
+              const diff = Math.abs(curr - prev);
+              if (diff > 0) {
+                const match = sortedIncrements.find(
+                  (inc) => inc <= diff + 0.001,
+                );
+                if (match) {
+                  diffCounts.set(
+                    match,
+                    (diffCounts.get(match) || 0) + 1,
                   );
-                  if (match) {
-                    diffCounts.set(
-                      match,
-                      (diffCounts.get(match) || 0) + 1,
-                    );
-                  }
                 }
               }
             }
+          }
 
-            let bestIncrement = 0;
-            let maxCount = 0;
-            for (const [inc, count] of diffCounts.entries()) {
-              if (count > maxCount) {
-                maxCount = count;
-                bestIncrement = inc;
-              } else if (count === maxCount && inc > bestIncrement) {
-                bestIncrement = inc;
-              }
-            }
-
-            if (bestIncrement > 0) {
-              return bestIncrement;
+          let bestIncrement = 0;
+          let maxCount = 0;
+          for (const [inc, count] of diffCounts.entries()) {
+            if (count > maxCount) {
+              maxCount = count;
+              bestIncrement = inc;
+            } else if (count === maxCount && inc > bestIncrement) {
+              bestIncrement = inc;
             }
           }
-        } catch {
-          // Fallback to defaults on error
+
+          if (bestIncrement > 0) {
+            return bestIncrement;
+          }
         }
+      } catch {
+        // Fallback to defaults on error
       }
-
-      const quickIncrement =
-        this.plugin.settings.quickWeightIncrement;
-      if (typeof quickIncrement === "number" && quickIncrement > 0) {
-        return quickIncrement;
-      }
-      return this.plugin.settings.weightIncrement;
     }
-    if (param.key === "duration" && param.unit === "sec") return 5;
-    if (param.key === "duration" && param.unit === "min") return 1;
-    if (param.key === "distance") return 0.5;
-    if (param.key === "heartRate") return 5;
 
-    // Default based on unit
-    if (param.unit?.includes("km")) return 0.5;
-    if (param.unit?.includes("min") || param.unit?.includes("sec"))
-      return 1;
-    return 1;
-  }
-
-  /**
-   * Determines step value for numeric input based on parameter.
-   */
-  private getStepForParameter(param: ParameterDefinition): number {
-    if (param.key === "weight") return 0.5;
-    if (param.key === "distance") return 0.1;
-    if (
-      param.key === "reps" ||
-      param.key === "duration" ||
-      param.key === "heartRate"
-    )
-      return 1;
-    return 0.1;
+    const quickIncrement = this.plugin.settings.quickWeightIncrement;
+    if (typeof quickIncrement === "number" && quickIncrement > 0) {
+      return quickIncrement;
+    }
+    return this.plugin.settings.weightIncrement;
   }
 }

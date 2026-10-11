@@ -667,6 +667,7 @@
       "validMinValue": "{field} must be at least {min}",
       "validMissingField": "Missing required field: {field}",
       "validMustBeNumber": "{field} must be a valid number",
+      "validMustBeWholeNumber": "{field} must be a whole number",
       "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
       "validationFillAll": "Please fill in all fields with valid values"
     },

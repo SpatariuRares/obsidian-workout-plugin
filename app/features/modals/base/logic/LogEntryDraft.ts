@@ -9,6 +9,7 @@ import {
 } from "@app/types/WorkoutLogData";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
+import { fieldFor, readField } from "@app/services/exercise/ExerciseFields";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
 
@@ -31,45 +32,24 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
 }
 
 /**
- * Why the form can't be saved, or null. `fields` holds the raw text of each
- * parameter input the form shows.
+ * Why the form can't be saved, or null. `fields` holds what each parameter
+ * input of the form holds (text, or the checked state of a checkbox).
  */
 export function validate(
   exercise: string,
-  fields: Map<string, string>,
+  fields: Map<string, string | boolean>,
   parameters: ParameterDefinition[],
 ): string | null {
   if (!exercise) return t("modal.notices.validationFillAll");
 
   for (const param of parameters) {
-    if (!param.required) continue;
-
     const raw = fields.get(param.key);
     if (raw === undefined) {
+      if (!param.required) continue;
       return t("modal.notices.validMissingField", { field: param.label });
     }
-    const value = raw.trim();
-
-    if (param.type === "number") {
-      const num = parseFloat(value);
-      if (isNaN(num)) {
-        return t("modal.notices.validMustBeNumber", { field: param.label });
-      }
-      if (param.min !== undefined && num < param.min) {
-        return t("modal.notices.validMinValue", {
-          field: param.label,
-          min: param.min,
-        });
-      }
-      if (param.max !== undefined && num > param.max) {
-        return t("modal.notices.validMaxValue", {
-          field: param.label,
-          max: param.max,
-        });
-      }
-    } else if (param.type === "string" && !value) {
-      return t("modal.notices.validFieldRequired", { field: param.label });
-    }
+    const { error } = readField(fieldFor(param), raw);
+    if (error) return error;
   }
   return null;
 }

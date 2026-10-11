@@ -241,6 +241,7 @@ export abstract class BaseLogModal extends ModalBase {
     const { data, fields } = readLogForm(
       formElements,
       this.getCurrentFileName(),
+      this.currentParameters,
     );
     const error = validate(data.exercise, fields, this.currentParameters);
     if (error) {

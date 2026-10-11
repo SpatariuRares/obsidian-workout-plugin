@@ -176,6 +176,17 @@ describe("ExerciseLibrary", () => {
       expect(lib.find("Treadmill")?.parameters.map((p) => p.key)).toEqual(["speed"]);
     });
 
+    it("should keep the shared duration field a custom exercise declares", () => {
+      const { lib } = library({
+        "Gym/Exercises/Jump Rope.md": {
+          exercise_type: "custom",
+          parameters: [{ key: "rounds" }, { key: "duration", unit: "sec" }],
+        },
+      });
+
+      expect(lib.find("Jump Rope")?.parameters.map((p) => p.key)).toEqual(["rounds", "duration"]);
+    });
+
     it("should have no parameters when none are declared", () => {
       const { lib } = library({ "Gym/Exercises/Squat.md": {} });
 

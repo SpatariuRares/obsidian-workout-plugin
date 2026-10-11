@@ -190,24 +190,25 @@ describe("WorkoutLogFile", () => {
       expect(read).toHaveBeenCalledTimes(1);
     });
 
-    it("re-reads when the weight unit setting changes, not other settings", async () => {
+    it("re-reads when the weight unit or the file path changes, not other settings", async () => {
       const { logFile, storage, eventBus } = setup(csv(HEADER));
       await logFile.read();
       const read = jest.spyOn(storage, "read");
+      const change = (key: "showRibbonIcon" | "weightUnit" | "csvLogFilePath") =>
+        eventBus.emit({
+          type: "settings:changed",
+          payload: { key, previousValue: "", newValue: "" },
+        });
 
-      eventBus.emit({
-        type: "settings:changed",
-        payload: { key: "csvLogFilePath", previousValue: "", newValue: "" },
-      });
+      change("showRibbonIcon");
       await logFile.read();
       expect(read).not.toHaveBeenCalled();
 
-      eventBus.emit({
-        type: "settings:changed",
-        payload: { key: "weightUnit", previousValue: "kg", newValue: "lb" },
-      });
+      change("weightUnit");
       await logFile.read();
-      expect(read).toHaveBeenCalledTimes(1);
+      change("csvLogFilePath");
+      await logFile.read();
+      expect(read).toHaveBeenCalledTimes(2);
     });
 
     it("re-reads after an external log refresh event, until destroyed", async () => {

@@ -9,11 +9,20 @@ import type {
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 import { changeWeightUnit } from "@app/features/settings/business/changeWeightUnit";
+import { announceDataPathChange } from "@app/features/settings/business/announceDataPathChange";
+
+/** Wait for typing to stop before views reload from a new path */
+const PATH_CHANGE_DELAY_MS = 600;
 
 export class GeneralSettings {
   private csvPathValidationTimer: ReturnType<
     typeof setTimeout
   > | null = null;
+  /** Pending path changes: the value before the first keystroke, and the timer */
+  private pathChanges = new Map<
+    "csvLogFilePath" | "exerciseFolderPath",
+    { previousValue: string; timer: ReturnType<typeof setTimeout> }
+  >();
 
   constructor(
     private app: App,
@@ -44,6 +53,7 @@ export class GeneralSettings {
           .setValue(folderPath)
           .onChange(async (value) => {
             const folder = normalizePath(value);
+            this.announcePathChangeLater("csvLogFilePath");
             this.plugin.settings.csvLogFilePath = `${folder}/workout_logs.csv`;
             await this.plugin.saveSettings();
             this.scheduleCsvPathValidation(
@@ -68,6 +78,7 @@ export class GeneralSettings {
           .setPlaceholder(t("forms.enterFolderPath"))
           .setValue(this.plugin.settings.exerciseFolderPath)
           .onChange(async (value) => {
+            this.announcePathChangeLater("exerciseFolderPath");
             this.plugin.settings.exerciseFolderPath =
               normalizePath(value);
             await this.plugin.saveSettings();
@@ -154,6 +165,24 @@ export class GeneralSettings {
             }
           }),
       );
+  }
+
+  /**
+   * Call before writing a new path. Once typing stops, views reload from
+   * the new place (see announceDataPathChange). The path is saved on every
+   * keystroke as before.
+   */
+  private announcePathChangeLater(
+    key: "csvLogFilePath" | "exerciseFolderPath",
+  ): void {
+    const pending = this.pathChanges.get(key);
+    if (pending) clearTimeout(pending.timer);
+    const previousValue = pending?.previousValue ?? this.plugin.settings[key];
+    const timer = setTimeout(() => {
+      this.pathChanges.delete(key);
+      announceDataPathChange(this.plugin, key, previousValue);
+    }, PATH_CHANGE_DELAY_MS);
+    this.pathChanges.set(key, { previousValue, timer });
   }
 
   private scheduleCsvPathValidation(

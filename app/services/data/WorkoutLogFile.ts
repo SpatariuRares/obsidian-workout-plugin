@@ -70,9 +70,15 @@ export class WorkoutLogFile {
       eventBus.on("log:updated", () => this.clearCache()),
       eventBus.on("log:deleted", () => this.clearCache()),
       eventBus.on("log:bulk-changed", () => this.clearCache()),
-      // Weights are converted to the settings unit on read
+      // Weights are converted to the settings unit on read, and the file
+      // itself may have moved
       eventBus.on("settings:changed", (payload) => {
-        if (payload.key === "weightUnit") this.clearCache();
+        if (
+          payload.key === "weightUnit" ||
+          payload.key === "csvLogFilePath"
+        ) {
+          this.clearCache();
+        }
       }),
     );
   }

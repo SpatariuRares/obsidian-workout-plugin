@@ -305,13 +305,7 @@ export class LogFormRenderer {
         await exerciseDefService.getParametersForExercise("");
     }
 
-    // Preserve existing values
-    const preservedValues = new Map<string, string>();
-    for (const [key, input] of formElements.dynamicFieldInputs) {
-      if (input.value) {
-        preservedValues.set(key, input.value);
-      }
-    }
+    const previousInputs = formElements.dynamicFieldInputs;
 
     // Render new fields
     const currentWorkoutValue =
@@ -327,13 +321,7 @@ export class LogFormRenderer {
     // Notify parent
     onExerciseChange(newParameters);
 
-    // Restore preserved values
-    for (const [key, value] of preservedValues) {
-      const input = newFieldInputs.get(key);
-      if (input) {
-        input.value = value;
-      }
-    }
+    DynamicFieldsRenderer.carryOver(previousInputs, newFieldInputs);
 
     // Auto-fill from last entry if enabled
     if (shouldAutoFill) {

@@ -2,50 +2,49 @@ import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { CONSTANTS } from "@app/constants";
+import { fieldKey } from "@app/services/exercise/ExerciseFields";
 
 /**
  * Resolves and formats table column headers based on exercise definitions.
  * Handles abbreviations, units, and dynamic column determination.
  */
 export class TableColumnResolver {
-  /** Map of parameter keys to their compact technical table headers */
-  private static readonly PARAM_KEY_HEADERS: Record<string, string> = {
+  /** Standard column identifier of each known field key */
+  private static readonly HEADERS: Record<string, string> = {
+    date: CONSTANTS.WORKOUT.TABLE.COLUMNS.DATE.value,
+    exercise: CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value,
     reps: CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value,
     weight: CONSTANTS.WORKOUT.TABLE.COLUMNS.WEIGHT.value,
+    volume: CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
     duration: CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value,
     distance: CONSTANTS.WORKOUT.TABLE.COLUMNS.DISTANCE.value,
-    heartrate: CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value,
-    volume: CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
+    heartRate: CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value,
+    notes: CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
+    protocol: CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
+    actions: CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
   };
 
-  /** Map of labels to their abbreviated forms for compact display */
-  private static readonly LABEL_ABBREVIATIONS: Record<
-    string,
-    string
-  > = {
-    Weight: "Wgt",
-    Reps: "Rep",
-    Duration: "Dur",
-    Distance: "Dist",
-    Volume: "Vol",
-    "Heart Rate": "HR",
-    Repetitions: "Rep",
-  };
+  /**
+   * Column header for a field: the standard identifier ("Wgt", "HR"…) with
+   * its unit, or the custom field's key as written. Weight shows the
+   * settings unit when none is given.
+   */
+  static columnHeader(name: string, unit?: string): string {
+    const key = fieldKey(name);
+    const header = this.HEADERS[key];
+    if (!header) return name.trim();
+    const shownUnit =
+      unit ?? (key === "weight" ? ParameterUtils.getWeightUnit() : undefined);
+    return shownUnit ? `${header} (${shownUnit})` : header;
+  }
 
-  /** Reverse map: abbreviated header to data key */
-  static readonly HEADER_TO_DATA_KEY: Record<string, string> = {
-    wgt: "weight",
-    rep: "reps",
-    dur: "duration",
-    dist: "distance",
-    vol: "volume",
-    hr: "heartrate",
-    heartrate: "heartrate",
-    "heart rate": "heartrate",
-    heartRate: "heartrate",
-    prot: "protocol",
-    act: "actions",
-  };
+  /** Columns from the block's `columns:`, as headers; a unit written there is kept */
+  static userColumns(columns: string[]): string[] {
+    return columns.map((column) => {
+      const written = /\(([^)]+)\)\s*$/.exec(column)?.[1];
+      return this.columnHeader(column, written);
+    });
+  }
 
   /**
    * Determines the appropriate columns for a specific exercise based on its type definition.
@@ -118,22 +117,10 @@ export class TableColumnResolver {
    * @returns Formatted header string (e.g., "Dur (sec)", "Wgt (kg)" or "Wgt (lb)")
    */
   static formatParameterHeader(param: ParameterDefinition): string {
-    const key = param.key.toLowerCase();
-    const abbreviatedLabel =
-      this.PARAM_KEY_HEADERS[key] ||
-      this.LABEL_ABBREVIATIONS[param.label] ||
-      param.label;
-
-    // Use param.unit if explicitly defined, otherwise get from ParameterUtils
-    let unit = param.unit;
-    if (!unit && key === "weight") {
-      unit = ParameterUtils.getWeightUnit();
+    if (this.HEADERS[fieldKey(param.key)]) {
+      return this.columnHeader(param.key, param.unit);
     }
-
-    if (unit) {
-      return `${abbreviatedLabel} (${unit})`;
-    }
-    return abbreviatedLabel;
+    return param.unit ? `${param.label} (${param.unit})` : param.label;
   }
 
   /**

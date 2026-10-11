@@ -8,10 +8,18 @@ import {
 } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import { trainingDay } from "@app/services/history/TrainingHistory";
-import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
+import { fieldKey } from "@app/services/exercise/ExerciseFields";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+
+/** A custom field's key compared ignoring case, spaces, "_" and "-" */
+function looseKey(key: string): string {
+  return key.toLowerCase().replace(/[\s_-]+/g, "");
+}
+
+/** Fields every exercise type may record: shown as N/A when a set lacks them */
+const KNOWN_CUSTOM_FIELDS = new Set(["duration", "distance", "heartRate"]);
 
 /**
  * Processes workout log data into table rows.
@@ -105,76 +113,31 @@ export class TableRowProcessor {
         dateKeyCache.set(log.date, dateKey);
       }
 
-      // Build base data map with simple keys
-      const baseDataMap: Record<string, string> = {
+      // Values by field key; custom fields by their loose key, so a "heartrate"
+      // column from an older CSV fills the heart rate column and a "Max load"
+      // header finds the "max_load" field
+      const values: Record<string, string> = {
         date: formattedDate,
         exercise: this.getExerciseDisplay(log.exercise),
         reps: log.reps?.toString() || t("table.notAvailable"),
         weight: this.getWeightDisplay(log),
         volume: this.getVolumeDisplay(log),
-        // Add custom fields for cardio/timed exercises
-        duration: this.formatCustomFieldValue(
-          log.customFields?.duration,
-        ),
-        distance: this.formatCustomFieldValue(
-          log.customFields?.distance,
-        ),
-        heartrate: this.formatCustomFieldValue(
-          log.customFields?.heartRate,
-        ),
         notes: log.notes || "",
         protocol: protocolId(log.protocol),
         actions: "", // Placeholder for actions
       };
-
-      // Add any additional custom fields to base data map
-      if (log.customFields) {
-        for (const [key, value] of Object.entries(log.customFields)) {
-          const lowerKey = key.toLowerCase();
-          const normalizedKey = this.normalizeHeaderKey(key);
-          // Don't overwrite already mapped fields
-          if (!(lowerKey in baseDataMap)) {
-            baseDataMap[lowerKey] = value?.toString() || "";
-          }
-          if (!(normalizedKey in baseDataMap)) {
-            baseDataMap[normalizedKey] = value?.toString() || "";
-          }
-        }
+      const custom = new Map<string, string | number | boolean>();
+      for (const [key, value] of Object.entries(log.customFields ?? {})) {
+        custom.set(looseKey(fieldKey(key)), value);
       }
 
-      // Build display row by matching headers to data
-      // Headers may be formatted like "Wgt (kg)" or simple like "Rep"
       const displayRow = headers.map((header) => {
-        // Extract the base key from the header (before any unit in parentheses)
-        const headerBase = header.split(" (")[0].toLowerCase();
-        const normalizedHeaderBase =
-          this.normalizeHeaderKey(headerBase);
-
-        // Try direct match first
-        if (baseDataMap[headerBase] !== undefined) {
-          return baseDataMap[headerBase];
-        }
-        if (baseDataMap[normalizedHeaderBase] !== undefined) {
-          return baseDataMap[normalizedHeaderBase];
-        }
-
-        // Try reverse mapping for abbreviated headers (e.g., "wgt" -> "weight")
-        const mappedKey =
-          TableColumnResolver.HEADER_TO_DATA_KEY[headerBase] ||
-          TableColumnResolver.HEADER_TO_DATA_KEY[
-            normalizedHeaderBase
-          ];
-        if (mappedKey && baseDataMap[mappedKey] !== undefined) {
-          return baseDataMap[mappedKey];
-        }
-
-        // Also check exact header match (case-insensitive) for backward compatibility
-        const exactMatch = baseDataMap[header.toLowerCase()];
-        if (exactMatch !== undefined) {
-          return exactMatch;
-        }
-
-        return "";
+        const key = fieldKey(header);
+        if (key in values) return values[key];
+        const value = custom.get(looseKey(key));
+        return KNOWN_CUSTOM_FIELDS.has(key)
+          ? this.formatCustomFieldValue(value)
+          : (value?.toString() ?? "");
       });
 
       const row = {
@@ -200,10 +163,6 @@ export class TableRowProcessor {
 
     // Remove file extension if present
     return exercise.replace(/\.md$/i, "");
-  }
-
-  private static normalizeHeaderKey(value: string): string {
-    return value.toLowerCase().replace(/[\s_-]+/g, "");
   }
 
   /**

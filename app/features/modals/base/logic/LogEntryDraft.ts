@@ -9,6 +9,8 @@ import {
 } from "@app/types/WorkoutLogData";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
+import { fieldFor, readField } from "@app/services/exercise/ExerciseFields";
+import { trainingDay } from "@app/services/history/TrainingHistory";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
 
@@ -24,52 +26,31 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
     weightUnit: log.enteredUnit,
     workout: log.workout || "",
     notes: log.notes || "",
-    date: localDay(log.date),
+    date: trainingDay(log.date),
     protocol: log.protocol,
     customFields: log.customFields,
   };
 }
 
 /**
- * Why the form can't be saved, or null. `fields` holds the raw text of each
- * parameter input the form shows.
+ * Why the form can't be saved, or null. `fields` holds what each parameter
+ * input of the form holds (text, or the checked state of a checkbox).
  */
 export function validate(
   exercise: string,
-  fields: Map<string, string>,
+  fields: Map<string, string | boolean>,
   parameters: ParameterDefinition[],
 ): string | null {
   if (!exercise) return t("modal.notices.validationFillAll");
 
   for (const param of parameters) {
-    if (!param.required) continue;
-
     const raw = fields.get(param.key);
     if (raw === undefined) {
+      if (!param.required) continue;
       return t("modal.notices.validMissingField", { field: param.label });
     }
-    const value = raw.trim();
-
-    if (param.type === "number") {
-      const num = parseFloat(value);
-      if (isNaN(num)) {
-        return t("modal.notices.validMustBeNumber", { field: param.label });
-      }
-      if (param.min !== undefined && num < param.min) {
-        return t("modal.notices.validMinValue", {
-          field: param.label,
-          min: param.min,
-        });
-      }
-      if (param.max !== undefined && num > param.max) {
-        return t("modal.notices.validMaxValue", {
-          field: param.label,
-          max: param.max,
-        });
-      }
-    } else if (param.type === "string" && !value) {
-      return t("modal.notices.validFieldRequired", { field: param.label });
-    }
+    const { error } = readField(fieldFor(param), raw);
+    if (error) return error;
   }
   return null;
 }
@@ -111,7 +92,7 @@ function entryDate(
   now: Date,
 ): string {
   const base = originalDate ?? now.toISOString();
-  if (!pickedDay || pickedDay === localDay(base)) return base;
+  if (!pickedDay || pickedDay === trainingDay(base)) return base;
 
   const [year, month, day] = pickedDay.split("-").map(Number);
   if (!year || !month || !day) return base;
@@ -119,12 +100,4 @@ function entryDate(
   // One call, so a 31st doesn't overflow into the next month on the way
   moved.setFullYear(year, month - 1, day);
   return moved.toISOString();
-}
-
-/** YYYY-MM-DD of an ISO date in local time */
-function localDay(iso: string): string {
-  const date = new Date(iso);
-  if (isNaN(date.getTime())) return iso.split("T")[0];
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }

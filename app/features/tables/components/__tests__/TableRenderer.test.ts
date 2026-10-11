@@ -9,6 +9,7 @@ import {
 } from "@app/types/WorkoutLogData";
 import { TableRow } from "@app/features/tables/types";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { t } from "@app/i18n";
 
 // Mock TableActions
 jest.mock("@app/features/tables/components/TableActions", () => ({
@@ -642,7 +643,7 @@ describe("TableRenderer", () => {
       const calls = SpacerStat.create.mock.calls;
       const setsCall = calls.find(
         (call: any[]) =>
-          call[1].value && call[1].value.includes("sets"),
+          call[1].value === t("table.setCount", { count: 1 }),
       );
       expect(setsCall).toBeTruthy();
     });

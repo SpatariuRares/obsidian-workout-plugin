@@ -2,7 +2,12 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   EmbeddedTableParams,
   TableData,
+  TableRow,
 } from "@app/features/tables/types";
+import {
+  durationSeconds,
+  fieldKey,
+} from "@app/services/exercise/ExerciseFields";
 import type { ExerciseDefinitionPort } from "@app/types/PluginPorts";
 import { TableDataCheckers } from "@app/features/tables/business/TableDataCheckers";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
@@ -86,6 +91,7 @@ export class TableDataProcessor {
       sortedAndLimitedData,
       headers,
     );
+    await this.addDurationSeconds(rows, plugin);
 
     return {
       headers,
@@ -98,6 +104,33 @@ export class TableDataProcessor {
       },
       params,
     };
+  }
+
+  /**
+   * Each row's duration in seconds, read in the unit of its exercise's
+   * `duration` field (minutes for cardio and distance, seconds for timed).
+   */
+  private static async addDurationSeconds(
+    rows: TableRow[],
+    plugin: ExerciseDefinitionPort | undefined,
+  ): Promise<void> {
+    const units = new Map<string, string | undefined>();
+    for (const row of rows) {
+      const log = row.originalLog;
+      const duration = log?.customFields?.duration;
+      if (!log || typeof duration !== "number") continue;
+      if (!units.has(log.exercise)) {
+        const params = await plugin
+          ?.getExerciseDefinitionService()
+          ?.getParametersForExercise(log.exercise)
+          .catch(() => undefined);
+        units.set(
+          log.exercise,
+          params?.find((p) => fieldKey(p.key) === fieldKey("duration"))?.unit,
+        );
+      }
+      row.durationSeconds = durationSeconds(units.get(log.exercise), duration);
+    }
   }
 
   /**
@@ -117,15 +150,16 @@ export class TableDataProcessor {
     if (params.columns) {
       if (Array.isArray(params.columns)) {
         return TableColumnResolver.addOptionalColumns(
-          params.columns,
+          TableColumnResolver.userColumns(params.columns),
           showNotes,
           showProtocol,
         );
       } else if (typeof params.columns === "string") {
         try {
-          const parsedColumns = JSON.parse(params.columns);
+          const parsedColumns: unknown = JSON.parse(params.columns);
+          if (!Array.isArray(parsedColumns)) throw new Error();
           return TableColumnResolver.addOptionalColumns(
-            parsedColumns,
+            TableColumnResolver.userColumns(parsedColumns.map(String)),
             showNotes,
             showProtocol,
           );

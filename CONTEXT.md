@@ -169,6 +169,10 @@ _Avoid_: exercise file, exercise note
 What a set's `exercise` column says. It finds the exercise page whose file name, `exercise_name` or `nome_esercizio` is the same, ignoring case and spacing. Names are never matched partially: an exercise whose name matches no page simply has no page. When two pages answer to the same name, a page whose file name matches wins over one whose frontmatter does; otherwise the first by path. With no exercise folder set there are no exercise pages.
 _Avoid_: exercise id
 
+**Field**:
+One value a set records: reps, weight, duration, distance, heart rate, or a parameter the exercise page declares. The exercise's type decides which fields it has and their unit (a `duration` is seconds for a timed exercise, minutes for cardio and distance). Reps, heart rate and durations in seconds are whole numbers; any filled-in field must respect its minimum and maximum.
+_Avoid_: parameter (for the value itself), column
+
 ### Exercise page frontmatter
 
 ```yaml

@@ -122,6 +122,10 @@ The only place that reads logged sets back as training (see "Training History" i
 
 The only place that finds an exercise's page (see "Exercise Pages" in `CONTEXT.md`): notes in the exercise folder and its subfolders, found by file name, `exercise_name` or `nome_esercizio`, ignoring case and spacing, never partially. `find(name)` gives an `ExercisePage` (file, names, type, tags as a list); `pages()` lists them; `pagesSharingAName(page)` finds duplicates. It reads frontmatter from `metadataCache` and stays current through `watch()` (vault/metadata events, registered in `main.ts`) and the folder setting, so there is no cache to clear. Get it with `plugin.getExerciseLibrary()` (`ExerciseLibraryPort`). Tests use the shared `FakeVault` (`app/services/exercise/__tests__/FakeVault.ts`), not hand-made vault mocks.
 
+#### ExerciseFields (`app/services/exercise/ExerciseFields.ts`)
+
+The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the canonical key however it is written ("Rep", "Wgt (kg)", "HR", "heart rate"), `fieldFor(param)` adds whether it takes whole numbers, its step and quick increment, `readField(field, raw)` reads and checks a typed value (limits apply to every filled-in field), `formatFieldNumber` and `durationSeconds(unit, value)`. The log form and the table use it; never switch on `param.key === "reps"` or compare header strings elsewhere.
+
 #### ExerciseDefinitionService
 
 Turns an exercise page (from `ExerciseLibrary`) into a definition: type (`exercise_type`, then `type`, aliases resolved, default strength), muscle tags and declared parameters, and the fields to log (`getParametersForExercise`). `saveExerciseDefinition` writes into the page the library finds and creates `folder/name.md` only when there is none. No cache of its own.

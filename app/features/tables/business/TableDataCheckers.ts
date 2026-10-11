@@ -3,6 +3,7 @@ import {
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import { fieldKey } from "@app/services/exercise/ExerciseFields";
 
 /**
  * Utility functions to check for presence of specific data fields in workout logs.
@@ -32,7 +33,8 @@ export class TableDataCheckers {
   }
 
   /**
-   * Checks if any log entry has a specific custom field with a non-zero value.
+   * Checks if any log entry has a specific custom field with a non-zero
+   * value, however the field's column is spelled ("heartrate", "heartRate").
    * @param logData - Array of workout log data
    * @param fieldName - Name of the custom field to check
    * @returns true if at least one entry has this field with a non-zero value
@@ -41,8 +43,12 @@ export class TableDataCheckers {
     logData: WorkoutLogData[],
     fieldName: string,
   ): boolean {
+    const wanted = fieldKey(fieldName);
     return logData.some((log) => {
-      const value = log.customFields?.[fieldName];
+      const entry = Object.entries(log.customFields ?? {}).find(
+        ([key]) => fieldKey(key) === wanted,
+      );
+      const value = entry?.[1];
       if (value === undefined || value === null || value === "")
         return false;
       if (typeof value === "number") return value !== 0;

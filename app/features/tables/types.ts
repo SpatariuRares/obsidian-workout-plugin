@@ -21,6 +21,8 @@ export interface TableRow {
   originalDate: string;
   dateKey: string;
   originalLog?: WorkoutLogData;
+  /** The set's duration in seconds, read in its exercise's unit */
+  durationSeconds?: number;
 }
 
 export interface TableData {

@@ -2,7 +2,6 @@ import { normalizePath } from "obsidian";
 import type { App, EventRef, TFile } from "obsidian";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { StringUtils } from "@app/utils/StringUtils";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 
@@ -134,7 +133,7 @@ export class ExerciseLibrary {
       file,
       names,
       type: text(frontmatter.exercise_type) ?? text(frontmatter.type),
-      tags: FrontmatterParser.toTagList(frontmatter.tags),
+      tags: tagList(frontmatter.tags),
       parameters: parseParameters(frontmatter.parameters),
     };
   }
@@ -183,6 +182,21 @@ function parseParameters(raw: unknown): ParameterDefinition[] {
     parameters.push(parameter);
   }
   return parameters;
+}
+
+/**
+ * A frontmatter `tags` value as a list: a YAML list, one tag, or a comma or
+ * space separated string ("chest, back", "[chest, back]"); "#" is dropped.
+ */
+function tagList(raw: unknown): string[] {
+  const items: unknown[] = Array.isArray(raw)
+    ? raw
+    : typeof raw === "string"
+      ? raw.replace(/^\[|\]$/g, "").split(/[,\s]+/)
+      : [];
+  return items
+    .map((tag) => String(tag).trim().replace(/^#/, ""))
+    .filter((tag) => tag.length > 0);
 }
 
 function normalizeFolder(folder: string | undefined): string {

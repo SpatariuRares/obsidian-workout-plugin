@@ -474,13 +474,10 @@
       "workoutLogCreateError": "فشل إنشاء ملف CSV في المسار: {path}. يرجى التحقق من المسار في الإعدادات.",
       "tableRenderError": "خطأ في عرض الجدول"
     },
-    "fileEmpty": "الملف فارغ",
     "imbalanceAlerts": "تنبيهات عدم التوازن",
     "insufficientData": "لا توجد بيانات كافية",
     "noDataPeriod": "لا توجد بيانات تدريبية متوفرة للوقت المحدد.",
-    "noFrontmatter": "لا توجد بيانات وصفية (frontmatter)",
     "noImbalances": "لم يتم العثور على أي عدم توازن",
-    "noTags": "لا توجد علامات في البيانات الوصفية (frontmatter)",
     "success": {
       "blockIdsAdded": "تمت إضافة {count} معرّف(ات) مفقود(ة) في {files} ملف(ات)",
       "csvCreated": "تم إنشاء ملف CSV بنجاح!",

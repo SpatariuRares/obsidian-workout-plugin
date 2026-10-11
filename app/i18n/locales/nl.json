@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Kan CSV-bestand niet maken op pad: {path}. Controleer het pad in de instellingen.",
       "tableRenderError": "Fout bij het renderen van de tabel"
     },
-    "fileEmpty": "Het bestand is leeg",
     "imbalanceAlerts": "Waarschuwingen voor disbalans",
     "insufficientData": "Niet genoeg gegevens",
     "noDataPeriod": "Geen trainingsgegevens gevonden voor de geselecteerde periode.",
-    "noFrontmatter": "Geen frontmatter",
     "noImbalances": "Geen disbalans gevonden",
-    "noTags": "Geen labels in de frontmatter",
     "success": {
       "blockIdsAdded": "{count} ontbrekende ID('s) toegevoegd in {files} bestand(en)",
       "csvCreated": "Het CSV-bestand is succesvol gemaakt!",

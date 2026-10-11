@@ -474,13 +474,10 @@
       "workoutLogCreateError": "पथ {path} पर CSV फ़ाइल बनाने में विफल। कृपया सेटिंग्स में पथ जाँचें।",
       "tableRenderError": "तालिका रेंडरिंग त्रुटि"
     },
-    "fileEmpty": "फ़ाइल खाली है",
     "imbalanceAlerts": "असंतुलन चेतावनियाँ",
     "insufficientData": "पर्याप्त डेटा नहीं",
     "noDataPeriod": "चुने गए समय अवधि के लिए कोई वर्कआउट डेटा नहीं मिला।",
-    "noFrontmatter": "कोई फ्रंटमैटर नहीं",
     "noImbalances": "कोई असंतुलन नहीं मिला",
-    "noTags": "फ्रंटमैटर में कोई टैग नहीं",
     "success": {
       "blockIdsAdded": "{files} फ़ाइलों में {count} गुम ID जोड़ी गईं",
       "csvCreated": "CSV फ़ाइल सफलतापूर्वक बनाई गई!",

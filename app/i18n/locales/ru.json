@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Не удалось создать CSV-файл по пути: {path}. Проверьте путь в настройках.",
       "tableRenderError": "Ошибка рендеринга таблицы"
     },
-    "fileEmpty": "Файл пуст",
     "imbalanceAlerts": "Предупреждения о дисбалансе",
     "insufficientData": "Недостаточно данных",
     "noDataPeriod": "Данные тренировок не найдены для выбранного периода времени.",
-    "noFrontmatter": "Нет frontmatter",
     "noImbalances": "Дисбаланс не обнаружен",
-    "noTags": "Во frontmatter нет тегов",
     "success": {
       "blockIdsAdded": "Добавлено отсутствующих ID: {count} (файлов: {files})",
       "csvCreated": "Файл CSV успешно создан!",

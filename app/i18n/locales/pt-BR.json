@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Falha ao criar o arquivo CSV no caminho: {path}. Verifique o caminho nas configurações.",
       "tableRenderError": "Erro ao renderizar a tabela"
     },
-    "fileEmpty": "O arquivo está vazio",
     "imbalanceAlerts": "Alertas de desequilíbrio",
     "insufficientData": "Dados insuficientes",
     "noDataPeriod": "Não foram encontradas informações de treino para o período selecionado.",
-    "noFrontmatter": "Sem frontmatter",
     "noImbalances": "Nenhum desequilíbrio encontrado",
-    "noTags": "Nenhuma tag no frontmatter",
     "success": {
       "blockIdsAdded": "Adicionados {count} ID(s) ausente(s) em {files} arquivo(s)",
       "csvCreated": "O arquivo CSV foi criado com sucesso!",

@@ -474,13 +474,10 @@
       "workoutLogCreateError": "パス {path} にCSVファイルを作成できませんでした。設定でパスを確認してください。",
       "tableRenderError": "テーブルレンダリングエラー"
     },
-    "fileEmpty": "ファイルが空です",
     "imbalanceAlerts": "アンバランスの警告",
     "insufficientData": "データが不足しています",
     "noDataPeriod": "選択した期間のワークアウトデータが見つかりませんでした。",
-    "noFrontmatter": "フロントマターがありません",
     "noImbalances": "アンバランスは見つかりませんでした",
-    "noTags": "フロントマターにタグがありません",
     "success": {
       "blockIdsAdded": "{count} の欠落した ID を {files} ファイルに登録しました。",
       "csvCreated": "CSVファイルが正常に作成されました！",

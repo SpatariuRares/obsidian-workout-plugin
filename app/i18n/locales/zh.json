@@ -474,13 +474,10 @@
       "workoutLogCreateError": "无法在路径 {path} 创建 CSV 文件，请检查设置中的路径。",
       "tableRenderError": "表格渲染错误"
     },
-    "fileEmpty": "文件为空",
     "imbalanceAlerts": "失衡提醒",
     "insufficientData": "数据不足",
     "noDataPeriod": "未找到所选时间段的训练数据。",
-    "noFrontmatter": "没有 frontmatter",
     "noImbalances": "未发现失衡",
-    "noTags": "frontmatter 中没有标签",
     "success": {
       "blockIdsAdded": "已在 {files} 个文件中添加 {count} 个缺失的 ID",
       "csvCreated": "CSV 文件已成功创建！",

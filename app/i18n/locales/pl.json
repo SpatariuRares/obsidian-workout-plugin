@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Nie udało się utworzyć pliku CSV pod ścieżką: {path}. Sprawdź ścieżkę w ustawieniach.",
       "tableRenderError": "Błąd renderowania tabeli"
     },
-    "fileEmpty": "Plik jest pusty",
     "imbalanceAlerts": "Ostrzeżenia o dysproporcjach",
     "insufficientData": "Za mało danych",
     "noDataPeriod": "Brak danych dotyczących treningu dla wybranego okresu.",
-    "noFrontmatter": "Brak frontmatter",
     "noImbalances": "Nie wykryto dysproporcji",
-    "noTags": "Brak tagów we frontmatter",
     "success": {
       "blockIdsAdded": "Dodano brakujące identyfikatory: {count} (pliki: {files})",
       "csvCreated": "Plik CSV został pomyślnie utworzony!",

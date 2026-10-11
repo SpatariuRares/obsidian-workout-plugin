@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Gagal membuat file CSV di jalur: {path}. Periksa jalur di pengaturan.",
       "tableRenderError": "Kesalahan saat merender tabel"
     },
-    "fileEmpty": "File kosong",
     "imbalanceAlerts": "Peringatan ketidakseimbangan",
     "insufficientData": "Data tidak cukup",
     "noDataPeriod": "Tidak ada data latihan yang ditemukan untuk periode waktu yang dipilih.",
-    "noFrontmatter": "Tidak ada frontmatter",
     "noImbalances": "Tidak ditemukan ketidakseimbangan",
-    "noTags": "Tidak ada tag di frontmatter",
     "success": {
       "blockIdsAdded": "Menambahkan {count} ID yang hilang di {files} file",
       "csvCreated": "File CSV berhasil dibuat!",

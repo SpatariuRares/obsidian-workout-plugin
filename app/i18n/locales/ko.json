@@ -474,13 +474,10 @@
       "workoutLogCreateError": "경로 {path}에 CSV 파일을 만들 수 없습니다. 설정에서 경로를 확인하세요.",
       "tableRenderError": "테이블 렌더링 오류"
     },
-    "fileEmpty": "파일이 비어 있습니다",
     "imbalanceAlerts": "불균형 경고",
     "insufficientData": "데이터 부족",
     "noDataPeriod": "선택된 기간 동안 운동 데이터가 없습니다.",
-    "noFrontmatter": "프론트매터 없음",
     "noImbalances": "불균형이 발견되지 않았습니다",
-    "noTags": "프론트매터에 태그가 없습니다",
     "success": {
       "blockIdsAdded": "파일 {files}개에 누락된 ID {count}개를 추가했습니다",
       "csvCreated": "CSV 파일이 성공적으로 생성되었습니다!",

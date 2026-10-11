@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Kunne ikke oprette CSV-fil på stien: {path}. Kontroller stien i indstillingerne.",
       "tableRenderError": "Fejl ved tabelgengivelse"
     },
-    "fileEmpty": "Filen er tom",
     "imbalanceAlerts": "Advarsler om ubalance",
     "insufficientData": "Ikke nok data",
     "noDataPeriod": "Ingen træningsdata fundet for den valgte tidsperiode.",
-    "noFrontmatter": "Ingen frontmatter",
     "noImbalances": "Ingen ubalancer fundet",
-    "noTags": "Ingen tags i frontmatter",
     "success": {
       "blockIdsAdded": "Tilføjede {count} manglende ID(er) i {files} fil(er)",
       "csvCreated": "CSV-filen er oprettet med succes!",

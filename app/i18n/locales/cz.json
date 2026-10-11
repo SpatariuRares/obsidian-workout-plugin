@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Nepodařilo se vytvořit soubor CSV na cestě: {path}. Zkontrolujte cestu v nastavení.",
       "tableRenderError": "Chyba při vykreslování tabulky"
     },
-    "fileEmpty": "Soubor je prázdný",
     "imbalanceAlerts": "Upozornění na nerovnováhu",
     "insufficientData": "Nedostatek dat",
     "noDataPeriod": "Pro vybrané období nebyla nalezena žádná data tréninků.",
-    "noFrontmatter": "Žádný frontmatter",
     "noImbalances": "Nebyla nalezena žádná nerovnováha",
-    "noTags": "Ve frontmatteru nejsou žádné štítky",
     "success": {
       "blockIdsAdded": "Přidáno chybějících ID: {count} (souborů: {files})",
       "csvCreated": "Soubor CSV byl úspěšně vytvořen!",

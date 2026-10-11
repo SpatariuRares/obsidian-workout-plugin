@@ -116,6 +116,19 @@ describe("ExerciseLibrary", () => {
       expect(lib.find("Run")?.tags).toEqual(["hamstrings", "calves"]);
     });
 
+    it.each([
+      [["Chest", "#back", " "], ["Chest", "back"]],
+      ["chest", ["chest"]],
+      ["chest, back #core", ["chest", "back", "core"]],
+      ["[chest, back]", ["chest", "back"]],
+      [undefined, []],
+      [42, []],
+    ])("should read tags %p as %p", (tags, expected) => {
+      const { lib } = library({ "Gym/Exercises/Squat.md": { tags } });
+
+      expect(lib.find("Squat")?.tags).toEqual(expected);
+    });
+
     it("should list every name a page answers to", () => {
       const { lib } = library({
         "Gym/Exercises/Bench Press.md": { exercise_name: "Bench press (barbell)" },

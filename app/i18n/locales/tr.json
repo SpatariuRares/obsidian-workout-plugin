@@ -474,13 +474,10 @@
       "workoutLogCreateError": "{path} yolunda CSV dosyası oluşturulamadı. Lütfen ayarlardaki yolu kontrol edin.",
       "tableRenderError": "Tablo oluşturma hatası"
     },
-    "fileEmpty": "Dosya boş",
     "imbalanceAlerts": "Dengesizlik uyarıları",
     "insufficientData": "Yeterli veri yok",
     "noDataPeriod": "Belirtilen zaman aralığı için herhangi bir antrenman verisi bulunamadı.",
-    "noFrontmatter": "Frontmatter yok",
     "noImbalances": "Dengesizlik bulunamadı",
-    "noTags": "Frontmatter'da etiket yok",
     "success": {
       "blockIdsAdded": "{files} dosyada {count} eksik ID eklendi",
       "csvCreated": "CSV dosyası başarıyla oluşturuldu!",

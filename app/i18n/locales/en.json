@@ -475,13 +475,10 @@
       "templateGenError": "Failed to generate templates: {error}",
       "workoutLogCreateError": "Failed to create CSV file at path: {path}. Please check the path in settings."
     },
-    "fileEmpty": "The file is empty",
     "imbalanceAlerts": "Imbalance alerts",
     "insufficientData": "Not enough data",
     "noDataPeriod": "No workout data found for the selected time period.",
-    "noFrontmatter": "No frontmatter",
     "noImbalances": "No imbalances found",
-    "noTags": "No tags in the frontmatter",
     "success": {
       "blockIdsAdded": "Added {count} missing ID(s) in {files} file(s)",
       "csvCreated": "CSV file created successfully!",

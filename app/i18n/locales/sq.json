@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Dështoi krijimi i skedarit CSV në shtegun: {path}. Kontrolloni shtegun te cilësimet.",
       "tableRenderError": "Gabim në paraqitjen e tabelës"
     },
-    "fileEmpty": "Skedari është bosh",
     "imbalanceAlerts": "Sinjalizime për çekuilibër",
     "insufficientData": "Të dhëna të pamjaftueshme",
     "noDataPeriod": "Nuk u gjetën të dhëna stërvitjeje për periudhën e zgjedhur.",
-    "noFrontmatter": "Pa frontmatter",
     "noImbalances": "Nuk u gjet asnjë çekuilibër",
-    "noTags": "Nuk ka etiketa në frontmatter",
     "success": {
       "blockIdsAdded": "U shtuan {count} ID që mungonin në {files} skedar(ë)",
       "csvCreated": "Skedari CSV u krijua me sukses!",

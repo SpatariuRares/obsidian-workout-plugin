@@ -474,13 +474,10 @@
       "workoutLogCreateError": "Nu s-a putut crea fișierul CSV la calea: {path}. Verificați calea în setări.",
       "tableRenderError": "Eroare la redarea tabelului"
     },
-    "fileEmpty": "Fișierul este gol",
     "imbalanceAlerts": "Alerte de dezechilibru",
     "insufficientData": "Date insuficiente",
     "noDataPeriod": "Nu au fost găsite date despre antrenament pentru perioada selectată.",
-    "noFrontmatter": "Fără frontmatter",
     "noImbalances": "Nu s-au găsit dezechilibre",
-    "noTags": "Nicio etichetă în frontmatter",
     "success": {
       "blockIdsAdded": "Au fost adăugate {count} ID-uri lipsă în {files} fișier(e)",
       "csvCreated": "Fișierul CSV a fost creat cu succes!",

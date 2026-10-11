@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Alle oefenpagina's zijn geldig",
       "noTags": "Geen spierlabels in de frontmatter",
-      "readError": "❌ Fout bij het lezen van bestand: {message}",
       "title": "Foutmeldingen bij bestanden",
       "tooManyTags": "Te veel spierlabels ({count})"
     },

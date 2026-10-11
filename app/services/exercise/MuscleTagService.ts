@@ -21,8 +21,7 @@ import {
 import { StringUtils } from "@app/utils/StringUtils";
 import { PathUtils } from "@app/utils/PathUtils";
 import { LanguageUtils } from "@app/utils/LanguageUtils";
-import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import type { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 
 /**
@@ -37,6 +36,7 @@ export class MuscleTagService {
   constructor(
     private app: App,
     private settings: WorkoutChartsSettings,
+    private exercises: ExerciseLibrary,
   ) {}
 
   /**
@@ -290,24 +290,12 @@ export class MuscleTagService {
   }
 
   /**
-   * Muscle groups an exercise trains, from the tags of its note in the
-   * exercise folder. An exercise without a note or without muscle tags
-   * trains nothing (it is never guessed from its name).
+   * Muscle groups an exercise trains, from the tags of its exercise page.
+   * An exercise without a page or without muscle tags trains nothing (it is
+   * never guessed from its name).
    */
   async musclesForExercise(exerciseName: string): Promise<string[]> {
-    return this.musclesForTags(this.exerciseTags(exerciseName));
-  }
-
-  /** The frontmatter tags of the exercise's note, [] without a note */
-  private exerciseTags(exerciseName: string): string[] {
-    const file = ExercisePathResolver.findExerciseFile(exerciseName, {
-      app: this.app,
-      settings: this.settings,
-    });
-    if (!file) return [];
-    return FrontmatterParser.toTagList(
-      this.app.metadataCache.getFileCache(file)?.frontmatter?.tags,
-    );
+    return this.musclesForTags(this.exercises.find(exerciseName)?.tags ?? []);
   }
 
   /**

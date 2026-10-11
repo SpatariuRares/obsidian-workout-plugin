@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "所有训练页面均有效",
       "noTags": "frontmatter 中没有肌肉标签",
-      "readError": "❌ 文件读取错误：{message}",
       "title": "文件错误",
       "tooManyTags": "肌肉标签过多 ({count})"
     },

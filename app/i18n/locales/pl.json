@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Wszystkie strony ćwiczeń są poprawne",
       "noTags": "Brak tagów mięśni we frontmatter",
-      "readError": "❌ Błąd odczytu pliku: {message}",
       "title": "Błędy w plikach",
       "tooManyTags": "Zbyt wiele tagów mięśni ({count})"
     },

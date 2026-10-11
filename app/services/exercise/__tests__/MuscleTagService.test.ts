@@ -1,4 +1,6 @@
 import { MuscleTagService } from "../MuscleTagService";
+import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
@@ -602,23 +604,16 @@ petto,chest,en`;
   });
 
   describe("musclesForExercise", () => {
-    function withNotes(notes: Record<string, unknown>) {
-      const files = Object.keys(notes).map((path) =>
-        Object.assign(new TFile(), {
-          path,
-          basename: path.split("/").pop()!.replace(/\.md$/, ""),
-          extension: "md",
-        }),
-      );
-      Object.assign(mockVault, { getMarkdownFiles: () => files });
-      (mockApp as unknown as Record<string, unknown>).metadataCache = {
-        getFileCache: (file: TFile) => ({ frontmatter: { tags: notes[file.path] } }),
-      };
+    /** Exercise pages in the "exercises" folder: path → frontmatter */
+    function withNotes(notes: Record<string, Record<string, unknown>>) {
+      const vault = new FakeVault(notes);
+      const library = new ExerciseLibrary(vault.app as never, mockSettings);
       mockVault.getAbstractFileByPath.mockReturnValue(null); // default tags
+      service = new MuscleTagService(mockApp as any, mockSettings, library);
     }
 
     it("reads the muscles from the tags of the exercise's note", async () => {
-      withNotes({ "exercises/Bench press.md": ["chest", "triceps", "compound"] });
+      withNotes({ "exercises/Bench press.md": { tags: ["chest", "triceps", "compound"] } });
 
       expect((await service.musclesForExercise("Bench press")).sort()).toEqual([
         "chest",
@@ -628,16 +623,30 @@ petto,chest,en`;
 
     it("prefers the note with the exact name over one that only contains it", async () => {
       withNotes({
-        "exercises/Front squat.md": ["quads"],
-        "exercises/Squat.md": ["glutes"],
+        "exercises/Front squat.md": { tags: ["quads"] },
+        "exercises/Squat.md": { tags: ["glutes"] },
       });
 
       expect(await service.musclesForExercise("Squat")).toEqual(["glutes"]);
     });
 
+    it("doesn't take muscles from a page whose name only contains the exercise", async () => {
+      withNotes({ "exercises/Squat Multi Power.md": { tags: ["quads"] } });
+
+      expect(await service.musclesForExercise("Squat")).toEqual([]);
+    });
+
+    it("reads the muscles of the page named by its frontmatter", async () => {
+      withNotes({
+        "exercises/Bench Press.md": { nome_esercizio: "Panca piana", tags: ["chest"] },
+      });
+
+      expect(await service.musclesForExercise("Panca piana")).toEqual(["chest"]);
+    });
+
     it("never guesses muscles from the exercise name", async () => {
       // "curl" is a default tag for biceps
-      withNotes({ "exercises/Leg curl.md": [] });
+      withNotes({ "exercises/Leg curl.md": { tags: [] } });
 
       expect(await service.musclesForExercise("Leg curl")).toEqual([]);
       expect(await service.musclesForExercise("Barbell curl")).toEqual([]);

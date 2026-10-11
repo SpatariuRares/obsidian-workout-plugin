@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "すべてのエクササイズページは有効です",
       "noTags": "フロントマターに筋肉タグがありません",
-      "readError": "❌ ファイルの読み込みエラー: {message}",
       "title": "ファイルのエラー",
       "tooManyTags": "筋肉タグが多すぎます（{count}）"
     },

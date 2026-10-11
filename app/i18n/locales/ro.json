@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Toate paginile de exerciții sunt valide",
       "noTags": "Nicio etichetă pentru mușchi în frontmatter",
-      "readError": "❌ Eroare la citirea fișierului: {message}",
       "title": "Erori în fișiere",
       "tooManyTags": "Prea multe etichete pentru mușchi ({count})"
     },

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Todas as páginas de exercício são válidas",
       "noTags": "Nenhuma tag muscular no frontmatter",
-      "readError": "❌ Erro ao ler o arquivo: {message}",
       "title": "Erros de arquivo",
       "tooManyTags": "Número excessivo de tags de músculos ({count})"
     },

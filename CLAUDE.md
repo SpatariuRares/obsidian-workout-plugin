@@ -118,6 +118,10 @@ The only place that knows what a protocol looks like: `new ProtocolCatalog(setti
 
 The only place that reads logged sets back as training (see "Training History" in `CONTEXT.md`). Pure: `new TrainingHistory(rows)`, no vault, no mocks in tests. `trainingDay(date)` is the one day rule (local day, never `date.split("T")[0]`); `sessions({ workout? })` groups sets by training day + workout name (case, spacing, quotes ignored; sets without a workout form their own unnamed session) and gives each session's plausible `duration`. `personalRecord(exercise)` and `newRecordSets()` are the one PR definition. `trendOf(values)` is the one trend (regression line, stable within 5% of the mean); the chart label (`TrendCalculator`), `TrendHeader`, the chart trend line and the API all read it, and the API's series is `heaviestPerDay(exercise)`. `streak(today?)` (calendar weeks from Monday), `totalVolume()`, `volumeByDay()` and `topExercisesByVolume(n)` feed the dashboard. Never group sets by day or session, compute a PR or a trend anywhere else.
 
+#### ExerciseLibrary (`app/services/exercise/ExerciseLibrary.ts`)
+
+The only place that finds an exercise's page (see "Exercise Pages" in `CONTEXT.md`): notes in the exercise folder and its subfolders, found by file name, `exercise_name` or `nome_esercizio`, ignoring case and spacing, never partially. `find(name)` gives an `ExercisePage` (file, names, type, tags as a list); `pages()` lists them; `pagesSharingAName(page)` finds duplicates. It reads frontmatter from `metadataCache` and stays current through `watch()` (vault/metadata events, registered in `main.ts`) and the folder setting, so there is no cache to clear. Get it with `plugin.getExerciseLibrary()` (`ExerciseLibraryPort`). Tests use the shared `FakeVault` (`app/services/exercise/__tests__/FakeVault.ts`), not hand-made vault mocks.
+
 #### ExerciseDefinitionService
 
 Manages exercise type definitions (Strength, Cardio, Flexibility, custom types) with field definitions. Cached with `clearCache()` method.

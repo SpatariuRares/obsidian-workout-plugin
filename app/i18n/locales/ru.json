@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Все страницы упражнений корректны",
       "noTags": "Во frontmatter нет тегов мышц",
-      "readError": "❌ Ошибка при чтении файла: {message}",
       "title": "Ошибки при работе с файлами",
       "tooManyTags": "Слишком много тегов мышц ({count})"
     },

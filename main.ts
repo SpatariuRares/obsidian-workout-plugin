@@ -17,6 +17,7 @@ import { VaultLogStorage } from "@app/services/data/LogStorage";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
 import { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
@@ -50,6 +51,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   private codeBlockProcessorService!: CodeBlockProcessorService;
   private exerciseDefinitionService!: ExerciseDefinitionService;
   private muscleTagService!: MuscleTagService;
+  private exerciseLibrary!: ExerciseLibrary;
   public templateGeneratorService!: TemplateGeneratorService;
 
   // Public API for Dataview integration
@@ -109,9 +111,12 @@ export default class WorkoutChartsPlugin extends Plugin {
       this.app,
       this.settings,
     );
+    this.exerciseLibrary = new ExerciseLibrary(this.app, this.settings);
+    this.exerciseLibrary.watch((ref) => this.registerEvent(ref));
     this.muscleTagService = new MuscleTagService(
       this.app,
       this.settings,
+      this.exerciseLibrary,
     );
     this.templateGeneratorService = new TemplateGeneratorService(
       this.app,
@@ -258,6 +263,13 @@ export default class WorkoutChartsPlugin extends Plugin {
    */
   public getExerciseDefinitionService(): ExerciseDefinitionService {
     return this.exerciseDefinitionService;
+  }
+
+  /**
+   * The exercise pages, found by exercise name.
+   */
+  public getExerciseLibrary(): ExerciseLibrary {
+    return this.exerciseLibrary;
   }
 
   /**

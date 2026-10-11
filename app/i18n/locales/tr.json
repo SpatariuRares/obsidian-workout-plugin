@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Tüm egzersiz sayfaları geçerli",
       "noTags": "Frontmatter'da kas etiketi yok",
-      "readError": "❌ Dosya okuma hatası: {message}",
       "title": "Dosya hataları",
       "tooManyTags": "Çok fazla kas etiketi ({count})"
     },

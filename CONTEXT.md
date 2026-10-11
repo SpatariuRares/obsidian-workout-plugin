@@ -159,7 +159,17 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 
 Users can define custom protocols with name, abbreviation (max 3 chars), and color.
 
-### Exercise Files (Frontmatter)
+### Exercise Pages
+
+**Exercise page**:
+A note in the exercise folder (or any of its subfolders) that describes one exercise: its type, fields and muscle tags.
+_Avoid_: exercise file, exercise note
+
+**Exercise name**:
+What a set's `exercise` column says. It finds the exercise page whose file name, `exercise_name` or `nome_esercizio` is the same, ignoring case and spacing. Names are never matched partially: an exercise whose name matches no page simply has no page. When two pages answer to the same name, a page whose file name matches wins over one whose frontmatter does; otherwise the first by path. With no exercise folder set there are no exercise pages.
+_Avoid_: exercise id
+
+### Exercise page frontmatter
 
 ```yaml
 nome_esercizio: Exercise Name

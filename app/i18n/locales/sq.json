@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
-      "readError": "❌ Gabim gjatë leximit të skedarit: {message}",
       "title": "Gabime në skedarë",
       "tooManyTags": "Shumë etiketa muskujsh ({count})"
     },

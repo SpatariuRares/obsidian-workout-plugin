@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "모든 운동 페이지가 유효합니다",
       "noTags": "프론트매터에 근육 태그가 없습니다",
-      "readError": "❌ 파일 읽기 오류: {message}",
       "title": "파일 오류",
       "tooManyTags": "너무 많은 근육 태그가 있습니다 ({count})"
     },

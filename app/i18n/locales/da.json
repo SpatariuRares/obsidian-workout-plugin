@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Alle øvelsessider er gyldige",
       "noTags": "Ingen muskeltags i frontmatter",
-      "readError": "❌ Fejl ved læsning af fil: {message}",
       "title": "Filfejl",
       "tooManyTags": "For mange muskeltags ({count})"
     },

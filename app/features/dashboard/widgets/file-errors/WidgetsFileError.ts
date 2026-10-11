@@ -1,14 +1,23 @@
 import { Feedback } from "@app/components/atoms/Feedback";
-import type { AppPort, SettingsPort, MuscleTagPort } from "@app/types/PluginPorts";
+import type {
+  AppPort,
+  SettingsPort,
+  MuscleTagPort,
+  ExerciseLibraryPort,
+} from "@app/types/PluginPorts";
+import type {
+  ExerciseLibrary,
+  ExercisePage,
+} from "@app/services/exercise/ExerciseLibrary";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
-import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
-import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 
-type FileErrorContext = AppPort & SettingsPort & MuscleTagPort;
+type FileErrorContext = AppPort &
+  SettingsPort &
+  MuscleTagPort &
+  ExerciseLibraryPort;
 
 interface ExerciseFileError {
   file: TFile;
@@ -83,19 +92,15 @@ export class WidgetsFileError {
   private static async validateExerciseFiles(
     plugin: FileErrorContext,
   ): Promise<ExerciseFileError[]> {
+    const library = plugin.getExerciseLibrary();
     const fileErrors: ExerciseFileError[] = [];
 
-    // Get all exercise files using the path resolver
-    const exerciseFiles =
-      ExercisePathResolver.findExerciseFiles(plugin);
-
-    // Validate each exercise file
-    for (const file of exerciseFiles) {
-      const errors = await this.validateExerciseFile(file, plugin);
+    for (const page of library.pages()) {
+      const errors = await this.validatePage(page, library, plugin);
       if (errors.length > 0) {
         fileErrors.push({
-          file,
-          fileName: file.basename,
+          file: page.file,
+          fileName: page.file.basename,
           errors,
         });
       }
@@ -104,50 +109,33 @@ export class WidgetsFileError {
     return fileErrors;
   }
 
-  private static async validateExerciseFile(
-    file: TFile,
+  private static async validatePage(
+    page: ExercisePage,
+    library: ExerciseLibrary,
     plugin: FileErrorContext,
   ): Promise<string[]> {
+    const warning = t("icons.status.warning");
     const errors: string[] = [];
 
-    try {
-      const content = await plugin.app.vault.read(file);
+    // Tags that point to a muscle, resolved like the heat map does
+    const muscleTagService = plugin.getMuscleTagService();
+    const resolved = await Promise.all(
+      page.tags.map((tag) => muscleTagService.musclesForTags([tag])),
+    );
+    const muscleTags = page.tags.filter((_, i) => resolved[i].length > 0);
 
-      // Use FrontmatterParser to validate structure
-      const validationErrors =
-        FrontmatterParser.validateFrontmatter(content);
-      if (validationErrors.length > 0) {
-        return validationErrors.map(
-          (err) => `${t("icons.status.warning")} ${err}`,
-        );
-      }
-
-      // Parse tags using FrontmatterParser
-      const tags = FrontmatterParser.parseTags(content);
-
-      // Tags that point to a muscle, resolved like the heat map does
-      const muscleTagService = plugin.getMuscleTagService();
-      const resolved = await Promise.all(
-        tags.map((tag) => muscleTagService.musclesForTags([tag])),
-      );
-      const muscleTags = tags.filter((_, i) => resolved[i].length > 0);
-
-      if (muscleTags.length === 0) {
-        errors.push(
-          `${t("icons.status.warning")} ${t("dashboard.fileErrors.noTags")}`,
-        );
-      } else if (muscleTags.length > 3) {
-        errors.push(
-          `${t("icons.status.warning")} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
-        );
-      }
-    } catch (error) {
-      const errorMessage = ErrorUtils.getErrorMessage(error);
+    if (muscleTags.length === 0) {
+      errors.push(`${warning} ${t("dashboard.fileErrors.noTags")}`);
+    } else if (muscleTags.length > 3) {
       errors.push(
-        t("dashboard.fileErrors.readError", {
-          message: errorMessage,
-        }),
+        `${warning} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
       );
+    }
+
+    const sharing = library.pagesSharingAName(page);
+    if (sharing.length > 0) {
+      const pages = sharing.map((other) => other.file.basename).join(", ");
+      errors.push(`${warning} ${t("dashboard.fileErrors.sharedName", { pages })}`);
     }
 
     return errors;

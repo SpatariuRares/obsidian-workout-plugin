@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "所有動作頁面皆有效",
       "noTags": "frontmatter 中沒有肌肉標籤",
-      "readError": "❌ 檔案讀取錯誤：{message}",
       "title": "檔案錯誤",
       "tooManyTags": "過多的肌肉標籤（{count}）"
     },

@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Semua halaman latihan valid",
       "noTags": "Tidak ada tag otot di frontmatter",
-      "readError": "❌ Terjadi kesalahan saat membaca file: {message}",
       "title": "Kesalahan pada file",
       "tooManyTags": "Terlalu banyak tag otot ({count})"
     },

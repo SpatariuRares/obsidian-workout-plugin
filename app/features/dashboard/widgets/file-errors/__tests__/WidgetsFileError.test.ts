@@ -1,35 +1,39 @@
 /** @jest-environment jsdom */
-import { App, TFile } from "obsidian";
+import type { App } from "obsidian";
 import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
 import { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
 
-function note(tags: string[]): string {
-  return ["---", "tags:", ...tags.map((tag) => `  - ${tag}`), "---", "# Notes"].join("\n");
+function note(tags: string[] | string): Record<string, unknown> {
+  return { tags };
 }
 
-async function errorsFor(notes: Record<string, string>): Promise<Record<string, string[]>> {
-  const files = Object.keys(notes).map((name) =>
-    Object.assign(new TFile(), {
-      path: `exercises/${name}.md`,
-      basename: name,
-      extension: "md",
-    }),
+/** Exercise pages by name (or by path ending in .md under "exercises/") → frontmatter */
+async function errorsFor(
+  notes: Record<string, Record<string, unknown>>,
+): Promise<Record<string, string[]>> {
+  const vault = new FakeVault(
+    Object.fromEntries(
+      Object.entries(notes).map(([name, fm]) => [
+        name.endsWith(".md") ? `exercises/${name}` : `exercises/${name}.md`,
+        fm,
+      ]),
+    ),
   );
   const app = {
-    vault: {
-      getMarkdownFiles: () => files,
-      read: async (file: TFile) => notes[file.basename],
-      getAbstractFileByPath: () => null, // no muscle-tags.csv: default tags
-    },
+    ...vault.app,
+    vault: { ...vault.app.vault, getAbstractFileByPath: () => null }, // no muscle-tags.csv: default tags
   } as unknown as App;
   const settings = {
     exerciseFolderPath: "exercises",
     csvLogFilePath: "workout_logs.csv",
   } as WorkoutChartsSettings;
-  const muscleTags = new MuscleTagService(app, settings);
+  const library = new ExerciseLibrary(vault.app as never, settings);
+  const muscleTags = new MuscleTagService(app, settings, library);
   const container = createObsidianContainer();
 
   await WidgetsFileError.render(container, {
@@ -37,6 +41,7 @@ async function errorsFor(notes: Record<string, string>): Promise<Record<string, 
     settings,
     saveSettings: async () => {},
     getMuscleTagService: () => muscleTags,
+    getExerciseLibrary: () => library,
     triggerMuscleTagRefresh: () => {},
   });
 
@@ -79,6 +84,32 @@ describe("WidgetsFileError", () => {
     expect(errors).toEqual({
       Burpee: [
         `${t("icons.status.warning")} ${t("dashboard.fileErrors.tooManyTags", { count: 4 })}`,
+      ],
+    });
+  });
+
+  it("accepts tags written as a comma separated string", async () => {
+    expect(await errorsFor({ Crunch: note("abs, core") })).toEqual({});
+  });
+
+  it("checks pages in subfolders of the exercise folder", async () => {
+    expect(await errorsFor({ "QA/Leg curl.md": note(["compound"]) })).toEqual({
+      "Leg curl": [noTags],
+    });
+  });
+
+  it("flags pages that answer to the same exercise name", async () => {
+    const errors = await errorsFor({
+      Squat: note(["quads"]),
+      "Front.md": { exercise_name: "Squat", tags: ["quads"] },
+    });
+
+    expect(errors).toEqual({
+      Squat: [
+        `${t("icons.status.warning")} ${t("dashboard.fileErrors.sharedName", { pages: "Front" })}`,
+      ],
+      Front: [
+        `${t("icons.status.warning")} ${t("dashboard.fileErrors.sharedName", { pages: "Squat" })}`,
       ],
     });
   });

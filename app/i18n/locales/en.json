@@ -98,7 +98,7 @@
     "fileErrors": {
       "allValid": "All exercise pages are valid",
       "noTags": "No muscle tags in the frontmatter",
-      "readError": "❌ Error reading file: {message}",
+      "sharedName": "Same exercise name as {pages}: logs go to only one of them",
       "title": "File errors",
       "tooManyTags": "Too many muscle tags ({count})"
     },

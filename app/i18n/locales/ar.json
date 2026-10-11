@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "جميع صفحات التمارين صالحة",
       "noTags": "لا توجد علامات عضلات في البيانات الوصفية (frontmatter)",
-      "readError": "❌ خطأ في قراءة الملف: {message}",
       "title": "أخطاء الملفات",
       "tooManyTags": "عدد كبير من علامات العضلات ({count})"
     },

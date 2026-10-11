@@ -98,7 +98,6 @@
     "fileErrors": {
       "allValid": "Všechny stránky cvičení jsou v pořádku",
       "noTags": "Ve frontmatteru nejsou žádné štítky svalů",
-      "readError": "❌ Chyba při čtení souboru: {message}",
       "title": "Chyby související se soubory",
       "tooManyTags": "Příliš mnoho štítků svalů ({count})"
     },

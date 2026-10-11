@@ -63,7 +63,7 @@ I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca ne
 
 **Da esercizio a muscoli** (`app/services/exercise/MuscleTagService.ts`, `musclesForExercise()`):
 
-1. Trova la nota dell'esercizio via `ExercisePathResolver` (prima il nome esatto, poi un nome che lo contiene)
+1. Trova la pagina dell'esercizio via `ExerciseLibrary` (nome del file, `exercise_name` o `nome_esercizio`, mai un nome parziale)
 2. Legge i tag del frontmatter dalla `metadataCache` di Obsidian
 3. Mappa ogni tag con la mappa dell'utente (`muscle-tags.csv`) o quella predefinita; un tag uguale all'id di un gruppo canonico (`upper_chest`, "Upper chest") vale sempre
 4. Nessun ripiego sul nome: un esercizio senza tag muscolari non conta (il widget "errori file" lo segnala)

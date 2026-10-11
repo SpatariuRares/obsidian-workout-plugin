@@ -6,6 +6,7 @@ import type {
 } from "@app/types/WorkoutLogData";
 import type { ExerciseDefinitionService } from "@app/services/exercise/ExerciseDefinitionService";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import type { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 import type { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
@@ -44,6 +45,10 @@ export interface WorkoutDataPort {
 
 export interface ExerciseDefinitionPort {
   getExerciseDefinitionService(): ExerciseDefinitionService;
+}
+
+export interface ExerciseLibraryPort {
+  getExerciseLibrary(): ExerciseLibrary;
 }
 
 export interface MuscleTagPort {
@@ -90,5 +95,6 @@ export type WorkoutPluginContext = AppPort &
   SettingsPort &
   WorkoutDataPort &
   ExerciseDefinitionPort &
+  ExerciseLibraryPort &
   MuscleTagPort &
   LogModalPort;

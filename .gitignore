@@ -28,3 +28,6 @@ strings_found/*
 .tmp/
 # Local issue tracker (agent skills)
 .scratch/
+
+# Build error log written by scripts/learning/error-logger.mjs (machine-specific)
+scripts/learning/error-log.json

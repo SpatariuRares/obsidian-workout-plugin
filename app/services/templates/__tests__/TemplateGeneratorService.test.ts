@@ -28,7 +28,7 @@ describe("TemplateGeneratorService", () => {
       ["gambe", "quads"],
     ]);
     service = new TemplateGeneratorService(app, {
-      getMuscleTagService: () => ({ getTagMap: () => tagMap }),
+      getMuscleTagService: () => ({ tagMap: async () => tagMap }),
     } as any);
   });
 

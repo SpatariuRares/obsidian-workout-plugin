@@ -1,14 +1,12 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
-import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
-import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
+import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
+import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 import { DateUtils } from "@app/utils/DateUtils";
 import {
   calculateZoneValues,
   type ZoneValues,
 } from "@app/features/dashboard/widgets/muscle-heat-map/body/zones";
 import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-map/types";
-
-type MuscleDataContext = AppPort & SettingsPort;
 
 export interface MuscleGroupData {
   name: string;
@@ -23,11 +21,9 @@ export interface MuscleGroupData {
  * Handles data processing and calculations for muscle heat maps
  */
 export class MuscleDataCalculator {
-  private tagMapper: MuscleTagMapper;
-
-  constructor(tagMapper: MuscleTagMapper) {
-    this.tagMapper = tagMapper;
-  }
+  constructor(
+    private muscleTags: Pick<MuscleTagService, "musclesForExercise">,
+  ) {}
 
   /**
    * Filter workout data by time frame
@@ -62,29 +58,30 @@ export class MuscleDataCalculator {
    */
   async calculateMuscleGroupVolumes(
     data: WorkoutLogData[],
-    plugin: MuscleDataContext,
     metric: HeatMapMetric = "volume",
   ): Promise<Map<string, MuscleGroupData>> {
     const muscleData = new Map<string, MuscleGroupData>();
 
-    // Initialize all muscle groups
-    const allMuscleGroups = this.tagMapper.getAllMuscleGroups();
-    allMuscleGroups.forEach((muscle) => {
+    for (const muscle of CANONICAL_MUSCLE_GROUPS) {
       muscleData.set(muscle, {
         name: muscle,
         volume: 0,
         exercises: [],
         intensity: 0,
       });
-    });
+    }
 
+    // One lookup per exercise, not per logged set
+    const musclesByExercise = new Map<string, string[]>();
     for (const entry of data) {
       const value = MuscleDataCalculator.getMetricValue(entry, metric);
-      const mappedMuscles =
-        await this.tagMapper.findMuscleGroupsFromTags(
+      let mappedMuscles = musclesByExercise.get(entry.exercise);
+      if (!mappedMuscles) {
+        mappedMuscles = await this.muscleTags.musclesForExercise(
           entry.exercise,
-          plugin,
         );
+        musclesByExercise.set(entry.exercise, mappedMuscles);
+      }
 
       mappedMuscles.forEach((muscle) => {
         const current = muscleData.get(muscle);

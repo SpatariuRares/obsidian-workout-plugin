@@ -1,12 +1,10 @@
 import { MuscleDataCalculator } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
-import type { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 
-const tagMapper = {
-  getAllMuscleGroups: () => new Set(["chest", "abs"]),
-  findMuscleGroupsFromTags: async (exercise: string) =>
+const muscleTags = {
+  musclesForExercise: async (exercise: string) =>
     exercise === "Bench Press" ? ["chest"] : ["abs"],
-} as unknown as MuscleTagMapper;
+};
 
 const log = (exercise: string, reps: number, weight: number) =>
   ({
@@ -29,12 +27,8 @@ const data = [
 const valuesFor = async (
   metric?: "volume" | "sets" | "reps",
 ): Promise<Record<string, number>> => {
-  const calculator = new MuscleDataCalculator(tagMapper);
-  const result = await calculator.calculateMuscleGroupVolumes(
-    data,
-    {} as never,
-    metric,
-  );
+  const calculator = new MuscleDataCalculator(muscleTags);
+  const result = await calculator.calculateMuscleGroupVolumes(data, metric);
   return {
     chest: result.get("chest")!.volume,
     abs: result.get("abs")!.volume,
@@ -54,11 +48,19 @@ describe("MuscleDataCalculator.calculateMuscleGroupVolumes", () => {
     expect(await valuesFor("reps")).toEqual({ chest: 20, abs: 60 });
   });
 
+  it("looks up each exercise's muscles once, not once per set", async () => {
+    const musclesForExercise = jest.fn(async () => ["chest"]);
+    await new MuscleDataCalculator({
+      musclesForExercise,
+    }).calculateMuscleGroupVolumes(data);
+
+    expect(musclesForExercise).toHaveBeenCalledTimes(2);
+  });
+
   it("normalizes intensity against the busiest muscle for the metric", async () => {
-    const calculator = new MuscleDataCalculator(tagMapper);
+    const calculator = new MuscleDataCalculator(muscleTags);
     const result = await calculator.calculateMuscleGroupVolumes(
       data,
-      {} as never,
       "sets",
     );
     expect(result.get("abs")!.intensity).toBe(1);
@@ -68,18 +70,11 @@ describe("MuscleDataCalculator.calculateMuscleGroupVolumes", () => {
 
 describe("MuscleDataCalculator.calculateZoneValues", () => {
   const zonesFor = async (groups: string[]) => {
-    const mapper = {
-      getAllMuscleGroups: () =>
-        new Set(
-          jest.requireActual("@app/constants/muscles.constants")
-            .CANONICAL_MUSCLE_GROUPS,
-        ),
-      findMuscleGroupsFromTags: async (exercise: string) => [exercise],
-    } as unknown as MuscleTagMapper;
-    const calculator = new MuscleDataCalculator(mapper);
+    const calculator = new MuscleDataCalculator({
+      musclesForExercise: async (exercise: string) => [exercise],
+    });
     const muscleData = await calculator.calculateMuscleGroupVolumes(
       groups.map((g) => log(g, 10, 10)),
-      {} as never,
     );
     return MuscleDataCalculator.calculateZoneValues(muscleData);
   };

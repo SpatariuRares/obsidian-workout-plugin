@@ -8,7 +8,6 @@ import {
 import {
   MuscleDataCalculator,
   MuscleBalanceAnalyzer,
-  MuscleTagMapper,
 } from "@app/features/dashboard/widgets/muscle-heat-map/business";
 import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
@@ -46,9 +45,9 @@ export class MuscleHeatMap {
     });
 
     // Create calculator with DI
-    const muscleTagService = plugin.getMuscleTagService();
-    const tagMapper = new MuscleTagMapper(muscleTagService);
-    const calculator = new MuscleDataCalculator(tagMapper);
+    const calculator = new MuscleDataCalculator(
+      plugin.getMuscleTagService(),
+    );
 
     const renderHeatMap = async (
       cntr: HTMLElement,
@@ -107,7 +106,6 @@ export class MuscleHeatMap {
     // Calculate per-muscle totals for the selected metric
     const muscleData = await calculator.calculateMuscleGroupVolumes(
       filteredData,
-      plugin,
       options.metric,
     );
 

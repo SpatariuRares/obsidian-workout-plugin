@@ -1,6 +1,6 @@
 /**
  * Muscle Heat Map Business Logic
- * Data calculations, balance analysis, tag mapping, and export functionality
+ * Data calculations and balance analysis
  */
 
 export {
@@ -11,4 +11,3 @@ export {
   MuscleBalanceAnalyzer,
   type ImbalanceAnalysis,
 } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleBalanceAnalyzer";
-export { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";

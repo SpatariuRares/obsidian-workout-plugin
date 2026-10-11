@@ -13,15 +13,6 @@ jest.mock("@app/i18n", () => ({
           .join(",")})`
       : key,
 }));
-jest.mock(
-  "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper",
-  () => ({
-    MuscleTagMapper: jest.fn().mockImplementation(() => ({
-      findMuscleGroupsFromTags: (...args: unknown[]) =>
-        mockFindGroups(...args),
-    })),
-  }),
-);
 
 const baseOptions: CanvasExportOptions = {
   layout: "horizontal",
@@ -79,7 +70,7 @@ describe("CanvasExporter.exportToCanvas", () => {
     exporter = new CanvasExporter(
       { vault } as any,
       api as any,
-      {} as any,
+      { musclesForExercise: (name: string) => mockFindGroups(name) },
       { exerciseFolderPath: "Exercises" } as any,
     );
   });

@@ -67,8 +67,8 @@ export class ExercisePathResolver {
   }
 
   /**
-   * Find a specific exercise file by name
-   * Uses fuzzy matching to handle variations in naming
+   * Find a specific exercise file by name: the exact name first, then a
+   * note whose name contains it or is contained in it
    */
   static findExerciseFile(
     exerciseName: string,
@@ -79,25 +79,22 @@ export class ExercisePathResolver {
       return undefined;
     }
 
-    const allFiles = plugin.app.vault.getMarkdownFiles();
     const searchName = exerciseName.toLowerCase();
+    const candidates = plugin.app.vault
+      .getMarkdownFiles()
+      .filter((file) => this.isInExerciseFolder(file, exerciseFolderPath));
 
-    return allFiles.find((file) => {
-      this.normalizeFilePath(file.path);
-      const fileName = file.basename.toLowerCase();
-
-      // Check if this file is in the exercise folder
-      if (!this.isInExerciseFolder(file, exerciseFolderPath)) {
-        return false;
-      }
-
-      // Match by exact name or fuzzy matching
-      return (
-        fileName === searchName ||
-        fileName.includes(searchName) ||
-        searchName.includes(fileName)
-      );
-    });
+    // An exact name wins over a note whose name only contains it
+    // ("Squat" must not pick "Front squat")
+    return (
+      candidates.find((file) => file.basename.toLowerCase() === searchName) ??
+      candidates.find((file) => {
+        const fileName = file.basename.toLowerCase();
+        return (
+          fileName.includes(searchName) || searchName.includes(fileName)
+        );
+      })
+    );
   }
 
   /**

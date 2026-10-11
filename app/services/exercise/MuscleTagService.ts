@@ -18,7 +18,12 @@ import {
   stringifyCsvRow,
   stringifyCsvValue,
 } from "@app/utils/data/CsvCodec";
-import { StringUtils, PathUtils, LanguageUtils } from "@app/utils";
+import { StringUtils } from "@app/utils/StringUtils";
+import { PathUtils } from "@app/utils/PathUtils";
+import { LanguageUtils } from "@app/utils/LanguageUtils";
+import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
+import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import { CANONICAL_MUSCLE_GROUPS } from "@app/constants/muscles.constants";
 
 /**
  * Service for managing custom muscle tag mappings via CSV file.
@@ -91,15 +96,17 @@ export class MuscleTagService {
         this.app.vault.getAbstractFileByPath(csvPath);
 
       if (!abstractFile || !(abstractFile instanceof TFile)) {
-        // CSV doesn't exist, return defaults
-        return this.getDefaultTags();
+        // CSV doesn't exist, use the defaults
+        this.tagCache = this.getDefaultTags();
+        return this.tagCache;
       }
 
       const content = await this.app.vault.read(abstractFile);
       const [headerRow] = parseCsv(content);
 
       if (!headerRow) {
-        return this.getDefaultTags();
+        this.tagCache = this.getDefaultTags();
+        return this.tagCache;
       }
 
       // Check if CSV needs migration (old format without language column)
@@ -259,36 +266,48 @@ export class MuscleTagService {
   }
 
   /**
-   * Gets the current tag map.
-   * Returns cached tags if available, otherwise loads from file or returns defaults.
+   * The tag → muscle group map: the user's CSV (their language + English),
+   * or the defaults when there is no CSV. Loaded once, then cached until
+   * clearCache().
    */
-  getTagMap(): Map<string, string> {
-    if (this.tagCache) {
-      return this.tagCache;
-    }
-
-    // Return defaults synchronously, actual loading happens in background
-    const defaults = this.getDefaultTags();
-    this.tagCache = defaults;
-
-    // Trigger async load to update cache
-    void this.loadTags().then((tags) => {
-      this.tagCache = tags;
-    });
-
-    return defaults;
+  async tagMap(): Promise<Map<string, string>> {
+    return this.tagCache ?? (await this.loadTags());
   }
 
   /**
-   * Gets the tag map as a plain object (for backward compatibility).
+   * Muscle groups a set of tags points to. A tag counts when the tag map
+   * has it, or when it names a muscle group directly ("upper_chest",
+   * "Upper chest", "upper-chest"), even if the user's tag file predates it.
    */
-  getTagMapAsObject(): Record<string, string> {
-    const map = this.getTagMap();
-    const obj: Record<string, string> = {};
-    map.forEach((value, key) => {
-      obj[key] = value;
+  async musclesForTags(tags: string[]): Promise<string[]> {
+    const tagMap = await this.tagMap();
+    const muscles = new Set<string>();
+    for (const tag of tags) {
+      const muscle = resolveTag(tagMap, tag);
+      if (muscle) muscles.add(muscle);
+    }
+    return Array.from(muscles);
+  }
+
+  /**
+   * Muscle groups an exercise trains, from the tags of its note in the
+   * exercise folder. An exercise without a note or without muscle tags
+   * trains nothing (it is never guessed from its name).
+   */
+  async musclesForExercise(exerciseName: string): Promise<string[]> {
+    return this.musclesForTags(this.exerciseTags(exerciseName));
+  }
+
+  /** The frontmatter tags of the exercise's note, [] without a note */
+  private exerciseTags(exerciseName: string): string[] {
+    const file = ExercisePathResolver.findExerciseFile(exerciseName, {
+      app: this.app,
+      settings: this.settings,
     });
-    return obj;
+    if (!file) return [];
+    return FrontmatterParser.toTagList(
+      this.app.metadataCache.getFileCache(file)?.frontmatter?.tags,
+    );
   }
 
   /**
@@ -350,6 +369,7 @@ export class MuscleTagService {
     await this.app.vault.create(csvPath, content);
 
     // Load tags to populate cache
+    this.clearCache();
     await this.loadTags();
 
     return true;
@@ -386,4 +406,17 @@ export class MuscleTagService {
   destroy(): void {
     this.clearCache();
   }
+}
+
+function resolveTag(
+  tagMap: Map<string, string>,
+  tag: string,
+): string | undefined {
+  const normalized = StringUtils.normalize(tag);
+  const mapped = tagMap.get(normalized);
+  if (mapped) return mapped;
+  const id = normalized.replace(/[\s-]+/g, "_");
+  return (CANONICAL_MUSCLE_GROUPS as readonly string[]).includes(id)
+    ? id
+    : undefined;
 }

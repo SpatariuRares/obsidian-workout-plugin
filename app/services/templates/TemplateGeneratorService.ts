@@ -83,7 +83,7 @@ export class TemplateGeneratorService {
     folderPath: string,
     overwrite: boolean = false,
   ): Promise<void> {
-    const tags = this.plugin.getMuscleTagService().getTagMap();
+    const tags = await this.plugin.getMuscleTagService().tagMap();
     const sortedTags = Array.from(tags.entries()).sort((a, b) =>
       a[0].localeCompare(b[0]),
     );

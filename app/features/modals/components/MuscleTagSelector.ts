@@ -40,9 +40,6 @@ export class MuscleTagSelector {
     const instance = new MuscleTagSelector();
     instance.onSelectionChange = onSelectionChange;
 
-    // Load all available muscle tags
-    instance.allTags = plugin.getMuscleTagService().getTagMap();
-
     // Create main container
     const selectorContainer = container.createEl("div", {
       cls: "workout-muscle-tag-selector",
@@ -92,6 +89,15 @@ export class MuscleTagSelector {
       const query = (e.target as HTMLInputElement).value;
       instance.renderTagList(tagListContainer, query);
     });
+
+    // Fill the list once the user's tag file is loaded
+    void plugin
+      .getMuscleTagService()
+      .tagMap()
+      .then((tags) => {
+        instance.allTags = tags;
+        instance.renderTagList(tagListContainer, searchInput.value);
+      });
 
     return {
       elements,

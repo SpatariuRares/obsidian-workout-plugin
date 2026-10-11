@@ -8,7 +8,7 @@ Widget del dashboard che visualizza una mappa termica del corpo umano colorata i
 WorkoutLogData[]
   -> MuscleDataCalculator.filterDataByTimeFrame()        filtra per settimana/mese/anno
   -> MuscleDataCalculator.calculateMuscleGroupVolumes()  somma la metrica (volume/sets/reps) per muscolo
-  -> MuscleTagMapper.findMuscleGroupsFromTags()          mappa esercizio -> muscoli (via tag frontmatter)
+  -> MuscleTagService.musclesForExercise()               mappa esercizio -> muscoli (via tag frontmatter)
   -> MuscleDataCalculator.calculateZoneValues()          valore di ogni zona da HEAT_MAP_ZONES
   -> Body.render()                                       disegna l'SVG e colora ogni [data-muscle]
 ```
@@ -25,7 +25,6 @@ muscle-heat-map/
 ├── business/                 # Logica dati
 │   ├── MuscleDataCalculator.ts   # Filtraggio, totali per muscolo, valori delle zone
 │   ├── MuscleBalanceAnalyzer.ts  # Analisi sbilanciamenti front/back (somma i sottogruppi nel padre)
-│   ├── MuscleTagMapper.ts        # Mapping tag esercizio -> gruppo muscolare
 │   └── index.ts
 │
 └── body/                     # Rendering SVG
@@ -57,17 +56,17 @@ I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca ne
 **`MuscleDataCalculator.ts`**
 
 1. `filterDataByTimeFrame()` - delega a `DateUtils` per filtrare i dati per periodo
-2. `calculateMuscleGroupVolumes()` - usa `MuscleTagMapper` per trovare i muscoli di ogni esercizio e somma la metrica scelta
+2. `calculateMuscleGroupVolumes()` - usa `MuscleTagService.musclesForExercise()` (una volta per esercizio) per trovare i muscoli e somma la metrica scelta
 3. `calculateZoneValues()` - converte i totali per muscolo nei valori delle zone tramite `HEAT_MAP_ZONES`
 
 **`MuscleBalanceAnalyzer.ts`** - Confronta il volume dei muscoli frontali (chest, abs, biceps, quads) con quelli posteriori (back, triceps, hamstrings, glutes), contando i sottogruppi (es. `lats`, `upper_chest`) nel gruppo padre. Oltre il 30% di differenza mostra un warning.
 
-**`MuscleTagMapper.ts`** - Dato un nome esercizio, trova i gruppi muscolari:
+**Da esercizio a muscoli** (`app/services/exercise/MuscleTagService.ts`, `musclesForExercise()`):
 
-1. Cerca il file dell'esercizio via `ExercisePathResolver`
-2. Legge i tag dal frontmatter via `FrontmatterParser`
+1. Trova la nota dell'esercizio via `ExercisePathResolver` (prima il nome esatto, poi un nome che lo contiene)
+2. Legge i tag del frontmatter dalla `metadataCache` di Obsidian
 3. Mappa ogni tag con la mappa dell'utente (`muscle-tags.csv`) o quella predefinita; un tag uguale all'id di un gruppo canonico (`upper_chest`, "Upper chest") vale sempre
-4. Fallback: se nessun tag matcha, cerca pattern nel nome dell'esercizio
+4. Nessun ripiego sul nome: un esercizio senza tag muscolari non conta (il widget "errori file" lo segnala)
 
 ### body/
 

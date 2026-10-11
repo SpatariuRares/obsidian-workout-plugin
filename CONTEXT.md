@@ -169,7 +169,7 @@ tags:
 exerciseType: strength
 ```
 
-Tags map to canonical muscle groups for the heatmap via the MuscleTagService (supports Italian/English and custom mappings).
+Tags map to canonical muscle groups via the MuscleTagService (supports Italian/English and custom mappings). It is the one place that turns tags into muscles: the heat map, canvas export and the file errors widget all ask it. A tag that names a muscle group directly (`upper_chest`, "Upper chest") always counts. An exercise with no muscle tags trains nothing; muscles are never guessed from the exercise name.
 
 ---
 

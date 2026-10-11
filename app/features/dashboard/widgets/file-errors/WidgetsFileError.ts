@@ -5,7 +5,7 @@ import { TFile } from "obsidian";
 import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import { ListItem } from "@app/components/molecules";
-import { StringUtils, ErrorUtils } from "@app/utils";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 
 type FileErrorContext = AppPort & SettingsPort & MuscleTagPort;
@@ -125,9 +125,12 @@ export class WidgetsFileError {
       // Parse tags using FrontmatterParser
       const tags = FrontmatterParser.parseTags(content);
 
-      // Check for muscle tags using MuscleTagService
-      const tagMap = plugin.getMuscleTagService().getTagMap();
-      const muscleTags = this.getMuscleTags(tags, tagMap);
+      // Tags that point to a muscle, resolved like the heat map does
+      const muscleTagService = plugin.getMuscleTagService();
+      const resolved = await Promise.all(
+        tags.map((tag) => muscleTagService.musclesForTags([tag])),
+      );
+      const muscleTags = tags.filter((_, i) => resolved[i].length > 0);
 
       if (muscleTags.length === 0) {
         errors.push(
@@ -148,15 +151,5 @@ export class WidgetsFileError {
     }
 
     return errors;
-  }
-
-  private static getMuscleTags(
-    tags: string[],
-    tagMap: Map<string, string>,
-  ): string[] {
-    return tags.filter((tag) => {
-      const normalizedTag = StringUtils.normalize(tag);
-      return tagMap.has(normalizedTag);
-    });
   }
 }

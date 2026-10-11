@@ -532,8 +532,8 @@ petto,chest,en`;
 
       await service.saveTags(tags);
 
-      // getTagMap should now return the saved tags
-      const cachedTags = service.getTagMap();
+      // tagMap should now return the saved tags
+      const cachedTags = await service.tagMap();
       expect(cachedTags.get("petto")).toBe("chest");
     });
 
@@ -549,74 +549,98 @@ petto,chest,en`;
     });
   });
 
-  describe("getTagMap", () => {
-    it("should return cached data on subsequent calls", async () => {
-      const csvContent = `tag,muscleGroup,language
-petto,chest,en`;
-
+  describe("tagMap", () => {
+    it("returns the user's tags on the very first call, not the defaults", async () => {
       const mockFile = new TFile();
       mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
 
-      // First call triggers async load
-      service.getTagMap();
+      const tags = await service.tagMap();
 
-      // Wait for async load to complete
-      await service.loadTags();
-
-      // Clear mock to verify cache is used
-      mockVault.read.mockClear();
-
-      // Second call should use cache
-      const tags2 = service.getTagMap();
-
-      expect(mockVault.read).not.toHaveBeenCalled();
-      expect(tags2.get("petto")).toBe("chest");
+      expect(tags).toEqual(new Map([["petto", "chest"]]));
     });
 
-    it("should return defaults synchronously on first call", () => {
-      mockVault.getAbstractFileByPath.mockReturnValue(null);
+    it("reads the file once and then serves the cache", async () => {
+      mockVault.getAbstractFileByPath.mockReturnValue(new TFile());
+      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
 
-      const tags = service.getTagMap();
+      await service.tagMap();
+      await service.tagMap();
 
-      // Should return defaults immediately without waiting for async load
-      expect(tags.size).toBeGreaterThan(0);
-      expect(tags.get("chest")).toBe("chest");
+      expect(mockVault.read).toHaveBeenCalledTimes(1);
     });
 
-    it("should trigger background load on first call", () => {
+    it("uses the defaults when there is no tag file", async () => {
       mockVault.getAbstractFileByPath.mockReturnValue(null);
 
-      service.getTagMap();
-
-      // getAbstractFileByPath is called during background load
-      expect(mockVault.getAbstractFileByPath).toHaveBeenCalled();
+      expect((await service.tagMap()).get("chest")).toBe("chest");
     });
   });
 
-  describe("getTagMapAsObject", () => {
-    it("should return tag map as plain object", async () => {
-      const csvContent = `tag,muscleGroup,language
-chest,chest,en
-back,back,en`;
+  describe("musclesForTags", () => {
+    beforeEach(() => {
+      mockVault.getAbstractFileByPath.mockReturnValue(new TFile());
+      // A user tag file from before specific muscles existed
+      mockVault.read.mockResolvedValue("tag,muscleGroup,language\npetto,chest,en");
+    });
 
-      const mockFile = new TFile();
-      mockVault.getAbstractFileByPath.mockReturnValue(mockFile);
-      mockVault.read.mockResolvedValue(csvContent);
+    it("maps tags through the user's tag map, ignoring case", async () => {
+      expect(await service.musclesForTags(["Petto"])).toEqual(["chest"]);
+    });
 
-      // Clear cache first to ensure clean state
-      service.clearCache();
+    it("recognizes a muscle group named directly, even if the tag file predates it", async () => {
+      expect(
+        (await service.musclesForTags(["upper_chest", "Side Delts", "rear-delts"])).sort(),
+      ).toEqual(["rear_delts", "side_delts", "upper_chest"]);
+    });
 
-      await service.loadTags();
+    it("ignores tags that aren't muscles and lists each muscle once", async () => {
+      expect(
+        await service.musclesForTags(["compound", "petto", "chest", "#petto"]),
+      ).toEqual(["chest"]);
+    });
+  });
 
-      const obj = service.getTagMapAsObject();
+  describe("musclesForExercise", () => {
+    function withNotes(notes: Record<string, unknown>) {
+      const files = Object.keys(notes).map((path) =>
+        Object.assign(new TFile(), {
+          path,
+          basename: path.split("/").pop()!.replace(/\.md$/, ""),
+          extension: "md",
+        }),
+      );
+      Object.assign(mockVault, { getMarkdownFiles: () => files });
+      (mockApp as unknown as Record<string, unknown>).metadataCache = {
+        getFileCache: (file: TFile) => ({ frontmatter: { tags: notes[file.path] } }),
+      };
+      mockVault.getAbstractFileByPath.mockReturnValue(null); // default tags
+    }
 
-      // Should contain exactly the loaded tags
-      expect(Object.keys(obj)).toHaveLength(2);
-      expect(obj.chest).toBe("chest");
-      expect(obj.back).toBe("back");
-      expect(typeof obj).toBe("object");
-      expect(obj instanceof Map).toBe(false);
+    it("reads the muscles from the tags of the exercise's note", async () => {
+      withNotes({ "exercises/Bench press.md": ["chest", "triceps", "compound"] });
+
+      expect((await service.musclesForExercise("Bench press")).sort()).toEqual([
+        "chest",
+        "triceps",
+      ]);
+    });
+
+    it("prefers the note with the exact name over one that only contains it", async () => {
+      withNotes({
+        "exercises/Front squat.md": ["quads"],
+        "exercises/Squat.md": ["glutes"],
+      });
+
+      expect(await service.musclesForExercise("Squat")).toEqual(["glutes"]);
+    });
+
+    it("never guesses muscles from the exercise name", async () => {
+      // "curl" is a default tag for biceps
+      withNotes({ "exercises/Leg curl.md": [] });
+
+      expect(await service.musclesForExercise("Leg curl")).toEqual([]);
+      expect(await service.musclesForExercise("Barbell curl")).toEqual([]);
     });
   });
 
@@ -637,8 +661,8 @@ chest,chest,en`;
       mockVault.read.mockClear();
       mockVault.getAbstractFileByPath.mockClear();
 
-      // getTagMap should return cached data without reading file
-      const cachedMap = service.getTagMap();
+      // tagMap should return cached data without reading file
+      const cachedMap = await service.tagMap();
       expect(cachedMap.get("chest")).toBe("chest");
       expect(mockVault.getAbstractFileByPath).not.toHaveBeenCalled();
 
@@ -681,7 +705,7 @@ chest,chest,en`;
       mockVault.read.mockClear();
       mockVault.getAbstractFileByPath.mockClear();
 
-      const cachedMap = service.getTagMap();
+      const cachedMap = await service.tagMap();
       expect(cachedMap.get("chest")).toBe("chest");
       expect(mockVault.getAbstractFileByPath).not.toHaveBeenCalled();
     });
@@ -783,7 +807,7 @@ petto,chest,en`;
       mockVault.read.mockClear();
 
       // Verify cache is populated
-      const cached = service2.getTagMap();
+      const cached = await service2.tagMap();
       expect(cached.get("chest")).toBe("chest");
 
       // Destroy should clear the cache

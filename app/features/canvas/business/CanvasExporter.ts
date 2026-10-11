@@ -5,7 +5,6 @@
  * with each exercise represented as a node colored by muscle group.
  */
 import { App, TFile } from "obsidian";
-import { MuscleTagMapper } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleTagMapper";
 import {
   WorkoutPlannerAPI,
   ExerciseStats,
@@ -122,17 +121,17 @@ const DEFAULT_OPTIONS: CanvasExportOptions = {
  */
 export class CanvasExporter {
   private api: WorkoutPlannerAPI;
-  private tagMapper: MuscleTagMapper;
+  private muscleTags: Pick<MuscleTagService, "musclesForExercise">;
   private settings: WorkoutChartsSettings;
 
   constructor(
     private app: App,
     api: WorkoutPlannerAPI,
-    muscleTagService: MuscleTagService,
+    muscleTags: Pick<MuscleTagService, "musclesForExercise">,
     settings: WorkoutChartsSettings,
   ) {
     this.api = api;
-    this.tagMapper = new MuscleTagMapper(muscleTagService);
+    this.muscleTags = muscleTags;
     this.settings = settings;
   }
 
@@ -230,10 +229,7 @@ export class CanvasExporter {
         ) {
           exerciseSet.add(exerciseName.toLowerCase());
           const muscleGroups =
-            await this.tagMapper.findMuscleGroupsFromTags(
-              exerciseName,
-              { app: this.app, settings: this.settings },
-            );
+            await this.muscleTags.musclesForExercise(exerciseName);
           exercises.push({
             name: exerciseName,
             muscleGroups,
@@ -257,10 +253,7 @@ export class CanvasExporter {
       ) {
         exerciseSet.add(headerText.toLowerCase());
         const muscleGroups =
-          await this.tagMapper.findMuscleGroupsFromTags(
-            headerText,
-            { app: this.app, settings: this.settings },
-          );
+          await this.muscleTags.musclesForExercise(headerText);
         exercises.push({ name: headerText, muscleGroups });
       }
     }
@@ -290,10 +283,7 @@ export class CanvasExporter {
           if (file || !linkPath.includes("/")) {
             exerciseSet.add(exerciseName.toLowerCase());
             const muscleGroups =
-              await this.tagMapper.findMuscleGroupsFromTags(
-                exerciseName,
-                { app: this.app, settings: this.settings },
-              );
+              await this.muscleTags.musclesForExercise(exerciseName);
             exercises.push({ name: exerciseName, muscleGroups });
           }
         }

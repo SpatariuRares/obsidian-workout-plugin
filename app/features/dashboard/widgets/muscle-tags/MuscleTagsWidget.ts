@@ -32,11 +32,11 @@ function getMuscleGroupEmoji(muscleGroup: string): string {
  * Helps users reference valid tags when creating exercises
  */
 export class MuscleTagsWidget {
-  static render(
+  static async render(
     container: HTMLElement,
     _params: EmbeddedDashboardParams,
     plugin: MuscleTagPort,
-  ): void {
+  ): Promise<void> {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.muscleTags.title"),
       className: "workout-muscle-tags-widget",
@@ -54,7 +54,7 @@ export class MuscleTagsWidget {
     });
 
     // Get tags from MuscleTagService (includes custom user tags)
-    const tagMap = plugin.getMuscleTagService().getTagMap();
+    const tagMap = await plugin.getMuscleTagService().tagMap();
     const sortedTags = Array.from(tagMap.entries()).sort(([a], [b]) =>
       a.localeCompare(b),
     );

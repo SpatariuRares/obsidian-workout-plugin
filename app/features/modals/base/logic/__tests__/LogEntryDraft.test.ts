@@ -1,6 +1,6 @@
-// Dates are read and written in the user's local time; pin it so the
-// UTC/local edge cases below are the ones a user in Italy hits
-process.env.TZ = "Europe/Rome";
+// Dates are read and written in the user's local time. jest.config.js pins
+// it to Europe/Rome, so the UTC/local edge cases below are the ones a user
+// in Italy hits.
 
 import {
   fromLog,

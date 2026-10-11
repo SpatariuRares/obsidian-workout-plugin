@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-process.env.TZ = "Europe/Rome";
+// Time zone: Europe/Rome, pinned in jest.config.js
 
 import { App } from "obsidian";
 

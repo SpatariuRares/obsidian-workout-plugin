@@ -1,3 +1,9 @@
+// Pin the time zone for every test worker. Date tests cover a set logged
+// just after local midnight, which only differs from UTC in a non-UTC zone;
+// setting process.env.TZ inside a test file has no effect (each file gets
+// its own copy of process.env), so CI ran them in UTC.
+process.env.TZ = "Europe/Rome";
+
 module.exports = {
   // Use Node environment for testing utilities
   // (Obsidian environment not needed for pure utility functions)

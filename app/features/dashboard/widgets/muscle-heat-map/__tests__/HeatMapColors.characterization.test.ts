@@ -12,7 +12,7 @@ import {
 import {
   Body,
   VIEW_TYPE,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body";
+} from "@app/features/dashboard/widgets/muscle-heat-map/body/Body";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 
 const renderZoneColors = (

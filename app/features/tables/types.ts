@@ -43,7 +43,3 @@ export enum TABLE_TYPE {
   ALL = "all",
 }
 
-export interface TableCallbacks {
-  onError?: (_error: Error, _context: string) => void;
-  onSuccess?: (_message: string) => void;
-}

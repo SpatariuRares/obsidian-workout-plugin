@@ -166,19 +166,4 @@ export class HeatMapColors {
     // High intensity: bright red to dark red
     return this.getHighIntensityColor(intensity);
   }
-
-  /**
-   * Generates colors for multiple intensity values
-   * @param intensities - Object with muscle names and intensity values
-   * @returns Object with muscle names and color strings
-   */
-  static getColors(
-    intensities: Record<string, number>,
-  ): Record<string, string> {
-    const result: Record<string, string> = {};
-    Object.entries(intensities).forEach(([key, intensity]) => {
-      result[key] = this.getColor(intensity);
-    });
-    return result;
-  }
 }

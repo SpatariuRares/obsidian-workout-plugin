@@ -7,13 +7,11 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DateUtils } from "@app/utils/DateUtils";
 import { TableActions } from "@app/features/tables/components/TableActions";
-import {
-  TableErrorMessage,
-  TableHeader,
-} from "@app/features/tables/ui";
+import { TableErrorMessage } from "@app/features/tables/ui/TableErrorMessage";
+import { TableHeader } from "@app/features/tables/ui/TableHeader";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
-import { ProtocolResolver } from "@app/features/tables/business/ProtocolResolver";
+import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
 import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
 
 export class TableRenderer {
@@ -191,7 +189,7 @@ export class TableRenderer {
 
   /**
    * Renders a protocol badge in the given cell.
-   * Delegates resolution to ProtocolResolver and renders via ProtocolBadge atom.
+   * Name, abbreviation and color come from ProtocolCatalog.
    * @param cell - The table cell to render the badge in
    * @param protocol - The protocol value to display
    * @param plugin - Plugin instance for accessing custom protocols
@@ -201,17 +199,16 @@ export class TableRenderer {
     protocol: string,
     plugin?: WorkoutPluginContext,
   ): void {
-    const config = ProtocolResolver.resolve(
-      protocol,
+    // Standard sets have no abbreviation, so no badge
+    const info = new ProtocolCatalog(
       plugin?.settings?.customProtocols,
-    );
-
-    if (config) {
+    ).resolve(protocol);
+    if (info.abbreviation) {
       ProtocolBadge.create(cell, {
-        text: config.label,
-        className: config.className,
-        tooltip: config.tooltip,
-        color: config.color,
+        text: info.abbreviation,
+        className: `workout-protocol-badge ${info.badgeClass}`,
+        tooltip: info.name,
+        color: info.badgeColor,
       });
     }
   }

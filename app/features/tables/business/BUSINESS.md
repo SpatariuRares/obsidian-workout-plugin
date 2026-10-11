@@ -13,7 +13,6 @@ Tutti i moduli sono classi statiche senza stato interno, consumate principalment
 EmbeddedTableView (view layer)
   |
   |-- TableDataProcessor.processTableData() --> Trasforma dati in righe/colonne
-  |-- TableRefresh.refreshTable()         --> Invalida cache e ri-renderizza
   |-- TargetCalculator.*()                --> Calcoli obiettivi (usato da UI)
 ```
 
@@ -63,23 +62,6 @@ Parametri, tipi, default (limit: 50, sortBy: date, sortOrder: desc, showAddButto
 
 ---
 
-### 3. TableRefresh
-
-**File**: `TableRefresh.ts`
-**Scopo**: Logica di refresh della tabella: invalida cache, ricarica dati, ri-renderizza.
-
-**Metodi**:
-
-| Metodo           | Input                                                           | Output          | Cosa fa                                                                                                                                  |
-| ---------------- | --------------------------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `refreshTable()` | `plugin`, `container`, `params`, `renderCallback`, `callbacks?` | `Promise<void>` | 1. `clearLogDataCache()` 2. `getWorkoutLogData()` 3. Chiama la renderCallback con i dati freschi 4. Notifica success/error via callbacks |
-
-**Perche' esiste**: Centralizza la logica di refresh che prima era duplicata inline in `EmbeddedTableView`. Separa il "come ricaricare" dal "come renderizzare" tramite la `renderCallback`.
-
-**Consumato da**: `EmbeddedTableView.refreshTable()` - delega completamente a questo modulo.
-
----
-
 ### 4. TargetCalculator
 
 **File**: `TargetCalculator.ts`
@@ -125,7 +107,7 @@ EmbeddedTableView.createTable(container, logData, params)
        |
   [click refresh]
        |
-  4. TableRefresh.refreshTable(...)                -- invalida + ricarica + re-render
+  4. EmbeddedTableView.refreshTable(...)           -- ricarica + re-render (errori nella tabella)
 ```
 
 ---
@@ -137,7 +119,6 @@ EmbeddedTableView.createTable(container, logData, params)
 | `EmbeddedTableParams` | `types.ts` | Parametri del code block, ricavati dallo schema `tableBlock`          |
 | `TableData`           | `types.ts` | Output di processTableData: headers, rows, totalRows, filterResult    |
 | `TableRow`            | `types.ts` | Singola riga: displayRow[], originalDate, dateKey, originalLog        |
-| `TableCallbacks`      | `types.ts` | Callbacks per refresh: onRefresh, onError, onSuccess                  |
 
 ---
 
@@ -148,5 +129,4 @@ Ogni modulo ha la propria test suite in `__tests__/`:
 | Modulo               | Test file                    | Test | Copertura                                                |
 | -------------------- | ---------------------------- | ---- | -------------------------------------------------------- |
 | `TableDataProcessor` | `TableDataProcessor.test.ts` | 20+  | Headers dinamici, sorting, limiting, custom fields       |
-| `TableRefresh`       | `TableRefresh.test.ts`       | 6    | Cache clear, re-render, callbacks success/error          |
 | `TargetCalculator`   | `TargetCalculator.test.ts`   | 14   | Calcoli best reps, target achieved, progress, edge cases |

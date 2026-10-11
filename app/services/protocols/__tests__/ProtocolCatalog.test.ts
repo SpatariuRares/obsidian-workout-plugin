@@ -42,6 +42,14 @@ describe("ProtocolCatalog", () => {
     });
   });
 
+  it("lets a built-in protocol win over a custom one with the same id", () => {
+    const conflicting = new ProtocolCatalog([
+      { id: "drop_set", name: "Custom drop", abbreviation: "CD", color: "#000000" },
+    ]);
+
+    expect(conflicting.resolve("drop_set").abbreviation).toBe("Drop");
+  });
+
   it("still describes a protocol nobody defines any more, by its id", () => {
     expect(catalog.resolve("tempo")).toMatchObject({
       id: "tempo",

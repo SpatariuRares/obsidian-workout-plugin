@@ -3,12 +3,10 @@ import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { TableRefresh } from "@app/features/tables/business/TableRefresh";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import {
-  TableCallbacks,
   EmbeddedTableParams,
   TableData,
 } from "@app/features/tables/types";
@@ -50,17 +48,12 @@ class TableRenderChild extends MarkdownRenderChild {
 }
 
 export class EmbeddedTableView extends BaseView {
-  private callbacks: TableCallbacks;
   private renderChildren: Map<HTMLElement, TableRenderChild> =
     new Map();
 
   constructor(plugin: WorkoutPluginContext) {
     super(plugin);
 
-    this.callbacks = {
-      onError: (_error, _context) => {},
-      onSuccess: (_message) => {},
-    };
   }
 
   /**
@@ -327,15 +320,15 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams,
     pageLink = "",
   ): Promise<void> {
-    await TableRefresh.refreshTable(
-      this.plugin,
-      container,
-      params,
-      async (c, logData, p) => {
-        await this.renderTable(c, logData, p, pageLink);
-      },
-      this.callbacks,
-    );
+    try {
+      const logData = await this.plugin.getWorkoutLogData();
+      await this.renderTable(container, logData, params, pageLink);
+    } catch (error) {
+      this.handleError(
+        container,
+        error instanceof Error ? error : new Error(String(error)),
+      );
+    }
   }
 
   // Fallback for callers that don't know the source note

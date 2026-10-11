@@ -2,11 +2,13 @@
 
 import {
   Body,
-  HEAT_MAP_ZONES,
   VIEW_TYPE,
+} from "@app/features/dashboard/widgets/muscle-heat-map/body/Body";
+import {
+  HEAT_MAP_ZONES,
   type HeatMapZoneId,
   type ZoneValues,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body";
+} from "@app/features/dashboard/widgets/muscle-heat-map/body/zones";
 import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/BodyViewSvg";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 

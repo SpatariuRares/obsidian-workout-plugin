@@ -3,7 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
-import { ActionButtons } from "@app/features/tables/ui";
+import { ActionButtons } from "@app/features/tables/ui/ActionButtons";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 

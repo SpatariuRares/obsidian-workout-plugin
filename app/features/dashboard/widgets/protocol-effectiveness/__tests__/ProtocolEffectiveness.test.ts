@@ -1,4 +1,5 @@
 /** @jest-environment jsdom */
+import { t } from "@app/i18n";
 
 import { ProtocolEffectiveness } from "@app/features/dashboard/widgets/protocol-effectiveness/ProtocolEffectiveness";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
@@ -64,6 +65,12 @@ describe("ProtocolEffectiveness", () => {
   beforeAll(() => {
     window.localStorage.clear();
     LocalizationService.initialize({} as never);
+  });
+
+  it("says it covers all logged sets, unlike the 30-day distribution", () => {
+    expect(
+      render([]).querySelector(".workout-widget-subtitle")?.textContent,
+    ).toBe(t("dashboard.protocolEffectiveness.subtitle"));
   });
 
   describe("empty states", () => {

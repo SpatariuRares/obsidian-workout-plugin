@@ -126,6 +126,7 @@
       "columnVolumeChange": "Volume change",
       "disclaimer": "Disclaimer",
       "noData": "Not enough data yet: each protocol needs at least 5 logged sets.",
+      "subtitle": "How each protocol has worked across all logged sets",
       "title": "Protocol effectiveness"
     },
     "quickActions": {

@@ -47,6 +47,9 @@ export class ProtocolEffectiveness {
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.protocolEffectiveness.title"),
+      // Uses all history (it compares before and after); the distribution
+      // next to it covers only the last 30 days
+      subtitle: t("dashboard.protocolEffectiveness.subtitle"),
       className: "workout-protocol-effectiveness",
       isWide: true,
     });

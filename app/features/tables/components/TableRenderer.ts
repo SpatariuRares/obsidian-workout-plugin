@@ -1,3 +1,4 @@
+import { fieldKey } from "@app/services/exercise/ExerciseFields";
 import {
   TableRow,
   EmbeddedTableParams,
@@ -129,19 +130,16 @@ export class TableRenderer {
       });
     };
 
-    // Find column indices dynamically based on headers
-    const protocolColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value,
-    );
-    const volumeColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value,
-    );
-    const actionsColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
-    );
-    const notesColumnIndex = headers.indexOf(
-      CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value,
-    );
+    // Find the special columns by field key, however their header is written
+    const COLUMNS = CONSTANTS.WORKOUT.TABLE.COLUMNS;
+    const columnOf = (column: { value: string }) =>
+      headers.findIndex(
+        (header) => fieldKey(header) === fieldKey(column.value),
+      );
+    const protocolColumnIndex = columnOf(COLUMNS.PROTOCOL);
+    const volumeColumnIndex = columnOf(COLUMNS.VOLUME);
+    const actionsColumnIndex = columnOf(COLUMNS.ACTIONS);
+    const notesColumnIndex = columnOf(COLUMNS.NOTES);
     // On phones the header row is hidden and each row becomes a card, so
     // value cells carry their column name (rendered via CSS attr())
     const columnLabels = mapColumnIdentifiersToLabels(headers);

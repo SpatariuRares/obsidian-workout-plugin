@@ -229,9 +229,9 @@ describe("TableDataProcessor", () => {
         },
       );
 
-      // Should contain the custom columns plus Actions
+      // Known columns become their standard identifiers (shown translated)
       expect(result.headers).toContain("Date");
-      expect(result.headers).toContain("Weight");
+      expect(result.headers).toContain("Wgt (kg)");
       expect(result.headers).toContain(
         CONSTANTS.WORKOUT.TABLE.COLUMNS.ACTIONS.value,
       );
@@ -248,7 +248,7 @@ describe("TableDataProcessor", () => {
       );
 
       expect(result.headers).toContain("Date");
-      expect(result.headers).toContain("Reps");
+      expect(result.headers).toContain("Rep");
     });
 
     it("falls back to defaults for invalid JSON string columns", async () => {
@@ -598,12 +598,10 @@ describe("TableDataProcessor", () => {
         },
       );
 
-      const durIdx = result.headers.indexOf("Duration");
-      if (durIdx >= 0) {
-        expect(result.rows[0].displayRow[durIdx]).toBe(
-          t("table.notAvailable"),
-        );
-      }
+      const durIdx = result.headers.indexOf("Dur");
+      expect(result.rows[0].displayRow[durIdx]).toBe(
+        t("table.notAvailable"),
+      );
     });
 
     it("shows N/A for exercise when empty", async () => {
@@ -699,9 +697,7 @@ describe("TableDataProcessor", () => {
       );
 
       const idx = result.headers.indexOf("mycustomfield");
-      if (idx >= 0) {
-        expect(result.rows[0].displayRow[idx]).toBe("hello");
-      }
+      expect(result.rows[0].displayRow[idx]).toBe("hello");
     });
 
     it("maps spaced heart rate headers to camelCase custom fields", async () => {
@@ -718,8 +714,35 @@ describe("TableDataProcessor", () => {
         },
       );
 
-      const idx = result.headers.indexOf("Heart rate (bpm)");
+      const idx = result.headers.indexOf("HR (bpm)");
       expect(result.rows[0].displayRow[idx]).toBe("152");
+    });
+
+    it("turns columns written as keys into standard headers", async () => {
+      const result = await TableDataProcessor.processTableData([createLog()], {
+        columns: ["date", "reps", "weight", "volume"],
+      });
+
+      expect(result.headers).toEqual(["Date", "Rep", "Wgt (kg)", "Vol", "Act"]);
+      expect(result.rows[0].displayRow.slice(1, 4)).toEqual(["8", "80", "640"]);
+    });
+
+    it("shows the heart rate column for sets stored under a lowercase column", async () => {
+      const result = await TableDataProcessor.processTableData(
+        [createLog({ customFields: { heartrate: 150 } })],
+        {},
+      );
+
+      expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value);
+    });
+
+    it("reads a heart rate stored under a lowercase column", async () => {
+      const result = await TableDataProcessor.processTableData(
+        [createLog({ customFields: { heartrate: 150 } })],
+        { columns: ["HR"] },
+      );
+
+      expect(result.rows[0].displayRow[result.headers.indexOf("HR")]).toBe("150");
     });
 
     it("returns filter method and title in filterResult", async () => {

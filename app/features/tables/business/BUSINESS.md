@@ -53,12 +53,9 @@ Parametri, tipi, default (limit: 50, sortBy: date, sortOrder: desc, showAddButto
    - Duration/Distance/HeartRate: se almeno un log ha il custom field con valore > 0
    - Actions: sempre presente (ultima colonna)
 
-4. **`processRowsEfficiently()`**: Per ogni log, costruisce una `baseDataMap` (chiavi normalizzate) e mappa ogni header alla cella corrispondente. Supporta:
-   - Header abbreviati (`Wgt` -> `weight`, `HR` -> `heartrate`) via `HEADER_TO_DATA_KEY`
-   - Header con unita' (`Wgt (kg)` -> estrae `wgt` -> mappa a `weight`)
-   - Custom fields extra dal log
+4. **`processRows()`**: Per ogni log mappa ogni header al valore tramite `fieldKey()` (`app/services/exercise/ExerciseFields.ts`), l'unico punto che sa che `Wgt (kg)`, `weight`, `HR`, `heart rate` indicano lo stesso campo. I custom field si confrontano ignorando maiuscole, spazi, `_` e `-` (una colonna CSV `heartrate` riempie la colonna HR).
 
-5. **`formatParameterHeader()`**: Abbrevia i nomi (`Weight` -> `Wgt`, `Duration` -> `Dur`) e aggiunge unita' (`Wgt (kg)`).
+5. **`columnHeader()` / `userColumns()` / `formatParameterHeader()`**: Header standard di un campo (`Rep`, `Wgt (kg)`, `Dur (min)`); le colonne scritte in `columns:` (`reps`, `weight`…) diventano gli stessi header, tradotti dal renderer. I parametri custom mostrano la loro label con l'unita'.
 
 6. **`formatCustomFieldValue()`**: Formatta valori custom: `0` e vuoto -> "N/A", altrimenti stringa.
 

@@ -117,15 +117,16 @@ export class TableDataProcessor {
     if (params.columns) {
       if (Array.isArray(params.columns)) {
         return TableColumnResolver.addOptionalColumns(
-          params.columns,
+          TableColumnResolver.userColumns(params.columns),
           showNotes,
           showProtocol,
         );
       } else if (typeof params.columns === "string") {
         try {
-          const parsedColumns = JSON.parse(params.columns);
+          const parsedColumns: unknown = JSON.parse(params.columns);
+          if (!Array.isArray(parsedColumns)) throw new Error();
           return TableColumnResolver.addOptionalColumns(
-            parsedColumns,
+            TableColumnResolver.userColumns(parsedColumns.map(String)),
             showNotes,
             showProtocol,
           );

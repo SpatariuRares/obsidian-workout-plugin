@@ -3,11 +3,14 @@
  * Handles parsing of workout-timer and workout-log code blocks.
  */
 import { TFile } from "obsidian";
-import { parseCsv } from "@app/utils/data/CsvCodec";
-import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import { DurationAnalysisResult } from "@app/features/duration/types";
-import { StringUtils, ErrorUtils } from "@app/utils";
-import type { AppPort, SettingsPort } from "@app/types/PluginPorts";
+import { StringUtils } from "@app/utils/StringUtils";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
+import type {
+  AppPort,
+  SettingsPort,
+  WorkoutDataPort,
+} from "@app/types/PluginPorts";
 
 /** Default set duration in seconds (used if not configured in settings) */
 const DEFAULT_SET_DURATION = 60;
@@ -22,7 +25,11 @@ const MAX_VALID_DURATION_SECONDS = 18000;
 const MAX_REASONABLE_SETS = 100;
 
 export class WorkoutFileAnalyzer {
-  constructor(private plugin: AppPort & SettingsPort) {}
+  constructor(
+    private plugin: AppPort &
+      SettingsPort &
+      Pick<WorkoutDataPort, "getWorkoutLogData">,
+  ) {}
 
   /**
    * Analyzes a workout file to extract duration components.
@@ -100,24 +107,14 @@ export class WorkoutFileAnalyzer {
   }
 
   /**
-   * Calculates duration based on historical logs from workout_logs.csv
+   * Calculates duration from the first and last set of the latest session
    */
   private async calculateHistoricalDuration(
     filePath: string,
     result: DurationAnalysisResult,
   ): Promise<void> {
     try {
-      // Use the configured CSV log file path from settings
-      const logsPath =
-        this.plugin.settings.csvLogFilePath ||
-        DEFAULT_SETTINGS.csvLogFilePath;
-      const logsFile =
-        this.plugin.app.vault.getAbstractFileByPath(logsPath);
-
-      if (!logsFile || !(logsFile instanceof TFile)) return;
-
-      const content = await this.plugin.app.vault.read(logsFile);
-      const rows = parseCsv(content);
+      const logs = await this.plugin.getWorkoutLogData();
 
       // Extract workout name from file path (basename without extension)
       const workoutName =
@@ -125,34 +122,15 @@ export class WorkoutFileAnalyzer {
 
       // Map to store timestamps by date
       const sessionTimestamps: Record<string, number[]> = {};
-
-      // Skip header row
-      for (let i = 1; i < rows.length; i++) {
-        // CSV format: date,exercise,reps,weight,volume,origin,workout,timestamp,...
-        // We need 'workout' (col index 6) and 'timestamp' (col index 7)
-        const cols = rows[i];
-        if (cols.length < 8) continue;
-
-        const logWorkout = cols[6]?.trim();
-        // Remove quotes if present
-        const cleanedWorkout =
-          logWorkout?.replace(/^["']|["']$/g, "") || "";
-
-        if (cleanedWorkout === workoutName) {
-          const timestampStr = cols[7]?.trim();
-          const timestamp = parseInt(timestampStr, 10);
-
-          if (!isNaN(timestamp) && timestamp > 0) {
-            // Date is col 0
-            const dateStr = cols[0]?.split("T")[0]; // ISO format YYYY-MM-DD
-            if (dateStr) {
-              if (!sessionTimestamps[dateStr]) {
-                sessionTimestamps[dateStr] = [];
-              }
-              sessionTimestamps[dateStr].push(timestamp);
-            }
-          }
-        }
+      for (const log of logs) {
+        // Hand-edited CSVs sometimes wrap the name in stray quotes
+        const logWorkout = log.workout?.replace(/^["']|["']$/g, "");
+        if (logWorkout !== workoutName) continue;
+        const timestamp = log.timestamp ?? 0;
+        if (timestamp <= 0) continue;
+        const dateStr = log.date.split("T")[0]; // ISO format YYYY-MM-DD
+        if (!dateStr) continue;
+        (sessionTimestamps[dateStr] ??= []).push(timestamp);
       }
 
       // Find the most recent session with valid duration

@@ -1,6 +1,10 @@
 import { TFile } from "obsidian";
 import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import { WorkoutFileAnalyzer } from "@app/features/duration/services/WorkoutFileAnalyzer";
+import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
+import { InMemoryLogStorage } from "@app/services/data/__tests__/InMemoryLogStorage";
+import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 
 type Settings = {
   csvLogFilePath?: string;
@@ -31,8 +35,15 @@ const setup = (
     if (!(file.path in files)) throw new Error("boom");
     return files[file.path];
   });
+  const logFile = new WorkoutLogFile(
+    new InMemoryLogStorage(files[CSV_PATH] ?? null),
+    { weightUnit: "kg", ...settings } as WorkoutChartsSettings,
+    new WorkoutEventBus(),
+    { retryDelayMs: 0 },
+  );
   const plugin = {
     settings,
+    getWorkoutLogData: () => logFile.read(),
     app: {
       vault: {
         getAbstractFileByPath: jest.fn((p: string) =>
@@ -290,28 +301,12 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.historicalDuration).toBe(900);
     });
 
-    it("should read the CSV from the configured path", async () => {
-      const csv = [
-        HEADER,
-        row("2024-01-01", "Push Day", 1_000_000),
-        row("2024-01-01", "Push Day", 1_900_000),
-      ].join("\n");
-      const { analyzer } = setup(
-        { [WORKOUT_PATH]: md, "custom/logs.csv": csv },
-        { csvLogFilePath: "custom/logs.csv" },
-      );
-      const r = await analyzer.analyzeWorkoutFile(WORKOUT_PATH);
-      expect(r.historicalDuration).toBe(900);
-    });
-
     it("should not fail the analysis when reading the CSV throws", async () => {
       const { analyzer, plugin } = setup({
         [WORKOUT_PATH]: md,
         [CSV_PATH]: HEADER,
       });
-      plugin.app.vault.read
-        .mockResolvedValueOnce(md)
-        .mockRejectedValueOnce(new Error("csv"));
+      plugin.getWorkoutLogData = () => Promise.reject(new Error("csv"));
       const r = await analyzer.analyzeWorkoutFile(WORKOUT_PATH);
       expect(r.success).toBe(true);
       expect(r.historicalDuration).toBeUndefined();

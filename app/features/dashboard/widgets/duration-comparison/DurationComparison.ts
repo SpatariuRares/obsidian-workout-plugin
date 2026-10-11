@@ -9,9 +9,6 @@ import { TrainingHistory } from "@app/services/history/TrainingHistory";
  */
 const RECENT_WORKOUT_COUNT = 5;
 
-/** Default estimated duration per set in seconds */
-const DEFAULT_SET_DURATION_SECONDS = 45;
-
 /** Default rest duration between sets in seconds */
 const DEFAULT_REST_BETWEEN_SETS_SECONDS = 90;
 
@@ -65,11 +62,13 @@ export class DurationComparison {
    * @param container - The container element to render in
    * @param data - Workout log data
    * @param _params - Dashboard parameters (unused but kept for consistency)
+   * @param estimate - `setDuration`: seconds per set, from settings
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
+    estimate: { setDuration: number },
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.durationComparison.title"),
@@ -79,7 +78,10 @@ export class DurationComparison {
     });
 
     // Calculate workout sessions with duration data
-    const sessions = this.calculateWorkoutSessions(data);
+    const sessions = this.calculateWorkoutSessions(
+      data,
+      estimate.setDuration,
+    );
 
     // Check if there's enough data
     if (sessions.length === 0) {
@@ -103,10 +105,12 @@ export class DurationComparison {
   /**
    * Named sessions with a plausible duration, compared with their estimate
    * @param data - Workout log data
+   * @param setDuration - Estimated seconds per set
    * @returns Array of workout sessions with duration data
    */
   private static calculateWorkoutSessions(
     data: WorkoutLogData[],
+    setDuration: number,
   ): WorkoutSession[] {
     const sessions: WorkoutSession[] = [];
 
@@ -118,10 +122,10 @@ export class DurationComparison {
       const actualDuration = session.duration;
 
       // Calculate estimated duration
-      // Estimate: setCount * 45 seconds per set + (setCount - 1) * 90 seconds rest between sets
+      // Estimate: setCount * setDuration + (setCount - 1) * 90 seconds rest between sets
       const setCount = session.sets.length;
       const estimatedDuration =
-        setCount * DEFAULT_SET_DURATION_SECONDS +
+        setCount * setDuration +
         Math.max(0, setCount - 1) * DEFAULT_REST_BETWEEN_SETS_SECONDS;
 
       // Calculate variance percentage

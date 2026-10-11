@@ -38,9 +38,9 @@ function entry(
   };
 }
 
-const render = (data: WorkoutLogData[]) => {
+const render = (data: WorkoutLogData[], setDuration = 45) => {
   const container = createObsidianContainer();
-  DurationComparison.render(container, data, {});
+  DurationComparison.render(container, data, {}, { setDuration });
   return container;
 };
 
@@ -129,6 +129,13 @@ describe("DurationComparison", () => {
         rows(c)[0].querySelector(".workout-duration-comparison-workout-date")
           ?.textContent,
       ).toBe("2024-01-15");
+    });
+
+    it("should estimate each set with the set duration from settings", () => {
+      // 6 sets at 30s + 5 rests of 90s = 630s, shown as 11 min
+      const c = render(session("Push", "2024-01-01", BASE, 630), 30);
+      expect(cell(rows(c)[0], 1).textContent).toBe(`11${SUFFIX()}`);
+      expect(cell(rows(c)[0], 3).textContent).toBe("+0%");
     });
 
     it("should use first-to-last timestamp regardless of input order", () => {

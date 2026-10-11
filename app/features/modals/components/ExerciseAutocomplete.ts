@@ -2,7 +2,6 @@
 
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { ExercisePathResolver } from "@app/utils/exercise/ExercisePathResolver";
 import { StringUtils } from "@app/utils/StringUtils";
 import type { ExerciseAutocompleteElements } from "@app/types/ModalTypes";
 
@@ -452,15 +451,13 @@ export class ExerciseAutocomplete {
   }
 
   /**
-   * Loads available exercises from the exercise folder
+   * Loads the file names of the exercise pages
    */
   private loadAvailableExercises(plugin: WorkoutPluginContext) {
-    try {
-      // Use ExercisePathResolver to get exercise names
-      this.availableExercises =
-        ExercisePathResolver.getExerciseNames(plugin);
-    } catch {
-      this.availableExercises = [];
-    }
+    const names = plugin
+      .getExerciseLibrary()
+      .pages()
+      .map((page) => page.file.basename);
+    this.availableExercises = Array.from(new Set(names)).sort();
   }
 }

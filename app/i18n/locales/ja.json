@@ -659,7 +659,6 @@
       "validMinValue": "{field}は{min}以上でなければなりません",
       "validMaxValue": "{field}は{max}以下でなければなりません",
       "validFieldRequired": "{field}は必須です",
-      "migrationFolderNotFound": "エクササイズフォルダが見つかりません: {path}",
       "migrationNoUpdates": "すべてのエクササイズページはすでに最新です"
     },
     "parameterKey": "キー:",

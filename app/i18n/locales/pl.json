@@ -659,7 +659,6 @@
       "validMinValue": "{field} musi wynosić co najmniej {min}",
       "validMaxValue": "{field} może wynosić co najwyżej {max}",
       "validFieldRequired": "{field} jest wymagane",
-      "migrationFolderNotFound": "Folder ćwiczeń nie znaleziony: {path}",
       "migrationNoUpdates": "Wszystkie strony ćwiczeń są już aktualne"
     },
     "parameterKey": "Klucz:",

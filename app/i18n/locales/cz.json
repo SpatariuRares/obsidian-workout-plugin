@@ -659,7 +659,6 @@
       "validMinValue": "{field} musí být alespoň {min}",
       "validMaxValue": "{field} musí být nejvýše {max}",
       "validFieldRequired": "{field} je povinné",
-      "migrationFolderNotFound": "Složka cvičení nenalezena: {path}",
       "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální"
     },
     "parameterKey": "Klíč:",

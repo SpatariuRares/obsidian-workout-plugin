@@ -637,7 +637,6 @@
       "logUpdated": "Workout log updated successfully!",
       "migrationComplete": "Migration complete. Updated {count} exercise files.",
       "migrationError": "Migration Error: {error}",
-      "migrationFolderNotFound": "Exercise folder not found: {path}",
       "migrationNoUpdates": "All exercise pages are already up to date",
       "muscleTagCount": "{count} tag(s) found",
       "muscleTagDeleteConfirm": "Are you sure you want to delete the tag \"{tag}\"?",

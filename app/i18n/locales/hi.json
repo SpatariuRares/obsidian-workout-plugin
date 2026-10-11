@@ -659,7 +659,6 @@
       "validMinValue": "{field} कम से कम {min} होना चाहिए",
       "validMaxValue": "{field} अधिकतम {max} होना चाहिए",
       "validFieldRequired": "{field} आवश्यक है",
-      "migrationFolderNotFound": "व्यायाम फ़ोल्डर नहीं मिला: {path}",
       "migrationNoUpdates": "सभी व्यायाम पृष्ठ पहले से अप-टू-डेट हैं"
     },
     "parameterKey": "कुंजी:",

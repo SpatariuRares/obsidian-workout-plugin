@@ -659,7 +659,6 @@
       "validMinValue": "{field} moet minimaal {min} zijn",
       "validMaxValue": "{field} mag maximaal {max} zijn",
       "validFieldRequired": "{field} is verplicht",
-      "migrationFolderNotFound": "Oefenmap niet gevonden: {path}",
       "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt"
     },
     "parameterKey": "Sleutel:",

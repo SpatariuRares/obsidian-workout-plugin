@@ -146,7 +146,7 @@ export class CommandHandlerService {
                   this.app,
                   this.plugin.getWorkoutPlannerAPI(),
                   this.plugin.getMuscleTagService(),
-                  this.plugin.settings,
+                  this.plugin.getExerciseLibrary(),
                 );
                 const canvasPath = await exporter.exportToCanvas(
                   file,

@@ -659,7 +659,6 @@
       "validMinValue": "{field} trebuie să fie cel puțin {min}",
       "validMaxValue": "{field} trebuie să fie cel mult {max}",
       "validFieldRequired": "{field} este obligatoriu",
-      "migrationFolderNotFound": "Dosarul de exerciții nu a fost găsit: {path}",
       "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate"
     },
     "parameterKey": "Cheie:",

@@ -659,7 +659,6 @@
       "validMinValue": "{field} يجب أن يكون على الأقل {min}",
       "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
       "validFieldRequired": "{field} مطلوب",
-      "migrationFolderNotFound": "لم يتم العثور على مجلد التمرين: {path}",
       "migrationNoUpdates": "جميع صفحات التمارين محدّثة بالفعل"
     },
     "parameterKey": "المفتاح:",

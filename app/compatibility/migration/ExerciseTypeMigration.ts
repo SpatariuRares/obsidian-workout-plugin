@@ -1,8 +1,12 @@
-import { Notice, TFolder, TFile } from "obsidian";
+import { Notice } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { t } from "@app/i18n";
 
+/**
+ * Marks exercise pages that say no type at all (neither `exercise_type` nor
+ * `type`) as strength, the type they already behave as.
+ */
 export class ExerciseTypeMigration {
   private plugin: WorkoutPluginContext;
 
@@ -12,42 +16,29 @@ export class ExerciseTypeMigration {
 
   public async migrateExerciseTypes(): Promise<void> {
     try {
-      const exerciseFolderPath =
-        this.plugin.settings.exerciseFolderPath;
-      if (!exerciseFolderPath) {
+      if (!this.plugin.settings.exerciseFolderPath) {
         new Notice(t("messages.exerciseFolderNotSet"));
         return;
       }
 
-      const folder = this.plugin.app.vault.getAbstractFileByPath(
-        exerciseFolderPath,
-      );
-      if (!folder || !(folder instanceof TFolder)) {
-        new Notice(
-          t("modal.notices.migrationFolderNotFound", { path: exerciseFolderPath }),
-        );
-        return;
-      }
+      const untyped = this.plugin
+        .getExerciseLibrary()
+        .pages()
+        .filter((page) => page.type === undefined);
 
-      let updatedCount = 0;
-      const files = this.getAllMarkdownFiles(folder);
-
-      for (const file of files) {
+      for (const page of untyped) {
         await this.plugin.app.fileManager.processFrontMatter(
-          file,
+          page.file,
           (frontmatter) => {
-            if (!frontmatter["exercise_type"]) {
-              frontmatter["exercise_type"] = "strength";
-              updatedCount++;
-            }
+            frontmatter["exercise_type"] = "strength";
           },
         );
       }
 
-      if (updatedCount > 0) {
+      if (untyped.length > 0) {
         new Notice(
           t("modal.notices.migrationComplete", {
-            count: updatedCount,
+            count: untyped.length,
           }),
         );
       } else {
@@ -57,17 +48,5 @@ export class ExerciseTypeMigration {
       const errorMessage = ErrorUtils.getErrorMessage(error);
       new Notice(t("modal.notices.migrationError", { error: errorMessage }));
     }
-  }
-
-  private getAllMarkdownFiles(folder: TFolder): TFile[] {
-    let files: TFile[] = [];
-    for (const child of folder.children) {
-      if (child instanceof TFile && child.extension === "md") {
-        files.push(child);
-      } else if (child instanceof TFolder) {
-        files = files.concat(this.getAllMarkdownFiles(child));
-      }
-    }
-    return files;
   }
 }

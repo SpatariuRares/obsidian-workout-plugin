@@ -659,7 +659,6 @@
       "validMinValue": "{field} harus minimal {min}",
       "validMaxValue": "{field} harus paling banyak {max}",
       "validFieldRequired": "{field} wajib diisi",
-      "migrationFolderNotFound": "Folder latihan tidak ditemukan: {path}",
       "migrationNoUpdates": "Semua halaman latihan sudah yang terbaru"
     },
     "parameterKey": "Kunci:",

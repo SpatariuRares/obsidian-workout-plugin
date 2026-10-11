@@ -659,7 +659,6 @@
       "validMinValue": "{field} duhet të jetë të paktën {min}",
       "validMaxValue": "{field} duhet të jetë më së shumti {max}",
       "validFieldRequired": "{field} është e detyrueshme",
-      "migrationFolderNotFound": "Dosja e ushtrimeve nuk u gjet: {path}",
       "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara"
     },
     "parameterKey": "Çelësi:",

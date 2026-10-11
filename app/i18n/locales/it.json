@@ -659,7 +659,6 @@
       "validMinValue": "{field} deve essere almeno {min}",
       "validMaxValue": "{field} deve essere al massimo {max}",
       "validFieldRequired": "{field} è obbligatorio",
-      "migrationFolderNotFound": "Cartella degli esercizi non trovata: {path}",
       "migrationNoUpdates": "Tutte le pagine esercizio sono già aggiornate"
     },
     "parameterKey": "Chiave:",

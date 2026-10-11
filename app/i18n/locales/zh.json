@@ -659,7 +659,6 @@
       "validMinValue": "{field}至少为{min}",
       "validMaxValue": "{field}最多为{max}",
       "validFieldRequired": "{field}为必填项",
-      "migrationFolderNotFound": "未找到训练动作文件夹：{path}",
       "migrationNoUpdates": "所有训练页面均已是最新"
     },
     "parameterKey": "键：",

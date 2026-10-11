@@ -659,7 +659,6 @@
       "validMinValue": "{field} повинно бути не менше {min}",
       "validMaxValue": "{field} повинно бути не більше {max}",
       "validFieldRequired": "{field} обов'язкове",
-      "migrationFolderNotFound": "Папку вправ не знайдено: {path}",
       "migrationNoUpdates": "Усі сторінки вправ уже актуальні"
     },
     "parameterKey": "Ключ:",

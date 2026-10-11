@@ -659,7 +659,6 @@
       "validMinValue": "{field} må være minst {min}",
       "validMaxValue": "{field} kan være høyst {max}",
       "validFieldRequired": "{field} er obligatorisk",
-      "migrationFolderNotFound": "Øvelsesmappen ble ikke funnet: {path}",
       "migrationNoUpdates": "Alle øvelsessider er allerede oppdatert"
     },
     "parameterKey": "Nøkkel:",

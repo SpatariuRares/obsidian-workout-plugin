@@ -4,14 +4,10 @@
  * This API is exposed globally as window.WorkoutPlannerAPI to enable
  * Dataview users to query workout logs and create custom views.
  */
-import {
-  WorkoutLogData,
-  WorkoutChartsSettings,
-} from "@app/types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutDataPort } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
-import { App, TFolder } from "obsidian";
-import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
+import type { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
@@ -99,8 +95,7 @@ export interface ExerciseStats {
 export class WorkoutPlannerAPI {
   constructor(
     private dataService: Pick<WorkoutDataPort, "getWorkoutLogData">,
-    private app?: App,
-    private settings?: WorkoutChartsSettings,
+    private exercises?: Pick<ExerciseLibrary, "pages">,
   ) {}
 
   /**
@@ -340,121 +335,39 @@ export class WorkoutPlannerAPI {
    * dv.list(exercises);
    */
   async getExercises(filter?: ExercisesFilter): Promise<string[]> {
-    // If we have app and settings, try to get exercises from the folder
-    if (this.app && this.settings?.exerciseFolderPath) {
-      return this.getExercisesFromFolder(filter);
-    }
-
-    // Fallback: get unique exercises from workout logs
-    return this.getExercisesFromLogs(filter);
-  }
-
-  /**
-   * Get exercises from the configured exercises folder.
-   */
-  private async getExercisesFromFolder(
-    filter?: ExercisesFilter,
-  ): Promise<string[]> {
-    if (!this.app || !this.settings) {
-      return [];
-    }
-
-    const folder = this.app.vault.getAbstractFileByPath(
-      this.settings.exerciseFolderPath,
-    );
-    if (!folder || !(folder instanceof TFolder)) {
-      // Fallback to logs if folder doesn't exist
+    const pages = this.exercises?.pages() ?? [];
+    if (pages.length === 0) {
       return this.getExercisesFromLogs(filter);
     }
 
-    // Get all markdown files in the folder
-    const exerciseFiles = folder.children.filter(
-      (file) => "extension" in file && file.extension === "md",
-    );
-
-    // If no tag filter, return all exercise names
-    if (!filter?.tag) {
-      return exerciseFiles
-        .map((file) =>
-          "basename" in file
-            ? (file as import("obsidian").TFile).basename
-            : "",
-        )
-        .filter(
-          (name): name is string =>
-            typeof name === "string" && name.length > 0,
-        )
-        .sort();
-    }
-
-    // Filter by tag - read each file's frontmatter
-    const tagFilter = filter.tag.toLowerCase();
-    const filteredExercises: string[] = [];
-
-    for (const file of exerciseFiles) {
-      if (!("path" in file)) continue;
-      try {
-        const tFile = file as import("obsidian").TFile;
-        const content = await this.app.vault.cachedRead(tFile);
-        const tags = FrontmatterParser.parseTags(content);
-
-        // Check if any tag matches (case-insensitive)
-        const hasMatchingTag = tags.some(
-          (tag) => tag.toLowerCase() === tagFilter,
-        );
-
-        if (hasMatchingTag) {
-          filteredExercises.push(tFile.basename);
-        }
-      } catch {
-        // Skip files that can't be read
-      }
-    }
-
-    return filteredExercises.sort();
+    const tag = filter?.tag?.toLowerCase();
+    const names = pages
+      .filter(
+        (page) =>
+          !tag || page.tags.some((t) => t.toLowerCase() === tag),
+      )
+      .map((page) => page.file.basename);
+    return Array.from(new Set(names)).sort();
   }
 
   /**
-   * Get unique exercises from workout logs.
-   * A tag filter is matched against the frontmatter tags of each exercise's
-   * note; when notes can't be resolved the result is empty, never unfiltered.
+   * Unique exercises from the workout log, used when there are no exercise
+   * pages. Without pages there are no tags, so a tag filter gives [] (never
+   * the unfiltered list).
    */
   private async getExercisesFromLogs(
     filter?: ExercisesFilter,
   ): Promise<string[]> {
+    if (filter?.tag) {
+      return [];
+    }
     const logs = await this.getWorkoutLogs();
     const exerciseSet = new Set<string>();
-
     for (const log of logs) {
       if (log.exercise) {
         exerciseSet.add(log.exercise);
       }
     }
-
-    const exercises = Array.from(exerciseSet).sort();
-    if (!filter?.tag) {
-      return exercises;
-    }
-    const tag = filter.tag.toLowerCase();
-    return exercises.filter((name) =>
-      this.getExerciseNoteTags(name).includes(tag),
-    );
-  }
-
-  /**
-   * Lower-cased frontmatter tags (without "#") of the note named like the
-   * exercise, or [] if there is no such note.
-   */
-  private getExerciseNoteTags(exercise: string): string[] {
-    const file = this.app?.metadataCache.getFirstLinkpathDest(
-      exercise,
-      "",
-    );
-    if (!file) {
-      return [];
-    }
-    return FrontmatterParser.toTagList(
-      this.app?.metadataCache.getFileCache(file)?.frontmatter?.tags,
-    ).map((tag) => tag.toLowerCase());
+    return Array.from(exerciseSet).sort();
   }
 }

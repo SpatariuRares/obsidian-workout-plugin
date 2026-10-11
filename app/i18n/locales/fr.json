@@ -659,7 +659,6 @@
       "validMinValue": "{field} doit être au moins {min}",
       "validMaxValue": "{field} doit être au maximum {max}",
       "validFieldRequired": "{field} est obligatoire",
-      "migrationFolderNotFound": "Dossier d'exercices introuvable: {path}",
       "migrationNoUpdates": "Toutes les pages d'exercices sont déjà à jour"
     },
     "parameterKey": "Clé :",

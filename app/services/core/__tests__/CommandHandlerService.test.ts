@@ -115,6 +115,7 @@ describe("CommandHandlerService", () => {
     mockPlugin = {
       addCommand: jest.fn(),
       createCSVLogFile: jest.fn(),
+      getExerciseLibrary: jest.fn().mockReturnValue({ find: jest.fn() }),
       getMuscleTagService: jest.fn().mockReturnValue({
         getTagMap: jest
           .fn()

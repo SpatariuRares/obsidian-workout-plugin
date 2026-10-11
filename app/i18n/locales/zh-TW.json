@@ -659,7 +659,6 @@
       "validMinValue": "{field}至少為{min}",
       "validMaxValue": "{field}最多為{max}",
       "validFieldRequired": "{field}為必填",
-      "migrationFolderNotFound": "找不到動作資料夾：{path}",
       "migrationNoUpdates": "所有動作頁面皆已是最新狀態"
     },
     "parameterKey": "鍵：",

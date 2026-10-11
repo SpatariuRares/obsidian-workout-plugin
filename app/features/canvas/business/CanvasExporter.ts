@@ -10,7 +10,7 @@ import {
   ExerciseStats,
 } from "@app/api/WorkoutPlannerAPI";
 import type { MuscleTagService } from "@app/services/exercise/MuscleTagService";
-import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
+import type { ExerciseLibrary } from "@app/services/exercise/ExerciseLibrary";
 import type {
   CanvasExportOptions,
   CanvasLayoutType,
@@ -122,17 +122,15 @@ const DEFAULT_OPTIONS: CanvasExportOptions = {
 export class CanvasExporter {
   private api: WorkoutPlannerAPI;
   private muscleTags: Pick<MuscleTagService, "musclesForExercise">;
-  private settings: WorkoutChartsSettings;
 
   constructor(
     private app: App,
     api: WorkoutPlannerAPI,
     muscleTags: Pick<MuscleTagService, "musclesForExercise">,
-    settings: WorkoutChartsSettings,
+    private exercises: Pick<ExerciseLibrary, "find">,
   ) {
     this.api = api;
     this.muscleTags = muscleTags;
-    this.settings = settings;
   }
 
   /**
@@ -258,35 +256,23 @@ export class CanvasExporter {
       }
     }
 
-    // Pattern 3: Extract from markdown links to exercise files [[Exercise Name]]
+    // Pattern 3: links to exercise pages [[Exercise Name]] / [[Folder/Exercise Name]]
     const linkRegex = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
-    const exerciseFolderPath =
-      this.settings.exerciseFolderPath;
     while ((match = linkRegex.exec(content)) !== null) {
       const linkPath = match[1].trim();
-      // Check if the link points to an exercise file
+      const exerciseName = (linkPath.split("/").pop() || linkPath).replace(
+        /\.md$/i,
+        "",
+      );
       if (
-        linkPath.startsWith(exerciseFolderPath) ||
-        !linkPath.includes("/")
+        exerciseName &&
+        !exerciseSet.has(exerciseName.toLowerCase()) &&
+        this.exercises.find(exerciseName)
       ) {
-        const exerciseName = (
-          linkPath.split("/").pop() || linkPath
-        ).replace(/\.md$/i, "");
-        if (
-          exerciseName &&
-          !exerciseSet.has(exerciseName.toLowerCase())
-        ) {
-          // Verify it's actually an exercise file
-          const file = this.app.vault.getFileByPath(
-            linkPath.endsWith(".md") ? linkPath : linkPath + ".md",
-          );
-          if (file || !linkPath.includes("/")) {
-            exerciseSet.add(exerciseName.toLowerCase());
-            const muscleGroups =
-              await this.muscleTags.musclesForExercise(exerciseName);
-            exercises.push({ name: exerciseName, muscleGroups });
-          }
-        }
+        exerciseSet.add(exerciseName.toLowerCase());
+        const muscleGroups =
+          await this.muscleTags.musclesForExercise(exerciseName);
+        exercises.push({ name: exerciseName, muscleGroups });
       }
     }
 

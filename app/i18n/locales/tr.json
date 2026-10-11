@@ -659,7 +659,6 @@
       "validMinValue": "{field} en az {min} olmalıdır",
       "validMaxValue": "{field} en fazla {max} olmalıdır",
       "validFieldRequired": "{field} zorunludur",
-      "migrationFolderNotFound": "Egzersiz klasörü bulunamadı: {path}",
       "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel"
     },
     "parameterKey": "Anahtar:",

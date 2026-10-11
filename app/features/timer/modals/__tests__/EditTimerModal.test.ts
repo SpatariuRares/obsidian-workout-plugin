@@ -50,6 +50,7 @@ function openModal() {
     app,
     settings: { timerPresets: {}, defaultTimerPreset: null, recentExercises: [] },
     getWorkoutLogData: async () => [],
+    getExerciseLibrary: () => ({ pages: () => [], find: () => undefined }),
     getExerciseDefinitionService: () => ({
       getExerciseNames: async () => [],
       getExerciseDefinitions: async () => [],

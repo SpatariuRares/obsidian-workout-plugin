@@ -659,7 +659,6 @@
       "validMinValue": "{field} должно быть не менее {min}",
       "validMaxValue": "{field} должно быть не более {max}",
       "validFieldRequired": "{field} обязательно",
-      "migrationFolderNotFound": "Папка упражнений не найдена: {path}",
       "migrationNoUpdates": "Все страницы упражнений уже актуальны"
     },
     "parameterKey": "Ключ:",

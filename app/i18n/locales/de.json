@@ -659,7 +659,6 @@
       "validMinValue": "{field} muss mindestens {min} sein",
       "validMaxValue": "{field} darf höchstens {max} sein",
       "validFieldRequired": "{field} ist erforderlich",
-      "migrationFolderNotFound": "Übungsordner nicht gefunden: {path}",
       "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell"
     },
     "parameterKey": "Schlüssel:",

@@ -134,7 +134,7 @@ jobs:
           cp manifest.json release/
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             release/main.js
@@ -142,7 +142,7 @@ jobs:
             release/manifest.json
           generate_release_notes: true
           draft: false
-          fail_on_unmatched: false
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

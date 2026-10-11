@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Follow established patterns** — use "Key Development Patterns" section before implementing features
 - **Delegate to tools** — use build system, Jest, ESLint; don't manually validate what tools can check
-- **Use services, not ad-hoc logic** — e.g., use `DataService` for CSV operations, not inline parsing. Any CSV reading/writing goes through `app/utils/data/CsvCodec.ts` (RFC 4180: quoted commas, quotes, newlines, CRLF); never `split("\n")`/`split(",")` CSV content
+- **Use services, not ad-hoc logic** — e.g., read and change the workout log only through `WorkoutLogFile` (via the plugin's `WorkoutDataPort` methods), never by parsing the CSV yourself. Any other CSV reading/writing goes through `app/utils/data/CsvCodec.ts` (RFC 4180: quoted commas, quotes, newlines, CRLF); never `split("\n")`/`split(",")` CSV content
 - **Update this file** — when discovering new patterns or solving complex problems, document them here
 
 ## Development Commands
@@ -70,7 +70,7 @@ The build process is sequential and must complete in order. Development mode (`n
 ```
 WorkoutChartsPlugin
 ├── Services
-│   ├── DataService              # Facade for CSV operations (cache, columns, repository)
+│   ├── WorkoutLogFile           # The workout log CSV: format, column order, cache, mutations
 │   ├── ExerciseDefinitionService # Exercise type definitions and field management
 │   ├── MuscleTagService          # Custom muscle tag mappings (CSV-backed, cached)
 │   ├── CommandHandlerService     # Registers Obsidian commands
@@ -94,21 +94,23 @@ WorkoutChartsPlugin
 
 ### Service Layer Architecture
 
-#### DataService (Facade)
+#### WorkoutLogFile (`app/services/data/WorkoutLogFile.ts`)
 
-Facade over specialized data services:
+The only module that knows the workout log CSV (see "Workout log file" in `CONTEXT.md`). It owns the header, the column order rule, row ⇄ entry conversion in both directions (`WorkoutLogCodec.ts`, internal), volume (`reps × weight`, computed on every add/update), the 5-second cache, and the `log:*` events. Every mutation goes through one private `rewrite()` that keeps the file's column order.
 
-- **CSVCacheService**: 5-second cache for raw CSV data
-- **CSVColumnService**: CSV header management (read, ensure columns exist)
-- **WorkoutLogRepository**: CRUD operations on CSV file
-- **DataFilter**: Multi-strategy filtering (exact, fuzzy, filename, exercise field)
+- **LogStorage** (`LogStorage.ts`): the seam under it. `VaultLogStorage` in production; tests use `InMemoryLogStorage` (`__tests__/InMemoryLogStorage.ts`) and assert on the CSV text, so test through `WorkoutLogFile`, not by mocking the vault
+- **DataFilter**: multi-strategy filtering (exact, fuzzy, exercise field); views apply it to `read()`'s rows
 
 ```typescript
-// Usage
-const data = await plugin.dataService.getWorkoutLogData(); // all rows; views filter via DataFilter.filterData
-await plugin.addWorkoutLogEntry({ date, exercise, reps, weight, ... });
-plugin.clearLogDataCache(); // Force refresh
+// Callers go through the plugin's WorkoutDataPort, which forwards to WorkoutLogFile
+const data = await plugin.getWorkoutLogData(); // all rows; views filter via DataFilter.filterData
+await plugin.addWorkoutLogEntry({ date, exercise, reps, weight, ... }); // LogEntryInput: no timestamp, no volume
+await plugin.updateWorkoutLogEntry(log, toLogEntryInput(log)); // toLogEntryInput keeps the entered weight and unit
 ```
+
+#### ProtocolCatalog (`app/services/protocols/ProtocolCatalog.ts`)
+
+The only place that knows what a protocol looks like: `new ProtocolCatalog(settings.customProtocols).resolve(id)` gives its translated name, badge text/class and chart color; `.all()` lists built-ins then custom ones. Use `protocolId(raw)` to normalize an id (lower case, empty = standard). Custom ids are kept in the CSV, so never map an unknown id to standard.
 
 #### ExerciseDefinitionService
 
@@ -116,7 +118,7 @@ Manages exercise type definitions (Strength, Cardio, Flexibility, custom types) 
 
 #### MuscleTagService
 
-Manages custom muscle tag mappings (e.g., `petto` → `chest`) from CSV file. Cache is invalidated via `triggerMuscleTagRefresh()`. Call `destroy()` to clean up.
+Manages custom muscle tag mappings (e.g., `petto` → `chest`) from CSV file, and is the only place that turns tags into muscles: `await tagMap()`, `musclesForTags(tags)`, `musclesForExercise(name)` (tags from the exercise note's frontmatter via `metadataCache`). Everything is async so nobody sees the default tags before the user's CSV has loaded. Cache is invalidated via `triggerMuscleTagRefresh()`. Call `destroy()` to clean up.
 
 ### Embedded Views (BaseView Pattern)
 
@@ -220,9 +222,9 @@ app/features/
 │
 ├── modals/              # Cross-feature modals (feature insert/edit modals live in their feature)
 │   ├── base/            # ModalBase, BaseInsertModal
-│   │   ├── logic/       # LogFormValidator
+│   │   ├── logic/       # LogEntryDraft (log form as data: prefill, validate, set to save)
 │   │   └── services/    # RecentExercisesService
-│   ├── components/      # ExerciseAutocomplete, CodeGenerator
+│   ├── components/      # ExerciseAutocomplete
 │   ├── log/             # CreateLogModal, EditLogModal
 │   ├── exercise/        # AddExerciseBlockModal, CreateExercisePageModal,
 │   │                    # CreateExerciseSectionModal, AuditExerciseNamesModal
@@ -301,9 +303,9 @@ All data mutations emit typed events on `WorkoutEventBus`. Views subscribe via `
 **Workout log mutation flow:**
 
 ```
-Repository.add/update/delete/rename
+WorkoutLogFile.add/update/delete/renameExercise/stampMissingWeightUnits
+  → rewrites the CSV (column order kept), clears its cache
   → eventBus.emit(log:added | log:updated | log:deleted | log:bulk-changed)
-  → CSVCacheService clears cache (reactive subscriber)
   → EventAwareRenderChild receives event → filters by exercise/workout → calls renderFn()
 ```
 
@@ -326,7 +328,7 @@ eventBus.emit(settings:changed { key, previousValue, newValue })
 **Bulk operations (e.g. exercise conversion, import):**
 
 ```
-dataService.batchOperation('import', async () => { ... N mutations ... })
+plugin.batchOperation('import', async () => { ... N mutations ... })
   → All log:* events suppressed during fn()
   → One log:bulk-changed emitted at end
   → All EventAwareRenderChild instances re-render once
@@ -339,16 +341,14 @@ dataService.batchOperation('import', async () => { ... N mutations ... })
 - `WorkoutEventTypes.ts` — Discriminated union `WorkoutEvent`, `normalizeExercise()` for case/whitespace-insensitive comparison
 - `triggerWorkoutLogRefresh()` in `main.ts` — **Deprecated** public method kept only for external callers (Dataview scripts); not part of any port and not used internally
 
-**Important:** Do NOT pass `onRefresh` callbacks through modal or table components. The event bus handles all refresh logic automatically after every repository mutation.
+**Important:** Do NOT pass `onRefresh` callbacks through modal or table components. The event bus handles all refresh logic automatically after every log mutation.
 
 ### Data Flow
 
 ```
 CSV File (workout_logs.csv)
     ↓
-DataService (Facade)
-    ↓
-CSVCacheService (5-second cache)
+WorkoutLogFile (format + 5-second cache)
     ↓
 DataFilter (multi-strategy matching)
     ↓
@@ -359,7 +359,7 @@ Views (Chart, Table, Dashboard) or Public API
 
 - `date`, `exercise`, `reps`, `weight`, `volume`, `origine`, `workout`, `timestamp`, `notes`, `protocol`
 - Custom fields for exercise type-specific parameters (duration, distance, pace, etc.)
-- `weightUnit` (`kg`/`lb`, last column, read by header name): unit of that row's `weight`/`volume`, empty = settings unit. `convertFromCSVEntry` converts `weight`/`volume` to `settings.weightUnit` on load and keeps the raw value in `enteredWeight`/`enteredUnit`; everything that does maths reads `weight`, only the table cell and the edit/autofill prefill show `enteredWeight`. Conversions go through `app/utils/WeightUnitUtils.ts` (2 decimals, 1.25 plates)
+- `weightUnit` (`kg`/`lb`, last column, read by header name): unit of that row's `weight`/`volume`, empty = settings unit. `toWorkoutLogData` (in `WorkoutLogCodec`) converts `weight`/`volume` to `settings.weightUnit` on load and keeps the raw value in `enteredWeight`/`enteredUnit`; everything that does maths reads `weight`, only the table cell and the edit/autofill prefill show `enteredWeight`. Conversions go through `app/utils/WeightUnitUtils.ts` (2 decimals, 1.25 plates)
 
 **Filtering strategies** (exercise field only; every row comes from the same CSV, so file names are not used):
 
@@ -369,7 +369,12 @@ Views (Chart, Table, Dashboard) or Public API
 
 ### Code Block Syntax
 
-Source of truth: the `Embedded*Params` interfaces in `app/features/{charts,tables,timer,dashboard}/types.ts`. All params are optional.
+Source of truth: one schema per block, built with `defineCodeBlock` (`app/services/codeblocks/CodeBlockSchema.ts`): `app/features/charts/chartBlock.ts`, `tables/tableBlock.ts`, `timer/timerBlock.ts`, `dashboard/dashboardBlock.ts`, `duration/durationBlock.ts`. Each lists every parameter with its type, default and allowed values; the `Embedded*Params` types are derived from it (`BlockParams<typeof tableBlock>`). All params are optional.
+
+- **Reading**: `CodeBlockProcessorService` calls `schema.parse(source)`. Invalid values show an error in place of the block; views get the params with `schema.defaults` applied (the timer applies them itself, under the preset).
+- **Writing**: insert modals and example generators call `schema.serialize(params)`. Never build a block with string concatenation.
+- **Editing**: edit modals snapshot the form when it opens (`collectParams()`), then `CodeBlockEditorService.patchCodeBlock(app, schema, { id }, changedParams(before, after))`. Only changed lines are rewritten; comments, order and parameters the form doesn't show stay as typed.
+- **Adding a parameter**: add it to the schema (with default and limits), read it in the view, and if a modal sets it, return it from `collectParams()`. Then update the examples below.
 
 #### workout-chart
 
@@ -429,7 +434,7 @@ recentWorkoutsLimit: 5
 volumeTrendDays: 7
 ```
 
-Code blocks written by the insert/edit modals also carry an `id` used to replace the block in place.
+Code blocks written by the insert modals also carry an `id`, used to find the block when it is edited.
 
 ## Key Development Patterns
 
@@ -518,7 +523,7 @@ npm test -- path/to/file.test.ts  # Single file
 
 **❌ DO NOT use barrel files for:**
 
-- Services (import directly from `@app/services/data/DataService`)
+- Services (import directly from `@app/services/data/WorkoutLogFile`)
 - Features (import directly from specific files)
 - Utils (import directly from `@app/utils/DateUtils`)
 - Types (import directly from specific files)
@@ -587,12 +592,12 @@ Feature folders have no top-level barrel. ESLint (`no-restricted-imports`) rejec
 
 ## Common Gotchas
 
-1. **Cache Invalidation**: Workout log mutations through the repository emit events that clear the cache and re-render views automatically. Don't call `triggerWorkoutLogRefresh()` (deprecated, kept for external callers) or `clearLogDataCache()`. After modifying muscle tags, call `plugin.triggerMuscleTagRefresh()`.
+1. **Cache Invalidation**: Workout log mutations through `WorkoutLogFile` emit events that clear the cache and re-render views automatically. Don't call `triggerWorkoutLogRefresh()` (deprecated, kept for external callers) or `clearLogDataCache()`. After modifying muscle tags, call `plugin.triggerMuscleTagRefresh()`.
 2. **Double Refresh**: Never pass local `onRefresh` callbacks through table components. The global event system handles refresh. Adding local callbacks causes double-rendering.
 3. **Chart.js Memory Leaks**: Always create charts via `ChartRenderer.renderChart()`, which destroys any tracked chart with the same ID first. Never call `new Chart()` directly, because untracked instances escape `destroyAllCharts()` on unload.
 4. **Modal Cleanup**: Always call `modal.close()` after success, avoid leaving modals open
 5. **Timer Cleanup**: Active timers stored in `plugin.activeTimers` Map must be destroyed in `onunload()`
-6. **Service Dependencies**: Services initialized in order - DataService must exist before ExerciseDefinitionService
+6. **Service Dependencies**: Services initialized in order - WorkoutLogFile must exist before ExerciseDefinitionService
 7. **Barrel Import Circular Dependencies**: If circular dependency error, import directly instead of using barrel file
 8. **Constants Backward Compatibility**: When refactoring constants, maintain `CONSTANTS.WORKOUT.*` structure for legacy code
 9. **Grid tracks on mobile**: use `minmax(0, 1fr)`, never a bare `1fr`. A `1fr` track grows to its widest child's min-content (e.g. a widget table), pushing the whole dashboard off-screen

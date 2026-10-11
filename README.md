@@ -1,6 +1,6 @@
 # Workout Planner for Obsidian
 
-![Obsidian](https://img.shields.io/badge/Obsidian-0.15.0%2B-purple) ![License](https://img.shields.io/badge/license-MIT-green)
+![Obsidian](https://img.shields.io/badge/Obsidian-0.15.0%2B-purple) ![License](https://img.shields.io/badge/license-MIT-green) [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-support-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/spatariurares)
 
 Log your sets in Obsidian and see your progress in the same notes you plan your training in. Workout Planner keeps every set in one CSV file in your vault, then draws tables, charts, timers and a dashboard (with a muscle heat map) wherever you put a code block.
 
@@ -23,6 +23,7 @@ It works on desktop and mobile, so you can log from your phone between sets.
 - [Your data](#your-data)
 - [Dataview and Templater](#dataview-and-templater)
 - [Troubleshooting](#troubleshooting)
+- [Support](#support)
 
 ## Install
 
@@ -414,7 +415,11 @@ tR += s.totalSets
 
 **The timer makes no sound on my phone.** Tap **Start** once; phones block sound until you interact with the page.
 
-**I changed the CSV folder and nothing updated.** Reopen the note, or log a set, to refresh the views.
+**I changed the CSV folder and nothing updated.** Open notes reload a moment after you stop typing the new folder. If one still shows old data, reopen it.
+
+## Support
+
+Workout Planner is free and open source. If it helps your training and you want to say thanks, you can [buy me a coffee](https://buymeacoffee.com/spatariurares). Obsidian also shows a donate button on the plugin's page in **Settings → Community plugins**. Bug reports and ideas are just as welcome as [issues](https://github.com/SpatariuRares/obsidian-workout-plugin/issues).
 
 ## Translations
 

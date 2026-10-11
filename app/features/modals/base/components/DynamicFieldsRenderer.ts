@@ -188,10 +188,16 @@ export class DynamicFieldsRenderer {
     if (select) select.value = unit;
   }
 
+  /** The unit picked next to a weight field, if it is a known one */
+  static getWeightUnit(input: HTMLInputElement): WeightUnit | undefined {
+    const unit = input.dataset.weightUnit;
+    return isWeightUnit(unit) ? unit : undefined;
+  }
+
   /**
    * Adds a kg/lb picker for this entry only. It starts at the settings unit;
-   * switching converts the value already in the field. LogSubmissionHandler
-   * saves the value as typed with this unit (read from `data-weight-unit`).
+   * switching converts the value already in the field. The set is saved as
+   * typed with this unit (see getWeightUnit).
    */
   private renderWeightUnitSelect(
     label: HTMLElement,

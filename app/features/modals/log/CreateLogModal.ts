@@ -4,6 +4,7 @@ import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
+import { toEntry } from "@app/features/modals/base/logic/LogEntryDraft";
 import { t } from "@app/i18n";
 
 export class CreateLogModal extends BaseLogModal {
@@ -57,7 +58,8 @@ export class CreateLogModal extends BaseLogModal {
   }
 
   protected async handleSubmit(data: LogFormData): Promise<void> {
-    const entry = this.createLogEntryObject(data);
-    await this.plugin.addWorkoutLogEntry(entry);
+    await this.plugin.addWorkoutLogEntry(
+      toEntry(data, { now: new Date(), pageLink: this.currentPageLink }),
+    );
   }
 }

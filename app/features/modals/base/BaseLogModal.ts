@@ -5,10 +5,6 @@ import { App, Notice, Platform } from "obsidian";
 import type { WorkoutPluginContext, TemplateGeneratorPort } from "@app/types/PluginPorts";
 import { CreateExercisePageModal } from "@app/features/modals/exercise/CreateExercisePageModal";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import {
-  LogEntryInput,
-  WorkoutProtocol,
-} from "@app/types/WorkoutLogData";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -16,7 +12,8 @@ import { DomUtils } from "@app/utils/DomUtils";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
-import { LogSubmissionHandler } from "@app/features/modals/base/logic/LogSubmissionHandler";
+import { readLogForm } from "@app/features/modals/base/components/readLogForm";
+import { validate } from "@app/features/modals/base/logic/LogEntryDraft";
 
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
@@ -146,64 +143,6 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Helper method to create log entry object from LogFormData.
-   * Simpler overload - recommended for new code.
-   */
-  protected createLogEntryObject(
-    data: LogFormData,
-  ): LogEntryInput;
-
-  /**
-   * Helper method to create log entry object from individual parameters.
-   * Preserved for backward compatibility with subclasses.
-   * @deprecated Use the LogFormData overload instead
-   */
-  protected createLogEntryObject(
-    exercise: string,
-    reps: number,
-    weight: number,
-    workout: string,
-    notes: string,
-    date?: string,
-    protocol?: WorkoutProtocol,
-    customFields?: Record<string, string | number | boolean>,
-  ): LogEntryInput;
-
-  protected createLogEntryObject(
-    dataOrExercise: LogFormData | string,
-    reps?: number,
-    weight?: number,
-    workout?: string,
-    notes?: string,
-    date?: string,
-    protocol?: WorkoutProtocol,
-    customFields?: Record<string, string | number | boolean>,
-  ): LogEntryInput {
-    if (typeof dataOrExercise === "string") {
-      // Old signature: individual parameters
-      return LogSubmissionHandler.createLogEntry(
-        {
-          exercise: dataOrExercise,
-          reps: reps!,
-          weight: weight!,
-          workout: workout!,
-          notes: notes!,
-          date,
-          protocol,
-          customFields,
-        },
-        this.currentPageLink,
-      );
-    } else {
-      // New signature: LogFormData object
-      return LogSubmissionHandler.createLogEntry(
-        dataOrExercise,
-        this.currentPageLink,
-      );
-    }
-  }
-
-  /**
    * Whether to enable auto-fill from the last entry.
    * Override in subclasses to disable.
    */
@@ -294,20 +233,20 @@ export abstract class BaseLogModal extends ModalBase {
   }
 
   /**
-   * Handles form submission via LogSubmissionHandler
+   * Reads and validates the form, then hands the data to handleSubmit
    */
   protected async handleFormSubmit(
     formElements: LogFormElements,
   ): Promise<void> {
-    const currentFileName = this.getCurrentFileName();
-
-    const data = LogSubmissionHandler.extractAndValidateData(
+    const { data, fields } = readLogForm(
       formElements,
-      this.currentParameters,
-      currentFileName,
+      this.getCurrentFileName(),
     );
-
-    if (!data) return;
+    const error = validate(data.exercise, fields, this.currentParameters);
+    if (error) {
+      new Notice(error);
+      return;
+    }
 
     try {
       await this.handleSubmit(data);

@@ -5,6 +5,10 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import { LogFormData } from "@app/types/ModalTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import {
+  fromLog,
+  toEntry,
+} from "@app/features/modals/base/logic/LogEntryDraft";
 import { t } from "@app/i18n";
 
 export class EditLogModal extends BaseLogModal {
@@ -44,56 +48,17 @@ export class EditLogModal extends BaseLogModal {
   }
 
   protected getPreFillData(): Partial<LogFormData> {
-    return {
-      exercise: this.originalLog.exercise || "",
-      reps: this.originalLog.reps,
-      // What was typed, in its own unit (weight is in the settings unit)
-      weight: this.originalLog.enteredWeight ?? this.originalLog.weight,
-      weightUnit: this.originalLog.enteredUnit,
-      notes: this.originalLog.notes || "",
-      workout: this.originalLog.workout || "",
-      date: this.originalLog.date,
-      protocol: this.originalLog.protocol,
-      customFields: this.originalLog.customFields,
-    };
+    return fromLog(this.originalLog);
   }
 
   protected async handleSubmit(data: LogFormData): Promise<void> {
-    let finalDate = this.originalLog.date;
-
-    // If date was changed (and exists in data), preserve the original time
-    if (data.date) {
-      try {
-        // data.date from input[type="date"] is "YYYY-MM-DD"
-        // this.originalLog.date is full ISO "YYYY-MM-DDTHH:mm:ss.sssZ"
-
-        const originalDateObj = new Date(this.originalLog.date);
-        const newDateParts = data.date.split("-");
-
-        if (newDateParts.length === 3) {
-          const year = parseInt(newDateParts[0], 10);
-          const month = parseInt(newDateParts[1], 10) - 1; // Month is 0-indexed
-          const day = parseInt(newDateParts[2], 10);
-
-          // Update year, month, day but keep time components
-          originalDateObj.setFullYear(year);
-          originalDateObj.setMonth(month);
-          originalDateObj.setDate(day);
-
-          finalDate = originalDateObj.toISOString();
-        }
-      } catch {
-        // Failed to parse date, keeping original
-      }
-    }
-
-    // Update the date in data with the preserved time
-    const updatedData = { ...data, date: finalDate };
-    const updatedEntry = this.createLogEntryObject(updatedData);
-
     await this.plugin.updateWorkoutLogEntry(
       this.originalLog,
-      updatedEntry,
+      toEntry(data, {
+        original: this.originalLog,
+        now: new Date(),
+        pageLink: this.currentPageLink,
+      }),
     );
   }
 }

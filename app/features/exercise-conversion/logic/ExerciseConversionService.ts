@@ -3,9 +3,9 @@ import {
   getExerciseTypeById,
 } from "@app/constants/exerciseTypes.constants";
 import type { ExerciseTypeDefinition } from "@app/types/ExerciseTypes";
-import type { CSVWorkoutLogEntry } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
+import { toLogEntryInput } from "@app/services/data/WorkoutLogCodec";
 
 export interface FieldMapping {
   fromField: string;
@@ -63,19 +63,10 @@ export class ExerciseConversionService {
 
     await this.plugin.batchOperation("other", async () => {
       for (const log of logData) {
-        // Build updated entry
-        const updatedEntry: Omit<CSVWorkoutLogEntry, "timestamp"> = {
-          date: log.date,
-          exercise: log.exercise,
-          reps: log.reps,
-          weight: log.weight,
-          volume: log.volume,
-          origine: log.origine,
-          workout: log.workout,
-          notes: log.notes,
-          protocol: log.protocol,
-          customFields: { ...log.customFields },
-        };
+        // Start from the set as entered (its own weight unit), not the
+        // weight converted to the settings unit
+        const updatedEntry = toLogEntryInput(log);
+        updatedEntry.customFields = { ...log.customFields };
 
         // Apply field mappings
         for (const mapping of fieldMappings) {
@@ -117,14 +108,6 @@ export class ExerciseConversionService {
                 delete updatedEntry.customFields[key];
               }
             }
-          }
-
-          // Recalculate volume for strength type
-          if (targetTypeId === EXERCISE_TYPE_IDS.STRENGTH) {
-            updatedEntry.volume =
-              updatedEntry.reps * updatedEntry.weight;
-          } else {
-            updatedEntry.volume = 0;
           }
         }
 

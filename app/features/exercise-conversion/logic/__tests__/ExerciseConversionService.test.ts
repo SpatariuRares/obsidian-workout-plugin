@@ -135,7 +135,6 @@ describe("ExerciseConversionService", () => {
         expect(updated).toMatchObject({
           reps: 50,
           weight: 5,
-          volume: 250,
           customFields: { duration: 60, rounds: 50 },
         });
       });
@@ -219,7 +218,6 @@ describe("ExerciseConversionService", () => {
       expect(original).toBe(log);
       expect(updated.reps).toBe(0);
       expect(updated.weight).toBe(0);
-      expect(updated.volume).toBe(0);
       expect(updated.customFields).toEqual({ duration: 45 });
       expect(updated.date).toBe("2024-01-01");
       expect(updated.exercise).toBe("Plank");
@@ -228,7 +226,7 @@ describe("ExerciseConversionService", () => {
       expect(updated.origine).toBe("x");
     });
 
-    it("should move duration into reps and recalculate volume when converting timed to strength", async () => {
+    it("should move duration into reps when converting timed to strength", async () => {
       logs = [
         makeLog({
           customFields: { duration: 30 },
@@ -244,12 +242,19 @@ describe("ExerciseConversionService", () => {
       const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
       expect(updated.reps).toBe(30);
       expect(updated.weight).toBe(0);
-      expect(updated.volume).toBe(0);
       expect(updated.customFields).toEqual({});
     });
 
-    it("should compute volume as reps times weight for strength targets", async () => {
-      logs = [makeLog({ reps: 5, weight: 80, volume: 1 })];
+    it("should write back the weight and unit the set was entered in", async () => {
+      logs = [
+        makeLog({
+          reps: 5,
+          weight: 45.36,
+          volume: 226.8,
+          enteredWeight: 100,
+          enteredUnit: "lb",
+        }),
+      ];
 
       await service.convertExerciseData(
         "Plank",
@@ -257,9 +262,8 @@ describe("ExerciseConversionService", () => {
         [],
       );
 
-      expect(plugin.updateWorkoutLogEntry.mock.calls[0][1].volume).toBe(
-        400,
-      );
+      const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
+      expect(updated).toMatchObject({ weight: 100, weightUnit: "lb" });
     });
 
     it("should keep reps and weight untouched when the target is strength and no mappings are given", async () => {
@@ -369,7 +373,6 @@ describe("ExerciseConversionService", () => {
       const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
       expect(updated.reps).toBe(12);
       expect(updated.weight).toBe(7.5);
-      expect(updated.volume).toBe(90);
     });
 
     it("should fall back to 0 when a mapped value is not numeric", async () => {
@@ -390,7 +393,6 @@ describe("ExerciseConversionService", () => {
       const updated = plugin.updateWorkoutLogEntry.mock.calls[0][1];
       expect(updated.reps).toBe(0);
       expect(updated.weight).toBe(0);
-      expect(updated.volume).toBe(0);
     });
 
     it("should map a boolean custom field into reps as 0", async () => {

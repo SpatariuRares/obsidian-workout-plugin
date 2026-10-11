@@ -73,9 +73,16 @@ const logs = [
   },
 ];
 
+// Everything ever logged; the dashboard is given only its period (`logs`)
+const history = [
+  { ...logs[0], date: "2025-01-01T10:00:00.000Z", weight: 90, volume: 450 },
+  ...logs,
+];
+
 const render = async (params: EmbeddedDashboardParams) => {
   const view = new EmbeddedDashboardView({
     settings: {},
+    getWorkoutLogData: async () => history,
   } as unknown as WorkoutChartsPlugin);
   await view.createDashboard(createObsidianContainer(), logs, params);
 };
@@ -117,6 +124,17 @@ describe("EmbeddedDashboardView widget params", () => {
       expect(w.render).not.toHaveBeenCalled();
     },
   );
+
+  it("gives the summary all history, so records are judged against it", async () => {
+    await render({});
+
+    expect(SummaryWidget.render).toHaveBeenCalledWith(
+      expect.any(HTMLElement),
+      logs,
+      expect.any(Object),
+      history,
+    );
+  });
 
   it("gives the volume chart a stable per-dashboard chart id", async () => {
     await render({});

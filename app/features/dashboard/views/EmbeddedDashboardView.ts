@@ -191,7 +191,9 @@ export class EmbeddedDashboardView extends BaseView {
 
     // show* flags hide optional widgets; every widget is shown by default
     if (params.showSummary !== false) {
-      SummaryWidget.render(gridEl, displayData, params);
+      // Records are judged against all history, not just this period
+      const history = (await this.plugin.getWorkoutLogData()) || [];
+      SummaryWidget.render(gridEl, displayData, params, history);
     }
     if (params.showQuickStats !== false) {
       QuickStatsCards.render(gridEl, displayData, params);

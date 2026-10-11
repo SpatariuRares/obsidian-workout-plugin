@@ -68,18 +68,20 @@ describe("DashboardCalculations", () => {
       expect(result.totalVolume).toBe(1800);
     });
 
-    it("should calculate personal records count", () => {
+    it("should count exercises with a new weight record", () => {
       const today = new Date();
       const data: WorkoutLogData[] = [
-        createMockLog(today.toISOString(), "Squat", 1000, 100),
-        createMockLog(today.toISOString(), "Squat", 1200, 120),
+        createMockLog(today.toISOString(), "Squat", 1000, 100, undefined, 1),
+        createMockLog(today.toISOString(), "Squat", 1200, 120, undefined, 2),
         createMockLog(today.toISOString(), "Bench", 800, 80),
         createMockLog(today.toISOString(), "Deadlift", 1500, 150),
       ];
 
       const result =
         DashboardCalculations.calculateSummaryMetrics(data);
-      expect(result.personalRecords).toBe(3); // 3 unique exercises
+      // Only Squat went up (100 → 120); one session of Bench or Deadlift
+      // has nothing to beat
+      expect(result.personalRecords).toBe(1);
     });
 
     it("should calculate current streak correctly", () => {

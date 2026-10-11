@@ -30,8 +30,9 @@ export type {
 export class DashboardCalculations {
   static calculateSummaryMetrics(
     data: WorkoutLogData[],
+    history?: WorkoutLogData[],
   ): SummaryMetrics {
-    return calculateSummaryMetrics(data);
+    return calculateSummaryMetrics(data, history);
   }
 
   static calculatePeriodStats(

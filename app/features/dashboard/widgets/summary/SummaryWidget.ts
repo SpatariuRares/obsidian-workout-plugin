@@ -11,6 +11,8 @@ export class SummaryWidget {
     container: HTMLElement,
     data: WorkoutLogData[],
     _params: EmbeddedDashboardParams,
+    /** Every logged set, so records are judged against all of them */
+    history: WorkoutLogData[] = data,
   ): void {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.summary.title"),
@@ -21,7 +23,7 @@ export class SummaryWidget {
       cls: "workout-summary-grid",
     });
 
-    const metrics = calculateSummaryMetrics(data);
+    const metrics = calculateSummaryMetrics(data, history);
 
     this.createSummaryCard(
       summaryEl,

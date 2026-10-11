@@ -1,16 +1,24 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
 import { DataAggregation } from "@app/utils/data/DataAggregation";
+import { StringUtils } from "@app/utils/StringUtils";
 
 export interface SummaryMetrics {
   totalWorkouts: number;
   currentStreak: number;
   totalVolume: number;
+  /** Exercises with a new weight record in the period */
   personalRecords: number;
 }
 
+/**
+ * @param data The sets shown (the dashboard's period and filters)
+ * @param history Every logged set, to judge records against; defaults to
+ *   `data`
+ */
 export function calculateSummaryMetrics(
   data: WorkoutLogData[],
+  history: WorkoutLogData[] = data,
 ): SummaryMetrics {
   const totalWorkouts = DataAggregation.countUniqueWorkouts(data);
   const totalVolume = DataAggregation.calculateTotalVolume(data);
@@ -28,13 +36,47 @@ export function calculateSummaryMetrics(
     }
   }
 
-  const exerciseMaxWeights =
-    DataAggregation.findMaxWeightsByExercise(data);
-
   return {
     totalWorkouts,
     currentStreak,
     totalVolume: Math.round(totalVolume),
-    personalRecords: exerciseMaxWeights.size,
+    personalRecords: countExercisesWithNewRecord(data, history),
   };
+}
+
+/**
+ * A set is a record when its weight beats every earlier set of the same
+ * exercise. Counts the exercises with at least one record among `shown`;
+ * a first session (nothing to beat) and bodyweight sets never count.
+ */
+function countExercisesWithNewRecord(
+  shown: WorkoutLogData[],
+  history: WorkoutLogData[],
+): number {
+  const shownSets = new Set(shown);
+  const best = new Map<string, number>();
+  const withRecord = new Set<string>();
+
+  const chronological = [...new Set([...history, ...shown])].sort(
+    (a, b) => setTime(a) - setTime(b),
+  );
+  for (const set of chronological) {
+    const exercise = StringUtils.normalize(set.exercise);
+    const previousBest = best.get(exercise);
+    if (
+      previousBest !== undefined &&
+      set.weight > previousBest &&
+      shownSets.has(set)
+    ) {
+      withRecord.add(exercise);
+    }
+    if (previousBest === undefined || set.weight > previousBest) {
+      best.set(exercise, set.weight);
+    }
+  }
+  return withRecord.size;
+}
+
+function setTime(set: WorkoutLogData): number {
+  return set.timestamp ?? new Date(set.date).getTime();
 }

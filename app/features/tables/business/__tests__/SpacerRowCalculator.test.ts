@@ -1,6 +1,7 @@
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
 import { TableRow } from "@app/features/tables/types";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { t } from "@app/i18n";
 
 const createRow = (
   logOverrides: Partial<WorkoutLogData> = {},
@@ -72,6 +73,18 @@ describe("SpacerRowCalculator", () => {
 
       expect(result.stats).toHaveLength(1);
       expect(result.stats[0].value).toBe("2m0s");
+    });
+
+    it("adds durations in each exercise's own unit", () => {
+      const rows = [
+        // 30 min of cardio and 90 s of plank on the same day
+        { ...createRow({ reps: 0, weight: 0, volume: 0, customFields: { duration: 30 } }), durationSeconds: 1800 },
+        { ...createRow({ reps: 0, weight: 0, volume: 0, customFields: { duration: 90 } }), durationSeconds: 90 },
+      ];
+
+      const result = SpacerRowCalculator.calculate(rows);
+
+      expect(result.stats[0].value).toBe("31m30s");
     });
 
     it("formats duration under 60s without minutes", () => {
@@ -171,7 +184,7 @@ describe("SpacerRowCalculator", () => {
       const result = SpacerRowCalculator.calculate(rows);
 
       expect(result.stats).toHaveLength(1);
-      expect(result.stats[0].value).toBe("3 sets");
+      expect(result.stats[0].value).toBe(t("table.setCount", { count: 3 }));
       expect(result.stats[0].icon).toBeUndefined();
     });
   });
@@ -190,7 +203,7 @@ describe("SpacerRowCalculator", () => {
       const result = SpacerRowCalculator.calculate(rows);
 
       expect(result.stats).toHaveLength(1);
-      expect(result.stats[0].value).toBe("1 sets");
+      expect(result.stats[0].value).toBe(t("table.setCount", { count: 1 }));
     });
 
     it("strength data takes priority over cardio data", () => {

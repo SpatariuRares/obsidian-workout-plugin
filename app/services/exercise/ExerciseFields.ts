@@ -120,3 +120,11 @@ export function formatFieldNumber(field: Field, value: number): string {
   if (field.integer) return String(Math.round(value));
   return String(Math.round(value * 100) / 100);
 }
+
+/** A duration in seconds, from a value in the field's unit ("sec", "min", "h") */
+export function durationSeconds(unit: string | undefined, value: number): number {
+  const u = unit?.trim().toLowerCase();
+  if (u === "min" || u === "m") return value * 60;
+  if (u === "h" || u === "hr" || u === "hours") return value * 3600;
+  return value;
+}

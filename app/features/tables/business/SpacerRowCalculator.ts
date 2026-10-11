@@ -47,7 +47,9 @@ export class SpacerRowCalculator {
       }
 
       if (log.customFields) {
-        const duration = log.customFields["duration"];
+        // In seconds; without a known unit the stored value counts as seconds
+        const duration =
+          r.durationSeconds ?? log.customFields["duration"];
         if (typeof duration === "number" && duration > 0) {
           hasDuration = true;
           totalDuration += duration;
@@ -116,7 +118,7 @@ export class SpacerRowCalculator {
 
       if (!hasDuration && !hasDistance && !hasHeartRate) {
         stats.push({
-          value: `${groupRows.length} sets`,
+          value: t("table.setCount", { count: groupRows.length }),
         });
       }
     }

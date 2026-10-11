@@ -940,6 +940,7 @@
     "notAvailable": "N/A",
     "refreshSuccess": "Table refreshed",
     "refreshingTable": "Refreshing table...",
+    "setCount": "{count} sets",
     "target": {
       "progressTooltip": "Best: {best} reps / Target: {target} reps",
       "repsSuffix": "reps",

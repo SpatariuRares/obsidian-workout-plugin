@@ -10,6 +10,7 @@ import {
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import type { LogFormData } from "@app/types/ModalTypes";
 import { fieldFor, readField } from "@app/services/exercise/ExerciseFields";
+import { trainingDay } from "@app/services/history/TrainingHistory";
 
 const DEFAULT_ORIGIN = "[[Workout Charts Plugin]]";
 
@@ -25,7 +26,7 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
     weightUnit: log.enteredUnit,
     workout: log.workout || "",
     notes: log.notes || "",
-    date: localDay(log.date),
+    date: trainingDay(log.date),
     protocol: log.protocol,
     customFields: log.customFields,
   };
@@ -91,7 +92,7 @@ function entryDate(
   now: Date,
 ): string {
   const base = originalDate ?? now.toISOString();
-  if (!pickedDay || pickedDay === localDay(base)) return base;
+  if (!pickedDay || pickedDay === trainingDay(base)) return base;
 
   const [year, month, day] = pickedDay.split("-").map(Number);
   if (!year || !month || !day) return base;
@@ -99,12 +100,4 @@ function entryDate(
   // One call, so a 31st doesn't overflow into the next month on the way
   moved.setFullYear(year, month - 1, day);
   return moved.toISOString();
-}
-
-/** YYYY-MM-DD of an ISO date in local time */
-function localDay(iso: string): string {
-  const date = new Date(iso);
-  if (isNaN(date.getTime())) return iso.split("T")[0];
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }

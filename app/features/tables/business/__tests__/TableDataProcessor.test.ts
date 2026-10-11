@@ -736,6 +736,31 @@ describe("TableDataProcessor", () => {
       expect(result.headers).toContain(CONSTANTS.WORKOUT.TABLE.COLUMNS.HEART_RATE.value);
     });
 
+    it("knows each row's duration in seconds from its exercise's unit", async () => {
+      const plugin = {
+        getExerciseDefinitionService: () => ({
+          getParametersForExercise: async (name: string) =>
+            name === "Run"
+              ? [{ key: "duration", label: "Duration", type: "number", unit: "min", required: true }]
+              : [{ key: "duration", label: "Duration", type: "number", unit: "sec", required: true }],
+        }),
+      } as never;
+
+      const result = await TableDataProcessor.processTableData(
+        [
+          createLog({ exercise: "Run", customFields: { duration: 30 } }),
+          createLog({ exercise: "Plank", customFields: { duration: 90 } }),
+        ],
+        {},
+        plugin,
+      );
+
+      const seconds = Object.fromEntries(
+        result.rows.map((r) => [r.originalLog!.exercise, r.durationSeconds]),
+      );
+      expect(seconds).toEqual({ Run: 1800, Plank: 90 });
+    });
+
     it("reads a heart rate stored under a lowercase column", async () => {
       const result = await TableDataProcessor.processTableData(
         [createLog({ customFields: { heartrate: 150 } })],

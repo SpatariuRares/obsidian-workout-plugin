@@ -1,50 +1,32 @@
 import { App } from "obsidian";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
+import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
+import { tableBlock } from "@app/features/tables/tableBlock";
+import { timerBlock } from "@app/features/timer/timerBlock";
 
-const TARGET_BLOCKS = ["workout-log", "workout-timer"];
+/** Blocks the edit modals find by id */
+const SCHEMAS = [tableBlock, timerBlock];
 
-function addMissingBlockIds(content: string): {
+/** Adds an `id:` line to every log and timer block that has none */
+export function addMissingBlockIds(content: string): {
   content: string;
   modified: boolean;
   added: number;
 } {
+  const missing = readWorkoutNote(content).blocks.filter((block) => {
+    const schema = SCHEMAS.find((s) => s.type === block.type);
+    return schema !== undefined && !schema.parse(block.body).params.id;
+  });
+  if (missing.length === 0) return { content, modified: false, added: 0 };
+
+  const crlf = content.includes("\r\n");
   const lines = content.split("\n");
-  let added = 0;
-  let i = 0;
-
-  while (i < lines.length) {
-    const trimmed = lines[i].trim();
-    const matchedType = TARGET_BLOCKS.find(
-      (type) => trimmed === `\`\`\`${type}`,
-    );
-
-    if (matchedType) {
-      let hasId = false;
-      let blockEnd = -1;
-
-      for (let j = i + 1; j < lines.length; j++) {
-        const inner = lines[j].trim();
-        if (inner === "```") {
-          blockEnd = j;
-          break;
-        }
-        if (inner.startsWith("id:")) {
-          hasId = true;
-        }
-      }
-
-      if (!hasId && blockEnd !== -1) {
-        lines.splice(i + 1, 0, `id: ${generateCodeBlockId()}`);
-        added++;
-        i = blockEnd + 2; // account for the inserted line
-        continue;
-      }
-    }
-
-    i++;
+  const ids = missing.map((block) => ({ block, id: `id: ${generateCodeBlockId()}` }));
+  // Insert bottom-up, so earlier line numbers stay valid
+  for (const { block, id } of ids.reverse()) {
+    lines.splice(block.start + 1, 0, crlf ? `${id}\r` : id);
   }
-
-  return { content: lines.join("\n"), modified: added > 0, added };
+  return { content: lines.join("\n"), modified: true, added: missing.length };
 }
 
 export interface BlockIdMigrationResult {

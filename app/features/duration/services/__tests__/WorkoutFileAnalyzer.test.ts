@@ -11,6 +11,8 @@ type Settings = {
   repDuration?: number;
   defaultRepsPerSet?: number;
   setDuration?: number;
+  timerPresets?: Record<string, unknown>;
+  defaultTimerPreset?: string | null;
 };
 
 const makeFile = (path: string): TFile => {
@@ -174,6 +176,37 @@ describe("WorkoutFileAnalyzer", () => {
       const r = await analyze(md);
       expect(r.totalRestTime).toBe(180);
       expect(r.restPeriodCount).toBe(4);
+    });
+
+    it("should count a timer that uses a preset", async () => {
+      const md = "## A\n### 2 sets\n```workout-timer\npreset: rest\n```";
+      const r = await analyze(md, {
+        timerPresets: { rest: { name: "rest", type: "countdown", duration: 90, showControls: true, sound: true } },
+      });
+      expect(r.totalRestTime).toBe(180);
+    });
+
+    it("should count a timer without a duration at the duration it runs with", async () => {
+      const r = await analyze("## A\n```workout-timer\n```");
+      expect(r.totalRestTime).toBe(30);
+    });
+
+    it("should count every round of an interval timer", async () => {
+      const md = "## A\n```workout-timer\ntype: interval\nduration: 20\nrounds: 8\n```";
+      const r = await analyze(md);
+      expect(r.totalRestTime).toBe(160);
+    });
+
+    it("should not read reps out of a code block", async () => {
+      const md = "## A\n```workout-log\nid: ax5bc\nlimit: 3\n```";
+      const r = await analyze(md, { setDuration: 40 });
+      expect(r.totalSetTime).toBe(3 * 40);
+    });
+
+    it("should ignore blocks shown inside an example fence", async () => {
+      const md = "## A\n````markdown\n```workout-timer\nduration: 90\n```\n````\n```workout-log\n```";
+      const r = await analyze(md);
+      expect(r.totalRestTime).toBe(0);
     });
 
     it("should ignore timers without a positive duration", async () => {

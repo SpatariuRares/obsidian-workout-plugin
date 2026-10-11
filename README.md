@@ -217,6 +217,7 @@ duration: 90
 | `rounds`              | `1`         | Rounds (interval)                                                                         |
 | `sound`               | `true`      | Beep when time is up                                                                      |
 | `autoStart`           | `false`     | Start as soon as the note opens                                                           |
+| `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset                     |
 | `showControls`        | `true`      | Show start, pause and reset                                                               |
 | `preset`              | —           | Start from a saved preset; other parameters override it                                   |
 | `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout, handy for rest periods |

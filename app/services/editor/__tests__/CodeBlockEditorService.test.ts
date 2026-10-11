@@ -132,6 +132,26 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     ).toBe(false);
   });
 
+  it("edits the real block, not an example of it shown in a longer fence", async () => {
+    const example = note("````markdown", "```workout-log", "exercise: Squat", "```", "````");
+    const real = note("```workout-log", "exercise: Squat", "```");
+    const { app, state } = setup(note(example, real));
+
+    await CodeBlockEditorService.patchCodeBlock(app, tableBlock, { exercise: "Squat" }, { limit: 5 });
+
+    expect(state.content).toBe(
+      note(example, "```workout-log", "exercise: Squat", "limit: 5", "```"),
+    );
+  });
+
+  it("keeps Windows line endings", async () => {
+    const { app, state } = setup("```workout-log\r\nid: a1\r\n```\r\n");
+
+    await CodeBlockEditorService.patchCodeBlock(app, tableBlock, { id: "a1" }, { limit: 5 });
+
+    expect(state.content).toBe("```workout-log\r\nid: a1\r\nlimit: 5\r\n```\r\n");
+  });
+
   it("returns false when a block is never closed", async () => {
     const { app } = setup(note("```workout-log", "id: a1"));
 

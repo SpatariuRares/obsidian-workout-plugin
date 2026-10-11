@@ -25,4 +25,6 @@ export const timerBlock = defineCodeBlock("workout-timer", {
   sound: { kind: "boolean", default: true },
   /** Start as soon as the block renders (once per timer) */
   autoStart: { kind: "boolean", default: false },
+  /** Canvas export: this exercise is done back to back with the next one */
+  superset: { kind: "boolean" },
 });

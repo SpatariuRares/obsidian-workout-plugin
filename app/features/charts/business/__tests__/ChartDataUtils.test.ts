@@ -177,6 +177,22 @@ describe("ChartDataUtils", () => {
       );
     });
 
+    it("should show the heaviest set of the day for weight in WORKOUT display type", () => {
+      const date = getRecentDate(1);
+      const result = ChartDataUtils.processChartData(
+        [
+          createLogEntry(date, "Squat", 5, 100, 500),
+          createLogEntry(date, "Curl", 10, 20, 200),
+        ],
+        CHART_DATA_TYPE.WEIGHT,
+        30,
+        "DD/MM/YYYY",
+        CHART_TYPE.WORKOUT,
+      );
+
+      expect(result.datasets[0].data[0]).toBe(100);
+    });
+
     it("should calculate totals for COMBINED display type", () => {
       const result = ChartDataUtils.processChartData(
         logData,

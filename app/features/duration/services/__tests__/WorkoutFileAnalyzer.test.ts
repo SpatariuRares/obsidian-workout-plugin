@@ -262,6 +262,28 @@ describe("WorkoutFileAnalyzer", () => {
       expect(r.historicalDuration).toBe(1000);
     });
 
+    it("should date a session by its local training day", async () => {
+      // 00:10 and 00:50 in Rome on 16 Jan are still 15 Jan in UTC
+      const csv = [
+        HEADER,
+        row("2024-01-15T23:10:00.000Z", "Push Day", Date.parse("2024-01-15T23:10:00.000Z")),
+        row("2024-01-15T23:50:00.000Z", "Push Day", Date.parse("2024-01-15T23:50:00.000Z")),
+      ].join("\n");
+      const r = await analyze(md, {}, csv);
+      expect(r.lastSessionDate).toBe("2024-01-16");
+      expect(r.historicalDuration).toBe(2400);
+    });
+
+    it("should match the workout name ignoring case and spacing", async () => {
+      const csv = [
+        HEADER,
+        row("2024-01-01", "push  day", 1_000_000),
+        row("2024-01-01", "push  day", 1_900_000),
+      ].join("\n");
+      const r = await analyze(md, {}, csv);
+      expect(r.historicalDuration).toBe(900);
+    });
+
     it("should ignore rows from other workouts, bad timestamps and short rows", async () => {
       const csv = [
         HEADER,

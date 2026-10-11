@@ -4,7 +4,7 @@ import {
   ChartDataset,
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
-import { StatisticsUtils } from "@app/utils/StatisticsUtils";
+import { trendOf } from "@app/services/history/TrainingHistory";
 import {
   ChartColors,
   getChartLabels,
@@ -40,10 +40,9 @@ export class ChartRenderer {
    */
   static addTrendLineToDatasets(datasets: ChartDataset[]): void {
     const mainDataset = datasets[0];
-    if (mainDataset.data && mainDataset.data.length > 1) {
-      const { slope, intercept } = StatisticsUtils.calculateTrendLine(
-        mainDataset.data,
-      );
+    const trend = mainDataset.data ? trendOf(mainDataset.data) : undefined;
+    if (trend) {
+      const { slope, intercept } = trend;
       const trendData = mainDataset.data.map(
         (_: number, index: number) => slope * index + intercept,
       );

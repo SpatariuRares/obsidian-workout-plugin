@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
-import { DataAggregation } from "@app/utils/data/DataAggregation";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 
 export interface VolumeTrendData {
   labels: string[];
@@ -12,7 +12,7 @@ export function prepareVolumeTrendData(
   days: number,
 ): VolumeTrendData {
   const labels = DateUtils.getDateRangeForDays(days);
-  const dailyVolumes = DataAggregation.aggregateDailyVolumes(data);
+  const dailyVolumes = new TrainingHistory(data).volumeByDay();
   const volumeData = labels.map(
     (dateStr) => dailyVolumes.get(dateStr) || 0,
   );
@@ -23,5 +23,5 @@ export function prepareVolumeTrendData(
 export function calculateMuscleGroupVolume(
   data: WorkoutLogData[],
 ): [string, number][] {
-  return DataAggregation.getTopExercisesByVolume(data, 5);
+  return new TrainingHistory(data).topExercisesByVolume(5);
 }

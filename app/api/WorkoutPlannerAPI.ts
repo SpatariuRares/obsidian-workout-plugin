@@ -14,6 +14,11 @@ import { App, TFolder } from "obsidian";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import {
+  TrainingHistory,
+  trainingDay,
+  trendOf,
+} from "@app/services/history/TrainingHistory";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -287,23 +292,19 @@ export class WorkoutPlannerAPI {
     const averageWeight = totalSets > 0 ? totalWeight / totalSets : 0;
     const averageReps = totalSets > 0 ? totalReps / totalSets : 0;
 
-    // Find PR (max weight)
-    let prWeight = 0;
-    let prReps = 0;
-    let prDate: string | null = null;
-    for (const log of logs) {
-      if (log.weight > prWeight) {
-        prWeight = log.weight;
-        prReps = log.reps;
-        prDate = log.date.split("T")[0];
-      }
-    }
+    const pr = new TrainingHistory(logs).personalRecord(exercise);
+    const prWeight = pr?.weight ?? 0;
+    const prReps = pr?.reps ?? 0;
+    const prDate = pr?.day ?? null;
 
     // Get last workout date
-    const lastWorkoutDate = sortedLogs[0]?.date.split("T")[0] || null;
+    const lastWorkoutDate = sortedLogs[0]
+      ? trainingDay(sortedLogs[0].date)
+      : null;
 
-    // Calculate trend by comparing recent performance (last 30 days) vs older
-    const trend = this.calculateTrend(sortedLogs);
+    const trend =
+      trendOf(new TrainingHistory(logs).heaviestPerDay(exercise))
+        ?.direction ?? "stable";
 
     return {
       totalVolume,
@@ -317,58 +318,6 @@ export class WorkoutPlannerAPI {
       prReps,
       prDate,
     };
-  }
-
-  /**
-   * Calculate performance trend based on recent vs older logs.
-   * Compares average weight from the last 30 days to the previous period.
-   */
-  private calculateTrend(
-    sortedLogs: DataviewWorkoutLog[],
-  ): "up" | "down" | "stable" {
-    if (sortedLogs.length < 2) {
-      return "stable";
-    }
-
-    const now = new Date();
-    const thirtyDaysAgo = new Date(now);
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-    const recentLogs: DataviewWorkoutLog[] = [];
-    const olderLogs: DataviewWorkoutLog[] = [];
-
-    for (const log of sortedLogs) {
-      const logDate = new Date(log.date);
-      if (logDate >= thirtyDaysAgo) {
-        recentLogs.push(log);
-      } else {
-        olderLogs.push(log);
-      }
-    }
-
-    // Need data in both periods to calculate trend
-    if (recentLogs.length === 0 || olderLogs.length === 0) {
-      return "stable";
-    }
-
-    // Compare average weight between periods
-    const recentAvgWeight =
-      recentLogs.reduce((sum, l) => sum + l.weight, 0) /
-      recentLogs.length;
-    const olderAvgWeight =
-      olderLogs.reduce((sum, l) => sum + l.weight, 0) /
-      olderLogs.length;
-
-    // 5% threshold for trend detection
-    const percentChange =
-      ((recentAvgWeight - olderAvgWeight) / olderAvgWeight) * 100;
-
-    if (percentChange > 5) {
-      return "up";
-    } else if (percentChange < -5) {
-      return "down";
-    }
-    return "stable";
   }
 
   /**

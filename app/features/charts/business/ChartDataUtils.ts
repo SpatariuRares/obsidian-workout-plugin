@@ -72,6 +72,7 @@ export class ChartDataUtils {
       {
         volume: number;
         weight: number;
+        maxWeight: number;
         reps: number;
         duration: number;
         distance: number;
@@ -89,6 +90,7 @@ export class ChartDataUtils {
       const existing = dateGroups.get(dateKey) || {
         volume: 0,
         weight: 0,
+        maxWeight: 0,
         reps: 0,
         duration: 0,
         distance: 0,
@@ -100,6 +102,7 @@ export class ChartDataUtils {
       // Standard fields
       existing.volume += log.volume || 0;
       existing.weight += log.weight || 0;
+      existing.maxWeight = Math.max(existing.maxWeight, log.weight || 0);
       existing.reps += log.reps || 0;
 
       // Extract from customFields for dynamic exercise types
@@ -149,9 +152,9 @@ export class ChartDataUtils {
         displayType === CHART_TYPE.COMBINED ||
         displayType === CHART_TYPE.ALL
       ) {
-        // For workout/combined/all: show total values (sum)
+        // For workout/combined/all: totals, but weight is the heaviest set
         volumeData.push(values.volume);
-        weightData.push(values.weight);
+        weightData.push(values.maxWeight);
         repsData.push(values.reps);
         durationData.push(values.duration);
         distanceData.push(values.distance);

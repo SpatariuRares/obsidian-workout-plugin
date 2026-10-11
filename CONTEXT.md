@@ -173,20 +173,53 @@ Tags map to canonical muscle groups via the MuscleTagService (supports Italian/E
 
 ---
 
+## Training History
+
+How logged sets are read back as training. Every view (dashboard, charts, tables, public API, duration) uses these meanings.
+
+**Set**:
+One row of the workout log: one exercise performed once, with its reps/weight or other fields and the moment it was logged.
+_Avoid_: entry, log (for a single row)
+
+**Training day**:
+The calendar day, in the device's local time, on which a set was logged.
+_Avoid_: date (ambiguous with the stored UTC timestamp)
+
+**Session**:
+All sets with the same training day and the same workout name (case, spaces and stray quotes ignored). Sets with no workout name on a training day form one unnamed session of their own, distinct from any named workout.
+_Avoid_: workout (that is the name/note), day
+
+**Session duration**:
+Time from a session's first set to its last. Only plausible when the session has at least two sets and lasts between 5 minutes and 5 hours.
+_Avoid_: workout time
+
+**Personal record (PR)**:
+An exercise's heaviest weight ever lifted. A set "sets a new PR" when it is strictly heavier than every earlier set of that exercise. Exercise names are compared ignoring case and spacing. Of several sets at the PR weight, the one with most reps (then the earliest) is the PR. Exercises logged without weight have no PR.
+_Avoid_: best, max (as separate concepts)
+
+**Trend**:
+The direction of a series of training-day values (for weight: the heaviest set of each training day), read from its linear regression line: up, down or stable (within 5% of the mean). For pace, lower is better.
+_Avoid_: progress, variation (for the direction itself)
+
+**Streak**:
+Consecutive calendar weeks (Monday to Sunday) with at least one session. The current week only breaks the streak once it has ended without a session.
+
+---
+
 ## Data Flow
 
 ```
 User taps "Add Log" on workout-log table
   -> CreateLogModal opens (pre-filled with exercise name)
     -> User enters reps/weight, taps save
-      -> CSV append (DataService)
-        -> 5s cache invalidation
+      -> WorkoutLogFile rewrites the CSV, clears its 5s cache
+        -> log:added event
           -> Table re-renders with new entry
 ```
 
-**DataService**: All CSV operations. 5-second cache. Clears on writes.
+**WorkoutLogFile**: All workout log reads and writes. 5-second cache. Clears on writes.
 
-**DataFilter**: Multi-strategy matching - exact, fuzzy, filename, exercise field, muscle tag. Score-based ranking with confidence thresholds.
+**DataFilter**: Exercise matching on the exercise field - exact or fuzzy (score-based), plus `dateRange`.
 
 ---
 
@@ -281,7 +314,7 @@ const exercises = await WorkoutPlannerAPI.getExercises({
 main.ts (WorkoutChartsPlugin)
 ├── CommandHandlerService      # 16 commands
 ├── CodeBlockProcessorService  # 5 code block types
-├── DataService                # CSV read/write + 5s cache
+├── WorkoutLogFile             # Workout log CSV read/write + 5s cache
 ├── ExerciseDefinitionService  # Exercise types & parameters
 └── MuscleTagService           # Custom tag mappings
 

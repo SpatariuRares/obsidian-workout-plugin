@@ -7,6 +7,7 @@ import {
   TableSortOrder,
 } from "@app/features/tables/types";
 import { DateUtils } from "@app/utils/DateUtils";
+import { trainingDay } from "@app/services/history/TrainingHistory";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
@@ -100,7 +101,7 @@ export class TableRowProcessor {
 
       let dateKey = dateKeyCache.get(log.date);
       if (!dateKey) {
-        dateKey = DateUtils.toDateKey(log.date);
+        dateKey = trainingDay(log.date);
         dateKeyCache.set(log.date, dateKey);
       }
 

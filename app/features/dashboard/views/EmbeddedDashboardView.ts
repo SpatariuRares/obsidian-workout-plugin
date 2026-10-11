@@ -214,7 +214,9 @@ export class EmbeddedDashboardView extends BaseView {
       onFilterChange: onProtocolFilterChange,
     });
     ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
-    DurationComparison.render(gridEl, data, params);
+    DurationComparison.render(gridEl, data, params, {
+      setDuration: this.plugin.settings.setDuration,
+    });
     if (params.showQuickActions !== false) {
       QuickActions.render(gridEl, params, this.plugin);
     }

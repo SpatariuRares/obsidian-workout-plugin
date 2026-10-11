@@ -23,7 +23,6 @@ import { getElementScopedId } from "@app/utils/IdUtils";
 import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolver";
 import { BaseView } from "@app/features/common/views/BaseView";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 
@@ -137,10 +136,7 @@ export class EmbeddedChartView extends BaseView {
       );
 
       const volumeData = datasets.length > 0 ? datasets[0].data : [];
-      const { slope } =
-        StatisticsUtils.calculateTrendLine(volumeData);
       const trendIndicators = TrendCalculator.getTrendIndicators(
-        slope,
         volumeData,
         resolvedType,
       );

@@ -49,7 +49,9 @@ app/
 │   │   ├── WorkoutLogCodec.ts      # CSV text ⇄ entries (internal to WorkoutLogFile)
 │   │   ├── LogStorage.ts           # Seam: VaultLogStorage (prod), InMemoryLogStorage (tests)
 │   │   ├── DataFilter.ts
-│   │   └── TrendCalculator.ts
+│   │   └── TrendCalculator.ts      # Trend label/color/icon (direction from trendOf)
+│   ├── history/
+│   │   └── TrainingHistory.ts      # Training day, sessions, PRs, trend, streak, volume
 │   └── suggest/                # Autocomplete suggestions
 │       └── FolderSuggest.ts
 │
@@ -58,7 +60,6 @@ app/
 │
 ├── utils/                  # Utility functions (13 files)
 │   ├── ChartDataUtils.ts
-│   ├── DataAggregation.ts
 │   ├── DateUtils.ts
 │   ├── DomUtils.ts
 │   ├── ExerciseMatchUtils.ts
@@ -66,7 +67,6 @@ app/
 │   ├── FormatUtils.ts
 │   ├── FrontmatterParser.ts
 │   ├── ParameterUtils.ts
-│   ├── StatisticsUtils.ts
 │   ├── StringUtils.ts
 │
 └── views/                  # Embedded views

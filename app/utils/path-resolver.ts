@@ -2,6 +2,25 @@
  * Path resolution utilities for workout files.
  */
 import { normalizePath } from "obsidian";
+import type { MetadataCache } from "obsidian";
+
+/**
+ * Finds the workout note a `workout:` parameter points to, the way Obsidian
+ * resolves a link: a path from the vault root, a path relative to the note,
+ * or just the note's name. When nothing matches, returns the path relative
+ * to the current note, so the "file not found" message names it.
+ */
+export function resolveWorkoutPath(
+  workout: string,
+  currentFilePath: string,
+  links: Pick<MetadataCache, "getFirstLinkpathDest">,
+): string {
+  const linkpath = normalizePath(workout.trim())
+    .replace(/^\/+/, "")
+    .replace(/\.md$/i, "");
+  const file = links.getFirstLinkpathDest(linkpath, currentFilePath);
+  return file ? file.path : resolveFilePath(workout, currentFilePath);
+}
 
 /**
  * Resolves a relative or absolute file path.

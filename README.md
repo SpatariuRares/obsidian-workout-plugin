@@ -235,7 +235,7 @@ workout: Workouts/Push Day.md
 
 | Parameter | Default   | What it does                         |
 | --------- | --------- | ------------------------------------ |
-| `workout` | this note | Path of the workout note to estimate |
+| `workout` | this note | Workout note to estimate: its path in the vault, a path relative to this note, or just its name |
 
 Seconds per rep and per set come from [Settings → Training parameters](#settings).
 

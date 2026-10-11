@@ -1,6 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { DateUtils } from "@app/utils/DateUtils";
-import { DataAggregation } from "@app/utils/data/DataAggregation";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 
 export interface PeriodStats {
   workouts: number;
@@ -14,11 +14,9 @@ export function calculatePeriodStats(
 ): PeriodStats {
   const periodData = DateUtils.filterByDaysAgo(data, days);
 
-  const uniqueWorkouts =
-    DataAggregation.countUniqueWorkouts(periodData);
-
-  const totalVolume =
-    DataAggregation.calculateTotalVolume(periodData);
+  const period = new TrainingHistory(periodData);
+  const uniqueWorkouts = period.sessions().length;
+  const totalVolume = period.totalVolume();
   const avgVolume =
     uniqueWorkouts > 0 ? totalVolume / uniqueWorkouts : 0;
 

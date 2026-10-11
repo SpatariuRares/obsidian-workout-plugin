@@ -1,7 +1,6 @@
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { DateUtils } from "@app/utils/DateUtils";
-import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
@@ -518,52 +517,6 @@ describe("Utility Classes", () => {
           "INVALID" as "DD/MM/YYYY",
         ),
       ).toBe("15/01/2024");
-    });
-  });
-
-  describe("StatisticsUtils.calculateTrendLine", () => {
-    it("should calculate trend line for increasing data", () => {
-      const data = [1, 2, 3, 4, 5];
-      const result = StatisticsUtils.calculateTrendLine(data);
-      expect(result.slope).toBeCloseTo(1, 1);
-      expect(result.intercept).toBeCloseTo(1, 1);
-    });
-
-    it("should calculate trend line for decreasing data", () => {
-      const data = [5, 4, 3, 2, 1];
-      const result = StatisticsUtils.calculateTrendLine(data);
-      expect(result.slope).toBeCloseTo(-1, 1);
-    });
-
-    it("should return zero slope for flat data", () => {
-      const data = [5, 5, 5, 5, 5];
-      const result = StatisticsUtils.calculateTrendLine(data);
-      expect(result.slope).toBeCloseTo(0, 1);
-      expect(result.intercept).toBeCloseTo(5, 1);
-    });
-
-    it("should return zero for data with less than 2 points", () => {
-      const result = StatisticsUtils.calculateTrendLine([1]);
-      expect(result.slope).toBe(0);
-      expect(result.intercept).toBe(0);
-    });
-
-    it("should return zero for empty array", () => {
-      const result = StatisticsUtils.calculateTrendLine([]);
-      expect(result.slope).toBe(0);
-      expect(result.intercept).toBe(0);
-    });
-
-    it("should calculate trend for real workout data", () => {
-      const data = [1000, 1100, 1050, 1200, 1250];
-      const result = StatisticsUtils.calculateTrendLine(data);
-      expect(result.slope).toBeGreaterThan(0); // Positive trend
-    });
-
-    it("should handle negative values", () => {
-      const data = [-5, -3, -1, 1, 3];
-      const result = StatisticsUtils.calculateTrendLine(data);
-      expect(result.slope).toBeCloseTo(2, 1);
     });
   });
 });

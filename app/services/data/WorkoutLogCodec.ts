@@ -2,12 +2,11 @@
 // the example data generator, which writes a fresh file) should need this.
 import type { TFile } from "obsidian";
 import {
-  WorkoutProtocol,
   type CSVWorkoutLogEntry,
   type LogEntryInput,
   type WorkoutLogData,
 } from "@app/types/WorkoutLogData";
-import { StringUtils } from "@app/utils/StringUtils";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import {
   parseCsv,
   protectFormula,
@@ -67,7 +66,7 @@ export interface ParsedLog {
  *   except `weightUnit`, which is read by name
  * - Rows with NaN reps/weight/volume, negative weight, no exercise, or
  *   reps <= 0 without a positive custom value are skipped
- * - Unknown or missing protocol reads as standard
+ * - A missing protocol reads as standard; custom ids are kept
  */
 export function parseLog(content: string): ParsedLog {
   let rows: string[][];
@@ -130,12 +129,8 @@ function parseRow(
   const exercise = values[1]?.trim() || "";
   if (!exercise) return null;
 
-  const protocolValue = StringUtils.normalize(values[9]);
-  const protocol = Object.values(WorkoutProtocol).includes(
-    protocolValue as WorkoutProtocol,
-  )
-    ? (protocolValue as WorkoutProtocol)
-    : WorkoutProtocol.STANDARD;
+  // Custom protocol ids are kept, so they survive every rewrite
+  const protocol = protocolId(values[9]);
 
   const customFields: Record<string, string | number | boolean> = {};
   for (const { name, index } of customFieldColumns) {
@@ -228,7 +223,7 @@ function entryToCSVLine(
     entry.workout || "",
     entry.timestamp.toString(),
     entry.notes || "",
-    entry.protocol || WorkoutProtocol.STANDARD,
+    protocolId(entry.protocol),
   ];
   for (const column of customColumns) {
     const value =

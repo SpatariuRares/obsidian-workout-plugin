@@ -1,9 +1,5 @@
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
-import {
-  WorkoutLogData,
-  WorkoutProtocol,
-  CustomProtocolConfig,
-} from "@app/types/WorkoutLogData";
+import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   EmbeddedDashboardParams,
   ProtocolFilterCallback,
@@ -16,39 +12,10 @@ import { Canvas } from "@app/components/atoms";
 import { FilterIndicator } from "@app/components/molecules";
 import { ChartLegendItem } from "@app/features/charts/ui";
 import { t } from "@app/i18n";
-
-/**
- * Protocol display configuration for badges and chart colors
- */
-const PROTOCOL_CONFIG: Record<
-  string,
-  { label: string; color: string }
-> = {
-  [WorkoutProtocol.STANDARD]: {
-    label: "Standard",
-    color: "rgba(128, 128, 128, 0.7)",
-  },
-  [WorkoutProtocol.DROP_SET]: {
-    label: "Drop Set",
-    color: "rgba(239, 68, 68, 0.7)",
-  },
-  [WorkoutProtocol.MYO_REPS]: {
-    label: "Myo Reps",
-    color: "rgba(168, 85, 247, 0.7)",
-  },
-  [WorkoutProtocol.REST_PAUSE]: {
-    label: "Rest Pause",
-    color: "rgba(249, 115, 22, 0.7)",
-  },
-  [WorkoutProtocol.SUPERSET]: {
-    label: "Superset",
-    color: "rgba(59, 130, 246, 0.7)",
-  },
-  [WorkoutProtocol.TWENTYONE]: {
-    label: "21s",
-    color: "rgba(34, 197, 94, 0.7)",
-  },
-};
+import {
+  ProtocolCatalog,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Protocol distribution data structure
@@ -180,69 +147,29 @@ export class ProtocolDistribution {
     data: WorkoutLogData[],
     plugin?: SettingsPort,
   ): ProtocolStats[] {
-    // Count occurrences of each protocol
+    const catalog = new ProtocolCatalog(plugin?.settings?.customProtocols);
     const protocolCounts = new Map<string, number>();
-
-    data.forEach((entry) => {
-      const protocol = entry.protocol || WorkoutProtocol.STANDARD;
-      protocolCounts.set(
-        protocol,
-        (protocolCounts.get(protocol) || 0) + 1,
-      );
-    });
+    for (const entry of data) {
+      const id = protocolId(entry.protocol);
+      protocolCounts.set(id, (protocolCounts.get(id) || 0) + 1);
+    }
 
     const totalSets = data.length;
-    const stats: ProtocolStats[] = [];
-
-    // Process built-in protocols
-    Object.entries(PROTOCOL_CONFIG).forEach(([protocol, config]) => {
-      const count = protocolCounts.get(protocol) || 0;
-      if (count > 0) {
-        stats.push({
+    const stats: ProtocolStats[] = [...protocolCounts].map(
+      ([protocol, count]) => {
+        const info = catalog.resolve(protocol);
+        return {
           protocol,
-          label: config.label,
+          label: info.name,
           count,
           percentage: totalSets > 0 ? (count / totalSets) * 100 : 0,
-          color: config.color,
-        });
-      }
-    });
-
-    // Process custom protocols
-    if (plugin?.settings?.customProtocols) {
-      plugin.settings.customProtocols.forEach(
-        (customProtocol: CustomProtocolConfig) => {
-          const count = protocolCounts.get(customProtocol.id) || 0;
-          if (count > 0) {
-            stats.push({
-              protocol: customProtocol.id,
-              label: customProtocol.name,
-              count,
-              percentage:
-                totalSets > 0 ? (count / totalSets) * 100 : 0,
-              color: this.hexToRgba(customProtocol.color, 0.7),
-            });
-          }
-        },
-      );
-    }
+          color: info.color,
+        };
+      },
+    );
 
     // Sort by count descending
     return stats.sort((a, b) => b.count - a.count);
-  }
-
-  /**
-   * Converts hex color to rgba
-   * @param hex - Hex color string
-   * @param alpha - Alpha value (0-1)
-   * @returns RGBA color string
-   */
-  private static hexToRgba(hex: string, alpha: number): string {
-    const cleanHex = hex.replace("#", "");
-    const r = parseInt(cleanHex.substring(0, 2), 16);
-    const g = parseInt(cleanHex.substring(2, 4), 16);
-    const b = parseInt(cleanHex.substring(4, 6), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
   /**

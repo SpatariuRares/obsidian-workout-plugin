@@ -20,6 +20,12 @@ export enum WorkoutProtocol {
 }
 
 /**
+ * A protocol id as logged: a built-in WorkoutProtocol or the id of a custom
+ * protocol from the settings. Resolve names and colors with ProtocolCatalog.
+ */
+export type ProtocolId = WorkoutProtocol | (string & {});
+
+/**
  * Configuration for a custom workout protocol.
  * Allows users to define their own training techniques beyond built-in protocols.
  */
@@ -48,7 +54,7 @@ export interface WorkoutLogData {
   workout?: string;
   notes?: string;
   timestamp?: number;
-  protocol?: WorkoutProtocol;
+  protocol?: ProtocolId;
   /** Custom fields for dynamic exercise type parameters */
   customFields?: Record<string, string | number | boolean>;
   /**
@@ -72,7 +78,7 @@ export interface CSVWorkoutLogEntry {
   workout?: string;
   notes?: string;
   timestamp: number; // For sorting and unique identification
-  protocol?: WorkoutProtocol;
+  protocol?: ProtocolId;
   /** Custom fields for dynamic exercise type parameters */
   customFields?: Record<string, string | number | boolean>;
   /** Unit of `weight`/`volume` in this row; undefined for legacy rows (settings unit) */

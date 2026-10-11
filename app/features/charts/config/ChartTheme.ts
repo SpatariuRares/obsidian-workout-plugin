@@ -4,6 +4,7 @@
  */
 
 import { CHART_DATA_TYPE } from "@app/features/charts/types";
+import { hexToRgba } from "@app/utils/ColorUtils";
 
 /**
  * Represents a complete color scheme for a chart element
@@ -71,24 +72,6 @@ export class ChartColors {
   }
 
   /**
-   * Converts a hex color to rgba with specified opacity
-   * @param hex - Hex color code (e.g., "#6366F1")
-   * @param opacity - Opacity value between 0 and 1
-   * @returns RGBA color string
-   */
-  private static hexToRgba(hex: string, opacity: number): string {
-    // Remove # if present
-    hex = hex.replace(/^#/, "");
-
-    // Parse hex values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-  }
-
-  /**
    * Creates a color scheme with main, light, dark, point, and border colors
    * @param mainVar - CSS variable for main color
    * @param mainFallback - Fallback for main color
@@ -113,7 +96,7 @@ export class ChartColors {
 
     return {
       main,
-      light: this.hexToRgba(main, lightOpacity),
+      light: hexToRgba(main, lightOpacity),
       dark,
       point,
       pointBorder: dark,
@@ -151,7 +134,7 @@ export class ChartColors {
         "text-error-hover",
         this.FALLBACK_COLORS.errorHover,
       ),
-      grid: this.hexToRgba(
+      grid: hexToRgba(
         this.getCSSVar(
           "background-modifier-border",
           this.FALLBACK_COLORS.border,
@@ -164,7 +147,7 @@ export class ChartColors {
         this.FALLBACK_COLORS.backgroundPrimary,
       ),
       tooltip: {
-        background: this.hexToRgba(
+        background: hexToRgba(
           this.getCSSVar(
             "background-secondary",
             this.FALLBACK_COLORS.backgroundSecondary,

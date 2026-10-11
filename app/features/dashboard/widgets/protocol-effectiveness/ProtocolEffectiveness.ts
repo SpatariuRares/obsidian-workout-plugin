@@ -1,13 +1,13 @@
-import {
-  WorkoutLogData,
-  WorkoutProtocol,
-  CustomProtocolConfig,
-} from "@app/types/WorkoutLogData";
+import type { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { ProtocolBadge } from "@app/components/atoms";
 import type { SettingsPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import {
+  ProtocolCatalog,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Minimum number of entries required to show statistics for a protocol.
@@ -26,39 +26,6 @@ interface ProtocolEffectivenessStats {
   avgVolumeChange: number; // Percentage change in volume
   progressionRate: number; // Percentage of sets with increased weight over time
 }
-
-/**
- * Protocol display configuration matching ProtocolDistribution
- */
-const PROTOCOL_CONFIG: Record<
-  string,
-  { label: string; color: string }
-> = {
-  [WorkoutProtocol.STANDARD]: {
-    label: "Standard",
-    color: "rgba(128, 128, 128, 0.7)",
-  },
-  [WorkoutProtocol.DROP_SET]: {
-    label: "Drop Set",
-    color: "rgba(239, 68, 68, 0.7)",
-  },
-  [WorkoutProtocol.MYO_REPS]: {
-    label: "Myo Reps",
-    color: "rgba(168, 85, 247, 0.7)",
-  },
-  [WorkoutProtocol.REST_PAUSE]: {
-    label: "Rest Pause",
-    color: "rgba(249, 115, 22, 0.7)",
-  },
-  [WorkoutProtocol.SUPERSET]: {
-    label: "Superset",
-    color: "rgba(59, 130, 246, 0.7)",
-  },
-  [WorkoutProtocol.TWENTYONE]: {
-    label: "21s",
-    color: "rgba(34, 197, 94, 0.7)",
-  },
-};
 
 /**
  * Widget for displaying protocol effectiveness analysis in the dashboard.
@@ -116,11 +83,13 @@ export class ProtocolEffectiveness {
     data: WorkoutLogData[],
     plugin?: SettingsPort,
   ): ProtocolEffectivenessStats[] {
+    const catalog = new ProtocolCatalog(plugin?.settings?.customProtocols);
+
     // Group entries by protocol
     const protocolGroups = new Map<string, WorkoutLogData[]>();
 
     data.forEach((entry) => {
-      const protocol = entry.protocol || WorkoutProtocol.STANDARD;
+      const protocol = protocolId(entry.protocol);
       const group = protocolGroups.get(protocol) || [];
       group.push(entry);
       protocolGroups.set(protocol, group);
@@ -135,11 +104,7 @@ export class ProtocolEffectiveness {
         return;
       }
 
-      // Get protocol display config
-      const config = this.getProtocolConfig(protocol, plugin);
-      if (!config) {
-        return;
-      }
+      const info = catalog.resolve(protocol);
 
       // Calculate average volume change and progression rate
       const { avgVolumeChange, progressionRate } =
@@ -147,8 +112,8 @@ export class ProtocolEffectiveness {
 
       stats.push({
         protocol,
-        label: config.label,
-        color: config.color,
+        label: info.name,
+        color: info.color,
         entryCount: entries.length,
         avgVolumeChange,
         progressionRate,
@@ -159,51 +124,6 @@ export class ProtocolEffectiveness {
     return stats.sort(
       (a, b) => b.progressionRate - a.progressionRate,
     );
-  }
-
-  /**
-   * Gets protocol display configuration
-   * @param protocol - Protocol identifier
-   * @param plugin - Plugin instance for custom protocols
-   * @returns Protocol config or null if not found
-   */
-  private static getProtocolConfig(
-    protocol: string,
-    plugin?: SettingsPort,
-  ): { label: string; color: string } | null {
-    // Check built-in protocols
-    if (PROTOCOL_CONFIG[protocol]) {
-      return PROTOCOL_CONFIG[protocol];
-    }
-
-    // Check custom protocols
-    if (plugin?.settings?.customProtocols) {
-      const customProtocol = plugin.settings.customProtocols.find(
-        (p: CustomProtocolConfig) => p.id === protocol,
-      );
-      if (customProtocol) {
-        return {
-          label: customProtocol.name,
-          color: this.hexToRgba(customProtocol.color, 0.7),
-        };
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * Converts hex color to rgba
-   * @param hex - Hex color string
-   * @param alpha - Alpha value (0-1)
-   * @returns RGBA color string
-   */
-  private static hexToRgba(hex: string, alpha: number): string {
-    const cleanHex = hex.replace("#", "");
-    const r = parseInt(cleanHex.substring(0, 2), 16);
-    const g = parseInt(cleanHex.substring(2, 4), 16);
-    const b = parseInt(cleanHex.substring(4, 6), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
   /**

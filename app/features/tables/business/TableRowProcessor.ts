@@ -1,6 +1,5 @@
 import {
   WorkoutLogData,
-  WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import {
   TableRow,
@@ -11,6 +10,7 @@ import { DateUtils } from "@app/utils/DateUtils";
 import { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 import { t } from "@app/i18n";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Processes workout log data into table rows.
@@ -122,7 +122,7 @@ export class TableRowProcessor {
           log.customFields?.heartRate,
         ),
         notes: log.notes || "",
-        protocol: log.protocol || WorkoutProtocol.STANDARD,
+        protocol: protocolId(log.protocol),
         actions: "", // Placeholder for actions
       };
 

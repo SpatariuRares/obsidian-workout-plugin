@@ -1,4 +1,4 @@
-import { WorkoutProtocol } from "@app/types/WorkoutLogData";
+import type { ProtocolId } from "@app/types/WorkoutLogData";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 export interface ExerciseAutocompleteElements {
@@ -15,7 +15,7 @@ export interface LogFormData {
   workout: string;
   notes: string;
   date?: string;
-  protocol?: WorkoutProtocol;
+  protocol?: ProtocolId;
   customFields?: Record<string, string | number | boolean>;
 }
 

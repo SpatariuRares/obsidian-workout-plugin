@@ -1,4 +1,5 @@
 /** @jest-environment jsdom */
+import { t } from "@app/i18n";
 
 import { ProtocolDistribution } from "@app/features/dashboard/widgets/protocol-distribution/ProtocolDistribution";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
@@ -98,7 +99,7 @@ describe("ProtocolDistribution", () => {
       ...container.querySelectorAll(".workout-protocol-legend-item"),
     ] as HTMLElement[];
     const standardItem = items.find((el) =>
-      el.textContent?.includes("Standard"),
+      el.textContent?.includes(t("modal.selectOptions.standard")),
     );
     standardItem?.click();
 

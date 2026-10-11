@@ -5,13 +5,13 @@ import {
 } from "@app/utils/exercise/ExerciseMatchUtils";
 import {
   WorkoutLogData,
-  WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import { CHART_TYPE } from "@app/types/WorkoutConfigTypes";
 import { FilterResult } from "@app/types/CommonTypes";
 import { StringUtils } from "@app/utils/StringUtils";
 import { DateUtils } from "@app/utils/DateUtils";
 import { t } from "@app/i18n";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Common filter parameters used by DataFilter.
@@ -228,10 +228,7 @@ export class DataFilter {
 
     // Filter data by matching protocol (OR logic within protocols array)
     const filteredData = logData.filter((log) => {
-      const logProtocol = (
-        log.protocol || WorkoutProtocol.STANDARD
-      ).toLowerCase();
-      return protocols.includes(logProtocol);
+      return protocols.includes(protocolId(log.protocol));
     });
 
     const protocolDisplay = protocols.join(", ");

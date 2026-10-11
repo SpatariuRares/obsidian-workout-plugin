@@ -1,6 +1,5 @@
 import {
   WorkoutLogData,
-  WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseView } from "@app/features/common/views/BaseView";
@@ -24,6 +23,7 @@ import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -147,11 +147,8 @@ export class EmbeddedDashboardView extends BaseView {
     data: WorkoutLogData[],
     protocol: string,
   ): WorkoutLogData[] {
-    return data.filter((entry) => {
-      const entryProtocol =
-        entry.protocol || WorkoutProtocol.STANDARD;
-      return entryProtocol.toLowerCase() === protocol.toLowerCase();
-    });
+    const wanted = protocolId(protocol);
+    return data.filter((entry) => protocolId(entry.protocol) === wanted);
   }
 
   /**

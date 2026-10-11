@@ -3,6 +3,7 @@ import {
   WorkoutProtocol,
   CustomProtocolConfig,
 } from "@app/types/WorkoutLogData";
+import { t } from "@app/i18n";
 
 describe("ProtocolResolver", () => {
   describe("built-in protocols", () => {
@@ -22,7 +23,7 @@ describe("ProtocolResolver", () => {
       expect(config!.className).toContain(
         "workout-protocol-badge-drop",
       );
-      expect(config!.tooltip).toBe("drop set");
+      expect(config!.tooltip).toBe(t("modal.selectOptions.dropSet"));
     });
 
     it("resolves myo_reps protocol", () => {
@@ -80,11 +81,11 @@ describe("ProtocolResolver", () => {
       expect(config!.className).toContain("workout-protocol-badge");
     });
 
-    it("formats tooltip by replacing underscores with spaces", () => {
+    it("uses the translated protocol name as tooltip", () => {
       const config = ProtocolResolver.resolve(
         WorkoutProtocol.REST_PAUSE,
       );
-      expect(config!.tooltip).toBe("rest pause");
+      expect(config!.tooltip).toBe(t("modal.selectOptions.restPause"));
     });
   });
 
@@ -129,14 +130,13 @@ describe("ProtocolResolver", () => {
       expect(config!.label).toBe("AM");
     });
 
-    it("returns null for unknown protocol with no custom protocols", () => {
-      expect(ProtocolResolver.resolve("unknown")).toBeNull();
-    });
-
-    it("returns null for unknown protocol not in custom list", () => {
-      expect(
-        ProtocolResolver.resolve("unknown", customProtocols),
-      ).toBeNull();
+    it("still shows a protocol whose custom definition was deleted, by its id", () => {
+      expect(ProtocolResolver.resolve("tempo", customProtocols)).toEqual({
+        label: "TEM",
+        className: "workout-protocol-badge workout-protocol-badge-custom",
+        tooltip: "tempo",
+        color: undefined,
+      });
     });
 
     it("built-in protocols take priority over custom", () => {

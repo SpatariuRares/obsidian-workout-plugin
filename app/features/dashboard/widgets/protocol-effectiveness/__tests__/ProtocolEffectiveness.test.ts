@@ -88,14 +88,9 @@ describe("ProtocolEffectiveness", () => {
       ).not.toBeNull();
     });
 
-    it("should skip protocols that are neither built-in nor custom", () => {
+    it("still shows a protocol whose custom definition was deleted, by its id", () => {
       const data = series("Squat", [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], "mystery");
-      expect(
-        render(data).querySelector(".workout-protocol-effectiveness-no-data"),
-      ).not.toBeNull();
-      expect(
-        render(data, pluginWith([])).querySelector("table"),
-      ).toBeNull();
+      expect(render(data, pluginWith([])).textContent).toContain("mystery");
     });
   });
 

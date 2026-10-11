@@ -2,6 +2,7 @@ import {
   WorkoutLogData,
   WorkoutProtocol,
 } from "@app/types/WorkoutLogData";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Utility functions to check for presence of specific data fields in workout logs.
@@ -15,10 +16,7 @@ export class TableDataCheckers {
    */
   static hasNonStandardProtocol(logData: WorkoutLogData[]): boolean {
     return logData.some(
-      (log) =>
-        log.protocol &&
-        log.protocol !== WorkoutProtocol.STANDARD &&
-        log.protocol.trim() !== "",
+      (log) => protocolId(log.protocol) !== (WorkoutProtocol.STANDARD as string),
     );
   }
 

@@ -6,15 +6,14 @@
  */
 import {
   WorkoutLogData,
-  WorkoutProtocol,
   WorkoutChartsSettings,
 } from "@app/types/WorkoutLogData";
 import type { WorkoutDataPort } from "@app/types/PluginPorts";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { App, TFolder } from "obsidian";
-import { StringUtils } from "@app/utils/StringUtils";
 import { FrontmatterParser } from "@app/utils/frontmatter/FrontmatterParser";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Filter options for getWorkoutLogs API
@@ -174,7 +173,7 @@ export class WorkoutPlannerAPI {
       workout: log.workout || log.origine || "",
       notes: log.notes || "",
       timestamp: log.timestamp || 0,
-      protocol: log.protocol || WorkoutProtocol.STANDARD,
+      protocol: protocolId(log.protocol),
       enteredWeight: log.enteredWeight,
       enteredUnit: log.enteredUnit,
     }));
@@ -223,13 +222,8 @@ export class WorkoutPlannerAPI {
     logs: DataviewWorkoutLog[],
     protocol: string,
   ): DataviewWorkoutLog[] {
-    const normalizedProtocol = StringUtils.normalize(protocol);
-    return logs.filter((log) => {
-      const logProtocol = (
-        log.protocol || WorkoutProtocol.STANDARD
-      ).toLowerCase();
-      return logProtocol === normalizedProtocol;
-    });
+    const wanted = protocolId(protocol);
+    return logs.filter((log) => protocolId(log.protocol) === wanted);
   }
 
   /**

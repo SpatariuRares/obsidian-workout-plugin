@@ -15,7 +15,7 @@ import {
 import { Chip } from "@app/components/atoms";
 import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
 import { t } from "@app/i18n";
-import { CONSTANTS } from "@app/constants";
+import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
 
 export class LogFormRenderer {
   constructor(
@@ -92,16 +92,11 @@ export class LogFormRenderer {
       );
 
     // Protocol dropdown
-    const builtInProtocols = [
-      ...CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.PROTOCOL,
-    ];
-    const customProtocols = this.plugin.settings.customProtocols.map(
-      (p) => ({
-        text: p.name,
-        value: p.id,
-      }),
-    );
-    const allProtocols = [...builtInProtocols, ...customProtocols];
+    const allProtocols = new ProtocolCatalog(
+      this.plugin.settings.customProtocols,
+    )
+      .all()
+      .map((p) => ({ text: p.name, value: p.id }));
 
     const protocolSelect = modal.createSelectField(
       formContainer,

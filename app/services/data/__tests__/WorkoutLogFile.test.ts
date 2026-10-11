@@ -117,17 +117,34 @@ describe("WorkoutLogFile", () => {
       ]);
     });
 
-    it("types custom values and reads unknown protocols as standard", async () => {
+    it("keeps custom protocols through a rewrite, and reads an empty one as standard", async () => {
+      const { logFile, storage } = setup(
+        csv(
+          HEADER,
+          "2026-01-01,Squat,5,100,500,,,1,,Cluster",
+          "2026-01-02,Squat,5,100,500,,,2,,",
+        ),
+      );
+
+      expect((await logFile.read()).map((log) => log.protocol)).toEqual([
+        "cluster",
+        WorkoutProtocol.STANDARD,
+      ]);
+
+      await logFile.add(squat);
+      expect(lines(storage)[1]).toBe("2026-01-01,Squat,5,100,500,,,1,,cluster,");
+    });
+
+    it("types custom values", async () => {
       const { logFile } = setup(
         csv(
           `${HEADER},duration,assisted,band`,
-          "2026-01-01,Pull up,5,0,0,,,1,,mystery,30,true,red",
+          "2026-01-01,Pull up,5,0,0,,,1,,standard,30,true,red",
         ),
       );
 
       const [log] = await logFile.read();
 
-      expect(log.protocol).toBe(WorkoutProtocol.STANDARD);
       expect(log.customFields).toEqual({
         duration: 30,
         assisted: true,

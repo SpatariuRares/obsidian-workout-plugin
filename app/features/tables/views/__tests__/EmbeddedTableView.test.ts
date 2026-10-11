@@ -56,11 +56,7 @@ jest.mock("@app/features/common/views/BaseView", () => ({
 }));
 
 // Mock tables modules
-jest.mock("@app/features/tables/business/TableRefresh", () => ({
-  TableRefresh: {
-    refreshTable: jest.fn().mockResolvedValue(undefined),
-  },
-}));
+
 jest.mock("@app/features/tables/components/TableRenderer", () => ({
   TableRenderer: {
     createTableContainer: jest.fn((parent: HTMLElement) => {
@@ -156,7 +152,6 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { TableRefresh } from "@app/features/tables/business/TableRefresh";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
 import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
@@ -458,19 +453,22 @@ describe("EmbeddedTableView", () => {
   });
 
   describe("refreshTable", () => {
-    it("delegates to TableRefresh.refreshTable", async () => {
+    it("reloads the log and renders the table again", async () => {
       const container = document.createElement("div");
-      const params = { exercise: "Bench" };
 
-      await view.refreshTable(container, params);
+      await view.refreshTable(container, { exercise: "Bench" });
 
-      expect(TableRefresh.refreshTable).toHaveBeenCalledWith(
-        plugin,
-        container,
-        params,
-        expect.any(Function),
-        expect.any(Object),
-      );
+      expect(plugin.getWorkoutLogData).toHaveBeenCalled();
+      expect(LogCallouts.renderAddLogButton).toHaveBeenCalled();
+    });
+
+    it("shows the error in the table when the log can't be read", async () => {
+      const container = document.createElement("div");
+      plugin.getWorkoutLogData.mockRejectedValueOnce(new Error("disk gone"));
+
+      await view.refreshTable(container, {});
+
+      expect(container.textContent).toContain("disk gone");
     });
   });
 
@@ -631,9 +629,6 @@ describe("EmbeddedTableView", () => {
       const container = document.createElement("div");
 
       await view.refreshTable(container, {}, "[[Leg Day]]");
-      const renderCallback = (TableRefresh.refreshTable as jest.Mock)
-        .mock.calls[0][3];
-      await renderCallback(container, [createLog()], {});
 
       const call = (LogCallouts.renderAddLogButton as jest.Mock).mock
         .calls[0];

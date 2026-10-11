@@ -4,10 +4,8 @@ import {
   CHART_DATA_TYPE,
   EmbeddedChartParams,
 } from "@app/features/charts/types";
-import {
-  getChartLabels,
-  ChartConfigBuilder,
-} from "@app/features/charts/config";
+import { getChartLabels } from "@app/features/charts/config/ChartConstants";
+import { ChartConfigBuilder } from "@app/features/charts/config/ChartConfigBuilder";
 
 // Mock DOM createElement
 const createMockElement = (id?: string): HTMLElement => {
@@ -51,7 +49,8 @@ jest.mock("@app/features/charts/components/ChartContainer", () => ({
 }));
 
 // Mock ChartColors and related modules to avoid getComputedStyle dependency
-jest.mock("@app/features/charts/config", () => ({
+jest.mock("@app/features/charts/config/ChartTheme", () => ({
+  ...jest.requireActual("@app/features/charts/config/ChartTheme"),
   ChartColors: {
     getChartColors: jest.fn(() => ({
       backgroundColor: "rgba(0, 0, 0, 0.1)",
@@ -68,11 +67,16 @@ jest.mock("@app/features/charts/config", () => ({
       secondary: "rgba(100, 150, 200, 0.5)",
     })),
   },
+}));
+jest.mock("@app/features/charts/config/ChartConstants", () => ({
+  ...jest.requireActual("@app/features/charts/config/ChartConstants"),
   getChartLabels: jest.fn(() => ({
     TREND_LINE: "Trend Line",
     X_AXIS: "Date",
   })),
   getDefaultChartTitle: jest.fn(() => "Test Chart"),
+}));
+jest.mock("@app/features/charts/config/ChartConfigBuilder", () => ({
   ChartConfigBuilder: {
     createChartConfig: jest.fn(
       (labels, datasets, title, colors, chartType) => ({

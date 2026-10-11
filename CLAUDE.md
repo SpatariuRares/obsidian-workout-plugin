@@ -548,7 +548,7 @@ npm test -- path/to/file.test.ts  # Single file
 
 **Rationale**: Barrel files add indirection and can cause circular dependency issues. Only use where they provide genuine organizational value (component APIs, constants re-exports).
 
-Feature folders have no top-level barrel. ESLint (`no-restricted-imports`) rejects `from "@app/features/<feature>"`; import the file instead (e.g. `@app/features/timer/views/EmbeddedTimerView`). Code under `app/` depends on the ports in `app/types/PluginPorts.ts`, never on `main.ts`.
+Feature folders have no barrels at any depth (`app/__tests__/structure.test.ts` fails on an `index.ts` under `app/features/`). Import the file instead (e.g. `@app/features/timer/views/EmbeddedTimerView`). Code under `app/` depends on the ports in `app/types/PluginPorts.ts`, never on `main.ts`.
 
 ## Obsidian Plugin Best Practices
 

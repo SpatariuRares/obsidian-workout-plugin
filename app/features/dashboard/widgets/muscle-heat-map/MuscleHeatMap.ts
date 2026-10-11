@@ -4,11 +4,9 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import {
   Body,
   VIEW_TYPE,
-} from "@app/features/dashboard/widgets/muscle-heat-map/body";
-import {
-  MuscleDataCalculator,
-  MuscleBalanceAnalyzer,
-} from "@app/features/dashboard/widgets/muscle-heat-map/business";
+} from "@app/features/dashboard/widgets/muscle-heat-map/body/Body";
+import { MuscleDataCalculator } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleDataCalculator";
+import { MuscleBalanceAnalyzer } from "@app/features/dashboard/widgets/muscle-heat-map/business/MuscleBalanceAnalyzer";
 import { HeatMapControls } from "@app/features/dashboard/widgets/muscle-heat-map/HeatMapControls";
 import type { MuscleHeatMapOptions } from "@app/features/dashboard/widgets/muscle-heat-map/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";

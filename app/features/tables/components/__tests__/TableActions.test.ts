@@ -4,7 +4,7 @@ import { TableActions } from "@app/features/tables/components/TableActions";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 
 // Mock ActionButtons
-jest.mock("@app/features/tables/ui", () => ({
+jest.mock("@app/features/tables/ui/ActionButtons", () => ({
   ActionButtons: {
     createActionButtonsContainer: jest.fn((parent: HTMLElement) => {
       const container = document.createElement("div");

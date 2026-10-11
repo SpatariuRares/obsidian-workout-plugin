@@ -10,7 +10,7 @@ import type { SettingsPort } from "@app/types/PluginPorts";
 import { ChartRenderer } from "@app/features/charts/components/ChartRenderer";
 import { Canvas } from "@app/components/atoms";
 import { FilterIndicator } from "@app/components/molecules";
-import { ChartLegendItem } from "@app/features/charts/ui";
+import { ChartLegendItem } from "@app/features/charts/ui/ChartLegendItem";
 import { t } from "@app/i18n";
 import {
   ProtocolCatalog,

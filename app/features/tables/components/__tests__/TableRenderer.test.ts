@@ -18,7 +18,7 @@ jest.mock("@app/features/tables/components/TableActions", () => ({
   },
 }));
 
-jest.mock("@app/features/tables/ui", () => ({
+jest.mock("@app/features/tables/ui/TableErrorMessage", () => ({
   TableErrorMessage: {
     render: jest.fn((container: HTMLElement, message: string) => {
       const div = document.createElement("div");
@@ -27,6 +27,8 @@ jest.mock("@app/features/tables/ui", () => ({
       container.appendChild(div);
     }),
   },
+}));
+jest.mock("@app/features/tables/ui/TableHeader", () => ({
   TableHeader: {
     render: jest.fn((table: HTMLElement, headers: string[]) => {
       const thead = table.appendChild(
@@ -455,7 +457,7 @@ describe("TableRenderer", () => {
 
       const {
         TableErrorMessage,
-      } = require("@app/features/tables/ui");
+      } = require("@app/features/tables/ui/TableErrorMessage");
       expect(TableErrorMessage.render).toHaveBeenCalledWith(
         container,
         "Something went wrong",

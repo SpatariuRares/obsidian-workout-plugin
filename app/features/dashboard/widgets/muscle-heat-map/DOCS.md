@@ -32,7 +32,6 @@ muscle-heat-map/
     ├── Body.ts               # Disegna l'SVG e applica i colori per zona
     ├── BodyViewSvg.ts        # Markup SVG fronte/retro con attributi data-muscle
     ├── HeatMapColors.ts      # Gradiente colori: grigio -> arancione -> rosso -> rosso scuro
-    ├── SVGBuilder.ts         # Helper per creare elementi SVG con namespace
     └── index.ts              # Barrel export (Body, VIEW_TYPE, zone)
 ```
 
@@ -83,4 +82,3 @@ I test in `body/__tests__/Body.test.ts` falliscono se una zona dell'SVG manca ne
 - `0.3 - 0.7` -> arancione chiaro -> rosso vivo
 - `0.7 - 1` -> rosso vivo -> rosso scuro (#9b0000)
 
-**`SVGBuilder.ts`** - Wrapper per `document.createElementNS()` con namespace SVG, usato da `Body.ts` per l'elemento `<svg>` radice.

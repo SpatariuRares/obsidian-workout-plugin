@@ -1,4 +1,3 @@
-import { SVGBuilder } from "@app/features/dashboard/widgets/muscle-heat-map/body/SVGBuilder";
 import { BODY_VIEWS_SVG } from "@app/features/dashboard/widgets/muscle-heat-map/body/BodyViewSvg";
 import { HeatMapColors } from "@app/features/dashboard/widgets/muscle-heat-map/body/HeatMapColors";
 import {
@@ -6,6 +5,8 @@ import {
   type HeatMapZoneId,
   type ZoneValues,
 } from "@app/features/dashboard/widgets/muscle-heat-map/body/zones";
+
+const SVG_NS = "http://www.w3.org/2000/svg";
 
 export enum VIEW_TYPE {
   FRONT = "front",
@@ -40,11 +41,14 @@ export class Body {
     container.empty();
     container.addClass("body-visualization");
 
-    const svg = SVGBuilder.createElementWithAttributes("svg", {
+    const svg = document.createElementNS(SVG_NS, "svg");
+    for (const [name, value] of Object.entries({
       viewBox: "0 0 660.46 1206.46",
       preserveAspectRatio: "xMidYMid meet",
       class: "body-svg",
-    });
+    })) {
+      svg.setAttribute(name, value);
+    }
     container.appendChild(svg);
 
     const uid = `workout-heatmap-${++renderedBodies}`;

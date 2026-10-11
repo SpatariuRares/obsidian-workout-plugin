@@ -5,13 +5,15 @@ import {
   CHART_DATA_TYPE,
 } from "@app/features/charts/types";
 import { trendOf } from "@app/services/history/TrainingHistory";
+import { ChartColors } from "@app/features/charts/config/ChartTheme";
 import {
-  ChartColors,
   getChartLabels,
   getDefaultChartTitle,
+} from "@app/features/charts/config/ChartConstants";
+import {
   ChartConfigBuilder,
   DatasetStyler,
-} from "@app/features/charts/config";
+} from "@app/features/charts/config/ChartConfigBuilder";
 import { ChartContainer } from "@app/features/charts/components/ChartContainer";
 /**
  * Handles the rendering of workout data charts using Chart.js.

@@ -10,10 +10,9 @@ import type { HeatMapMetric } from "@app/features/dashboard/widgets/muscle-heat-
 
 export interface MuscleGroupData {
   name: string;
-  /** Total of the selected heat map metric (volume by default) */
-  volume: number;
+  /** Total of the selected heat map metric (volume, sets or reps) */
+  total: number;
   exercises: string[];
-  intensity: number; // 0-1 scale for heat map coloring
 }
 
 
@@ -65,9 +64,8 @@ export class MuscleDataCalculator {
     for (const muscle of CANONICAL_MUSCLE_GROUPS) {
       muscleData.set(muscle, {
         name: muscle,
-        volume: 0,
+        total: 0,
         exercises: [],
-        intensity: 0,
       });
     }
 
@@ -86,21 +84,11 @@ export class MuscleDataCalculator {
       mappedMuscles.forEach((muscle) => {
         const current = muscleData.get(muscle);
         if (current) {
-          current.volume += value;
+          current.total += value;
           if (!current.exercises.includes(entry.exercise)) {
             current.exercises.push(entry.exercise);
           }
         }
-      });
-    }
-
-    // Calculate intensities (normalize to 0-1 scale)
-    const maxVolume = Math.max(
-      ...Array.from(muscleData.values()).map((m) => m.volume),
-    );
-    if (maxVolume > 0) {
-      muscleData.forEach((muscle) => {
-        muscle.intensity = muscle.volume / maxVolume;
       });
     }
 
@@ -114,7 +102,7 @@ export class MuscleDataCalculator {
     muscleData: Map<string, MuscleGroupData>,
   ): ZoneValues {
     return calculateZoneValues(
-      (group) => muscleData.get(group)?.volume || 0,
+      (group) => muscleData.get(group)?.total || 0,
     );
   }
 }

@@ -22,7 +22,7 @@ const renderZoneColors = (
   const muscleData = new Map<string, MuscleGroupData>(
     CANONICAL_MUSCLE_GROUPS.map((name) => [
       name,
-      { name, volume: volumes[name] ?? 0, exercises: [], intensity: 0 },
+      { name, total: volumes[name] ?? 0, exercises: [] },
     ]),
   );
   const container = createObsidianContainer();

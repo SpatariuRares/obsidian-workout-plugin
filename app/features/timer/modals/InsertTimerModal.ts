@@ -7,8 +7,11 @@ import {
   TimerConfigurationElements,
   TimerConfigurationHandlers,
 } from "@app/features/timer/modals/components/TimerConfigurationSection";
-import { TIMER_TYPE } from "@app/features/timer/types";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import {
+  TIMER_TYPE,
+  type EmbeddedTimerParams,
+} from "@app/features/timer/types";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import { Chip } from "@app/components/atoms/Chip";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
@@ -126,26 +129,34 @@ export class InsertTimerModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
+    return timerBlock.serialize(this.collectParams());
+  }
+
+  /**
+   * The block parameters the form sets. Controls and sound are always
+   * written, since a preset may set them the other way.
+   */
+  protected collectParams(): EmbeddedTimerParams {
     if (!this.timerElements) {
       throw new Error(t("modal.notices.timerElementsNotInitialized"));
     }
 
-    // If a preset is selected, include preset reference in generated code
-    const presetName = this.selectedPreset;
-    const timerValues = TimerConfigurationSection.getValues(
-      this.timerElements,
-    );
+    const values = TimerConfigurationSection.getValues(this.timerElements);
+    const type = values.type as TIMER_TYPE;
 
-    return CodeGenerator.generateTimerCode({
+    return {
       id: this.getCodeBlockId(),
-      type: timerValues.type as TIMER_TYPE,
-      duration: timerValues.duration,
-      rounds: timerValues.rounds,
-      exercise: timerValues.exercise,
-      showControls: timerValues.showControls,
-      sound: timerValues.sound,
-      preset: presetName || undefined,
-    });
+      preset: this.selectedPreset || undefined,
+      type,
+      duration: values.duration || undefined,
+      rounds:
+        type === TIMER_TYPE.INTERVAL && values.rounds
+          ? values.rounds
+          : undefined,
+      exercise: values.exercise || undefined,
+      showControls: values.showControls,
+      sound: values.sound,
+    };
   }
 
   /**

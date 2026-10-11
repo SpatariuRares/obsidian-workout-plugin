@@ -6,6 +6,8 @@ import {
   TABLE_TYPE,
 } from "@app/features/tables/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
+import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
+import { tableBlock } from "@app/features/tables/tableBlock";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { t } from "@app/i18n";
 
@@ -13,10 +15,13 @@ import { t } from "@app/i18n";
  * EditTableModal - Modal for editing existing table code block parameters.
  *
  * Extends InsertTableModal to reuse form creation, then pre-fills fields
- * with current params and replaces the code block on submit (matched by ID).
+ * with current params and patches the parameters the user changed into the
+ * code block on submit (matched by ID).
  */
 export class EditTableModal extends InsertTableModal {
   private readonly initialParams: EmbeddedTableParams;
+  /** The form as it opened, to tell which parameters the user changed */
+  private formAtOpen: EmbeddedTableParams = {};
 
   constructor(
     app: App,
@@ -51,6 +56,7 @@ export class EditTableModal extends InsertTableModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
+    this.formAtOpen = this.collectParams();
   }
 
   /**
@@ -136,7 +142,6 @@ export class EditTableModal extends InsertTableModal {
     Button.onClick(cancelBtn, () => this.close());
 
     Button.onClick(updateBtn, () => {
-      const code = this.generateCode();
       const id = this.initialParams.id;
 
       if (!id) {
@@ -145,11 +150,15 @@ export class EditTableModal extends InsertTableModal {
         return;
       }
 
-      void CodeBlockEditorService.replaceCodeBlock(
+      // Only what the user changed: parameters the form doesn't show,
+      // comments and the line order stay as they are in the note
+      const changes = changedParams(this.formAtOpen, this.collectParams());
+
+      void CodeBlockEditorService.patchCodeBlock(
         this.app,
-        "workout-log",
-        id,
-        code,
+        tableBlock,
+        { id },
+        changes,
       ).then((success) => {
         if (success) {
           new Notice(this.getSuccessMessage());

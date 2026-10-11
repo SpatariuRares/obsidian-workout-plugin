@@ -1,16 +1,10 @@
-export interface EmbeddedDashboardParams {
-  title?: string;
-  dateRange?: number; // Days to include in analytics
-  showSummary?: boolean;
-  showQuickStats?: boolean;
-  showVolumeAnalytics?: boolean;
-  showRecentWorkouts?: boolean;
-  showQuickActions?: boolean;
-  recentWorkoutsLimit?: number;
-  volumeTrendDays?: number;
-  /** Active protocol filter for dashboard-wide filtering */
+import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
+import type { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
+/** Parameters of a `workout-dashboard` block; the schema is in dashboardBlock.ts */
+export type EmbeddedDashboardParams = BlockParams<typeof dashboardBlock> & {
+  /** View state, not a block parameter: the protocol chosen in the distribution widget */
   activeProtocolFilter?: string | null;
-}
+};
 
 /**
  * Callback type for protocol filter changes in dashboard

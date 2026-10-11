@@ -1,5 +1,5 @@
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 
 export function generateDashboardBlock(): string {
-  return CodeGenerator.generateDashboardCode();
+  return dashboardBlock.serialize({});
 }

@@ -1,5 +1,4 @@
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import { TABLE_TYPE } from "@app/features/tables/types";
+import { tableBlock } from "@app/features/tables/tableBlock";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 
 export function generateExerciseLogBlock(
@@ -7,14 +6,12 @@ export function generateExerciseLogBlock(
   workout: string,
   opts?: { limit?: number; exactMatch?: boolean },
 ): string {
-  return CodeGenerator.generateTableCode({
+  return tableBlock.serialize({
     id: generateCodeBlockId(),
-    tableType: TABLE_TYPE.COMBINED,
     exercise,
     workout,
     limit: opts?.limit ?? 12,
-    showAddButton: true,
-    exactMatch: opts?.exactMatch ?? true,
+    exactMatch: (opts?.exactMatch ?? true) || undefined,
   });
 }
 
@@ -22,30 +19,14 @@ export function generateExerciseOnlyLogBlock(
   exercise: string,
   limit: number,
 ): string {
-  return CodeGenerator.generateTableCode({
-    id: generateCodeBlockId(),
-    tableType: TABLE_TYPE.EXERCISE,
-    exercise,
-    workout: "",
-    limit,
-    showAddButton: true,
-    exactMatch: false,
-  });
+  return tableBlock.serialize({ id: generateCodeBlockId(), exercise, limit });
 }
 
 export function generateWorkoutLogBlock(
   workout: string,
   limit: number,
 ): string {
-  return CodeGenerator.generateTableCode({
-    id: generateCodeBlockId(),
-    tableType: TABLE_TYPE.WORKOUT,
-    exercise: "",
-    workout,
-    limit,
-    showAddButton: true,
-    exactMatch: false,
-  });
+  return tableBlock.serialize({ id: generateCodeBlockId(), workout, limit });
 }
 
 export function generateCombinedLogBlock(
@@ -53,13 +34,11 @@ export function generateCombinedLogBlock(
   workout: string,
   limit: number,
 ): string {
-  return CodeGenerator.generateTableCode({
+  return tableBlock.serialize({
     id: generateCodeBlockId(),
-    tableType: TABLE_TYPE.COMBINED,
     exercise,
     workout,
     limit,
-    showAddButton: true,
     exactMatch: true,
   });
 }

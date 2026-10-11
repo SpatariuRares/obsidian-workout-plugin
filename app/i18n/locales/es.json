@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Línea de tendencia",
-    "refreshingTable": "Actualizando tabla...",
-    "validation": {
-      "sortByInvalid": "sortBy debe ser uno de {allowed}, recibido: \"{value}\"",
-      "sortOrderInvalid": "sortOrder debe ser asc o desc, recibido: \"{value}\""
-    }
+    "refreshingTable": "Actualizando tabla..."
   },
   "timeperiods": {
     "month": "Mes",

@@ -104,13 +104,6 @@ export const CONSTANTS = {
       DEFAULTS: {
         EXACT_MATCH: DEFAULT_TABLE_CONFIG.EXACT_MATCH,
       },
-      VALIDATION_ERRORS: {
-        LIMIT_RANGE: (min: number, max: number, received: string) =>
-          `limit must be a number between ${min} and ${max}, received: "${received}"`,
-        COLUMNS_INVALID_TYPE:
-          "columns must be an array of strings or a JSON string",
-        COLUMNS_NOT_STRINGS: "columns must be an array of strings",
-      },
     },
   },
 } as const;

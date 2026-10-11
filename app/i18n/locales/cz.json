@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Spojnice trendu",
-    "refreshingTable": "Obnovování tabulky...",
-    "validation": {
-      "sortByInvalid": "sortBy musí být jedna z hodnot {allowed}, přijato: \"{value}\"",
-      "sortOrderInvalid": "sortOrder musí být asc nebo desc, přijato: \"{value}\""
-    }
+    "refreshingTable": "Obnovování tabulky..."
   },
   "timeperiods": {
     "month": "Měsíc",

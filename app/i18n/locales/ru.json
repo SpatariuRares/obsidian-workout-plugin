@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Линия тренда",
-    "refreshingTable": "Обновление таблицы...",
-    "validation": {
-      "sortByInvalid": "sortBy должен быть одним из {allowed}, получено: \"{value}\"",
-      "sortOrderInvalid": "sortOrder должен быть asc или desc, получено: \"{value}\""
-    }
+    "refreshingTable": "Обновление таблицы..."
   },
   "timeperiods": {
     "month": "Месяц",

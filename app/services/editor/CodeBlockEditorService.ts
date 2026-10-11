@@ -1,272 +1,76 @@
 import { App, MarkdownView } from "obsidian";
+import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 
 /**
- * CodeBlockEditorService - Service for editing code block parameters in markdown files
- *
- * Provides methods to programmatically update parameters within code blocks
- * (e.g., workout-log, workout-chart) in the active editor.
+ * Which block to edit: by the `id` the insert modals write, or by exercise
+ * for blocks written before ids existed (first match wins).
  */
+export type CodeBlockMatch = { id: string } | { exercise: string };
+
+/** Edits code block parameters in the note open in the active view */
 export class CodeBlockEditorService {
   /**
-   * Update the targetWeight parameter in a workout-log code block
-   *
-   * Finds the code block matching the exercise name and updates its targetWeight.
-   *
-   * @param app - Obsidian App instance
-   * @param exercise - Exercise name to match
-   * @param newWeight - New target weight value
-   * @returns True if update was successful, false otherwise
+   * Patch one block of the schema's type: only the changed parameters'
+   * lines are rewritten (see CodeBlockSchema.patch).
+   * @returns false when there is no active note or no matching block
    */
-  static async updateTargetWeight(
+  static async patchCodeBlock<P>(
     app: App,
-    exercise: string,
-    newWeight: number,
+    schema: CodeBlockSchema<P>,
+    match: CodeBlockMatch,
+    changes: P,
   ): Promise<boolean> {
+    const file = app.workspace.getActiveViewOfType(MarkdownView)?.file;
+    if (!file) return false;
+
+    let found = false;
     try {
-      const activeView =
-        app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView?.file) {
-        return false;
-      }
+      // Vault API, not the editor, so it works in Reading view too
+      await app.vault.process(file, (content) => {
+        const patched = patchBlockInNote(content, schema, match, changes);
+        found = patched !== null;
+        return patched ?? content;
+      });
+    } catch {
+      return false;
+    }
+    return found;
+  }
+}
 
-      const file = activeView.file;
-      const content = await app.vault.read(file);
+function patchBlockInNote<P>(
+  content: string,
+  schema: CodeBlockSchema<P>,
+  match: CodeBlockMatch,
+  changes: P,
+): string | null {
+  const lines = content.split("\n");
+  const fence = `\`\`\`${schema.type}`;
 
-      const result = this.updateCodeBlockParameter(
-        content,
-        "workout-log",
-        exercise,
-        "targetWeight",
-        newWeight,
+  for (let start = 0; start < lines.length; start++) {
+    if (lines[start].trim() !== fence) continue;
+    const end = lines.findIndex(
+      (line, index) => index > start && line.trim().startsWith("```"),
+    );
+    if (end === -1) return null;
+
+    const body = lines.slice(start + 1, end).join("\n");
+    const params = schema.parse(body).params as Record<string, unknown>;
+    const isMatch =
+      "id" in match
+        ? params.id === match.id
+        : params.exercise === match.exercise;
+
+    if (isMatch) {
+      const patched = schema.patch(body, changes);
+      lines.splice(
+        start + 1,
+        end - start - 1,
+        ...(patched === "" ? [] : patched.split("\n")),
       );
-
-      if (result.updated) {
-        await app.vault.modify(file, result.content);
-        return true;
-      }
-
-      return false;
-    } catch {
-      return false;
+      return lines.join("\n");
     }
+    start = end;
   }
-
-  /**
-   * Generic method to update a parameter in a code block
-   *
-   * @param content - Full markdown content
-   * @param blockType - Code block type (e.g., "workout-log")
-   * @param exerciseMatch - Exercise name to match
-   * @param paramName - Parameter name to update
-   * @param newValue - New parameter value
-   * @returns Object with updated content and success flag
-   */
-  private static updateCodeBlockParameter(
-    content: string,
-    blockType: string,
-    exerciseMatch: string,
-    paramName: string,
-    newValue: number | string,
-  ): { content: string; updated: boolean } {
-    const lines = content.split("\n");
-    let inCodeBlock = false;
-    let _codeBlockStart = -1;
-    let foundExercise = false;
-    let paramLineIndex = -1;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim();
-
-      // Start of target code block
-      if (line.startsWith(`\`\`\`${blockType}`)) {
-        inCodeBlock = true;
-        _codeBlockStart = i;
-        foundExercise = false;
-        paramLineIndex = -1;
-        continue;
-      }
-
-      // End of code block
-      if (inCodeBlock && line.startsWith("```")) {
-        if (foundExercise && paramLineIndex !== -1) {
-          // Found the matching block with the parameter - update it
-          lines[paramLineIndex] = lines[paramLineIndex].replace(
-            new RegExp(`${paramName}:\\s*[\\d.]+`),
-            `${paramName}: ${newValue}`,
-          );
-          return { content: lines.join("\n"), updated: true };
-        }
-        // Reset for next code block
-        inCodeBlock = false;
-        foundExercise = false;
-        paramLineIndex = -1;
-        continue;
-      }
-
-      if (!inCodeBlock) continue;
-
-      // Check for exercise match
-      if (line.startsWith("exercise:")) {
-        const exerciseValue = line.replace("exercise:", "").trim();
-        if (exerciseValue === exerciseMatch) {
-          foundExercise = true;
-        }
-      }
-
-      // Track parameter line
-      if (line.startsWith(`${paramName}:`)) {
-        paramLineIndex = i;
-      }
-    }
-
-    return { content, updated: false };
-  }
-
-  /**
-   * Replace an entire code block with new content
-   *
-   * Finds the code block matching blockType + id and replaces it entirely.
-   *
-   * @param app - Obsidian App instance
-   * @param blockType - Code block type (e.g., "workout-log")
-   * @param id - Unique code block ID to match
-   * @param newCode - Full replacement code block (including opening/closing ```)
-   * @returns True if replacement was successful
-   */
-  static async replaceCodeBlock(
-    app: App,
-    blockType: string,
-    id: string,
-    newCode: string,
-  ): Promise<boolean> {
-    try {
-      const activeView =
-        app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView?.file) {
-        return false;
-      }
-
-      // Use vault API instead of editor API so it works in Reading Mode too
-      const file = activeView.file;
-      const content = await app.vault.read(file);
-      const lines = content.split("\n");
-
-      let inCodeBlock = false;
-      let codeBlockStart = -1;
-      let foundId = false;
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-
-        if (line.startsWith(`\`\`\`${blockType}`)) {
-          inCodeBlock = true;
-          codeBlockStart = i;
-          foundId = false;
-          continue;
-        }
-
-        if (inCodeBlock && line.startsWith("```")) {
-          if (foundId) {
-            const before = lines.slice(0, codeBlockStart);
-            const after = lines.slice(i + 1);
-            const newContent = [...before, newCode, ...after].join(
-              "\n",
-            );
-            await app.vault.modify(file, newContent);
-            return true;
-          }
-          inCodeBlock = false;
-          continue;
-        }
-
-        if (!inCodeBlock) continue;
-
-        if (line.startsWith("id:")) {
-          const idValue = line.replace("id:", "").trim();
-          if (idValue === id) {
-            foundId = true;
-          }
-        }
-      }
-
-      return false;
-    } catch {
-      return false;
-    }
-  }
-
-  static async setParameter(
-    app: App,
-    blockType: string,
-    exercise: string,
-    paramName: string,
-    value: number | string | boolean,
-  ): Promise<boolean> {
-    try {
-      const activeView =
-        app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeView?.file) {
-        return false;
-      }
-
-      const file = activeView.file;
-      const content = await app.vault.read(file);
-      const lines = content.split("\n");
-
-      let inCodeBlock = false;
-      let foundExercise = false;
-      let paramLineIndex = -1;
-      let codeBlockEndIndex = -1;
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-
-        if (line.startsWith(`\`\`\`${blockType}`)) {
-          inCodeBlock = true;
-          foundExercise = false;
-          paramLineIndex = -1;
-          continue;
-        }
-
-        if (inCodeBlock && line.startsWith("```")) {
-          if (foundExercise) {
-            codeBlockEndIndex = i;
-            break;
-          }
-          inCodeBlock = false;
-          continue;
-        }
-
-        if (!inCodeBlock) continue;
-
-        if (line.startsWith("exercise:")) {
-          const exerciseValue = line.replace("exercise:", "").trim();
-          if (exerciseValue === exercise) {
-            foundExercise = true;
-          }
-        }
-
-        if (foundExercise && line.startsWith(`${paramName}:`)) {
-          paramLineIndex = i;
-        }
-      }
-
-      if (!foundExercise) {
-        return false;
-      }
-
-      if (paramLineIndex !== -1) {
-        lines[paramLineIndex] = `${paramName}: ${value}`;
-      } else if (codeBlockEndIndex !== -1) {
-        lines.splice(codeBlockEndIndex, 0, `${paramName}: ${value}`);
-      } else {
-        return false;
-      }
-
-      await app.vault.modify(file, lines.join("\n"));
-      return true;
-    } catch {
-      return false;
-    }
-  }
+  return null;
 }

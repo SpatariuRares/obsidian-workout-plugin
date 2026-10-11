@@ -12,7 +12,6 @@ Tutti i moduli sono classi statiche senza stato interno, consumate principalment
 ```
 EmbeddedTableView (view layer)
   |
-  |-- TableConfig.validateParams()        --> Valida parametri utente
   |-- TableDataProcessor.processTableData() --> Trasforma dati in righe/colonne
   |-- TableRefresh.refreshTable()         --> Invalida cache e ri-renderizza
   |-- TargetCalculator.*()                --> Calcoli obiettivi (usato da UI)
@@ -22,22 +21,9 @@ EmbeddedTableView (view layer)
 
 ## Moduli
 
-### 1. TableConfig
+### 1. Parametri del blocco (`../tableBlock.ts`)
 
-**File**: `TableConfig.ts`
-**Scopo**: Configurazione e validazione dei parametri della tabella.
-
-**Metodi**:
-
-| Metodo                     | Input                          | Output                | Cosa fa                                                                         |
-| -------------------------- | ------------------------------ | --------------------- | ------------------------------------------------------------------------------- |
-| `getDefaults()`            | -                              | `EmbeddedTableParams` | Ritorna i valori default (limit: 50, exactMatch, columns)                       |
-| `validateParams()`         | `EmbeddedTableParams`          | `string[]`            | Valida limit (range min-max) e columns (tipo corretto). Ritorna array di errori |
-| `hasValidationErrors()`    | `string[]`                     | `boolean`             | Controlla se ci sono errori                                                     |
-| `formatValidationErrors()` | `string[]`                     | `string`              | Unisce gli errori in stringa per display                                        |
-| `mergeWithDefaults()`      | `Partial<EmbeddedTableParams>` | `EmbeddedTableParams` | Merge parametri utente con i defaults                                           |
-
-**Consumato da**: `EmbeddedTableView.renderTable()` - prima di ogni render valida i parametri.
+Parametri, tipi, default (limit: 50, sortBy: date, sortOrder: desc, showAddButton e showProtocol: true) e valori ammessi stanno nello schema `tableBlock`. `CodeBlockProcessorService` legge il blocco con `tableBlock.parse()`, mostra gli errori al posto della tabella e passa alla view i parametri con i default già applicati. I modali scrivono con `tableBlock.serialize()` (inserimento) e `CodeBlockEditorService.patchCodeBlock()` (modifica).
 
 ---
 
@@ -127,24 +113,22 @@ Code block YAML (workout-log)
        |
        v
 CodeBlockProcessorService
-  - Parsa parametri
+  - tableBlock.parse(source): parametri tipizzati + errori, poi i default
   - Carica dati raw da WorkoutLogFile (via `plugin.getWorkoutLogData()`)
        |
        v
 EmbeddedTableView.createTable(container, logData, params)
        |
        v
-  1. TableConfig.validateParams(params)           -- valida
+  1. BaseView.filterData(logData, params)         -- DataFilter (dateRange/fuzzy/exact/protocol)
        |
-  2. BaseView.filterData(logData, params)         -- DataFilter (dateRange/fuzzy/exact/protocol)
+  2. TableDataProcessor.processTableData(filtered) -- headers + rows
        |
-  3. TableDataProcessor.processTableData(filtered) -- headers + rows
-       |
-  4. TableRenderer.renderTable(tableData)          -- DOM (fuori da business/)
+  3. TableRenderer.renderTable(tableData)          -- DOM (fuori da business/)
        |
   [click refresh]
        |
-  5. TableRefresh.refreshTable(...)                -- invalida + ricarica + re-render
+  4. TableRefresh.refreshTable(...)                -- invalida + ricarica + re-render
 ```
 
 ---
@@ -153,11 +137,10 @@ EmbeddedTableView.createTable(container, logData, params)
 
 | Tipo                  | File       | Descrizione                                                           |
 | --------------------- | ---------- | --------------------------------------------------------------------- |
-| `EmbeddedTableParams` | `types.ts` | Parametri dal code block YAML (exercise, limit, columns, target...)   |
+| `EmbeddedTableParams` | `types.ts` | Parametri del code block, ricavati dallo schema `tableBlock`          |
 | `TableData`           | `types.ts` | Output di processTableData: headers, rows, totalRows, filterResult    |
 | `TableRow`            | `types.ts` | Singola riga: displayRow[], originalDate, dateKey, originalLog        |
 | `TableCallbacks`      | `types.ts` | Callbacks per refresh: onRefresh, onError, onSuccess                  |
-| `TableCodeOptions`    | `types.ts` | Parametri per CodeGenerator (extends EmbeddedTableParams + tableType) |
 
 ---
 
@@ -167,7 +150,6 @@ Ogni modulo ha la propria test suite in `__tests__/`:
 
 | Modulo               | Test file                    | Test | Copertura                                                |
 | -------------------- | ---------------------------- | ---- | -------------------------------------------------------- |
-| `TableConfig`        | `TableConfig.test.ts`        | 6    | Defaults, validazione limit/columns, merge, errori       |
 | `TableDataProcessor` | `TableDataProcessor.test.ts` | 20+  | Headers dinamici, sorting, limiting, custom fields       |
 | `TableRefresh`       | `TableRefresh.test.ts`       | 6    | Cache clear, re-render, callbacks success/error          |
 | `TargetCalculator`   | `TargetCalculator.test.ts`   | 14   | Calcoli best reps, target achieved, progress, edge cases |

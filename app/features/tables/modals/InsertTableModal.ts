@@ -12,8 +12,11 @@ import {
   AdvancedOptionsSection,
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
-import { TABLE_TYPE } from "@app/features/tables/types";
+import {
+  TABLE_TYPE,
+  type EmbeddedTableParams,
+} from "@app/features/tables/types";
+import { tableBlock } from "@app/features/tables/tableBlock";
 import { Chip } from "@app/components/atoms/Chip";
 import {
   Button,
@@ -315,6 +318,14 @@ export class InsertTableModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
+    return tableBlock.serialize(this.collectParams());
+  }
+
+  /**
+   * The block parameters the form sets. Parameters the form leaves at their
+   * default are undefined, so they are not written (and an edit removes them).
+   */
+  protected collectParams(): EmbeddedTableParams {
     if (
       !this.tableTypeSelect ||
       !this.targetElements ||
@@ -324,13 +335,12 @@ export class InsertTableModal extends BaseInsertModal {
       throw new Error(t("modal.errors.missingElements"));
     }
 
-    const tableType = this.tableTypeSelect.value;
+    const tableType = this.tableTypeSelect.value as TABLE_TYPE;
     const target = TargetSectionWithAutocomplete.getTargetValue(
       this.targetElements,
       this.tableTypeSelect,
       this.currentFileName,
     );
-    const limit = parseInt(this.limitInput.value) || 50;
     const dateRange = this.dateRangeInput
       ? parseInt(this.dateRangeInput.value) || 0
       : 0;
@@ -346,26 +356,26 @@ export class InsertTableModal extends BaseInsertModal {
       ? parseInt(this.targetRepsInput.value) || 0
       : 0;
 
-    // Validation for combined mode
-    if ((tableType as TABLE_TYPE) === TABLE_TYPE.COMBINED) {
-      if (!target.exercise || !target.workout) {
-        new Notice(t("modal.notices.validationCombinedMode"));
-        throw new Error(t("modal.errors.validationCombinedMode"));
-      }
+    if (
+      tableType === TABLE_TYPE.COMBINED &&
+      (!target.exercise || !target.workout)
+    ) {
+      new Notice(t("modal.notices.validationCombinedMode"));
+      throw new Error(t("modal.errors.validationCombinedMode"));
     }
 
-    return CodeGenerator.generateTableCode({
+    return {
       id: this.getCodeBlockId(),
-      tableType: tableType as TABLE_TYPE,
-      exercise: target?.exercise || "",
-      workout: target?.workout || "",
-      limit,
+      exercise: target.exercise || undefined,
+      workout: target.workout || undefined,
+      limit:
+        parseInt(this.limitInput.value) || tableBlock.defaults.limit,
       dateRange: dateRange > 0 ? dateRange : undefined,
-      showAddButton,
-      exactMatch: advancedValues.exactMatch,
+      showAddButton: showAddButton ? undefined : false,
+      exactMatch: advancedValues.exactMatch ? true : undefined,
       targetWeight: targetWeight > 0 ? targetWeight : undefined,
       targetReps: targetReps > 0 ? targetReps : undefined,
-    });
+    };
   }
 
   /**

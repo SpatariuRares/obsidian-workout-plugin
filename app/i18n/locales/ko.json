@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "추세선",
-    "refreshingTable": "테이블 새로 고치는 중...",
-    "validation": {
-      "sortByInvalid": "sortBy는 {allowed} 중 하나여야 합니다. 받은 값: \"{value}\"",
-      "sortOrderInvalid": "sortOrder는 asc 또는 desc여야 합니다. 받은 값: \"{value}\""
-    }
+    "refreshingTable": "테이블 새로 고치는 중..."
   },
   "timeperiods": {
     "month": "월",

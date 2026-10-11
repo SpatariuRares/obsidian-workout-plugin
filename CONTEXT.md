@@ -42,6 +42,8 @@ Workout Planner turns Obsidian into a gym tracking system. It reads/writes worko
 
 ## The 5 Code Blocks
 
+**Code block parameters**: the `key: value` lines inside a block. Each block type has one **schema** (`app/features/<feature>/<name>Block.ts`, built with `CodeBlockSchema`) listing its parameters with type, default and allowed values. Rendering, the insert/edit modals and validation all read that schema. Editing a block **patches** it: only the lines of parameters the user changed are rewritten, so comments, order and parameters the form doesn't show are kept as typed.
+
 ### 1. `workout-log` - The Main Interaction Point
 
 This is what the user interacts with most. It's a table embedded in the workout note showing past sets for a specific exercise, with an "Add Log" button to record new data.

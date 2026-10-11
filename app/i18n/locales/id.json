@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Garis tren",
-    "refreshingTable": "Menyegarkan tabel...",
-    "validation": {
-      "sortByInvalid": "sortBy harus salah satu dari {allowed}, diterima: \"{value}\"",
-      "sortOrderInvalid": "sortOrder harus asc atau desc, diterima: \"{value}\""
-    }
+    "refreshingTable": "Menyegarkan tabel..."
   },
   "timeperiods": {
     "month": "Bulan",

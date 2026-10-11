@@ -3,6 +3,8 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
+import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
 import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
@@ -11,10 +13,13 @@ import { t } from "@app/i18n";
  * EditTimerModal - Modal for editing existing timer code block parameters.
  *
  * Extends InsertTimerModal to reuse form creation, then pre-fills fields
- * with current params and replaces the code block on submit (matched by ID).
+ * with current params and patches the parameters the user changed into the
+ * code block on submit (matched by ID).
  */
 export class EditTimerModal extends InsertTimerModal {
   private readonly initialParams: EmbeddedTimerParams;
+  /** The form as it opened, to tell which parameters the user changed */
+  private formAtOpen: EmbeddedTimerParams = {};
 
   constructor(
     app: App,
@@ -49,6 +54,7 @@ export class EditTimerModal extends InsertTimerModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
+    this.formAtOpen = this.collectParams();
   }
 
   /**
@@ -112,7 +118,6 @@ export class EditTimerModal extends InsertTimerModal {
     Button.onClick(cancelBtn, () => this.close());
 
     Button.onClick(updateBtn, () => {
-      const code = this.generateCode();
       const id = this.initialParams.id;
 
       if (!id) {
@@ -121,11 +126,15 @@ export class EditTimerModal extends InsertTimerModal {
         return;
       }
 
-      void CodeBlockEditorService.replaceCodeBlock(
+      // Only what the user changed: autoStart, workout, comments and the
+      // line order stay as they are in the note
+      const changes = changedParams(this.formAtOpen, this.collectParams());
+
+      void CodeBlockEditorService.patchCodeBlock(
         this.app,
-        "workout-timer",
-        id,
-        code,
+        timerBlock,
+        { id },
+        changes,
       ).then((success) => {
         if (success) {
           new Notice(this.getSuccessMessage());

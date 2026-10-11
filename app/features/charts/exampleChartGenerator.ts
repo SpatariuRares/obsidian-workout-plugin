@@ -1,4 +1,4 @@
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { chartBlock } from "@app/features/charts/chartBlock";
 import {
   CHART_DATA_TYPE,
   CHART_TYPE,
@@ -63,7 +63,7 @@ export function generateWorkoutChartBlock(
   workoutName: string,
   opts?: { dateRange?: number; showStats?: boolean },
 ): string {
-  return CodeGenerator.generateChartCode({
+  return chartBlock.serialize({
     chartType: CHART_TYPE.WORKOUT,
     type: CHART_DATA_TYPE.VOLUME,
     workout: workoutName,
@@ -84,7 +84,7 @@ export function generateExerciseChartBlock(
     showTrendLine?: boolean;
   },
 ): string {
-  return CodeGenerator.generateChartCode({
+  return chartBlock.serialize({
     chartType: CHART_TYPE.EXERCISE,
     type: dataType,
     exercise,
@@ -100,7 +100,7 @@ export function generateAllDataChartBlock(
   dataType: CHART_DATA_TYPE,
   opts?: { dateRange?: number },
 ): string {
-  return CodeGenerator.generateChartCode({
+  return chartBlock.serialize({
     chartType: CHART_TYPE.ALL,
     type: dataType,
     dateRange: opts?.dateRange ?? 30,

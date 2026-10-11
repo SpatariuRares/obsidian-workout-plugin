@@ -12,10 +12,10 @@ import {
   AdvancedOptionsSection,
   AdvancedOptionsElements,
 } from "@app/features/modals/components/AdvancedOptionsSection";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { chartBlock } from "@app/features/charts/chartBlock";
 import {
   CHART_DATA_TYPE,
-  CHART_TYPE,
+  type EmbeddedChartParams,
 } from "@app/features/charts/types";
 import {
   getAvailableChartDataTypes,
@@ -427,18 +427,18 @@ export class InsertChartModal extends BaseInsertModal {
       this.advancedElements,
     );
 
-    return CodeGenerator.generateChartCode({
+    return chartBlock.serialize({
+      chartType: chartType as EmbeddedChartParams["chartType"],
       type: dataType as CHART_DATA_TYPE,
-      chartType: chartType as CHART_TYPE,
-      exercise: target.exercise || "",
-      workout: target.workout || "",
+      exercise: target.exercise || undefined,
+      workout: target.workout || undefined,
       dateRange,
       limit,
       showTrendLine,
       showTrend,
       showStats,
-      exactMatch: advancedValues.exactMatch,
-      title: advancedValues.title || "",
+      exactMatch: advancedValues.exactMatch ? true : undefined,
+      title: advancedValues.title || undefined,
     });
   }
 

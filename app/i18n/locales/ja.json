@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "トレンドライン",
-    "refreshingTable": "テーブルを更新中...",
-    "validation": {
-      "sortByInvalid": "sortBy は {allowed} のいずれかである必要があります。受け取った値：\"{value}\"",
-      "sortOrderInvalid": "sortOrder は asc または desc である必要があります。受け取った値：\"{value}\""
-    }
+    "refreshingTable": "テーブルを更新中..."
   },
   "timeperiods": {
     "month": "月",

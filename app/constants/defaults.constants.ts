@@ -93,6 +93,4 @@ export const DEFAULT_TABLE_CONFIG = {
   VISIBLE_COLUMNS: ["Date", "Reps", "Weight", "Volume", "Notes"],
   /** Default exact match setting for table filtering */
   EXACT_MATCH: false,
-  /** Default limit specifically for modal inserts (12 rows) */
-  MODAL_INSERT_LIMIT: 12,
 } as const;

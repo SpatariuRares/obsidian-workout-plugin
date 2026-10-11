@@ -1,270 +1,147 @@
-import { CodeBlockEditorService } from "../CodeBlockEditorService";
-import { App, MarkdownView } from "obsidian";
+import { App } from "obsidian";
+import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
+import { tableBlock } from "@app/features/tables/tableBlock";
+import { timerBlock } from "@app/features/timer/timerBlock";
 
-describe("CodeBlockEditorService", () => {
-  let app: App;
-  let mockEditor: any;
-  let mockView: any;
-  let mockFile: any;
+function note(...lines: string[]): string {
+  return lines.join("\n");
+}
 
-  beforeEach(() => {
-    app = new App();
-    mockFile = { path: "test.md" };
-    mockEditor = {
-      getValue: jest.fn(),
-      setValue: jest.fn(),
-    };
-    mockView = {
-      editor: mockEditor,
-      file: mockFile,
-    };
-    (app.workspace.getActiveViewOfType as jest.Mock).mockReturnValue(
-      mockView,
+function setup(content: string, hasActiveNote = true) {
+  const state = { content };
+  const app = {
+    workspace: {
+      getActiveViewOfType: () =>
+        hasActiveNote ? { file: { path: "Leg day.md" } } : null,
+    },
+    vault: {
+      process: jest.fn(async (_file: unknown, fn: (c: string) => string) => {
+        state.content = fn(state.content);
+      }),
+    },
+  } as unknown as App;
+  return { app, state };
+}
+
+const NOTE = note(
+  "# Leg day",
+  "```workout-timer",
+  "id: t1",
+  "duration: 90",
+  "```",
+  "```workout-log",
+  "id: a1",
+  "exercise: Squat",
+  "# heavy week",
+  "sortBy: volume",
+  "columns: [date, reps]",
+  "showProtocol: false",
+  "```",
+  "```workout-log",
+  "id: b2",
+  "exercise: Bench",
+  "```",
+);
+
+describe("CodeBlockEditorService.patchCodeBlock", () => {
+  it("edits the block with that id and keeps every other line of the note", async () => {
+    const { app, state } = setup(NOTE);
+
+    const ok = await CodeBlockEditorService.patchCodeBlock(
+      app,
+      tableBlock,
+      { id: "a1" },
+      { limit: 20, exercise: "Front squat" },
     );
-    (app.vault.read as jest.Mock).mockResolvedValue("");
-    (app.vault.modify as jest.Mock).mockResolvedValue(undefined);
-    jest.clearAllMocks();
+
+    expect(ok).toBe(true);
+    expect(state.content).toBe(
+      NOTE.replace("exercise: Squat", "exercise: Front squat").replace(
+        "showProtocol: false\n```",
+        "showProtocol: false\nlimit: 20\n```",
+      ),
+    );
   });
 
-  describe("updateTargetWeight", () => {
-    it("should update targetWeight for matching exercise", async () => {
-      const content = `
-\`\`\`workout-log
-exercise: Bench Press
-targetWeight: 100
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
+  it("finds a block without an id by its exercise", async () => {
+    const { app, state } = setup(
+      note("```workout-log", "exercise: Bench Press", "targetWeight: 100", "```"),
+    );
 
-      const result = await CodeBlockEditorService.updateTargetWeight(
-        app,
-        "Bench Press",
-        105,
-      );
+    await CodeBlockEditorService.patchCodeBlock(
+      app,
+      tableBlock,
+      { exercise: "Bench Press" },
+      { targetWeight: 105 },
+    );
 
-      expect(result).toBe(true);
-      expect(app.vault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("targetWeight: 105"),
-      );
-    });
-
-    it("should return false if no active view", async () => {
-      (
-        app.workspace.getActiveViewOfType as jest.Mock
-      ).mockReturnValue(null);
-      const result = await CodeBlockEditorService.updateTargetWeight(
-        app,
-        "Bench Press",
-        100,
-      );
-      expect(result).toBe(false);
-    });
-
-    it("should return false if exercise block not found", async () => {
-      const content = `
-\`\`\`workout-log
-exercise: Squat
-targetWeight: 100
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
-      const result = await CodeBlockEditorService.updateTargetWeight(
-        app,
-        "Bench Press",
-        105,
-      );
-      expect(result).toBe(false);
-    });
-
-    it("should return false when an error is thrown", async () => {
-      (app.vault.read as jest.Mock).mockImplementation(() => {
-        throw new Error("Test error");
-      });
-
-      const result = await CodeBlockEditorService.updateTargetWeight(
-        app,
-        "Bench Press",
-        100,
-      );
-
-      expect(result).toBe(false);
-    });
+    expect(state.content).toBe(
+      note("```workout-log", "exercise: Bench Press", "targetWeight: 105", "```"),
+    );
   });
 
-  describe("setParameter", () => {
-    it("should update existing parameter", async () => {
-      const content = `
-\`\`\`workout-chart
-exercise: Running
-type: distance
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
+  it("only looks at blocks of the schema's type", async () => {
+    const { app, state } = setup(NOTE);
 
-      const result = await CodeBlockEditorService.setParameter(
+    await CodeBlockEditorService.patchCodeBlock(
+      app,
+      timerBlock,
+      { id: "t1" },
+      { autoStart: true },
+    );
+
+    expect(state.content).toContain("duration: 90\nautoStart: true\n```");
+  });
+
+  it("returns false and leaves the note alone when nothing matches", async () => {
+    const { app, state } = setup(NOTE);
+
+    expect(
+      await CodeBlockEditorService.patchCodeBlock(
         app,
-        "workout-chart",
-        "Running",
-        "type",
-        "pace",
-      );
+        tableBlock,
+        { id: "zz" },
+        { limit: 5 },
+      ),
+    ).toBe(false);
+    expect(state.content).toBe(NOTE);
+  });
 
-      expect(result).toBe(true);
-      expect(app.vault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("type: pace"),
-      );
-    });
+  it("returns false without an active note or when the write fails", async () => {
+    const noNote = setup(NOTE, false);
+    expect(
+      await CodeBlockEditorService.patchCodeBlock(
+        noNote.app,
+        tableBlock,
+        { id: "a1" },
+        { limit: 5 },
+      ),
+    ).toBe(false);
 
-    it("should add new parameter if missing", async () => {
-      const content = `
-\`\`\`workout-chart
-exercise: Running
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
+    const failing = setup(NOTE);
+    (failing.app.vault.process as jest.Mock).mockRejectedValue(
+      new Error("locked"),
+    );
+    expect(
+      await CodeBlockEditorService.patchCodeBlock(
+        failing.app,
+        tableBlock,
+        { id: "a1" },
+        { limit: 5 },
+      ),
+    ).toBe(false);
+  });
 
-      const result = await CodeBlockEditorService.setParameter(
+  it("returns false when a block is never closed", async () => {
+    const { app } = setup(note("```workout-log", "id: a1"));
+
+    expect(
+      await CodeBlockEditorService.patchCodeBlock(
         app,
-        "workout-chart",
-        "Running",
-        "type",
-        "distance",
-      );
-
-      expect(result).toBe(true);
-      // Verify it was added
-      expect(app.vault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("type: distance"),
-      );
-    });
-
-    it("should return false if no active view", async () => {
-      (
-        app.workspace.getActiveViewOfType as jest.Mock
-      ).mockReturnValue(null);
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "type",
-        "distance",
-      );
-
-      expect(result).toBe(false);
-    });
-
-    it("should return false if exercise not found", async () => {
-      const content = `
-\`\`\`workout-chart
-exercise: Swimming
-type: distance
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "type",
-        "pace",
-      );
-
-      expect(result).toBe(false);
-    });
-
-    it("should skip non-matching code blocks and find the correct one", async () => {
-      const content = `
-\`\`\`workout-chart
-exercise: Swimming
-type: distance
-\`\`\`
-
-\`\`\`workout-chart
-exercise: Running
-type: distance
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "type",
-        "pace",
-      );
-
-      expect(result).toBe(true);
-      expect(app.vault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("type: pace"),
-      );
-    });
-
-    it("should return false when an error is thrown", async () => {
-      (app.vault.read as jest.Mock).mockImplementation(() => {
-        throw new Error("Test error");
-      });
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "type",
-        "distance",
-      );
-
-      expect(result).toBe(false);
-    });
-
-    it("should handle boolean values", async () => {
-      const content = `
-\`\`\`workout-chart
-exercise: Running
-showTrendLine: false
-\`\`\`
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "showTrendLine",
-        true,
-      );
-
-      expect(result).toBe(true);
-      expect(app.vault.modify).toHaveBeenCalledWith(
-        mockFile,
-        expect.stringContaining("showTrendLine: true"),
-      );
-    });
-
-    it("should return false when code block has no closing delimiter", async () => {
-      // Malformed markdown: code block never closes
-      const content = `
-\`\`\`workout-chart
-exercise: Running
-type: distance
-`;
-      (app.vault.read as jest.Mock).mockResolvedValue(content);
-
-      const result = await CodeBlockEditorService.setParameter(
-        app,
-        "workout-chart",
-        "Running",
-        "newParam",
-        "value",
-      );
-
-      // foundExercise is true but codeBlockEndIndex is -1
-      expect(result).toBe(false);
-    });
+        tableBlock,
+        { id: "a1" },
+        { limit: 5 },
+      ),
+    ).toBe(false);
   });
 });

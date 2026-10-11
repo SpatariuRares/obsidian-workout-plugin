@@ -1,16 +1,13 @@
+import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
+import type { durationBlock } from "@app/features/duration/durationBlock";
 /**
  * Types for the workout duration estimator feature.
  * The duration estimator calculates estimated workout time based on
  * rest periods (from workout-timer blocks) and set durations.
  */
 
-/**
- * Parameters for the workout-duration code block.
- */
-export interface EmbeddedDurationParams {
-  /** Path to the workout file to analyze (relative or absolute). Defaults to current file. */
-  workout?: string;
-}
+/** Parameters of a `workout-duration` block; the schema is in durationBlock.ts */
+export type EmbeddedDurationParams = BlockParams<typeof durationBlock>;
 
 /**
  * Parsed duration data from analyzing a workout file.

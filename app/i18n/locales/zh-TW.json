@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "趨勢線",
-    "refreshingTable": "正在重新整理表格...",
-    "validation": {
-      "sortByInvalid": "sortBy 必須是 {allowed} 其中之一，收到的值：\"{value}\"",
-      "sortOrderInvalid": "sortOrder 必須是 asc 或 desc，收到的值：\"{value}\""
-    }
+    "refreshingTable": "正在重新整理表格..."
   },
   "timeperiods": {
     "month": "月份",

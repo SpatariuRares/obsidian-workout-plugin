@@ -8,5 +8,4 @@ export { TableDataCheckers } from "@app/features/tables/business/TableDataChecke
 export { TableColumnResolver } from "@app/features/tables/business/TableColumnResolver";
 export { TableRowProcessor } from "@app/features/tables/business/TableRowProcessor";
 export { TableRefresh } from "@app/features/tables/business/TableRefresh";
-export { TableConfig } from "@app/features/tables/business/TableConfig";
 export { TargetCalculator } from "@app/features/tables/business/TargetCalculator";

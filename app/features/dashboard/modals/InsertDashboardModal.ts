@@ -2,7 +2,7 @@
 
 import { App } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { t } from "@app/i18n";
 
 export class InsertDashboardModal extends BaseInsertModal {
@@ -41,6 +41,6 @@ export class InsertDashboardModal extends BaseInsertModal {
   }
 
   protected generateCode(): string {
-    return CodeGenerator.generateDashboardCode();
+    return dashboardBlock.serialize({});
   }
 }

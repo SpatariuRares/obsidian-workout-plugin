@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Vija e tendencës",
-    "refreshingTable": "Po rifreskohet tabela...",
-    "validation": {
-      "sortByInvalid": "sortBy duhet të jetë një nga {allowed}, u mor: \"{value}\"",
-      "sortOrderInvalid": "sortOrder duhet të jetë asc ose desc, u mor: \"{value}\""
-    }
+    "refreshingTable": "Po rifreskohet tabela..."
   },
   "timeperiods": {
     "month": "Muaj",

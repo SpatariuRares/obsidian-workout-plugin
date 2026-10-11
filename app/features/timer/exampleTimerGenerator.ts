@@ -1,4 +1,4 @@
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import { TIMER_TYPE } from "@app/features/timer/types";
 
 export function generateCountdownTimerBlock(
@@ -6,10 +6,10 @@ export function generateCountdownTimerBlock(
   duration: number,
   exercise: string,
 ): string {
-  return CodeGenerator.generateTimerCode({
+  return timerBlock.serialize({
     id,
-    duration,
     type: TIMER_TYPE.COUNTDOWN,
+    duration,
     exercise,
     showControls: true,
     sound: true,
@@ -22,11 +22,11 @@ export function generateIntervalTimerBlock(
   rounds: number,
   exercise: string,
 ): string {
-  return CodeGenerator.generateTimerCode({
+  return timerBlock.serialize({
     id,
+    type: TIMER_TYPE.INTERVAL,
     duration,
     rounds,
-    type: TIMER_TYPE.INTERVAL,
     exercise,
     showControls: true,
     sound: true,

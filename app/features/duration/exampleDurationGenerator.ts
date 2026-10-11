@@ -1,5 +1,5 @@
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { durationBlock } from "@app/features/duration/durationBlock";
 
 export function generateDurationBlock(): string {
-  return CodeGenerator.generateDurationCode();
+  return durationBlock.serialize({});
 }

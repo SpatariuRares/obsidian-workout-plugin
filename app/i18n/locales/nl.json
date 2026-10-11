@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Trendlijn",
-    "refreshingTable": "Tabel vernieuwen...",
-    "validation": {
-      "sortByInvalid": "sortBy moet een van {allowed} zijn, ontvangen: \"{value}\"",
-      "sortOrderInvalid": "sortOrder moet asc of desc zijn, ontvangen: \"{value}\""
-    }
+    "refreshingTable": "Tabel vernieuwen..."
   },
   "timeperiods": {
     "month": "Maand",

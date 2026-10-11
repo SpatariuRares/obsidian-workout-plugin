@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Tendenslinje",
-    "refreshingTable": "Opdaterer tabel...",
-    "validation": {
-      "sortByInvalid": "sortBy skal være en af {allowed}, modtaget: \"{value}\"",
-      "sortOrderInvalid": "sortOrder skal være asc eller desc, modtaget: \"{value}\""
-    }
+    "refreshingTable": "Opdaterer tabel..."
   },
   "timeperiods": {
     "month": "Måned",

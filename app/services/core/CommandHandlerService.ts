@@ -22,7 +22,7 @@ import type {
   WorkoutAPIPort,
   TemplateGeneratorPort,
 } from "@app/types/PluginPorts";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
+import { durationBlock } from "@app/features/duration/durationBlock";
 
 type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
 
@@ -108,7 +108,7 @@ export class CommandHandlerService {
       name: t("modal.titles.insertDuration"),
       editorCallback: (editor) => {
         editor.replaceRange(
-          CodeGenerator.generateDurationCode() + "\n\n",
+          durationBlock.serialize({}) + "\n\n",
           editor.getCursor(),
         );
         new Notice(t("messages.codeInserted"));

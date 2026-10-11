@@ -1,7 +1,6 @@
 import { ExerciseMatchUtils } from "@app/utils/exercise/ExerciseMatchUtils";
 import { ChartDataUtils } from "@app/features/charts/business/ChartDataUtils";
 import { DateUtils } from "@app/utils/DateUtils";
-import { ValidationUtils } from "@app/utils/ValidationUtils";
 import { StatisticsUtils } from "@app/utils/StatisticsUtils";
 import { TFile } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
@@ -466,99 +465,6 @@ describe("Utility Classes", () => {
         "YYYY-MM-DD",
       );
       expect(result.labels[0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    });
-  });
-
-  describe("ValidationUtils.validateUserParams", () => {
-    it("should validate dateRange parameter", () => {
-      const errors = ValidationUtils.validateUserParams({
-        dateRange: 400,
-      });
-      expect(errors.length).toBeGreaterThan(0);
-      expect(errors[0]).toContain("dateRange");
-    });
-
-    it("should accept valid dateRange", () => {
-      const errors = ValidationUtils.validateUserParams({
-        dateRange: 30,
-      });
-      expect(errors.length).toBe(0);
-    });
-
-    it("should validate limit parameter", () => {
-      const errors = ValidationUtils.validateUserParams({
-        limit: 2000,
-      });
-      expect(errors.length).toBeGreaterThan(0);
-      expect(errors[0]).toContain("limit");
-    });
-
-    it("should accept valid limit", () => {
-      const errors = ValidationUtils.validateUserParams({
-        limit: 100,
-      });
-      expect(errors.length).toBe(0);
-    });
-
-    it("should validate chartType parameter", () => {
-      const errors = ValidationUtils.validateUserParams({
-        chartType: "invalid" as CHART_TYPE,
-      });
-      expect(errors.length).toBeGreaterThan(0);
-      expect(errors[0]).toContain("chartType");
-    });
-
-    it("should accept valid chartType", () => {
-      const errors = ValidationUtils.validateUserParams({
-        chartType: CHART_TYPE.EXERCISE,
-      });
-      expect(errors.length).toBe(0);
-    });
-
-    it("should validate type parameter for charts", () => {
-      const errors = ValidationUtils.validateUserParams({
-        type: "invalid" as CHART_DATA_TYPE,
-      });
-      expect(errors.length).toBeGreaterThan(0);
-      expect(errors[0]).toContain("type");
-    });
-
-    it("should accept valid type", () => {
-      const errors = ValidationUtils.validateUserParams({
-        type: CHART_DATA_TYPE.VOLUME,
-      });
-      expect(errors.length).toBe(0);
-    });
-
-    it("should validate duration parameter for timers", () => {
-      const errors = ValidationUtils.validateUserParams({
-        duration: 5000,
-      });
-      expect(errors.length).toBeGreaterThan(0);
-      expect(errors[0]).toContain("duration");
-    });
-
-    it("should accept valid duration", () => {
-      const errors = ValidationUtils.validateUserParams({
-        duration: 120,
-      });
-      expect(errors.length).toBe(0);
-    });
-
-    it("should return multiple errors for multiple invalid params", () => {
-      const errors = ValidationUtils.validateUserParams({
-        dateRange: 400,
-        limit: 2000,
-        type: "invalid" as CHART_DATA_TYPE,
-      });
-      expect(errors.length).toBe(3);
-    });
-
-    it("should handle NaN values", () => {
-      const errors = ValidationUtils.validateUserParams({
-        dateRange: "abc" as unknown as number,
-      });
-      expect(errors.length).toBeGreaterThan(0);
     });
   });
 

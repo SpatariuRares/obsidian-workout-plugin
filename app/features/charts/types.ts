@@ -1,3 +1,5 @@
+import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
+import type { chartBlock } from "@app/features/charts/chartBlock";
 import {
   CHART_DATA_TYPE,
   CHART_TYPE,
@@ -5,20 +7,8 @@ import {
 
 export { CHART_DATA_TYPE, CHART_TYPE };
 
-export interface EmbeddedChartParams {
-  type?: CHART_DATA_TYPE;
-  chartType?: CHART_TYPE;
-  exercise?: string;
-  workout?: string;
-  dateRange?: number;
-  showTrendLine?: boolean;
-  showTrend?: boolean;
-  showStats?: boolean;
-  title?: string;
-  height?: string | number; // e.g. 300 (px) or "50vh"; default 4:3 aspect ratio
-  limit?: number;
-  exactMatch?: boolean;
-}
+/** Parameters of a `workout-chart` block; the schema is in chartBlock.ts */
+export type EmbeddedChartParams = BlockParams<typeof chartBlock>;
 
 export interface ChartDataset {
   label: string;

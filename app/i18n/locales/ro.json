@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Linie de tendință",
-    "refreshingTable": "Se reîmprospătează tabelul...",
-    "validation": {
-      "sortByInvalid": "sortBy trebuie să fie una dintre valorile {allowed}, primit: \"{value}\"",
-      "sortOrderInvalid": "sortOrder trebuie să fie asc sau desc, primit: \"{value}\""
-    }
+    "refreshingTable": "Se reîmprospătează tabelul..."
   },
   "timeperiods": {
     "month": "Luna",

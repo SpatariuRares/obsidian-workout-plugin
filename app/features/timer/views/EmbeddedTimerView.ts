@@ -13,6 +13,7 @@ import {
 } from "@app/features/timer/types";
 import { BaseView } from "@app/features/common/views/BaseView";
 import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class EmbeddedTimerView extends BaseView {
@@ -47,16 +48,12 @@ export class EmbeddedTimerView extends BaseView {
       }
       const resolvedParams = resolveResult.params;
 
-      if (!this.validateTimerParams(container, resolvedParams)) {
-        return;
-      }
-
       // If timer is already running, we only re-render the UI components
       // without resetting the core timing state, unless parameters changed significantly
       const currentState = this.timerCore.getState();
-      const timerType = resolvedParams.type || TIMER_TYPE.COUNTDOWN;
-      const duration = resolvedParams.duration || 30;
-      const totalRounds = resolvedParams.rounds || 1;
+      const timerType = resolvedParams.type ?? TIMER_TYPE.COUNTDOWN;
+      const duration = resolvedParams.duration ?? 30;
+      const totalRounds = resolvedParams.rounds ?? 1;
 
       const needsReset =
         !this.timerCore.isRunning() ||
@@ -98,7 +95,7 @@ export class EmbeddedTimerView extends BaseView {
    * 1. Explicit parameters from the code block
    * 2. Parameters from the specified preset (if any)
    * 3. Parameters from the default preset (if configured)
-   * 4. Hardcoded defaults
+   * 4. The timerBlock defaults
    */
   private resolveTimerParams(params: EmbeddedTimerParams): {
     params: EmbeddedTimerParams;
@@ -127,8 +124,9 @@ export class EmbeddedTimerView extends BaseView {
       }
     }
 
-    // Merge: explicit params override preset params
+    // Merge: the preset overrides the defaults, the block overrides both
     const resolvedParams: EmbeddedTimerParams = {
+      ...timerBlock.defaults,
       ...baseParams,
       ...this.filterUndefined(params),
     };
@@ -160,13 +158,9 @@ export class EmbeddedTimerView extends BaseView {
   private filterUndefined(
     params: EmbeddedTimerParams,
   ): Partial<EmbeddedTimerParams> {
-    const filtered: Partial<EmbeddedTimerParams> = {};
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined) {
-        filtered[key as keyof EmbeddedTimerParams] = value;
-      }
-    }
-    return filtered;
+    return Object.fromEntries(
+      Object.entries(params).filter(([, value]) => value !== undefined),
+    ) as Partial<EmbeddedTimerParams>;
   }
 
   /**
@@ -181,23 +175,6 @@ export class EmbeddedTimerView extends BaseView {
       cls: "workout-timer-error",
       text: errorMessage,
     });
-  }
-
-  private validateTimerParams(
-    container: HTMLElement,
-    params: EmbeddedTimerParams,
-  ): boolean {
-    const validationErrors: string[] = [];
-
-    if (params.duration && params.duration <= 0) {
-      validationErrors.push("Duration must be greater than 0");
-    }
-
-    if (params.rounds && params.rounds <= 0) {
-      validationErrors.push("Rounds must be greater than 0");
-    }
-
-    return this.validateAndHandleErrors(container, validationErrors);
   }
 
   private renderTimerContent(

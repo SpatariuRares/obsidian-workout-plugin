@@ -24,7 +24,6 @@ import { ChartTypeResolver } from "@app/features/charts/business/ChartTypeResolv
 import { BaseView } from "@app/features/common/views/BaseView";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { StatisticsUtils } from "@app/utils/StatisticsUtils";
-import { ValidationUtils } from "@app/utils/ValidationUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
 
@@ -75,10 +74,6 @@ export class EmbeddedChartView extends BaseView {
     params: EmbeddedChartParams,
   ): Promise<void> {
     try {
-      if (!this.validateChartParams(container, params)) {
-        return;
-      }
-
       const loadingDiv = this.showLoadingIndicator(container);
 
       if (this.handleEmptyData(container, logData)) {
@@ -166,15 +161,6 @@ export class EmbeddedChartView extends BaseView {
         error instanceof Error ? error : new Error(String(error));
       this.handleError(container, errorObj);
     }
-  }
-
-  private validateChartParams(
-    container: HTMLElement,
-    params: EmbeddedChartParams,
-  ): boolean {
-    const validationErrors =
-      ValidationUtils.validateUserParams(params);
-    return this.validateAndHandleErrors(container, validationErrors);
   }
 
   private renderChartContent(

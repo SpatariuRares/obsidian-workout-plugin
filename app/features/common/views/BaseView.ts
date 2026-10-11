@@ -163,10 +163,7 @@ export abstract class BaseView {
     validationErrors: string[],
   ): boolean {
     if (validationErrors.length > 0) {
-      Feedback.renderError(
-        container,
-        `Invalid parameters:\n${validationErrors.join("\n")}`,
-      );
+      renderInvalidParams(container, validationErrors);
       return false;
     }
     return true;
@@ -181,4 +178,15 @@ export abstract class BaseView {
   ): void {
     Feedback.renderSuccess(container, message);
   }
+}
+
+/** Show why a code block's parameters can't be used, one line per problem */
+export function renderInvalidParams(
+  container: HTMLElement,
+  errors: string[],
+): void {
+  Feedback.renderError(
+    container,
+    `${t("codeBlocks.validation.title")}\n${errors.join("\n")}`,
+  );
 }

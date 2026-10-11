@@ -56,18 +56,6 @@ jest.mock("@app/features/common/views/BaseView", () => ({
 }));
 
 // Mock tables modules
-jest.mock("@app/features/tables/business/TableConfig", () => {
-  const actual = jest.requireActual(
-    "@app/features/tables/business/TableConfig",
-  );
-  return {
-    TableConfig: {
-      validateParams: jest.fn().mockReturnValue([]),
-      mergeWithDefaults: (p: object) =>
-        actual.TableConfig.mergeWithDefaults(p),
-    },
-  };
-});
 jest.mock("@app/features/tables/business/TableRefresh", () => ({
   TableRefresh: {
     refreshTable: jest.fn().mockResolvedValue(undefined),
@@ -160,14 +148,14 @@ jest.mock("@app/types/ViewTypes", () => ({
 // Mock CodeBlockEditorService
 jest.mock("@app/services/editor/CodeBlockEditorService", () => ({
   CodeBlockEditorService: {
-    updateTargetWeight: jest.fn().mockResolvedValue(true),
+    patchCodeBlock: jest.fn().mockResolvedValue(true),
   },
 }));
 
 import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
-import { TableConfig } from "@app/features/tables/business/TableConfig";
+import { tableBlock } from "@app/features/tables/tableBlock";
 import { TableRefresh } from "@app/features/tables/business/TableRefresh";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
@@ -264,35 +252,6 @@ describe("EmbeddedTableView", () => {
         plugin,
       );
       expect(TableRenderer.renderTable).toHaveBeenCalled();
-    });
-
-    it("validates params before rendering", async () => {
-      const container = document.createElement("div");
-
-      await view.createTable(container, [createLog()], { limit: 10 });
-
-      expect(TableConfig.validateParams).toHaveBeenCalledWith({
-        limit: 10,
-      });
-    });
-
-    it("stops rendering when validation fails", async () => {
-      (TableConfig.validateParams as jest.Mock).mockReturnValueOnce([
-        "Invalid limit",
-      ]);
-      const container = document.createElement("div");
-
-      // Need to override validateAndHandleErrors to return false
-      const origValidate = (view as any).validateAndHandleErrors;
-      (view as any).validateAndHandleErrors = jest
-        .fn()
-        .mockReturnValue(false);
-
-      await view.createTable(container, [createLog()], { limit: -1 });
-
-      expect(TableRenderer.renderTable).not.toHaveBeenCalled();
-
-      (view as any).validateAndHandleErrors = origValidate;
     });
 
     it("handles empty data", async () => {
@@ -573,9 +532,13 @@ describe("EmbeddedTableView", () => {
       const {
         CodeBlockEditorService,
       } = require("@app/services/editor/CodeBlockEditorService");
-      expect(
-        CodeBlockEditorService.updateTargetWeight,
-      ).toHaveBeenCalledWith(plugin.app, "Bench Press", 82.5);
+      // No id in this block, so it is found by exercise
+      expect(CodeBlockEditorService.patchCodeBlock).toHaveBeenCalledWith(
+        plugin.app,
+        tableBlock,
+        { exercise: "Bench Press" },
+        { targetWeight: 82.5 },
+      );
     });
 
     it("passes isDismissedForWeight correctly", async () => {

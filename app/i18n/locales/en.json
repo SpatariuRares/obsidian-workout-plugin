@@ -947,11 +947,7 @@
       "repsSuffix": "reps",
       "separator": " × "
     },
-    "trendLine": "Trend line",
-    "validation": {
-      "sortByInvalid": "sortBy must be one of {allowed}, received: \"{value}\"",
-      "sortOrderInvalid": "sortOrder must be asc or desc, received: \"{value}\""
-    }
+    "trendLine": "Trend line"
   },
   "timeperiods": {
     "month": "Month",
@@ -994,6 +990,16 @@
       "title": "Muscle tags reference",
       "description": "This file lists all available muscle tags from your muscle-tags.csv file.",
       "note": "**Note**: This file is auto-generated. To add or change tags, use the '{command}' command."
+    }
+  },
+  "codeBlocks": {
+    "validation": {
+      "title": "Invalid parameters:",
+      "notANumber": "{key} must be a number, but it is \"{value}\"",
+      "tooSmall": "{key} must be {min} or more, but it is {value}",
+      "outOfRange": "{key} must be between {min} and {max}, but it is {value}",
+      "notABoolean": "{key} must be true or false, but it is \"{value}\"",
+      "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\""
     }
   }
 }

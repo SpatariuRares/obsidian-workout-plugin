@@ -10,7 +10,13 @@ import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
-import { EmbeddedDurationParams } from "@app/features/duration/types";
+import { chartBlock } from "@app/features/charts/chartBlock";
+import { tableBlock } from "@app/features/tables/tableBlock";
+import { timerBlock } from "@app/features/timer/timerBlock";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
+import { durationBlock } from "@app/features/duration/durationBlock";
+import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
+import { renderInvalidParams } from "@app/features/common/views/BaseView";
 import { EventAwareRenderChild } from "@app/services/core/EventAwareRenderChild";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
 import type {
@@ -24,7 +30,6 @@ import {
 } from "obsidian";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import { normalizeExercise } from "@app/services/events/WorkoutEventTypes";
-import { CONSTANTS } from "@app/constants";
 
 type CodeBlockProcessorPlugin = WorkoutPluginContext &
   MarkdownCodeBlockProcessorPort;
@@ -97,24 +102,24 @@ export class CodeBlockProcessorService {
 
   registerProcessors(): void {
     this.plugin.registerMarkdownCodeBlockProcessor(
-      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.CHART,
+      chartBlock.type,
       (source, el, ctx) => this.handleWorkoutChart(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TABLE,
+      tableBlock.type,
       (source, el, ctx) => this.handleWorkoutLog(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.TIMER,
+      timerBlock.type,
       (source, el, ctx) => this.handleWorkoutTimer(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DASHBOARD,
+      dashboardBlock.type,
       (source, el, ctx) =>
         this.handleWorkoutDashboard(source, el, ctx),
     );
     this.plugin.registerMarkdownCodeBlockProcessor(
-      CONSTANTS.WORKOUT.MODAL.CODE_BLOCKS.DURATION,
+      durationBlock.type,
       (source, el, ctx) =>
         this.handleWorkoutDuration(source, el, ctx),
     );
@@ -127,37 +132,32 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(source);
-      const logData = await this.embeddedChartView.loadChartData(
-        params as EmbeddedChartParams,
-      );
+      const parsed = this.parseParams(chartBlock, source, el);
+      if (!parsed) return;
+      const params: EmbeddedChartParams = {
+        ...chartBlock.defaults,
+        ...parsed,
+      };
+      const logData = await this.embeddedChartView.loadChartData(params);
 
       if (logData.length === 0) {
         this.renderNoDataMessage(el, ctx);
         return;
       }
 
-      await this.embeddedChartView.createChart(
-        el,
-        logData,
-        params as EmbeddedChartParams,
-      );
+      await this.embeddedChartView.createChart(el, logData, params);
 
       ctx.addChild(
         new EventAwareRenderChild(
           el,
           this.eventBus,
           {
-            exercise: params.exercise as string | undefined,
-            workout: params.workout as string | undefined,
-            exactMatch: params.exactMatch as boolean | undefined,
+            exercise: params.exercise,
+            workout: params.workout,
+            exactMatch: params.exactMatch,
             muscleTagsAware: false,
           },
-          () =>
-            this.embeddedChartView.refreshChart(
-              el,
-              params as EmbeddedChartParams,
-            ),
+          () => this.embeddedChartView.refreshChart(el, params),
         ),
       );
     } catch (error) {
@@ -176,14 +176,19 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(source);
+      const parsed = this.parseParams(tableBlock, source, el);
+      if (!parsed) return;
+      const params: EmbeddedTableParams = {
+        ...tableBlock.defaults,
+        ...parsed,
+      };
 
       const pageLink = PathUtils.toWikiLink(ctx.sourcePath);
       const logData = await this.loadLogData();
       await this.embeddedTableView.createTable(
         el,
         logData,
-        params as EmbeddedTableParams,
+        params,
         pageLink,
       );
 
@@ -192,17 +197,13 @@ export class CodeBlockProcessorService {
           el,
           this.eventBus,
           {
-            exercise: params.exercise as string | undefined,
-            workout: params.workout as string | undefined,
-            exactMatch: params.exactMatch as boolean | undefined,
+            exercise: params.exercise,
+            workout: params.workout,
+            exactMatch: params.exactMatch,
             muscleTagsAware: false,
           },
           () =>
-            this.embeddedTableView.refreshTable(
-              el,
-              params as EmbeddedTableParams,
-              pageLink,
-            ),
+            this.embeddedTableView.refreshTable(el, params, pageLink),
         ),
       );
     } catch (error) {
@@ -220,9 +221,9 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(
-        source,
-      ) as EmbeddedTimerParams;
+      // Defaults are applied by the timer view, after the preset
+      const params = this.parseParams(timerBlock, source, el);
+      if (!params) return;
 
       this.createEmbeddedTimer(el, params, ctx);
     } catch (error) {
@@ -255,9 +256,9 @@ export class CodeBlockProcessorService {
     }
 
     // Resolve workout: fallback to current file title if not in code block
-    const timerExercise = params.exercise as string | undefined;
+    const timerExercise = params.exercise;
     const timerWorkout =
-      (params.workout as string | undefined) ||
+      params.workout ||
       ctx.sourcePath.split("/").pop()?.replace(/\.md$/i, "");
 
     // Register lifecycle manager + auto-start listener on log-added
@@ -283,11 +284,14 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(source);
+      const parsed = this.parseParams(dashboardBlock, source, el);
+      if (!parsed) return;
+      const params: EmbeddedDashboardParams = {
+        ...dashboardBlock.defaults,
+        ...parsed,
+      };
       const logData =
-        await this.embeddedDashboardView.loadDashboardData(
-          params as EmbeddedDashboardParams,
-        );
+        await this.embeddedDashboardView.loadDashboardData(params);
 
       if (logData.length === 0) {
         this.renderNoDataMessage(el, ctx);
@@ -297,7 +301,7 @@ export class CodeBlockProcessorService {
       await this.embeddedDashboardView.createDashboard(
         el,
         logData,
-        params as EmbeddedDashboardParams,
+        params,
       );
 
       ctx.addChild(
@@ -308,11 +312,7 @@ export class CodeBlockProcessorService {
             // Nessun filtro esercizio/workout = sempre refresh
             muscleTagsAware: true, // Dashboard mostra muscle heat map
           },
-          () =>
-            this.embeddedDashboardView.refreshDashboard(
-              el,
-              params as EmbeddedDashboardParams,
-            ),
+          () => this.embeddedDashboardView.refreshDashboard(el, params),
         ),
       );
     } catch (error) {
@@ -334,9 +334,8 @@ export class CodeBlockProcessorService {
     ctx: MarkdownPostProcessorContext,
   ) {
     try {
-      const params = this.parseCodeBlockParams(
-        source,
-      ) as EmbeddedDurationParams;
+      const params = this.parseParams(durationBlock, source, el);
+      if (!params) return;
 
       // Get current file path from context
       const currentFilePath = ctx.sourcePath;
@@ -376,55 +375,20 @@ export class CodeBlockProcessorService {
     );
   }
 
-  // Parse code block parameters
-  private parseCodeBlockParams(
+  /**
+   * Read a block with its schema. Invalid values are shown in place of the
+   * block and stop the render (null).
+   */
+  private parseParams<P>(
+    schema: CodeBlockSchema<P>,
     source: string,
-  ): Record<string, unknown> {
-    const params: Record<string, unknown> = {};
-    const lines = source.split("\n");
-
-    lines.forEach((line) => {
-      const trimmedLine = line.trim();
-      if (trimmedLine && !trimmedLine.startsWith("#")) {
-        const colonIndex = trimmedLine.indexOf(":");
-        if (colonIndex > 0) {
-          const key = trimmedLine.substring(0, colonIndex).trim();
-          const value = trimmedLine.substring(colonIndex + 1).trim();
-
-          // Check for array syntax: [value1, value2, ...]
-          if (value.startsWith("[") && value.endsWith("]")) {
-            const arrayStr = value.slice(1, -1);
-            params[key] = arrayStr
-              .split(",")
-              .map((v) => this.unquote(v.trim()))
-              .filter((v) => v.length > 0);
-          } else if (value === "true" || value === "false") {
-            // Try to parse as boolean
-            params[key] = value === "true";
-          } else if (value && !isNaN(Number(value))) {
-            // Check for empty string before number conversion
-            // Empty strings convert to 0 with Number(""), which is undesirable
-            params[key] = Number(value);
-          } else {
-            params[key] = this.unquote(value);
-          }
-        }
-      }
-    });
-
-    return params;
-  }
-
-  // Strip one pair of matching wrapping quotes ("x" or 'x')
-  private unquote(value: string): string {
-    const first = value.charAt(0);
-    if (
-      value.length >= 2 &&
-      (first === '"' || first === "'") &&
-      value.endsWith(first)
-    ) {
-      return value.slice(1, -1).trim();
+    el: HTMLElement,
+  ): P | null {
+    const { params, errors } = schema.parse(source);
+    if (errors.length > 0) {
+      renderInvalidParams(el, errors);
+      return null;
     }
-    return value;
+    return params;
   }
 }

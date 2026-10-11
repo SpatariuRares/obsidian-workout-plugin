@@ -68,7 +68,6 @@ app/
 │   ├── ParameterUtils.ts
 │   ├── StatisticsUtils.ts
 │   ├── StringUtils.ts
-│   └── ValidationUtils.ts
 │
 └── views/                  # Embedded views
     ├── BaseView.ts             # Template method base class

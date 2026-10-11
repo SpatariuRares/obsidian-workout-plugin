@@ -3,9 +3,9 @@
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { ModalBase } from "@app/features/modals/base/ModalBase";
-import { CodeGenerator } from "@app/features/modals/components/CodeGenerator";
 import { ExerciseAutocomplete } from "@app/features/modals/components/ExerciseAutocomplete";
-import { TABLE_TYPE } from "@app/features/tables/types";
+import { tableBlock } from "@app/features/tables/tableBlock";
+import { timerBlock } from "@app/features/timer/timerBlock";
 import { TIMER_TYPE } from "@app/features/timer/types";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
@@ -218,9 +218,9 @@ export class CreateExerciseSectionModal extends ModalBase {
       });
     }
     if (params.showTimer) {
-      const timerCode = CodeGenerator.generateTimerCode({
+      const timerCode = timerBlock.serialize({
         type: TIMER_TYPE.COUNTDOWN,
-        duration: params.restTime,
+        duration: params.restTime || undefined,
         exercise: params.exerciseName,
         showControls: true,
         sound: params.timerSound,
@@ -230,17 +230,12 @@ export class CreateExerciseSectionModal extends ModalBase {
     }
 
     if (params.showLog) {
-      // Determine table type based on whether workout is specified
-      const tableType: TABLE_TYPE = params.workoutName
-        ? TABLE_TYPE.COMBINED
-        : TABLE_TYPE.EXERCISE;
-      const logCode = CodeGenerator.generateTableCode({
+      // With a workout the table shows that exercise in that workout only
+      const logCode = tableBlock.serialize({
         id: generateCodeBlockId(),
-        tableType,
-        exercise: params.exerciseName,
-        workout: params.workoutName,
+        exercise: params.exerciseName || undefined,
+        workout: params.workoutName || undefined,
         limit: CONSTANTS.WORKOUT.MODAL.DEFAULTS.TABLE_LIMIT,
-        showAddButton: true,
         exactMatch: true,
       });
       sectionCode += logCode;

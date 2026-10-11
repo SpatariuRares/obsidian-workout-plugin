@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Trend çizgisi",
-    "refreshingTable": "Tablo yenileniyor...",
-    "validation": {
-      "sortByInvalid": "sortBy şunlardan biri olmalıdır: {allowed}, alınan: \"{value}\"",
-      "sortOrderInvalid": "sortOrder asc veya desc olmalıdır, alınan: \"{value}\""
-    }
+    "refreshingTable": "Tablo yenileniyor..."
   },
   "timeperiods": {
     "month": "Ay",

@@ -2,7 +2,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { MarkdownView, MarkdownRenderChild } from "obsidian";
 import { TableRenderer } from "@app/features/tables/components/TableRenderer";
 import { TableDataProcessor } from "@app/features/tables/business/TableDataProcessor";
-import { TableConfig } from "@app/features/tables/business/TableConfig";
+import { tableBlock } from "@app/features/tables/tableBlock";
 import { TableRefresh } from "@app/features/tables/business/TableRefresh";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { TargetHeader } from "@app/features/tables/ui/TargetHeader";
@@ -83,13 +83,6 @@ export class EmbeddedTableView extends BaseView {
     pageLink: string,
   ): Promise<void> {
     try {
-      const validationErrors = TableConfig.validateParams(params);
-      if (
-        !this.validateAndHandleErrors(container, validationErrors)
-      ) {
-        return;
-      }
-
       const loadingDiv = this.showLoadingIndicator(container);
       // Use global refresh for the "create first log" button so all views update
       if (
@@ -105,9 +98,10 @@ export class EmbeddedTableView extends BaseView {
         return;
       }
 
-      // Defaults apply to the data path only; the UI (edit action) keeps the
-      // block's own params so defaults are never written back into the block
-      const dataParams = TableConfig.mergeWithDefaults(params);
+      const dataParams: EmbeddedTableParams = {
+        ...tableBlock.defaults,
+        ...params,
+      };
 
       const filterResult = this.filterData(logData, dataParams);
 
@@ -309,12 +303,12 @@ export class EmbeddedTableView extends BaseView {
           await this.plugin.saveSettings();
         },
         onUpdateTarget: async (newWeight: number) => {
-          const success =
-            await CodeBlockEditorService.updateTargetWeight(
-              this.plugin.app,
-              exercise,
-              newWeight,
-            );
+          const success = await CodeBlockEditorService.patchCodeBlock(
+            this.plugin.app,
+            tableBlock,
+            params.id ? { id: params.id } : { exercise },
+            { targetWeight: newWeight },
+          );
           if (success) {
             await this.refreshTable(
               tableContainer,

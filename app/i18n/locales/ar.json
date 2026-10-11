@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "خط الاتجاه",
-    "refreshingTable": "جارٍ تحديث الجدول...",
-    "validation": {
-      "sortByInvalid": "يجب أن تكون قيمة sortBy إحدى {allowed}، القيمة المستلمة: \"{value}\"",
-      "sortOrderInvalid": "يجب أن تكون قيمة sortOrder إما asc أو desc، القيمة المستلمة: \"{value}\""
-    }
+    "refreshingTable": "جارٍ تحديث الجدول..."
   },
   "timeperiods": {
     "month": "شهر",

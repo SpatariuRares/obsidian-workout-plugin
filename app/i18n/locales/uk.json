@@ -947,11 +947,7 @@
       "separator": " × "
     },
     "trendLine": "Лінія тренду",
-    "refreshingTable": "Оновлення таблиці...",
-    "validation": {
-      "sortByInvalid": "sortBy має бути одним із {allowed}, отримано: \"{value}\"",
-      "sortOrderInvalid": "sortOrder має бути asc або desc, отримано: \"{value}\""
-    }
+    "refreshingTable": "Оновлення таблиці..."
   },
   "timeperiods": {
     "month": "Місяць",

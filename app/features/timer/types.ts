@@ -1,3 +1,5 @@
+import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
+import type { timerBlock } from "@app/features/timer/timerBlock";
 import {
   TIMER_TYPE,
   type TimerPresetConfig,
@@ -6,18 +8,8 @@ import {
 export { TIMER_TYPE };
 export type { TimerPresetConfig };
 
-export interface EmbeddedTimerParams {
-  id?: string; // Unique identifier for code block replacement
-  duration?: number; // Duration in seconds (used for all timer types)
-  type?: TIMER_TYPE;
-  showControls?: boolean;
-  exercise?: string;
-  workout?: string;
-  rounds?: number; // Number of rounds (for interval timer)
-  sound?: boolean; // Play the notification sound (default true)
-  autoStart?: boolean; // Start the timer as soon as the block renders
-  preset?: string; // Name of a saved timer preset to use as base configuration
-}
+/** Parameters of a `workout-timer` block; the schema is in timerBlock.ts */
+export type EmbeddedTimerParams = BlockParams<typeof timerBlock>;
 
 export interface TimerState {
   timerInterval?: number;

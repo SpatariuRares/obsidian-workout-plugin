@@ -24,6 +24,30 @@ describe("block schemas", () => {
     ]);
   });
 
+  describe("blocks written before the schemas", () => {
+    it("accepts true/false and yes/no in any case", () => {
+      expect(
+        tableBlock.parse("showProtocol: True\nexactMatch: FALSE").params,
+      ).toEqual({ showProtocol: true, exactMatch: false });
+      expect(
+        chartBlock.parse("showTrendLine: yes\nshowStats: No").params,
+      ).toEqual({ showTrendLine: true, showStats: false });
+    });
+
+    it("accepts a choice in any case and stores its canonical spelling", () => {
+      expect(timerBlock.parse("type: Countdown").params.type).toBe("countdown");
+      expect(tableBlock.parse("sortOrder: DESC").params.sortOrder).toBe("desc");
+      expect(chartBlock.parse("type: heartrate").params.type).toBe("heartRate");
+    });
+
+    it("keeps dateRange 0 in a dashboard meaning all history", () => {
+      expect(dashboardBlock.parse("dateRange: 0")).toEqual({
+        params: { dateRange: 0 },
+        errors: [],
+      });
+    });
+  });
+
   describe("workout-chart", () => {
     it.each([
       ["dateRange: 400"],

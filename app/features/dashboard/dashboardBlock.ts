@@ -3,8 +3,8 @@ import { defineCodeBlock } from "@app/services/codeblocks/CodeBlockSchema";
 /** The `workout-dashboard` code block: its parameters, types and defaults */
 export const dashboardBlock = defineCodeBlock("workout-dashboard", {
   title: { kind: "string" },
-  /** Days to include in analytics */
-  dateRange: { kind: "number", min: 1 },
+  /** Days to include in analytics; 0 = all history */
+  dateRange: { kind: "number", min: 0 },
   showSummary: { kind: "boolean", default: true },
   showQuickStats: { kind: "boolean", default: true },
   showVolumeAnalytics: { kind: "boolean", default: true },

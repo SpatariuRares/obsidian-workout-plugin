@@ -249,11 +249,20 @@ function readValue(
       return { value: num };
     }
     case "boolean":
-      if (value === "true") return { value: true };
-      if (value === "false") return { value: false };
+      // YAML-style True/FALSE and yes/no too: older notes have them
+      if (["true", "yes"].includes(value.toLowerCase())) {
+        return { value: true };
+      }
+      if (["false", "no"].includes(value.toLowerCase())) {
+        return { value: false };
+      }
       return { error: t("codeBlocks.validation.notABoolean", { key, value }) };
-    case "enum":
-      if (field.values.includes(value)) return { value };
+    case "enum": {
+      // Any case, stored with the canonical spelling ("DESC" → "desc")
+      const match = field.values.find(
+        (allowed) => allowed.toLowerCase() === value.toLowerCase(),
+      );
+      if (match !== undefined) return { value: match };
       return {
         error: t("codeBlocks.validation.notOneOf", {
           key,
@@ -261,6 +270,7 @@ function readValue(
           allowed: field.values.join(", "),
         }),
       };
+    }
     case "list": {
       const inner =
         raw.startsWith("[") && raw.endsWith("]") ? raw.slice(1, -1) : raw;

@@ -71,7 +71,7 @@ describe("CodeBlockSchema (workout-log schema)", () => {
         body(
           "limit: lots",
           "dateRange: -1",
-          "exactMatch: yes",
+          "exactMatch: maybe",
           "sortOrder: up",
           "limit: 5000",
           "exercise: Squat",
@@ -82,7 +82,7 @@ describe("CodeBlockSchema (workout-log schema)", () => {
       expect(errors).toEqual([
         t("codeBlocks.validation.notANumber", { key: "limit", value: "lots" }),
         t("codeBlocks.validation.tooSmall", { key: "dateRange", min: "0", value: "-1" }),
-        t("codeBlocks.validation.notABoolean", { key: "exactMatch", value: "yes" }),
+        t("codeBlocks.validation.notABoolean", { key: "exactMatch", value: "maybe" }),
         t("codeBlocks.validation.notOneOf", {
           key: "sortOrder",
           value: "up",

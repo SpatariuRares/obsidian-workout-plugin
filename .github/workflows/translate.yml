@@ -1,0 +1,148 @@
+name: Translate
+
+# Fills in the keys that en.json has and other locales don't, with
+# translategemma on Ollama, then commits the locales to the same branch.
+# One runner per locale, so a release no longer waits ~10-20 minutes for 23
+# languages in a row.
+#
+# Runs on its own when en.json changes on main, when started by hand or by
+# the local pre-push hook (any branch), and as a step of every release.
+
+on:
+  push:
+    branches: [main]
+    paths: ["app/i18n/locales/en.json"]
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Branch to read en.json from and commit the locales to
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: translate-${{ inputs.ref || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  BRANCH: ${{ inputs.ref || github.ref_name }}
+
+jobs:
+  plan:
+    name: Find missing translations
+    runs-on: ubuntu-latest
+    outputs:
+      locales: ${{ steps.missing.outputs.locales }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Placeholder and planner tests
+        working-directory: AI translate
+        run: python -m unittest test_placeholders test_missing_locales
+
+      - name: Locales missing keys of en.json
+        id: missing
+        working-directory: AI translate
+        run: |
+          LOCALES=$(python missing_locales.py --json)
+          echo "Missing: $LOCALES"
+          echo "locales=$LOCALES" >> "$GITHUB_OUTPUT"
+
+  translate:
+    name: Translate ${{ matrix.locale }}
+    needs: plan
+    if: needs.plan.outputs.locales != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        locale: ${{ fromJson(needs.plan.outputs.locales) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: AI translate/requirements.txt
+
+      - name: Cache Ollama model
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-translategemma-latest
+
+      - name: Install Ollama
+        run: curl -fsSL https://ollama.com/install.sh | sh
+
+      - name: Start Ollama and pull model
+        run: |
+          ollama serve &
+          until curl -s http://localhost:11434/api/tags > /dev/null; do sleep 2; done
+          ollama pull translategemma:latest
+
+      - name: Install Python dependencies
+        run: pip install -r "AI translate/requirements.txt"
+
+      - name: Translate
+        working-directory: AI translate
+        run: python translate.py --locale "${{ matrix.locale }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: locale-${{ matrix.locale }}
+          path: app/i18n/locales/${{ matrix.locale }}.json
+          retention-days: 1
+
+  commit:
+    name: Check and commit locales
+    needs: translate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: locale-*
+          path: app/i18n/locales
+          merge-multiple: true
+
+      # Same rules as app/i18n/__tests__/locales.consistency.test.ts: stops a
+      # broken placeholder ({count} -> {{count}}) from reaching the branch
+      - name: Check translated locales
+        working-directory: AI translate
+        run: python check_locales.py
+
+      - name: Commit translations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app/i18n/locales/
+          if git diff --staged --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore(i18n): translate new strings"
+          # The branch may have moved while translating
+          for attempt in 1 2 3; do
+            git pull --rebase origin "$BRANCH" && git push origin "HEAD:$BRANCH" && exit 0
+            sleep 5
+          done
+          exit 1

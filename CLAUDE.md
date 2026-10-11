@@ -24,9 +24,11 @@ npm run doe:validate # Import-convention check (@app aliases, barrels, circular 
 node scripts/find-hardcoded-strings.mjs  # Strict scan for literals that should use t()
 ```
 
-**Release**: push a `X.Y.Z` tag (use `/release`). CI syncs `manifest.json` to the tag, translates locales, commits both back to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow.
+**Release**: push a `X.Y.Z` tag (use `/release`). CI runs the Translate workflow for anything still untranslated (usually nothing: see "Internationalization"), syncs `manifest.json` to the tag, commits it to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow.
 
-**Husky pre-push** runs typecheck → lint → `test:coverage` → build, so a failing check (including a coverage drop) blocks `git push`. CI runs the same lint and coverage checks.
+**Husky pre-push** runs typecheck → lint → `test:coverage` → build, so a failing check (including a coverage drop) blocks `git push`. CI runs the same lint and coverage checks. Tests run with `TZ=Europe/Rome` (set in `jest.config.js`; setting `process.env.TZ` inside a test file has no effect).
+
+**Translation hooks**: **pre-commit** translates new `en.json` strings locally when Ollama runs here (`brew install ollama`, `ollama serve`, `ollama pull translategemma`) and adds the locales to the commit; without Ollama it does nothing. **pre-push** then starts the Translate workflow on GitHub for a pushed branch that still misses translations (needs `gh`; `git pull` afterwards to get the commit).
 
 **Run single test**: `npm test -- app/utils/__tests__/DateUtils.test.ts`
 
@@ -288,7 +290,7 @@ import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 ### Internationalization
 
 - `import { t } from "@app/i18n";` then `t("common.clear")`. Keys are nested JSON paths in `app/i18n/locales/en.json`.
-- **Only edit `en.json`.** The other 23 locales are filled by the CI `translate` job (Ollama, `AI translate/`) when a release tag is pushed, and committed back to `main`.
+- **Only edit `en.json`.** The other 23 locales are filled by `.github/workflows/translate.yml` (Ollama translategemma, `AI translate/`, one runner per locale): it runs when `en.json` changes on `main`, when the pre-push hook asks for a branch, and as part of every release, and commits the locales to that branch. `AI translate/missing_locales.py` lists the locales still missing keys.
 - The translator repairs or rejects placeholder changes (`AI translate/placeholders.py`, e.g. the model turning `{count}` into `{{count}}`), and `AI translate/check_locales.py` fails the job before the locales are committed if any locale still breaks a placeholder, code span or `**bold**` of en.json. Python tests: `cd "AI translate" && venv/bin/python -m unittest test_placeholders`.
 - The job only translates **missing** keys. When you change the English text of an existing key (or remove a key), delete that key from every other locale too, otherwise the old translation stays. Untranslated keys fall back to English at runtime.
 - Write real UI text, never the key name spelled out ("Delete this log entry?", not "Delete Confirm"), in sentence case.

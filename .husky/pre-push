@@ -1,7 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# The refs being pushed, before the checks below can read stdin
+PUSHED_REFS=$(cat)
+
 npm run typecheck
 npm run lint
 npm run test:coverage
 npm run build
+
+# Ask GitHub to translate pushed branches that miss translations
+printf '%s\n' "$PUSHED_REFS" | sh scripts/i18n-request-translation.sh

@@ -653,6 +653,13 @@ Claude can then read console errors, screenshot rendered code blocks, run JS in 
 
 ## Agent skills
 
+### Claude Code automations (`.claude/`)
+
+- **Hooks** (`.claude/settings.json`, scripts in `.claude/hooks/`): editing `main.js`, `styles.css` or any `.csv` is blocked (build outputs and user data); every edited `.ts` file is linted with `--max-warnings 0` right away.
+- **`architecture-guardian` agent**: run it on a branch or diff before merging; it reports code that re-derives what a deep module owns (training days, exercise pages, fields, note blocks, the log CSV, protocols, muscles).
+- **`obsidian-verify` skill**: live check in the running Obsidian without writing notes or the log (rebuild, reload, detached renders, modals closed unsaved, console).
+- **`release` skill**: also pushes `main` first when it is ahead, reruns failed translation jobs, and puts the release notes on the GitHub release.
+
 ### Issue tracker
 
 Issues live as local markdown files under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.

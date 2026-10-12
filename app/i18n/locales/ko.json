@@ -99,7 +99,8 @@
       "allValid": "모든 운동 페이지가 유효합니다",
       "noTags": "프론트매터에 근육 태그가 없습니다",
       "title": "파일 오류",
-      "tooManyTags": "너무 많은 근육 태그가 있습니다 ({count})"
+      "tooManyTags": "너무 많은 근육 태그가 있습니다 ({count})",
+      "sharedName": "{pages}과 동일한 운동 이름: 로그는 해당 항목 중 하나로만 저장됩니다."
     },
     "muscleTags": {
       "description": "설명",
@@ -167,6 +168,10 @@
         "volume": "평균 볼륨: {value} {unit}",
         "sets": "평균 세트 수: {value}",
         "reps": "평균 횟수: {value}"
+      },
+      "imbalance": {
+        "backDominant": "전체와 후면의 불균형: 후면 근육이 전면 근육보다 훨씬 더 많이 사용됩니다.",
+        "frontDominant": "전면-후면 불균형: 전면 근육이 후면 근육보다 훨씬 더 많이 사용됩니다."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field}은(는) 최소 {min}이어야 합니다",
       "validMaxValue": "{field}은(는) 최대 {max}이어야 합니다",
       "validFieldRequired": "{field}은(는) 필수입니다",
-      "migrationNoUpdates": "모든 운동 페이지가 이미 최신 상태입니다"
+      "migrationNoUpdates": "모든 운동 페이지가 이미 최신 상태입니다",
+      "validMustBeWholeNumber": "{field}는 정수여야 합니다."
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "추세선",
-    "refreshingTable": "테이블 새로 고치는 중..."
+    "refreshingTable": "테이블 새로 고치는 중...",
+    "setCount": "{count} 설정"
   },
   "timeperiods": {
     "month": "월",

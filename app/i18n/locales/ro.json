@@ -99,7 +99,8 @@
       "allValid": "Toate paginile de exerciții sunt valide",
       "noTags": "Nicio etichetă pentru mușchi în frontmatter",
       "title": "Erori în fișiere",
-      "tooManyTags": "Prea multe etichete pentru mușchi ({count})"
+      "tooManyTags": "Prea multe etichete pentru mușchi ({count})",
+      "sharedName": "Aceeași denumire a exercițiului ca la {pages}: jurnalele sunt salvate doar într-unul dintre ele"
     },
     "muscleTags": {
       "description": "Descriere",
@@ -167,6 +168,10 @@
         "volume": "Volum mediu: {value} {unit}",
         "sets": "Număr mediu de serii: {value}",
         "reps": "Număr mediu de repetări: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Diferență între partea anterioară și cea posterioară: mușchii din partea posterioară lucrează mult mai intens decât cei din partea anterioară.",
+        "frontDominant": "Dezechilibru față/spate: mușchii din partea din față lucrează mult mai intens decât cei din partea din spate."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} trebuie să fie cel puțin {min}",
       "validMaxValue": "{field} trebuie să fie cel mult {max}",
       "validFieldRequired": "{field} este obligatoriu",
-      "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate"
+      "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate",
+      "validMustBeWholeNumber": "{field} trebuie să fie un număr întreg"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Linie de tendință",
-    "refreshingTable": "Se reîmprospătează tabelul..."
+    "refreshingTable": "Se reîmprospătează tabelul...",
+    "setCount": "{count} setează"
   },
   "timeperiods": {
     "month": "Luna",

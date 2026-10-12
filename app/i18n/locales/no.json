@@ -99,7 +99,8 @@
       "allValid": "Alle øvelsessider er gyldige",
       "noTags": "Ingen muskeltagger i frontmatter",
       "title": "Filfeil",
-      "tooManyTags": "For mange muskeltagger ({count})"
+      "tooManyTags": "For mange muskeltagger ({count})",
+      "sharedName": "Samme treningsnavn som {pages}: loggene går til kun ett av dem."
     },
     "muscleTags": {
       "description": "Beskrivelse",
@@ -167,6 +168,10 @@
         "volume": "Gjennomsnittlig volum: {value} {unit}",
         "sets": "Gjennomsnittlig antall sett: {value}",
         "reps": "Gjennomsnittlig antall repetisjoner: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Ubalanse mellom for- og bakside: ryggen din er mye mer aktiv enn forside.",
+        "frontDominant": "Ubalanse mellom for- og bakside: din forside fungerer mye mer enn din bakside."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} må være minst {min}",
       "validMaxValue": "{field} kan være høyst {max}",
       "validFieldRequired": "{field} er obligatorisk",
-      "migrationNoUpdates": "Alle øvelsessider er allerede oppdatert"
+      "migrationNoUpdates": "Alle øvelsessider er allerede oppdatert",
+      "validMustBeWholeNumber": "{field} må være et helt tall"
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Etikett:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Trendlinje",
-    "refreshingTable": "Oppdaterer tabell..."
+    "refreshingTable": "Oppdaterer tabell...",
+    "setCount": "{count} angir"
   },
   "timeperiods": {
     "month": "Måned",

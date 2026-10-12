@@ -99,7 +99,8 @@
       "allValid": "Všechny stránky cvičení jsou v pořádku",
       "noTags": "Ve frontmatteru nejsou žádné štítky svalů",
       "title": "Chyby související se soubory",
-      "tooManyTags": "Příliš mnoho štítků svalů ({count})"
+      "tooManyTags": "Příliš mnoho štítků svalů ({count})",
+      "sharedName": "Stejný název cvičení jako {pages}: záznamy se ukládají pouze do jednoho z nich"
     },
     "muscleTags": {
       "description": "Popis",
@@ -167,6 +168,10 @@
         "volume": "Průměrný objem: {value} {unit}",
         "sets": "Průměrný počet sérií: {value}",
         "reps": "Průměrný počet opakování: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Nerovnováha mezi přední a zadní částí: vaše zadní strana pracuje mnohem více než přední.",
+        "frontDominant": "Nerovnováha mezi přední a zadní částí: vaše přední strana pracuje mnohem více než zadní."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} musí být alespoň {min}",
       "validMaxValue": "{field} musí být nejvýše {max}",
       "validFieldRequired": "{field} je povinné",
-      "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální"
+      "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální",
+      "validMustBeWholeNumber": "Hodnota {field} musí být celé číslo."
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Spojnice trendu",
-    "refreshingTable": "Obnovování tabulky..."
+    "refreshingTable": "Obnovování tabulky...",
+    "setCount": "{count} nastavuje"
   },
   "timeperiods": {
     "month": "Měsíc",

@@ -99,7 +99,8 @@
       "allValid": "Alle Übungsseiten sind gültig",
       "noTags": "Keine Muskel-Tags im Frontmatter",
       "title": "Dateifehler",
-      "tooManyTags": "Zu viele Muskel-Tags ({count})"
+      "tooManyTags": "Zu viele Muskel-Tags ({count})",
+      "sharedName": "Gleicher Übungstyp wie {pages}: Protokolle werden nur für einen von ihnen gespeichert."
     },
     "muscleTags": {
       "description": "Beschreibung",
@@ -167,6 +168,10 @@
         "volume": "Durchschnittlicher Volumenwert: {value} {unit}",
         "sets": "Durchschnittliche Anzahl Sätze: {value}",
         "reps": "Durchschnittliche Wiederholungen: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Ungleichgewicht: Ihre hintere Muskelgruppe arbeitet deutlich stärker als Ihre vordere.",
+        "frontDominant": "Ungleichgewicht: Ihre Vorderseite arbeitet deutlich mehr als Ihre Rückseite."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} muss mindestens {min} sein",
       "validMaxValue": "{field} darf höchstens {max} sein",
       "validFieldRequired": "{field} ist erforderlich",
-      "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell"
+      "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell",
+      "validMustBeWholeNumber": "{field} muss eine ganze Zahl sein"
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Trendlinie",
-    "refreshingTable": "Tabelle wird aktualisiert..."
+    "refreshingTable": "Tabelle wird aktualisiert...",
+    "setCount": "{count} legt fest"
   },
   "timeperiods": {
     "month": "Monat",

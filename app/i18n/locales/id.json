@@ -99,7 +99,8 @@
       "allValid": "Semua halaman latihan valid",
       "noTags": "Tidak ada tag otot di frontmatter",
       "title": "Kesalahan pada file",
-      "tooManyTags": "Terlalu banyak tag otot ({count})"
+      "tooManyTags": "Terlalu banyak tag otot ({count})",
+      "sharedName": "Nama latihan yang sama dengan {pages}: log hanya disimpan di salah satu dari mereka."
     },
     "muscleTags": {
       "description": "Deskripsi",
@@ -167,6 +168,10 @@
         "volume": "Volume rata-rata: {value} {unit}",
         "sets": "Rata-rata set: {value}",
         "reps": "Rata-rata repetisi: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Ketidakseimbangan depan-belakang: otot punggung Anda bekerja jauh lebih banyak daripada otot perut Anda.",
+        "frontDominant": "Ketidakseimbangan depan-belakang: bagian depan Anda bekerja jauh lebih banyak daripada bagian belakang."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} harus minimal {min}",
       "validMaxValue": "{field} harus paling banyak {max}",
       "validFieldRequired": "{field} wajib diisi",
-      "migrationNoUpdates": "Semua halaman latihan sudah yang terbaru"
+      "migrationNoUpdates": "Semua halaman latihan sudah yang terbaru",
+      "validMustBeWholeNumber": "{field} harus berupa bilangan bulat"
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Garis tren",
-    "refreshingTable": "Menyegarkan tabel..."
+    "refreshingTable": "Menyegarkan tabel...",
+    "setCount": "{count} mengatur"
   },
   "timeperiods": {
     "month": "Bulan",

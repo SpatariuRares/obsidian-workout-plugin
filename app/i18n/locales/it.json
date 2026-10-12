@@ -99,7 +99,8 @@
       "allValid": "Tutte le pagine esercizio sono valide",
       "noTags": "Nessun tag muscolare nel frontmatter",
       "title": "Errori relativi ai file",
-      "tooManyTags": "Troppi tag muscolari ({count})"
+      "tooManyTags": "Troppi tag muscolari ({count})",
+      "sharedName": "Stesso nome dell'esercizio come {pages}: i log vengono salvati solo in uno di essi"
     },
     "muscleTags": {
       "description": "Descrizione",
@@ -167,6 +168,10 @@
         "volume": "Volume medio: {value} {unit}",
         "sets": "Numero medio di serie: {value}",
         "reps": "Numero medio di ripetizioni: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Squilibrio tra parte anteriore e posteriore: i muscoli della parte posteriore lavorano molto di più rispetto a quelli della parte anteriore.",
+        "frontDominant": "Squilibrio tra parte anteriore e posteriore: la parte anteriore del corpo lavora molto di più rispetto alla parte posteriore."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} deve essere almeno {min}",
       "validMaxValue": "{field} deve essere al massimo {max}",
       "validFieldRequired": "{field} è obbligatorio",
-      "migrationNoUpdates": "Tutte le pagine esercizio sono già aggiornate"
+      "migrationNoUpdates": "Tutte le pagine esercizio sono già aggiornate",
+      "validMustBeWholeNumber": "{field} deve essere un numero intero"
     },
     "parameterKey": "Chiave:",
     "parameterLabel": "Etichetta:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Linea di tendenza",
-    "refreshingTable": "Aggiornamento tabella..."
+    "refreshingTable": "Aggiornamento tabella...",
+    "setCount": "{count} imposta"
   },
   "timeperiods": {
     "month": "Mese",

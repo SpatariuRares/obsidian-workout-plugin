@@ -99,7 +99,8 @@
       "allValid": "Alle øvelsessider er gyldige",
       "noTags": "Ingen muskeltags i frontmatter",
       "title": "Filfejl",
-      "tooManyTags": "For mange muskeltags ({count})"
+      "tooManyTags": "For mange muskeltags ({count})",
+      "sharedName": "Samme øvelsesnavn som {pages}: logfiler går kun til én af dem"
     },
     "muscleTags": {
       "description": "Beskrivelse",
@@ -167,6 +168,10 @@
         "volume": "Gennemsnitlig volumen: {value} {unit}",
         "sets": "Gennemsnitligt antal sæt: {value}",
         "reps": "Gennemsnitlige gentagelser: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Ubalance mellem for- og bagside: din bagside arbejder meget mere end din forside.",
+        "frontDominant": "Ubalance mellem for- og bagside: din forside arbejder meget mere end din bagside."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} skal være mindst {min}",
       "validMaxValue": "{field} må højst være {max}",
       "validFieldRequired": "{field} er obligatorisk",
-      "migrationNoUpdates": "Alle øvelsessider er allerede opdaterede"
+      "migrationNoUpdates": "Alle øvelsessider er allerede opdaterede",
+      "validMustBeWholeNumber": "{field} skal være et heltal"
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Tendenslinje",
-    "refreshingTable": "Opdaterer tabel..."
+    "refreshingTable": "Opdaterer tabel...",
+    "setCount": "{count} sætter"
   },
   "timeperiods": {
     "month": "Måned",

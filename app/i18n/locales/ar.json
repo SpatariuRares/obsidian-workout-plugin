@@ -99,7 +99,8 @@
       "allValid": "جميع صفحات التمارين صالحة",
       "noTags": "لا توجد علامات عضلات في البيانات الوصفية (frontmatter)",
       "title": "أخطاء الملفات",
-      "tooManyTags": "عدد كبير من علامات العضلات ({count})"
+      "tooManyTags": "عدد كبير من علامات العضلات ({count})",
+      "sharedName": "نفس اسم التمرين كما في {pages}: يتم تسجيل السجلات في واحد فقط منهم."
     },
     "muscleTags": {
       "description": "وصف",
@@ -167,6 +168,10 @@
         "volume": "متوسط الحجم: {value} {unit}",
         "sets": "متوسط المجموعات: {value}",
         "reps": "متوسط التكرارات: {value}"
+      },
+      "imbalance": {
+        "backDominant": "عدم التوازن بين الجزء الأمامي والخلفي: الجزء الخلفي يعمل بشكل أكبر بكثير من الجزء الأمامي.",
+        "frontDominant": "عدم التوازن بين الجزء الأمامي والخلفي: الجزء الأمامي يعمل بكثير أكثر من الجزء الخلفي."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} يجب أن يكون على الأقل {min}",
       "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
       "validFieldRequired": "{field} مطلوب",
-      "migrationNoUpdates": "جميع صفحات التمارين محدّثة بالفعل"
+      "migrationNoUpdates": "جميع صفحات التمارين محدّثة بالفعل",
+      "validMustBeWholeNumber": "يجب أن تكون القيمة {field} عبارة عن عدد صحيح."
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "خط الاتجاه",
-    "refreshingTable": "جارٍ تحديث الجدول..."
+    "refreshingTable": "جارٍ تحديث الجدول...",
+    "setCount": "{count} يحدد"
   },
   "timeperiods": {
     "month": "شهر",

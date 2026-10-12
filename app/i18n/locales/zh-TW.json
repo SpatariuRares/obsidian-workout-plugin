@@ -99,7 +99,8 @@
       "allValid": "所有動作頁面皆有效",
       "noTags": "frontmatter 中沒有肌肉標籤",
       "title": "檔案錯誤",
-      "tooManyTags": "過多的肌肉標籤（{count}）"
+      "tooManyTags": "過多的肌肉標籤（{count}）",
+      "sharedName": "與 {pages} 相同的訓練名稱：記錄將僅儲存在其中一個"
     },
     "muscleTags": {
       "description": "說明",
@@ -167,6 +168,10 @@
         "volume": "平均訓練量：{value} {unit}",
         "sets": "平均組數：{value}",
         "reps": "平均次數：{value}"
+      },
+      "imbalance": {
+        "backDominant": "前後肌肉力量失衡：您的後方肌肉活動量遠大於您的前方肌肉。",
+        "frontDominant": "前後肌肉力量失衡：您的前側肌肉活動量遠大於後側。"
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field}至少為{min}",
       "validMaxValue": "{field}最多為{max}",
       "validFieldRequired": "{field}為必填",
-      "migrationNoUpdates": "所有動作頁面皆已是最新狀態"
+      "migrationNoUpdates": "所有動作頁面皆已是最新狀態",
+      "validMustBeWholeNumber": "{field} 必須為整數"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "趨勢線",
-    "refreshingTable": "正在重新整理表格..."
+    "refreshingTable": "正在重新整理表格...",
+    "setCount": "{count} 設置"
   },
   "timeperiods": {
     "month": "月份",

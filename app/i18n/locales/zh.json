@@ -99,7 +99,8 @@
       "allValid": "所有训练页面均有效",
       "noTags": "frontmatter 中没有肌肉标签",
       "title": "文件错误",
-      "tooManyTags": "肌肉标签过多 ({count})"
+      "tooManyTags": "肌肉标签过多 ({count})",
+      "sharedName": "与 {pages} 相同的练习名称：日志仅记录到其中一个。"
     },
     "muscleTags": {
       "description": "描述",
@@ -167,6 +168,10 @@
         "volume": "平均训练量：{value} {unit}",
         "sets": "平均组数：{value}",
         "reps": "平均次数：{value}"
+      },
+      "imbalance": {
+        "backDominant": "前后肌肉力量失衡：您的后侧肌肉活动量远大于前侧。",
+        "frontDominant": "前部与后部的力量失衡：您的前部力量远大于后部。"
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field}至少为{min}",
       "validMaxValue": "{field}最多为{max}",
       "validFieldRequired": "{field}为必填项",
-      "migrationNoUpdates": "所有训练页面均已是最新"
+      "migrationNoUpdates": "所有训练页面均已是最新",
+      "validMustBeWholeNumber": "{field} 必须是整数"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "趋势线",
-    "refreshingTable": "正在刷新表格..."
+    "refreshingTable": "正在刷新表格...",
+    "setCount": "{count} 设置"
   },
   "timeperiods": {
     "month": "月",

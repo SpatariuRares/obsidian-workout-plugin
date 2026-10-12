@@ -99,7 +99,8 @@
       "allValid": "सभी व्यायाम पृष्ठ मान्य हैं",
       "noTags": "फ्रंटमैटर में कोई मांसपेशी टैग नहीं है",
       "title": "फ़ाइल त्रुटियाँ",
-      "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})"
+      "tooManyTags": "बहुत अधिक मांसपेशी टैग ({count})",
+      "sharedName": "{pages} के समान व्यायाम का नाम: लॉग केवल एक में ही जाएंगे"
     },
     "muscleTags": {
       "description": "विवरण",
@@ -167,6 +168,10 @@
         "volume": "औसत मात्रा: {value} {unit}",
         "sets": "औसत सेट: {value}",
         "reps": "औसत रेप्स: {value}"
+      },
+      "imbalance": {
+        "backDominant": "आगे-पीछे का असंतुलन: आपकी पीठ, आपके सामने की तुलना में बहुत अधिक काम करती है।",
+        "frontDominant": "आगे-पीछे का असंतुलन: आपकी आगे की मांसपेशियां आपकी पीछे की मांसपेशियों की तुलना में कहीं अधिक सक्रिय हैं।"
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} कम से कम {min} होना चाहिए",
       "validMaxValue": "{field} अधिकतम {max} होना चाहिए",
       "validFieldRequired": "{field} आवश्यक है",
-      "migrationNoUpdates": "सभी व्यायाम पृष्ठ पहले से अप-टू-डेट हैं"
+      "migrationNoUpdates": "सभी व्यायाम पृष्ठ पहले से अप-टू-डेट हैं",
+      "validMustBeWholeNumber": "{field} एक पूर्ण संख्या होनी चाहिए"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "ट्रेंड लाइन",
-    "refreshingTable": "तालिका रीफ़्रेश हो रही है..."
+    "refreshingTable": "तालिका रीफ़्रेश हो रही है...",
+    "setCount": "{count} सेट करें"
   },
   "timeperiods": {
     "month": "महीना",

@@ -99,7 +99,8 @@
       "allValid": "すべてのエクササイズページは有効です",
       "noTags": "フロントマターに筋肉タグがありません",
       "title": "ファイルのエラー",
-      "tooManyTags": "筋肉タグが多すぎます（{count}）"
+      "tooManyTags": "筋肉タグが多すぎます（{count}）",
+      "sharedName": "{pages} と同じエクササイズの名前: ログは、そのうちのいずれか1つにのみ保存されます"
     },
     "muscleTags": {
       "description": "説明",
@@ -167,6 +168,10 @@
         "volume": "平均ボリューム: {value} {unit}",
         "sets": "平均セット数: {value}",
         "reps": "平均レップ数: {value}"
+      },
+      "imbalance": {
+        "backDominant": "前後のバランス: あなたの体前部は、体後部よりもはるかに活動しています。",
+        "frontDominant": "前後のバランスの偏り：前側の筋肉が後側の筋肉よりもはるかに活動しています。"
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field}は{min}以上でなければなりません",
       "validMaxValue": "{field}は{max}以下でなければなりません",
       "validFieldRequired": "{field}は必須です",
-      "migrationNoUpdates": "すべてのエクササイズページはすでに最新です"
+      "migrationNoUpdates": "すべてのエクササイズページはすでに最新です",
+      "validMustBeWholeNumber": "{field} は、整数である必要があります。"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "トレンドライン",
-    "refreshingTable": "テーブルを更新中..."
+    "refreshingTable": "テーブルを更新中...",
+    "setCount": "{count} を設定する"
   },
   "timeperiods": {
     "month": "月",

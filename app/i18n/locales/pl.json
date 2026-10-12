@@ -99,7 +99,8 @@
       "allValid": "Wszystkie strony ćwiczeń są poprawne",
       "noTags": "Brak tagów mięśni we frontmatter",
       "title": "Błędy w plikach",
-      "tooManyTags": "Zbyt wiele tagów mięśni ({count})"
+      "tooManyTags": "Zbyt wiele tagów mięśni ({count})",
+      "sharedName": "Ta sama nazwa ćwiczenia, jak w {pages}: logi są zapisywane tylko w jednym z nich."
     },
     "muscleTags": {
       "description": "Opis",
@@ -167,6 +168,10 @@
         "volume": "Średnia objętość: {value} {unit}",
         "sets": "Średnia liczba serii: {value}",
         "reps": "Średnia liczba powtórzeń: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Nierównowaga: Twoja grupa mięśniowa tylna pracuje znacznie bardziej niż grupa mięśniowa przednia.",
+        "frontDominant": "Nierównowaga: Twoja przednia część mięśni jest znacznie bardziej obciążona niż tylna."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} musi wynosić co najmniej {min}",
       "validMaxValue": "{field} może wynosić co najwyżej {max}",
       "validFieldRequired": "{field} jest wymagane",
-      "migrationNoUpdates": "Wszystkie strony ćwiczeń są już aktualne"
+      "migrationNoUpdates": "Wszystkie strony ćwiczeń są już aktualne",
+      "validMustBeWholeNumber": "{field} musi być liczbą całkowitą"
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Linia trendu",
-    "refreshingTable": "Odświeżanie tabeli..."
+    "refreshingTable": "Odświeżanie tabeli...",
+    "setCount": "{count} ustawia"
   },
   "timeperiods": {
     "month": "Miesiąc",

@@ -99,7 +99,8 @@
       "allValid": "Усі сторінки вправ коректні",
       "noTags": "У frontmatter немає тегів м'язів",
       "title": "Помилки при роботі з файлами",
-      "tooManyTags": "Занадто багато тегів м'язів ({count})"
+      "tooManyTags": "Занадто багато тегів м'язів ({count})",
+      "sharedName": "Однакові назва вправи, що використовується в {pages}: журнали записуються лише в одній з них."
     },
     "muscleTags": {
       "description": "Опис",
@@ -167,6 +168,10 @@
         "volume": "Середній об'єм: {value} {unit}",
         "sets": "Середнє число підходів: {value}",
         "reps": "Середнє число повторень: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Незбалансованість перед-зад: ваша спина працює набагато більше, ніж передня частина.",
+        "frontDominant": "Незбалансованість перед-зад: ваша передня частина працює набагато більше, ніж задня."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} повинно бути не менше {min}",
       "validMaxValue": "{field} повинно бути не більше {max}",
       "validFieldRequired": "{field} обов'язкове",
-      "migrationNoUpdates": "Усі сторінки вправ уже актуальні"
+      "migrationNoUpdates": "Усі сторінки вправ уже актуальні",
+      "validMustBeWholeNumber": "{field} має бути цілим числом"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Лінія тренду",
-    "refreshingTable": "Оновлення таблиці..."
+    "refreshingTable": "Оновлення таблиці...",
+    "setCount": "{count} встановлює"
   },
   "timeperiods": {
     "month": "Місяць",

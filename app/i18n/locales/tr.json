@@ -99,7 +99,8 @@
       "allValid": "Tüm egzersiz sayfaları geçerli",
       "noTags": "Frontmatter'da kas etiketi yok",
       "title": "Dosya hataları",
-      "tooManyTags": "Çok fazla kas etiketi ({count})"
+      "tooManyTags": "Çok fazla kas etiketi ({count})",
+      "sharedName": "Aynı egzersizin adı {pages} ile aynı: günlükler yalnızca bunlardan birine kaydedilir."
     },
     "muscleTags": {
       "description": "Açıklama",
@@ -167,6 +168,10 @@
         "volume": "Ortalama hacim: {value} {unit}",
         "sets": "Ortalama set sayısı: {value}",
         "reps": "Ortalama tekrar sayısı: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Ön-arka dengesizlik: Sırt kaslarınız, ön kaslarınıza göre çok daha fazla çalışıyor.",
+        "frontDominant": "Ön-arka dengesizliği: Ön tarafınız, arka tarafınızdan çok daha fazla çalışıyor."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} en az {min} olmalıdır",
       "validMaxValue": "{field} en fazla {max} olmalıdır",
       "validFieldRequired": "{field} zorunludur",
-      "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel"
+      "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel",
+      "validMustBeWholeNumber": "{field} tamsayı olmalıdır"
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Trend çizgisi",
-    "refreshingTable": "Tablo yenileniyor..."
+    "refreshingTable": "Tablo yenileniyor...",
+    "setCount": "{count} değerini ayarlar"
   },
   "timeperiods": {
     "month": "Ay",

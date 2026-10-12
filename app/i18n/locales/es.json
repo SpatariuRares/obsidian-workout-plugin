@@ -99,7 +99,8 @@
       "allValid": "Todas las páginas de ejercicios son válidas",
       "noTags": "No hay etiquetas musculares en el frontmatter",
       "title": "Errores de archivo",
-      "tooManyTags": "Demasiadas etiquetas de músculo ({count})"
+      "tooManyTags": "Demasiadas etiquetas de músculo ({count})",
+      "sharedName": "El mismo nombre de ejercicio que {pages}: los registros se guardan en uno solo."
     },
     "muscleTags": {
       "description": "Descripción",
@@ -167,6 +168,10 @@
         "volume": "Volumen promedio: {value} {unit}",
         "sets": "Número promedio de series: {value}",
         "reps": "Número promedio de repeticiones: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Desequilibrio entre la parte frontal y la trasera: su espalda trabaja mucho más que su parte frontal.",
+        "frontDominant": "Desequilibrio entre la parte frontal y la trasera: tu parte frontal trabaja mucho más que tu parte trasera."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} debe ser al menos {min}",
       "validMaxValue": "{field} debe ser como máximo {max}",
       "validFieldRequired": "{field} es obligatorio",
-      "migrationNoUpdates": "Todas las páginas de ejercicios ya están actualizadas"
+      "migrationNoUpdates": "Todas las páginas de ejercicios ya están actualizadas",
+      "validMustBeWholeNumber": "{field} debe ser un número entero."
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Etiqueta:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Línea de tendencia",
-    "refreshingTable": "Actualizando tabla..."
+    "refreshingTable": "Actualizando tabla...",
+    "setCount": "{count} establece"
   },
   "timeperiods": {
     "month": "Mes",

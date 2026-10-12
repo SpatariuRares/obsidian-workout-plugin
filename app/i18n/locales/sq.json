@@ -99,7 +99,8 @@
       "allValid": "Të gjitha faqet e ushtrimeve janë të vlefshme",
       "noTags": "Nuk ka etiketa muskujsh në frontmatter",
       "title": "Gabime në skedarë",
-      "tooManyTags": "Shumë etiketa muskujsh ({count})"
+      "tooManyTags": "Shumë etiketa muskujsh ({count})",
+      "sharedName": "Nëse emri i التمرين është i njëjti si {pages}: regjistrat shkonin vetëm në njëri nga ata."
     },
     "muscleTags": {
       "description": "Përshkrim",
@@ -167,6 +168,10 @@
         "volume": "Volumi mesatar: {value} {unit}",
         "sets": "Numri mesatar i serive: {value}",
         "reps": "Numri mesatar i përsëritjeve: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Diferencë mes pjesës front dhe back: pjesa e prapa e trupit punon shumë më shumë se pjesa e përpara.",
+        "frontDominant": "Diferencë mes pjesëve përpara dhe prapa: pjesa përpara është shumë më aktive se pjesa e prapa."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} duhet të jetë të paktën {min}",
       "validMaxValue": "{field} duhet të jetë më së shumti {max}",
       "validFieldRequired": "{field} është e detyrueshme",
-      "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara"
+      "migrationNoUpdates": "Të gjitha faqet e ushtrimeve janë tashmë të përditësuara",
+      "validMustBeWholeNumber": "{field} duhet të jetë një numër i plote"
     },
     "parameterKey": "Çelësi:",
     "parameterLabel": "Etiketa:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Vija e tendencës",
-    "refreshingTable": "Po rifreskohet tabela..."
+    "refreshingTable": "Po rifreskohet tabela...",
+    "setCount": "{count} ndërton"
   },
   "timeperiods": {
     "month": "Muaj",

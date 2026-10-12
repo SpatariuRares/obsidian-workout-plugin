@@ -99,7 +99,8 @@
       "allValid": "Alle oefenpagina's zijn geldig",
       "noTags": "Geen spierlabels in de frontmatter",
       "title": "Foutmeldingen bij bestanden",
-      "tooManyTags": "Te veel spierlabels ({count})"
+      "tooManyTags": "Te veel spierlabels ({count})",
+      "sharedName": "Exacte naam van de oefening als {pages}: de logs gaan naar slechts één van hen"
     },
     "muscleTags": {
       "description": "Beschrijving",
@@ -167,6 +168,10 @@
         "volume": "Gemiddelde volume: {value} {unit}",
         "sets": "Gemiddelde aantal sets: {value}",
         "reps": "Gemiddeld aantal herhalingen: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Asymmetrie voor-achter: uw achterspieren werken veel meer dan uw voorspieren.",
+        "frontDominant": "Onevenwichtigheid: uw voorste spieren werken veel meer dan uw achterste spieren."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} moet minimaal {min} zijn",
       "validMaxValue": "{field} mag maximaal {max} zijn",
       "validFieldRequired": "{field} is verplicht",
-      "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt"
+      "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt",
+      "validMustBeWholeNumber": "{field} moet een geheel getal zijn"
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Trendlijn",
-    "refreshingTable": "Tabel vernieuwen..."
+    "refreshingTable": "Tabel vernieuwen...",
+    "setCount": "{count} instellen"
   },
   "timeperiods": {
     "month": "Maand",

@@ -99,7 +99,8 @@
       "allValid": "Все страницы упражнений корректны",
       "noTags": "Во frontmatter нет тегов мышц",
       "title": "Ошибки при работе с файлами",
-      "tooManyTags": "Слишком много тегов мышц ({count})"
+      "tooManyTags": "Слишком много тегов мышц ({count})",
+      "sharedName": "То же название упражнения, что и у {pages}: логи записываются только в одно из них."
     },
     "muscleTags": {
       "description": "Описание",
@@ -167,6 +168,10 @@
         "volume": "Средний объем: {value} {unit}",
         "sets": "Среднее количество подходов: {value}",
         "reps": "Среднее количество повторений: {value}"
+      },
+      "imbalance": {
+        "backDominant": "Несбалансированность: ваша задняя часть работает гораздо активнее, чем передняя.",
+        "frontDominant": "Несбалансированность: передняя часть мышц работает гораздо интенсивнее, чем задняя."
       }
     }
   },
@@ -656,7 +661,8 @@
       "validMinValue": "{field} должно быть не менее {min}",
       "validMaxValue": "{field} должно быть не более {max}",
       "validFieldRequired": "{field} обязательно",
-      "migrationNoUpdates": "Все страницы упражнений уже актуальны"
+      "migrationNoUpdates": "Все страницы упражнений уже актуальны",
+      "validMustBeWholeNumber": "{field} должно быть целым числом"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Метка:",
@@ -943,7 +949,8 @@
       "separator": " × "
     },
     "trendLine": "Линия тренда",
-    "refreshingTable": "Обновление таблицы..."
+    "refreshingTable": "Обновление таблицы...",
+    "setCount": "{count} устанавливает"
   },
   "timeperiods": {
     "month": "Месяц",

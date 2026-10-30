@@ -898,7 +898,9 @@
     "recentLast3": " (seneste 3)",
     "recentTrend": "Seneste tendens",
     "recentVsPrev": " (vs forrige)",
-    "sessions": "Træningspas"
+    "sessions": "Træningspas",
+    "average": "Gennemsnit:",
+    "title": "📈 {dataTypeLabel} statistik ({contextLabel}):"
   },
   "table": {
     "actions": "Handlinger",

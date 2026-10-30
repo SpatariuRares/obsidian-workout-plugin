@@ -898,7 +898,9 @@
     "recentLast3": " (3 dernières)",
     "recentTrend": "Tendance récente",
     "recentVsPrev": " (vs préc.)",
-    "sessions": "Séances"
+    "sessions": "Séances",
+    "average": "Moyenne :",
+    "title": "📈 {dataTypeLabel} Statistiques ({contextLabel}):"
   },
   "table": {
     "actions": "Actions",

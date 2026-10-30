@@ -898,7 +898,9 @@
     "recentLast3": " (poslední 3)",
     "recentTrend": "Nedávný trend",
     "recentVsPrev": " (vs předch.)",
-    "sessions": "Tréninky"
+    "sessions": "Tréninky",
+    "average": "Průměr:",
+    "title": "📈 {dataTypeLabel} statistiky ({contextLabel}):"
   },
   "table": {
     "actions": "Akce",

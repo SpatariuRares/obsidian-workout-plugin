@@ -898,7 +898,9 @@
     "recentLast3": " (останні 3)",
     "recentTrend": "Останній тренд",
     "recentVsPrev": " (vs попер.)",
-    "sessions": "Сесії"
+    "sessions": "Сесії",
+    "average": "Середнє:",
+    "title": "📈 {dataTypeLabel} статистичні дані ({contextLabel}):"
   },
   "table": {
     "actions": "Дії",

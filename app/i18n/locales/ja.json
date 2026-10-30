@@ -898,7 +898,9 @@
     "recentLast3": " (直近3回)",
     "recentTrend": "最近の傾向",
     "recentVsPrev": " (前回比)",
-    "sessions": "セッション"
+    "sessions": "セッション",
+    "average": "平均:",
+    "title": "📈 {dataTypeLabel} の統計情報 ({contextLabel}):"
   },
   "table": {
     "actions": "操作",

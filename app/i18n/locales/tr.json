@@ -898,7 +898,9 @@
     "recentLast3": " (son 3)",
     "recentTrend": "Son trend",
     "recentVsPrev": " (öncekiyle)",
-    "sessions": "Oturumlar"
+    "sessions": "Oturumlar",
+    "average": "Ortalama:",
+    "title": "📈 {dataTypeLabel} istatistikleri ({contextLabel}):"
   },
   "table": {
     "actions": "Eylemler",

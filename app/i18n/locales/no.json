@@ -898,7 +898,9 @@
     "recentLast3": " (siste 3)",
     "recentTrend": "Nylig trend",
     "recentVsPrev": " (vs forrige)",
-    "sessions": "Økter"
+    "sessions": "Økter",
+    "average": "Gjennomsnitt:",
+    "title": "📈 {dataTypeLabel} statistikk ({contextLabel}):"
   },
   "table": {
     "actions": "Handlinger",

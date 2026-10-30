@@ -898,7 +898,9 @@
     "recentLast3": " (最近3次)",
     "recentTrend": "近期趨勢",
     "recentVsPrev": " (與上次比)",
-    "sessions": "訓練次數"
+    "sessions": "訓練次數",
+    "average": "平均值：",
+    "title": "📈 {dataTypeLabel} 統計數據 ({contextLabel}):"
   },
   "table": {
     "actions": "操作",

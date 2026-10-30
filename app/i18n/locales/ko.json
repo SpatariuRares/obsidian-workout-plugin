@@ -898,7 +898,9 @@
     "recentLast3": " (최근 3회)",
     "recentTrend": "최근 추세",
     "recentVsPrev": " (이전 대비)",
-    "sessions": "세션"
+    "sessions": "세션",
+    "average": "평균:",
+    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):"
   },
   "table": {
     "actions": "액션",

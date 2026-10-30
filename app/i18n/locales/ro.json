@@ -898,7 +898,9 @@
     "recentLast3": " (ultimele 3)",
     "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
-    "sessions": "Sesiuni"
+    "sessions": "Sesiuni",
+    "average": "Media:",
+    "title": "📈 {dataTypeLabel} statistici ({contextLabel}):"
   },
   "table": {
     "actions": "Acțiuni",

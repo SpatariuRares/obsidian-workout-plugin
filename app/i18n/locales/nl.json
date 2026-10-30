@@ -898,7 +898,9 @@
     "recentLast3": " (laatste 3)",
     "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
-    "sessions": "Sessies"
+    "sessions": "Sessies",
+    "average": "Gemiddelde:",
+    "title": "📈 {dataTypeLabel} statistieken ({contextLabel}):"
   },
   "table": {
     "actions": "Acties",

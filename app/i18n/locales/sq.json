@@ -898,7 +898,9 @@
     "recentLast3": " (3 të fundit)",
     "recentTrend": "Tendenca e fundit",
     "recentVsPrev": " (vs para.)",
-    "sessions": "Sesionet"
+    "sessions": "Sesionet",
+    "average": "Mesatarja:",
+    "title": "📈 {dataTypeLabel} statistikat ({contextLabel}):"
   },
   "table": {
     "actions": "Veprime",

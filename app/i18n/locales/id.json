@@ -898,7 +898,9 @@
     "recentLast3": " (3 terakhir)",
     "recentTrend": "Tren terbaru",
     "recentVsPrev": " (vs sblm.)",
-    "sessions": "Sesi"
+    "sessions": "Sesi",
+    "average": "Rata-rata:",
+    "title": "📈 {dataTypeLabel} statistik ({contextLabel}):"
   },
   "table": {
     "actions": "Tindakan",

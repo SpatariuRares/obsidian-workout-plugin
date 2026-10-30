@@ -898,7 +898,9 @@
     "recentLast3": " (آخر 3)",
     "recentTrend": "الاتجاه الأخير",
     "recentVsPrev": " (مقابل السابق)",
-    "sessions": "الجلسات"
+    "sessions": "الجلسات",
+    "average": "المتوسط:",
+    "title": "📈 {dataTypeLabel} إحصائيات ({contextLabel}):"
   },
   "table": {
     "actions": "الإجراءات",

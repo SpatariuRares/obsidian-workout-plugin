@@ -11,7 +11,7 @@
     "typecheck": "tsc -noEmit -skipLibCheck",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint . --max-warnings 0 && node scripts/check-readme.mjs",
     "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "doe:validate": "node scripts/validation/check-imports.mjs",

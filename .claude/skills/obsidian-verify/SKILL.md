@@ -1,6 +1,6 @@
 ---
 name: obsidian-verify
-description: Check a change live in the running Obsidian (obsidian-devtools MCP) without writing the user's notes or workout log - rebuild, reload the plugin, render views in detached containers, open modals and close them unsaved, read the console. Use after a change to confirm it works in the real app, or when asked to test something in Obsidian.
+description: Check a change live in the running Obsidian (obsidian-devtools MCP) without writing the user's notes or workout log - rebuild, reload the plugin, render views in detached containers, open modals and close them unsaved, read the console. Use after a change to confirm it works in the real app, when asked to test something in Obsidian, or to capture screenshots of the plugin's views (desktop or mobile) for the README.
 ---
 
 # Verify in Obsidian, read-only
@@ -36,6 +36,7 @@ Pick the matching recipes from [recipes.md](recipes.md):
 - **Views** (table, chart, dashboard): render into a detached `<div>` with the plugin's view (`p.embeddedTableView.createTable(el, logs, params)`, `p.embeddedChartView.createChart(el, logs, params)`), read the DOM, then `el.remove()`. Or open an existing note with `app.workspace.getLeaf(false).openFile(app.vault.getAbstractFileByPath(path))` and read the rendered blocks.
 - **Modals and forms**: open with `app.commands.executeCommandById("workout-planner:<command>")`, fill inputs, press buttons that only compute (+/-), and press the save button **only with input that must be refused** (to test validation). Close with the modal's close button. Never confirm a valid form.
 - **Services and API**: call them directly (`p.getExerciseLibrary()`, `p.getExerciseDefinitionService()`, `p.getMuscleTagService()`, `window.WorkoutPlannerAPI`).
+- **Screenshots** for the README: follow "Screenshots" in [recipes.md](recipes.md), then frame them with `scripts/frame-screenshot.py`.
 - **Expected values**: compute them independently from `await p.getWorkoutLogData()` in the same script and compare. A matching number is the evidence; "it renders" is not.
 
 ## 3. Things that write: do not run them

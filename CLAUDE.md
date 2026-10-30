@@ -17,14 +17,14 @@ npm run build        # Production build (tsc check + CSS + minified bundle)
 npm test             # Run Jest test suite
 npm run test:watch   # Jest in watch mode
 npm run test:coverage # Jest with coverage report
-npm run lint         # ESLint
+npm run lint         # ESLint + scripts/check-readme.mjs (README images, unused assets, #anchors)
 npm run lint:fix     # ESLint with auto-fix
 npm run typecheck    # tsc only, no emit
 npm run doe:validate # Import-convention check (@app aliases, barrels, circular deps)
 node scripts/find-hardcoded-strings.mjs  # Strict scan for literals that should use t()
 ```
 
-**Release**: push a `X.Y.Z` tag (use `/release`). CI runs the Translate workflow for anything still untranslated (usually nothing: see "Internationalization"), syncs `manifest.json` to the tag, commits it to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow.
+**Release**: push a `X.Y.Z` tag (use `/release`). CI runs the Translate workflow for anything still untranslated (usually nothing: see "Internationalization"), syncs `manifest.json` to the tag, commits it to `main`, then builds and publishes. Don't bump `manifest.json` by hand; `npm run version` / `versions.json` are not part of the flow. The plugin browser's list and search show the `description` from `community-plugins.json` in `obsidianmd/obsidian-releases`, not from `manifest.json`: changing it there takes a PR to that repo, with the same text as the manifest.
 
 **Husky pre-push** runs typecheck → lint → `test:coverage` → build, so a failing check (including a coverage drop) blocks `git push`. CI runs the same lint and coverage checks. Tests run with `TZ=Europe/Rome` (set in `jest.config.js`; setting `process.env.TZ` inside a test file has no effect).
 
@@ -662,11 +662,11 @@ Claude can then read console errors, screenshot rendered code blocks, run JS in 
 
 ### Issue tracker
 
-Issues live as local markdown files under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+Issues live in the repo's GitHub Issues (`gh` CLI). See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), recorded as a `Status:` line in each issue file. See `docs/agents/triage-labels.md`.
+Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), applied as GitHub labels. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 

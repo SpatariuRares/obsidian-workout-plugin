@@ -4,11 +4,8 @@
     "fallbackTableMessage": "تعذّر رسم المخطط، لذا تُعرض البيانات في جدول.",
     "labels": {
       "quickWeightIncrementUnit": "أزرار الوزن تزيد بمقدار {weightIncrementUnit}",
-      "reps": "التكرارات",
       "trendType": "اتجاه {type}:",
       "variationFromTo": " من {startValue} إلى {endValue}",
-      "volume": "الحجم",
-      "weight": "الوزن",
       "weightIncrementUnit": "زيادة الوزن {weightIncrementUnit}"
     },
     "overallVariationPrefix": "التغيّر الإجمالي: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "متوسط الحجم",
     "max": "الحد الأقصى: ",
     "min": "الحد الأدنى: ",
     "recentLast3": " (آخر 3)",
     "recentTrend": "الاتجاه الأخير",
     "recentVsPrev": " (مقابل السابق)",
-    "sessions": "الجلسات",
-    "title": "📈 إحصائيات {dataTypeLabel} ({contextLabel}):"
+    "sessions": "الجلسات"
   },
   "table": {
     "actions": "الإجراءات",

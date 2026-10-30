@@ -4,11 +4,8 @@
     "fallbackTableMessage": "グラフを描画できなかったため、データを表で表示しています。",
     "labels": {
       "quickWeightIncrementUnit": "重量ボタンで{weightIncrementUnit}ずつ増やす",
-      "reps": "レップ数",
       "trendType": "トレンド {type}:",
       "variationFromTo": " {startValue} から {endValue} へ",
-      "volume": "ボリューム",
-      "weight": "重量",
       "weightIncrementUnit": "重量の増分 {weightIncrementUnit}"
     },
     "overallVariationPrefix": "全体の変化: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "平均ボリューム",
     "max": "最大：",
     "min": "最小：",
     "recentLast3": " (直近3回)",
     "recentTrend": "最近の傾向",
     "recentVsPrev": " (前回比)",
-    "sessions": "セッション",
-    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):"
+    "sessions": "セッション"
   },
   "table": {
     "actions": "操作",

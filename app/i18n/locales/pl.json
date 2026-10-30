@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Nie udało się narysować wykresu, więc dane są pokazane w tabeli.",
     "labels": {
       "quickWeightIncrementUnit": "Przyciski wagi zwiększają o {weightIncrementUnit}",
-      "reps": "Powtórzenia",
       "trendType": "Trend {type}:",
       "variationFromTo": " od {startValue} do {endValue}",
-      "volume": "Objętość",
-      "weight": "Waga",
       "weightIncrementUnit": "Zwiększenie wagi {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Zmiana ogółem: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Śr. objętość",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (ostatnie 3)",
     "recentTrend": "Ostatni trend",
     "recentVsPrev": " (vs poprz.)",
-    "sessions": "Sesje",
-    "title": "📈 Statystyki {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sesje"
   },
   "table": {
     "actions": "Akcje",

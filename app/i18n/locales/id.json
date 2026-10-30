@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Grafik tidak dapat ditampilkan, jadi data ditampilkan sebagai tabel.",
     "labels": {
       "quickWeightIncrementUnit": "Tombol berat menambah {weightIncrementUnit}",
-      "reps": "Repetisi",
       "trendType": "Tren {type}:",
       "variationFromTo": " dari {startValue} hingga {endValue}",
-      "volume": "Volume",
-      "weight": "Berat",
       "weightIncrementUnit": "Penambahan berat {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Perubahan keseluruhan: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Rata-rata volume",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (3 terakhir)",
     "recentTrend": "Tren terbaru",
     "recentVsPrev": " (vs sblm.)",
-    "sessions": "Sesi",
-    "title": "📈 Statistik {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sesi"
   },
   "table": {
     "actions": "Tindakan",

@@ -4,11 +4,8 @@
     "fallbackTableMessage": "차트를 그릴 수 없어 데이터를 표로 표시합니다.",
     "labels": {
       "quickWeightIncrementUnit": "무게 버튼 증가 단위 {weightIncrementUnit}",
-      "reps": "반복 횟수",
       "trendType": "추세 {type}:",
       "variationFromTo": " {startValue}에서 {endValue}까지",
-      "volume": "볼륨",
-      "weight": "무게",
       "weightIncrementUnit": "무게 증가 {weightIncrementUnit}"
     },
     "overallVariationPrefix": "전체 변화: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "평균 볼륨",
     "max": "최대: ",
     "min": "최소: ",
     "recentLast3": " (최근 3회)",
     "recentTrend": "최근 추세",
     "recentVsPrev": " (이전 대비)",
-    "sessions": "세션",
-    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):"
+    "sessions": "세션"
   },
   "table": {
     "actions": "액션",

@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Das Diagramm konnte nicht gezeichnet werden, daher werden die Daten als Tabelle angezeigt.",
     "labels": {
       "quickWeightIncrementUnit": "Gewichtstasten erhöhen um {weightIncrementUnit}",
-      "reps": "Wiederholungen",
       "trendType": "Trend {type}:",
       "variationFromTo": " von {startValue} bis {endValue}",
-      "volume": "Volumen",
-      "weight": "Gewicht",
       "weightIncrementUnit": "Erhöhung des Gewichts {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Gesamtveränderung: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Ø Volumen",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (letzte 3)",
     "recentTrend": "Aktueller Trend",
     "recentVsPrev": " (vs. vorh.)",
-    "sessions": "Sitzungen",
-    "title": "📈 {dataTypeLabel} Statistiken ({contextLabel}):"
+    "sessions": "Sitzungen"
   },
   "table": {
     "actions": "Aktionen",

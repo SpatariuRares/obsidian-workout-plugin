@@ -4,11 +4,8 @@
     "fallbackTableMessage": "無法繪製圖表，因此改以表格顯示資料。",
     "labels": {
       "quickWeightIncrementUnit": "按重量按鈕可增加 {weightIncrementUnit}",
-      "reps": "次數",
       "trendType": "趨勢 {type}:",
       "variationFromTo": " 從 {startValue} 到 {endValue}",
-      "volume": "訓練量",
-      "weight": "重量",
       "weightIncrementUnit": "重量增加 {weightIncrementUnit}"
     },
     "overallVariationPrefix": "整體變化: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "平均訓練量",
     "max": "最大值：",
     "min": "最小值：",
     "recentLast3": " (最近3次)",
     "recentTrend": "近期趨勢",
     "recentVsPrev": " (與上次比)",
-    "sessions": "訓練次數",
-    "title": "📈 {dataTypeLabel} 統計 ({contextLabel}):"
+    "sessions": "訓練次數"
   },
   "table": {
     "actions": "操作",

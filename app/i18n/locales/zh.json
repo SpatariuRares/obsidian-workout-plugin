@@ -4,11 +4,8 @@
     "fallbackTableMessage": "无法绘制图表，已改用表格显示数据。",
     "labels": {
       "quickWeightIncrementUnit": "重量按钮增量 {weightIncrementUnit}",
-      "reps": "次数",
       "trendType": "趋势 {type}：",
       "variationFromTo": " 从 {startValue} 到 {endValue}",
-      "volume": "训练量",
-      "weight": "重量",
       "weightIncrementUnit": "重量增量 {weightIncrementUnit}"
     },
     "overallVariationPrefix": "总体变化: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "平均训练量",
     "max": "最大值：",
     "min": "最小值：",
     "recentLast3": " (最近3次)",
     "recentTrend": "近期趋势",
     "recentVsPrev": " (与上次比)",
-    "sessions": "训练次数",
-    "title": "📈 {dataTypeLabel} 统计 ({contextLabel}):"
+    "sessions": "训练次数"
   },
   "table": {
     "actions": "操作",

@@ -3,7 +3,8 @@
  * Centralizes all magic strings, labels, and default values.
  */
 
-import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
+import { getTypeNames, getUnitsMap } from "@app/constants/ui.constants";
+import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { t } from "@app/i18n";
 
 /**
@@ -15,15 +16,6 @@ export function getChartLabels() {
   return {
     TREND_LINE: t("charts.trendLine"),
     X_AXIS: t("charts.date"),
-    Y_AXIS: {
-      VOLUME: t("charts.labels.volume"),
-      WEIGHT: t("charts.labels.weight"),
-      REPS: t("charts.labels.reps"),
-    },
-    UNITS: {
-      WEIGHT: t("charts.labels.weight"),
-      REPS: t("charts.labels.reps"),
-    },
   };
 }
 
@@ -77,45 +69,25 @@ export function getDefaultChartTitle(chartType: string): string {
 }
 
 /**
- * Gets the unit label for a chart type.
- * Returns the actual unit (e.g., "kg", "lb") based on user settings.
- * @param chartType - Type of chart (volume, weight, reps, duration, distance, pace, heartRate)
- * @returns Unit string (e.g., "kg", "lb", "", "sec", "km", "min/km", "bpm")
+ * Gets the unit for a chart type (e.g., "kg", "lb", "sec", "km", "min/km", "bpm").
+ * Volume and weight follow the weight unit setting; reps and custom fields have none.
+ * @param chartType - Chart data type id (volume, weight, reps, duration, distance, pace, heartRate) or a custom field key
+ * @returns Unit string, empty when the type has no unit
  */
 export function getUnitForChartType(chartType: string): string {
-  // For volume and weight charts, use the dynamic weight unit from settings
-  if (
-    chartType === t("charts.labels.volume") ||
-    chartType === t("charts.labels.weight")
-  ) {
-    return ParameterUtils.getWeightUnit();
-  }
-
-  // For other chart types, return empty string (reps don't have units)
-  // Duration, distance, pace, and heart rate are handled by their respective formatters
-  return "";
+  return getUnitsMap()[chartType as CHART_DATA_TYPE] ?? "";
 }
 
 /**
- * Gets the Y-axis label for a chart type with dynamic unit.
- * Returns label with unit (e.g., "Volume (kg)", "Weight (lb)") based on settings.
- * @param chartType - Type of chart (volume, weight, reps, duration, distance, pace, heartRate)
- * @returns Y-axis label string with unit
+ * Gets the Y-axis label for a chart type, with its unit when it has one
+ * (e.g., "Weight (kg)", "Reps", "Heart rate (bpm)"). A custom field is labelled by its key.
+ * @param chartType - Chart data type id or a custom field key
+ * @returns Y-axis label string
  */
 export function getYAxisLabel(chartType: string): string {
-  const weightUnit = ParameterUtils.getWeightUnit();
-  const labels = getChartLabels();
-
-  switch (chartType) {
-    case t("charts.labels.volume"):
-      return `${labels.Y_AXIS.VOLUME} (${weightUnit})`;
-    case t("charts.labels.weight"):
-      return `${labels.Y_AXIS.WEIGHT} (${weightUnit})`;
-    case t("charts.labels.reps"):
-      return labels.Y_AXIS.REPS;
-    default:
-      return `${labels.Y_AXIS.VOLUME} (${weightUnit})`;
-  }
+  const name = getTypeNames()[chartType as CHART_DATA_TYPE] ?? chartType;
+  const unit = getUnitForChartType(chartType);
+  return unit ? `${name} (${unit})` : name;
 }
 
 /**

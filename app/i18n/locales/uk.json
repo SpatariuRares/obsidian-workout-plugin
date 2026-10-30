@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Не вдалося побудувати графік, тому дані показано у вигляді таблиці.",
     "labels": {
       "quickWeightIncrementUnit": "Кнопки зміни ваги збільшують {weightIncrementUnit}",
-      "reps": "Повторення",
       "trendType": "Тенденція {type}:",
       "variationFromTo": " від {startValue} до {endValue}",
-      "volume": "Об'єм",
-      "weight": "Вага",
       "weightIncrementUnit": "Крок збільшення ваги {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Загальна зміна: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Сер. об'єм",
     "max": "Макс: ",
     "min": "Мін: ",
     "recentLast3": " (останні 3)",
     "recentTrend": "Останній тренд",
     "recentVsPrev": " (vs попер.)",
-    "sessions": "Сесії",
-    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Сесії"
   },
   "table": {
     "actions": "Дії",

@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Grafiku nuk mund të vizatohej, prandaj të dhënat shfaqen në tabelë.",
     "labels": {
       "quickWeightIncrementUnit": "Butonat e peshës rrisin me {weightIncrementUnit}",
-      "reps": "Përsëritjet",
       "trendType": "Tendenca {type}:",
       "variationFromTo": " nga {startValue} në {endValue}",
-      "volume": "Volum",
-      "weight": "Pesha",
       "weightIncrementUnit": "Rritja e peshës {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Ndryshimi i përgjithshëm: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Volumi mesatar",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (3 të fundit)",
     "recentTrend": "Tendenca e fundit",
     "recentVsPrev": " (vs para.)",
-    "sessions": "Sesionet",
-    "title": "📈 Statistikat {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sesionet"
   },
   "table": {
     "actions": "Veprime",

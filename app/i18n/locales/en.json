@@ -4,11 +4,8 @@
     "fallbackTableMessage": "The chart couldn't be drawn, so the data is shown as a table.",
     "labels": {
       "quickWeightIncrementUnit": "Weight buttons increment {weightIncrementUnit}",
-      "reps": "Reps",
       "trendType": "Trend {type}:",
       "variationFromTo": " from {startValue} to {endValue}",
-      "volume": "Volume",
-      "weight": "Weight",
       "weightIncrementUnit": "Weight increment {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Overall change: ",
@@ -896,14 +893,14 @@
     }
   },
   "stats": {
-    "avgVolume": "Avg volume",
+    "average": "Average: ",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (last 3)",
     "recentTrend": "Recent trend",
     "recentVsPrev": " (vs prev.)",
     "sessions": "Sessions",
-    "title": "📈 {dataTypeLabel} Statistics ({contextLabel}):"
+    "title": "📈 {dataTypeLabel} statistics ({contextLabel}):"
   },
   "table": {
     "actions": "Actions",

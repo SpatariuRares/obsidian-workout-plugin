@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Diagrammet kunne ikke tegnes, så dataene vises som en tabel.",
     "labels": {
       "quickWeightIncrementUnit": "Vægtknapperne øger med {weightIncrementUnit}",
-      "reps": "Gentagelser",
       "trendType": "Tendens {type}:",
       "variationFromTo": " fra {startValue} til {endValue}",
-      "volume": "Volumen",
-      "weight": "Vægt",
       "weightIncrementUnit": "Vægtøgning {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Samlet ændring: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Gns. volumen",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (seneste 3)",
     "recentTrend": "Seneste tendens",
     "recentVsPrev": " (vs forrige)",
-    "sessions": "Træningspas",
-    "title": "📈 {dataTypeLabel} Statistik ({contextLabel}):"
+    "sessions": "Træningspas"
   },
   "table": {
     "actions": "Handlinger",

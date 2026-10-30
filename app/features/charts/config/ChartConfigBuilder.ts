@@ -86,9 +86,10 @@ export class ChartConfigBuilder {
           const value = tooltipItem.parsed.y;
           const label = tooltipItem.dataset.label ?? "";
           const unit = getUnitForChartType(chartType);
-          return `${label}: ${
+          const text = `${label}: ${
             value?.toFixed ? value.toFixed(1) : value
-          } ${unit}`;
+          }`;
+          return unit ? `${text} ${unit}` : text;
         },
       },
     };

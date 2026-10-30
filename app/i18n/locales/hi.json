@@ -4,11 +4,8 @@
     "fallbackTableMessage": "चार्ट नहीं बन सका, इसलिए डेटा तालिका के रूप में दिखाया गया है।",
     "labels": {
       "quickWeightIncrementUnit": "वज़न बटन {weightIncrementUnit} से बढ़ जाते हैं",
-      "reps": "रेप्स",
       "trendType": "ट्रेंड {type}:",
       "variationFromTo": " {startValue} से {endValue} तक",
-      "volume": "मात्रा",
-      "weight": "वजन",
       "weightIncrementUnit": "वज़न में वृद्धि {weightIncrementUnit}"
     },
     "overallVariationPrefix": "कुल बदलाव: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "औसत मात्रा",
     "max": "अधिकतम: ",
     "min": "न्यूनतम: ",
     "recentLast3": " (अंतिम 3)",
     "recentTrend": "हाल का ट्रेंड",
     "recentVsPrev": " (पिछले से)",
-    "sessions": "सत्र",
-    "title": "📈 {dataTypeLabel} सांख्यिकी ({contextLabel}):"
+    "sessions": "सत्र"
   },
   "table": {
     "actions": "क्रियाएं",

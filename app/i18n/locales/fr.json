@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Le graphique n'a pas pu être affiché, les données sont donc présentées sous forme de tableau.",
     "labels": {
       "quickWeightIncrementUnit": "Les boutons de poids incrémentent de {weightIncrementUnit}",
-      "reps": "Répétitions",
       "trendType": "Tendance {type}:",
       "variationFromTo": " de {startValue} à {endValue}",
-      "volume": "Volume",
-      "weight": "Poids",
       "weightIncrementUnit": "Augmentation du poids {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Variation globale : ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Volume moy.",
     "max": "Max : ",
     "min": "Min : ",
     "recentLast3": " (3 dernières)",
     "recentTrend": "Tendance récente",
     "recentVsPrev": " (vs préc.)",
-    "sessions": "Séances",
-    "title": "📈 Statistiques {dataTypeLabel} ({contextLabel}) :"
+    "sessions": "Séances"
   },
   "table": {
     "actions": "Actions",

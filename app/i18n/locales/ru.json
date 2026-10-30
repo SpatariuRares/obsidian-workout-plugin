@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Не удалось построить график, поэтому данные показаны в виде таблицы.",
     "labels": {
       "quickWeightIncrementUnit": "Кнопки изменения веса увеличивают {weightIncrementUnit}",
-      "reps": "Повторения",
       "trendType": "Динамика {type}:",
       "variationFromTo": " от {startValue} до {endValue}",
-      "volume": "Объем",
-      "weight": "Вес",
       "weightIncrementUnit": "Увеличение веса {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Общее изменение: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Сред. объем",
     "max": "Макс: ",
     "min": "Мин: ",
     "recentLast3": " (последние 3)",
     "recentTrend": "Последний тренд",
     "recentVsPrev": " (vs пред.)",
-    "sessions": "Сеансы",
-    "title": "📈 Статистика {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Сеансы"
   },
   "table": {
     "actions": "Действия",

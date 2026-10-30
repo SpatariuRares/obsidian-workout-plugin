@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Grafik çizilemedi, bu yüzden veriler tablo olarak gösteriliyor.",
     "labels": {
       "quickWeightIncrementUnit": "Ağırlık butonları, {weightIncrementUnit} kadar artırır",
-      "reps": "Tekrarlar",
       "trendType": "{type} trendi:",
       "variationFromTo": " {startValue} değerinden {endValue} değerine",
-      "volume": "Hacim",
-      "weight": "Ağırlık",
       "weightIncrementUnit": "Ağırlık artışı {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Genel değişim: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Ort. hacim",
     "max": "Maks: ",
     "min": "Min: ",
     "recentLast3": " (son 3)",
     "recentTrend": "Son trend",
     "recentVsPrev": " (öncekiyle)",
-    "sessions": "Oturumlar",
-    "title": "📈 {dataTypeLabel} İstatistikleri ({contextLabel}):"
+    "sessions": "Oturumlar"
   },
   "table": {
     "actions": "Eylemler",

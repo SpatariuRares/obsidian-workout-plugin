@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Graficul nu a putut fi afișat, așa că datele sunt prezentate într-un tabel.",
     "labels": {
       "quickWeightIncrementUnit": "Butoanele de greutate cresc cu {weightIncrementUnit}",
-      "reps": "Repetări",
       "trendType": "Tendință {type}:",
       "variationFromTo": " de la {startValue} la {endValue}",
-      "volume": "Volum",
-      "weight": "Greutate",
       "weightIncrementUnit": "Creștere a greutății {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Variație totală: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Volum mediu",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (ultimele 3)",
     "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
-    "sessions": "Sesiuni",
-    "title": "📈 Statistici {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sesiuni"
   },
   "table": {
     "actions": "Acțiuni",

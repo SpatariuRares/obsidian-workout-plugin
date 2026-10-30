@@ -4,11 +4,8 @@
     "fallbackTableMessage": "De grafiek kon niet worden getekend, daarom worden de gegevens als tabel getoond.",
     "labels": {
       "quickWeightIncrementUnit": "De knoppen voor gewicht verhogen met {weightIncrementUnit}",
-      "reps": "Herhalingen",
       "trendType": "Trend: {type}",
       "variationFromTo": " van {startValue} tot {endValue}",
-      "volume": "Volume",
-      "weight": "Gewicht",
       "weightIncrementUnit": "Toename in gewicht {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Totale verandering: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Gem. volume",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (laatste 3)",
     "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
-    "sessions": "Sessies",
-    "title": "📈 Statistieken {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sessies"
   },
   "table": {
     "actions": "Acties",

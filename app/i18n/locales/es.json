@@ -4,11 +4,8 @@
     "fallbackTableMessage": "No se pudo dibujar el gráfico, así que los datos se muestran en una tabla.",
     "labels": {
       "quickWeightIncrementUnit": "Los botones de peso incrementan en {weightIncrementUnit}",
-      "reps": "Repeticiones",
       "trendType": "Tendencia {type}:",
       "variationFromTo": " de {startValue} a {endValue}",
-      "volume": "Volumen",
-      "weight": "Peso",
       "weightIncrementUnit": "Incremento de peso {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Cambio total: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Volumen medio",
     "max": "Máx: ",
     "min": "Mín: ",
     "recentLast3": " (últimas 3)",
     "recentTrend": "Tendencia reciente",
     "recentVsPrev": " (vs ant.)",
-    "sessions": "Sesiones",
-    "title": "📈 Estadísticas {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Sesiones"
   },
   "table": {
     "actions": "Acciones",

@@ -1,7 +1,7 @@
 import {
   CONSTANTS,
   getUnitsMap,
-  getColumnLabels,
+  getTypeNames,
 } from "@app/constants";
 import {
   CHART_TYPE,
@@ -42,9 +42,8 @@ export class StatsBox {
       dataType,
     );
 
-    // Get dynamic title from data type (e.g., "Volume (kg)" -> "Volume Statistics")
-    const columnLabels = getColumnLabels();
-    const dataTypeLabel = columnLabels[dataType].split(" (")[0];
+    // A custom numeric field has no type name: use its key
+    const dataTypeLabel = getTypeNames()[dataType] ?? dataType;
     const contextLabel =
       chartType === CHART_TYPE.WORKOUT
         ? CONSTANTS.WORKOUT.UI.LABELS.TOTAL_WORKOUT
@@ -60,7 +59,7 @@ export class StatsBox {
     });
 
     ListItem.createStat(ul, {
-      label: t("stats.avgVolume"),
+      label: t("stats.average"),
       value: stats.avgFormatted,
     });
 

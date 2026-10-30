@@ -4,11 +4,8 @@
     "fallbackTableMessage": "Graf se nepodařilo vykreslit, proto se data zobrazují jako tabulka.",
     "labels": {
       "quickWeightIncrementUnit": "Tlačítka pro váhu zvyšují hodnotu o {weightIncrementUnit}",
-      "reps": "Opakování",
       "trendType": "Trend {type}:",
       "variationFromTo": " od {startValue} do {endValue}",
-      "volume": "Objem",
-      "weight": "Hmotnost",
       "weightIncrementUnit": "Zvýšení váhy {weightIncrementUnit}"
     },
     "overallVariationPrefix": "Celková změna: ",
@@ -896,14 +893,12 @@
     }
   },
   "stats": {
-    "avgVolume": "Prům. objem",
     "max": "Max: ",
     "min": "Min: ",
     "recentLast3": " (poslední 3)",
     "recentTrend": "Nedávný trend",
     "recentVsPrev": " (vs předch.)",
-    "sessions": "Tréninky",
-    "title": "📈 Statistiky {dataTypeLabel} ({contextLabel}):"
+    "sessions": "Tréninky"
   },
   "table": {
     "actions": "Akce",

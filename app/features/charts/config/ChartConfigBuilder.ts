@@ -14,7 +14,7 @@ import {
   ChartStyling,
   ChartInteraction,
   getYAxisLabel,
-  getUnitForChartType,
+  formatWithUnit,
 } from "@app/features/charts/config/ChartConstants";
 import { ChartTypeRegistry, TooltipItem } from "chart.js";
 
@@ -29,7 +29,7 @@ export class ChartConfigBuilder {
   static createPluginsConfig(
     title: string,
     colors: ChartColorPalette,
-    chartType: string,
+    dataType: string,
   ) {
     return {
       title: {
@@ -60,13 +60,13 @@ export class ChartConfigBuilder {
           },
         },
       },
-      tooltip: this.createTooltipConfig(colors, chartType),
+      tooltip: this.createTooltipConfig(colors, dataType),
     };
   }
 
   private static createTooltipConfig(
     colors: ChartColorPalette,
-    chartType: string,
+    dataType: string,
   ) {
     return {
       mode: ChartInteraction.TOOLTIP_MODE,
@@ -85,11 +85,10 @@ export class ChartConfigBuilder {
         ) {
           const value = tooltipItem.parsed.y;
           const label = tooltipItem.dataset.label ?? "";
-          const unit = getUnitForChartType(chartType);
-          const text = `${label}: ${
-            value?.toFixed ? value.toFixed(1) : value
-          }`;
-          return unit ? `${text} ${unit}` : text;
+          return `${label}: ${formatWithUnit(
+            value?.toFixed ? value.toFixed(1) : String(value),
+            dataType,
+          )}`;
         },
       },
     };
@@ -100,13 +99,13 @@ export class ChartConfigBuilder {
    */
   static createScalesConfig(
     colors: ChartColorPalette,
-    chartType: string,
+    dataType: string,
   ) {
     return {
       x: this.createAxisConfig(colors, getChartLabels().X_AXIS, true),
       y: this.createAxisConfig(
         colors,
-        getYAxisLabel(chartType),
+        getYAxisLabel(dataType),
         true,
       ),
     };
@@ -160,7 +159,7 @@ export class ChartConfigBuilder {
     datasets: ChartDataset[],
     title: string,
     colors: ChartColorPalette,
-    chartType: string,
+    dataType: string,
   ): ChartConfiguration {
     return {
       type: "line",
@@ -169,8 +168,8 @@ export class ChartConfigBuilder {
         responsive: true,
         maintainAspectRatio: true,
         aspectRatio: ChartStyling.ASPECT_RATIO,
-        plugins: this.createPluginsConfig(title, colors, chartType),
-        scales: this.createScalesConfig(colors, chartType),
+        plugins: this.createPluginsConfig(title, colors, dataType),
+        scales: this.createScalesConfig(colors, dataType),
         interaction: this.createInteractionConfig(),
       },
     };

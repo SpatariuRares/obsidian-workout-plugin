@@ -3,7 +3,7 @@ import {
   ChartInteraction,
   getChartLabels,
   ChartStyling,
-  getUnitForChartType,
+  getUnitForDataType,
   getYAxisLabel,
 } from "../ChartConstants";
 import { ChartColorPalette } from "@app/features/charts/config/ChartTheme";
@@ -83,7 +83,7 @@ describe("ChartConfigBuilder", () => {
     });
 
     expect(labelText).toBe(
-      `Volume: 12.3 ${getUnitForChartType("volume")}`,
+      `Volume: 12.3 ${getUnitForDataType("volume")}`,
     );
   });
 

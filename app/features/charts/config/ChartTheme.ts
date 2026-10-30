@@ -168,14 +168,14 @@ export class ChartColors {
 
   /**
    * Gets the appropriate color scheme based on chart type
-   * @param chartType - Type of chart data (volume, weight, reps)
+   * @param dataType - Type of chart data (volume, weight, reps)
    * @returns Color scheme object
    */
   static getColorSchemeForType(
-    chartType: CHART_DATA_TYPE,
+    dataType: CHART_DATA_TYPE,
   ): ColorScheme {
     const colors = this.getChartColors();
-    switch (chartType) {
+    switch (dataType) {
       case CHART_DATA_TYPE.VOLUME:
         return colors.primary;
       case CHART_DATA_TYPE.WEIGHT:

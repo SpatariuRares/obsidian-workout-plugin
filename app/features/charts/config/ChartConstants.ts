@@ -58,35 +58,46 @@ export const ChartInteraction = {
 } as const;
 
 /**
- * Generates a default chart title based on type
- * @param chartType - Type of chart (volume, weight, reps)
+ * Generates a default chart title based on the data type
+ * @param dataType - Chart data type (volume, weight, reps, ...)
  * @returns Formatted chart title
  */
-export function getDefaultChartTitle(chartType: string): string {
+export function getDefaultChartTitle(dataType: string): string {
   const capitalizedType =
-    chartType.charAt(0).toUpperCase() + chartType.slice(1);
+    dataType.charAt(0).toUpperCase() + dataType.slice(1);
   return t("charts.defaultTitle", { type: capitalizedType });
 }
 
 /**
- * Gets the unit for a chart type (e.g., "kg", "lb", "sec", "km", "min/km", "bpm").
+ * Gets the unit for a data type (e.g., "kg", "lb", "sec", "km", "min/km", "bpm").
  * Volume and weight follow the weight unit setting; reps and custom fields have none.
- * @param chartType - Chart data type id (volume, weight, reps, duration, distance, pace, heartRate) or a custom field key
+ * @param dataType - Chart data type id (volume, weight, reps, duration, distance, pace, heartRate) or a custom field key
  * @returns Unit string, empty when the type has no unit
  */
-export function getUnitForChartType(chartType: string): string {
-  return getUnitsMap()[chartType as CHART_DATA_TYPE] ?? "";
+export function getUnitForDataType(dataType: string): string {
+  return getUnitsMap()[dataType as CHART_DATA_TYPE] ?? "";
 }
 
 /**
- * Gets the Y-axis label for a chart type, with its unit when it has one
+ * Appends the data type's unit to a formatted value ("65.8 kg"), or returns
+ * the value alone when the type has no unit ("8").
+ * @param value - The already formatted value
+ * @param dataType - Chart data type id or a custom field key
+ */
+export function formatWithUnit(value: string, dataType: string): string {
+  const unit = getUnitForDataType(dataType);
+  return unit ? `${value} ${unit}` : value;
+}
+
+/**
+ * Gets the Y-axis label for a data type, with its unit when it has one
  * (e.g., "Weight (kg)", "Reps", "Heart rate (bpm)"). A custom field is labelled by its key.
- * @param chartType - Chart data type id or a custom field key
+ * @param dataType - Chart data type id or a custom field key
  * @returns Y-axis label string
  */
-export function getYAxisLabel(chartType: string): string {
-  const name = getTypeNames()[chartType as CHART_DATA_TYPE] ?? chartType;
-  const unit = getUnitForChartType(chartType);
+export function getYAxisLabel(dataType: string): string {
+  const name = getTypeNames()[dataType as CHART_DATA_TYPE] ?? dataType;
+  const unit = getUnitForDataType(dataType);
   return unit ? `${name} (${unit})` : name;
 }
 

@@ -60,19 +60,19 @@ export class ChartRenderer {
    * Creates a Chart.js configuration object with styling and options.
    * @param labels - Array of labels for the x-axis (dates)
    * @param datasets - Array of datasets to display in the chart
-   * @param chartType - Type of chart data (volume, weight, reps)
+   * @param dataType - Type of chart data (volume, weight, reps)
    * @param params - Chart parameters including title and display options
    * @returns Chart.js configuration object
    */
   private static createChartConfig(
     labels: string[],
     datasets: ChartDataset[],
-    chartType: CHART_DATA_TYPE,
+    dataType: CHART_DATA_TYPE,
     params: EmbeddedChartParams,
   ): ChartConfiguration {
-    const title = params.title || getDefaultChartTitle(chartType);
+    const title = params.title || getDefaultChartTitle(dataType);
     const colors = ChartColors.getChartColors();
-    const colorScheme = ChartColors.getColorSchemeForType(chartType);
+    const colorScheme = ChartColors.getColorSchemeForType(dataType);
 
     // Apply styling to all datasets
     DatasetStyler.styleDatasets(datasets, colorScheme, colors);
@@ -83,7 +83,7 @@ export class ChartRenderer {
       datasets,
       title,
       colors,
-      chartType,
+      dataType,
     );
   }
 

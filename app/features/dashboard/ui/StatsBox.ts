@@ -1,8 +1,5 @@
-import {
-  CONSTANTS,
-  getUnitsMap,
-  getTypeNames,
-} from "@app/constants";
+import { CONSTANTS, getTypeNames } from "@app/constants";
+import { formatWithUnit } from "@app/features/charts/config/ChartConstants";
 import {
   CHART_TYPE,
   CHART_DATA_TYPE,
@@ -156,13 +153,8 @@ export class StatsBox {
         return FormatUtils.formatPace(value);
       case CHART_DATA_TYPE.REPS:
         return Math.round(value).toString();
-      default: {
-        const unitsMap = getUnitsMap();
-        const unit = unitsMap[dataType];
-        return unit
-          ? `${value.toFixed(1)} ${unit}`
-          : value.toFixed(1);
-      }
+      default:
+        return formatWithUnit(value.toFixed(1), dataType);
     }
   }
 
@@ -182,8 +174,6 @@ export class StatsBox {
     suffix?: string;
   } {
     const isLowerBetter = FormatUtils.isLowerBetter(dataType);
-    const unitsMap = getUnitsMap();
-    const unit = unitsMap[dataType];
 
     if (volumeData.length >= 3) {
       const recent = volumeData.slice(-3);
@@ -195,7 +185,7 @@ export class StatsBox {
           ? "var(--color-red)"
           : "var(--color-green)";
         return {
-          text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
+          text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType)}`,
           color,
           suffix: t("stats.recentLast3"),
         };
@@ -205,7 +195,7 @@ export class StatsBox {
           ? "var(--color-green)"
           : "var(--color-red)";
         return {
-          text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
+          text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType)}`,
           color,
           suffix: t("stats.recentLast3"),
         };
@@ -225,7 +215,7 @@ export class StatsBox {
           ? "var(--color-red)"
           : "var(--color-green)";
         return {
-          text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
+          text: `+${this.formatTrendValue(Math.abs(changeRecent), dataType)}`,
           color,
           suffix: t("stats.recentVsPrev"),
         };
@@ -235,7 +225,7 @@ export class StatsBox {
           ? "var(--color-green)"
           : "var(--color-red)";
         return {
-          text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType, unit)}`,
+          text: `-${this.formatTrendValue(Math.abs(changeRecent), dataType)}`,
           color,
           suffix: t("stats.recentVsPrev"),
         };
@@ -255,25 +245,21 @@ export class StatsBox {
    * For duration/pace uses specialized formatters, for others adds the unit.
    * @param value - The absolute change value
    * @param dataType - Type of data being formatted
-   * @param unit - Unit string from UNITS_MAP
    * @returns Formatted string
    */
   private static formatTrendValue(
     value: number,
     dataType: CHART_DATA_TYPE,
-    unit: string,
   ): string {
     switch (dataType) {
       case CHART_DATA_TYPE.DURATION:
         return FormatUtils.formatDuration(value);
       case CHART_DATA_TYPE.PACE:
-        return `${value.toFixed(2)} ${unit}`;
+        return formatWithUnit(value.toFixed(2), dataType);
       case CHART_DATA_TYPE.REPS:
         return Math.round(value).toString();
       default:
-        return unit
-          ? `${value.toFixed(1)} ${unit}`
-          : value.toFixed(1);
+        return formatWithUnit(value.toFixed(1), dataType);
     }
   }
 }

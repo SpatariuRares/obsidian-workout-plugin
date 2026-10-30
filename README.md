@@ -1,134 +1,68 @@
-# Workout Planner for Obsidian
+<img src="assets/logo.png" width="96" alt="Workout Planner logo">
 
-![Obsidian](https://img.shields.io/badge/Obsidian-0.15.0%2B-purple) ![License](https://img.shields.io/badge/license-MIT-green) [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-support-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/spatariurares)
+# Workout Planner
 
-Log your sets in Obsidian and see your progress in the same notes you plan your training in. Workout Planner keeps every set in one CSV file in your vault, then draws tables, charts, timers and a dashboard (with a muscle heat map) wherever you put a code block.
+Mobile-first workout tracker for Obsidian. Log every set from your phone at the gym, then watch your progress in tables, charts and a dashboard inside the same notes where you plan your training. Your sets go into one CSV file in your vault. No account, no cloud.
 
-It works on desktop and mobile, so you can log from your phone between sets.
+![Workout Planner on a phone: a workout note with rest timer and log table, the log form with +/− buttons and kg/lb picker, and the muscle heat map](assets/hero.png)
 
-![Volume trend chart](assets/charts.png)
+## Features
 
-## Contents
+- Log sets with reps and weight, pre-filled from your last set, with +/− buttons and one-tap recent exercises
+- Log each set in kg or lb, whatever the plates in front of you say
+- Tag sets with a protocol: drop set, myo-reps, rest-pause, superset, 21s, or your own
+- Tables of your sets, grouped by day with daily totals, editable with one tap
+- Charts for weight, volume, reps, duration, distance, pace and heart rate, and a trend that tells you plainly if you're improving
+- A dashboard with weekly streak, personal records, total volume, recent workouts and protocol stats
+- A muscle heat map, front and back, by volume, sets or reps
+- Rest timers (countdown, interval, stopwatch) with presets, that restart when you log a set and beep on iOS and Android
+- An estimate of how long a planned workout takes
+- Strength, bodyweight, timed, distance and cardio exercises, or your own fields
+- Every set in one plain CSV file, readable from Dataview and Templater
+- Built for phones: no sideways scrolling, buttons always in reach
+- Available in 24 languages
 
-- [Install](#install)
-- [Your first workout in five minutes](#your-first-workout-in-five-minutes)
-- [How it fits together](#how-it-fits-together)
-- [Logging sets](#logging-sets)
-- [Seeing your progress](#seeing-your-progress)
-- [Code block reference](#code-block-reference)
-- [Exercise pages](#exercise-pages)
-- [Muscle tags and the heat map](#muscle-tags-and-the-heat-map)
-- [Commands](#commands)
-- [Settings](#settings)
-- [Your data](#your-data)
-- [Dataview and Templater](#dataview-and-templater)
-- [Troubleshooting](#troubleshooting)
-- [Support](#support)
+## Getting started
 
-## Install
+In **Settings → Workout Planner**, select **Create examples**. You get sample exercises, a few workouts with a month of logs, and a dashboard. Poke around before setting up your own.
 
-1. In Obsidian, open **Settings → Community plugins → Browse**.
-2. Search for **Workout Planner**, then select **Install** and **Enable**.
+When you're ready, set the CSV folder and the exercise folder, select **Create files**, then add a table to any note, for example `Push Day`:
 
-To install by hand, download `main.js`, `manifest.json` and `styles.css` from the [latest release](https://github.com/SpatariuRares/obsidian-workout-plugin/releases/latest) into `<your vault>/.obsidian/plugins/workout-planner/`.
+````markdown
+```workout-log
+exercise: Bench Press
+```
+````
 
-## Your first workout in five minutes
-
-The quickest way to see everything working is the example folder. Go to **Settings → Workout Planner** and select **Create examples**. You get sample exercises, a few workouts with a month of logs, and a dashboard. Open them and look around.
-
-To start with your own data instead:
-
-1. In **Settings → Workout Planner**, set the CSV folder (where your logs go) and the exercise folder (where your exercise pages go), then select **Create files**.
-2. Make a note called `Push Day` and add a table for one exercise:
-
-   ````markdown
-   ```workout-log
-   exercise: Bench Press
-   ```
-   ````
-
-3. Select the **+** button under the table (or the dumbbell icon in the ribbon, or the **Create workout log** command). Enter reps and weight and save. The table updates on its own.
-4. Once you have a few sessions, add a chart under the table:
-
-   ````markdown
-   ```workout-chart
-   exercise: Bench Press
-   type: weight
-   ```
-   ````
-
-## How it fits together
-
-There are three kinds of files:
-
-| What           | Where                                       | What it does                                                                                                                                           |
-| -------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| The log        | `workout_logs.csv` in your CSV folder       | One row per set. Every view reads from here.                                                                                                           |
-| Exercise pages | Your exercise folder, one note per exercise | Say what kind of exercise it is (so the log form asks for the right fields) and which muscles it trains (for the heat map). Optional, but recommended. |
-| Your notes     | Anywhere                                    | Workout plans, journals, dashboards. You add code blocks to them to show tables, charts, timers and stats.                                             |
-
-When you log a set from a note, the note's name is saved as the set's **workout**. That's how `workout: Push Day` filters work later.
+Tap **+** under the table, enter reps and weight, and save. The table updates on its own. You don't have to write blocks by hand either: the **Insert workout chart / table / timer / dashboard / duration** commands open a form and insert the block for you.
 
 ## Logging sets
 
-Open the log form in any of these ways:
+Open the log form with the **+** under a table (the exercise is filled in for you), the dumbbell icon in the ribbon, or the **Create workout log** command. The form starts from your last set, so most of the time you tap **+/−** once and save. Done before your rest is over.
 
-- the **+** button under a `workout-log` table (it fills in the exercise for you)
-- the dumbbell icon in the ribbon
-- the **Create workout log** command
+The form asks for the fields that fit the exercise: reps and weight for a squat, seconds for a plank, distance and time for a run (see [Exercise types](#exercise-types)). Each set can also carry a note and a protocol, shown as a badge in the table.
 
-The form fills in the reps and weight of your last set, has **+/−** buttons for both, and shows recent exercises as one-tap chips (on a phone they sit under **Recent exercises and workout**, at the bottom of the form). It asks for the fields that fit the exercise: reps and weight for a squat, seconds for a plank, distance and time for a run (see [Exercise pages](#exercise-pages)).
+The weight field has a kg/lb picker, so you can log 225 lb even if your setting is kg. The table shows that set as "225 lb"; charts, stats and volume convert every set to your setting.
 
-Each set can also carry:
+When you log a set from a note, the note's name is saved as the set's **workout**, so a table or chart with `workout: Push Day` finds it later.
 
-- notes, as free text
-- a protocol, the training technique shown as a badge: standard, drop set, myo-reps, rest-pause, superset, 21s, or [your own](#settings)
+## Tables
 
-To change or delete a set, use the buttons on its row in a table.
+A `workout-log` block shows the sets of an exercise or workout, newest first. Sets from the same day are grouped under a row with that day's totals, and each row has edit and delete buttons. On a phone each set becomes a compact row with no sideways scrolling.
 
-### On your phone
-
-The plugin is built to be used between sets. On a phone:
-
-- each set in a `workout-log` table becomes a compact row with its edit and delete buttons always in reach, with no sideways scrolling
-- the dashboard puts **Quick actions** first and shows the summary as a 2 × 2 grid
-- charts are replaced by a table of their values, which is easier to read on a small screen
-
-<p align="center">
-  <img src="assets/mobile-log.png" width="260" alt="Workout note on a phone: rest timer, add button and the log table as one row per set">
-  <img src="assets/mobile-log-form.png" width="260" alt="Log form on a phone, prefilled with the last set, with +/− buttons for reps and weight">
-  <img src="assets/mobile-dashboard.png" width="260" alt="Dashboard on a phone: quick actions on top, then a 2 × 2 summary">
-</p>
-
-## Seeing your progress
-
-| You want to…                                                              | Use                                                                                        |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| See every set of an exercise or workout                                   | [`workout-log`](#workout-log) table                                                        |
-| See a lift go up over time                                                | [`workout-chart`](#workout-chart) with `type: weight` or `volume`                          |
-| Track runs, rides, planks                                                 | [`workout-chart`](#workout-chart) with `type: duration`, `distance`, `pace` or `heartRate` |
-| Get an overview: totals, recent workouts, muscles trained, protocol stats | [`workout-dashboard`](#workout-dashboard)                                                  |
-| Time your rest                                                            | [`workout-timer`](#workout-timer)                                                          |
-| Know how long a planned workout takes                                     | [`workout-duration`](#workout-duration)                                                    |
-| Lay out a workout on a canvas                                             | **Export workout to canvas** command                                                       |
-
-You don't have to write code blocks by hand: the **Insert workout chart / table / timer / dashboard / duration** commands open a form and insert the block for you.
-
-## Code block reference
-
-Every parameter is optional. Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add `exactMatch: true` when you want only that exact name.
-
-### workout-log
-
-A table of sets, newest first, with edit and delete buttons. Sets from the same day are grouped under a row with that day's totals.
-
-![Rest timer and log table for one exercise](assets/tables.png)
+![The same workout-log table on desktop and on a phone, where each set becomes a compact row](assets/tables.png)
 
 ```workout-log
 exercise: Bench Press
 dateRange: 14
-limit: 20
+targetWeight: 100
+targetReps: 8
 ```
+
+With `targetWeight` and `targetReps`, a progressive-overload target appears above the table.
+
+<details>
+<summary>All parameters</summary>
 
 | Parameter                    | Default | What it does                                       |
 | ---------------------------- | ------- | -------------------------------------------------- |
@@ -144,9 +78,15 @@ limit: 20
 | `showAddButton`              | `true`  | Show the **+** button                              |
 | `targetWeight`, `targetReps` | —       | Show a progressive-overload target above the table |
 
-### workout-chart
+Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add `exactMatch: true` for only that exact name.
 
-A line chart for one measure over time.
+</details>
+
+## Charts and trends
+
+A `workout-chart` block draws one measure over time: weight, volume, reps, duration, distance, pace or heart rate. The header says whether the trend is **Increasing**, **Stable** or **Decreasing**. Stable means the trend line moves less than 5% of the average over the whole period, so a slow, steady gain still counts as increasing. For pace, lower is better, and a falling line shows as improving. On a phone the chart becomes a table of the same values.
+
+![A bench press volume chart with its increasing trend on desktop, and the same values as a table on a phone](assets/charts.png)
 
 ```workout-chart
 exercise: Squat
@@ -154,6 +94,9 @@ type: volume
 dateRange: 90
 showTrendLine: true
 ```
+
+<details>
+<summary>All parameters</summary>
 
 | Parameter       | Default        | What it does                                                              |
 | --------------- | -------------- | ------------------------------------------------------------------------- |
@@ -169,8 +112,6 @@ showTrendLine: true
 | `height`        | 4:3            | `300` (pixels) or any CSS length such as `50vh`                           |
 | `exactMatch`    | `false`        | Match the exercise name exactly                                           |
 
-`chartType` picks which sets count and how a day becomes one point:
-
 | `chartType` | Sets used                           | Each day's point |
 | ----------- | ----------------------------------- | ---------------- |
 | `exercise`  | sets of `exercise`                  | average          |
@@ -178,20 +119,25 @@ showTrendLine: true
 | `combined`  | sets of `exercise` within `workout` | total            |
 | `all`       | every set (filters ignored)         | total            |
 
-The header above the chart calls the trend **Increasing**, **Decreasing** or **Stable**. It is stable when the trend line moves by less than 5% of the average across the whole period, so steady small gains still count as increasing. For pace, lower is better, so a falling line is shown as improving.
+</details>
 
-On a phone the chart is replaced by a table of the same values.
+## Dashboard and muscle heat map
 
-### workout-dashboard
+A `workout-dashboard` block opens with four numbers: total workouts, weekly streak, total volume and personal records. Below them you get quick stats for the week, month and year, a volume trend, your recent workouts, protocol stats and planned vs. actual workout length. On a phone, quick actions come first and the summary is a 2 × 2 grid.
 
-Summary cards, quick stats, volume trend, recent workouts, a muscle heat map, protocol usage and effectiveness, and planned vs. actual workout length.
-
-![Dashboard with summary cards, quick stats and the muscle heat map](assets/dashboard.png)
+![The dashboard on desktop with summary, quick stats, heat map, volume analytics and recent workouts, and on a phone with quick actions first](assets/dashboard.png)
 
 ```workout-dashboard
 title: Last three months
 dateRange: 90
 ```
+
+The heat map shows which muscles you trained over the last week, month or year, front and back, by **Volume**, **Sets** or **Reps**. It's the quickest way to notice you've skipped legs for three weeks. Under it, a short training analysis warns you about imbalances, like a front that works much more than the back. It reads the muscle tags of your [exercise pages](#exercise-types). Bodyweight and timed exercises have no weight, so they light up only under Sets and Reps.
+
+<img src="assets/heatmap.png" width="720" alt="Muscle heat map for the week on desktop and on a phone: chest and quads trained">
+
+<details>
+<summary>All parameters</summary>
 
 | Parameter                                                                                        | Default | What it does                   |
 | ------------------------------------------------------------------------------------------------ | ------- | ------------------------------ |
@@ -201,48 +147,80 @@ dateRange: 90
 | `recentWorkoutsLimit`                                                                            | `5`     | Workouts in the recent list    |
 | `volumeTrendDays`                                                                                | `30`    | Days in the volume trend chart |
 
-The heat map has buttons for the period (week, month, year), the side of the body, and what to measure: **Volume** (reps × weight), **Sets** or **Reps**. Bodyweight and timed exercises have no weight, so they only light up under Sets and Reps.
+</details>
 
-### workout-timer
+<details>
+<summary>Muscle tags</summary>
+
+Tags can be a list, a single word (`tags: chest`) or a comma-separated line (`tags: chest, triceps`).
+
+Broad groups: `chest`, `back`, `shoulders`, `biceps`, `triceps`, `forearms`, `traps`, `quads`, `hamstrings`, `glutes`, `calves`, `abs`, `core`
+
+Specific muscles have their own area of the body and count toward their group. A broad tag spreads over the whole area: `chest` lights all three parts of the chest a little, `upper_chest` lights only the top one fully.
+
+| Group       | Specific muscles                            |
+| ----------- | ------------------------------------------- |
+| `chest`     | `upper_chest`, `mid_chest`, `lower_chest`   |
+| `shoulders` | `front_delts`, `side_delts`, `rear_delts`   |
+| `back`      | `lats`, `rhomboids`, `lower_back` (or `ql`) |
+| `core`      | `obliques`, `serratus`                      |
+
+Tags in your own language, like `petto` or `schiena`, work too. The plugin maps them to the groups above using `muscle-tags.csv`, next to your log. Edit it with **Manage muscle tags** (add, rename, search, spot duplicates) or by hand:
+
+```csv
+tag,muscleGroup,language
+petto,chest,it
+dorsali,lats,it
+```
+
+A tag that is already a group name (`upper_chest`, `Upper chest`, `upper-chest`) always works, even if `muscle-tags.csv` doesn't list it.
+
+</details>
+
+## Timers
+
+A `workout-timer` block is a countdown, interval or stopwatch timer. Save your usual rest times as presets. Link a timer to an exercise or workout and it restarts every time you log a set, so you don't have to touch it between sets. With `autoStart: true` it starts as soon as the note opens.
+
+It beeps on iOS and Android too. Phones only allow sound after you've tapped the page, so a timer started by `autoStart` stays silent until you tap **Start** once.
 
 ```workout-timer
 type: countdown
 duration: 90
+exercise: Bench Press
 ```
 
-| Parameter             | Default     | What it does                                                                              |
-| --------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| `type`                | `countdown` | `countdown`, `interval` or `stopwatch`                                                    |
-| `duration`            | `30`        | Seconds (countdown and interval)                                                          |
-| `rounds`              | `1`         | Rounds (interval)                                                                         |
-| `sound`               | `true`      | Beep when time is up                                                                      |
-| `autoStart`           | `false`     | Start as soon as the note opens                                                           |
-| `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset                     |
-| `showControls`        | `true`      | Show start, pause and reset                                                               |
-| `preset`              | —           | Start from a saved preset; other parameters override it                                   |
-| `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout, handy for rest periods |
+<details>
+<summary>All parameters</summary>
 
-On a phone, the browser only allows sound after you've tapped **Start** once, so a timer started by `autoStart` stays silent until then.
+| Parameter             | Default     | What it does                                                          |
+| --------------------- | ----------- | --------------------------------------------------------------------- |
+| `type`                | `countdown` | `countdown`, `interval` or `stopwatch`                                |
+| `duration`            | `30`        | Seconds (countdown and interval)                                      |
+| `rounds`              | `1`         | Rounds (interval)                                                     |
+| `sound`               | `true`      | Beep when time is up                                                  |
+| `autoStart`           | `false`     | Start as soon as the note opens                                       |
+| `showControls`        | `true`      | Show start, pause and reset                                           |
+| `preset`              | —           | Start from a saved preset; other parameters override it               |
+| `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout     |
+| `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset |
 
-### workout-duration
+</details>
 
-Estimates how long a workout note takes: rest from its `workout-timer` blocks plus time for each set.
+## Workout duration
 
-![Estimated duration card with rest time, set time and the last session](assets/duration.png)
+A `workout-duration` block estimates how long a workout note takes: the rest from its timers plus the time for each set, next to how long your last session really took.
+
+<img src="assets/duration.png" width="420" alt="Estimated duration card with rest time, set time and the last session">
 
 ```workout-duration
 workout: Workouts/Push Day.md
 ```
 
-| Parameter | Default   | What it does                         |
-| --------- | --------- | ------------------------------------ |
-| `workout` | this note | Workout note to estimate: its path in the vault, a path relative to this note, or just its name |
+`workout` can be a path in the vault, a path relative to this note, or just the note's name; leave it out to estimate the current note. Seconds per rep and per set come from [Settings](#settings).
 
-Seconds per rep and per set come from [Settings → Training parameters](#settings).
+## Exercise types
 
-## Exercise pages
-
-An exercise page is a note in your exercise folder. Its frontmatter tells the plugin two things: what to ask for when you log it, and which muscles it trains. **Create exercise page** makes one for you.
+An exercise page is a note in your exercise folder. Its frontmatter says what the log form should ask for and which muscles the exercise trains. **Create exercise page** makes one for you.
 
 ```yaml
 ---
@@ -253,7 +231,7 @@ tags:
 ---
 ```
 
-| `exercise_type`      | The log form asks for                        | You can also write                                           |
+| `exercise_type`      | The log form asks for                        | Also accepted                                                |
 | -------------------- | -------------------------------------------- | ------------------------------------------------------------ |
 | `strength` (default) | reps, weight                                 | `bodyweight`, `weights`                                      |
 | `timed`              | duration                                     | `duration`, `time`, `timer`, `interval`, `hold`, `isometric` |
@@ -261,7 +239,7 @@ tags:
 | `cardio`             | duration, distance and heart rate (optional) | —                                                            |
 | `custom`             | only the fields you list under `parameters`  | —                                                            |
 
-`type:` works the same as `exercise_type:`. To add your own fields, list them under `parameters`, for example rounds for jump rope:
+`type:` works the same as `exercise_type:`. Add your own fields under `parameters`, for example rounds for jump rope:
 
 ```yaml
 ---
@@ -271,80 +249,22 @@ parameters:
     label: Rounds
     type: number
     required: false
-tags:
-  - calves
 ---
 ```
 
 If you change an exercise's type after logging it, **Convert exercise** moves the existing sets over and lets you choose which old field goes where.
 
-## Muscle tags and the heat map
-
-The heat map reads the `tags` of each exercise page. Tags can be a list, a single word (`tags: chest`) or a comma-separated line (`tags: chest, triceps`).
-
-Broad groups: `chest`, `back`, `shoulders`, `biceps`, `triceps`, `forearms`, `traps`, `quads`, `hamstrings`, `glutes`, `calves`, `abs`, `core`
-
-Specific muscles are each drawn in its own area of the body and counted toward its group:
-
-| Group       | Specific muscles                            |
-| ----------- | ------------------------------------------- |
-| `chest`     | `upper_chest`, `mid_chest`, `lower_chest`   |
-| `shoulders` | `front_delts`, `side_delts`, `rear_delts`   |
-| `back`      | `lats`, `rhomboids`, `lower_back` (or `ql`) |
-| `core`      | `obliques`, `serratus`                      |
-
-A broad tag spreads over its whole area: `chest` lights all three parts of the chest a little, `upper_chest` lights only the top one fully.
-
-Tags in your own language, like `petto` or `schiena`, work too. The plugin maps them to the groups above using `muscle-tags.csv`, next to your log. Edit it with **Manage muscle tags** (add, rename, search, spot duplicates) or by hand:
-
-```csv
-tag,muscleGroup,language
-petto,chest,it
-dorsali,lats,it
-```
-
-A tag that is already a group name (`upper_chest`, `Upper chest`, `upper-chest`) always works, even if your `muscle-tags.csv` doesn't list it.
-
-## Commands
-
-Open the command palette (`Ctrl/Cmd + P`) and type the name.
-
-| Command                                                                                                         | What it does                                                       |
-| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Create workout log                                                                                              | Log a set                                                          |
-| Insert workout chart / table / timer / dashboard / duration | Insert a code block through a form                                 |
-| Create exercise page                                                                                            | New exercise page with type and tags                               |
-| Create exercise section                                                                                         | Add a heading, timer and table for an exercise to the current note |
-| Add exercise block                                                                                              | Insert an exercise block, with name autocomplete                   |
-| Convert exercise                                                                                                | Move an exercise's sets to another exercise type                   |
-| Manage muscle tags                                                                                              | Edit `muscle-tags.csv`                                             |
-| Generate tag reference                                                                                          | Create a note listing every muscle tag                             |
-| Audit exercise names                                                                                            | Find the same exercise logged under different spellings            |
-| Export workout to canvas                                                                                        | Lay out the current workout on an Obsidian canvas                  |
-| Create CSV log file                                                                                             | Create an empty log                                                |
-| Migrate exercise types, Add missing IDs to code blocks                                                          | Maintenance after upgrading from older versions                    |
-
-## Settings
-
-| Section             | Settings                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Setup & data        | CSV folder, exercise folder, weight unit (`kg` or `lb`), create the CSV files, create examples                                              |
-| Mobile logging      | Match exercise names exactly by default, show the ribbon icon, weight step for the **+/−** buttons                                          |
-| Timer presets       | Saved timers (type, duration, rounds, sound) and the default one for new timers                                                             |
-| Custom protocols    | Your own techniques, each with a name, a short label of up to 3 letters, and a color                                                        |
-| Training parameters | Weight step for overload targets, seconds per rep, default reps per set, seconds per set when reps are unknown (used by `workout-duration`) |
-| Advanced            | The block inserted by **Create exercise section**, template generation, and **Run all** maintenance                                         |
-
-Each set keeps the unit it was logged in. The weight field in the log form has a kg/lb picker, so you can log 225 lb even if the setting is kg; the table shows that set as "225 lb". Charts, volume, stats and the API convert every set to the unit in the settings. Changing that setting doesn't relabel old sets: sets logged before this version get the previous unit saved first (a copy of the CSV is kept next to it, last 3 copies). **Run all** maintenance does the same with the current unit.
-
 ## Your data
 
-Everything is in `workout_logs.csv`, one row per set, so you can open it in a spreadsheet, back it up, or sync it like any other file.
+Every set is one row in `workout_logs.csv`, so you can open it in a spreadsheet, back it up, or sync it like any other file.
 
 ```csv
 date,exercise,reps,weight,volume,origine,workout,timestamp,notes,protocol
 2025-01-17T10:30:00.000Z,Bench Press,8,100,800,[[Push Day]],Push Day,1737138600000,,standard
 ```
+
+<details>
+<summary>Columns and editing by hand</summary>
 
 | Column                     | Meaning                             |
 | -------------------------- | ----------------------------------- |
@@ -359,14 +279,24 @@ Exercise types with their own fields (`duration`, `distance`, `heartRate`, or yo
 
 If you edit the file by hand, keep the header row, and wrap any value that contains a comma, quote or line break in double quotes. Notes starting with `=`, `+`, `-` or `@` are stored with a leading `'` so spreadsheets don't run them as formulas; the plugin hides it again.
 
-## Dataview and Templater
+</details>
+
+### Dataview and Templater
 
 The plugin exposes `WorkoutPlannerAPI` (also `window.WorkoutPlannerAPI`) once it has loaded.
 
-| Method                       | Returns                                                                                                                                                                  |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` and `volume` are in the settings unit; `enteredWeight` and `enteredUnit` are what was logged |
-| `getExerciseStats(exercise)` | `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                      |
+```dataviewjs
+const s = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
+dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
+```
+
+<details>
+<summary>API reference and more examples</summary>
+
+| Method                       | Returns                                                                                                                                                                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` and `volume` are in the settings unit; `enteredWeight` and `enteredUnit` are what was logged                                    |
+| `getExerciseStats(exercise)` | `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                                                   |
 | `getExercises(filter?)`      | Exercise names, sorted: the file names of your exercise pages (subfolders included), or the names in your log when you have no exercise pages. `{ tag: "chest" }` keeps the exercises whose page has that tag, so it is empty without exercise pages. |
 
 `getWorkoutLogs` accepts `exercise` (partial, case-insensitive), `workout`, `dateRange: { start, end }`, `protocol` and `exactMatch`.
@@ -384,13 +314,6 @@ dv.table(
 );
 ```
 
-Best bench press:
-
-```dataviewjs
-const s = await WorkoutPlannerAPI.getExerciseStats("Bench Press");
-dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
-```
-
 In a [Templater](https://github.com/SilentVoid13/Templater) template, to start a note with your latest numbers:
 
 ```markdown
@@ -404,28 +327,64 @@ tR += s.totalSets
 %>
 ```
 
+</details>
+
+## Settings
+
+Set the CSV and exercise folders, the default weight unit, the weight step of the **+/−** buttons, timer presets, your own protocols (name, short label and color), and the seconds per rep and per set used by the duration estimate. **Run all** under Advanced runs every maintenance task after an upgrade.
+
+Changing the weight unit doesn't relabel old sets: each set keeps the unit it was logged in.
+
+<details>
+<summary>All commands</summary>
+
+Open the command palette (`Ctrl/Cmd + P`) and type the name.
+
+| Command                                                     | What it does                                                       |
+| ----------------------------------------------------------- | ------------------------------------------------------------------ |
+| Create workout log                                          | Log a set                                                          |
+| Insert workout chart / table / timer / dashboard / duration | Insert a block through a form                                      |
+| Create exercise page                                        | New exercise page with type and tags                               |
+| Create exercise section                                     | Add a heading, timer and table for an exercise to the current note |
+| Add exercise block                                          | Insert an exercise block, with name autocomplete                   |
+| Convert exercise                                            | Move an exercise's sets to another exercise type                   |
+| Manage muscle tags                                          | Edit `muscle-tags.csv`                                             |
+| Generate tag reference                                      | Create a note listing every muscle tag                             |
+| Audit exercise names                                        | Find the same exercise logged under different spellings            |
+| Export workout to canvas                                    | Lay out the current workout on an Obsidian canvas                  |
+| Create CSV log file                                         | Create an empty log                                                |
+| Migrate exercise types, Add missing IDs to code blocks      | Maintenance after upgrading from older versions                    |
+
+</details>
+
 ## Troubleshooting
 
-**A table or chart is empty.** Check the exercise name and the `dateRange` (charts default to the last 30 days). With `exactMatch: true` the name must match exactly; leave it out to match loosely.
+- **A table or chart is empty.** Check the exercise name and the `dateRange` (charts default to the last 30 days). With `exactMatch: true` the name must match exactly.
+- **An exercise is missing from the heat map.** Its page needs muscle `tags` and must be in the exercise folder. Bodyweight and timed exercises show up only under **Sets** or **Reps**.
+- **The log form asks for reps and weight for a plank.** Set `exercise_type: timed` in the exercise page.
+- **The timer makes no sound on my phone.** Tap **Start** once; phones block sound until you touch the page.
 
-**Bodyweight or timed exercises don't show on the heat map.** Switch the heat map to **Sets** or **Reps**: their volume is 0 because they have no weight.
+## Installation
 
-**An exercise is missing from the heat map.** Its page needs muscle `tags`, and the page has to be in the exercise folder set in the settings.
+### From community plugins
 
-**The log form asks for reps and weight for a plank.** Set `exercise_type: timed` (or `type: duration`) in the exercise page.
+1. Open **Settings → Community plugins**
+2. Search for **Workout Planner**
+3. Select **Install**, then **Enable**
 
-**The timer makes no sound on my phone.** Tap **Start** once; phones block sound until you interact with the page.
+### Manual
 
-**I changed the CSV folder and nothing updated.** Open notes reload a moment after you stop typing the new folder. If one still shows old data, reopen it.
+1. Download `main.js`, `manifest.json` and `styles.css` from the [latest release](https://github.com/SpatariuRares/obsidian-workout-plugin/releases/latest)
+2. Create the folder `your-vault/.obsidian/plugins/workout-planner/`
+3. Copy the downloaded files into that folder
+4. Enable the plugin in **Settings → Community plugins**
 
 ## Support
 
-Workout Planner is free and open source. If it helps your training and you want to say thanks, you can [buy me a coffee](https://buymeacoffee.com/spatariurares). Obsidian also shows a donate button on the plugin's page in **Settings → Community plugins**. Bug reports and ideas are just as welcome as [issues](https://github.com/SpatariuRares/obsidian-workout-plugin/issues).
+Workout Planner is free and open source. If it helps your training, you can [buy me a coffee](https://buymeacoffee.com/spatariurares). Found a bug or missing something? Open an [issue](https://github.com/SpatariuRares/obsidian-workout-plugin/issues).
 
-## Translations
+Every language except English is machine-translated, so some phrases may sound off. If yours reads strangely, corrections are welcome.
 
-Every language except English is machine-translated, so some phrases may sound off. Corrections are welcome as an issue or pull request.
-
-## Credits and license
+## Credits
 
 Charts use [Chart.js](https://github.com/chartjs/Chart.js) (MIT). Workout Planner is released under the [MIT License](LICENSE).

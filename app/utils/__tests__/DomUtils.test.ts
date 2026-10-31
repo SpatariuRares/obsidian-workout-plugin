@@ -38,6 +38,26 @@ describe("DomUtils", () => {
       });
     });
 
+    describe("custom properties", () => {
+      it("should set a CSS custom property", () => {
+        DomUtils.setCssProps(element, { "--workout-test": "span 2" });
+        expect(element.style.getPropertyValue("--workout-test")).toBe(
+          "span 2",
+        );
+      });
+
+      it("should set custom and standard properties together", () => {
+        DomUtils.setCssProps(element, {
+          "--workout-test": "4",
+          color: "red",
+        });
+        expect(element.style.getPropertyValue("--workout-test")).toBe(
+          "4",
+        );
+        expect(element.style.color).toBe("red");
+      });
+    });
+
     describe("multiple properties", () => {
       it("should set multiple CSS properties at once", () => {
         DomUtils.setCssProps(element, {

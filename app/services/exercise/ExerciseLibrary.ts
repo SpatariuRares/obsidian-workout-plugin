@@ -1,5 +1,5 @@
-import { normalizePath } from "obsidian";
-import type { App, EventRef, TFile } from "obsidian";
+import { normalizePath, TFile, TFolder } from "obsidian";
+import type { App, EventRef } from "obsidian";
 import type { WorkoutChartsSettings } from "@app/types/WorkoutLogData";
 import { StringUtils } from "@app/utils/StringUtils";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
@@ -22,7 +22,7 @@ export interface ExercisePage {
 }
 
 type LibraryApp = {
-  vault: Pick<App["vault"], "getMarkdownFiles" | "on">;
+  vault: Pick<App["vault"], "getFolderByPath" | "on">;
   metadataCache: Pick<App["metadataCache"], "getFileCache" | "on">;
 };
 
@@ -89,13 +89,10 @@ export class ExerciseLibrary {
   }
 
   private build(folder: string): Index {
-    const pages = folder
-      ? this.app.vault
-          .getMarkdownFiles()
-          .filter((file) => file.path.startsWith(`${folder}/`))
-          .map((file) => this.readPage(file))
-          .sort(byPath)
-      : [];
+    const root = folder ? this.app.vault.getFolderByPath(folder) : null;
+    const pages = (root ? notesIn(root) : [])
+      .map((file) => this.readPage(file))
+      .sort(byPath);
 
     const byName = new Map<string, { page: ExercisePage; byFileName: boolean }[]>();
     for (const page of pages) {
@@ -197,6 +194,16 @@ function tagList(raw: unknown): string[] {
   return items
     .map((tag) => String(tag).trim().replace(/^#/, ""))
     .filter((tag) => tag.length > 0);
+}
+
+/** Markdown notes in a folder and its subfolders, without listing the rest of the vault */
+function notesIn(folder: TFolder): TFile[] {
+  const notes: TFile[] = [];
+  for (const child of folder.children) {
+    if (child instanceof TFolder) notes.push(...notesIn(child));
+    else if (child instanceof TFile && child.extension === "md") notes.push(child);
+  }
+  return notes;
 }
 
 function normalizeFolder(folder: string | undefined): string {

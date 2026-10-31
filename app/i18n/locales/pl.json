@@ -36,7 +36,8 @@
     "manageMuscleTags": "Zarządzaj tagami mięśni",
     "migrateExerciseTypes": "Migruj typy ćwiczeń",
     "createExampleNotes": "Utwórz przykładowe notatki",
-    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących"
+    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących",
+    "startTour": "Rozpocznij wycieczkę"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Uruchom wszystko",
       "savePreset": "Zapisz",
       "saveProtocol": "Zapisz",
-      "showWelcome": "Pokaż powitanie"
+      "showWelcome": "Pokaż powitanie",
+      "takeTour": "Przejdź trasę"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -1020,6 +1022,48 @@
     "next": "Następny",
     "skip": "Przejdź",
     "done": "Zakończono",
-    "progress": "{current} z {total}"
+    "progress": "{current} z {total}",
+    "noteName": "Wycieczka z przewodnikiem",
+    "noteIntro": "Wytyczne dotyczące wycieczki prowadzonej wskazują na każdy element wtyczki na tej stronie. Edytuj lub usuń tę notę, kiedy tylko chcesz.",
+    "noteTable": "Twoje zestawy",
+    "noteChart": "Postęp",
+    "noteDashboard": "Panel kontrolny",
+    "noteTimer": "Timer pauzy",
+    "steps": {
+      "logSet": {
+        "title": "Zapisz swój pierwszy zestaw",
+        "text": "Naciśnij przycisk \"+\" aby otworzyć formularz, a następnie zapisz zestaw. Zostanie on natychmiast wyświetlony w tabeli."
+      },
+      "rowActions": {
+        "title": "Edytuj lub usuń zbiór",
+        "text": "Każdy wiersz zawiera przyciski edycji i usuwania. Użyj ich, aby poprawić błąd lub usunąć wpis."
+      },
+      "chart": {
+        "title": "Twój postęp",
+        "text": "Na wykresie przedstawiono, jak dany ćwiczenie zmienia się w czasie, wraz z linią trendu i danymi statystycznymi.",
+        "textMine": "Na wykresie przedstawiono, jak postępuje ćwiczenie w czasie. Początkowo wykres jest prawie pusty, aż do momentu, w którym zarejestrujesz kilka serii.",
+        "mobileText": "Na telefonie wykres jest wyświetlany jako tabela z tymi samymi liczbami.",
+        "mobileTextMine": "Na telefonie wykres jest wyświetlany jako tabela. Początkowo jest prawie pusty, aż do momentu, gdy dodasz kilka zestawów danych."
+      },
+      "dashboard": {
+        "title": "Twój panel kontrolny"
+      },
+      "timer": {
+        "title": "Timer pauzy",
+        "text": "Naciśnij przycisk \"Start\", aby uruchomić odliczanie między seriami."
+      },
+      "ribbon": {
+        "title": "Zapisz notatkę z dowolnego miejsca",
+        "text": "Ikona hantla w pasku otwiera formularz logowania z dowolnego miejsca.",
+        "mobileText": "Na telefonie nie ma tutaj ikony wstążki. Użyj palety poleceń, aby otworzyć formularz dziennika z dowolnego notatnika."
+      },
+      "commands": {
+        "title": "Dodaj polecenia",
+        "text": "Otwórz paletę poleceń i uruchom polecenie \"Dodaj ćwiczenie\", aby dodać tabelę, wykres, timer lub panel kontrolny do notatki."
+      },
+      "end": {
+        "title": "Gotowe"
+      }
+    }
   }
 }

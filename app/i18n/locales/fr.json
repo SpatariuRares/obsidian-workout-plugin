@@ -36,7 +36,8 @@
     "manageMuscleTags": "Gérer les tags musculaires",
     "migrateExerciseTypes": "Migrer les types d'exercices",
     "createExampleNotes": "Créer des notes d'exemple",
-    "openGettingStartedGuide": "Ouvrir le guide de démarrage"
+    "openGettingStartedGuide": "Ouvrir le guide de démarrage",
+    "startTour": "Commencer la visite"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Tout exécuter",
       "savePreset": "Enregistrer",
       "saveProtocol": "Enregistrer",
-      "showWelcome": "Afficher le message de bienvenue"
+      "showWelcome": "Afficher le message de bienvenue",
+      "takeTour": "Commencer la visite"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
@@ -1020,6 +1022,48 @@
     "next": "Suivant",
     "skip": "Passer au tour suivant",
     "done": "Terminé",
-    "progress": "{current} de {total}"
+    "progress": "{current} de {total}",
+    "noteName": "Visite guidée",
+    "noteIntro": "La visite guidée met en évidence chaque élément du plugin sur cette page. Modifiez ou supprimez cette note à votre guise.",
+    "noteTable": "Vos ensembles",
+    "noteChart": "Progression",
+    "noteDashboard": "Tableau de bord",
+    "noteTimer": "Minuteur de repos",
+    "steps": {
+      "logSet": {
+        "title": "Enregistrez votre premier ensemble",
+        "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez un ensemble. Il apparaîtra immédiatement dans le tableau."
+      },
+      "rowActions": {
+        "title": "Modifier ou supprimer un ensemble",
+        "text": "Chaque ligne comporte des boutons de modification et de suppression. Utilisez-les pour corriger une erreur ou supprimer une ligne."
+      },
+      "chart": {
+        "title": "Votre progression",
+        "text": "Le graphique montre l'évolution d'un exercice au fil du temps, avec une ligne de tendance et des statistiques.",
+        "textMine": "Le graphique montre l'évolution d'un exercice au fil du temps. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries.",
+        "mobileText": "Sur un téléphone, le graphique est affiché sous forme de tableau avec les mêmes chiffres.",
+        "mobileTextMine": "Sur un téléphone, le graphique est affiché sous forme de tableau. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries."
+      },
+      "dashboard": {
+        "title": "Votre tableau de bord"
+      },
+      "timer": {
+        "title": "Minuteur de pause",
+        "text": "Appuyez sur le bouton \"Démarrer\" pour lancer un compte à rebours entre les séries."
+      },
+      "ribbon": {
+        "title": "Accéder à la liste des notes",
+        "text": "L'icône de haltère dans la barre permet d'ouvrir le formulaire d'historique depuis n'importe quel endroit.",
+        "mobileText": "Sur un téléphone, il n'y a pas d'icône de ruban ici. Utilisez la palette de commandes pour ouvrir le formulaire de journal depuis n'importe quelle note."
+      },
+      "commands": {
+        "title": "Ajouter des commandes",
+        "text": "Ouvrez la palette de commandes et exécutez la commande \"Insérer un entraînement\" pour ajouter une table, un graphique, un minuteur ou un tableau de bord à une note."
+      },
+      "end": {
+        "title": "Vous êtes prêt."
+      }
+    }
   }
 }

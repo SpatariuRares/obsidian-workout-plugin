@@ -36,7 +36,8 @@
     "manageMuscleTags": "Gestisci tag muscolari",
     "migrateExerciseTypes": "Migra tipi di esercizio",
     "createExampleNotes": "Crea note di esempio",
-    "openGettingStartedGuide": "Apri la guida per iniziare"
+    "openGettingStartedGuide": "Apri la guida per iniziare",
+    "startTour": "Inizia il tour"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Esegui tutti",
       "savePreset": "Salva",
       "saveProtocol": "Salva",
-      "showWelcome": "Mostra benvenuto"
+      "showWelcome": "Mostra benvenuto",
+      "takeTour": "Inizia il tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
@@ -1020,6 +1022,48 @@
     "next": "Prossimo",
     "skip": "Salta",
     "done": "Completato",
-    "progress": "{current} di {total}"
+    "progress": "{current} di {total}",
+    "noteName": "Visita guidata",
+    "noteIntro": "La guida evidenzia ogni parte del plugin presente su questa pagina. Modifica o elimina questa nota quando desideri.",
+    "noteTable": "Le tue impostazioni",
+    "noteChart": "Progresso",
+    "noteDashboard": "Pannello di controllo",
+    "noteTimer": "Timer per la pausa",
+    "steps": {
+      "logSet": {
+        "title": "Registra il tuo primo set",
+        "text": "Premi il pulsante \"+\" per aprire il modulo, quindi salva un set. Apparirà immediatamente nella tabella."
+      },
+      "rowActions": {
+        "title": "Modifica o elimina un insieme",
+        "text": "Ogni riga ha pulsanti per modificare e eliminare. Utilizzali per correggere un errore o eliminare un set."
+      },
+      "chart": {
+        "title": "Il tuo progresso",
+        "text": "Il grafico mostra come un esercizio evolve nel tempo, con una linea di tendenza e i relativi dati statistici.",
+        "textMine": "Il grafico mostra come un esercizio evolve nel tempo. Inizialmente è quasi vuoto, ma si riempie quando si registrano alcuni set.",
+        "mobileText": "Sul telefono, il grafico viene visualizzato come una tabella con gli stessi numeri.",
+        "mobileTextMine": "Sul telefono, il grafico viene visualizzato come una tabella. Inizialmente è quasi vuoto, ma si riempie una volta che si inseriscono alcuni set di dati."
+      },
+      "dashboard": {
+        "title": "Il tuo pannello di controllo"
+      },
+      "timer": {
+        "title": "Timer di riposo",
+        "text": "Premi il pulsante \"avvia\" per avviare un conto alla rovescia tra le serie."
+      },
+      "ribbon": {
+        "title": "Accedi da qualsiasi nota",
+        "text": "L'icona della manubrio nella barra consente di aprire il modulo di log da qualsiasi posizione.",
+        "mobileText": "Su un dispositivo mobile, non è presente l'icona \"ribbon\" in questa schermata. Utilizza il pannello dei comandi per aprire il modulo di log da qualsiasi nota."
+      },
+      "commands": {
+        "title": "Inserisci i comandi",
+        "text": "Apri la palette dei comandi ed esegui il comando \"Aggiungi allenamento\" per aggiungere una tabella, un grafico, un timer o un pannello di controllo a una nota."
+      },
+      "end": {
+        "title": "Procedi"
+      }
+    }
   }
 }

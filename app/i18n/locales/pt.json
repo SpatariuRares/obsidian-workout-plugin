@@ -36,7 +36,8 @@
     "manageMuscleTags": "Gerir tags musculares",
     "migrateExerciseTypes": "Migrar tipos de exercício",
     "createExampleNotes": "Criar notas de exemplo",
-    "openGettingStartedGuide": "Abrir o guia de início rápido"
+    "openGettingStartedGuide": "Abrir o guia de início rápido",
+    "startTour": "Inicie o tour"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Executar tudo",
       "savePreset": "Salvar",
       "saveProtocol": "Salvar",
-      "showWelcome": "Mostrar mensagem de boas-vindas"
+      "showWelcome": "Mostrar mensagem de boas-vindas",
+      "takeTour": "Comece o tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Já existe um ficheiro CSV de tags musculares. Deseja substituí-lo pelos valores padrão? Isto removerá todas as tags personalizadas.",
@@ -1020,6 +1022,48 @@
     "next": "Próximo",
     "skip": "Pular",
     "done": "Concluído",
-    "progress": "{current} de {total}"
+    "progress": "{current} de {total}",
+    "noteName": "Visita guiada",
+    "noteIntro": "O tour destaca cada parte do plugin nesta página. Edite ou exclua esta nota sempre que desejar.",
+    "noteTable": "Suas configurações",
+    "noteChart": "Progresso",
+    "noteDashboard": "Painel de controle",
+    "noteTimer": "Tempo restante",
+    "steps": {
+      "logSet": {
+        "title": "Registre o seu primeiro conjunto",
+        "text": "Pressione o botão \"+\" para abrir o formulário, e então salve um conjunto. Ele aparecerá imediatamente na tabela."
+      },
+      "rowActions": {
+        "title": "Editar ou excluir um conjunto",
+        "text": "Cada linha possui botões de edição e exclusão. Utilize-os para corrigir um erro ou remover um conjunto."
+      },
+      "chart": {
+        "title": "Seu progresso",
+        "text": "O gráfico mostra como um exercício evolui ao longo do tempo, com uma linha de tendência e estatísticas.",
+        "textMine": "O gráfico mostra como um exercício evolui ao longo do tempo. Ele está quase vazio até que você registre alguns exercícios.",
+        "mobileText": "No telemóvel, o gráfico é exibido como uma tabela com os mesmos números.",
+        "mobileTextMine": "No celular, o gráfico é exibido como uma tabela. Inicialmente, está quase vazio, mas preenche-se quando você registra alguns conjuntos de dados."
+      },
+      "dashboard": {
+        "title": "Seu painel de controle"
+      },
+      "timer": {
+        "title": "Reiniciar contador",
+        "text": "Pressione \"Iniciar\" para iniciar um cronômetro entre os exercícios."
+      },
+      "ribbon": {
+        "title": "Acessar de qualquer anotação",
+        "text": "O ícone de haltere na faixa abre o formulário de log de qualquer lugar.",
+        "mobileText": "Em um dispositivo móvel, não existe um ícone de \"ribbon\" aqui. Utilize o painel de comandos para abrir o formulário de log a partir de qualquer nota."
+      },
+      "commands": {
+        "title": "Adicionar comandos",
+        "text": "Abra o painel de comandos e execute o comando \"Inserir treino\" para adicionar uma tabela, gráfico, temporizador ou painel de controle a uma anotação."
+      },
+      "end": {
+        "title": "Você está pronto"
+      }
+    }
   }
 }

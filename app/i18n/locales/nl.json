@@ -36,7 +36,8 @@
     "manageMuscleTags": "Spierlabels beheren",
     "migrateExerciseTypes": "Oefeningstypen migreren",
     "createExampleNotes": "Maak voorbeeldnotities",
-    "openGettingStartedGuide": "Open handleiding"
+    "openGettingStartedGuide": "Open handleiding",
+    "startTour": "Begin de tour"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Alle onderhoud uitvoeren",
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
-      "showWelcome": "Toon welkomstbericht"
+      "showWelcome": "Toon welkomstbericht",
+      "takeTour": "Volg de tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -1020,6 +1022,48 @@
     "next": "Volgende",
     "skip": "Overslaan",
     "done": "Afgevolgd",
-    "progress": "{current} van {total}"
+    "progress": "{current} van {total}",
+    "noteName": "Gidsenrondleiding",
+    "noteIntro": "De rondleiding wijst naar elk onderdeel van het plugin op deze pagina. Bewerk of verwijder deze notitie wanneer u wilt.",
+    "noteTable": "Uw verzamelingen",
+    "noteChart": "Vooruitgang",
+    "noteDashboard": "Dashboard",
+    "noteTimer": "Timer voor pauzes",
+    "steps": {
+      "logSet": {
+        "title": "Registreer uw eerste set",
+        "text": "Druk op de + knop om het formulier te openen, en sla vervolgens een set op. Het wordt direct in de tabel weergegeven."
+      },
+      "rowActions": {
+        "title": "Bewerk of verwijder een set",
+        "text": "Elke rij heeft knoppen om te bewerken en te verwijderen. Gebruik deze om een typefout te corrigeren of een rij te verwijderen."
+      },
+      "chart": {
+        "title": "Uw voortgang",
+        "text": "De grafiek toont hoe een oefening zich in de loop van de tijd ontwikkelt, met een trendlijn en statistieken.",
+        "textMine": "De grafiek laat zien hoe een oefening zich in de loop van de tijd ontwikkelt. Totdat je een paar sets hebt geregistreerd, is de grafiek bijna leeg.",
+        "mobileText": "Op een telefoon wordt de grafiek weergegeven als een tabel met dezelfde getallen.",
+        "mobileTextMine": "Op een telefoon wordt de grafiek weergegeven als een tabel. Deze is aanvankelijk vrij leeg, totdat u een paar sets hebt ingevoerd."
+      },
+      "dashboard": {
+        "title": "Uw dashboard"
+      },
+      "timer": {
+        "title": "Timer opnieuw starten",
+        "text": "Druk op 'Start' om een timer te starten tussen de sets."
+      },
+      "ribbon": {
+        "title": "Loggen vanuit elke notitie",
+        "text": "Het dumbbell-icoon in de balk opent het logboekformulier vanaf elke locatie.",
+        "mobileText": "Op een telefoon is er hier geen 'ribbon'-icoon. Gebruik het commando-menu om het logboek te openen vanuit elke notitie."
+      },
+      "commands": {
+        "title": "Voer commando's in",
+        "text": "Open het commando-menu en voer een \"Toevoegen workout\" commando uit om een tabel, grafiek, timer of dashboard aan een notitie toe te voegen."
+      },
+      "end": {
+        "title": "Je bent klaar"
+      }
+    }
   }
 }

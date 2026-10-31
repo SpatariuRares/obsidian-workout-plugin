@@ -36,7 +36,8 @@
     "manageMuscleTags": "Administrer muskeltagger",
     "migrateExerciseTypes": "Migrer øvelsestyper",
     "createExampleNotes": "Opprett eksempelnotater",
-    "openGettingStartedGuide": "Åpne veiledning"
+    "openGettingStartedGuide": "Åpne veiledning",
+    "startTour": "Start guiden"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Kjør alt",
       "savePreset": "Lagre",
       "saveProtocol": "Lagre",
-      "showWelcome": "Vis velkomst"
+      "showWelcome": "Vis velkomst",
+      "takeTour": "Følg guiden"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -1020,6 +1022,48 @@
     "next": "Neste",
     "skip": "Hoppe over",
     "done": "Fullført",
-    "progress": "{current} av {total}"
+    "progress": "{current} av {total}",
+    "noteName": "Guidet tur",
+    "noteIntro": "Den guiderte turen peker på hver del av plugin-en på denne siden. Rediger eller slett denne noten når som helst.",
+    "noteTable": "Dine sett",
+    "noteChart": "Fremskritt",
+    "noteDashboard": "Dashboard",
+    "noteTimer": "Restetid",
+    "steps": {
+      "logSet": {
+        "title": "Logg din første serie",
+        "text": "Trykk på +-knappen for å åpne skjemaet, og lagre deretter et sett. Det vises umiddelbart i tabellen."
+      },
+      "rowActions": {
+        "title": "Rediger eller slett en samling",
+        "text": "Hver rad har knapper for å redigere og slette. Bruk dem for å rette en skrivefeil eller fjerne en oppføring."
+      },
+      "chart": {
+        "title": "Din fremgang",
+        "text": "Diagrammet viser hvordan en øvelse utvikler seg over tid, med en trendlinje og statistikk.",
+        "textMine": "Diagrammet viser hvordan en øvelse utvikler seg over tid. Det er nesten tomt før du registrerer noen sett.",
+        "mobileText": "På en mobiltelefon vises diagrammet som en tabell med de samme tallene.",
+        "mobileTextMine": "På en mobiltelefon vises diagrammet som en tabell. Det er nesten tomt før du logger inn noen sett."
+      },
+      "dashboard": {
+        "title": "Ditt dashbord"
+      },
+      "timer": {
+        "title": "Tidsbegrenset",
+        "text": "Trykk på \"Start\" for å starte en nedtelling mellom settene."
+      },
+      "ribbon": {
+        "title": "Logg fra hvilken som helst notat",
+        "text": "Ikonet for vektskiven i båndet åpner loggformularen fra hvor som helst.",
+        "mobileText": "På en mobiltelefon finnes det ikke en \"ribbon\"-ikon her. Bruk kommando-paletten for å åpne logg-formatet fra hvilken som helst notat."
+      },
+      "commands": {
+        "title": "Legg til kommandoer",
+        "text": "Åpne kommando-paletten og kjør kommandoen \"Legg til treningsøkt\" for å legge til en tabell, et diagram, en timer eller et dashbord i en notat."
+      },
+      "end": {
+        "title": "Du er klar."
+      }
+    }
   }
 }

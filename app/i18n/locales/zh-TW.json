@@ -36,7 +36,8 @@
     "manageMuscleTags": "管理肌肉標籤",
     "migrateExerciseTypes": "遷移動作類型",
     "createExampleNotes": "建立範例說明",
-    "openGettingStartedGuide": "開啟新手指南"
+    "openGettingStartedGuide": "開啟新手指南",
+    "startTour": "開始導覽"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "執行全部",
       "savePreset": "儲存",
       "saveProtocol": "儲存",
-      "showWelcome": "顯示歡迎訊息"
+      "showWelcome": "顯示歡迎訊息",
+      "takeTour": "開始導覽"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -1020,6 +1022,48 @@
     "next": "下一",
     "skip": "跳過",
     "done": "已完成",
-    "progress": "{current} 來自 {total}"
+    "progress": "{current} 來自 {total}",
+    "noteName": "有嚮導的導覽",
+    "noteIntro": "本頁的導覽將指引您瀏覽插件的各個部分。您可以隨時編輯或刪除此說明。",
+    "noteTable": "您的設定",
+    "noteChart": "進度",
+    "noteDashboard": "儀表板",
+    "noteTimer": "休息時間",
+    "steps": {
+      "logSet": {
+        "title": "記錄您的第一個組",
+        "text": "點擊 \"+\" 按鈕以開啟表單，然後儲存設定。設定會立即顯示在表格中。"
+      },
+      "rowActions": {
+        "title": "編輯或刪除一個集合",
+        "text": "每一排都有編輯和刪除按鈕。請使用它們來修正拼寫錯誤或刪除某個設定。"
+      },
+      "chart": {
+        "title": "您的進度",
+        "text": "圖表顯示運動在時間上的變化趨勢，並包含趨勢線和相關數據。",
+        "textMine": "圖表顯示運動在時間上的變化。在您記錄幾組運動後，圖表才會顯示相關數據。",
+        "mobileText": "在手機上，圖表以表格形式顯示，並使用相同的數字。",
+        "mobileTextMine": "在手機上，圖表以表格形式顯示。 除非您記錄幾組數據，否則圖表幾乎是空的。"
+      },
+      "dashboard": {
+        "title": "您的儀表板"
+      },
+      "timer": {
+        "title": "暫停計時",
+        "text": "按下「開始」按鈕，以設定組間計時。"
+      },
+      "ribbon": {
+        "title": "從任何筆記中記錄",
+        "text": "在「記錄」頁面中的啞鈴圖示，可以從任何位置開啟記錄表。",
+        "mobileText": "在手機上，這裡沒有「緞帶」圖示。請使用命令面板，從任何筆記中開啟記錄表。"
+      },
+      "commands": {
+        "title": "插入指令",
+        "text": "開啟命令面板，然後執行「插入工作」指令，以在筆記中新增表格、圖表、計時器或儀表板。"
+      },
+      "end": {
+        "title": "您已完成設定"
+      }
+    }
   }
 }

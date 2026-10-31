@@ -36,7 +36,8 @@
     "manageMuscleTags": "Kas etiketlerini yönet",
     "migrateExerciseTypes": "Egzersiz türlerini taşı",
     "createExampleNotes": "Örnek notlar oluştur",
-    "openGettingStartedGuide": "Başlangıç kılidını aç"
+    "openGettingStartedGuide": "Başlangıç kılidını aç",
+    "startTour": "Turu başlatın"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Tümünü çalıştır",
       "savePreset": "Kaydet",
       "saveProtocol": "Kaydet",
-      "showWelcome": "Hoş geldiniz göster"
+      "showWelcome": "Hoş geldiniz göster",
+      "takeTour": "Turlara katılın"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -1020,6 +1022,48 @@
     "next": "Sonra",
     "skip": "Atla",
     "done": "Tamamlandı",
-    "progress": "{current} numaralı {total}"
+    "progress": "{current} numaralı {total}",
+    "noteName": "Rehberli tur",
+    "noteIntro": "Bu sayfadaki kılavuz tur, eklendeki her bir parçaya işaret ediyor. İstediğiniz zaman bu notu düzenleyin veya silin.",
+    "noteTable": "Koleksiyonlarınız",
+    "noteChart": "İlerleme",
+    "noteDashboard": "Kontrol Paneli",
+    "noteTimer": "Dinlenme zamanlayıcısı",
+    "steps": {
+      "logSet": {
+        "title": "İlk ayarınızı kaydedin",
+        "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Form, hemen tabloya eklenecektir."
+      },
+      "rowActions": {
+        "title": "Bir küme'yi düzenle veya sil",
+        "text": "Her satırda düzenleme ve silme butonları bulunmaktadır. Bunları kullanarak bir yazım hatasını düzeltin veya bir kaydı silin."
+      },
+      "chart": {
+        "title": "İlerlemeniz",
+        "text": "Grafik, egzersizin zaman içindeki değişimini, eğilim çizgisini ve istatistikleri gösterir.",
+        "textMine": "Grafik, bir egzersizin zaman içindeki gelişimini gösterir. Birkaç tekrar kaydettikten sonra neredeyse boş görünür.",
+        "mobileText": "Telefon üzerinde, grafik aynı sayılarla bir tablo olarak görüntülenir.",
+        "mobileTextMine": "Telefon üzerinde grafik, bir tablo olarak görüntülenir. Birkaç veri girişi yapana kadar neredeyse boş görünür."
+      },
+      "dashboard": {
+        "title": "Kontrol paneliniz"
+      },
+      "timer": {
+        "title": "Tur süresi sayacı",
+        "text": "Setler arasında sayma sayım başlatmak için \"başlat\" düğmesine basın."
+      },
+      "ribbon": {
+        "title": "Notlardan herhangi birine kaydet",
+        "text": "Ribbon içindeki dambıl simgesi, herhangi bir konumdan log formunu açar.",
+        "mobileText": "Telefonlarda, buradaki \"ribbon\" simgesi bulunmamaktadır. Her nottan log formunu açmak için komut paletini kullanın."
+      },
+      "commands": {
+        "title": "Komutları ekle",
+        "text": "Komut paletini açın ve bir notta tablo, grafik, zamanlayıcı veya kontrol paneli eklemek için \"Ekle Egzersiz\" komutunu çalıştırın."
+      },
+      "end": {
+        "title": "Hazır"
+      }
+    }
   }
 }

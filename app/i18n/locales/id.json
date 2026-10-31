@@ -36,7 +36,8 @@
     "manageMuscleTags": "Kelola tag otot",
     "migrateExerciseTypes": "Migrasikan jenis latihan",
     "createExampleNotes": "Buat catatan contoh",
-    "openGettingStartedGuide": "Buka panduan memulai"
+    "openGettingStartedGuide": "Buka panduan memulai",
+    "startTour": "Mulai tur"
   },
   "common": {
     "bpm": "BPM",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Jalankan semua",
       "savePreset": "Simpan",
       "saveProtocol": "Simpan",
-      "showWelcome": "Tampilkan pesan selamat datang"
+      "showWelcome": "Tampilkan pesan selamat datang",
+      "takeTour": "Ikuti tur"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -1020,6 +1022,48 @@
     "next": "Berikutnya",
     "skip": "Lewati",
     "done": "Selesai",
-    "progress": "{current} dari {total}"
+    "progress": "{current} dari {total}",
+    "noteName": "Tur berpemandu",
+    "noteIntro": "Panduan tur ini menunjuk ke setiap bagian dari plugin di halaman ini. Edit atau hapus catatan ini kapan pun Anda mau.",
+    "noteTable": "Koleksi Anda",
+    "noteChart": "Kemajuan",
+    "noteDashboard": "Dasbor",
+    "noteTimer": "Timer istirahat",
+    "steps": {
+      "logSet": {
+        "title": "Catat set pertama Anda",
+        "text": "Tekan tombol \"+\" untuk membuka formulir, lalu simpan satu set. Formulir tersebut akan langsung muncul di tabel."
+      },
+      "rowActions": {
+        "title": "Edit atau hapus satu set",
+        "text": "Setiap baris memiliki tombol untuk mengedit dan menghapus. Gunakan tombol-tombol ini untuk memperbaiki kesalahan ketik atau menghapus satu set."
+      },
+      "chart": {
+        "title": "Kemajuan Anda",
+        "text": "Grafik ini menunjukkan bagaimana suatu aktivitas berubah seiring waktu, dengan garis tren dan statistik.",
+        "textMine": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu. Grafik ini hampir kosong hingga Anda mencatat beberapa set latihan.",
+        "mobileText": "Di ponsel, grafik ditampilkan sebagai tabel dengan angka yang sama.",
+        "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set data."
+      },
+      "dashboard": {
+        "title": "Dasbor Anda"
+      },
+      "timer": {
+        "title": "Hentikan timer",
+        "text": "Tekan tombol \"mulai\" untuk menjalankan hitungan mundur antar set."
+      },
+      "ribbon": {
+        "title": "Catat dari catatan apa pun",
+        "text": "Ikon dumbbell pada ribbon membuka formulir log dari mana saja.",
+        "mobileText": "Di ponsel, tidak ada ikon pita di sini. Gunakan palet perintah untuk membuka formulir log dari catatan mana pun."
+      },
+      "commands": {
+        "title": "Masukkan perintah",
+        "text": "Buka palet perintah dan jalankan perintah \"Sisipkan Latihan\" untuk menambahkan tabel, grafik, timer, atau dasbor ke dalam catatan."
+      },
+      "end": {
+        "title": "Anda sudah siap"
+      }
+    }
   }
 }

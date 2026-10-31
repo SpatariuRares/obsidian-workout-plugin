@@ -36,7 +36,8 @@
     "manageMuscleTags": "근육 태그 관리",
     "migrateExerciseTypes": "운동 유형 마이그레이션",
     "createExampleNotes": "예제 노트 생성",
-    "openGettingStartedGuide": "시작 가이드 열기"
+    "openGettingStartedGuide": "시작 가이드 열기",
+    "startTour": "투어 시작"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "모두 실행",
       "savePreset": "저장",
       "saveProtocol": "저장",
-      "showWelcome": "환영 메시지 표시"
+      "showWelcome": "환영 메시지 표시",
+      "takeTour": "투어 시작"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -1020,6 +1022,48 @@
     "next": "다음",
     "skip": "건너뛰기",
     "done": "완료",
-    "progress": "{current} 중 {total}"
+    "progress": "{current} 중 {total}",
+    "noteName": "가이드 투어",
+    "noteIntro": "이 페이지의 플러그인의 각 부분을 안내하는 설명이 있습니다. 필요할 때마다 이 설명을 편집하거나 삭제할 수 있습니다.",
+    "noteTable": "사용자 설정",
+    "noteChart": "진행",
+    "noteDashboard": "대시보드",
+    "noteTimer": "휴식 시간",
+    "steps": {
+      "logSet": {
+        "title": "첫 번째 세트를 기록",
+        "text": "\"+\" 버튼을 눌러 양식을 열고, 그런 다음 세트를 저장합니다. 그러면 바로 테이블에 표시됩니다."
+      },
+      "rowActions": {
+        "title": "수정하거나 삭제",
+        "text": "각 행에는 편집 및 삭제 버튼이 있습니다. 이를 사용하여 오타를 수정하거나 항목을 삭제할 수 있습니다."
+      },
+      "chart": {
+        "title": "진행 상황",
+        "text": "이 차트는 운동이 시간에 따라 어떻게 변화하는지 보여주며, 추세선과 통계 정보를 제공합니다.",
+        "textMine": "이 차트는 운동이 시간에 따라 어떻게 변화하는지 보여줍니다. 몇 세트를 기록하기 전에는 거의 비어 있습니다.",
+        "mobileText": "스마트폰에서는 동일한 숫자를 가진 표 형태로 차트가 표시됩니다.",
+        "mobileTextMine": "스마트폰에서는 차트를 표 형태로 표시합니다. 몇 개의 데이터를 입력하기 전에는 거의 비어 있는 상태입니다."
+      },
+      "dashboard": {
+        "title": "당신의 대시보드"
+      },
+      "timer": {
+        "title": "타이머 재설정",
+        "text": "세트 사이의 카운트다운을 시작하려면 '시작' 버튼을 누르세요."
+      },
+      "ribbon": {
+        "title": "노트에서 기록",
+        "text": "리본에 있는 덤벨 아이콘을 클릭하면, 어디서든 로그 양식을 열 수 있습니다.",
+        "mobileText": "스마트폰에서는 이 위치에 리본 아이콘이 없습니다. 노트에서 원하는 노트의 로그 폼을 열기 위해 명령 팔레트를 사용하세요."
+      },
+      "commands": {
+        "title": "명령 추가",
+        "text": "명령 팔레트를 열고, 메모에 테이블, 차트, 타이머 또는 대시보드를 추가하기 위한 \"워크아웃 삽입\" 명령을 실행합니다."
+      },
+      "end": {
+        "title": "설정이 완료되었습니다."
+      }
+    }
   }
 }

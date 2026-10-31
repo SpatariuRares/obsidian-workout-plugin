@@ -1,6 +1,6 @@
 {
   "name": "workout-planner",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Log every set from your phone, right at the gym, and see your progress in your notes: workout tables, charts, rest timers and a dashboard with PRs, trends and a muscle heat map. Mobile-first, kg or lb per set, all in one CSV file.",
   "main": "main.js",
   "scripts": {

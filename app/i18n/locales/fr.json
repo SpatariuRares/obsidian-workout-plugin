@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Créer le premier journal pour {exerciseName}",
     "createLogButtonAria": "Créer un journal pour : {exerciseName}",
     "createLogButtonText": "Créer un journal pour : {exerciseName}",
-    "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}"
+    "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}",
+    "exploreExampleData": "Ou explorez avec des données d'exemple."
   },
   "messages": {
     "codeInserted": "Bloc de code inséré",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} doit être vrai ou faux, mais il s'agit de \"{value}\".",
       "notOneOf": "{key} doit être l'une des valeurs suivantes : {allowed}, mais elle est \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Bienvenue dans le plugin d'entraînement",
+    "intro": "Suivez vos séances, puis visualisez-les sous forme de graphiques, de tableaux et de tableau de bord. Comment souhaitez-vous commencer ?",
+    "tryExamples": "Essayez avec des données d'exemple",
+    "tryExamplesDesc": "Ajoute des exemples d'entraînements et ouvre un guide court.",
+    "startScratch": "Commencer à zéro",
+    "startScratchDesc": "Crée un enregistrement avec votre journal et ouvre le formulaire pour enregistrer la première série.",
+    "later": "Plus tard",
+    "scratchNoteName": "Mes séances d'entraînement"
   }
 }

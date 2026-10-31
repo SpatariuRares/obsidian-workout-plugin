@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Ersten Eintrag für {exerciseName} erstellen",
     "createLogButtonAria": "Protokoll erstellen für: {exerciseName}",
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
-    "noDataTitle": "Keine Protokolle für {exerciseName} gefunden"
+    "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
+    "exploreExampleData": "Oder erkunden Sie mit Beispieldaten"
   },
   "messages": {
     "codeInserted": "Codeblock eingefügt",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} muss entweder wahr oder falsch sein, aber es ist \"{value}\"",
       "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Willkommen zum Workout-Plugin",
+    "intro": "Verfolgen Sie Ihre Sätze, und sehen Sie sie anschließend als Diagramme, Tabellen und eine Übersicht. Wie möchten Sie beginnen?",
+    "tryExamples": "Versuchen Sie es mit Beispieldaten",
+    "tryExamplesDesc": "Fügt Beispiel-Trainings hinzu und öffnet eine kurze Anleitung.",
+    "startScratch": "Beginne von Grund auf",
+    "startScratchDesc": "Erstellt eine Notiz mit Ihrem Protokoll und öffnet das Formular, um die erste Reihe zu protokollieren.",
+    "later": "Später",
+    "scratchNoteName": "Meine Trainingseinheiten"
   }
 }

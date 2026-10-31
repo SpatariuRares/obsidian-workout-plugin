@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Krijo regjistrimin e parë për {exerciseName}",
     "createLogButtonAria": "Krijo regjistër për: {exerciseName}",
     "createLogButtonText": "Krijo regjistër për: {exerciseName}",
-    "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}"
+    "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}",
+    "exploreExampleData": "Nëse dëshiron, mund të eksplorosh me të dhëna të shembullore"
   },
   "messages": {
     "codeInserted": "Blloku i kodit u shtua",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
       "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Mirë datang në pluginin e stilit",
+    "intro": "Παρακολлоvojini seritë tuaj, dhe më pas shohini ata në formë të grafikëve, tabeleve dhe një paneli. Si donit të filloni?",
+    "tryExamples": "Provoni me të dhëna shembullore",
+    "tryExamplesDesc": "Shtron stila me shembull dhe hapson një udhëzues të shkurtër.",
+    "startScratch": "Filloni nga zero",
+    "startScratchDesc": "Krijo një notë me regjistrimin tuaj dhe hap formularin për të regjistruar një set të parë.",
+    "later": "Më pas",
+    "scratchNoteName": "Rutina e stëmimit time"
   }
 }

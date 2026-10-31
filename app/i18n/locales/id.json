@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Buat log pertama untuk {exerciseName}",
     "createLogButtonAria": "Buat log untuk: {exerciseName}",
     "createLogButtonText": "Buat log untuk: {exerciseName}",
-    "noDataTitle": "Tidak ditemukan log untuk {exerciseName}"
+    "noDataTitle": "Tidak ditemukan log untuk {exerciseName}",
+    "exploreExampleData": "Atau jelajahi dengan data contoh"
   },
   "messages": {
     "codeInserted": "Blok kode dimasukkan",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} harus berupa benar atau salah, tetapi saat ini bernilai \"{value}\"",
       "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Selamat datang di plugin latihan",
+    "intro": "Lacak kemajuan Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
+    "tryExamples": "Coba dengan data contoh",
+    "tryExamplesDesc": "Menambahkan contoh latihan dan membuka panduan singkat.",
+    "startScratch": "Mulai dari awal",
+    "startScratchDesc": "Membuat catatan dengan log Anda dan membuka formulir untuk mencatat set pertama.",
+    "later": "Nanti",
+    "scratchNoteName": "Latihan saya"
   }
 }

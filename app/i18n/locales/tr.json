@@ -1004,5 +1004,15 @@
       "notABoolean": "{key} ya doğru ya da yanlış olmalıdır, ancak şu anda \"{value}\" değerindedir.",
       "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir."
     }
+  },
+  "welcome": {
+    "title": "Egzersiz eklentisine hoş geldiniz",
+    "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve bir kontrol paneli olarak görün. Nasıl başlamak istersiniz?",
+    "tryExamples": "Örnek verilerle deneyin",
+    "tryExamplesDesc": "Örnek egzersizleri ekler ve kısa bir rehber açar.",
+    "startScratch": "Yeni bir başlangıç yap",
+    "startScratchDesc": "Kayıtlarınızı içeren bir not oluşturur ve ilk kaydı kaydetmek için formu açar.",
+    "later": "Daha sonra",
+    "scratchNoteName": "Egzersizlerim"
   }
 }

@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Creați primul jurnal pentru {exerciseName}",
     "createLogButtonAria": "Creează jurnal pentru: {exerciseName}",
     "createLogButtonText": "Creează jurnal pentru: {exerciseName}",
-    "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}"
+    "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}",
+    "exploreExampleData": "Sau explorați folosind date de exemplu"
   },
   "messages": {
     "codeInserted": "Bloc de cod inserat",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} trebuie să fie adevărat sau fals, dar este \"{value}\"",
       "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Bun venit la plugin-ul de exerciții",
+    "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub forma de grafice, tabele și un panou de control. Cum dorești să începi?",
+    "tryExamples": "Încearcă cu date de exemplu",
+    "tryExamplesDesc": "Adaugă antrenamente de exemplu și deschide un ghid scurt.",
+    "startScratch": "Începe de la zero",
+    "startScratchDesc": "Creează o notă cu jurnalul tău și deschide formularul pentru a înregistra o primă serie de date.",
+    "later": "Mai târziu",
+    "scratchNoteName": "Antrenamentele mele"
   }
 }

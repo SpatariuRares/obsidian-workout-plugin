@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "為 {exerciseName} 建立第一個記錄",
     "createLogButtonAria": "建立記錄：{exerciseName}",
     "createLogButtonText": "建立記錄：{exerciseName}",
-    "noDataTitle": "找不到 {exerciseName} 的記錄"
+    "noDataTitle": "找不到 {exerciseName} 的記錄",
+    "exploreExampleData": "或者，使用範例資料進行探索"
   },
   "messages": {
     "codeInserted": "已插入程式碼區塊",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} 必須為「真」或「假」，但目前為「{value}」",
       "notOneOf": "{key} 必須是 {allowed} 中的一種，但目前是 \"{value}\"。"
     }
+  },
+  "welcome": {
+    "title": "歡迎使用運動插件",
+    "intro": "追蹤您的訓練，然後以圖表、表格和儀表板的形式查看。您想從哪一步開始？",
+    "tryExamples": "請使用範例資料",
+    "tryExamplesDesc": "新增示範運動，並開啟簡短的教學指南。",
+    "startScratch": "從頭開始",
+    "startScratchDesc": "建立一個包含您的記錄的備忘錄，並開啟表單以記錄第一個記錄。",
+    "later": "稍後",
+    "scratchNoteName": "我的運動"
   }
 }

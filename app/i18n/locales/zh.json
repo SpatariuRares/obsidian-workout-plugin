@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "为 {exerciseName} 创建第一条记录",
     "createLogButtonAria": "创建记录：{exerciseName}",
     "createLogButtonText": "创建记录：{exerciseName}",
-    "noDataTitle": "未找到与 {exerciseName} 相关的记录"
+    "noDataTitle": "未找到与 {exerciseName} 相关的记录",
+    "exploreExampleData": "或者，使用示例数据进行探索"
   },
   "messages": {
     "codeInserted": "已插入代码块",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} 必须是真或假，但现在是 \"{value}\"。",
       "notOneOf": "{key} 必须是 {allowed} 中的一个，但实际上是 \"{value}\"。"
     }
+  },
+  "welcome": {
+    "title": "欢迎使用健身插件",
+    "intro": "跟踪您的训练，然后以图表、表格和仪表盘的形式查看。您希望从哪里开始？",
+    "tryExamples": "使用示例数据",
+    "tryExamplesDesc": "添加示例训练计划，并打开一份简短的指南。",
+    "startScratch": "从头开始",
+    "startScratchDesc": "创建一个包含您的日志的笔记，并打开表单以记录第一个日志。",
+    "later": "稍后",
+    "scratchNoteName": "我的锻炼计划"
   }
 }

@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Utwórz pierwszy wpis w dzienniku dla {exerciseName}",
     "createLogButtonAria": "Utwórz log dla: {exerciseName}",
     "createLogButtonText": "Utwórz log dla: {exerciseName}",
-    "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}"
+    "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}",
+    "exploreExampleData": "Albo zapoznaj się z przykładowymi danymi."
   },
   "messages": {
     "codeInserted": "Wstawiono blok kodu",
@@ -1003,5 +1004,15 @@
       "notABoolean": "{key} musi być wartością prawdy lub fałszu, ale jest \"{value}\"",
       "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Witaj w wtyczce do treningów",
+    "intro": "Śledź swoje serie, a następnie zobacz je w formie wykresów, tabel i panelu kontrolnego. Jak chcesz zacząć?",
+    "tryExamples": "Wypróbuj z przykładowymi danymi",
+    "tryExamplesDesc": "Dodaje przykładowe ćwiczenia i otwiera krótką instrukcję.",
+    "startScratch": "Zacznij od zera",
+    "startScratchDesc": "Tworzy notatkę z Twoimi danymi logowania i otwiera formularz, aby zarejestrować pierwsze zestaw danych.",
+    "later": "Później",
+    "scratchNoteName": "Moje treningi"
   }
 }

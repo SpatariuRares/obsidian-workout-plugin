@@ -266,11 +266,7 @@ export class ProtocolDistribution {
       },
     };
 
-    ChartRenderer.renderConfiguredChart(
-      chartId,
-      canvas,
-      config,
-    );
+    ChartRenderer.renderConfiguredChart(chartId, canvas, config);
   }
 
   /**

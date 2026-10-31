@@ -162,11 +162,13 @@ export class MuscleTagSelector {
           );
           this.renderTagList(
             container,
-            (container
-              .closest(".workout-muscle-tag-selector")!
-              .querySelector(
-                ".workout-muscle-tag-search",
-              ) as HTMLInputElement).value,
+            (
+              container
+                .closest(".workout-muscle-tag-selector")!
+                .querySelector(
+                  ".workout-muscle-tag-search",
+                ) as HTMLInputElement
+            ).value,
           );
 
           // Trigger callback

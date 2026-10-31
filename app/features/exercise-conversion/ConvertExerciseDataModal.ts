@@ -144,7 +144,10 @@ export class ConvertExerciseDataModal extends ModalBase {
       variant: BUTTONVARIANT.PRIMARY,
     });
     Button.setDisabled(this.convertButton, true);
-    Button.onClick(this.convertButton, () => void this.handleConvert());
+    Button.onClick(
+      this.convertButton,
+      () => void this.handleConvert(),
+    );
   }
 
   private async handleExerciseChange(): Promise<void> {

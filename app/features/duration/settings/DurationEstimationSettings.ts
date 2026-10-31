@@ -58,9 +58,9 @@ export class DurationEstimationSettings {
           });
       });
     const repDurationError = repDurationSetting.controlEl.createDiv({
-        cls: "workout-setting-error",
-        text: t("settings.validation.mustBePositive"),
-      });
+      cls: "workout-setting-error",
+      text: t("settings.validation.mustBePositive"),
+    });
 
     // Default Reps per Set
     const defaultRepsSetting = new Setting(containerEl)
@@ -80,9 +80,9 @@ export class DurationEstimationSettings {
           });
       });
     const defaultRepsError = defaultRepsSetting.controlEl.createDiv({
-        cls: "workout-setting-error",
-        text: t("settings.validation.mustBeNonNegative"),
-      });
+      cls: "workout-setting-error",
+      text: t("settings.validation.mustBeNonNegative"),
+    });
 
     const setDurationSetting = new Setting(containerEl)
       .setName(t("settings.labels.setDuration"))
@@ -101,8 +101,8 @@ export class DurationEstimationSettings {
           });
       });
     const setDurationError = setDurationSetting.controlEl.createDiv({
-        cls: "workout-setting-error",
-        text: t("settings.validation.mustBePositive"),
-      });
+      cls: "workout-setting-error",
+      text: t("settings.validation.mustBePositive"),
+    });
   }
 }

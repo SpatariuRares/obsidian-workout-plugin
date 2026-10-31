@@ -45,7 +45,8 @@ export class ChartTableViews {
       row.createEl("td", { text: value.toFixed(1) });
     });
 
-    tableDiv.createDiv({ cls: "workout-charts-footer" })
+    tableDiv
+      .createDiv({ cls: "workout-charts-footer" })
       .appendText(
         `${t("icons.status.info")} ${t("charts.fallbackTableMessage")}`,
       );

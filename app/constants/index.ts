@@ -30,7 +30,7 @@ import {
 } from "@app/constants/ui.constants";
 import { ParameterUtils } from "@app/utils/parameter/ParameterUtils";
 
-import { MUSCLE_TAG_ENTRIES } from "@app/constants/muscles.constants";
+import { defaultTagMap } from "@app/constants/muscles.constants";
 
 import { DEFAULT_TABLE_CONFIG } from "@app/constants/defaults.constants";
 
@@ -65,9 +65,7 @@ export const CONSTANTS = {
       },
     },
     MUSCLES: {
-      TAG_MAP: Object.fromEntries(
-        MUSCLE_TAG_ENTRIES.map((entry) => [entry.tag, entry.muscleGroup]),
-      ) as Record<string, string>,
+      TAG_MAP: defaultTagMap(),
     },
     ERRORS: {
       TYPES: ERROR_TYPES,

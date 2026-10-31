@@ -1,5 +1,6 @@
 import {
   CANONICAL_MUSCLE_GROUPS,
+  defaultTagMap,
   MUSCLE_PARENT_GROUPS,
   MUSCLE_TAG_ENTRIES,
   MUSCLE_TAG_MAP,
@@ -9,6 +10,32 @@ import {
 import { CONSTANTS } from "@app/constants";
 
 describe("MuscleTags", () => {
+  describe("defaultTagMap", () => {
+    it("maps every default tag to its muscle group", () => {
+      const map = defaultTagMap();
+
+      expect(map.petto).toBe("chest");
+      expect(map.chest).toBe("chest");
+      expect(Object.keys(map).sort()).toEqual(
+        [...MUSCLE_TAGS].sort(),
+      );
+    });
+
+    it("is what the deprecated maps expose", () => {
+      expect(MUSCLE_TAG_MAP).toEqual(defaultTagMap());
+      expect(CONSTANTS.WORKOUT.MUSCLES.TAG_MAP).toEqual(
+        defaultTagMap(),
+      );
+    });
+
+    it("gives a new object each call, so callers cannot change the defaults", () => {
+      const map = defaultTagMap();
+      map.chest = "back";
+
+      expect(defaultTagMap().chest).toBe("chest");
+    });
+  });
+
   describe("MUSCLE_TAGS constant", () => {
     it("should contain all expected muscle tags", () => {
       expect(MUSCLE_TAGS).toContain("chest");
@@ -150,15 +177,25 @@ describe("Muscle group consistency", () => {
   });
 
   it("only links canonical sub-muscles to canonical parents", () => {
-    for (const [child, parent] of Object.entries(MUSCLE_PARENT_GROUPS)) {
+    for (const [child, parent] of Object.entries(
+      MUSCLE_PARENT_GROUPS,
+    )) {
       expect(canonical.has(child)).toBe(true);
       expect(canonical.has(parent!)).toBe(true);
-      expect(MUSCLE_PARENT_GROUPS[parent as CanonicalMuscleGroup]).toBeUndefined();
+      expect(
+        MUSCLE_PARENT_GROUPS[parent as CanonicalMuscleGroup],
+      ).toBeUndefined();
     }
   });
 
   it("keeps the broad groups existing tag files rely on", () => {
-    for (const group of ["chest", "back", "shoulders", "core", "rear_delts"]) {
+    for (const group of [
+      "chest",
+      "back",
+      "shoulders",
+      "core",
+      "rear_delts",
+    ]) {
       expect(canonical.has(group)).toBe(true);
     }
   });

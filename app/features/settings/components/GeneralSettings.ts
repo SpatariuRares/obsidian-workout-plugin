@@ -248,11 +248,9 @@ export class GeneralSettings {
    */
   private async createMuscleTagsCsvWithDefaults(): Promise<void> {
     const muscleTagService = this.plugin.getMuscleTagService();
-    const { MUSCLE_TAG_ENTRIES } =
+    const { defaultTagMap } =
       await import("@app/constants/muscles.constants");
-    const defaultTags = new Map(
-      MUSCLE_TAG_ENTRIES.map((entry) => [entry.tag, entry.muscleGroup]),
-    );
+    const defaultTags = new Map(Object.entries(defaultTagMap()));
 
     try {
       await muscleTagService.saveTags(defaultTags);

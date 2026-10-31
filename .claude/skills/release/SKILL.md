@@ -2,6 +2,7 @@
 name: release
 description: Cut a plugin release by bumping the version in a commit on main, tagging that commit and pushing the tag, which triggers the Build and Release workflow (verify, build, attest, GitHub release). Optional argument is the version (e.g. 1.4.7) or patch/minor/major.
 disable-model-invocation: true
+model: haiku
 ---
 
 # Release

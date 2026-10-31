@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Maakt een notitie met uw log en opent het formulier om de eerste set in te voeren.",
     "later": "Later",
     "scratchNoteName": "Mijn trainingen"
+  },
+  "tour": {
+    "back": "Terug",
+    "next": "Volgende",
+    "skip": "Overslaan",
+    "done": "Afgevolgd",
+    "progress": "{current} van {total}"
   }
 }

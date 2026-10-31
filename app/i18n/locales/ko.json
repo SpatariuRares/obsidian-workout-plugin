@@ -1018,5 +1018,12 @@
     "startScratchDesc": "사용자 로그를 기록하고, 첫 번째 기록을 입력할 양식을 엽니다.",
     "later": "나중에",
     "scratchNoteName": "제 운동 기록"
+  },
+  "tour": {
+    "back": "돌아가",
+    "next": "다음",
+    "skip": "건너뛰기",
+    "done": "완료",
+    "progress": "{current} 중 {total}"
   }
 }

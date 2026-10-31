@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Erstellt eine Notiz mit Ihrem Protokoll und öffnet das Formular, um die erste Reihe zu protokollieren.",
     "later": "Später",
     "scratchNoteName": "Meine Trainingseinheiten"
+  },
+  "tour": {
+    "back": "Zurück",
+    "next": "Nächster",
+    "skip": "Überspringen",
+    "done": "Abgeschlossen",
+    "progress": "{current} von {total}"
   }
 }

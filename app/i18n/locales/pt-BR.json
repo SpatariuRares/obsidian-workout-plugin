@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Cria um registro com seu log e abre o formulário para registrar o primeiro conjunto.",
     "later": "Mais tarde",
     "scratchNoteName": "Meus treinos"
+  },
+  "tour": {
+    "back": "Voltar",
+    "next": "Próximo",
+    "skip": "Pular",
+    "done": "Concluído",
+    "progress": "{current} de {total}"
   }
 }

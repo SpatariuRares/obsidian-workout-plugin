@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Creează o notă cu jurnalul tău și deschide formularul pentru a înregistra o primă serie de date.",
     "later": "Mai târziu",
     "scratchNoteName": "Antrenamentele mele"
+  },
+  "tour": {
+    "back": "Înapoi",
+    "next": "Următor",
+    "skip": "Sări peste",
+    "done": "Finalizat",
+    "progress": "{current} din {total}"
   }
 }

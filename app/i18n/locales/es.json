@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Crea una nota con tu registro y abre el formulario para registrar el primer conjunto de datos.",
     "later": "Más tarde",
     "scratchNoteName": "Mis entrenamientos"
+  },
+  "tour": {
+    "back": "Regresar",
+    "next": "Siguiente",
+    "skip": "Saltar",
+    "done": "Completado",
+    "progress": "{current} de {total}"
   }
 }

@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Membuat catatan dengan log Anda dan membuka formulir untuk mencatat set pertama.",
     "later": "Nanti",
     "scratchNoteName": "Latihan saya"
+  },
+  "tour": {
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "skip": "Lewati",
+    "done": "Selesai",
+    "progress": "{current} dari {total}"
   }
 }

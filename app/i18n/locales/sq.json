@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Krijo një notë me regjistrimin tuaj dhe hap formularin për të regjistruar një set të parë.",
     "later": "Më pas",
     "scratchNoteName": "Rutina e stëmimit time"
+  },
+  "tour": {
+    "back": "Para",
+    "next": "Tjetër",
+    "skip": "Hidhe",
+    "done": "Mbaruar",
+    "progress": "{current} nga {total}"
   }
 }

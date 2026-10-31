@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Crée un enregistrement avec votre journal et ouvre le formulaire pour enregistrer la première série.",
     "later": "Plus tard",
     "scratchNoteName": "Mes séances d'entraînement"
+  },
+  "tour": {
+    "back": "Retour",
+    "next": "Suivant",
+    "skip": "Passer au tour suivant",
+    "done": "Terminé",
+    "progress": "{current} de {total}"
   }
 }

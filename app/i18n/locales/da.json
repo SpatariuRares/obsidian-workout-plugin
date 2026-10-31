@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Opretter en note med dine logfiler og åbner formularen til at registrere det første sæt.",
     "later": "Senere",
     "scratchNoteName": "Mine træningssessioner"
+  },
+  "tour": {
+    "back": "Tilbage",
+    "next": "Næste",
+    "skip": "Spring over",
+    "done": "Færdig",
+    "progress": "{current} af {total}"
   }
 }

@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
     "later": "Později",
     "scratchNoteName": "Moje tréninky"
+  },
+  "tour": {
+    "back": "Zpět",
+    "next": "Další",
+    "skip": "Přeskočit",
+    "done": "Dokončeno",
+    "progress": "{current} z {total}"
   }
 }

@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Crea un appunto con il tuo registro e apre il modulo per registrare il primo set.",
     "later": "Più tardi",
     "scratchNoteName": "I miei allenamenti"
+  },
+  "tour": {
+    "back": "Indietro",
+    "next": "Prossimo",
+    "skip": "Salta",
+    "done": "Completato",
+    "progress": "{current} di {total}"
   }
 }

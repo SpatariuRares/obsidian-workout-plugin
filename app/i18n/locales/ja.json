@@ -1018,5 +1018,12 @@
     "startScratchDesc": "ログを記録したメモを作成し、最初の記録フォームを開きます。",
     "later": "後で",
     "scratchNoteName": "私のトレーニング"
+  },
+  "tour": {
+    "back": "戻る",
+    "next": "次",
+    "skip": "スキップ",
+    "done": "完了",
+    "progress": "{current} の {total}"
   }
 }

@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Tworzy notatkę z Twoimi danymi logowania i otwiera formularz, aby zarejestrować pierwsze zestaw danych.",
     "later": "Później",
     "scratchNoteName": "Moje treningi"
+  },
+  "tour": {
+    "back": "Wstecz",
+    "next": "Następny",
+    "skip": "Przejdź",
+    "done": "Zakończono",
+    "progress": "{current} z {total}"
   }
 }

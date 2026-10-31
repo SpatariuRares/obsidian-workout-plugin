@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Kayıtlarınızı içeren bir not oluşturur ve ilk kaydı kaydetmek için formu açar.",
     "later": "Daha sonra",
     "scratchNoteName": "Egzersizlerim"
+  },
+  "tour": {
+    "back": "Geri",
+    "next": "Sonra",
+    "skip": "Atla",
+    "done": "Tamamlandı",
+    "progress": "{current} numaralı {total}"
   }
 }

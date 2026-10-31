@@ -1018,5 +1018,12 @@
     "startScratchDesc": "建立一個包含您的記錄的備忘錄，並開啟表單以記錄第一個記錄。",
     "later": "稍後",
     "scratchNoteName": "我的運動"
+  },
+  "tour": {
+    "back": "返回",
+    "next": "下一",
+    "skip": "跳過",
+    "done": "已完成",
+    "progress": "{current} 來自 {total}"
   }
 }

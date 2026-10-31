@@ -6,7 +6,7 @@ Technical checks: production build (including TypeScript), ESLint and README ass
 
 ## External listing
 
-Author access was available. Saved a 196-character short description (the store limit is 200; the manifest text is 230). The public listing visibly shows the new text. The long description already matched the manifest. Evidence: `/private/tmp/workout-implementation/store.png`. The hourly GitHub mirror has not been verified.
+Author access was available. Saved a 196-character short description (the store limit is 200; the manifest text is 230). The public listing visibly shows the new text. The long description already matched the manifest. Evidence: `/private/tmp/workout-implementation/store.png`. Checked the GitHub mirror: it still contains the previous description. Propagation remains pending; the public store listing is already updated.
 
 ## Obsidian
 
@@ -25,8 +25,9 @@ Created a disposable note and header-only CSV, and temporarily selected that CSV
 | Tap inline save, then reopen note | Exactly one row persists; next set number advances; linked rest timer restarts |
 | Enter invalid values or cancel modal | No row saved; validation shown / modal closes |
 | Use narrow viewport and keyboard | No overflow; labels, adjustment, protocol and save remain usable |
+| Hide all prior sets with a date filter | Next set remains available from full history |
 | Open table without a single exercise or exact prior set | Use existing modal flow; no guessed next set |
 
 Cleanup: both plugin settings profiles and the original plugin directory were restored; the disposable note, CSV, empty folder and newly created empty note were moved to trash. Compared original CSV text before and after: identical. Returned to the original Getting Started note. The new build is not installed in the normal protected plugin directory.
 
-README additions have been inspected in source and passed asset/anchor validation; the updated rendered GitHub/store README remains unverified until pushed.
+README additions passed asset/anchor validation and were inspected in a local preview rendered by the GitHub Markdown API: the introductory paragraph and Workout Block warning are present. The public GitHub/store README remains unchanged until pushed.

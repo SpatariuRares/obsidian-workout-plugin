@@ -124,10 +124,7 @@ export class WorkoutLogFile {
     exerciseName: string,
   ): Promise<WorkoutLogData | undefined> {
     if (!exerciseName) return undefined;
-    const target = StringUtils.normalize(exerciseName);
-    return [...(await this.read())]
-      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
-      .find((log) => StringUtils.normalize(log.exercise) === target);
+    return new TrainingHistory(await this.read()).lastSet(exerciseName);
   }
 
   /** Create the log file with its header and a sample row */

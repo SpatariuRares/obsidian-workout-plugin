@@ -101,12 +101,20 @@ export class EmbeddedTableView extends BaseView {
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
+        const renderChild = this.createRenderChild(container);
         this.handleNoFilteredData(
           container,
           params,
           filterResult.titlePrefix,
           VIEW_TYPES.TABLE,
         );
+        await this.renderNextSet(
+          container,
+          params,
+          pageLink,
+          renderChild.getSignal(),
+        );
+        renderChild.load();
         return;
       }
 
@@ -137,11 +145,7 @@ export class EmbeddedTableView extends BaseView {
   ): Promise<void> {
     const { headers, rows, filterResult, params } = tableData;
 
-    this.unloadRenderChild(container);
-    container.empty();
-
-    const renderChild = new TableRenderChild(container);
-    this.renderChildren.set(container, renderChild);
+    const renderChild = this.createRenderChild(container);
 
     const contentDiv = container.createDiv({
       cls: "workout-table-content-container",
@@ -204,10 +208,30 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
+    await this.renderNextSet(contentDiv, params, pageLink, signal);
+    renderChild.load();
+  }
+
+  private createRenderChild(
+    container: HTMLElement,
+  ): TableRenderChild {
+    this.unloadRenderChild(container);
+    container.empty();
+    const child = new TableRenderChild(container);
+    this.renderChildren.set(container, child);
+    return child;
+  }
+
+  private async renderNextSet(
+    container: HTMLElement,
+    params: EmbeddedTableParams,
+    pageLink: string,
+    signal: AbortSignal,
+  ): Promise<void> {
     if (params.showAddButton !== false && params.exercise) {
       const link = pageLink || this.getActivePageLink();
       await NextSetRow.render(
-        contentDiv,
+        container,
         this.plugin,
         params.exercise,
         params.workout || link.replace(/^\[\[|\]\]$/g, ""),
@@ -215,7 +239,6 @@ export class EmbeddedTableView extends BaseView {
         signal,
       );
     }
-    renderChild.load();
   }
 
   /**

@@ -8,6 +8,7 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, Input } from "@app/components/atoms";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { t } from "@app/i18n";
 import {
   convertWeight,
@@ -135,6 +136,7 @@ export class DynamicFieldsRenderer {
         );
       });
 
+      input.setAttribute("aria-label", param.label);
       if (param.required) {
         input.required = true;
       }
@@ -153,6 +155,7 @@ export class DynamicFieldsRenderer {
         type: INPUT_TYPE.CHECKBOX,
         className: "workout-charts-checkbox",
       });
+      input.setAttribute("aria-label", param.label);
       if (param.default === true) {
         input.checked = true;
       }
@@ -168,6 +171,7 @@ export class DynamicFieldsRenderer {
           ? String(param.default)
           : undefined,
     });
+    input.setAttribute("aria-label", param.label);
     if (param.required) {
       input.required = true;
     }
@@ -191,6 +195,24 @@ export class DynamicFieldsRenderer {
         input.value = old.value;
       }
     }
+  }
+
+  /** Apply the last set in its entered unit, for modal and inline logging. */
+  static fillFromLog(
+    inputs: Map<string, HTMLInputElement>,
+    log: WorkoutLogData,
+  ): void {
+    const reps = inputs.get("reps");
+    if (reps && log.reps >= 0) reps.value = String(log.reps);
+    const weight = inputs.get("weight");
+    if (weight && log.weight >= 0) {
+      this.setWeightValue(
+        weight,
+        log.enteredWeight ?? log.weight,
+        log.enteredUnit,
+      );
+    }
+    fillDynamicInputsFromCustomFields(log.customFields, inputs);
   }
 
   /**

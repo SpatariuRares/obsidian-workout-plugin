@@ -4,6 +4,8 @@
 
 Mobile-first workout tracker for Obsidian. Log every set from your phone at the gym, then watch your progress in tables, charts and a dashboard inside the same notes where you plan your training. Your sets go into one CSV file in your vault. No account, no cloud.
 
+Charts show your trend, the muscle heat map shows what you trained, and each set keeps its own kg/lb unit. Available in 24 languages, with one CSV you can query from Dataview.
+
 ![Workout Planner on a phone: a workout note with rest timer and log table, the log form with +/− buttons and kg/lb picker, and the muscle heat map](assets/hero.png)
 
 ## Features
@@ -389,6 +391,8 @@ Open the command palette (`Ctrl/Cmd + P`) and type the name.
 </details>
 
 ## Troubleshooting
+
+- **Conflict with Workout Block (`workout-block`).** Both plugins register `workout-log` code blocks and use `workout_logs.csv` as the default log file name. Disable one of the two plugins before using the other.
 
 - **A table or chart is empty.** Check the exercise name and the `dateRange` (charts default to the last 30 days). With `exactMatch: true` the name must match exactly.
 - **An exercise is missing from the heat map.** Its page needs muscle `tags` and must be in the exercise folder. Bodyweight and timed exercises show up only under **Sets** or **Reps**.

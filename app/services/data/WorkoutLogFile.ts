@@ -15,6 +15,7 @@ import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { StringUtils } from "@app/utils/StringUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
 
 const CACHE_DURATION_MS = 5000;
@@ -155,10 +156,24 @@ export class WorkoutLogFile {
     }
 
     let added!: CSVWorkoutLogEntry;
+    let recordIncrease: number | undefined;
     await this.rewrite(file, (entries) => {
       added = { ...this.toRow(entry), timestamp: Date.now() };
+      recordIncrease = new TrainingHistory(
+        entries.map((row) => this.toLog(row, file)),
+      ).recordIncrease(this.toLog(added, file));
       entries.push(added);
     });
+
+    if (recordIncrease !== undefined) {
+      new Notice(
+        t("modal.notices.newRecord", {
+          weight: Number(this.toLog(added, file).weight.toFixed(2)),
+          increase: Number(recordIncrease.toFixed(2)),
+          unit: this.settings.weightUnit,
+        }),
+      );
+    }
 
     this.eventBus.emit({
       type: "log:added",
@@ -173,7 +188,10 @@ export class WorkoutLogFile {
    * Replace a set, keeping its timestamp. The set is found by timestamp,
    * or else by date, exercise, reps and entered weight.
    */
-  async update(original: WorkoutLogData, entry: LogEntryInput): Promise<void> {
+  async update(
+    original: WorkoutLogData,
+    entry: LogEntryInput,
+  ): Promise<void> {
     const file = this.requireFile();
 
     let updated!: CSVWorkoutLogEntry;
@@ -191,7 +209,10 @@ export class WorkoutLogFile {
 
     this.eventBus.emit({
       type: "log:updated",
-      payload: { previous: original, updated: this.toLog(updated, file) },
+      payload: {
+        previous: original,
+        updated: this.toLog(updated, file),
+      },
     });
   }
 
@@ -201,7 +222,8 @@ export class WorkoutLogFile {
 
     await this.rewrite(file, (entries) => {
       const index = findRowIndex(entries, log);
-      if (index === -1) throw new Error("Log entry not found in CSV file");
+      if (index === -1)
+        throw new Error("Log entry not found in CSV file");
       entries.splice(index, 1);
     });
 
@@ -218,7 +240,10 @@ export class WorkoutLogFile {
    * Rename every set of an exercise (case/whitespace-insensitive match).
    * @returns How many sets were renamed
    */
-  async renameExercise(oldName: string, newName: string): Promise<number> {
+  async renameExercise(
+    oldName: string,
+    newName: string,
+  ): Promise<number> {
     const file = this.requireFile();
     const target = StringUtils.normalize(oldName);
 
@@ -298,7 +323,9 @@ export class WorkoutLogFile {
     return file;
   }
 
-  private toRow(entry: LogEntryInput): Omit<CSVWorkoutLogEntry, "timestamp"> {
+  private toRow(
+    entry: LogEntryInput,
+  ): Omit<CSVWorkoutLogEntry, "timestamp"> {
     return {
       ...entry,
       volume: entry.reps * entry.weight,
@@ -306,7 +333,10 @@ export class WorkoutLogFile {
     };
   }
 
-  private toLog(entry: CSVWorkoutLogEntry, file: TFile): WorkoutLogData {
+  private toLog(
+    entry: CSVWorkoutLogEntry,
+    file: TFile,
+  ): WorkoutLogData {
     return toWorkoutLogData(entry, file, this.settings.weightUnit);
   }
 

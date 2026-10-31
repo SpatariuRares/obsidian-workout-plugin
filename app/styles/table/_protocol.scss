@@ -66,3 +66,9 @@
     letter-spacing: 0;
   }
 }
+
+.workout-protocol-badge-warmup {
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+}

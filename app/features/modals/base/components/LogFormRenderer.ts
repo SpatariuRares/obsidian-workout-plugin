@@ -8,13 +8,11 @@ import { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import type { BaseLogModal } from "@app/features/modals/base/BaseLogModal";
 import type { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
-import {
-  fillDynamicInputsFromCustomFields,
-  setupWorkoutToggle,
-} from "@app/utils/form/FormUtils";
+import { setupWorkoutToggle } from "@app/utils/form/FormUtils";
 import { Chip } from "@app/components/atoms";
 import { FileSuggest } from "@app/features/common/suggest/FileSuggest";
 import { t } from "@app/i18n";
+import { LogHistory } from "@app/features/modals/log/LogHistory";
 import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
 
 export class LogFormRenderer {
@@ -50,6 +48,30 @@ export class LogFormRenderer {
           onCreateExercise: this.onCreateExercise,
         },
       );
+
+    const history = formContainer.createDiv({
+      cls: "workout-log-history",
+      attr: { "aria-live": "polite" },
+    });
+    await LogHistory.render(
+      history,
+      this.plugin,
+      initialExerciseName || "",
+    );
+    exerciseElements.exerciseInput.addEventListener("change", () => {
+      void LogHistory.render(
+        history,
+        this.plugin,
+        exerciseElements.exerciseInput.value.trim(),
+      );
+    });
+    exerciseElements.exerciseInput.addEventListener("blur", () => {
+      void LogHistory.render(
+        history,
+        this.plugin,
+        exerciseElements.exerciseInput.value.trim(),
+      );
+    });
 
     const isMobile = Platform.isMobile;
 
@@ -198,6 +220,12 @@ export class LogFormRenderer {
       modal.shouldAutoFillFromLastEntry(),
     );
 
+    if (modal.shouldAutoFillFromLastEntry() && initialExerciseName) {
+      await this.autoFillFromLastEntry(
+        initialExerciseName,
+        formElements,
+      );
+    }
     return formElements;
   }
 
@@ -337,25 +365,9 @@ export class LogFormRenderer {
       await this.plugin.findLastEntryForExercise(exerciseName);
     if (!lastEntry) return;
 
-    // Auto-fill reps and weight
-    const repsInput = formElements.dynamicFieldInputs.get("reps");
-    if (repsInput && lastEntry.reps > 0) {
-      repsInput.value = String(lastEntry.reps);
-    }
-
-    const weightInput = formElements.dynamicFieldInputs.get("weight");
-    if (weightInput && lastEntry.weight >= 0) {
-      DynamicFieldsRenderer.setWeightValue(
-        weightInput,
-        lastEntry.enteredWeight ?? lastEntry.weight,
-        lastEntry.enteredUnit,
-      );
-    }
-
-    // Auto-fill custom fields
-    fillDynamicInputsFromCustomFields(
-      lastEntry.customFields,
+    DynamicFieldsRenderer.fillFromLog(
       formElements.dynamicFieldInputs,
+      lastEntry,
     );
 
     // Auto-fill protocol

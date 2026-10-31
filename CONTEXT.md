@@ -208,7 +208,7 @@ Time from a session's first set to its last. Only plausible when the session has
 _Avoid_: workout time
 
 **Personal record (PR)**:
-An exercise's heaviest weight ever lifted. A set "sets a new PR" when it is strictly heavier than every earlier set of that exercise. Exercise names are compared ignoring case and spacing. Of several sets at the PR weight, the one with most reps (then the earliest) is the PR. Exercises logged without weight have no PR.
+An exercise's heaviest eligible weight ever lifted. Warm-up (`warmup`) and drop sets (`drop_set`) are excluded from PRs and new-record counts; other built-in and custom protocols remain eligible. Warm-up and drop sets still contribute to volume and trends. The first eligible weighted set establishes the PR without counting as a new record. A set "sets a new PR" when it is strictly heavier than every earlier set of that exercise. Exercise names are compared ignoring case and spacing. Of several sets at the PR weight, the one with most reps (then the earliest) is the PR. Exercises logged without weight have no PR.
 _Avoid_: best, max (as separate concepts)
 
 **Trend**:

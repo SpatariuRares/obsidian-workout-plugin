@@ -23,6 +23,7 @@ export interface ProtocolInfo {
 }
 
 const CHART_ALPHA = 0.7;
+const NEUTRAL_CHART_COLOR = "rgba(128, 128, 128, 0.7)";
 
 const BUILT_IN: ReadonlyArray<{
   id: WorkoutProtocol;
@@ -35,8 +36,15 @@ const BUILT_IN: ReadonlyArray<{
     id: WorkoutProtocol.STANDARD,
     nameKey: "modal.selectOptions.standard",
     abbreviation: "",
-    color: "rgba(128, 128, 128, 0.7)",
+    color: NEUTRAL_CHART_COLOR,
     badgeClass: "",
+  },
+  {
+    id: WorkoutProtocol.WARMUP,
+    nameKey: "modal.selectOptions.warmup",
+    abbreviation: "WU",
+    color: NEUTRAL_CHART_COLOR,
+    badgeClass: "workout-protocol-badge-warmup",
   },
   {
     id: WorkoutProtocol.DROP_SET,

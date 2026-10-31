@@ -16,6 +16,8 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { Button } from "@app/components";
+import { NextSetRow } from "@app/features/tables/ui/NextSetRow";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
 
 /**
@@ -53,7 +55,6 @@ export class EmbeddedTableView extends BaseView {
 
   constructor(plugin: WorkoutPluginContext) {
     super(plugin);
-
   }
 
   /**
@@ -117,7 +118,7 @@ export class EmbeddedTableView extends BaseView {
         this.plugin,
       );
 
-      this.renderTableContentOptimized(
+      await this.renderTableContentOptimized(
         container,
         { ...tableData, params },
         pageLink,
@@ -129,11 +130,11 @@ export class EmbeddedTableView extends BaseView {
     }
   }
 
-  private renderTableContentOptimized(
+  private async renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
     pageLink: string,
-  ): void {
+  ): Promise<void> {
     const { headers, rows, filterResult, params } = tableData;
 
     this.unloadRenderChild(container);
@@ -203,6 +204,17 @@ export class EmbeddedTableView extends BaseView {
       );
     }
 
+    if (params.showAddButton !== false && params.exercise) {
+      const link = pageLink || this.getActivePageLink();
+      await NextSetRow.render(
+        contentDiv,
+        this.plugin,
+        params.exercise,
+        params.workout || link.replace(/^\[\[|\]\]$/g, ""),
+        link,
+        signal,
+      );
+    }
     renderChild.load();
   }
 
@@ -223,10 +235,11 @@ export class EmbeddedTableView extends BaseView {
     const buttonContainer = Button.createContainer(contentDiv);
     buttonContainer.addClass("workout-add-log-button-container");
 
-    const latestEntry =
-      filterResult.filteredData.length > 0
-        ? filterResult.filteredData[0]
-        : undefined;
+    const latestEntry = params.exercise
+      ? new TrainingHistory(filterResult.filteredData).lastSet(
+          params.exercise,
+        )
+      : undefined;
 
     LogCallouts.renderAddLogButton(
       buttonContainer,

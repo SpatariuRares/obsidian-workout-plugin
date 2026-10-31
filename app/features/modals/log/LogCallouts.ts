@@ -3,6 +3,7 @@ import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { Feedback } from "@app/components/atoms/Feedback";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
+import { fromLog } from "@app/features/modals/base/logic/LogEntryDraft";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { t } from "@app/i18n";
@@ -139,17 +140,8 @@ export class LogCallouts {
     Button.onClick(
       button,
       () => {
-        const prefillData = latestEntry
-          ? {
-              exercise: latestEntry.exercise,
-              weight: latestEntry.weight,
-              reps: latestEntry.reps,
-              workout: latestEntry.workout || "",
-              notes: latestEntry.notes || "",
-              protocol: latestEntry.protocol,
-              customFields: latestEntry.customFields,
-            }
-          : undefined;
+        const prefillData = latestEntry ? fromLog(latestEntry) : undefined;
+        if (prefillData) prefillData.date = undefined;
 
         new CreateLogModal(
           plugin.app,

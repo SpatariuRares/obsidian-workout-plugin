@@ -12,6 +12,7 @@ import type { WeightUnit } from "@app/utils/WeightUnitUtils";
  */
 export enum WorkoutProtocol {
   STANDARD = "standard",
+  WARMUP = "warmup",
   DROP_SET = "drop_set",
   MYO_REPS = "myo_reps",
   REST_PAUSE = "rest_pause",

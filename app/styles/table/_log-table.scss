@@ -37,7 +37,8 @@
     /* Inset shadow tints the row without replacing its background */
     @media (hover: hover) {
       &:hover {
-        box-shadow: inset 0 0 0 100vmax var(--background-modifier-hover);
+        box-shadow: inset 0 0 0 100vmax
+          var(--background-modifier-hover);
       }
     }
   }
@@ -180,4 +181,44 @@
     min-width: var(--workout-touch-target-min);
     height: var(--workout-touch-target-min);
   }
+}
+
+/* Inline logging reuses the modal field controls at a touch-friendly size. */
+.workout-next-set {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--workout-space-md);
+  margin-top: var(--workout-space-lg);
+  padding-block: var(--workout-space-md);
+  border-top: var(--workout-border-thin) solid
+    var(--background-modifier-border);
+
+  > strong {
+    flex-basis: 100%;
+  }
+  .workout-next-set-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--workout-space-md);
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .workout-field-with-adjust {
+    flex: 1 1 180px;
+    min-width: 0;
+  }
+  input {
+    min-width: 0;
+    width: 100%;
+  }
+  button,
+  select {
+    min-height: var(--workout-touch-target-min);
+  }
+}
+.workout-log-history {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  margin-block: var(--workout-space-sm) var(--workout-space-md);
 }

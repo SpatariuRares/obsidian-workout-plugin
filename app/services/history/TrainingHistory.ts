@@ -1,4 +1,8 @@
-import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import {
+  WorkoutProtocol,
+  type WorkoutLogData,
+} from "@app/types/WorkoutLogData";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import { StringUtils } from "@app/utils/StringUtils";
 
 /** Session durations outside this window are logging gaps, not training. */
@@ -87,7 +91,11 @@ export function trendOf(values: number[]): Trend | undefined {
   const threshold = 0.05 * Math.abs(sumY / n) || Number.EPSILON;
   const change = end - start;
   const direction =
-    change > threshold ? "up" : change < -threshold ? "down" : "stable";
+    change > threshold
+      ? "up"
+      : change < -threshold
+        ? "down"
+        : "stable";
 
   return {
     direction,
@@ -119,7 +127,9 @@ export class TrainingHistory {
   /** Sessions in the order they started, optionally only one workout's. */
   sessions(filter: { workout?: string } = {}): Session[] {
     const wanted =
-      filter.workout === undefined ? undefined : workoutKey(filter.workout);
+      filter.workout === undefined
+        ? undefined
+        : workoutKey(filter.workout);
     const groups = new Map<string, WorkoutLogData[]>();
 
     for (const log of this.logs) {
@@ -145,7 +155,7 @@ export class TrainingHistory {
     const wanted = StringUtils.normalize(exercise);
     let best: WorkoutLogData | undefined;
     for (const log of this.chronological()) {
-      if (!(log.weight > 0)) continue;
+      if (!countsForRecord(log)) continue;
       if (StringUtils.normalize(log.exercise) !== wanted) continue;
       if (
         !best ||
@@ -173,15 +183,53 @@ export class TrainingHistory {
     const best = new Map<string, number>();
     const records: WorkoutLogData[] = [];
     for (const log of this.chronological()) {
-      if (!(log.weight > 0)) continue;
+      if (!countsForRecord(log)) continue;
       const exercise = StringUtils.normalize(log.exercise);
       const previous = best.get(exercise);
-      if (previous !== undefined && log.weight > previous) records.push(log);
+      if (previous !== undefined && log.weight > previous)
+        records.push(log);
       if (previous === undefined || log.weight > previous) {
         best.set(exercise, log.weight);
       }
     }
     return records;
+  }
+
+  /** Latest exact exercise match, independent of table sorting and filters. */
+  lastSet(exercise: string): WorkoutLogData | undefined {
+    const wanted = StringUtils.normalize(exercise);
+    return this.chronological()
+      .reverse()
+      .find((log) => StringUtils.normalize(log.exercise) === wanted);
+  }
+
+  /** Position of the next set in today's session for this exercise. */
+  nextSetNumber(
+    exercise: string,
+    workout?: string,
+    today = new Date(),
+  ): number {
+    const wanted = StringUtils.normalize(exercise);
+    const session = this.sessions({ workout: workout ?? "" }).find(
+      (s) => s.day === trainingDay(today.toISOString()),
+    );
+    return (
+      1 +
+      (session?.sets.filter(
+        (s) => StringUtils.normalize(s.exercise) === wanted,
+      ).length ?? 0)
+    );
+  }
+
+  /** Increase over the prior PR; the first weighted set is not a new record. */
+  recordIncrease(set: WorkoutLogData): number | undefined {
+    if (!countsForRecord(set)) return undefined;
+    const previous = new TrainingHistory(
+      this.logs.filter((log) => setTime(log) <= setTime(set)),
+    ).personalRecord(set.exercise);
+    return previous && set.weight > previous.weight
+      ? set.weight - previous.weight
+      : undefined;
   }
 
   /**
@@ -243,7 +291,10 @@ export class TrainingHistory {
     for (const log of this.logs) {
       if (StringUtils.normalize(log.exercise) !== wanted) continue;
       const day = trainingDay(log.date);
-      byDay.set(day, Math.max(byDay.get(day) ?? -Infinity, log.weight));
+      byDay.set(
+        day,
+        Math.max(byDay.get(day) ?? -Infinity, log.weight),
+      );
     }
     return Array.from(byDay.entries())
       .sort(([a], [b]) => a.localeCompare(b))
@@ -299,4 +350,14 @@ function setTime(log: WorkoutLogData): number {
 
 function sortTime(session: Session): number {
   return session.start ?? setTime(session.sets[0]);
+}
+
+function countsForRecord(log: WorkoutLogData): boolean {
+  const protocol = protocolId(log.protocol);
+  return (
+    Number.isFinite(log.weight) &&
+    log.weight > 0 &&
+    protocol !== protocolId(WorkoutProtocol.WARMUP) &&
+    protocol !== protocolId(WorkoutProtocol.DROP_SET)
+  );
 }

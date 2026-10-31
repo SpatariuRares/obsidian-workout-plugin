@@ -466,6 +466,11 @@
     }
   },
   "logs": {
+    "lastSet": "Last time: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Personal record: {weight} {unit} × {reps}",
+    "nextSet": "Next set · {number}",
+    "saveNextSet": "Log this set",
     "addLogButtonAria": "Add log for {exerciseName}",
     "addLogButtonText": "Add log for {exerciseName}",
     "createFirstLogButton": "Create first log for {exerciseName}",
@@ -621,6 +626,7 @@
     "noteTemplate": "**Note: {note}**\n",
     "notes": "Notes (optional):",
     "notices": {
+      "newRecord": "New record: {weight} {unit} (+{increase} {unit})",
       "auditConfirmRenameFile": "Rename this file?\n\n{oldName} → {newName}",
       "auditMismatchCount": "Found {count} potential mismatches:",
       "auditNoMatchFound": "No match found",
@@ -731,6 +737,7 @@
       "workout": "Workout"
     },
     "selectOptions": {
+      "warmup": "Warm-up",
       "allLogs": "All logs",
       "cardio": "Cardio",
       "completeWorkout": "Complete workout",

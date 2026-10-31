@@ -1,7 +1,4 @@
-import type {
-  LogFormData,
-  LogFormElements,
-} from "@app/types/ModalTypes";
+import type { LogFormData, LogFormElements } from "@app/types/ModalTypes";
 import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
@@ -27,45 +24,16 @@ export function readLogForm(
   currentFileName: string | undefined,
   parameters: ParameterDefinition[],
 ): LogFormReading {
-  const { fields, ...reading } = readLogFields(
-    form.dynamicFieldInputs,
-    parameters,
-  );
-  const workout =
-    form.currentWorkoutToggle?.checked && currentFileName
-      ? currentFileName
-      : form.workoutInput.value.trim();
-
-  return {
-    fields,
-    data: {
-      exercise: form.exerciseElements.exerciseInput.value.trim(),
-      ...reading,
-      workout,
-      notes: form.notesInput.value.trim(),
-      date: form.dateInput?.value || undefined,
-      protocol:
-        form.protocolSelect?.value || WorkoutProtocol.STANDARD,
-    },
-  };
-}
-
-/** Read dynamic fields identically in modal and inline logging. */
-export function readLogFields(
-  inputs: Map<string, HTMLInputElement>,
-  parameters: ParameterDefinition[],
-) {
   const fields = new Map<string, string | boolean>();
   const values = new Map<string, FieldValue>();
-  for (const [key, input] of inputs) {
+  for (const [key, input] of form.dynamicFieldInputs) {
     const param = parameters.find((p) => p.key === key) ?? {
       key,
       label: key,
       type: input.type === "checkbox" ? "boolean" : "string",
       required: false,
     };
-    const raw =
-      param.type === "boolean" ? input.checked : input.value;
+    const raw = param.type === "boolean" ? input.checked : input.value;
     fields.set(key, raw);
     const { value } = readField(fieldFor(param), raw);
     if (value !== undefined) values.set(key, value);
@@ -76,16 +44,29 @@ export function readLogFields(
     if (key !== "reps" && key !== "weight") customFields[key] = value;
   }
 
-  const weightInput = inputs.get("weight");
+  const weightInput = form.dynamicFieldInputs.get("weight");
+  const workout =
+    form.currentWorkoutToggle?.checked && currentFileName
+      ? currentFileName
+      : form.workoutInput.value.trim();
+
   return {
     fields,
-    reps: numberOr0(values.get("reps")),
-    weight: numberOr0(values.get("weight")),
-    weightUnit: weightInput
-      ? DynamicFieldsRenderer.getWeightUnit(weightInput)
-      : undefined,
-    customFields:
-      Object.keys(customFields).length > 0 ? customFields : undefined,
+    data: {
+      exercise: form.exerciseElements.exerciseInput.value.trim(),
+      reps: numberOr0(values.get("reps")),
+      weight: numberOr0(values.get("weight")),
+      weightUnit: weightInput
+        ? DynamicFieldsRenderer.getWeightUnit(weightInput)
+        : undefined,
+      workout,
+      notes: form.notesInput.value.trim(),
+      date: form.dateInput?.value || undefined,
+      protocol:
+        form.protocolSelect?.value || WorkoutProtocol.STANDARD,
+      customFields:
+        Object.keys(customFields).length > 0 ? customFields : undefined,
+    },
   };
 }
 

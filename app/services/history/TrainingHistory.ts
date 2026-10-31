@@ -203,24 +203,6 @@ export class TrainingHistory {
       .find((log) => StringUtils.normalize(log.exercise) === wanted);
   }
 
-  /** Position of the next set in today's session for this exercise. */
-  nextSetNumber(
-    exercise: string,
-    workout?: string,
-    today = new Date(),
-  ): number {
-    const wanted = StringUtils.normalize(exercise);
-    const session = this.sessions({ workout: workout ?? "" }).find(
-      (s) => s.day === trainingDay(today.toISOString()),
-    );
-    return (
-      1 +
-      (session?.sets.filter(
-        (s) => StringUtils.normalize(s.exercise) === wanted,
-      ).length ?? 0)
-    );
-  }
-
   /** Increase over the prior PR; the first weighted set is not a new record. */
   recordIncrease(set: WorkoutLogData): number | undefined {
     if (!countsForRecord(set)) return undefined;

@@ -197,7 +197,7 @@ export class DynamicFieldsRenderer {
     }
   }
 
-  /** Apply the last set in its entered unit, for modal and inline logging. */
+  /** Apply the last set in its entered unit. */
   static fillFromLog(
     inputs: Map<string, HTMLInputElement>,
     log: WorkoutLogData,

@@ -469,8 +469,6 @@
     "lastSet": "Last time: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "Personal record: {weight} {unit} × {reps}",
-    "nextSet": "Next set · {number}",
-    "saveNextSet": "Log this set",
     "addLogButtonAria": "Add log for {exerciseName}",
     "addLogButtonText": "Add log for {exerciseName}",
     "createFirstLogButton": "Create first log for {exerciseName}",

@@ -313,7 +313,14 @@
       "title": "Aan de slag met de plugin The Gym",
       "welcome": "Welkom! Deze map bevat voorbeeldbestanden om u te helpen alle functies te leren.",
       "workoutsDesc": "Voorbeeld trainingsschema's",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Verken één functie per pagina. Volg de links in de juiste volgorde, of kies een functie hieronder. Gebruik \"Terug\" en \"Volgende\" om tussen de voorbeelden te navigeren; scroll normaal om elk voorbeeld te bekijken.",
+      "liveIntro": "Verken alle functies hieronder met behulp van voorbeeldtrainingsschema's gedurende zes weken. Dit zijn voorbeeldgegevens; probeer de bedieningselementen en kijk hoe uw notities werken.",
+      "tryLog": "Gebruik de \"+\" knop om een set toe te voegen. De tabel, grafieken en dashboard lezen allemaal hetzelfde CSV-bestand.",
+      "continueWithWorkout": "Open [[{workout}]] om een complete workout uit te proberen met oefentabellen en rusttimers.",
+      "moreExamples": "Raadpleeg [[{showcase}]] voor meer grafiektypen, filters en trainingsprotocollen.",
+      "ownData": "Wanneer u klaar bent, selecteer dan uw eigen CSV-map en oefenmap in Instellingen → Setup & data. Bewaar de voorbeeldmap als referentie.",
+      "openGuideDesc": "Open de pagina met voorbeelden om aan de slag te gaan, met voorbeelden van tabellen, grafieken, timers en het dashboard."
     },
     "hiit": {
       "cyclingCooldownTitle": "Cooling-down op de fiets",

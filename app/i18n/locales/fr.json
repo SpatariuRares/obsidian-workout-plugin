@@ -313,7 +313,14 @@
       "title": "Bien démarrer avec le plugin The Gym",
       "welcome": "Bienvenue ! Ce dossier contient des fichiers d'exemple qui vous aideront à découvrir toutes les fonctionnalités.",
       "workoutsDesc": "Exemples de modèles d'entraînement",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Explorez une fonctionnalité par page. Suivez les liens dans l'ordre, ou choisissez une fonctionnalité ci-dessous. Utilisez les boutons \"Précédent\" et \"Suivant\" pour naviguer entre les notes ; faites défiler normalement pour explorer chaque exemple.",
+      "liveIntro": "Explorez toutes les fonctionnalités ci-dessous avec des exemples d'entraînements sur six semaines. Il s'agit de données de démonstration ; essayez les commandes et voyez comment vos notes fonctionnent.",
+      "tryLog": "Utilisez le bouton \"+\" pour ajouter un ensemble de données. La table, les graphiques et le tableau de bord utilisent le même fichier CSV.",
+      "continueWithWorkout": "Ouvrez [[{workout}]] pour essayer un entraînement complet avec des tableaux d'exercices et des minuteries de repos.",
+      "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles de formation.",
+      "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans les paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
+      "openGuideDesc": "Ouvrez la page \"débuter\" avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
     },
     "hiit": {
       "cyclingCooldownTitle": "Retour au calme à vélo",

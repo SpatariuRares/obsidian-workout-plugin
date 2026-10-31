@@ -313,7 +313,14 @@
       "title": "Start med The Gym Plugin",
       "welcome": "Velkommen! Denne mappe indeholder eksempelfiler, der hjælper dig med at lære alle funktionerne.",
       "workoutsDesc": "Eksempler på træningsskabeloner",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Udforsk én funktion pr. side. Følg linksne i rækkefølge, eller vælg en funktion nedenfor. Brug \"Tilbage\" og \"Næste\" for at navigere mellem notaterne; scroll normalt for at udforske hvert eksempel.",
+      "liveIntro": "Udforsk alle funktioner nedenfor med seks ugers eksempstræning. Dette er demo-data; prøv kontrollerne og se, hvordan dine noter fungerer.",
+      "tryLog": "Brug \"+\" knappen til at tilføje et sæt. Tabellen, diagrammerne og dashboardet læser alle det samme CSV-format.",
+      "continueWithWorkout": "Åbn [[{workout}]], for at prøve en komplet træning med øvelsesvejledninger og pausetimer.",
+      "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og træningsprotokoller.",
+      "ownData": "Når du er klar, vælg din egen CSV-mappe og eksempelfolder i Indstillinger → Opsætning & data. Behold eksempelfolderen som en reference.",
+      "openGuideDesc": "Åbn siden med eksempler, der viser, hvordan man bruger tabeller, diagrammer, tidsmålere og dashboardet."
     },
     "hiit": {
       "cyclingCooldownTitle": "Nedkøling på cykel",

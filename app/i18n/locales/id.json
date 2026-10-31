@@ -313,7 +313,14 @@
       "title": "Memulai Penggunaan Plugin Gym",
       "welcome": "Selamat datang! Folder ini berisi file contoh untuk membantu Anda mempelajari semua fitur.",
       "workoutsDesc": "Contoh templat latihan",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Jelajahi satu fitur per halaman. Ikuti tautan dalam urutan, atau pilih fitur di bawah ini. Gunakan tombol \"Kembali\" dan \"Berikutnya\" untuk berpindah antar catatan; gulir secara normal untuk menjelajahi setiap contoh.",
+      "liveIntro": "Jelajahi setiap fitur di bawah ini dengan latihan contoh selama enam minggu. Ini adalah data demo; coba kontrolnya dan lihat bagaimana catatan Anda berfungsi.",
+      "tryLog": "Gunakan tombol \"+\" untuk menambahkan satu set. Tabel, grafik, dan dasbor membaca file CSV yang sama.",
+      "continueWithWorkout": "Buka [[{workout}]] untuk mencoba latihan lengkap dengan tabel latihan dan timer istirahat.",
+      "moreExamples": "Lihat [[{showcase}]] untuk jenis grafik, filter, dan protokol pelatihan lainnya.",
+      "ownData": "Saat Anda siap, pilih folder CSV dan folder contoh Anda di Pengaturan → Konfigurasi & data. Simpan folder contoh sebagai referensi.",
+      "openGuideDesc": "Buka halaman \"mulai\" dengan contoh-contoh yang berfungsi dari tabel, grafik, timer, dan dasbor."
     },
     "hiit": {
       "cyclingCooldownTitle": "Pendinginan setelah bersepeda",

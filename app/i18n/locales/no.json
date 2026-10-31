@@ -313,7 +313,14 @@
       "title": "Komme i gang med The Gym-plugin",
       "welcome": "Velkommen! Denne mappen inneholder eksempelfiler som kan hjelpe deg med å lære deg alle funksjonene.",
       "workoutsDesc": "Eksempler på treningsplaner",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Utforsk én funksjon per side. Følg lenkene i rekkefølge, eller velg en funksjon nedenfor. Bruk \"Tilbake\" og \"Neste\" for å navigere mellom notatene; scroll normalt for å utforske hvert eksempel.",
+      "liveIntro": "Utforsk alle funksjonene nedenfor med seks uker med eksempler på treningsøkter. Dette er demonstrasjonsdata; prøv kontrollene og se hvordan notene dine fungerer.",
+      "tryLog": "Bruk \"+\" knappen for å legge til et sett. Tabellen, diagrammene og dashboardet bruker samme CSV-fil.",
+      "continueWithWorkout": "Åpne [[{workout}]] for å prøve en komplett treningsøkt med øvelseslister og pausetimer.",
+      "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og treningsprotokoller.",
+      "ownData": "Når du er klar, velg din egen CSV-mappe og eksempelmappe i Innstillinger → Oppsett og data. Behold eksempelmappen som en referanse.",
+      "openGuideDesc": "Åpne \"Start\"-siden med eksempler som viser bruk av tabeller, diagrammer, stoppeklokker og dashbord."
     },
     "hiit": {
       "cyclingCooldownTitle": "Nedtrapping på sykkel",

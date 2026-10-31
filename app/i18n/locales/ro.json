@@ -313,7 +313,14 @@
       "title": "Începeți să utilizați pluginul The Gym",
       "welcome": "Bun venit! Acest folder conține fișiere de exemplu, care vă vor ajuta să învățați toate funcțiile.",
       "workoutsDesc": "Exemple de șabloane pentru antrenamente",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Explorați o funcție pe pagină. Urmați link-urile în ordinea indicată, sau alegeți o funcție din lista de mai jos. Utilizați butoanele \"Înapoi\" și \"Următor\" pentru a naviga între note; derulați normal pentru a explora fiecare exemplu.",
+      "liveIntro": "Explorați fiecare funcție de mai jos cu un set de exerciții de antrenament pe șase săptămâni. Acestea sunt date de demonstrație; testați comenzile și vedeți cum funcționează notele.",
+      "tryLog": "Utilizați butonul \"+\" pentru a adăuga un set de date. Tabelul, graficele și panoul de control utilizează același fișier CSV.",
+      "continueWithWorkout": "Deschide [[{workout}]] pentru a încerca un antrenament complet, cu tabele de exerciții și cronometre de odihnă.",
+      "moreExamples": "Consultați [[{showcase}]] pentru mai multe tipuri de grafice, filtre și protocoale de instruire.",
+      "ownData": "Când sunteți pregătit, selectați folderul CSV și folderul de exemple în setările → Configurarea și date. Păstrați folderul de exemple ca referință.",
+      "openGuideDesc": "Deschide pagina \"Începe\", care include exemple funcționale de tabele, grafice, cronometre și panoul de control."
     },
     "hiit": {
       "cyclingCooldownTitle": "Răcire după ciclism",

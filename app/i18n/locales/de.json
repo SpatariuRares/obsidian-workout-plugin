@@ -313,7 +313,14 @@
       "title": "Erste Schritte mit The Gym Plugin",
       "welcome": "Willkommen! Dieser Ordner enthält Beispieldateien, die dir helfen, alle Funktionen kennenzulernen.",
       "workoutsDesc": "Beispielvorlagen für Trainings",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Erkunden Sie jeweils eine Funktion pro Seite. Folgen Sie den Links in der angegebenen Reihenfolge oder wählen Sie eine Funktion unten aus. Verwenden Sie die Schaltflächen \"Zurück\" und \"Weiter\", um zwischen den Abschnitten zu wechseln; scrollen Sie normal, um jedes Beispiel zu erkunden.",
+      "liveIntro": "Entdecken Sie alle Funktionen unten mit einem Beispiel-Workout-Plan über sechs Wochen. Dies sind Demo-Daten; probieren Sie die Steuerelemente aus und sehen Sie, wie Ihre Notizen funktionieren.",
+      "tryLog": "Verwenden Sie die Schaltfläche \"+\", um einen Datensatz hinzuzufügen. Tabelle, Diagramme und Dashboard lesen denselben CSV-Datei.",
+      "continueWithWorkout": "Öffnen Sie [[{workout}], um ein komplettes Workout mit Übungsanleitungen und Pausenzeitern auszuprobieren.",
+      "moreExamples": "Weitere Diagrammtypen, Filter und Schulungsprotokolle finden Sie unter [[{showcase}].",
+      "ownData": "Wenn Sie bereit sind, wählen Sie Ihren eigenen CSV-Ordner und Ihren Übungordner in den Einstellungen → Einrichtung & Daten aus. Behalten Sie den Beispielordner als Referenz.",
+      "openGuideDesc": "Öffnen Sie die Seite \"So geht's\", die Beispiele für Tabellen, Diagramme, Timer und das Dashboard enthält."
     },
     "hiit": {
       "cyclingCooldownTitle": "Cool-down auf dem Rad",

@@ -313,7 +313,14 @@
       "title": "Cómo empezar a usar el plugin \"The Gym\"",
       "welcome": "¡Bienvenido! Esta carpeta contiene archivos de ejemplo para ayudarle a aprender todas las funciones.",
       "workoutsDesc": "Ejemplos de plantillas de entrenamiento",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Explora una función por página. Sigue los enlaces en orden, o elige una función a continuación. Utiliza los botones \"Atrás\" y \"Siguiente\" para navegar entre las notas; desplázate normalmente para explorar cada ejemplo.",
+      "liveIntro": "Explore todas las funciones a continuación con un programa de ejercicios de ejemplo de seis semanas. Estos son datos de demostración; pruebe los controles y vea cómo funcionan sus notas.",
+      "tryLog": "Utilice el botón \"+\" para añadir un conjunto de datos. La tabla, los gráficos y el panel de control utilizan el mismo archivo CSV.",
+      "continueWithWorkout": "Abra [[{workout}]], para probar un entrenamiento completo con tablas de ejercicios y temporizadores de descanso.",
+      "moreExamples": "Consulte [[{showcase}]] para obtener más información sobre los tipos de gráficos, filtros y protocolos de formación.",
+      "ownData": "Cuando esté listo, seleccione su propia carpeta CSV y la carpeta de ejemplos en la configuración → Configuración y datos. Mantenga la carpeta de ejemplo como referencia.",
+      "openGuideDesc": "Abrir la página de inicio con ejemplos prácticos de tablas, gráficos, temporizadores y el panel de control."
     },
     "hiit": {
       "cyclingCooldownTitle": "Vuelta a la calma en bicicleta",

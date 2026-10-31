@@ -313,7 +313,14 @@
       "title": "Fillimi me pluginin The Gym",
       "welcome": "Mirë se vini! Kjo dosje përmban skedarë shembull që t'ju ndihmojnë të mësoni të gjitha veçoritë.",
       "workoutsDesc": "Shabllone stërvitjesh shembull",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Eksploroni një funksion në çdo faqe. U ndjekni lidhjet në rend, ose zgjidhni një funksion më poshtë. Për të vazhduar, përdojini butonët \"Para\" dhe \"Pas\" për të vazhduar; scrolloni normalisht për të eksploruar çdo shembull.",
+      "liveIntro": "Eksploroni çdo funksion më poshtë me seanca stërdhuese prej gjashtë javësh. Këto janë të dhëna demonstrative; provoni kontrollët dhe shihini si funksionojnë notat tuaja.",
+      "tryLog": "Për të shtuar një set, përdojni butonin \"+\". Tablot, diagramet dhe paneli lexojnë të njëjajnë failin CSV.",
+      "continueWithWorkout": "Hapeni [[{workout}]] për të provuar një stërvitje të plotë me tabela me ushtrime dhe timer-a për paqe.",
+      "moreExamples": "Për më shumë lloje të grafikëve, filtra dhe protokole stërditëse, shihjeni [[{showcase}]].",
+      "ownData": "Nëse jeni gati, zgjidhni folderin dhe folderin e shembullit tuaj CSV nën Settings → Konfigurim dhe të dhëna. Ruani folderin e shembullit si referencë.",
+      "openGuideDesc": "Hapni faqen \"Fillimi\" me shembuj të veçantë të tabeleve, grafikëve, orëve dhe dasbordit."
     },
     "hiit": {
       "cyclingCooldownTitle": "Qetësimi me biçikletë",

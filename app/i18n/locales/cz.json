@@ -313,7 +313,14 @@
       "title": "Začínáme s pluginem The Gym",
       "welcome": "Vítejte! Tato složka obsahuje ukázkové soubory, které vám pomohou poznat všechny funkce.",
       "workoutsDesc": "Ukázkové šablony tréninků",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Prozkoumejte jednu funkci na stránce. Postupujte podle odkazů v daném pořadí, nebo vyberte funkci níže. Použijte tlačítka \"Zpět\" a \"Další\" pro přechod mezi poznámkami; prozkoumávejte každý příklad normálním způsobem.",
+      "liveIntro": "Prozkoumejte všechny funkce níže s šesti týdny ukázkových tréninků. Jedná se o ukázková data; vyzkoušejte ovládací prvky a zjistěte, jak fungují vaše poznámky.",
+      "tryLog": "Použijte tlačítko \"+\" pro přidání sady. Tabulka, grafy a dashboard čtou stejný soubor CSV.",
+      "continueWithWorkout": "Otevřete [[{workout}], abyste si mohli vyzkoušet kompletní cvičení s tabulkami cviků a časovači odpočinku.",
+      "moreExamples": "Pro další typy grafů, filtry a protokoly školení, viz [[{showcase}]].",
+      "ownData": "Když jste připraveni, vyberte si vlastní složku CSV a složku s příklady v Nastavení → Konfigurace a data. Složku s příklady používejte jako referenci.",
+      "openGuideDesc": "Otevřete stránku s návodem a ukázkami, které demonstrují použití tabulek, grafů, časovačů a dashboardu."
     },
     "hiit": {
       "cyclingCooldownTitle": "Zklidnění na kole",

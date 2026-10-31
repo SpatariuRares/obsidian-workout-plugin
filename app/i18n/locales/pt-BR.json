@@ -313,7 +313,14 @@
       "title": "Primeiros passos com o plugin The Gym",
       "welcome": "Bem-vindo! Esta pasta contém arquivos de exemplo para ajudá-lo a aprender todas as funcionalidades.",
       "workoutsDesc": "Exemplos de modelos de treino",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Explore uma funcionalidade por página. Siga os links na ordem, ou escolha uma funcionalidade abaixo. Use os botões \"Voltar\" e \"Próximo\" para navegar entre as notas; role normalmente para explorar cada exemplo.",
+      "liveIntro": "Explore todas as funcionalidades abaixo com um conjunto de exercícios de exemplo que duram seis semanas. Estes são dados de demonstração; experimente os controles e veja como suas anotações funcionam.",
+      "tryLog": "Use o botão \"+\" para adicionar um conjunto de dados. A tabela, os gráficos e o painel de controle utilizam o mesmo arquivo CSV.",
+      "continueWithWorkout": "Abra [[{workout}]] para experimentar um treino completo com tabelas de exercícios e temporizadores de descanso.",
+      "moreExamples": "Consulte [[{showcase}]] para obter mais tipos de gráficos, filtros e protocolos de treinamento.",
+      "ownData": "Quando estiver pronto, escolha sua própria pasta CSV e pasta de exemplos nas configurações → Configuração e dados. Mantenha a pasta de exemplos como referência.",
+      "openGuideDesc": "Abra a página de \"Início\" com exemplos práticos de tabelas, gráficos, cronômetros e painel de controle."
     },
     "hiit": {
       "cyclingCooldownTitle": "Desaquecimento na bicicleta",

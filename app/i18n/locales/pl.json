@@ -313,7 +313,14 @@
       "title": "Jak rozpocząć pracę z wtyczką The Gym",
       "welcome": "Witaj! Ten folder zawiera przykładowe pliki, które pomogą Ci poznać wszystkie funkcje.",
       "workoutsDesc": "Przykładowe szablony treningowe",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Zapoznaj się z jedną funkcją na stronie. Śledź linki w odpowiedniej kolejności, lub wybierz funkcję poniżej. Użyj przycisków \"Wstecz\" i \"Dalej\", aby przechodzić między notatkami; przewijaj normalnie, aby zapoznać się z każdym przykładem.",
+      "liveIntro": "Odkryj wszystkie funkcje, korzystając z przykładowych ćwiczeń trwających sześć tygodni. Są to dane demonstracyjne; wypróbuj sterowanie i sprawdź, jak działają Twoje notatki.",
+      "tryLog": "Użyj przycisku \"+\" aby dodać zestaw. Tabela, wykresy i panel kontrolny odczytują ten sam plik CSV.",
+      "continueWithWorkout": "Otwórz [[{workout}], aby spróbować kompletnego treningu z tabelami ćwiczeń i timerami odpoczynku.",
+      "moreExamples": "Zobacz [[{showcase}]] w celu uzyskania więcej informacji o typach wykresów, filtrowaniu oraz protokołach szkoleniowych.",
+      "ownData": "Kiedy będziecie gotowi, wybierzcie własny folder CSV oraz folder z przykładami w ustawieniach → Konfiguracja i dane. Zachowaj folder z przykładami jako punkt odniesienia.",
+      "openGuideDesc": "Otwórz stronę „początek pracy” zawierającą przykładowe tabele, wykresy, timery oraz panel kontrolny."
     },
     "hiit": {
       "cyclingCooldownTitle": "Schłodzenie na rowerze",

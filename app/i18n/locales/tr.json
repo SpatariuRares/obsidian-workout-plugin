@@ -313,7 +313,14 @@
       "title": "The Gym Eklentisi ile Başlangıç",
       "welcome": "Hoş geldiniz! Bu klasör, tüm özellikleri öğrenmenize yardımcı olacak örnek dosyaları içerir.",
       "workoutsDesc": "Örnek antrenman şablonları",
-      "workoutsFolder": "**{folder}/**"
+      "workoutsFolder": "**{folder}/**",
+      "pagesIntro": "Her sayfada bir özelliği keşfedin. Bağlantıları sırayla takip edin veya aşağıdaki özelliklerden birini seçin. Notlar arasında geçiş yapmak için \"Geri\" ve \"Sonraki\" düğmelerini kullanın; her örneği keşfetmek için normal şekilde kaydırın.",
+      "liveIntro": "Aşağıdaki tüm özellikleri, altı haftalık örnek antrenmanlarla keşfedin. Bunlar örnek verilerdir; kontrolleri deneyin ve notlarınızın nasıl çalıştığını görün.",
+      "tryLog": "\"+\" düğmesini kullanarak bir veri kümesi ekleyin. Tablo, grafikler ve kontrol paneli aynı CSV dosyasını okur.",
+      "continueWithWorkout": "[[{workout}]]'ı açarak, egzersiz tabloları ve dinlenme zamanlayıcıları ile birlikte kapsamlı bir antrenman deneyin.",
+      "moreExamples": "Daha fazla grafik türü, filtre ve eğitim protokolleri için [[{showcase}]] bölümüne bakın.",
+      "ownData": "Hazır olduğunuzda, Ayarlar → Kurulum & Veri bölümünde kendi CSV klasörünüzü ve örnek klasörünüzü seçin. Örnek klasörü bir referans olarak saklayın.",
+      "openGuideDesc": "Tablolar, grafikler, zamanlayıcılar ve kontrol paneli gibi örneklerle birlikte \"başlangıç\" sayfasını açın."
     },
     "hiit": {
       "cyclingCooldownTitle": "Bisikletle Soğuma",

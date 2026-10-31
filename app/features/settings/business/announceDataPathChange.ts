@@ -1,6 +1,7 @@
 import type {
   EventBusPort,
-  WorkoutPluginContext,
+  MuscleTagPort,
+  SettingsPort,
 } from "@app/types/PluginPorts";
 
 type DataPathKey = "csvLogFilePath" | "exerciseFolderPath";
@@ -12,7 +13,7 @@ type DataPathKey = "csvLogFilePath" | "exerciseFolderPath";
  * setting by itself.
  */
 export function announceDataPathChange(
-  plugin: WorkoutPluginContext & EventBusPort,
+  plugin: SettingsPort & MuscleTagPort & EventBusPort,
   key: DataPathKey,
   previousValue: string,
 ): void {

@@ -1,4 +1,11 @@
-import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
+import { normalizePath, Notice, TFile, TFolder } from "obsidian";
+import type {
+  AppPort,
+  EventBusPort,
+  MuscleTagPort,
+  SettingsPort,
+} from "@app/types/PluginPorts";
+import { announceDataPathChange } from "@app/features/settings/business/announceDataPathChange";
 import { t } from "@app/i18n";
 import {
   generateGettingStartedContent,
@@ -10,8 +17,93 @@ import {
 } from "@app/services/examples/exampleContentGenerator";
 import { generateExampleCSVData } from "@app/services/examples/exampleDataGenerator";
 
+/** What the example flow needs from the plugin */
+export type ExamplePluginPort = AppPort &
+  SettingsPort &
+  MuscleTagPort &
+  EventBusPort;
+
+/**
+ * How `createExamples` ended:
+ * - `pointed-at-examples`: no log existed, so the settings now read the example log and exercises
+ * - `separate-file`: a log exists, so it and the settings were left alone
+ * - `cancelled`: the user declined to overwrite the existing example folder
+ * - `failed`: the example files could not be written
+ */
+export type CreateExamplesResult =
+  | "pointed-at-examples"
+  | "separate-file"
+  | "cancelled"
+  | "failed";
+
 export class ExampleGeneratorService {
-  constructor(private app: App) {}
+  private app: ExamplePluginPort["app"];
+
+  constructor(private plugin: ExamplePluginPort) {
+    this.app = plugin.app;
+  }
+
+  /**
+   * The one entry point for "create examples" (settings button, command,
+   * welcome modal). Asks `confirmOverwrite` when the example folder already
+   * exists, writes the examples, then decides how the views reach them: with
+   * no log at `csvLogFilePath` the settings are pointed at the example log
+   * and exercises; with a real log nothing in the settings or that log
+   * changes. Tells the user either way.
+   */
+  public async createExamples(
+    confirmOverwrite: () => Promise<boolean>,
+  ): Promise<CreateExamplesResult> {
+    const overwrite = this.exampleFolderExists();
+    if (overwrite && !(await confirmOverwrite())) return "cancelled";
+
+    // Decide before writing: the examples never count as the user's log
+    const hasLog =
+      this.app.vault.getAbstractFileByPath(
+        normalizePath(this.plugin.settings.csvLogFilePath),
+      ) instanceof TFile;
+
+    if (!(await this.generateExampleFolder(overwrite))) return "failed";
+    if (hasLog) {
+      if (this.plugin.settings.csvLogFilePath !== this.exampleLogPath()) {
+        new Notice(t("examples.usesSeparateLog"));
+      }
+      return "separate-file";
+    }
+
+    const { settings } = this.plugin;
+    const previous = {
+      csvLogFilePath: settings.csvLogFilePath,
+      exerciseFolderPath: settings.exerciseFolderPath,
+    };
+    settings.csvLogFilePath = this.exampleLogPath();
+    settings.exerciseFolderPath = this.exampleExercisesPath();
+    await this.plugin.saveSettings();
+    announceDataPathChange(
+      this.plugin,
+      "csvLogFilePath",
+      previous.csvLogFilePath,
+    );
+    announceDataPathChange(
+      this.plugin,
+      "exerciseFolderPath",
+      previous.exerciseFolderPath,
+    );
+    new Notice(t("examples.pointedAtExamples"));
+    return "pointed-at-examples";
+  }
+
+  private exampleLogPath(): string {
+    return normalizePath(
+      `${t("examples.folderNames.base")}/${t("examples.folderNames.log")}/workout_logs.csv`,
+    );
+  }
+
+  private exampleExercisesPath(): string {
+    return normalizePath(
+      `${t("examples.folderNames.base")}/${t("examples.folderNames.exercises")}`,
+    );
+  }
 
   /** Whether the (localized) example folder already exists in the vault */
   public exampleFolderExists(): boolean {
@@ -22,9 +114,10 @@ export class ExampleGeneratorService {
     );
   }
 
+  /** Writes the example folder; false when it could not be written */
   public async generateExampleFolder(
     overwrite: boolean = false,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const baseFolderName = t("examples.folderNames.base");
     const basePath = normalizePath(baseFolderName);
     const exercisesPath = normalizePath(
@@ -166,8 +259,10 @@ export class ExampleGeneratorService {
           folder: baseFolderName,
         }),
       );
+      return true;
     } catch {
       new Notice(t("examples.folderCreatedError"));
+      return false;
     }
   }
 

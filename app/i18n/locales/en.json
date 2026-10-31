@@ -275,6 +275,8 @@
       "hiitCardioSession": "HIIT Cardio Session"
     },
     "folderCreatedError": "Failed to create example folder.",
+    "pointedAtExamples": "Your views now read the example log and exercises. Change this in the data settings.",
+    "usesSeparateLog": "You already have a workout log, so it was left untouched. The examples use their own log file.",
     "folderCreatedSuccess": "Example folder '{folder}' created successfully!",
     "folderNames": {
       "base": "The gym examples",

@@ -146,28 +146,102 @@ export class Plugin {}
 
 type Handler<V> = (value: V) => unknown;
 
-/** A chainable stand-in for Obsidian's setting components (text, toggle, ...). */
+/** Obsidian's DomElementInfo, the part the helpers below honour */
+type ElInfo = {
+  cls?: string | string[];
+  text?: string;
+  attr?: Record<string, string | number | boolean | null>;
+};
+
+/** Value-holding base of Obsidian's setting components (text, toggle, ...). */
 export class MockComponent<V = unknown> {
   value: V | undefined;
   handler: Handler<V> | null = null;
   disabled = false;
-  text = "";
-  options: Record<string, string> = {};
-  inputEl: HTMLInputElement;
-  buttonEl: HTMLButtonElement;
-  constructor(readonly kind: string) {
-    this.inputEl = document.createElement("input");
-    this.buttonEl = withHelpers(document.createElement("button"));
-  }
+  constructor(
+    readonly kind: string,
+    /** The one element this component creates */
+    readonly el: HTMLElement,
+  ) {}
   setValue(value: V) {
     this.value = value;
     return this;
   }
-  setPlaceholder() {
+  setDisabled(disabled: boolean) {
+    this.disabled = disabled;
     return this;
   }
+  onChange(handler: Handler<V>) {
+    this.handler = handler;
+    return this;
+  }
+  /** Test helper: act as the user changing the value. */
+  async change(value: V) {
+    this.value = value;
+    await this.handler?.(value);
+  }
+}
+
+/** TextComponent and TextAreaComponent */
+export class MockText extends MockComponent<string> {
+  inputEl: HTMLInputElement | HTMLTextAreaElement;
+  constructor(kind: "text" | "textarea", doc: Document) {
+    const inputEl = doc.createElement(kind === "text" ? "input" : "textarea");
+    super(kind, inputEl);
+    this.inputEl = inputEl;
+  }
+  setPlaceholder(placeholder: string) {
+    this.inputEl.placeholder = placeholder;
+    return this;
+  }
+}
+
+export class MockToggle extends MockComponent<boolean> {
+  toggleEl: HTMLElement;
+  constructor(doc: Document) {
+    const toggleEl = doc.createElement("div");
+    super("toggle", toggleEl);
+    this.toggleEl = toggleEl;
+  }
+}
+
+export class MockDropdown extends MockComponent<string> {
+  selectEl: HTMLSelectElement;
+  options: Record<string, string> = {};
+  constructor(doc: Document) {
+    const selectEl = doc.createElement("select");
+    super("dropdown", selectEl);
+    this.selectEl = selectEl;
+  }
+  addOption(value: string, label: string) {
+    this.options[value] = label;
+    return this;
+  }
+}
+
+export class MockColor extends MockComponent<string> {
+  constructor(doc: Document) {
+    const input = doc.createElement("input");
+    input.type = "color";
+    super("color", input);
+  }
+}
+
+/** ButtonComponent: the only component with a click handler and text */
+export class MockButton {
+  readonly kind = "button";
+  buttonEl: HTMLButtonElement;
+  text = "";
+  disabled = false;
+  constructor(doc: Document) {
+    this.buttonEl = withHelpers(doc.createElement("button"));
+  }
+  get el(): HTMLElement {
+    return this.buttonEl;
+  }
+  /** Like Obsidian's setTooltip: the tooltip text is the aria-label */
   setTooltip(tooltip: string) {
-    this.buttonEl.title = tooltip;
+    this.buttonEl.setAttribute("aria-label", tooltip);
     return this;
   }
   setIcon(icon: string) {
@@ -189,37 +263,37 @@ export class MockComponent<V = unknown> {
     this.buttonEl.textContent = text;
     return this;
   }
-  addOption(value: string, label: string) {
-    this.options[value] = label;
-    return this;
-  }
-  onChange(handler: Handler<V>) {
-    this.handler = handler;
-    return this;
-  }
   onClick(handler: () => unknown) {
     this.buttonEl.addEventListener("click", () => handler());
     return this;
   }
-  /** Test helper: act as the user changing the value. */
-  async change(value: V) {
-    this.value = value;
-    await this.handler?.(value);
-  }
 }
+
+type AnyMockComponent =
+  | MockText
+  | MockToggle
+  | MockDropdown
+  | MockColor
+  | MockButton;
 
 export function withHelpers<T extends HTMLElement | DocumentFragment>(el: T): T {
   const e = el as unknown as Record<string, unknown>;
-  const make = (tag: string, o?: { cls?: string; text?: string }) => {
+  const make = (tag: string, o?: ElInfo | string) => {
+    const info: ElInfo = typeof o === "string" ? { cls: o } : (o ?? {});
     const child = el.ownerDocument.createElement(tag);
-    if (o?.cls) child.className = o.cls;
-    if (o?.text) child.textContent = o.text;
+    if (info.cls) {
+      child.className = Array.isArray(info.cls) ? info.cls.join(" ") : info.cls;
+    }
+    if (info.text) child.textContent = info.text;
+    for (const [name, value] of Object.entries(info.attr ?? {})) {
+      if (value !== null) child.setAttribute(name, String(value));
+    }
     el.appendChild(child);
     return withHelpers(child);
   };
   e.createEl = make;
-  e.createDiv = ((o?: { cls?: string; text?: string }) => make("div", o));
-  e.createSpan = ((o?: { cls?: string; text?: string }) => make("span", o));
+  e.createDiv = (o?: ElInfo | string) => make("div", o);
+  e.createSpan = (o?: ElInfo | string) => make("span", o);
   e.empty = () => el.replaceChildren();
   e.addClass = (c: string) => (el as HTMLElement).classList.add(c);
   e.removeClass = (c: string) => (el as HTMLElement).classList.remove(c);
@@ -254,7 +328,7 @@ export class Setting {
   descEl: HTMLElement;
   controlEl: HTMLElement;
   heading = false;
-  components: MockComponent[] = [];
+  components: AnyMockComponent[] = [];
   constructor(containerEl: HTMLElement) {
     const doc = containerEl.ownerDocument;
     this.settingEl = doc.createElement("div");
@@ -284,33 +358,43 @@ export class Setting {
     this.settingEl.classList.add("setting-item-heading");
     return this;
   }
-  private add(kind: string, cb: (c: never) => unknown) {
-    const component = new MockComponent(kind);
+  private add<C extends AnyMockComponent>(
+    component: C,
+    cb: (c: C) => unknown,
+  ) {
     this.components.push(component);
-    this.controlEl.append(component.buttonEl, component.inputEl);
-    cb(component as never);
+    this.controlEl.append(component.el);
+    cb(component);
     return this;
   }
-  addText(cb: (c: MockComponent<string>) => unknown) {
-    return this.add("text", cb);
+  private get doc() {
+    return this.settingEl.ownerDocument;
   }
-  addTextArea(cb: (c: MockComponent<string>) => unknown) {
-    return this.add("textarea", cb);
+  addText(cb: (c: MockText) => unknown) {
+    return this.add(new MockText("text", this.doc), cb);
   }
-  addToggle(cb: (c: MockComponent<boolean>) => unknown) {
-    return this.add("toggle", cb);
+  addTextArea(cb: (c: MockText) => unknown) {
+    return this.add(new MockText("textarea", this.doc), cb);
   }
-  addDropdown(cb: (c: MockComponent<string>) => unknown) {
-    return this.add("dropdown", cb);
+  addToggle(cb: (c: MockToggle) => unknown) {
+    return this.add(new MockToggle(this.doc), cb);
   }
-  addColorPicker(cb: (c: MockComponent<string>) => unknown) {
-    return this.add("color", cb);
+  addDropdown(cb: (c: MockDropdown) => unknown) {
+    return this.add(new MockDropdown(this.doc), cb);
   }
-  addButton(cb: (c: MockComponent) => unknown) {
-    return this.add("button", cb);
+  addColorPicker(cb: (c: MockColor) => unknown) {
+    return this.add(new MockColor(this.doc), cb);
+  }
+  addButton(cb: (c: MockButton) => unknown) {
+    return this.add(new MockButton(this.doc), cb);
   }
   /** Test helper */
-  component(kind: string, index = 0) {
+  component(kind: "text" | "textarea", index?: number): MockText;
+  component(kind: "toggle", index?: number): MockToggle;
+  component(kind: "dropdown", index?: number): MockDropdown;
+  component(kind: "color", index?: number): MockColor;
+  component(kind: "button", index?: number): MockButton;
+  component(kind: string, index = 0): AnyMockComponent {
     return this.components.filter((c) => c.kind === kind)[index];
   }
 }

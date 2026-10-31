@@ -11,7 +11,9 @@ jest.mock("@app/services/examples/ExampleGeneratorService", () => ({
   ExampleGeneratorService: jest
     .fn()
     .mockImplementation(() => ({ createExamples: mockCreateExamples })),
-  gettingStartedGuidePath: () => "base/Getting Started.md",
+}));
+jest.mock("@app/services/examples/ExamplePaths", () => ({
+  examplePaths: { gettingStartedGuide: () => "base/Getting Started.md" },
 }));
 
 /** Every ConfirmModal opened: the message it shows, and a way to answer it */

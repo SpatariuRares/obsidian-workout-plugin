@@ -1,6 +1,7 @@
 import { App, TFile, TFolder } from "obsidian";
 import { ExampleGeneratorService } from "@app/services/examples/ExampleGeneratorService";
 import { t } from "@app/i18n";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
 import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import type { ExamplePluginPort } from "@app/services/examples/ExampleGeneratorService";
 
@@ -188,5 +189,45 @@ describe("ExampleGeneratorService.createExamples", () => {
 
     expect(result).toBe("failed");
     expect(plugin.saveSettings).not.toHaveBeenCalled();
+  });
+});
+
+describe("ExampleGeneratorService with the example log as the active log", () => {
+  const base = t("examples.folderNames.base");
+  const exampleLog = `${base}/${t("examples.folderNames.log")}/workout_logs.csv`;
+  const guide = `${base}/${t("examples.fileNames.gettingStarted")}.md`;
+  const userCsv = "date,exercise,reps,weight\n2026-01-01,Squat,5,100\n";
+
+  function setup() {
+    const vault = new FakeVault();
+    vault.app.vault.create(exampleLog, userCsv);
+    vault.app.vault.create(guide, "edited guide");
+    const plugin = {
+      app: vault.app,
+      settings: { ...DEFAULT_SETTINGS, csvLogFilePath: exampleLog },
+      saveSettings: jest.fn().mockResolvedValue(undefined),
+      triggerMuscleTagRefresh: jest.fn(),
+      eventBus: { emit: jest.fn() },
+    } as unknown as ExamplePluginPort;
+    return { vault, plugin };
+  }
+
+  it("keeps the user's sets when the examples are created again with overwrite", async () => {
+    const { vault, plugin } = setup();
+
+    const result = await new ExampleGeneratorService(plugin).createExamples(
+      async () => true,
+    );
+
+    expect(result).toBe("separate-file");
+    expect(vault.content(exampleLog)).toBe(userCsv);
+  });
+
+  it("still overwrites the other example files", async () => {
+    const { vault, plugin } = setup();
+
+    await new ExampleGeneratorService(plugin).createExamples(async () => true);
+
+    expect(vault.content(guide)).not.toBe("edited guide");
   });
 });

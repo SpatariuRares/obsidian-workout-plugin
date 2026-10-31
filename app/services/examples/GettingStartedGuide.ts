@@ -1,9 +1,9 @@
 import { TFile } from "obsidian";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { t } from "@app/i18n";
+import { examplePaths } from "@app/services/examples/ExamplePaths";
 import {
   ExampleGeneratorService,
-  gettingStartedGuidePath,
   type CreateExamplesResult,
   type ExamplePluginPort,
 } from "@app/services/examples/ExampleGeneratorService";
@@ -33,6 +33,11 @@ export function createExampleNotes(
   );
 }
 
+/** Whether the examples were written, i.e. not cancelled and not failed */
+export function examplesCreated(result: CreateExamplesResult): boolean {
+  return result !== "cancelled" && result !== "failed";
+}
+
 /**
  * Opens the "Getting started" note. When it does not exist, offers to create
  * the examples first. Returns whether the note was opened.
@@ -44,12 +49,12 @@ export async function openGettingStartedGuide(
   if (await openGuideFile(app)) return true;
   if (!(await ask(app, t("examples.createToOpenGuide")))) return false;
   const result = await createExampleNotes(plugin);
-  if (result === "cancelled" || result === "failed") return false;
+  if (!examplesCreated(result)) return false;
   return openGuideFile(app);
 }
 
 async function openGuideFile(app: ExamplePluginPort["app"]): Promise<boolean> {
-  const file = app.vault.getAbstractFileByPath(gettingStartedGuidePath());
+  const file = app.vault.getAbstractFileByPath(examplePaths.gettingStartedGuide());
   if (!(file instanceof TFile)) return false;
   await app.workspace.getLeaf(false).openFile(file);
   return true;

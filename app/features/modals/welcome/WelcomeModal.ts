@@ -3,6 +3,7 @@ import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
 import {
   createExampleNotes,
+  examplesCreated,
   openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
 import {
@@ -30,7 +31,7 @@ export class WelcomeModal extends ModalBase {
       BUTTONVARIANT.PRIMARY,
       async () => {
         const result = await createExampleNotes(this.plugin);
-        if (result !== "cancelled" && result !== "failed") {
+        if (examplesCreated(result)) {
           await openGettingStartedGuide(this.plugin);
         }
       },

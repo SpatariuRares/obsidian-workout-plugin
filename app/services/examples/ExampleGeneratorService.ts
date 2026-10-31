@@ -15,6 +15,8 @@ import {
   generateHIITContent,
   generateDashboardContent,
 } from "@app/services/examples/exampleContentGenerator";
+import { examplePaths } from "@app/services/examples/ExamplePaths";
+import { logFileExists } from "@app/services/data/logFileExists";
 import { generateExampleCSVData } from "@app/services/examples/exampleDataGenerator";
 
 /** What the example flow needs from the plugin */
@@ -35,13 +37,6 @@ export type CreateExamplesResult =
   | "separate-file"
   | "cancelled"
   | "failed";
-
-/** Vault path of the example "Getting started" note (localized) */
-export function gettingStartedGuidePath(): string {
-  return normalizePath(
-    `${t("examples.folderNames.base")}/${t("examples.fileNames.gettingStarted")}.md`,
-  );
-}
 
 export class ExampleGeneratorService {
   private app: ExamplePluginPort["app"];
@@ -65,14 +60,11 @@ export class ExampleGeneratorService {
     if (overwrite && !(await confirmOverwrite())) return "cancelled";
 
     // Decide before writing: the examples never count as the user's log
-    const hasLog =
-      this.app.vault.getAbstractFileByPath(
-        normalizePath(this.plugin.settings.csvLogFilePath),
-      ) instanceof TFile;
+    const hasLog = logFileExists(this.plugin);
 
     if (!(await this.generateExampleFolder(overwrite))) return "failed";
     if (hasLog) {
-      if (this.plugin.settings.csvLogFilePath !== this.exampleLogPath()) {
+      if (this.plugin.settings.csvLogFilePath !== examplePaths.log()) {
         new Notice(t("examples.usesSeparateLog"));
       }
       return "separate-file";
@@ -83,8 +75,8 @@ export class ExampleGeneratorService {
       csvLogFilePath: settings.csvLogFilePath,
       exerciseFolderPath: settings.exerciseFolderPath,
     };
-    settings.csvLogFilePath = this.exampleLogPath();
-    settings.exerciseFolderPath = this.exampleExercisesPath();
+    settings.csvLogFilePath = examplePaths.log();
+    settings.exerciseFolderPath = examplePaths.exercises();
     await this.plugin.saveSettings();
     announceDataPathChange(
       this.plugin,
@@ -100,23 +92,11 @@ export class ExampleGeneratorService {
     return "pointed-at-examples";
   }
 
-  private exampleLogPath(): string {
-    return normalizePath(
-      `${t("examples.folderNames.base")}/${t("examples.folderNames.log")}/workout_logs.csv`,
-    );
-  }
-
-  private exampleExercisesPath(): string {
-    return normalizePath(
-      `${t("examples.folderNames.base")}/${t("examples.folderNames.exercises")}`,
-    );
-  }
-
   /** Whether the (localized) example folder already exists in the vault */
   public exampleFolderExists(): boolean {
     return (
       this.app.vault.getAbstractFileByPath(
-        normalizePath(t("examples.folderNames.base")),
+        examplePaths.base(),
       ) instanceof TFolder
     );
   }
@@ -126,16 +106,10 @@ export class ExampleGeneratorService {
     overwrite: boolean = false,
   ): Promise<boolean> {
     const baseFolderName = t("examples.folderNames.base");
-    const basePath = normalizePath(baseFolderName);
-    const exercisesPath = normalizePath(
-      `${baseFolderName}/${t("examples.folderNames.exercises")}`,
-    );
-    const workoutsPath = normalizePath(
-      `${baseFolderName}/${t("examples.folderNames.workouts")}`,
-    );
-    const logPath = normalizePath(
-      `${baseFolderName}/${t("examples.folderNames.log")}`,
-    );
+    const basePath = examplePaths.base();
+    const exercisesPath = examplePaths.exercises();
+    const workoutsPath = examplePaths.workouts();
+    const logPath = examplePaths.logFolder();
 
     try {
       // Create directories
@@ -229,12 +203,16 @@ export class ExampleGeneratorService {
         overwrite,
       );
 
-      // Create Log File
+      // Create Log File. Never over the log the settings read: after
+      // "try with example data" that is the user's own log.
+      const logIsActive =
+        normalizePath(this.plugin.settings.csvLogFilePath) ===
+        examplePaths.log();
       await this.createOrUpdateFile(
         logPath,
-        "workout_logs.csv",
+        examplePaths.logFileName(),
         generateExampleCSVData(),
-        overwrite,
+        overwrite && !logIsActive,
       );
 
       // Create Dashboard File

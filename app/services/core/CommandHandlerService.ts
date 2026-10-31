@@ -21,7 +21,6 @@ import type {
   CommandRegistryPort,
   WorkoutAPIPort,
   TemplateGeneratorPort,
-  EventBusPort,
 } from "@app/types/PluginPorts";
 import {
   createExampleNotes,
@@ -29,7 +28,7 @@ import {
 } from "@app/services/examples/GettingStartedGuide";
 import { durationBlock } from "@app/features/duration/durationBlock";
 
-type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort & EventBusPort;
+type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
 
 export class CommandHandlerService {
   constructor(

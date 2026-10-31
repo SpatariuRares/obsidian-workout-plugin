@@ -88,7 +88,7 @@ export class CopyableBadge {
 
       // Show visual feedback
       badge.addClass(copiedClass);
-      setTimeout(() => {
+      window.setTimeout(() => {
         badge.removeClass(copiedClass);
       }, copiedDuration);
     });

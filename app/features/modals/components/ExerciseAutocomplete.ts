@@ -314,7 +314,7 @@ export class ExerciseAutocomplete {
     };
 
     const hideAutocomplete = () => {
-      setTimeout(() => {
+      window.setTimeout(() => {
         autocompleteContainer.className =
           "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden";
         instance.selectedIndex = -1;

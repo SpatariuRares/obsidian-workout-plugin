@@ -8,16 +8,16 @@ import type {
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
-import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
 
 const mockStartTour = jest.fn();
 jest.mock("@app/features/tour/startGuidedTour", () => ({
   startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
 }));
 
-const mockOpen = jest.fn();
-jest.mock("@app/features/modals/welcome/WelcomeModal", () => ({
-  WelcomeModal: jest.fn().mockImplementation(() => ({ open: mockOpen })),
+const mockOpenGuide = jest.fn();
+jest.mock("@app/services/examples/GettingStartedGuide", () => ({
+  openGettingStartedGuide: (...args: unknown[]) =>
+    mockOpenGuide(...args),
 }));
 
 jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
@@ -99,8 +99,8 @@ describe("GeneralSettings data paths", () => {
   });
 });
 
-describe("GeneralSettings welcome window", () => {
-  it("opens the welcome window from the button without changing welcomeShown", async () => {
+describe("GeneralSettings getting started", () => {
+  it("opens the getting-started guide without changing welcomeShown", async () => {
     const plugin = {
       settings: {
         welcomeShown: true,
@@ -116,49 +116,13 @@ describe("GeneralSettings welcome window", () => {
       new GeneralSettings({} as App, plugin).definitions(),
     );
 
-    mockSettingNamed(container, t("settings.labels.welcomeWindow"))
+    mockSettingNamed(container, t("commands.openGettingStartedGuide"))
       .component("button", 0)
       .buttonEl.click();
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    expect(WelcomeModal).toHaveBeenCalledWith(plugin);
-    expect(mockOpen).toHaveBeenCalled();
+    expect(mockOpenGuide).toHaveBeenCalledWith(plugin);
     expect(plugin.settings.welcomeShown).toBe(true);
     expect(plugin.saveSettings).not.toHaveBeenCalled();
-  });
-});
-
-describe("GeneralSettings guided tour", () => {
-  it("starts the tour from its own row, apart from Show welcome", async () => {
-    const plugin = {
-      settings: {
-        welcomeShown: true,
-        csvLogFilePath: "Log/workout_logs.csv",
-        exerciseFolderPath: "Exercises",
-        weightUnit: "kg",
-      },
-      saveSettings: jest.fn(),
-    } as unknown as WorkoutPluginContext & EventBusPort;
-    const container = document.createElement("div");
-    renderSettingDefinitions(
-      container,
-      new GeneralSettings({} as App, plugin).definitions(),
-    );
-
-    const row = mockSettingNamed(container, t("settings.labels.takeTour"));
-    expect(row.component("button", 0).buttonEl.textContent).toBe(
-      t("settings.buttons.takeTour"),
-    );
-    const welcome = mockSettingNamed(
-      container,
-      t("settings.labels.welcomeWindow"),
-    );
-    expect(welcome.component("button", 0).buttonEl.textContent).toBe(
-      t("settings.buttons.showWelcome"),
-    );
-    row.component("button", 0).buttonEl.click();
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    expect(mockStartTour).toHaveBeenCalledWith(plugin, { source: "settings" });
   });
 });

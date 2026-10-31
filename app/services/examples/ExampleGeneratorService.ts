@@ -1,3 +1,4 @@
+import { gettingStartedPages } from "@app/services/examples/GettingStartedPages";
 import { normalizePath, Notice, TFile, TFolder } from "obsidian";
 import type {
   AppPort,
@@ -57,7 +58,9 @@ export class ExampleGeneratorService {
 
     if (!(await this.generateExampleFolder())) return "failed";
     if (hasLog) {
-      if (this.plugin.settings.csvLogFilePath !== examplePaths.log()) {
+      if (
+        this.plugin.settings.csvLogFilePath !== examplePaths.log()
+      ) {
         new Notice(t("examples.usesSeparateLog"));
       }
       return "separate-file";
@@ -100,9 +103,20 @@ export class ExampleGeneratorService {
       await this.createFolderIfNotExists(workoutsPath);
       await this.createFolderIfNotExists(logPath);
 
+      await this.createFolderIfNotExists(
+        examplePaths.gettingStartedFolder(),
+      );
+      for (const page of gettingStartedPages()) {
+        await this.createFileIfMissing(
+          examplePaths.gettingStartedFolder(),
+          page.path.split("/").pop()!,
+          page.content,
+        );
+      }
+
       // Create Getting Started File
       await this.createFileIfMissing(
-        basePath,
+        examplePaths.gettingStartedFolder(),
         `${t("examples.fileNames.gettingStarted")}.md`,
         generateGettingStartedContent(),
       );
@@ -185,7 +199,7 @@ export class ExampleGeneratorService {
         logPath,
         examplePaths.logFileName(),
         generateExampleCSVData(),
-              );
+      );
 
       // Create Dashboard File
       await this.createFileIfMissing(

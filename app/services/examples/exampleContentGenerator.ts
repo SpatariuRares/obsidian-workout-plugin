@@ -1,3 +1,4 @@
+import { gettingStartedIndex } from "@app/services/examples/GettingStartedPages";
 import { t } from "@app/i18n";
 import {
   getChartSectionsForExerciseType,
@@ -20,36 +21,7 @@ import { generateDurationBlock } from "@app/features/duration/exampleDurationGen
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 
 export function generateGettingStartedContent(): string {
-  return `# ${t("examples.gettingStarted.title")}
-
-${t("examples.gettingStarted.welcome")}
-
-## ${t("examples.gettingStarted.folderStructureTitle")}
-
-| ${t("examples.gettingStarted.tableHeaderFileFolder")} | ${t("examples.gettingStarted.tableHeaderDescription")} |
-|-------------|-------------|
-| [[${t("examples.fileNames.dashboard")}]] | ${t("examples.gettingStarted.dashboardDesc")} |
-| [[${t("examples.fileNames.featureShowcase")}]] | ${t("examples.gettingStarted.featureShowcaseDesc")} |
-| ${t("examples.gettingStarted.exercisesFolder", { folder: t("examples.folderNames.exercises") })} | ${t("examples.gettingStarted.exercisesDesc")} |
-| ${t("examples.gettingStarted.workoutsFolder", { folder: t("examples.folderNames.workouts") })} | ${t("examples.gettingStarted.workoutsDesc")} |
-| ${t("examples.gettingStarted.logFolder", { folder: t("examples.folderNames.log") })} | ${t("examples.gettingStarted.logDesc")} |
-
-## ${t("examples.gettingStarted.quickActionsTitle")}
-
-${t("examples.gettingStarted.quickActionsIntro")}
-- **${t("examples.gettingStarted.commandCreateLog")}** - ${t("examples.gettingStarted.commandCreateLogDesc")}
-- **${t("examples.gettingStarted.commandInsertChart")}** - ${t("examples.gettingStarted.commandInsertChartDesc")}
-- **${t("examples.gettingStarted.commandInsertTimer")}** - ${t("examples.gettingStarted.commandInsertTimerDesc")}
-- **${t("examples.gettingStarted.commandCreateExercise")}** - ${t("examples.gettingStarted.commandCreateExerciseDesc")}
-
-## ${t("examples.gettingStarted.nextStepsTitle")}
-
-1. ${t("examples.gettingStarted.step1", { dashboard: t("examples.fileNames.dashboard") })}
-2. ${t("examples.gettingStarted.step2", { featureShowcase: t("examples.fileNames.featureShowcase") })}
-3. ${t("examples.gettingStarted.step3", { workouts: t("examples.folderNames.workouts") })}
-4. ${t("examples.gettingStarted.step4", { exercises: t("examples.folderNames.exercises") })}
-
-`;
+  return gettingStartedIndex();
 }
 
 export function generateExerciseContent(

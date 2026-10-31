@@ -14,5 +14,8 @@
       "Bash(node:*)"
     ],
     "deny": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "obsidian-devtools"
+  ]
 }

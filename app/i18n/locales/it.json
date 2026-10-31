@@ -286,6 +286,13 @@
       "workouts": "Allenamenti"
     },
     "gettingStarted": {
+      "pagesIntro": "Esplora una funzionalità per pagina. Segui i link in ordine oppure scegli da dove iniziare. Usa Indietro e Avanti per cambiare nota; scorri liberamente per esplorare ogni esempio.",
+      "liveIntro": "Esplora le funzionalità qui sotto con sei settimane di allenamenti di esempio. Sono dati dimostrativi: prova i controlli e scopri come funzionano le tue note.",
+      "tryLog": "Usa il pulsante + per aggiungere una serie. Tabella, grafici e dashboard leggono lo stesso CSV.",
+      "continueWithWorkout": "Apri [[{workout}]] per provare un allenamento completo con tabelle degli esercizi e timer di recupero.",
+      "moreExamples": "In [[{showcase}]] trovi altri tipi di grafici, filtri e protocolli di allenamento.",
+      "ownData": "Quando vuoi iniziare con i tuoi dati, scegli la cartella CSV e la cartella degli esercizi nelle impostazioni del plugin. Conserva la cartella di esempio come riferimento.",
+      "openGuideDesc": "Apri la guida iniziale con esempi funzionanti di tabelle, grafici, timer e dashboard.",
       "commandCreateExercise": "Crea pagina esercizio",
       "commandCreateExerciseDesc": "Crea un nuovo file esercizio",
       "commandCreateLog": "Crea registro allenamento",

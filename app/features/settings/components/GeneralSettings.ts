@@ -1,3 +1,4 @@
+import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import {
   App,
   Setting,
@@ -14,7 +15,6 @@ import type {
   TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
-import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 import { changeWeightUnit } from "@app/features/settings/business/changeWeightUnit";
@@ -76,14 +76,9 @@ export class GeneralSettings {
         heading: t("settings.sections.gettingStarted"),
         items: [
           {
-            name: t("settings.labels.takeTour"),
-            desc: t("settings.descriptions.takeTour"),
-            render: (setting) => this.renderTakeTour(setting),
-          },
-          {
-            name: t("settings.labels.welcomeWindow"),
-            desc: t("settings.descriptions.welcomeWindow"),
-            render: (setting) => this.renderShowWelcome(setting),
+            name: t("commands.openGettingStartedGuide"),
+            desc: t("examples.gettingStarted.openGuideDesc"),
+            render: (setting) => this.renderGettingStarted(setting),
           },
         ],
       },
@@ -183,23 +178,13 @@ export class GeneralSettings {
     );
   }
 
-  private renderTakeTour(setting: Setting): void {
-    setting.addButton((button) =>
-      button.setButtonText(t("settings.buttons.takeTour")).onClick(async () => {
-        await startGuidedTour(this.plugin, { source: "settings" });
-      }),
-    );
-  }
-
-  /** Opens the welcome window on demand; never touches `welcomeShown` */
-  private renderShowWelcome(setting: Setting): void {
+  /** Opens the same page as first-run onboarding. */
+  private renderGettingStarted(setting: Setting): void {
     setting.addButton((button) =>
       button
-        .setButtonText(t("settings.buttons.showWelcome"))
+        .setButtonText(t("commands.openGettingStartedGuide"))
         .onClick(async () => {
-          const { WelcomeModal } =
-            await import("@app/features/modals/welcome/WelcomeModal");
-          new WelcomeModal(this.plugin).open();
+          await openGettingStartedGuide(this.plugin);
         }),
     );
   }

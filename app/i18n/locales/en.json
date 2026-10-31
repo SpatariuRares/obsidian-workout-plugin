@@ -289,6 +289,13 @@
       "workouts": "Workouts"
     },
     "gettingStarted": {
+      "pagesIntro": "Explore one feature per page. Follow the links in order, or choose a feature below. Use Back and Next to move between notes; scroll normally to explore each example.",
+      "liveIntro": "Explore every feature below with six weeks of example workouts. These are demo data; try the controls and see how your notes work.",
+      "tryLog": "Use the + button to add a set. The table, charts and dashboard read the same CSV.",
+      "continueWithWorkout": "Open [[{workout}]] to try a complete workout with exercise tables and rest timers.",
+      "moreExamples": "See [[{showcase}]] for more chart types, filters and training protocols.",
+      "ownData": "When you are ready, choose your own CSV folder and exercise folder in Settings → Setup & data. Keep the example folder as a reference.",
+      "openGuideDesc": "Open the getting-started page with working examples of tables, charts, timers and the dashboard.",
       "commandCreateExercise": "Create exercise page",
       "commandCreateExerciseDesc": "Create a new exercise file",
       "commandCreateLog": "Create workout log",

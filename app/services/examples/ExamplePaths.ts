@@ -24,8 +24,12 @@ export const examplePaths = {
     normalizePath(
       `${t("examples.folderNames.base")}/${t("examples.folderNames.log")}/${EXAMPLE_LOG_FILE_NAME}`,
     ),
+  gettingStartedFolder: (): string =>
+    normalizePath(
+      `${t("examples.folderNames.base")}/${t("examples.fileNames.gettingStarted")}`,
+    ),
   gettingStartedGuide: (): string =>
     normalizePath(
-      `${t("examples.folderNames.base")}/${t("examples.fileNames.gettingStarted")}.md`,
+      `${t("examples.folderNames.base")}/${t("examples.fileNames.gettingStarted")}/${t("examples.fileNames.gettingStarted")}.md`,
     ),
 };

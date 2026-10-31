@@ -13,10 +13,27 @@ function setup(settings: Partial<typeof DEFAULT_SETTINGS> = {}) {
     triggerMuscleTagRefresh: jest.fn(),
     eventBus: { emit: jest.fn() },
   } as unknown as ExamplePluginPort;
-  return { vault, plugin, service: new ExampleGeneratorService(plugin) };
+  return {
+    vault,
+    plugin,
+    service: new ExampleGeneratorService(plugin),
+  };
 }
 
 describe("ExampleGeneratorService.createExamples", () => {
+  it("creates a new walkthrough without overwriting a legacy getting-started note", async () => {
+    const { vault, service } = setup();
+    const legacy = examplePaths
+      .gettingStartedGuide()
+      .replace(/\/[^/]+$/, ".md");
+    await vault.app.vault.create(legacy, "my original guide");
+    await service.createExamples();
+    expect(vault.content(legacy)).toBe("my original guide");
+    expect(vault.paths()).toContain(
+      examplePaths.gettingStartedGuide(),
+    );
+  });
+
   it("creates the examples and points the settings at them when there is no log yet", async () => {
     const { vault, plugin, service } = setup();
 
@@ -24,9 +41,13 @@ describe("ExampleGeneratorService.createExamples", () => {
 
     expect(result).toBe("pointed-at-examples");
     expect(vault.paths()).toContain(examplePaths.log());
-    expect(vault.paths()).toContain(examplePaths.gettingStartedGuide());
+    expect(vault.paths()).toContain(
+      examplePaths.gettingStartedGuide(),
+    );
     expect(plugin.settings.csvLogFilePath).toBe(examplePaths.log());
-    expect(plugin.settings.exerciseFolderPath).toBe(examplePaths.exercises());
+    expect(plugin.settings.exerciseFolderPath).toBe(
+      examplePaths.exercises(),
+    );
     expect(plugin.saveSettings).toHaveBeenCalled();
     expect(plugin.eventBus.emit).toHaveBeenCalledWith(
       expect.objectContaining({ type: "settings:changed" }),
@@ -36,7 +57,10 @@ describe("ExampleGeneratorService.createExamples", () => {
 
   it("leaves the settings and the real log alone when a log exists", async () => {
     const { vault, plugin, service } = setup();
-    await vault.app.vault.create(DEFAULT_SETTINGS.csvLogFilePath, "real sets");
+    await vault.app.vault.create(
+      DEFAULT_SETTINGS.csvLogFilePath,
+      "real sets",
+    );
 
     const result = await service.createExamples();
 
@@ -48,7 +72,9 @@ describe("ExampleGeneratorService.createExamples", () => {
       DEFAULT_SETTINGS.exerciseFolderPath,
     );
     expect(plugin.saveSettings).not.toHaveBeenCalled();
-    expect(vault.content(DEFAULT_SETTINGS.csvLogFilePath)).toBe("real sets");
+    expect(vault.content(DEFAULT_SETTINGS.csvLogFilePath)).toBe(
+      "real sets",
+    );
     expect(vault.paths()).toContain(examplePaths.log());
   });
 
@@ -59,7 +85,10 @@ describe("ExampleGeneratorService.createExamples", () => {
       // The settings now read the example log, and the user logs a set
       expect(plugin.settings.csvLogFilePath).toBe(examplePaths.log());
       const userCsv = `${vault.content(examplePaths.log())}2026-10-30,Squat,5,100\n`;
-      await vault.app.vault.modify(vault.file(examplePaths.log()), userCsv);
+      await vault.app.vault.modify(
+        vault.file(examplePaths.log()),
+        userCsv,
+      );
       await vault.app.vault.modify(
         vault.file(examplePaths.gettingStartedGuide()),
         "my own notes",
@@ -89,7 +118,9 @@ describe("ExampleGeneratorService.createExamples", () => {
 
       await service.createExamples();
 
-      expect(vault.content(missing)).toBe(original);
+      expect(
+        vault.content(missing).replace(/^id: .+$/gm, "id: generated"),
+      ).toBe(original.replace(/^id: .+$/gm, "id: generated"));
     });
   });
 
@@ -105,7 +136,9 @@ describe("ExampleGeneratorService.createExamples", () => {
 
   it("fails without touching the settings when the folders cannot be created", async () => {
     const { vault, plugin, service } = setup();
-    vault.app.vault.createFolder = jest.fn().mockRejectedValue(new Error("no"));
+    vault.app.vault.createFolder = jest
+      .fn()
+      .mockRejectedValue(new Error("no"));
 
     const result = await service.createExamples();
 

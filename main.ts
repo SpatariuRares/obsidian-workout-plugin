@@ -13,9 +13,8 @@ import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
 import { TourEngine } from "@app/features/tour/TourEngine";
-import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
 import {
-  markWelcomeShown,
+  openOnboarding,
   shouldShowWelcome,
 } from "@app/services/onboarding/Welcome";
 import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
@@ -161,7 +160,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.app.workspace.onLayoutReady(() => {
       this.commandHandlerService.registerCommands();
-      void this.showWelcomeOnFreshInstall();
+      void this.openGettingStartedOnFreshInstall();
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
@@ -257,10 +256,9 @@ export default class WorkoutChartsPlugin extends Plugin {
   /** What `loadData()` returned at startup; null on a fresh install */
   private savedDataAtLoad: Partial<WorkoutChartsSettings> | null = null;
 
-  private async showWelcomeOnFreshInstall(): Promise<void> {
+  private async openGettingStartedOnFreshInstall(): Promise<void> {
     if (!(await shouldShowWelcome(this, this.savedDataAtLoad))) return;
-    await markWelcomeShown(this);
-    new WelcomeModal(this).open();
+    await openOnboarding(this);
   }
 
   async loadSettings() {

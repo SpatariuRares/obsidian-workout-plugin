@@ -1,3 +1,4 @@
+import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import { logFileExists } from "@app/services/data/logFileExists";
 import type { ExamplePluginPort } from "@app/services/examples/ExampleGeneratorService";
 
@@ -5,8 +6,8 @@ export type WelcomePluginPort = ExamplePluginPort;
 
 /**
  * Fresh install = nothing saved by the plugin before and no log CSV yet, so
- * updating users never see the welcome. Shown once: the flag is saved when
- * the modal opens.
+ * updating users never see the onboarding. The flag is saved only after
+ * the getting-started page opens.
  */
 export async function shouldShowWelcome(
   plugin: WelcomePluginPort,
@@ -22,4 +23,13 @@ export async function markWelcomeShown(
 ): Promise<void> {
   plugin.settings.welcomeShown = true;
   await plugin.saveSettings();
+}
+
+/** Fresh installs go straight to working examples, without a choice modal. */
+export async function openOnboarding(
+  plugin: WelcomePluginPort,
+): Promise<boolean> {
+  if (!(await openGettingStartedGuide(plugin))) return false;
+  await markWelcomeShown(plugin);
+  return true;
 }

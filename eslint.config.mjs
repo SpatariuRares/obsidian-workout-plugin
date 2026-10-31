@@ -1,9 +1,7 @@
 import obsidianmd from "eslint-plugin-obsidianmd";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
-import importPlugin from "eslint-plugin-import";
 import i18nextPlugin from "eslint-plugin-i18next";
 
 export default [
@@ -15,6 +13,7 @@ export default [
       "node_modules/**",
       "dist/**",
       "build/**",
+      "coverage/**",
       "scripts/**",
       "AI translate/**",
       "*.config.js",
@@ -40,6 +39,9 @@ export default [
   // Base ESLint recommended rules
   js.configs.recommended,
 
+  // Obsidian recommended config (includes typescript-eslint type-checked rules)
+  ...obsidianmd.configs.recommended,
+
   // TypeScript files configuration
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -62,25 +64,10 @@ export default [
     },
 
     plugins: {
-      obsidianmd,
-      import: importPlugin,
-      "@typescript-eslint": tsPlugin,
       i18next: i18nextPlugin,
     },
 
-    settings: {
-      "import/resolver": {
-        typescript: {
-          alwaysTryTypes: true,
-          project: "./tsconfig.json",
-        },
-      },
-    },
-
     rules: {
-      // Obsidian Plugin Rules
-      ...obsidianmd.configs.recommended,
-
       // Import rules - Enforce @app/* alias usage
       "no-restricted-imports": [
         "error",
@@ -99,6 +86,22 @@ export default [
           ],
         },
       ],
+
+      // Rules from the obsidianmd recommended config owned by other tickets
+      // TODO(#38): re-enable once fixed
+      "obsidianmd/prefer-create-el": "off",
+      // TODO(#37): re-enable once fixed
+      "obsidianmd/prefer-window-timers": "off",
+      // TODO(#39): re-enable once fixed
+      "@typescript-eslint/no-explicit-any": "off",
+      // TODO(#39): re-enable once fixed (caused by the `any` in ExampleGeneratorService)
+      "@typescript-eslint/no-unsafe-argument": "off",
+      // TODO(#39): re-enable once fixed
+      "@typescript-eslint/no-empty-object-type": "off",
+      // TODO(#39): re-enable once fixed
+      "obsidianmd/prefer-get-language": "off",
+      // TODO(#40): re-enable once fixed
+      "obsidianmd/settings-tab/prefer-setting-definitions": "off",
 
       // TypeScript-specific rules
       "@typescript-eslint/no-floating-promises": "error",

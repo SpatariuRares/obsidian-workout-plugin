@@ -136,6 +136,8 @@ Entry points for commands, modals and callouts are `createExampleNotes(plugin)` 
 
 The welcome flow: `Welcome.ts` (`shouldShowWelcome`, `markWelcomeShown`, `startFromScratch`) and `WelcomeModal`, shown once on a fresh install. The "Show welcome" button in Settings → Getting started opens `WelcomeModal` directly, without the fresh-install check and without touching `welcomeShown`.
 
+The guided tour (`app/features/tour/`): `TourEngine` runs a `Tour` (`TourStep[]`) and ends on Esc, skip or unload. A step's `completion` (`completions.ts`: `completeOnLogAdded`, `completeOnInsertCommand`, `completeOnTargetClick`) waits for a real action on the `WorkoutEventBus` or a click, so steps advance when the user does the thing. Steps point at elements by `data-tour` attributes named in `tourTargets.ts` (`TOUR_TARGETS`); a step without a target is a centred card, and `mobileText` replaces the text on phones. `buildTour` (`tourSteps.ts`) lists the steps, and `tourNote.ts` writes the note they run on (blocks via `schema.serialize`, never overwritten). `startGuidedTour(plugin, { source })` is the single entry point (welcome, settings button, `start-tour` command): it picks examples or own-data mode, ensures the note, opens it and starts the engine. Don't build a tour or call the engine from UI code.
+
 #### ExerciseDefinitionService
 
 Turns an exercise page (from `ExerciseLibrary`) into a definition: type (`exercise_type`, then `type`, aliases resolved, default strength), muscle tags and declared parameters, and the fields to log (`getParametersForExercise`). `saveExerciseDefinition` writes into the page the library finds and creates `folder/name.md` only when there is none. No cache of its own.

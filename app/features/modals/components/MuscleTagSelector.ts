@@ -41,7 +41,7 @@ export class MuscleTagSelector {
     instance.onSelectionChange = onSelectionChange;
 
     // Create main container
-    const selectorContainer = container.createEl("div", {
+    const selectorContainer = container.createDiv({
       cls: "workout-muscle-tag-selector",
     });
 
@@ -59,12 +59,12 @@ export class MuscleTagSelector {
     searchInput.addClass("workout-muscle-tag-search");
 
     // Selected tags display
-    const selectedTagsContainer = selectorContainer.createEl("div", {
+    const selectedTagsContainer = selectorContainer.createDiv({
       cls: "workout-selected-tags-container",
     });
 
     // Tag list container
-    const tagListContainer = selectorContainer.createEl("div", {
+    const tagListContainer = selectorContainer.createDiv({
       cls: "workout-muscle-tag-list",
     });
 
@@ -131,7 +131,7 @@ export class MuscleTagSelector {
       .sort(([a], [b]) => a.localeCompare(b));
 
     if (filteredTags.length === 0) {
-      container.createEl("div", {
+      container.createDiv({
         cls: "workout-muscle-tag-list-empty",
         text: t("modal.noTagsFound"),
       });
@@ -185,7 +185,7 @@ export class MuscleTagSelector {
     container.empty();
 
     if (this.selectedTags.size === 0) {
-      container.createEl("div", {
+      container.createDiv({
         cls: "workout-selected-tags-empty",
         text: t("modal.noTagsSelected"),
       });

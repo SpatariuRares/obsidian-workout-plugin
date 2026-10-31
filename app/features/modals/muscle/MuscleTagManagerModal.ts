@@ -49,7 +49,7 @@ export class MuscleTagManagerModal extends ModalBase {
       text: t("modal.titles.muscleTagManager"),
     });
 
-    this.contentContainer = contentEl.createEl("div", {
+    this.contentContainer = contentEl.createDiv({
       cls: "workout-charts-form",
     });
     this.contentContainer.createEl("p", {

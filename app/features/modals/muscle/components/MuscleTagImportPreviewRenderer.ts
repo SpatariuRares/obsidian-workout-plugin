@@ -40,7 +40,7 @@ export class MuscleTagImportPreviewRenderer {
   }
 
   private renderErrors(errors: string[]): void {
-    const errorContainer = this.container.createEl("div", {
+    const errorContainer = this.container.createDiv({
       cls: "workout-tag-import-errors",
     });
     const errorHeader = errorContainer.createEl("p", {
@@ -104,7 +104,7 @@ export class MuscleTagImportPreviewRenderer {
   }
 
   private renderButtons(options: RenderImportPreviewOptions): void {
-    const buttonContainer = this.container.createEl("div", {
+    const buttonContainer = this.container.createDiv({
       cls: "workout-tag-form-buttons",
     });
 

@@ -214,7 +214,7 @@ export class LogFormRenderer {
       return;
     }
 
-    const chipSection = container.createEl("div", {
+    const chipSection = container.createDiv({
       cls: "workout-log-recent-section",
     });
     const exerciseFieldGroup = exerciseInput.closest(
@@ -232,7 +232,7 @@ export class LogFormRenderer {
       cls: "workout-log-recent-label",
     });
 
-    const chipContainer = chipSection.createEl("div", {
+    const chipContainer = chipSection.createDiv({
       cls: "workout-log-recent-chips",
     });
 

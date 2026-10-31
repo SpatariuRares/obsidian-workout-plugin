@@ -80,7 +80,7 @@ export class ExerciseAutocomplete {
     matchType: "semantic" | "fuzzy",
     score: number,
   ): HTMLElement {
-    const badge = parent.createEl("span", {
+    const badge = parent.createSpan({
       cls: `workout-autocomplete-badge workout-autocomplete-badge-${matchType}`,
     });
 
@@ -134,7 +134,7 @@ export class ExerciseAutocomplete {
     );
 
     // Autocomplete container
-    const autocompleteContainer = exerciseContainer.createEl("div", {
+    const autocompleteContainer = exerciseContainer.createDiv({
       cls: "workout-exercise-autocomplete-container workout-exercise-autocomplete-hidden",
     });
 
@@ -196,7 +196,7 @@ export class ExerciseAutocomplete {
         instance.selectedIndex = -1;
 
         allMatches.slice(0, 8).forEach((match, index) => {
-          const suggestion = autocompleteContainer.createEl("div", {
+          const suggestion = autocompleteContainer.createDiv({
             cls: "workout-exercise-autocomplete-suggestion",
           });
 
@@ -211,7 +211,7 @@ export class ExerciseAutocomplete {
           );
 
           // Add highlighted text
-          const textSpan = suggestion.createEl("span", {
+          const textSpan = suggestion.createSpan({
             cls: "workout-autocomplete-text",
           });
           ExerciseAutocomplete.renderHighlightedMatch(
@@ -255,18 +255,18 @@ export class ExerciseAutocomplete {
 
         // Add "create exercise" option at bottom of dropdown
         if (showCreateButton) {
-          const createItem = autocompleteContainer.createEl("div", {
+          const createItem = autocompleteContainer.createDiv({
             cls: "workout-exercise-autocomplete-suggestion workout-exercise-autocomplete-create",
           });
           createItem.setAttribute(
             "data-index",
             allMatches.slice(0, 8).length.toString(),
           );
-          createItem.createEl("span", {
+          createItem.createSpan({
             cls: "workout-exercise-autocomplete-create-icon",
             text: "+",
           });
-          createItem.createEl("span", {
+          createItem.createSpan({
             cls: "workout-autocomplete-text",
             text: t("modal.autocomplete.addExercise", {
               name: query,

@@ -13,7 +13,7 @@ jest.mock("obsidian", () => {
   class Setting {
     private name = "";
     controlEl = {
-      createEl: () => ({
+      createDiv: () => ({
         setCssProps: () => {},
         setText: () => {},
         addClass: () => {},

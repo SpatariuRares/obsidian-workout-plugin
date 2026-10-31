@@ -18,7 +18,7 @@ export abstract class ModalBase extends Modal {
     parent: HTMLElement,
     title: string,
   ): HTMLElement {
-    const section = parent.createEl("div", {
+    const section = parent.createDiv({
       cls: "workout-modal-section",
     });
     section.createEl("h3", { text: title });
@@ -29,7 +29,7 @@ export abstract class ModalBase extends Modal {
    * Creates a form group container
    */
   public createFormGroup(parent: HTMLElement): HTMLElement {
-    return parent.createEl("div", {
+    return parent.createDiv({
       cls: "workout-charts-form-group",
     });
   }
@@ -38,7 +38,7 @@ export abstract class ModalBase extends Modal {
    * Creates a checkbox group container
    */
   public createCheckboxGroup(parent: HTMLElement): HTMLElement {
-    return parent.createEl("div", {
+    return parent.createDiv({
       cls: "workout-charts-form-group workout-charts-checkbox-group",
     });
   }
@@ -170,7 +170,7 @@ export abstract class ModalBase extends Modal {
   protected createStyledMainContainer(
     contentEl: HTMLElement,
   ): HTMLElement {
-    const mainContainer = contentEl.createEl("div", {
+    const mainContainer = contentEl.createDiv({
       cls: "workout-charts-form workout-modal",
     });
     return mainContainer;
@@ -183,7 +183,7 @@ export abstract class ModalBase extends Modal {
     parent: HTMLElement,
     currentFileName: string,
   ): HTMLElement {
-    const currentFileInfo = parent.createEl("div", {
+    const currentFileInfo = parent.createDiv({
       cls: "workout-current-file-info",
     });
     currentFileInfo.textContent = t("modal.labels.currentFileInfo", {

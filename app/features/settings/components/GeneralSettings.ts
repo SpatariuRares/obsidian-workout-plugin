@@ -62,7 +62,7 @@ export class GeneralSettings {
             );
           });
       });
-    const csvPathWarning = csvPathSetting.controlEl.createEl("div", {
+    const csvPathWarning = csvPathSetting.controlEl.createDiv({
       cls: "workout-setting-error",
     });
     csvPathWarning.setCssProps({

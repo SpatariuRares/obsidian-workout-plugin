@@ -122,7 +122,7 @@ export class ConvertExerciseDataModal extends ModalBase {
 
     const typeGroup = this.createFormGroup(section);
     typeGroup.createEl("label", { text: t("convert.currentType") });
-    this.currentTypeDisplay = typeGroup.createEl("span", {
+    this.currentTypeDisplay = typeGroup.createSpan({
       cls: "workout-convert-current-type",
       text: "—",
     });

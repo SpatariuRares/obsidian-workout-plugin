@@ -74,7 +74,7 @@ export class ChartDataExtractor {
       displayType === CHART_TYPE.COMBINED ||
       displayType === CHART_TYPE.ALL;
 
-    const chartTypeStr = chartType as string;
+    const chartTypeStr = chartType;
 
     switch (chartTypeStr) {
       case "volume":

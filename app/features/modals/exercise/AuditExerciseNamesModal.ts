@@ -261,7 +261,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         try {
           await this.app.fileManager.processFrontMatter(
             mismatch.file,
-            (frontmatter) => {
+            (frontmatter: Record<string, unknown>) => {
               if (typeof frontmatter.exercise_name === "string") {
                 frontmatter.exercise_name = newFileName;
               } else if (

@@ -1,9 +1,6 @@
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import {
-  DataFilter,
-  DataFilterParams,
-} from "@app/services/data/DataFilter";
+import { DataFilter } from "@app/services/data/DataFilter";
 import { LoadingSpinner } from "@app/components/molecules";
 import { Feedback } from "@app/components/atoms/Feedback";
 import { LogCallouts } from "@app/features/modals/log/LogCallouts";
@@ -152,7 +149,7 @@ export abstract class BaseView {
     logData: WorkoutLogData[],
     params: EmbeddedViewParams,
   ) {
-    return DataFilter.filterData(logData, params as DataFilterParams);
+    return DataFilter.filterData(logData, params);
   }
 
   /**

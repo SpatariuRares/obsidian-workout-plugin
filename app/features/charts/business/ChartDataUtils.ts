@@ -60,10 +60,10 @@ export class ChartDataUtils {
 
     // Check if chartType is a custom parameter key (not a standard type)
     const isCustomParam = !ChartDataExtractor.isStandardChartType(
-      chartType as string,
+      chartType,
     );
     const customParamKey = isCustomParam
-      ? (chartType as string)
+      ? (chartType)
       : null;
 
     // Group by date and calculate values

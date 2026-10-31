@@ -107,7 +107,8 @@ export class LocalizationService {
     try {
       // Dynamic import of locale JSON
       // NOTE: This will be bundled by esbuild
-      const localeFile = require(`./locales/${locale}.json`);
+      // eslint-disable-next-line @typescript-eslint/no-require-imports -- esbuild bundles every locale JSON through this dynamic require
+      const localeFile: unknown = require(`./locales/${locale}.json`);
       return localeFile as Translations;
     } catch {
       // Return empty object if file doesn't exist
@@ -146,11 +147,18 @@ export class LocalizationService {
       return key;
     }
 
-    // Ensure translation is a string
-    const translatedString =
-      typeof translation === "string"
-        ? translation
-        : String(translation);
+    // Ensure translation is a string; a group of keys is not a translation
+    let translatedString: string;
+    if (typeof translation === "string") {
+      translatedString = translation;
+    } else if (
+      typeof translation === "number" ||
+      typeof translation === "boolean"
+    ) {
+      translatedString = String(translation);
+    } else {
+      return key;
+    }
 
     // Interpolate parameters if provided
     if (params) {
@@ -191,7 +199,7 @@ export class LocalizationService {
     template: string,
     params: TranslationParams,
   ): string {
-    return template.replace(/\{(\w+)\}/g, (match, key) => {
+    return template.replace(/\{(\w+)\}/g, (match: string, key: string) => {
       return key in params ? String(params[key]) : match;
     });
   }

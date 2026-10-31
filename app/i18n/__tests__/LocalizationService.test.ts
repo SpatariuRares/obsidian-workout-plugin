@@ -94,11 +94,11 @@ describe("LocalizationService", () => {
       expect(t("nope.at.all")).toBe("nope.at.all");
     });
 
-    it("should stringify non-string leaf values", () => {
+    it("should stringify number leaves and return the key for a group", () => {
       const { LocalizationService, t } = loadFresh("en", { en: EN });
       LocalizationService.initialize(app);
       expect(t("num")).toBe("42");
-      expect(t("group")).toBe("[object Object]");
+      expect(t("group")).toBe("group");
     });
   });
 

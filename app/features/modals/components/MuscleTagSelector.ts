@@ -166,7 +166,7 @@ export class MuscleTagSelector {
               .closest(".workout-muscle-tag-selector")!
               .querySelector(
                 ".workout-muscle-tag-search",
-              ) as HTMLInputElement)!.value,
+              ) as HTMLInputElement).value,
           );
 
           // Trigger callback

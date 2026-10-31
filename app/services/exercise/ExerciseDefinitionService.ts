@@ -69,7 +69,7 @@ export class ExerciseDefinitionService {
     if (page) {
       await this.app.fileManager.processFrontMatter(
         page.file,
-        (frontmatter) => {
+        (frontmatter: Record<string, unknown>) => {
           frontmatter.exercise_type = definition.typeId;
 
           if (

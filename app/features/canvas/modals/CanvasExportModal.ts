@@ -22,7 +22,7 @@ import { t } from "@app/i18n";
 export class CanvasExportModal extends ModalBase {
   private workoutFile: TFile;
   private plugin: WorkoutPluginContext;
-  private onSubmit: (options: CanvasExportOptions) => void;
+  private onSubmit: (options: CanvasExportOptions) => void | Promise<void>;
 
   // Form elements
   private layoutSelect!: HTMLSelectElement;
@@ -34,7 +34,7 @@ export class CanvasExportModal extends ModalBase {
     app: App,
     plugin: WorkoutPluginContext,
     workoutFile: TFile,
-    onSubmit: (options: CanvasExportOptions) => void,
+    onSubmit: (options: CanvasExportOptions) => void | Promise<void>,
   ) {
     super(app);
     this.plugin = plugin;
@@ -170,7 +170,7 @@ export class CanvasExportModal extends ModalBase {
       connectSupersets: this.connectSupersetsCheckbox.checked,
     };
 
-    this.onSubmit(options);
+    void this.onSubmit(options);
     this.close();
   }
 

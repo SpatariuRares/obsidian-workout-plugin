@@ -5,7 +5,6 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
 
 type CreateLogPlugin = ConstructorParameters<
@@ -22,13 +21,13 @@ export class LogCallouts {
   private static asCreateLogPlugin(
     plugin: WorkoutPluginContext,
   ): CreateLogPlugin {
-    return plugin as unknown as CreateLogPlugin;
+    return plugin;
   }
 
   private static asExerciseActionPlugin(
     plugin: WorkoutPluginContext,
   ): ExerciseActionPlugin {
-    return plugin as unknown as ExerciseActionPlugin;
+    return plugin;
   }
 
   private static openCreateLogModal(
@@ -116,7 +115,7 @@ export class LogCallouts {
         params: {
           exercise: exerciseName,
           id: codeBlockId,
-        } as EmbeddedTableParams,
+        },
       });
     }
   }

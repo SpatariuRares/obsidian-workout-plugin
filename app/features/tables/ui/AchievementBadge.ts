@@ -101,9 +101,8 @@ export class AchievementBadge {
 
     Button.onClick(
       dismissButton,
-      async () => {
-        await callbacks.onDismiss();
-        badgeDiv.remove();
+      () => {
+        void callbacks.onDismiss().then(() => badgeDiv.remove());
       },
       signal,
     );

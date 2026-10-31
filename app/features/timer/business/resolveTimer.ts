@@ -53,5 +53,5 @@ function presetToParams(preset: TimerPresetConfig): Partial<EmbeddedTimerParams>
 function withoutUndefined(params: EmbeddedTimerParams): Partial<EmbeddedTimerParams> {
   return Object.fromEntries(
     Object.entries(params).filter(([, value]) => value !== undefined),
-  ) as Partial<EmbeddedTimerParams>;
+  );
 }

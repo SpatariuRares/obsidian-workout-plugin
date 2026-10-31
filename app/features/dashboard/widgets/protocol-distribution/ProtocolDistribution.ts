@@ -212,7 +212,7 @@ export class ProtocolDistribution {
       return activeFilter && s.protocol === activeFilter ? 4 : 2;
     });
 
-    const config: ChartConfiguration<"pie", number[], string> = {
+    const config: ChartConfiguration = {
       type: "pie",
       data: {
         labels: stats.map((s) => s.label),
@@ -269,7 +269,7 @@ export class ProtocolDistribution {
     ChartRenderer.renderConfiguredChart(
       chartId,
       canvas,
-      config as ChartConfiguration,
+      config,
     );
   }
 

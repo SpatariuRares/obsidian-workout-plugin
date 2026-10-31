@@ -7,6 +7,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -131,6 +132,7 @@ export class LogCallouts {
         exerciseName: exerciseName ?? "Workout",
       }),
     });
+    markTourTarget(button, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(
       button,

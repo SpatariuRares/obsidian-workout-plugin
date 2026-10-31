@@ -3845,3 +3845,10 @@ body.theme-dark {
 .workout-advanced-section[open] > summary::before {
   transform: rotate(90deg);
 }
+
+/* Custom protocol list entry: badge preview followed by the protocol id */
+.workout-protocol-details {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}

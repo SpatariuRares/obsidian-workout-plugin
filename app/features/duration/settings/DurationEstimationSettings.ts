@@ -1,108 +1,92 @@
-import { Setting } from "obsidian";
+import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
+import {
+  isPositive,
+  renderNumberField,
+} from "@app/features/settings/renderNumberField";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { getDynamicSettingsLabels } from "@app/constants";
 import type { SettingsPort } from "@app/types/PluginPorts";
 
+/** The numeric settings of this section: one text box, a check, a message */
+type NumberField = {
+  key:
+    | "weightIncrement"
+    | "repDuration"
+    | "defaultRepsPerSet"
+    | "setDuration";
+  name: string;
+  desc: string;
+  parse: (raw: string) => number;
+  isValid: (value: number) => boolean;
+  error: string;
+};
+
 export class DurationEstimationSettings {
-  constructor(
-    private plugin: SettingsPort,
-    private containerEl: HTMLElement,
-  ) {}
+  constructor(private plugin: SettingsPort) {}
 
-  render(): void {
-    const { containerEl } = this;
+  definitions(): DefinitionItem[] {
+    const fields: NumberField[] = [
+      {
+        // Was in ProgressiveOverloadSettings
+        key: "weightIncrement",
+        name: getDynamicSettingsLabels().WEIGHT_INCREMENT,
+        desc: t("settings.descriptions.weightIncrement"),
+        parse: parseFloat,
+        isValid: isPositive,
+        error: t("settings.validation.mustBePositive"),
+      },
+      {
+        key: "repDuration",
+        name: t("settings.labels.repDuration"),
+        desc: t("settings.descriptions.repDuration"),
+        parse: parseFloat,
+        isValid: isPositive,
+        error: t("settings.validation.mustBePositive"),
+      },
+      {
+        key: "defaultRepsPerSet",
+        name: t("settings.labels.defaultRepsPerSet"),
+        desc: t("settings.descriptions.defaultRepsPerSet"),
+        parse: (raw) => parseInt(raw, 10),
+        isValid: (v) => !isNaN(v) && v >= 0,
+        error: t("settings.validation.mustBeNonNegative"),
+      },
+      {
+        key: "setDuration",
+        name: t("settings.labels.setDuration"),
+        desc: t("settings.descriptions.setDuration"),
+        parse: (raw) => parseInt(raw, 10),
+        isValid: isPositive,
+        error: t("settings.validation.mustBePositive"),
+      },
+    ];
 
-    // "Training parameters" absorbs what used to be the separate "Progressive Overload" section
-    new Setting(containerEl)
-      .setName(t("settings.sections.trainingParameters"))
-      .setHeading();
+    return [
+      {
+        // "Training parameters" absorbs what used to be the separate "Progressive Overload" section
+        type: "group",
+        heading: t("settings.sections.trainingParameters"),
+        items: fields.map((field) => ({
+          name: field.name,
+          desc: field.desc,
+          render: (setting: Setting) =>
+            this.renderField(setting, field),
+        })),
+      },
+    ];
+  }
 
-    // Weight increment (was in ProgressiveOverloadSettings)
-    const weightIncrementSetting = new Setting(containerEl)
-      .setName(getDynamicSettingsLabels().WEIGHT_INCREMENT)
-      .setDesc(t("settings.descriptions.weightIncrement"))
-      .addText((text) => {
-        text
-          .setValue(String(this.plugin.settings.weightIncrement))
-          .onChange(async (value) => {
-            const numValue = parseFloat(value);
-            const isValid = !isNaN(numValue) && numValue > 0;
-            weightIncrementError.toggleClass("is-visible", !isValid);
-            if (isValid) {
-              this.plugin.settings.weightIncrement = numValue;
-              await this.plugin.saveSettings();
-            }
-          });
-      });
-    const weightIncrementError =
-      weightIncrementSetting.controlEl.createDiv({
-        cls: "workout-setting-error",
-        text: t("settings.validation.mustBePositive"),
-      });
-
-    // Duration per Rep
-    const repDurationSetting = new Setting(containerEl)
-      .setName(t("settings.labels.repDuration"))
-      .setDesc(t("settings.descriptions.repDuration"))
-      .addText((text) => {
-        text
-          .setValue(String(this.plugin.settings.repDuration))
-          .onChange(async (value) => {
-            const numValue = parseFloat(value);
-            const isValid = !isNaN(numValue) && numValue > 0;
-            repDurationError.toggleClass("is-visible", !isValid);
-            if (isValid) {
-              this.plugin.settings.repDuration = numValue;
-              await this.plugin.saveSettings();
-            }
-          });
-      });
-    const repDurationError = repDurationSetting.controlEl.createDiv({
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBePositive"),
-    });
-
-    // Default Reps per Set
-    const defaultRepsSetting = new Setting(containerEl)
-      .setName(t("settings.labels.defaultRepsPerSet"))
-      .setDesc(t("settings.descriptions.defaultRepsPerSet"))
-      .addText((text) => {
-        text
-          .setValue(String(this.plugin.settings.defaultRepsPerSet))
-          .onChange(async (value) => {
-            const numValue = parseInt(value, 10);
-            const isValid = !isNaN(numValue) && numValue >= 0;
-            defaultRepsError.toggleClass("is-visible", !isValid);
-            if (isValid) {
-              this.plugin.settings.defaultRepsPerSet = numValue;
-              await this.plugin.saveSettings();
-            }
-          });
-      });
-    const defaultRepsError = defaultRepsSetting.controlEl.createDiv({
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBeNonNegative"),
-    });
-
-    const setDurationSetting = new Setting(containerEl)
-      .setName(t("settings.labels.setDuration"))
-      .setDesc(t("settings.descriptions.setDuration"))
-      .addText((text) => {
-        text
-          .setValue(String(this.plugin.settings.setDuration))
-          .onChange(async (value) => {
-            const numValue = parseInt(value, 10);
-            const isValid = !isNaN(numValue) && numValue > 0;
-            setDurationError.toggleClass("is-visible", !isValid);
-            if (isValid) {
-              this.plugin.settings.setDuration = numValue;
-              await this.plugin.saveSettings();
-            }
-          });
-      });
-    const setDurationError = setDurationSetting.controlEl.createDiv({
-      cls: "workout-setting-error",
-      text: t("settings.validation.mustBePositive"),
+  private renderField(setting: Setting, field: NumberField): void {
+    renderNumberField(setting, {
+      value: this.plugin.settings[field.key],
+      parse: field.parse,
+      isValid: field.isValid,
+      error: field.error,
+      save: async (value) => {
+        this.plugin.settings[field.key] = value;
+        await this.plugin.saveSettings();
+      },
     });
   }
 }

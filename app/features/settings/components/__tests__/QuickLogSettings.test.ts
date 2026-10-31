@@ -1,61 +1,78 @@
+/** @jest-environment jsdom */
+import { mockSettingNamed } from "obsidian";
 import { QuickLogSettings } from "@app/features/settings/components/QuickLogSettings";
+import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
 import { t } from "@app/i18n";
+import { getDynamicSettingsLabels } from "@app/constants";
 import type WorkoutChartsPlugin from "main";
 
-const toggles = new Map<string, (value: boolean) => Promise<void>>();
-
-jest.mock("obsidian", () => {
-  class Setting {
-    private name = "";
-    controlEl = {
-      createDiv: jest.fn(() => ({ toggleClass: jest.fn() })),
-    };
-    setName(name: string) {
-      this.name = name;
-      return this;
-    }
-    setDesc() {
-      return this;
-    }
-    setHeading() {
-      return this;
-    }
-    addToggle(cb: (toggle: unknown) => void) {
-      const toggle = {
-        setValue: () => toggle,
-        onChange: (fn: (value: boolean) => Promise<void>) => {
-          toggles.set(this.name, fn);
-          return toggle;
-        },
-      };
-      cb(toggle);
-      return this;
-    }
-    addText(cb: (text: unknown) => void) {
-      const text = { setValue: () => text, onChange: () => text };
-      cb(text);
-      return this;
-    }
-  }
-  return { Setting };
-});
-
-describe("QuickLogSettings ribbon toggle", () => {
-  it("saves showRibbonIcon and refreshes the ribbon", async () => {
-    const plugin = {
-      settings: { showRibbonIcon: true, quickWeightIncrement: 2.5 },
-      saveSettings: jest.fn().mockResolvedValue(undefined),
-      updateQuickLogRibbon: jest.fn(),
-    };
-
+function setup() {
+  const plugin = {
+    settings: {
+      defaultExactMatch: false,
+      showRibbonIcon: true,
+      quickWeightIncrement: 2.5,
+    },
+    saveSettings: jest.fn().mockResolvedValue(undefined),
+    updateQuickLogRibbon: jest.fn(),
+  };
+  const container = document.createElement("div");
+  renderSettingDefinitions(
+    container,
     new QuickLogSettings(
       plugin as unknown as WorkoutChartsPlugin,
-      {} as HTMLElement,
-    ).render();
-    await toggles.get(t("settings.labels.showRibbonIcon"))!(false);
+    ).definitions(),
+  );
+  return { plugin, container };
+}
+
+describe("QuickLogSettings", () => {
+  it("saves showRibbonIcon and refreshes the ribbon", async () => {
+    const { plugin, container } = setup();
+
+    await mockSettingNamed(
+      container,
+      t("settings.labels.showRibbonIcon"),
+    )
+      .component("toggle")
+      .change(false as never);
 
     expect(plugin.settings.showRibbonIcon).toBe(false);
     expect(plugin.saveSettings).toHaveBeenCalled();
     expect(plugin.updateQuickLogRibbon).toHaveBeenCalled();
+  });
+
+  it("saves the exact-match default", async () => {
+    const { plugin, container } = setup();
+
+    await mockSettingNamed(
+      container,
+      t("settings.labels.defaultExactMatch"),
+    )
+      .component("toggle")
+      .change(true as never);
+
+    expect(plugin.settings.defaultExactMatch).toBe(true);
+    expect(plugin.saveSettings).toHaveBeenCalled();
+  });
+
+  it("keeps a valid weight increment and shows an error for an invalid one", async () => {
+    const { plugin, container } = setup();
+    const row = mockSettingNamed(
+      container,
+      getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT,
+    );
+    const text = row.component("text");
+    const error = row.controlEl.querySelector(
+      ".workout-setting-error",
+    )!;
+
+    await text.change("5" as never);
+    expect(plugin.settings.quickWeightIncrement).toBe(5);
+    expect(error.classList.contains("is-visible")).toBe(false);
+
+    await text.change("-1" as never);
+    expect(plugin.settings.quickWeightIncrement).toBe(5);
+    expect(error.classList.contains("is-visible")).toBe(true);
   });
 });

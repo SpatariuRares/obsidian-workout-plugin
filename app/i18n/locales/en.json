@@ -874,6 +874,8 @@
       "exampleData": "Example data",
       "maintenance": "Maintenance",
       "quickLog": "Mobile logging",
+      "savedPresets": "Saved presets",
+      "savedProtocols": "Saved protocols",
       "setupAndData": "Setup & data",
       "templates": "Templates",
       "timerPresets": "Timer presets",

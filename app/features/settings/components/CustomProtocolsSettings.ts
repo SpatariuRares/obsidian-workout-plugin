@@ -1,100 +1,63 @@
-import { Setting, Notice, App } from "obsidian";
+import { Notice, App } from "obsidian";
 import { t } from "@app/i18n";
+import { ProtocolEditorModal } from "@app/features/settings/modals/ProtocolEditorModal";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class CustomProtocolsSettings {
-  private protocolsContainer: HTMLElement | null = null;
-
   constructor(
     private app: App,
     private plugin: WorkoutPluginContext,
-    private containerEl: HTMLElement,
+    /** Redraws the settings tab after the protocol list changed */
+    private refresh: () => void,
   ) {}
 
-  render(): void {
-    const { containerEl } = this;
-
-    new Setting(containerEl)
-      .setName(t("settings.sections.customProtocols"))
-      .setHeading();
-
-    new Setting(containerEl)
-      .setName(t("settings.labels.customProtocols"))
-      .setDesc(t("settings.descriptions.customProtocols"));
-
-    // Container for protocols list
-    this.protocolsContainer = containerEl.createDiv({
-      cls: "custom-protocols-container",
-    });
-    this.renderProtocolsList();
-
-    // Add protocol button
-    new Setting(containerEl).addButton((button) =>
-      button
-        .setButtonText(t("settings.buttons.addProtocol"))
-        .setCta()
-        .onClick(() => {
-          this.showProtocolEditor(null);
-        }),
-    );
-  }
-
-  private renderProtocolsList(): void {
-    if (!this.protocolsContainer) return;
-
-    this.protocolsContainer.empty();
-
+  definitions(): DefinitionItem[] {
     const protocols = this.plugin.settings.customProtocols || [];
 
-    if (protocols.length === 0) {
-      this.protocolsContainer.createEl("p", {
-        text: t("settings.descriptions.noCustomProtocols"),
-        cls: "workout-setting-item-description",
-      });
-      return;
-    }
-
-    protocols.forEach((protocol) => {
-      this.renderProtocolItem(protocol);
-    });
+    return [
+      {
+        type: "group",
+        heading: t("settings.sections.customProtocols"),
+        items: [
+          {
+            name: t("settings.labels.customProtocols"),
+            desc: t("settings.descriptions.customProtocols"),
+          },
+        ],
+      },
+      {
+        type: "list",
+        heading: t("settings.sections.savedProtocols"),
+        emptyState: t("settings.descriptions.noCustomProtocols"),
+        addItem: {
+          name: t("settings.buttons.addProtocol"),
+          action: () => this.showProtocolEditor(null),
+        },
+        onDelete: (index) => this.confirmDelete(protocols[index]?.id),
+        deleteTooltip: t("settings.tooltips.deleteProtocol"),
+        items: protocols.map((protocol) => ({
+          name: protocol.name,
+          desc: this.formatProtocolDetails(protocol),
+          tooltip: t("settings.tooltips.editProtocol"),
+          action: () => this.showProtocolEditor(protocol),
+        })),
+      },
+    ];
   }
 
-  private renderProtocolItem(protocol: CustomProtocolConfig): void {
-    if (!this.protocolsContainer) return;
-
-    const protocolSetting = new Setting(this.protocolsContainer);
-
-    // Format protocol details for description
-    const details = this.formatProtocolDetails(protocol);
-
-    protocolSetting
-      .setName(protocol.name)
-      .setDesc(details)
-      .addButton((button) =>
-        button
-          .setIcon("pencil")
-          .setTooltip(t("settings.tooltips.editProtocol"))
-          .onClick(() => {
-            this.showProtocolEditor(protocol);
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setIcon("trash")
-          .setTooltip(t("settings.tooltips.deleteProtocol"))
-          .onClick(() => {
-            new ConfirmModal(
-              this.app,
-              t("settings.messages.confirmDeleteProtocol"),
-              async () => {
-                await this.deleteProtocol(protocol.id);
-              },
-            ).open();
-          }),
-      );
+  private confirmDelete(id: string | undefined): void {
+    if (id === undefined) return;
+    new ConfirmModal(
+      this.app,
+      t("settings.messages.confirmDeleteProtocol"),
+      async () => {
+        await this.deleteProtocol(id);
+      },
+    ).open();
   }
 
   private formatProtocolDetails(
@@ -103,7 +66,9 @@ export class CustomProtocolsSettings {
     const fragment = createFragment();
 
     // Create a container for the badge preview and details
-    const container = fragment.createSpan();
+    const container = fragment.createSpan({
+      cls: "workout-protocol-details",
+    });
 
     // Add abbreviation badge preview
     ProtocolBadge.create(container, {
@@ -120,24 +85,6 @@ export class CustomProtocolsSettings {
   private showProtocolEditor(
     existingProtocol: CustomProtocolConfig | null,
   ): void {
-    if (!this.protocolsContainer) return;
-
-    // Remove any existing editor
-    const existingEditor = this.containerEl.querySelector(
-      ".protocol-editor-container",
-    );
-    if (existingEditor) {
-      existingEditor.remove();
-    }
-
-    const editorContainer = this.containerEl.createDiv({
-      cls: "protocol-editor-container",
-    });
-
-    // Move editor right after protocols container
-    this.protocolsContainer.after(editorContainer);
-
-    // Create form state
     const formState: CustomProtocolConfig = existingProtocol
       ? { ...existingProtocol }
       : {
@@ -146,83 +93,21 @@ export class CustomProtocolsSettings {
           abbreviation: "",
           color: "#6366f1", // Default indigo color
         };
-
     const originalId = existingProtocol?.id || null;
 
-    // Protocol name input
-    new Setting(editorContainer)
-      .setName(t("settings.labels.protocolName"))
-      .addText((text) =>
-        text
-          .setValue(formState.name)
-          .setPlaceholder(t("settings.placeholders.protocolName"))
-          .onChange((value) => {
-            formState.name = value;
-            // Auto-generate ID from name if creating new protocol
-            if (!originalId) {
-              formState.id = value
-                .toLowerCase()
-                .replace(/\s+/g, "_")
-                .replace(/[^a-z0-9_]/g, "");
-            }
-          }),
-      );
-
-    // Protocol abbreviation input
-    new Setting(editorContainer)
-      .setName(t("settings.labels.protocolAbbreviation"))
-      .setDesc(t("settings.descriptions.protocolAbbreviation"))
-      .addText((text) =>
-        text
-          .setValue(formState.abbreviation)
-          .setPlaceholder(
-            t("settings.placeholders.protocolAbbreviation"),
-          )
-          .onChange((value) => {
-            // Limit to 3 characters
-            formState.abbreviation = value.slice(0, 3).toUpperCase();
-            text.setValue(formState.abbreviation);
-          }),
-      );
-
-    // Protocol color input
-    new Setting(editorContainer)
-      .setName(t("settings.labels.protocolColor"))
-      .setDesc(t("settings.descriptions.protocolColor"))
-      .addColorPicker((colorPicker) =>
-        colorPicker.setValue(formState.color).onChange((value) => {
-          formState.color = value;
-        }),
-      );
-
-    // Save and Cancel buttons
-    new Setting(editorContainer)
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.saveProtocol"))
-          .setCta()
-          .onClick(async () => {
-            await this.saveProtocol(formState, originalId);
-            editorContainer.remove();
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => {
-            editorContainer.remove();
-          }),
-      );
+    new ProtocolEditorModal(this.app, formState, originalId, () =>
+      this.saveProtocol(formState, originalId),
+    ).open();
   }
 
   private async saveProtocol(
     protocol: CustomProtocolConfig,
     originalId: string | null,
-  ): Promise<void> {
+  ): Promise<boolean> {
     // Validate name
     if (!protocol.name.trim()) {
       new Notice(t("settings.messages.protocolNameRequired"));
-      return;
+      return false;
     }
 
     // Validate abbreviation
@@ -231,7 +116,7 @@ export class CustomProtocolsSettings {
       protocol.abbreviation.length > 3
     ) {
       new Notice(t("settings.messages.protocolAbbreviationRequired"));
-      return;
+      return false;
     }
 
     // Validate color
@@ -240,7 +125,7 @@ export class CustomProtocolsSettings {
       !/^#[0-9A-Fa-f]{6}$/.test(protocol.color)
     ) {
       new Notice(t("settings.messages.protocolColorRequired"));
-      return;
+      return false;
     }
 
     const trimmedName = protocol.name.trim();
@@ -276,7 +161,7 @@ export class CustomProtocolsSettings {
 
     if (existingNameIndex !== -1) {
       new Notice(t("settings.messages.protocolNameExists"));
-      return;
+      return false;
     }
 
     if (originalId && originalId !== protocol.id) {
@@ -299,7 +184,8 @@ export class CustomProtocolsSettings {
     await this.plugin.saveSettings();
     new Notice(t("settings.messages.protocolSaved"));
 
-    this.renderProtocolsList();
+    this.refresh();
+    return true;
   }
 
   private async deleteProtocol(id: string): Promise<void> {
@@ -317,6 +203,6 @@ export class CustomProtocolsSettings {
     await this.plugin.saveSettings();
     new Notice(t("settings.messages.protocolDeleted"));
 
-    this.renderProtocolsList();
+    this.refresh();
   }
 }

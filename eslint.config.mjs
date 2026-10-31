@@ -87,10 +87,6 @@ export default [
         },
       ],
 
-      // Rules from the obsidianmd recommended config owned by other tickets
-      // TODO(#40): re-enable once fixed
-      "obsidianmd/settings-tab/prefer-setting-definitions": "off",
-
       // TypeScript-specific rules
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/no-unsafe-enum-comparison": "error",
@@ -249,5 +245,20 @@ export default [
         },
       ],
     },
+  },
+
+  // Only for the display() fallback in WorkoutChartsSettings.ts: Obsidian
+  // before 1.13 (minAppVersion is 1.6.6) has no other way to draw or redraw
+  // the tab, and 1.13+ marks display() deprecated. Inline disables of this
+  // rule are blocked by eslint-comments/no-restricted-disable.
+  {
+    files: ["app/features/settings/WorkoutChartsSettings.ts"],
+    rules: { "@typescript-eslint/no-deprecated": "off" },
+  },
+
+  // The jest mock builds the DOM that Obsidian's createEl helpers would
+  {
+    files: ["__mocks__/**/*.ts"],
+    rules: { "obsidianmd/prefer-create-el": "off" },
   },
 ];

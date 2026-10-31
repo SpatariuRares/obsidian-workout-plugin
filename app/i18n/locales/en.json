@@ -462,6 +462,7 @@
     "addLogButtonText": "Add log for {exerciseName}",
     "createFirstLogButton": "Create first log for {exerciseName}",
     "createFirstLogButtonAria": "Create first log for {exerciseName}",
+    "exploreExampleData": "Or explore with example data",
     "createLogButtonAria": "Create log for: {exerciseName}",
     "createLogButtonText": "Create log for: {exerciseName}",
     "noDataTitle": "No logs found for {exerciseName}"

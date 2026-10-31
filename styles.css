@@ -171,6 +171,12 @@ body.theme-dark {
 .workout-log-no-data p {
   margin: var(--workout-space-sm) 0;
 }
+.workout-log-no-data .workout-log-example-link {
+  display: block;
+  margin-top: var(--workout-space-md);
+  font-style: normal;
+  color: var(--workout-text-accent);
+}
 .workout-log-no-data code {
   background: var(--background-primary);
   padding: var(--workout-space-xs) var(--workout-space-sm);

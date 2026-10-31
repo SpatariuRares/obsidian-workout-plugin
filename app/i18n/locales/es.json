@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Crear el primer registro para {exerciseName}",
     "createLogButtonAria": "Crear registro para: {exerciseName}",
     "createLogButtonText": "Crear registro para: {exerciseName}",
-    "noDataTitle": "No se encontraron registros para {exerciseName}"
+    "noDataTitle": "No se encontraron registros para {exerciseName}",
+    "exploreExampleData": "O explore utilizando datos de ejemplo."
   },
   "messages": {
     "codeInserted": "Bloque de código insertado",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} debe ser verdadero o falso, pero es \"{value}\".",
       "notOneOf": "{key} debe ser uno de {allowed}, pero es \"{value}\"."
     }
+  },
+  "welcome": {
+    "title": "Bienvenido al complemento de entrenamiento",
+    "intro": "Visualiza tus entrenamientos, luego observa los resultados en gráficos, tablas y un panel de control. ¿Cómo quieres empezar?",
+    "tryExamples": "Prueba con datos de ejemplo",
+    "tryExamplesDesc": "Agrega ejemplos de entrenamientos y abre una guía breve.",
+    "startScratch": "Comenzar desde cero",
+    "startScratchDesc": "Crea una nota con tu registro y abre el formulario para registrar el primer conjunto de datos.",
+    "later": "Más tarde",
+    "scratchNoteName": "Mis entrenamientos"
   }
 }

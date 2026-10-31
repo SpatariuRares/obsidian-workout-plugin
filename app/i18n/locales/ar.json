@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "إنشاء السجل الأول لـ {exerciseName}",
     "createLogButtonAria": "إنشاء سجل لـ: {exerciseName}",
     "createLogButtonText": "إنشاء سجل لـ: {exerciseName}",
-    "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}"
+    "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}",
+    "exploreExampleData": "أو استكشف باستخدام بيانات مثال"
   },
   "messages": {
     "codeInserted": "تم إدراج كتلة الكود",
@@ -1008,5 +1009,15 @@
       "notABoolean": "يجب أن تكون القيمة {key} إما صح أو خطأ، ولكنها هي \"{value}\"",
       "notOneOf": "يجب أن يكون {key} أحد الخيارات التالية {allowed}، ولكنه هو \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "أهلاً بك في إضافة التدريب",
+    "intro": "تتبع مجموعاتك، ثم شاهدها على شكل رسوم بيانية وجداول ولوحة تحكم. كيف تريد أن تبدأ؟",
+    "tryExamples": "جرب باستخدام بيانات نموذجية",
+    "tryExamplesDesc": "يضيف تمارين نموذجية ويفتح دليلًا موجزًا.",
+    "startScratch": "ابدأ من الصفر",
+    "startScratchDesc": "يقوم بإنشاء ملاحظة تحتوي على سجلاتك، ويفتح النموذج لتسجيل مجموعة أولية.",
+    "later": "لاحقًا",
+    "scratchNoteName": "تمارين التدريب"
   }
 }

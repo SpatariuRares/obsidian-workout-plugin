@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Vytvořit první záznam pro {exerciseName}",
     "createLogButtonAria": "Vytvořit záznam pro: {exerciseName}",
     "createLogButtonText": "Vytvořit záznam pro: {exerciseName}",
-    "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy"
+    "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy",
+    "exploreExampleData": "Nebo prozkoumejte s ukázkovými daty"
   },
   "messages": {
     "codeInserted": "Blok kódu vložen",
@@ -1008,5 +1009,15 @@
       "notABoolean": "Hodnota {key} musí být buď pravda, nebo nepravda, ale je \"{value}\"",
       "notOneOf": "{key} musí být jedním z {allowed}, ale je \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Vítejte v pluginu pro trénink",
+    "intro": "Sledujte své série, a poté je zobrazujte ve formě grafů, tabulek a přehledu. Jak chcete začít?",
+    "tryExamples": "Zkuste s ukázkovými daty",
+    "tryExamplesDesc": "Přidá ukázkové tréninky a otevře krátký průvodce.",
+    "startScratch": "Začněte od začátku",
+    "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
+    "later": "Později",
+    "scratchNoteName": "Moje tréninky"
   }
 }

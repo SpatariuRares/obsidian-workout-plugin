@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Criar o primeiro log para {exerciseName}",
     "createLogButtonAria": "Criar log para: {exerciseName}",
     "createLogButtonText": "Criar log para: {exerciseName}",
-    "noDataTitle": "Não foram encontrados logs para {exerciseName}"
+    "noDataTitle": "Não foram encontrados logs para {exerciseName}",
+    "exploreExampleData": "Ou explore com dados de exemplo"
   },
   "messages": {
     "codeInserted": "Bloco de código inserido",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} deve ser verdadeiro ou falso, mas é \"{value}\"",
       "notOneOf": "{key} deve ser uma das opções listadas em {allowed}, mas é \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Bem-vindo ao plugin de treino",
+    "intro": "Acompanhe seus treinos, depois visualize-os em gráficos, tabelas e um painel de controle. Como você gostaria de começar?",
+    "tryExamples": "Experimente com dados de exemplo",
+    "tryExamplesDesc": "Adiciona exemplos de treinos e abre um guia curto.",
+    "startScratch": "Começar do zero",
+    "startScratchDesc": "Cria uma anotação com seu registro e abre o formulário para registrar o primeiro conjunto.",
+    "later": "Mais tarde",
+    "scratchNoteName": "Meus treinos"
   }
 }

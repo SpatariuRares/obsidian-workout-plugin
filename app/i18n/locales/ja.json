@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} のための最初のログを作成する",
     "createLogButtonAria": "{exerciseName} のログを作成する",
     "createLogButtonText": "{exerciseName} のログを作成する",
-    "noDataTitle": "{exerciseName} のログが見つかりません"
+    "noDataTitle": "{exerciseName} のログが見つかりません",
+    "exploreExampleData": "または、サンプルデータを使って探求してみる"
   },
   "messages": {
     "codeInserted": "コードブロックを挿入しました",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} は真または偽の値である必要がありますが、実際には「{value}」となっています。",
       "notOneOf": "{key} は、{allowed} のいずれかである必要がありますが、実際には \"{value}\" です。"
     }
+  },
+  "welcome": {
+    "title": "ワークアウトプラグインへようこそ",
+    "intro": "あなたのトレーニングの記録を追跡し、その後、グラフ、表、ダッシュボードで確認できます。どのように始めたいですか？",
+    "tryExamples": "サンプルデータで試してみてください",
+    "tryExamplesDesc": "サンプルワークアウトを追加し、短いガイドを表示します。",
+    "startScratch": "最初から始める",
+    "startScratchDesc": "ログを記録したメモを作成し、最初の記録フォームを開きます。",
+    "later": "後で",
+    "scratchNoteName": "私のトレーニング"
   }
 }

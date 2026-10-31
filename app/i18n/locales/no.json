@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Opprett første logg for {exerciseName}",
     "createLogButtonAria": "Opprett logg for: {exerciseName}",
     "createLogButtonText": "Opprett logg for: {exerciseName}",
-    "noDataTitle": "Ingen logger funnet for {exerciseName}"
+    "noDataTitle": "Ingen logger funnet for {exerciseName}",
+    "exploreExampleData": "Eller utforsk med eksempeldata"
   },
   "messages": {
     "codeInserted": "Kodeblokk satt inn",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} må være sant eller usant, men det er \"{value}\"",
       "notOneOf": "{key} må være en av {allowed}, men det er \"{value}\"."
     }
+  },
+  "welcome": {
+    "title": "Velkommen til treningsplugin",
+    "intro": "Spor treningsøktene dine, og se dem deretter som grafer, tabeller og et dashbord. Hvordan vil du helst starte?",
+    "tryExamples": "Prøv med eksempeldata",
+    "tryExamplesDesc": "Legger til eksempeløvelser og åpner en kort veiledning.",
+    "startScratch": "Start fra bunnen av",
+    "startScratchDesc": "Oppretter en notat med loggen din og åpner skjemaet for å registrere den første settet.",
+    "later": "Senere",
+    "scratchNoteName": "Mine treningsøkter"
   }
 }

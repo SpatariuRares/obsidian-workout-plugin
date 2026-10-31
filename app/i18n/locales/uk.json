@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Створити перший запис для {exerciseName}",
     "createLogButtonAria": "Створити запис для: {exerciseName}",
     "createLogButtonText": "Створити запис для: {exerciseName}",
-    "noDataTitle": "Не знайдено записів для {exerciseName}"
+    "noDataTitle": "Не знайдено записів для {exerciseName}",
+    "exploreExampleData": "Або ознайомтеся з прикладами даних"
   },
   "messages": {
     "codeInserted": "Блок коду вставлено",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} має бути значенням \"true\" або \"false\", але воно \"{value}\"",
       "notOneOf": "{key} має бути одним із {allowed}, але воно \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Ласкаво просимо до плагіну для тренувань",
+    "intro": "Відстежуйте свої набори, а потім переглядайте їх у вигляді графіків, таблиць та дашборду. Як ви хочете почати?",
+    "tryExamples": "Спробуйте з прикладами даних",
+    "tryExamplesDesc": "Додає приклади тренувань та відкриває короткий посібник.",
+    "startScratch": "Почніть з нуля",
+    "startScratchDesc": "Створює нотатку з вашими записами та відкриває форму для запису першого набору даних.",
+    "later": "Пізніше",
+    "scratchNoteName": "Мої тренування"
   }
 }

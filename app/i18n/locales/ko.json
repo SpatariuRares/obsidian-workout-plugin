@@ -1009,5 +1009,15 @@
       "notABoolean": "{key}는 참 또는 거짓이어야 하지만, 현재 \"{value}\"입니다.",
       "notOneOf": "{key}는 {allowed} 중 하나여야 하지만, 현재 \"{value}\"입니다."
     }
+  },
+  "welcome": {
+    "title": "운동 플러그인에 오신 것을 환영합니다.",
+    "intro": "세트 진행 상황을 추적하고, 차트, 표, 대시보드로 확인하세요. 어떻게 시작하시겠습니까?",
+    "tryExamples": "예제 데이터를 사용하여 시도해 보세요.",
+    "tryExamplesDesc": "샘플 운동 루틴을 추가하고, 짧은 가이드에 액세스합니다.",
+    "startScratch": "처음부터 시작",
+    "startScratchDesc": "사용자 로그를 기록하고, 첫 번째 기록을 입력할 양식을 엽니다.",
+    "later": "나중에",
+    "scratchNoteName": "제 운동 기록"
   }
 }

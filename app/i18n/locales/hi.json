@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} के लिए पहली लॉग बनाएं",
     "createLogButtonAria": "इसके लिए लॉग बनाएं: {exerciseName}",
     "createLogButtonText": "इसके लिए लॉग बनाएं: {exerciseName}",
-    "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला"
+    "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला",
+    "exploreExampleData": "या उदाहरण डेटा के साथ खोज करें।"
   },
   "messages": {
     "codeInserted": "कोड ब्लॉक डाला गया",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} को सत्य या असत्य होना चाहिए, लेकिन यह \"{value}\" है।",
       "notOneOf": "{key} को {allowed} में से एक होना चाहिए, लेकिन यह \"{value}\" है।"
     }
+  },
+  "welcome": {
+    "title": "वर्कआउट प्लगइन में आपका स्वागत है",
+    "intro": "अपनी सेट को ट्रैक करें, फिर उन्हें चार्ट, तालिकाओं और डैशबोर्ड के रूप में देखें। आप कहां से शुरू करना चाहेंगे?",
+    "tryExamples": "उदाहरण डेटा के साथ प्रयास करें",
+    "tryExamplesDesc": "नमूना वर्कआउट जोड़ता है और एक संक्षिप्त गाइड खोलता है।",
+    "startScratch": "शुरू से",
+    "startScratchDesc": "यह आपके लॉग के साथ एक नोट बनाता है और पहली सेट को लॉग करने के लिए फॉर्म खोलता है।",
+    "later": "बाद में",
+    "scratchNoteName": "मेरा वर्कआउट"
   }
 }

@@ -464,7 +464,8 @@
     "createFirstLogButtonAria": "Eerste log aanmaken voor {exerciseName}",
     "createLogButtonAria": "Log aanmaken voor: {exerciseName}",
     "createLogButtonText": "Log aanmaken voor: {exerciseName}",
-    "noDataTitle": "Geen logs gevonden voor {exerciseName}"
+    "noDataTitle": "Geen logs gevonden voor {exerciseName}",
+    "exploreExampleData": "Of bekijk voorbeelddatasets"
   },
   "messages": {
     "codeInserted": "Codeblok ingevoegd",
@@ -1008,5 +1009,15 @@
       "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\".",
       "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Welkom bij het workout-plugin",
+    "intro": "Volg je sessies, en bekijk ze vervolgens in grafieken, tabellen en een overzichtspagina. Hoe wil je beginnen?",
+    "tryExamples": "Probeer met voorbeeldgegevens",
+    "tryExamplesDesc": "Voegt voorbeeldtrainingen toe en opent een korte handleiding.",
+    "startScratch": "Begin opnieuw",
+    "startScratchDesc": "Maakt een notitie met uw log en opent het formulier om de eerste set in te voeren.",
+    "later": "Later",
+    "scratchNoteName": "Mijn trainingen"
   }
 }

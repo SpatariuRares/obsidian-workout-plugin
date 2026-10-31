@@ -18,6 +18,13 @@ jest.mock("@app/features/modals/log/CreateLogModal", () => ({
   })),
 }));
 
+jest.mock("@app/services/examples/GettingStartedGuide", () => ({
+  openGettingStartedGuide: jest.fn().mockResolvedValue(true),
+}));
+
+import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
+import { t } from "@app/i18n";
+
 // Import after mocking
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 
@@ -115,6 +122,35 @@ describe("LogCallouts organism", () => {
         undefined,
         true,
       );
+    });
+  });
+
+  describe("example data link on an empty log", () => {
+    it("offers the example data and opens the getting started guide", () => {
+      const container = createObsidianContainer();
+      const plugin = createMockPlugin();
+
+      LogCallouts.renderCsvNoDataMessage(container, plugin, "Squat");
+
+      const link = container.querySelector(
+        ".workout-log-example-link",
+      ) as HTMLElement;
+      expect(link).toBeTruthy();
+      expect(link.textContent).toBe(t("logs.exploreExampleData"));
+
+      link.click();
+
+      expect(openGettingStartedGuide).toHaveBeenCalledWith(plugin);
+    });
+
+    it("is not shown when filters just match nothing", () => {
+      const container = createObsidianContainer();
+
+      LogCallouts.renderNoMatchMessage(container);
+
+      expect(
+        container.querySelector(".workout-log-example-link"),
+      ).toBeNull();
     });
   });
 

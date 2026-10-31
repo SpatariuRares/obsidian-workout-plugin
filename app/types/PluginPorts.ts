@@ -97,4 +97,5 @@ export type WorkoutPluginContext = AppPort &
   ExerciseDefinitionPort &
   ExerciseLibraryPort &
   MuscleTagPort &
+  EventBusPort &
   LogModalPort;

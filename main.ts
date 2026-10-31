@@ -33,6 +33,7 @@ import { LocalizationService, t } from "@app/i18n";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -185,6 +186,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       t("modal.titles.createLog"),
       () => this.createLogModalHandler.openModal(),
     );
+    markTourTarget(this.quickLogRibbonIcon, TOUR_TARGETS.ribbonIcon);
   }
 
   onunload() {

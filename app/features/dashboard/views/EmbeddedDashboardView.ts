@@ -24,6 +24,7 @@ import { DomUtils } from "@app/utils/DomUtils";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -164,6 +165,7 @@ export class EmbeddedDashboardView extends BaseView {
     const dashboardEl = container.createDiv({
       cls: "workout-dashboard",
     });
+    markTourTarget(dashboardEl, TOUR_TARGETS.dashboard);
 
     // Add dashboard title if provided
     if (params.title) {

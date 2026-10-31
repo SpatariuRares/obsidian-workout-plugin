@@ -8,6 +8,7 @@ import { StatCard, DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import { TOUR_TARGETS } from "@app/features/tour/tourTargets";
 
 export class QuickStatsCards {
   static render(
@@ -18,6 +19,7 @@ export class QuickStatsCards {
     const cardsEl = WidgetContainer.create(container, {
       title: t("dashboard.quickStats.title"),
       className: "workout-stats-cards",
+      tourTarget: TOUR_TARGETS.dashboardQuickStats,
     });
 
     const statsGrid = cardsEl.createDiv({

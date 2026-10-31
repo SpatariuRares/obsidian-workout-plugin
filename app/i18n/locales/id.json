@@ -817,7 +817,9 @@
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
-      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan."
+      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan.",
+      "takeTour": "Berikan penjelasan singkat tentang cara menggunakan fitur pencatatan, grafik, tabel, dan timer.",
+      "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -843,7 +845,8 @@
       "setupCSV": "Siapkan file CSV",
       "weightUnit": "Satuan berat",
       "showRibbonIcon": "Tampilkan ikon catatan cepat",
-      "welcomeWindow": "Jendela selamat datang"
+      "welcomeWindow": "Jendela selamat datang",
+      "takeTour": "Tur berpemandu"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -1015,7 +1018,10 @@
     "intro": "Lacak kemajuan Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
     "tryExamples": "Coba dengan data contoh",
     "startScratch": "Mulai dari awal",
-    "later": "Nanti"
+    "later": "Nanti",
+    "tryExamplesDesc": "Menambahkan contoh latihan, kemudian memandu Anda dalam menggunakan plugin tersebut.",
+    "startScratchDesc": "Memandu Anda dalam menggunakan plugin pada data Anda sendiri, mulai dari set pertama Anda.",
+    "tourOnYourData": "Anda sudah memiliki catatan latihan, jadi tur ini akan berjalan berdasarkan data Anda sendiri."
   },
   "tour": {
     "back": "Kembali",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set data."
       },
       "dashboard": {
-        "title": "Dasbor Anda"
+        "title": "Dasbor Anda",
+        "text": "Total, tren volume, dan latihan terbaru, semuanya dalam satu tampilan.",
+        "textMine": "Total, tren volume, dan latihan terbaru. Informasi ini akan terisi saat Anda mencatat lebih banyak set latihan."
       },
       "timer": {
         "title": "Hentikan timer",
@@ -1062,8 +1070,14 @@
         "text": "Buka palet perintah dan jalankan perintah \"Sisipkan Latihan\" untuk menambahkan tabel, grafik, timer, atau dasbor ke dalam catatan."
       },
       "end": {
-        "title": "Anda sudah siap"
+        "title": "Anda sudah siap",
+        "text": "Anda dapat mengikuti tur ini lagi dari Pengaturan → Memulai."
+      },
+      "muscles": {
+        "title": "Peta panas otot",
+        "text": "Peta panas menunjukkan otot mana yang Anda latih paling baru."
       }
-    }
+    },
+    "showMe": "Tampilkan"
   }
 }

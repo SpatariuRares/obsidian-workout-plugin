@@ -817,7 +817,9 @@
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
-      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde."
+      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
+      "takeTour": "Geben Sie einen kurzen Überblick über das Protokollieren, Diagramme, Tabellen und Timer.",
+      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -843,7 +845,8 @@
       "setupCSV": "CSV-Dateien einrichten",
       "weightUnit": "Gewichtseinheit",
       "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
-      "welcomeWindow": "Willkommensfenster"
+      "welcomeWindow": "Willkommensfenster",
+      "takeTour": "Führte Tour"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",
@@ -1015,7 +1018,10 @@
     "intro": "Verfolgen Sie Ihre Sätze, und sehen Sie sie anschließend als Diagramme, Tabellen und eine Übersicht. Wie möchten Sie beginnen?",
     "tryExamples": "Versuchen Sie es mit Beispieldaten",
     "startScratch": "Beginne von Grund auf",
-    "later": "Später"
+    "later": "Später",
+    "tryExamplesDesc": "Fügt Beispiel-Workouts hinzu und führt Sie anschließend durch die Verwendung des Plugins anhand dieser Workouts.",
+    "startScratchDesc": "Führt Sie Schritt für Schritt durch die Verwendung des Plugins mit Ihren eigenen Daten, beginnend mit Ihrem ersten Datensatz.",
+    "tourOnYourData": "Sie haben bereits ein Trainingsprotokoll, daher läuft die Tour auf Ihren eigenen Daten."
   },
   "tour": {
     "back": "Zurück",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Auf einem Smartphone wird die Grafik als Tabelle angezeigt. Sie ist zunächst fast leer, bis Sie einige Datensätze hinzugefügt haben."
       },
       "dashboard": {
-        "title": "Ihr Dashboard"
+        "title": "Ihr Dashboard",
+        "text": "Gesamtsummen, Trends bei der Trainingsmenge und kürzliche Trainingseinheiten – alles auf einen Blick.",
+        "textMine": "Gesamtsummen, Trends bei der Trainingsmenge und kürzliche Trainingseinheiten. Es füllt sich, wenn Sie weitere Sätze hinzufügen."
       },
       "timer": {
         "title": "Timer für die Pausenzeit",
@@ -1062,8 +1070,14 @@
         "text": "Öffnen Sie das Befehlsfenster und führen Sie den Befehl „Eintrag erstellen“ aus, um eine Tabelle, ein Diagramm, einen Timer oder ein Dashboard zu einer Notiz hinzuzufügen."
       },
       "end": {
-        "title": "Alles ist vorbereitet"
+        "title": "Alles ist vorbereitet",
+        "text": "Sie können diese Tour erneut von \"Einstellungen → Starten\" aus beginnen."
+      },
+      "muscles": {
+        "title": "Karte der Muskelwärme",
+        "text": "Die Heatmap zeigt, welche Muskeln Sie zuletzt trainiert haben."
       }
-    }
+    },
+    "showMe": "Zeige mir"
   }
 }

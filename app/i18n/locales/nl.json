@@ -817,7 +817,9 @@
       "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
-      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd."
+      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
+      "takeTour": "Geef een korte uitleg over het gebruik van logging, grafieken, tabellen en timers.",
+      "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -843,7 +845,8 @@
       "setupCSV": "CSV-bestanden instellen",
       "weightUnit": "Eenheid voor gewicht",
       "showRibbonIcon": "Pictogram voor snel loggen tonen",
-      "welcomeWindow": "Welkomstscherm"
+      "welcomeWindow": "Welkomstscherm",
+      "takeTour": "Gidsen rondleiding"
     },
     "messages": {
       "confirmDeletePreset": "Weet u zeker dat u deze voorinstelling wilt verwijderen?",
@@ -1015,7 +1018,10 @@
     "intro": "Volg je sessies, en bekijk ze vervolgens in grafieken, tabellen en een overzichtspagina. Hoe wil je beginnen?",
     "tryExamples": "Probeer met voorbeeldgegevens",
     "startScratch": "Begin opnieuw",
-    "later": "Later"
+    "later": "Later",
+    "tryExamplesDesc": "Voegt voorbeeldtrainingsschema's toe, waarna het je stap voor stap begeleidt bij het gebruik van de plugin.",
+    "startScratchDesc": "Leidt u stap voor stap door het gebruik van de plugin met uw eigen gegevens, beginnend met uw eerste set.",
+    "tourOnYourData": "U heeft al een trainingslog, dus de tour gebruikt uw eigen gegevens."
   },
   "tour": {
     "back": "Terug",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Op een telefoon wordt de grafiek weergegeven als een tabel. Deze is aanvankelijk vrij leeg, totdat u een paar sets hebt ingevoerd."
       },
       "dashboard": {
-        "title": "Uw dashboard"
+        "title": "Uw dashboard",
+        "text": "Overzichten, trends in het volume en recente trainingen, allemaal op één plek.",
+        "textMine": "Totaal, volume trends en recente trainingen. Het vult zich naarmate je meer sets registreert."
       },
       "timer": {
         "title": "Timer opnieuw starten",
@@ -1062,8 +1070,14 @@
         "text": "Open het commando-menu en voer een \"Toevoegen workout\" commando uit om een tabel, grafiek, timer of dashboard aan een notitie toe te voegen."
       },
       "end": {
-        "title": "Je bent klaar"
+        "title": "Je bent klaar",
+        "text": "U kunt deze tour opnieuw starten vanuit Instellingen → Beginnen."
+      },
+      "muscles": {
+        "title": "Kaart van de warmte in de spieren",
+        "text": "De heatmap toont welke spieren u het meest recent hebt getraind."
       }
-    }
+    },
+    "showMe": "Laat me zien"
   }
 }

@@ -817,7 +817,9 @@
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
       "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
-      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur."
+      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur.",
+      "takeTour": "Günlük kaydı, grafikler, tablolar ve zamanlayıcıları kısaca açıklayın.",
+      "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -843,7 +845,8 @@
       "setupCSV": "CSV dosyalarını kur",
       "weightUnit": "Ağırlık birimi",
       "showRibbonIcon": "Hızlı kayıt simgesini göster",
-      "welcomeWindow": "Hoş geldiniz penceresi"
+      "welcomeWindow": "Hoş geldiniz penceresi",
+      "takeTour": "Rehberli tur"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -1015,7 +1018,10 @@
     "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve bir kontrol paneli olarak görün. Nasıl başlamak istersiniz?",
     "tryExamples": "Örnek verilerle deneyin",
     "startScratch": "Yeni bir başlangıç yap",
-    "later": "Daha sonra"
+    "later": "Daha sonra",
+    "tryExamplesDesc": "Örnek egzersizleri ekler, ardından bu egzersizler için eklentiyi nasıl kullanacağınızı adım adım anlatır.",
+    "startScratchDesc": "Verdiğiniz veriler üzerinde, ilk veri kümenizden başlayarak, eklentiyi nasıl kullanacağınızı adım adım gösterir.",
+    "tourOnYourData": "Zaten bir antrenman kaydınız var, bu nedenle tur, kendi verileriniz üzerinde çalışacak."
   },
   "tour": {
     "back": "Geri",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Telefon üzerinde grafik, bir tablo olarak görüntülenir. Birkaç veri girişi yapana kadar neredeyse boş görünür."
       },
       "dashboard": {
-        "title": "Kontrol paneliniz"
+        "title": "Kontrol paneliniz",
+        "text": "Toplamlar, hacim eğilimleri ve son antrenmanlar, tek bir blokta.",
+        "textMine": "Toplamlar, hacim trendleri ve son antrenmanlar. Daha fazla set kaydettikçe otomatik olarak güncellenir."
       },
       "timer": {
         "title": "Tur süresi sayacı",
@@ -1062,8 +1070,14 @@
         "text": "Komut paletini açın ve bir notta tablo, grafik, zamanlayıcı veya kontrol paneli eklemek için \"Ekle Egzersiz\" komutunu çalıştırın."
       },
       "end": {
-        "title": "Hazır"
+        "title": "Hazır",
+        "text": "Bu turu, Ayarlar → Başlangıç bölümünden tekrar başlatabilirsiniz."
+      },
+      "muscles": {
+        "title": "Kas ısı haritası",
+        "text": "Isınma haritası, hangi kasları en son çalıştırdığınızı gösterir."
       }
-    }
+    },
+    "showMe": "Beni göster"
   }
 }

@@ -817,7 +817,9 @@
       "setupCSV": "Cree los archivos \"workout_logs.csv\" y \"muscle-tags.csv\" en la carpeta configurada.",
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
       "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento",
-      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo."
+      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo.",
+      "takeTour": "Resumen de cómo utilizar el registro, los gráficos, las tablas y los temporizadores.",
+      "welcomeWindow": "Mostrar nuevamente la ventana de bienvenida para comenzar con datos de ejemplo o desde cero."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -843,7 +845,8 @@
       "setupCSV": "Configurar archivos CSV",
       "weightUnit": "Unidad de peso",
       "showRibbonIcon": "Mostrar icono de registro rápido",
-      "welcomeWindow": "Ventana de bienvenida"
+      "welcomeWindow": "Ventana de bienvenida",
+      "takeTour": "Visita guiada"
     },
     "messages": {
       "confirmDeletePreset": "¿Está seguro de que desea eliminar este preajuste?",
@@ -1015,7 +1018,10 @@
     "intro": "Visualiza tus entrenamientos, luego observa los resultados en gráficos, tablas y un panel de control. ¿Cómo quieres empezar?",
     "tryExamples": "Prueba con datos de ejemplo",
     "startScratch": "Comenzar desde cero",
-    "later": "Más tarde"
+    "later": "Más tarde",
+    "tryExamplesDesc": "Añade ejemplos de entrenamientos y, a continuación, te guía a través del uso del complemento en esos ejemplos.",
+    "startScratchDesc": "Le guía a través del complemento utilizando sus propios datos, comenzando con su primer conjunto.",
+    "tourOnYourData": "Ya tienes un registro de tus entrenamientos, por lo que la aplicación utiliza tus propios datos."
   },
   "tour": {
     "back": "Regresar",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "En un teléfono, el gráfico se muestra como una tabla. Inicialmente, está casi vacía, pero se llena una vez que se registran algunos conjuntos de datos."
       },
       "dashboard": {
-        "title": "Tu panel de control"
+        "title": "Tu panel de control",
+        "text": "Totales, tendencias de volumen y entrenamientos recientes, todo en un solo bloque.",
+        "textMine": "Totales, tendencias de volumen y entrenamientos recientes. Se completa a medida que registras más series."
       },
       "timer": {
         "title": "Reiniciar temporizador",
@@ -1062,8 +1070,14 @@
         "text": "Abrir la paleta de comandos y ejecutar el comando \"Insertar ejercicio\" para añadir una tabla, gráfico, temporizador o panel de control a una nota."
       },
       "end": {
-        "title": "¡Ya está configurado!"
+        "title": "¡Ya está configurado!",
+        "text": "Puede repetir esta visita desde la sección de Configuración → Inicio."
+      },
+      "muscles": {
+        "title": "Mapa de calor muscular",
+        "text": "El mapa de calor muestra qué músculos entrenaste más recientemente."
       }
-    }
+    },
+    "showMe": "Muéstrame"
   }
 }

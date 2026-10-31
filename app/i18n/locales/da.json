@@ -817,7 +817,9 @@
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
       "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen",
-      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i."
+      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i.",
+      "takeTour": "Gennemgå kortfattet logning, diagrammer, tabeller og tidsmålere.",
+      "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
@@ -843,7 +845,8 @@
       "setupCSV": "Opsæt CSV-filer",
       "weightUnit": "Vægtenhed",
       "showRibbonIcon": "Vis ikon til hurtig logning",
-      "welcomeWindow": "Velkomstvindue"
+      "welcomeWindow": "Velkomstvindue",
+      "takeTour": "Guidet tur"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på, at du vil slette denne forudindstilling?",
@@ -1015,7 +1018,10 @@
     "intro": "Spor dine sæt, og se dem derefter som grafer, tabeller og et overblik. Hvordan vil du gerne starte?",
     "tryExamples": "Prøv med eksempeldata",
     "startScratch": "Start fra nul",
-    "later": "Senere"
+    "later": "Senere",
+    "tryExamplesDesc": "Tilføjer eksempeltræninger, og guider dig derefter igennem brugen af plugin'et på disse.",
+    "startScratchDesc": "Guider dig igennem plugin'et med dine egne data, og starter med dit første sæt.",
+    "tourOnYourData": "Du har allerede en træningslog, så turen baseres på dine egne data."
   },
   "tour": {
     "back": "Tilbage",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "På en mobiltelefon vises diagrammet som en tabel. Det er næsten tomt, indtil du har registreret et par sæt."
       },
       "dashboard": {
-        "title": "Dit overblik"
+        "title": "Dit overblik",
+        "text": "Samlede tal, udvikling i volumen og seneste træninger, alt sammen på ét sted.",
+        "textMine": "Samlet resultater, volumenstrends og seneste træninger. Den fyldes op, efterhånden som du registrerer flere sæt."
       },
       "timer": {
         "title": "Timer for pauser",
@@ -1062,8 +1070,14 @@
         "text": "Åbn kommandopalet og kør kommandoen \"Indsæt træning\" for at tilføje en tabel, et diagram, en timer eller et dashboard til en note."
       },
       "end": {
-        "title": "Du er klar."
+        "title": "Du er klar.",
+        "text": "Du kan gennemføre denne tur igen fra Indstillinger → Start."
+      },
+      "muscles": {
+        "title": "Muskelvarme-kort",
+        "text": "Heatkortet viser, hvilke muskler du har trænet senest."
       }
-    }
+    },
+    "showMe": "Vis mig"
   }
 }

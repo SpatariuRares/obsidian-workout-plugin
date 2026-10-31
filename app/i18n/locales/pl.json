@@ -817,7 +817,9 @@
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
-      "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony."
+      "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
+      "takeTour": "Krótko omówienie: rejestrowanie danych, wykresy, tabele i timery.",
+      "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
@@ -843,7 +845,8 @@
       "setupCSV": "Konfiguracja plików CSV",
       "weightUnit": "Jednostka wagi",
       "showRibbonIcon": "Pokaż ikonę szybkiego zapisu",
-      "welcomeWindow": "Okno powitalne"
+      "welcomeWindow": "Okno powitalne",
+      "takeTour": "Przewodnik po aplikacji"
     },
     "messages": {
       "confirmDeletePreset": "Czy na pewno chcesz usunąć to ustawienie?",
@@ -1015,7 +1018,10 @@
     "intro": "Śledź swoje serie, a następnie zobacz je w formie wykresów, tabel i panelu kontrolnego. Jak chcesz zacząć?",
     "tryExamples": "Wypróbuj z przykładowymi danymi",
     "startScratch": "Zacznij od zera",
-    "later": "Później"
+    "later": "Później",
+    "tryExamplesDesc": "Dodaje przykładowe treningi, a następnie prowadzi Cię przez konfigurację w oparciu o nie.",
+    "startScratchDesc": "Przewodnik po wtyczce, wykorzystujący Twoje własne dane, zaczynając od pierwszego zestawu.",
+    "tourOnYourData": "Używasz już dziennika treningów, więc turę prowadzi się na podstawie Twoich własnych danych."
   },
   "tour": {
     "back": "Wstecz",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Na telefonie wykres jest wyświetlany jako tabela. Początkowo jest prawie pusty, aż do momentu, gdy dodasz kilka zestawów danych."
       },
       "dashboard": {
-        "title": "Twój panel kontrolny"
+        "title": "Twój panel kontrolny",
+        "text": "Podsumowania, trendy dotyczące objętości i ostatnie treningi – wszystko w jednym miejscu.",
+        "textMine": "Podsumowania, trendy dotyczące objętości i ostatnie treningi. Zaznaczane dane są automatycznie dodawane, gdy rejestrujesz kolejne serie."
       },
       "timer": {
         "title": "Timer pauzy",
@@ -1062,8 +1070,14 @@
         "text": "Otwórz paletę poleceń i uruchom polecenie \"Dodaj ćwiczenie\", aby dodać tabelę, wykres, timer lub panel kontrolny do notatki."
       },
       "end": {
-        "title": "Gotowe"
+        "title": "Gotowe",
+        "text": "Można powtórzyć tę wycieczkę ponownie, przechodząc do ustawień → Rozpoczęcie."
+      },
+      "muscles": {
+        "title": "Mapa temperatury mięśni",
+        "text": "Mapa ciepła pokazuje, które mięśnie były najczęściej trenowane."
       }
-    }
+    },
+    "showMe": "Pokaż mi"
   }
 }

@@ -817,7 +817,9 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
+      "takeTour": "Paraqisni një përmbledhje të shkurtuar për regjistrim, grafikë, tabele dhe orë.",
+      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -843,7 +845,8 @@
       "setupCSV": "Konfiguro skedarët CSV",
       "weightUnit": "Njësia e peshës",
       "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
-      "welcomeWindow": "Vendi të mirësekomstës"
+      "welcomeWindow": "Vendi të mirësekomstës",
+      "takeTour": "Turor me udhësim"
     },
     "messages": {
       "confirmDeletePreset": "Jeni të sigurt që doni ta fshini këtë paracaktim?",
@@ -1015,7 +1018,10 @@
     "intro": "Παρακολлоvojini seritë tuaj, dhe më pas shohini ata në formë të grafikëve, tabeleve dhe një paneli. Si donit të filloni?",
     "tryExamples": "Provoni me të dhëna shembullore",
     "startScratch": "Filloni nga zero",
-    "later": "Më pas"
+    "later": "Më pas",
+    "tryExamplesDesc": "Shtron protokollime të shembullore, pastaj ju ndihmon të shijoni funksionin përmes tyre.",
+    "startScratchDesc": "Ju ndihmon të shijoni funksionalitetin e pluginit me të dhënat tuaja, duke filluar me setin e parë.",
+    "tourOnYourData": "Ju tashmë keni një regjistër stërdhor, kështu që turen ajo kryen me të dhënat tuaja."
   },
   "tour": {
     "back": "Para",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Në një telefon, sharta shfaqet si një tabelë. Ajo është pothuajse e bosh derisa të regjistrohen disa seritë."
       },
       "dashboard": {
-        "title": "Taqimi tual"
+        "title": "Taqimi tual",
+        "text": "Numra, tendenca e volumit dhe antrenimet e fundit, të gjitha në një seksion.",
+        "textMine": "Numra, tendenca e volumit dhe stila e stilit. A kompletohet ndërsa regjistrohet numri i serive."
       },
       "timer": {
         "title": "Përpashimi i kohës",
@@ -1062,8 +1070,14 @@
         "text": "Hapni paletin e komandave dhe ekz ekon një komandë për të shtuar një tabellë, grafik, timer ose dasbord në një notë."
       },
       "end": {
-        "title": "Jeni gati"
+        "title": "Jeni gati",
+        "text": "Ju mund të vazhdoni këtë udhëtim përsëri nga Settings → Fillimi."
+      },
+      "muscles": {
+        "title": "Karte e ngroheve të muskujve",
+        "text": "Harta e ngrohtë dëshmon se cilat muskuj i keni trajnuar më fundit."
       }
-    }
+    },
+    "showMe": "Shfaq"
   }
 }

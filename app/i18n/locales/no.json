@@ -817,7 +817,9 @@
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
       "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
-      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i."
+      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
+      "takeTour": "Gi en kort oversikt over logging, diagrammer, tabeller og tidsmålere.",
+      "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -843,7 +845,8 @@
       "setupCSV": "Sett opp CSV-filer",
       "weightUnit": "Enhet for vekt",
       "showRibbonIcon": "Vis ikon for hurtiglogging",
-      "welcomeWindow": "Velkomstvindu"
+      "welcomeWindow": "Velkomstvindu",
+      "takeTour": "Veiledet tur"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -1015,7 +1018,10 @@
     "intro": "Spor treningsøktene dine, og se dem deretter som grafer, tabeller og et dashbord. Hvordan vil du helst starte?",
     "tryExamples": "Prøv med eksempeldata",
     "startScratch": "Start fra bunnen av",
-    "later": "Senere"
+    "later": "Senere",
+    "tryExamplesDesc": "Legger til eksempeløvelser, og guider deg deretter gjennom bruken av plugin-et for disse.",
+    "startScratchDesc": "Veileder deg gjennom plugin-et med dine egne data, og starter med ditt første sett.",
+    "tourOnYourData": "Du har allerede en treningslogg, så turen bruker dine egne data."
   },
   "tour": {
     "back": "Tilbake",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "På en mobiltelefon vises diagrammet som en tabell. Det er nesten tomt før du logger inn noen sett."
       },
       "dashboard": {
-        "title": "Ditt dashbord"
+        "title": "Ditt dashbord",
+        "text": "Totale, trender i volum og nylige treningsøkter, alt samlet på ett sted.",
+        "textMine": "Totaler, trender i volum og nylige treningsøkter. Den fylles ut etter hvert som du registrerer flere sett."
       },
       "timer": {
         "title": "Tidsbegrenset",
@@ -1062,8 +1070,14 @@
         "text": "Åpne kommando-paletten og kjør kommandoen \"Legg til treningsøkt\" for å legge til en tabell, et diagram, en timer eller et dashbord i en notat."
       },
       "end": {
-        "title": "Du er klar."
+        "title": "Du er klar.",
+        "text": "Du kan ta denne turen igjen fra Innstillinger → Begynn."
+      },
+      "muscles": {
+        "title": "Muskelvarmekart",
+        "text": "Varmekartet viser hvilke muskler du har trent sist."
       }
-    }
+    },
+    "showMe": "Vis meg"
   }
 }

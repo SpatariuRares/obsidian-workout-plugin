@@ -817,7 +817,9 @@
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
-      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé."
+      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
+      "takeTour": "Présentez brièvement les fonctionnalités de journalisation, de graphiques, de tableaux et de minuteurs.",
+      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -843,7 +845,8 @@
       "setupCSV": "Configurer les fichiers CSV",
       "weightUnit": "Unité de poids",
       "showRibbonIcon": "Afficher l'icône de saisie rapide",
-      "welcomeWindow": "Fenêtre de bienvenue"
+      "welcomeWindow": "Fenêtre de bienvenue",
+      "takeTour": "Visite guidée"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
@@ -1015,7 +1018,10 @@
     "intro": "Suivez vos séances, puis visualisez-les sous forme de graphiques, de tableaux et de tableau de bord. Comment souhaitez-vous commencer ?",
     "tryExamples": "Essayez avec des données d'exemple",
     "startScratch": "Commencer à zéro",
-    "later": "Plus tard"
+    "later": "Plus tard",
+    "tryExamplesDesc": "Ajoute des exemples d'entraînements, puis vous guide à travers l'utilisation du plugin avec ces exemples.",
+    "startScratchDesc": "Vous guide à travers l'utilisation du plugin sur vos propres données, en commençant par votre premier ensemble.",
+    "tourOnYourData": "Vous avez déjà un journal d'entraînement, donc le programme s'exécute sur vos propres données."
   },
   "tour": {
     "back": "Retour",
@@ -1046,7 +1052,9 @@
         "mobileTextMine": "Sur un téléphone, le graphique est affiché sous forme de tableau. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries."
       },
       "dashboard": {
-        "title": "Votre tableau de bord"
+        "title": "Votre tableau de bord",
+        "text": "Résultats, tendances du volume et séances d'entraînement récentes, le tout regroupé.",
+        "textMine": "Résultats, tendances du volume et séances d'entraînement récentes. Il se remplit à mesure que vous enregistrez davantage de séries."
       },
       "timer": {
         "title": "Minuteur de pause",
@@ -1062,8 +1070,14 @@
         "text": "Ouvrez la palette de commandes et exécutez la commande \"Insérer un entraînement\" pour ajouter une table, un graphique, un minuteur ou un tableau de bord à une note."
       },
       "end": {
-        "title": "Vous êtes prêt."
+        "title": "Vous êtes prêt.",
+        "text": "Vous pouvez refaire cette visite à nouveau depuis les Paramètres → Début."
+      },
+      "muscles": {
+        "title": "Carte de chaleur musculaire",
+        "text": "La carte de chaleur indique quels muscles vous avez le plus récemment sollicités."
       }
-    }
+    },
+    "showMe": "Montrez-moi"
   }
 }

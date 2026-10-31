@@ -100,11 +100,10 @@ export class CustomProtocolsSettings {
   private formatProtocolDetails(
     protocol: CustomProtocolConfig,
   ): DocumentFragment {
-    const fragment = document.createDocumentFragment();
+    const fragment = createFragment();
 
     // Create a container for the badge preview and details
-    const container = fragment.createEl("span");
-
+    const container = fragment.createSpan();
 
     // Add abbreviation badge preview
     ProtocolBadge.create(container, {
@@ -113,7 +112,7 @@ export class CustomProtocolsSettings {
     });
 
     // Add ID info
-    container.createEl("span", { text: `ID: ${protocol.id}` });
+    container.createSpan({ text: `ID: ${protocol.id}` });
 
     return fragment;
   }

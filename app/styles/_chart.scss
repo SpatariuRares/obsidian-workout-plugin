@@ -94,7 +94,6 @@
 
 @media print {
   .workout-charts-container {
-    .workout-charts-controls,
     .workout-log-table th,
     .workout-log-table td {
       border: var(--workout-border-thin) solid
@@ -102,19 +101,11 @@
       padding: var(--workout-space-sm);
     }
 
-    .workout-charts-controls {
-      display: none !important;
-    }
-
     .workout-log-table {
       border-collapse: collapse;
       width: 100%;
       font-size: var(--workout-font-sm);
     }
-  }
-
-  .workout-embedded-chart-debug {
-    display: none !important;
   }
 
   .workout-embedded-chart-table-fallback {

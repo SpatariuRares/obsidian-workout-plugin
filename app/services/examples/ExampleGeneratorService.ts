@@ -1,4 +1,4 @@
-import { App, normalizePath, Notice, TFolder } from "obsidian";
+import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
 import { t } from "@app/i18n";
 import {
   generateGettingStartedContent,
@@ -190,14 +190,12 @@ export class ExampleGeneratorService {
     const existingFile =
       this.app.vault.getAbstractFileByPath(filePath);
 
-    if (existingFile && !overwrite) {
-      return;
-    }
-
-    if (existingFile) {
-      await this.app.vault.modify(existingFile as any, content);
-    } else {
+    if (!existingFile) {
       await this.app.vault.create(filePath, content);
+    } else if (!(existingFile instanceof TFile)) {
+      throw new Error(`Path '${filePath}' exists but is not a file.`);
+    } else if (overwrite) {
+      await this.app.vault.modify(existingFile, content);
     }
   }
 }

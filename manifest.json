@@ -4,7 +4,7 @@
   "description": "Log every set from your phone, right at the gym, and see your progress in your notes: workout tables, charts, rest timers and a dashboard with PRs, trends and a muscle heat map. Mobile-first, kg or lb per set, all in one CSV file.",
   "id": "workout-planner",
   "isDesktopOnly": false,
-  "minAppVersion": "0.15.0",
+  "minAppVersion": "1.6.6",
   "name": "Workout Planner",
   "version": "2.3.2",
   "fundingUrl": "https://buymeacoffee.com/spatariurares"

@@ -5,32 +5,12 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
-import { EmbeddedTableParams } from "@app/features/tables/types";
 import { t } from "@app/i18n";
-
-type CreateLogPlugin = ConstructorParameters<
-  typeof CreateLogModal
->[1];
-type ExerciseActionPlugin = Parameters<
-  typeof ExerciseActionSelect.render
->[1]["plugin"];
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
  */
 export class LogCallouts {
-  private static asCreateLogPlugin(
-    plugin: WorkoutPluginContext,
-  ): CreateLogPlugin {
-    return plugin as unknown as CreateLogPlugin;
-  }
-
-  private static asExerciseActionPlugin(
-    plugin: WorkoutPluginContext,
-  ): ExerciseActionPlugin {
-    return plugin as unknown as ExerciseActionPlugin;
-  }
-
   private static openCreateLogModal(
     plugin: WorkoutPluginContext,
     exerciseName?: string,
@@ -43,7 +23,7 @@ export class LogCallouts {
 
     new CreateLogModal(
       plugin.app,
-      this.asCreateLogPlugin(plugin),
+      plugin,
       exerciseName,
       currentPageLink,
       undefined,
@@ -100,7 +80,7 @@ export class LogCallouts {
 
       new CreateLogModal(
         plugin.app,
-        this.asCreateLogPlugin(plugin),
+        plugin,
         exerciseName,
         link,
         undefined,
@@ -112,11 +92,11 @@ export class LogCallouts {
       ExerciseActionSelect.render(buttonDiv, {
         exerciseName,
         app: plugin.app,
-        plugin: this.asExerciseActionPlugin(plugin),
+        plugin,
         params: {
           exercise: exerciseName,
           id: codeBlockId,
-        } as EmbeddedTableParams,
+        },
       });
     }
   }
@@ -157,7 +137,7 @@ export class LogCallouts {
 
         new CreateLogModal(
           plugin.app,
-          this.asCreateLogPlugin(plugin),
+          plugin,
           exerciseName,
           currentPageLink,
           prefillData,

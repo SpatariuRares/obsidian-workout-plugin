@@ -21,7 +21,7 @@ export class ChartTableViews {
     labels: string[],
     volumeData: number[],
   ): void {
-    const tableDiv = container.createEl("div", {
+    const tableDiv = container.createDiv({
       cls: "workout-charts-table-fallback",
     });
 
@@ -46,7 +46,7 @@ export class ChartTableViews {
     });
 
     tableDiv
-      .createEl("div", { cls: "workout-charts-footer" })
+      .createDiv({ cls: "workout-charts-footer" })
       .appendText(
         `${t("icons.status.info")} ${t("charts.fallbackTableMessage")}`,
       );
@@ -63,7 +63,7 @@ export class ChartTableViews {
     chartType: CHART_DATA_TYPE,
     params: EmbeddedChartParams,
   ): void {
-    const mobileTableContainer = container.createEl("div", {
+    const mobileTableContainer = container.createDiv({
       cls: "workout-chart-mobile-table",
     });
 

@@ -32,7 +32,7 @@ export class VolumeAnalytics {
     });
 
     // Create chart container
-    const chartContainer = analyticsEl.createEl("div", {
+    const chartContainer = analyticsEl.createDiv({
       cls: "workout-dashboard-chart-container",
     });
     if (options.chartId) {
@@ -63,7 +63,7 @@ export class VolumeAnalytics {
     );
 
     // Volume by muscle group breakdown
-    const muscleGroupEl = analyticsEl.createEl("div", {
+    const muscleGroupEl = analyticsEl.createDiv({
       cls: "workout-muscle-group-breakdown",
     });
 

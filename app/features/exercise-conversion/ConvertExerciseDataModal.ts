@@ -60,7 +60,7 @@ export class ConvertExerciseDataModal extends ModalBase {
     // Conversion Type Section
     this.typeSelect = new ConversionTypeSelect(
       mainContainer,
-      async (typeId) => this.handleTargetTypeChange(typeId),
+      (typeId) => void this.handleTargetTypeChange(typeId),
       (update) => {
         this.updateFrontmatter = update;
       },
@@ -107,22 +107,22 @@ export class ConvertExerciseDataModal extends ModalBase {
       { showCreateButton: false },
     );
 
-    elements.exerciseInput.addEventListener("change", async () => {
+    elements.exerciseInput.addEventListener("change", () => {
       this.selectedExercise = elements.exerciseInput.value.trim();
-      await this.handleExerciseChange();
+      void this.handleExerciseChange();
     });
 
-    elements.exerciseInput.addEventListener("blur", async () => {
+    elements.exerciseInput.addEventListener("blur", () => {
       const newValue = elements.exerciseInput.value.trim();
       if (newValue && newValue !== this.selectedExercise) {
         this.selectedExercise = newValue;
-        await this.handleExerciseChange();
+        void this.handleExerciseChange();
       }
     });
 
     const typeGroup = this.createFormGroup(section);
     typeGroup.createEl("label", { text: t("convert.currentType") });
-    this.currentTypeDisplay = typeGroup.createEl("span", {
+    this.currentTypeDisplay = typeGroup.createSpan({
       cls: "workout-convert-current-type",
       text: "—",
     });
@@ -144,7 +144,10 @@ export class ConvertExerciseDataModal extends ModalBase {
       variant: BUTTONVARIANT.PRIMARY,
     });
     Button.setDisabled(this.convertButton, true);
-    Button.onClick(this.convertButton, () => this.handleConvert());
+    Button.onClick(
+      this.convertButton,
+      () => void this.handleConvert(),
+    );
   }
 
   private async handleExerciseChange(): Promise<void> {

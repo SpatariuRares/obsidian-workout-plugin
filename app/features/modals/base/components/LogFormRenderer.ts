@@ -214,7 +214,7 @@ export class LogFormRenderer {
       return;
     }
 
-    const chipSection = container.createEl("div", {
+    const chipSection = container.createDiv({
       cls: "workout-log-recent-section",
     });
     const exerciseFieldGroup = exerciseInput.closest(
@@ -232,7 +232,7 @@ export class LogFormRenderer {
       cls: "workout-log-recent-label",
     });
 
-    const chipContainer = chipSection.createEl("div", {
+    const chipContainer = chipSection.createDiv({
       cls: "workout-log-recent-chips",
     });
 
@@ -275,10 +275,10 @@ export class LogFormRenderer {
     exerciseInput.addEventListener("change", () => void handler());
 
     // Also listen for blur to catch manual typing
-    let blurTimeout: ReturnType<typeof setTimeout> | null = null;
+    let blurTimeout: number | null = null;
     exerciseInput.addEventListener("blur", () => {
-      if (blurTimeout) clearTimeout(blurTimeout);
-      blurTimeout = setTimeout(() => void handler(), 250);
+      if (blurTimeout) window.clearTimeout(blurTimeout);
+      blurTimeout = window.setTimeout(() => void handler(), 250);
     });
   }
 

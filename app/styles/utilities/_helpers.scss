@@ -2,31 +2,11 @@
    GENERAL HELPERS
    ============================================================================ */
 
-/* Trend color classes */
-.workout-trend-color {
-  .workout-trend-color-green {
-    color: var(--workout-text-success) !important;
-  }
-  .workout-trend-color-red {
-    color: var(--workout-text-error) !important;
-  }
-  .workout-trend-color-orange {
-    color: var(--workout-text-warning) !important;
-  }
-  .workout-trend-color-accent {
-    color: var(--workout-text-accent) !important;
-  }
-}
-
-/* Display Control Classes */
-.workout-display-none {
-  display: none !important;
-}
-.workout-display-block {
-  display: block !important;
-}
-.workout-display-inline-block {
-  display: inline-block !important;
+/* Display control: hides a form field the current choice doesn't use.
+   Doubled class so it beats the field's own `display: flex` rules, which
+   come later in the stylesheet. */
+.workout-display-none.workout-display-none {
+  display: none;
 }
 
 /* Opacity Control Classes */
@@ -39,13 +19,13 @@
 
 /* Flexbox Utilities */
 .workout-flex {
-  display: flex !important;
+  display: flex;
 }
 
 .workout-items-center {
-  align-items: center !important;
+  align-items: center;
 }
 
 .workout-gap-2 {
-  gap: var(--workout-space-sm) !important;
+  gap: var(--workout-space-sm);
 }

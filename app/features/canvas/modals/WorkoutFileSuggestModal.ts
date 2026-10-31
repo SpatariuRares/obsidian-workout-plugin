@@ -23,6 +23,7 @@ export class WorkoutFileSuggestModal extends FuzzySuggestModal<TFile> {
    * Get all markdown files to show in the suggester
    */
   getItems(): TFile[] {
+    // Vault-wide on purpose: the canvas source note can be anywhere
     return this.app.vault.getMarkdownFiles().sort((a, b) => {
       // Sort by modification time (most recent first)
       return b.stat.mtime - a.stat.mtime;

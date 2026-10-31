@@ -49,7 +49,7 @@ export class MuscleTagsWidget {
     });
 
     // Create muscle tags grid
-    const tagsGrid = widgetEl.createEl("div", {
+    const tagsGrid = widgetEl.createDiv({
       cls: "workout-muscle-tags-grid",
     });
 
@@ -64,7 +64,7 @@ export class MuscleTagsWidget {
     });
 
     // Add info section
-    const infoEl = widgetEl.createEl("div", {
+    const infoEl = widgetEl.createDiv({
       cls: "workout-muscle-tags-info",
     });
 

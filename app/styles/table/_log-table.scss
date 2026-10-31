@@ -135,11 +135,8 @@
       /* Protocol badge and notes go on a second line under the numbers:
          squeezed into the first line they broke words letter by letter.
          The ::after item is a full-width line break, added only to rows
-         that have something to show there. */
-      tr:has(
-          > td.workout-table-notes-cell:not(:empty),
-          > td.workout-table-protocol-cell:not(:empty)
-        )::after {
+         that have something to show there (TableRenderer marks them). */
+      tr.workout-table-row-with-details::after {
         content: "";
         order: 1;
         flex-basis: 100%;

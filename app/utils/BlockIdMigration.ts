@@ -37,6 +37,7 @@ export interface BlockIdMigrationResult {
 export async function runAddMissingBlockIds(
   app: App,
 ): Promise<BlockIdMigrationResult> {
+  // Vault-wide on purpose: the migration covers every note with a plugin block
   const files = app.vault.getMarkdownFiles();
   let totalAdded = 0;
   let modifiedFiles = 0;

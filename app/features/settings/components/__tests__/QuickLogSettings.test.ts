@@ -7,7 +7,9 @@ const toggles = new Map<string, (value: boolean) => Promise<void>>();
 jest.mock("obsidian", () => {
   class Setting {
     private name = "";
-    controlEl = { createEl: jest.fn(() => ({ toggleClass: jest.fn() })) };
+    controlEl = {
+      createDiv: jest.fn(() => ({ toggleClass: jest.fn() })),
+    };
     setName(name: string) {
       this.name = name;
       return this;

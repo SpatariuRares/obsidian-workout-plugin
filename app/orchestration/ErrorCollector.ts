@@ -17,7 +17,7 @@ export interface ErrorLogData {
   script?: string;
   method?: string;
   error: Error | string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
 }
 
 export type ErrorType =
@@ -77,7 +77,7 @@ export class ErrorCollector {
     instance.errorQueue.push(normalized);
 
     // Generate simple ID (timestamp + random)
-    const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const id = `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 
     return id;
   }

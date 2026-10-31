@@ -316,7 +316,7 @@ export class WorkoutLogFile {
       if (!file) {
         if (attempt < LOAD_RETRIES) {
           await new Promise((resolve) =>
-            setTimeout(resolve, this.retryDelayMs),
+            window.setTimeout(resolve, this.retryDelayMs),
           );
           return this.load(attempt + 1);
         }

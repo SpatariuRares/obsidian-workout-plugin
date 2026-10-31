@@ -85,7 +85,7 @@ export class DurationComparison {
 
     // Check if there's enough data
     if (sessions.length === 0) {
-      widgetEl.createEl("div", {
+      widgetEl.createDiv({
         text: t("dashboard.durationComparison.noData"),
         cls: "workout-duration-comparison-no-data",
       });
@@ -243,7 +243,7 @@ export class DurationComparison {
     container: HTMLElement,
     sessions: WorkoutSession[],
   ): void {
-    const tableContainer = container.createEl("div", {
+    const tableContainer = container.createDiv({
       cls: "workout-duration-comparison-table-container",
     });
 
@@ -278,11 +278,11 @@ export class DurationComparison {
       const workoutCell = row.createEl("td", {
         cls: "workout-duration-comparison-workout-cell",
       });
-      workoutCell.createEl("div", {
+      workoutCell.createDiv({
         text: session.workout,
         cls: "workout-duration-comparison-workout-name",
       });
-      workoutCell.createEl("div", {
+      workoutCell.createDiv({
         text: session.date,
         cls: "workout-duration-comparison-workout-date",
       });
@@ -312,7 +312,7 @@ export class DurationComparison {
             ? "workout-duration-comparison-variance-moderate"
             : "workout-duration-comparison-variance-poor";
 
-      varianceCell.createEl("span", {
+      varianceCell.createSpan({
         text: `${varianceSign}${session.variancePercent.toFixed(0)}%`,
         cls: varianceClass,
       });
@@ -328,18 +328,18 @@ export class DurationComparison {
     container: HTMLElement,
     trend: VarianceTrend,
   ): void {
-    const trendEl = container.createEl("div", {
+    const trendEl = container.createDiv({
       cls: "workout-duration-comparison-trend",
     });
 
     // Title
-    trendEl.createEl("div", {
+    trendEl.createDiv({
       text: t("dashboard.durationComparison.varianceTrendTitle"),
       cls: "workout-duration-comparison-trend-title",
     });
 
     // Trend message with icon
-    const messageEl = trendEl.createEl("div", {
+    const messageEl = trendEl.createDiv({
       cls: `workout-duration-comparison-trend-message workout-duration-comparison-trend-${trend.direction}`,
     });
 
@@ -351,7 +351,7 @@ export class DurationComparison {
           ? "↘"
           : "→";
 
-    messageEl.createEl("span", {
+    messageEl.createSpan({
       text: icon,
       cls: "workout-duration-comparison-trend-icon",
     });
@@ -363,13 +363,13 @@ export class DurationComparison {
           ? t("dashboard.durationComparison.varianceTrendDeclining")
           : t("dashboard.durationComparison.varianceTrendStable");
 
-    messageEl.createEl("span", {
+    messageEl.createSpan({
       text: trendText,
       cls: "workout-duration-comparison-trend-text",
     });
 
     // Average variance stat
-    trendEl.createEl("div", {
+    trendEl.createDiv({
       text: t("dashboard.durationComparison.avgVarianceStat", { value: trend.averageVariance.toFixed(0) }),
       cls: "workout-duration-comparison-trend-stat",
     });

@@ -4,6 +4,9 @@
 # The refs being pushed, before the checks below can read stdin
 PUSHED_REFS=$(cat)
 
+# Fail fast when package-lock.json is out of sync with package.json (what CI's npm ci checks)
+npm ci --dry-run --ignore-scripts --no-audit --no-fund > /dev/null
+
 npm run typecheck
 npm run lint
 npm run test:coverage

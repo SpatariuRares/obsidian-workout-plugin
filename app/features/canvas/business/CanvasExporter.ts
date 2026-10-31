@@ -501,8 +501,8 @@ export class CanvasExporter {
           id: this.generateEdgeId(i),
           fromNode: nodes[i].id,
           toNode: nodes[i + 1].id,
-          fromSide: fromSide as "top" | "right" | "bottom" | "left",
-          toSide: toSide as "top" | "right" | "bottom" | "left",
+          fromSide: fromSide,
+          toSide: toSide,
           toEnd: "arrow",
           color: "6", // purple for superset connection
           label: "superset",

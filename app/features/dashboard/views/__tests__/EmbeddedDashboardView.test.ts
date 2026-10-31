@@ -147,3 +147,31 @@ describe("EmbeddedDashboardView widget params", () => {
     );
   });
 });
+
+describe("EmbeddedDashboardView bento layout", () => {
+  beforeAll(() => {
+    (
+      window as unknown as { ResizeObserver: unknown }
+    ).ResizeObserver = FakeResizeObserver;
+  });
+
+  it("gives each widget its row span as a CSS variable, so phones can drop it without !important", async () => {
+    const widgets: HTMLElement[] = [];
+    (VolumeAnalytics.render as jest.Mock).mockImplementation(
+      (container: HTMLElement) => {
+        widgets.push(
+          container.createDiv({ cls: "workout-dashboard-widget" }),
+        );
+      },
+    );
+
+    await render({});
+
+    expect(widgets).toHaveLength(1);
+    expect(
+      widgets[0].style.getPropertyValue("--workout-widget-row-end"),
+    ).toMatch(/^span \d+$/);
+    // An inline grid-row-end would beat the phone layout's `grid-row: auto`
+    expect(widgets[0].style.gridRowEnd).toBe("");
+  });
+});

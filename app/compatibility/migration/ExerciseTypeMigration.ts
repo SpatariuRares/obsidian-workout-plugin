@@ -29,7 +29,7 @@ export class ExerciseTypeMigration {
       for (const page of untyped) {
         await this.plugin.app.fileManager.processFrontMatter(
           page.file,
-          (frontmatter) => {
+          (frontmatter: Record<string, unknown>) => {
             frontmatter["exercise_type"] = "strength";
           },
         );

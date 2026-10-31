@@ -62,7 +62,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Create form container
-    const formContainer = contentEl.createEl("div", {
+    const formContainer = contentEl.createDiv({
       cls: "workout-charts-form",
     });
 
@@ -86,7 +86,7 @@ export class CreateExercisePageModal extends ModalBase {
     exerciseTypeSelect.value = DEFAULT_EXERCISE_TYPE_ID;
 
     // Custom parameters section (initially hidden)
-    this.customParametersContainer = formContainer.createEl("div", {
+    this.customParametersContainer = formContainer.createDiv({
       cls: "workout-charts-custom-parameters-section",
     });
     DomUtils.setCssProps(this.customParametersContainer, {
@@ -95,7 +95,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Custom parameters header with add button
     const customParamsHeader =
-      this.customParametersContainer.createEl("div", {
+      this.customParametersContainer.createDiv({
         cls: "workout-charts-custom-params-header",
       });
     customParamsHeader.createEl("label", {
@@ -110,7 +110,7 @@ export class CreateExercisePageModal extends ModalBase {
 
     // Container for parameter rows
     const paramRowsContainer =
-      this.customParametersContainer.createEl("div", {
+      this.customParametersContainer.createDiv({
         cls: "workout-charts-param-rows",
       });
 
@@ -218,12 +218,12 @@ export class CreateExercisePageModal extends ModalBase {
   }
 
   private addParameterRow(container: HTMLElement): void {
-    const rowContainer = container.createEl("div", {
+    const rowContainer = container.createDiv({
       cls: "workout-charts-param-row",
     });
 
     // Key input
-    const keyGroup = rowContainer.createEl("div", {
+    const keyGroup = rowContainer.createDiv({
       cls: "workout-charts-param-field",
     });
     keyGroup.createEl("label", {
@@ -235,7 +235,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Label input
-    const labelGroup = rowContainer.createEl("div", {
+    const labelGroup = rowContainer.createDiv({
       cls: "workout-charts-param-field",
     });
     labelGroup.createEl("label", {
@@ -247,7 +247,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Type select
-    const typeGroup = rowContainer.createEl("div", {
+    const typeGroup = rowContainer.createDiv({
       cls: "workout-charts-param-field",
     });
     typeGroup.createEl("label", {
@@ -264,7 +264,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Unit input
-    const unitGroup = rowContainer.createEl("div", {
+    const unitGroup = rowContainer.createDiv({
       cls: "workout-charts-param-field",
     });
     unitGroup.createEl("label", {
@@ -276,7 +276,7 @@ export class CreateExercisePageModal extends ModalBase {
     });
 
     // Required checkbox
-    const requiredGroup = rowContainer.createEl("div", {
+    const requiredGroup = rowContainer.createDiv({
       cls: "workout-charts-param-field workout-charts-param-checkbox",
     });
     const requiredCheckbox = Input.create(requiredGroup, {

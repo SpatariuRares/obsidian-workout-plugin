@@ -76,7 +76,7 @@ export class ProtocolDistribution {
 
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
-      widgetEl.createEl("div", {
+      widgetEl.createDiv({
         text: t("dashboard.protocolDistribution.noData"),
         cls: "workout-protocol-no-data",
       });
@@ -95,7 +95,7 @@ export class ProtocolDistribution {
     }
 
     // Create chart container
-    const chartContainer = widgetEl.createEl("div", {
+    const chartContainer = widgetEl.createDiv({
       cls: "workout-protocol-chart-container",
     });
 
@@ -212,7 +212,7 @@ export class ProtocolDistribution {
       return activeFilter && s.protocol === activeFilter ? 4 : 2;
     });
 
-    const config: ChartConfiguration<"pie", number[], string> = {
+    const config: ChartConfiguration = {
       type: "pie",
       data: {
         labels: stats.map((s) => s.label),
@@ -266,11 +266,7 @@ export class ProtocolDistribution {
       },
     };
 
-    ChartRenderer.renderConfiguredChart(
-      chartId,
-      canvas,
-      config as ChartConfiguration,
-    );
+    ChartRenderer.renderConfiguredChart(chartId, canvas, config);
   }
 
   /**
@@ -286,7 +282,7 @@ export class ProtocolDistribution {
     onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
   ): void {
-    const legendEl = container.createEl("div", {
+    const legendEl = container.createDiv({
       cls: "workout-protocol-legend",
     });
 

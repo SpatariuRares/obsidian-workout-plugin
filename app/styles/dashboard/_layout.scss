@@ -32,6 +32,11 @@
     grid-auto-flow: dense;
   }
 
+  /* Row span measured by EmbeddedDashboardView (masonry packing) */
+  .workout-dashboard-widget {
+    grid-row-end: var(--workout-widget-row-end, auto);
+  }
+
   /* Full-width widgets - always span all columns */
   .workout-summary-widget,
   .workout-stats-cards {
@@ -63,8 +68,9 @@
     .workout-stats-cards,
     .widget-wide,
     .workout-dashboard-widget {
-      grid-column: 1 / -1 !important;
-      grid-row: auto !important;
+      /* Same specificity as the desktop rules above, and later: wins */
+      grid-column: 1 / -1;
+      grid-row: auto;
     }
 
     /* At the gym the actions matter more than the stats: show them first */

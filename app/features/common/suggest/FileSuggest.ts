@@ -9,6 +9,7 @@ export class FileSuggest extends AbstractInputSuggest<TFile> {
   }
 
   getSuggestions(query: string): TFile[] {
+    // Vault-wide on purpose: any note can be a workout, wherever it lives
     const files = this.app.vault.getMarkdownFiles();
     const lowerCaseQuery = query.toLowerCase();
 

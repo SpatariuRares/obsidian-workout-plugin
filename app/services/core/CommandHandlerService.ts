@@ -135,7 +135,7 @@ export class CommandHandlerService {
       id: "export-workout-to-canvas",
       name: t("commands.exportWorkoutToCanvas"),
       callback: () => {
-        new WorkoutFileSuggestModal(this.app, async (file) => {
+        new WorkoutFileSuggestModal(this.app, (file) => {
           new CanvasExportModal(
             this.app,
             this.plugin,

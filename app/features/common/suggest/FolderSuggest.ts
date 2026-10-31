@@ -9,6 +9,7 @@ export class FolderSuggest extends AbstractInputSuggest<TFolder> {
   }
 
   getSuggestions(query: string): TFolder[] {
+    // Vault-wide on purpose: a folder picker must offer every folder
     const abstractFiles = this.app.vault.getAllLoadedFiles();
     const folders: TFolder[] = [];
     const lowerCaseQuery = query.toLowerCase();

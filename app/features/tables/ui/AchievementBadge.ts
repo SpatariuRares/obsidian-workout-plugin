@@ -1,8 +1,9 @@
-import { App } from "obsidian";
+import { App, Notice } from "obsidian";
 import { Button, BUTTONVARIANT, Text } from "@app/components/atoms";
 import { TargetCalculator } from "@app/features/tables/business/TargetCalculator";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
+import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 
 /**
@@ -101,9 +102,18 @@ export class AchievementBadge {
 
     Button.onClick(
       dismissButton,
-      async () => {
-        await callbacks.onDismiss();
-        badgeDiv.remove();
+      () => {
+        // Keep the badge if the dismissal was not saved
+        callbacks.onDismiss().then(
+          () => badgeDiv.remove(),
+          (error: unknown) => {
+            new Notice(
+              t("modal.notices.genericError", {
+                error: ErrorUtils.getErrorMessage(error),
+              }),
+            );
+          },
+        );
       },
       signal,
     );

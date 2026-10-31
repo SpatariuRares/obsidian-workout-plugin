@@ -8,13 +8,13 @@ import { t } from "@app/i18n";
  */
 export class ConfirmModal extends ModalBase {
   private message: string;
-  private onConfirm: () => void;
+  private onConfirm: () => void | Promise<void>;
   private onCancel?: () => void;
 
   constructor(
     app: App,
     message: string,
-    onConfirm: () => void,
+    onConfirm: () => void | Promise<void>,
     onCancel?: () => void,
   ) {
     super(app);
@@ -60,7 +60,7 @@ export class ConfirmModal extends ModalBase {
       variant: BUTTONVARIANT.PRIMARY,
     });
     Button.onClick(confirmBtn, () => {
-      this.onConfirm();
+      void this.onConfirm();
       this.close();
     });
 

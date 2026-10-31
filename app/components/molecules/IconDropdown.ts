@@ -49,7 +49,7 @@ export class IconDropdown {
     parent: HTMLElement,
     props: IconDropdownProps,
   ): IconDropdownResult {
-    const wrapper = parent.createEl("div", {
+    const wrapper = parent.createDiv({
       cls: `workout-icon-dropdown ${props.className || ""}`.trim(),
     });
 
@@ -64,7 +64,7 @@ export class IconDropdown {
     });
     button.textContent = props.icon;
 
-    const panel = wrapper.createEl("div", {
+    const panel = wrapper.createDiv({
       cls: "workout-icon-dropdown-panel",
       attr: { role: "menu" },
     });

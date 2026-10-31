@@ -212,9 +212,15 @@ export const MUSCLE_TAGS: readonly string[] = [
 /**
  * Default tag -> muscle group map (all languages), derived from
  * MUSCLE_TAG_ENTRIES. Used when the user has no muscle-tags.csv.
- *
- * @deprecated Use MUSCLE_TAG_ENTRIES for language-aware tag handling
+ * Returns a new object on every call.
  */
-export const MUSCLE_TAG_MAP: Record<string, string> = Object.fromEntries(
-  MUSCLE_TAG_ENTRIES.map((entry) => [entry.tag, entry.muscleGroup]),
-);
+export function defaultTagMap(): Record<string, string> {
+  return Object.fromEntries(
+    MUSCLE_TAG_ENTRIES.map((entry) => [entry.tag, entry.muscleGroup]),
+  );
+}
+
+/**
+ * @deprecated Use defaultTagMap(), or MUSCLE_TAG_ENTRIES for language-aware tag handling
+ */
+export const MUSCLE_TAG_MAP: Record<string, string> = defaultTagMap();

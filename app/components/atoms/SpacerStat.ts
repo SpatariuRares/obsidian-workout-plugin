@@ -25,7 +25,7 @@ export class SpacerStat {
     parent: HTMLElement,
     props: SpacerStatProps,
   ): HTMLSpanElement {
-    const span = parent.createEl("span", {
+    const span = parent.createSpan({
       cls: props.className || "workout-spacer-stat",
     });
 

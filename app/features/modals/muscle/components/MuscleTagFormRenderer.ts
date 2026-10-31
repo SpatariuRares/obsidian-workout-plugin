@@ -29,11 +29,11 @@ export class MuscleTagFormRenderer {
 
     this.formContainer.createEl("h4", { text: options.title });
 
-    const fieldsContainer = this.formContainer.createEl("div", {
+    const fieldsContainer = this.formContainer.createDiv({
       cls: "workout-tag-form-fields",
     });
 
-    const tagFieldContainer = fieldsContainer.createEl("div", {
+    const tagFieldContainer = fieldsContainer.createDiv({
       cls: "workout-tag-field",
     });
     tagFieldContainer.createEl("label", {
@@ -52,7 +52,7 @@ export class MuscleTagFormRenderer {
       tagInput.classList.add("workout-tag-input-disabled");
     }
 
-    this.suggestionsContainer = tagFieldContainer.createEl("div", {
+    this.suggestionsContainer = tagFieldContainer.createDiv({
       cls: "workout-tag-suggestions",
     });
     DomUtils.setCssProps(this.suggestionsContainer, {
@@ -65,7 +65,7 @@ export class MuscleTagFormRenderer {
       });
     }
 
-    const groupFieldContainer = fieldsContainer.createEl("div", {
+    const groupFieldContainer = fieldsContainer.createDiv({
       cls: "workout-tag-field",
     });
     groupFieldContainer.createEl("label", {
@@ -96,7 +96,7 @@ export class MuscleTagFormRenderer {
       }
     }
 
-    const buttonContainer = this.formContainer.createEl("div", {
+    const buttonContainer = this.formContainer.createDiv({
       cls: "workout-tag-form-buttons",
     });
 
@@ -162,26 +162,26 @@ export class MuscleTagFormRenderer {
       display: "block",
     });
 
-    const header = this.suggestionsContainer.createEl("div", {
+    const header = this.suggestionsContainer.createDiv({
       cls: "workout-tag-suggestions-header",
     });
-    header.createEl("span", {
+    header.createSpan({
       text: t("modal.similarTags"),
       cls: "workout-tag-suggestions-label",
     });
-    header.createEl("span", {
+    header.createSpan({
       text: t("modal.notices.muscleTagSimilarFound", {
         count: suggestions.length,
       }),
       cls: "workout-tag-suggestions-count",
     });
 
-    const list = this.suggestionsContainer.createEl("div", {
+    const list = this.suggestionsContainer.createDiv({
       cls: "workout-tag-suggestions-list",
     });
 
     for (const suggestion of suggestions) {
-      const item = list.createEl("div", {
+      const item = list.createDiv({
         cls: `workout-tag-suggestion-item${
           suggestion.isVeryClose
             ? " workout-tag-suggestion-warning"
@@ -190,7 +190,7 @@ export class MuscleTagFormRenderer {
       });
 
       if (suggestion.isVeryClose) {
-        item.createEl("span", {
+        item.createSpan({
           text: "!",
           cls: "workout-tag-suggestion-warning-icon",
           attr: {
@@ -199,12 +199,12 @@ export class MuscleTagFormRenderer {
         });
       }
 
-      item.createEl("span", {
+      item.createSpan({
         text: suggestion.tag,
         cls: "workout-tag-suggestion-name",
       });
 
-      item.createEl("span", {
+      item.createSpan({
         text: suggestion.muscleGroup,
         cls: "workout-tag-suggestion-group",
       });

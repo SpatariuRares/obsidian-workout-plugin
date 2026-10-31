@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
 import type { App } from "obsidian";
 import type { EventBusPort, WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -13,7 +14,7 @@ jest.mock("obsidian", () => {
   class Setting {
     private name = "";
     controlEl = {
-      createEl: () => ({
+      createDiv: () => ({
         setCssProps: () => {},
         setText: () => {},
         addClass: () => {},

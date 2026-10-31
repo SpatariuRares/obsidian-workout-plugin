@@ -1,4 +1,4 @@
-import { TFile } from "obsidian";
+import { TFile, TFolder } from "obsidian";
 
 type Frontmatter = Record<string, unknown> | undefined;
 type Listener = { source: "vault" | "metadataCache"; name: string; cb: (...args: unknown[]) => void };
@@ -19,6 +19,10 @@ export class FakeVault {
     vault: {
       getMarkdownFiles: (): TFile[] =>
         Array.from(this.notes.values()).map((n) => n.file),
+      /** A note, or a folder with its files and subfolders built from the notes' paths */
+      getAbstractFileByPath: (path: string): TFile | TFolder | null =>
+        this.notes.get(path)?.file ?? this.folder(path),
+      getFolderByPath: (path: string): TFolder | null => this.folder(path),
       getFileByPath: (path: string): TFile | null =>
         this.notes.get(path)?.file ?? null,
       on: (name: string, cb: (...args: unknown[]) => void) =>
@@ -105,6 +109,30 @@ export class FakeVault {
     const note = this.notes.get(path);
     if (!note) throw new Error(`No note at ${path}`);
     return note.file;
+  }
+
+  private folder(path: string): TFolder | null {
+    const prefix = `${path}/`;
+    const inside = Array.from(this.notes.values()).filter((n) =>
+      n.file.path.startsWith(prefix),
+    );
+    if (inside.length === 0) return null;
+    const folder = Object.assign(new TFolder(), {
+      path,
+      name: path.split("/").pop() ?? path,
+      children: [] as (TFile | TFolder)[],
+    });
+    const subfolders = new Set<string>();
+    for (const { file } of inside) {
+      const rest = file.path.slice(prefix.length);
+      if (rest.includes("/")) subfolders.add(rest.split("/")[0]);
+      else folder.children.push(file);
+    }
+    for (const name of subfolders) {
+      const sub = this.folder(`${prefix}${name}`);
+      if (sub) folder.children.push(sub);
+    }
+    return folder;
   }
 
   private listen(source: Listener["source"], name: string, cb: Listener["cb"]) {

@@ -4,13 +4,23 @@
  */
 export class DomUtils {
   /**
-   * Helper to set multiple CSS properties on an element
+   * Helper to set multiple CSS properties on an element.
+   * Custom properties (`--name`) are set with `style.setProperty`, since
+   * assigning them to `style` has no effect.
    */
   static setCssProps(
     element: HTMLElement,
     props: Partial<CSSStyleDeclaration> | Record<string, string>,
   ): void {
-    Object.assign(element.style, props);
+    const standard: Record<string, unknown> = {};
+    for (const [name, value] of Object.entries(props)) {
+      if (name.startsWith("--") && typeof value === "string") {
+        element.style.setProperty(name, value);
+      } else {
+        standard[name] = value;
+      }
+    }
+    Object.assign(element.style, standard);
   }
 
   /**

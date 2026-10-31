@@ -35,7 +35,7 @@ export class AuditExerciseNamesModal extends ModalBase {
     });
 
     // Main container
-    this.contentContainer = contentEl.createEl("div", {
+    this.contentContainer = contentEl.createDiv({
       cls: "workout-charts-form",
     });
 
@@ -101,7 +101,7 @@ export class AuditExerciseNamesModal extends ModalBase {
     });
 
     // Create table
-    const tableContainer = this.contentContainer.createEl("div", {
+    const tableContainer = this.contentContainer.createDiv({
       cls: "workout-audit-table-container",
     });
 
@@ -143,7 +143,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         );
       });
       if (mismatch.canonicalName !== mismatch.fileName) {
-        fileCell.createEl("span", {
+        fileCell.createSpan({
           text: ` (${mismatch.canonicalName})`,
           cls: "workout-text-muted",
         });
@@ -175,7 +175,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         statusText = t("modal.auditStatusPartialMatch");
       }
 
-      statusCell.createEl("span", {
+      statusCell.createSpan({
         text: statusText,
         cls: statusClass,
       });
@@ -261,7 +261,7 @@ export class AuditExerciseNamesModal extends ModalBase {
         try {
           await this.app.fileManager.processFrontMatter(
             mismatch.file,
-            (frontmatter) => {
+            (frontmatter: Record<string, unknown>) => {
               if (typeof frontmatter.exercise_name === "string") {
                 frontmatter.exercise_name = newFileName;
               } else if (

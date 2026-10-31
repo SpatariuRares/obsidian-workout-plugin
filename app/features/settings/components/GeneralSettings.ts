@@ -15,13 +15,11 @@ import { announceDataPathChange } from "@app/features/settings/business/announce
 const PATH_CHANGE_DELAY_MS = 600;
 
 export class GeneralSettings {
-  private csvPathValidationTimer: ReturnType<
-    typeof setTimeout
-  > | null = null;
+  private csvPathValidationTimer: number | null = null;
   /** Pending path changes: the value before the first keystroke, and the timer */
   private pathChanges = new Map<
     "csvLogFilePath" | "exerciseFolderPath",
-    { previousValue: string; timer: ReturnType<typeof setTimeout> }
+    { previousValue: string; timer: number }
   >();
 
   constructor(
@@ -62,7 +60,7 @@ export class GeneralSettings {
             );
           });
       });
-    const csvPathWarning = csvPathSetting.controlEl.createEl("div", {
+    const csvPathWarning = csvPathSetting.controlEl.createDiv({
       cls: "workout-setting-error",
     });
     csvPathWarning.setCssProps({
@@ -176,9 +174,9 @@ export class GeneralSettings {
     key: "csvLogFilePath" | "exerciseFolderPath",
   ): void {
     const pending = this.pathChanges.get(key);
-    if (pending) clearTimeout(pending.timer);
+    if (pending) window.clearTimeout(pending.timer);
     const previousValue = pending?.previousValue ?? this.plugin.settings[key];
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
       this.pathChanges.delete(key);
       announceDataPathChange(this.plugin, key, previousValue);
     }, PATH_CHANGE_DELAY_MS);
@@ -190,9 +188,9 @@ export class GeneralSettings {
     warningEl: HTMLElement,
   ): void {
     if (this.csvPathValidationTimer !== null) {
-      clearTimeout(this.csvPathValidationTimer);
+      window.clearTimeout(this.csvPathValidationTimer);
     }
-    this.csvPathValidationTimer = setTimeout(() => {
+    this.csvPathValidationTimer = window.setTimeout(() => {
       this.csvPathValidationTimer = null;
       if (!folderValue) {
         warningEl.textContent = t("settings.validation.csvPathEmpty");
@@ -250,9 +248,9 @@ export class GeneralSettings {
    */
   private async createMuscleTagsCsvWithDefaults(): Promise<void> {
     const muscleTagService = this.plugin.getMuscleTagService();
-    const { MUSCLE_TAG_MAP } =
+    const { defaultTagMap } =
       await import("@app/constants/muscles.constants");
-    const defaultTags = new Map(Object.entries(MUSCLE_TAG_MAP));
+    const defaultTags = new Map(Object.entries(defaultTagMap()));
 
     try {
       await muscleTagService.saveTags(defaultTags);

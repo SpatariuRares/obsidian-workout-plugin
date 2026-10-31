@@ -367,6 +367,38 @@ describe("TableRenderer", () => {
       );
     });
 
+    describe("rows with a second line (notes or protocol badge)", () => {
+      const notesCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value;
+      const protocolCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value;
+      const DETAILS_CLASS = "workout-table-row-with-details";
+
+      const renderRow = (displayRow: string[]) => {
+        const container = document.createElement("div");
+        TableRenderer.renderTable(
+          container,
+          ["Date", notesCol, protocolCol],
+          [createRow({ dateKey: "2024-01-15", displayRow })],
+          {},
+        );
+        return container.querySelector("tr.workout-same-day-log");
+      };
+
+      it("marks a row that has notes", () => {
+        const tr = renderRow(["10:00", "Felt strong", WorkoutProtocol.STANDARD]);
+        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(true);
+      });
+
+      it("marks a row that has a protocol badge", () => {
+        const tr = renderRow(["10:00", "", WorkoutProtocol.DROP_SET]);
+        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(true);
+      });
+
+      it("does not mark a row with no notes and a standard set", () => {
+        const tr = renderRow(["10:00", "", WorkoutProtocol.STANDARD]);
+        expect(tr?.classList.contains(DETAILS_CLASS)).toBe(false);
+      });
+    });
+
     it("applies volume cell class to volume column", () => {
       const container = document.createElement("div");
       const volCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.VOLUME.value;

@@ -184,6 +184,15 @@ export class TableRenderer {
           tr.createEl("td", { text: cell, attr: labelAttr(cellIndex) });
         }
       });
+
+      // On phones notes and the protocol badge go on a second line; the
+      // class tells CSS which rows need that line break
+      const hasDetails = Array.from(
+        tr.querySelectorAll(
+          ".workout-table-notes-cell, .workout-table-protocol-cell",
+        ),
+      ).some((td) => td.hasChildNodes());
+      tr.classList.toggle("workout-table-row-with-details", hasDetails);
     });
   }
 

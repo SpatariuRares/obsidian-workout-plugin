@@ -20,12 +20,6 @@
   gap: var(--workout-space-sm);
   overflow-x: auto;
   padding: var(--workout-space-xs) 0;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .workout-log-recent-chip {

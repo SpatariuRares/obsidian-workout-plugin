@@ -69,6 +69,12 @@ describe("ExerciseLibrary", () => {
 
       expect(lib.pages()).toEqual([]);
     });
+
+    it("should have no pages when the exercise folder setting names a note", () => {
+      const { lib } = library({ "Gym/Exercises.md": {} }, "Gym/Exercises.md");
+
+      expect(lib.pages()).toEqual([]);
+    });
   });
 
   describe("find", () => {

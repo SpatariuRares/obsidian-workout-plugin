@@ -22,7 +22,7 @@ export interface ExercisePage {
 }
 
 type LibraryApp = {
-  vault: Pick<App["vault"], "getFolderByPath" | "on">;
+  vault: Pick<App["vault"], "getAbstractFileByPath" | "on">;
   metadataCache: Pick<App["metadataCache"], "getFileCache" | "on">;
 };
 
@@ -89,8 +89,9 @@ export class ExerciseLibrary {
   }
 
   private build(folder: string): Index {
-    const root = folder ? this.app.vault.getFolderByPath(folder) : null;
-    const pages = (root ? notesIn(root) : [])
+    // getAbstractFileByPath, not getFolderByPath: the latter needs Obsidian 1.5.7
+    const root = folder ? this.app.vault.getAbstractFileByPath(folder) : null;
+    const pages = (root instanceof TFolder ? notesIn(root) : [])
       .map((file) => this.readPage(file))
       .sort(byPath);
 

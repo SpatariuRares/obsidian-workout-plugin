@@ -21,8 +21,9 @@ export class FakeVault {
         Array.from(this.notes.values())
           .map((n) => n.file)
           .filter((file) => file.extension === "md"),
-      /** The folder with its files and subfolders, built from the notes' paths */
-      getFolderByPath: (path: string): TFolder | null => this.folder(path),
+      /** A note, or a folder with its files and subfolders built from the notes' paths */
+      getAbstractFileByPath: (path: string): TFile | TFolder | null =>
+        this.notes.get(path)?.file ?? this.folder(path),
       getFileByPath: (path: string): TFile | null =>
         this.notes.get(path)?.file ?? null,
       on: (name: string, cb: (...args: unknown[]) => void) =>

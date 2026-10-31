@@ -1,4 +1,5 @@
-import { TFile } from "obsidian";
+import { FakeVault } from "@app/services/exercise/__tests__/FakeVault";
+import { t } from "@app/i18n";
 import { DEFAULT_SETTINGS } from "@app/constants/defaults.constants";
 import {
   shouldShowWelcome,
@@ -7,15 +8,9 @@ import {
   type WelcomePluginPort,
 } from "@app/services/onboarding/Welcome";
 
-function makeFile(path: string): TFile {
-  const f = new TFile();
-  f.path = path;
-  return f;
-}
-
 function makePlugin(existing: string[] = []) {
-  const files = new Set(existing);
-  const created: Record<string, string> = {};
+  const vault = new FakeVault();
+  for (const path of existing) void vault.app.vault.create(path, "");
   const openFile = jest.fn();
   const openModal = jest.fn();
   const saveSettings = jest.fn().mockResolvedValue(undefined);
@@ -23,22 +18,9 @@ function makePlugin(existing: string[] = []) {
     settings: { ...DEFAULT_SETTINGS },
     saveSettings,
     createLogModalHandler: { openModal },
-    app: {
-      vault: {
-        adapter: { exists: async (p: string) => files.has(p) },
-        getAbstractFileByPath: (p: string) =>
-          files.has(p) ? makeFile(p) : null,
-        createFolder: async (p: string) => void files.add(p),
-        create: async (p: string, c: string) => {
-          files.add(p);
-          created[p] = c;
-          return makeFile(p);
-        },
-      },
-      workspace: { getLeaf: () => ({ openFile }) },
-    },
+    app: { ...vault.app, workspace: { getLeaf: () => ({ openFile }) } },
   } as unknown as WelcomePluginPort;
-  return { plugin, created, openFile, openModal, saveSettings };
+  return { plugin, vault, openFile, openModal, saveSettings };
 }
 
 describe("shouldShowWelcome", () => {
@@ -71,23 +53,25 @@ describe("markWelcomeShown", () => {
 });
 
 describe("startFromScratch", () => {
-  it("creates a note with a workout-log block, opens it and the log form", async () => {
-    const { plugin, created, openFile, openModal } = makePlugin();
+  const name = t("welcome.scratchNoteName");
+
+  it("creates the note at the vault root with a workout-log block, opens it and the log form", async () => {
+    const { plugin, vault, openFile, openModal } = makePlugin();
     await startFromScratch(plugin);
-    const [path, content] = Object.entries(created)[0];
-    expect(path.endsWith(".md")).toBe(true);
-    expect(content).toContain("```workout-log");
+    expect(vault.paths()).toEqual([`${name}.md`]);
+    expect(vault.content(`${name}.md`)).toContain("```workout-log");
     expect(openFile).toHaveBeenCalled();
     expect(openModal).toHaveBeenCalled();
   });
-  it("does not overwrite an existing note", async () => {
-    const first = makePlugin();
-    await startFromScratch(first.plugin);
-    const path = Object.keys(first.created)[0];
-    const second = makePlugin([path]);
-    await startFromScratch(second.plugin);
-    const created = Object.keys(second.created);
-    expect(created).toHaveLength(1);
-    expect(created[0]).not.toBe(path);
+  it("does not overwrite an existing note: picks a free name", async () => {
+    const { plugin, vault } = makePlugin([`${name}.md`]);
+    await startFromScratch(plugin);
+    expect(vault.content(`${name}.md`)).toBe("");
+    expect(vault.paths()).toEqual([`${name} 1.md`, `${name}.md`]);
+  });
+  it("keeps counting when several are taken", async () => {
+    const { plugin, vault } = makePlugin([`${name}.md`, `${name} 1.md`]);
+    await startFromScratch(plugin);
+    expect(vault.paths()).toContain(`${name} 2.md`);
   });
 });

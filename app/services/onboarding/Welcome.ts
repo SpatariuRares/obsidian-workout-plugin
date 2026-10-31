@@ -1,5 +1,6 @@
 import { normalizePath, TFile } from "obsidian";
 import { t } from "@app/i18n";
+import { logFileExists } from "@app/services/data/logFileExists";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import type { ExamplePluginPort } from "@app/services/examples/ExampleGeneratorService";
 import type { LogModalPort } from "@app/types/PluginPorts";
@@ -17,10 +18,7 @@ export async function shouldShowWelcome(
 ): Promise<boolean> {
   if (plugin.settings.welcomeShown) return false;
   if (savedData !== null && savedData !== undefined) return false;
-  const csvExists = await plugin.app.vault.adapter.exists(
-    normalizePath(plugin.settings.csvLogFilePath),
-  );
-  return !csvExists;
+  return !logFileExists(plugin);
 }
 
 export async function markWelcomeShown(
@@ -38,18 +36,10 @@ export async function startFromScratch(
   plugin: WelcomePluginPort,
 ): Promise<void> {
   const { vault, workspace } = plugin.app;
-  const folder = normalizePath(t("examples.folderNames.base"));
-  if (!vault.getAbstractFileByPath(folder)) {
-    try {
-      await vault.createFolder(folder);
-    } catch {
-      // created meanwhile
-    }
-  }
   const name = t("welcome.scratchNoteName");
-  let path = normalizePath(`${folder}/${name}.md`);
-  for (let n = 2; vault.getAbstractFileByPath(path); n++) {
-    path = normalizePath(`${folder}/${name} ${n}.md`);
+  let path = normalizePath(`${name}.md`);
+  for (let n = 1; vault.getAbstractFileByPath(path); n++) {
+    path = normalizePath(`${name} ${n}.md`);
   }
   const content = `# ${name}\n\n${tableBlock.serialize({})}\n`;
   const file = await vault.create(path, content);

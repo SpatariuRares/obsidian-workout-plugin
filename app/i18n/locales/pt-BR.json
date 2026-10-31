@@ -1012,11 +1012,8 @@
     "title": "Bem-vindo ao plugin de treino",
     "intro": "Acompanhe seus treinos, e depois visualize-os em gráficos, tabelas e um painel de controle. Como você gostaria de começar?",
     "tryExamples": "Experimente com dados de exemplo",
-    "tryExamplesDesc": "Adiciona exemplos de treinos e abre um guia curto.",
     "startScratch": "Comece do zero",
-    "startScratchDesc": "Cria um registro com seu log e abre o formulário para registrar o primeiro conjunto.",
-    "later": "Mais tarde",
-    "scratchNoteName": "Meus treinos"
+    "later": "Mais tarde"
   },
   "tour": {
     "back": "Voltar",

@@ -1,4 +1,5 @@
-import { TFile } from "obsidian";
+import { Notice, TFile } from "obsidian";
+import { t } from "@app/i18n";
 import { buildTour, type TourMode } from "@app/features/tour/tourSteps";
 import { ensureTourNote } from "@app/features/tour/tourNote";
 import { examplePaths } from "@app/services/examples/ExamplePaths";
@@ -28,9 +29,10 @@ export interface GuidedTourOptions {
 }
 
 /**
- * The tour follows the welcome choice: "Start from scratch" runs on the user's
- * own data; everything else runs on the examples when they exist and the views
- * read their log, otherwise on the user's own data.
+ * "Start from scratch" runs on the user's own data; everything else runs on the
+ * examples when the views read the example log, otherwise on the user's own
+ * data (e.g. "Try with example data" with a real log: the examples got their
+ * own log file and the views keep reading the real one).
  */
 function modeFor(
   plugin: GuidedTourPluginPort,
@@ -53,9 +55,14 @@ export async function startGuidedTour(
   options: GuidedTourOptions,
 ): Promise<void> {
   const mode = modeFor(plugin, options.source);
+  // The examples never go into a real log, so the tour shows the user's own data
+  if (options.source === "welcome-examples" && mode === "mine") {
+    new Notice(t("welcome.tourOnYourData"));
+  }
   const file = await ensureTourNote(plugin.app, mode);
   await plugin.app.workspace.getLeaf(false).openFile(file);
-  plugin
-    .getTourEngine()
-    .start(buildTour({ bus: plugin.eventBus, mode }), { onEnd: options.onEnd });
+  plugin.getTourEngine().start(buildTour({ bus: plugin.eventBus, mode }), {
+    onEnd: options.onEnd,
+    notePath: file.path,
+  });
 }

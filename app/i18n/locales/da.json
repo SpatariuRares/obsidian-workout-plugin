@@ -1012,11 +1012,8 @@
     "title": "Velkommen til træningsplugin'et",
     "intro": "Spor dine sæt, og se dem derefter som grafer, tabeller og et overblik. Hvordan vil du gerne starte?",
     "tryExamples": "Prøv med eksempeldata",
-    "tryExamplesDesc": "Tilføjer eksempler på træningsprogrammer og åbner en kort guide.",
     "startScratch": "Start fra nul",
-    "startScratchDesc": "Opretter en note med dine logfiler og åbner formularen til at registrere det første sæt.",
-    "later": "Senere",
-    "scratchNoteName": "Mine træningssessioner"
+    "later": "Senere"
   },
   "tour": {
     "back": "Tilbage",

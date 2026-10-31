@@ -27,6 +27,8 @@ export class FakeVault {
         this.notes.get(path)?.file ?? null,
       on: (name: string, cb: (...args: unknown[]) => void) =>
         this.listen("vault", name, cb),
+      read: async (file: TFile): Promise<string> =>
+        this.notes.get(file.path)?.content ?? "",
       /** Stores the text; its frontmatter is not parsed (read it with `content`) */
       create: async (path: string, content: string): Promise<TFile> => {
         if (this.notes.has(path)) throw new Error(`File already exists: ${path}`);

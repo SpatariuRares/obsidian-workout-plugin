@@ -5,13 +5,9 @@ import { t } from "@app/i18n";
 import {
   createExampleNotes,
   examplesCreated,
-  openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
 import { startGuidedTour } from "@app/features/tour/startGuidedTour";
-import {
-  startFromScratch,
-  type WelcomePluginPort,
-} from "@app/services/onboarding/Welcome";
+import type { WelcomePluginPort } from "@app/services/onboarding/Welcome";
 
 /** Shown once after a fresh install. Nothing is written until a choice is made. */
 export class WelcomeModal extends ModalBase {
@@ -27,34 +23,22 @@ export class WelcomeModal extends ModalBase {
     contentEl.createEl("h2", { text: t("welcome.title") });
     contentEl.createEl("p", { text: t("welcome.intro") });
 
-    // A fresh vault has no data to point at, so the tour runs on the examples
-    this.choice(
-      t("welcome.takeTour"),
-      t("welcome.takeTourDesc"),
-      BUTTONVARIANT.PRIMARY,
-      async () => {
-        const result = await createExampleNotes(this.plugin);
-        if (examplesCreated(result)) {
-          await startGuidedTour(this.plugin, { source: "welcome-examples" });
-        }
-      },
-    );
+    // Both choices end in the guided tour; they differ in the data it runs on
     this.choice(
       t("welcome.tryExamples"),
       t("welcome.tryExamplesDesc"),
-      BUTTONVARIANT.SECONDARY,
+      BUTTONVARIANT.PRIMARY,
       async () => {
         const result = await createExampleNotes(this.plugin);
-        if (examplesCreated(result)) {
-          await openGettingStartedGuide(this.plugin);
-        }
+        if (!examplesCreated(result)) return;
+        await startGuidedTour(this.plugin, { source: "welcome-examples" });
       },
     );
     this.choice(
       t("welcome.startScratch"),
       t("welcome.startScratchDesc"),
       BUTTONVARIANT.SECONDARY,
-      () => startFromScratch(this.plugin),
+      () => startGuidedTour(this.plugin, { source: "welcome-scratch" }),
     );
 
     const row = Button.createContainer(contentEl);

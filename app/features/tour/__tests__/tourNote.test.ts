@@ -45,9 +45,43 @@ describe("tour note", () => {
     const vault = new FakeVault();
     const first = await ensureTourNote(vault.app as never, "mine");
     expect(vault.content(tourNotePath("mine"))).toBe(tourNoteContent("mine"));
-    await vault.app.vault.modify(first, "my edits");
+    const edited = `${tourNoteContent("mine")}my edits\n`;
+    await vault.app.vault.modify(first, edited);
     const again = await ensureTourNote(vault.app as never, "mine");
     expect(again.path).toBe(first.path);
-    expect(vault.content(tourNotePath("mine"))).toBe("my edits");
+    expect(vault.content(tourNotePath("mine"))).toBe(edited);
+  });
+
+  it("never opens a foreign note of that name: takes the next free name", async () => {
+    const vault = new FakeVault();
+    await vault.app.vault.create(tourNotePath("mine"), "# My own note\n");
+    const file = await ensureTourNote(vault.app as never, "mine");
+    expect(file.path).toBe(tourNotePath("mine", 1));
+    expect(vault.content(tourNotePath("mine"))).toBe("# My own note\n");
+    expect(vault.content(tourNotePath("mine", 1))).toBe(
+      tourNoteContent("mine"),
+    );
+  });
+
+  it("skips every taken name and reuses a numbered note that is ours", async () => {
+    const vault = new FakeVault();
+    await vault.app.vault.create(tourNotePath("mine"), "foreign");
+    await vault.app.vault.create(tourNotePath("mine", 1), "foreign too");
+    const first = await ensureTourNote(vault.app as never, "mine");
+    expect(first.path).toBe(tourNotePath("mine", 2));
+    const again = await ensureTourNote(vault.app as never, "mine");
+    expect(again.path).toBe(first.path);
+  });
+
+  it("still reuses our note after the user removed some blocks", async () => {
+    const vault = new FakeVault();
+    const first = await ensureTourNote(vault.app as never, "mine");
+    const content = tourNoteContent("mine");
+    await vault.app.vault.modify(
+      first,
+      content.slice(content.indexOf("```workout-timer")),
+    );
+    const again = await ensureTourNote(vault.app as never, "mine");
+    expect(again.path).toBe(first.path);
   });
 });

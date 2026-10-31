@@ -816,9 +816,10 @@
       "setDuration": "Used when reps are not specified (fallback). Typical range: 30-60 seconds.",
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
+      "takeTour": "Walk through logging, charts, tables and timers on a short note.",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
-      "welcomeWindow": "Take the guided tour, or show the welcome window again to start with example data or from scratch."
+      "welcomeWindow": "Show the welcome window again to start with example data or from scratch."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -843,6 +844,7 @@
       "setDuration": "Fallback set duration (seconds)",
       "setupCSV": "Setup CSV files",
       "showRibbonIcon": "Show quick log icon",
+      "takeTour": "Guided tour",
       "weightUnit": "Weight unit",
       "welcomeWindow": "Welcome window"
     },
@@ -1014,17 +1016,16 @@
   "welcome": {
     "title": "Welcome to the workout plugin",
     "intro": "Track your sets, then see them as charts, tables and a dashboard. How do you want to begin?",
-    "takeTour": "Take the tour",
-    "takeTourDesc": "Adds sample workouts, then walks you through logging, charts, tables and timers.",
     "tryExamples": "Try with example data",
-    "tryExamplesDesc": "Adds sample workouts and opens a short guide.",
+    "tryExamplesDesc": "Adds sample workouts, then walks you through the plugin on them.",
     "startScratch": "Start from scratch",
-    "startScratchDesc": "Creates a note with your log and opens the form to log a first set.",
+    "startScratchDesc": "Walks you through the plugin on your own data, starting with your first set.",
     "later": "Later",
-    "scratchNoteName": "My workouts"
+    "tourOnYourData": "You already have a workout log, so the tour runs on your own data."
   },
   "tour": {
     "back": "Back",
+    "showMe": "Show me",
     "next": "Next",
     "skip": "Skip",
     "done": "Done",
@@ -1053,8 +1054,12 @@
       },
       "dashboard": {
         "title": "Your dashboard",
-        "text": "Totals, volume trends, recent workouts and a muscle heat map, all in one block.",
-        "textMine": "Totals, volume trends, recent workouts and a muscle heat map. It fills up as you log more sets."
+        "text": "Totals, volume trends and recent workouts, all in one block.",
+        "textMine": "Totals, volume trends and recent workouts. It fills up as you log more sets."
+      },
+      "muscles": {
+        "title": "Muscle heat map",
+        "text": "The heat map shows which muscles you trained most recently."
       },
       "timer": {
         "title": "Rest timer",
@@ -1071,7 +1076,7 @@
       },
       "end": {
         "title": "You are set",
-        "text": "You can take this tour again from the plugin settings."
+        "text": "You can take this tour again from Settings → Getting started."
       }
     }
   }

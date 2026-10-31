@@ -117,7 +117,7 @@ describe("GeneralSettings welcome window", () => {
     );
 
     mockSettingNamed(container, t("settings.labels.welcomeWindow"))
-      .component("button", 1)
+      .component("button", 0)
       .buttonEl.click();
     await new Promise((resolve) => setTimeout(resolve, 0));
 
@@ -129,7 +129,7 @@ describe("GeneralSettings welcome window", () => {
 });
 
 describe("GeneralSettings guided tour", () => {
-  it("starts the tour from the Take the tour button next to Show welcome", async () => {
+  it("starts the tour from its own row, apart from Show welcome", async () => {
     const plugin = {
       settings: {
         welcomeShown: true,
@@ -145,11 +145,15 @@ describe("GeneralSettings guided tour", () => {
       new GeneralSettings({} as App, plugin).definitions(),
     );
 
-    const row = mockSettingNamed(container, t("settings.labels.welcomeWindow"));
+    const row = mockSettingNamed(container, t("settings.labels.takeTour"));
     expect(row.component("button", 0).buttonEl.textContent).toBe(
       t("settings.buttons.takeTour"),
     );
-    expect(row.component("button", 1).buttonEl.textContent).toBe(
+    const welcome = mockSettingNamed(
+      container,
+      t("settings.labels.welcomeWindow"),
+    );
+    expect(welcome.component("button", 0).buttonEl.textContent).toBe(
       t("settings.buttons.showWelcome"),
     );
     row.component("button", 0).buttonEl.click();

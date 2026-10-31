@@ -1012,11 +1012,8 @@
     "title": "歡迎使用運動插件",
     "intro": "追蹤您的訓練，然後以圖表、表格和儀表板的形式查看。您想從哪一步開始？",
     "tryExamples": "請使用範例資料",
-    "tryExamplesDesc": "新增示範運動，並開啟簡短的教學指南。",
     "startScratch": "從頭開始",
-    "startScratchDesc": "建立一個包含您的記錄的備忘錄，並開啟表單以記錄第一個記錄。",
-    "later": "稍後",
-    "scratchNoteName": "我的運動"
+    "later": "稍後"
   },
   "tour": {
     "back": "返回",

@@ -1,11 +1,7 @@
-import { normalizePath, TFile } from "obsidian";
-import { t } from "@app/i18n";
 import { logFileExists } from "@app/services/data/logFileExists";
-import { tableBlock } from "@app/features/tables/tableBlock";
 import type { ExamplePluginPort } from "@app/services/examples/ExampleGeneratorService";
-import type { LogModalPort } from "@app/types/PluginPorts";
 
-export type WelcomePluginPort = ExamplePluginPort & LogModalPort;
+export type WelcomePluginPort = ExamplePluginPort;
 
 /**
  * Fresh install = nothing saved by the plugin before and no log CSV yet, so
@@ -26,23 +22,4 @@ export async function markWelcomeShown(
 ): Promise<void> {
   plugin.settings.welcomeShown = true;
   await plugin.saveSettings();
-}
-
-/**
- * "Start from scratch": a note holding a `workout-log` block, then the log
- * form. Never overwrites an existing note.
- */
-export async function startFromScratch(
-  plugin: WelcomePluginPort,
-): Promise<void> {
-  const { vault, workspace } = plugin.app;
-  const name = t("welcome.scratchNoteName");
-  let path = normalizePath(`${name}.md`);
-  for (let n = 1; vault.getAbstractFileByPath(path); n++) {
-    path = normalizePath(`${name} ${n}.md`);
-  }
-  const content = `# ${name}\n\n${tableBlock.serialize({})}\n`;
-  const file = await vault.create(path, content);
-  if (file instanceof TFile) await workspace.getLeaf(false).openFile(file);
-  plugin.createLogModalHandler.openModal();
 }

@@ -1012,11 +1012,8 @@
     "title": "Bun venit la plugin-ul de exerciții",
     "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub forma de grafice, tabele și un panou de control. Cum dorești să începi?",
     "tryExamples": "Încearcă cu date de exemplu",
-    "tryExamplesDesc": "Adaugă antrenamente de exemplu și deschide un ghid scurt.",
     "startScratch": "Începe de la zero",
-    "startScratchDesc": "Creează o notă cu jurnalul tău și deschide formularul pentru a înregistra o primă serie de date.",
-    "later": "Mai târziu",
-    "scratchNoteName": "Antrenamentele mele"
+    "later": "Mai târziu"
   },
   "tour": {
     "back": "Înapoi",

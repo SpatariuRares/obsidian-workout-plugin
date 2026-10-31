@@ -1012,11 +1012,8 @@
     "title": "Benvenuti nel plugin per l'allenamento",
     "intro": "Monitora i tuoi allenamenti, quindi visualizzali sotto forma di grafici, tabelle e un pannello di controllo. Come preferisci iniziare?",
     "tryExamples": "Prova con dati di esempio",
-    "tryExamplesDesc": "Aggiunge esempi di allenamenti e apre una breve guida.",
     "startScratch": "Inizia da zero",
-    "startScratchDesc": "Crea un appunto con il tuo registro e apre il modulo per registrare il primo set.",
-    "later": "Più tardi",
-    "scratchNoteName": "I miei allenamenti"
+    "later": "Più tardi"
   },
   "tour": {
     "back": "Indietro",

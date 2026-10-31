@@ -1012,11 +1012,8 @@
     "title": "Welkom bij het workout-plugin",
     "intro": "Volg je sessies, en bekijk ze vervolgens in grafieken, tabellen en een overzichtspagina. Hoe wil je beginnen?",
     "tryExamples": "Probeer met voorbeeldgegevens",
-    "tryExamplesDesc": "Voegt voorbeeldtrainingen toe en opent een korte handleiding.",
     "startScratch": "Begin opnieuw",
-    "startScratchDesc": "Maakt een notitie met uw log en opent het formulier om de eerste set in te voeren.",
-    "later": "Later",
-    "scratchNoteName": "Mijn trainingen"
+    "later": "Later"
   },
   "tour": {
     "back": "Terug",

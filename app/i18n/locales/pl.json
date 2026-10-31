@@ -1012,11 +1012,8 @@
     "title": "Witaj w wtyczce do treningów",
     "intro": "Śledź swoje serie, a następnie zobacz je w formie wykresów, tabel i panelu kontrolnego. Jak chcesz zacząć?",
     "tryExamples": "Wypróbuj z przykładowymi danymi",
-    "tryExamplesDesc": "Dodaje przykładowe ćwiczenia i otwiera krótką instrukcję.",
     "startScratch": "Zacznij od zera",
-    "startScratchDesc": "Tworzy notatkę z Twoimi danymi logowania i otwiera formularz, aby zarejestrować pierwsze zestaw danych.",
-    "later": "Później",
-    "scratchNoteName": "Moje treningi"
+    "later": "Później"
   },
   "tour": {
     "back": "Wstecz",

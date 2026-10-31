@@ -1012,11 +1012,8 @@
     "title": "Bienvenido al complemento de entrenamiento",
     "intro": "Visualiza tus entrenamientos, luego observa los resultados en gráficos, tablas y un panel de control. ¿Cómo quieres empezar?",
     "tryExamples": "Prueba con datos de ejemplo",
-    "tryExamplesDesc": "Agrega ejemplos de entrenamientos y abre una guía breve.",
     "startScratch": "Comenzar desde cero",
-    "startScratchDesc": "Crea una nota con tu registro y abre el formulario para registrar el primer conjunto de datos.",
-    "later": "Más tarde",
-    "scratchNoteName": "Mis entrenamientos"
+    "later": "Más tarde"
   },
   "tour": {
     "back": "Regresar",

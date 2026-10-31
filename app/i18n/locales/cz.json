@@ -1012,11 +1012,8 @@
     "title": "Vítejte v pluginu pro trénink",
     "intro": "Sledujte své série, a poté je zobrazujte ve formě grafů, tabulek a přehledu. Jak chcete začít?",
     "tryExamples": "Zkuste s ukázkovými daty",
-    "tryExamplesDesc": "Přidá ukázkové tréninky a otevře krátký průvodce.",
     "startScratch": "Začněte od začátku",
-    "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
-    "later": "Později",
-    "scratchNoteName": "Moje tréninky"
+    "later": "Později"
   },
   "tour": {
     "back": "Zpět",

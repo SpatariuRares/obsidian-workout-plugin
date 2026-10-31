@@ -14,6 +14,7 @@ import type {
   TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
+import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 import { changeWeightUnit } from "@app/features/settings/business/changeWeightUnit";
@@ -74,6 +75,11 @@ export class GeneralSettings {
         type: "group",
         heading: t("settings.sections.gettingStarted"),
         items: [
+          {
+            name: t("settings.labels.takeTour"),
+            desc: t("settings.descriptions.takeTour"),
+            render: (setting) => this.renderTakeTour(setting),
+          },
           {
             name: t("settings.labels.welcomeWindow"),
             desc: t("settings.descriptions.welcomeWindow"),
@@ -177,15 +183,16 @@ export class GeneralSettings {
     );
   }
 
-  /** Opens the welcome window on demand; never touches `welcomeShown` */
-  private renderShowWelcome(setting: Setting): void {
+  private renderTakeTour(setting: Setting): void {
     setting.addButton((button) =>
       button.setButtonText(t("settings.buttons.takeTour")).onClick(async () => {
-        const { startGuidedTour } =
-          await import("@app/features/tour/startGuidedTour");
         await startGuidedTour(this.plugin, { source: "settings" });
       }),
     );
+  }
+
+  /** Opens the welcome window on demand; never touches `welcomeShown` */
+  private renderShowWelcome(setting: Setting): void {
     setting.addButton((button) =>
       button
         .setButtonText(t("settings.buttons.showWelcome"))

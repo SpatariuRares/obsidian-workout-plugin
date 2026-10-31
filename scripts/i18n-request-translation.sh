@@ -3,7 +3,7 @@
 # start the Translate workflow on GitHub for that branch once the push has
 # landed (it commits the translations back to the branch; git pull after).
 # main is skipped: a push to main that changes en.json starts it by itself,
-# and every release runs it too.
+# while a release only checks that no locale misses keys.
 #
 # Reads the refs git passes to pre-push on stdin.
 

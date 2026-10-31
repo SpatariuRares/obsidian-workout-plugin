@@ -45,6 +45,36 @@ describe("ExerciseLibrary", () => {
 
       expect(pathOf(lib.find("Squat"))).toBe("Gym/Exercises/Squat.md");
     });
+
+    it("should list only the exercise folder, never the whole vault", () => {
+      const { vault, lib } = library({ "Gym/Exercises/Squat.md": {} });
+      const listVault = jest.spyOn(vault.app.vault, "getMarkdownFiles");
+
+      expect(lib.pages().map(pathOf)).toEqual(["Gym/Exercises/Squat.md"]);
+      expect(listVault).not.toHaveBeenCalled();
+    });
+
+    it("should skip files that are not markdown notes", () => {
+      const { lib } = library({
+        "Gym/Exercises/Squat.md": {},
+        "Gym/Exercises/squat.png": {},
+        "Gym/Exercises/Board.canvas": {},
+      });
+
+      expect(lib.pages().map(pathOf)).toEqual(["Gym/Exercises/Squat.md"]);
+    });
+
+    it("should have no pages when the exercise folder does not exist", () => {
+      const { lib } = library({ "Gym/Other/Squat.md": {} }, "Gym/Missing");
+
+      expect(lib.pages()).toEqual([]);
+    });
+
+    it("should have no pages when the exercise folder setting names a note", () => {
+      const { lib } = library({ "Gym/Exercises.md": {} }, "Gym/Exercises.md");
+
+      expect(lib.pages()).toEqual([]);
+    });
   });
 
   describe("find", () => {

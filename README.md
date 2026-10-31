@@ -281,6 +281,8 @@ If you edit the file by hand, keep the header row, and wrap any value that conta
 
 </details>
 
+Everything stays in your vault. The plugin writes to the clipboard only when you click a copy badge (a muscle tag in the dashboard), and never reads it.
+
 ### Dataview and Templater
 
 The plugin exposes `WorkoutPlannerAPI` (also `window.WorkoutPlannerAPI`) once it has loaded.

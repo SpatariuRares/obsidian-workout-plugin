@@ -92,14 +92,6 @@ export default [
       "obsidianmd/prefer-create-el": "off",
       // TODO(#37): re-enable once fixed
       "obsidianmd/prefer-window-timers": "off",
-      // TODO(#39): re-enable once fixed
-      "@typescript-eslint/no-explicit-any": "off",
-      // TODO(#39): re-enable once fixed (caused by the `any` in ExampleGeneratorService)
-      "@typescript-eslint/no-unsafe-argument": "off",
-      // TODO(#39): re-enable once fixed
-      "@typescript-eslint/no-empty-object-type": "off",
-      // TODO(#39): re-enable once fixed
-      "obsidianmd/prefer-get-language": "off",
       // TODO(#40): re-enable once fixed
       "obsidianmd/settings-tab/prefer-setting-definitions": "off",
 

@@ -17,7 +17,7 @@ export interface ErrorLogData {
   script?: string;
   method?: string;
   error: Error | string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
 }
 
 export type ErrorType =

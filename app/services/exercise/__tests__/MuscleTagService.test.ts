@@ -8,7 +8,7 @@ import { CHART_DATA_TYPE } from "@app/features/charts/types";
 // Mock Obsidian module
 
 // Import after mocking
-import { TFile, TAbstractFile } from "obsidian";
+import { TFile, TAbstractFile, getLanguage } from "obsidian";
 
 // Define mock types
 interface MockEventCallback {
@@ -35,35 +35,12 @@ describe("MuscleTagService", () => {
   let mockSettings: WorkoutChartsSettings;
   let mockVault: MockVault;
   let fileModifyCallback: MockEventCallback | null;
-  let originalLocalStorage: Storage;
 
   beforeEach(() => {
     jest.clearAllMocks();
     fileModifyCallback = null;
 
-    // Mock window and localStorage
-    if (!global.window) {
-      (global as any).window = {};
-    }
-    originalLocalStorage = (global.window as any).localStorage;
-
-    const mockLocalStorage = {
-      getItem: jest.fn((key: string) => {
-        if (key === "language") return "en";
-        return null;
-      }),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
-      clear: jest.fn(),
-      length: 0,
-      key: jest.fn(),
-    };
-
-    Object.defineProperty(global.window, "localStorage", {
-      value: mockLocalStorage,
-      writable: true,
-      configurable: true,
-    });
+    (getLanguage as jest.Mock).mockReturnValue("en");
 
     mockVault = {
       getAbstractFileByPath: jest.fn(),
@@ -112,14 +89,6 @@ describe("MuscleTagService", () => {
 
   afterEach(() => {
     service.destroy();
-    // Restore original localStorage
-    if (originalLocalStorage !== undefined) {
-      Object.defineProperty(global.window, "localStorage", {
-        value: originalLocalStorage,
-        writable: true,
-        configurable: true,
-      });
-    }
   });
 
   describe("constructor", () => {
@@ -189,9 +158,7 @@ back,back,en`;
 
     it("should include both user language and English tags", async () => {
       // Change user language to Italian
-      (window.localStorage.getItem as jest.Mock).mockReturnValue(
-        "it",
-      );
+      (getLanguage as jest.Mock).mockReturnValue("it");
 
       const csvContent = `tag,muscleGroup,language
 petto,chest,it
@@ -214,11 +181,6 @@ spalle,shoulders,it`;
       expect(tags.get("schiena")).toBe("back");
       expect(tags.get("back")).toBe("back");
       expect(tags.get("spalle")).toBe("shoulders");
-
-      // Reset to English
-      (window.localStorage.getItem as jest.Mock).mockReturnValue(
-        "en",
-      );
     });
 
     it("should return default tags when CSV does not exist", async () => {

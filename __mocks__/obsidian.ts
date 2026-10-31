@@ -36,12 +36,12 @@ export class AbstractInputSuggest<T> {
 }
 
 export const parseYaml = jest.fn(
-  (yaml: string): Record<string, any> | null => {
+  (yaml: string): Record<string, string | string[]> | null => {
     if (!yaml || !yaml.trim()) {
       return null;
     }
 
-    const result: Record<string, any> = {};
+    const result: Record<string, string | string[]> = {};
     const lines = yaml.split("\n");
     let currentKey: string | null = null;
     let currentArray: string[] | null = null;
@@ -95,6 +95,14 @@ export const parseYaml = jest.fn(
     return Object.keys(result).length > 0 ? result : null;
   },
 );
+
+/** Obsidian's app language (since 1.8.7). Tests set it with mockReturnValue. */
+export const getLanguage = jest.fn((): string => "en");
+
+/** Obsidian's bundled moment; only the locale is mocked. */
+export const moment = {
+  locale: jest.fn((): string => "en"),
+};
 
 // Mock other commonly used obsidian exports
 export const Notice = jest.fn();

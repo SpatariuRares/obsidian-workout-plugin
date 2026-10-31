@@ -46,9 +46,8 @@ export interface LogBulkChangedPayload {
     | "other";
 }
 
-export interface MuscleTagsChangedPayload {
-  // Intenzionalmente vuoto: il cambio è sempre globale
-}
+/** No data: a muscle tag change always affects every view. */
+export type MuscleTagsChangedPayload = Record<string, never>;
 
 export interface SettingsChangedPayload {
   key: keyof WorkoutChartsSettings;

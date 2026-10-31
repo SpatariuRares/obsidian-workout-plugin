@@ -6,14 +6,20 @@ const LOCALES_DIR = path.resolve(__dirname, "..", "locales");
 
 type Mod = typeof import("@app/i18n/LocalizationService");
 
+/** Sets the language Obsidian's getLanguage() reports (current module registry). */
+const setLanguage = (language: string): void => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const obsidian = require("obsidian") as { getLanguage: jest.Mock };
+  obsidian.getLanguage.mockReturnValue(language);
+};
+
 /** Loads a fresh copy of the module so the singleton starts uninitialized. */
 const loadFresh = (
   language: string | null,
   virtualLocales: Record<string, unknown> = {},
 ): Mod => {
   jest.resetModules();
-  window.localStorage.clear();
-  if (language !== null) window.localStorage.setItem("language", language);
+  setLanguage(language ?? "");
   ["en", "xx", "zz"].forEach((locale) => {
     if (locale in virtualLocales) return;
     jest.doMock(
@@ -71,7 +77,7 @@ describe("LocalizationService", () => {
       const { LocalizationService } = loadFresh("en");
       LocalizationService.initialize(app);
       const first = LocalizationService.getInstance();
-      window.localStorage.setItem("language", "fr");
+      setLanguage("fr");
       LocalizationService.initialize(app);
       expect(LocalizationService.getInstance()).toBe(first);
       expect(first.getCurrentLocale()).toBe("en");
@@ -124,7 +130,7 @@ describe("LocalizationService", () => {
   });
 
   describe("language detection and fallback", () => {
-    it("should use the locale from localStorage", () => {
+    it("should use the app language from getLanguage()", () => {
       const { LocalizationService, t } = loadFresh("xx", {
         en: EN,
         xx: XX,
@@ -194,7 +200,7 @@ describe("LocalizationService", () => {
       });
       LocalizationService.initialize(app);
       const svc = LocalizationService.getInstance();
-      window.localStorage.setItem("language", "xx");
+      setLanguage("xx");
       svc.reload();
       expect(svc.getCurrentLocale()).toBe("xx");
       expect(t("greet.hello", { name: "Q" })).toBe("Ciao Q!");

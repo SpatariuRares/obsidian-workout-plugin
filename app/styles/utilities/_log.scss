@@ -12,6 +12,13 @@
     margin: var(--workout-space-sm) 0;
   }
 
+  .workout-log-example-link {
+    display: block;
+    margin-top: var(--workout-space-md);
+    font-style: normal;
+    color: var(--workout-text-accent);
+  }
+
   code {
     background: var(--background-primary);
     padding: var(--workout-space-xs) var(--workout-space-sm);

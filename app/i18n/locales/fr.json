@@ -34,7 +34,9 @@
     "generateTagReference": "Générer la référence des tags",
     "insertTable": "Insérer un tableau d'entraînement",
     "manageMuscleTags": "Gérer les tags musculaires",
-    "migrateExerciseTypes": "Migrer les types d'exercices"
+    "migrateExerciseTypes": "Migrer les types d'exercices",
+    "createExampleNotes": "Créer des notes d'exemple",
+    "openGettingStartedGuide": "Ouvrir le guide de démarrage"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset avec extensions des mollets au poids du corps",
       "supersetLunges": "Superset avec fentes"
-    }
+    },
+    "createToOpenGuide": "Le guide de démarrage est inclus dans les notes d'exemple, qui n'existent pas encore. Voulez-vous les créer maintenant ?",
+    "pointedAtExamples": "Vos vues afficheront désormais le journal d'exemple et les exercices. Modifiez ceci dans les paramètres de données.",
+    "usesSeparateLog": "Vous avez déjà un journal d'entraînement, donc il n'a pas été modifié. Les exemples utilisent leur propre fichier de journal."
   },
   "forms": {
     "enterCsvPath": "Dossier des fichiers CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Créer le premier journal pour {exerciseName}",
     "createLogButtonAria": "Créer un journal pour : {exerciseName}",
     "createLogButtonText": "Créer un journal pour : {exerciseName}",
-    "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}"
+    "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}",
+    "exploreExampleData": "Ou explorez avec des données d'exemple."
   },
   "messages": {
     "codeInserted": "Bloc de code inséré",
@@ -772,7 +778,6 @@
       "addPreset": "Ajouter un préréglage",
       "addProtocol": "Ajouter un protocole",
       "cancel": "Annuler",
-      "createExamples": "Créer des exemples",
       "createFiles": "Créer les fichiers",
       "done": "Terminé !",
       "failed": "Échec",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Ré-générer (écraser)",
       "runAllMaintenance": "Tout exécuter",
       "savePreset": "Enregistrer",
-      "saveProtocol": "Enregistrer"
+      "saveProtocol": "Enregistrer",
+      "showWelcome": "Afficher le message de bienvenue"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Modèle des blocs d'exercices. Variables disponibles : {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Chemin d'accès au dossier contenant les pages d'exercices.",
       "generateDefaultTemplates": "Générez le modèle de page d'exercice par défaut et la référence des tags dans le dossier 'Workout Templates'. Vous pouvez personnaliser ces fichiers pour modifier la langue et la structure.",
-      "generateExamples": "Créez un dossier contenant des exemples d'exercices et de séances d'entraînement pour vous aider à démarrer.",
       "noCustomProtocols": "Aucun protocole personnalisé n'est configuré. Cliquez sur « Ajouter un protocole » pour en créer un.",
       "noPresets": "Aucun préréglage de minuteur configuré. Cliquez sur « Ajouter un préréglage » pour en créer un.",
       "presetDurationDesc": "Durée en secondes (par exemple, 90 pour un minuteur de 90 secondes).",
@@ -810,7 +815,8 @@
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
-      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé."
+      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
+      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Modèle de bloc d'exercice",
       "exerciseFolder": "Chemin du dossier des exercices",
       "generateDefaultTemplates": "Générer les modèles par défaut",
-      "generateExamples": "Générer des données d'exemple",
       "presetDuration": "Durée (secondes)",
       "presetName": "Nom du préréglage",
       "presetRounds": "Rondes",
@@ -836,12 +841,12 @@
       "setDuration": "Durée de série par défaut (secondes)",
       "setupCSV": "Configurer les fichiers CSV",
       "weightUnit": "Unité de poids",
-      "showRibbonIcon": "Afficher l'icône de saisie rapide"
+      "showRibbonIcon": "Afficher l'icône de saisie rapide",
+      "welcomeWindow": "Fenêtre de bienvenue"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
       "confirmDeleteProtocol": "Êtes-vous sûr de vouloir supprimer ce protocole ?",
-      "confirmOverwriteExamples": "Un dossier d'exemple existe déjà. Voulez-vous le remplacer ?",
       "csvFilesCreated": "Les fichiers CSV ont été créés avec succès !",
       "presetDeleted": "Préréglage supprimé",
       "presetNameExists": "Un préréglage portant ce nom existe déjà.",
@@ -871,7 +876,6 @@
       "advanced": "Options avancées",
       "csvManagement": "Gestion des fichiers CSV",
       "customProtocols": "Protocoles personnalisés",
-      "exampleData": "Données d'exemple",
       "maintenance": "Maintenance",
       "quickLog": "Journalisation mobile",
       "setupAndData": "Configuration et données",
@@ -879,7 +883,8 @@
       "timerPresets": "Préréglages du minuteur",
       "trainingParameters": "Paramètres d'entraînement",
       "savedPresets": "Préréglages sauvegardés",
-      "savedProtocols": "Protocoles enregistrés"
+      "savedProtocols": "Protocoles enregistrés",
+      "gettingStarted": "Premiers pas"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} doit être vrai ou faux, mais il s'agit de \"{value}\".",
       "notOneOf": "{key} doit être l'une des valeurs suivantes : {allowed}, mais elle est \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Bienvenue dans le plugin d'entraînement",
+    "intro": "Suivez vos séances, puis visualisez-les sous forme de graphiques, de tableaux et de tableau de bord. Comment souhaitez-vous commencer ?",
+    "tryExamples": "Essayez avec des données d'exemple",
+    "tryExamplesDesc": "Ajoute des exemples d'entraînements et ouvre un guide court.",
+    "startScratch": "Commencer à zéro",
+    "startScratchDesc": "Crée un enregistrement avec votre journal et ouvre le formulaire pour enregistrer la première série.",
+    "later": "Plus tard",
+    "scratchNoteName": "Mes séances d'entraînement"
   }
 }

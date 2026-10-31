@@ -8,6 +8,12 @@ import type {
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
+import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
+
+const mockOpen = jest.fn();
+jest.mock("@app/features/modals/welcome/WelcomeModal", () => ({
+  WelcomeModal: jest.fn().mockImplementation(() => ({ open: mockOpen })),
+}));
 
 jest.mock("@app/features/common/suggest/FolderSuggest", () => ({
   FolderSuggest: jest.fn(),
@@ -85,5 +91,34 @@ describe("GeneralSettings data paths", () => {
         newValue: "New/workout_logs.csv",
       },
     });
+  });
+});
+
+describe("GeneralSettings welcome window", () => {
+  it("opens the welcome window from the button without changing welcomeShown", async () => {
+    const plugin = {
+      settings: {
+        welcomeShown: true,
+        csvLogFilePath: "Log/workout_logs.csv",
+        exerciseFolderPath: "Exercises",
+        weightUnit: "kg",
+      },
+      saveSettings: jest.fn(),
+    } as unknown as WorkoutPluginContext & EventBusPort;
+    const container = document.createElement("div");
+    renderSettingDefinitions(
+      container,
+      new GeneralSettings({} as App, plugin).definitions(),
+    );
+
+    mockSettingNamed(container, t("settings.labels.welcomeWindow"))
+      .component("button")
+      .buttonEl.click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(WelcomeModal).toHaveBeenCalledWith(plugin);
+    expect(mockOpen).toHaveBeenCalled();
+    expect(plugin.settings.welcomeShown).toBe(true);
+    expect(plugin.saveSettings).not.toHaveBeenCalled();
   });
 });

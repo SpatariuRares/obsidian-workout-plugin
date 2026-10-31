@@ -35,6 +35,14 @@ export class FakeVault {
         this.emit("vault", "create", file);
         return file;
       },
+      /** Folders only exist through the notes inside them */
+      createFolder: async (): Promise<void> => undefined,
+      modify: async (file: TFile, content: string): Promise<void> => {
+        const note = this.notes.get(file.path);
+        if (!note) throw new Error(`No note at ${file.path}`);
+        note.content = content;
+        this.emit("vault", "modify", file);
+      },
     },
     fileManager: {
       processFrontMatter: async (

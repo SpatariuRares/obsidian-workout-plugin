@@ -34,7 +34,9 @@
     "generateTagReference": "Vygenerovat přehled štítků",
     "insertTable": "Vložit tabulku tréninku",
     "manageMuscleTags": "Spravovat štítky svalů",
-    "migrateExerciseTypes": "Migrovat typy cvičení"
+    "migrateExerciseTypes": "Migrovat typy cvičení",
+    "createExampleNotes": "Vytvořte ukázkové poznámky",
+    "openGettingStartedGuide": "Zobrazit návod pro začátek"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset s výpony na lýtka s vlastní vahou",
       "supersetLunges": "Superset s výpady"
-    }
+    },
+    "createToOpenGuide": "Průvodce pro začátek je součástí poznámek s příklady, které ještě neexistují. Chcete je vytvořit nyní?",
+    "pointedAtExamples": "Vaše nastavení nyní čte příkladový log a cvičení. Změňte to v nastaveních dat.",
+    "usesSeparateLog": "Máte již vytvořený záznam tréninků, takže byl ponechán bez úprav. Příklady používají vlastní soubor pro záznam."
   },
   "forms": {
     "enterCsvPath": "Složka pro soubory CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Vytvořit první záznam pro {exerciseName}",
     "createLogButtonAria": "Vytvořit záznam pro: {exerciseName}",
     "createLogButtonText": "Vytvořit záznam pro: {exerciseName}",
-    "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy"
+    "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy",
+    "exploreExampleData": "Nebo prozkoumejte s ukázkovými daty"
   },
   "messages": {
     "codeInserted": "Blok kódu vložen",
@@ -772,7 +778,6 @@
       "addPreset": "Přidat předvolbu",
       "addProtocol": "Přidat protokol",
       "cancel": "Zrušit",
-      "createExamples": "Vytvořit příklady",
       "createFiles": "Vytvořit soubory",
       "done": "Hotovo!",
       "failed": "Neúspěšné",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Znovu vygenerovat (přepsat)",
       "runAllMaintenance": "Spustit vše",
       "savePreset": "Uložit",
-      "saveProtocol": "Uložit"
+      "saveProtocol": "Uložit",
+      "showWelcome": "Zobrazit uvítací zprávu"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Soubor CSV se štítky svalů už existuje. Chcete jej přepsat výchozími hodnotami? Tím odstraníte všechny vlastní štítky.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Šablona pro bloky cvičení. Dostupné zástupné znaky: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Cesta ke složce obsahující stránky cvičení",
       "generateDefaultTemplates": "Vygeneruje výchozí šablonu stránky cvičení a přehled štítků ve složce 'Workout Templates'. Úpravou těchto souborů můžete změnit jazyk a strukturu.",
-      "generateExamples": "Vytvořte složku s ukázkovými cvičeními a tréninky, které vám pomohou začít.",
       "noCustomProtocols": "Nejsou nastaveny žádné vlastní protokoly. Klikněte na 'Přidat protokol' a vytvořte nový.",
       "noPresets": "Nejsou nastaveny žádné předvolby časovače. Klikněte na 'Přidat předvolbu' a vytvořte novou.",
       "presetDurationDesc": "Doba trvání v sekundách (např. 90 pro časovač 90 sekund).",
@@ -810,7 +815,8 @@
       "setupCSV": "Vytvoří soubory workout_logs.csv i muscle-tags.csv v nastavené složce.",
       "weightIncrement": "Výchozí krok zvýšení váhy pro progresivní přetížení (např. 2,5 pro kroky po 2,5 jednotky)",
       "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku",
-      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen."
+      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen.",
+      "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Šablona bloku cvičení",
       "exerciseFolder": "Cesta ke složce cvičení",
       "generateDefaultTemplates": "Generovat výchozí šablony",
-      "generateExamples": "Vytvořit ukázkové údaje",
       "presetDuration": "Délka (sekundy)",
       "presetName": "Název předvolby",
       "presetRounds": "Kola",
@@ -836,12 +841,12 @@
       "setDuration": "Záložní doba série (sekundy)",
       "setupCSV": "Nastavit soubory CSV",
       "weightUnit": "Jednotka hmotnosti",
-      "showRibbonIcon": "Zobrazit ikonu rychlého záznamu"
+      "showRibbonIcon": "Zobrazit ikonu rychlého záznamu",
+      "welcomeWindow": "Okno přivítání"
     },
     "messages": {
       "confirmDeletePreset": "Opravdu chcete tuto předvolbu smazat?",
       "confirmDeleteProtocol": "Jste si jisti, že chcete tento protokol smazat?",
-      "confirmOverwriteExamples": "Existuje již ukázková složka. Chcete ji přepsat?",
       "csvFilesCreated": "Soubory CSV byly úspěšně vytvořeny!",
       "presetDeleted": "Předvolba smazána",
       "presetNameExists": "Předvolba s tímto názvem už existuje",
@@ -871,7 +876,6 @@
       "advanced": "Pokročilé",
       "csvManagement": "Správa CSV souborů",
       "customProtocols": "Vlastní protokoly",
-      "exampleData": "Ukázková data",
       "maintenance": "Údržba",
       "quickLog": "Mobilní záznamy",
       "setupAndData": "Nastavení a data",
@@ -879,7 +883,8 @@
       "timerPresets": "Předvolby časovače",
       "trainingParameters": "Parametry tréninku",
       "savedPresets": "Uložené přednastavení",
-      "savedProtocols": "Uložené protokoly"
+      "savedProtocols": "Uložené protokoly",
+      "gettingStarted": "Začít"
     },
     "tooltips": {
       "deletePreset": "Smazat předvolbu",
@@ -1003,5 +1008,15 @@
       "notABoolean": "Hodnota {key} musí být buď pravda, nebo nepravda, ale je \"{value}\"",
       "notOneOf": "{key} musí být jedním z {allowed}, ale je \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Vítejte v pluginu pro trénink",
+    "intro": "Sledujte své série, a poté je zobrazujte ve formě grafů, tabulek a přehledu. Jak chcete začít?",
+    "tryExamples": "Zkuste s ukázkovými daty",
+    "tryExamplesDesc": "Přidá ukázkové tréninky a otevře krátký průvodce.",
+    "startScratch": "Začněte od začátku",
+    "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
+    "later": "Později",
+    "scratchNoteName": "Moje tréninky"
   }
 }

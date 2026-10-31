@@ -6,6 +6,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { t } from "@app/i18n";
+import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -86,6 +87,17 @@ export class LogCallouts {
         undefined,
         !link,
       ).open();
+    });
+
+    // Only an empty log reaches this callout, so it is the place to offer the examples
+    const exampleLink = noDataDiv.createEl("a", {
+      text: t("logs.exploreExampleData"),
+      cls: "workout-log-example-link",
+      href: "#",
+    });
+    exampleLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      void openGettingStartedGuide(plugin);
     });
 
     if (exerciseName) {

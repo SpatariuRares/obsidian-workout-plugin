@@ -34,7 +34,9 @@
     "generateTagReference": "產生標籤參考",
     "insertTable": "插入運動表格",
     "manageMuscleTags": "管理肌肉標籤",
-    "migrateExerciseTypes": "遷移動作類型"
+    "migrateExerciseTypes": "遷移動作類型",
+    "createExampleNotes": "建立範例說明",
+    "openGettingStartedGuide": "開啟新手指南"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "與徒手提踵組成超級組",
       "supersetLunges": "與弓箭步組成超級組"
-    }
+    },
+    "createToOpenGuide": "「入門指南」是範例說明的一部分，目前還不存在。您想現在就創建它嗎？",
+    "pointedAtExamples": "現在，您可以查看範例記錄和練習。請在數據設定中進行更改。",
+    "usesSeparateLog": "您已經有一個運動記錄，因此它沒有被修改。範例使用自己的記錄檔案。"
   },
   "forms": {
     "enterCsvPath": "CSV 檔案所在資料夾",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "為 {exerciseName} 建立第一個記錄",
     "createLogButtonAria": "建立記錄：{exerciseName}",
     "createLogButtonText": "建立記錄：{exerciseName}",
-    "noDataTitle": "找不到 {exerciseName} 的記錄"
+    "noDataTitle": "找不到 {exerciseName} 的記錄",
+    "exploreExampleData": "或者，使用範例資料進行探索"
   },
   "messages": {
     "codeInserted": "已插入程式碼區塊",
@@ -772,7 +778,6 @@
       "addPreset": "新增預設",
       "addProtocol": "新增訓練法",
       "cancel": "取消",
-      "createExamples": "建立範例",
       "createFiles": "建立檔案",
       "done": "完成！",
       "failed": "失敗",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "重新生成 (覆蓋)",
       "runAllMaintenance": "執行全部",
       "savePreset": "儲存",
-      "saveProtocol": "儲存"
+      "saveProtocol": "儲存",
+      "showWelcome": "顯示歡迎訊息"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "動作區塊範本。可用的預留位置：{{exercise}}、{{duration}}、{{workout}}、{{preset}}",
       "exerciseFolder": "包含動作頁面的資料夾路徑",
       "generateDefaultTemplates": "在「運動範本」資料夾中產生預設的動作頁面範本和標籤參考。您可以自訂這些檔案，以更改語言和結構。",
-      "generateExamples": "建立一個包含範例動作和運動計畫的資料夾，幫助您快速上手。",
       "noCustomProtocols": "沒有設定任何自訂訓練法。點擊「新增訓練法」以建立一個。",
       "noPresets": "沒有設定任何計時器預設。點擊「新增預設」以建立一個。",
       "presetDurationDesc": "時間長度（以秒為單位，例如：90 秒，用於 90 秒計時器）。",
@@ -810,7 +815,8 @@
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
-      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。"
+      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。",
+      "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "動作區塊範本",
       "exerciseFolder": "動作資料夾路徑",
       "generateDefaultTemplates": "產生預設範本",
-      "generateExamples": "產生範例資料",
       "presetDuration": "時長 (秒)",
       "presetName": "預設名稱",
       "presetRounds": "輪次",
@@ -836,12 +841,12 @@
       "setDuration": "備用每組時長 (秒)",
       "setupCSV": "設定 CSV 檔案",
       "weightUnit": "重量單位",
-      "showRibbonIcon": "顯示快速紀錄圖示"
+      "showRibbonIcon": "顯示快速紀錄圖示",
+      "welcomeWindow": "歡迎畫面"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",
       "confirmDeleteProtocol": "您確定要刪除此訓練法嗎？",
-      "confirmOverwriteExamples": "已經存在一個範例資料夾。您是否要覆蓋它？",
       "csvFilesCreated": "CSV 檔案已成功建立！",
       "presetDeleted": "預設已刪除",
       "presetNameExists": "已存在同名的預設",
@@ -871,7 +876,6 @@
       "advanced": "進階",
       "csvManagement": "CSV 檔案管理",
       "customProtocols": "自訂訓練法",
-      "exampleData": "範例資料",
       "maintenance": "維護",
       "quickLog": "行動裝置記錄",
       "setupAndData": "設定與資料",
@@ -879,7 +883,8 @@
       "timerPresets": "計時器預設",
       "trainingParameters": "訓練參數",
       "savedPresets": "儲存的預設",
-      "savedProtocols": "儲存的協議"
+      "savedProtocols": "儲存的協議",
+      "gettingStarted": "開始使用"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} 必須為「真」或「假」，但目前為「{value}」",
       "notOneOf": "{key} 必須是 {allowed} 中的一種，但目前是 \"{value}\"。"
     }
+  },
+  "welcome": {
+    "title": "歡迎使用運動插件",
+    "intro": "追蹤您的訓練，然後以圖表、表格和儀表板的形式查看。您想從哪一步開始？",
+    "tryExamples": "請使用範例資料",
+    "tryExamplesDesc": "新增示範運動，並開啟簡短的教學指南。",
+    "startScratch": "從頭開始",
+    "startScratchDesc": "建立一個包含您的記錄的備忘錄，並開啟表單以記錄第一個記錄。",
+    "later": "稍後",
+    "scratchNoteName": "我的運動"
   }
 }

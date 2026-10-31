@@ -34,7 +34,9 @@
     "generateTagReference": "Generează referința etichetelor",
     "insertTable": "Adaugă tabel de antrenament",
     "manageMuscleTags": "Gestionează etichetele pentru mușchi",
-    "migrateExerciseTypes": "Migrează tipurile de exerciții"
+    "migrateExerciseTypes": "Migrează tipurile de exerciții",
+    "createExampleNotes": "Creați note de exemplu",
+    "openGettingStartedGuide": "Deschide ghidul de pornire"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset cu ridicări pe vârfuri cu greutatea corpului",
       "supersetLunges": "Superset cu fandări"
-    }
+    },
+    "createToOpenGuide": "Ghidul de pornire face parte din notele de exemplu, care nu există încă. Ar trebui să le creăm acum?",
+    "pointedAtExamples": "Acum, opiniile tale vor citi log-ul de exemplu și exercițiile. Modifică această opțiune în setările datelor.",
+    "usesSeparateLog": "Deoarece aveți deja un jurnal de antrenament, acesta a rămas nemodificat. Exemplele folosesc propriul lor fișier de jurnal."
   },
   "forms": {
     "enterCsvPath": "Folderul pentru fișierele CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Creați primul jurnal pentru {exerciseName}",
     "createLogButtonAria": "Creează jurnal pentru: {exerciseName}",
     "createLogButtonText": "Creează jurnal pentru: {exerciseName}",
-    "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}"
+    "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}",
+    "exploreExampleData": "Sau explorați folosind date de exemplu"
   },
   "messages": {
     "codeInserted": "Bloc de cod inserat",
@@ -772,7 +778,6 @@
       "addPreset": "Adaugă preset",
       "addProtocol": "Adaugă protocol",
       "cancel": "Anulează",
-      "createExamples": "Creează exemple",
       "createFiles": "Creează fișiere",
       "done": "Terminat!",
       "failed": "Eșuat",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Regenerează (suprascrie)",
       "runAllMaintenance": "Rulează toate",
       "savePreset": "Salvează",
-      "saveProtocol": "Salvează"
+      "saveProtocol": "Salvează",
+      "showWelcome": "Afișează mesajul de bun venit"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Locuri de înlocuire disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
       "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exerciții și referința pentru etichete în folderul 'Workout Templates'. Puteți personaliza aceste fișiere pentru a modifica limba și structura.",
-      "generateExamples": "Creați un folder cu exerciții și antrenamente de exemplu, pentru a vă ajuta să începeți.",
       "noCustomProtocols": "Nu sunt configurate protocoale personalizate. Dați clic pe „Adaugă protocol” pentru a crea unul.",
       "noPresets": "Nu sunt configurate preset-uri pentru temporizator. Dați clic pe „Adaugă preset” pentru a crea unul.",
       "presetDurationDesc": "Durata în secunde (de exemplu, 90 pentru un temporizator de 90 de secunde).",
@@ -810,7 +815,8 @@
       "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
-      "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă."
+      "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
+      "welcomeWindow": "Reafăși fereastra de bun venit pentru a începe cu date de exemplu sau de la zero."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Șablon pentru blocul de exerciții",
       "exerciseFolder": "Cale către folderul cu exerciții",
       "generateDefaultTemplates": "Generează șabloane implicite",
-      "generateExamples": "Generează date de exemplu",
       "presetDuration": "Durată (secunde)",
       "presetName": "Nume preset",
       "presetRounds": "Runde",
@@ -836,12 +841,12 @@
       "setDuration": "Durată implicită a setului (secunde)",
       "setupCSV": "Configurare fișiere CSV",
       "weightUnit": "Unitatea de măsură a greutății",
-      "showRibbonIcon": "Afișează pictograma de înregistrare rapidă"
+      "showRibbonIcon": "Afișează pictograma de înregistrare rapidă",
+      "welcomeWindow": "Ferestruță de bun venit"
     },
     "messages": {
       "confirmDeletePreset": "Sunteți sigur(ă) că doriți să ștergeți acest preset?",
       "confirmDeleteProtocol": "Sunteți sigur(ă) că doriți să ștergeți acest protocol?",
-      "confirmOverwriteExamples": "Un folder de exemplu există deja. Vrei să îl suprascrii?",
       "csvFilesCreated": "Fișierele CSV au fost create cu succes!",
       "presetDeleted": "Presetul a fost șters",
       "presetNameExists": "Există deja un preset cu acest nume.",
@@ -871,7 +876,6 @@
       "advanced": "Avansat",
       "csvManagement": "Gestionarea fișierelor CSV",
       "customProtocols": "Protocoale personalizate",
-      "exampleData": "Date de exemplu",
       "maintenance": "Întreținere",
       "quickLog": "Înregistrare mobilă",
       "setupAndData": "Configurare și date",
@@ -879,7 +883,8 @@
       "timerPresets": "Preseturi temporizator",
       "trainingParameters": "Parametri de antrenament",
       "savedPresets": "Prezăseturi salvate",
-      "savedProtocols": "Protocoale salvate"
+      "savedProtocols": "Protocoale salvate",
+      "gettingStarted": "Începe"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} trebuie să fie adevărat sau fals, dar este \"{value}\"",
       "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Bun venit la plugin-ul de exerciții",
+    "intro": "Urmărește-ți antrenamentele, apoi vezi-le sub forma de grafice, tabele și un panou de control. Cum dorești să începi?",
+    "tryExamples": "Încearcă cu date de exemplu",
+    "tryExamplesDesc": "Adaugă antrenamente de exemplu și deschide un ghid scurt.",
+    "startScratch": "Începe de la zero",
+    "startScratchDesc": "Creează o notă cu jurnalul tău și deschide formularul pentru a înregistra o primă serie de date.",
+    "later": "Mai târziu",
+    "scratchNoteName": "Antrenamentele mele"
   }
 }

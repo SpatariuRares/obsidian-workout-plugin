@@ -34,7 +34,9 @@
     "generateTagReference": "Generer tag-oversikt",
     "insertTable": "Legg til treningstabell",
     "manageMuscleTags": "Administrer muskeltagger",
-    "migrateExerciseTypes": "Migrer øvelsestyper"
+    "migrateExerciseTypes": "Migrer øvelsestyper",
+    "createExampleNotes": "Opprett eksempelnotater",
+    "openGettingStartedGuide": "Åpne veiledning"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset med tåhev med kroppsvekt",
       "supersetLunges": "Superset med utfall"
-    }
+    },
+    "createToOpenGuide": "Veiledningen for å komme i gang er en del av eksempelkravene, som ikke finnes ennå. Skal vi lage dem nå?",
+    "pointedAtExamples": "Dine innstillinger vil nå lese eksempel-loggene og øvelsene. Endre dette i innstillingene for data.",
+    "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil."
   },
   "forms": {
     "enterCsvPath": "Mappe for CSV-filene",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Opprett første logg for {exerciseName}",
     "createLogButtonAria": "Opprett logg for: {exerciseName}",
     "createLogButtonText": "Opprett logg for: {exerciseName}",
-    "noDataTitle": "Ingen logger funnet for {exerciseName}"
+    "noDataTitle": "Ingen logger funnet for {exerciseName}",
+    "exploreExampleData": "Eller utforsk med eksempeldata"
   },
   "messages": {
     "codeInserted": "Kodeblokk satt inn",
@@ -772,7 +778,6 @@
       "addPreset": "Legg til forhåndsinnstilling",
       "addProtocol": "Legg til protokoll",
       "cancel": "Avbryt",
-      "createExamples": "Opprett eksempler",
       "createFiles": "Opprett filer",
       "done": "Ferdig!",
       "failed": "Mislykket",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Generer på nytt (overskriv)",
       "runAllMaintenance": "Kjør alt",
       "savePreset": "Lagre",
-      "saveProtocol": "Lagre"
+      "saveProtocol": "Lagre",
+      "showWelcome": "Vis velkomst"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Mal for øvelsesblokker. Tilgjengelige plassholdere: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Sti til mappen som inneholder øvelsessider",
       "generateDefaultTemplates": "Generer standardmal for øvelsessider og tag-referanse i mappen 'Workout Templates'. Du kan tilpasse disse filene for å endre språk og struktur.",
-      "generateExamples": "Opprett en mappe med eksempler på øvelser og treningsprogrammer for å hjelpe deg i gang.",
       "noCustomProtocols": "Ingen egne protokoller er konfigurert. Klikk på «Legg til protokoll» for å opprette en.",
       "noPresets": "Ingen timer-forhåndsinnstillinger er konfigurert. Klikk på «Legg til forhåndsinnstilling» for å opprette en.",
       "presetDurationDesc": "Varighet i sekunder (f.eks. 90 for en 90-sekunders timer).",
@@ -810,7 +815,8 @@
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
       "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
-      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i."
+      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
+      "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Mal for øvelsesblokk",
       "exerciseFolder": "Sti til øvelsesmappe",
       "generateDefaultTemplates": "Generer standardmaler",
-      "generateExamples": "Generer eksempeldata",
       "presetDuration": "Varighet (sekunder)",
       "presetName": "Navn på forhåndsinnstilling",
       "presetRounds": "Runder",
@@ -836,12 +841,12 @@
       "setDuration": "Reservevarighet per sett (sekunder)",
       "setupCSV": "Sett opp CSV-filer",
       "weightUnit": "Enhet for vekt",
-      "showRibbonIcon": "Vis ikon for hurtiglogging"
+      "showRibbonIcon": "Vis ikon for hurtiglogging",
+      "welcomeWindow": "Velkomstvindu"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
       "confirmDeleteProtocol": "Er du sikker på at du vil slette denne protokollen?",
-      "confirmOverwriteExamples": "En eksempelmappe finnes allerede. Vil du overskrive den?",
       "csvFilesCreated": "CSV-filer opprettet med suksess!",
       "presetDeleted": "Forhåndsinnstilling slettet",
       "presetNameExists": "En forhåndsinnstilling med dette navnet finnes allerede",
@@ -871,7 +876,6 @@
       "advanced": "Avansert",
       "csvManagement": "Administrasjon av CSV-filer",
       "customProtocols": "Tilpassede protokoller",
-      "exampleData": "Eksempeldata",
       "maintenance": "Vedlikehold",
       "quickLog": "Mobillogging",
       "setupAndData": "Oppsett og data",
@@ -879,7 +883,8 @@
       "timerPresets": "Timer-forhåndsinnstillinger",
       "trainingParameters": "Treningsparametere",
       "savedPresets": "Lagrede forhåndsinnstillinger",
-      "savedProtocols": "Lagrede protokoller"
+      "savedProtocols": "Lagrede protokoller",
+      "gettingStarted": "Komme i gang"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} må være sant eller usant, men det er \"{value}\"",
       "notOneOf": "{key} må være en av {allowed}, men det er \"{value}\"."
     }
+  },
+  "welcome": {
+    "title": "Velkommen til treningsplugin",
+    "intro": "Spor treningsøktene dine, og se dem deretter som grafer, tabeller og et dashbord. Hvordan vil du helst starte?",
+    "tryExamples": "Prøv med eksempeldata",
+    "tryExamplesDesc": "Legger til eksempeløvelser og åpner en kort veiledning.",
+    "startScratch": "Start fra bunnen av",
+    "startScratchDesc": "Oppretter en notat med loggen din og åpner skjemaet for å registrere den første settet.",
+    "later": "Senere",
+    "scratchNoteName": "Mine treningsøkter"
   }
 }

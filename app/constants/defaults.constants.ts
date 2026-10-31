@@ -76,6 +76,8 @@ workout: {{workout}}
   weightUnit: "kg",
   /** Show the dumbbell ribbon icon that opens the create log modal */
   showRibbonIcon: true,
+  /** The welcome modal was shown */
+  welcomeShown: false,
 };
 
 /**

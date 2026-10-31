@@ -24,9 +24,15 @@ Mobile-first workout tracker for Obsidian. Log every set from your phone at the 
 
 ## Getting started
 
-In **Settings → Workout Planner**, select **Create examples**. You get sample exercises, a few workouts with a month of logs, and a dashboard. Poke around before setting up your own.
+The first time you install the plugin, a welcome window asks how you want to begin. You don't need to open settings.
 
-When you're ready, set the CSV folder and the exercise folder, select **Create files**, then add a table to any note, for example `Push Day`:
+- **Try with example data** adds sample exercises, a few workouts with a month of logs, and a dashboard, points the plugin at them, and opens a short guide. Poke around before setting up your own.
+- **Start from scratch** creates a note called "My workouts" at the top of your vault (an existing note is never overwritten) with a log table and opens the log form, so you can log your first set right away. The log file is created when you save it.
+- **Later** closes the window without changing anything.
+
+Closed it by accident, or want it again? Select **Show welcome** under **Settings → Workout Planner → Getting started** to open the window again. Or open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
+
+To add a table to any note, for example `Push Day`:
 
 ````markdown
 ```workout-log
@@ -345,6 +351,8 @@ Open the command palette (`Ctrl/Cmd + P`) and type the name.
 | Command                                                     | What it does                                                       |
 | ----------------------------------------------------------- | ------------------------------------------------------------------ |
 | Create workout log                                          | Log a set                                                          |
+| Create example notes                                        | Add sample exercises, workouts, logs and a dashboard               |
+| Open getting started guide                                  | Open the guide in the examples                                     |
 | Insert workout chart / table / timer / dashboard / duration | Insert a block through a form                                      |
 | Create exercise page                                        | New exercise page with type and tags                               |
 | Create exercise section                                     | Add a heading, timer and table for an exercise to the current note |

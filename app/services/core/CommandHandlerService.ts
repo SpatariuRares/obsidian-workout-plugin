@@ -22,6 +22,10 @@ import type {
   WorkoutAPIPort,
   TemplateGeneratorPort,
 } from "@app/types/PluginPorts";
+import {
+  createExampleNotes,
+  openGettingStartedGuide,
+} from "@app/services/examples/GettingStartedGuide";
 import { durationBlock } from "@app/features/duration/durationBlock";
 
 type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
@@ -52,6 +56,22 @@ export class CommandHandlerService {
           const errorMessage = ErrorUtils.getErrorMessage(error);
           new Notice(t("messages.errors.csvCreateError", { error: errorMessage }));
         }
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "create-example-notes",
+      name: t("commands.createExampleNotes"),
+      callback: async () => {
+        await createExampleNotes(this.plugin);
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "open-getting-started-guide",
+      name: t("commands.openGettingStartedGuide"),
+      callback: async () => {
+        await openGettingStartedGuide(this.plugin);
       },
     });
 

@@ -34,7 +34,9 @@
     "generateTagReference": "टैग संदर्भ बनाएँ",
     "insertTable": "वर्कआउट तालिका डालें",
     "manageMuscleTags": "मांसपेशी टैग प्रबंधित करें",
-    "migrateExerciseTypes": "व्यायाम प्रकार माइग्रेट करें"
+    "migrateExerciseTypes": "व्यायाम प्रकार माइग्रेट करें",
+    "createExampleNotes": "उदाहरण नोट्स बनाएँ",
+    "openGettingStartedGuide": "शुरू करने के लिए गाइड खोलें"
   },
   "common": {
     "bpm": "बीपीएम",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "बॉडीवेट काफ रेज़ के साथ सुपरसेट",
       "supersetLunges": "लंजेस के साथ सुपरसेट"
-    }
+    },
+    "createToOpenGuide": "शुरू करने के लिए गाइड, उदाहरण नोट्स का हिस्सा है, जो अभी तक मौजूद नहीं हैं। क्या अब उन्हें बनाएं?",
+    "pointedAtExamples": "आपकी राय अब उदाहरण लॉग और अभ्यासों को पढ़ती है। इसे डेटा सेटिंग्स में बदलें।",
+    "usesSeparateLog": "आपके पास पहले से ही एक वर्कआउट लॉग मौजूद है, इसलिए इसे अपरिवर्तित रखा गया है। उदाहरणों में, वे अपनी स्वयं की लॉग फ़ाइल का उपयोग करते हैं।"
   },
   "forms": {
     "enterCsvPath": "CSV फ़ाइलों का फ़ोल्डर",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} के लिए पहली लॉग बनाएं",
     "createLogButtonAria": "इसके लिए लॉग बनाएं: {exerciseName}",
     "createLogButtonText": "इसके लिए लॉग बनाएं: {exerciseName}",
-    "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला"
+    "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला",
+    "exploreExampleData": "या उदाहरण डेटा के साथ खोज करें।"
   },
   "messages": {
     "codeInserted": "कोड ब्लॉक डाला गया",
@@ -772,7 +778,6 @@
       "addPreset": "प्रीसेट जोड़ें",
       "addProtocol": "प्रोटोकॉल जोड़ें",
       "cancel": "रद्द करें",
-      "createExamples": "उदाहरण बनाएँ",
       "createFiles": "फ़ाइलें बनाएँ",
       "done": "पूर्ण!",
       "failed": "असफल",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "पुनर्जनरेट (ओवरराइट)",
       "runAllMaintenance": "सभी चलाएँ",
       "savePreset": "सेव करें",
-      "saveProtocol": "सेव करें"
+      "saveProtocol": "सेव करें",
+      "showWelcome": "स्वागत प्रदर्शित करें"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "मांसपेशी टैग की CSV फ़ाइल पहले से मौजूद है। क्या आप इसे डिफ़ॉल्ट मानों से ओवरराइट करना चाहते हैं? इससे सभी कस्टम टैग हट जाएंगे।",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "व्यायाम ब्लॉक के लिए टेम्पलेट। उपलब्ध प्लेसहोल्डर: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "व्यायाम पृष्ठों वाले फ़ोल्डर का पथ",
       "generateDefaultTemplates": "'Workout Templates' फ़ोल्डर में डिफ़ॉल्ट व्यायाम पृष्ठ टेम्पलेट और टैग संदर्भ बनाएँ। भाषा और संरचना बदलने के लिए आप इन फ़ाइलों को अनुकूलित कर सकते हैं।",
-      "generateExamples": "शुरुआत करने में मदद के लिए उदाहरण व्यायामों और वर्कआउट वाला एक फ़ोल्डर बनाएं।",
       "noCustomProtocols": "कोई कस्टम प्रोटोकॉल कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रोटोकॉल जोड़ें' पर क्लिक करें।",
       "noPresets": "कोई टाइमर प्रीसेट कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रीसेट जोड़ें' पर क्लिक करें।",
       "presetDurationDesc": "सेकंड में अवधि (उदाहरण के लिए, 90 सेकंड के टाइमर के लिए 90)।",
@@ -810,7 +815,8 @@
       "setupCSV": "कॉन्फ़िगर किए गए फ़ोल्डर में workout_logs.csv और muscle-tags.csv दोनों फ़ाइलें बनाएं।",
       "weightIncrement": "प्रोग्रेसिव ओवरलोड के लिए डिफ़ॉल्ट वज़न वृद्धि (उदाहरण के लिए, 2.5 इकाई की वृद्धि के लिए 2.5)",
       "showRibbonIcon": "रिबन में डंबल आइकन दिखाएँ जो वर्कआउट लॉग फ़ॉर्म खोलता है",
-      "weightUnit": "चार्ट, कुल और नए लॉग के लिए इकाई। प्रत्येक लॉग में वह इकाई दर्ज की गई थी।"
+      "weightUnit": "चार्ट, कुल और नए लॉग के लिए इकाई। प्रत्येक लॉग में वह इकाई दर्ज की गई थी।",
+      "welcomeWindow": "उदाहरण डेटा के साथ शुरुआत करने या बिल्कुल नए से शुरू करने के लिए, वेलकम विंडो को फिर से दिखाएं।"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "व्यायाम ब्लॉक टेम्पलेट",
       "exerciseFolder": "व्यायाम फ़ोल्डर का पथ",
       "generateDefaultTemplates": "डिफ़ॉल्ट टेम्प्लेट जेनरेट करें",
-      "generateExamples": "उदाहरण डेटा उत्पन्न करें",
       "presetDuration": "अवधि (सेकंड)",
       "presetName": "प्रीसेट का नाम",
       "presetRounds": "राउंड",
@@ -836,12 +841,12 @@
       "setDuration": "फ़ॉलबैक सेट अवधि (सेकंड)",
       "setupCSV": "CSV फ़ाइलों को सेटअप करें",
       "weightUnit": "वज़न की इकाई",
-      "showRibbonIcon": "क्विक लॉग आइकन दिखाएँ"
+      "showRibbonIcon": "क्विक लॉग आइकन दिखाएँ",
+      "welcomeWindow": "स्वागत विंडो"
     },
     "messages": {
       "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
       "confirmDeleteProtocol": "क्या आप निश्चित रूप से इस प्रोटोकॉल को हटाना चाहते हैं?",
-      "confirmOverwriteExamples": "एक उदाहरण फ़ोल्डर पहले से मौजूद है। क्या आप इसे ओवरराइट करना चाहते हैं?",
       "csvFilesCreated": "CSV फाइलें सफलतापूर्वक बनाई गईं!",
       "presetDeleted": "प्रीसेट हटा दिया गया",
       "presetNameExists": "इस नाम के साथ पहले से एक प्रीसेट मौजूद है।",
@@ -871,7 +876,6 @@
       "advanced": "उन्नत",
       "csvManagement": "CSV फ़ाइल प्रबंधन",
       "customProtocols": "कस्टम प्रोटोकॉल",
-      "exampleData": "उदाहरण डेटा",
       "maintenance": "रखरखाव",
       "quickLog": "मोबाइल लॉगिंग",
       "setupAndData": "स्थापना और डेटा",
@@ -879,7 +883,8 @@
       "timerPresets": "टाइमर प्रीसेट",
       "trainingParameters": "प्रशिक्षण पैरामीटर",
       "savedPresets": "सेव की गई प्रीसेट",
-      "savedProtocols": "सहे हुए प्रोटोकॉल"
+      "savedProtocols": "सहे हुए प्रोटोकॉल",
+      "gettingStarted": "शुरू करना"
     },
     "tooltips": {
       "deletePreset": "प्रीसेट हटाएं",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} को सत्य या असत्य होना चाहिए, लेकिन यह \"{value}\" है।",
       "notOneOf": "{key} को {allowed} में से एक होना चाहिए, लेकिन यह \"{value}\" है।"
     }
+  },
+  "welcome": {
+    "title": "वर्कआउट प्लगइन में आपका स्वागत है",
+    "intro": "अपनी सेट को ट्रैक करें, फिर उन्हें चार्ट, तालिकाओं और डैशबोर्ड के रूप में देखें। आप कहां से शुरू करना चाहेंगे?",
+    "tryExamples": "उदाहरण डेटा के साथ प्रयास करें",
+    "tryExamplesDesc": "नमूना वर्कआउट जोड़ता है और एक संक्षिप्त गाइड खोलता है।",
+    "startScratch": "शुरू से",
+    "startScratchDesc": "यह आपके लॉग के साथ एक नोट बनाता है और पहली सेट को लॉग करने के लिए फॉर्म खोलता है।",
+    "later": "बाद में",
+    "scratchNoteName": "मेरा वर्कआउट"
   }
 }

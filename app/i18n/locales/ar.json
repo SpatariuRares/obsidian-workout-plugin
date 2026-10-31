@@ -34,7 +34,9 @@
     "generateTagReference": "إنشاء مرجع العلامات",
     "insertTable": "إدراج جدول التدريب",
     "manageMuscleTags": "إدارة علامات العضلات",
-    "migrateExerciseTypes": "ترحيل أنواع التمارين"
+    "migrateExerciseTypes": "ترحيل أنواع التمارين",
+    "createExampleNotes": "إنشاء ملاحظات نموذجية",
+    "openGettingStartedGuide": "فتح دليل البدء السريع"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "سوبرسِت مع رفع السمانة بوزن الجسم",
       "supersetLunges": "سوبرسِت مع الطعنات (لانجز)"
-    }
+    },
+    "createToOpenGuide": "دليل البدء هو جزء من ملاحظات الأمثلة، والتي لم يتم إنشاؤها بعد. هل تريد إنشاءها الآن؟",
+    "pointedAtExamples": "الآن، يمكنك قراءة سجل المثال والتمارين. قم بتغيير هذا الإعداد في إعدادات البيانات.",
+    "usesSeparateLog": "لديك بالفعل سجل تدريبات، لذلك لم يتم تعديله. تستخدم الأمثلة ملف السجل الخاص بها."
   },
   "forms": {
     "enterCsvPath": "مجلد ملفات CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "إنشاء السجل الأول لـ {exerciseName}",
     "createLogButtonAria": "إنشاء سجل لـ: {exerciseName}",
     "createLogButtonText": "إنشاء سجل لـ: {exerciseName}",
-    "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}"
+    "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}",
+    "exploreExampleData": "أو استكشف باستخدام بيانات مثال"
   },
   "messages": {
     "codeInserted": "تم إدراج كتلة الكود",
@@ -772,7 +778,6 @@
       "addPreset": "إضافة إعداد مسبق",
       "addProtocol": "إضافة بروتوكول",
       "cancel": "إلغاء",
-      "createExamples": "إنشاء أمثلة",
       "createFiles": "إنشاء ملفات",
       "done": "تم!",
       "failed": "فشل",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "إعادة إنشاء (الكتابة فوق)",
       "runAllMaintenance": "تشغيل الكل",
       "savePreset": "حفظ",
-      "saveProtocol": "حفظ"
+      "saveProtocol": "حفظ",
+      "showWelcome": "عرض ترحيب"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "يوجد ملف CSV لعلامات العضلات بالفعل. هل ترغب في استبداله بالقيم الافتراضية؟ سيؤدي هذا إلى إزالة أي علامات مخصصة.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "قالب كتل التمارين. العناصر النائبة المتاحة: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "مسار المجلد الذي يحتوي على صفحات التمارين",
       "generateDefaultTemplates": "إنشاء نموذج الصفحة الافتراضي لتمارين التدريب ومرجع العلامات في المجلد 'قوالب التدريب'، ويمكنك تعديل هذه الملفات لتغيير اللغة والهيكل.",
-      "generateExamples": "أنشئ مجلدًا يحتوي على أمثلة لتمارين وتدريبات لمساعدتك في البدء.",
       "noCustomProtocols": "لا توجد بروتوكولات مخصصة مُحددة. انقر على 'إضافة بروتوكول' لإنشاء واحدة",
       "noPresets": "لا توجد إعدادات مسبقة للمؤقت. انقر على 'إضافة إعداد مسبق' لإنشاء واحد.",
       "presetDurationDesc": "المدة بالثواني (على سبيل المثال، 90 ثانية لمؤقت مدته 90 ثانية).",
@@ -810,7 +815,8 @@
       "setupCSV": "أنشئ كلاً من workout_logs.csv و muscle-tags.csv في المجلد المُحدد.",
       "weightIncrement": "الزيادة الافتراضية في الوزن لزيادة التحميل التدريجي (مثلاً: 2.5 للزيادة بمقدار 2.5 وحدة)",
       "showRibbonIcon": "إظهار أيقونة الدمبل في الشريط الجانبي لفتح نموذج سجل التدريب",
-      "weightUnit": "وحدة للرسوم البيانية، والمجموعات، والسجلات الجديدة. تحتفظ كل سجل بالوحدة التي تم إدخاله فيها."
+      "weightUnit": "وحدة للرسوم البيانية، والمجموعات، والسجلات الجديدة. تحتفظ كل سجل بالوحدة التي تم إدخاله فيها.",
+      "welcomeWindow": "اعرض نافذة الترحيب مرة أخرى لبدء العمل باستخدام بيانات نموذجية أو من البداية."
     },
     "labels": {
       "csvPath": "مسار ملف سجل CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "قالب كتلة التمرين",
       "exerciseFolder": "مسار مجلد التمارين",
       "generateDefaultTemplates": "إنشاء قوالب افتراضية",
-      "generateExamples": "إنشاء بيانات مثال",
       "presetDuration": "المدة (الثواني)",
       "presetName": "اسم الإعداد المسبق",
       "presetRounds": "الدورات",
@@ -836,12 +841,12 @@
       "setDuration": "مدة المجموعة الاحتياطية (ثوانٍ)",
       "setupCSV": "إعداد ملفات CSV",
       "weightUnit": "وحدة الوزن",
-      "showRibbonIcon": "إظهار أيقونة التسجيل السريع"
+      "showRibbonIcon": "إظهار أيقونة التسجيل السريع",
+      "welcomeWindow": "نافذة الترحيب"
     },
     "messages": {
       "confirmDeletePreset": "هل أنت متأكد من أنك تريد حذف هذا الإعداد؟",
       "confirmDeleteProtocol": "هل أنت متأكد من أنك تريد حذف هذا البروتوكول؟",
-      "confirmOverwriteExamples": "يوجد مجلد مثال موجود بالفعل. هل تريد استبداله؟",
       "csvFilesCreated": "تم إنشاء ملفات CSV بنجاح!",
       "presetDeleted": "تم حذف الإعداد المسبق",
       "presetNameExists": "هذا الاسم موجود بالفعل في إعدادات مسبقة.",
@@ -871,7 +876,6 @@
       "advanced": "متقدم",
       "csvManagement": "إدارة ملفات CSV",
       "customProtocols": "بروتوكولات مخصصة",
-      "exampleData": "بيانات مثال",
       "maintenance": "الصيانة",
       "quickLog": "تسجيل محمول",
       "setupAndData": "الإعداد والبيانات",
@@ -879,7 +883,8 @@
       "timerPresets": "الإعدادات المسبقة للمؤقت",
       "trainingParameters": "معلمات التدريب",
       "savedPresets": "الإعدادات المحفوظة",
-      "savedProtocols": "البروتوكولات المحفوظة"
+      "savedProtocols": "البروتوكولات المحفوظة",
+      "gettingStarted": "ابدأ"
     },
     "tooltips": {
       "deletePreset": "حذف الإعداد المسبق",
@@ -1003,5 +1008,15 @@
       "notABoolean": "يجب أن تكون القيمة {key} إما صح أو خطأ، ولكنها هي \"{value}\"",
       "notOneOf": "يجب أن يكون {key} أحد الخيارات التالية {allowed}، ولكنه هو \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "أهلاً بك في إضافة التدريب",
+    "intro": "تتبع مجموعاتك، ثم شاهدها على شكل رسوم بيانية وجداول ولوحة تحكم. كيف تريد أن تبدأ؟",
+    "tryExamples": "جرب باستخدام بيانات نموذجية",
+    "tryExamplesDesc": "يضيف تمارين نموذجية ويفتح دليلًا موجزًا.",
+    "startScratch": "ابدأ من الصفر",
+    "startScratchDesc": "يقوم بإنشاء ملاحظة تحتوي على سجلاتك، ويفتح النموذج لتسجيل مجموعة أولية.",
+    "later": "لاحقًا",
+    "scratchNoteName": "تمارين التدريب"
   }
 }

@@ -30,11 +30,13 @@
     "auditExerciseNames": "Audit exercise names",
     "convertExercise": "Convert exercise",
     "createCsvLog": "Create CSV log file",
+    "createExampleNotes": "Create example notes",
     "exportWorkoutToCanvas": "Export workout to canvas",
     "generateTagReference": "Generate tag reference",
     "insertTable": "Insert workout table",
     "manageMuscleTags": "Manage muscle tags",
-    "migrateExerciseTypes": "Migrate exercise types"
+    "migrateExerciseTypes": "Migrate exercise types",
+    "openGettingStartedGuide": "Open getting started guide"
   },
   "common": {
     "bpm": "bpm",
@@ -274,7 +276,10 @@
       "gettingStarted": "Getting Started",
       "hiitCardioSession": "HIIT Cardio Session"
     },
+    "createToOpenGuide": "The getting started guide is part of the example notes, which don't exist yet. Create them now?",
     "folderCreatedError": "Failed to create example folder.",
+    "pointedAtExamples": "Your views now read the example log and exercises. Change this in the data settings.",
+    "usesSeparateLog": "You already have a workout log, so it was left untouched. The examples use their own log file.",
     "folderCreatedSuccess": "Example folder '{folder}' created successfully!",
     "folderNames": {
       "base": "The gym examples",
@@ -457,6 +462,7 @@
     "addLogButtonText": "Add log for {exerciseName}",
     "createFirstLogButton": "Create first log for {exerciseName}",
     "createFirstLogButtonAria": "Create first log for {exerciseName}",
+    "exploreExampleData": "Or explore with example data",
     "createLogButtonAria": "Create log for: {exerciseName}",
     "createLogButtonText": "Create log for: {exerciseName}",
     "noDataTitle": "No logs found for {exerciseName}"
@@ -772,7 +778,6 @@
       "addPreset": "Add preset",
       "addProtocol": "Add protocol",
       "cancel": "Cancel",
-      "createExamples": "Create examples",
       "createFiles": "Create files",
       "done": "Done!",
       "failed": "Failed",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Regenerate (overwrite)",
       "runAllMaintenance": "Run all",
       "savePreset": "Save",
-      "saveProtocol": "Save"
+      "saveProtocol": "Save",
+      "showWelcome": "Show welcome"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Path to the folder containing exercise pages",
       "generateDefaultTemplates": "Generate default exercise page template and tag reference in the 'Workout Templates' folder. You can customize these files to change the language and structure.",
-      "generateExamples": "Create a folder with example exercises and workouts to help you get started.",
       "noCustomProtocols": "No custom protocols configured. Click 'Add protocol' to create one.",
       "noPresets": "No timer presets configured. Click 'Add preset' to create one.",
       "presetDurationDesc": "Duration in seconds (e.g., 90 for a 90-second timer).",
@@ -810,7 +815,8 @@
       "setupCSV": "Create both workout_logs.csv and muscle-tags.csv in the configured folder.",
       "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
-      "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in."
+      "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
+      "welcomeWindow": "Show the welcome window again to start with example data or from scratch."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Exercise block template",
       "exerciseFolder": "Exercise folder path",
       "generateDefaultTemplates": "Generate default templates",
-      "generateExamples": "Generate example data",
       "presetDuration": "Duration (seconds)",
       "presetName": "Preset name",
       "presetRounds": "Rounds",
@@ -836,12 +841,12 @@
       "setDuration": "Fallback set duration (seconds)",
       "setupCSV": "Setup CSV files",
       "showRibbonIcon": "Show quick log icon",
-      "weightUnit": "Weight unit"
+      "weightUnit": "Weight unit",
+      "welcomeWindow": "Welcome window"
     },
     "messages": {
       "confirmDeletePreset": "Are you sure you want to delete this preset?",
       "confirmDeleteProtocol": "Are you sure you want to delete this protocol?",
-      "confirmOverwriteExamples": "An example folder already exists. Do you want to overwrite it?",
       "csvFilesCreated": "CSV files created successfully!",
       "presetDeleted": "Preset deleted",
       "presetNameExists": "A preset with this name already exists",
@@ -871,7 +876,6 @@
       "advanced": "Advanced",
       "csvManagement": "CSV file management",
       "customProtocols": "Custom protocols",
-      "exampleData": "Example data",
       "maintenance": "Maintenance",
       "quickLog": "Mobile logging",
       "savedPresets": "Saved presets",
@@ -879,7 +883,8 @@
       "setupAndData": "Setup & data",
       "templates": "Templates",
       "timerPresets": "Timer presets",
-      "trainingParameters": "Training parameters"
+      "trainingParameters": "Training parameters",
+      "gettingStarted": "Getting started"
     },
     "tooltips": {
       "deletePreset": "Delete preset",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} must be true or false, but it is \"{value}\"",
       "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Welcome to the workout plugin",
+    "intro": "Track your sets, then see them as charts, tables and a dashboard. How do you want to begin?",
+    "tryExamples": "Try with example data",
+    "tryExamplesDesc": "Adds sample workouts and opens a short guide.",
+    "startScratch": "Start from scratch",
+    "startScratchDesc": "Creates a note with your log and opens the form to log a first set.",
+    "later": "Later",
+    "scratchNoteName": "My workouts"
   }
 }

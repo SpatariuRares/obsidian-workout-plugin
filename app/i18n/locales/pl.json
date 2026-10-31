@@ -34,7 +34,9 @@
     "generateTagReference": "Wygeneruj spis tagów",
     "insertTable": "Wstaw tabelę treningu",
     "manageMuscleTags": "Zarządzaj tagami mięśni",
-    "migrateExerciseTypes": "Migruj typy ćwiczeń"
+    "migrateExerciseTypes": "Migruj typy ćwiczeń",
+    "createExampleNotes": "Utwórz przykładowe notatki",
+    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superseria ze wspięciami na palce z masą ciała",
       "supersetLunges": "Superseria z wykrokami"
-    }
+    },
+    "createToOpenGuide": "Przewodnik \"Jak zacząć\" jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je stworzyć teraz?",
+    "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
+    "usesSeparateLog": "Udostępniasz już dziennik treningów, więc pozostał on bez zmian. Przykłady korzystają z własnego pliku dziennika."
   },
   "forms": {
     "enterCsvPath": "Folder na pliki CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Utwórz pierwszy wpis w dzienniku dla {exerciseName}",
     "createLogButtonAria": "Utwórz log dla: {exerciseName}",
     "createLogButtonText": "Utwórz log dla: {exerciseName}",
-    "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}"
+    "noDataTitle": "Nie znaleziono żadnych wpisów dotyczących {exerciseName}",
+    "exploreExampleData": "Albo zapoznaj się z przykładowymi danymi."
   },
   "messages": {
     "codeInserted": "Wstawiono blok kodu",
@@ -772,7 +778,6 @@
       "addPreset": "Dodaj ustawienie",
       "addProtocol": "Dodaj protokół",
       "cancel": "Anuluj",
-      "createExamples": "Utwórz przykłady",
       "createFiles": "Utwórz pliki",
       "done": "Zakończono!",
       "failed": "Nie udało się",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Wygeneruj ponownie (nadpisz)",
       "runAllMaintenance": "Uruchom wszystko",
       "savePreset": "Zapisz",
-      "saveProtocol": "Zapisz"
+      "saveProtocol": "Zapisz",
+      "showWelcome": "Pokaż powitanie"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Szablon dla bloków ćwiczeń. Dostępne zmienne: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Ścieżka do folderu zawierającego strony ćwiczeń",
       "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczenia i spis tagów w folderze 'Workout Templates'. Możesz dostosować te pliki, aby zmienić język i strukturę.",
-      "generateExamples": "Utwórz folder z przykładowymi ćwiczeniami i planami treningowymi, aby pomóc Ci zacząć.",
       "noCustomProtocols": "Brak skonfigurowanych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
       "noPresets": "Brak skonfigurowanych ustawień timera. Kliknij „Dodaj ustawienie”, aby je utworzyć.",
       "presetDurationDesc": "Czas w sekundach (np. 90 dla timera o czasie trwania 90 sekund).",
@@ -810,7 +815,8 @@
       "setupCSV": "Utwórz pliki workout_logs.csv i muscle-tags.csv w skonfigurowanym folderze.",
       "weightIncrement": "Domyślny krok zwiększania wagi dla progresywnego obciążania (np. 2,5 dla kroków o wartości 2,5 jednostki)",
       "showRibbonIcon": "Pokaż ikonę hantli na pasku bocznym, która otwiera formularz dziennika treningowego",
-      "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony."
+      "weightUnit": "Jednostka dla wykresów, sum i nowych wpisów. Każdy wpis zachowuje jednostkę, w której został wprowadzony.",
+      "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Szablon bloku ćwiczeń",
       "exerciseFolder": "Ścieżka do folderu z ćwiczeniami",
       "generateDefaultTemplates": "Generuj domyślne szablony",
-      "generateExamples": "Wygeneruj przykładowe dane",
       "presetDuration": "Czas trwania (sekundy)",
       "presetName": "Nazwa ustawienia",
       "presetRounds": "Rundy",
@@ -836,12 +841,12 @@
       "setDuration": "Rezerwowy czas trwania serii (sekundy)",
       "setupCSV": "Konfiguracja plików CSV",
       "weightUnit": "Jednostka wagi",
-      "showRibbonIcon": "Pokaż ikonę szybkiego zapisu"
+      "showRibbonIcon": "Pokaż ikonę szybkiego zapisu",
+      "welcomeWindow": "Okno powitalne"
     },
     "messages": {
       "confirmDeletePreset": "Czy na pewno chcesz usunąć to ustawienie?",
       "confirmDeleteProtocol": "Czy na pewno chcesz usunąć ten protokół?",
-      "confirmOverwriteExamples": "Istnieje już folder z przykładami. Czy chcesz go nadpisać?",
       "csvFilesCreated": "Pliki CSV zostały pomyślnie utworzone!",
       "presetDeleted": "Usunięto ustawienie",
       "presetNameExists": "Istnieje już ustawienie o tej nazwie",
@@ -871,7 +876,6 @@
       "advanced": "Zaawansowane",
       "csvManagement": "Zarządzanie plikami CSV",
       "customProtocols": "Dostosowane protokoły",
-      "exampleData": "Przykładowe dane",
       "maintenance": "Utrzymanie",
       "quickLog": "Rejestrowanie na urządzeniach mobilnych",
       "setupAndData": "Konfiguracja i dane",
@@ -879,7 +883,8 @@
       "timerPresets": "Predefiniowane ustawienia timera",
       "trainingParameters": "Parametry treningu",
       "savedPresets": "Zapisane ustawienia",
-      "savedProtocols": "Zapisane protokoły"
+      "savedProtocols": "Zapisane protokoły",
+      "gettingStarted": "Jak zacząć"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} musi być wartością prawdy lub fałszu, ale jest \"{value}\"",
       "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Witaj w wtyczce do treningów",
+    "intro": "Śledź swoje serie, a następnie zobacz je w formie wykresów, tabel i panelu kontrolnego. Jak chcesz zacząć?",
+    "tryExamples": "Wypróbuj z przykładowymi danymi",
+    "tryExamplesDesc": "Dodaje przykładowe ćwiczenia i otwiera krótką instrukcję.",
+    "startScratch": "Zacznij od zera",
+    "startScratchDesc": "Tworzy notatkę z Twoimi danymi logowania i otwiera formularz, aby zarejestrować pierwsze zestaw danych.",
+    "later": "Później",
+    "scratchNoteName": "Moje treningi"
   }
 }

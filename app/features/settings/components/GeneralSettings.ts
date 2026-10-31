@@ -71,12 +71,12 @@ export class GeneralSettings {
       },
       {
         type: "group",
-        heading: t("settings.sections.exampleData"),
+        heading: t("settings.sections.gettingStarted"),
         items: [
           {
-            name: t("settings.labels.generateExamples"),
-            desc: t("settings.descriptions.generateExamples"),
-            render: (setting) => this.renderGenerateExamples(setting),
+            name: t("settings.labels.welcomeWindow"),
+            desc: t("settings.descriptions.welcomeWindow"),
+            render: (setting) => this.renderShowWelcome(setting),
           },
         ],
       },
@@ -176,26 +176,15 @@ export class GeneralSettings {
     );
   }
 
-  private renderGenerateExamples(setting: Setting): void {
+  /** Opens the welcome window on demand; never touches `welcomeShown` */
+  private renderShowWelcome(setting: Setting): void {
     setting.addButton((button) =>
       button
-        .setButtonText(t("settings.buttons.createExamples"))
+        .setButtonText(t("settings.buttons.showWelcome"))
         .onClick(async () => {
-          const { ExampleGeneratorService } =
-            await import("@app/services/examples/ExampleGeneratorService");
-          const generator = new ExampleGeneratorService(this.app);
-
-          if (generator.exampleFolderExists()) {
-            new ConfirmModal(
-              this.app,
-              t("settings.messages.confirmOverwriteExamples"),
-              async () => {
-                await generator.generateExampleFolder(true);
-              },
-            ).open();
-          } else {
-            await generator.generateExampleFolder(false);
-          }
+          const { WelcomeModal } =
+            await import("@app/features/modals/welcome/WelcomeModal");
+          new WelcomeModal(this.plugin).open();
         }),
     );
   }

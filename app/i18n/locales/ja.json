@@ -34,7 +34,9 @@
     "generateTagReference": "タグ一覧を生成",
     "insertTable": "ワークアウト表を挿入",
     "manageMuscleTags": "筋肉タグを管理",
-    "migrateExerciseTypes": "エクササイズタイプを移行"
+    "migrateExerciseTypes": "エクササイズタイプを移行",
+    "createExampleNotes": "例を作成する",
+    "openGettingStartedGuide": "チュートリアルを開始する"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "自重カーフレイズとスーパーセット",
       "supersetLunges": "ランジとスーパーセット"
-    }
+    },
+    "createToOpenGuide": "「はじめに」ガイドは、まだ存在しない「例」に関するメモの一部です。今、作成しますか？",
+    "pointedAtExamples": "現在、あなたの意見は、例示されたログと演習を参照しています。この設定をデータ設定で変更してください。",
+    "usesSeparateLog": "すでにワークアウトの記録があるため、変更は行われていません。この例では、それぞれの記録ファイルを使用しています。"
   },
   "forms": {
     "enterCsvPath": "CSV ファイルのフォルダー",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} のための最初のログを作成する",
     "createLogButtonAria": "{exerciseName} のログを作成する",
     "createLogButtonText": "{exerciseName} のログを作成する",
-    "noDataTitle": "{exerciseName} のログが見つかりません"
+    "noDataTitle": "{exerciseName} のログが見つかりません",
+    "exploreExampleData": "または、サンプルデータを使って探求してみる"
   },
   "messages": {
     "codeInserted": "コードブロックを挿入しました",
@@ -772,7 +778,6 @@
       "addPreset": "プリセットを追加",
       "addProtocol": "プロトコルを追加",
       "cancel": "キャンセル",
-      "createExamples": "サンプルを作成",
       "createFiles": "ファイルを作成",
       "done": "完了！",
       "failed": "失敗",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "再生成 (上書き)",
       "runAllMaintenance": "すべて実行",
       "savePreset": "保存",
-      "saveProtocol": "保存"
+      "saveProtocol": "保存",
+      "showWelcome": "ウェルカムを表示する"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "エクササイズページの保存されているフォルダへのパス",
       "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
-      "generateExamples": "例となるエクササイズやワークアウトを含むフォルダを作成し、開始するのに役立ててください。",
       "noCustomProtocols": "カスタムプロトコルは設定されていません。 'プロトコルを追加' をクリックして作成してください。",
       "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
       "presetDurationDesc": "秒単位の時間（例：90秒タイマーなら 90）。",
@@ -810,7 +815,8 @@
       "setupCSV": "設定したフォルダに workout_logs.csv と muscle-tags.csv の両方を作成します。",
       "weightIncrement": "漸進性過負荷で使うデフォルトの重量増分（例：2.5 単位ずつ増やすなら 2.5）",
       "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
-      "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。"
+      "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。",
+      "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "エクササイズブロックテンプレート",
       "exerciseFolder": "エクササイズフォルダのパス",
       "generateDefaultTemplates": "デフォルトのテンプレートを生成する",
-      "generateExamples": "サンプルデータを作成",
       "presetDuration": "時間（秒）",
       "presetName": "プリセット名",
       "presetRounds": "ラウンド",
@@ -836,12 +841,12 @@
       "setDuration": "代替のセット時間（秒）",
       "setupCSV": "CSVファイルのセットアップ",
       "weightUnit": "単位（重量）",
-      "showRibbonIcon": "クイック記録アイコンを表示"
+      "showRibbonIcon": "クイック記録アイコンを表示",
+      "welcomeWindow": "ウェルカムウィンドウ"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
       "confirmDeleteProtocol": "このプロトコルを削除してもよろしいですか？",
-      "confirmOverwriteExamples": "サンプルフォルダはすでに存在します。上書きしますか？",
       "csvFilesCreated": "CSVファイルが正常に作成されました！",
       "presetDeleted": "プリセットが削除されました",
       "presetNameExists": "同じ名前のプリセットが既に存在します",
@@ -871,7 +876,6 @@
       "advanced": "詳細設定",
       "csvManagement": "CSVファイルの管理",
       "customProtocols": "カスタムプロトコル",
-      "exampleData": "サンプルデータ",
       "maintenance": "メンテナンス",
       "quickLog": "モバイルでの記録",
       "setupAndData": "設定とデータ",
@@ -879,7 +883,8 @@
       "timerPresets": "タイマープリセット",
       "trainingParameters": "トレーニングパラメータ",
       "savedPresets": "保存されたプリセット",
-      "savedProtocols": "保存されたプロトコル"
+      "savedProtocols": "保存されたプロトコル",
+      "gettingStarted": "開始"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} は真または偽の値である必要がありますが、実際には「{value}」となっています。",
       "notOneOf": "{key} は、{allowed} のいずれかである必要がありますが、実際には \"{value}\" です。"
     }
+  },
+  "welcome": {
+    "title": "ワークアウトプラグインへようこそ",
+    "intro": "あなたのトレーニングの記録を追跡し、その後、グラフ、表、ダッシュボードで確認できます。どのように始めたいですか？",
+    "tryExamples": "サンプルデータで試してみてください",
+    "tryExamplesDesc": "サンプルワークアウトを追加し、短いガイドを表示します。",
+    "startScratch": "最初から始める",
+    "startScratchDesc": "ログを記録したメモを作成し、最初の記録フォームを開きます。",
+    "later": "後で",
+    "scratchNoteName": "私のトレーニング"
   }
 }

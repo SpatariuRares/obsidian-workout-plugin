@@ -34,7 +34,9 @@
     "generateTagReference": "生成标签参考",
     "insertTable": "插入训练表格",
     "manageMuscleTags": "管理肌肉标签",
-    "migrateExerciseTypes": "迁移训练动作类型"
+    "migrateExerciseTypes": "迁移训练动作类型",
+    "createExampleNotes": "创建示例笔记",
+    "openGettingStartedGuide": "打开新手指南"
   },
   "common": {
     "bpm": "次/分钟",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "与自重提踵组成超级组",
       "supersetLunges": "与弓步蹲组成超级组"
-    }
+    },
+    "createToOpenGuide": "“入门指南”是示例笔记的一部分，但目前还没有。现在创建它们怎么样？",
+    "pointedAtExamples": "现在，您可以查看示例日志和练习。请在数据设置中进行更改。",
+    "usesSeparateLog": "您已经有一个锻炼记录，因此它保持不变。这些示例使用自己的日志文件。"
   },
   "forms": {
     "enterCsvPath": "CSV 文件所在文件夹",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "为 {exerciseName} 创建第一条记录",
     "createLogButtonAria": "创建记录：{exerciseName}",
     "createLogButtonText": "创建记录：{exerciseName}",
-    "noDataTitle": "未找到与 {exerciseName} 相关的记录"
+    "noDataTitle": "未找到与 {exerciseName} 相关的记录",
+    "exploreExampleData": "或者，使用示例数据进行探索"
   },
   "messages": {
     "codeInserted": "已插入代码块",
@@ -772,7 +778,6 @@
       "addPreset": "添加预设",
       "addProtocol": "添加方案",
       "cancel": "取消",
-      "createExamples": "创建示例",
       "createFiles": "创建文件",
       "done": "完成！",
       "failed": "失败",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "重新生成（覆盖）",
       "runAllMaintenance": "运行所有",
       "savePreset": "保存",
-      "saveProtocol": "保存"
+      "saveProtocol": "保存",
+      "showWelcome": "显示欢迎信息"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "训练块模板。可用占位符：{{exercise}}、{{duration}}、{{workout}}、{{preset}}",
       "exerciseFolder": "包含训练页面的文件夹路径",
       "generateDefaultTemplates": "在'训练模板'文件夹中生成默认的训练页面模板和标签参考。您可以自定义这些文件以更改语言和结构。",
-      "generateExamples": "创建包含示例训练和训练计划的文件夹，帮助您快速入门。",
       "noCustomProtocols": "未配置自定义训练方案。点击'添加方案'创建一个。",
       "noPresets": "未配置计时器预设。点击'添加预设'创建一个。",
       "presetDurationDesc": "时长（秒）（例如：90 表示 90 秒计时器）。",
@@ -810,7 +815,8 @@
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
       "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标",
-      "weightUnit": "用于图表、总计和新日志的单位。每个日志都保留了它被输入的单位。"
+      "weightUnit": "用于图表、总计和新日志的单位。每个日志都保留了它被输入的单位。",
+      "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "训练块模板",
       "exerciseFolder": "训练文件夹路径",
       "generateDefaultTemplates": "生成默认模板",
-      "generateExamples": "生成示例数据",
       "presetDuration": "时长（秒）",
       "presetName": "预设名称",
       "presetRounds": "回合",
@@ -836,12 +841,12 @@
       "setDuration": "备用组时长（秒）",
       "setupCSV": "设置 CSV 文件",
       "weightUnit": "重量单位",
-      "showRibbonIcon": "显示快速记录图标"
+      "showRibbonIcon": "显示快速记录图标",
+      "welcomeWindow": "欢迎窗口"
     },
     "messages": {
       "confirmDeletePreset": "确定要删除此预设吗？",
       "confirmDeleteProtocol": "确定要删除此训练方案吗？",
-      "confirmOverwriteExamples": "示例文件夹已存在。是否要覆盖？",
       "csvFilesCreated": "CSV 文件已成功创建！",
       "presetDeleted": "预设已删除",
       "presetNameExists": "已存在同名预设",
@@ -871,7 +876,6 @@
       "advanced": "高级",
       "csvManagement": "CSV 文件管理",
       "customProtocols": "自定义训练方案",
-      "exampleData": "示例数据",
       "maintenance": "维护",
       "quickLog": "移动记录",
       "setupAndData": "设置与数据",
@@ -879,7 +883,8 @@
       "timerPresets": "计时器预设",
       "trainingParameters": "训练参数",
       "savedPresets": "保存的预设",
-      "savedProtocols": "已保存的协议"
+      "savedProtocols": "已保存的协议",
+      "gettingStarted": "开始"
     },
     "tooltips": {
       "deletePreset": "删除预设",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} 必须是真或假，但现在是 \"{value}\"。",
       "notOneOf": "{key} 必须是 {allowed} 中的一个，但实际上是 \"{value}\"。"
     }
+  },
+  "welcome": {
+    "title": "欢迎使用健身插件",
+    "intro": "跟踪您的训练，然后以图表、表格和仪表盘的形式查看。您希望从哪里开始？",
+    "tryExamples": "使用示例数据",
+    "tryExamplesDesc": "添加示例训练计划，并打开一份简短的指南。",
+    "startScratch": "从头开始",
+    "startScratchDesc": "创建一个包含您的日志的笔记，并打开表单以记录第一个日志。",
+    "later": "稍后",
+    "scratchNoteName": "我的锻炼计划"
   }
 }

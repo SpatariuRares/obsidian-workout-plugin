@@ -34,7 +34,9 @@
     "generateTagReference": "Tag-Referenz erstellen",
     "insertTable": "Trainingstabelle einfügen",
     "manageMuscleTags": "Muskel-Tags verwalten",
-    "migrateExerciseTypes": "Übungstypen migrieren"
+    "migrateExerciseTypes": "Übungstypen migrieren",
+    "createExampleNotes": "Beispielnotizen erstellen",
+    "openGettingStartedGuide": "Öffne die Einführung"
   },
   "common": {
     "bpm": "BPM",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset mit Wadenheben mit eigenem Körpergewicht",
       "supersetLunges": "Superset mit Ausfallschritten"
-    }
+    },
+    "createToOpenGuide": "Die Anleitung für den Einstieg ist Teil der Beispielnotizen, die noch nicht existieren. Sollten wir sie jetzt erstellen?",
+    "pointedAtExamples": "Ihre Ansichten lesen jetzt die Beispielprotokolle und Übungen. Ändern Sie dies in den Daten-Einstellungen.",
+    "usesSeparateLog": "Sie haben bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden ihre eigene Protokolldatei."
   },
   "forms": {
     "enterCsvPath": "Ordner für die CSV-Dateien",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Ersten Eintrag für {exerciseName} erstellen",
     "createLogButtonAria": "Protokoll erstellen für: {exerciseName}",
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
-    "noDataTitle": "Keine Protokolle für {exerciseName} gefunden"
+    "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
+    "exploreExampleData": "Oder erkunden Sie mit Beispieldaten"
   },
   "messages": {
     "codeInserted": "Codeblock eingefügt",
@@ -772,7 +778,6 @@
       "addPreset": "Voreinstellung hinzufügen",
       "addProtocol": "Protokoll hinzufügen",
       "cancel": "Abbrechen",
-      "createExamples": "Beispiele erstellen",
       "createFiles": "Dateien erstellen",
       "done": "Fertig!",
       "failed": "Fehlgeschlagen",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Neu generieren (überschreiben)",
       "runAllMaintenance": "Alle durchführen",
       "savePreset": "Speichern",
-      "saveProtocol": "Speichern"
+      "saveProtocol": "Speichern",
+      "showWelcome": "Zeige Willkommensnachricht"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Vorlage für Übungsblöcke. Verfügbare Platzhalter: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pfad zum Ordner mit Übungsseiten",
       "generateDefaultTemplates": "Erstellt die Standardvorlage für Übungsseiten und die Tag-Referenz im Ordner 'Workout Templates'. Du kannst diese Dateien anpassen, um Sprache und Struktur zu ändern.",
-      "generateExamples": "Erstelle einen Ordner mit Beispielübungen und -trainings für den Einstieg.",
       "noCustomProtocols": "Keine benutzerdefinierten Protokolle konfiguriert. Klicke auf 'Protokoll hinzufügen', um eines zu erstellen.",
       "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf 'Voreinstellung hinzufügen', um eine zu erstellen.",
       "presetDurationDesc": "Dauer in Sekunden (z. B. 90 für einen Timer von 90 Sekunden).",
@@ -810,7 +815,8 @@
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
-      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde."
+      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
+      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Übungsblock-Vorlage",
       "exerciseFolder": "Pfad des Übungsordners",
       "generateDefaultTemplates": "Standardvorlagen generieren",
-      "generateExamples": "Beispieldaten generieren",
       "presetDuration": "Dauer (Sekunden)",
       "presetName": "Name der Voreinstellung",
       "presetRounds": "Runden",
@@ -836,12 +841,12 @@
       "setDuration": "Fallback-Satzdauer (Sekunden)",
       "setupCSV": "CSV-Dateien einrichten",
       "weightUnit": "Gewichtseinheit",
-      "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen"
+      "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
+      "welcomeWindow": "Willkommensfenster"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",
       "confirmDeleteProtocol": "Möchtest du dieses Protokoll wirklich löschen?",
-      "confirmOverwriteExamples": "Ein Beispielordner existiert bereits. Möchtest du ihn überschreiben?",
       "csvFilesCreated": "CSV-Dateien erfolgreich erstellt!",
       "presetDeleted": "Voreinstellung gelöscht",
       "presetNameExists": "Eine Voreinstellung mit diesem Namen existiert bereits",
@@ -871,7 +876,6 @@
       "advanced": "Erweitert",
       "csvManagement": "CSV-Dateiverwaltung",
       "customProtocols": "Benutzerdefinierte Protokolle",
-      "exampleData": "Beispieldaten",
       "maintenance": "Wartung",
       "quickLog": "Mobile Erfassung",
       "setupAndData": "Einrichtung und Daten",
@@ -879,7 +883,8 @@
       "timerPresets": "Timer-Voreinstellungen",
       "trainingParameters": "Parameter für das Training",
       "savedPresets": "Gespeicherte Voreinstellungen",
-      "savedProtocols": "Gespeicherte Protokolle"
+      "savedProtocols": "Gespeicherte Protokolle",
+      "gettingStarted": "Wie man anfängt"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} muss entweder wahr oder falsch sein, aber es ist \"{value}\"",
       "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Willkommen zum Workout-Plugin",
+    "intro": "Verfolgen Sie Ihre Sätze, und sehen Sie sie anschließend als Diagramme, Tabellen und eine Übersicht. Wie möchten Sie beginnen?",
+    "tryExamples": "Versuchen Sie es mit Beispieldaten",
+    "tryExamplesDesc": "Fügt Beispiel-Trainings hinzu und öffnet eine kurze Anleitung.",
+    "startScratch": "Beginne von Grund auf",
+    "startScratchDesc": "Erstellt eine Notiz mit Ihrem Protokoll und öffnet das Formular, um die erste Reihe zu protokollieren.",
+    "later": "Später",
+    "scratchNoteName": "Meine Trainingseinheiten"
   }
 }

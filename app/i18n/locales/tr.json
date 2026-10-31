@@ -34,7 +34,9 @@
     "generateTagReference": "Etiket başvurusu oluştur",
     "insertTable": "Antrenman tablosu ekle",
     "manageMuscleTags": "Kas etiketlerini yönet",
-    "migrateExerciseTypes": "Egzersiz türlerini taşı"
+    "migrateExerciseTypes": "Egzersiz türlerini taşı",
+    "createExampleNotes": "Örnek notlar oluştur",
+    "openGettingStartedGuide": "Başlangıç kılidını aç"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Vücut ağırlığıyla baldır kaldırma ile süperset",
       "supersetLunges": "Lunge ile süperset"
-    }
+    },
+    "createToOpenGuide": "Başlangıç kılavuzu, henüz mevcut olmayan örnek notaların bir parçasıdır. Şimdi oluşturun mu?",
+    "pointedAtExamples": "Şu anda, görüşleriniz örnek günlük ve alıştırmaları okuyor. Bu ayarı veri ayarları bölümünde değiştirin.",
+    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle bu, değiştirilmeden bırakılmıştır. Örnekler, kendi log dosyalarını kullanır."
   },
   "forms": {
     "enterCsvPath": "CSV dosyaları için klasör",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} için ilk kaydı oluştur",
     "createLogButtonAria": "Kayıt oluştur: {exerciseName}",
     "createLogButtonText": "Kayıt oluştur: {exerciseName}",
-    "noDataTitle": "{exerciseName} için kayıt bulunamadı"
+    "noDataTitle": "{exerciseName} için kayıt bulunamadı",
+    "exploreExampleData": "Veya örnek veriyle keşfet"
   },
   "messages": {
     "codeInserted": "Kod bloğu eklendi",
@@ -772,7 +778,6 @@
       "addPreset": "Ön ayar ekle",
       "addProtocol": "Protokol ekle",
       "cancel": "İptal et",
-      "createExamples": "Örnekler oluştur",
       "createFiles": "Dosyaları oluştur",
       "done": "Tamam!",
       "failed": "Başarısız",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Yeniden oluştur (üzerine yaz)",
       "runAllMaintenance": "Tümünü çalıştır",
       "savePreset": "Kaydet",
-      "saveProtocol": "Kaydet"
+      "saveProtocol": "Kaydet",
+      "showWelcome": "Hoş geldiniz göster"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Egzersiz blokları için şablon. Kullanılabilir yer tutucular: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Egzersiz sayfalarının bulunduğu klasörün yolu",
       "generateDefaultTemplates": "'Workout Templates' klasöründe varsayılan egzersiz sayfası şablonunu ve etiket başvurusunu oluşturun. Dili ve yapıyı değiştirmek için bu dosyaları özelleştirebilirsiniz.",
-      "generateExamples": "Başlamanıza yardımcı olması için örnek egzersizler ve antrenmanlar içeren bir klasör oluşturun.",
       "noCustomProtocols": "Özel protokoller yapılandırılmamış. \"Protokol ekle\" seçeneğine tıklayarak bir tane oluşturabilirsiniz.",
       "noPresets": "Zamanlayıcı ön ayarı yapılandırılmamış. Yeni bir tane oluşturmak için 'Ön ayar ekle'ye tıklayın.",
       "presetDurationDesc": "Saniye cinsinden süre (örneğin, 90 saniyelik bir zamanlayıcı için 90).",
@@ -810,7 +815,8 @@
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
       "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
-      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur."
+      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur.",
+      "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Egzersiz blok şablonu",
       "exerciseFolder": "Egzersiz klasör yolu",
       "generateDefaultTemplates": "Varsayılan şablonları oluştur",
-      "generateExamples": "Örnek veri oluştur",
       "presetDuration": "Süre (saniye)",
       "presetName": "Ön ayar adı",
       "presetRounds": "Turlar",
@@ -836,12 +841,12 @@
       "setDuration": "Yedek set süresi (saniye)",
       "setupCSV": "CSV dosyalarını kur",
       "weightUnit": "Ağırlık birimi",
-      "showRibbonIcon": "Hızlı kayıt simgesini göster"
+      "showRibbonIcon": "Hızlı kayıt simgesini göster",
+      "welcomeWindow": "Hoş geldiniz penceresi"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
       "confirmDeleteProtocol": "Bu protokolü gerçekten silmek istiyor musunuz?",
-      "confirmOverwriteExamples": "Örnek klasörü zaten mevcut. Üzerine yazmak istiyor musunuz?",
       "csvFilesCreated": "CSV dosyaları başarıyla oluşturuldu!",
       "presetDeleted": "Ön ayar silindi",
       "presetNameExists": "Bu adda bir ön ayar zaten mevcut",
@@ -871,7 +876,6 @@
       "advanced": "Gelişmiş",
       "csvManagement": "CSV dosya yönetimi",
       "customProtocols": "Özel protokoller",
-      "exampleData": "Örnek veri",
       "maintenance": "Bakım",
       "quickLog": "Mobil günlük kaydı",
       "setupAndData": "Kurulum ve veri",
@@ -879,7 +883,8 @@
       "timerPresets": "Zamanlayıcı ön ayarları",
       "trainingParameters": "Antrenman parametreleri",
       "savedPresets": "Kaydedilmiş ön ayarlar",
-      "savedProtocols": "Kaydedilmiş protokoller"
+      "savedProtocols": "Kaydedilmiş protokoller",
+      "gettingStarted": "Başlangıç"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} ya doğru ya da yanlış olmalıdır, ancak şu anda \"{value}\" değerindedir.",
       "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir."
     }
+  },
+  "welcome": {
+    "title": "Egzersiz eklentisine hoş geldiniz",
+    "intro": "Setlerinizi takip edin, ardından bunları grafik, tablo ve bir kontrol paneli olarak görün. Nasıl başlamak istersiniz?",
+    "tryExamples": "Örnek verilerle deneyin",
+    "tryExamplesDesc": "Örnek egzersizleri ekler ve kısa bir rehber açar.",
+    "startScratch": "Yeni bir başlangıç yap",
+    "startScratchDesc": "Kayıtlarınızı içeren bir not oluşturur ve ilk kaydı kaydetmek için formu açar.",
+    "later": "Daha sonra",
+    "scratchNoteName": "Egzersizlerim"
   }
 }

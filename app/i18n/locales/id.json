@@ -34,7 +34,9 @@
     "generateTagReference": "Buat referensi tag",
     "insertTable": "Sisipkan tabel latihan",
     "manageMuscleTags": "Kelola tag otot",
-    "migrateExerciseTypes": "Migrasikan jenis latihan"
+    "migrateExerciseTypes": "Migrasikan jenis latihan",
+    "createExampleNotes": "Buat catatan contoh",
+    "openGettingStartedGuide": "Buka panduan memulai"
   },
   "common": {
     "bpm": "BPM",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset dengan calf raise beban tubuh",
       "supersetLunges": "Superset dengan lunges"
-    }
+    },
+    "createToOpenGuide": "Panduan memulai ini adalah bagian dari catatan contoh, yang belum ada. Apakah Anda ingin membuatnya sekarang?",
+    "pointedAtExamples": "Pandangan Anda sekarang membaca contoh log dan latihan. Ubah ini di pengaturan data.",
+    "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri."
   },
   "forms": {
     "enterCsvPath": "Folder untuk file CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Buat log pertama untuk {exerciseName}",
     "createLogButtonAria": "Buat log untuk: {exerciseName}",
     "createLogButtonText": "Buat log untuk: {exerciseName}",
-    "noDataTitle": "Tidak ditemukan log untuk {exerciseName}"
+    "noDataTitle": "Tidak ditemukan log untuk {exerciseName}",
+    "exploreExampleData": "Atau jelajahi dengan data contoh"
   },
   "messages": {
     "codeInserted": "Blok kode dimasukkan",
@@ -772,7 +778,6 @@
       "addPreset": "Tambahkan preset",
       "addProtocol": "Tambahkan protokol",
       "cancel": "Batal",
-      "createExamples": "Buat contoh",
       "createFiles": "Buat berkas",
       "done": "Selesai!",
       "failed": "Gagal",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Hasilkan ulang (menimpa)",
       "runAllMaintenance": "Jalankan semua",
       "savePreset": "Simpan",
-      "saveProtocol": "Simpan"
+      "saveProtocol": "Simpan",
+      "showWelcome": "Tampilkan pesan selamat datang"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Templat untuk blok latihan. Placeholder yang tersedia: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Jalur ke folder yang berisi halaman-halaman latihan",
       "generateDefaultTemplates": "Buat templat halaman latihan dan referensi tag standar di folder 'Workout Templates'. Anda dapat menyesuaikan file-file ini untuk mengubah bahasa dan struktur.",
-      "generateExamples": "Buat sebuah folder yang berisi contoh latihan dan program olahraga untuk membantu Anda memulai.",
       "noCustomProtocols": "Tidak ada protokol khusus yang dikonfigurasi. Klik 'Tambahkan protokol' untuk membuatnya.",
       "noPresets": "Belum ada preset timer. Klik 'Tambahkan preset' untuk membuatnya.",
       "presetDurationDesc": "Durasi dalam detik (misalnya, 90 untuk timer 90 detik).",
@@ -810,7 +815,8 @@
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
-      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan."
+      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan.",
+      "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Templat blok latihan",
       "exerciseFolder": "Lokasi folder untuk latihan",
       "generateDefaultTemplates": "Buat templat standar",
-      "generateExamples": "Hasilkan data contoh",
       "presetDuration": "Durasi (detik)",
       "presetName": "Nama preset",
       "presetRounds": "Putaran",
@@ -836,12 +841,12 @@
       "setDuration": "Durasi set cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
       "weightUnit": "Satuan berat",
-      "showRibbonIcon": "Tampilkan ikon catatan cepat"
+      "showRibbonIcon": "Tampilkan ikon catatan cepat",
+      "welcomeWindow": "Jendela selamat datang"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
       "confirmDeleteProtocol": "Apakah Anda yakin ingin menghapus protokol ini?",
-      "confirmOverwriteExamples": "Sebuah folder contoh sudah ada. Apakah Anda ingin menimpanya?",
       "csvFilesCreated": "Berkas CSV berhasil dibuat!",
       "presetDeleted": "Preset dihapus",
       "presetNameExists": "Terdapat preset dengan nama ini yang sudah ada.",
@@ -871,7 +876,6 @@
       "advanced": "Lanjutan",
       "csvManagement": "Manajemen file CSV",
       "customProtocols": "Protokol khusus",
-      "exampleData": "Contoh data",
       "maintenance": "Pemeliharaan",
       "quickLog": "Pencatatan melalui perangkat seluler",
       "setupAndData": "Pengaturan & data",
@@ -879,7 +883,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parameter pelatihan",
       "savedPresets": "Preset yang telah disimpan",
-      "savedProtocols": "Protokol yang disimpan"
+      "savedProtocols": "Protokol yang disimpan",
+      "gettingStarted": "Memulai"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} harus berupa benar atau salah, tetapi saat ini bernilai \"{value}\"",
       "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Selamat datang di plugin latihan",
+    "intro": "Lacak kemajuan Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
+    "tryExamples": "Coba dengan data contoh",
+    "tryExamplesDesc": "Menambahkan contoh latihan dan membuka panduan singkat.",
+    "startScratch": "Mulai dari awal",
+    "startScratchDesc": "Membuat catatan dengan log Anda dan membuka formulir untuk mencatat set pertama.",
+    "later": "Nanti",
+    "scratchNoteName": "Latihan saya"
   }
 }

@@ -34,7 +34,9 @@
     "generateTagReference": "Genera riferimento dei tag",
     "insertTable": "Inserisci tabella allenamento",
     "manageMuscleTags": "Gestisci tag muscolari",
-    "migrateExerciseTypes": "Migra tipi di esercizio"
+    "migrateExerciseTypes": "Migra tipi di esercizio",
+    "createExampleNotes": "Crea note di esempio",
+    "openGettingStartedGuide": "Apri la guida per iniziare"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset con calf raise a corpo libero",
       "supersetLunges": "Superset con affondi"
-    }
+    },
+    "createToOpenGuide": "La guida introduttiva fa parte delle note di esempio, che al momento non esistono. Vuoi crearle ora?",
+    "pointedAtExamples": "Le tue preferenze ora leggono il log di esempio e gli esercizi. Modifica questa impostazione nelle impostazioni dei dati.",
+    "usesSeparateLog": "Giacché hai già un registro degli allenamenti, questo è stato lasciato inalterato. Gli esempi utilizzano il proprio file di log."
   },
   "forms": {
     "enterCsvPath": "Cartella dei file CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Crea il primo log per {exerciseName}",
     "createLogButtonAria": "Crea log per: {exerciseName}",
     "createLogButtonText": "Crea log per: {exerciseName}",
-    "noDataTitle": "Nessun log trovato per {exerciseName}"
+    "noDataTitle": "Nessun log trovato per {exerciseName}",
+    "exploreExampleData": "Oppure esplora utilizzando dati di esempio."
   },
   "messages": {
     "codeInserted": "Blocco di codice inserito",
@@ -772,7 +778,6 @@
       "addPreset": "Aggiungi preset",
       "addProtocol": "Aggiungi protocollo",
       "cancel": "Annulla",
-      "createExamples": "Crea esempi",
       "createFiles": "Crea file",
       "done": "Completato!",
       "failed": "Fallito",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Rigenera (sovrascrivi)",
       "runAllMaintenance": "Esegui tutti",
       "savePreset": "Salva",
-      "saveProtocol": "Salva"
+      "saveProtocol": "Salva",
+      "showWelcome": "Mostra benvenuto"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Template per blocchi esercizio. Placeholder disponibili: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Percorso alla cartella contenente le pagine degli esercizi",
       "generateDefaultTemplates": "Genera template predefinito pagina esercizio e riferimento tag nella cartella 'Workout Templates'. Puoi personalizzare questi file per cambiare lingua e struttura.",
-      "generateExamples": "Crea una cartella con esercizi e allenamenti di esempio per aiutarti a iniziare.",
       "noCustomProtocols": "Nessun protocollo personalizzato configurato. Clicca 'Aggiungi protocollo' per crearne uno.",
       "noPresets": "Nessun preset timer configurato. Clicca 'Aggiungi preset' per crearne uno.",
       "presetDurationDesc": "Durata in secondi (ad esempio, 90 per un timer di 90 secondi).",
@@ -810,7 +815,8 @@
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
-      "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito."
+      "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito.",
+      "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Template blocco esercizio",
       "exerciseFolder": "Percorso cartella esercizi",
       "generateDefaultTemplates": "Genera template predefiniti",
-      "generateExamples": "Genera dati di esempio",
       "presetDuration": "Durata (secondi)",
       "presetName": "Nome preset",
       "presetRounds": "Round",
@@ -836,12 +841,12 @@
       "setDuration": "Durata serie di riserva (secondi)",
       "setupCSV": "Configura file CSV",
       "weightUnit": "Unità di misura peso",
-      "showRibbonIcon": "Mostra icona di registrazione rapida"
+      "showRibbonIcon": "Mostra icona di registrazione rapida",
+      "welcomeWindow": "Finestra di benvenuto"
     },
     "messages": {
       "confirmDeletePreset": "Sei sicuro di voler eliminare questo preset?",
       "confirmDeleteProtocol": "Sei sicuro di voler eliminare questo protocollo?",
-      "confirmOverwriteExamples": "Esiste già una cartella di esempio. Vuoi sovrascriverla?",
       "csvFilesCreated": "I file CSV sono stati creati correttamente!",
       "presetDeleted": "Preset eliminato",
       "presetNameExists": "Esiste già un preset con questo nome.",
@@ -871,7 +876,6 @@
       "advanced": "Avanzate",
       "csvManagement": "Gestione file CSV",
       "customProtocols": "Protocolli personalizzati",
-      "exampleData": "Dati di esempio",
       "maintenance": "Manutenzione",
       "quickLog": "Registro mobile",
       "setupAndData": "Configurazione e dati",
@@ -879,7 +883,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di allenamento",
       "savedPresets": "Preimpostazioni salvate",
-      "savedProtocols": "Protocolli salvati"
+      "savedProtocols": "Protocolli salvati",
+      "gettingStarted": "Inizia"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} deve essere vero o falso, ma è \"{value}\"",
       "notOneOf": "{key} deve essere uno tra {allowed}, ma è \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Benvenuti nel plugin per l'allenamento",
+    "intro": "Monitora i tuoi allenamenti, quindi visualizzali sotto forma di grafici, tabelle e un pannello di controllo. Come preferisci iniziare?",
+    "tryExamples": "Prova con dati di esempio",
+    "tryExamplesDesc": "Aggiunge esempi di allenamenti e apre una breve guida.",
+    "startScratch": "Inizia da zero",
+    "startScratchDesc": "Crea un appunto con il tuo registro e apre il modulo per registrare il primo set.",
+    "later": "Più tardi",
+    "scratchNoteName": "I miei allenamenti"
   }
 }

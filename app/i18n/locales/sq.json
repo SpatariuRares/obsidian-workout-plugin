@@ -34,7 +34,9 @@
     "generateTagReference": "Gjenero referencën e etiketave",
     "insertTable": "Shto tabelë stërvitjeje",
     "manageMuscleTags": "Menaxho etiketat e muskujve",
-    "migrateExerciseTypes": "Migro llojet e ushtrimeve"
+    "migrateExerciseTypes": "Migro llojet e ushtrimeve",
+    "createExampleNotes": "Krijo nota të shembullore",
+    "openGettingStartedGuide": "Hap udhezimin për fillimin"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset me ngritje në majat e këmbëve me peshën e trupit",
       "supersetLunges": "Superset me hapa sulmi (lunges)"
-    }
+    },
+    "createToOpenGuide": "Guida për fillimin është pjesë e notave të shembullit, të cilat ende nuk janë krijuar. A duhet t'i krijojmë tani?",
+    "pointedAtExamples": "Opinioni tuaj tani lexon lojën dhe veprimtoret e shembullit. Ndryshoni këtë në opsionet e datës.",
+    "usesSeparateLog": "Ju tashmë keni një regjistër stërdhor, kështu që ky u lënë pa ndërthur. Shembujt përdorën vetë regjistrin e tyre."
   },
   "forms": {
     "enterCsvPath": "Dosja për skedarët CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Krijo regjistrimin e parë për {exerciseName}",
     "createLogButtonAria": "Krijo regjistër për: {exerciseName}",
     "createLogButtonText": "Krijo regjistër për: {exerciseName}",
-    "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}"
+    "noDataTitle": "Nuk u gjetën regjistrime për {exerciseName}",
+    "exploreExampleData": "Nëse dëshiron, mund të eksplorosh me të dhëna të shembullore"
   },
   "messages": {
     "codeInserted": "Blloku i kodit u shtua",
@@ -772,7 +778,6 @@
       "addPreset": "Shto paracaktim",
       "addProtocol": "Shto protokol",
       "cancel": "Anullo",
-      "createExamples": "Krijo shembuj",
       "createFiles": "Krijo skedarët",
       "done": "U krye!",
       "failed": "Dështoi",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Rigjenero (mbishkruaj)",
       "runAllMaintenance": "Ekzekuto të gjitha",
       "savePreset": "Ruaj",
-      "saveProtocol": "Ruaj"
+      "saveProtocol": "Ruaj",
+      "showWelcome": "Shfaq"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Shabllon për blloqet e ushtrimeve. Vendmbajtësit e disponueshëm: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Shtegu i dosjes që përmban faqet e ushtrimeve",
       "generateDefaultTemplates": "Gjeneron shabllonin e parazgjedhur të faqes së ushtrimit dhe referencën e etiketave në dosjen 'Workout Templates'. Mund t'i personalizoni këta skedarë për të ndryshuar gjuhën dhe strukturën.",
-      "generateExamples": "Krijo një dosje me ushtrime dhe stërvitje shembull për t'ju ndihmuar të filloni.",
       "noCustomProtocols": "Nuk janë konfiguruar protokole të personalizuara. Kliko në 'Shto protokol' për të krijuar një.",
       "noPresets": "Nuk ka paracaktime timeri të konfiguruara. Klikoni 'Shto paracaktim' për të krijuar një.",
       "presetDurationDesc": "Kohëzgjatja në sekonda (p.sh., 90 për një timer prej 90 sekondash).",
@@ -810,7 +815,8 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
+      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Shablloni i bllokut të ushtrimit",
       "exerciseFolder": "Shtegu i dosjes së ushtrimeve",
       "generateDefaultTemplates": "Gjenero shabllonet e parazgjedhura",
-      "generateExamples": "Gjenero të dhëna shembull",
       "presetDuration": "Kohëzgjatja (sekonda)",
       "presetName": "Emri i paracaktimit",
       "presetRounds": "Raundet",
@@ -836,12 +841,12 @@
       "setDuration": "Kohëzgjatja rezervë e serisë (sekonda)",
       "setupCSV": "Konfiguro skedarët CSV",
       "weightUnit": "Njësia e peshës",
-      "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë"
+      "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
+      "welcomeWindow": "Vendi të mirësekomstës"
     },
     "messages": {
       "confirmDeletePreset": "Jeni të sigurt që doni ta fshini këtë paracaktim?",
       "confirmDeleteProtocol": "Jeni të sigurt që doni ta fshini këtë protokoll?",
-      "confirmOverwriteExamples": "Një dosje shembujsh ekziston tashmë. Doni ta mbishkruani?",
       "csvFilesCreated": "Skedarët CSV u krijuan me sukses!",
       "presetDeleted": "Paracaktimi u fshi",
       "presetNameExists": "Ekziston tashmë një paracaktim me këtë emër",
@@ -871,7 +876,6 @@
       "advanced": "Të avancuara",
       "csvManagement": "Menaxhimi i skedarëve CSV",
       "customProtocols": "Protokole të personalizuara",
-      "exampleData": "Të dhëna shembull",
       "maintenance": "Mirëmbajtje",
       "quickLog": "Regjistrim nga celulari",
       "setupAndData": "Konfigurim dhe të dhëna",
@@ -879,7 +883,8 @@
       "timerPresets": "Paracaktimet e timerit",
       "trainingParameters": "Parametrat e stërvitjes",
       "savedPresets": "Parametrat të ruajtura",
-      "savedProtocols": "Протокол të ruajtura"
+      "savedProtocols": "Протокол të ruajtura",
+      "gettingStarted": "Fillimi"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
       "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Mirë datang në pluginin e stilit",
+    "intro": "Παρακολлоvojini seritë tuaj, dhe më pas shohini ata në formë të grafikëve, tabeleve dhe një paneli. Si donit të filloni?",
+    "tryExamples": "Provoni me të dhëna shembullore",
+    "tryExamplesDesc": "Shtron stila me shembull dhe hapson një udhëzues të shkurtër.",
+    "startScratch": "Filloni nga zero",
+    "startScratchDesc": "Krijo një notë me regjistrimin tuaj dhe hap formularin për të regjistruar një set të parë.",
+    "later": "Më pas",
+    "scratchNoteName": "Rutina e stëmimit time"
   }
 }

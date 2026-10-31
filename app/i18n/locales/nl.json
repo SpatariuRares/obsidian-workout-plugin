@@ -34,7 +34,9 @@
     "generateTagReference": "Labeloverzicht genereren",
     "insertTable": "Trainingstabel invoegen",
     "manageMuscleTags": "Spierlabels beheren",
-    "migrateExerciseTypes": "Oefeningstypen migreren"
+    "migrateExerciseTypes": "Oefeningstypen migreren",
+    "createExampleNotes": "Maak voorbeeldnotities",
+    "openGettingStartedGuide": "Open handleiding"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset met calf raises met eigen lichaamsgewicht",
       "supersetLunges": "Superset met lunges"
-    }
+    },
+    "createToOpenGuide": "De handleiding voor het opstarten is onderdeel van de voorbeeldnotities, maar die bestaan nog niet. Maak ze nu?",
+    "pointedAtExamples": "Uw instellingen lezen nu het voorbeeldlogboek en de oefeningen. Wijzig dit in de instellingen.",
+    "usesSeparateLog": "U heeft al een trainingslog, dus deze is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand."
   },
   "forms": {
     "enterCsvPath": "Map voor de CSV-bestanden",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Eerste log aanmaken voor {exerciseName}",
     "createLogButtonAria": "Log aanmaken voor: {exerciseName}",
     "createLogButtonText": "Log aanmaken voor: {exerciseName}",
-    "noDataTitle": "Geen logs gevonden voor {exerciseName}"
+    "noDataTitle": "Geen logs gevonden voor {exerciseName}",
+    "exploreExampleData": "Of bekijk voorbeelddatasets"
   },
   "messages": {
     "codeInserted": "Codeblok ingevoegd",
@@ -772,7 +778,6 @@
       "addPreset": "Voorinstelling toevoegen",
       "addProtocol": "Protocol toevoegen",
       "cancel": "Annuleren",
-      "createExamples": "Voorbeelden maken",
       "createFiles": "Bestanden aanmaken",
       "done": "Klaar!",
       "failed": "Mislukt",
@@ -783,7 +788,8 @@
       "regenerateOverwrite": "Opnieuw genereren (overschrijven)",
       "runAllMaintenance": "Alle onderhoud uitvoeren",
       "savePreset": "Opslaan",
-      "saveProtocol": "Opslaan"
+      "saveProtocol": "Opslaan",
+      "showWelcome": "Toon welkomstbericht"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -795,7 +801,6 @@
       "exerciseBlockTemplate": "Template voor oefenblokken. Beschikbare placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
       "generateDefaultTemplates": "Genereer een standaardsjabloon voor oefeningspagina's en een labeloverzicht in de map 'Workout Templates'. Je kunt deze bestanden aanpassen om de taal en structuur te wijzigen.",
-      "generateExamples": "Maak een map met voorbeeldoefeningen en -trainingsschema's om je op weg te helpen.",
       "noCustomProtocols": "Geen aangepaste protocollen zijn geconfigureerd. Klik op 'Protocol toevoegen' om er een aan te maken.",
       "noPresets": "Geen timervoorinstellingen geconfigureerd. Klik op 'Voorinstelling toevoegen' om er een aan te maken.",
       "presetDurationDesc": "Duur in seconden (bijvoorbeeld 90 voor een timer van 90 seconden).",
@@ -810,7 +815,8 @@
       "setupCSV": "Maak zowel workout_logs.csv als muscle-tags.csv aan in de ingestelde map.",
       "weightIncrement": "Standaard gewichtstoename voor progressieve overbelasting (bijvoorbeeld 2,5 voor stappen van 2,5 eenheden)",
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
-      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd."
+      "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
+      "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -821,7 +827,6 @@
       "exerciseBlockTemplate": "Template voor een oefenblok",
       "exerciseFolder": "Pad naar de map met de oefeningen",
       "generateDefaultTemplates": "Standaard sjablonen genereren",
-      "generateExamples": "Voorbeeldgegevens genereren",
       "presetDuration": "Duur (seconden)",
       "presetName": "Naam van de voorinstelling",
       "presetRounds": "Rondes",
@@ -836,12 +841,12 @@
       "setDuration": "Terugvalduur per set (seconden)",
       "setupCSV": "CSV-bestanden instellen",
       "weightUnit": "Eenheid voor gewicht",
-      "showRibbonIcon": "Pictogram voor snel loggen tonen"
+      "showRibbonIcon": "Pictogram voor snel loggen tonen",
+      "welcomeWindow": "Welkomstscherm"
     },
     "messages": {
       "confirmDeletePreset": "Weet u zeker dat u deze voorinstelling wilt verwijderen?",
       "confirmDeleteProtocol": "Bent u er zeker van dat u dit protocol wilt verwijderen?",
-      "confirmOverwriteExamples": "Een voorbeeldmap bestaat al. Wilt u deze overschrijven?",
       "csvFilesCreated": "CSV-bestanden succesvol aangemaakt!",
       "presetDeleted": "Voorinstelling verwijderd",
       "presetNameExists": "Er bestaat al een voorinstelling met deze naam",
@@ -871,7 +876,6 @@
       "advanced": "Geavanceerd",
       "csvManagement": "Beheer van CSV-bestanden",
       "customProtocols": "Aangepaste protocollen",
-      "exampleData": "Voorbeeldgegevens",
       "maintenance": "Onderhoud",
       "quickLog": "Mobiel loggen",
       "setupAndData": "Instellingen en gegevens",
@@ -879,7 +883,8 @@
       "timerPresets": "Timervoorinstellingen",
       "trainingParameters": "Parameters voor training",
       "savedPresets": "Opgeslagen instellingen",
-      "savedProtocols": "Opgeslagen protocollen"
+      "savedProtocols": "Opgeslagen protocollen",
+      "gettingStarted": "Beginnen"
     },
     "tooltips": {
       "deletePreset": "Voorinstelling verwijderen",
@@ -1003,5 +1008,15 @@
       "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\".",
       "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Welkom bij het workout-plugin",
+    "intro": "Volg je sessies, en bekijk ze vervolgens in grafieken, tabellen en een overzichtspagina. Hoe wil je beginnen?",
+    "tryExamples": "Probeer met voorbeeldgegevens",
+    "tryExamplesDesc": "Voegt voorbeeldtrainingen toe en opent een korte handleiding.",
+    "startScratch": "Begin opnieuw",
+    "startScratchDesc": "Maakt een notitie met uw log en opent het formulier om de eerste set in te voeren.",
+    "later": "Later",
+    "scratchNoteName": "Mijn trainingen"
   }
 }

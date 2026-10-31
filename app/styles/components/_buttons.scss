@@ -443,8 +443,8 @@
 }
 
 @media print {
-  .workout-add-log-button-container {
-    display: none !important;
+  .workout-buttons-container.workout-add-log-button-container {
+    display: none;
   }
 }
 

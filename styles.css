@@ -286,31 +286,11 @@ body.theme-dark {
 /* ============================================================================
    GENERAL HELPERS
    ============================================================================ */
-/* Trend color classes */
-.workout-trend-color .workout-trend-color-green {
-  color: var(--workout-text-success) !important;
-}
-.workout-trend-color .workout-trend-color-red {
-  color: var(--workout-text-error) !important;
-}
-.workout-trend-color .workout-trend-color-orange {
-  color: var(--workout-text-warning) !important;
-}
-.workout-trend-color .workout-trend-color-accent {
-  color: var(--workout-text-accent) !important;
-}
-
-/* Display Control Classes */
-.workout-display-none {
-  display: none !important;
-}
-
-.workout-display-block {
-  display: block !important;
-}
-
-.workout-display-inline-block {
-  display: inline-block !important;
+/* Display control: hides a form field the current choice doesn't use.
+   Doubled class so it beats the field's own `display: flex` rules, which
+   come later in the stylesheet. */
+.workout-display-none.workout-display-none {
+  display: none;
 }
 
 /* Opacity Control Classes */
@@ -324,15 +304,15 @@ body.theme-dark {
 
 /* Flexbox Utilities */
 .workout-flex {
-  display: flex !important;
+  display: flex;
 }
 
 .workout-items-center {
-  align-items: center !important;
+  align-items: center;
 }
 
 .workout-gap-2 {
-  gap: var(--workout-space-sm) !important;
+  gap: var(--workout-space-sm);
 }
 
 /* ============================================================================
@@ -766,8 +746,8 @@ body.theme-dark {
 }
 
 @media print {
-  .workout-add-log-button-container {
-    display: none !important;
+  .workout-buttons-container.workout-add-log-button-container {
+    display: none;
   }
 }
 @media (max-width: 768px) {
@@ -1400,10 +1380,9 @@ body.theme-dark {
     /* Protocol badge and notes go on a second line under the numbers:
        squeezed into the first line they broke words letter by letter.
        The ::after item is a full-width line break, added only to rows
-       that have something to show there. */
+       that have something to show there (TableRenderer marks them). */
   }
-  .workout-table-content-container .workout-table-container .workout-log-table tr:has(> td.workout-table-notes-cell:not(:empty),
-  > td.workout-table-protocol-cell:not(:empty))::after {
+  .workout-table-content-container .workout-table-container .workout-log-table tr.workout-table-row-with-details::after {
     content: "";
     order: 1;
     flex-basis: 100%;
@@ -1786,22 +1765,15 @@ body.theme-dark {
   }
 }
 @media print {
-  .workout-charts-container .workout-charts-controls,
   .workout-charts-container .workout-log-table th,
   .workout-charts-container .workout-log-table td {
     border: var(--workout-border-thin) solid var(--workout-border-color);
     padding: var(--workout-space-sm);
   }
-  .workout-charts-container .workout-charts-controls {
-    display: none !important;
-  }
   .workout-charts-container .workout-log-table {
     border-collapse: collapse;
     width: 100%;
     font-size: var(--workout-font-sm);
-  }
-  .workout-embedded-chart-debug {
-    display: none !important;
   }
   .workout-embedded-chart-table-fallback .workout-log-table {
     border-collapse: collapse;
@@ -2516,11 +2488,6 @@ body.theme-dark {
   gap: var(--workout-space-sm);
   overflow-x: auto;
   padding: var(--workout-space-xs) 0;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.workout-log-recent-chips::-webkit-scrollbar {
-  display: none;
 }
 
 .workout-log-recent-chip {
@@ -2748,10 +2715,10 @@ body.theme-dark {
   font-size: var(--workout-font-xs);
 }
 
-.workout-tag-empty {
+.workout-tag-table td.workout-tag-empty {
   text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl) !important;
+  padding: var(--workout-space-xl);
 }
 
 /* ============================================================================
@@ -2775,11 +2742,6 @@ body.theme-dark {
   gap: var(--workout-space-sm);
   overflow-x: auto;
   padding: var(--workout-space-xs) 0;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.workout-timer-preset-chips::-webkit-scrollbar {
-  display: none;
 }
 
 /* Display options row - compact flex layout */
@@ -2861,6 +2823,12 @@ body.theme-dark {
   grid-auto-flow: dense;
 }
 .workout-dashboard {
+  /* Row span measured by EmbeddedDashboardView (masonry packing) */
+}
+.workout-dashboard .workout-dashboard-widget {
+  grid-row-end: var(--workout-widget-row-end, auto);
+}
+.workout-dashboard {
   /* Full-width widgets - always span all columns */
 }
 .workout-dashboard .workout-summary-widget,
@@ -2890,8 +2858,9 @@ body.theme-dark {
   .workout-dashboard .workout-stats-cards,
   .workout-dashboard .widget-wide,
   .workout-dashboard .workout-dashboard-widget {
-    grid-column: 1/-1 !important;
-    grid-row: auto !important;
+    /* Same specificity as the desktop rules above, and later: wins */
+    grid-column: 1/-1;
+    grid-row: auto;
   }
   .workout-dashboard {
     /* At the gym the actions matter more than the stats: show them first */

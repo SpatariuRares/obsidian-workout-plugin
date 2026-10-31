@@ -187,8 +187,8 @@
   font-size: var(--workout-font-xs);
 }
 
-.workout-tag-empty {
+.workout-tag-table td.workout-tag-empty {
   text-align: center;
   color: var(--text-muted);
-  padding: var(--workout-space-xl) !important;
+  padding: var(--workout-space-xl);
 }

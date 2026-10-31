@@ -307,10 +307,13 @@ export class EmbeddedDashboardView extends BaseView {
       gridAutoRows: "",
       alignItems: "",
     });
+    // A CSS variable, not an inline grid-row-end: the phone layout
+    // (one column, auto rows) must be able to ignore the span
     for (let i = 0; i < widgets.length; i++) {
-      DomUtils.setCssProps(widgets[i], {
-        gridRowEnd: `span ${spans[i]}`,
-      });
+      widgets[i].style.setProperty(
+        "--workout-widget-row-end",
+        `span ${spans[i]}`,
+      );
     }
   }
 }

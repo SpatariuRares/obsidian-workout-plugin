@@ -3858,3 +3858,86 @@ body.theme-dark {
   align-items: center;
   gap: var(--workout-space-xs);
 }
+
+.workout-tour {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--layer-modal) - 1);
+  pointer-events: none;
+  --workout-tour-dim: color-mix(
+    in srgb,
+    var(--background-primary) 65%,
+    transparent
+  );
+}
+.workout-tour .workout-tour-blocker {
+  position: fixed;
+  pointer-events: auto;
+  background: transparent;
+}
+.workout-tour .workout-tour-blocker.is-hidden {
+  display: none;
+}
+.workout-tour:not(.has-target) .workout-tour-blocker {
+  background: var(--workout-tour-dim);
+}
+.workout-tour .workout-tour-ring {
+  position: fixed;
+  pointer-events: none;
+  border-radius: var(--radius-s);
+  box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--workout-accent-fill), 0 0 0 9999px var(--workout-tour-dim);
+}
+.workout-tour .workout-tour-ring.is-hidden {
+  display: none;
+}
+.workout-tour .workout-tour-card {
+  position: fixed;
+  box-sizing: border-box;
+  width: min(320px, 100vw - var(--size-4-6));
+  padding: var(--size-4-3);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: var(--border-width) solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-l);
+  pointer-events: auto;
+}
+.workout-tour .workout-tour-card.is-centered {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.workout-tour .workout-tour-card.is-docked {
+  left: var(--size-4-3);
+  right: var(--size-4-3);
+  bottom: calc(var(--size-4-3) + env(safe-area-inset-bottom, 0px) + var(--size-4-14));
+  width: auto;
+}
+.workout-tour .workout-tour-card.is-docked.is-docked-top {
+  top: calc(var(--size-4-3) + env(safe-area-inset-top, 0px));
+  bottom: auto;
+}
+.workout-tour .workout-tour-title {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--size-4-1);
+}
+.workout-tour .workout-tour-text {
+  color: var(--text-muted);
+  margin-bottom: var(--size-4-3);
+}
+.workout-tour .workout-tour-show-me {
+  margin-bottom: var(--size-4-3);
+}
+.workout-tour .workout-tour-show-me.is-hidden {
+  display: none;
+}
+.workout-tour .workout-tour-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+}
+.workout-tour .workout-tour-footer .workout-tour-progress {
+  flex: 1;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}

@@ -36,7 +36,8 @@
     "manageMuscleTags": "Gestionar etiquetas musculares",
     "migrateExerciseTypes": "Migrar tipos de ejercicio",
     "createExampleNotes": "Crear notas de ejemplo",
-    "openGettingStartedGuide": "Abrir guía de inicio rápido"
+    "openGettingStartedGuide": "Abrir guía de inicio rápido",
+    "startTour": "Iniciar el recorrido"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Ejecutar todas",
       "savePreset": "Guardar",
       "saveProtocol": "Guardar",
-      "showWelcome": "Mostrar bienvenida"
+      "showWelcome": "Mostrar bienvenida",
+      "takeTour": "Comienza la visita guiada"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas de músculos. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
@@ -815,8 +817,7 @@
       "setupCSV": "Cree los archivos \"workout_logs.csv\" y \"muscle-tags.csv\" en la carpeta configurada.",
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
       "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento",
-      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo.",
-      "welcomeWindow": "Mostrar nuevamente la ventana de bienvenida para comenzar con datos de ejemplo o desde cero."
+      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -1013,10 +1014,56 @@
     "title": "Bienvenido al complemento de entrenamiento",
     "intro": "Visualiza tus entrenamientos, luego observa los resultados en gráficos, tablas y un panel de control. ¿Cómo quieres empezar?",
     "tryExamples": "Prueba con datos de ejemplo",
-    "tryExamplesDesc": "Agrega ejemplos de entrenamientos y abre una guía breve.",
     "startScratch": "Comenzar desde cero",
-    "startScratchDesc": "Crea una nota con tu registro y abre el formulario para registrar el primer conjunto de datos.",
-    "later": "Más tarde",
-    "scratchNoteName": "Mis entrenamientos"
+    "later": "Más tarde"
+  },
+  "tour": {
+    "back": "Regresar",
+    "next": "Siguiente",
+    "skip": "Saltar",
+    "done": "Completado",
+    "progress": "{current} de {total}",
+    "noteName": "Visita guiada",
+    "noteIntro": "La visita guiada señala cada parte del complemento en esta página. Edite o elimine esta nota cuando desee.",
+    "noteTable": "Sus conjuntos",
+    "noteChart": "Progreso",
+    "noteDashboard": "Panel de control",
+    "noteTimer": "Temporizador de descanso",
+    "steps": {
+      "logSet": {
+        "title": "Registra tu primer conjunto",
+        "text": "Pulse el botón \"+\" para abrir el formulario, y luego guarde un conjunto. Aparecerá inmediatamente en la tabla."
+      },
+      "rowActions": {
+        "title": "Editar o eliminar un conjunto",
+        "text": "Cada fila tiene botones para editar y eliminar. Úselos para corregir un error o eliminar un conjunto."
+      },
+      "chart": {
+        "title": "Tu progreso",
+        "text": "El gráfico muestra cómo evoluciona un ejercicio a lo largo del tiempo, con una línea de tendencia y estadísticas.",
+        "textMine": "El gráfico muestra cómo evoluciona un ejercicio a lo largo del tiempo. Inicialmente, está casi vacío hasta que registres algunos ejercicios.",
+        "mobileText": "En un teléfono, el gráfico se muestra como una tabla con los mismos números.",
+        "mobileTextMine": "En un teléfono, el gráfico se muestra como una tabla. Inicialmente, está casi vacía, pero se llena una vez que se registran algunos conjuntos de datos."
+      },
+      "dashboard": {
+        "title": "Tu panel de control"
+      },
+      "timer": {
+        "title": "Reiniciar temporizador",
+        "text": "Pulsa \"Iniciar\" para comenzar un temporizador entre series."
+      },
+      "ribbon": {
+        "title": "Acceder desde cualquier nota",
+        "text": "El icono de la mancuerna en la cinta abre el formulario de registro desde cualquier lugar.",
+        "mobileText": "En un teléfono, no hay icono de cinta aquí. Utilice la paleta de comandos para abrir el formulario de registro desde cualquier nota."
+      },
+      "commands": {
+        "title": "Introducir comandos",
+        "text": "Abrir la paleta de comandos y ejecutar el comando \"Insertar ejercicio\" para añadir una tabla, gráfico, temporizador o panel de control a una nota."
+      },
+      "end": {
+        "title": "¡Ya está configurado!"
+      }
+    }
   }
 }

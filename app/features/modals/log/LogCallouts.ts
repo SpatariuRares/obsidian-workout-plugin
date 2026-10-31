@@ -7,6 +7,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSelect";
 import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -68,6 +69,8 @@ export class LogCallouts {
         exerciseName: exerciseName ?? "exercise",
       }),
     });
+    // On an empty log this is the only way to a first set (tour step 1)
+    markTourTarget(createButton, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(createButton, () => {
       let link = currentPageLink;
@@ -131,6 +134,7 @@ export class LogCallouts {
         exerciseName: exerciseName ?? "Workout",
       }),
     });
+    markTourTarget(button, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(
       button,

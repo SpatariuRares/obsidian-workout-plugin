@@ -1,5 +1,6 @@
 import { ActionButtonGroup } from "@app/components/molecules";
 import { t } from "@app/i18n";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 /**
  * UI component for creating action buttons (edit, delete, etc.).
@@ -18,12 +19,14 @@ export class ActionButtons {
     editBtn: HTMLButtonElement;
     deleteBtn: HTMLButtonElement;
   } {
-    return ActionButtonGroup.create(container, {
+    const buttons = ActionButtonGroup.create(container, {
       editTitle: t("table.editTitle"),
       deleteTitle: t("table.deleteTitle"),
       editIcon: t("icons.tables.edit"),
       deleteIcon: t("icons.tables.delete"),
       className: "workout-table-actions",
     });
+    markTourTarget(buttons.container, TOUR_TARGETS.tableRowActions);
+    return buttons;
   }
 }

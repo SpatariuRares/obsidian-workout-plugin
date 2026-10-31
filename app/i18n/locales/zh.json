@@ -36,7 +36,8 @@
     "manageMuscleTags": "管理肌肉标签",
     "migrateExerciseTypes": "迁移训练动作类型",
     "createExampleNotes": "创建示例笔记",
-    "openGettingStartedGuide": "打开新手指南"
+    "openGettingStartedGuide": "打开新手指南",
+    "startTour": "开始导览"
   },
   "common": {
     "bpm": "次/分钟",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "运行所有",
       "savePreset": "保存",
       "saveProtocol": "保存",
-      "showWelcome": "显示欢迎信息"
+      "showWelcome": "显示欢迎信息",
+      "takeTour": "开始导览"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -815,8 +817,7 @@
       "setupCSV": "在配置的文件夹中创建 workout_logs.csv 和 muscle-tags.csv 文件。",
       "weightIncrement": "渐进式超负荷的默认重量增量（例如：2.5 表示 2.5 单位增量）",
       "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标",
-      "weightUnit": "用于图表、总计和新日志的单位。每个日志都保留了它被输入的单位。",
-      "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。"
+      "weightUnit": "用于图表、总计和新日志的单位。每个日志都保留了它被输入的单位。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -1013,10 +1014,56 @@
     "title": "欢迎使用健身插件",
     "intro": "跟踪您的训练，然后以图表、表格和仪表盘的形式查看。您希望从哪里开始？",
     "tryExamples": "使用示例数据",
-    "tryExamplesDesc": "添加示例训练计划，并打开一份简短的指南。",
     "startScratch": "从头开始",
-    "startScratchDesc": "创建一个包含您的日志的笔记，并打开表单以记录第一个日志。",
-    "later": "稍后",
-    "scratchNoteName": "我的锻炼计划"
+    "later": "稍后"
+  },
+  "tour": {
+    "back": "返回",
+    "next": "下一",
+    "skip": "跳过",
+    "done": "已完成",
+    "progress": "{current} 来自 {total}",
+    "noteName": "导览",
+    "noteIntro": "本页的导览会指引您了解插件的各个部分。您可以随时编辑或删除此说明。",
+    "noteTable": "您的设置",
+    "noteChart": "进度",
+    "noteDashboard": "仪表盘",
+    "noteTimer": "休息计时器",
+    "steps": {
+      "logSet": {
+        "title": "记录您的第一个步骤",
+        "text": "点击“+”按钮打开表单，然后保存一个设置。 这样，设置就会立即出现在表格中。"
+      },
+      "rowActions": {
+        "title": "编辑或删除一组",
+        "text": "每一行都有编辑和删除按钮。 使用它们来纠正拼写错误或删除一组数据。"
+      },
+      "chart": {
+        "title": "您的进度",
+        "text": "图表显示了锻炼在一段时间内的变化情况，包括趋势线和相关统计数据。",
+        "textMine": "图表显示锻炼在一段时间内的变化情况。在您记录几次训练后，图表才会显示出明显的趋势。",
+        "mobileText": "在手机上，图表以表格的形式显示，表格中的数字相同。",
+        "mobileTextMine": "在手机上，图表以表格形式显示。 除非您记录了几组数据，否则图表几乎是空的。"
+      },
+      "dashboard": {
+        "title": "您的仪表盘"
+      },
+      "timer": {
+        "title": "暂停计时器",
+        "text": "按下“开始”按钮，以每组之间设置一个倒计时。"
+      },
+      "ribbon": {
+        "title": "从任何笔记中记录",
+        "text": "在“ribbon”中，哑铃图标可以从任何位置打开日志表单。",
+        "mobileText": "在手机上，这里没有“ribbon”图标。 使用命令面板，从任何笔记中打开日志表单。"
+      },
+      "commands": {
+        "title": "插入指令",
+        "text": "打开命令面板，然后执行“插入锻炼”命令，以在笔记中添加表格、图表、计时器或仪表盘。"
+      },
+      "end": {
+        "title": "一切已准备就绪"
+      }
+    }
   }
 }

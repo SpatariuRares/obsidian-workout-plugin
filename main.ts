@@ -12,6 +12,7 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
+import { TourEngine } from "@app/features/tour/TourEngine";
 import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
 import {
   markWelcomeShown,
@@ -32,6 +33,7 @@ import { LocalizationService, t } from "@app/i18n";
 import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -49,6 +51,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   public embeddedDashboardView!: EmbeddedDashboardView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
   private quickLogRibbonIcon: HTMLElement | null = null;
+  private tourEngine: TourEngine | null = null;
 
   // Services
   private commandHandlerService!: CommandHandlerService;
@@ -79,6 +82,12 @@ export default class WorkoutChartsPlugin extends Plugin {
         ).open();
       },
     };
+  }
+
+  /** The guided tour engine (one tour at a time, stopped on unload). */
+  getTourEngine(): TourEngine {
+    this.tourEngine ??= new TourEngine(this.app);
+    return this.tourEngine;
   }
 
   async onload() {
@@ -177,6 +186,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       t("modal.titles.createLog"),
       () => this.createLogModalHandler.openModal(),
     );
+    markTourTarget(this.quickLogRibbonIcon, TOUR_TARGETS.ribbonIcon);
   }
 
   onunload() {
@@ -197,7 +207,11 @@ export default class WorkoutChartsPlugin extends Plugin {
      * - Service references preventing garbage collection
      */
 
-    // 0. Destroy event bus (must be first to prevent stale handlers)
+    // 0. Stop a running guided tour (overlay, scope, frame loop, workspace events)
+    this.tourEngine?.destroy();
+    this.tourEngine = null;
+
+    // 0b. Destroy event bus (before the rest, to prevent stale handlers)
     this.eventBus?.destroy();
 
     // 1. Clean up all active timers

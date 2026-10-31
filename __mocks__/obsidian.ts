@@ -122,7 +122,27 @@ export class TAbstractFile {
 
 export class EventRef {}
 
+/** Mutable in tests: `Platform.isMobile = true` */
+export const Platform = { isMobile: false };
+
+type ScopeHandler = (evt: KeyboardEvent, ctx: unknown) => unknown;
+
+export class Scope {
+  keys: { modifiers: string[]; key: string | null; func: ScopeHandler }[] = [];
+  constructor(public parent?: Scope) {}
+  register(modifiers: string[] | null, key: string | null, func: ScopeHandler) {
+    const hotkey = { modifiers: modifiers ?? [], key, func };
+    this.keys.push(hotkey);
+    return hotkey;
+  }
+  unregister(hotkey: unknown) {
+    this.keys = this.keys.filter((k) => k !== hotkey);
+  }
+}
+
 export class App {
+  scope = new Scope();
+  keymap = { pushScope: jest.fn(), popScope: jest.fn() };
   vault = {
     getAbstractFileByPath: jest.fn(),
     getFolderByPath: jest.fn().mockReturnValue(null),
@@ -301,7 +321,9 @@ export function withHelpers<T extends HTMLElement | DocumentFragment>(el: T): T 
   e.addClass = (c: string) => (el as HTMLElement).classList.add(c);
   e.removeClass = (c: string) => (el as HTMLElement).classList.remove(c);
   e.toggleClass = (c: string, on: boolean) => (el as HTMLElement).classList.toggle(c, on);
-  e.setCssProps = () => undefined;
+  e.setCssProps = (props: Record<string, string>) => {
+    for (const [k, v] of Object.entries(props)) (el as HTMLElement).style.setProperty(k, v);
+  };
   return el;
 }
 

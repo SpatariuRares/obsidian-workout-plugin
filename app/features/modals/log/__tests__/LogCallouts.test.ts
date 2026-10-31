@@ -49,6 +49,14 @@ describe("LogCallouts organism", () => {
   });
 
   describe("renderCsvNoDataMessage", () => {
+    it("marks the create button as the tour's add-button target", () => {
+      const container = createObsidianContainer();
+      LogCallouts.renderCsvNoDataMessage(container, createMockPlugin(), "Squat");
+      expect(
+        container.querySelector(".add-log-button")?.getAttribute("data-tour"),
+      ).toBe("table-add-button");
+    });
+
     it("renders no data message with create button", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();

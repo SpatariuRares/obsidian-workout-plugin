@@ -26,11 +26,31 @@ Mobile-first workout tracker for Obsidian. Log every set from your phone at the 
 
 The first time you install the plugin, a welcome window asks how you want to begin. You don't need to open settings.
 
-- **Try with example data** adds sample exercises, a few workouts with a month of logs, and a dashboard, points the plugin at them, and opens a short guide. Poke around before setting up your own.
-- **Start from scratch** creates a note called "My workouts" at the top of your vault (an existing note is never overwritten) with a log table and opens the log form, so you can log your first set right away. The log file is created when you save it.
+- **Try with example data** adds sample exercises, a few workouts with a month of logs, and a dashboard, points the plugin at them, and starts the guided tour on them (see below). Poke around before setting up your own.
+- **Start from scratch** starts the same guided tour on your own data. Its first step is logging your first set, and the log file is created when you save it.
 - **Later** closes the window without changing anything.
 
-Closed it by accident, or want it again? Select **Show welcome** under **Settings → Workout Planner → Getting started** to open the window again. Or open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
+### The guided tour
+
+The tour opens a "Guided tour" note with a table, a chart, a dashboard and a timer, and points at each one in turn. It has nine short steps:
+
+1. Log your first set with the **+** button. The step finishes when you save it.
+2. Edit or delete a set with the buttons on each row.
+3. See your progress in the chart.
+4. See totals and trends in the dashboard.
+5. See which muscles you trained in the muscle heat map.
+6. Start the rest timer. The step finishes when you press start.
+7. Find the dumbbell icon in the ribbon, which opens the log form from any note. On a phone, use the command palette instead.
+8. Run any **Insert workout** command from the command palette. The step finishes when you do.
+9. Done.
+
+Use **Back** and **Next** to move around, or **Skip** to leave. If the part of the note the tour points at is out of view, **Show me** scrolls to it. Press `Esc` at any time to end it. The tour also ends when you close its note or switch to another file. Nothing is lost: your sets stay in the log.
+
+When the example data is in use, the tour runs on it. Otherwise it runs on your own log, so the chart and dashboard start nearly empty. If you already have a workout log, **Try with example data** still adds the examples as separate files, never in your log, and the tour runs on your own data (a notice tells you). The note is created once, next to the examples or at the top of your vault. An existing note is never overwritten, and you can edit or delete it. If a note called "Guided tour" already exists and isn't the tour's own, the tour uses "Guided tour 1" (or the next free number) instead.
+
+Want to take the tour again? Select **Take the tour** under **Settings → Workout Planner → Getting started**, or run **Start the tour** from the command palette.
+
+Closed the welcome window by accident, or want it again? Select **Show welcome** under **Settings → Workout Planner → Getting started** to open the window again. Or open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
 
 To add a table to any note, for example `Push Day`:
 
@@ -351,6 +371,7 @@ Open the command palette (`Ctrl/Cmd + P`) and type the name.
 | Command                                                     | What it does                                                       |
 | ----------------------------------------------------------- | ------------------------------------------------------------------ |
 | Create workout log                                          | Log a set                                                          |
+| Start the tour                                              | Take the guided tour                                               |
 | Create example notes                                        | Add sample exercises, workouts, logs and a dashboard               |
 | Open getting started guide                                  | Open the guide in the examples                                     |
 | Insert workout chart / table / timer / dashboard / duration | Insert a block through a form                                      |

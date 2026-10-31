@@ -36,7 +36,8 @@
     "manageMuscleTags": "Spravovat štítky svalů",
     "migrateExerciseTypes": "Migrovat typy cvičení",
     "createExampleNotes": "Vytvořte ukázkové poznámky",
-    "openGettingStartedGuide": "Zobrazit návod pro začátek"
+    "openGettingStartedGuide": "Zobrazit návod pro začátek",
+    "startTour": "Spustit prohlídku"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Spustit vše",
       "savePreset": "Uložit",
       "saveProtocol": "Uložit",
-      "showWelcome": "Zobrazit uvítací zprávu"
+      "showWelcome": "Zobrazit uvítací zprávu",
+      "takeTour": "Procházejte si průvodcem"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Soubor CSV se štítky svalů už existuje. Chcete jej přepsat výchozími hodnotami? Tím odstraníte všechny vlastní štítky.",
@@ -815,8 +817,7 @@
       "setupCSV": "Vytvoří soubory workout_logs.csv i muscle-tags.csv v nastavené složce.",
       "weightIncrement": "Výchozí krok zvýšení váhy pro progresivní přetížení (např. 2,5 pro kroky po 2,5 jednotky)",
       "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku",
-      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen.",
-      "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku."
+      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -1013,10 +1014,56 @@
     "title": "Vítejte v pluginu pro trénink",
     "intro": "Sledujte své série, a poté je zobrazujte ve formě grafů, tabulek a přehledu. Jak chcete začít?",
     "tryExamples": "Zkuste s ukázkovými daty",
-    "tryExamplesDesc": "Přidá ukázkové tréninky a otevře krátký průvodce.",
     "startScratch": "Začněte od začátku",
-    "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
-    "later": "Později",
-    "scratchNoteName": "Moje tréninky"
+    "later": "Později"
+  },
+  "tour": {
+    "back": "Zpět",
+    "next": "Další",
+    "skip": "Přeskočit",
+    "done": "Dokončeno",
+    "progress": "{current} z {total}",
+    "noteName": "Prohlídka s průvodcem",
+    "noteIntro": "Tato prohlídka vás provede každou částí tohoto pluginu na této stránce. Můžete upravit nebo smazat tuto poznámku kdykoli potřebujete.",
+    "noteTable": "Vaše sady",
+    "noteChart": "Pokrok",
+    "noteDashboard": "Přehled",
+    "noteTimer": "Časovač odpočinku",
+    "steps": {
+      "logSet": {
+        "title": "Zaznamenejte první sadu",
+        "text": "Stiskněte tlačítko +, abyste otevřeli formulář, a poté uložte sadu. Sadě se okamžitě zobrazí v tabulce."
+      },
+      "rowActions": {
+        "title": "Upravte nebo odstraňte sadu",
+        "text": "Každý řádek má tlačítka pro úpravu a smazání. Použijte je k opravě překlepu nebo k odstranění záznamu."
+      },
+      "chart": {
+        "title": "Váš pokrok",
+        "text": "Graf zobrazuje, jak se cvičení vyvíjí v čase, včetně trendové linie a statistických údajů.",
+        "textMine": "Graf zobrazuje, jak se cvičení vyvíjí v průběhu času. Na začátku je graf téměř prázdný, dokud nezaznamenáte několik sérií.",
+        "mobileText": "Na mobilním telefonu je graf zobrazen jako tabulka se stejnými čísly.",
+        "mobileTextMine": "Na telefonu je graf zobrazen jako tabulka. Je téměř prázdný, dokud nezaznamenáte několik sad dat."
+      },
+      "dashboard": {
+        "title": "Vaše přehled"
+      },
+      "timer": {
+        "title": "Zastavit časovač",
+        "text": "Stiskněte tlačítko „Start“, abyste spustili časovač mezi sériemi."
+      },
+      "ribbon": {
+        "title": "Záznam z jakéhokoli poznámkového bloku",
+        "text": "Ikona činky v pruhu otevírá formulář záznamů odkudkoli.",
+        "mobileText": "Na telefonu zde není ikona \"ribbon\". Pro otevření formuláře logu z jakéhokoli poznámkového záznamu použijte paletu příkazů."
+      },
+      "commands": {
+        "title": "Přidejte příkazy",
+        "text": "Otevřete panel příkazů a spusťte příkaz pro vložení, abyste přidali tabulku, graf, časovač nebo dashboard do poznámky."
+      },
+      "end": {
+        "title": "Jste připraveni"
+      }
+    }
   }
 }

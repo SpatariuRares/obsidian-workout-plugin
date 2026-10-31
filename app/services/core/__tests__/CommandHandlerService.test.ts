@@ -6,6 +6,7 @@ import { CreateLogModal } from "@app/features/modals/log/CreateLogModal";
 import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
 import { WorkoutFileSuggestModal } from "@app/features/canvas/modals/WorkoutFileSuggestModal";
 import { CanvasExportModal } from "@app/features/canvas/modals/CanvasExportModal";
+import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 
 // Mocks
 jest.mock("@app/features/modals/log/CreateLogModal", () => ({
@@ -109,6 +110,11 @@ jest.mock("@app/compatibility/migration", () => ({
     .mockImplementation(() => ({ migrateExerciseTypes: jest.fn() })),
 }));
 
+const mockStartTour = jest.fn();
+jest.mock("@app/features/tour/startGuidedTour", () => ({
+  startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
+}));
+
 describe("CommandHandlerService", () => {
   let app: App;
   let mockPlugin: any;
@@ -129,6 +135,7 @@ describe("CommandHandlerService", () => {
       settings: { exerciseFolderPath: "exercises" },
       triggerWorkoutLogRefresh: jest.fn(),
       createLogModalHandler: { openModal: jest.fn() },
+      eventBus: new WorkoutEventBus(),
     };
     service = new CommandHandlerService(app, mockPlugin);
     jest.clearAllMocks();
@@ -189,6 +196,37 @@ describe("CommandHandlerService", () => {
       "```workout-duration\n```\n\n",
       cursor,
     );
+  });
+
+  it.each([
+    ["insert-workout-chart", "chart"],
+    ["insert-workout-table", "table"],
+    ["insert-workout-timer", "timer"],
+    ["insert-workout-dashboard", "dashboard"],
+  ])("%s emits command:insert when run", (id, kind) => {
+    const seen: unknown[] = [];
+    mockPlugin.eventBus.on("command:insert", (p: unknown) => seen.push(p));
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === id,
+    )[0];
+
+    cmd.callback();
+
+    expect(seen).toEqual([{ kind }]);
+  });
+
+  it("insert-workout-duration emits command:insert when run", () => {
+    const seen: unknown[] = [];
+    mockPlugin.eventBus.on("command:insert", (p: unknown) => seen.push(p));
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "insert-workout-duration",
+    )[0];
+
+    cmd.editorCallback({ getCursor: jest.fn(), replaceRange: jest.fn() });
+
+    expect(seen).toEqual([{ kind: "duration" }]);
   });
 
   it("should handle error in create-csv-log", async () => {
@@ -498,6 +536,19 @@ describe("CommandHandlerService", () => {
     await csvCmd.callback();
 
     expect(mockPlugin.createCSVLogFile).toHaveBeenCalled();
+  });
+
+  it("registers Start the tour, which starts the tour from the command", async () => {
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "start-tour",
+    )[0];
+    expect(cmd.name).toBe(t("commands.startTour"));
+    expect(cmd.hotkeys).toBeUndefined();
+    await cmd.callback();
+    expect(mockStartTour).toHaveBeenCalledWith(mockPlugin, {
+      source: "command",
+    });
   });
 
   it("registers the example commands without hotkeys", () => {

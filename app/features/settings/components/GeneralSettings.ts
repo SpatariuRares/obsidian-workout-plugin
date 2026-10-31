@@ -11,8 +11,10 @@ import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type {
   EventBusPort,
+  TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
+import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { isWeightUnit } from "@app/utils/WeightUnitUtils";
 import { changeWeightUnit } from "@app/features/settings/business/changeWeightUnit";
@@ -31,7 +33,7 @@ export class GeneralSettings {
 
   constructor(
     private app: App,
-    private plugin: WorkoutPluginContext & EventBusPort,
+    private plugin: WorkoutPluginContext & EventBusPort & TourPort,
   ) {}
 
   definitions(): DefinitionItem[] {
@@ -73,6 +75,11 @@ export class GeneralSettings {
         type: "group",
         heading: t("settings.sections.gettingStarted"),
         items: [
+          {
+            name: t("settings.labels.takeTour"),
+            desc: t("settings.descriptions.takeTour"),
+            render: (setting) => this.renderTakeTour(setting),
+          },
           {
             name: t("settings.labels.welcomeWindow"),
             desc: t("settings.descriptions.welcomeWindow"),
@@ -173,6 +180,14 @@ export class GeneralSettings {
             );
           }
         }),
+    );
+  }
+
+  private renderTakeTour(setting: Setting): void {
+    setting.addButton((button) =>
+      button.setButtonText(t("settings.buttons.takeTour")).onClick(async () => {
+        await startGuidedTour(this.plugin, { source: "settings" });
+      }),
     );
   }
 

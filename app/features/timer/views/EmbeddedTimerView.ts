@@ -97,7 +97,7 @@ export class EmbeddedTimerView extends BaseView {
     errorMessage: string,
   ): void {
     container.empty();
-    container.createEl("div", {
+    container.createDiv({
       cls: "workout-timer-error",
       text: errorMessage,
     });

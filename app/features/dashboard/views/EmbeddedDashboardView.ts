@@ -161,7 +161,7 @@ export class EmbeddedDashboardView extends BaseView {
     onProtocolFilterChange: ProtocolFilterCallback,
   ): Promise<void> {
     // Create main dashboard container
-    const dashboardEl = container.createEl("div", {
+    const dashboardEl = container.createDiv({
       cls: "workout-dashboard",
     });
 
@@ -174,7 +174,7 @@ export class EmbeddedDashboardView extends BaseView {
     }
 
     // Create dashboard grid layout
-    const gridEl = dashboardEl.createEl("div", {
+    const gridEl = dashboardEl.createDiv({
       cls: "workout-dashboard-grid",
     });
 

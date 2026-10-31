@@ -174,7 +174,7 @@ export class EmbeddedChartView extends BaseView {
       data;
 
     container.empty();
-    const contentDiv = container.createEl("div");
+    const contentDiv = container.createDiv();
 
     if (params.showTrend !== false && volumeData.length > 0) {
       TrendHeader.render(

@@ -43,7 +43,7 @@ export class CopyableBadge {
     parent: HTMLElement,
     props: CopyableBadgeProps,
   ): HTMLElement {
-    const badge = parent.createEl("div", {
+    const badge = parent.createDiv({
       cls: props.className || "workout-copyable-badge",
     });
 
@@ -58,14 +58,14 @@ export class CopyableBadge {
 
     // Icon/emoji
     if (props.icon) {
-      badge.createEl("span", {
+      badge.createSpan({
         text: props.icon,
         cls: "workout-copyable-badge-icon",
       });
     }
 
     // Text
-    badge.createEl("span", {
+    badge.createSpan({
       text: props.text,
       cls: "workout-copyable-badge-text",
     });

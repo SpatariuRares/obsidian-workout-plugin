@@ -58,7 +58,7 @@ export class WidgetsFileError {
       );
 
       // File name as clickable link
-      const fileNameEl = itemEl.createEl("div", {
+      const fileNameEl = itemEl.createDiv({
         cls: "workout-file-error-name",
       });
 

@@ -39,7 +39,7 @@ export class TimerDisplay {
       this.urgentOverlays.set(timerId, overlay);
     }
     overlay.empty();
-    overlay.createEl("span", {
+    overlay.createSpan({
       cls: "workout-timer-urgent-overlay__count",
       text: String(secondsLeft),
     });
@@ -82,7 +82,7 @@ export class TimerDisplay {
     state.timerDisplay.empty();
 
     if (isCompleted) {
-      state.timerDisplay.createEl("span", {
+      state.timerDisplay.createSpan({
         cls: "workout-timer-complete",
         text: t("icons.status.success"),
       });
@@ -101,7 +101,7 @@ export class TimerDisplay {
       displayTime = "00:00";
     }
 
-    state.timerDisplay.createEl("span", {
+    state.timerDisplay.createSpan({
       cls: "workout-timer-time-display",
       text: displayTime,
     });
@@ -124,7 +124,7 @@ export class TimerDisplay {
   }
 
   static createDisplay(container: HTMLElement): HTMLElement {
-    const timeDisplay = container.createEl("div", {
+    const timeDisplay = container.createDiv({
       cls: "workout-timer-time",
     });
 
@@ -132,7 +132,7 @@ export class TimerDisplay {
   }
 
   static createRoundCounter(container: HTMLElement): HTMLElement {
-    return container.createEl("span", {
+    return container.createSpan({
       cls: "workout-timer-round-counter",
     });
   }

@@ -76,7 +76,7 @@ export class ProtocolDistribution {
 
     // Check if there's any data
     if (stats.length === 0 || stats.every((s) => s.count === 0)) {
-      widgetEl.createEl("div", {
+      widgetEl.createDiv({
         text: t("dashboard.protocolDistribution.noData"),
         cls: "workout-protocol-no-data",
       });
@@ -95,7 +95,7 @@ export class ProtocolDistribution {
     }
 
     // Create chart container
-    const chartContainer = widgetEl.createEl("div", {
+    const chartContainer = widgetEl.createDiv({
       cls: "workout-protocol-chart-container",
     });
 
@@ -286,7 +286,7 @@ export class ProtocolDistribution {
     onFilterChange: ProtocolFilterCallback,
     activeFilter?: string | null,
   ): void {
-    const legendEl = container.createEl("div", {
+    const legendEl = container.createDiv({
       cls: "workout-protocol-legend",
     });
 

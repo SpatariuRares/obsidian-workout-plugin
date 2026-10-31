@@ -18,6 +18,11 @@ export class ProtocolEditorModal extends ModalBase {
   onOpen(): void {
     const { contentEl, formState, originalId } = this;
     contentEl.empty();
+    this.titleEl.setText(
+      originalId
+        ? t("settings.tooltips.editProtocol")
+        : t("settings.buttons.addProtocol"),
+    );
 
     new Setting(contentEl)
       .setName(t("settings.labels.protocolName"))

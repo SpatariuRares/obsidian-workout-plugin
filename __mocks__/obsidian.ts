@@ -295,6 +295,9 @@ export function withHelpers<T extends HTMLElement | DocumentFragment>(el: T): T 
   e.createDiv = (o?: ElInfo | string) => make("div", o);
   e.createSpan = (o?: ElInfo | string) => make("span", o);
   e.empty = () => el.replaceChildren();
+  e.setText = (text: string) => {
+    el.textContent = text;
+  };
   e.addClass = (c: string) => (el as HTMLElement).classList.add(c);
   e.removeClass = (c: string) => (el as HTMLElement).classList.remove(c);
   e.toggleClass = (c: string, on: boolean) => (el as HTMLElement).classList.toggle(c, on);

@@ -62,6 +62,23 @@ describe("custom protocols list", () => {
     return { plugin, refresh, list: listOf(section.definitions()) };
   }
 
+  it("titles the list so its add button has a header row", () => {
+    expect(setup().list.heading).toBe(t("settings.sections.savedProtocols"));
+  });
+
+  it("titles the form by whether it adds or edits a protocol", () => {
+    const { list } = setup();
+    const adding = captureModal(() => list.addItem!.action(document.body));
+    const editing = captureModal(() =>
+      list.items![0].action!(document.body),
+    );
+
+    expect(adding.titleEl.textContent).toBe(t("settings.buttons.addProtocol"));
+    expect(editing.titleEl.textContent).toBe(
+      t("settings.tooltips.editProtocol"),
+    );
+  });
+
   it("deletes a protocol once the user confirms", async () => {
     const { plugin, refresh, list } = setup();
     confirms.length = 0;
@@ -144,6 +161,18 @@ describe("timer presets list", () => {
     );
     return { plugin, refresh, definitions: section.definitions() };
   }
+
+  it("titles the list and the form", () => {
+    const list = listOf(setup().definitions);
+    const adding = captureModal(() => list.addItem!.action(document.body));
+    const editing = captureModal(() =>
+      list.items![0].action!(document.body),
+    );
+
+    expect(list.heading).toBe(t("settings.sections.savedPresets"));
+    expect(adding.titleEl.textContent).toBe(t("settings.buttons.addPreset"));
+    expect(editing.titleEl.textContent).toBe(t("settings.tooltips.editPreset"));
+  });
 
   it("clears the default when its preset is deleted", async () => {
     const { plugin, refresh, definitions } = setup();

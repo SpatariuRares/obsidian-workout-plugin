@@ -8,6 +8,7 @@ export class TimerPresetEditorModal extends ModalBase {
   constructor(
     app: App,
     private formState: TimerPresetConfig,
+    private isNew: boolean,
     /** Returns false to keep the form open (validation failed) */
     private save: () => Promise<boolean>,
   ) {
@@ -15,6 +16,11 @@ export class TimerPresetEditorModal extends ModalBase {
   }
 
   onOpen(): void {
+    this.titleEl.setText(
+      this.isNew
+        ? t("settings.buttons.addPreset")
+        : t("settings.tooltips.editPreset"),
+    );
     this.renderForm();
   }
 

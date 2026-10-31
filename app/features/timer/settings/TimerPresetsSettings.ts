@@ -50,6 +50,7 @@ export class TimerPresetsSettings {
       },
       {
         type: "list",
+        heading: t("settings.sections.savedPresets"),
         emptyState: t("settings.descriptions.noPresets"),
         addItem: {
           name: t("settings.buttons.addPreset"),
@@ -114,7 +115,7 @@ export class TimerPresetsSettings {
         };
     const originalName = existingPreset?.name || null;
 
-    new TimerPresetEditorModal(this.app, formState, async () => {
+    new TimerPresetEditorModal(this.app, formState, !existingPreset, async () => {
       return this.savePreset(formState, originalName);
     }).open();
   }

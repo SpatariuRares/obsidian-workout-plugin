@@ -31,6 +31,7 @@ export class CustomProtocolsSettings {
       },
       {
         type: "list",
+        heading: t("settings.sections.savedProtocols"),
         emptyState: t("settings.descriptions.noCustomProtocols"),
         addItem: {
           name: t("settings.buttons.addProtocol"),
@@ -65,7 +66,9 @@ export class CustomProtocolsSettings {
     const fragment = createFragment();
 
     // Create a container for the badge preview and details
-    const container = fragment.createSpan();
+    const container = fragment.createSpan({
+      cls: "workout-protocol-details",
+    });
 
     // Add abbreviation badge preview
     ProtocolBadge.create(container, {

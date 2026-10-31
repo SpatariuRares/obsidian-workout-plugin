@@ -1,6 +1,18 @@
 import * as obsidian from "obsidian";
 
 /**
+ * moment locale codes whose name differs from the plugin's locale files,
+ * which use Obsidian's language codes (app/i18n/locales).
+ */
+const MOMENT_TO_LOCALE: Readonly<Record<string, string>> = {
+  "zh-cn": "zh",
+  "zh-tw": "zh-TW",
+  "zh-hk": "zh-TW",
+  cs: "cz",
+  nb: "no",
+};
+
+/**
  * Utility for detecting the user's language from Obsidian settings.
  */
 export class LanguageUtils {
@@ -9,7 +21,8 @@ export class LanguageUtils {
   /**
    * Gets the app language Obsidian is set to.
    * Uses `getLanguage()` (Obsidian 1.8.7+); on older versions, where it does
-   * not exist, reads the locale Obsidian set on its bundled moment.
+   * not exist, reads the locale Obsidian set on its bundled moment and maps
+   * it to the plugin's locale code.
    * Defaults to 'en' if not available.
    * @param normalize - If true, normalizes regional codes (e.g., "pt-br" → "pt-BR")
    * @returns Language code string
@@ -35,6 +48,9 @@ export class LanguageUtils {
     if (typeof getLanguage === "function") {
       return getLanguage();
     }
-    return obsidian.moment.locale();
+    const momentLocale = obsidian.moment.locale();
+    return (
+      MOMENT_TO_LOCALE[momentLocale.toLowerCase()] ?? momentLocale
+    );
   }
 }

@@ -788,7 +788,8 @@
       "regenerateOverwrite": "重新生成 (覆蓋)",
       "runAllMaintenance": "執行全部",
       "savePreset": "儲存",
-      "saveProtocol": "儲存"
+      "saveProtocol": "儲存",
+      "showWelcome": "顯示歡迎訊息"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
@@ -814,7 +815,8 @@
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
-      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。"
+      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。",
+      "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -839,7 +841,8 @@
       "setDuration": "備用每組時長 (秒)",
       "setupCSV": "設定 CSV 檔案",
       "weightUnit": "重量單位",
-      "showRibbonIcon": "顯示快速紀錄圖示"
+      "showRibbonIcon": "顯示快速紀錄圖示",
+      "welcomeWindow": "歡迎畫面"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",
@@ -880,7 +883,8 @@
       "timerPresets": "計時器預設",
       "trainingParameters": "訓練參數",
       "savedPresets": "儲存的預設",
-      "savedProtocols": "儲存的協議"
+      "savedProtocols": "儲存的協議",
+      "gettingStarted": "開始使用"
     },
     "tooltips": {
       "deletePreset": "刪除預設",

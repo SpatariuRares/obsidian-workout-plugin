@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Hasilkan ulang (menimpa)",
       "runAllMaintenance": "Jalankan semua",
       "savePreset": "Simpan",
-      "saveProtocol": "Simpan"
+      "saveProtocol": "Simpan",
+      "showWelcome": "Tampilkan pesan selamat datang"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -814,7 +815,8 @@
       "setupCSV": "Buat kedua file workout_logs.csv dan muscle-tags.csv di folder yang telah dikonfigurasi.",
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
-      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan."
+      "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan.",
+      "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -839,7 +841,8 @@
       "setDuration": "Durasi set cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
       "weightUnit": "Satuan berat",
-      "showRibbonIcon": "Tampilkan ikon catatan cepat"
+      "showRibbonIcon": "Tampilkan ikon catatan cepat",
+      "welcomeWindow": "Jendela selamat datang"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
@@ -880,7 +883,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parameter pelatihan",
       "savedPresets": "Preset yang telah disimpan",
-      "savedProtocols": "Protokol yang disimpan"
+      "savedProtocols": "Protokol yang disimpan",
+      "gettingStarted": "Memulai"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",

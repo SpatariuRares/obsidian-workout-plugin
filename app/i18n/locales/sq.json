@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Rigjenero (mbishkruaj)",
       "runAllMaintenance": "Ekzekuto të gjitha",
       "savePreset": "Ruaj",
-      "saveProtocol": "Ruaj"
+      "saveProtocol": "Ruaj",
+      "showWelcome": "Shfaq"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -814,7 +815,8 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
+      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -839,7 +841,8 @@
       "setDuration": "Kohëzgjatja rezervë e serisë (sekonda)",
       "setupCSV": "Konfiguro skedarët CSV",
       "weightUnit": "Njësia e peshës",
-      "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë"
+      "showRibbonIcon": "Shfaq ikonën e regjistrimit të shpejtë",
+      "welcomeWindow": "Vendi të mirësekomstës"
     },
     "messages": {
       "confirmDeletePreset": "Jeni të sigurt që doni ta fshini këtë paracaktim?",
@@ -880,7 +883,8 @@
       "timerPresets": "Paracaktimet e timerit",
       "trainingParameters": "Parametrat e stërvitjes",
       "savedPresets": "Parametrat të ruajtura",
-      "savedProtocols": "Протокол të ruajtura"
+      "savedProtocols": "Протокол të ruajtura",
+      "gettingStarted": "Fillimi"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",

@@ -788,7 +788,8 @@
       "regenerateOverwrite": "재생성 (덮어쓰기)",
       "runAllMaintenance": "모두 실행",
       "savePreset": "저장",
-      "saveProtocol": "저장"
+      "saveProtocol": "저장",
+      "showWelcome": "환영 메시지 표시"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -814,7 +815,8 @@
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
       "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다",
-      "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다."
+      "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다.",
+      "welcomeWindow": "예제 데이터 또는 처음부터 시작하기 위해 환영 창을 다시 표시합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
@@ -839,7 +841,8 @@
       "setDuration": "대체 세트 시간 (초)",
       "setupCSV": "CSV 파일 설정",
       "weightUnit": "무게 단위",
-      "showRibbonIcon": "빠른 기록 아이콘 표시"
+      "showRibbonIcon": "빠른 기록 아이콘 표시",
+      "welcomeWindow": "환영 창"
     },
     "messages": {
       "confirmDeletePreset": "이 프리셋을 삭제하시겠습니까?",
@@ -880,7 +883,8 @@
       "timerPresets": "타이머 프리셋",
       "trainingParameters": "훈련 매개변수",
       "savedPresets": "저장된 프리셋",
-      "savedProtocols": "저장된 프로토콜"
+      "savedProtocols": "저장된 프로토콜",
+      "gettingStarted": "시작하기"
     },
     "tooltips": {
       "deletePreset": "프리셋 삭제",

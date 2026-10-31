@@ -788,7 +788,8 @@
       "regenerateOverwrite": "再生成 (上書き)",
       "runAllMaintenance": "すべて実行",
       "savePreset": "保存",
-      "saveProtocol": "保存"
+      "saveProtocol": "保存",
+      "showWelcome": "ウェルカムを表示する"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -814,7 +815,8 @@
       "setupCSV": "設定したフォルダに workout_logs.csv と muscle-tags.csv の両方を作成します。",
       "weightIncrement": "漸進性過負荷で使うデフォルトの重量増分（例：2.5 単位ずつ増やすなら 2.5）",
       "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
-      "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。"
+      "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。",
+      "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -839,7 +841,8 @@
       "setDuration": "代替のセット時間（秒）",
       "setupCSV": "CSVファイルのセットアップ",
       "weightUnit": "単位（重量）",
-      "showRibbonIcon": "クイック記録アイコンを表示"
+      "showRibbonIcon": "クイック記録アイコンを表示",
+      "welcomeWindow": "ウェルカムウィンドウ"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
@@ -880,7 +883,8 @@
       "timerPresets": "タイマープリセット",
       "trainingParameters": "トレーニングパラメータ",
       "savedPresets": "保存されたプリセット",
-      "savedProtocols": "保存されたプロトコル"
+      "savedProtocols": "保存されたプロトコル",
+      "gettingStarted": "開始"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",

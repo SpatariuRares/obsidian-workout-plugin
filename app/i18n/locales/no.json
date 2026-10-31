@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Generer på nytt (overskriv)",
       "runAllMaintenance": "Kjør alt",
       "savePreset": "Lagre",
-      "saveProtocol": "Lagre"
+      "saveProtocol": "Lagre",
+      "showWelcome": "Vis velkomst"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -814,7 +815,8 @@
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
       "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
-      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i."
+      "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
+      "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -839,7 +841,8 @@
       "setDuration": "Reservevarighet per sett (sekunder)",
       "setupCSV": "Sett opp CSV-filer",
       "weightUnit": "Enhet for vekt",
-      "showRibbonIcon": "Vis ikon for hurtiglogging"
+      "showRibbonIcon": "Vis ikon for hurtiglogging",
+      "welcomeWindow": "Velkomstvindu"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -880,7 +883,8 @@
       "timerPresets": "Timer-forhåndsinnstillinger",
       "trainingParameters": "Treningsparametere",
       "savedPresets": "Lagrede forhåndsinnstillinger",
-      "savedProtocols": "Lagrede protokoller"
+      "savedProtocols": "Lagrede protokoller",
+      "gettingStarted": "Komme i gang"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",

@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Ré-générer (écraser)",
       "runAllMaintenance": "Tout exécuter",
       "savePreset": "Enregistrer",
-      "saveProtocol": "Enregistrer"
+      "saveProtocol": "Enregistrer",
+      "showWelcome": "Afficher le message de bienvenue"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
@@ -814,7 +815,8 @@
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
-      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé."
+      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
+      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -839,7 +841,8 @@
       "setDuration": "Durée de série par défaut (secondes)",
       "setupCSV": "Configurer les fichiers CSV",
       "weightUnit": "Unité de poids",
-      "showRibbonIcon": "Afficher l'icône de saisie rapide"
+      "showRibbonIcon": "Afficher l'icône de saisie rapide",
+      "welcomeWindow": "Fenêtre de bienvenue"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
@@ -880,7 +883,8 @@
       "timerPresets": "Préréglages du minuteur",
       "trainingParameters": "Paramètres d'entraînement",
       "savedPresets": "Préréglages sauvegardés",
-      "savedProtocols": "Protocoles enregistrés"
+      "savedProtocols": "Protocoles enregistrés",
+      "gettingStarted": "Premiers pas"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",

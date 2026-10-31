@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Recriar (substituir)",
       "runAllMaintenance": "Executar tudo",
       "savePreset": "Salvar",
-      "saveProtocol": "Salvar"
+      "saveProtocol": "Salvar",
+      "showWelcome": "Mostrar mensagem de boas-vindas"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Já existe um ficheiro CSV de tags musculares. Deseja substituí-lo pelos valores padrão? Isto removerá todas as tags personalizadas.",
@@ -814,7 +815,8 @@
       "setupCSV": "Crie os arquivos workout_logs.csv e muscle-tags.csv na pasta configurada.",
       "weightIncrement": "Incremento padrão de peso para sobrecarga progressiva (por exemplo, 2,5 para incrementos de 2,5 unidades)",
       "showRibbonIcon": "Mostrar na barra lateral o ícone de haltere que abre o formulário de registo de treino",
-      "weightUnit": "Unidade para gráficos, totais e novos registros. Cada registro mantém a unidade em que foi inserido."
+      "weightUnit": "Unidade para gráficos, totais e novos registros. Cada registro mantém a unidade em que foi inserido.",
+      "welcomeWindow": "Exiba novamente a janela de boas-vindas para começar com dados de exemplo ou do zero."
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
@@ -839,7 +841,8 @@
       "setDuration": "Duração de série alternativa (segundos)",
       "setupCSV": "Configurar ficheiros CSV",
       "weightUnit": "Unidade de peso",
-      "showRibbonIcon": "Mostrar ícone de registo rápido"
+      "showRibbonIcon": "Mostrar ícone de registo rápido",
+      "welcomeWindow": "Janela de boas-vindas"
     },
     "messages": {
       "confirmDeletePreset": "Tem certeza de que deseja excluir esta predefinição?",
@@ -880,7 +883,8 @@
       "timerPresets": "Predefinições de temporizador",
       "trainingParameters": "Parâmetros de treinamento",
       "savedPresets": "Predefinições salvas",
-      "savedProtocols": "Protocolos salvos"
+      "savedProtocols": "Protocolos salvos",
+      "gettingStarted": "Como começar"
     },
     "tooltips": {
       "deletePreset": "Excluir predefinição",

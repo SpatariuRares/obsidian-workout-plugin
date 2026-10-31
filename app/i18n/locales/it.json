@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Rigenera (sovrascrivi)",
       "runAllMaintenance": "Esegui tutti",
       "savePreset": "Salva",
-      "saveProtocol": "Salva"
+      "saveProtocol": "Salva",
+      "showWelcome": "Mostra benvenuto"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
@@ -814,7 +815,8 @@
       "setupCSV": "Crea sia workout_logs.csv che muscle-tags.csv nella cartella configurata.",
       "weightIncrement": "Incremento peso predefinito per sovraccarico progressivo (es. 2.5 per incrementi di 2.5 unità)",
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
-      "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito."
+      "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito.",
+      "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -839,7 +841,8 @@
       "setDuration": "Durata serie di riserva (secondi)",
       "setupCSV": "Configura file CSV",
       "weightUnit": "Unità di misura peso",
-      "showRibbonIcon": "Mostra icona di registrazione rapida"
+      "showRibbonIcon": "Mostra icona di registrazione rapida",
+      "welcomeWindow": "Finestra di benvenuto"
     },
     "messages": {
       "confirmDeletePreset": "Sei sicuro di voler eliminare questo preset?",
@@ -880,7 +883,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di allenamento",
       "savedPresets": "Preimpostazioni salvate",
-      "savedProtocols": "Protocolli salvati"
+      "savedProtocols": "Protocolli salvati",
+      "gettingStarted": "Inizia"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",

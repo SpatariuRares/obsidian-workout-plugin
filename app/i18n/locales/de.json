@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Neu generieren (überschreiben)",
       "runAllMaintenance": "Alle durchführen",
       "savePreset": "Speichern",
-      "saveProtocol": "Speichern"
+      "saveProtocol": "Speichern",
+      "showWelcome": "Zeige Willkommensnachricht"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -814,7 +815,8 @@
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
-      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde."
+      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
+      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -839,7 +841,8 @@
       "setDuration": "Fallback-Satzdauer (Sekunden)",
       "setupCSV": "CSV-Dateien einrichten",
       "weightUnit": "Gewichtseinheit",
-      "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen"
+      "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
+      "welcomeWindow": "Willkommensfenster"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",
@@ -880,7 +883,8 @@
       "timerPresets": "Timer-Voreinstellungen",
       "trainingParameters": "Parameter für das Training",
       "savedPresets": "Gespeicherte Voreinstellungen",
-      "savedProtocols": "Gespeicherte Protokolle"
+      "savedProtocols": "Gespeicherte Protokolle",
+      "gettingStarted": "Wie man anfängt"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",

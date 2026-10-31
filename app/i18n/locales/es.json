@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Regenerar (sobrescribir)",
       "runAllMaintenance": "Ejecutar todas",
       "savePreset": "Guardar",
-      "saveProtocol": "Guardar"
+      "saveProtocol": "Guardar",
+      "showWelcome": "Mostrar bienvenida"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas de músculos. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
@@ -814,7 +815,8 @@
       "setupCSV": "Cree los archivos \"workout_logs.csv\" y \"muscle-tags.csv\" en la carpeta configurada.",
       "weightIncrement": "Incremento de peso predeterminado para la sobrecarga progresiva (por ejemplo, 2,5 para incrementos de 2,5 unidades).",
       "showRibbonIcon": "Muestra en la cinta el icono de mancuerna que abre el formulario del registro de entrenamiento",
-      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo."
+      "weightUnit": "Unidad para gráficos, totales y nuevos registros. Cada registro mantiene la unidad en la que se introdujo.",
+      "welcomeWindow": "Mostrar nuevamente la ventana de bienvenida para comenzar con datos de ejemplo o desde cero."
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
@@ -839,7 +841,8 @@
       "setDuration": "Duración de serie alternativa (segundos)",
       "setupCSV": "Configurar archivos CSV",
       "weightUnit": "Unidad de peso",
-      "showRibbonIcon": "Mostrar icono de registro rápido"
+      "showRibbonIcon": "Mostrar icono de registro rápido",
+      "welcomeWindow": "Ventana de bienvenida"
     },
     "messages": {
       "confirmDeletePreset": "¿Está seguro de que desea eliminar este preajuste?",
@@ -880,7 +883,8 @@
       "timerPresets": "Preajustes de temporizador",
       "trainingParameters": "Parámetros de entrenamiento",
       "savedPresets": "Preajustes guardados",
-      "savedProtocols": "Protocolos guardados"
+      "savedProtocols": "Protocolos guardados",
+      "gettingStarted": "Cómo empezar"
     },
     "tooltips": {
       "deletePreset": "Eliminar preajuste",

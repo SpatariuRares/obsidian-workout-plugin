@@ -788,7 +788,8 @@
       "regenerateOverwrite": "Yeniden oluştur (üzerine yaz)",
       "runAllMaintenance": "Tümünü çalıştır",
       "savePreset": "Kaydet",
-      "saveProtocol": "Kaydet"
+      "saveProtocol": "Kaydet",
+      "showWelcome": "Hoş geldiniz göster"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -814,7 +815,8 @@
       "setupCSV": "Ayarlanan klasörde hem workout_logs.csv hem de muscle-tags.csv dosyalarını oluşturun.",
       "weightIncrement": "Progresif yüklenme için varsayılan ağırlık artışı (örneğin, 2.5 birimlik artışlar için 2.5)",
       "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
-      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur."
+      "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur.",
+      "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -839,7 +841,8 @@
       "setDuration": "Yedek set süresi (saniye)",
       "setupCSV": "CSV dosyalarını kur",
       "weightUnit": "Ağırlık birimi",
-      "showRibbonIcon": "Hızlı kayıt simgesini göster"
+      "showRibbonIcon": "Hızlı kayıt simgesini göster",
+      "welcomeWindow": "Hoş geldiniz penceresi"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -880,7 +883,8 @@
       "timerPresets": "Zamanlayıcı ön ayarları",
       "trainingParameters": "Antrenman parametreleri",
       "savedPresets": "Kaydedilmiş ön ayarlar",
-      "savedProtocols": "Kaydedilmiş protokoller"
+      "savedProtocols": "Kaydedilmiş protokoller",
+      "gettingStarted": "Başlangıç"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",

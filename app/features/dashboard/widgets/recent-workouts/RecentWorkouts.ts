@@ -5,7 +5,6 @@ import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
-import { TOUR_TARGETS } from "@app/features/tour/tourTargets";
 
 export class RecentWorkouts {
   static render(
@@ -16,7 +15,6 @@ export class RecentWorkouts {
     const recentEl = WidgetContainer.create(container, {
       title: t("dashboard.recentWorkouts.title"),
       className: "workout-recent-workouts",
-      tourTarget: TOUR_TARGETS.dashboardRecentWorkouts,
     });
 
     const recentWorkouts = getRecentWorkouts(

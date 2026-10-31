@@ -12,12 +12,8 @@ export const TOUR_TARGETS = {
   chart: "chart",
   /** A `workout-dashboard` block as a whole. */
   dashboard: "dashboard",
-  dashboardSummary: "dashboard-summary",
-  dashboardQuickStats: "dashboard-quick-stats",
+  /** The muscle heat map widget of a dashboard. */
   dashboardMuscleHeatMap: "dashboard-muscle-heat-map",
-  dashboardVolumeAnalytics: "dashboard-volume-analytics",
-  dashboardRecentWorkouts: "dashboard-recent-workouts",
-  dashboardQuickActions: "dashboard-quick-actions",
   /** Start / stop button of a `workout-timer` block. */
   timerStart: "timer-start",
   /** The quick-log ribbon icon. */

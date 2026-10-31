@@ -69,6 +69,8 @@ export class LogCallouts {
         exerciseName: exerciseName ?? "exercise",
       }),
     });
+    // On an empty log this is the only way to a first set (tour step 1)
+    markTourTarget(createButton, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(createButton, () => {
       let link = currentPageLink;

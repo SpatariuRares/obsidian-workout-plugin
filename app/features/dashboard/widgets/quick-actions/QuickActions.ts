@@ -4,7 +4,6 @@ import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
-import { TOUR_TARGETS } from "@app/features/tour/tourTargets";
 
 export class QuickActions {
   static render(
@@ -15,7 +14,6 @@ export class QuickActions {
     const actionsEl = WidgetContainer.create(container, {
       title: t("dashboard.quickActions.title"),
       className: "workout-quick-actions",
-      tourTarget: TOUR_TARGETS.dashboardQuickActions,
     });
 
     const buttonsEl = Button.createContainer(actionsEl);

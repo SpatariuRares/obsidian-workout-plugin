@@ -19,9 +19,9 @@ describe("data-tour markers on real components", () => {
   it("a dashboard widget carries its tour target", () => {
     const widget = WidgetContainer.create(root, {
       title: "Summary",
-      tourTarget: TOUR_TARGETS.dashboardSummary,
+      tourTarget: TOUR_TARGETS.dashboardMuscleHeatMap,
     });
-    expect(widget.getAttribute("data-tour")).toBe("dashboard-summary");
+    expect(widget.getAttribute("data-tour")).toBe("dashboard-muscle-heat-map");
   });
 
   it("a widget without a tour target has no data-tour", () => {

@@ -8,7 +8,7 @@
  *   </div>
  */
 
-import type { TourTarget } from "@app/features/tour/tourTargets";
+import { markTourTarget, type TourTarget } from "@app/features/tour/tourTargets";
 
 export interface WidgetContainerProps {
   /** Widget title displayed as h3 */
@@ -42,7 +42,7 @@ export class WidgetContainer {
       cls: classes.join(" "),
     });
 
-    if (props.tourTarget) widgetEl.setAttribute("data-tour", props.tourTarget);
+    if (props.tourTarget) markTourTarget(widgetEl, props.tourTarget);
 
     widgetEl.createEl("h3", {
       text: props.title,

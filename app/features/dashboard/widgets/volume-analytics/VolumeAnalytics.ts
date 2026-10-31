@@ -11,7 +11,6 @@ import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
-import { TOUR_TARGETS } from "@app/features/tour/tourTargets";
 
 export class VolumeAnalytics {
   /**
@@ -29,7 +28,6 @@ export class VolumeAnalytics {
     const analyticsEl = WidgetContainer.create(container, {
       title: t("dashboard.volumeAnalytics.title"),
       className: "workout-volume-analytics",
-      tourTarget: TOUR_TARGETS.dashboardVolumeAnalytics,
       isWide: true,
     });
 

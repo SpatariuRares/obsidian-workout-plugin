@@ -5,7 +5,6 @@ import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary
 import { DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
-import { TOUR_TARGETS } from "@app/features/tour/tourTargets";
 
 export class SummaryWidget {
   static render(
@@ -18,7 +17,6 @@ export class SummaryWidget {
     const widgetEl = WidgetContainer.create(container, {
       title: t("dashboard.summary.title"),
       className: "workout-summary-widget",
-      tourTarget: TOUR_TARGETS.dashboardSummary,
     });
 
     const summaryEl = widgetEl.createDiv({

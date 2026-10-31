@@ -16,7 +16,7 @@ export type TourMode = "examples" | "mine";
 
 export const GUIDED_TOUR_ID = "guided-tour";
 
-/** The eight steps of the guided tour, in the order of the tour note's blocks. */
+/** The nine steps of the guided tour, in the order of the tour note's blocks. */
 export function buildTour(options: {
   bus: WorkoutEventBus;
   mode: TourMode;
@@ -56,6 +56,12 @@ export function buildTour(options: {
         text: own
           ? t("tour.steps.dashboard.textMine")
           : t("tour.steps.dashboard.text"),
+      },
+      {
+        id: "muscles",
+        target: TOUR_TARGETS.dashboardMuscleHeatMap,
+        title: t("tour.steps.muscles.title"),
+        text: t("tour.steps.muscles.text"),
       },
       {
         id: "timer",

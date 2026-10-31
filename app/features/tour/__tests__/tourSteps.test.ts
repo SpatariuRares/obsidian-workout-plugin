@@ -14,13 +14,14 @@ function armed(step: TourStep) {
 describe("buildTour", () => {
   const bus = new WorkoutEventBus();
 
-  it("has the eight steps in order, pointing at the right targets", () => {
+  it("has the nine steps in order, pointing at the right targets", () => {
     const tour = buildTour({ bus, mode: "examples" });
     expect(tour.steps.map((s) => [s.id, s.target])).toEqual([
       ["log-set", TOUR_TARGETS.tableAddButton],
       ["row-actions", TOUR_TARGETS.tableRowActions],
       ["chart", TOUR_TARGETS.chart],
       ["dashboard", TOUR_TARGETS.dashboard],
+      ["muscles", TOUR_TARGETS.dashboardMuscleHeatMap],
       ["timer", TOUR_TARGETS.timerStart],
       ["ribbon", TOUR_TARGETS.ribbonIcon],
       ["commands", undefined],

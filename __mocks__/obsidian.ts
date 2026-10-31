@@ -125,6 +125,7 @@ export class EventRef {}
 export class App {
   vault = {
     getAbstractFileByPath: jest.fn(),
+    getFolderByPath: jest.fn().mockReturnValue(null),
     getAllLoadedFiles: jest.fn(),
     read: jest.fn(),
     create: jest.fn(),

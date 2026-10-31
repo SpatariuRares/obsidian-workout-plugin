@@ -815,7 +815,8 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
+      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -1023,6 +1024,51 @@
     "next": "Tjetër",
     "skip": "Hidhe",
     "done": "Mbaruar",
-    "progress": "{current} nga {total}"
+    "progress": "{current} nga {total}",
+    "noteName": "Tours me udhësim",
+    "noteIntro": "Rruga e udhëtorit ndërton në çdo pjesë të pluginit në këtë faqe. Redaktojeni ose fshini këtë notë kur të doni.",
+    "noteTable": "Trivet e tua",
+    "noteChart": "Progres",
+    "noteDashboard": "Dasbord",
+    "noteTimer": "Koha e pritjes",
+    "steps": {
+      "logSet": {
+        "title": "Registron paraqitjen e parë",
+        "text": "Depresoni butonën \"+\" për të hapur formën, pastaj ruani një set. Ajo shfaqet menjëherë në tabelë."
+      },
+      "rowActions": {
+        "title": "Redaktojuni ose fshini një grupmullim",
+        "text": "Çdo radë ka butonat për redaktim dhe fshirje. Përdyshuni ata për të korrigjuar një gabim ose për të fshirë një set."
+      },
+      "chart": {
+        "title": "J Shiti",
+        "text": "Shkëmbimi tregon se si një veprim zhvillohet në kohë, me një vlerësim dhe statistika.",
+        "textMine": "Karta tregon se si një veprim zhvillohet në kohë. Ajo është praktikesisht bosh derë që nuk regjistrohet një numër i caktuar.",
+        "mobileText": "Në një telefon, sharta shfaqet si një tabelë me numra të njëjtë.",
+        "mobileTextMine": "Në një telefon, sharta shfaqet si një tabelë. Ajo është pothuajse e bosh derisa të regjistrohen disa seritë."
+      },
+      "dashboard": {
+        "title": "Taqimi tual",
+        "text": "Numra, tendenca e volumit, antrenimet e fundit dhe harta e temperaturës së muskujve, të gjitha në një seksion.",
+        "textMine": "Numra, tendenca e volumit, antrenimet e fundit dhe harta e temperaturës së muskujve. A kompletohet ndërsa regjistrohen më shumë seritë."
+      },
+      "timer": {
+        "title": "Përpashimi i kohës",
+        "text": "Depron \"Fill\" për të kryer një numërim ndër serit."
+      },
+      "ribbon": {
+        "title": "Shkarkoni nga çdo not",
+        "text": "Simboli pesheve në \"ribbon\" çkon formën e regjistrimit nga çdo vend.",
+        "mobileText": "Në një telefon, nuk ka ikonën \"ribbon\" në vendin e këtij. Për të hapur formën e logut nga çdo notë, përdohuni nga paleta komandëve."
+      },
+      "commands": {
+        "title": "Shtypni komandat",
+        "text": "Hapni paletin e komandave dhe ekz ekon një komandë për të shtuar një tabellë, grafik, timer ose dasbord në një notë."
+      },
+      "end": {
+        "title": "Jeni gati",
+        "text": "Ju mund të rikriheno këtë tur përsëri nga opsionet e pluginit."
+      }
+    }
   }
 }

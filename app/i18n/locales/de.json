@@ -815,7 +815,8 @@
       "setupCSV": "Erstellt workout_logs.csv und muscle-tags.csv im konfigurierten Ordner.",
       "weightIncrement": "Standard-Gewichtsschritt für progressive Überlastung (z. B. 2,5 für Schritte von 2,5 Einheiten)",
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
-      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde."
+      "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
+      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -1023,6 +1024,51 @@
     "next": "Nächster",
     "skip": "Überspringen",
     "done": "Abgeschlossen",
-    "progress": "{current} von {total}"
+    "progress": "{current} von {total}",
+    "noteName": "Führte Tour",
+    "noteIntro": "Die Führung zeigt jeden Teil des Plugins auf dieser Seite. Bearbeiten oder löschen Sie diese Notiz, wann immer Sie möchten.",
+    "noteTable": "Ihre Sätze",
+    "noteChart": "Fortschritt",
+    "noteDashboard": "Dashboard",
+    "noteTimer": "Timer für die Pausenzeit",
+    "steps": {
+      "logSet": {
+        "title": "Protokollieren Sie Ihren ersten Satz.",
+        "text": "Drücken Sie die Schaltfläche \"+\", um das Formular zu öffnen, und speichern Sie dann eine Einstellung. Sie wird sofort in der Tabelle angezeigt."
+      },
+      "rowActions": {
+        "title": "Bearbeiten oder löschen Sie eine Gruppe",
+        "text": "Jede Zeile hat Schaltflächen zum Bearbeiten und Löschen. Verwenden Sie diese, um einen Tippfehler zu korrigieren oder einen Eintrag zu löschen."
+      },
+      "chart": {
+        "title": "Ihr Fortschritt",
+        "text": "Die Grafik zeigt, wie sich eine Übung im Laufe der Zeit entwickelt, mit einer Trendlinie und Statistiken.",
+        "textMine": "Die Grafik zeigt, wie sich eine Übung im Laufe der Zeit entwickelt. Sie ist zunächst leer, bis Sie ein paar Sätze aufgezeichnet haben.",
+        "mobileText": "Auf einem Mobiltelefon wird die Grafik als Tabelle mit den gleichen Zahlen angezeigt.",
+        "mobileTextMine": "Auf einem Smartphone wird die Grafik als Tabelle angezeigt. Sie ist zunächst fast leer, bis Sie einige Datensätze hinzugefügt haben."
+      },
+      "dashboard": {
+        "title": "Ihr Dashboard",
+        "text": "Gesamtzahlen, Trends, kürzliche Trainingseinheiten und eine Muskel-Heatmap – alles auf einen Blick.",
+        "textMine": "Gesamtsummen, Trendanalysen, kürzliche Trainingseinheiten und eine Muskel-Heatmap. Sie füllt sich, je mehr Trainingseinheiten Sie protokollieren."
+      },
+      "timer": {
+        "title": "Timer für die Pausenzeit",
+        "text": "Drücken Sie die Start-Taste, um einen Timer zwischen den Sätzen zu starten."
+      },
+      "ribbon": {
+        "title": "Protokoll erstellen aus jeder Notiz",
+        "text": "Das Dumbbell-Symbol in der Leiste öffnet das Protokollformular von überall.",
+        "mobileText": "Auf einem Telefon gibt es hier kein Ribbon-Symbol. Verwenden Sie die Befehlsleiste, um das Protokollformular von jeder Notiz aus zu öffnen."
+      },
+      "commands": {
+        "title": "Eingabe der Befehle",
+        "text": "Öffnen Sie das Befehlsfenster und führen Sie den Befehl „Eintrag erstellen“ aus, um eine Tabelle, ein Diagramm, einen Timer oder ein Dashboard zu einer Notiz hinzuzufügen."
+      },
+      "end": {
+        "title": "Alles ist vorbereitet",
+        "text": "Sie können diese Tour jederzeit wieder von den Einstellungen des Plugins starten."
+      }
+    }
   }
 }

@@ -815,7 +815,8 @@
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
       "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen",
-      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i."
+      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i.",
+      "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
@@ -1023,6 +1024,51 @@
     "next": "Næste",
     "skip": "Spring over",
     "done": "Færdig",
-    "progress": "{current} af {total}"
+    "progress": "{current} af {total}",
+    "noteName": "Guidet tur",
+    "noteIntro": "Den guidede tur viser hvert element i plugin'et på denne side. Rediger eller slet dette notat, når du har lyst.",
+    "noteTable": "Dine sæt",
+    "noteChart": "Fremskridt",
+    "noteDashboard": "Dashboard",
+    "noteTimer": "Timer for hvile",
+    "steps": {
+      "logSet": {
+        "title": "Log dit første sæt",
+        "text": "Tryk på +-knappen for at åbne formularen, og gem derefter en opsætning. Den vises straks i tabellen."
+      },
+      "rowActions": {
+        "title": "Rediger eller slet en gruppe",
+        "text": "Hver række har knapper til redigering og sletning. Brug dem til at rette en tastefejl eller slette en række."
+      },
+      "chart": {
+        "title": "Din fremgang",
+        "text": "Diagrammet viser, hvordan en øvelse udvikler sig over tid, med en trendlinje og statistikker.",
+        "textMine": "Diagrammet viser, hvordan en øvelse udvikler sig over tid. Det er næsten tomt, indtil du har registreret et par sæt.",
+        "mobileText": "På en mobiltelefon vises diagrammet som et tabelformat med de samme tal.",
+        "mobileTextMine": "På en mobiltelefon vises diagrammet som en tabel. Det er næsten tomt, indtil du har registreret et par sæt."
+      },
+      "dashboard": {
+        "title": "Dit overblik",
+        "text": "Samlede tal, volumen trends, seneste træninger og en muskel-heatmap, alt sammen på ét sted.",
+        "textMine": "Samlede resultater, volumen trends, seneste træninger og en muskel-heatmap. Den udfyldes, efterhånden som du registrerer flere sæt."
+      },
+      "timer": {
+        "title": "Timer for pauser",
+        "text": "Tryk på \"Start\" for at starte en tæller mellem sæt."
+      },
+      "ribbon": {
+        "title": "Log fra enhver note",
+        "text": "Dværgstang-ikonet i båndet åbner log-formularen fra hvor som helst.",
+        "mobileText": "På en telefon er der ikke nogen \"ribbon\"-ikon her. Brug kommandopanelet til at åbne log-formularen fra enhver note."
+      },
+      "commands": {
+        "title": "Indsæt kommandoer",
+        "text": "Åbn kommandopalet og kør kommandoen \"Indsæt træning\" for at tilføje en tabel, et diagram, en timer eller et dashboard til en note."
+      },
+      "end": {
+        "title": "Du er klar.",
+        "text": "Du kan gennemføre denne tur igen fra plugin-indstillingerne."
+      }
+    }
   }
 }

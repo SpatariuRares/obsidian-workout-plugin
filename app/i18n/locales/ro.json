@@ -815,7 +815,8 @@
       "setupCSV": "Creați atât fișierul workout_logs.csv, cât și fișierul muscle-tags.csv în folderul configurat.",
       "weightIncrement": "Creșterea implicită a greutății pentru supraîncărcarea progresivă (de exemplu, 2,5 pentru creșteri de 2,5 unități)",
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
-      "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă."
+      "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
+      "welcomeWindow": "Reafăși fereastra de bun venit pentru a începe cu date de exemplu sau de la zero."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -1023,6 +1024,51 @@
     "next": "Următor",
     "skip": "Sări peste",
     "done": "Finalizat",
-    "progress": "{current} din {total}"
+    "progress": "{current} din {total}",
+    "noteName": "Tur ghidat",
+    "noteIntro": "Turul ghidat indică fiecare componentă a plugin-ului de pe această pagină. Editați sau ștergeți această notă oricând doriți.",
+    "noteTable": "Seturile tale",
+    "noteChart": "Progres",
+    "noteDashboard": "Panou de control",
+    "noteTimer": "Cronometru pentru pauză",
+    "steps": {
+      "logSet": {
+        "title": "Înregistrează primul set",
+        "text": "Apasă butonul \"+\" pentru a deschide formularul, apoi salvează un set. Acesta va apărea imediat în tabel."
+      },
+      "rowActions": {
+        "title": "Modifică sau șterge un set",
+        "text": "Fiecare rând are butoane de editare și ștergere. Folosiți-le pentru a corecta o greșeală sau pentru a elimina un set."
+      },
+      "chart": {
+        "title": "Progresul tău",
+        "text": "Graficul prezintă evoluția unui exercițiu în timp, cu o linie de tendință și statistici.",
+        "textMine": "Graficul arată cum evoluează un exercițiu în timp. Inițial, este aproape gol, până când înregistrezi câteva serii.",
+        "mobileText": "Pe un telefon, graficul este afișat sub forma unui tabel cu aceleași numere.",
+        "mobileTextMine": "Pe un telefon, graficul este afișat sub forma unui tabel. Inițial, este aproape gol, dar devine complet după ce introduceți câteva serii."
+      },
+      "dashboard": {
+        "title": "Panoul tău de control",
+        "text": "Suma valorilor, tendințele volumului, antrenamentele recente și o hartă a temperaturii musculare, toate într-un singur bloc.",
+        "textMine": "Totaluri, tendințe ale volumului, antrenamente recente și o hartă a temperaturii musculare. Se umple pe măsură ce înregistrezi mai multe serii."
+      },
+      "timer": {
+        "title": "Cronometru de pauză",
+        "text": "Apasă butonul Start pentru a începe un cronometru între seturi."
+      },
+      "ribbon": {
+        "title": "Înregistrează de la orice notă",
+        "text": "Pictograma cu gantera din bara de instrumente deschide formularul de jurnalizare de oriunde.",
+        "mobileText": "Pe un telefon, nu există pictograma \"ribbon\" aici. Utilizați paleta de comenzi pentru a deschide formularul de jurnal de la orice notă."
+      },
+      "commands": {
+        "title": "Introduceți comenzile",
+        "text": "Deschideți paleta de comenzi și executați comanda \"Adaugă antrenament\" pentru a adăuga o tabelă, un grafic, un cronometru sau un panou de control la o notă."
+      },
+      "end": {
+        "title": "Sunteți pregătit",
+        "text": "Puteți relua acest tur din nou, folosind setările plugin-ului."
+      }
+    }
   }
 }

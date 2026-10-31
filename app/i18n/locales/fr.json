@@ -815,7 +815,8 @@
       "setupCSV": "Créez les fichiers \"workout_logs.csv\" et \"muscle-tags.csv\" dans le dossier configuré.",
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
-      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé."
+      "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
+      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -1023,6 +1024,51 @@
     "next": "Suivant",
     "skip": "Passer au tour suivant",
     "done": "Terminé",
-    "progress": "{current} de {total}"
+    "progress": "{current} de {total}",
+    "noteName": "Visite guidée",
+    "noteIntro": "La visite guidée met en évidence chaque élément du plugin sur cette page. Modifiez ou supprimez cette note à votre guise.",
+    "noteTable": "Vos ensembles",
+    "noteChart": "Progression",
+    "noteDashboard": "Tableau de bord",
+    "noteTimer": "Minuteur de repos",
+    "steps": {
+      "logSet": {
+        "title": "Enregistrez votre premier ensemble",
+        "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez un ensemble. Il apparaîtra immédiatement dans le tableau."
+      },
+      "rowActions": {
+        "title": "Modifier ou supprimer un ensemble",
+        "text": "Chaque ligne comporte des boutons de modification et de suppression. Utilisez-les pour corriger une erreur ou supprimer une ligne."
+      },
+      "chart": {
+        "title": "Votre progression",
+        "text": "Le graphique montre l'évolution d'un exercice au fil du temps, avec une ligne de tendance et des statistiques.",
+        "textMine": "Le graphique montre l'évolution d'un exercice au fil du temps. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries.",
+        "mobileText": "Sur un téléphone, le graphique est affiché sous forme de tableau avec les mêmes chiffres.",
+        "mobileTextMine": "Sur un téléphone, le graphique est affiché sous forme de tableau. Il est presque vide jusqu'à ce que vous ayez enregistré quelques séries."
+      },
+      "dashboard": {
+        "title": "Votre tableau de bord",
+        "text": "Résumés, tendances du volume, séances d'entraînement récentes et une carte de chaleur musculaire, le tout regroupé.",
+        "textMine": "Résultats, tendances du volume, séances d'entraînement récentes et une carte de chaleur musculaire. Elle se remplit à mesure que vous enregistrez davantage de séries."
+      },
+      "timer": {
+        "title": "Minuteur de pause",
+        "text": "Appuyez sur le bouton \"Démarrer\" pour lancer un compte à rebours entre les séries."
+      },
+      "ribbon": {
+        "title": "Accéder à la liste des notes",
+        "text": "L'icône de haltère dans la barre permet d'ouvrir le formulaire d'historique depuis n'importe quel endroit.",
+        "mobileText": "Sur un téléphone, il n'y a pas d'icône de ruban ici. Utilisez la palette de commandes pour ouvrir le formulaire de journal depuis n'importe quelle note."
+      },
+      "commands": {
+        "title": "Ajouter des commandes",
+        "text": "Ouvrez la palette de commandes et exécutez la commande \"Insérer un entraînement\" pour ajouter une table, un graphique, un minuteur ou un tableau de bord à une note."
+      },
+      "end": {
+        "title": "Vous êtes prêt.",
+        "text": "Vous pouvez relancer cette visite à partir des paramètres du plugin."
+      }
+    }
   }
 }

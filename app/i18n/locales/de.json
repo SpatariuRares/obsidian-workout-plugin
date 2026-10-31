@@ -34,7 +34,9 @@
     "generateTagReference": "Tag-Referenz erstellen",
     "insertTable": "Trainingstabelle einfügen",
     "manageMuscleTags": "Muskel-Tags verwalten",
-    "migrateExerciseTypes": "Übungstypen migrieren"
+    "migrateExerciseTypes": "Übungstypen migrieren",
+    "createExampleNotes": "Beispielnotizen erstellen",
+    "openGettingStartedGuide": "Öffne die Einführung"
   },
   "common": {
     "bpm": "BPM",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset mit Wadenheben mit eigenem Körpergewicht",
       "supersetLunges": "Superset mit Ausfallschritten"
-    }
+    },
+    "createToOpenGuide": "Die Anleitung für den Einstieg ist Teil der Beispielnotizen, die noch nicht existieren. Sollten wir sie jetzt erstellen?",
+    "pointedAtExamples": "Ihre Ansichten lesen jetzt die Beispielprotokolle und Übungen. Ändern Sie dies in den Daten-Einstellungen.",
+    "usesSeparateLog": "Sie haben bereits ein Trainingsprotokoll, daher wurde es nicht verändert. Die Beispiele verwenden ihre eigene Protokolldatei."
   },
   "forms": {
     "enterCsvPath": "Ordner für die CSV-Dateien",

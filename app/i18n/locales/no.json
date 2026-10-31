@@ -34,7 +34,9 @@
     "generateTagReference": "Generer tag-oversikt",
     "insertTable": "Legg til treningstabell",
     "manageMuscleTags": "Administrer muskeltagger",
-    "migrateExerciseTypes": "Migrer øvelsestyper"
+    "migrateExerciseTypes": "Migrer øvelsestyper",
+    "createExampleNotes": "Opprett eksempelnotater",
+    "openGettingStartedGuide": "Åpne veiledning"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset med tåhev med kroppsvekt",
       "supersetLunges": "Superset med utfall"
-    }
+    },
+    "createToOpenGuide": "Veiledningen for å komme i gang er en del av eksempelkravene, som ikke finnes ennå. Skal vi lage dem nå?",
+    "pointedAtExamples": "Dine innstillinger vil nå lese eksempel-loggene og øvelsene. Endre dette i innstillingene for data.",
+    "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil."
   },
   "forms": {
     "enterCsvPath": "Mappe for CSV-filene",

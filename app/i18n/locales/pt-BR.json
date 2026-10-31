@@ -34,7 +34,9 @@
     "generateTagReference": "Gerar referência de tags",
     "insertTable": "Inserir tabela de treino",
     "manageMuscleTags": "Gerenciar tags musculares",
-    "migrateExerciseTypes": "Migrar tipos de exercício"
+    "migrateExerciseTypes": "Migrar tipos de exercício",
+    "createExampleNotes": "Criar notas de exemplo",
+    "openGettingStartedGuide": "Abrir guia de início rápido"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset com elevação de panturrilha com peso corporal",
       "supersetLunges": "Superset com afundos"
-    }
+    },
+    "createToOpenGuide": "O guia de início é parte das notas de exemplo, que ainda não existem. Criá-las agora?",
+    "pointedAtExamples": "Agora, suas visualizações lerão o exemplo de log e os exercícios. Modifique isso nas configurações de dados.",
+    "usesSeparateLog": "Você já possui um registo de treino, por isso, ele permanece inalterado. Os exemplos utilizam o seu próprio ficheiro de registo."
   },
   "forms": {
     "enterCsvPath": "Pasta dos arquivos CSV",

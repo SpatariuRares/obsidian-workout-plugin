@@ -34,7 +34,9 @@
     "generateTagReference": "Buat referensi tag",
     "insertTable": "Sisipkan tabel latihan",
     "manageMuscleTags": "Kelola tag otot",
-    "migrateExerciseTypes": "Migrasikan jenis latihan"
+    "migrateExerciseTypes": "Migrasikan jenis latihan",
+    "createExampleNotes": "Buat catatan contoh",
+    "openGettingStartedGuide": "Buka panduan memulai"
   },
   "common": {
     "bpm": "BPM",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset dengan calf raise beban tubuh",
       "supersetLunges": "Superset dengan lunges"
-    }
+    },
+    "createToOpenGuide": "Panduan memulai ini adalah bagian dari catatan contoh, yang belum ada. Apakah Anda ingin membuatnya sekarang?",
+    "pointedAtExamples": "Pandangan Anda sekarang membaca contoh log dan latihan. Ubah ini di pengaturan data.",
+    "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri."
   },
   "forms": {
     "enterCsvPath": "Folder untuk file CSV",

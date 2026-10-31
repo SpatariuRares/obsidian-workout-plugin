@@ -34,7 +34,9 @@
     "generateTagReference": "Wygeneruj spis tagów",
     "insertTable": "Wstaw tabelę treningu",
     "manageMuscleTags": "Zarządzaj tagami mięśni",
-    "migrateExerciseTypes": "Migruj typy ćwiczeń"
+    "migrateExerciseTypes": "Migruj typy ćwiczeń",
+    "createExampleNotes": "Utwórz przykładowe notatki",
+    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superseria ze wspięciami na palce z masą ciała",
       "supersetLunges": "Superseria z wykrokami"
-    }
+    },
+    "createToOpenGuide": "Przewodnik \"Jak zacząć\" jest częścią notatek przykładowych, które jeszcze nie istnieją. Czy chcesz je stworzyć teraz?",
+    "pointedAtExamples": "Teraz, gdy wyświetlasz przykładowe logi i ćwiczenia, możesz to zmienić w ustawieniach danych.",
+    "usesSeparateLog": "Udostępniasz już dziennik treningów, więc pozostał on bez zmian. Przykłady korzystają z własnego pliku dziennika."
   },
   "forms": {
     "enterCsvPath": "Folder na pliki CSV",

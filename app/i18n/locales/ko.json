@@ -34,7 +34,9 @@
     "generateTagReference": "태그 참조 생성",
     "insertTable": "운동 표 삽입",
     "manageMuscleTags": "근육 태그 관리",
-    "migrateExerciseTypes": "운동 유형 마이그레이션"
+    "migrateExerciseTypes": "운동 유형 마이그레이션",
+    "createExampleNotes": "예제 노트 생성",
+    "openGettingStartedGuide": "시작 가이드 열기"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "맨몸 카프 레이즈와 슈퍼세트",
       "supersetLunges": "런지와 슈퍼세트"
-    }
+    },
+    "createToOpenGuide": "시작 가이드에는 예제 노트가 포함되어 있으며, 아직 존재하지 않습니다. 지금 만들어 볼까요?",
+    "pointedAtExamples": "현재 뷰는 예제 로그와 연습을 참조합니다. 데이터 설정에서 이를 변경하십시오.",
+    "usesSeparateLog": "이미 운동 기록이 있으므로, 변경하지 않았습니다. 예시에서는 자체 로그 파일을 사용합니다."
   },
   "forms": {
     "enterCsvPath": "CSV 파일 폴더",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName}에 대한 첫 로그 생성",
     "createLogButtonAria": "{exerciseName}에 대한 로그 생성",
     "createLogButtonText": "{exerciseName}에 대한 로그 생성",
-    "noDataTitle": "{exerciseName}에 대한 로그가 없습니다"
+    "noDataTitle": "{exerciseName}에 대한 로그가 없습니다",
+    "exploreExampleData": "또 예제 데이터를 사용하여 탐색해 보세요."
   },
   "messages": {
     "codeInserted": "코드 블록을 삽입했습니다",

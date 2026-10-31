@@ -34,7 +34,9 @@
     "generateTagReference": "Vygenerovat přehled štítků",
     "insertTable": "Vložit tabulku tréninku",
     "manageMuscleTags": "Spravovat štítky svalů",
-    "migrateExerciseTypes": "Migrovat typy cvičení"
+    "migrateExerciseTypes": "Migrovat typy cvičení",
+    "createExampleNotes": "Vytvořte ukázkové poznámky",
+    "openGettingStartedGuide": "Zobrazit návod pro začátek"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset s výpony na lýtka s vlastní vahou",
       "supersetLunges": "Superset s výpady"
-    }
+    },
+    "createToOpenGuide": "Průvodce pro začátek je součástí poznámek s příklady, které ještě neexistují. Chcete je vytvořit nyní?",
+    "pointedAtExamples": "Vaše nastavení nyní čte příkladový log a cvičení. Změňte to v nastaveních dat.",
+    "usesSeparateLog": "Máte již vytvořený záznam tréninků, takže byl ponechán bez úprav. Příklady používají vlastní soubor pro záznam."
   },
   "forms": {
     "enterCsvPath": "Složka pro soubory CSV",

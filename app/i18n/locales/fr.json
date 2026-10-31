@@ -34,7 +34,9 @@
     "generateTagReference": "Générer la référence des tags",
     "insertTable": "Insérer un tableau d'entraînement",
     "manageMuscleTags": "Gérer les tags musculaires",
-    "migrateExerciseTypes": "Migrer les types d'exercices"
+    "migrateExerciseTypes": "Migrer les types d'exercices",
+    "createExampleNotes": "Créer des notes d'exemple",
+    "openGettingStartedGuide": "Ouvrir le guide de démarrage"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset avec extensions des mollets au poids du corps",
       "supersetLunges": "Superset avec fentes"
-    }
+    },
+    "createToOpenGuide": "Le guide de démarrage est inclus dans les notes d'exemple, qui n'existent pas encore. Voulez-vous les créer maintenant ?",
+    "pointedAtExamples": "Vos vues afficheront désormais le journal d'exemple et les exercices. Modifiez ceci dans les paramètres de données.",
+    "usesSeparateLog": "Vous avez déjà un journal d'entraînement, donc il n'a pas été modifié. Les exemples utilisent leur propre fichier de journal."
   },
   "forms": {
     "enterCsvPath": "Dossier des fichiers CSV",

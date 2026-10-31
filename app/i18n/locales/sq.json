@@ -34,7 +34,9 @@
     "generateTagReference": "Gjenero referencën e etiketave",
     "insertTable": "Shto tabelë stërvitjeje",
     "manageMuscleTags": "Menaxho etiketat e muskujve",
-    "migrateExerciseTypes": "Migro llojet e ushtrimeve"
+    "migrateExerciseTypes": "Migro llojet e ushtrimeve",
+    "createExampleNotes": "Krijo nota të shembullore",
+    "openGettingStartedGuide": "Hap udhezimin për fillimin"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset me ngritje në majat e këmbëve me peshën e trupit",
       "supersetLunges": "Superset me hapa sulmi (lunges)"
-    }
+    },
+    "createToOpenGuide": "Guida për fillimin është pjesë e notave të shembullit, të cilat ende nuk janë krijuar. A duhet t'i krijojmë tani?",
+    "pointedAtExamples": "Opinioni tuaj tani lexon lojën dhe veprimtoret e shembullit. Ndryshoni këtë në opsionet e datës.",
+    "usesSeparateLog": "Ju tashmë keni një regjistër stërdhor, kështu që ky u lënë pa ndërthur. Shembujt përdorën vetë regjistrin e tyre."
   },
   "forms": {
     "enterCsvPath": "Dosja për skedarët CSV",

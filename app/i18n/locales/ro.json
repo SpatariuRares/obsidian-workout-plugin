@@ -34,7 +34,9 @@
     "generateTagReference": "Generează referința etichetelor",
     "insertTable": "Adaugă tabel de antrenament",
     "manageMuscleTags": "Gestionează etichetele pentru mușchi",
-    "migrateExerciseTypes": "Migrează tipurile de exerciții"
+    "migrateExerciseTypes": "Migrează tipurile de exerciții",
+    "createExampleNotes": "Creați note de exemplu",
+    "openGettingStartedGuide": "Deschide ghidul de pornire"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset cu ridicări pe vârfuri cu greutatea corpului",
       "supersetLunges": "Superset cu fandări"
-    }
+    },
+    "createToOpenGuide": "Ghidul de pornire face parte din notele de exemplu, care nu există încă. Ar trebui să le creăm acum?",
+    "pointedAtExamples": "Acum, opiniile tale vor citi log-ul de exemplu și exercițiile. Modifică această opțiune în setările datelor.",
+    "usesSeparateLog": "Deoarece aveți deja un jurnal de antrenament, acesta a rămas nemodificat. Exemplele folosesc propriul lor fișier de jurnal."
   },
   "forms": {
     "enterCsvPath": "Folderul pentru fișierele CSV",

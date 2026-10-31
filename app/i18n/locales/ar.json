@@ -34,7 +34,9 @@
     "generateTagReference": "إنشاء مرجع العلامات",
     "insertTable": "إدراج جدول التدريب",
     "manageMuscleTags": "إدارة علامات العضلات",
-    "migrateExerciseTypes": "ترحيل أنواع التمارين"
+    "migrateExerciseTypes": "ترحيل أنواع التمارين",
+    "createExampleNotes": "إنشاء ملاحظات نموذجية",
+    "openGettingStartedGuide": "فتح دليل البدء السريع"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "سوبرسِت مع رفع السمانة بوزن الجسم",
       "supersetLunges": "سوبرسِت مع الطعنات (لانجز)"
-    }
+    },
+    "createToOpenGuide": "دليل البدء هو جزء من ملاحظات الأمثلة، والتي لم يتم إنشاؤها بعد. هل تريد إنشاءها الآن؟",
+    "pointedAtExamples": "الآن، يمكنك قراءة سجل المثال والتمارين. قم بتغيير هذا الإعداد في إعدادات البيانات.",
+    "usesSeparateLog": "لديك بالفعل سجل تدريبات، لذلك لم يتم تعديله. تستخدم الأمثلة ملف السجل الخاص بها."
   },
   "forms": {
     "enterCsvPath": "مجلد ملفات CSV",

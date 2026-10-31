@@ -34,7 +34,9 @@
     "generateTagReference": "Generér tag-oversigt",
     "insertTable": "Indsæt træningstabel",
     "manageMuscleTags": "Administrer muskeltags",
-    "migrateExerciseTypes": "Migrér øvelsestyper"
+    "migrateExerciseTypes": "Migrér øvelsestyper",
+    "createExampleNotes": "Opret eksempelnoter",
+    "openGettingStartedGuide": "Åbn vejledningen"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset med calf raises med egen kropsvægt",
       "supersetLunges": "Superset med lunges"
-    }
+    },
+    "createToOpenGuide": "Guidet til begyndelsen er en del af eksemplerne, som endnu ikke findes. Skal vi oprette dem nu?",
+    "pointedAtExamples": "Dine indstillinger læser nu eksemplerne og øvelserne. Ændr dette i indstillingerne for data.",
+    "usesSeparateLog": "Du har allerede en træningslog, så den blev ikke ændret. Eksemplerne bruger deres egen logfil."
   },
   "forms": {
     "enterCsvPath": "Mappe til CSV-filerne",

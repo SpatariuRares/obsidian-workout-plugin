@@ -34,7 +34,9 @@
     "generateTagReference": "Genera riferimento dei tag",
     "insertTable": "Inserisci tabella allenamento",
     "manageMuscleTags": "Gestisci tag muscolari",
-    "migrateExerciseTypes": "Migra tipi di esercizio"
+    "migrateExerciseTypes": "Migra tipi di esercizio",
+    "createExampleNotes": "Crea note di esempio",
+    "openGettingStartedGuide": "Apri la guida per iniziare"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset con calf raise a corpo libero",
       "supersetLunges": "Superset con affondi"
-    }
+    },
+    "createToOpenGuide": "La guida introduttiva fa parte delle note di esempio, che al momento non esistono. Vuoi crearle ora?",
+    "pointedAtExamples": "Le tue preferenze ora leggono il log di esempio e gli esercizi. Modifica questa impostazione nelle impostazioni dei dati.",
+    "usesSeparateLog": "Giacché hai già un registro degli allenamenti, questo è stato lasciato inalterato. Gli esempi utilizzano il proprio file di log."
   },
   "forms": {
     "enterCsvPath": "Cartella dei file CSV",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "Crea il primo log per {exerciseName}",
     "createLogButtonAria": "Crea log per: {exerciseName}",
     "createLogButtonText": "Crea log per: {exerciseName}",
-    "noDataTitle": "Nessun log trovato per {exerciseName}"
+    "noDataTitle": "Nessun log trovato per {exerciseName}",
+    "exploreExampleData": "Oppure esplora utilizzando dati di esempio."
   },
   "messages": {
     "codeInserted": "Blocco di codice inserito",

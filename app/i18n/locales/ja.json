@@ -34,7 +34,9 @@
     "generateTagReference": "タグ一覧を生成",
     "insertTable": "ワークアウト表を挿入",
     "manageMuscleTags": "筋肉タグを管理",
-    "migrateExerciseTypes": "エクササイズタイプを移行"
+    "migrateExerciseTypes": "エクササイズタイプを移行",
+    "createExampleNotes": "例を作成する",
+    "openGettingStartedGuide": "チュートリアルを開始する"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "自重カーフレイズとスーパーセット",
       "supersetLunges": "ランジとスーパーセット"
-    }
+    },
+    "createToOpenGuide": "「はじめに」ガイドは、まだ存在しない「例」に関するメモの一部です。今、作成しますか？",
+    "pointedAtExamples": "現在、あなたの意見は、例示されたログと演習を参照しています。この設定をデータ設定で変更してください。",
+    "usesSeparateLog": "すでにワークアウトの記録があるため、変更は行われていません。この例では、それぞれの記録ファイルを使用しています。"
   },
   "forms": {
     "enterCsvPath": "CSV ファイルのフォルダー",

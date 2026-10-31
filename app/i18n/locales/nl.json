@@ -34,7 +34,9 @@
     "generateTagReference": "Labeloverzicht genereren",
     "insertTable": "Trainingstabel invoegen",
     "manageMuscleTags": "Spierlabels beheren",
-    "migrateExerciseTypes": "Oefeningstypen migreren"
+    "migrateExerciseTypes": "Oefeningstypen migreren",
+    "createExampleNotes": "Maak voorbeeldnotities",
+    "openGettingStartedGuide": "Open handleiding"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superset met calf raises met eigen lichaamsgewicht",
       "supersetLunges": "Superset met lunges"
-    }
+    },
+    "createToOpenGuide": "De handleiding voor het opstarten is onderdeel van de voorbeeldnotities, maar die bestaan nog niet. Maak ze nu?",
+    "pointedAtExamples": "Uw instellingen lezen nu het voorbeeldlogboek en de oefeningen. Wijzig dit in de instellingen.",
+    "usesSeparateLog": "U heeft al een trainingslog, dus deze is ongewijzigd gebleven. De voorbeelden gebruiken hun eigen logbestand."
   },
   "forms": {
     "enterCsvPath": "Map voor de CSV-bestanden",

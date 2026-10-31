@@ -34,7 +34,9 @@
     "generateTagReference": "Generar referencia de etiquetas",
     "insertTable": "Insertar tabla de entrenamiento",
     "manageMuscleTags": "Gestionar etiquetas musculares",
-    "migrateExerciseTypes": "Migrar tipos de ejercicio"
+    "migrateExerciseTypes": "Migrar tipos de ejercicio",
+    "createExampleNotes": "Crear notas de ejemplo",
+    "openGettingStartedGuide": "Abrir guía de inicio rápido"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Superserie con elevaciones de gemelos con peso corporal",
       "supersetLunges": "Superserie con zancadas"
-    }
+    },
+    "createToOpenGuide": "La guía de inicio está incluida en las notas de ejemplo, que aún no existen. ¿Se deben crear ahora?",
+    "pointedAtExamples": "Ahora, las vistas mostrarán el registro de ejemplo y los ejercicios. Modifique esto en la configuración de datos.",
+    "usesSeparateLog": "Ya tienes un registro de tus entrenamientos, por lo que se dejó sin modificar. Los ejemplos utilizan su propio archivo de registro."
   },
   "forms": {
     "enterCsvPath": "Carpeta de los archivos CSV",

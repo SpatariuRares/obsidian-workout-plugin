@@ -34,7 +34,9 @@
     "generateTagReference": "產生標籤參考",
     "insertTable": "插入運動表格",
     "manageMuscleTags": "管理肌肉標籤",
-    "migrateExerciseTypes": "遷移動作類型"
+    "migrateExerciseTypes": "遷移動作類型",
+    "createExampleNotes": "建立範例說明",
+    "openGettingStartedGuide": "開啟新手指南"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "與徒手提踵組成超級組",
       "supersetLunges": "與弓箭步組成超級組"
-    }
+    },
+    "createToOpenGuide": "「入門指南」是範例說明的一部分，目前還不存在。您想現在就創建它嗎？",
+    "pointedAtExamples": "現在，您可以查看範例記錄和練習。請在數據設定中進行更改。",
+    "usesSeparateLog": "您已經有一個運動記錄，因此它沒有被修改。範例使用自己的記錄檔案。"
   },
   "forms": {
     "enterCsvPath": "CSV 檔案所在資料夾",

@@ -34,7 +34,9 @@
     "generateTagReference": "生成标签参考",
     "insertTable": "插入训练表格",
     "manageMuscleTags": "管理肌肉标签",
-    "migrateExerciseTypes": "迁移训练动作类型"
+    "migrateExerciseTypes": "迁移训练动作类型",
+    "createExampleNotes": "创建示例笔记",
+    "openGettingStartedGuide": "打开新手指南"
   },
   "common": {
     "bpm": "次/分钟",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "与自重提踵组成超级组",
       "supersetLunges": "与弓步蹲组成超级组"
-    }
+    },
+    "createToOpenGuide": "“入门指南”是示例笔记的一部分，但目前还没有。现在创建它们怎么样？",
+    "pointedAtExamples": "现在，您可以查看示例日志和练习。请在数据设置中进行更改。",
+    "usesSeparateLog": "您已经有一个锻炼记录，因此它保持不变。这些示例使用自己的日志文件。"
   },
   "forms": {
     "enterCsvPath": "CSV 文件所在文件夹",

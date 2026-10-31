@@ -34,7 +34,9 @@
     "generateTagReference": "Etiket başvurusu oluştur",
     "insertTable": "Antrenman tablosu ekle",
     "manageMuscleTags": "Kas etiketlerini yönet",
-    "migrateExerciseTypes": "Egzersiz türlerini taşı"
+    "migrateExerciseTypes": "Egzersiz türlerini taşı",
+    "createExampleNotes": "Örnek notlar oluştur",
+    "openGettingStartedGuide": "Başlangıç kılidını aç"
   },
   "common": {
     "bpm": "bpm",
@@ -341,7 +343,10 @@
     "notes": {
       "supersetCalves": "Vücut ağırlığıyla baldır kaldırma ile süperset",
       "supersetLunges": "Lunge ile süperset"
-    }
+    },
+    "createToOpenGuide": "Başlangıç kılavuzu, henüz mevcut olmayan örnek notaların bir parçasıdır. Şimdi oluşturun mu?",
+    "pointedAtExamples": "Şu anda, görüşleriniz örnek günlük ve alıştırmaları okuyor. Bu ayarı veri ayarları bölümünde değiştirin.",
+    "usesSeparateLog": "Zaten bir antrenman kaydınız var, bu nedenle bu, değiştirilmeden bırakılmıştır. Örnekler, kendi log dosyalarını kullanır."
   },
   "forms": {
     "enterCsvPath": "CSV dosyaları için klasör",
@@ -459,7 +464,8 @@
     "createFirstLogButtonAria": "{exerciseName} için ilk kaydı oluştur",
     "createLogButtonAria": "Kayıt oluştur: {exerciseName}",
     "createLogButtonText": "Kayıt oluştur: {exerciseName}",
-    "noDataTitle": "{exerciseName} için kayıt bulunamadı"
+    "noDataTitle": "{exerciseName} için kayıt bulunamadı",
+    "exploreExampleData": "Veya örnek veriyle keşfet"
   },
   "messages": {
     "codeInserted": "Kod bloğu eklendi",

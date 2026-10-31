@@ -49,5 +49,13 @@ export type TourEndReason =
   | "replaced";
 
 export interface TourStartOptions {
+  /** Path of the note the tour runs in: the tour ends when it is closed or another file takes over. */
+  notePath?: string;
   onEnd?: (reason: TourEndReason) => void;
+}
+
+/** What callers need from the engine: run a tour, stop it. */
+export interface TourRunner {
+  start(tour: Tour, options?: TourStartOptions): void;
+  stop(): void;
 }

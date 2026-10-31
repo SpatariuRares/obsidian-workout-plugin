@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { App, Scope, withHelpers } from "obsidian";
+import { App, Platform, Scope, withHelpers } from "obsidian";
 import { TourEngine } from "@app/features/tour/TourEngine";
 import type { Tour } from "@app/features/tour/TourStep";
 import { t } from "@app/i18n";
@@ -43,6 +43,7 @@ const card = () =>
   root()?.querySelector<HTMLElement>(".workout-tour-card") ?? null;
 const ring = () =>
   root()!.querySelector<HTMLElement>(".workout-tour-ring")!;
+const showMe = () => button(t("tour.showMe"));
 const button = (label: string) =>
   [...(card()?.querySelectorAll("button") ?? [])].find(
     (b) => b.textContent === label,
@@ -55,6 +56,7 @@ describe("TourEngine", () => {
   beforeEach(() => {
     withHelpers(document.body).empty();
     document.body.className = "";
+    Platform.isMobile = false;
     frames = [];
     jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
       frames.push(cb);
@@ -151,7 +153,7 @@ describe("TourEngine", () => {
   });
 
   it("uses the mobile text on mobile", () => {
-    document.body.classList.add("is-mobile");
+    Platform.isMobile = true;
     engine.start(tour);
     button(t("tour.next")).click();
     expect(card()?.textContent).toContain("Mobile text");
@@ -223,5 +225,112 @@ describe("TourEngine", () => {
     expect(document.activeElement).toBe(input);
     engine.start(tour);
     expect(document.activeElement).not.toBe(input);
+  });
+
+  describe("an off-screen target", () => {
+    const farAway = { left: 100, top: 5000, width: 40, height: 20 };
+
+    it("offers Show me, which scrolls the target into view", () => {
+      const el = addTarget("add-button", farAway);
+      const scroll = jest.fn();
+      el.scrollIntoView = scroll;
+      engine.start(tour);
+      runFrame();
+      expect(scroll).toHaveBeenCalledTimes(1); // the one automatic scroll
+      expect(showMe().classList.contains("is-hidden")).toBe(false);
+      showMe().click();
+      expect(scroll).toHaveBeenCalledTimes(2);
+    });
+
+    it("hides Show me when the target is on screen or missing", () => {
+      addTarget("add-button");
+      engine.start(tour);
+      runFrame();
+      expect(showMe().classList.contains("is-hidden")).toBe(true);
+      button(t("tour.next")).click();
+      button(t("tour.next")).click(); // "missing" target
+      runFrame();
+      expect(showMe().classList.contains("is-hidden")).toBe(true);
+    });
+
+    it("shows it again after the target has scrolled into view and out", () => {
+      let rect = { ...farAway };
+      const el = addTarget("add-button", rect);
+      engine.start(tour);
+      runFrame();
+      el.getBoundingClientRect = () =>
+        ({ ...rect, top: 100, right: 140, bottom: 120 }) as DOMRect;
+      runFrame();
+      expect(showMe().classList.contains("is-hidden")).toBe(true);
+      rect = { ...farAway };
+      el.getBoundingClientRect = () =>
+        ({ ...rect, right: 140, bottom: 5020 }) as DOMRect;
+      runFrame();
+      expect(showMe().classList.contains("is-hidden")).toBe(false);
+    });
+  });
+
+  describe("tied to its note", () => {
+    type Handler = (arg?: unknown) => void;
+    let handlers: Record<string, Handler[]>;
+    let openPaths: string[];
+    const emit = (name: string, arg?: unknown) =>
+      (handlers[name] ?? []).forEach((h) => h(arg));
+    const leafOn = (path: string) => ({ view: { file: { path } } });
+
+    beforeEach(() => {
+      handlers = {};
+      openPaths = ["Guided tour.md"];
+      Object.assign(app.workspace, {
+        on: jest.fn((name: string, cb: Handler) => {
+          (handlers[name] ??= []).push(cb);
+          return { name, cb };
+        }),
+        offref: jest.fn((ref: { name: string; cb: Handler }) => {
+          handlers[ref.name] = (handlers[ref.name] ?? []).filter(
+            (h) => h !== ref.cb,
+          );
+        }),
+        getLeavesOfType: jest.fn(() => openPaths.map(leafOn)),
+      });
+    });
+
+    it("ends as stopped when the active leaf moves to another file", () => {
+      const onEnd = jest.fn();
+      engine.start(tour, { onEnd, notePath: "Guided tour.md" });
+      emit("active-leaf-change", leafOn("Other.md"));
+      expect(onEnd).toHaveBeenCalledWith("stopped");
+      expect(root()).toBeNull();
+      expect(() => runFrame()).not.toThrow();
+    });
+
+    it("stays when the active leaf is the note or has no file (a sidebar)", () => {
+      engine.start(tour, { notePath: "Guided tour.md" });
+      emit("active-leaf-change", leafOn("Guided tour.md"));
+      emit("active-leaf-change", { view: {} });
+      emit("active-leaf-change", null);
+      expect(engine.isRunning()).toBe(true);
+    });
+
+    it("ends as stopped when the note's leaf is closed", () => {
+      const onEnd = jest.fn();
+      engine.start(tour, { onEnd, notePath: "Guided tour.md" });
+      emit("layout-change");
+      expect(engine.isRunning()).toBe(true);
+      openPaths = [];
+      emit("layout-change");
+      expect(onEnd).toHaveBeenCalledWith("stopped");
+    });
+
+    it("stops listening once the tour has ended", () => {
+      engine.start(tour, { notePath: "Guided tour.md" });
+      engine.stop();
+      expect(Object.values(handlers).flat()).toHaveLength(0);
+    });
+
+    it("does not watch the workspace without a note path", () => {
+      engine.start(tour);
+      expect(app.workspace.on).not.toHaveBeenCalled();
+    });
   });
 });

@@ -1,4 +1,4 @@
-import { Scope, type App } from "obsidian";
+import { Platform, Scope, type App, type EventRef } from "obsidian";
 import { t } from "@app/i18n";
 import type {
   Tour,
@@ -25,6 +25,8 @@ interface Running {
   card: HTMLElement;
   disposeCompletion: (() => void) | null;
   frame: number | null;
+  showMe: HTMLButtonElement | null;
+  workspaceRefs: EventRef[];
   lastLayout: string;
   scrolledStep: number;
 }
@@ -78,11 +80,41 @@ export class TourEngine {
       card,
       disposeCompletion: null,
       frame: null,
+      showMe: null,
+      workspaceRefs: [],
       lastLayout: "",
       scrolledStep: -1,
     };
+    this.watchNote(this.running, options.notePath);
     this.showStep();
     this.schedule();
+  }
+
+  /**
+   * The tour belongs to its note: it ends when the note's leaf is closed or
+   * another file becomes the active one. Leaves without a file (sidebars) are
+   * ignored.
+   */
+  private watchNote(run: Running, notePath: string | undefined): void {
+    if (!notePath) return;
+    const { workspace } = this.app;
+    run.workspaceRefs.push(
+      workspace.on("active-leaf-change", (leaf) => {
+        const file = (leaf?.view as { file?: { path: string } } | undefined)
+          ?.file;
+        if (file && file.path !== notePath) this.end("stopped");
+      }),
+      workspace.on("layout-change", () => {
+        const shown = workspace
+          .getLeavesOfType("markdown")
+          .some(
+            (leaf) =>
+              (leaf.view as { file?: { path: string } }).file?.path ===
+              notePath,
+          );
+        if (!shown) this.end("stopped");
+      }),
+    );
   }
 
   /** Ends the tour if one runs. */
@@ -101,6 +133,7 @@ export class TourEngine {
     this.running = null;
     run.disposeCompletion?.();
     if (run.frame !== null) window.cancelAnimationFrame(run.frame);
+    run.workspaceRefs.forEach((ref) => this.app.workspace.offref(ref));
     this.app.keymap.popScope(run.scope);
     run.root.remove();
     run.options.onEnd?.(reason);
@@ -119,10 +152,6 @@ export class TourEngine {
     this.showStep();
   }
 
-  private isMobile(): boolean {
-    return document.body.classList.contains("is-mobile");
-  }
-
   private showStep(): void {
     const run = this.running;
     if (!run) return;
@@ -136,8 +165,13 @@ export class TourEngine {
 
     run.card.empty();
     run.card.createDiv({ cls: "workout-tour-title", text: step.title });
-    const text = this.isMobile() ? (step.mobileText ?? step.text) : step.text;
+    const text = Platform.isMobile ? (step.mobileText ?? step.text) : step.text;
     run.card.createDiv({ cls: "workout-tour-text", text });
+    run.showMe = run.card.createEl("button", {
+      cls: "workout-tour-show-me is-hidden",
+      text: t("tour.showMe"),
+    });
+    run.showMe.addEventListener("click", () => this.scrollToTarget(step));
     const footer = run.card.createDiv({ cls: "workout-tour-footer" });
     footer.createSpan({
       cls: "workout-tour-progress",
@@ -191,6 +225,12 @@ export class TourEngine {
     return null;
   }
 
+  private scrollToTarget(step: TourStep): void {
+    this.resolveTarget(step)?.scrollIntoView?.({
+      block: Platform.isMobile ? "start" : "center",
+    });
+  }
+
   private layout(): void {
     const run = this.running;
     if (!run) return;
@@ -200,7 +240,7 @@ export class TourEngine {
 
     if (el && run.scrolledStep !== run.index) {
       run.scrolledStep = run.index;
-      el.scrollIntoView?.({ block: this.isMobile() ? "start" : "center" });
+      this.scrollToTarget(step);
     }
 
     const rect = el?.getBoundingClientRect();
@@ -214,11 +254,15 @@ export class TourEngine {
           }
         : null;
 
+    // Found but outside the viewport (e.g. in a long note): offer "Show me"
+    const offscreen = el !== null && box === null;
+
     // eslint-disable-next-line i18next/no-literal-string -- cache key, not UI text
-    const key = `${run.index}|${box ? `${box.left},${box.top},${box.width},${box.height}` : "none"}|${viewport.width}x${viewport.height}`;
+    const key = `${run.index}|${offscreen}|${box ? `${box.left},${box.top},${box.width},${box.height}` : "none"}|${viewport.width}x${viewport.height}`;
     if (key === run.lastLayout) return;
     run.lastLayout = key;
 
+    run.showMe?.toggleClass("is-hidden", !offscreen);
     this.applyHole(run, box, viewport);
     this.applyCard(run, box, viewport);
   }
@@ -274,7 +318,7 @@ export class TourEngine {
       width: run.card.offsetWidth || FALLBACK_CARD.width,
       height: run.card.offsetHeight || FALLBACK_CARD.height,
     };
-    const placement = placeCard(box, size, viewport, this.isMobile());
+    const placement = placeCard(box, size, viewport, Platform.isMobile);
     run.card.toggleClass("is-centered", placement.mode === "centered");
     run.card.toggleClass("is-docked", placement.mode === "docked");
     run.card.toggleClass(

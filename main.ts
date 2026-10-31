@@ -207,12 +207,12 @@ export default class WorkoutChartsPlugin extends Plugin {
      * - Service references preventing garbage collection
      */
 
-    // 0. Destroy event bus (must be first to prevent stale handlers)
-    this.eventBus?.destroy();
-
-    // 0b. Stop a running guided tour (overlay, scope, frame loop)
+    // 0. Stop a running guided tour (overlay, scope, frame loop, workspace events)
     this.tourEngine?.destroy();
     this.tourEngine = null;
+
+    // 0b. Destroy event bus (before the rest, to prevent stale handlers)
+    this.eventBus?.destroy();
 
     // 1. Clean up all active timers
     for (const timerView of this.activeTimers.values()) {

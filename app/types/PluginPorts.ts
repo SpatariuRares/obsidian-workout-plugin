@@ -11,7 +11,7 @@ import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTyp
 import type { TemplateGeneratorService } from "@app/services/templates/TemplateGeneratorService";
 import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
-import type { TourEngine } from "@app/features/tour/TourEngine";
+import type { TourRunner } from "@app/features/tour/TourStep";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 
 export interface AppPort {
@@ -62,7 +62,7 @@ export interface LogModalPort {
 }
 
 export interface TourPort {
-  getTourEngine(): TourEngine;
+  getTourEngine(): TourRunner;
 }
 
 export interface QuickLogRibbonPort {

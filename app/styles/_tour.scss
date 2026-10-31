@@ -6,6 +6,14 @@
   z-index: calc(var(--layer-modal) - 1);
   pointer-events: none;
 
+  // The dim: the page background at 65%, so it follows the theme and stays
+  // visible on dark ones (--background-modifier-cover is only 40% opaque).
+  --workout-tour-dim: color-mix(
+    in srgb,
+    var(--background-primary) 65%,
+    transparent
+  );
+
   .workout-tour-blocker {
     position: fixed;
     pointer-events: auto;
@@ -18,7 +26,7 @@
 
   // Without a target the single blocker also dims the screen.
   &:not(.has-target) .workout-tour-blocker {
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--workout-tour-dim);
   }
 
   // The hole: the dim comes from the shadow. No transition, it would lag scrolling.
@@ -27,8 +35,8 @@
     pointer-events: none;
     border-radius: var(--radius-s);
     box-shadow:
-      0 0 0 2px var(--workout-accent-fill),
-      0 0 0 9999px rgba(0, 0, 0, 0.6);
+      0 0 0 calc(var(--border-width) * 2) var(--workout-accent-fill),
+      0 0 0 9999px var(--workout-tour-dim);
 
     &.is-hidden {
       display: none;
@@ -38,11 +46,11 @@
   .workout-tour-card {
     position: fixed;
     box-sizing: border-box;
-    width: min(320px, calc(100vw - 24px));
+    width: min(320px, calc(100vw - var(--size-4-6)));
     padding: var(--size-4-3);
     background: var(--background-secondary);
     color: var(--text-normal);
-    border: 1px solid var(--background-modifier-border);
+    border: var(--border-width) solid var(--background-modifier-border);
     border-radius: var(--radius-m);
     box-shadow: var(--shadow-l);
     pointer-events: auto;
@@ -54,13 +62,15 @@
     }
 
     &.is-docked {
-      left: 12px;
-      right: 12px;
-      bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 56px);
+      left: var(--size-4-3);
+      right: var(--size-4-3);
+      bottom: calc(
+        var(--size-4-3) + env(safe-area-inset-bottom, 0px) + var(--size-4-14)
+      );
       width: auto;
 
       &.is-docked-top {
-        top: calc(12px + env(safe-area-inset-top, 0px));
+        top: calc(var(--size-4-3) + env(safe-area-inset-top, 0px));
         bottom: auto;
       }
     }
@@ -74,6 +84,14 @@
   .workout-tour-text {
     color: var(--text-muted);
     margin-bottom: var(--size-4-3);
+  }
+
+  .workout-tour-show-me {
+    margin-bottom: var(--size-4-3);
+
+    &.is-hidden {
+      display: none;
+    }
   }
 
   .workout-tour-footer {

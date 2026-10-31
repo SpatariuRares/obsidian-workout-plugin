@@ -122,6 +122,9 @@ export class TAbstractFile {
 
 export class EventRef {}
 
+/** Mutable in tests: `Platform.isMobile = true` */
+export const Platform = { isMobile: false };
+
 type ScopeHandler = (evt: KeyboardEvent, ctx: unknown) => unknown;
 
 export class Scope {

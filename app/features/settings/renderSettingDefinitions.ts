@@ -1,10 +1,10 @@
 import { Setting } from "obsidian";
-import { t } from "@app/i18n";
 import type {
   ActionRowDefinition,
   DefinitionItem,
   GroupDefinition,
   ListDefinition,
+  ListItemDefinition,
   PageDefinition,
   RenderRowDefinition,
   RowDefinition,
@@ -28,14 +28,6 @@ export function renderSettingDefinitions(
   for (const item of items) renderItem(containerEl, item);
 }
 
-function isShown(
-  visible: boolean | (() => boolean) | undefined,
-): boolean {
-  return typeof visible === "function"
-    ? visible()
-    : (visible ?? true);
-}
-
 function isPage(item: DefinitionItem): item is PageDefinition {
   return "type" in item && item.type === "page";
 }
@@ -52,7 +44,7 @@ function renderItem(
   containerEl: HTMLElement,
   item: DefinitionItem,
 ): void {
-  if (!isShown(item.visible)) return;
+  if (item.visible === false) return;
   if (isPage(item)) {
     renderPage(containerEl, item);
   } else if (isGroup(item)) {
@@ -85,30 +77,38 @@ function renderGroup(
     new Setting(containerEl).setName(group.heading).setHeading();
   }
 
-  const list = group.type === "list" ? group : null;
-  const shown = group.items.filter((item) => isShown(item.visible));
+  if (group.type === "list") {
+    renderList(containerEl, group);
+  } else {
+    for (const row of group.items) {
+      if (row.visible !== false) renderRow(containerEl, row);
+    }
+  }
+}
 
-  if (list?.emptyState && shown.length === 0) {
+function renderList(
+  containerEl: HTMLElement,
+  list: ListDefinition,
+): void {
+  if (list.emptyState && list.items.length === 0) {
     containerEl.createEl("p", {
       text: list.emptyState,
       cls: "workout-setting-item-description",
     });
   }
 
-  shown.forEach((item, index) => {
-    const setting = renderRow(containerEl, item, index);
-    const onDelete = list?.onDelete;
+  const { onDelete } = list;
+  list.items.forEach((item, index) => {
+    const setting = renderRow(containerEl, item);
     if (onDelete) {
-      setting.addButton((button) =>
-        button
-          .setIcon("trash")
-          .setTooltip(t("settings.tooltips.deleteItem"))
-          .onClick(() => onDelete(index)),
-      );
+      setting.addButton((button) => {
+        button.setIcon("trash").onClick(() => onDelete(index));
+        if (list.deleteTooltip) button.setTooltip(list.deleteTooltip);
+      });
     }
   });
 
-  const addItem = list?.addItem;
+  const { addItem } = list;
   if (addItem) {
     new Setting(containerEl).addButton((button) =>
       button
@@ -119,18 +119,19 @@ function renderGroup(
   }
 }
 
-function isRender(row: RowDefinition): row is RenderRowDefinition {
+function isRender(row: RowDefinition | ListItemDefinition): row is RenderRowDefinition {
   return "render" in row;
 }
 
-function isAction(row: RowDefinition): row is ActionRowDefinition {
+function isAction(
+  row: RowDefinition | ListItemDefinition,
+): row is ActionRowDefinition | ListItemDefinition {
   return "action" in row;
 }
 
 function renderRow(
   containerEl: HTMLElement,
-  row: RowDefinition,
-  index = 0,
+  row: RowDefinition | ListItemDefinition,
 ): Setting {
   const setting = new Setting(containerEl).setName(row.name);
   if (row.desc) setting.setDesc(row.desc);
@@ -139,12 +140,10 @@ function renderRow(
     row.render(setting);
   } else if (isAction(row)) {
     const { action } = row;
-    setting.addButton((button) =>
-      button
-        .setIcon("pencil")
-        .setTooltip(row.name)
-        .onClick(() => action(button.buttonEl, index)),
-    );
+    setting.addButton((button) => {
+      button.setIcon("pencil").onClick(() => action(button.buttonEl));
+      if (row.tooltip) button.setTooltip(row.tooltip);
+    });
   }
   return setting;
 }

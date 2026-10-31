@@ -247,8 +247,10 @@ export default [
     },
   },
 
-  // The settings tab keeps display() for Obsidian before 1.13 (minAppVersion
-  // is 1.6.6); 1.13+ deprecates it in favour of getSettingDefinitions()
+  // Only for the display() fallback in WorkoutChartsSettings.ts: Obsidian
+  // before 1.13 (minAppVersion is 1.6.6) has no other way to draw or redraw
+  // the tab, and 1.13+ marks display() deprecated. Inline disables of this
+  // rule are blocked by eslint-comments/no-restricted-disable.
   {
     files: ["app/features/settings/WorkoutChartsSettings.ts"],
     rules: { "@typescript-eslint/no-deprecated": "off" },

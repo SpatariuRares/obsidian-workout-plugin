@@ -1,5 +1,9 @@
 import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
+import {
+  isPositive,
+  renderNumberField,
+} from "@app/features/settings/renderNumberField";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { getDynamicSettingsLabels } from "@app/constants";
 import type { SettingsPort } from "@app/types/PluginPorts";
@@ -22,7 +26,6 @@ export class DurationEstimationSettings {
   constructor(private plugin: SettingsPort) {}
 
   definitions(): DefinitionItem[] {
-    const positive = (v: number) => !isNaN(v) && v > 0;
     const fields: NumberField[] = [
       {
         // Was in ProgressiveOverloadSettings
@@ -30,7 +33,7 @@ export class DurationEstimationSettings {
         name: getDynamicSettingsLabels().WEIGHT_INCREMENT,
         desc: t("settings.descriptions.weightIncrement"),
         parse: parseFloat,
-        isValid: positive,
+        isValid: isPositive,
         error: t("settings.validation.mustBePositive"),
       },
       {
@@ -38,7 +41,7 @@ export class DurationEstimationSettings {
         name: t("settings.labels.repDuration"),
         desc: t("settings.descriptions.repDuration"),
         parse: parseFloat,
-        isValid: positive,
+        isValid: isPositive,
         error: t("settings.validation.mustBePositive"),
       },
       {
@@ -54,7 +57,7 @@ export class DurationEstimationSettings {
         name: t("settings.labels.setDuration"),
         desc: t("settings.descriptions.setDuration"),
         parse: (raw) => parseInt(raw, 10),
-        isValid: positive,
+        isValid: isPositive,
         error: t("settings.validation.mustBePositive"),
       },
     ];
@@ -75,22 +78,15 @@ export class DurationEstimationSettings {
   }
 
   private renderField(setting: Setting, field: NumberField): void {
-    setting.addText((text) => {
-      text
-        .setValue(String(this.plugin.settings[field.key]))
-        .onChange(async (value) => {
-          const numValue = field.parse(value);
-          const isValid = field.isValid(numValue);
-          error.toggleClass("is-visible", !isValid);
-          if (isValid) {
-            this.plugin.settings[field.key] = numValue;
-            await this.plugin.saveSettings();
-          }
-        });
-    });
-    const error = setting.controlEl.createDiv({
-      cls: "workout-setting-error",
-      text: field.error,
+    renderNumberField(setting, {
+      value: this.plugin.settings[field.key],
+      parse: field.parse,
+      isValid: field.isValid,
+      error: field.error,
+      save: async (value) => {
+        this.plugin.settings[field.key] = value;
+        await this.plugin.saveSettings();
+      },
     });
   }
 }

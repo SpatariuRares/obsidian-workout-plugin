@@ -1,4 +1,8 @@
 import { t } from "@app/i18n";
+import {
+  isPositive,
+  renderNumberField,
+} from "@app/features/settings/renderNumberField";
 import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { getDynamicSettingsLabels } from "@app/constants";
 import type {
@@ -51,25 +55,15 @@ export class QuickLogSettings {
             name: getDynamicSettingsLabels().QUICK_WEIGHT_INCREMENT,
             desc: t("settings.descriptions.quickWeightIncrement"),
             render: (setting) => {
-              setting.addText((text) => {
-                text
-                  .setValue(
-                    String(this.plugin.settings.quickWeightIncrement),
-                  )
-                  .onChange(async (value) => {
-                    const numValue = parseFloat(value);
-                    const isValid = !isNaN(numValue) && numValue > 0;
-                    error.toggleClass("is-visible", !isValid);
-                    if (isValid) {
-                      this.plugin.settings.quickWeightIncrement =
-                        numValue;
-                      await this.plugin.saveSettings();
-                    }
-                  });
-              });
-              const error = setting.controlEl.createDiv({
-                cls: "workout-setting-error",
-                text: t("settings.validation.mustBePositive"),
+              renderNumberField(setting, {
+                value: this.plugin.settings.quickWeightIncrement,
+                parse: parseFloat,
+                isValid: isPositive,
+                error: t("settings.validation.mustBePositive"),
+                save: async (value) => {
+                  this.plugin.settings.quickWeightIncrement = value;
+                  await this.plugin.saveSettings();
+                },
               });
             },
           },

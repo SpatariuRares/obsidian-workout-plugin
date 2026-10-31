@@ -1,10 +1,10 @@
 /** @jest-environment jsdom */
 import { mockSettingNamed, withHelpers } from "obsidian";
-import type { SettingDefinitionItem } from "obsidian";
+import type { MockButton } from "obsidian";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
-import { t } from "@app/i18n";
 
-function draw(items: SettingDefinitionItem[]) {
+function draw(items: DefinitionItem[]) {
   const container = withHelpers(document.createElement("div"));
   renderSettingDefinitions(container, items);
   return container;
@@ -50,7 +50,6 @@ describe("renderSettingDefinitions", () => {
   it("skips what is not visible", () => {
     const c = draw([
       { name: "Hidden", visible: false },
-      { name: "Hidden too", visible: () => false },
       { name: "Shown" },
     ]);
 
@@ -66,26 +65,47 @@ describe("renderSettingDefinitions", () => {
         type: "list",
         addItem: { name: "Add one", action: add },
         onDelete: del,
+        deleteTooltip: "Delete entry",
         items: [
-          { name: "A", action: edit },
-          { name: "B", action: edit },
+          { name: "A", action: edit, tooltip: "Edit entry" },
+          { name: "B", action: edit, tooltip: "Edit entry" },
         ],
       },
     ]);
 
     const buttons = mockSettingNamed(c, "B").components.filter(
       (x) => x.kind === "button",
-    );
+    ) as MockButton[];
     buttons[0].buttonEl.click(); // edit
     buttons[1].buttonEl.click(); // delete
-    expect(edit).toHaveBeenCalledWith(expect.anything(), 1);
+    expect(edit).toHaveBeenCalledWith(expect.anything());
     expect(del).toHaveBeenCalledWith(1);
-    expect(buttons[1].buttonEl.title).toBe(t("settings.tooltips.deleteItem"));
+    expect(buttons[0].buttonEl.getAttribute("aria-label")).toBe("Edit entry");
+    expect(buttons[1].buttonEl.getAttribute("aria-label")).toBe("Delete entry");
 
     Array.from(c.querySelectorAll("button"))
       .find((b) => b.textContent === "Add one")!
       .click();
     expect(add).toHaveBeenCalled();
+  });
+
+  it("deletes the entry at its place in the list, whatever the row's own flags", () => {
+    const del = jest.fn();
+    const c = draw([
+      {
+        type: "list",
+        onDelete: del,
+        items: [
+          { name: "A", action: jest.fn() },
+          { name: "B", action: jest.fn() },
+          { name: "C", action: jest.fn() },
+        ],
+      },
+    ]);
+
+    const buttons = mockSettingNamed(c, "C").components as MockButton[];
+    buttons[1].buttonEl.click();
+    expect(del).toHaveBeenCalledWith(2);
   });
 
   it("shows the empty state of an empty list", () => {

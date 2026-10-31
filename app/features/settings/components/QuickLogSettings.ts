@@ -61,13 +61,10 @@ export class QuickLogSettings {
             }
           });
       });
-    const quickWeightError = quickWeightSetting.controlEl.createEl(
-      "div",
-      {
-        cls: "workout-setting-error",
-        text: t("settings.validation.mustBePositive"),
-      },
-    );
+    const quickWeightError = quickWeightSetting.controlEl.createDiv({
+      cls: "workout-setting-error",
+      text: t("settings.validation.mustBePositive"),
+    });
     void quickWeightError;
   }
 }

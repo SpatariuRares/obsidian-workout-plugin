@@ -30,12 +30,12 @@ export class HeatMapControls {
     plugin: WorkoutPluginContext,
     renderCallback: RenderCallback,
   ): MuscleHeatMapOptions {
-    const controlsEl = container.createEl("div", {
+    const controlsEl = container.createDiv({
       cls: "workout-heatmap-controls",
     });
 
     // Time frame toggle
-    const timeFrameEl = controlsEl.createEl("div", {
+    const timeFrameEl = controlsEl.createDiv({
       cls: "workout-frame-toggle",
     });
 
@@ -61,7 +61,7 @@ export class HeatMapControls {
     });
 
     // View toggle
-    const viewToggleEl = controlsEl.createEl("div", {
+    const viewToggleEl = controlsEl.createDiv({
       cls: "workout-frame-toggle",
     });
 
@@ -80,7 +80,7 @@ export class HeatMapControls {
     });
 
     // Metric toggle (sets/reps make bodyweight and timed work visible)
-    const metricToggleEl = controlsEl.createEl("div", {
+    const metricToggleEl = controlsEl.createDiv({
       cls: "workout-frame-toggle",
     });
 

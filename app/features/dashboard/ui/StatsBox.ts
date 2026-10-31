@@ -29,7 +29,7 @@ export class StatsBox {
     chartType: CHART_TYPE,
     dataType: CHART_DATA_TYPE = CHART_DATA_TYPE.VOLUME,
   ): void {
-    const statsDiv = container.createEl("div", {
+    const statsDiv = container.createDiv({
       cls: "workout-charts-stats",
     });
 
@@ -80,7 +80,7 @@ export class StatsBox {
     if (recentTrendData.text !== t("table.notAvailable")) {
       const li5 = ListItem.createEmpty(ul);
       li5.appendText(`${t("stats.recentTrend")} `);
-      const span = li5.createEl("span", {
+      const span = li5.createSpan({
         cls: "workout-charts-trend-variation",
         text: recentTrendData.text,
       });

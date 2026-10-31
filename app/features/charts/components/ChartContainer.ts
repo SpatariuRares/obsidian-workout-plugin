@@ -15,7 +15,7 @@ export class ChartContainer {
     parent: HTMLElement,
     className = "workout-charts-container",
   ): HTMLElement {
-    return parent.createEl("div", { cls: className });
+    return parent.createDiv({ cls: className });
   }
 
   /**

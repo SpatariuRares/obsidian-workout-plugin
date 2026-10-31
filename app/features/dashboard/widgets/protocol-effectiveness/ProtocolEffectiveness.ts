@@ -59,7 +59,7 @@ export class ProtocolEffectiveness {
 
     // Check if there's enough data
     if (stats.length === 0) {
-      widgetEl.createEl("div", {
+      widgetEl.createDiv({
         text: t("dashboard.protocolEffectiveness.noData"),
         cls: "workout-protocol-effectiveness-no-data",
       });
@@ -70,7 +70,7 @@ export class ProtocolEffectiveness {
     this.renderStatsTable(widgetEl, stats);
 
     // Render disclaimer
-    widgetEl.createEl("div", {
+    widgetEl.createDiv({
       text: t("dashboard.protocolEffectiveness.disclaimer"),
       cls: "workout-protocol-effectiveness-disclaimer",
     });
@@ -250,7 +250,7 @@ export class ProtocolEffectiveness {
     container: HTMLElement,
     stats: ProtocolEffectivenessStats[],
   ): void {
-    const tableContainer = container.createEl("div", {
+    const tableContainer = container.createDiv({
       cls: "workout-protocol-effectiveness-table-container",
     });
 
@@ -308,7 +308,7 @@ export class ProtocolEffectiveness {
           : stat.avgVolumeChange < 0
             ? "workout-protocol-effectiveness-negative"
             : "workout-protocol-effectiveness-neutral";
-      volumeCell.createEl("span", {
+      volumeCell.createSpan({
         text: `${volumeSign}${stat.avgVolumeChange.toFixed(1)}%`,
         cls: volumeClass,
       });
@@ -323,7 +323,7 @@ export class ProtocolEffectiveness {
           : stat.progressionRate >= 50
             ? "workout-protocol-effectiveness-neutral"
             : "workout-protocol-effectiveness-negative";
-      progressionCell.createEl("span", {
+      progressionCell.createSpan({
         text: `${stat.progressionRate.toFixed(1)}%`,
         cls: progressionClass,
       });

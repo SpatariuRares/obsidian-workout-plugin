@@ -28,17 +28,17 @@ export class MuscleTagLayoutRenderer {
   ): MuscleTagLayoutRefs {
     container.empty();
 
-    const headerSection = container.createEl("div", {
+    const headerSection = container.createDiv({
       cls: "workout-modal-section workout-tag-header",
     });
     this.renderHeader(headerSection, callbacks, searchValue);
 
-    const importPreviewContainer = container.createEl("div", {
+    const importPreviewContainer = container.createDiv({
       cls: "workout-tag-import-preview workout-modal-section",
     });
     DomUtils.setCssProps(importPreviewContainer, { display: "none" });
 
-    const formContainer = container.createEl("div", {
+    const formContainer = container.createDiv({
       cls: "workout-tag-form-container workout-modal-section",
     });
     DomUtils.setCssProps(formContainer, { display: "none" });
@@ -47,7 +47,7 @@ export class MuscleTagLayoutRenderer {
       cls: "workout-tag-count",
     });
 
-    const tableContainer = container.createEl("div", {
+    const tableContainer = container.createDiv({
       cls: "workout-tag-table-container",
     });
     const tableBody = this.createTable(tableContainer);
@@ -79,7 +79,7 @@ export class MuscleTagLayoutRenderer {
       callbacks.onSearch(SearchBox.getValue(searchBox).toLowerCase());
     });
 
-    const buttonContainer = headerSection.createEl("div", {
+    const buttonContainer = headerSection.createDiv({
       cls: "workout-tag-header-buttons",
     });
 

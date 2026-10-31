@@ -88,10 +88,6 @@ export default [
       ],
 
       // Rules from the obsidianmd recommended config owned by other tickets
-      // TODO(#38): re-enable once fixed
-      "obsidianmd/prefer-create-el": "off",
-      // TODO(#37): re-enable once fixed
-      "obsidianmd/prefer-window-timers": "off",
       // TODO(#40): re-enable once fixed
       "obsidianmd/settings-tab/prefer-setting-definitions": "off",
 

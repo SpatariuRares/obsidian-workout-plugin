@@ -34,17 +34,17 @@ export class Feedback {
     const { className = "workout-feedback-error", icon = "⚠️" } =
       options;
 
-    const errorDiv = container.createEl("div", { cls: className });
+    const errorDiv = container.createDiv({ cls: className });
 
     // If icon is provided, render it
     if (icon) {
-      errorDiv.createEl("span", {
+      errorDiv.createSpan({
         cls: "workout-feedback-error-icon",
         text: icon,
       });
     }
 
-    errorDiv.createEl("span", {
+    errorDiv.createSpan({
       cls: "workout-feedback-error-message",
       text: message,
     });
@@ -60,7 +60,7 @@ export class Feedback {
   ): void {
     this.prepareContainer(container, options);
     const { className = "workout-feedback-info" } = options;
-    container.createEl("div", {
+    container.createDiv({
       cls: className,
       text: message,
     });
@@ -76,7 +76,7 @@ export class Feedback {
   ): void {
     this.prepareContainer(container, options);
     const { className = "workout-feedback-info" } = options;
-    container.createEl("div", {
+    container.createDiv({
       cls: className,
       text: message,
     });
@@ -92,7 +92,7 @@ export class Feedback {
   ): void {
     this.prepareContainer(container, options);
     const { className = "workout-success-message" } = options;
-    container.createEl("div", {
+    container.createDiv({
       cls: className,
       text: message,
     });
@@ -109,7 +109,7 @@ export class Feedback {
     this.prepareContainer(container, options);
     const { className = "workout-feedback-warning", title } = options;
 
-    const alertEl = container.createEl("div", { cls: className });
+    const alertEl = container.createDiv({ cls: className });
 
     if (title) {
       alertEl.createEl("h5", {

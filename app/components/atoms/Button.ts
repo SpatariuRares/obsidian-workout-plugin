@@ -44,7 +44,7 @@ export class Button {
    * Create a button container with the workout-button-container class
    */
   static createContainer(parent: HTMLElement): HTMLElement {
-    return parent.createEl("div", {
+    return parent.createDiv({
       cls: "workout-buttons-container",
     });
   }

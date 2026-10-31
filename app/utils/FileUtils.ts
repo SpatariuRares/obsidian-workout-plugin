@@ -36,7 +36,7 @@ export function downloadCsv(
   });
   const url = URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
+  const link = createEl("a");
   link.href = url;
   link.download = filename;
   DomUtils.setCssProps(link, { display: "none" });

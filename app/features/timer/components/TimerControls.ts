@@ -18,7 +18,7 @@ export class TimerControls {
     getState: () => TimerState,
     callbacks: TimerControlCallbacks,
   ): HTMLButtonElement | undefined {
-    const controlsDiv = container.createEl("div", {
+    const controlsDiv = container.createDiv({
       cls: "workout-timer-controls",
     });
 

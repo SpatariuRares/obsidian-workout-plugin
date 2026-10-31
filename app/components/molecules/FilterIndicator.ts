@@ -42,7 +42,7 @@ export class FilterIndicator {
     parent: HTMLElement,
     props: FilterIndicatorProps,
   ): HTMLElement {
-    const container = parent.createEl("div", {
+    const container = parent.createDiv({
       cls: props.className || "workout-filter-indicator",
     });
 

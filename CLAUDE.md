@@ -130,6 +130,10 @@ The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the 
 
 `readWorkoutNote(content)` is the only place that finds the plugin's code blocks in a note's text: each block's type, body and line range (to rewrite it in place), and the note's level-2 sections with their prose. It skips blocks shown inside a longer fence (a ````markdown example) and copes with CRLF. Parse a block's body with its schema (`tableBlock.parse(block.body)`), never with a regex. Used by the duration estimate, canvas export, the block editor and the block-id migration. The timer a `workout-timer` block runs (preset, default preset, defaults) comes from `resolveTimer` (`app/features/timer/business/resolveTimer.ts`).
 
+#### ExampleGeneratorService (`app/services/examples/ExampleGeneratorService.ts`)
+
+`new ExampleGeneratorService(plugin).createExamples(confirmOverwrite)` is the one "create examples" flow (confirm, write, then settings): with no log at `csvLogFilePath` it points `csvLogFilePath`/`exerciseFolderPath` at the example files so the views show them; with a real log it changes nothing. Commands and modals call it, never `generateExampleFolder` directly.
+
 #### ExerciseDefinitionService
 
 Turns an exercise page (from `ExerciseLibrary`) into a definition: type (`exercise_type`, then `type`, aliases resolved, default strength), muscle tags and declared parameters, and the fields to log (`getParametersForExercise`). `saveExerciseDefinition` writes into the page the library finds and creates `folder/name.md` only when there is none. No cache of its own.

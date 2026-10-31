@@ -183,19 +183,17 @@ export class GeneralSettings {
         .onClick(async () => {
           const { ExampleGeneratorService } =
             await import("@app/services/examples/ExampleGeneratorService");
-          const generator = new ExampleGeneratorService(this.app);
-
-          if (generator.exampleFolderExists()) {
-            new ConfirmModal(
-              this.app,
-              t("settings.messages.confirmOverwriteExamples"),
-              async () => {
-                await generator.generateExampleFolder(true);
-              },
-            ).open();
-          } else {
-            await generator.generateExampleFolder(false);
-          }
+          await new ExampleGeneratorService(this.plugin).createExamples(
+            () =>
+              new Promise<boolean>((resolve) => {
+                new ConfirmModal(
+                  this.app,
+                  t("settings.messages.confirmOverwriteExamples"),
+                  () => resolve(true),
+                  () => resolve(false),
+                ).open();
+              }),
+          );
         }),
     );
   }

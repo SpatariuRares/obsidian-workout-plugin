@@ -93,7 +93,7 @@ const EXPECTED_ROWS = [
   "settings.labels.exerciseFolder",
   "settings.labels.weightUnit",
   "settings.labels.setupCSV",
-  "settings.labels.welcomeWindow",
+  "commands.openGettingStartedGuide",
   "settings.labels.defaultExactMatch",
   "settings.labels.showRibbonIcon",
   "settings.labels.defaultTimerPreset",

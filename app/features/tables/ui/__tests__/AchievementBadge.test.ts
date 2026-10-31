@@ -4,6 +4,8 @@ import { AchievementBadge } from "@app/features/tables/ui/AchievementBadge";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import { Button } from "@app/components/atoms";
+import { Notice } from "obsidian";
+import { t } from "@app/i18n";
 
 jest.mock("@app/components/atoms", () => ({
   BUTTONVARIANT: {
@@ -198,6 +200,58 @@ describe("AchievementBadge", () => {
 
     expect(result).not.toBeNull();
     expect(result!.dismissButton).toBeTruthy();
+  });
+
+  describe("dismissing", () => {
+    const renderBadge = (onDismiss: () => Promise<void>) => {
+      const container = createObsidianContainer();
+      const result = AchievementBadge.render(
+        container,
+        {
+          app: {} as any,
+          exercise: "Bench Press",
+          targetWeight: 80,
+          targetReps: 10,
+          filteredData: [createLog({ weight: 80, reps: 10 })],
+          weightIncrement: 2.5,
+          isDismissedForWeight: false,
+          weightUnit: "kg",
+        },
+        { ...defaultCallbacks, onDismiss },
+      );
+      return { container, result: result! };
+    };
+    const flush = () =>
+      new Promise((resolve) => setTimeout(resolve, 0));
+
+    it("removes the badge once the dismissal is saved", async () => {
+      const { container, result } = renderBadge(
+        jest.fn().mockResolvedValue(undefined),
+      );
+
+      result.dismissButton.click();
+      await flush();
+
+      expect(
+        container.querySelector(".workout-achievement-badge"),
+      ).toBeNull();
+    });
+
+    it("shows an error and keeps the badge when saving fails", async () => {
+      const { container, result } = renderBadge(
+        jest.fn().mockRejectedValue(new Error("disk full")),
+      );
+
+      result.dismissButton.click();
+      await flush();
+
+      expect(Notice).toHaveBeenCalledWith(
+        t("modal.notices.genericError", { error: "disk full" }),
+      );
+      expect(
+        container.querySelector(".workout-achievement-badge"),
+      ).not.toBeNull();
+    });
   });
 
   it("renders update target button", () => {

@@ -877,7 +877,9 @@
       "setupAndData": "Configuración y datos",
       "templates": "Plantillas",
       "timerPresets": "Preajustes de temporizador",
-      "trainingParameters": "Parámetros de entrenamiento"
+      "trainingParameters": "Parámetros de entrenamiento",
+      "savedPresets": "Preajustes guardados",
+      "savedProtocols": "Protocolos guardados"
     },
     "tooltips": {
       "deletePreset": "Eliminar preajuste",

@@ -877,7 +877,9 @@
       "setupAndData": "設定與資料",
       "templates": "範本",
       "timerPresets": "計時器預設",
-      "trainingParameters": "訓練參數"
+      "trainingParameters": "訓練參數",
+      "savedPresets": "儲存的預設",
+      "savedProtocols": "儲存的協議"
     },
     "tooltips": {
       "deletePreset": "刪除預設",

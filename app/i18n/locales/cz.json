@@ -877,7 +877,9 @@
       "setupAndData": "Nastavení a data",
       "templates": "Šablony",
       "timerPresets": "Předvolby časovače",
-      "trainingParameters": "Parametry tréninku"
+      "trainingParameters": "Parametry tréninku",
+      "savedPresets": "Uložené přednastavení",
+      "savedProtocols": "Uložené protokoly"
     },
     "tooltips": {
       "deletePreset": "Smazat předvolbu",

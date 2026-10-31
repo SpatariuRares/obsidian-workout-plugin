@@ -877,7 +877,9 @@
       "setupAndData": "स्थापना और डेटा",
       "templates": "टेम्प्लेट",
       "timerPresets": "टाइमर प्रीसेट",
-      "trainingParameters": "प्रशिक्षण पैरामीटर"
+      "trainingParameters": "प्रशिक्षण पैरामीटर",
+      "savedPresets": "सेव की गई प्रीसेट",
+      "savedProtocols": "सहे हुए प्रोटोकॉल"
     },
     "tooltips": {
       "deletePreset": "प्रीसेट हटाएं",

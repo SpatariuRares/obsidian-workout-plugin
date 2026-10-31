@@ -877,7 +877,9 @@
       "setupAndData": "Konfigurim dhe të dhëna",
       "templates": "Shabllonet",
       "timerPresets": "Paracaktimet e timerit",
-      "trainingParameters": "Parametrat e stërvitjes"
+      "trainingParameters": "Parametrat e stërvitjes",
+      "savedPresets": "Parametrat të ruajtura",
+      "savedProtocols": "Протокол të ruajtura"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",

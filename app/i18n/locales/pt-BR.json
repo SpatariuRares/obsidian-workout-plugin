@@ -877,7 +877,9 @@
       "setupAndData": "Configuração e dados",
       "templates": "Modelos",
       "timerPresets": "Predefinições de temporizador",
-      "trainingParameters": "Parâmetros de treinamento"
+      "trainingParameters": "Parâmetros de treinamento",
+      "savedPresets": "Predefinições salvas",
+      "savedProtocols": "Protocolos salvos"
     },
     "tooltips": {
       "deletePreset": "Excluir predefinição",

@@ -877,7 +877,9 @@
       "setupAndData": "Налаштування та дані",
       "templates": "Шаблони",
       "timerPresets": "Пресети таймера",
-      "trainingParameters": "Параметри тренування"
+      "trainingParameters": "Параметри тренування",
+      "savedPresets": "Збережені попередні налаштування",
+      "savedProtocols": "Збережені протоколи"
     },
     "tooltips": {
       "deletePreset": "Видалити пресет",

@@ -877,7 +877,9 @@
       "setupAndData": "Настройка и данные",
       "templates": "Шаблоны",
       "timerPresets": "Предустановки таймера",
-      "trainingParameters": "Параметры тренировки"
+      "trainingParameters": "Параметры тренировки",
+      "savedPresets": "Сохраненные пресеты",
+      "savedProtocols": "Сохраненные протоколы"
     },
     "tooltips": {
       "deletePreset": "Удалить предустановку",

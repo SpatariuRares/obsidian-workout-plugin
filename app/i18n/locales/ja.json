@@ -877,7 +877,9 @@
       "setupAndData": "設定とデータ",
       "templates": "テンプレート",
       "timerPresets": "タイマープリセット",
-      "trainingParameters": "トレーニングパラメータ"
+      "trainingParameters": "トレーニングパラメータ",
+      "savedPresets": "保存されたプリセット",
+      "savedProtocols": "保存されたプロトコル"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",

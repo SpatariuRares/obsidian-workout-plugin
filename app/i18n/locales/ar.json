@@ -877,7 +877,9 @@
       "setupAndData": "الإعداد والبيانات",
       "templates": "القوالب",
       "timerPresets": "الإعدادات المسبقة للمؤقت",
-      "trainingParameters": "معلمات التدريب"
+      "trainingParameters": "معلمات التدريب",
+      "savedPresets": "الإعدادات المحفوظة",
+      "savedProtocols": "البروتوكولات المحفوظة"
     },
     "tooltips": {
       "deletePreset": "حذف الإعداد المسبق",

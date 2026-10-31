@@ -877,7 +877,9 @@
       "setupAndData": "Einrichtung und Daten",
       "templates": "Vorlagen",
       "timerPresets": "Timer-Voreinstellungen",
-      "trainingParameters": "Parameter für das Training"
+      "trainingParameters": "Parameter für das Training",
+      "savedPresets": "Gespeicherte Voreinstellungen",
+      "savedProtocols": "Gespeicherte Protokolle"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",

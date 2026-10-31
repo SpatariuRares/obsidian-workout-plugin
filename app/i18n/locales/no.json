@@ -877,7 +877,9 @@
       "setupAndData": "Oppsett og data",
       "templates": "Maler",
       "timerPresets": "Timer-forhåndsinnstillinger",
-      "trainingParameters": "Treningsparametere"
+      "trainingParameters": "Treningsparametere",
+      "savedPresets": "Lagrede forhåndsinnstillinger",
+      "savedProtocols": "Lagrede protokoller"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",

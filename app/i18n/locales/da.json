@@ -877,7 +877,9 @@
       "setupAndData": "Opsætning og data",
       "templates": "Skabeloner",
       "timerPresets": "Timer-forudindstillinger",
-      "trainingParameters": "Træningsparametre"
+      "trainingParameters": "Træningsparametre",
+      "savedPresets": "Gemte forudindstillinger",
+      "savedProtocols": "Gemte protokoller"
     },
     "tooltips": {
       "deletePreset": "Slet forudindstilling",

@@ -877,7 +877,9 @@
       "setupAndData": "Configuration et données",
       "templates": "Modèles",
       "timerPresets": "Préréglages du minuteur",
-      "trainingParameters": "Paramètres d'entraînement"
+      "trainingParameters": "Paramètres d'entraînement",
+      "savedPresets": "Préréglages sauvegardés",
+      "savedProtocols": "Protocoles enregistrés"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",

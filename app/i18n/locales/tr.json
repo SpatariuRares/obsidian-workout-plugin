@@ -877,7 +877,9 @@
       "setupAndData": "Kurulum ve veri",
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
-      "trainingParameters": "Antrenman parametreleri"
+      "trainingParameters": "Antrenman parametreleri",
+      "savedPresets": "Kaydedilmiş ön ayarlar",
+      "savedProtocols": "Kaydedilmiş protokoller"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",

@@ -877,7 +877,9 @@
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 프리셋",
-      "trainingParameters": "훈련 매개변수"
+      "trainingParameters": "훈련 매개변수",
+      "savedPresets": "저장된 프리셋",
+      "savedProtocols": "저장된 프로토콜"
     },
     "tooltips": {
       "deletePreset": "프리셋 삭제",

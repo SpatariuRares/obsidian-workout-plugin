@@ -877,7 +877,9 @@
       "setupAndData": "Configurare și date",
       "templates": "Șabloane",
       "timerPresets": "Preseturi temporizator",
-      "trainingParameters": "Parametri de antrenament"
+      "trainingParameters": "Parametri de antrenament",
+      "savedPresets": "Prezăseturi salvate",
+      "savedProtocols": "Protocoale salvate"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",

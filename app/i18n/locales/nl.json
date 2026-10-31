@@ -877,7 +877,9 @@
       "setupAndData": "Instellingen en gegevens",
       "templates": "Templates",
       "timerPresets": "Timervoorinstellingen",
-      "trainingParameters": "Parameters voor training"
+      "trainingParameters": "Parameters voor training",
+      "savedPresets": "Opgeslagen instellingen",
+      "savedProtocols": "Opgeslagen protocollen"
     },
     "tooltips": {
       "deletePreset": "Voorinstelling verwijderen",

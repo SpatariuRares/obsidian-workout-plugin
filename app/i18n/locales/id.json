@@ -877,7 +877,9 @@
       "setupAndData": "Pengaturan & data",
       "templates": "Templat",
       "timerPresets": "Preset timer",
-      "trainingParameters": "Parameter pelatihan"
+      "trainingParameters": "Parameter pelatihan",
+      "savedPresets": "Preset yang telah disimpan",
+      "savedProtocols": "Protokol yang disimpan"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",

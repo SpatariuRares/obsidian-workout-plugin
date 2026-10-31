@@ -62,8 +62,8 @@ export function readLogForm(
       workout,
       notes: form.notesInput.value.trim(),
       date: form.dateInput?.value || undefined,
-      protocol: (form.protocolSelect?.value ||
-        WorkoutProtocol.STANDARD),
+      protocol:
+        form.protocolSelect?.value || WorkoutProtocol.STANDARD,
       customFields:
         Object.keys(customFields).length > 0 ? customFields : undefined,
     },

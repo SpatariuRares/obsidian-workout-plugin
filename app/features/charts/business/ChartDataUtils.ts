@@ -62,9 +62,7 @@ export class ChartDataUtils {
     const isCustomParam = !ChartDataExtractor.isStandardChartType(
       chartType,
     );
-    const customParamKey = isCustomParam
-      ? (chartType)
-      : null;
+    const customParamKey = isCustomParam ? chartType : null;
 
     // Group by date and calculate values
     const dateGroups = new Map<

@@ -11,7 +11,10 @@ import { TableErrorMessage } from "@app/features/tables/ui/TableErrorMessage";
 import { TableHeader } from "@app/features/tables/ui/TableHeader";
 import { SpacerStat, ProtocolBadge } from "@app/components/atoms";
 import { SpacerRowCalculator } from "@app/features/tables/business/SpacerRowCalculator";
-import { ProtocolCatalog } from "@app/services/protocols/ProtocolCatalog";
+import {
+  ProtocolCatalog,
+  type ProtocolInfo,
+} from "@app/services/protocols/ProtocolCatalog";
 import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
 
 export class TableRenderer {
@@ -145,8 +148,13 @@ export class TableRenderer {
       "data-label": columnLabels[cellIndex] ?? "",
     });
 
+    const protocols = new ProtocolCatalog(plugin?.settings?.customProtocols);
+
     rows.forEach((row) => {
       const dateKey = row.dateKey;
+      const cellAt = (index: number) =>
+        index >= 0 ? (row.displayRow[index] ?? "") : "";
+      const protocol = protocols.resolve(cellAt(protocolColumnIndex));
 
       // New group - show spacer BEFORE the group
       if (dateKey !== currentDateKey) {
@@ -173,7 +181,7 @@ export class TableRenderer {
           });
         } else if (cellIndex === protocolColumnIndex) {
           const td = tr.createEl("td", { cls: "workout-table-protocol-cell" });
-          this.renderProtocolBadge(td, cell, plugin);
+          this.renderProtocolBadge(td, protocol);
         } else if (cellIndex === notesColumnIndex) {
           tr.createEl("td", {
             cls: "workout-table-notes-cell",
@@ -187,11 +195,9 @@ export class TableRenderer {
 
       // On phones notes and the protocol badge go on a second line; the
       // class tells CSS which rows need that line break
-      const hasDetails = Array.from(
-        tr.querySelectorAll(
-          ".workout-table-notes-cell, .workout-table-protocol-cell",
-        ),
-      ).some((td) => td.hasChildNodes());
+      const hasBadge =
+        protocolColumnIndex >= 0 && protocol.abbreviation !== "";
+      const hasDetails = cellAt(notesColumnIndex) !== "" || hasBadge;
       tr.classList.toggle("workout-table-row-with-details", hasDetails);
     });
   }
@@ -200,18 +206,13 @@ export class TableRenderer {
    * Renders a protocol badge in the given cell.
    * Name, abbreviation and color come from ProtocolCatalog.
    * @param cell - The table cell to render the badge in
-   * @param protocol - The protocol value to display
-   * @param plugin - Plugin instance for accessing custom protocols
+   * @param info - The row's protocol, resolved by ProtocolCatalog
    */
   private static renderProtocolBadge(
     cell: HTMLElement,
-    protocol: string,
-    plugin?: WorkoutPluginContext,
+    info: ProtocolInfo,
   ): void {
     // Standard sets have no abbreviation, so no badge
-    const info = new ProtocolCatalog(
-      plugin?.settings?.customProtocols,
-    ).resolve(protocol);
     if (info.abbreviation) {
       ProtocolBadge.create(cell, {
         text: info.abbreviation,

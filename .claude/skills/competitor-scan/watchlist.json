@@ -1,0 +1,37 @@
+{
+  "track": [
+    {"id": "liftoff", "why": "mobile-first gym logger, sets/reps/weight, markdown storage"},
+    {"id": "fitkit", "why": "workouts, sets, interval timers (Tabata/EMOM), dashboard"},
+    {"id": "gym-app", "why": "Gym Vault: dashboard, exercise library, plans, history, body stats"},
+    {"id": "workout-journal", "why": "active-session tracker, everything lives as notes"},
+    {"id": "coach", "why": "in-depth fitness and workout tracking"},
+    {"id": "gym-workout-tracker", "why": "templates, calendar, quick entry, all data in one file"},
+    {"id": "workout-tracker", "why": "log workouts, progress, exercise statistics"},
+    {"id": "better-form", "why": "workout log, recovery, training recommendations"},
+    {"id": "workout-ai-tracker", "why": "workout tracker with AI analysis"},
+    {"id": "workout-block", "why": "custom workout types, muscle heatmaps, training plans"},
+    {"id": "doms", "why": "mobile-first workout logger with routines"},
+    {"id": "gym-stone", "why": "gym routines, sessions, measurements, calendar, stats"},
+    {"id": "workout-logger", "why": "weight training sessions as Dataview-friendly notes"},
+    {"id": "workout-tracker-simple", "why": "workouts by muscle group, exercise picker"},
+    {"id": "training-log", "why": "gym sets in a note plus a progress dashboard"}
+  ],
+  "adjacent": [
+    {"id": "atomic-tracker", "why": "habit/exercise heatmaps and timers, not a set logger"},
+    {"id": "heatmap-calendar", "why": "generic activity heatmap"},
+    {"id": "heatmap-tracker", "why": "generic activity heatmap"},
+    {"id": "strava-sync", "why": "imports activities from Strava, no logging"},
+    {"id": "strava-periodic-note-sync", "why": "imports Strava into periodic notes"},
+    {"id": "garmin-health-sync", "why": "imports Garmin health data"},
+    {"id": "garmin-connect", "why": "Garmin dashboard"},
+    {"id": "sports", "why": "syncs training from spreadsheets/Garmin"},
+    {"id": "mobius-fitness", "why": "body measurements and assessments"},
+    {"id": "yoga-workout-importer", "why": "builds workout notes from pasted text"}
+  ],
+  "ignore": [
+    {"id": "neurovim", "why": "Vim learning game"},
+    {"id": "ear-training", "why": "music ear training"},
+    {"id": "exercises", "why": "interactive study exercises, not fitness"},
+    {"id": "exerciser", "why": "programming exercises"}
+  ]
+}

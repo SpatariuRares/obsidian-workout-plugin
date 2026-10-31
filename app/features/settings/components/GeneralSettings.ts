@@ -181,19 +181,9 @@ export class GeneralSettings {
       button
         .setButtonText(t("settings.buttons.createExamples"))
         .onClick(async () => {
-          const { ExampleGeneratorService } =
-            await import("@app/services/examples/ExampleGeneratorService");
-          await new ExampleGeneratorService(this.plugin).createExamples(
-            () =>
-              new Promise<boolean>((resolve) => {
-                new ConfirmModal(
-                  this.app,
-                  t("settings.messages.confirmOverwriteExamples"),
-                  () => resolve(true),
-                  () => resolve(false),
-                ).open();
-              }),
-          );
+          const { createExampleNotes } =
+            await import("@app/services/examples/GettingStartedGuide");
+          await createExampleNotes(this.plugin);
         }),
     );
   }

@@ -36,6 +36,13 @@ export type CreateExamplesResult =
   | "cancelled"
   | "failed";
 
+/** Vault path of the example "Getting started" note (localized) */
+export function gettingStartedGuidePath(): string {
+  return normalizePath(
+    `${t("examples.folderNames.base")}/${t("examples.fileNames.gettingStarted")}.md`,
+  );
+}
+
 export class ExampleGeneratorService {
   private app: ExamplePluginPort["app"];
 

@@ -99,6 +99,10 @@ jest.mock("@app/features/canvas/business/CanvasExporter", () => ({
     .fn()
     .mockImplementation(() => ({ exportToCanvas: jest.fn() })),
 }));
+jest.mock("@app/services/examples/GettingStartedGuide", () => ({
+  createExampleNotes: jest.fn().mockResolvedValue("cancelled"),
+  openGettingStartedGuide: jest.fn().mockResolvedValue(false),
+}));
 jest.mock("@app/compatibility/migration", () => ({
   ExerciseTypeMigration: jest
     .fn()
@@ -494,5 +498,20 @@ describe("CommandHandlerService", () => {
     await csvCmd.callback();
 
     expect(mockPlugin.createCSVLogFile).toHaveBeenCalled();
+  });
+
+  it("registers the example commands without hotkeys", () => {
+    service.registerCommands();
+    const find = (id: string) =>
+      mockPlugin.addCommand.mock.calls.find((c: any) => c[0].id === id)[0];
+
+    expect(find("create-example-notes").name).toBe(
+      t("commands.createExampleNotes"),
+    );
+    expect(find("open-getting-started-guide").name).toBe(
+      t("commands.openGettingStartedGuide"),
+    );
+    expect(find("create-example-notes").hotkeys).toBeUndefined();
+    expect(find("open-getting-started-guide").hotkeys).toBeUndefined();
   });
 });

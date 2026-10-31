@@ -30,11 +30,13 @@
     "auditExerciseNames": "Audit exercise names",
     "convertExercise": "Convert exercise",
     "createCsvLog": "Create CSV log file",
+    "createExampleNotes": "Create example notes",
     "exportWorkoutToCanvas": "Export workout to canvas",
     "generateTagReference": "Generate tag reference",
     "insertTable": "Insert workout table",
     "manageMuscleTags": "Manage muscle tags",
-    "migrateExerciseTypes": "Migrate exercise types"
+    "migrateExerciseTypes": "Migrate exercise types",
+    "openGettingStartedGuide": "Open getting started guide"
   },
   "common": {
     "bpm": "bpm",
@@ -274,6 +276,7 @@
       "gettingStarted": "Getting Started",
       "hiitCardioSession": "HIIT Cardio Session"
     },
+    "createToOpenGuide": "The getting started guide is part of the example notes, which don't exist yet. Create them now?",
     "folderCreatedError": "Failed to create example folder.",
     "pointedAtExamples": "Your views now read the example log and exercises. Change this in the data settings.",
     "usesSeparateLog": "You already have a workout log, so it was left untouched. The examples use their own log file.",

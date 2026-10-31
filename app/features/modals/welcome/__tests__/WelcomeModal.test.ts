@@ -15,6 +15,11 @@ jest.mock("@app/services/onboarding/Welcome", () => ({
   startFromScratch: (...a: unknown[]) => mockStartFromScratch(...a),
 }));
 
+const mockStartTour = jest.fn();
+jest.mock("@app/features/tour/startGuidedTour", () => ({
+  startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
+}));
+
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 function openModal() {
@@ -29,10 +34,45 @@ function openModal() {
     if (!btn) throw new Error(`no button ${text}`);
     btn.click();
   };
-  return { plugin, click, close };
+  return { plugin, modal, click, close };
 }
 
 describe("WelcomeModal", () => {
+  it("offers the tour first, as the primary choice", () => {
+    const { modal } = openModal();
+    const buttons = Array.from(modal.contentEl.querySelectorAll("button"));
+    expect(buttons[0].textContent).toBe(t("welcome.takeTour"));
+    expect(buttons[0].classList.contains("workout-btn-primary")).toBe(true);
+    expect(buttons.length).toBe(4);
+  });
+
+  it("take the tour creates the examples, then starts the tour on them", async () => {
+    const { plugin, click, close } = openModal();
+    click(t("welcome.takeTour"));
+    await flush();
+    expect(mockCreateExampleNotes).toHaveBeenCalledWith(plugin);
+    expect(mockStartTour).toHaveBeenCalledWith(plugin, {
+      source: "welcome-examples",
+    });
+    expect(close).toHaveBeenCalled();
+  });
+
+  it("take the tour does not start when creating the examples failed", async () => {
+    mockCreateExampleNotes.mockResolvedValue("failed");
+    const { click } = openModal();
+    click(t("welcome.takeTour"));
+    await flush();
+    expect(mockStartTour).not.toHaveBeenCalled();
+  });
+
+  it("the other choices do not start the tour", async () => {
+    const { click } = openModal();
+    click(t("welcome.tryExamples"));
+    click(t("welcome.startScratch"));
+    await flush();
+    expect(mockStartTour).not.toHaveBeenCalled();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockCreateExampleNotes.mockResolvedValue("pointed-at-examples");

@@ -815,8 +815,7 @@
       "setupCSV": "구성된 폴더에 workout_logs.csv와 muscle-tags.csv 파일을 모두 생성합니다.",
       "weightIncrement": "점진적 과부하를 위한 기본 무게 증가 값 (예: 2.5 단위씩 증가하는 경우 2.5)",
       "showRibbonIcon": "운동 기록 양식을 여는 덤벨 아이콘을 리본에 표시합니다",
-      "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다.",
-      "welcomeWindow": "예제 데이터 또는 처음부터 시작하기 위해 환영 창을 다시 표시합니다."
+      "weightUnit": "차트, 총계 및 새로운 로그에 대한 단위. 각 로그는 입력된 단위를 유지합니다."
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",

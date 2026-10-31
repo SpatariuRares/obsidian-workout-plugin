@@ -815,8 +815,7 @@
       "setupCSV": "在設定的資料夾中，建立 workout_logs.csv 和 muscle-tags.csv 兩個檔案。",
       "weightIncrement": "漸進式超負荷的預設增重幅度（例如：2.5 表示每次增加 2.5 單位）",
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
-      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。",
-      "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。"
+      "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",

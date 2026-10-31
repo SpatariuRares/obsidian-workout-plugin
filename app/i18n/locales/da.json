@@ -815,8 +815,7 @@
       "setupCSV": "Opret både workout_logs.csv og muscle-tags.csv i den konfigurerede mappe.",
       "weightIncrement": "Standard vægtstigning for progressiv belastning (f.eks., 2,5 for 2,5 enheds-stigninger)",
       "showRibbonIcon": "Vis håndvægtikonet i båndet, som åbner formularen til træningsloggen",
-      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i.",
-      "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden."
+      "weightUnit": "Enhed til diagrammer, summer og nye logfiler. Hver logfil bevarer den enhed, den blev oprettet i."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",

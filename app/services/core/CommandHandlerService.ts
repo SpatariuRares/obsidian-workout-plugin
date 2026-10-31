@@ -21,15 +21,17 @@ import type {
   CommandRegistryPort,
   WorkoutAPIPort,
   TemplateGeneratorPort,
+  TourPort,
 } from "@app/types/PluginPorts";
 import {
   createExampleNotes,
   openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
+import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import type { InsertCommandKind } from "@app/services/events/WorkoutEventTypes";
 import { durationBlock } from "@app/features/duration/durationBlock";
 
-type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort;
+type CommandHandlerPlugin = WorkoutPluginContext & CommandRegistryPort & WorkoutAPIPort & TemplateGeneratorPort & TourPort;
 
 export class CommandHandlerService {
   constructor(
@@ -70,6 +72,14 @@ export class CommandHandlerService {
       name: t("commands.createExampleNotes"),
       callback: async () => {
         await createExampleNotes(this.plugin);
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "start-tour",
+      name: t("commands.startTour"),
+      callback: async () => {
+        await startGuidedTour(this.plugin, { source: "command" });
       },
     });
 

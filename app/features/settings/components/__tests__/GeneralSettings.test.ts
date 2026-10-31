@@ -10,6 +10,11 @@ import type {
 import { t } from "@app/i18n";
 import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
 
+const mockStartTour = jest.fn();
+jest.mock("@app/features/tour/startGuidedTour", () => ({
+  startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
+}));
+
 const mockOpen = jest.fn();
 jest.mock("@app/features/modals/welcome/WelcomeModal", () => ({
   WelcomeModal: jest.fn().mockImplementation(() => ({ open: mockOpen })),
@@ -112,7 +117,7 @@ describe("GeneralSettings welcome window", () => {
     );
 
     mockSettingNamed(container, t("settings.labels.welcomeWindow"))
-      .component("button")
+      .component("button", 1)
       .buttonEl.click();
     await new Promise((resolve) => setTimeout(resolve, 0));
 
@@ -120,5 +125,36 @@ describe("GeneralSettings welcome window", () => {
     expect(mockOpen).toHaveBeenCalled();
     expect(plugin.settings.welcomeShown).toBe(true);
     expect(plugin.saveSettings).not.toHaveBeenCalled();
+  });
+});
+
+describe("GeneralSettings guided tour", () => {
+  it("starts the tour from the Take the tour button next to Show welcome", async () => {
+    const plugin = {
+      settings: {
+        welcomeShown: true,
+        csvLogFilePath: "Log/workout_logs.csv",
+        exerciseFolderPath: "Exercises",
+        weightUnit: "kg",
+      },
+      saveSettings: jest.fn(),
+    } as unknown as WorkoutPluginContext & EventBusPort;
+    const container = document.createElement("div");
+    renderSettingDefinitions(
+      container,
+      new GeneralSettings({} as App, plugin).definitions(),
+    );
+
+    const row = mockSettingNamed(container, t("settings.labels.welcomeWindow"));
+    expect(row.component("button", 0).buttonEl.textContent).toBe(
+      t("settings.buttons.takeTour"),
+    );
+    expect(row.component("button", 1).buttonEl.textContent).toBe(
+      t("settings.buttons.showWelcome"),
+    );
+    row.component("button", 0).buttonEl.click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(mockStartTour).toHaveBeenCalledWith(plugin, { source: "settings" });
   });
 });

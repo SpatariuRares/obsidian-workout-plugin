@@ -815,8 +815,7 @@
       "setupCSV": "Krijo si workout_logs.csv ashtu edhe muscle-tags.csv në dosjen e konfiguruar.",
       "weightIncrement": "Rritja e parazgjedhur e peshës për mbingarkesën progresive (p.sh., 2.5 për rritje me 2.5 njësi)",
       "showRibbonIcon": "Shfaq ikonën e shtangës në shiritin anësor që hap formularin e regjistrimit të stërvitjes",
-      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua.",
-      "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para."
+      "weightUnit": "Njësia për grafikë, numra të përgjithshëm dhe regjistra të reja. Secili regjist mban njësinë në të cilën u krijua."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",

@@ -11,6 +11,7 @@ import { FolderSuggest } from "@app/features/common/suggest/FolderSuggest";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type {
   EventBusPort,
+  TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
@@ -31,7 +32,7 @@ export class GeneralSettings {
 
   constructor(
     private app: App,
-    private plugin: WorkoutPluginContext & EventBusPort,
+    private plugin: WorkoutPluginContext & EventBusPort & TourPort,
   ) {}
 
   definitions(): DefinitionItem[] {
@@ -178,6 +179,13 @@ export class GeneralSettings {
 
   /** Opens the welcome window on demand; never touches `welcomeShown` */
   private renderShowWelcome(setting: Setting): void {
+    setting.addButton((button) =>
+      button.setButtonText(t("settings.buttons.takeTour")).onClick(async () => {
+        const { startGuidedTour } =
+          await import("@app/features/tour/startGuidedTour");
+        await startGuidedTour(this.plugin, { source: "settings" });
+      }),
+    );
     setting.addButton((button) =>
       button
         .setButtonText(t("settings.buttons.showWelcome"))

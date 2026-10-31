@@ -815,8 +815,7 @@
       "setupCSV": "Vytvoří soubory workout_logs.csv i muscle-tags.csv v nastavené složce.",
       "weightIncrement": "Výchozí krok zvýšení váhy pro progresivní přetížení (např. 2,5 pro kroky po 2,5 jednotky)",
       "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku",
-      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen.",
-      "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku."
+      "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",

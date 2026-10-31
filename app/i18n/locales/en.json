@@ -36,7 +36,8 @@
     "insertTable": "Insert workout table",
     "manageMuscleTags": "Manage muscle tags",
     "migrateExerciseTypes": "Migrate exercise types",
-    "openGettingStartedGuide": "Open getting started guide"
+    "openGettingStartedGuide": "Open getting started guide",
+    "startTour": "Start the tour"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Run all",
       "savePreset": "Save",
       "saveProtocol": "Save",
-      "showWelcome": "Show welcome"
+      "showWelcome": "Show welcome",
+      "takeTour": "Take the tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
@@ -816,7 +818,7 @@
       "showRibbonIcon": "Show the dumbbell icon in the ribbon that opens the workout log form",
       "weightIncrement": "Default weight increment for progressive overload (e.g., 2.5 for 2.5 unit increments)",
       "weightUnit": "Unit for charts, totals and new logs. Each log keeps the unit it was entered in.",
-      "welcomeWindow": "Show the welcome window again to start with example data or from scratch."
+      "welcomeWindow": "Take the guided tour, or show the welcome window again to start with example data or from scratch."
     },
     "labels": {
       "csvPath": "CSV log file path",
@@ -1012,6 +1014,8 @@
   "welcome": {
     "title": "Welcome to the workout plugin",
     "intro": "Track your sets, then see them as charts, tables and a dashboard. How do you want to begin?",
+    "takeTour": "Take the tour",
+    "takeTourDesc": "Adds sample workouts, then walks you through logging, charts, tables and timers.",
     "tryExamples": "Try with example data",
     "tryExamplesDesc": "Adds sample workouts and opens a short guide.",
     "startScratch": "Start from scratch",

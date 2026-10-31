@@ -8,6 +8,7 @@ import type {
   EventBusPort,
   QuickLogRibbonPort,
   TemplateGeneratorPort,
+  TourPort,
   WorkoutPluginContext,
 } from "@app/types/PluginPorts";
 import { GeneralSettings } from "@app/features/settings/components/GeneralSettings";
@@ -23,7 +24,8 @@ type SettingsTabContext = Plugin &
   WorkoutPluginContext &
   EventBusPort &
   QuickLogRibbonPort &
-  TemplateGeneratorPort;
+  TemplateGeneratorPort &
+  TourPort;
 
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: SettingsTabContext;

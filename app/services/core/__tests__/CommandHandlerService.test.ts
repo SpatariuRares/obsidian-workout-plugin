@@ -110,6 +110,11 @@ jest.mock("@app/compatibility/migration", () => ({
     .mockImplementation(() => ({ migrateExerciseTypes: jest.fn() })),
 }));
 
+const mockStartTour = jest.fn();
+jest.mock("@app/features/tour/startGuidedTour", () => ({
+  startGuidedTour: (...a: unknown[]) => mockStartTour(...a),
+}));
+
 describe("CommandHandlerService", () => {
   let app: App;
   let mockPlugin: any;
@@ -531,6 +536,19 @@ describe("CommandHandlerService", () => {
     await csvCmd.callback();
 
     expect(mockPlugin.createCSVLogFile).toHaveBeenCalled();
+  });
+
+  it("registers Start the tour, which starts the tour from the command", async () => {
+    service.registerCommands();
+    const cmd = mockPlugin.addCommand.mock.calls.find(
+      (c: any) => c[0].id === "start-tour",
+    )[0];
+    expect(cmd.name).toBe(t("commands.startTour"));
+    expect(cmd.hotkeys).toBeUndefined();
+    await cmd.callback();
+    expect(mockStartTour).toHaveBeenCalledWith(mockPlugin, {
+      source: "command",
+    });
   });
 
   it("registers the example commands without hotkeys", () => {

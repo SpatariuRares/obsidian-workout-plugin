@@ -1,11 +1,13 @@
 import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
+import type { TourPort } from "@app/types/PluginPorts";
 import { t } from "@app/i18n";
 import {
   createExampleNotes,
   examplesCreated,
   openGettingStartedGuide,
 } from "@app/services/examples/GettingStartedGuide";
+import { startGuidedTour } from "@app/features/tour/startGuidedTour";
 import {
   startFromScratch,
   type WelcomePluginPort,
@@ -13,7 +15,7 @@ import {
 
 /** Shown once after a fresh install. Nothing is written until a choice is made. */
 export class WelcomeModal extends ModalBase {
-  constructor(private plugin: WelcomePluginPort) {
+  constructor(private plugin: WelcomePluginPort & TourPort) {
     super(plugin.app);
   }
 
@@ -25,10 +27,22 @@ export class WelcomeModal extends ModalBase {
     contentEl.createEl("h2", { text: t("welcome.title") });
     contentEl.createEl("p", { text: t("welcome.intro") });
 
+    // A fresh vault has no data to point at, so the tour runs on the examples
+    this.choice(
+      t("welcome.takeTour"),
+      t("welcome.takeTourDesc"),
+      BUTTONVARIANT.PRIMARY,
+      async () => {
+        const result = await createExampleNotes(this.plugin);
+        if (examplesCreated(result)) {
+          await startGuidedTour(this.plugin, { source: "welcome-examples" });
+        }
+      },
+    );
     this.choice(
       t("welcome.tryExamples"),
       t("welcome.tryExamplesDesc"),
-      BUTTONVARIANT.PRIMARY,
+      BUTTONVARIANT.SECONDARY,
       async () => {
         const result = await createExampleNotes(this.plugin);
         if (examplesCreated(result)) {

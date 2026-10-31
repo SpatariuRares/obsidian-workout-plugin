@@ -25,7 +25,7 @@ export class TrendHeader {
     volumeData: number[],
     dataType?: CHART_DATA_TYPE,
   ): void {
-    const trendHeader = container.createEl("div", {
+    const trendHeader = container.createDiv({
       cls: "workout-charts-trend-header",
     });
 
@@ -63,7 +63,7 @@ export class TrendHeader {
     const p = trendHeader.createEl("p", {
       cls: "workout-charts-trend-header-p",
     });
-    p.createEl("span", {
+    p.createSpan({
       text: t("charts.overallVariationPrefix"),
     });
 
@@ -97,7 +97,7 @@ export class TrendHeader {
       });
     } else if (variationData.text !== undefined) {
       // Fallback for non-percentage values (e.g., t("table.notAvailable"), "Aumento signif.")
-      const span = p.createEl("span", {
+      const span = p.createSpan({
         cls: "workout-charts-trend-variation",
       });
       span.textContent = variationData.text;

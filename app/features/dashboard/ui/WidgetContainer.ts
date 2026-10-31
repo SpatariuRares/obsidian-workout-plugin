@@ -34,7 +34,7 @@ export class WidgetContainer {
     if (props.isWide) classes.push("widget-wide");
     if (props.className) classes.push(props.className);
 
-    const widgetEl = parent.createEl("div", {
+    const widgetEl = parent.createDiv({
       cls: classes.join(" "),
     });
 
@@ -44,7 +44,7 @@ export class WidgetContainer {
     });
 
     if (props.subtitle) {
-      widgetEl.createEl("div", {
+      widgetEl.createDiv({
         text: props.subtitle,
         cls: "workout-widget-subtitle",
       });

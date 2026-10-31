@@ -32,8 +32,7 @@ export class MuscleTagManagerModal extends ModalBase {
   private searchValue = "";
   private isEditing = false;
   private editingTag: string | null = null;
-  private debounceTimeout: ReturnType<typeof setTimeout> | null =
-    null;
+  private debounceTimeout: number | null = null;
 
   constructor(app: App, plugin: WorkoutPluginContext) {
     super(app);
@@ -273,7 +272,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private handleTagInputChange(value: string): void {
     this.clearDebounce();
-    this.debounceTimeout = setTimeout(() => {
+    this.debounceTimeout = window.setTimeout(() => {
       this.updateSuggestions(StringUtils.normalize(value));
     }, DEBOUNCE_DELAY);
   }
@@ -397,7 +396,7 @@ export class MuscleTagManagerModal extends ModalBase {
 
   private clearDebounce(): void {
     if (this.debounceTimeout) {
-      clearTimeout(this.debounceTimeout);
+      window.clearTimeout(this.debounceTimeout);
       this.debounceTimeout = null;
     }
   }

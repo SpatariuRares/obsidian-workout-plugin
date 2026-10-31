@@ -26,7 +26,7 @@ export class ProtocolBadge {
     parent: HTMLElement,
     props: ProtocolBadgeProps,
   ): HTMLSpanElement {
-    const badge = parent.createEl("span", {
+    const badge = parent.createSpan({
       text: props.text,
       cls: props.className || "workout-protocol-badge",
     });

@@ -17,7 +17,7 @@ export class DurationRenderer {
     container: HTMLElement,
     analysis: DurationAnalysisResult,
   ): void {
-    const card = container.createEl("div", {
+    const card = container.createDiv({
       cls: "workout-duration-card",
     });
 
@@ -41,16 +41,16 @@ export class DurationRenderer {
    * Renders the card header with icon and title.
    */
   private renderHeader(card: HTMLElement): void {
-    const header = card.createEl("div", {
+    const header = card.createDiv({
       cls: "workout-duration-header",
     });
 
-    header.createEl("span", {
+    header.createSpan({
       cls: "workout-duration-icon",
       text: t("icons.duration.timer"),
     });
 
-    header.createEl("span", {
+    header.createSpan({
       cls: "workout-duration-title",
       text: t("duration.estimatedDuration"),
     });
@@ -60,7 +60,7 @@ export class DurationRenderer {
    * Renders an error message.
    */
   private renderError(card: HTMLElement, error?: string): void {
-    card.createEl("div", {
+    card.createDiv({
       cls: "workout-duration-error",
       text: error || t("duration.unableToAnalyze"),
     });
@@ -73,11 +73,11 @@ export class DurationRenderer {
     card: HTMLElement,
     analysis: DurationAnalysisResult,
   ): void {
-    const mainDisplay = card.createEl("div", {
+    const mainDisplay = card.createDiv({
       cls: "workout-duration-main",
     });
 
-    mainDisplay.createEl("span", {
+    mainDisplay.createSpan({
       cls: "workout-duration-value",
       text: FormatUtils.formatDuration(analysis.totalDuration),
     });
@@ -90,7 +90,7 @@ export class DurationRenderer {
     card: HTMLElement,
     analysis: DurationAnalysisResult,
   ): void {
-    const breakdown = card.createEl("div", {
+    const breakdown = card.createDiv({
       cls: "workout-duration-breakdown",
     });
 
@@ -130,16 +130,16 @@ export class DurationRenderer {
     label: string,
     value: string,
   ): void {
-    const row = container.createEl("div", {
+    const row = container.createDiv({
       cls: "workout-duration-row",
     });
 
-    row.createEl("span", {
+    row.createSpan({
       cls: "workout-duration-label",
       text: label,
     });
 
-    row.createEl("span", {
+    row.createSpan({
       cls: "workout-duration-detail",
       text: value,
     });

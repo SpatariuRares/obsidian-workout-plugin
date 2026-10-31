@@ -21,7 +21,7 @@ export class TableRenderer {
    * @returns The table container element
    */
   static createTableContainer(contentDiv: HTMLElement): HTMLElement {
-    return contentDiv.createEl("div", {
+    return contentDiv.createDiv({
       cls: "workout-table-container",
     });
   }

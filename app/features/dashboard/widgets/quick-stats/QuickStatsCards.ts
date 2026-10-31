@@ -20,7 +20,7 @@ export class QuickStatsCards {
       className: "workout-stats-cards",
     });
 
-    const statsGrid = cardsEl.createEl("div", {
+    const statsGrid = cardsEl.createDiv({
       cls: "workout-stats-grid",
     });
 
@@ -64,7 +64,7 @@ export class QuickStatsCards {
     });
 
     // Stats grid using StatCard molecules
-    const statsEl = cardEl.createEl("div", {
+    const statsEl = cardEl.createDiv({
       cls: "workout-card-stats",
     });
 

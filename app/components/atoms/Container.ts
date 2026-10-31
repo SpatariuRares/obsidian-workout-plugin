@@ -23,7 +23,7 @@ export class Container {
     parent: HTMLElement,
     props?: ContainerProps,
   ): HTMLElement {
-    return parent.createEl("div", {
+    return parent.createDiv({
       cls: props?.className || "container",
       attr: props?.id ? { id: props.id } : undefined,
     });

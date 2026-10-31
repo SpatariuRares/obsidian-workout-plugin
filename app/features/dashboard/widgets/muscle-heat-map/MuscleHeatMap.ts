@@ -30,15 +30,15 @@ export class MuscleHeatMap {
     });
 
     // Controls container (created in correct DOM order: title -> controls -> canvas -> info)
-    const controlsContainer = heatMapEl.createEl("div");
+    const controlsContainer = heatMapEl.createDiv();
 
     // Heat map canvas container
-    const canvasContainer = heatMapEl.createEl("div", {
+    const canvasContainer = heatMapEl.createDiv({
       cls: "workout-heatmap-canvas-container",
     });
 
     // Info panel for imbalance alerts
-    const infoPanel = heatMapEl.createEl("div", {
+    const infoPanel = heatMapEl.createDiv({
       cls: "workout-heatmap-info-panel",
     });
 

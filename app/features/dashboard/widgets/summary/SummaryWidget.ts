@@ -19,7 +19,7 @@ export class SummaryWidget {
       className: "workout-summary-widget",
     });
 
-    const summaryEl = widgetEl.createEl("div", {
+    const summaryEl = widgetEl.createDiv({
       cls: "workout-summary-grid",
     });
 

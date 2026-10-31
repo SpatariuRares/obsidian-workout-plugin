@@ -1018,5 +1018,12 @@
     "startScratchDesc": "Creates a note with your log and opens the form to log a first set.",
     "later": "Later",
     "scratchNoteName": "My workouts"
+  },
+  "tour": {
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "done": "Done",
+    "progress": "{current} of {total}"
   }
 }

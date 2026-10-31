@@ -12,6 +12,7 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
+import { TourEngine } from "@app/features/tour/TourEngine";
 import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
 import {
   markWelcomeShown,
@@ -49,6 +50,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   public embeddedDashboardView!: EmbeddedDashboardView;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
   private quickLogRibbonIcon: HTMLElement | null = null;
+  private tourEngine: TourEngine | null = null;
 
   // Services
   private commandHandlerService!: CommandHandlerService;
@@ -79,6 +81,12 @@ export default class WorkoutChartsPlugin extends Plugin {
         ).open();
       },
     };
+  }
+
+  /** The guided tour engine (one tour at a time, stopped on unload). */
+  getTourEngine(): TourEngine {
+    this.tourEngine ??= new TourEngine(this.app);
+    return this.tourEngine;
   }
 
   async onload() {
@@ -199,6 +207,10 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // 0. Destroy event bus (must be first to prevent stale handlers)
     this.eventBus?.destroy();
+
+    // 0b. Stop a running guided tour (overlay, scope, frame loop)
+    this.tourEngine?.destroy();
+    this.tourEngine = null;
 
     // 1. Clean up all active timers
     for (const timerView of this.activeTimers.values()) {

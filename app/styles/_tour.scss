@@ -1,0 +1,90 @@
+// Guided tour overlay. Below modals (--layer-modal) so a modal opened from a
+// highlighted button stays usable.
+.workout-tour {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--layer-modal) - 1);
+  pointer-events: none;
+
+  .workout-tour-blocker {
+    position: fixed;
+    pointer-events: auto;
+    background: transparent;
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  // Without a target the single blocker also dims the screen.
+  &:not(.has-target) .workout-tour-blocker {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  // The hole: the dim comes from the shadow. No transition, it would lag scrolling.
+  .workout-tour-ring {
+    position: fixed;
+    pointer-events: none;
+    border-radius: var(--radius-s);
+    box-shadow:
+      0 0 0 2px var(--workout-accent-fill),
+      0 0 0 9999px rgba(0, 0, 0, 0.6);
+
+    &.is-hidden {
+      display: none;
+    }
+  }
+
+  .workout-tour-card {
+    position: fixed;
+    box-sizing: border-box;
+    width: min(320px, calc(100vw - 24px));
+    padding: var(--size-4-3);
+    background: var(--background-secondary);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-l);
+    pointer-events: auto;
+
+    &.is-centered {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &.is-docked {
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px) + 56px);
+      width: auto;
+
+      &.is-docked-top {
+        top: calc(12px + env(safe-area-inset-top, 0px));
+        bottom: auto;
+      }
+    }
+  }
+
+  .workout-tour-title {
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--size-4-1);
+  }
+
+  .workout-tour-text {
+    color: var(--text-muted);
+    margin-bottom: var(--size-4-3);
+  }
+
+  .workout-tour-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+
+    .workout-tour-progress {
+      flex: 1;
+      color: var(--text-faint);
+      font-size: var(--font-ui-smaller);
+    }
+  }
+}

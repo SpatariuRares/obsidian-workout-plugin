@@ -34,7 +34,7 @@ export class EmbeddedDashboardView extends BaseView {
   /** ResizeObserver for bento layout recalculation */
   private resizeObserver: ResizeObserver | null = null;
   /** Debounce timer for resize recalculation */
-  private resizeTimer: ReturnType<typeof setTimeout> | null = null;
+  private resizeTimer: number | null = null;
 
   constructor(plugin: WorkoutPluginContext) {
     super(plugin);
@@ -243,8 +243,8 @@ export class EmbeddedDashboardView extends BaseView {
       if (Math.abs(newWidth - lastWidth) < 1) return;
       lastWidth = newWidth;
 
-      if (this.resizeTimer) clearTimeout(this.resizeTimer);
-      this.resizeTimer = setTimeout(() => {
+      if (this.resizeTimer) window.clearTimeout(this.resizeTimer);
+      this.resizeTimer = window.setTimeout(() => {
         this.applyBentoLayout(gridEl);
       }, 150);
     });
@@ -254,7 +254,7 @@ export class EmbeddedDashboardView extends BaseView {
 
   private destroyResizeObserver(): void {
     if (this.resizeTimer) {
-      clearTimeout(this.resizeTimer);
+      window.clearTimeout(this.resizeTimer);
       this.resizeTimer = null;
     }
     if (this.resizeObserver) {

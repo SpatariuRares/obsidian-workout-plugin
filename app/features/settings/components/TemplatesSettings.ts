@@ -34,7 +34,7 @@ export class TemplatesSettings {
                 false,
               );
               button.setButtonText(t("settings.buttons.generated"));
-              setTimeout(() => {
+              window.setTimeout(() => {
                 button.setButtonText(
                   t("settings.buttons.generateTemplates"),
                 );
@@ -42,7 +42,7 @@ export class TemplatesSettings {
               }, 2000);
             } catch {
               button.setButtonText(t("settings.buttons.failed"));
-              setTimeout(() => {
+              window.setTimeout(() => {
                 button.setButtonText(
                   t("settings.buttons.generateTemplates"),
                 );
@@ -63,7 +63,7 @@ export class TemplatesSettings {
                 true,
               );
               button.setButtonText(t("settings.buttons.done"));
-              setTimeout(() => {
+              window.setTimeout(() => {
                 button.setButtonText(
                   t("settings.buttons.regenerateOverwrite"),
                 );
@@ -71,7 +71,7 @@ export class TemplatesSettings {
               }, 2000);
             } catch {
               button.setButtonText(t("settings.buttons.failed"));
-              setTimeout(() => {
+              window.setTimeout(() => {
                 button.setButtonText(
                   t("settings.buttons.regenerateOverwrite"),
                 );

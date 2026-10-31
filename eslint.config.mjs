@@ -90,8 +90,6 @@ export default [
       // Rules from the obsidianmd recommended config owned by other tickets
       // TODO(#38): re-enable once fixed
       "obsidianmd/prefer-create-el": "off",
-      // TODO(#37): re-enable once fixed
-      "obsidianmd/prefer-window-timers": "off",
       // TODO(#39): re-enable once fixed
       "@typescript-eslint/no-explicit-any": "off",
       // TODO(#39): re-enable once fixed (caused by the `any` in ExampleGeneratorService)

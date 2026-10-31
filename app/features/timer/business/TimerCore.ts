@@ -98,7 +98,7 @@ export class TimerCore {
     this.setState({ isRunning: false });
 
     if (this.state.timerInterval) {
-      clearInterval(this.state.timerInterval);
+      window.clearInterval(this.state.timerInterval);
       this.setState({ timerInterval: undefined });
     }
   }

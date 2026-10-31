@@ -1024,6 +1024,51 @@
     "next": "Next",
     "skip": "Skip",
     "done": "Done",
-    "progress": "{current} of {total}"
+    "progress": "{current} of {total}",
+    "noteName": "Guided tour",
+    "noteIntro": "The guided tour points at each part of the plugin on this page. Edit or delete this note whenever you like.",
+    "noteTable": "Your sets",
+    "noteChart": "Progress",
+    "noteDashboard": "Dashboard",
+    "noteTimer": "Rest timer",
+    "steps": {
+      "logSet": {
+        "title": "Log your first set",
+        "text": "Press the + button to open the form, then save a set. It lands in the table right away."
+      },
+      "rowActions": {
+        "title": "Edit or delete a set",
+        "text": "Every row has edit and delete buttons. Use them to fix a typo or remove a set."
+      },
+      "chart": {
+        "title": "Your progress",
+        "text": "The chart shows how an exercise moves over time, with a trend line and stats.",
+        "textMine": "The chart shows how an exercise moves over time. It is nearly empty until you log a few sets.",
+        "mobileText": "On a phone the chart is shown as a table with the same numbers.",
+        "mobileTextMine": "On a phone the chart is shown as a table. It is nearly empty until you log a few sets."
+      },
+      "dashboard": {
+        "title": "Your dashboard",
+        "text": "Totals, volume trends, recent workouts and a muscle heat map, all in one block.",
+        "textMine": "Totals, volume trends, recent workouts and a muscle heat map. It fills up as you log more sets."
+      },
+      "timer": {
+        "title": "Rest timer",
+        "text": "Press start to run a countdown between sets."
+      },
+      "ribbon": {
+        "title": "Log from any note",
+        "text": "The dumbbell icon in the ribbon opens the log form from anywhere.",
+        "mobileText": "On a phone there is no ribbon icon here. Use the command palette to open the log form from any note."
+      },
+      "commands": {
+        "title": "Insert commands",
+        "text": "Open the command palette and run an Insert workout command to add a table, chart, timer or dashboard to a note."
+      },
+      "end": {
+        "title": "You are set",
+        "text": "You can take this tour again from the plugin settings."
+      }
+    }
   }
 }

@@ -31,3 +31,13 @@ Created a disposable note and header-only CSV, and temporarily selected that CSV
 Cleanup: both plugin settings profiles and the original plugin directory were restored; the disposable note, CSV, empty folder and newly created empty note were moved to trash. Compared original CSV text before and after: identical. Returned to the original Getting Started note. The new build is not installed in the normal protected plugin directory.
 
 README additions passed asset/anchor validation and were inspected in a local preview rendered by the GitHub Markdown API: the introductory paragraph and Workout Block warning are present. The public GitHub/store README remains unchanged until pushed.
+
+## Follow-up: mobile-first acceptance
+
+The user explicitly authorized arbitrary test changes inside `the-gym-test-plugin` and made mobile the primary acceptance target. Required device profile: **iPhone SE, 375 × 667**, with Obsidian mobile emulation (`this.app.emulateMobile(!this.app.isMobile)`), not only responsive CSS. The DevTools device profile and Obsidian's mobile navigation were visibly confirmed in the live screenshot.
+
+A second fixture was prepared at `QA-live-records-1793466900989/Acceptance.md`, with a separate CSV and strength/timed exercise definitions. The repository build was loaded at runtime. Through the real form, entered 8 reps and 80 kg and selected Create log. The live accessibility tree subsequently showed the table row (8 reps, 80 kg, volume 640) and `Next set · 2`, pre-filled with 8 and 80. This is a partial desktop observation; durable persistence and absence of the first-record Notice were not independently verified.
+
+After the mobile-emulation reload, Obsidian loaded the normally installed plugin again. The current-build mobile flow has **not been verified**. Attempts to reload the repository build through the console were not confirmed; copying the build into the installed plugin directory was denied by the filesystem. The native control session also repeatedly returned ScreenCaptureKit capture errors (-3811/-3812), stale frames, and `noWindowsAvailable`, even after reconnecting it. Do not treat the screenshot of mobile chrome as acceptance of the new logging features.
+
+The second fixture remains in the disposable test vault for resumption. The normal plugin directory was not overwritten. Mobile form save/validation/cancel, warm-up/drop record exclusion, PR feedback, inline logging/timer restart, units, and narrow-layout checks all remain required before acceptance can be completed. Restore or deliberately reselect the test CSV when reloading the repository build; the ordinary installed plugin has a separate settings profile.

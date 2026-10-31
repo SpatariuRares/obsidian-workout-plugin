@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  packages: write
+  contents: read
 
 jobs:
   quality:
@@ -26,7 +25,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint
@@ -34,25 +33,32 @@ jobs:
       - name: Tests (with coverage thresholds)
         run: npm run test:coverage
 
-  # Missing translations (usually done already by the Translate workflow
-  # when en.json changed on main): one runner per locale, committed to main
-  translate:
-    name: Translate
-    needs: quality
-    uses: ./.github/workflows/translate.yml
-    with:
-      ref: main
-
-  version:
-    name: Sync version
+  # The release is built from the tagged commit as it is, so that commit must
+  # already carry the version (the /release skill bumps it before tagging) and
+  # every translation. Nothing is committed back to main here.
+  verify:
+    name: Verify tagged commit
     runs-on: ubuntu-latest
-    needs: translate
 
     steps:
-      - name: Checkout code
+      - name: Checkout tag
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
+
+      - name: Tag matches manifest.json version
+        run: |
+          if [ "${{ github.ref_type }}" != "tag" ]; then
+            echo "::error::Releases run on a X.Y.Z tag, not on ${{ github.ref }}"
+            exit 1
+          fi
+          TAG="${{ github.ref_name }}"
+          MANIFEST=$(jq -r '.version' manifest.json)
+          if [ "$MANIFEST" != "$TAG" ]; then
+            echo "::error::manifest.json version is $MANIFEST but the tag is $TAG. Bump manifest.json in a commit and tag that commit (use /release)."
+            exit 1
+          fi
+          echo "manifest.json version matches tag $TAG"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,43 +70,24 @@ jobs:
         run: |
           MISSING=$(python missing_locales.py)
           if [ -n "$MISSING" ]; then
-            echo "::error::Locales still missing keys of en.json: $MISSING"
+            echo "::error::Locales still missing keys of en.json: $MISSING. Let the Translate workflow finish on main, then tag again."
             exit 1
           fi
-
-      - name: Sync manifest.json and package versions with tag
-        run: |
-          TAG="${{ github.ref_name }}"
-          CURRENT=$(jq -r '.version' manifest.json)
-          if [ "$CURRENT" != "$TAG" ]; then
-            echo "Updating manifest.json: $CURRENT → $TAG"
-            jq --arg v "$TAG" '.version = $v' manifest.json > manifest.tmp && mv manifest.tmp manifest.json
-          else
-            echo "manifest.json already at $TAG"
-          fi
-          jq --arg v "$TAG" '.version = $v' package.json > package.tmp && mv package.tmp package.json
-          jq --arg v "$TAG" '.version = $v | .packages[""].version = $v' package-lock.json > package-lock.tmp && mv package-lock.tmp package-lock.json
-
-      - name: Commit versions to main
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add manifest.json package.json package-lock.json
-          git diff --staged --quiet && echo "Nothing to commit" || (
-            git commit -m "chore: release ${{ github.ref_name }} — sync versions"
-            git push origin HEAD:main
-          )
 
   build:
     name: Build and Release
     runs-on: ubuntu-latest
-    needs: version
+    needs: [quality, verify]
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout tag
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -109,7 +96,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -132,6 +119,14 @@ jobs:
           cp main.js release/
           cp styles.css release/
           cp manifest.json release/
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            release/main.js
+            release/styles.css
+            release/manifest.json
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

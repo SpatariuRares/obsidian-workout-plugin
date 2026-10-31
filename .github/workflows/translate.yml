@@ -2,11 +2,11 @@ name: Translate
 
 # Fills in the keys that en.json has and other locales don't, with
 # translategemma on Ollama, then commits the locales to the same branch.
-# One runner per locale, so a release no longer waits ~10-20 minutes for 23
-# languages in a row.
+# One runner per locale, so 23 languages don't run ~10-20 minutes in a row.
 #
 # Runs on its own when en.json changes on main, when started by hand or by
-# the local pre-push hook (any branch), and as a step of every release.
+# the local pre-push hook (any branch). A release does not run it: main.yml
+# only fails when a locale still misses keys.
 
 on:
   push:

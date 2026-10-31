@@ -1,5 +1,6 @@
-import { Setting } from "obsidian";
+import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import type {
   WorkoutPluginContext,
   TemplateGeneratorPort,
@@ -8,20 +9,31 @@ import type {
 export class TemplatesSettings {
   constructor(
     private plugin: WorkoutPluginContext & TemplateGeneratorPort,
-    private containerEl: HTMLElement,
   ) {}
 
-  render(): void {
-    const { containerEl } = this;
+  definitions(): DefinitionItem[] {
+    return [
+      {
+        type: "group",
+        heading: t("settings.sections.templates"),
+        items: [
+          {
+            name: t("settings.labels.generateDefaultTemplates"),
+            desc: t("settings.descriptions.generateDefaultTemplates"),
+            render: (setting) => this.renderGenerate(setting),
+          },
+          {
+            name: t("settings.labels.exerciseBlockTemplate"),
+            desc: t("settings.descriptions.exerciseBlockTemplate"),
+            render: (setting) => this.renderBlockTemplate(setting),
+          },
+        ],
+      },
+    ];
+  }
 
-    new Setting(containerEl)
-      .setName(t("settings.sections.templates"))
-      .setHeading();
-
-    // Generate Templates button
-    new Setting(containerEl)
-      .setName(t("settings.labels.generateDefaultTemplates"))
-      .setDesc(t("settings.descriptions.generateDefaultTemplates"))
+  private renderGenerate(setting: Setting): void {
+    setting
       .addButton((button) => {
         button
           .setButtonText(t("settings.buttons.generateTemplates"))
@@ -52,9 +64,10 @@ export class TemplatesSettings {
           });
       })
       .addButton((button) => {
+        // The "warning" style; setWarning() is deprecated, setDestructive() needs Obsidian 1.13
+        button.buttonEl.addClass("mod-warning");
         button
           .setButtonText(t("settings.buttons.regenerateOverwrite"))
-          .setWarning()
           .onClick(async () => {
             button.setDisabled(true);
             button.setButtonText(t("settings.buttons.overwriting"));
@@ -80,20 +93,19 @@ export class TemplatesSettings {
             }
           });
       });
+  }
 
-    new Setting(containerEl)
-      .setName(t("settings.labels.exerciseBlockTemplate"))
-      .setDesc(t("settings.descriptions.exerciseBlockTemplate"))
-      .addTextArea((text) => {
-        text
-          .setValue(this.plugin.settings.exerciseBlockTemplate)
-          .setPlaceholder(this.plugin.settings.exerciseBlockTemplate)
-          .onChange(async (value) => {
-            this.plugin.settings.exerciseBlockTemplate = value;
-            await this.plugin.saveSettings();
-          });
-        text.inputEl.rows = 10;
-        text.inputEl.cols = 50;
-      });
+  private renderBlockTemplate(setting: Setting): void {
+    setting.addTextArea((text) => {
+      text
+        .setValue(this.plugin.settings.exerciseBlockTemplate)
+        .setPlaceholder(this.plugin.settings.exerciseBlockTemplate)
+        .onChange(async (value) => {
+          this.plugin.settings.exerciseBlockTemplate = value;
+          await this.plugin.saveSettings();
+        });
+      text.inputEl.rows = 10;
+      text.inputEl.cols = 50;
+    });
   }
 }

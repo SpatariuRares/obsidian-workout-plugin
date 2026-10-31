@@ -1,119 +1,78 @@
-import { Setting, Notice, App } from "obsidian";
+import { Setting, Notice, App, Modal } from "obsidian";
 import { t } from "@app/i18n";
-import { TIMER_TYPE, TimerPresetConfig } from "@app/features/timer/types";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
+import {
+  TIMER_TYPE,
+  TimerPresetConfig,
+} from "@app/features/timer/types";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class TimerPresetsSettings {
-  private presetsContainer: HTMLElement | null = null;
-
   constructor(
     private app: App,
     private plugin: WorkoutPluginContext,
-    private containerEl: HTMLElement,
+    /** Redraws the settings tab after the preset list changed */
+    private refresh: () => void,
   ) {}
 
-  render(): void {
-    const { containerEl } = this;
-
-    new Setting(containerEl)
-      .setName(t("settings.sections.timerPresets"))
-      .setHeading();
-
-    // Default timer preset dropdown
-    const presetNames = Object.keys(
-      this.plugin.settings.timerPresets,
-    );
-
-    new Setting(containerEl)
-      .setName(t("settings.labels.defaultTimerPreset"))
-      .setDesc(t("settings.descriptions.defaultTimerPreset"))
-      .addDropdown((dropdown) => {
-        dropdown.addOption("", t("settings.options.none"));
-        presetNames.forEach((name) => {
-          dropdown.addOption(name, name);
-        });
-        dropdown.setValue(
-          this.plugin.settings.defaultTimerPreset || "",
-        );
-        dropdown.onChange(async (value) => {
-          this.plugin.settings.defaultTimerPreset = value || null;
-          await this.plugin.saveSettings();
-        });
-      });
-
-    // Container for presets list
-    this.presetsContainer = containerEl.createDiv({
-      cls: "timer-presets-container",
-    });
-    this.renderPresetsList();
-
-    // Add preset button
-    new Setting(containerEl).addButton((button) =>
-      button
-        .setButtonText(t("settings.buttons.addPreset"))
-        .setCta()
-        .onClick(() => {
-          this.showPresetEditor(null);
-        }),
-    );
-  }
-
-  private renderPresetsList(): void {
-    if (!this.presetsContainer) return;
-
-    this.presetsContainer.empty();
-
+  definitions(): DefinitionItem[] {
     const presets = this.plugin.settings.timerPresets;
     const presetNames = Object.keys(presets);
 
-    if (presetNames.length === 0) {
-      this.presetsContainer.createEl("p", {
-        text: t("settings.descriptions.noPresets"),
-        cls: "workout-setting-item-description",
-      });
-      return;
-    }
-
-    presetNames.forEach((name) => {
-      const preset = presets[name];
-      this.renderPresetItem(preset);
-    });
+    return [
+      {
+        type: "group",
+        heading: t("settings.sections.timerPresets"),
+        items: [
+          {
+            name: t("settings.labels.defaultTimerPreset"),
+            desc: t("settings.descriptions.defaultTimerPreset"),
+            render: (setting) => {
+              setting.addDropdown((dropdown) => {
+                dropdown.addOption("", t("settings.options.none"));
+                presetNames.forEach((name) => {
+                  dropdown.addOption(name, name);
+                });
+                dropdown.setValue(
+                  this.plugin.settings.defaultTimerPreset || "",
+                );
+                dropdown.onChange(async (value) => {
+                  this.plugin.settings.defaultTimerPreset =
+                    value || null;
+                  await this.plugin.saveSettings();
+                });
+              });
+            },
+          },
+        ],
+      },
+      {
+        type: "list",
+        emptyState: t("settings.descriptions.noPresets"),
+        addItem: {
+          name: t("settings.buttons.addPreset"),
+          action: () => this.showPresetEditor(null),
+        },
+        onDelete: (index) => this.confirmDelete(presetNames[index]),
+        items: presetNames.map((name) => ({
+          name: presets[name].name,
+          desc: this.formatPresetDetails(presets[name]),
+          action: () => this.showPresetEditor(presets[name]),
+        })),
+      },
+    ];
   }
 
-  private renderPresetItem(preset: TimerPresetConfig): void {
-    if (!this.presetsContainer) return;
-
-    const presetSetting = new Setting(this.presetsContainer);
-
-    // Format preset details for description
-    const details = this.formatPresetDetails(preset);
-
-    presetSetting
-      .setName(preset.name)
-      .setDesc(details)
-      .addButton((button) =>
-        button
-          .setIcon("pencil")
-          .setTooltip(t("settings.tooltips.editPreset"))
-          .onClick(() => {
-            this.showPresetEditor(preset);
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setIcon("trash")
-          .setTooltip(t("settings.tooltips.deletePreset"))
-          .onClick(() => {
-            new ConfirmModal(
-              this.app,
-              t("settings.messages.confirmDeletePreset"),
-              async () => {
-                await this.deletePreset(preset.name);
-              },
-            ).open();
-          }),
-      );
+  private confirmDelete(name: string | undefined): void {
+    if (name === undefined) return;
+    new ConfirmModal(
+      this.app,
+      t("settings.messages.confirmDeletePreset"),
+      async () => {
+        await this.deletePreset(name);
+      },
+    ).open();
   }
 
   private formatPresetDetails(preset: TimerPresetConfig): string {
@@ -140,24 +99,6 @@ export class TimerPresetsSettings {
   private showPresetEditor(
     existingPreset: TimerPresetConfig | null,
   ): void {
-    if (!this.presetsContainer) return;
-
-    // Remove any existing editor
-    const existingEditor = this.containerEl.querySelector(
-      ".preset-editor-container",
-    );
-    if (existingEditor) {
-      existingEditor.remove();
-    }
-
-    const editorContainer = this.containerEl.createDiv({
-      cls: "preset-editor-container",
-    });
-
-    // Move editor right after presets container
-    this.presetsContainer.after(editorContainer);
-
-    // Create form state
     const formState: TimerPresetConfig = existingPreset
       ? { ...existingPreset }
       : {
@@ -168,120 +109,21 @@ export class TimerPresetsSettings {
           sound: true,
           rounds: 5,
         };
-
     const originalName = existingPreset?.name || null;
 
-    // Preset name input
-    new Setting(editorContainer)
-      .setName(t("settings.labels.presetName"))
-      .setDesc(t("settings.descriptions.presetNameDesc"))
-      .addText((text) =>
-        text
-          .setValue(formState.name)
-          .setPlaceholder(t("settings.placeholders.presetName"))
-          .onChange((value) => {
-            formState.name = value;
-          }),
-      );
-
-    // Timer type dropdown
-    new Setting(editorContainer)
-      .setName(t("settings.labels.presetType"))
-      .addDropdown((dropdown) => {
-        dropdown.addOption(
-          TIMER_TYPE.COUNTDOWN,
-          t("timer.countdown"),
-        );
-        dropdown.addOption(TIMER_TYPE.INTERVAL, t("timer.interval"));
-        dropdown.addOption(
-          TIMER_TYPE.STOPWATCH,
-          t("timer.stopwatch"),
-        );
-        dropdown.setValue(formState.type);
-        dropdown.onChange((value) => {
-          formState.type = value as TIMER_TYPE;
-          // Refresh editor to show/hide interval options
-          this.showPresetEditor({ ...formState });
-        });
-      });
-
-    // Duration input
-    new Setting(editorContainer)
-      .setName(t("settings.labels.presetDuration"))
-      .setDesc(t("settings.descriptions.presetDurationDesc"))
-      .addText((text) =>
-        text
-          .setValue(String(formState.duration))
-          .onChange((value) => {
-            const num = parseInt(value);
-            if (!isNaN(num) && num > 0) {
-              formState.duration = num;
-            }
-          }),
-      );
-
-    // Interval-specific options (rounds only)
-    if (formState.type === TIMER_TYPE.INTERVAL) {
-      new Setting(editorContainer)
-        .setName(t("settings.labels.presetRounds"))
-        .setDesc(t("settings.descriptions.presetRoundsDesc"))
-        .addText((text) =>
-          text
-            .setValue(String(formState.rounds || 5))
-            .onChange((value) => {
-              const num = parseInt(value);
-              if (!isNaN(num) && num > 0) {
-                formState.rounds = num;
-              }
-            }),
-        );
-    }
-
-    // Boolean toggles
-    new Setting(editorContainer)
-      .setName(t("settings.labels.presetShowControls"))
-      .addToggle((toggle) =>
-        toggle.setValue(formState.showControls).onChange((value) => {
-          formState.showControls = value;
-        }),
-      );
-
-    new Setting(editorContainer)
-      .setName(t("settings.labels.presetSound"))
-      .addToggle((toggle) =>
-        toggle.setValue(formState.sound).onChange((value) => {
-          formState.sound = value;
-        }),
-      );
-
-    // Save and Cancel buttons
-    new Setting(editorContainer)
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.savePreset"))
-          .setCta()
-          .onClick(async () => {
-            await this.savePreset(formState, originalName);
-            editorContainer.remove();
-          }),
-      )
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.cancel"))
-          .onClick(() => {
-            editorContainer.remove();
-          }),
-      );
+    new TimerPresetEditorModal(this.app, formState, async () => {
+      return this.savePreset(formState, originalName);
+    }).open();
   }
 
   private async savePreset(
     preset: TimerPresetConfig,
     originalName: string | null,
-  ): Promise<void> {
+  ): Promise<boolean> {
     // Validate name
     if (!preset.name.trim()) {
       new Notice(t("settings.messages.presetNameRequired"));
-      return;
+      return false;
     }
 
     const trimmedName = preset.name.trim();
@@ -293,7 +135,7 @@ export class TimerPresetsSettings {
       this.plugin.settings.timerPresets[trimmedName]
     ) {
       new Notice(t("settings.messages.presetNameExists"));
-      return;
+      return false;
     }
 
     // If renaming, delete the old preset
@@ -311,7 +153,8 @@ export class TimerPresetsSettings {
     await this.plugin.saveSettings();
 
     new Notice(t("settings.messages.presetSaved"));
-    this.renderPresetsList();
+    this.refresh();
+    return true;
   }
 
   private async deletePreset(name: string): Promise<void> {
@@ -325,6 +168,124 @@ export class TimerPresetsSettings {
     await this.plugin.saveSettings();
     new Notice(t("settings.messages.presetDeleted"));
 
-    this.renderPresetsList();
+    this.refresh();
+  }
+}
+
+/** Form to add or edit a timer preset */
+class TimerPresetEditorModal extends Modal {
+  constructor(
+    app: App,
+    private formState: TimerPresetConfig,
+    /** Returns false to keep the form open (validation failed) */
+    private save: () => Promise<boolean>,
+  ) {
+    super(app);
+  }
+
+  onOpen(): void {
+    this.renderForm();
+  }
+
+  onClose(): void {
+    this.contentEl.empty();
+  }
+
+  private renderForm(): void {
+    const { contentEl, formState } = this;
+    contentEl.empty();
+
+    new Setting(contentEl)
+      .setName(t("settings.labels.presetName"))
+      .setDesc(t("settings.descriptions.presetNameDesc"))
+      .addText((text) =>
+        text
+          .setValue(formState.name)
+          .setPlaceholder(t("settings.placeholders.presetName"))
+          .onChange((value) => {
+            formState.name = value;
+          }),
+      );
+
+    new Setting(contentEl)
+      .setName(t("settings.labels.presetType"))
+      .addDropdown((dropdown) => {
+        dropdown.addOption(
+          TIMER_TYPE.COUNTDOWN,
+          t("timer.countdown"),
+        );
+        dropdown.addOption(TIMER_TYPE.INTERVAL, t("timer.interval"));
+        dropdown.addOption(
+          TIMER_TYPE.STOPWATCH,
+          t("timer.stopwatch"),
+        );
+        dropdown.setValue(formState.type);
+        dropdown.onChange((value) => {
+          formState.type = value as TIMER_TYPE;
+          // Redraw to show/hide interval options
+          this.renderForm();
+        });
+      });
+
+    new Setting(contentEl)
+      .setName(t("settings.labels.presetDuration"))
+      .setDesc(t("settings.descriptions.presetDurationDesc"))
+      .addText((text) =>
+        text
+          .setValue(String(formState.duration))
+          .onChange((value) => {
+            const num = parseInt(value);
+            if (!isNaN(num) && num > 0) {
+              formState.duration = num;
+            }
+          }),
+      );
+
+    if (formState.type === TIMER_TYPE.INTERVAL) {
+      new Setting(contentEl)
+        .setName(t("settings.labels.presetRounds"))
+        .setDesc(t("settings.descriptions.presetRoundsDesc"))
+        .addText((text) =>
+          text
+            .setValue(String(formState.rounds || 5))
+            .onChange((value) => {
+              const num = parseInt(value);
+              if (!isNaN(num) && num > 0) {
+                formState.rounds = num;
+              }
+            }),
+        );
+    }
+
+    new Setting(contentEl)
+      .setName(t("settings.labels.presetShowControls"))
+      .addToggle((toggle) =>
+        toggle.setValue(formState.showControls).onChange((value) => {
+          formState.showControls = value;
+        }),
+      );
+
+    new Setting(contentEl)
+      .setName(t("settings.labels.presetSound"))
+      .addToggle((toggle) =>
+        toggle.setValue(formState.sound).onChange((value) => {
+          formState.sound = value;
+        }),
+      );
+
+    new Setting(contentEl)
+      .addButton((button) =>
+        button
+          .setButtonText(t("settings.buttons.savePreset"))
+          .setCta()
+          .onClick(async () => {
+            if (await this.save()) this.close();
+          }),
+      )
+      .addButton((button) =>
+        button
+          .setButtonText(t("settings.buttons.cancel"))
+          .onClick(() => this.close()),
+      );
   }
 }

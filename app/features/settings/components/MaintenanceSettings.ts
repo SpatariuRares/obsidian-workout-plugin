@@ -1,5 +1,7 @@
-import { App, Notice, Setting } from "obsidian";
+import { App, Notice } from "obsidian";
+import type { Setting } from "obsidian";
 import { t } from "@app/i18n";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { runAddMissingBlockIds } from "@app/utils/BlockIdMigration";
 import { ExerciseTypeMigration } from "@app/compatibility/migration";
@@ -15,62 +17,72 @@ export class MaintenanceSettings {
   constructor(
     private app: App,
     private plugin: WorkoutPluginContext,
-    private containerEl: HTMLElement,
   ) {}
 
-  render(): void {
-    const { containerEl } = this;
+  definitions(): DefinitionItem[] {
+    return [
+      {
+        type: "group",
+        heading: t("settings.sections.maintenance"),
+        items: [
+          {
+            name: t("settings.labels.runAllMaintenance"),
+            desc: t("settings.descriptions.runAllMaintenance"),
+            render: (setting) => this.renderRunAll(setting),
+          },
+        ],
+      },
+    ];
+  }
 
-    new Setting(containerEl)
-      .setName(t("settings.sections.maintenance"))
-      .setHeading();
+  private renderRunAll(setting: Setting): void {
+    setting.addButton((button) =>
+      button
+        .setButtonText(t("settings.buttons.runAllMaintenance"))
+        .setCta()
+        .onClick(async () => {
+          button.setDisabled(true);
+          try {
+            const { totalAdded, modifiedFiles } =
+              await runAddMissingBlockIds(this.app);
 
-    new Setting(containerEl)
-      .setName(t("settings.labels.runAllMaintenance"))
-      .setDesc(t("settings.descriptions.runAllMaintenance"))
-      .addButton((button) =>
-        button
-          .setButtonText(t("settings.buttons.runAllMaintenance"))
-          .setCta()
-          .onClick(async () => {
-            button.setDisabled(true);
-            try {
-              const { totalAdded, modifiedFiles } =
-                await runAddMissingBlockIds(this.app);
-
-              if (totalAdded === 0) {
-                new Notice(t("messages.success.noBlockIdsNeeded"));
-              } else {
-                new Notice(
-                  t("messages.success.blockIdsAdded", {
-                    count: totalAdded,
-                    files: modifiedFiles,
-                  }),
-                );
-              }
-
-              await new ExerciseTypeMigration(
-                this.plugin,
-              ).migrateExerciseTypes();
-
-              // Older logs have no weight unit: freeze them in the current one
-              const stamped = await this.plugin.stampMissingWeightUnits(
-                this.plugin.settings.weightUnit,
+            if (totalAdded === 0) {
+              new Notice(t("messages.success.noBlockIdsNeeded"));
+            } else {
+              new Notice(
+                t("messages.success.blockIdsAdded", {
+                  count: totalAdded,
+                  files: modifiedFiles,
+                }),
               );
-              if (stamped > 0) {
-                new Notice(
-                  t("messages.success.weightUnitsStamped", {
-                    count: stamped,
-                  }),
-                );
-              }
-            } catch (error) {
-              const errorMessage = ErrorUtils.getErrorMessage(error);
-              new Notice(t("modal.notices.genericError", { error: errorMessage }));
-            } finally {
-              button.setDisabled(false);
             }
-          }),
-      );
+
+            await new ExerciseTypeMigration(
+              this.plugin,
+            ).migrateExerciseTypes();
+
+            // Older logs have no weight unit: freeze them in the current one
+            const stamped = await this.plugin.stampMissingWeightUnits(
+              this.plugin.settings.weightUnit,
+            );
+            if (stamped > 0) {
+              new Notice(
+                t("messages.success.weightUnitsStamped", {
+                  count: stamped,
+                }),
+              );
+            }
+          } catch (error) {
+            const errorMessage = ErrorUtils.getErrorMessage(error);
+            new Notice(
+              t("modal.notices.genericError", {
+                error: errorMessage,
+              }),
+            );
+          } finally {
+            button.setDisabled(false);
+          }
+        }),
+    );
   }
 }

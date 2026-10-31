@@ -880,6 +880,7 @@
       "trainingParameters": "Training parameters"
     },
     "tooltips": {
+      "deleteItem": "Delete",
       "deletePreset": "Delete preset",
       "deleteProtocol": "Delete protocol",
       "editPreset": "Edit preset",

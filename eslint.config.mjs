@@ -87,10 +87,6 @@ export default [
         },
       ],
 
-      // Rules from the obsidianmd recommended config owned by other tickets
-      // TODO(#40): re-enable once fixed
-      "obsidianmd/settings-tab/prefer-setting-definitions": "off",
-
       // TypeScript-specific rules
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/no-unsafe-enum-comparison": "error",
@@ -249,5 +245,18 @@ export default [
         },
       ],
     },
+  },
+
+  // The settings tab keeps display() for Obsidian before 1.13 (minAppVersion
+  // is 1.6.6); 1.13+ deprecates it in favour of getSettingDefinitions()
+  {
+    files: ["app/features/settings/WorkoutChartsSettings.ts"],
+    rules: { "@typescript-eslint/no-deprecated": "off" },
+  },
+
+  // The jest mock builds the DOM that Obsidian's createEl helpers would
+  {
+    files: ["__mocks__/**/*.ts"],
+    rules: { "obsidianmd/prefer-create-el": "off" },
   },
 ];

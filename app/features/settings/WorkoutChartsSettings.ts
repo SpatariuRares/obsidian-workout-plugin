@@ -1,5 +1,8 @@
 // Settings tab for the Workout Charts plugin
 import { App, Plugin, PluginSettingTab } from "obsidian";
+import type { SettingDefinitionItem } from "obsidian";
+import type { DefinitionItem } from "@app/features/settings/settingDefinitionTypes";
+import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
 import { t } from "@app/i18n";
 import type {
   EventBusPort,
@@ -25,52 +28,81 @@ type SettingsTabContext = Plugin &
 export class WorkoutChartsSettingTab extends PluginSettingTab {
   plugin: SettingsTabContext;
 
+  private general: GeneralSettings;
+  private quickLog: QuickLogSettings;
+  private timerPresets: TimerPresetsSettings;
+  private customProtocols: CustomProtocolsSettings;
+  private durationEstimation: DurationEstimationSettings;
+  private templates: TemplatesSettings;
+  private maintenance: MaintenanceSettings;
+
   constructor(app: App, plugin: SettingsTabContext) {
     super(app, plugin);
     this.plugin = plugin;
+
+    const refresh = () => this.refresh();
+    this.general = new GeneralSettings(app, plugin);
+    this.quickLog = new QuickLogSettings(plugin);
+    this.timerPresets = new TimerPresetsSettings(
+      app,
+      plugin,
+      refresh,
+    );
+    this.customProtocols = new CustomProtocolsSettings(
+      app,
+      plugin,
+      refresh,
+    );
+    this.durationEstimation = new DurationEstimationSettings(plugin);
+    this.templates = new TemplatesSettings(plugin);
+    this.maintenance = new MaintenanceSettings(app, plugin);
   }
 
+  /**
+   * Every row of every section, in one place. Obsidian 1.13+ draws these
+   * itself and indexes them for settings search; it then never calls
+   * display(), so no row may exist outside this list.
+   */
+  getSettingDefinitions(): SettingDefinitionItem[] {
+    return this.definitions();
+  }
+
+  private definitions(): DefinitionItem[] {
+    return [
+      // Setup & Data (paths, weight unit, CSV management, example data)
+      ...this.general.definitions(),
+      // Quick log (exact match, ribbon icon, weight increment)
+      ...this.quickLog.definitions(),
+      ...this.timerPresets.definitions(),
+      ...this.customProtocols.definitions(),
+      // Training parameters
+      ...this.durationEstimation.definitions(),
+      {
+        type: "page",
+        name: t("settings.sections.advanced"),
+        items: [
+          ...this.templates.definitions(),
+          ...this.maintenance.definitions(),
+        ],
+      },
+    ];
+  }
+
+  /** Obsidian before 1.13 only calls display(): draw the same definitions */
   display(): void {
     const { containerEl } = this;
     containerEl.empty();
+    renderSettingDefinitions(containerEl, this.definitions());
+  }
 
-    // Setup & Data (paths, weight unit, CSV management, example data)
-    new GeneralSettings(this.app, this.plugin, containerEl).render();
-
-    // Quick Log Section (exact match + weight increment)
-    new QuickLogSettings(this.plugin, containerEl).render();
-
-    // Timer Presets Section
-    new TimerPresetsSettings(
-      this.app,
-      this.plugin,
-      containerEl,
-    ).render();
-
-    // Custom Protocols Section
-    new CustomProtocolsSettings(
-      this.app,
-      this.plugin,
-      containerEl,
-    ).render();
-
-    // Training Parameters Section
-    new DurationEstimationSettings(this.plugin, containerEl).render();
-
-    // Advanced collapsible section (Templates + Maintenance)
-    const advancedDetails = containerEl.createEl("details", {
-      cls: "workout-advanced-section",
-    });
-    advancedDetails.createEl("summary", {
-      cls: "workout-advanced-section__toggle",
-      text: t("settings.sections.advanced"),
-    });
-
-    new TemplatesSettings(this.plugin, advancedDetails).render();
-    new MaintenanceSettings(
-      this.app,
-      this.plugin,
-      advancedDetails,
-    ).render();
+  /** Redraw after the list of presets or protocols changed */
+  refresh(): void {
+    // update() only exists on Obsidian 1.13+
+    const { update } = this as { update?: () => void };
+    if (typeof update === "function") {
+      update.call(this);
+    } else {
+      this.display();
+    }
   }
 }

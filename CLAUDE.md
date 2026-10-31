@@ -488,6 +488,14 @@ Code blocks written by the insert modals also carry an `id`, used to find the bl
 4. Expose service methods through plugin instance if needed by external code
 5. DO NOT create barrel file (`index.ts`) - import services directly
 
+### Adding or changing a setting
+
+The settings tab is declarative (Obsidian 1.13+ settings search). Every row comes from `getSettingDefinitions()` in `WorkoutChartsSettings.ts`, built from each section's `definitions()`; if that returns a non-empty array Obsidian never calls `display()`, so **no row may exist outside the definitions**. Older Obsidian (minAppVersion is 1.6.6) calls `display()`, which draws the same definitions through `renderSettingDefinitions`.
+
+- Add a row as `{ name, desc, render: (setting) => setting.addToggle(...) }` in a section's `definitions()`. Build definitions with the local types in `settingDefinitionTypes.ts`, not Obsidian's `SettingDefinition*` types (naming their 1.13-only members fails `obsidianmd/no-unsupported-api`), and never extend a 1.13-only class (`SettingPage`) at module level.
+- Entries the user adds/edits/deletes (timer presets, protocols) are `type: "list"` with `addItem`, `onDelete` and an `action` per item; their editor is a `Modal`. After changing the list call the section's `refresh` (tab `update()` on 1.13+, `display()` before).
+- Test a section by drawing its definitions with `renderSettingDefinitions` in a jsdom test and driving the shared `Setting` mock (`mockSettingNamed`, in `__mocks__/obsidian.ts`).
+
 ### Adding New Dashboard Widgets
 
 1. Create widget in `app/features/dashboard/widgets/[widget-name]/`

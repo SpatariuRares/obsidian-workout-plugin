@@ -1008,5 +1008,15 @@
       "notABoolean": "{key} must be true or false, but it is \"{value}\"",
       "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\""
     }
+  },
+  "welcome": {
+    "title": "Welcome to the workout plugin",
+    "intro": "Track your sets, then see them as charts, tables and a dashboard. How do you want to begin?",
+    "tryExamples": "Try with example data",
+    "tryExamplesDesc": "Adds sample workouts and opens a short guide.",
+    "startScratch": "Start from scratch",
+    "startScratchDesc": "Creates a note with your log and opens the form to log a first set.",
+    "later": "Later",
+    "scratchNoteName": "My workouts"
   }
 }

@@ -12,6 +12,11 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
+import { WelcomeModal } from "@app/features/modals/welcome/WelcomeModal";
+import {
+  markWelcomeShown,
+  shouldShowWelcome,
+} from "@app/services/onboarding/Welcome";
 import { WorkoutLogFile } from "@app/services/data/WorkoutLogFile";
 import { VaultLogStorage } from "@app/services/data/LogStorage";
 import { CodeBlockProcessorService } from "@app/services/core/CodeBlockProcessorService";
@@ -147,6 +152,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     this.app.workspace.onLayoutReady(() => {
       this.commandHandlerService.registerCommands();
+      void this.showWelcomeOnFreshInstall();
     });
 
     this.addSettingTab(new WorkoutChartsSettingTab(this.app, this));
@@ -234,12 +240,19 @@ export default class WorkoutChartsPlugin extends Plugin {
     }
   }
 
+  /** What `loadData()` returned at startup; null on a fresh install */
+  private savedDataAtLoad: Partial<WorkoutChartsSettings> | null = null;
+
+  private async showWelcomeOnFreshInstall(): Promise<void> {
+    if (!(await shouldShowWelcome(this, this.savedDataAtLoad))) return;
+    await markWelcomeShown(this);
+    new WelcomeModal(this).open();
+  }
+
   async loadSettings() {
-    this.settings = Object.assign(
-      {},
-      DEFAULT_SETTINGS,
-      (await this.loadData()) as Partial<WorkoutChartsSettings> | null,
-    );
+    const saved = (await this.loadData()) as Partial<WorkoutChartsSettings> | null;
+    this.savedDataAtLoad = saved;
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, saved);
   }
 
   async saveSettings() {

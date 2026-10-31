@@ -36,7 +36,8 @@
     "manageMuscleTags": "Administrer muskeltags",
     "migrateExerciseTypes": "Migrér øvelsestyper",
     "createExampleNotes": "Opret eksempelnoter",
-    "openGettingStartedGuide": "Åbn vejledningen"
+    "openGettingStartedGuide": "Åbn vejledningen",
+    "startTour": "Start guiden"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Kør alle",
       "savePreset": "Gem",
       "saveProtocol": "Gem",
-      "showWelcome": "Vis velkomst"
+      "showWelcome": "Vis velkomst",
+      "takeTour": "Tag på turen"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Der findes allerede en CSV-fil med muskeltags. Vil du overskrive den med standardværdier? Det fjerner alle brugerdefinerede tags.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Start fra nul",
     "startScratchDesc": "Opretter en note med dine logfiler og åbner formularen til at registrere det første sæt.",
     "later": "Senere",
-    "scratchNoteName": "Mine træningssessioner"
+    "scratchNoteName": "Mine træningssessioner",
+    "takeTour": "Tag på turen",
+    "takeTourDesc": "Tilføjer eksempler på træningsprogrammer, og guider dig derefter gennem registrering, diagrammer, tabeller og tidsmålere."
   },
   "tour": {
     "back": "Tilbage",

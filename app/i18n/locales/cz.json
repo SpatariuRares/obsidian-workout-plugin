@@ -36,7 +36,8 @@
     "manageMuscleTags": "Spravovat štítky svalů",
     "migrateExerciseTypes": "Migrovat typy cvičení",
     "createExampleNotes": "Vytvořte ukázkové poznámky",
-    "openGettingStartedGuide": "Zobrazit návod pro začátek"
+    "openGettingStartedGuide": "Zobrazit návod pro začátek",
+    "startTour": "Spustit prohlídku"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Spustit vše",
       "savePreset": "Uložit",
       "saveProtocol": "Uložit",
-      "showWelcome": "Zobrazit uvítací zprávu"
+      "showWelcome": "Zobrazit uvítací zprávu",
+      "takeTour": "Procházejte si průvodcem"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Soubor CSV se štítky svalů už existuje. Chcete jej přepsat výchozími hodnotami? Tím odstraníte všechny vlastní štítky.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Začněte od začátku",
     "startScratchDesc": "Vytvoří poznámku s vašimi záznamy a otevře formulář pro zaznamenání prvního setu.",
     "later": "Později",
-    "scratchNoteName": "Moje tréninky"
+    "scratchNoteName": "Moje tréninky",
+    "takeTour": "Projděte si prohlídku",
+    "takeTourDesc": "Přidá ukázkové tréninky a poté vás provede procesem zaznamenávání, vytváření grafů, tabulek a časovačů."
   },
   "tour": {
     "back": "Zpět",

@@ -36,7 +36,8 @@
     "manageMuscleTags": "管理肌肉标签",
     "migrateExerciseTypes": "迁移训练动作类型",
     "createExampleNotes": "创建示例笔记",
-    "openGettingStartedGuide": "打开新手指南"
+    "openGettingStartedGuide": "打开新手指南",
+    "startTour": "开始导览"
   },
   "common": {
     "bpm": "次/分钟",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "运行所有",
       "savePreset": "保存",
       "saveProtocol": "保存",
-      "showWelcome": "显示欢迎信息"
+      "showWelcome": "显示欢迎信息",
+      "takeTour": "开始导览"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
@@ -1017,7 +1019,9 @@
     "startScratch": "从头开始",
     "startScratchDesc": "创建一个包含您的日志的笔记，并打开表单以记录第一个日志。",
     "later": "稍后",
-    "scratchNoteName": "我的锻炼计划"
+    "scratchNoteName": "我的锻炼计划",
+    "takeTour": "开始导览",
+    "takeTourDesc": "添加示例训练计划，然后引导您进行记录、图表、表格和计时器的使用。"
   },
   "tour": {
     "back": "返回",

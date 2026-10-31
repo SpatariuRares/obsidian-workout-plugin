@@ -36,7 +36,8 @@
     "manageMuscleTags": "筋肉タグを管理",
     "migrateExerciseTypes": "エクササイズタイプを移行",
     "createExampleNotes": "例を作成する",
-    "openGettingStartedGuide": "チュートリアルを開始する"
+    "openGettingStartedGuide": "チュートリアルを開始する",
+    "startTour": "ツアーを開始する"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "すべて実行",
       "savePreset": "保存",
       "saveProtocol": "保存",
-      "showWelcome": "ウェルカムを表示する"
+      "showWelcome": "ウェルカムを表示する",
+      "takeTour": "ツアーを開始する"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
@@ -1017,7 +1019,9 @@
     "startScratch": "最初から始める",
     "startScratchDesc": "ログを記録したメモを作成し、最初の記録フォームを開きます。",
     "later": "後で",
-    "scratchNoteName": "私のトレーニング"
+    "scratchNoteName": "私のトレーニング",
+    "takeTour": "ツアーに参加する",
+    "takeTourDesc": "サンプルワークアウトを追加し、その後、記録、グラフ、表、タイマーの使用方法を説明します。"
   },
   "tour": {
     "back": "戻る",

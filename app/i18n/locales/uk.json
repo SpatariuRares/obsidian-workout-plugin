@@ -36,7 +36,8 @@
     "manageMuscleTags": "Керувати тегами м'язів",
     "migrateExerciseTypes": "Перенести типи вправ",
     "createExampleNotes": "Створити приклади нотаток",
-    "openGettingStartedGuide": "Відкрити посібник для новачків"
+    "openGettingStartedGuide": "Відкрити посібник для новачків",
+    "startTour": "Почніть екскурсію"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Запустити все",
       "savePreset": "Зберегти",
       "saveProtocol": "Зберегти",
-      "showWelcome": "Показати вітання"
+      "showWelcome": "Показати вітання",
+      "takeTour": "Пройти екскурсію"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Файл CSV з тегами м'язів вже існує. Чи хочете ви перезаписати його значеннями за замовчуванням? Це видалить будь-які налаштовані теги.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Почніть з нуля",
     "startScratchDesc": "Створює нотатку з вашими записами та відкриває форму для запису першого набору даних.",
     "later": "Пізніше",
-    "scratchNoteName": "Мої тренування"
+    "scratchNoteName": "Мої тренування",
+    "takeTour": "Проходьте екскурсію",
+    "takeTourDesc": "Додає приклади тренувань, а потім показує, як вести записи, використовувати графіки, таблиці та таймери."
   },
   "tour": {
     "back": "Назад",

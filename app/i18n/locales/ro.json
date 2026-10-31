@@ -36,7 +36,8 @@
     "manageMuscleTags": "Gestionează etichetele pentru mușchi",
     "migrateExerciseTypes": "Migrează tipurile de exerciții",
     "createExampleNotes": "Creați note de exemplu",
-    "openGettingStartedGuide": "Deschide ghidul de pornire"
+    "openGettingStartedGuide": "Deschide ghidul de pornire",
+    "startTour": "Începeți turul"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Rulează toate",
       "savePreset": "Salvează",
       "saveProtocol": "Salvează",
-      "showWelcome": "Afișează mesajul de bun venit"
+      "showWelcome": "Afișează mesajul de bun venit",
+      "takeTour": "Urmăriți turul"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Începe de la zero",
     "startScratchDesc": "Creează o notă cu jurnalul tău și deschide formularul pentru a înregistra o primă serie de date.",
     "later": "Mai târziu",
-    "scratchNoteName": "Antrenamentele mele"
+    "scratchNoteName": "Antrenamentele mele",
+    "takeTour": "Urmăriți turul",
+    "takeTourDesc": "Adaugă antrenamente de exemplu, apoi te ghidează prin înregistrarea antrenamentelor, crearea de grafice și tabele, precum și utilizarea temporizatorului."
   },
   "tour": {
     "back": "Înapoi",

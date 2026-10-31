@@ -36,7 +36,8 @@
     "manageMuscleTags": "Zarządzaj tagami mięśni",
     "migrateExerciseTypes": "Migruj typy ćwiczeń",
     "createExampleNotes": "Utwórz przykładowe notatki",
-    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących"
+    "openGettingStartedGuide": "Otwórz przewodnik dla początkujących",
+    "startTour": "Rozpocznij wycieczkę"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Uruchom wszystko",
       "savePreset": "Zapisz",
       "saveProtocol": "Zapisz",
-      "showWelcome": "Pokaż powitanie"
+      "showWelcome": "Pokaż powitanie",
+      "takeTour": "Przejdź trasę"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Zacznij od zera",
     "startScratchDesc": "Tworzy notatkę z Twoimi danymi logowania i otwiera formularz, aby zarejestrować pierwsze zestaw danych.",
     "later": "Później",
-    "scratchNoteName": "Moje treningi"
+    "scratchNoteName": "Moje treningi",
+    "takeTour": "Przejdź trasę",
+    "takeTourDesc": "Dodaje przykładowe ćwiczenia, a następnie przeprowadza Cię przez proces rejestracji, tworzenie wykresów, tabel i ustawianie timerów."
   },
   "tour": {
     "back": "Wstecz",

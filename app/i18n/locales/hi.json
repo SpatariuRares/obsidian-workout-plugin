@@ -36,7 +36,8 @@
     "manageMuscleTags": "मांसपेशी टैग प्रबंधित करें",
     "migrateExerciseTypes": "व्यायाम प्रकार माइग्रेट करें",
     "createExampleNotes": "उदाहरण नोट्स बनाएँ",
-    "openGettingStartedGuide": "शुरू करने के लिए गाइड खोलें"
+    "openGettingStartedGuide": "शुरू करने के लिए गाइड खोलें",
+    "startTour": "टूर शुरू करें"
   },
   "common": {
     "bpm": "बीपीएम",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "सभी चलाएँ",
       "savePreset": "सेव करें",
       "saveProtocol": "सेव करें",
-      "showWelcome": "स्वागत प्रदर्शित करें"
+      "showWelcome": "स्वागत प्रदर्शित करें",
+      "takeTour": "टूर लें"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "मांसपेशी टैग की CSV फ़ाइल पहले से मौजूद है। क्या आप इसे डिफ़ॉल्ट मानों से ओवरराइट करना चाहते हैं? इससे सभी कस्टम टैग हट जाएंगे।",
@@ -1017,7 +1019,9 @@
     "startScratch": "शुरू से",
     "startScratchDesc": "यह आपके लॉग के साथ एक नोट बनाता है और पहली सेट को लॉग करने के लिए फॉर्म खोलता है।",
     "later": "बाद में",
-    "scratchNoteName": "मेरा वर्कआउट"
+    "scratchNoteName": "मेरा वर्कआउट",
+    "takeTour": "टूर लें",
+    "takeTourDesc": "नमूना वर्कआउट जोड़ता है, फिर लॉगिंग, चार्ट, तालिकाओं और टाइमर का उपयोग करने का तरीका बताता है।"
   },
   "tour": {
     "back": "वापस",

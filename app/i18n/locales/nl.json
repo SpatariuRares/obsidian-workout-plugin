@@ -36,7 +36,8 @@
     "manageMuscleTags": "Spierlabels beheren",
     "migrateExerciseTypes": "Oefeningstypen migreren",
     "createExampleNotes": "Maak voorbeeldnotities",
-    "openGettingStartedGuide": "Open handleiding"
+    "openGettingStartedGuide": "Open handleiding",
+    "startTour": "Begin de tour"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Alle onderhoud uitvoeren",
       "savePreset": "Opslaan",
       "saveProtocol": "Opslaan",
-      "showWelcome": "Toon welkomstbericht"
+      "showWelcome": "Toon welkomstbericht",
+      "takeTour": "Volg de tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Begin opnieuw",
     "startScratchDesc": "Maakt een notitie met uw log en opent het formulier om de eerste set in te voeren.",
     "later": "Later",
-    "scratchNoteName": "Mijn trainingen"
+    "scratchNoteName": "Mijn trainingen",
+    "takeTour": "Volg de tour",
+    "takeTourDesc": "Voegt voorbeeldtrainingen toe, waarna het je begeleidt bij het bijhouden van je voortgang, het maken van grafieken, tabellen en timers."
   },
   "tour": {
     "back": "Terug",

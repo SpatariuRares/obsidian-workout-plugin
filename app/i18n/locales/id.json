@@ -36,7 +36,8 @@
     "manageMuscleTags": "Kelola tag otot",
     "migrateExerciseTypes": "Migrasikan jenis latihan",
     "createExampleNotes": "Buat catatan contoh",
-    "openGettingStartedGuide": "Buka panduan memulai"
+    "openGettingStartedGuide": "Buka panduan memulai",
+    "startTour": "Mulai tur"
   },
   "common": {
     "bpm": "BPM",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Jalankan semua",
       "savePreset": "Simpan",
       "saveProtocol": "Simpan",
-      "showWelcome": "Tampilkan pesan selamat datang"
+      "showWelcome": "Tampilkan pesan selamat datang",
+      "takeTour": "Ikuti tur"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Mulai dari awal",
     "startScratchDesc": "Membuat catatan dengan log Anda dan membuka formulir untuk mencatat set pertama.",
     "later": "Nanti",
-    "scratchNoteName": "Latihan saya"
+    "scratchNoteName": "Latihan saya",
+    "takeTour": "Ikuti tur",
+    "takeTourDesc": "Menambahkan contoh latihan, kemudian memandu Anda dalam mencatat, membuat grafik, tabel, dan mengatur timer."
   },
   "tour": {
     "back": "Kembali",

@@ -36,7 +36,8 @@
     "manageMuscleTags": "Menaxho etiketat e muskujve",
     "migrateExerciseTypes": "Migro llojet e ushtrimeve",
     "createExampleNotes": "Krijo nota të shembullore",
-    "openGettingStartedGuide": "Hap udhezimin për fillimin"
+    "openGettingStartedGuide": "Hap udhezimin për fillimin",
+    "startTour": "Filloni turën"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Ekzekuto të gjitha",
       "savePreset": "Ruaj",
       "saveProtocol": "Ruaj",
-      "showWelcome": "Shfaq"
+      "showWelcome": "Shfaq",
+      "takeTour": "Filloni udhëtimin"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Filloni nga zero",
     "startScratchDesc": "Krijo një notë me regjistrimin tuaj dhe hap formularin për të regjistruar një set të parë.",
     "later": "Më pas",
-    "scratchNoteName": "Rutina e stëmimit time"
+    "scratchNoteName": "Rutina e stëmimit time",
+    "takeTour": "Filloni udhëtimin",
+    "takeTourDesc": "Shtron stila të sheh, pastaj ju ndihmon të regjistroheni, të shohni grafikët, tabelat dhe orët."
   },
   "tour": {
     "back": "Para",

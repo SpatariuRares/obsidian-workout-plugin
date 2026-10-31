@@ -36,7 +36,8 @@
     "manageMuscleTags": "إدارة علامات العضلات",
     "migrateExerciseTypes": "ترحيل أنواع التمارين",
     "createExampleNotes": "إنشاء ملاحظات نموذجية",
-    "openGettingStartedGuide": "فتح دليل البدء السريع"
+    "openGettingStartedGuide": "فتح دليل البدء السريع",
+    "startTour": "ابدأ الجولة"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "تشغيل الكل",
       "savePreset": "حفظ",
       "saveProtocol": "حفظ",
-      "showWelcome": "عرض ترحيب"
+      "showWelcome": "عرض ترحيب",
+      "takeTour": "ابدأ الجولة"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "يوجد ملف CSV لعلامات العضلات بالفعل. هل ترغب في استبداله بالقيم الافتراضية؟ سيؤدي هذا إلى إزالة أي علامات مخصصة.",
@@ -1017,7 +1019,9 @@
     "startScratch": "ابدأ من الصفر",
     "startScratchDesc": "يقوم بإنشاء ملاحظة تحتوي على سجلاتك، ويفتح النموذج لتسجيل مجموعة أولية.",
     "later": "لاحقًا",
-    "scratchNoteName": "تمارين التدريب"
+    "scratchNoteName": "تمارين التدريب",
+    "takeTour": "ابدأ الجولة",
+    "takeTourDesc": "يضيف تمارين نموذجية، ثم يقدم لك إرشادات حول تسجيل البيانات، وإنشاء الرسوم البيانية والجداول، واستخدام المؤقت."
   },
   "tour": {
     "back": "رجوع",

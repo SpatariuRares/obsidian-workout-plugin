@@ -36,7 +36,8 @@
     "manageMuscleTags": "Muskel-Tags verwalten",
     "migrateExerciseTypes": "Übungstypen migrieren",
     "createExampleNotes": "Beispielnotizen erstellen",
-    "openGettingStartedGuide": "Öffne die Einführung"
+    "openGettingStartedGuide": "Öffne die Einführung",
+    "startTour": "Beginnen Sie die Tour"
   },
   "common": {
     "bpm": "BPM",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Alle durchführen",
       "savePreset": "Speichern",
       "saveProtocol": "Speichern",
-      "showWelcome": "Zeige Willkommensnachricht"
+      "showWelcome": "Zeige Willkommensnachricht",
+      "takeTour": "Starte die Tour"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Beginne von Grund auf",
     "startScratchDesc": "Erstellt eine Notiz mit Ihrem Protokoll und öffnet das Formular, um die erste Reihe zu protokollieren.",
     "later": "Später",
-    "scratchNoteName": "Meine Trainingseinheiten"
+    "scratchNoteName": "Meine Trainingseinheiten",
+    "takeTour": "Nehmen Sie die Führung",
+    "takeTourDesc": "Fügt Beispiel-Trainings hinzu und führt Sie anschließend durch die Erfassung von Daten, die Erstellung von Diagrammen und Tabellen sowie die Verwendung von Timern."
   },
   "tour": {
     "back": "Zurück",

@@ -36,7 +36,8 @@
     "manageMuscleTags": "Administrer muskeltagger",
     "migrateExerciseTypes": "Migrer øvelsestyper",
     "createExampleNotes": "Opprett eksempelnotater",
-    "openGettingStartedGuide": "Åpne veiledning"
+    "openGettingStartedGuide": "Åpne veiledning",
+    "startTour": "Start guiden"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Kjør alt",
       "savePreset": "Lagre",
       "saveProtocol": "Lagre",
-      "showWelcome": "Vis velkomst"
+      "showWelcome": "Vis velkomst",
+      "takeTour": "Følg guiden"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Start fra bunnen av",
     "startScratchDesc": "Oppretter en notat med loggen din og åpner skjemaet for å registrere den første settet.",
     "later": "Senere",
-    "scratchNoteName": "Mine treningsøkter"
+    "scratchNoteName": "Mine treningsøkter",
+    "takeTour": "Ta en omvisning",
+    "takeTourDesc": "Legger til eksempeløkter, og guider deg deretter gjennom registrering, grafer, tabeller og tidsmålere."
   },
   "tour": {
     "back": "Tilbake",

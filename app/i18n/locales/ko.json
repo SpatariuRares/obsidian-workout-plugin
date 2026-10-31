@@ -36,7 +36,8 @@
     "manageMuscleTags": "근육 태그 관리",
     "migrateExerciseTypes": "운동 유형 마이그레이션",
     "createExampleNotes": "예제 노트 생성",
-    "openGettingStartedGuide": "시작 가이드 열기"
+    "openGettingStartedGuide": "시작 가이드 열기",
+    "startTour": "투어 시작"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "모두 실행",
       "savePreset": "저장",
       "saveProtocol": "저장",
-      "showWelcome": "환영 메시지 표시"
+      "showWelcome": "환영 메시지 표시",
+      "takeTour": "투어 시작"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "이미 근육 태그 CSV 파일이 존재합니다. 기본 값으로 덮어쓰기를 하시겠습니까? 이 경우 모든 사용자 지정 태그가 삭제됩니다.",
@@ -1017,7 +1019,9 @@
     "startScratch": "처음부터 시작",
     "startScratchDesc": "사용자 로그를 기록하고, 첫 번째 기록을 입력할 양식을 엽니다.",
     "later": "나중에",
-    "scratchNoteName": "제 운동 기록"
+    "scratchNoteName": "제 운동 기록",
+    "takeTour": "투어 시작",
+    "takeTourDesc": "샘플 운동 루틴을 추가하고, 기록, 차트, 표, 타이머 사용 방법을 안내합니다."
   },
   "tour": {
     "back": "돌아가",

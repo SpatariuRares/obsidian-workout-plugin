@@ -36,7 +36,8 @@
     "manageMuscleTags": "Kas etiketlerini yönet",
     "migrateExerciseTypes": "Egzersiz türlerini taşı",
     "createExampleNotes": "Örnek notlar oluştur",
-    "openGettingStartedGuide": "Başlangıç kılidını aç"
+    "openGettingStartedGuide": "Başlangıç kılidını aç",
+    "startTour": "Turu başlatın"
   },
   "common": {
     "bpm": "bpm",
@@ -789,7 +790,8 @@
       "runAllMaintenance": "Tümünü çalıştır",
       "savePreset": "Kaydet",
       "saveProtocol": "Kaydet",
-      "showWelcome": "Hoş geldiniz göster"
+      "showWelcome": "Hoş geldiniz göster",
+      "takeTour": "Turlara katılın"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
@@ -1017,7 +1019,9 @@
     "startScratch": "Yeni bir başlangıç yap",
     "startScratchDesc": "Kayıtlarınızı içeren bir not oluşturur ve ilk kaydı kaydetmek için formu açar.",
     "later": "Daha sonra",
-    "scratchNoteName": "Egzersizlerim"
+    "scratchNoteName": "Egzersizlerim",
+    "takeTour": "Turları tamamla",
+    "takeTourDesc": "Örnek egzersizler ekler, ardından kaydı, grafikleri, tabloları ve zamanlayıcıları kullanma konusunda size rehberlik eder."
   },
   "tour": {
     "back": "Geri",

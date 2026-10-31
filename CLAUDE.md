@@ -132,7 +132,9 @@ The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the 
 
 #### ExampleGeneratorService (`app/services/examples/ExampleGeneratorService.ts`)
 
-`new ExampleGeneratorService(plugin).createExamples(confirmOverwrite)` is the one "create examples" flow (confirm, write, then settings): with no log at `csvLogFilePath` it points `csvLogFilePath`/`exerciseFolderPath` at the example files so the views show them; with a real log it changes nothing. Commands and modals call it, never `generateExampleFolder` directly.
+Entry points for commands, modals and callouts are `createExampleNotes(plugin)` and `openGettingStartedGuide(plugin)` in `GettingStartedGuide.ts` (`examplesCreated(result)` is the one success check); don't call `new ExampleGeneratorService(plugin).createExamples()` or `generateExampleFolder()` from UI code. Creation only adds missing files and never overwrites one (so running it again is safe, even on an example log the user logs to), and there is no overwrite prompt. With no log at `csvLogFilePath` it points `csvLogFilePath`/`exerciseFolderPath` at the example files so the views show them; with a real log it changes no setting. Example vault paths come from `examplePaths` (`ExamplePaths.ts`); "is there a log at `csvLogFilePath`" is `logFileExists(plugin)` (`app/services/data/logFileExists.ts`).
+
+The welcome flow: `Welcome.ts` (`shouldShowWelcome`, `markWelcomeShown`, `startFromScratch`) and `WelcomeModal`, shown once on a fresh install. The "Show welcome" button in Settings → Getting started opens `WelcomeModal` directly, without the fresh-install check and without touching `welcomeShown`.
 
 #### ExerciseDefinitionService
 

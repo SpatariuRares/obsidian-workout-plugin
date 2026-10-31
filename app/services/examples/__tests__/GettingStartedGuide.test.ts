@@ -65,20 +65,13 @@ describe("getting started guide", () => {
     );
 
   describe("createExampleNotes", () => {
-    it("asks before overwriting an existing example folder", async () => {
-      mockCreateExamples.mockImplementation(
-        async (confirm: () => Promise<boolean>) =>
-          (await confirm()) ? "separate-file" : "cancelled",
-      );
+    it("creates the examples without asking anything", async () => {
+      mockCreateExamples.mockResolvedValue("separate-file");
 
-      const result = createExampleNotes(plugin);
-      await flush();
-      expect(modals[0].message).toBe(
-        t("settings.messages.confirmOverwriteExamples"),
-      );
-      modals[0].decline();
+      await expect(createExampleNotes(plugin)).resolves.toBe("separate-file");
 
-      await expect(result).resolves.toBe("cancelled");
+      expect(mockCreateExamples).toHaveBeenCalledWith();
+      expect(modals).toHaveLength(0);
     });
   });
 

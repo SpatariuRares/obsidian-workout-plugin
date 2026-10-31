@@ -27,10 +27,10 @@ Mobile-first workout tracker for Obsidian. Log every set from your phone at the 
 The first time you install the plugin, a welcome window asks how you want to begin. You don't need to open settings.
 
 - **Try with example data** adds sample exercises, a few workouts with a month of logs, and a dashboard, points the plugin at them, and opens a short guide. Poke around before setting up your own.
-- **Start from scratch** creates a note called "My workouts" with a log table and opens the log form, so you can log your first set right away. The log file is created when you save it.
+- **Start from scratch** creates a note called "My workouts" at the top of your vault (an existing note is never overwritten) with a log table and opens the log form, so you can log your first set right away. The log file is created when you save it.
 - **Later** closes the window without changing anything.
 
-Closed it by accident, or want the examples later? Open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
+Closed it by accident, or want it again? Select **Show welcome** under **Settings → Workout Planner → Getting started** to open the window again. Or open the command palette (`Ctrl/Cmd + P`) and run **Create example notes** or **Open getting started guide**. Creating the examples never overwrites anything: running it again only adds the example files that are missing, and files you changed stay as they are. The guide offers to create the examples if they don't exist yet. An empty table, chart or dashboard also has an **Or explore with example data** link. If you already have a workout log, the examples get their own log file and yours stays untouched.
 
 To add a table to any note, for example `Push Day`:
 

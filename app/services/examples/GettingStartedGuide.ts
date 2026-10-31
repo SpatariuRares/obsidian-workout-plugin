@@ -21,21 +21,19 @@ function ask(app: ExamplePluginPort["app"], message: string): Promise<boolean> {
 }
 
 /**
- * "Create example notes" with its overwrite confirmation. The one call the
- * settings button, the command, the welcome modal and the empty-state link
- * share.
+ * "Create example notes": adds the example files that are missing and never
+ * touches an existing one. The one call the command, the welcome modal and the
+ * empty-state link share.
  */
 export function createExampleNotes(
   plugin: ExamplePluginPort,
 ): Promise<CreateExamplesResult> {
-  return new ExampleGeneratorService(plugin).createExamples(() =>
-    ask(plugin.app, t("settings.messages.confirmOverwriteExamples")),
-  );
+  return new ExampleGeneratorService(plugin).createExamples();
 }
 
-/** Whether the examples were written, i.e. not cancelled and not failed */
+/** Whether the examples were written, i.e. the result is not "failed" */
 export function examplesCreated(result: CreateExamplesResult): boolean {
-  return result !== "cancelled" && result !== "failed";
+  return result !== "failed";
 }
 
 /**

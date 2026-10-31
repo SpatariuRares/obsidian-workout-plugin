@@ -29,13 +29,11 @@ export type ExamplePluginPort = AppPort &
  * How `createExamples` ended:
  * - `pointed-at-examples`: no log existed, so the settings now read the example log and exercises
  * - `separate-file`: a log exists, so it and the settings were left alone
- * - `cancelled`: the user declined to overwrite the existing example folder
  * - `failed`: the example files could not be written
  */
 export type CreateExamplesResult =
   | "pointed-at-examples"
   | "separate-file"
-  | "cancelled"
   | "failed";
 
 export class ExampleGeneratorService {
@@ -47,22 +45,17 @@ export class ExampleGeneratorService {
 
   /**
    * The one entry point for "create examples" (settings button, command,
-   * welcome modal). Asks `confirmOverwrite` when the example folder already
-   * exists, writes the examples, then decides how the views reach them: with
+   * welcome modal). Writes the examples that are missing (an existing file,
+   * the log included, is never touched), then decides how the views reach them: with
    * no log at `csvLogFilePath` the settings are pointed at the example log
    * and exercises; with a real log nothing in the settings or that log
    * changes. Tells the user either way.
    */
-  public async createExamples(
-    confirmOverwrite: () => Promise<boolean>,
-  ): Promise<CreateExamplesResult> {
-    const overwrite = this.exampleFolderExists();
-    if (overwrite && !(await confirmOverwrite())) return "cancelled";
-
+  public async createExamples(): Promise<CreateExamplesResult> {
     // Decide before writing: the examples never count as the user's log
     const hasLog = logFileExists(this.plugin);
 
-    if (!(await this.generateExampleFolder(overwrite))) return "failed";
+    if (!(await this.generateExampleFolder())) return "failed";
     if (hasLog) {
       if (this.plugin.settings.csvLogFilePath !== examplePaths.log()) {
         new Notice(t("examples.usesSeparateLog"));
@@ -92,19 +85,8 @@ export class ExampleGeneratorService {
     return "pointed-at-examples";
   }
 
-  /** Whether the (localized) example folder already exists in the vault */
-  public exampleFolderExists(): boolean {
-    return (
-      this.app.vault.getAbstractFileByPath(
-        examplePaths.base(),
-      ) instanceof TFolder
-    );
-  }
-
-  /** Writes the example folder; false when it could not be written */
-  public async generateExampleFolder(
-    overwrite: boolean = false,
-  ): Promise<boolean> {
+  /** Creates the example files that do not exist yet; false when it could not be written */
+  public async generateExampleFolder(): Promise<boolean> {
     const baseFolderName = t("examples.folderNames.base");
     const basePath = examplePaths.base();
     const exercisesPath = examplePaths.exercises();
@@ -119,11 +101,10 @@ export class ExampleGeneratorService {
       await this.createFolderIfNotExists(logPath);
 
       // Create Getting Started File
-      await this.createOrUpdateFile(
+      await this.createFileIfMissing(
         basePath,
         `${t("examples.fileNames.gettingStarted")}.md`,
         generateGettingStartedContent(),
-        overwrite,
       );
 
       // Create Exercises
@@ -131,13 +112,11 @@ export class ExampleGeneratorService {
         name: string;
         type: string;
         tags: string[];
-        overwrite?: boolean;
       }[] = [
         {
           name: t("examples.exercises.benchPress.name"),
           type: "strength",
           tags: ["chest", "triceps", "shoulders"],
-          overwrite: true,
         },
         {
           name: t("examples.exercises.squat.name"),
@@ -187,56 +166,46 @@ export class ExampleGeneratorService {
       ];
 
       for (const ex of exercises) {
-        await this.createOrUpdateFile(
+        await this.createFileIfMissing(
           exercisesPath,
           `${ex.name}.md`,
           generateExerciseContent(ex.name, ex.type, ex.tags),
-          ex.overwrite ? overwrite : false,
         );
       }
 
       // Create Workout
-      await this.createOrUpdateFile(
+      await this.createFileIfMissing(
         workoutsPath,
         `${t("examples.workouts.lowerBodyA.name")}.md`,
         generateWorkoutContent(),
-        overwrite,
       );
 
-      // Create Log File. Never over the log the settings read: after
-      // "try with example data" that is the user's own log.
-      const logIsActive =
-        normalizePath(this.plugin.settings.csvLogFilePath) ===
-        examplePaths.log();
-      await this.createOrUpdateFile(
+      // Create Log File
+      await this.createFileIfMissing(
         logPath,
         examplePaths.logFileName(),
         generateExampleCSVData(),
-        overwrite && !logIsActive,
-      );
+              );
 
       // Create Dashboard File
-      await this.createOrUpdateFile(
+      await this.createFileIfMissing(
         basePath,
         `${t("examples.fileNames.dashboard")}.md`,
         generateDashboardContent(),
-        overwrite,
       );
 
       // Create Feature Showcase File
-      await this.createOrUpdateFile(
+      await this.createFileIfMissing(
         basePath,
         `${t("examples.fileNames.featureShowcase")}.md`,
         generateFeatureShowcaseContent(),
-        overwrite,
       );
 
       // Create HIIT Workout
-      await this.createOrUpdateFile(
+      await this.createFileIfMissing(
         workoutsPath,
         `${t("examples.fileNames.hiitCardioSession")}.md`,
         generateHIITContent(),
-        overwrite,
       );
 
       new Notice(
@@ -260,11 +229,10 @@ export class ExampleGeneratorService {
     }
   }
 
-  private async createOrUpdateFile(
+  private async createFileIfMissing(
     folderPath: string,
     fileName: string,
     content: string,
-    overwrite: boolean,
   ): Promise<void> {
     const filePath = normalizePath(`${folderPath}/${fileName}`);
     const existingFile =
@@ -274,8 +242,6 @@ export class ExampleGeneratorService {
       await this.app.vault.create(filePath, content);
     } else if (!(existingFile instanceof TFile)) {
       throw new Error(`Path '${filePath}' exists but is not a file.`);
-    } else if (overwrite) {
-      await this.app.vault.modify(existingFile, content);
     }
   }
 }

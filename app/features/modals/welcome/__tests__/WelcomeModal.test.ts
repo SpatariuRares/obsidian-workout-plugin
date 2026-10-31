@@ -8,6 +8,7 @@ const mockOpenGuide = jest.fn();
 jest.mock("@app/services/examples/GettingStartedGuide", () => ({
   createExampleNotes: (...a: unknown[]) => mockCreateExampleNotes(...a),
   openGettingStartedGuide: (...a: unknown[]) => mockOpenGuide(...a),
+  examplesCreated: (result: string) => result !== "failed",
 }));
 const mockStartFromScratch = jest.fn();
 jest.mock("@app/services/onboarding/Welcome", () => ({
@@ -47,8 +48,8 @@ describe("WelcomeModal", () => {
     expect(close).toHaveBeenCalled();
   });
 
-  it("does not open the guide when creating the examples was cancelled", async () => {
-    mockCreateExampleNotes.mockResolvedValue("cancelled");
+  it("does not open the guide when creating the examples failed", async () => {
+    mockCreateExampleNotes.mockResolvedValue("failed");
     const { click } = openModal();
     click(t("welcome.tryExamples"));
     await flush();

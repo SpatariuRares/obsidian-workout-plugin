@@ -41,6 +41,7 @@ export function getUnitsMap(): Record<CHART_DATA_TYPE, string> {
   return {
     [CHART_DATA_TYPE.VOLUME]: weightUnit,
     [CHART_DATA_TYPE.WEIGHT]: weightUnit,
+    [CHART_DATA_TYPE.E1RM]: weightUnit,
     [CHART_DATA_TYPE.REPS]: "",
     [CHART_DATA_TYPE.DURATION]: t("common.sec"),
     [CHART_DATA_TYPE.DISTANCE]: t("common.km"),
@@ -63,6 +64,7 @@ export function getColumnLabels(): Record<CHART_DATA_TYPE, string> {
     [CHART_DATA_TYPE.WEIGHT]: t("table.columns.weightUnit", {
       weightUnit,
     }),
+    [CHART_DATA_TYPE.E1RM]: `${t("charts.types.e1rm")} (${weightUnit})`,
     [CHART_DATA_TYPE.REPS]: t("table.columns.reps"),
     [CHART_DATA_TYPE.DURATION]: t("table.columns.duration"),
     [CHART_DATA_TYPE.DISTANCE]: t("table.columns.distanceUnit", {
@@ -80,6 +82,7 @@ export function getTypeNames(): Record<CHART_DATA_TYPE, string> {
   return {
     [CHART_DATA_TYPE.VOLUME]: t("charts.types.volume"),
     [CHART_DATA_TYPE.WEIGHT]: t("charts.types.weight"),
+    [CHART_DATA_TYPE.E1RM]: t("charts.types.e1rm"),
     [CHART_DATA_TYPE.REPS]: t("charts.types.reps"),
     [CHART_DATA_TYPE.DURATION]: t("charts.types.duration"),
     [CHART_DATA_TYPE.DISTANCE]: t("charts.types.distance"),
@@ -120,6 +123,10 @@ export function getDynamicDataTypeOptions() {
       value: "weight",
     },
     { text: t("modal.labels.reps"), value: "reps" },
+    {
+      text: `${t("charts.types.e1rm")} (${weightUnit})`,
+      value: "e1rm",
+    },
   ];
 }
 

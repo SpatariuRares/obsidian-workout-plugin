@@ -1,5 +1,6 @@
 // Refactored InsertChartModal extending BaseInsertModal
 
+import { getYAxisLabel } from "@app/features/charts/config/ChartConstants";
 import { DomUtils } from "@app/utils/DomUtils";
 import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -453,6 +454,7 @@ export class InsertChartModal extends BaseInsertModal {
     // If no exercise selected, reset to standard options
     if (!exerciseName) {
       // Rebuild standard options
+      const currentValue = this.dataTypeSelect.value;
       this.dataTypeSelect.empty();
       const standardOptions =
         CONSTANTS.WORKOUT.MODAL.SELECT_OPTIONS.DATA_TYPE.map(
@@ -467,6 +469,9 @@ export class InsertChartModal extends BaseInsertModal {
           attr: { value: opt.value },
         });
       });
+      if (standardOptions.some((option) => option.value === currentValue)) {
+        this.dataTypeSelect.value = currentValue;
+      }
       this.buildDataTypeChips(standardOptions);
       return;
     }
@@ -490,6 +495,7 @@ export class InsertChartModal extends BaseInsertModal {
     );
 
     // Clear existing options
+    const currentVal = this.dataTypeSelect.value;
     this.dataTypeSelect.empty();
 
     // Build new options
@@ -502,7 +508,9 @@ export class InsertChartModal extends BaseInsertModal {
       );
       const displayText = customParam
         ? ParameterUtils.formatParamWithUnit(customParam)
-        : ParameterUtils.formatKeyWithUnit(type);
+        : type === "e1rm"
+          ? getYAxisLabel(type)
+          : ParameterUtils.formatKeyWithUnit(type);
 
       this.dataTypeSelect?.createEl("option", {
         text: displayText,
@@ -512,13 +520,9 @@ export class InsertChartModal extends BaseInsertModal {
     });
 
     // Update selected value to default if current is invalid
-    const currentVal = this.dataTypeSelect.value;
-    if (!isValidChartDataType(typeId, currentVal, customParams)) {
-      this.dataTypeSelect.value = getDefaultChartDataType(
-        typeId,
-        customParams,
-      );
-    }
+    this.dataTypeSelect.value = isValidChartDataType(typeId, currentVal, customParams)
+      ? currentVal
+      : getDefaultChartDataType(typeId, customParams);
 
     // Rebuild data type chips
     this.buildDataTypeChips(newOptions);

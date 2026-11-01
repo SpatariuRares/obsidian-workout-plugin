@@ -407,7 +407,7 @@ Source of truth: one schema per block, built with `defineCodeBlock` (`app/servic
 ```yaml
 exercise: Squat
 workout: Push Day
-type: volume # volume, weight, reps, duration, distance, pace, heartRate
+type: volume # volume, weight, reps, e1rm, duration, distance, pace, heartRate
 chartType: exercise # exercise = daily average; workout/combined/all = daily total (all ignores filters)
 dateRange: 30
 limit: 50
@@ -417,6 +417,20 @@ showStats: true # default true
 title: Squat volume
 height: "400px"
 ```
+
+For daily best estimated 1RM:
+
+```yaml
+exercise: Squat
+type: e1rm
+dateRange: 180
+```
+
+`TrainingHistory` owns Epley estimates (`weight × (1 + reps / 30)`) for
+integer reps 1–12 and positive weight, excluding warm-up and drop sets like PRs.
+Days without eligible sets are omitted; kg/lb follows settings. Strength charts
+still default to volume. API `getExerciseStats` adds
+`estimatedOneRepMax` (`number | null`); CSV and existing PR fields stay unchanged.
 
 #### workout-log
 

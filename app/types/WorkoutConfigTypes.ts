@@ -10,6 +10,7 @@ export enum CHART_DATA_TYPE {
   // Strength exercise types
   VOLUME = "volume",
   WEIGHT = "weight",
+  E1RM = "e1rm",
   REPS = "reps",
   // Timed/Distance/Cardio exercise types
   DURATION = "duration",

@@ -3,7 +3,10 @@
  * Centralizes all magic strings, labels, and default values.
  */
 
-import { getTypeNames, getUnitsMap } from "@app/constants/ui.constants";
+import {
+  getTypeNames,
+  getUnitsMap,
+} from "@app/constants/ui.constants";
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { t } from "@app/i18n";
 
@@ -63,6 +66,8 @@ export const ChartInteraction = {
  * @returns Formatted chart title
  */
 export function getDefaultChartTitle(dataType: string): string {
+  if (dataType === "e1rm")
+    return getTypeNames()[CHART_DATA_TYPE.E1RM];
   const capitalizedType =
     dataType.charAt(0).toUpperCase() + dataType.slice(1);
   return t("charts.defaultTitle", { type: capitalizedType });
@@ -84,7 +89,10 @@ export function getUnitForDataType(dataType: string): string {
  * @param value - The already formatted value
  * @param dataType - Chart data type id or a custom field key
  */
-export function formatWithUnit(value: string, dataType: string): string {
+export function formatWithUnit(
+  value: string,
+  dataType: string,
+): string {
   const unit = getUnitForDataType(dataType);
   return unit ? `${value} ${unit}` : value;
 }
@@ -96,7 +104,8 @@ export function formatWithUnit(value: string, dataType: string): string {
  * @returns Y-axis label string
  */
 export function getYAxisLabel(dataType: string): string {
-  const name = getTypeNames()[dataType as CHART_DATA_TYPE] ?? dataType;
+  const name =
+    getTypeNames()[dataType as CHART_DATA_TYPE] ?? dataType;
   const unit = getUnitForDataType(dataType);
   return unit ? `${name} (${unit})` : name;
 }
@@ -106,7 +115,7 @@ export function getYAxisLabel(dataType: string): string {
  * Determines what data types can be visualized for each exercise type.
  */
 const EXERCISE_TYPE_CHART_DATA_TYPES: Record<string, string[]> = {
-  strength: ["volume", "weight", "reps"],
+  strength: ["volume", "weight", "reps", "e1rm"],
   timed: ["duration"],
   distance: ["distance", "duration", "pace"],
   cardio: ["duration", "distance", "heartRate"],

@@ -1,3 +1,4 @@
+import { t } from "@app/i18n";
 // Embedded Chart View for workout data visualization
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
@@ -25,7 +26,10 @@ import { BaseView } from "@app/features/common/views/BaseView";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { Feedback } from "@app/components/atoms/Feedback";
-import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
+import {
+  TOUR_TARGETS,
+  markTourTarget,
+} from "@app/features/tour/tourTargets";
 
 export class EmbeddedChartView extends BaseView {
   constructor(plugin: WorkoutPluginContext) {
@@ -130,6 +134,14 @@ export class EmbeddedChartView extends BaseView {
         "DD/MM/YYYY",
         params.chartType || CHART_TYPE.EXERCISE,
       );
+      if (
+        resolvedType === CHART_DATA_TYPE.E1RM &&
+        chartData.labels.length === 0
+      ) {
+        loadingDiv.remove();
+        Feedback.renderError(container, t("charts.noEligibleE1rm"));
+        return;
+      }
       const { labels, datasets } = ChartDataUtils.limitToLatest(
         chartData.labels,
         chartData.datasets,

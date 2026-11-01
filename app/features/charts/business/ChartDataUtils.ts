@@ -1,9 +1,11 @@
+import { getTypeNames } from "@app/constants/ui.constants";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import {
   ChartDataset,
   CHART_DATA_TYPE,
   CHART_TYPE,
 } from "@app/features/charts/types";
+import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { DateUtils } from "@app/utils/DateUtils";
 import { ChartDataExtractor } from "@app/features/charts/business/ChartDataExtractor";
 
@@ -26,7 +28,10 @@ export class ChartDataUtils {
     }
     return {
       labels: labels.slice(-limit),
-      datasets: datasets.map((d) => ({ ...d, data: d.data.slice(-limit) })),
+      datasets: datasets.map((d) => ({
+        ...d,
+        data: d.data.slice(-limit),
+      })),
     };
   }
 
@@ -52,6 +57,25 @@ export class ChartDataUtils {
       return logDate >= cutoffDate;
     });
 
+    if (chartType === "e1rm") {
+      const daily = new TrainingHistory(
+        filteredData,
+      ).estimatedOneRepMaxPerDay();
+      return {
+        labels: [...daily.keys()].map((day) =>
+          DateUtils.formatDateWithFormat(`${day}T12:00:00`, dateFormat),
+        ),
+        datasets: daily.size
+          ? [
+              {
+                label: getTypeNames()[CHART_DATA_TYPE.E1RM],
+                data: [...daily.values()],
+              },
+            ]
+          : [],
+      };
+    }
+
     // Sort by date
     filteredData.sort(
       (a, b) =>
@@ -59,9 +83,8 @@ export class ChartDataUtils {
     );
 
     // Check if chartType is a custom parameter key (not a standard type)
-    const isCustomParam = !ChartDataExtractor.isStandardChartType(
-      chartType,
-    );
+    const isCustomParam =
+      !ChartDataExtractor.isStandardChartType(chartType);
     const customParamKey = isCustomParam ? chartType : null;
 
     // Group by date and calculate values
@@ -100,7 +123,10 @@ export class ChartDataUtils {
       // Standard fields
       existing.volume += log.volume || 0;
       existing.weight += log.weight || 0;
-      existing.maxWeight = Math.max(existing.maxWeight, log.weight || 0);
+      existing.maxWeight = Math.max(
+        existing.maxWeight,
+        log.weight || 0,
+      );
       existing.reps += log.reps || 0;
 
       // Extract from customFields for dynamic exercise types

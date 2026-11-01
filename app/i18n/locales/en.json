@@ -19,10 +19,12 @@
       "pace": "Pace",
       "reps": "Reps",
       "volume": "Volume",
-      "weight": "Weight"
+      "weight": "Weight",
+      "e1rm": "Estimated 1RM"
     },
     "defaultTitle": "Trend {type}",
-    "noTypesAvailable": "no chart types available"
+    "noTypesAvailable": "no chart types available",
+    "noEligibleE1rm": "No eligible sets for estimated 1RM. Log a positive weight with 1–12 reps, excluding warm-up and drop sets."
   },
   "commands": {
     "addExerciseBlock": "Add exercise block",

@@ -112,7 +112,17 @@ Exercise names match loosely by default ("squat" finds "Squat (high bar)"); add 
 
 ## Charts and trends
 
-A `workout-chart` block draws one measure over time: weight, volume, reps, duration, distance, pace or heart rate. The header says whether the trend is **Increasing**, **Stable** or **Decreasing**. Stable means the trend line moves less than 5% of the average over the whole period, so a slow, steady gain still counts as increasing. For pace, lower is better, and a falling line shows as improving. On a phone the chart becomes a table of the same values.
+A `workout-chart` block draws one measure over time: weight, volume, reps, estimated 1RM, duration, distance, pace or heart rate. The header says whether the trend is **Increasing**, **Stable** or **Decreasing**. Stable means the trend line moves less than 5% of the average over the whole period, so a slow, steady gain still counts as increasing. For pace, lower is better, and a falling line shows as improving. On a phone the chart becomes a table of the same values.
+
+Use `type: e1rm` for the best daily estimated one-rep max (Epley: `weight × (1 + reps / 30)`). Only positive weights with integer reps from 1 to 12 count; warm-up and drop sets are excluded. Days without eligible sets are omitted. Estimates follow your kg/lb setting. The default strength chart remains volume.
+
+```workout-chart
+exercise: Bench Press
+type: e1rm
+dateRange: 180
+```
+
+The API adds `estimatedOneRepMax` to `getExerciseStats`: the best estimate in the configured weight unit, or `null` when no eligible set exists. Existing PR fields and CSV columns are unchanged.
 
 ![A bench press volume chart with its increasing trend on desktop, and the same values as a table on a phone](assets/charts.png)
 
@@ -328,7 +338,7 @@ dv.paragraph(`Best: ${s.prWeight} × ${s.prReps} on ${s.prDate}`);
 | Method                       | Returns                                                                                                                                                                                                                                               |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `getWorkoutLogs(filter?)`    | Sets, each with `date`, `exercise`, `reps`, `weight`, `volume`, `workout`, `notes`, `timestamp`, `protocol`. `weight` and `volume` are in the settings unit; `enteredWeight` and `enteredUnit` are what was logged                                    |
-| `getExerciseStats(exercise)` | `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                                                   |
+| `getExerciseStats(exercise)` | `estimatedOneRepMax`, `totalVolume`, `maxWeight`, `prWeight`, `prReps`, `prDate`, `totalSets`, `averageWeight`, `averageReps`, `lastWorkoutDate`, `trend`                                                                                             |
 | `getExercises(filter?)`      | Exercise names, sorted: the file names of your exercise pages (subfolders included), or the names in your log when you have no exercise pages. `{ tag: "chest" }` keeps the exercises whose page has that tag, so it is empty without exercise pages. |
 
 `getWorkoutLogs` accepts `exercise` (partial, case-insensitive), `workout`, `dateRange: { start, end }`, `protocol` and `exactMatch`.

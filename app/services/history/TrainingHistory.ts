@@ -5,6 +5,21 @@ import {
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
 import { StringUtils } from "@app/utils/StringUtils";
 
+/** Epley estimate in the row's normalized weight unit; only eligible 1–12 rep sets. */
+export function estimatedOneRepMax(
+  set: WorkoutLogData,
+): number | undefined {
+  if (
+    !countsForRecord(set) ||
+    !Number.isInteger(set.reps) ||
+    set.reps < 1 ||
+    set.reps > 12
+  )
+    return undefined;
+  const estimate = set.weight * (1 + set.reps / 30);
+  return Number.isFinite(estimate) ? estimate : undefined;
+}
+
 /** Session durations outside this window are logging gaps, not training. */
 const MIN_SESSION_SECONDS = 5 * 60;
 const MAX_SESSION_SECONDS = 5 * 60 * 60;
@@ -173,6 +188,47 @@ export class TrainingHistory {
           set: best,
         }
       : undefined;
+  }
+
+  /** Best eligible estimate; ties retain the earliest set. */
+  bestEstimatedOneRepMax(
+    exercise: string,
+  ): { value: number; day: string; set: WorkoutLogData } | undefined {
+    const wanted = StringUtils.normalize(exercise);
+    let best:
+      | { value: number; day: string; set: WorkoutLogData }
+      | undefined;
+    for (const set of this.chronological()) {
+      if (StringUtils.normalize(set.exercise) !== wanted) continue;
+      const value = estimatedOneRepMax(set);
+      if (value !== undefined && (!best || value > best.value)) {
+        best = { value, day: trainingDay(set.date), set };
+      }
+    }
+    return best;
+  }
+
+  /** Daily maximum estimate, oldest first; days without eligible sets are omitted.
+   * Omitting exercise reads all supplied rows (callers own filtering).
+   */
+  estimatedOneRepMaxPerDay(exercise?: string): Map<string, number> {
+    const wanted =
+      exercise === undefined
+        ? undefined
+        : StringUtils.normalize(exercise);
+    const byDay = new Map<string, number>();
+    for (const set of this.logs) {
+      if (
+        wanted !== undefined &&
+        StringUtils.normalize(set.exercise) !== wanted
+      )
+        continue;
+      const value = estimatedOneRepMax(set);
+      if (value === undefined) continue;
+      const day = trainingDay(set.date);
+      byDay.set(day, Math.max(byDay.get(day) ?? 0, value));
+    }
+    return new Map([...byDay].sort(([a], [b]) => a.localeCompare(b)));
   }
 
   /**

@@ -86,6 +86,8 @@ export interface ExerciseStats {
   prReps: number;
   /** Date when PR was achieved */
   prDate: string | null;
+  /** Best Epley estimate (1–12 reps, excluding warm-up/drop sets), in the settings weight unit; null when unavailable. */
+  estimatedOneRepMax: number | null;
 }
 
 /**
@@ -263,6 +265,7 @@ export class WorkoutPlannerAPI {
         prWeight: 0,
         prReps: 0,
         prDate: null,
+        estimatedOneRepMax: null,
       };
     }
 
@@ -312,6 +315,9 @@ export class WorkoutPlannerAPI {
       prWeight,
       prReps,
       prDate,
+      estimatedOneRepMax:
+        new TrainingHistory(logs).bestEstimatedOneRepMax(exercise)
+          ?.value ?? null,
     };
   }
 

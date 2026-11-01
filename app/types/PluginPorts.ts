@@ -13,6 +13,7 @@ import type { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { WorkoutPlannerAPI } from "@app/api/WorkoutPlannerAPI";
 import type { TourRunner } from "@app/features/tour/TourStep";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
+import type { TimerDeviceEffects } from "@app/features/timer/business/TimerDeviceEffects";
 
 export interface AppPort {
   app: App;
@@ -103,4 +104,4 @@ export type WorkoutPluginContext = AppPort &
   ExerciseLibraryPort &
   MuscleTagPort &
   EventBusPort &
-  LogModalPort;
+  LogModalPort & { timerDeviceEffects: TimerDeviceEffects };

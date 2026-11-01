@@ -14,6 +14,7 @@ const createPlugin = () =>
   ({
     app: {},
     settings: { timerPresets: {}, defaultTimerPreset: undefined },
+    timerDeviceEffects: { setRunning: jest.fn(), complete: jest.fn() },
   }) as unknown as WorkoutChartsPlugin;
 
 describe("EmbeddedTimerView", () => {

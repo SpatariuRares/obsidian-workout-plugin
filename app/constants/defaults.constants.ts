@@ -42,6 +42,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   timerPresets: {},
   /** Default timer preset to use (null means no default) */
   defaultTimerPreset: null,
+  keepScreenAwake: true,
+  vibrateOnCompletion: false,
   /** Template for exercise blocks inserted via modal */
   exerciseBlockTemplate: `## {{exercise}}
 

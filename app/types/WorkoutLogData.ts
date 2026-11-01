@@ -106,6 +106,10 @@ export interface WorkoutChartsSettings {
   defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;
+  /** Best-effort foreground screen protection while any timer runs */
+  keepScreenAwake: boolean;
+  /** Optional tactile cue at actual timer completion, independent of sound */
+  vibrateOnCompletion: boolean;
   exerciseBlockTemplate: string;
   weightIncrement: number;
   achievedTargets: Record<string, number>;

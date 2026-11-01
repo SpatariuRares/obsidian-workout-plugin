@@ -24,6 +24,40 @@ export class TimerPresetsSettings {
     return [
       {
         type: "group",
+        heading: t("settings.sections.timerDeviceCues"),
+        items: [
+          {
+            name: t("settings.labels.keepScreenAwake"),
+            desc: t("settings.descriptions.keepScreenAwake"),
+            render: (setting) => {
+              setting.addToggle((toggle) =>
+                toggle
+                  .setValue(this.plugin.settings.keepScreenAwake)
+                  .onChange(async (value) => {
+                    this.plugin.settings.keepScreenAwake = value;
+                    await this.plugin.saveSettings();
+                  }),
+              );
+            },
+          },
+          {
+            name: t("settings.labels.vibrateOnCompletion"),
+            desc: t("settings.descriptions.vibrateOnCompletion"),
+            render: (setting) => {
+              setting.addToggle((toggle) =>
+                toggle
+                  .setValue(this.plugin.settings.vibrateOnCompletion)
+                  .onChange(async (value) => {
+                    this.plugin.settings.vibrateOnCompletion = value;
+                    await this.plugin.saveSettings();
+                  }),
+              );
+            },
+          },
+        ],
+      },
+      {
+        type: "group",
         heading: t("settings.sections.timerPresets"),
         items: [
           {

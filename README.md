@@ -211,6 +211,8 @@ A `workout-timer` block is a countdown, interval or stopwatch timer. Save your u
 
 It beeps on iOS and Android too. Phones only allow sound after you've tapped the page, so a timer started by `autoStart` stays silent until you tap **Start** once.
 
+Under **Settings → Workout Planner → Timer device cues**, **Keep screen awake while a timer runs** is on by default. It requests screen protection while at least one timer runs in the foreground, where the device allows it. **Vibrate when a timer completes** is off by default and adds a brief pulse at zero, independently of sound, on supported devices such as Android. iOS keeps the existing audio cue; web vibration is unavailable there. These features use browser APIs on a best-effort basis and have not yet been verified on physical Android/iOS devices. They do not provide background alarms. A timer with an `id` keeps running when you change notes; pause it or let it finish to release screen protection.
+
 ```workout-timer
 type: countdown
 duration: 90

@@ -156,6 +156,8 @@ All user-facing strings in `app/constants/Constants.ts` under `CONSTANTS.WORKOUT
 
 ## Testing
 
+- **Test vault data**: In the `the-gym-test-plugin` vault, always use the existing example notes and their example CSV for live verification. The user authorizes test writes to that CSV; separate disposable notes or CSVs are not required. This permission applies only to example data in this test vault and takes precedence over generic disposable-fixture guidance for these examples.
+
 - **Location**: `__tests__/` directories alongside source files
 - **Coverage**: 70% threshold (statements, branches, functions, lines)
 - **Excluded**: Constants.ts, FrontmatterParser.ts (Obsidian API mocking)

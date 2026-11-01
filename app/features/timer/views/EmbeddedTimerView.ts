@@ -28,9 +28,10 @@ export class EmbeddedTimerView extends BaseView {
 
     // Initialize timer core with callbacks
     this.timerCore = new TimerCore(this.timerId, {
-      onTimerComplete: () => {},
+      onTimerComplete: () => this.plugin.timerDeviceEffects.complete(),
       onSoundPlay: () => {},
-      onStateChange: (_state: TimerState) => {},
+      onStateChange: (state: TimerState) =>
+        this.plugin.timerDeviceEffects.setRunning(this, state.isRunning),
     });
   }
 

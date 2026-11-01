@@ -10,6 +10,7 @@ import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSet
 import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
 import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView";
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
+import { TimerDeviceEffects } from "@app/features/timer/business/TimerDeviceEffects";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { CommandHandlerService } from "@app/services/core/CommandHandlerService";
 import { TourEngine } from "@app/features/tour/TourEngine";
@@ -48,6 +49,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   public embeddedChartView!: EmbeddedChartView;
   public embeddedTableView!: EmbeddedTableView;
   public embeddedDashboardView!: EmbeddedDashboardView;
+  public timerDeviceEffects!: TimerDeviceEffects;
   private activeTimers: Map<string, EmbeddedTimerView> = new Map();
   private quickLogRibbonIcon: HTMLElement | null = null;
   private tourEngine: TourEngine | null = null;
@@ -91,6 +93,7 @@ export default class WorkoutChartsPlugin extends Plugin {
 
   async onload() {
     await this.loadSettings();
+    this.timerDeviceEffects = new TimerDeviceEffects(() => this.settings);
 
     // Fase 1: inizializza event bus (non ancora usato da altri componenti)
     this.eventBus = new WorkoutEventBus();
@@ -218,6 +221,7 @@ export default class WorkoutChartsPlugin extends Plugin {
       timerView.destroy();
     }
     this.activeTimers.clear();
+    this.timerDeviceEffects?.destroy();
 
     // 2. Clean up embedded views (each view handles its own cleanup)
     this.embeddedChartView?.cleanup();
@@ -268,6 +272,7 @@ export default class WorkoutChartsPlugin extends Plugin {
   }
 
   async saveSettings() {
+    this.timerDeviceEffects?.refresh();
     await this.saveData(this.settings);
   }
 

@@ -1,6 +1,7 @@
 import { Notice } from "obsidian";
 import {
   TimerState,
+  TimerSurface,
   TimerCallbacks,
   TIMER_TYPE,
 } from "@app/features/timer/types";
@@ -31,8 +32,7 @@ export class TimerCore {
       totalRounds: 1,
       timerType: TIMER_TYPE.COUNTDOWN,
       duration: 30,
-      timerDisplay: undefined,
-      startStopBtn: undefined,
+      surfaces: [],
     };
   }
 
@@ -44,6 +44,28 @@ export class TimerCore {
     this.soundEnabled = enabled;
   }
 
+  /** Draw on this rendering too, dropping renderings no longer in the document */
+  addSurface(surface: TimerSurface): void {
+    this.state.surfaces = [...this.liveSurfaces(), surface];
+  }
+
+  /** Renderings seen in the document; Obsidian may render a block before attaching it */
+  private attached = new WeakSet<HTMLElement>();
+
+  /** Surfaces not yet attached, or still attached; drops those removed since */
+  private liveSurfaces(): TimerSurface[] {
+    return this.state.surfaces.filter(({ timerDisplay }) => {
+      if (timerDisplay.isConnected) this.attached.add(timerDisplay);
+      return timerDisplay.isConnected || !this.attached.has(timerDisplay);
+    });
+  }
+
+  private updateButtons(isRunning: boolean): void {
+    for (const surface of this.state.surfaces) {
+      TimerControls.updateStartStopButton(surface.startStopBtn, isRunning);
+    }
+  }
+
   setState(newState: Partial<TimerState>): void {
     this.state = { ...this.state, ...newState };
     this.callbacks.onStateChange?.(this.state);
@@ -52,8 +74,9 @@ export class TimerCore {
   start(): void {
     if (this.state.isRunning) return;
 
-    // Ensure timer display is available
-    if (!this.state.timerDisplay) {
+    // Ensure there is a rendering to draw on
+    this.state.surfaces = this.liveSurfaces();
+    if (this.state.surfaces.length === 0) {
       return;
     }
 
@@ -79,13 +102,8 @@ export class TimerCore {
       startTime: Date.now() - this.state.elapsedTime,
     });
 
-    // Update start/stop button icon (needed for programmatic start, e.g. auto-start)
-    if (this.state.startStopBtn) {
-      TimerControls.updateStartStopButton(
-        this.state.startStopBtn,
-        true,
-      );
-    }
+    // Update start/stop button icons (also for auto-start and other renderings)
+    this.updateButtons(true);
 
     this.state.timerInterval = window.setInterval(() => {
       this.updateTimer();
@@ -101,6 +119,9 @@ export class TimerCore {
       window.clearInterval(this.state.timerInterval);
       this.setState({ timerInterval: undefined });
     }
+    // Redraw as paused: drops the last-seconds overlay, shows "Paused"
+    this.updateButtons(false);
+    this.updateDisplay();
   }
 
   reset(): void {
@@ -163,6 +184,7 @@ export class TimerCore {
   }
 
   private updateDisplay(): void {
+    this.state.surfaces = this.liveSurfaces();
     TimerDisplay.updateDisplay(this.state, this.timerId);
   }
 
@@ -171,13 +193,6 @@ export class TimerCore {
     TimerDisplay.cleanupOverlay(this.timerId);
     if (!this.earlySoundPlayed) {
       this.playSound();
-    }
-
-    if (this.state.startStopBtn) {
-      TimerControls.updateStartStopButton(
-        this.state.startStopBtn,
-        false,
-      );
     }
 
     // Update display to show completion

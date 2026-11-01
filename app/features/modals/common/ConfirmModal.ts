@@ -3,6 +3,15 @@ import { ModalBase } from "@app/features/modals/base/ModalBase";
 import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
 
+export interface ConfirmOptions {
+  /** Defaults to "Confirm action" */
+  title?: string;
+  /** Text of the confirm button, naming the action ("Delete"); defaults to "Confirm" */
+  confirmText?: string;
+  /** The action destroys data: the confirm button is red */
+  destructive?: boolean;
+}
+
 /**
  * Simple confirmation modal
  */
@@ -16,6 +25,7 @@ export class ConfirmModal extends ModalBase {
     message: string,
     onConfirm: () => void | Promise<void>,
     onCancel?: () => void,
+    private options: ConfirmOptions = {},
   ) {
     super(app);
     this.message = message;
@@ -31,7 +41,7 @@ export class ConfirmModal extends ModalBase {
 
     // Title
     contentEl.createEl("h2", {
-      text: t("modal.confirmAction"),
+      text: this.options.title ?? t("modal.confirmAction"),
     });
 
     // Message
@@ -54,10 +64,13 @@ export class ConfirmModal extends ModalBase {
     });
 
     // Confirm button using Button atom
+    const confirmText = this.options.confirmText ?? t("modal.buttons.confirm");
     const confirmBtn = Button.create(buttonContainer, {
-      text: t("modal.buttons.confirm"),
-      ariaLabel: t("modal.buttons.confirm"),
-      variant: BUTTONVARIANT.PRIMARY,
+      text: confirmText,
+      ariaLabel: confirmText,
+      variant: this.options.destructive
+        ? BUTTONVARIANT.DANGER
+        : BUTTONVARIANT.PRIMARY,
     });
     Button.onClick(confirmBtn, () => {
       void this.onConfirm();

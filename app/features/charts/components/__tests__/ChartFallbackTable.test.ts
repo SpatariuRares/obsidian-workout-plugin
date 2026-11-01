@@ -3,6 +3,7 @@
 import { ChartFallbackTable } from "../ChartTableViews";
 
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 
 describe("ChartFallbackTable", () => {
@@ -47,8 +48,9 @@ describe("ChartFallbackTable", () => {
       ".workout-charts-footer",
     ) as HTMLElement;
     expect(footer).toBeTruthy();
-    expect(footer.textContent).toBe(
-      `icons.status.info ${t("charts.fallbackTableMessage")}`,
-    );
+    expect(footer.textContent).toBe(t("charts.fallbackTableMessage"));
+    expect(
+      footer.querySelector(".workout-icon")?.getAttribute("data-icon"),
+    ).toBe(ICONS.STATUS.INFO);
   });
 });

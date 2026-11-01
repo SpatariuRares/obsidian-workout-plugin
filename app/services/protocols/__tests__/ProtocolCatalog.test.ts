@@ -62,6 +62,7 @@ describe("ProtocolCatalog", () => {
   it("lists built-ins first, standard on top, then custom ones", () => {
     expect(catalog.all().map((p) => p.id)).toEqual([
       "standard",
+      "warmup",
       "drop_set",
       "myo_reps",
       "rest_pause",

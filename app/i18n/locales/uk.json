@@ -391,80 +391,6 @@
     "workoutData": "Дані тренування",
     "workoutLog": "Журнал тренувань"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Додати запис для {exerciseName}",
     "addLogButtonText": "Додати запис для {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Сканування файлів вправ...",
       "canvasExportError": "Помилка експорту на полотно: {error}",
       "canvasExported": "Полотно експортовано ({path})",
-      "chartInserted": "✅ Графік успішно додано!",
       "confirmUpdateTarget": "Оновити ціль до {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Панель керування успішно додана!",
       "dismissAchievement": "Закрити досягнення",
       "exerciseBlockInserted": "Блок вправи вставлено",
-      "exerciseNameRequired": "❌ Будь ласка, введіть назву вправи",
       "exercisePageCreated": "Сторінку вправи успішно створено!",
       "exercisePageError": "Помилка під час створення сторінки вправи: {error}",
       "exercisePageNameRequired": "Будь ласка, введіть назву вправи",
-      "exerciseSectionCreated": "✅ Розділ вправи успішно створено!",
       "genericError": "Помилка: {error}",
       "insertCodeNoFile": "Відкрийте файл Markdown, щоб вставити код",
       "logCreated": "Запис тренування успішно створено!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "Знайдено схожих тегів: {count}",
       "muscleTagSimilarWarning": "Схожий тег уже існує",
       "suggestedNextWeight": "Рекомендована наступна вага: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Таблиця успішно додана!",
       "tableUpdateFailed": "Не вдалося оновити таблицю. Переконайтеся, що файл відкритий у редакторі.",
-      "tableUpdated": "✅ Таблиця успішно оновлена!",
       "targetAchieved": "Ціль досягнуто!",
       "timerElementsNotInitialized": "Елементи таймера не були ініціалізовані",
-      "timerInserted": "✅ Таймер успішно додано!",
       "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
-      "timerUpdated": "✅ Таймер успішно оновлено!",
-      "validationCombinedMode": "⚠️ Для типу 'вправа + тренування' необхідно заповнити обидва поля!",
       "validationFillAll": "Будь ласка, заповніть усі поля дійсними значеннями",
       "validMissingField": "Відсутнє обов'язкове поле: {field}",
       "validMustBeNumber": "{field} повинно бути числом",
@@ -917,8 +834,7 @@
     "recentTrend": "Останній тренд",
     "recentVsPrev": " (vs попер.)",
     "sessions": "Сесії",
-    "average": "Середнє:",
-    "title": "📈 {dataTypeLabel} статистичні дані ({contextLabel}):"
+    "average": "Середнє:"
   },
   "table": {
     "actions": "Дії",
@@ -944,7 +860,6 @@
       "volumeUnit": "Об'єм ({weightUnit})",
       "weightUnit": "Вага ({weightUnit})"
     },
-    "deleteConfirm": "Видалити цей запис?",
     "deleteError": "Помилка при видаленні: {error}",
     "deleteSuccess": "Запис видалено",
     "deleteTitle": "Видалити",
@@ -1048,8 +963,7 @@
         "text": "Натисніть кнопку \"+\", щоб відкрити форму, а потім збережіть набір. Він одразу з'явиться в таблиці."
       },
       "rowActions": {
-        "title": "Редагувати або видалити набір",
-        "text": "Кожна рядок має кнопки \"Редагувати\" та \"Видалити\". Використовуйте їх, щоб виправити помилку або видалити рядок."
+        "title": "Редагувати або видалити набір"
       },
       "chart": {
         "title": "Ваш прогрес",

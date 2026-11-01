@@ -11,13 +11,13 @@ describe("SearchBox molecule", () => {
     const searchBox = SearchBox.create(parent, {
       placeholder: "Search exercises...",
       value: "bench press",
-      icon: "🔎",
+      icon: "scan-search",
       className: "mb-2",
     });
 
     expect(searchBox.container.className).toContain("search-box");
     expect(searchBox.container.className).toContain("mb-2");
-    expect(searchBox.icon.textContent).toBe("🔎");
+    expect(searchBox.icon.getAttribute("data-icon")).toBe("scan-search");
     expect(
       searchBox.input.classList.contains("search-box-input"),
     ).toBe(true);

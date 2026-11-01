@@ -9,7 +9,7 @@ import { EmbeddedViewParams } from "@app/types/PluginTypes";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { ErrorCollector } from "@app/orchestration/ErrorCollector";
 import { t } from "@app/i18n";
-import { CONSTANTS } from "@app/constants";
+import { CONSTANTS, ICONS } from "@app/constants";
 /**
  * Base class for all embedded views that provides common functionality
  * and reduces code duplication across Chart, Table, and Timer views.
@@ -115,7 +115,7 @@ export abstract class BaseView {
       );
     } else {
       const exerciseName =
-        t("common.exercise") in params
+        "exercise" in params
           ? (params as { exercise?: string }).exercise || ""
           : "";
       LogCallouts.renderNoMatchMessage(container);
@@ -137,7 +137,7 @@ export abstract class BaseView {
   ): HTMLElement {
     return LoadingSpinner.create(container, {
       message: "Loading data...",
-      icon: "⏳",
+      icon: ICONS.STATUS.LOADING,
       className: "workout-feedback-info",
     });
   }

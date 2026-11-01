@@ -1,3 +1,6 @@
+import { Icon } from "@app/components/atoms/Icon";
+import { ICONS } from "@app/constants/ui.constants";
+
 export interface FeedbackOptions {
   title?: string;
   icon?: string;
@@ -31,16 +34,16 @@ export class Feedback {
     options: FeedbackOptions = {},
   ): void {
     this.prepareContainer(container, options);
-    const { className = "workout-feedback-error", icon = "⚠️" } =
+    const { className = "workout-feedback-error", icon = ICONS.STATUS.WARNING } =
       options;
 
     const errorDiv = container.createDiv({ cls: className });
 
     // If icon is provided, render it
     if (icon) {
-      errorDiv.createSpan({
-        cls: "workout-feedback-error-icon",
-        text: icon,
+      Icon.create(errorDiv, {
+        name: icon,
+        className: "workout-feedback-error-icon",
       });
     }
 

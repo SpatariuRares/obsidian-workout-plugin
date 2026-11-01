@@ -39,6 +39,7 @@ export function buildTour(options: {
         target: TOUR_TARGETS.tableRowActions,
         title: t("tour.steps.rowActions.title"),
         text: t("tour.steps.rowActions.text"),
+        mobileText: t("tour.steps.rowActions.mobileText"),
       },
       {
         id: "chart",

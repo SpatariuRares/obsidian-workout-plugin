@@ -112,6 +112,14 @@ describe("DynamicFieldsRenderer quick adjust buttons", () => {
     expect(inputs.get("reps")!.step).toBe("1");
   });
 
+  it("should ask phones for the digit pad on whole-number fields only", async () => {
+    const reps: ParameterDefinition = { key: "reps", label: "Reps", type: "number", required: true, min: 0 };
+    const { inputs } = await render([reps, weightParam]);
+
+    expect(inputs.get("reps")!.inputMode).toBe("numeric");
+    expect(inputs.get("weight")!.inputMode).toBe("");
+  });
+
   it("should adjust a duration in seconds by five", async () => {
     const duration: ParameterDefinition = { key: "duration", label: "Duration", type: "number", unit: "sec", required: true, min: 0 };
     const { inputs, plus } = await render([duration]);

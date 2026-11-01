@@ -10,7 +10,7 @@ describe("TrendCalculator", () => {
       const result = TrendCalculator.getTrendIndicators([100]);
       expect(result.trendDirection).toBe(t("messages.insufficientData"));
       expect(result.trendColor).toBe("var(--text-muted, #888)");
-      expect(result.trendIcon).toBe("·");
+      expect(result.trendIcon).toBe("minus");
     });
 
     it("should return insufficient data message for empty array", () => {
@@ -22,21 +22,21 @@ describe("TrendCalculator", () => {
       const result = TrendCalculator.getTrendIndicators([100, 110, 120, 130]);
       expect(result.trendDirection).toBe(t("trends.increasing"));
       expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
-      expect(result.trendIcon).toBe("↗️");
+      expect(result.trendIcon).toBe("trending-up");
     });
 
     it("should return decreasing/red for a falling series", () => {
       const result = TrendCalculator.getTrendIndicators([130, 120, 110, 100]);
       expect(result.trendDirection).toBe(t("trends.decreasing"));
       expect(result.trendColor).toBe("var(--color-red, #F44336)");
-      expect(result.trendIcon).toBe("↘️");
+      expect(result.trendIcon).toBe("trending-down");
     });
 
     it("should return stable for a flat series", () => {
       const result = TrendCalculator.getTrendIndicators([100, 100, 100]);
       expect(result.trendDirection).toBe(t("trends.stableLower"));
       expect(result.trendColor).toBe("var(--color-accent, #FFC107)");
-      expect(result.trendIcon).toBe("→");
+      expect(result.trendIcon).toBe("arrow-right");
     });
 
     it("should return increasing for steady progressive overload (+25% over 6 sessions)", () => {
@@ -62,7 +62,7 @@ describe("TrendCalculator", () => {
         );
         expect(result.trendDirection).toBe(t("trends.improving"));
         expect(result.trendColor).toBe("var(--color-green, #4CAF50)");
-        expect(result.trendIcon).toBe("↗️");
+        expect(result.trendIcon).toBe("trending-up");
       });
 
       it("should return declining/red for pace getting slower", () => {
@@ -72,7 +72,7 @@ describe("TrendCalculator", () => {
         );
         expect(result.trendDirection).toBe(t("trends.declining"));
         expect(result.trendColor).toBe("var(--color-red, #F44336)");
-        expect(result.trendIcon).toBe("↘️");
+        expect(result.trendIcon).toBe("trending-down");
       });
 
       it("should return stable for pace within 5% of the mean", () => {

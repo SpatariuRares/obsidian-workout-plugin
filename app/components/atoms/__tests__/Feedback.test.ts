@@ -1,6 +1,7 @@
 /** @jest-environment jsdom */
 
 import { Feedback } from "@app/components/atoms/Feedback";
+import { ICONS } from "@app/constants/ui.constants";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 
 describe("Feedback atom", () => {
@@ -16,8 +17,8 @@ describe("Feedback atom", () => {
       expect(errorDiv).toBeTruthy();
       expect(
         errorDiv?.querySelector(".workout-feedback-error-icon")
-          ?.textContent,
-      ).toBe("⚠️");
+          ?.getAttribute("data-icon"),
+      ).toBe(ICONS.STATUS.WARNING);
       expect(
         errorDiv?.querySelector(".workout-feedback-error-message")
           ?.textContent,
@@ -29,15 +30,15 @@ describe("Feedback atom", () => {
 
       Feedback.renderError(container, "Custom error", {
         className: "custom-error-class",
-        icon: "❌",
+        icon: "x-circle",
       });
 
       const errorDiv = container.querySelector(".custom-error-class");
       expect(errorDiv).toBeTruthy();
       expect(
         errorDiv?.querySelector(".workout-feedback-error-icon")
-          ?.textContent,
-      ).toBe("❌");
+          ?.getAttribute("data-icon"),
+      ).toBe("x-circle");
     });
 
     it("renders error message without icon when icon is empty", () => {

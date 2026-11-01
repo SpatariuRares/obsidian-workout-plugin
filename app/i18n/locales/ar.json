@@ -391,80 +391,6 @@
     "workoutData": "بيانات التدريب",
     "workoutLog": "سجل التدريب"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "إضافة سجل لـ {exerciseName}",
     "addLogButtonText": "إضافة سجل لـ {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "جارٍ فحص ملفات التمارين...",
       "canvasExportError": "خطأ في التصدير إلى Canvas: {error}",
       "canvasExported": "تم التصدير إلى Canvas ({path})",
-      "chartInserted": "✅ تم إدراج الرسم البياني بنجاح!",
       "confirmUpdateTarget": "هل تريد تحديث الهدف إلى {targetWeight}{weightUnit}؟",
-      "dashboardInserted": "✅ تم إدخال لوحة التحكم بنجاح!",
       "dismissAchievement": "إغلاق الإنجاز",
       "exerciseBlockInserted": "تم إدراج كتلة التمرين",
-      "exerciseNameRequired": "❌ الرجاء إدخال اسم تمرين",
       "exercisePageCreated": "تم إنشاء صفحة التمرين بنجاح!",
       "exercisePageError": "خطأ في إنشاء صفحة التمرين: {error}",
       "exercisePageNameRequired": "الرجاء إدخال اسم تمرين",
-      "exerciseSectionCreated": "✅ تم إنشاء قسم التمرين بنجاح!",
       "genericError": "خطأ: {error}",
       "insertCodeNoFile": "افتح ملف markdown لإدراج الكود",
       "logCreated": "تم إنشاء سجل التدريب بنجاح!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "تم العثور على {count} من العلامات المشابهة",
       "muscleTagSimilarWarning": "توجد علامة مشابهة بالفعل",
       "suggestedNextWeight": "الوزن التالي المقترح: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ تم إدخال الجدول بنجاح!",
       "tableUpdateFailed": "فشلت عملية تحديث الجدول. تأكد من أن الملف مفتوح في محرر النصوص.",
-      "tableUpdated": "✅ تم تحديث الجدول بنجاح!",
       "targetAchieved": "تم بلوغ الهدف!",
       "timerElementsNotInitialized": "عناصر المؤقت غير مهيأة",
-      "timerInserted": "✅ تم إدخال المؤقت بنجاح!",
       "timerUpdateFailed": "فشلت عملية تحديث المؤقت. تأكد من أن الملف مفتوح في محرر النصوص.",
-      "timerUpdated": "✅ تم تحديث المؤقت بنجاح!",
-      "validationCombinedMode": "⚠️ لنوع 'التمرين + الجلسة' يجب ملء كلا الحقلين!",
       "validationFillAll": "يرجى ملء جميع الحقول بقيم صالحة",
       "validMissingField": "حقل مطلوب مفقود: {field}",
       "validMustBeNumber": "{field} يجب أن يكون رقماً صحيحاً",
@@ -917,8 +834,7 @@
     "recentTrend": "الاتجاه الأخير",
     "recentVsPrev": " (مقابل السابق)",
     "sessions": "الجلسات",
-    "average": "المتوسط:",
-    "title": "📈 {dataTypeLabel} إحصائيات ({contextLabel}):"
+    "average": "المتوسط:"
   },
   "table": {
     "actions": "الإجراءات",
@@ -944,7 +860,6 @@
       "volumeUnit": "الحجم ({weightUnit})",
       "weightUnit": "وزن ({weightUnit})"
     },
-    "deleteConfirm": "هل تريد حذف هذا الإدخال من السجل؟",
     "deleteError": "خطأ الحذف: {error}",
     "deleteSuccess": "تم حذف الإدخال من السجل",
     "deleteTitle": "حذف",
@@ -1048,8 +963,7 @@
         "text": "اضغط على زر \"+\" لفتح النموذج، ثم احفظ مجموعة. سيظهر تلقائيًا في الجدول."
       },
       "rowActions": {
-        "title": "تحرير أو حذف مجموعة",
-        "text": "يحتوي كل صف على أزرار \"تحرير\" و \"حذف\". استخدمها لتصحيح أي خطأ إملائي أو لحذف مجموعة."
+        "title": "تحرير أو حذف مجموعة"
       },
       "chart": {
         "title": "تقدمك",

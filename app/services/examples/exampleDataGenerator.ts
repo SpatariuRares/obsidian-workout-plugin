@@ -96,6 +96,23 @@ export function generateExampleCSVData(): string {
           2.5,
       ) * 2.5;
     const squatBaseReps = [10, 9, 8, 8];
+    // A warm-up set at half the load now and then (not counted for records)
+    if (sessionIdx % 4 === 2) {
+      const warmupWeight = Math.round((squatWeight * 0.5) / 2.5) * 2.5;
+      addLogEntry(entries, {
+        date: dateStr,
+        exercise: t("examples.exercises.squatMultiPower.name"),
+        reps: 10,
+        weight: warmupWeight,
+        volume: 10 * warmupWeight,
+        workout: workoutName,
+        notes: "",
+        protocol: WorkoutProtocol.WARMUP,
+        timestamp: exerciseTime.getTime(),
+        origine: `[[${workoutName}]]`,
+      });
+      exerciseTime = new Date(exerciseTime.getTime() + 120000);
+    }
     for (let set = 1; set <= 4; set++) {
       const reps =
         squatBaseReps[set - 1] +

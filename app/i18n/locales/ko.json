@@ -391,80 +391,6 @@
     "workoutData": "운동 데이터",
     "workoutLog": "운동 기록"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "{exerciseName}에 대한 로그 추가",
     "addLogButtonText": "{exerciseName}에 대한 로그 추가",
@@ -622,16 +548,12 @@
       "auditScanning": "운동 파일 검사 중...",
       "canvasExportError": "캔버스 내보내기 오류: {error}",
       "canvasExported": "캔버스를 내보냈습니다 ({path})",
-      "chartInserted": "✅ 차트가 성공적으로 삽입되었습니다!",
       "confirmUpdateTarget": "목표를 {targetWeight}{weightUnit}(으)로 업데이트하시겠습니까?",
-      "dashboardInserted": "✅ 대시보드가 성공적으로 삽입되었습니다!",
       "dismissAchievement": "업적 닫기",
       "exerciseBlockInserted": "운동 블록을 삽입했습니다",
-      "exerciseNameRequired": "❌ 운동 이름을 입력해주세요",
       "exercisePageCreated": "운동 페이지가 성공적으로 생성되었습니다!",
       "exercisePageError": "운동 페이지 생성 중 오류: {error}",
       "exercisePageNameRequired": "운동 이름을 입력해 주세요",
-      "exerciseSectionCreated": "✅ 운동 섹션이 성공적으로 생성되었습니다!",
       "genericError": "오류: {error}",
       "insertCodeNoFile": "코드를 삽입하려면 마크다운 파일을 엽니다.",
       "logCreated": "운동 기록이 성공적으로 생성되었습니다!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "유사한 태그 {count}개 발견",
       "muscleTagSimilarWarning": "비슷한 태그가 이미 있습니다",
       "suggestedNextWeight": "다음 추천 무게: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ 테이블이 성공적으로 삽입되었습니다!",
       "tableUpdateFailed": "테이블 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
-      "tableUpdated": "✅ 테이블이 성공적으로 업데이트되었습니다!",
       "targetAchieved": "목표 달성!",
       "timerElementsNotInitialized": "타이머 요소가 초기화되지 않음",
-      "timerInserted": "✅ 타이머가 성공적으로 삽입되었습니다!",
       "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
-      "timerUpdated": "✅ 타이머가 성공적으로 업데이트되었습니다!",
-      "validationCombinedMode": "⚠️ '운동 종목 + 운동 루틴' 유형은 두 필드를 모두 채워야 합니다!",
       "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
       "validMissingField": "필수 필드 없음: {field}",
       "validMustBeNumber": "{field}은(는) 유효한 숫자여야 합니다",
@@ -917,8 +834,7 @@
     "recentTrend": "최근 추세",
     "recentVsPrev": " (이전 대비)",
     "sessions": "세션",
-    "average": "평균:",
-    "title": "📈 {dataTypeLabel} 통계 ({contextLabel}):"
+    "average": "평균:"
   },
   "table": {
     "actions": "액션",
@@ -944,7 +860,6 @@
       "volumeUnit": "볼륨 ({weightUnit})",
       "weightUnit": "무게 ({weightUnit})"
     },
-    "deleteConfirm": "이 기록 항목을 삭제할까요?",
     "deleteError": "삭제 오류: {error}",
     "deleteSuccess": "기록 항목을 삭제했습니다",
     "deleteTitle": "삭제",
@@ -1048,8 +963,7 @@
         "text": "\"+\" 버튼을 눌러 양식을 열고, 그런 다음 세트를 저장합니다. 그러면 바로 테이블에 표시됩니다."
       },
       "rowActions": {
-        "title": "수정하거나 삭제",
-        "text": "각 행에는 편집 및 삭제 버튼이 있습니다. 이를 사용하여 오타를 수정하거나 항목을 삭제할 수 있습니다."
+        "title": "수정하거나 삭제"
       },
       "chart": {
         "title": "진행 상황",

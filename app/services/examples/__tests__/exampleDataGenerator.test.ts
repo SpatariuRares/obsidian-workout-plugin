@@ -28,8 +28,9 @@ describe("generateExampleCSVData", () => {
     });
 
     it("should generate 12 lower, 12 upper and 11 cardio sessions of rows", () => {
-      // lower: 12 * (4+4+4+3+4+3) = 264, upper: 12 * 8 = 96, cardio: 11 * 2 = 22
-      expect(lines.length - 1).toBe(264 + 96 + 22);
+      // lower: 12 * (4+4+4+3+4+3) = 264, plus a squat warm-up in sessions 2, 6
+      // and 10 = 3; upper: 12 * 8 = 96, cardio: 11 * 2 = 22
+      expect(lines.length - 1).toBe(264 + 3 + 96 + 22);
     });
 
     it("should use ISO dates within the last 40 days", () => {

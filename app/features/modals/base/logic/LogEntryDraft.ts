@@ -32,6 +32,12 @@ export function fromLog(log: WorkoutLogData): Partial<LogFormData> {
   };
 }
 
+/** Why the form can't be saved, and the field to fix: "exercise" or a parameter key */
+export interface FormError {
+  field: string;
+  message: string;
+}
+
 /**
  * Why the form can't be saved, or null. `fields` holds what each parameter
  * input of the form holds (text, or the checked state of a checkbox).
@@ -40,17 +46,22 @@ export function validate(
   exercise: string,
   fields: Map<string, string | boolean>,
   parameters: ParameterDefinition[],
-): string | null {
-  if (!exercise) return t("modal.notices.validationFillAll");
+): FormError | null {
+  if (!exercise) {
+    return { field: "exercise", message: t("modal.notices.validChooseExercise") };
+  }
 
   for (const param of parameters) {
     const raw = fields.get(param.key);
     if (raw === undefined) {
       if (!param.required) continue;
-      return t("modal.notices.validMissingField", { field: param.label });
+      return {
+        field: param.key,
+        message: t("modal.notices.validMissingField", { field: param.label }),
+      };
     }
     const { error } = readField(fieldFor(param), raw);
-    if (error) return error;
+    if (error) return { field: param.key, message: error };
   }
   return null;
 }

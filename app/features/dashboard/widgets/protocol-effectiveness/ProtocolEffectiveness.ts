@@ -255,7 +255,8 @@ export class ProtocolEffectiveness {
     });
 
     const table = tableContainer.createEl("table", {
-      cls: "workout-protocol-effectiveness-table",
+      // On phones each row becomes a card (CSS reads each cell's data-label)
+      cls: "workout-protocol-effectiveness-table workout-card-table",
     });
 
     // Header
@@ -295,11 +296,15 @@ export class ProtocolEffectiveness {
       row.createEl("td", {
         text: stat.entryCount.toString(),
         cls: "workout-protocol-effectiveness-entries-cell",
+        attr: { "data-label": t("dashboard.protocolEffectiveness.columnEntries") },
       });
 
       // Volume change with indicator
       const volumeCell = row.createEl("td", {
         cls: "workout-protocol-effectiveness-volume-cell",
+        attr: {
+          "data-label": t("dashboard.protocolEffectiveness.columnVolumeChange"),
+        },
       });
       const volumeSign = stat.avgVolumeChange >= 0 ? "+" : "";
       const volumeClass =
@@ -316,6 +321,9 @@ export class ProtocolEffectiveness {
       // Progression rate with indicator
       const progressionCell = row.createEl("td", {
         cls: "workout-protocol-effectiveness-progression-cell",
+        attr: {
+          "data-label": t("dashboard.protocolEffectiveness.columnProgression"),
+        },
       });
       const progressionClass =
         stat.progressionRate >= 70

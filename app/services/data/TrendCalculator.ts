@@ -24,7 +24,7 @@ export class TrendCalculator {
       return {
         trendDirection: t("messages.insufficientData"),
         trendColor: "var(--text-muted, #888)",
-        trendIcon: "·",
+        trendIcon: "minus",
       };
     }
 
@@ -39,13 +39,13 @@ export class TrendCalculator {
         return {
           trendDirection: t("trends.declining"),
           trendColor: "var(--color-red, #F44336)",
-          trendIcon: "↘️",
+          trendIcon: "trending-down",
         };
       }
       return {
         trendDirection: t("trends.increasing"),
         trendColor: "var(--color-green, #4CAF50)",
-        trendIcon: "↗️",
+        trendIcon: "trending-up",
       };
     } else if (trend.direction === "down") {
       if (isLowerBetter) {
@@ -53,19 +53,19 @@ export class TrendCalculator {
         return {
           trendDirection: t("trends.improving"),
           trendColor: "var(--color-green, #4CAF50)",
-          trendIcon: "↗️",
+          trendIcon: "trending-up",
         };
       }
       return {
         trendDirection: t("trends.decreasing"),
         trendColor: "var(--color-red, #F44336)",
-        trendIcon: "↘️",
+        trendIcon: "trending-down",
       };
     } else {
       return {
         trendDirection: t("trends.stableLower"),
         trendColor: "var(--color-accent, #FFC107)", // più visibile di orange
-        trendIcon: "→",
+        trendIcon: "arrow-right",
       };
     }
   }

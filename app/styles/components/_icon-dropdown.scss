@@ -7,8 +7,9 @@
   margin-left: auto;
 }
 
-// Trigger button — shows only the icon, no visual chrome
-.workout-icon-dropdown-btn {
+// Trigger button — shows only the icon, no visual chrome. Qualified with the
+// tag to beat Obsidian's mobile `button` rule (--interactive-normal fill)
+button.workout-icon-dropdown-btn {
   min-width: 2em;
   display: flex;
   align-items: center;

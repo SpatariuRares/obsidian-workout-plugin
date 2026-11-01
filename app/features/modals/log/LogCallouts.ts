@@ -9,6 +9,7 @@ import { ExerciseActionSelect } from "@app/features/tables/ui/ExerciseActionSele
 import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -63,7 +64,7 @@ export class LogCallouts {
       text: t("logs.createFirstLogButton", {
         exerciseName: exerciseName ?? "exercise",
       }),
-      icon: t("icons.actions.add"),
+      icon: ICONS.ACTIONS.ADD,
       className: "add-log-button",
       variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.createFirstLogButtonAria", {
@@ -129,7 +130,7 @@ export class LogCallouts {
       text: t("logs.addLogButtonText", {
         exerciseName: exerciseName ?? "Workout",
       }),
-      icon: t("icons.actions.add"),
+      icon: ICONS.ACTIONS.ADD,
       variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.addLogButtonAria", {
         exerciseName: exerciseName ?? "Workout",
@@ -168,7 +169,7 @@ export class LogCallouts {
       text: t("logs.createLogButtonText", {
         exerciseName: exerciseName,
       }),
-      icon: t("icons.actions.add"),
+      icon: ICONS.ACTIONS.ADD,
       className: "create-log-button",
       variant: BUTTONVARIANT.PRIMARY,
       ariaLabel: t("logs.createLogButtonAria", {
@@ -183,7 +184,7 @@ export class LogCallouts {
 
   static renderNoMatchMessage(container: HTMLElement): void {
     Feedback.renderInfo(container, t("general.noMatchMessage"), {
-      icon: t("icons.status.info"),
+      icon: ICONS.STATUS.INFO,
       className: "workout-log-no-match",
     });
   }

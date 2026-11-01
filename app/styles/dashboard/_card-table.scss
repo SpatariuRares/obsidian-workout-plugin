@@ -1,0 +1,55 @@
+@use "../variables";
+
+/* Dashboard tables whose rows are "a title + three values" (protocol
+   effectiveness, duration comparison). On phones each row becomes a card:
+   the first cell as its title, the values side by side under their column
+   name (from data-label), so nothing scrolls sideways. */
+@media (max-width: variables.$breakpoint-tablet) {
+  .workout-dashboard table.workout-card-table {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: grid;
+      gap: var(--workout-space-sm);
+    }
+
+    tr {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--workout-space-xs) var(--workout-space-sm);
+      padding: var(--workout-space-md);
+      background: var(--background-secondary);
+      border: var(--workout-border-thin) solid var(--workout-border-subtle);
+      border-radius: var(--workout-radius-md);
+    }
+
+    td {
+      display: block;
+      padding: 0;
+      border: none;
+      text-align: start;
+      background: none;
+    }
+
+    td:first-child {
+      grid-column: 1 / -1;
+      margin-bottom: var(--workout-space-2xs);
+    }
+
+    td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-size: var(--workout-font-xs);
+      font-weight: normal;
+      color: var(--text-muted);
+      // Whole words only: uppercase labels broke "Progressi-on" mid-word
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+    }
+  }
+}

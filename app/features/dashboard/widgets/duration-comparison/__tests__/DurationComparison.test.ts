@@ -4,6 +4,7 @@ import { DurationComparison } from "@app/features/dashboard/widgets/duration-com
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { LocalizationService, t } from "@app/i18n";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
+import { ICONS } from "@app/constants/ui.constants";
 
 const BASE = 1_700_000_000_000;
 const SUFFIX = () => t("dashboard.durationComparison.minutesSuffix");
@@ -244,8 +245,9 @@ describe("DurationComparison", () => {
         c.querySelector(".workout-duration-comparison-trend-improving"),
       ).not.toBeNull();
       expect(
-        c.querySelector(".workout-duration-comparison-trend-icon")?.textContent,
-      ).toBe("↗");
+        (c.querySelector(".workout-duration-comparison-trend-icon") as HTMLElement | null)
+          ?.dataset.icon,
+      ).toBe(ICONS.TREND.UP);
     });
 
     it("should report declining when recent variance grew more than 5 points", () => {
@@ -254,8 +256,9 @@ describe("DurationComparison", () => {
         t("dashboard.durationComparison.varianceTrendDeclining"),
       );
       expect(
-        c.querySelector(".workout-duration-comparison-trend-icon")?.textContent,
-      ).toBe("↘");
+        (c.querySelector(".workout-duration-comparison-trend-icon") as HTMLElement | null)
+          ?.dataset.icon,
+      ).toBe(ICONS.TREND.DOWN);
     });
 
     it("should report stable for small changes", () => {
@@ -264,8 +267,9 @@ describe("DurationComparison", () => {
         t("dashboard.durationComparison.varianceTrendStable"),
       );
       expect(
-        c.querySelector(".workout-duration-comparison-trend-icon")?.textContent,
-      ).toBe("→");
+        (c.querySelector(".workout-duration-comparison-trend-icon") as HTMLElement | null)
+          ?.dataset.icon,
+      ).toBe(ICONS.TREND.FLAT);
     });
 
     it("should show the average absolute variance", () => {

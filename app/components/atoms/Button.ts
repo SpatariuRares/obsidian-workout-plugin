@@ -2,6 +2,7 @@
  * Button Atom
  * Basic button component - indivisible UI primitive
  */
+import { Icon } from "@app/components/atoms/Icon";
 
 export enum BUTTONSIZE {
   SMALL = "small",
@@ -19,6 +20,7 @@ export enum BUTTONVARIANT {
 
 export interface ButtonProps {
   text?: string;
+  /** Lucide icon id, from ICONS */
   icon?: string;
   className?: string;
   variant: BUTTONVARIANT;
@@ -62,8 +64,10 @@ export class Button {
       },
     });
 
-    btn.textContent =
-      `${props.icon || ""} ${props.text || ""}`.trim();
+    if (props.icon) {
+      Icon.create(btn, { name: props.icon, className: "workout-btn-icon" });
+    }
+    if (props.text) btn.appendText(props.text);
 
     return btn;
   }

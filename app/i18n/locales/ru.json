@@ -391,80 +391,6 @@
     "workoutData": "Данные тренировки",
     "workoutLog": "Журнал тренировок"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Добавить запись в журнал для {exerciseName}",
     "addLogButtonText": "Добавить запись в журнал для {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Сканирование файлов упражнений...",
       "canvasExportError": "Ошибка при экспорте на холст: {error}",
       "canvasExported": "Холст экспортирован ({path})",
-      "chartInserted": "✅ График успешно добавлен!",
       "confirmUpdateTarget": "Обновить цель до {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Панель управления успешно добавлена!",
       "dismissAchievement": "Закрыть достижение",
       "exerciseBlockInserted": "Блок упражнения вставлен",
-      "exerciseNameRequired": "❌ Пожалуйста, введите название упражнения",
       "exercisePageCreated": "Страница упражнения успешно создана!",
       "exercisePageError": "Ошибка при создании страницы упражнения: {error}",
       "exercisePageNameRequired": "Пожалуйста, введите название упражнения",
-      "exerciseSectionCreated": "✅ Раздел упражнения успешно создан!",
       "genericError": "Ошибка: {error}",
       "insertCodeNoFile": "Откройте файл Markdown, чтобы вставить код",
       "logCreated": "Запись тренировки успешно создана!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "Найдено похожих тегов: {count}",
       "muscleTagSimilarWarning": "Похожий тег уже существует",
       "suggestedNextWeight": "Рекомендуемый следующий вес: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Таблица успешно добавлена!",
       "tableUpdateFailed": "Не удалось обновить таблицу. Убедитесь, что файл открыт в редакторе.",
-      "tableUpdated": "✅ Таблица успешно обновлена!",
       "targetAchieved": "Цель достигнута!",
       "timerElementsNotInitialized": "Элементы таймера не инициализированы",
-      "timerInserted": "✅ Таймер успешно добавлен!",
       "timerUpdateFailed": "Не удалось обновить таймер. Убедитесь, что файл открыт в редакторе.",
-      "timerUpdated": "✅ Таймер успешно обновлен!",
-      "validationCombinedMode": "⚠️ Для типа \"упражнения + тренировка\" необходимо заполнить оба поля!",
       "validationFillAll": "Пожалуйста, заполните все поля допустимыми значениями",
       "validMissingField": "Отсутствует обязательное поле: {field}",
       "validMustBeNumber": "{field} должно быть числом",
@@ -917,8 +834,7 @@
     "recentTrend": "Последний тренд",
     "recentVsPrev": " (vs пред.)",
     "sessions": "Сеансы",
-    "average": "Среднее значение:",
-    "title": "📈 {dataTypeLabel} Статистика ({contextLabel}):"
+    "average": "Среднее значение:"
   },
   "table": {
     "actions": "Действия",
@@ -944,7 +860,6 @@
       "volumeUnit": "Объем ({weightUnit})",
       "weightUnit": "Вес ({weightUnit})"
     },
-    "deleteConfirm": "Удалить эту запись?",
     "deleteError": "Ошибка при удалении: {error}",
     "deleteSuccess": "Запись удалена",
     "deleteTitle": "Удалить",
@@ -1048,8 +963,7 @@
         "text": "Нажмите кнопку \"+\", чтобы открыть форму, а затем сохранить набор. Он сразу появится в таблице."
       },
       "rowActions": {
-        "title": "Редактировать или удалить набор",
-        "text": "Каждая строка содержит кнопки \"редактировать\" и \"удалить\". Используйте их для исправления опечатки или удаления записи."
+        "title": "Редактировать или удалить набор"
       },
       "chart": {
         "title": "Ваш прогресс",

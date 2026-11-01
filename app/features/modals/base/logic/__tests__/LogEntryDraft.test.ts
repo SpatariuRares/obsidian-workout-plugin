@@ -172,22 +172,23 @@ describe("LogEntryDraft", () => {
     });
 
     it.each([
-      ["no exercise", "", {}, t("modal.notices.validationFillAll")],
-      ["text in a number", "Squat", { reps: "five" }, t("modal.notices.validMustBeNumber", { field: "Reps" })],
-      ["below the minimum", "Squat", { reps: "0" }, t("modal.notices.validMinValue", { field: "Reps", min: 1 })],
-      ["above the maximum", "Squat", { weight: "600" }, t("modal.notices.validMaxValue", { field: "Weight", max: 500 })],
-      ["an empty required text", "Squat", { band: "  " }, t("modal.notices.validFieldRequired", { field: "Band" })],
-      ["decimal reps", "Squat", { reps: "8.5" }, t("modal.notices.validMustBeWholeNumber", { field: "Reps" })],
-      ["an optional field out of its limits", "Squat", { heartRate: "300" }, t("modal.notices.validMaxValue", { field: "Heart rate", max: 250 })],
-    ])("rejects %s", (_case, exercise, values, message) => {
-      expect(validate(exercise, fields(values), params)).toBe(message);
+      ["no exercise", "", {}, "exercise", t("modal.notices.validChooseExercise")],
+      ["text in a number", "Squat", { reps: "five" }, "reps", t("modal.notices.validMustBeNumber", { field: "Reps" })],
+      ["below the minimum", "Squat", { reps: "0" }, "reps", t("modal.notices.validMinValue", { field: "Reps", min: 1 })],
+      ["above the maximum", "Squat", { weight: "600" }, "weight", t("modal.notices.validMaxValue", { field: "Weight", max: 500 })],
+      ["an empty required text", "Squat", { band: "  " }, "band", t("modal.notices.validFieldRequired", { field: "Band" })],
+      ["decimal reps", "Squat", { reps: "8.5" }, "reps", t("modal.notices.validMustBeWholeNumber", { field: "Reps" })],
+      ["an optional field out of its limits", "Squat", { heartRate: "300" }, "heartRate", t("modal.notices.validMaxValue", { field: "Heart rate", max: 250 })],
+    ])("rejects %s, naming the field to fix", (_case, exercise, values, field, message) => {
+      expect(validate(exercise, fields(values), params)).toEqual({ field, message });
     });
 
     it("rejects a required field the form doesn't have", () => {
       const missing = new Map([["reps", "5"]]);
-      expect(validate("Squat", missing, params)).toBe(
-        t("modal.notices.validMissingField", { field: "Weight" }),
-      );
+      expect(validate("Squat", missing, params)).toEqual({
+        field: "weight",
+        message: t("modal.notices.validMissingField", { field: "Weight" }),
+      });
     });
 
     it("ignores optional fields", () => {

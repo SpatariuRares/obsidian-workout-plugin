@@ -391,80 +391,6 @@
     "workoutData": "運動資料",
     "workoutLog": "運動紀錄"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "新增記錄：{exerciseName}",
     "addLogButtonText": "新增記錄：{exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "正在掃描動作檔案...",
       "canvasExportError": "畫布匯出錯誤: {error}",
       "canvasExported": "畫布已匯出 ({path})",
-      "chartInserted": "✅ 圖表已成功插入！",
       "confirmUpdateTarget": "要將目標更新為 {targetWeight}{weightUnit} 嗎？",
-      "dashboardInserted": "✅ 儀表板已成功插入！",
       "dismissAchievement": "關閉成就",
       "exerciseBlockInserted": "已插入動作區塊",
-      "exerciseNameRequired": "❌ 請輸入動作名稱",
       "exercisePageCreated": "動作頁面已成功建立！",
       "exercisePageError": "建立動作頁面時發生錯誤：{error}",
       "exercisePageNameRequired": "請輸入動作名稱",
-      "exerciseSectionCreated": "✅ 已成功建立動作區段！",
       "genericError": "錯誤：{error}",
       "insertCodeNoFile": "開啟 Markdown 檔案，以便插入程式碼",
       "logCreated": "運動紀錄已成功建立！",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "找到 {count} 個類似標籤",
       "muscleTagSimilarWarning": "已有類似的標籤",
       "suggestedNextWeight": "建議下次重量：{suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ 表格已成功插入！",
       "tableUpdateFailed": "無法更新表格。請確認檔案已在編輯器中開啟。",
-      "tableUpdated": "✅ 表格已成功更新！",
       "targetAchieved": "已達成目標！",
       "timerElementsNotInitialized": "計時元素尚未初始化",
-      "timerInserted": "✅ 計時器已成功插入！",
       "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
-      "timerUpdated": "✅ 計時器已成功更新！",
-      "validationCombinedMode": "⚠️ 針對「動作 + 運動」類型，您必須填寫兩個欄位！",
       "validationFillAll": "請務必填寫所有欄位，並使用有效的值。",
       "validMissingField": "缺少必填欄位：{field}",
       "validMustBeNumber": "{field}必須是有效數字",
@@ -917,8 +834,7 @@
     "recentTrend": "近期趨勢",
     "recentVsPrev": " (與上次比)",
     "sessions": "訓練次數",
-    "average": "平均值：",
-    "title": "📈 {dataTypeLabel} 統計數據 ({contextLabel}):"
+    "average": "平均值："
   },
   "table": {
     "actions": "操作",
@@ -944,7 +860,6 @@
       "volumeUnit": "訓練量 ({weightUnit})",
       "weightUnit": "重量 ({weightUnit})"
     },
-    "deleteConfirm": "要刪除這筆紀錄嗎？",
     "deleteError": "刪除失敗: {error}",
     "deleteSuccess": "紀錄已刪除",
     "deleteTitle": "刪除",
@@ -1048,8 +963,7 @@
         "text": "點擊 \"+\" 按鈕以開啟表單，然後儲存設定。設定會立即顯示在表格中。"
       },
       "rowActions": {
-        "title": "編輯或刪除一個集合",
-        "text": "每一排都有編輯和刪除按鈕。請使用它們來修正拼寫錯誤或刪除某個設定。"
+        "title": "編輯或刪除一個集合"
       },
       "chart": {
         "title": "您的進度",

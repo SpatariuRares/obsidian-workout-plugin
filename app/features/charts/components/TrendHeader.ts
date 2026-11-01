@@ -5,6 +5,7 @@ import { FormatUtils } from "@app/utils";
 import { t } from "@app/i18n";
 import { trendOf } from "@app/services/history/TrainingHistory";
 import { CONSTANTS } from "@app/constants";
+import { Icon } from "@app/components/atoms";
 
 /**
  * Renders trend header information for workout charts.
@@ -55,8 +56,9 @@ export class TrendHeader {
       h3.classList.add("trend-color-accent");
     }
 
+    Icon.create(h3, { name: trendIndicators.trendIcon });
     h3.appendText(
-      `${trendIndicators.trendIcon} ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)} `,
+      ` ${CONSTANTS.WORKOUT.LABELS.CHARTS.TREND_TITLE(dataType)} `,
     );
     h3.createEl("strong", { text: trendIndicators.trendDirection });
 
@@ -200,17 +202,12 @@ export class TrendHeader {
       lastValue !== undefined &&
       volumeData.length >= 2
     ) {
-      const changeSign =
-        parseFloat(percentChange) > 0
-          ? t("icons.common.plus")
-          : t("icons.common.empty");
+      const changeSign = parseFloat(percentChange) > 0 ? "+" : "";
       return {
         text:
           percentChange === "Infinity"
             ? t("charts.significantIncrease")
-            : changeSign +
-              percentChange +
-              t("icons.common.percentage"),
+            : `${changeSign}${percentChange}%`,
         color: trendColor,
       };
     } else if (firstValue !== undefined && volumeData.length === 1) {

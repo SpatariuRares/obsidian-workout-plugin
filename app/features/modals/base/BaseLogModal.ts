@@ -13,7 +13,7 @@ import type { ParameterDefinition } from "@app/types/ExerciseTypes";
 import { DynamicFieldsRenderer } from "@app/features/modals/base/components/DynamicFieldsRenderer";
 import { LogFormRenderer } from "@app/features/modals/base/components/LogFormRenderer";
 import { readLogForm } from "@app/features/modals/base/components/readLogForm";
-import { validate } from "@app/features/modals/base/logic/LogEntryDraft";
+import { validate, type FormError } from "@app/features/modals/base/logic/LogEntryDraft";
 
 import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
@@ -92,7 +92,7 @@ export abstract class BaseLogModal extends ModalBase {
 
   async onOpen() {
     const { contentEl } = this;
-    contentEl.addClass("workout-modal");
+    contentEl.addClass("workout-modal", "workout-log-modal");
 
     // iOS overlays the keyboard on the modal, hiding fields like notes
     if (Platform.isMobile) {
@@ -130,6 +130,9 @@ export abstract class BaseLogModal extends ModalBase {
 
     // Create buttons
     const buttonsContainer = Button.createContainer(formContainer);
+    // Stays at the bottom of the modal on phones: saving the prefilled set
+    // shouldn't need a scroll past protocol, notes and workout
+    buttonsContainer.addClass("workout-log-actions");
     this.createButtons(buttonsContainer, this.formElements);
 
     // Set focus
@@ -244,8 +247,9 @@ export abstract class BaseLogModal extends ModalBase {
       this.currentParameters,
     );
     const error = validate(data.exercise, fields, this.currentParameters);
+    this.clearFieldError();
     if (error) {
-      new Notice(error);
+      this.showFieldError(formElements, error);
       return;
     }
 
@@ -269,6 +273,44 @@ export abstract class BaseLogModal extends ModalBase {
         t("modal.notices.genericError", { error: errorMessage }),
       );
     }
+  }
+
+  /**
+   * Shows why the set can't be saved under the field to fix and focuses it,
+   * so on a phone the message isn't a notice far from the field. Falls back
+   * to a notice when the form has no such field.
+   */
+  private showFieldError(formElements: LogFormElements, error: FormError): void {
+    const input =
+      error.field === "exercise"
+        ? formElements.exerciseElements.exerciseInput
+        : formElements.dynamicFieldInputs.get(error.field);
+    if (!input) {
+      new Notice(error.message);
+      return;
+    }
+
+    input.setAttribute("aria-invalid", "true");
+    const message = this.contentEl.createDiv({
+      cls: "workout-field-error",
+      text: error.message,
+      attr: { role: "alert" },
+    });
+    message.id = "workout-log-field-error";
+    input.setAttribute("aria-describedby", message.id);
+    // After the +/- row for numbers, so the message sits under the whole control
+    (input.closest(".workout-input-with-adjust") ?? input).after(message);
+    input.addEventListener("input", () => this.clearFieldError(), { once: true });
+    input.focus();
+  }
+
+  private clearFieldError(): void {
+    const { contentEl } = this;
+    contentEl.querySelector(".workout-field-error")?.remove();
+    contentEl.querySelectorAll("[aria-invalid]").forEach((el) => {
+      el.removeAttribute("aria-invalid");
+      el.removeAttribute("aria-describedby");
+    });
   }
 
   /**

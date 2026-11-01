@@ -2,42 +2,17 @@
 
 import { ActionButtons } from "@app/features/tables/ui/ActionButtons";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
-import { ActionButtonGroup } from "@app/components/molecules";
-
-jest.mock("@app/components/molecules", () => ({
-  ActionButtonGroup: {
-    create: jest.fn(),
-  },
-}));
+import { t } from "@app/i18n";
 
 describe("ActionButtons", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("creates action buttons using ActionButtonGroup molecule", () => {
+  it("gives a row one action: the edit button (delete is in the edit form)", () => {
     const container = createObsidianContainer();
-    const mockEditBtn = document.createElement("button");
-    const mockDeleteBtn = document.createElement("button");
-    const mockContainer = document.createElement("div");
 
-    (ActionButtonGroup.create as jest.Mock).mockReturnValue({
-      container: mockContainer,
-      editBtn: mockEditBtn,
-      deleteBtn: mockDeleteBtn,
-    });
-
-    const result =
+    const { container: actions, editBtn } =
       ActionButtons.createActionButtonsContainer(container);
 
-    expect(ActionButtonGroup.create).toHaveBeenCalledWith(
-      container,
-      expect.objectContaining({
-        className: "workout-table-actions",
-      }),
-    );
-    expect(result.container).toBe(mockContainer);
-    expect(result.editBtn).toBe(mockEditBtn);
-    expect(result.deleteBtn).toBe(mockDeleteBtn);
+    expect(actions.classList.contains("workout-table-actions")).toBe(true);
+    expect(actions.querySelectorAll("button")).toHaveLength(1);
+    expect(editBtn.getAttribute("aria-label")).toBe(t("table.editTitle"));
   });
 });

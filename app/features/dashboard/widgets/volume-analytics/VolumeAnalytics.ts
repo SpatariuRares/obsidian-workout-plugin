@@ -11,6 +11,7 @@ import { ListItem } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import { FormatUtils } from "@app/utils/FormatUtils";
 
 export class VolumeAnalytics {
   /**
@@ -86,7 +87,7 @@ export class VolumeAnalytics {
     data.forEach(([exercise, volume]) => {
       ListItem.create(listEl, {
         label: exercise,
-        value: `${volume.toLocaleString()} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
+        value: `${FormatUtils.formatNumber(volume)} ${CONSTANTS.WORKOUT.LABELS.DASHBOARD.VOLUME_ANALYTICS.VOLUME_SUFFIX}`,
         className: "workout-muscle-group-item",
         labelClassName: "workout-exercise-name",
         valueClassName: "workout-exercise-volume",

@@ -188,3 +188,15 @@
   font-size: var(--font-ui-small);
   margin-block: var(--workout-space-sm) var(--workout-space-md);
 }
+
+/* Phones: tapping a set's card edits it (TableActions). The pencil button
+   stays as the visible cue that the card opens; the card lights up on press */
+tr.workout-table-row-tappable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: var(--workout-transition);
+
+  &:active {
+    background: var(--background-modifier-active-hover);
+  }
+}

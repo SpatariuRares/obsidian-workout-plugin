@@ -391,80 +391,6 @@
     "workoutData": "训练数据",
     "workoutLog": "训练记录"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "为 {exerciseName} 添加记录",
     "addLogButtonText": "为 {exerciseName} 添加记录",
@@ -622,16 +548,12 @@
       "auditScanning": "正在扫描训练动作文件...",
       "canvasExportError": "画布导出错误: {error}",
       "canvasExported": "画布已导出 ({path})",
-      "chartInserted": "✅ 图表已成功插入！",
       "confirmUpdateTarget": "将目标更新为 {targetWeight}{weightUnit}？",
-      "dashboardInserted": "✅ 仪表盘已成功插入！",
       "dismissAchievement": "关闭成就",
       "exerciseBlockInserted": "已插入训练动作块",
-      "exerciseNameRequired": "❌ 请输入训练动作名称",
       "exercisePageCreated": "训练页面已成功创建！",
       "exercisePageError": "创建训练页面时出错：{error}",
       "exercisePageNameRequired": "请输入训练动作名称",
-      "exerciseSectionCreated": "✅ 训练板块已成功创建！",
       "genericError": "错误：{error}",
       "insertCodeNoFile": "请打开一个 Markdown 文件以插入代码",
       "logCreated": "训练记录已成功创建！",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "找到 {count} 个相似标签",
       "muscleTagSimilarWarning": "已存在相似的标签",
       "suggestedNextWeight": "建议下次重量：{suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ 表格已成功插入！",
       "tableUpdateFailed": "更新表格失败。请确保文件已在编辑器中打开。",
-      "tableUpdated": "✅ 表格已成功更新！",
       "targetAchieved": "已达成目标！",
       "timerElementsNotInitialized": "计时器元素未初始化",
-      "timerInserted": "✅ 计时器已成功插入！",
       "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
-      "timerUpdated": "✅ 计时器已成功更新！",
-      "validationCombinedMode": "⚠️ 对于“训练动作 + 训练计划”类型，必须同时填写两个字段！",
       "validationFillAll": "请填写所有字段并使用有效值。",
       "validMissingField": "缺少必填字段：{field}",
       "validMustBeNumber": "{field}必须是有效数字",
@@ -917,8 +834,7 @@
     "recentTrend": "近期趋势",
     "recentVsPrev": " (与上次比)",
     "sessions": "训练次数",
-    "average": "平均值：",
-    "title": "📈 {dataTypeLabel} 统计数据 ({contextLabel}):"
+    "average": "平均值："
   },
   "table": {
     "actions": "操作",
@@ -944,7 +860,6 @@
       "volumeUnit": "训练量 ({weightUnit})",
       "weightUnit": "重量 ({weightUnit})"
     },
-    "deleteConfirm": "删除这条记录？",
     "deleteError": "删除失败: {error}",
     "deleteSuccess": "记录已删除",
     "deleteTitle": "删除",
@@ -1048,8 +963,7 @@
         "text": "点击“+”按钮打开表单，然后保存一个设置。 这样，设置就会立即出现在表格中。"
       },
       "rowActions": {
-        "title": "编辑或删除一组",
-        "text": "每一行都有编辑和删除按钮。 使用它们来纠正拼写错误或删除一组数据。"
+        "title": "编辑或删除一组"
       },
       "chart": {
         "title": "您的进度",

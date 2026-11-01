@@ -28,10 +28,11 @@ export interface TrendIndicatorProps {
  * ```
  */
 export class TrendIndicator {
+  /** Lucide icon ids */
   private static readonly ARROWS: Record<TrendDirection, string> = {
-    up: "↑",
-    down: "↓",
-    neutral: "→",
+    up: "arrow-up",
+    down: "arrow-down",
+    neutral: "arrow-right",
   };
 
   /**

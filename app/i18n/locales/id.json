@@ -391,80 +391,6 @@
     "workoutData": "Data latihan",
     "workoutLog": "Catatan latihan"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Tambahkan log untuk {exerciseName}",
     "addLogButtonText": "Tambahkan log untuk {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Memindai file latihan...",
       "canvasExportError": "Kesalahan Ekspor Kanvas: {error}",
       "canvasExported": "Kanvas berhasil diekspor ({path})",
-      "chartInserted": "✅ Grafik berhasil ditambahkan!",
       "confirmUpdateTarget": "Perbarui target menjadi {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Dasbor berhasil ditambahkan!",
       "dismissAchievement": "Tutup pencapaian",
       "exerciseBlockInserted": "Blok latihan dimasukkan",
-      "exerciseNameRequired": "❌ mohon masukkan nama latihan",
       "exercisePageCreated": "Halaman latihan berhasil dibuat!",
       "exercisePageError": "Kesalahan saat membuat halaman latihan: {error}",
       "exercisePageNameRequired": "Mohon masukkan nama latihan",
-      "exerciseSectionCreated": "✅ Bagian latihan berhasil dibuat!",
       "genericError": "Kesalahan: {error}",
       "insertCodeNoFile": "Buka file Markdown untuk memasukkan kode",
       "logCreated": "Catatan latihan berhasil dibuat!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} tag serupa ditemukan",
       "muscleTagSimilarWarning": "Tag yang mirip sudah ada",
       "suggestedNextWeight": "Beban berikutnya yang disarankan: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabel berhasil ditambahkan!",
       "tableUpdateFailed": "Gagal memperbarui tabel. Pastikan file tersebut terbuka di editor.",
-      "tableUpdated": "✅ Tabel berhasil diperbarui!",
       "targetAchieved": "Target tercapai!",
       "timerElementsNotInitialized": "Elemen timer belum diinisialisasi",
-      "timerInserted": "✅ Timer berhasil ditambahkan!",
       "timerUpdateFailed": "Gagal memperbarui timer. Pastikan file tersebut terbuka di dalam editor.",
-      "timerUpdated": "✅ Timer berhasil diperbarui!",
-      "validationCombinedMode": "⚠️ Untuk jenis 'latihan + sesi latihan', Anda harus mengisi kedua kolom!",
       "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid.",
       "validMissingField": "Bidang wajib tidak ada: {field}",
       "validMustBeNumber": "{field} harus berupa angka valid",
@@ -917,8 +834,7 @@
     "recentTrend": "Tren terbaru",
     "recentVsPrev": " (vs sblm.)",
     "sessions": "Sesi",
-    "average": "Rata-rata:",
-    "title": "📈 {dataTypeLabel} statistik ({contextLabel}):"
+    "average": "Rata-rata:"
   },
   "table": {
     "actions": "Tindakan",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Berat ({weightUnit})"
     },
-    "deleteConfirm": "Hapus entri catatan ini?",
     "deleteError": "Kesalahan Penghapusan: {error}",
     "deleteSuccess": "Entri catatan dihapus",
     "deleteTitle": "Hapus",
@@ -1048,8 +963,7 @@
         "text": "Tekan tombol \"+\" untuk membuka formulir, lalu simpan satu set. Formulir tersebut akan langsung muncul di tabel."
       },
       "rowActions": {
-        "title": "Edit atau hapus satu set",
-        "text": "Setiap baris memiliki tombol untuk mengedit dan menghapus. Gunakan tombol-tombol ini untuk memperbaiki kesalahan ketik atau menghapus satu set."
+        "title": "Edit atau hapus satu set"
       },
       "chart": {
         "title": "Kemajuan Anda",

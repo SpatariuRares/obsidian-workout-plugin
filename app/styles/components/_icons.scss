@@ -1,0 +1,28 @@
+/* Obsidian (Lucide) icons drawn by the Icon atom. Sized from the font size,
+   like the emoji they replace, so `font-size` rules on an icon still apply. */
+.workout-icon {
+  --icon-size: 1.15em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* A button with an icon and text: icon, then label, centred */
+.workout-btn:has(> .workout-btn-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--workout-space-xs);
+}
+
+/* Icon before text in a line (spacer stats, list items, footers) */
+.workout-spacer-stat-icon,
+.workout-list-item-icon,
+.workout-charts-footer > .workout-icon,
+.workout-file-error-message > .workout-icon {
+  margin-inline-end: var(--workout-space-2xs, 2px);
+  color: var(--text-muted);
+}

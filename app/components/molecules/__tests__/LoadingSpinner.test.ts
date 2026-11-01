@@ -2,6 +2,7 @@
 
 import { LoadingSpinner } from "@app/components/molecules/LoadingSpinner";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 
 describe("LoadingSpinner molecule", () => {
@@ -10,15 +11,15 @@ describe("LoadingSpinner molecule", () => {
 
     const spinner = LoadingSpinner.create(parent, {
       message: t("messages.loading"),
-      icon: "⏳",
+      icon: "hourglass",
       className: "mt-md",
     });
 
     expect(spinner.className).toContain("loading-spinner");
     expect(spinner.className).toContain("mt-md");
     expect(
-      spinner.querySelector(".loading-spinner-icon")?.textContent,
-    ).toBe("⏳");
+      spinner.querySelector(".loading-spinner-icon")?.getAttribute("data-icon"),
+    ).toBe("hourglass");
     expect(
       spinner.querySelector(".loading-spinner-message")?.textContent,
     ).toBe(t("messages.loading"));
@@ -32,20 +33,20 @@ describe("LoadingSpinner molecule", () => {
     });
 
     expect(
-      spinner.querySelector(".loading-spinner-icon")?.textContent,
-    ).toBe("⏳");
+      spinner.querySelector(".loading-spinner-icon")?.getAttribute("data-icon"),
+    ).toBe(ICONS.STATUS.LOADING);
   });
 
   it("renders spinner without message", () => {
     const parent = createObsidianContainer();
 
     const spinner = LoadingSpinner.create(parent, {
-      icon: "🔄",
+      icon: "refresh-cw",
     });
 
     expect(
-      spinner.querySelector(".loading-spinner-icon")?.textContent,
-    ).toBe("🔄");
+      spinner.querySelector(".loading-spinner-icon")?.getAttribute("data-icon"),
+    ).toBe("refresh-cw");
     expect(
       spinner.querySelector(".loading-spinner-message"),
     ).toBeNull();
@@ -58,8 +59,8 @@ describe("LoadingSpinner molecule", () => {
 
     expect(spinner.className).toContain("loading-spinner");
     expect(
-      spinner.querySelector(".loading-spinner-icon")?.textContent,
-    ).toBe("⏳");
+      spinner.querySelector(".loading-spinner-icon")?.getAttribute("data-icon"),
+    ).toBe(ICONS.STATUS.LOADING);
     expect(
       spinner.querySelector(".loading-spinner-message"),
     ).toBeNull();

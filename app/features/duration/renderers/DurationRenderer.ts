@@ -5,6 +5,8 @@
 import { DurationAnalysisResult } from "@app/features/duration/types";
 import { FormatUtils } from "@app/utils/FormatUtils";
 import { t } from "@app/i18n";
+import { Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 
 export class DurationRenderer {
   /**
@@ -45,9 +47,9 @@ export class DurationRenderer {
       cls: "workout-duration-header",
     });
 
-    header.createSpan({
-      cls: "workout-duration-icon",
-      text: t("icons.duration.timer"),
+    Icon.create(header, {
+      name: ICONS.TIMER.DURATION,
+      className: "workout-duration-icon",
     });
 
     header.createSpan({

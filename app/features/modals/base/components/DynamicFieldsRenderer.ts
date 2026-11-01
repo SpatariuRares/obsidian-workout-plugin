@@ -140,6 +140,12 @@ export class DynamicFieldsRenderer {
       if (param.required) {
         input.required = true;
       }
+      // Phones open the digit pad instead of the full keyboard. Not for
+      // decimals: the pad's separator follows the locale (","), which a
+      // number input may reject
+      if (field.integer) {
+        input.inputMode = "numeric";
+      }
 
       if (param.key === "weight") {
         label.textContent = param.label;

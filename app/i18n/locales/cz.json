@@ -391,80 +391,6 @@
     "workoutData": "Data tréninku",
     "workoutLog": "Záznam tréninku"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Přidat záznam pro {exerciseName}",
     "addLogButtonText": "Přidat záznam pro {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Prohledávání souborů cvičení...",
       "canvasExportError": "Chyba exportu plátna: {error}",
       "canvasExported": "Plátno exportováno ({path})",
-      "chartInserted": "✅ Graf vložen úspěšně!",
       "confirmUpdateTarget": "Aktualizovat cíl na {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Přehled byl úspěšně vložen!",
       "dismissAchievement": "Zavřít úspěch",
       "exerciseBlockInserted": "Blok cvičení vložen",
-      "exerciseNameRequired": "❌ Zadejte název cvičení",
       "exercisePageCreated": "Stránka cvičení vytvořena úspěšně!",
       "exercisePageError": "Chyba při vytváření stránky cvičení: {error}",
       "exercisePageNameRequired": "Zadejte název cvičení",
-      "exerciseSectionCreated": "✅ Sekce cvičení vytvořena úspěšně!",
       "genericError": "Chyba: {error}",
       "insertCodeNoFile": "Otevřete soubor markdown pro vložení kódu",
       "logCreated": "Záznam tréninku vytvořen úspěšně!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "Nalezeno podobných štítků: {count}",
       "muscleTagSimilarWarning": "Podobný štítek už existuje",
       "suggestedNextWeight": "Navrhovaná další váha: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabulka vložena úspěšně!",
       "tableUpdateFailed": "Tabulku se nepodařilo aktualizovat. Ujistěte se, že je soubor otevřený v editoru.",
-      "tableUpdated": "✅ Tabulka byla úspěšně aktualizována!",
       "targetAchieved": "Cíl splněn!",
       "timerElementsNotInitialized": "Prvky časovače nebyly inicializovány",
-      "timerInserted": "✅ Časovač vložen úspěšně!",
       "timerUpdateFailed": "Časovač se nepodařilo aktualizovat. Ujistěte se, že je soubor otevřený v editoru.",
-      "timerUpdated": "✅ Časovač byl úspěšně aktualizován!",
-      "validationCombinedMode": "⚠️ pro typ 'cvičení + trénink' musíte vyplnit obě pole!",
       "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami",
       "validMissingField": "Chybí povinné pole: {field}",
       "validMustBeNumber": "{field} musí být platné číslo",
@@ -917,8 +834,7 @@
     "recentTrend": "Nedávný trend",
     "recentVsPrev": " (vs předch.)",
     "sessions": "Tréninky",
-    "average": "Průměr:",
-    "title": "📈 {dataTypeLabel} statistiky ({contextLabel}):"
+    "average": "Průměr:"
   },
   "table": {
     "actions": "Akce",
@@ -944,7 +860,6 @@
       "volumeUnit": "Objem ({weightUnit})",
       "weightUnit": "Hmotnost ({weightUnit})"
     },
-    "deleteConfirm": "Smazat tento záznam?",
     "deleteError": "Chyba při smazání: {error}",
     "deleteSuccess": "Záznam smazán",
     "deleteTitle": "Smazat",
@@ -1048,8 +963,7 @@
         "text": "Stiskněte tlačítko +, abyste otevřeli formulář, a poté uložte sadu. Sadě se okamžitě zobrazí v tabulce."
       },
       "rowActions": {
-        "title": "Upravte nebo odstraňte sadu",
-        "text": "Každý řádek má tlačítka pro úpravu a smazání. Použijte je k opravě překlepu nebo k odstranění záznamu."
+        "title": "Upravte nebo odstraňte sadu"
       },
       "chart": {
         "title": "Váš pokrok",

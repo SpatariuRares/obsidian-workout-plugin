@@ -122,6 +122,11 @@ export class TAbstractFile {
 
 export class EventRef {}
 
+/** Draws a Lucide icon into an element; tests read the name back */
+export const setIcon = (el: HTMLElement, icon: string) => {
+  el.dataset.icon = icon;
+};
+
 /** Mutable in tests: `Platform.isMobile = true` */
 export const Platform = { isMobile: false };
 

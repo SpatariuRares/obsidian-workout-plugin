@@ -207,3 +207,31 @@ describe("FormatUtils", () => {
     });
   });
 });
+
+describe("FormatUtils.formatNumber", () => {
+  const { LocalizationService } = jest.requireActual("@app/i18n");
+  const withLocale = (locale: string) =>
+    jest
+      .spyOn(LocalizationService, "getInstance")
+      .mockReturnValue({ getCurrentLocale: () => locale });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it("uses the plugin language's separators", () => {
+    withLocale("en");
+    expect(FormatUtils.formatNumber(63814)).toBe("63,814");
+    withLocale("it");
+    expect(FormatUtils.formatNumber(63814)).toBe("63.814");
+  });
+
+  it("rounds to the decimals asked for", () => {
+    withLocale("en");
+    expect(FormatUtils.formatNumber(9895.6)).toBe("9,896");
+    expect(FormatUtils.formatNumber(82.567, 1)).toBe("82.6");
+  });
+
+  it("falls back to English for a locale code Intl rejects", () => {
+    withLocale("not a locale");
+    expect(FormatUtils.formatNumber(1234)).toBe("1,234");
+  });
+});

@@ -58,3 +58,48 @@
     padding: var(--workout-space-sm) var(--workout-space-lg);
   }
 }
+
+/* Create/edit log: why the set can't be saved, under the field to fix */
+.workout-field-error {
+  color: var(--workout-text-error);
+  font-size: var(--font-ui-small);
+  margin-top: var(--workout-space-xs);
+}
+
+.workout-modal input[aria-invalid="true"] {
+  border-color: var(--workout-text-error);
+}
+
+/* On phones the save button stays at the bottom of the modal while the
+   optional fields scroll under it */
+body.is-mobile .modal-content.workout-log-modal {
+  // The bar carries the bottom spacing; with the scroller's own padding
+  // the fields would show through below it
+  padding-bottom: 0;
+}
+
+body.is-mobile .workout-log-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: var(--workout-space-lg);
+  padding-block: var(--workout-space-md)
+    calc(var(--workout-space-md) + env(safe-area-inset-bottom, 0px));
+  background: var(--modal-background, var(--background-primary));
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+/* Edit log: deleting is rare, so it is a small icon at the start of the
+   save bar, with save and cancel pushed to the end */
+.workout-buttons-container button.workout-log-delete {
+  margin-inline-end: auto;
+  align-self: center;
+  color: var(--workout-text-error);
+}
+
+// A finger-sized target on phones; the icon itself stays small
+body.is-mobile .workout-buttons-container button.workout-log-delete {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}

@@ -5,6 +5,7 @@
  */
 
 export interface CopyableBadgeProps {
+  /** Emoji prefix, drawn as text (muscle tags: Lucide has no muscle icons) */
   icon?: string;
   text: string;
   copyValue: string;

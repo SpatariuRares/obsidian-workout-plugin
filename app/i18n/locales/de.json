@@ -391,80 +391,6 @@
     "workoutData": "Trainingsdaten",
     "workoutLog": "Trainingslog"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Protokoll hinzufügen für {exerciseName}",
     "addLogButtonText": "Protokoll hinzufügen für {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Übungsdateien werden durchsucht...",
       "canvasExportError": "Fehler beim Canvas-Export: {error}",
       "canvasExported": "Canvas exportiert ({path})",
-      "chartInserted": "✅ Diagramm erfolgreich eingefügt!",
       "confirmUpdateTarget": "Ziel auf {targetWeight}{weightUnit} aktualisieren?",
-      "dashboardInserted": "✅ Dashboard erfolgreich eingefügt!",
       "dismissAchievement": "Erfolg schließen",
       "exerciseBlockInserted": "Übungsblock eingefügt",
-      "exerciseNameRequired": "❌ Bitte gib einen Übungsnamen ein",
       "exercisePageCreated": "Übungsseite erfolgreich erstellt!",
       "exercisePageError": "Fehler beim Erstellen der Übungsseite: {error}",
       "exercisePageNameRequired": "Bitte gib einen Übungsnamen ein",
-      "exerciseSectionCreated": "✅ Übungsabschnitt erfolgreich erstellt!",
       "genericError": "Fehler: {error}",
       "insertCodeNoFile": "Öffne eine Markdown-Datei, um den Code einzufügen",
       "logCreated": "Trainingsprotokoll erfolgreich erstellt!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} ähnliche Tags gefunden",
       "muscleTagSimilarWarning": "Ein ähnlicher Tag existiert bereits",
       "suggestedNextWeight": "Vorgeschlagenes nächstes Gewicht: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabelle erfolgreich eingefügt!",
       "tableUpdateFailed": "Tabelle konnte nicht aktualisiert werden. Stelle sicher, dass die Datei im Editor geöffnet ist.",
-      "tableUpdated": "✅ Tabelle erfolgreich aktualisiert!",
       "targetAchieved": "Ziel erreicht!",
       "timerElementsNotInitialized": "Timer-Elemente nicht initialisiert",
-      "timerInserted": "✅ Timer erfolgreich eingefügt!",
       "timerUpdateFailed": "Timer konnte nicht aktualisiert werden. Stelle sicher, dass die Datei im Editor geöffnet ist.",
-      "timerUpdated": "✅ Timer erfolgreich aktualisiert!",
-      "validationCombinedMode": "⚠️ Für den Typ 'Übung + Training' müssen beide Felder ausgefüllt werden!",
       "validationFillAll": "Bitte alle Felder mit gültigen Werten füllen",
       "validMissingField": "Pflichtfeld fehlt: {field}",
       "validMustBeNumber": "{field} muss eine gültige Zahl sein",
@@ -917,8 +834,7 @@
     "recentTrend": "Aktueller Trend",
     "recentVsPrev": " (vs. vorh.)",
     "sessions": "Sitzungen",
-    "average": "Durchschnitt:",
-    "title": "📈 {dataTypeLabel} Statistiken ({contextLabel}):"
+    "average": "Durchschnitt:"
   },
   "table": {
     "actions": "Aktionen",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volumen ({weightUnit})",
       "weightUnit": "Gewicht ({weightUnit})"
     },
-    "deleteConfirm": "Diesen Eintrag löschen?",
     "deleteError": "Fehler beim Löschen: {error}",
     "deleteSuccess": "Eintrag gelöscht",
     "deleteTitle": "Löschen",
@@ -1048,8 +963,7 @@
         "text": "Drücken Sie die Schaltfläche \"+\", um das Formular zu öffnen, und speichern Sie dann eine Einstellung. Sie wird sofort in der Tabelle angezeigt."
       },
       "rowActions": {
-        "title": "Bearbeiten oder löschen Sie eine Gruppe",
-        "text": "Jede Zeile hat Schaltflächen zum Bearbeiten und Löschen. Verwenden Sie diese, um einen Tippfehler zu korrigieren oder einen Eintrag zu löschen."
+        "title": "Bearbeiten oder löschen Sie eine Gruppe"
       },
       "chart": {
         "title": "Ihr Fortschritt",

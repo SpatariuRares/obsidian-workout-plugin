@@ -103,12 +103,13 @@
   }
 }
 
+// Obsidian's own destructive buttons (.mod-warning) use these
 %workout-btn-danger {
-  background: var(--interactive-error);
+  background: var(--background-modifier-error);
   color: var(--text-on-accent);
 
   &:hover {
-    background: var(--interactive-error-hover);
+    background: var(--background-modifier-error-hover);
   }
 }
 
@@ -165,6 +166,10 @@
     }
   }
 
+  .workout-btn-danger {
+    @extend %workout-btn-danger;
+  }
+
   .workout-btn-warning {
     @extend %workout-btn-warning;
 
@@ -175,12 +180,17 @@
   }
 
   // Modifier: add log layout
+  // One row: Add log takes the room (its long label wraps inside it) and
+  // the ⋮ menu stays next to it instead of dropping to a line of its own
   &.workout-add-log-button-container {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
     justify-content: space-between;
 
     .workout-btn-primary {
       @extend %workout-btn-big;
+      flex: 0 1 auto;
+      min-width: 0;
     }
   }
 
@@ -196,6 +206,7 @@
 
 .workout-modal {
   .workout-btn-primary,
+  .workout-btn-danger,
   .workout-btn-warning {
     @extend %workout-btn-giant;
   }
@@ -404,18 +415,6 @@
    Table Action Buttons
    ---------------------------------------------------------------------------- */
 
-// Shared hover effect for table actions
-@mixin workout-table-action-hover($bg-color) {
-  // Touch devices keep :hover after a tap; only enlarge on real pointers
-  @media (hover: hover) {
-    &:hover {
-      background: $bg-color;
-      color: var(--text-on-accent);
-      transform: scale(1.1);
-    }
-  }
-}
-
 .workout-table-action-btn {
   @extend %workout-btn-interactive;
   @include workout-btn-press;
@@ -423,23 +422,19 @@
   height: var(--workout-size-2xl);
 }
 
-/* Own surface + border: rows use --background-secondary, so a button with
-   the same fill looked like a bare icon. Qualified with the tag to beat
-   Obsidian's mobile `button` rule (--interactive-normal, no border). */
+/* Just the icon: no fill, border or shadow (the touch area stays its size).
+   Qualified with the tag to beat Obsidian's mobile `button` rule
+   (--interactive-normal fill). */
 .workout-table-actions button.workout-table-action-btn {
-  background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
-}
+  background: transparent;
+  border: none;
+  box-shadow: none;
 
-.workout-table-actions button.workout-table-action-btn-edit {
-  @include workout-table-action-hover(var(--workout-accent-fill));
-}
-
-.workout-table-actions button.workout-table-action-btn-delete {
-  // Raw --text-error gives white text ~3.3:1
-  @include workout-table-action-hover(
-    color-mix(in srgb, var(--text-error) 75%, black)
-  );
+  @media (hover: hover) {
+    &:hover {
+      background: var(--background-modifier-hover);
+    }
+  }
 }
 
 @media print {

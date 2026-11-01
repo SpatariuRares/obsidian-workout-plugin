@@ -393,80 +393,6 @@
     "workoutData": "Workout data",
     "workoutLog": "Workout log"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "lastSet": "Last time: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
@@ -537,6 +463,7 @@
       "create": "Create log",
       "createExercise": "Create exercise page",
       "createSection": "Create section",
+      "deleteSet": "Delete set",
       "decreaseBy": "Decrease {label} by {increment}",
       "export": "Export",
       "increaseBy": "Increase {label} by {increment}",
@@ -639,16 +566,16 @@
       "auditScanning": "Scanning exercise files...",
       "canvasExportError": "Canvas Export Error: {error}",
       "canvasExported": "Canvas Exported ({path})",
-      "chartInserted": "✅ Chart inserted successfully!",
+      "chartInserted": "Chart inserted successfully!",
       "confirmUpdateTarget": "Update the target to {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Dashboard inserted successfully!",
+      "dashboardInserted": "Dashboard inserted successfully!",
       "dismissAchievement": "Dismiss achievement",
       "exerciseBlockInserted": "Exercise block inserted",
-      "exerciseNameRequired": "❌ please enter an exercise name",
+      "exerciseNameRequired": "Please enter an exercise name",
       "exercisePageCreated": "Exercise page created successfully!",
       "exercisePageError": "Error creating exercise page: {error}",
       "exercisePageNameRequired": "Please enter an exercise name",
-      "exerciseSectionCreated": "✅ exercise section created successfully!",
+      "exerciseSectionCreated": "Exercise section created successfully!",
       "genericError": "Error: {error}",
       "insertCodeNoFile": "Open a markdown file to insert the code",
       "logCreated": "Workout log created successfully!",
@@ -675,21 +602,22 @@
       "muscleTagSimilarFound": "{count} similar tag(s) found",
       "muscleTagSimilarWarning": "A similar tag already exists",
       "suggestedNextWeight": "Suggested next weight: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Table inserted successfully!",
+      "tableInserted": "Table inserted successfully!",
       "tableUpdateFailed": "Failed to update table. Make sure the file is open in the editor.",
-      "tableUpdated": "✅ Table updated successfully!",
+      "tableUpdated": "Table updated successfully!",
       "targetAchieved": "Target reached!",
       "timerElementsNotInitialized": "Timer elements not initialized",
-      "timerInserted": "✅ Timer inserted successfully!",
+      "timerInserted": "Timer inserted successfully!",
       "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
-      "timerUpdated": "✅ Timer updated successfully!",
+      "timerUpdated": "Timer updated successfully!",
+      "validChooseExercise": "Choose an exercise",
       "validFieldRequired": "{field} is required",
       "validMaxValue": "{field} must be at most {max}",
       "validMinValue": "{field} must be at least {min}",
       "validMissingField": "Missing required field: {field}",
       "validMustBeNumber": "{field} must be a valid number",
       "validMustBeWholeNumber": "{field} must be a whole number",
-      "validationCombinedMode": "⚠️ for 'exercise + workout' type you must fill both fields!",
+      "validationCombinedMode": "For 'exercise + workout' type you must fill both fields!",
       "validationFillAll": "Please fill in all fields with valid values"
     },
     "parameterKey": "Key:",
@@ -930,7 +858,7 @@
     "recentTrend": "Recent trend",
     "recentVsPrev": " (vs prev.)",
     "sessions": "Sessions",
-    "title": "📈 {dataTypeLabel} statistics ({contextLabel}):"
+    "title": "{dataTypeLabel} statistics ({contextLabel}):"
   },
   "table": {
     "actions": "Actions",
@@ -956,7 +884,8 @@
       "volumeUnit": "Vol ({weightUnit})",
       "weightUnit": "Wgt ({weightUnit})"
     },
-    "deleteConfirm": "Delete this log entry?",
+    "deleteSetMessage": "{set} will be removed from your log. This can't be undone.",
+    "deleteSetTitle": "Delete this set?",
     "deleteError": "Delete Error: {error}",
     "deleteSuccess": "Log entry deleted",
     "deleteTitle": "Delete",
@@ -996,6 +925,11 @@
     "presets": {
       "detailsControls": "Controls",
       "detailsSound": "Sound"
+    },
+    "round": "Round {current} of {total}",
+    "status": {
+      "done": "Done",
+      "paused": "Paused"
     },
     "stopwatch": "Stopwatch"
   },
@@ -1061,8 +995,9 @@
         "text": "Press the + button to open the form, then save a set. It lands in the table right away."
       },
       "rowActions": {
-        "title": "Edit or delete a set",
-        "text": "Every row has edit and delete buttons. Use them to fix a typo or remove a set."
+        "mobileText": "Tap a set to fix it. To remove it, use Delete set in the form that opens.",
+        "text": "Use the pencil on a row to fix a set. To remove it, use Delete set in the form that opens.",
+        "title": "Edit or delete a set"
       },
       "chart": {
         "title": "Your progress",

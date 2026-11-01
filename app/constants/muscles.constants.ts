@@ -224,3 +224,27 @@ export function defaultTagMap(): Record<string, string> {
  * @deprecated Use defaultTagMap(), or MUSCLE_TAG_ENTRIES for language-aware tag handling
  */
 export const MUSCLE_TAG_MAP: Record<string, string> = defaultTagMap();
+
+/**
+ * Emoji shown on a muscle group's tag badge (Obsidian's Lucide icons have no
+ * muscles). Not translated: an emoji reads the same in every language.
+ */
+export const MUSCLE_GROUP_EMOJI: Record<string, string> = {
+  chest: "🫁",
+  back: "🦾",
+  shoulders: "🦵",
+  biceps: "💪",
+  triceps: "💪",
+  forearms: "✊",
+  quads: "🦵",
+  hamstrings: "🦵",
+  glutes: "🍑",
+  calves: "🦵",
+  abs: "🎯",
+  core: "🎯",
+  traps: "🔺",
+  rear_delts: "🔙",
+};
+
+/** Badge emoji for a muscle group the map doesn't name */
+export const OTHER_MUSCLE_EMOJI = "💀";

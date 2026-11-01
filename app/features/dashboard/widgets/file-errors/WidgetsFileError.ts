@@ -13,6 +13,8 @@ import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { TFile } from "obsidian";
 import { ListItem } from "@app/components/molecules";
 import { t } from "@app/i18n";
+import { Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 
 type FileErrorContext = AppPort &
   SettingsPort &
@@ -41,7 +43,7 @@ export class WidgetsFileError {
     if (fileErrors.length === 0) {
       Feedback.renderSuccess(
         errorEl,
-        `${t("icons.status.success")} ${t("dashboard.fileErrors.allValid")}`,
+        t("dashboard.fileErrors.allValid"),
         { className: "workout-feedback-success", append: true },
       );
       return;
@@ -81,10 +83,11 @@ export class WidgetsFileError {
       });
 
       fileError.errors.forEach((error) => {
-        ListItem.createText(errorsEl, {
+        const item = ListItem.createText(errorsEl, {
           text: error,
           className: "workout-file-error-message",
         });
+        item.prepend(Icon.create(item, { name: ICONS.STATUS.WARNING }));
       });
     });
   }
@@ -114,7 +117,6 @@ export class WidgetsFileError {
     library: ExerciseLibrary,
     plugin: FileErrorContext,
   ): Promise<string[]> {
-    const warning = t("icons.status.warning");
     const errors: string[] = [];
 
     // Tags that point to a muscle, resolved like the heat map does
@@ -125,17 +127,17 @@ export class WidgetsFileError {
     const muscleTags = page.tags.filter((_, i) => resolved[i].length > 0);
 
     if (muscleTags.length === 0) {
-      errors.push(`${warning} ${t("dashboard.fileErrors.noTags")}`);
+      errors.push(t("dashboard.fileErrors.noTags"));
     } else if (muscleTags.length > 3) {
       errors.push(
-        `${warning} ${t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length })}`,
+        t("dashboard.fileErrors.tooManyTags", { count: muscleTags.length }),
       );
     }
 
     const sharing = library.pagesSharingAName(page);
     if (sharing.length > 0) {
       const pages = sharing.map((other) => other.file.basename).join(", ");
-      errors.push(`${warning} ${t("dashboard.fileErrors.sharedName", { pages })}`);
+      errors.push(t("dashboard.fileErrors.sharedName", { pages }));
     }
 
     return errors;

@@ -1,4 +1,10 @@
-import { TimerState, TIMER_TYPE } from "@app/features/timer/types";
+import {
+  TimerState,
+  TimerSurface,
+  TIMER_TYPE,
+} from "@app/features/timer/types";
+import { Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 
 const URGENT_THRESHOLD_MS = 10000;
@@ -58,7 +64,7 @@ export class TimerDisplay {
   }
 
   static updateDisplay(state: TimerState, timerId: string): void {
-    if (!state.timerDisplay) {
+    if (state.surfaces.length === 0) {
       return;
     }
 
@@ -79,47 +85,69 @@ export class TimerDisplay {
       this.hideUrgentOverlay(timerId);
     }
 
-    state.timerDisplay.empty();
+    // Running/paused drive the digit color; "Paused" is also written out
+    const isPaused = !state.isRunning && state.elapsedTime > 0 && !isCompleted;
+    const roundText =
+      state.timerType === TIMER_TYPE.INTERVAL && !isCompleted
+        ? t("timer.round", {
+            current: state.currentRound,
+            total: state.totalRounds,
+          })
+        : "";
 
-    if (isCompleted) {
-      state.timerDisplay.createSpan({
-        cls: "workout-timer-complete",
-        text: t("icons.status.success"),
+    for (const surface of state.surfaces) {
+      this.drawSurface(surface, state, {
+        time: this.timeText(state, remaining),
+        isCompleted,
+        isPaused,
+        roundText,
       });
-      this.updateRoundCounter(state, "");
-      return;
-    }
-
-    let displayTime: string;
-    if (state.timerType === TIMER_TYPE.COUNTDOWN) {
-      displayTime = this.formatTime(remaining ?? 0);
-    } else if (state.timerType === TIMER_TYPE.STOPWATCH) {
-      displayTime = this.formatTime(state.elapsedTime);
-    } else if (state.timerType === TIMER_TYPE.INTERVAL) {
-      displayTime = this.formatTime(remaining ?? 0);
-    } else {
-      displayTime = "00:00";
-    }
-
-    state.timerDisplay.createSpan({
-      cls: "workout-timer-time-display",
-      text: displayTime,
-    });
-
-    if (state.timerType === TIMER_TYPE.INTERVAL) {
-      this.updateRoundCounter(
-        state,
-        `${state.currentRound} / ${state.totalRounds}`,
-      );
     }
   }
 
-  private static updateRoundCounter(
+  private static timeText(state: TimerState, remaining: number | null): string {
+    if (
+      state.timerType === TIMER_TYPE.COUNTDOWN ||
+      state.timerType === TIMER_TYPE.INTERVAL
+    ) {
+      return this.formatTime(remaining ?? 0);
+    }
+    if (state.timerType === TIMER_TYPE.STOPWATCH) {
+      return this.formatTime(state.elapsedTime);
+    }
+    return "00:00";
+  }
+
+  private static drawSurface(
+    surface: TimerSurface,
     state: TimerState,
-    text: string,
+    view: { time: string; isCompleted: boolean; isPaused: boolean; roundText: string },
   ): void {
-    if (state.roundCounterDisplay) {
-      state.roundCounterDisplay.textContent = text;
+    const display = surface.timerDisplay;
+    display.empty();
+    const timer = display.closest(".workout-timer");
+    timer?.classList.toggle("is-running", state.isRunning);
+    timer?.classList.toggle("is-paused", view.isPaused);
+    if (surface.roundCounterDisplay) {
+      surface.roundCounterDisplay.textContent = view.roundText;
+    }
+
+    if (view.isCompleted) {
+      const done = display.createSpan({ cls: "workout-timer-complete" });
+      Icon.create(done, { name: ICONS.STATUS.SUCCESS });
+      done.appendText(t("timer.status.done"));
+      return;
+    }
+
+    display.createSpan({
+      cls: "workout-timer-time-display",
+      text: view.time,
+    });
+    if (view.isPaused) {
+      display.createSpan({
+        cls: "workout-timer-status",
+        text: t("timer.status.paused"),
+      });
     }
   }
 

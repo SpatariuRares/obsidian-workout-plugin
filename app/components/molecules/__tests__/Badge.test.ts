@@ -10,7 +10,7 @@ describe("Badge molecule", () => {
 
     const badge = Badge.create(parent, {
       text: BODY_PARTS.UPPER_BODY,
-      icon: "💪",
+      icon: "dumbbell",
       variant: "info",
       className: "mb-2",
     });
@@ -19,9 +19,9 @@ describe("Badge molecule", () => {
     expect(badge.classList.contains("badge")).toBe(true);
     expect(badge.className).toContain("badge-info");
     expect(badge.className).toContain("mb-2");
-    expect(badge.querySelector(".badge-icon")?.textContent).toBe(
-      "💪",
-    );
+    expect(
+      badge.querySelector(".badge-icon")?.getAttribute("data-icon"),
+    ).toBe("dumbbell");
     expect(badge.querySelector(".badge-text")?.textContent).toBe(
       BODY_PARTS.UPPER_BODY,
     );

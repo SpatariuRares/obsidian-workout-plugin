@@ -8,7 +8,7 @@ describe("StatCard molecule", () => {
     const parent = createObsidianContainer();
 
     const card = StatCard.create(parent, {
-      icon: "🏋️",
+      icon: "dumbbell",
       value: 42,
       label: "Workouts",
       className: "highlight",
@@ -16,9 +16,9 @@ describe("StatCard molecule", () => {
 
     expect(card.classList.contains("stat-card")).toBe(true);
     expect(card.className).toContain("highlight");
-    expect(card.querySelector(".stat-card-icon")?.textContent).toBe(
-      "🏋️",
-    );
+    expect(
+      card.querySelector(".stat-card-icon")?.getAttribute("data-icon"),
+    ).toBe("dumbbell");
     expect(card.querySelector(".stat-card-value")?.textContent).toBe(
       "42",
     );

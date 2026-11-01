@@ -20,7 +20,17 @@ export interface TimerState {
   totalRounds: number;
   timerType: TIMER_TYPE;
   duration: number;
-  timerDisplay?: HTMLElement;
+  /** Every rendering of the block the timer draws on (see TimerSurface) */
+  surfaces: TimerSurface[];
+}
+
+/**
+ * One rendering of a timer block. A note open in reading and editing view
+ * renders the block twice and both share the timer, so it draws on every
+ * surface still in the document, not only the last one rendered.
+ */
+export interface TimerSurface {
+  timerDisplay: HTMLElement;
   roundCounterDisplay?: HTMLElement;
   startStopBtn?: HTMLButtonElement;
 }

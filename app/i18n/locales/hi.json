@@ -391,80 +391,6 @@
     "workoutData": "वर्कआउट डेटा",
     "workoutLog": "वर्कआउट लॉग"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "{exerciseName} के लिए लॉग जोड़ें",
     "addLogButtonText": "{exerciseName} के लिए लॉग जोड़ें",
@@ -622,16 +548,12 @@
       "auditScanning": "व्यायाम फ़ाइलें स्कैन की जा रही हैं...",
       "canvasExportError": "कैनवस निर्यात त्रुटि: {error}",
       "canvasExported": "कैनवस निर्यात किया गया ({path})",
-      "chartInserted": "✅ चार्ट सफलतापूर्वक डाला गया!",
       "confirmUpdateTarget": "क्या लक्ष्य को {targetWeight}{weightUnit} पर अपडेट करें?",
-      "dashboardInserted": "✅ डैशबोर्ड सफलतापूर्वक डाला गया!",
       "dismissAchievement": "उपलब्धि खारिज करें",
       "exerciseBlockInserted": "व्यायाम ब्लॉक डाला गया",
-      "exerciseNameRequired": "❌ कृपया व्यायाम का नाम दर्ज करें",
       "exercisePageCreated": "व्यायाम पृष्ठ सफलतापूर्वक बनाया गया!",
       "exercisePageError": "व्यायाम पृष्ठ बनाने में त्रुटि: {error}",
       "exercisePageNameRequired": "कृपया व्यायाम का नाम दर्ज करें",
-      "exerciseSectionCreated": "✅ व्यायाम अनुभाग सफलतापूर्वक बनाया गया!",
       "genericError": "त्रुटि: {error}",
       "insertCodeNoFile": "कोड डालने के लिए एक मार्कडाउन फ़ाइल खोलें।",
       "logCreated": "वर्कआउट लॉग सफलतापूर्वक बनाया गया!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} मिलते-जुलते टैग मिले",
       "muscleTagSimilarWarning": "मिलता-जुलता टैग पहले से मौजूद है",
       "suggestedNextWeight": "सुझाया गया अगला वजन: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ तालिका सफलतापूर्वक डाली गई!",
       "tableUpdateFailed": "तालिका अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
-      "tableUpdated": "✅ तालिका सफलतापूर्वक अपडेट की गई!",
       "targetAchieved": "लक्ष्य पूरा!",
       "timerElementsNotInitialized": "टाइमर के तत्व अभी तक शुरू नहीं किए गए हैं",
-      "timerInserted": "✅ टाइमर सफलतापूर्वक डाला गया!",
       "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
-      "timerUpdated": "✅ टाइमर सफलतापूर्वक अपडेट हो गया!",
-      "validationCombinedMode": "⚠️ 'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड को भरना होगा!",
       "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
       "validMissingField": "आवश्यक फ़ील्ड गायब है: {field}",
       "validMustBeNumber": "{field} एक मान्य संख्या होनी चाहिए",
@@ -917,8 +834,7 @@
     "recentTrend": "हाल का ट्रेंड",
     "recentVsPrev": " (पिछले से)",
     "sessions": "सत्र",
-    "average": "औसत:",
-    "title": "📈 {dataTypeLabel} आँकड़े ({contextLabel}):"
+    "average": "औसत:"
   },
   "table": {
     "actions": "क्रियाएं",
@@ -944,7 +860,6 @@
       "volumeUnit": "मात्रा ({weightUnit})",
       "weightUnit": "वज़न ({weightUnit})"
     },
-    "deleteConfirm": "यह लॉग प्रविष्टि हटाएँ?",
     "deleteError": "हटाने में त्रुटि: {error}",
     "deleteSuccess": "लॉग प्रविष्टि हटाई गई",
     "deleteTitle": "हटाएँ",
@@ -1048,8 +963,7 @@
         "text": "फॉर्म खोलने के लिए '+' बटन पर टैप करें, फिर एक सेट सहेजें। यह तुरंत टेबल में आ जाएगा।"
       },
       "rowActions": {
-        "title": "संपादित करें या एक सेट हटाएं",
-        "text": "प्रत्येक पंक्ति में संपादन और हटाएँ बटन हैं। इनका उपयोग किसी गलत वर्तनी को ठीक करने या किसी सेट को हटाने के लिए करें।"
+        "title": "संपादित करें या एक सेट हटाएं"
       },
       "chart": {
         "title": "आपका प्रगति",

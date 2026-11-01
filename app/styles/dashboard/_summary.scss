@@ -192,3 +192,66 @@
     padding: var(--workout-space-lg);
   }
 }
+
+/* Quick stats: periods as columns, metrics as rows. Tabular figures keep the
+   digits aligned so the periods compare at a glance. Qualified to beat
+   Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-quick-stats-table {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: var(--workout-space-sm) var(--workout-space-xs);
+    border: none;
+    border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+    background: none;
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  thead th {
+    text-align: end;
+    font-size: var(--workout-font-sm);
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-muted);
+  }
+
+  tbody th {
+    text-align: start;
+    font-weight: normal;
+    color: var(--text-muted);
+
+    .workout-icon {
+      margin-inline-end: var(--workout-space-xs);
+    }
+  }
+
+  tbody td {
+    text-align: end;
+    font-weight: var(--workout-font-weight-semibold);
+    color: var(--text-normal);
+    white-space: nowrap;
+  }
+}
+
+/* Phones: the row icons cost the labels their width; numbers a step smaller */
+@media (max-width: variables.$breakpoint-mobile) {
+  .workout-dashboard table.workout-quick-stats-table {
+    font-size: var(--workout-font-sm);
+
+    tbody th {
+      font-size: var(--workout-font-xs);
+
+      .workout-icon {
+        display: none;
+      }
+    }
+  }
+}

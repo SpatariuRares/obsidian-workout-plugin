@@ -5,6 +5,8 @@
  * outside click or Escape key.
  */
 
+import { Icon } from "@app/components/atoms/Icon";
+
 export interface IconDropdownOption {
   label: string;
   value: string;
@@ -62,7 +64,7 @@ export class IconDropdown {
         "aria-expanded": "false",
       },
     });
-    button.textContent = props.icon;
+    Icon.create(button, { name: props.icon });
 
     const panel = wrapper.createDiv({
       cls: "workout-icon-dropdown-panel",
@@ -78,9 +80,8 @@ export class IconDropdown {
           "data-value": opt.value,
         },
       });
-      item.textContent = opt.icon
-        ? `${opt.icon} ${opt.label}`
-        : opt.label;
+      if (opt.icon) Icon.create(item, { name: opt.icon });
+      item.appendText(opt.label);
     }
 
     // Toggle open/close

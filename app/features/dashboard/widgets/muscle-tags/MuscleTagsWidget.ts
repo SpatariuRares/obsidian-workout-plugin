@@ -3,28 +3,13 @@ import { CopyableBadge } from "@app/components/molecules";
 import type { MuscleTagPort } from "@app/types/PluginPorts";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import {
+  MUSCLE_GROUP_EMOJI,
+  OTHER_MUSCLE_EMOJI,
+} from "@app/constants/muscles.constants";
 
 function getMuscleGroupEmoji(muscleGroup: string): string {
-  const MUSCLE_GROUP_EMOJI: Record<string, string> = {
-    chest: t("icons.exercise.chest"),
-    back: t("icons.exercise.back"),
-    shoulders: t("icons.exercise.shoulders"),
-    biceps: t("icons.exercise.biceps"),
-    triceps: t("icons.exercise.triceps"),
-    forearms: t("icons.exercise.forearms"),
-    quads: t("icons.exercise.quads"),
-    hamstrings: t("icons.exercise.hamstrings"),
-    glutes: t("icons.exercise.glutes"),
-    calves: t("icons.exercise.calves"),
-    abs: t("icons.exercise.abs"),
-    core: t("icons.exercise.core"),
-    traps: t("icons.exercise.traps"),
-    rear_delts: t("icons.exercise.rear_delts"),
-  };
-
-  return (
-    MUSCLE_GROUP_EMOJI[muscleGroup] ?? t("icons.exercise.deadlift")
-  );
+  return MUSCLE_GROUP_EMOJI[muscleGroup] ?? OTHER_MUSCLE_EMOJI;
 }
 
 /**

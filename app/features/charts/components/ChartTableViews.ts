@@ -6,6 +6,8 @@ import {
 } from "@app/features/charts/types";
 import { t } from "@app/i18n";
 import { getDefaultChartTitle } from "@app/features/charts/config/ChartConstants";
+import { Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
  * Table-based representations of chart data.
@@ -45,11 +47,9 @@ export class ChartTableViews {
       row.createEl("td", { text: value.toFixed(1) });
     });
 
-    tableDiv
-      .createDiv({ cls: "workout-charts-footer" })
-      .appendText(
-        `${t("icons.status.info")} ${t("charts.fallbackTableMessage")}`,
-      );
+    const footer = tableDiv.createDiv({ cls: "workout-charts-footer" });
+    Icon.create(footer, { name: ICONS.STATUS.INFO });
+    footer.appendText(t("charts.fallbackTableMessage"));
   }
 
   /**

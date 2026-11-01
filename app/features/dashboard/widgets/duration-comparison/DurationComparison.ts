@@ -3,6 +3,8 @@ import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
+import { Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
  * Number of recent workouts to display in the comparison
@@ -248,7 +250,8 @@ export class DurationComparison {
     });
 
     const table = tableContainer.createEl("table", {
-      cls: "workout-duration-comparison-table",
+      // On phones each row becomes a card (CSS reads each cell's data-label)
+      cls: "workout-duration-comparison-table workout-card-table",
     });
 
     // Header
@@ -291,17 +294,20 @@ export class DurationComparison {
       row.createEl("td", {
         text: this.formatDuration(session.estimatedDuration),
         cls: "workout-duration-comparison-duration-cell",
+        attr: { "data-label": t("dashboard.durationComparison.columnEstimated") },
       });
 
       // Actual duration
       row.createEl("td", {
         text: this.formatDuration(session.actualDuration),
         cls: "workout-duration-comparison-duration-cell",
+        attr: { "data-label": t("dashboard.durationComparison.columnActual") },
       });
 
       // Variance
       const varianceCell = row.createEl("td", {
         cls: "workout-duration-comparison-variance-cell",
+        attr: { "data-label": t("dashboard.durationComparison.columnVariance") },
       });
 
       const varianceSign = session.variancePercent >= 0 ? "+" : "";
@@ -346,14 +352,14 @@ export class DurationComparison {
     // Icon based on trend direction
     const icon =
       trend.direction === "improving"
-        ? "↗"
+        ? ICONS.TREND.UP
         : trend.direction === "declining"
-          ? "↘"
-          : "→";
+          ? ICONS.TREND.DOWN
+          : ICONS.TREND.FLAT;
 
-    messageEl.createSpan({
-      text: icon,
-      cls: "workout-duration-comparison-trend-icon",
+    Icon.create(messageEl, {
+      name: icon,
+      className: "workout-duration-comparison-trend-icon",
     });
 
     const trendText =

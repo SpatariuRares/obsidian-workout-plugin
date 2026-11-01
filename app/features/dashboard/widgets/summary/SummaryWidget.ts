@@ -5,6 +5,8 @@ import { calculateSummaryMetrics } from "@app/features/dashboard/widgets/summary
 import { DashboardCard } from "@app/components/molecules";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
+import { ICONS } from "@app/constants/ui.constants";
+import { FormatUtils } from "@app/utils/FormatUtils";
 
 export class SummaryWidget {
   static render(
@@ -29,7 +31,7 @@ export class SummaryWidget {
       summaryEl,
       t("dashboard.summary.totalWorkouts"),
       metrics.totalWorkouts.toString(),
-      t("icons.dashboard.summary.totalWorkouts"),
+      ICONS.METRICS.WORKOUTS,
     );
 
     this.createSummaryCard(
@@ -38,21 +40,21 @@ export class SummaryWidget {
       t("dashboard.summary.currentStreakSuffix", {
         count: metrics.currentStreak,
       }),
-      t("icons.dashboard.summary.currentStreak"),
+      ICONS.METRICS.STREAK,
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.summary.totalVolume"),
-      `${metrics.totalVolume.toLocaleString()} ${getUnitsMap()["volume"]}`,
-      t("icons.dashboard.summary.totalVolume"),
+      `${FormatUtils.formatNumber(metrics.totalVolume)} ${getUnitsMap()["volume"]}`,
+      ICONS.METRICS.TOTAL_VOLUME,
     );
 
     this.createSummaryCard(
       summaryEl,
       t("dashboard.summary.personalRecords"),
       metrics.personalRecords.toString(),
-      t("icons.dashboard.summary.personalRecords"),
+      ICONS.METRICS.RECORDS,
     );
   }
 

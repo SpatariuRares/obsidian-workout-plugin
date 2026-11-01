@@ -11,7 +11,7 @@ describe("Button atom", () => {
 
     const button = Button.create(parent, {
       text: "Save",
-      icon: "💾",
+      icon: "save",
       variant: "primary",
       title: "Save workout",
       ariaLabel: "Save workout log",
@@ -21,7 +21,10 @@ describe("Button atom", () => {
     expect(button.classList.contains("workout-btn-primary")).toBe(
       true,
     );
-    expect(button.textContent).toBe("💾 Save");
+    expect(button.textContent).toBe("Save");
+    expect(
+      button.querySelector(".workout-btn-icon")?.getAttribute("data-icon"),
+    ).toBe("save");
     expect(button.getAttribute("title")).toBe("Save workout");
     expect(button.getAttribute("aria-label")).toBe(
       "Save workout log",
@@ -102,11 +105,14 @@ describe("Button atom", () => {
     const parent = createParent();
 
     const button = Button.create(parent, {
-      icon: "🔍",
+      icon: "search",
       variant: "secondary",
     });
 
-    expect(button.textContent).toBe("🔍");
+    expect(button.textContent).toBe("");
+    expect(
+      button.querySelector(".workout-btn-icon")?.getAttribute("data-icon"),
+    ).toBe("search");
   });
 
   it("creates button with empty text and no icon", () => {

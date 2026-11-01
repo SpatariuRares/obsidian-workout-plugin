@@ -163,7 +163,7 @@ abstract class BaseView {
 **Views:**
 
 - `EmbeddedChartView` - Chart.js visualizations (volume, weight, reps, pace, distance, duration, heart rate)
-- `EmbeddedTableView` - Sortable tables with edit/delete actions, protocol badges, target calculations
+- `EmbeddedTableView` - Sortable tables with an edit action per row (on phones the whole card opens it; delete is in `EditLogModal`), protocol badges, target calculations
 - `EmbeddedTimerView` - Countdown/interval timers with presets and audio notifications
 - `EmbeddedDashboardView` - Aggregated stats, muscle heat map, recent workouts, volume analytics
 
@@ -175,7 +175,7 @@ Each view has a `cleanup()` method called during plugin unload.
 app/components/
 ├── atoms/        # Primitives: Button, Input, Text, Icon, Container, Canvas, Chip, ProtocolBadge, SpacerStat
 ├── molecules/    # Composites: StatCard, FormField, SearchBox, Badge, TrendIndicator, LoadingSpinner,
-│                 #            ActionButtonGroup, FilterIndicator, CopyableBadge, ListItem
+│                 #            FilterIndicator, CopyableBadge, ListItem
 └── index.ts      # Barrel export (DO use for components)
 ```
 
@@ -201,7 +201,7 @@ import { Button } from "@app/components/atoms/Button";
 ```
 app/features/
 ├── dashboard/ui/DashboardCard.ts      # Dashboard-specific card component
-├── tables/ui/ActionButtons.ts         # Table action buttons (edit, delete)
+├── tables/ui/ActionButtons.ts         # Table row action (edit)
 ├── tables/ui/TargetHeader.ts          # Table target calculation header
 ├── charts/components/TrendHeader.ts   # Chart trend indicator header
 └── dashboard/ui/StatsBox.ts           # Dashboard stats box

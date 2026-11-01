@@ -4,6 +4,8 @@
  * Used for displaying summary statistics in tables (e.g., reps, weight, volume)
  */
 
+import { Icon } from "@app/components/atoms/Icon";
+
 export interface SpacerStatProps {
   icon?: string;
   value: string;
@@ -30,7 +32,7 @@ export class SpacerStat {
     });
 
     if (props.icon) {
-      span.appendText(props.icon);
+      Icon.create(span, { name: props.icon, className: "workout-spacer-stat-icon" });
     }
 
     span.createEl("strong", { text: props.value });

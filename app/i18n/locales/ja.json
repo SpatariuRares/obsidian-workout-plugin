@@ -391,80 +391,6 @@
     "workoutData": "ワークアウトデータ",
     "workoutLog": "ワークアウト記録"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "{exerciseName} のログを追加する",
     "addLogButtonText": "{exerciseName} のログを追加する",
@@ -622,16 +548,12 @@
       "auditScanning": "エクササイズファイルをスキャン中...",
       "canvasExportError": "キャンバスのエクスポートエラー: {error}",
       "canvasExported": "キャンバスをエクスポートしました ({path})",
-      "chartInserted": "✅ グラフが正常に挿入されました！",
       "confirmUpdateTarget": "目標を {targetWeight}{weightUnit} に更新しますか？",
-      "dashboardInserted": "✅ ダッシュボードの挿入に成功しました！",
       "dismissAchievement": "実績を閉じる",
       "exerciseBlockInserted": "エクササイズブロックを挿入しました",
-      "exerciseNameRequired": "❌ エクササイズ名を入力してください",
       "exercisePageCreated": "エクササイズページが正常に作成されました！",
       "exercisePageError": "エクササイズページの作成中にエラーが発生しました：{error}",
       "exercisePageNameRequired": "エクササイズ名を入力してください",
-      "exerciseSectionCreated": "✅ エクササイズセクションを作成しました！",
       "genericError": "エラー：{error}",
       "insertCodeNoFile": "コードを挿入するには Markdown ファイルを開いてください",
       "logCreated": "ワークアウト記録が正常に作成されました！",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "類似のタグが {count} 件見つかりました",
       "muscleTagSimilarWarning": "似たタグがすでに存在します",
       "suggestedNextWeight": "次回の推奨重量：{suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ テーブルが正常に挿入されました！",
       "tableUpdateFailed": "テーブルの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
-      "tableUpdated": "✅ テーブルが正常に更新されました！",
       "targetAchieved": "目標達成！",
       "timerElementsNotInitialized": "タイマー要素が初期化されていません",
-      "timerInserted": "✅ タイマーが正常に挿入されました！",
       "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
-      "timerUpdated": "✅ タイマーが正常に更新されました！",
-      "validationCombinedMode": "⚠️ 「エクササイズ + ワークアウト」タイプの場合は、両方のフィールドを必ず入力してください！",
       "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
       "validMissingField": "必須フィールドがありません：{field}",
       "validMustBeNumber": "{field}は有効な数値でなければなりません",
@@ -917,8 +834,7 @@
     "recentTrend": "最近の傾向",
     "recentVsPrev": " (前回比)",
     "sessions": "セッション",
-    "average": "平均:",
-    "title": "📈 {dataTypeLabel} の統計情報 ({contextLabel}):"
+    "average": "平均:"
   },
   "table": {
     "actions": "操作",
@@ -944,7 +860,6 @@
       "volumeUnit": "ボリューム ({weightUnit})",
       "weightUnit": "重量 ({weightUnit})"
     },
-    "deleteConfirm": "この記録を削除しますか？",
     "deleteError": "削除エラー: {error}",
     "deleteSuccess": "記録を削除しました",
     "deleteTitle": "削除",
@@ -1048,8 +963,7 @@
         "text": "「+」ボタンを押してフォームを開き、その後、設定を保存します。すると、すぐにテーブルに表示されます。"
       },
       "rowActions": {
-        "title": "編集または削除する",
-        "text": "各行には、編集と削除のボタンがあります。これらを使用して、タイプミスを修正したり、行を削除したりしてください。"
+        "title": "編集または削除する"
       },
       "chart": {
         "title": "あなたの進捗状況",

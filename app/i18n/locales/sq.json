@@ -391,80 +391,6 @@
     "workoutData": "Të dhënat e stërvitjes",
     "workoutLog": "Regjistri i stërvitjes"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Shto regjistrim për {exerciseName}",
     "addLogButtonText": "Shto regjistrim për {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Po skanohen skedarët e ushtrimeve...",
       "canvasExportError": "Gabim në eksportimin e canvas: {error}",
       "canvasExported": "Canvas u eksportua ({path})",
-      "chartInserted": "✅ Grafiku u shtua me sukses!",
       "confirmUpdateTarget": "Të përditësohet objektivi në {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Paneli u shtua me sukses!",
       "dismissAchievement": "Hiq arritjen",
       "exerciseBlockInserted": "Blloku i ushtrimit u shtua",
-      "exerciseNameRequired": "❌ ju lutemi, vendosni emrin e ushtrimit",
       "exercisePageCreated": "Faqja e ushtrimit u krijua me sukses!",
       "exercisePageError": "Gabim gjatë krijimit të faqes së ushtrimit: {error}",
       "exercisePageNameRequired": "Ju lutemi, vendosni emrin e ushtrimit",
-      "exerciseSectionCreated": "✅ Seksioni i ushtrimit u krijua me sukses!",
       "genericError": "Gabim: {error}",
       "insertCodeNoFile": "Hapni një skedar Markdown për të vendosur kodin",
       "logCreated": "Regjistrimi i stërvitjes u krijua me sukses!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "U gjetën {count} etiketa të ngjashme",
       "muscleTagSimilarWarning": "Ekziston tashmë një etiketë e ngjashme",
       "suggestedNextWeight": "Pesha e sugjeruar e radhës: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabela u shtua me sukses!",
       "tableUpdateFailed": "Përditësimi i tabelës dështoi. Sigurohuni që skedari është i hapur në redaktues.",
-      "tableUpdated": "✅ Tabela u përditësua me sukses!",
       "targetAchieved": "Objektivi u arrit!",
       "timerElementsNotInitialized": "Elementët e timerit nuk janë inicializuar",
-      "timerInserted": "✅ Timeri u shtua me sukses!",
       "timerUpdateFailed": "Përditësimi i timerit dështoi. Sigurohuni që skedari është i hapur në redaktues.",
-      "timerUpdated": "✅ Timeri u përditësua me sukses!",
-      "validationCombinedMode": "⚠️ për llojin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
       "validationFillAll": "Ju lutemi, plotësoni të gjitha fushat me vlera të vlefshme.",
       "validMissingField": "Mungon fusha e detyrueshme: {field}",
       "validMustBeNumber": "{field} duhet të jetë numër i vlefshëm",
@@ -917,8 +834,7 @@
     "recentTrend": "Tendenca e fundit",
     "recentVsPrev": " (vs para.)",
     "sessions": "Sesionet",
-    "average": "Mesatarja:",
-    "title": "📈 {dataTypeLabel} statistikat ({contextLabel}):"
+    "average": "Mesatarja:"
   },
   "table": {
     "actions": "Veprime",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Pesha ({weightUnit})"
     },
-    "deleteConfirm": "Të fshihet ky regjistrim?",
     "deleteError": "Gabim në fshirje: {error}",
     "deleteSuccess": "Regjistrimi u fshi",
     "deleteTitle": "Fshi",
@@ -1048,8 +963,7 @@
         "text": "Depresoni butonën \"+\" për të hapur formën, pastaj ruani një set. Ajo shfaqet menjëherë në tabelë."
       },
       "rowActions": {
-        "title": "Redaktojuni ose fshini një grupmullim",
-        "text": "Çdo radë ka butonat për redaktim dhe fshirje. Përdyshuni ata për të korrigjuar një gabim ose për të fshirë një set."
+        "title": "Redaktojuni ose fshini një grupmullim"
       },
       "chart": {
         "title": "J Shiti",

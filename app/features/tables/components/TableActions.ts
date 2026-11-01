@@ -1,15 +1,12 @@
-import { Notice } from "obsidian";
+import { Platform } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditLogModal } from "@app/features/modals/log/EditLogModal";
-import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import { ActionButtons } from "@app/features/tables/ui/ActionButtons";
-import { ErrorUtils } from "@app/utils/ErrorUtils";
-import { t } from "@app/i18n";
 
 /**
- * Handles actions for table rows (edit, delete)
- * Business logic layer that uses UI components from table/ui
+ * Handles a table row's action: editing the set (deleting it is done from
+ * the edit form). Business logic layer that uses UI components from table/ui
  */
 export class TableActions {
   /**
@@ -24,33 +21,8 @@ export class TableActions {
   }
 
   /**
-   * Handle delete action for a workout log entry
-   */
-  static handleDelete(
-    log: WorkoutLogData,
-    plugin: WorkoutPluginContext,
-  ): void {
-    const modal = new ConfirmModal(
-      plugin.app,
-      t("table.deleteConfirm"),
-      () => {
-        void (async () => {
-          try {
-            await plugin.deleteWorkoutLogEntry(log);
-            new Notice(t("table.deleteSuccess"));
-          } catch (error) {
-            const errorMessage = ErrorUtils.getErrorMessage(error);
-            new Notice(t("table.deleteError", { error: errorMessage }));
-          }
-        })();
-      },
-    );
-    modal.open();
-  }
-
-  /**
-   * Render action buttons (edit and delete) for a table row
-   * Delegates UI creation to ActionButtons component
+   * Render the edit button for a table row. On phones the whole row (a
+   * card) also opens the edit form; the button shows that it can.
    */
   static renderActionButtons(
     td: HTMLElement,
@@ -62,11 +34,9 @@ export class TableActions {
       return;
     }
 
-    // Use UI component to create buttons
-    const { editBtn, deleteBtn } =
-      ActionButtons.createActionButtonsContainer(td);
+    const { editBtn } = ActionButtons.createActionButtonsContainer(td);
+    const listenerOptions = signal ? { signal } : undefined;
 
-    // Add event listeners with business logic, using AbortSignal for cleanup
     editBtn.addEventListener(
       "click",
       (e) => {
@@ -74,17 +44,20 @@ export class TableActions {
         e.stopPropagation();
         this.handleEdit(originalLog, plugin);
       },
-      signal ? { signal } : undefined,
+      listenerOptions,
     );
 
-    deleteBtn.addEventListener(
-      "click",
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.handleDelete(originalLog, plugin);
-      },
-      signal ? { signal } : undefined,
-    );
+    const row = td.closest("tr");
+    if (Platform.isMobile && row) {
+      row.classList.add("workout-table-row-tappable");
+      row.addEventListener(
+        "click",
+        (e) => {
+          if ((e.target as HTMLElement).closest("button, a")) return;
+          this.handleEdit(originalLog, plugin);
+        },
+        listenerOptions,
+      );
+    }
   }
 }

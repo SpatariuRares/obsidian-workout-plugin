@@ -1,32 +1,33 @@
-import { ActionButtonGroup } from "@app/components/molecules";
+import { Button, BUTTONVARIANT } from "@app/components/atoms";
 import { t } from "@app/i18n";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
- * UI component for creating action buttons (edit, delete, etc.).
- * Pure UI - creates buttons without attaching business logic.
- * Now uses ActionButtonGroup molecule for consistent styling.
+ * UI component for a table row's action: the edit button. Deleting a set is
+ * done from the edit form, so a row has one action. Pure UI - creates the
+ * button without attaching business logic.
  */
 export class ActionButtons {
   /**
-   * Creates an actions container with edit and delete buttons
-   * Uses ActionButtonGroup molecule for consistent button styling
+   * Creates the actions container with the row's edit button
    * @param container - Parent element
    * @returns Object with container and button elements
    */
   static createActionButtonsContainer(container: HTMLElement): {
     container: HTMLElement;
     editBtn: HTMLButtonElement;
-    deleteBtn: HTMLButtonElement;
   } {
-    const buttons = ActionButtonGroup.create(container, {
-      editTitle: t("table.editTitle"),
-      deleteTitle: t("table.deleteTitle"),
-      editIcon: t("icons.tables.edit"),
-      deleteIcon: t("icons.tables.delete"),
-      className: "workout-table-actions",
+    const actions = Button.createContainer(container);
+    actions.classList.add("workout-table-action-button-group", "workout-table-actions");
+    const editBtn = Button.create(actions, {
+      icon: ICONS.ACTIONS.EDIT,
+      className: "workout-table-action-btn workout-table-action-btn-edit",
+      title: t("table.editTitle"),
+      variant: BUTTONVARIANT.SECONDARY,
+      ariaLabel: t("table.editTitle"),
     });
-    markTourTarget(buttons.container, TOUR_TARGETS.tableRowActions);
-    return buttons;
+    markTourTarget(actions, TOUR_TARGETS.tableRowActions);
+    return { container: actions, editBtn };
   }
 }

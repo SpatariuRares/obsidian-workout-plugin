@@ -391,80 +391,6 @@
     "workoutData": "Antrenman verileri",
     "workoutLog": "Antrenman günlüğü"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "{exerciseName} için kayıt ekle",
     "addLogButtonText": "{exerciseName} için kayıt ekle",
@@ -622,16 +548,12 @@
       "auditScanning": "Egzersiz dosyaları taranıyor...",
       "canvasExportError": "Tuvale aktarma hatası: {error}",
       "canvasExported": "Tuval dışa aktarıldı ({path})",
-      "chartInserted": "✅ Grafik başarıyla eklendi!",
       "confirmUpdateTarget": "Hedef {targetWeight}{weightUnit} olarak güncellensin mi?",
-      "dashboardInserted": "✅ Gösterge paneli başarıyla eklendi!",
       "dismissAchievement": "Başarıyı kapat",
       "exerciseBlockInserted": "Egzersiz bloğu eklendi",
-      "exerciseNameRequired": "❌ Lütfen bir egzersiz adı girin",
       "exercisePageCreated": "Egzersiz sayfası başarıyla oluşturuldu!",
       "exercisePageError": "Egzersiz sayfası oluşturulurken hata: {error}",
       "exercisePageNameRequired": "Lütfen egzersiz adı girin",
-      "exerciseSectionCreated": "✅ Egzersiz bölümü başarıyla oluşturuldu!",
       "genericError": "Hata: {error}",
       "insertCodeNoFile": "Kod eklemek için bir Markdown dosyası açın",
       "logCreated": "Antrenman kaydı başarıyla oluşturuldu!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} benzer etiket bulundu",
       "muscleTagSimilarWarning": "Benzer bir etiket zaten var",
       "suggestedNextWeight": "Önerilen sonraki ağırlık: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tablo başarıyla eklendi!",
       "tableUpdateFailed": "Tablo güncellenemedi. Dosyanın düzenleyicide açık olduğundan emin olun.",
-      "tableUpdated": "✅ Tablo başarıyla güncellendi!",
       "targetAchieved": "Hedefe ulaşıldı!",
       "timerElementsNotInitialized": "Zamanlayıcı öğeleri henüz başlatılmamış",
-      "timerInserted": "✅ Zamanlayıcı başarıyla eklendi!",
       "timerUpdateFailed": "Zamanlayıcı güncellenemedi. Dosyanın düzenleyicide açık olduğundan emin olun.",
-      "timerUpdated": "✅ Zamanlayıcı başarıyla güncellendi!",
-      "validationCombinedMode": "⚠️ \"Egzersiz + Antrenman\" türü için, her iki alanı da doldurmanız gerekmektedir!",
       "validationFillAll": "Lütfen tüm alanları geçerli değerlerle doldurun",
       "validMissingField": "Zorunlu alan eksik: {field}",
       "validMustBeNumber": "{field} geçerli bir sayı olmalıdır",
@@ -917,8 +834,7 @@
     "recentTrend": "Son trend",
     "recentVsPrev": " (öncekiyle)",
     "sessions": "Oturumlar",
-    "average": "Ortalama:",
-    "title": "📈 {dataTypeLabel} istatistikleri ({contextLabel}):"
+    "average": "Ortalama:"
   },
   "table": {
     "actions": "Eylemler",
@@ -944,7 +860,6 @@
       "volumeUnit": "Hacim ({weightUnit})",
       "weightUnit": "Ağırlık ({weightUnit})"
     },
-    "deleteConfirm": "Bu kayıt silinsin mi?",
     "deleteError": "Silme hatası: {error}",
     "deleteSuccess": "Kayıt silindi",
     "deleteTitle": "Sil",
@@ -1048,8 +963,7 @@
         "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Form, hemen tabloya eklenecektir."
       },
       "rowActions": {
-        "title": "Bir küme'yi düzenle veya sil",
-        "text": "Her satırda düzenleme ve silme butonları bulunmaktadır. Bunları kullanarak bir yazım hatasını düzeltin veya bir kaydı silin."
+        "title": "Bir küme'yi düzenle veya sil"
       },
       "chart": {
         "title": "İlerlemeniz",

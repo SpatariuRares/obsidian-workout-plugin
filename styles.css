@@ -514,12 +514,12 @@ body.theme-dark {
   background: var(--interactive-success-hover);
 }
 
-.workout-timer-btn-stop {
-  background: var(--interactive-error);
+.workout-timer-btn-stop, .workout-buttons-container .workout-btn-danger {
+  background: var(--background-modifier-error);
   color: var(--text-on-accent);
 }
-.workout-timer-btn-stop:hover {
-  background: var(--interactive-error-hover);
+.workout-timer-btn-stop:hover, .workout-buttons-container .workout-btn-danger:hover {
+  background: var(--background-modifier-error-hover);
 }
 
 /* ----------------------------------------------------------------------------
@@ -531,6 +531,7 @@ body.theme-dark {
 }
 
 .workout-quick-log-confirm-btn, .workout-quick-log-cancel-btn, .workout-modal .workout-btn-primary,
+.workout-modal .workout-btn-danger,
 .workout-modal .workout-btn-warning {
   padding: var(--workout-space-xl) var(--workout-space-3xl);
   font-size: var(--workout-font-xl);
@@ -557,8 +558,13 @@ body.theme-dark {
   transform: translateY(-1px);
 }
 .workout-buttons-container.workout-add-log-button-container {
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
   justify-content: space-between;
+}
+.workout-buttons-container.workout-add-log-button-container .workout-btn-primary {
+  flex: 0 1 auto;
+  min-width: 0;
 }
 .workout-buttons-container.workout-action-buttons {
   flex-direction: column;
@@ -727,27 +733,17 @@ body.theme-dark {
   height: var(--workout-size-2xl);
 }
 
-/* Own surface + border: rows use --background-secondary, so a button with
-   the same fill looked like a bare icon. Qualified with the tag to beat
-   Obsidian's mobile `button` rule (--interactive-normal, no border). */
+/* Just the icon: no fill, border or shadow (the touch area stays its size).
+   Qualified with the tag to beat Obsidian's mobile `button` rule
+   (--interactive-normal fill). */
 .workout-table-actions button.workout-table-action-btn {
-  background: var(--background-primary);
-  border: var(--workout-border-thin) solid var(--workout-border-color);
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
-
 @media (hover: hover) {
-  .workout-table-actions button.workout-table-action-btn-edit:hover {
-    background: var(--workout-accent-fill);
-    color: var(--text-on-accent);
-    transform: scale(1.1);
-  }
-}
-
-@media (hover: hover) {
-  .workout-table-actions button.workout-table-action-btn-delete:hover {
-    background: color-mix(in srgb, var(--text-error) 75%, black);
-    color: var(--text-on-accent);
-    transform: scale(1.1);
+  .workout-table-actions button.workout-table-action-btn:hover {
+    background: var(--background-modifier-hover);
   }
 }
 
@@ -1019,7 +1015,7 @@ body.theme-dark {
   margin-left: auto;
 }
 
-.workout-icon-dropdown-btn {
+button.workout-icon-dropdown-btn {
   min-width: 2em;
   display: flex;
   align-items: center;
@@ -1034,11 +1030,11 @@ body.theme-dark {
   transition: var(--workout-transition);
   box-shadow: none;
 }
-.workout-icon-dropdown-btn:hover {
+button.workout-icon-dropdown-btn:hover {
   background-color: var(--background-modifier-hover);
   border-color: var(--background-modifier-border-hover);
 }
-.workout-icon-dropdown-btn:focus-visible {
+button.workout-icon-dropdown-btn:focus-visible {
   outline: none;
   border-color: var(--interactive-accent);
   box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
@@ -1091,6 +1087,35 @@ body.theme-dark {
   content: "✓";
   color: var(--workout-text-accent);
   font-size: var(--workout-font-sm);
+}
+
+/* Obsidian (Lucide) icons drawn by the Icon atom. Sized from the font size,
+   like the emoji they replace, so `font-size` rules on an icon still apply. */
+.workout-icon {
+  --icon-size: 1.15em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* A button with an icon and text: icon, then label, centred */
+.workout-btn:has(> .workout-btn-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--workout-space-xs);
+}
+
+/* Icon before text in a line (spacer stats, list items, footers) */
+.workout-spacer-stat-icon,
+.workout-list-item-icon,
+.workout-charts-footer > .workout-icon,
+.workout-file-error-message > .workout-icon {
+  margin-inline-end: var(--workout-space-2xs, 2px);
+  color: var(--text-muted);
 }
 
 /* Table styles entrypoint (split into app/styles/table/*) */
@@ -1428,6 +1453,17 @@ body.theme-dark {
   color: var(--text-muted);
   font-size: var(--font-ui-small);
   margin-block: var(--workout-space-sm) var(--workout-space-md);
+}
+
+/* Phones: tapping a set's card edits it (TableActions). The pencil button
+   stays as the visible cue that the card opens; the card lights up on press */
+tr.workout-table-row-tappable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: var(--workout-transition);
+}
+tr.workout-table-row-tappable:active {
+  background: var(--background-modifier-active-hover);
 }
 
 /* Target header */
@@ -1906,6 +1942,81 @@ body.theme-dark {
 .workout-timer .workout-timer-menu-btn:hover {
   color: var(--text-normal);
   background: var(--background-modifier-hover);
+}
+
+/* State: digits in the accent color while running, faded when paused */
+.workout-timer .workout-timer-time {
+  gap: var(--workout-space-sm);
+}
+.workout-timer.is-paused .workout-timer-time-display {
+  color: var(--text-muted);
+}
+.workout-timer .workout-timer-status {
+  font-size: var(--workout-font-sm);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.workout-timer .workout-timer-complete {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--workout-space-xs);
+}
+
+/* Phones: read from a bench, tapped with a sweaty thumb. Big centred digits,
+   the round on its own line, then large play/pause and reset; the menu sits
+   in the corner instead of taking a row */
+body.is-mobile .workout-timer {
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--workout-space-md);
+  padding-block: var(--workout-space-sm);
+}
+body.is-mobile .workout-timer .workout-timer-time {
+  flex: 1 0 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--workout-space-2xs);
+}
+body.is-mobile .workout-timer .workout-timer-time .workout-timer-time-display {
+  font-size: clamp(3rem, 18vw, 4.5rem);
+  line-height: 1.1;
+  min-width: 0;
+}
+body.is-mobile .workout-timer .workout-timer-time .workout-timer-complete {
+  font-size: var(--workout-font-2xl);
+}
+body.is-mobile .workout-timer .workout-timer-actions-group {
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--workout-space-sm);
+}
+body.is-mobile .workout-timer .workout-timer-round-counter {
+  order: -1;
+  flex: 1 0 100%;
+  text-align: center;
+  font-size: var(--workout-font-base);
+}
+body.is-mobile .workout-timer .workout-timer-controls {
+  flex: 1;
+  gap: var(--workout-space-sm);
+}
+body.is-mobile .workout-timer .workout-timer-controls .workout-timer-btn {
+  flex: 1;
+  min-height: 56px;
+}
+body.is-mobile .workout-timer .workout-timer-controls .workout-timer-btn .workout-icon {
+  --icon-size: 28px;
+}
+body.is-mobile .workout-timer .workout-timer-controls .workout-timer-start-stop {
+  flex: 2;
+}
+body.is-mobile .workout-timer .workout-icon-dropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .workout-timer-error {
@@ -2541,6 +2652,47 @@ body.theme-dark {
     padding: var(--workout-space-sm) var(--workout-space-lg);
   }
 }
+/* Create/edit log: why the set can't be saved, under the field to fix */
+.workout-field-error {
+  color: var(--workout-text-error);
+  font-size: var(--font-ui-small);
+  margin-top: var(--workout-space-xs);
+}
+
+.workout-modal input[aria-invalid=true] {
+  border-color: var(--workout-text-error);
+}
+
+/* On phones the save button stays at the bottom of the modal while the
+   optional fields scroll under it */
+body.is-mobile .modal-content.workout-log-modal {
+  padding-bottom: 0;
+}
+
+body.is-mobile .workout-log-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: var(--workout-space-lg);
+  padding-block: var(--workout-space-md) calc(var(--workout-space-md) + env(safe-area-inset-bottom, 0px));
+  background: var(--modal-background, var(--background-primary));
+  border-top: var(--workout-border-thin) solid var(--workout-border-subtle);
+}
+
+/* Edit log: deleting is rare, so it is a small icon at the start of the
+   save bar, with save and cancel pushed to the end */
+.workout-buttons-container button.workout-log-delete {
+  margin-inline-end: auto;
+  align-self: center;
+  color: var(--workout-text-error);
+}
+
+body.is-mobile .workout-buttons-container button.workout-log-delete {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+
 /* Conversion modal */
 .workout-convert-mapping-row {
   display: flex;
@@ -3125,6 +3277,60 @@ body.theme-dark {
     padding: var(--workout-space-lg);
   }
 }
+/* Quick stats: periods as columns, metrics as rows. Tabular figures keep the
+   digits aligned so the periods compare at a glance. Qualified to beat
+   Obsidian's note table rules (a border around every cell) */
+.workout-dashboard table.workout-quick-stats-table {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.workout-dashboard table.workout-quick-stats-table th,
+.workout-dashboard table.workout-quick-stats-table td {
+  padding: var(--workout-space-sm) var(--workout-space-xs);
+  border: none;
+  border-bottom: var(--workout-border-thin) solid var(--workout-border-subtle);
+  background: none;
+}
+.workout-dashboard table.workout-quick-stats-table tbody tr:last-child th,
+.workout-dashboard table.workout-quick-stats-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.workout-dashboard table.workout-quick-stats-table thead th {
+  text-align: end;
+  font-size: var(--workout-font-sm);
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-muted);
+}
+.workout-dashboard table.workout-quick-stats-table tbody th {
+  text-align: start;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+.workout-dashboard table.workout-quick-stats-table tbody th .workout-icon {
+  margin-inline-end: var(--workout-space-xs);
+}
+.workout-dashboard table.workout-quick-stats-table tbody td {
+  text-align: end;
+  font-weight: var(--workout-font-weight-semibold);
+  color: var(--text-normal);
+  white-space: nowrap;
+}
+
+/* Phones: the row icons cost the labels their width; numbers a step smaller */
+@media (max-width: 484px) {
+  .workout-dashboard table.workout-quick-stats-table {
+    font-size: var(--workout-font-sm);
+  }
+  .workout-dashboard table.workout-quick-stats-table tbody th {
+    font-size: var(--workout-font-xs);
+  }
+  .workout-dashboard table.workout-quick-stats-table tbody th .workout-icon {
+    display: none;
+  }
+}
 /* ============================================================================
    WORKOUT CHARTS PLUGIN - STYLES
    Modern styles using Obsidian CSS Variables
@@ -3693,7 +3899,7 @@ body.theme-dark {
 
 .workout-duration-comparison-duration-cell {
   text-align: center;
-  font-family: var(--font-monospace);
+  font-variant-numeric: tabular-nums;
   font-size: var(--workout-font-sm);
 }
 
@@ -3820,6 +4026,59 @@ body.theme-dark {
   gap: var(--workout-space-sm);
 }
 
+/* ============================================================================
+   WORKOUT CHARTS PLUGIN - STYLES
+   Modern styles using Obsidian CSS Variables
+
+   This stylesheet uses a modular approach with component-based CSS files.
+   All components follow Obsidian's theming system for consistent appearance.
+   ============================================================================ */
+/* Dashboard tables whose rows are "a title + three values" (protocol
+   effectiveness, duration comparison). On phones each row becomes a card:
+   the first cell as its title, the values side by side under their column
+   name (from data-label), so nothing scrolls sideways. */
+@media (max-width: 768px) {
+  .workout-dashboard table.workout-card-table {
+    display: block;
+  }
+  .workout-dashboard table.workout-card-table thead {
+    display: none;
+  }
+  .workout-dashboard table.workout-card-table tbody {
+    display: grid;
+    gap: var(--workout-space-sm);
+  }
+  .workout-dashboard table.workout-card-table tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--workout-space-xs) var(--workout-space-sm);
+    padding: var(--workout-space-md);
+    background: var(--background-secondary);
+    border: var(--workout-border-thin) solid var(--workout-border-subtle);
+    border-radius: var(--workout-radius-md);
+  }
+  .workout-dashboard table.workout-card-table td {
+    display: block;
+    padding: 0;
+    border: none;
+    text-align: start;
+    background: none;
+  }
+  .workout-dashboard table.workout-card-table td:first-child {
+    grid-column: 1/-1;
+    margin-bottom: var(--workout-space-2xs);
+  }
+  .workout-dashboard table.workout-card-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--workout-font-xs);
+    font-weight: normal;
+    color: var(--text-muted);
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+}
 /* ============================================================================
    SETTINGS PAGE STYLES
    Styles for the plugin settings tab UI enhancements

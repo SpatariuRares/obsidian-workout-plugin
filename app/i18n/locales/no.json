@@ -391,80 +391,6 @@
     "workoutData": "Treningsdata",
     "workoutLog": "Treningslogg"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Legg til logg for {exerciseName}",
     "addLogButtonText": "Legg til logg for {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Skanner øvelsesfiler...",
       "canvasExportError": "Feil ved Canvas-eksport: {error}",
       "canvasExported": "Canvas eksportert ({path})",
-      "chartInserted": "✅ Diagrammet er lagt inn med suksess!",
       "confirmUpdateTarget": "Oppdater målet til {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Dashboard er nå lagt til!",
       "dismissAchievement": "Lukk prestasjon",
       "exerciseBlockInserted": "Øvelsesblokk satt inn",
-      "exerciseNameRequired": "❌ Oppgi et øvelsesnavn",
       "exercisePageCreated": "Øvelsesside opprettet!",
       "exercisePageError": "Feil ved oppretting av øvelsesside: {error}",
       "exercisePageNameRequired": "Oppgi et navn på øvelsen",
-      "exerciseSectionCreated": "✅ Øvelsesseksjon opprettet!",
       "genericError": "Feil: {error}",
       "insertCodeNoFile": "Åpne en Markdown-fil for å sette inn koden",
       "logCreated": "Treningslogg opprettet!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} lignende tag(ger) funnet",
       "muscleTagSimilarWarning": "En lignende tagg finnes allerede",
       "suggestedNextWeight": "Foreslått neste vekt: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabellen er lagt til med suksess!",
       "tableUpdateFailed": "Kunne ikke oppdatere tabellen. Sørg for at filen er åpen i redigeringsprogrammet.",
-      "tableUpdated": "✅ Tabellen er oppdatert med suksess!",
       "targetAchieved": "Målet er nådd!",
       "timerElementsNotInitialized": "Timer-elementene er ikke initialisert",
-      "timerInserted": "✅ Timer er lagt til med suksess!",
       "timerUpdateFailed": "Kunne ikke oppdatere timeren. Sørg for at filen er åpen i redigeringsprogrammet.",
-      "timerUpdated": "✅ Timer oppdatert med suksess!",
-      "validationCombinedMode": "⚠️ For typen 'øvelse + trening' må du fylle ut begge feltene!",
       "validationFillAll": "Fyll ut alle feltene med gyldige verdier",
       "validMissingField": "Obligatorisk felt mangler: {field}",
       "validMustBeNumber": "{field} må være et gyldig tall",
@@ -917,8 +834,7 @@
     "recentTrend": "Nylig trend",
     "recentVsPrev": " (vs forrige)",
     "sessions": "Økter",
-    "average": "Gjennomsnitt:",
-    "title": "📈 {dataTypeLabel} statistikk ({contextLabel}):"
+    "average": "Gjennomsnitt:"
   },
   "table": {
     "actions": "Handlinger",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Vekt ({weightUnit})"
     },
-    "deleteConfirm": "Vil du slette denne loggføringen?",
     "deleteError": "Feil ved sletting: {error}",
     "deleteSuccess": "Loggføringen er slettet",
     "deleteTitle": "Slett",
@@ -1048,8 +963,7 @@
         "text": "Trykk på +-knappen for å åpne skjemaet, og lagre deretter et sett. Det vises umiddelbart i tabellen."
       },
       "rowActions": {
-        "title": "Rediger eller slett en samling",
-        "text": "Hver rad har knapper for å redigere og slette. Bruk dem for å rette en skrivefeil eller fjerne en oppføring."
+        "title": "Rediger eller slett en samling"
       },
       "chart": {
         "title": "Din fremgang",

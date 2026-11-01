@@ -71,10 +71,10 @@ export class DashboardCard {
       });
     } else {
       // Summary variant: Icon, Value, Title
-      // Icon works as a text/emoji icon here
-      Container.create(card, {
+      Icon.create(card, {
+        name: icon,
         className: "workout-card-icon",
-      }).setText(icon);
+      });
 
       // Value
       if (value) {

@@ -3,6 +3,7 @@ import { WorkoutLogData } from "@app/types/WorkoutLogData";
 export interface TrendIndicators {
   trendDirection: string;
   trendColor: string;
+  /** Lucide icon id */
   trendIcon: string;
 }
 

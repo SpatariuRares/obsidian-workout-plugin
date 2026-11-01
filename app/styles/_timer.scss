@@ -114,6 +114,96 @@
   }
 }
 
+/* State: digits in the accent color while running, faded when paused */
+.workout-timer {
+  .workout-timer-time {
+    gap: var(--workout-space-sm);
+  }
+
+  &.is-paused .workout-timer-time-display {
+    color: var(--text-muted);
+  }
+
+  .workout-timer-status {
+    font-size: var(--workout-font-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .workout-timer-complete {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--workout-space-xs);
+  }
+}
+
+/* Phones: read from a bench, tapped with a sweaty thumb. Big centred digits,
+   the round on its own line, then large play/pause and reset; the menu sits
+   in the corner instead of taking a row */
+body.is-mobile .workout-timer {
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--workout-space-md);
+  padding-block: var(--workout-space-sm);
+
+  .workout-timer-time {
+    flex: 1 0 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--workout-space-2xs);
+
+    .workout-timer-time-display {
+      font-size: clamp(3rem, 18vw, 4.5rem);
+      line-height: 1.1;
+      min-width: 0;
+    }
+
+    .workout-timer-complete {
+      font-size: var(--workout-font-2xl);
+    }
+  }
+
+  .workout-timer-actions-group {
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--workout-space-sm);
+  }
+
+  .workout-timer-round-counter {
+    order: -1;
+    flex: 1 0 100%;
+    text-align: center;
+    font-size: var(--workout-font-base);
+  }
+
+  .workout-timer-controls {
+    flex: 1;
+    gap: var(--workout-space-sm);
+
+    .workout-timer-btn {
+      flex: 1;
+      min-height: 56px;
+
+      .workout-icon {
+        --icon-size: 28px;
+      }
+    }
+
+    .workout-timer-start-stop {
+      flex: 2;
+    }
+  }
+
+  .workout-icon-dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
 .workout-timer-error {
   padding: var(--workout-space-sm) var(--workout-space-md);
   background: var(--background-modifier-error);

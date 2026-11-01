@@ -391,80 +391,6 @@
     "workoutData": "Date de antrenament",
     "workoutLog": "Jurnal de antrenament"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Adaugă jurnal pentru {exerciseName}",
     "addLogButtonText": "Adaugă jurnal pentru {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Se scanează fișierele de exerciții...",
       "canvasExportError": "Eroare la exportarea pe canvas: {error}",
       "canvasExported": "Canvas exportat ({path})",
-      "chartInserted": "✅ Graficul a fost inserat cu succes!",
       "confirmUpdateTarget": "Actualizezi obiectivul la {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Panoul de control a fost inserat cu succes!",
       "dismissAchievement": "Închide realizare",
       "exerciseBlockInserted": "Bloc de exercițiu inserat",
-      "exerciseNameRequired": "❌ vă rugăm să introduceți un nume pentru exercițiu",
       "exercisePageCreated": "Pagina de exerciții a fost creată cu succes!",
       "exercisePageError": "Eroare la crearea paginii exercițiului: {error}",
       "exercisePageNameRequired": "Vă rugăm să introduceți un nume pentru exercițiu",
-      "exerciseSectionCreated": "✅ Secțiunea de exerciții a fost creată cu succes!",
       "genericError": "Eroare: {error}",
       "insertCodeNoFile": "Deschide un fișier Markdown pentru a introduce codul",
       "logCreated": "Jurnalul antrenamentului a fost creat cu succes!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} etichete similare găsite",
       "muscleTagSimilarWarning": "Există deja o etichetă similară",
       "suggestedNextWeight": "Următoarea greutate sugerată: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabelul a fost inserat cu succes!",
       "tableUpdateFailed": "Nu s-a putut actualiza tabelul. Asigurați-vă că fișierul este deschis în editor.",
-      "tableUpdated": "✅ Tabelul a fost actualizat cu succes!",
       "targetAchieved": "Obiectiv atins!",
       "timerElementsNotInitialized": "Elementele temporizatorului nu au fost inițializate",
-      "timerInserted": "✅ Temporizatorul a fost inserat cu succes!",
       "timerUpdateFailed": "Nu s-a reușit actualizarea temporizatorului. Asigurați-vă că fișierul este deschis în editor.",
-      "timerUpdated": "✅ Temporizatorul a fost actualizat cu succes!",
-      "validationCombinedMode": "⚠️ Pentru tipul 'exercițiu + antrenament' trebuie să completați ambele câmpuri!",
       "validationFillAll": "Vă rugăm să completați toate câmpurile cu valori valide.",
       "validMissingField": "Câmp obligatoriu lipsă: {field}",
       "validMustBeNumber": "{field} trebuie să fie un număr valid",
@@ -917,8 +834,7 @@
     "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
     "sessions": "Sesiuni",
-    "average": "Media:",
-    "title": "📈 {dataTypeLabel} statistici ({contextLabel}):"
+    "average": "Media:"
   },
   "table": {
     "actions": "Acțiuni",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volum ({weightUnit})",
       "weightUnit": "Greutate ({weightUnit})"
     },
-    "deleteConfirm": "Ștergi această înregistrare?",
     "deleteError": "Eroare la ștergere: {error}",
     "deleteSuccess": "Înregistrare ștearsă",
     "deleteTitle": "Șterge",
@@ -1048,8 +963,7 @@
         "text": "Apasă butonul \"+\" pentru a deschide formularul, apoi salvează un set. Acesta va apărea imediat în tabel."
       },
       "rowActions": {
-        "title": "Modifică sau șterge un set",
-        "text": "Fiecare rând are butoane de editare și ștergere. Folosiți-le pentru a corecta o greșeală sau pentru a elimina un set."
+        "title": "Modifică sau șterge un set"
       },
       "chart": {
         "title": "Progresul tău",

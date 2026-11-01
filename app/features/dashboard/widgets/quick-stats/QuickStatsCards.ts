@@ -4,11 +4,18 @@ import {
   calculatePeriodStats,
   PeriodStats,
 } from "@app/features/dashboard/widgets/quick-stats/business/calculatePeriodStats";
-import { StatCard, DashboardCard } from "@app/components/molecules";
+import { Icon } from "@app/components/atoms";
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import { t } from "@app/i18n";
 import { CONSTANTS } from "@app/constants";
+import { ICONS } from "@app/constants/ui.constants";
+import { FormatUtils } from "@app/utils/FormatUtils";
 
+/**
+ * Week, month and year side by side in one compact table (metrics as rows,
+ * periods as columns): comparable at a glance and short on a phone, where
+ * three stacked cards took about three screens.
+ */
 export class QuickStatsCards {
   static render(
     container: HTMLElement,
@@ -20,76 +27,53 @@ export class QuickStatsCards {
       className: "workout-stats-cards",
     });
 
-    const statsGrid = cardsEl.createDiv({
-      cls: "workout-stats-grid",
+    const periods = [
+      { label: t("dashboard.quickStats.week"), stats: calculatePeriodStats(data, 7) },
+      { label: t("dashboard.quickStats.month"), stats: calculatePeriodStats(data, 30) },
+      { label: t("dashboard.quickStats.year"), stats: calculatePeriodStats(data, 365) },
+    ];
+    const metrics: {
+      icon: string;
+      label: string;
+      value: (stats: PeriodStats) => number;
+    }[] = [
+      {
+        icon: ICONS.METRICS.WORKOUTS,
+        label: t("dashboard.quickStats.workouts"),
+        value: (stats) => stats.workouts,
+      },
+      {
+        icon: ICONS.METRICS.TOTAL_VOLUME,
+        label: CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME,
+        value: (stats) => stats.volume,
+      },
+      {
+        icon: ICONS.METRICS.VOLUME,
+        label: CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
+        value: (stats) => stats.avgVolume,
+      },
+    ];
+
+    const table = cardsEl.createEl("table", {
+      cls: "workout-quick-stats-table",
     });
+    const headRow = table.createEl("thead").createEl("tr");
+    headRow.createEl("td");
+    for (const period of periods) {
+      headRow.createEl("th", { text: period.label, attr: { scope: "col" } });
+    }
 
-    // Calculate stats for different periods
-    const weekStats = calculatePeriodStats(data, 7);
-    const monthStats = calculatePeriodStats(data, 30);
-    const yearStats = calculatePeriodStats(data, 365);
-
-    // Render stats cards
-    this.createStatsCard(
-      statsGrid,
-      t("dashboard.quickStats.week"),
-      weekStats,
-      t("icons.dashboard.quickStats.periods.week"),
-    );
-    this.createStatsCard(
-      statsGrid,
-      t("dashboard.quickStats.month"),
-      monthStats,
-      t("icons.dashboard.quickStats.periods.month"),
-    );
-    this.createStatsCard(
-      statsGrid,
-      t("dashboard.quickStats.year"),
-      yearStats,
-      t("icons.dashboard.quickStats.periods.year"),
-    );
-  }
-
-  private static createStatsCard(
-    container: HTMLElement,
-    title: string,
-    stats: PeriodStats,
-    icon: string,
-  ): void {
-    const cardEl = DashboardCard.create(container, {
-      icon,
-      title,
-      variant: "stats",
-      className: "workout-stats-card",
-    });
-
-    // Stats grid using StatCard molecules
-    const statsEl = cardEl.createDiv({
-      cls: "workout-card-stats",
-    });
-
-    // Workouts stat using StatCard molecule
-    StatCard.create(statsEl, {
-      icon: t("icons.dashboard.quickStats.metrics.workouts"),
-      value: stats.workouts.toString(),
-      label: t("dashboard.quickStats.workouts"),
-      className: "workout-stat-item",
-    });
-
-    // Total volume stat using StatCard molecule
-    StatCard.create(statsEl, {
-      icon: t("icons.dashboard.quickStats.metrics.totalVolume"),
-      value: stats.volume.toLocaleString(),
-      label: CONSTANTS.WORKOUT.LABELS.GENERAL.TOTAL_VOLUME,
-      className: "workout-stat-item",
-    });
-
-    // Average volume stat using StatCard molecule
-    StatCard.create(statsEl, {
-      icon: t("icons.dashboard.quickStats.metrics.avgVolume"),
-      value: stats.avgVolume.toLocaleString(),
-      label: CONSTANTS.WORKOUT.LABELS.GENERAL.AVG_VOLUME,
-      className: "workout-stat-item",
-    });
+    const body = table.createEl("tbody");
+    for (const metric of metrics) {
+      const row = body.createEl("tr");
+      const label = row.createEl("th", { attr: { scope: "row" } });
+      Icon.create(label, { name: metric.icon });
+      label.appendText(metric.label);
+      for (const period of periods) {
+        row.createEl("td", {
+          text: FormatUtils.formatNumber(metric.value(period.stats)),
+        });
+      }
+    }
   }
 }

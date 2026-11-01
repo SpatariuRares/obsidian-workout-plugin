@@ -1,11 +1,12 @@
 import { App } from "obsidian";
 
-import { IconDropdown } from "@app/components/molecules/IconDropdown";
+import { IconDropdown, type IconDropdownOption } from "@app/components/molecules/IconDropdown";
 import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTableModal } from "@app/features/tables/modals/EditTableModal";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { openExercisePage } from "@app/features/modals/exercise/openExercisePage";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
  * ExerciseActionSelect - Icon button dropdown for exercise-level actions
@@ -36,9 +37,9 @@ export class ExerciseActionSelect {
   ): HTMLElement {
     const { exerciseName, app, plugin, params } = props;
 
-    const options = [
+    const options: IconDropdownOption[] = [
       {
-        icon: t("icons.tables.goto"),
+        icon: ICONS.ACTIONS.GOTO,
         label: t("table.gotoExercise"),
         value: "goto",
       },
@@ -47,14 +48,14 @@ export class ExerciseActionSelect {
     // Only show edit option when the code block has an ID
     if (params.id) {
       options.push({
-        icon: t("icons.tables.edit"),
+        icon: ICONS.ACTIONS.EDIT,
         label: t("table.editTable"),
         value: "edit",
       });
     }
 
     const { wrapper } = IconDropdown.create(container, {
-      icon: t("icons.timer.menu"),
+      icon: ICONS.ACTIONS.MENU,
       ariaLabel: t("table.actions"),
       options,
     });

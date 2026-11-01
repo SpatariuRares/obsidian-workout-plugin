@@ -73,7 +73,7 @@ jest.mock("@app/features/tables/business/TableDataProcessor", () => ({
   TableDataProcessor: {
     processTableData: jest
       .fn()
-      .mockImplementation(async (_data, params) => ({
+      .mockImplementation(async (data, params) => ({
         headers: ["Date", "Reps", "Weight", "Volume", "Actions"],
         rows: [
           {
@@ -90,16 +90,9 @@ jest.mock("@app/features/tables/business/TableDataProcessor", () => ({
           },
         ],
         totalRows: 1,
+        // The rows it was given, like the real processor (which only sorts and limits)
         filterResult: {
-          filteredData: [
-            {
-              date: "2024-01-15T10:00:00",
-              exercise: "Bench Press",
-              reps: 8,
-              weight: 80,
-              volume: 640,
-            },
-          ],
+          filteredData: data,
           filterMethodUsed: "test",
           titlePrefix: "Workout Log",
         },
@@ -121,6 +114,7 @@ jest.mock("@app/features/tables/ui/AchievementBadge", () => ({
 jest.mock("@app/features/modals/log/LogCallouts", () => ({
   LogCallouts: {
     renderAddLogButton: jest.fn(),
+    renderNoMatchMessage: jest.fn(),
   },
 }));
 
@@ -279,6 +273,30 @@ describe("EmbeddedTableView", () => {
       (view as any).filterData = origFilter;
     });
 
+    it("keeps Add log, prefilled from the whole history, when an exercise has no set in the filter", async () => {
+      const origFilter = (view as any).filterData;
+      (view as any).filterData = jest.fn().mockReturnValue({
+        filteredData: [],
+        filterMethodUsed: "test",
+        titlePrefix: "Bench Press",
+      });
+      const older = createLog({ date: "2024-01-10T10:00:00", weight: 75 });
+      const latest = createLog({ date: "2024-01-15T10:00:00", weight: 80 });
+      const container = document.createElement("div");
+
+      await view.createTable(container, [older, latest], {
+        exercise: "Bench Press",
+      });
+
+      expect(TableRenderer.renderTable).not.toHaveBeenCalled();
+      expect(LogCallouts.renderNoMatchMessage).toHaveBeenCalled();
+      const call = (LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0];
+      expect(call[1]).toBe("Bench Press");
+      expect(call[5]).toMatchObject({ weight: 80 });
+
+      (view as any).filterData = origFilter;
+    });
+
     it("renders action buttons when showAddButton is not false", async () => {
       const container = document.createElement("div");
 
@@ -410,8 +428,9 @@ describe("EmbeddedTableView", () => {
 
     it("uses exercise name from params for add log button", async () => {
       const container = document.createElement("div");
+      const squat = createLog({ exercise: "Squat" });
 
-      await view.createTable(container, [createLog()], {
+      await view.createTable(container, [squat], {
         exercise: "Squat",
       });
 
@@ -421,19 +440,24 @@ describe("EmbeddedTableView", () => {
         expect.any(String),
         plugin,
         expect.any(AbortSignal),
-        expect.anything(),
+        squat,
       );
     });
 
-    it("passes latest entry to add log button", async () => {
-      const container = document.createElement("div");
+    it("prefills add log with the exercise's latest set, none without an exercise", async () => {
+      const older = createLog({ date: "2024-01-10T10:00:00", weight: 75 });
+      const latest = createLog({ date: "2024-01-15T10:00:00", weight: 80 });
+      const addLogCall = () =>
+        (LogCallouts.renderAddLogButton as jest.Mock).mock.calls.at(-1);
 
-      await view.createTable(container, [createLog()], {});
-
-      const addLogCall = (LogCallouts.renderAddLogButton as jest.Mock)
-        .mock.calls[0];
+      await view.createTable(document.createElement("div"), [older, latest], {
+        exercise: "Bench Press",
+      });
       // The 6th argument is latestEntry
-      expect(addLogCall[5]).toBeDefined();
+      expect(addLogCall()[5]).toBe(latest);
+
+      await view.createTable(document.createElement("div"), [older, latest], {});
+      expect(addLogCall()[5]).toBeUndefined();
     });
 
     it("unloads previous render child before rendering into the same container", async () => {
@@ -615,14 +639,10 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, [createLog()], {}, "[[Leg Day]]");
 
-      expect(LogCallouts.renderAddLogButton).toHaveBeenCalledWith(
-        expect.any(HTMLElement),
-        expect.any(String),
-        "[[Leg Day]]",
-        expect.anything(),
-        expect.anything(),
-        expect.anything(),
-      );
+      // 3rd argument: the note the set is logged from
+      expect(
+        (LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0][2],
+      ).toBe("[[Leg Day]]");
     });
 
     it("keeps the source note link on refresh", async () => {
@@ -646,14 +666,10 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, [createLog()], {});
 
-      expect(LogCallouts.renderAddLogButton).toHaveBeenCalledWith(
-        expect.any(HTMLElement),
-        expect.any(String),
-        "[[My Workout]]",
-        expect.anything(),
-        expect.anything(),
-        expect.anything(),
-      );
+      // 3rd argument: the note the set is logged from
+      expect(
+        (LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0][2],
+      ).toBe("[[My Workout]]");
     });
   });
 });

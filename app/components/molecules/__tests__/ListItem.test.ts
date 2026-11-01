@@ -74,12 +74,14 @@ describe("ListItem molecule", () => {
       const item = ListItem.create(list, {
         label: "Squat",
         value: "1000",
-        icon: "🏋️",
+        icon: "dumbbell",
       });
 
       expect(
-        item.querySelector(".workout-list-item-icon")?.textContent,
-      ).toBe("🏋️");
+        item
+          .querySelector(".workout-list-item-icon")
+          ?.getAttribute("data-icon"),
+      ).toBe("dumbbell");
     });
 
     it("renders secondary text when provided", () => {

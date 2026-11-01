@@ -4,8 +4,27 @@
  */
 import { CHART_DATA_TYPE } from "@app/types/WorkoutConfigTypes";
 import { getUnitsMap } from "@app/constants/ui.constants";
+import { LocalizationService } from "@app/i18n";
 
 export class FormatUtils {
+  /**
+   * A number with the thousands and decimal separators of the plugin's
+   * language ("63,814" in English, "63.814" in Italian), at most
+   * `maxFractionDigits` decimals
+   */
+  static formatNumber(value: number, maxFractionDigits = 0): string {
+    const options = { maximumFractionDigits: maxFractionDigits };
+    try {
+      return new Intl.NumberFormat(
+        LocalizationService.getInstance().getCurrentLocale(),
+        options,
+      ).format(value);
+    } catch {
+      // A locale code Intl doesn't accept
+      return new Intl.NumberFormat("en", options).format(value);
+    }
+  }
+
   /**
    * Format duration in seconds to human-readable string
    * @param seconds Duration in seconds

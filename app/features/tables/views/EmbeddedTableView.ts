@@ -101,6 +101,10 @@ export class EmbeddedTableView extends BaseView {
 
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
+        if (params.exercise) {
+          this.renderEmptyExerciseTable(container, params, logData, pageLink);
+          return;
+        }
         this.handleNoFilteredData(
           container,
           params,
@@ -203,6 +207,40 @@ export class EmbeddedTableView extends BaseView {
         t("messages.errors.tableRenderError"),
       );
     }
+
+    renderChild.load();
+  }
+
+  /**
+   * An exercise table with no set in its filter (e.g. nothing logged today):
+   * the same Add log button and menu as a filled table, prefilled from the
+   * last set in the whole history, so the first set of the day is one tap.
+   */
+  private renderEmptyExerciseTable(
+    container: HTMLElement,
+    params: EmbeddedTableParams,
+    logData: WorkoutLogData[],
+    pageLink: string,
+  ): void {
+    this.unloadRenderChild(container);
+    container.empty();
+
+    const renderChild = new TableRenderChild(container);
+    this.renderChildren.set(container, renderChild);
+    const contentDiv = container.createDiv({
+      cls: "workout-table-content-container",
+    });
+
+    if (params.showAddButton !== false) {
+      this.renderActionButtons(
+        contentDiv,
+        params,
+        { filteredData: logData },
+        renderChild.getSignal(),
+        pageLink,
+      );
+    }
+    LogCallouts.renderNoMatchMessage(contentDiv);
 
     renderChild.load();
   }

@@ -589,3 +589,54 @@ export const GENERAL_UI = {
     },
   },
 } as const;
+
+/**
+ * Icons, as ids of Obsidian's Lucide icon set (drawn with `setIcon` by the
+ * Icon atom and Button). They follow the theme, unlike emoji. Obsidian ships
+ * the older Lucide names ("more-vertical", not "ellipsis-vertical"): a name
+ * it doesn't know draws nothing.
+ */
+export const ICONS = {
+  ACTIONS: {
+    ADD: "plus",
+    DELETE: "trash-2",
+    EDIT: "pencil",
+    GOTO: "link",
+    MENU: "more-vertical",
+  },
+  STATUS: {
+    INFO: "info",
+    SUCCESS: "check-circle",
+    WARNING: "alert-triangle",
+    LOADING: "loader-2",
+  },
+  SEARCH: "search",
+  TIMER: {
+    PLAY: "play",
+    PAUSE: "pause",
+    RESET: "rotate-ccw",
+    DURATION: "timer",
+  },
+  METRICS: {
+    REPS: "repeat",
+    WEIGHT: "weight",
+    VOLUME: "bar-chart-2",
+    TOTAL_VOLUME: "package",
+    WORKOUTS: "dumbbell",
+    DURATION: "timer",
+    DISTANCE: "map-pin",
+    HEART_RATE: "heart",
+    STREAK: "flame",
+    RECORDS: "award",
+  },
+  TREND: {
+    UP: "trending-up",
+    DOWN: "trending-down",
+    FLAT: "arrow-right",
+  },
+  PERIODS: {
+    WEEK: "calendar-days",
+    MONTH: "calendar",
+    YEAR: "calendar-range",
+  },
+} as const;

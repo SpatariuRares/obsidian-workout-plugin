@@ -8,13 +8,16 @@ describe("SpacerStat atom", () => {
     const parent = createObsidianContainer();
 
     const stat = SpacerStat.create(parent, {
-      icon: "🔄",
+      icon: "refresh-cw",
       value: "42",
     });
 
     expect(parent.contains(stat)).toBe(true);
     expect(stat.classList.contains("workout-spacer-stat")).toBe(true);
-    expect(stat.textContent).toContain("🔄");
+    expect(
+      stat.querySelector(".workout-spacer-stat-icon")?.getAttribute("data-icon"),
+    ).toBe("refresh-cw");
+    expect(stat.textContent).toBe("42");
     expect(stat.querySelector("strong")?.textContent).toBe("42");
   });
 

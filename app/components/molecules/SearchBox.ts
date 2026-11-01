@@ -5,6 +5,7 @@
  */
 
 import { Icon, Input, Container } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { INPUT_TYPE } from "@app/types/InputTypes";
 import { t } from "@app/i18n";
 
@@ -34,7 +35,7 @@ export interface SearchBoxResult {
  */
 export class SearchBox {
   // Default search icon
-  private static readonly DEFAULT_ICON = "🔍";
+  private static readonly DEFAULT_ICON = ICONS.SEARCH;
 
   /**
    * Create a search box element

@@ -1,5 +1,6 @@
 import { TimerState } from "@app/features/timer/types";
-import { Button } from "@app/components/atoms";
+import { Button, Icon } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
 import {
   BUTTONVARIANT,
@@ -26,7 +27,7 @@ export class TimerControls {
     // Start/Stop button
     const startStopBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-start-stop",
-      text: t("icons.timer.play"),
+      icon: ICONS.TIMER.PLAY,
       variant: BUTTONVARIANT.PRIMARY,
       size: BUTTONSIZE.SMALL,
       ariaLabel: t("timer.controls.startTimer"),
@@ -36,7 +37,7 @@ export class TimerControls {
     // Reset button
     const resetBtn = Button.create(controlsDiv, {
       className: "workout-timer-btn workout-timer-reset",
-      text: t("icons.timer.reset"),
+      icon: ICONS.TIMER.RESET,
       variant: BUTTONVARIANT.SECONDARY,
       size: BUTTONSIZE.SMALL,
       ariaLabel: t("timer.controls.resetTimer"),
@@ -47,41 +48,36 @@ export class TimerControls {
       const state = getState();
       if (state.isRunning) {
         callbacks.onStop();
-        startStopBtn.textContent = t("icons.timer.play");
-        startStopBtn.setAttribute(
-          "aria-label",
-          t("timer.controls.startTimer"),
-        );
       } else {
         callbacks.onStart();
-        startStopBtn.textContent = t("icons.timer.pause");
-        startStopBtn.setAttribute(
-          "aria-label",
-          t("timer.controls.pauseTimer"),
-        );
       }
+      this.updateStartStopButton(startStopBtn, !state.isRunning);
     });
 
     Button.onClick(resetBtn, () => {
       callbacks.onReset();
-      startStopBtn.textContent = t("icons.timer.play");
-      startStopBtn.setAttribute(
-        "aria-label",
-        t("timer.controls.startTimer"),
-      );
+      this.updateStartStopButton(startStopBtn, false);
     });
 
     return startStopBtn;
   }
 
+  /** Play or pause icon, with the label a screen reader reads for it */
   static updateStartStopButton(
     button: HTMLButtonElement | undefined,
     isRunning: boolean,
   ): void {
-    if (button) {
-      button.textContent = isRunning
-        ? t("icons.timer.pause")
-        : t("icons.timer.play");
-    }
+    if (!button) return;
+    button.empty();
+    Icon.create(button, {
+      name: isRunning ? ICONS.TIMER.PAUSE : ICONS.TIMER.PLAY,
+      className: "workout-btn-icon",
+    });
+    button.setAttribute(
+      "aria-label",
+      isRunning
+        ? t("timer.controls.pauseTimer")
+        : t("timer.controls.startTimer"),
+    );
   }
 }

@@ -4,7 +4,7 @@
  * Combines: Container + Text atoms
  */
 
-import { Text } from "@app/components/atoms";
+import { Icon, Text } from "@app/components/atoms";
 
 export interface ListItemProps {
   /** Primary label/name text */
@@ -133,10 +133,9 @@ export class ListItem {
 
     // Render icon if provided
     if (props.icon) {
-      Text.create(item, {
-        text: props.icon,
+      Icon.create(item, {
+        name: props.icon,
         className: "workout-list-item-icon",
-        tag: "span",
       });
     }
 

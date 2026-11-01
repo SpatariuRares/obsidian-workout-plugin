@@ -8,20 +8,22 @@ describe("Icon atom", () => {
     const parent = createObsidianContainer();
 
     const icon = Icon.create(parent, {
-      name: "🔥",
+      name: "flame",
       className: "metric-icon",
       title: "Intensity",
     });
 
     expect(parent.contains(icon)).toBe(true);
     expect(icon.classList.contains("metric-icon")).toBe(true);
-    expect(icon.textContent).toBe("🔥");
+    expect(icon.getAttribute("data-icon")).toBe("flame");
+    expect(icon.classList.contains("workout-icon")).toBe(true);
+    expect(icon.getAttribute("aria-hidden")).toBe("true");
     expect(icon.getAttribute("title")).toBe("Intensity");
   });
 
   it("uses the default icon class when none supplied", () => {
     const parent = createObsidianContainer();
-    const icon = Icon.create(parent, { name: "✨" });
+    const icon = Icon.create(parent, { name: "sparkles" });
 
     expect(icon.classList.contains("icon")).toBe(true);
   });

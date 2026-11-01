@@ -1,16 +1,18 @@
 /**
  * Icon Atom
- * Basic icon/emoji display - indivisible UI primitive
+ * One of Obsidian's (Lucide) icons - indivisible UI primitive
  */
+import { setIcon } from "obsidian";
 
 export interface IconProps {
+  /** Lucide icon id, from ICONS (`@app/constants/ui.constants`) */
   name: string;
   className?: string;
   title?: string;
 }
 
 /**
- * Creates icon elements (emoji or text icons)
+ * Creates icon elements drawn by Obsidian, so they follow the theme
  * This is an atom - it has no dependencies on other UI components
  */
 export class Icon {
@@ -24,10 +26,14 @@ export class Icon {
     parent: HTMLElement,
     props: IconProps,
   ): HTMLSpanElement {
-    return parent.createSpan({
-      text: props.name,
-      cls: props.className || "icon",
-      attr: props.title ? { title: props.title } : undefined,
+    const span = parent.createSpan({
+      cls: `workout-icon ${props.className || "icon"}`,
+      attr: {
+        "aria-hidden": "true",
+        ...(props.title && { title: props.title }),
+      },
     });
+    setIcon(span, props.name);
+    return span;
   }
 }

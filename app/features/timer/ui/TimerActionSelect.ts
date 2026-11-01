@@ -5,6 +5,7 @@ import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { EditTimerModal } from "@app/features/timer/modals/EditTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
+import { ICONS } from "@app/constants/ui.constants";
 
 /**
  * TimerActionSelect - Icon button dropdown for timer-level actions
@@ -35,13 +36,13 @@ export class TimerActionSelect {
     }
 
     const { wrapper } = IconDropdown.create(container, {
-      icon: t("icons.timer.menu"),
+      icon: ICONS.ACTIONS.MENU,
       ariaLabel: t("table.actions"),
       options: [
         {
           label: t("timer.editTimer"),
           value: "edit",
-          icon: t("icons.tables.edit"),
+          icon: ICONS.ACTIONS.EDIT,
         },
       ],
     });

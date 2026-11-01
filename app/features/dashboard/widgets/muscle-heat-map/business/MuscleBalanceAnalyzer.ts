@@ -8,6 +8,7 @@ import {
   MUSCLE_GROUPS,
   type BodySide,
 } from "@app/constants/muscles.constants";
+import { FormatUtils } from "@app/utils/FormatUtils";
 
 export interface ImbalanceAnalysis {
   avgVolume: number;
@@ -102,7 +103,7 @@ export class MuscleBalanceAnalyzer {
 
     infoPanel.createEl("p", {
       text: t(`dashboard.muscleHeatMap.average.${metric}`, {
-        value: analysis.avgVolume.toFixed(0),
+        value: FormatUtils.formatNumber(analysis.avgVolume),
         unit: ParameterUtils.getWeightUnit(),
       }),
     });

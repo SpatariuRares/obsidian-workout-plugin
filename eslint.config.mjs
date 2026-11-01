@@ -22,6 +22,7 @@ export default [
       "esbuild.config.mjs",
       "version-bump.mjs",
       ".claude/**",
+      ".tmp/**", // Local scratch files, gitignored
       "**/__tests__/**", // Ignore test files for now
     ],
   },

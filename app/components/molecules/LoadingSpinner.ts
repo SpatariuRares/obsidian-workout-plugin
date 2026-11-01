@@ -5,6 +5,7 @@
  */
 
 import { Icon, Text, Container } from "@app/components/atoms";
+import { ICONS } from "@app/constants/ui.constants";
 
 export interface LoadingSpinnerProps {
   message?: string;
@@ -28,7 +29,7 @@ export interface LoadingSpinnerProps {
  */
 export class LoadingSpinner {
   // Default loading icon
-  private static readonly DEFAULT_ICON = "⏳";
+  private static readonly DEFAULT_ICON = ICONS.STATUS.LOADING;
 
   /**
    * Create a loading spinner element

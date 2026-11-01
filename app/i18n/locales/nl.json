@@ -391,80 +391,6 @@
     "workoutData": "Trainingsgegevens",
     "workoutLog": "Trainingslog"
   },
-  "icons": {
-    "actions": {
-      "add": "➕",
-      "delete": "🗑️",
-      "edit": "✏️"
-    },
-    "common": {
-      "empty": "",
-      "percentage": "%",
-      "plus": "+"
-    },
-    "dashboard": {
-      "quickStats": {
-        "metrics": {
-          "avgVolume": "📊",
-          "totalVolume": "📦",
-          "workouts": "🏋️"
-        },
-        "periods": {
-          "month": "📆",
-          "week": "🗓️",
-          "year": "📈"
-        }
-      },
-      "summary": {
-        "currentStreak": "🔥",
-        "personalRecords": "🏅",
-        "totalVolume": "📦",
-        "totalWorkouts": "🏋️"
-      }
-    },
-    "duration": {
-      "timer": "⏱️"
-    },
-    "exercise": {
-      "abs": "🎯",
-      "back": "🦾",
-      "biceps": "💪",
-      "calves": "🦵",
-      "chest": "🫁",
-      "core": "🎯",
-      "deadlift": "💀",
-      "forearms": "✊",
-      "glutes": "🍑",
-      "hamstrings": "🦵",
-      "quads": "🦵",
-      "rear_delts": "🔙",
-      "shoulders": "🦵",
-      "traps": "🔺",
-      "triceps": "💪"
-    },
-    "status": {
-      "info": "ℹ️",
-      "success": "✅",
-      "warning": "⚠️"
-    },
-    "tables": {
-      "delete": "🗑️",
-      "distance": "📍 ",
-      "duration": "⏱️ ",
-      "edit": "✏️",
-      "goto": "🔗",
-      "heartRate": "❤️ ",
-      "reps": "🔁 ",
-      "volume": "📊 ",
-      "weight": "🏋️ "
-    },
-    "timer": {
-      "menu": "⋮",
-      "pause": "⏸",
-      "play": "▶",
-      "reset": "↺"
-    }
-  },
   "logs": {
     "addLogButtonAria": "Log toevoegen voor {exerciseName}",
     "addLogButtonText": "Log toevoegen voor {exerciseName}",
@@ -622,16 +548,12 @@
       "auditScanning": "Oefeningsbestanden scannen...",
       "canvasExportError": "Fout bij exporteren van het canvas: {error}",
       "canvasExported": "Canvas is geëxporteerd ({path})",
-      "chartInserted": "✅ Grafiek succesvol toegevoegd!",
       "confirmUpdateTarget": "Doel bijwerken naar {targetWeight}{weightUnit}?",
-      "dashboardInserted": "✅ Dashboard succesvol ingevoegd!",
       "dismissAchievement": "Prestatie sluiten",
       "exerciseBlockInserted": "Oefeningsblok ingevoegd",
-      "exerciseNameRequired": "❌ Gelieve een naam voor de oefening in te voeren",
       "exercisePageCreated": "Oefenpagina succesvol aangemaakt!",
       "exercisePageError": "Fout bij het aanmaken van de oefeningspagina: {error}",
       "exercisePageNameRequired": "Geef een naam voor de oefening",
-      "exerciseSectionCreated": "✅ Oefeningssectie succesvol aangemaakt!",
       "genericError": "Fout: {error}",
       "insertCodeNoFile": "Open een Markdown-bestand om de code in te voegen.",
       "logCreated": "Trainingslog succesvol aangemaakt!",
@@ -657,15 +579,10 @@
       "muscleTagSimilarFound": "{count} vergelijkbare label(s) gevonden",
       "muscleTagSimilarWarning": "Er bestaat al een vergelijkbaar label",
       "suggestedNextWeight": "Voorgesteld volgend gewicht: {suggestedWeight}{weightUnit}",
-      "tableInserted": "✅ Tabel succesvol toegevoegd!",
       "tableUpdateFailed": "Update van de tabel is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
-      "tableUpdated": "✅ Tabel succesvol bijgewerkt!",
       "targetAchieved": "Doel bereikt!",
       "timerElementsNotInitialized": "Timer-elementen zijn niet geïnitialiseerd",
-      "timerInserted": "✅ Timer succesvol toegevoegd!",
       "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
-      "timerUpdated": "✅ Timer is succesvol bijgewerkt!",
-      "validationCombinedMode": "⚠️ Voor het type 'oefening + training' moet u beide velden invullen!",
       "validationFillAll": "Vul alle velden in met geldige waarden.",
       "validMissingField": "Verplicht veld ontbreekt: {field}",
       "validMustBeNumber": "{field} moet een geldig getal zijn",
@@ -917,8 +834,7 @@
     "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
     "sessions": "Sessies",
-    "average": "Gemiddelde:",
-    "title": "📈 {dataTypeLabel} statistieken ({contextLabel}):"
+    "average": "Gemiddelde:"
   },
   "table": {
     "actions": "Acties",
@@ -944,7 +860,6 @@
       "volumeUnit": "Volume ({weightUnit})",
       "weightUnit": "Gewicht ({weightUnit})"
     },
-    "deleteConfirm": "Deze logregel verwijderen?",
     "deleteError": "Fout bij verwijderen: {error}",
     "deleteSuccess": "Logregel verwijderd",
     "deleteTitle": "Verwijderen",
@@ -1048,8 +963,7 @@
         "text": "Druk op de + knop om het formulier te openen, en sla vervolgens een set op. Het wordt direct in de tabel weergegeven."
       },
       "rowActions": {
-        "title": "Bewerk of verwijder een set",
-        "text": "Elke rij heeft knoppen om te bewerken en te verwijderen. Gebruik deze om een typefout te corrigeren of een rij te verwijderen."
+        "title": "Bewerk of verwijder een set"
       },
       "chart": {
         "title": "Uw voortgang",

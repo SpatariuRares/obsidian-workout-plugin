@@ -164,8 +164,8 @@ export class EmbeddedTimerView extends BaseView {
       params: originalParams,
     });
 
-    // Store references in timer core state
-    this.timerCore.setState({
+    // Draw on this rendering too (the note may also be open in another view)
+    this.timerCore.addSurface({
       timerDisplay: timeDisplay,
       roundCounterDisplay,
       startStopBtn,

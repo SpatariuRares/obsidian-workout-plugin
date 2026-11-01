@@ -174,6 +174,25 @@ describe("LogCallouts organism", () => {
       ).toBeTruthy();
     });
 
+    it("reads Create first log when firstLog is set", () => {
+      const container = createObsidianContainer();
+      const plugin = createMockPlugin();
+
+      LogCallouts.renderAddLogButton(
+        container,
+        "Squat",
+        "",
+        plugin,
+        undefined,
+        undefined,
+        true,
+      );
+
+      expect(
+        container.querySelector(".workout-btn-primary")?.textContent,
+      ).toContain(t("logs.createFirstLogButton", { exerciseName: "Squat" }));
+    });
+
     it("renders add log button with currentPageLink", () => {
       const container = createObsidianContainer();
       const plugin = createMockPlugin();

@@ -125,16 +125,18 @@ export class LogCallouts {
     plugin: WorkoutPluginContext,
     signal?: AbortSignal,
     latestEntry?: WorkoutLogData,
+    firstLog = false,
   ): void {
     const button = Button.create(container, {
-      text: t("logs.addLogButtonText", {
+      text: t(firstLog ? "logs.createFirstLogButton" : "logs.addLogButtonText", {
         exerciseName: exerciseName ?? "Workout",
       }),
       icon: ICONS.ACTIONS.ADD,
       variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: t("logs.addLogButtonAria", {
-        exerciseName: exerciseName ?? "Workout",
-      }),
+      ariaLabel: t(
+        firstLog ? "logs.createFirstLogButtonAria" : "logs.addLogButtonAria",
+        { exerciseName: exerciseName ?? "Workout" },
+      ),
     });
     markTourTarget(button, TOUR_TARGETS.tableAddButton);
 

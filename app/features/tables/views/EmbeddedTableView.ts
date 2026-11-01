@@ -212,9 +212,12 @@ export class EmbeddedTableView extends BaseView {
   }
 
   /**
-   * An exercise table with no set in its filter (e.g. nothing logged today):
-   * the same Add log button and menu as a filled table, prefilled from the
-   * last set in the whole history, so the first set of the day is one tap.
+   * An exercise table with no set in its filter: the same Add log button and
+   * menu as a filled table, prefilled from the last set in the whole history,
+   * so the next set is one tap. When only the date range hides the sets
+   * (e.g. nothing logged today) it says no set matches yet; when nothing
+   * matches the block at all (this exercise never logged in this workout)
+   * the button reads "Create first log" and there is no message.
    */
   private renderEmptyExerciseTable(
     container: HTMLElement,
@@ -231,16 +234,25 @@ export class EmbeddedTableView extends BaseView {
       cls: "workout-table-content-container",
     });
 
-    if (params.showAddButton !== false) {
+    const showAddButton = params.showAddButton !== false;
+    const firstLog =
+      showAddButton &&
+      this.filterData(logData, { ...params, dateRange: undefined })
+        .filteredData.length === 0;
+
+    if (showAddButton) {
       this.renderActionButtons(
         contentDiv,
         params,
         { filteredData: logData },
         renderChild.getSignal(),
         pageLink,
+        firstLog,
       );
     }
-    LogCallouts.renderNoMatchMessage(contentDiv);
+    if (!firstLog) {
+      LogCallouts.renderNoMatchMessage(contentDiv);
+    }
 
     renderChild.load();
   }
@@ -254,6 +266,7 @@ export class EmbeddedTableView extends BaseView {
     filterResult: { filteredData: WorkoutLogData[] },
     signal: AbortSignal,
     pageLink: string,
+    firstLog = false,
   ): void {
     const currentPageLink = pageLink || this.getActivePageLink();
     const exerciseName =
@@ -275,6 +288,7 @@ export class EmbeddedTableView extends BaseView {
       this.plugin,
       signal,
       latestEntry,
+      firstLog,
     );
 
     if (params.exercise) {

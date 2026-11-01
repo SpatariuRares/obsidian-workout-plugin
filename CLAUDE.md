@@ -102,6 +102,7 @@ The only module that knows the workout log CSV (see "Workout log file" in `CONTE
 
 - **LogStorage** (`LogStorage.ts`): the seam under it. `VaultLogStorage` in production; tests use `InMemoryLogStorage` (`__tests__/InMemoryLogStorage.ts`) and assert on the CSV text, so test through `WorkoutLogFile`, not by mocking the vault
 - **DataFilter**: multi-strategy filtering (exact, fuzzy, exercise field); views apply it to `read()`'s rows
+- **Imports** (`app/features/import/`): `readWorkoutExport` turns a Strong/Hevy CSV into `TimedLogEntryInput`s (kept unit, spread timestamps), `planImport` drops sets already logged, then `importSets` writes them in one rewrite (backup first, one `log:bulk-changed` `import`, no record notices)
 
 ```typescript
 // Callers go through the plugin's WorkoutDataPort, which forwards to WorkoutLogFile
@@ -329,7 +330,7 @@ All data mutations emit typed events on `WorkoutEventBus`. Views subscribe via `
 **Workout log mutation flow:**
 
 ```
-WorkoutLogFile.add/update/delete/renameExercise/stampMissingWeightUnits
+WorkoutLogFile.add/update/delete/renameExercise/stampMissingWeightUnits/importSets
   → rewrites the CSV (column order kept), clears its cache
   → eventBus.emit(log:added | log:updated | log:deleted | log:bulk-changed)
   → EventAwareRenderChild receives event → filters by exercise/workout → calls renderFn()

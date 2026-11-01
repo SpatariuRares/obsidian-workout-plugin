@@ -572,4 +572,75 @@ describe("WorkoutLogFile", () => {
       expect(await setup(null).logFile.stampMissingWeightUnits("kg")).toBe(0);
     });
   });
+
+  describe("importSets", () => {
+    const imported = {
+      date: "2024-01-17T17:02:00.000Z",
+      exercise: "Bench Press (Barbell)",
+      reps: 8,
+      weight: 135,
+      weightUnit: "lb" as const,
+      workout: "Push",
+      origine: "Hevy",
+      timestamp: 1705510920000,
+    };
+
+    it("appends every set in one rewrite with its own timestamp, unit and volume, backing up first", async () => {
+      const { storage, logFile, events } = setup(
+        csv(HEADER, "2026-01-01,Squat,5,100,500,,Leg Day,1000,,standard"),
+      );
+
+      const count = await logFile.importSets([
+        imported,
+        { ...imported, reps: 6, timestamp: imported.timestamp + 60000 },
+      ]);
+
+      expect(count).toBe(2);
+      expect(storage.backups).toHaveLength(1);
+      expect(lines(storage)).toEqual([
+        `${HEADER},weightUnit`,
+        "2026-01-01,Squat,5,100,500,,Leg Day,1000,,standard,",
+        "2024-01-17T17:02:00.000Z,Bench Press (Barbell),8,135,1080,Hevy,Push,1705510920000,,standard,lb",
+        "2024-01-17T17:02:00.000Z,Bench Press (Barbell),6,135,810,Hevy,Push,1705510980000,,standard,lb",
+      ]);
+      expect(events).toEqual([
+        {
+          type: "log:bulk-changed",
+          payload: { count: 2, operation: "import" },
+        },
+      ]);
+      expect(Notice).not.toHaveBeenCalled();
+    });
+
+    it("moves a timestamp already in the log so every set stays addressable", async () => {
+      const { logFile } = setup(
+        csv(HEADER, "2026-01-01,Squat,5,100,500,,Leg Day,1705510920000,,standard"),
+      );
+
+      await logFile.importSets([imported]);
+
+      const stamps = (await logFile.read()).map((log) => log.timestamp);
+      expect(new Set(stamps).size).toBe(2);
+    });
+
+    it("creates the log without a sample row when there is none", async () => {
+      const { storage, logFile } = setup(null);
+
+      await logFile.importSets([imported]);
+
+      expect(storage.backups).toHaveLength(0);
+      expect(lines(storage)).toEqual([
+        `${HEADER},weightUnit`,
+        "2024-01-17T17:02:00.000Z,Bench Press (Barbell),8,135,1080,Hevy,Push,1705510920000,,standard,lb",
+      ]);
+    });
+
+    it("writes nothing for an empty import", async () => {
+      const { storage, logFile, events } = setup(null);
+
+      expect(await logFile.importSets([])).toBe(0);
+      expect(storage.content).toBeNull();
+      expect(events).toEqual([]);
+    });
+  });
 });

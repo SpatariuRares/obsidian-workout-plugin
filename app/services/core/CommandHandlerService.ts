@@ -11,6 +11,7 @@ import { AuditExerciseNamesModal } from "@app/features/modals/exercise/AuditExer
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { AddExerciseBlockModal } from "@app/features/modals/exercise/AddExerciseBlockModal";
 import { ConvertExerciseDataModal } from "@app/features/exercise-conversion/ConvertExerciseDataModal";
+import { ImportWorkoutsModal } from "@app/features/import/modals/ImportWorkoutsModal";
 import { MuscleTagManagerModal } from "@app/features/modals/muscle/MuscleTagManagerModal";
 import { CanvasExporter } from "@app/features/canvas/business/CanvasExporter";
 import { WorkoutFileSuggestModal } from "@app/features/canvas/modals/WorkoutFileSuggestModal";
@@ -216,6 +217,14 @@ export class CommandHandlerService {
         await new ExerciseTypeMigration(
           this.plugin,
         ).migrateExerciseTypes();
+      },
+    });
+
+    this.plugin.addCommand({
+      id: "import-strong-hevy",
+      name: t("commands.importWorkouts"),
+      callback: () => {
+        new ImportWorkoutsModal(this.app, this.plugin).open();
       },
     });
 

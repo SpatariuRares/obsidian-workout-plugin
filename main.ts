@@ -5,6 +5,7 @@ import {
   DEFAULT_SETTINGS,
   WorkoutLogData,
   LogEntryInput,
+  TimedLogEntryInput,
 } from "@app/types/WorkoutLogData";
 import { WorkoutChartsSettingTab } from "@app/features/settings/WorkoutChartsSettings";
 import { EmbeddedChartView } from "@app/features/charts/views/EmbeddedChartView";
@@ -340,6 +341,15 @@ export default class WorkoutChartsPlugin extends Plugin {
     logToDelete: WorkoutLogData,
   ): Promise<void> {
     return this.workoutLogFile.delete(logToDelete);
+  }
+
+  /**
+   * Add sets recorded elsewhere (an import) in one write
+   */
+  public async importWorkoutLogEntries(
+    entries: TimedLogEntryInput[],
+  ): Promise<number> {
+    return this.workoutLogFile.importSets(entries);
   }
 
   /**

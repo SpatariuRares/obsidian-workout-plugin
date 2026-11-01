@@ -2,6 +2,7 @@ import { Notice, type TFile } from "obsidian";
 import type {
   CSVWorkoutLogEntry,
   LogEntryInput,
+  TimedLogEntryInput,
   WorkoutChartsSettings,
   WorkoutLogData,
 } from "@app/types/WorkoutLogData";
@@ -179,6 +180,44 @@ export class WorkoutLogFile {
         context: { exercise: added.exercise, workout: added.workout },
       },
     });
+  }
+
+  /**
+   * Append sets recorded elsewhere (an import) in one rewrite. Each keeps
+   * its own timestamp, moved by a millisecond when the log already has it
+   * so every set stays addressable. Backs up an existing log first and
+   * creates a missing one (without the sample row). No record notices.
+   * @returns How many sets were added
+   */
+  async importSets(entries: TimedLogEntryInput[]): Promise<number> {
+    if (entries.length === 0) return 0;
+
+    const toRows = (existing: CSVWorkoutLogEntry[]) => {
+      const taken = new Set(existing.map((row) => row.timestamp));
+      return entries.map((entry) => {
+        let timestamp = entry.timestamp;
+        while (taken.has(timestamp)) timestamp++;
+        taken.add(timestamp);
+        return { ...this.toRow(entry), timestamp };
+      });
+    };
+
+    const file = this.storage.file();
+    if (file) {
+      await this.storage.backup(file);
+      await this.rewrite(file, (rows) => {
+        rows.push(...toRows(rows));
+      });
+    } else {
+      await this.storage.create(serializeLog(toRows([])));
+      this.clearCache();
+    }
+
+    this.eventBus.emit({
+      type: "log:bulk-changed",
+      payload: { count: entries.length, operation: "import" },
+    });
+    return entries.length;
   }
 
   /**

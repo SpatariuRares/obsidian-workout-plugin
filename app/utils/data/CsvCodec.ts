@@ -8,8 +8,9 @@
 /**
  * Parses CSV content into rows of raw string fields.
  * Accepts LF and CRLF line endings. Blank lines are skipped.
+ * Fields are split on `delimiter` (some exports use `;`).
  */
-export function parseCsv(content: string): string[][] {
+export function parseCsv(content: string, delimiter = ","): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
   let field = "";
@@ -49,7 +50,7 @@ export function parseCsv(content: string): string[][] {
     if (char === '"') {
       inQuotes = true;
       rowHasContent = true;
-    } else if (char === ",") {
+    } else if (char === delimiter) {
       endField();
     } else if (char === "\n" || char === "\r") {
       if (char === "\r" && content[i + 1] === "\n") i++;

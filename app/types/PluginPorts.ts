@@ -1,6 +1,7 @@
 import type { App, Command, MarkdownPostProcessorContext } from "obsidian";
 import type {
   LogEntryInput,
+  TimedLogEntryInput,
   WorkoutChartsSettings,
   WorkoutLogData,
 } from "@app/types/WorkoutLogData";
@@ -34,6 +35,8 @@ export interface WorkoutDataPort {
     updatedEntry: LogEntryInput,
   ): Promise<void>;
   deleteWorkoutLogEntry(logToDelete: WorkoutLogData): Promise<void>;
+  /** Add sets recorded elsewhere in one write; returns how many */
+  importWorkoutLogEntries(entries: TimedLogEntryInput[]): Promise<number>;
   batchOperation(
     operation: LogBulkChangedPayload["operation"],
     fn: () => Promise<void>,

@@ -411,6 +411,7 @@ Open the command palette (`Ctrl/Cmd + P`) and type the name.
 | Audit exercise names                                        | Find the same exercise logged under different spellings            |
 | Export workout to canvas                                    | Lay out the current workout on an Obsidian canvas                  |
 | Create CSV log file                                         | Create an empty log                                                |
+| Import from Strong or Hevy                                  | Add the sets of a Strong or Hevy CSV export to the log             |
 | Migrate exercise types, Add missing IDs to code blocks      | Maintenance after upgrading from older versions                    |
 
 </details>

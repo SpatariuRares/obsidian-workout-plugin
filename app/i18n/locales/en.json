@@ -35,6 +35,7 @@
     "createExampleNotes": "Create example notes",
     "exportWorkoutToCanvas": "Export workout to canvas",
     "generateTagReference": "Generate tag reference",
+    "importWorkouts": "Import from Strong or Hevy",
     "insertTable": "Insert workout table",
     "manageMuscleTags": "Manage muscle tags",
     "migrateExerciseTypes": "Migrate exercise types",
@@ -1040,5 +1041,24 @@
         "text": "You can take this tour again from Settings → Getting started."
       }
     }
+  },
+  "import": {
+    "title": "Import from Strong or Hevy",
+    "intro": "Choose the CSV from the app's workout data export. Nothing is written until you confirm.",
+    "chooseFile": "Choose CSV file",
+    "notAnExport": "This file is not a Strong or Hevy export.",
+    "noSets": "No sets could be read from this file. Check that it is the CSV the app exported, unchanged.",
+    "readError": "Could not read the file: {error}",
+    "source": "Export from {source}",
+    "setsFound": "Sets in the file: {count}",
+    "setsToAdd": "Sets to add: {count}",
+    "duplicates": "Already in your log, skipped: {count}",
+    "dateRange": "Training days: {first} to {last}",
+    "newExercises": "Exercises without a page: {exercises}",
+    "nothingToAdd": "Every set in this file is already in your log.",
+    "backupNote": "Your log is backed up before the sets are added.",
+    "importButton": "Import sets",
+    "imported": "Import done. Sets added: {count}",
+    "error": "Import failed: {error}"
   }
 }

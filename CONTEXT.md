@@ -274,7 +274,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 
 ---
 
-## Commands (16 Total)
+## Commands (17 Total)
 
 | Command                     | What It Does                                 |
 | --------------------------- | -------------------------------------------- |
@@ -294,6 +294,7 @@ Everything. `isDesktopOnly: false`. No Node.js/Electron APIs. No regex lookbehin
 | Convert exercise data       | Converts exercise data formats               |
 | Manage muscle tags          | Opens MuscleTagManagerModal                  |
 | Generate tag reference note | Creates a reference note for all tags        |
+| Import from Strong or Hevy  | Imports a Strong/Hevy CSV export (preview)   |
 
 ---
 

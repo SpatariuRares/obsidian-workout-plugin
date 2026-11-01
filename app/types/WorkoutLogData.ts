@@ -93,6 +93,12 @@ export interface CSVWorkoutLogEntry {
 export type LogEntryInput = Omit<CSVWorkoutLogEntry, "timestamp" | "volume">;
 
 /**
+ * A set recorded elsewhere (an import): it keeps the time it was done
+ * instead of getting the time it is written.
+ */
+export type TimedLogEntryInput = LogEntryInput & { timestamp: number };
+
+/**
  * Plugin settings interface.
  */
 export interface WorkoutChartsSettings {

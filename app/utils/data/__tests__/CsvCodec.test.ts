@@ -14,6 +14,10 @@ describe("CsvCodec.parseCsv", () => {
     ]);
   });
 
+  it("splits on another delimiter, keeping commas as text", () => {
+    expect(parseCsv('a;"b;c";1,5', ";")).toEqual([["a", "b;c", "1,5"]]);
+  });
+
   it("keeps commas and escaped quotes inside quoted fields", () => {
     expect(parseCsv('x,"a, ""b"" c",y')).toEqual([
       ["x", 'a, "b" c', "y"],

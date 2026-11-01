@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
       "csvFolder": "Dosja ku do të ruhen skedarët CSV të regjistrit të stërvitjeve dhe të etiketave të muskujve.",
-      "customProtocols": "Krijoni protokolle stërvitjeje të personalizuara për të ndjekur teknika të specializuara stërvitjeje",
       "defaultExactMatch": "Kur është aktivizuar, filtrimi i ushtrimeve përdor si parazgjedhje përputhjen e saktë të emrit. Çaktivizojeni për përputhje të përafërt.",
       "defaultRepsPerSet": "Numri i supozuar i përsëritjeve kur nuk është specifikuar. Nëse është 0, përdoret 'Kohëzgjatja rezervë e serisë'.",
       "defaultTimerPreset": "Zgjidhni një paracaktim të parazgjedhur për timerët e rinj",
       "exerciseBlockTemplate": "Shabllon për blloqet e ushtrimeve. Vendmbajtësit e disponueshëm: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Shtegu i dosjes që përmban faqet e ushtrimeve",
       "generateDefaultTemplates": "Gjeneron shabllonin e parazgjedhur të faqes së ushtrimit dhe referencën e etiketave në dosjen 'Workout Templates'. Mund t'i personalizoni këta skedarë për të ndryshuar gjuhën dhe strukturën.",
-      "noCustomProtocols": "Nuk janë konfiguruar protokole të personalizuara. Kliko në 'Shto protokol' për të krijuar një.",
       "noPresets": "Nuk ka paracaktime timeri të konfiguruara. Klikoni 'Shto paracaktim' për të krijuar një.",
       "presetDurationDesc": "Kohëzgjatja në sekonda (p.sh., 90 për një timer prej 90 sekondash).",
       "presetNameDesc": "Emër unik për këtë paracaktim timeri (p.sh., 'Pushim 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
-      "customProtocols": "Protokole të personalizuara",
       "defaultExactMatch": "Përputhje e saktë si parazgjedhje",
       "defaultRepsPerSet": "Përsëritje të parazgjedhura për seri",
       "defaultTimerPreset": "Paracaktimi i parazgjedhur i timerit",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Të avancuara",
       "csvManagement": "Menaxhimi i skedarëve CSV",
-      "customProtocols": "Protokole të personalizuara",
       "maintenance": "Mirëmbajtje",
       "quickLog": "Regjistrim nga celulari",
       "setupAndData": "Konfigurim dhe të dhëna",
       "templates": "Shabllonet",
       "timerPresets": "Paracaktimet e timerit",
       "trainingParameters": "Parametrat e stërvitjes",
-      "savedPresets": "Parametrat të ruajtura",
-      "savedProtocols": "Протокол të ruajtura",
       "gettingStarted": "Fillimi",
       "timerDeviceCues": "Simboli/indikatorët për pajisjet që kanë funksion kohor"
     },

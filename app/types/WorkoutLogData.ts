@@ -112,6 +112,8 @@ export interface WorkoutChartsSettings {
   defaultExactMatch: boolean;
   timerPresets: Record<string, TimerPresetConfig>;
   defaultTimerPreset: string | null;
+  /** The built-in presets were added to `timerPresets` (once, so deleted ones stay deleted) */
+  timerPresetDefaultsAdded: boolean;
   /** Best-effort foreground screen protection while any timer runs */
   keepScreenAwake: boolean;
   /** Optional tactile cue at actual timer completion, independent of sound */
@@ -120,6 +122,8 @@ export interface WorkoutChartsSettings {
   weightIncrement: number;
   achievedTargets: Record<string, number>;
   customProtocols: CustomProtocolConfig[];
+  /** The built-in protocols were added to `customProtocols` (once, so deleted ones stay deleted) */
+  protocolDefaultsAdded: boolean;
   /** Default duration per set in seconds for workout duration estimation */
   setDuration: number;
   /** Duration per repetition in seconds. Used when reps are detected. */

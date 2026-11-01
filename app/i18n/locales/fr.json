@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fichier CSV de tags musculaires existe déjà. Souhaitez-vous le remplacer par les valeurs par défaut ? Cela supprimera tous les tags personnalisés.",
       "csvFolder": "Dossier où seront stockés les fichiers CSV du journal d'entraînement et des tags musculaires.",
-      "customProtocols": "Créez des protocoles d'entraînement personnalisés pour suivre des techniques d'entraînement spécifiques.",
       "defaultExactMatch": "Lorsque cette option est activée, le filtre d'exercices utilise par défaut une correspondance exacte du nom. Désactivez-la pour une correspondance approximative.",
       "defaultRepsPerSet": "Nombre de répétitions supposé lorsqu'il n'est pas précisé. Si 0, la « Durée de série par défaut » est utilisée.",
       "defaultTimerPreset": "Sélectionnez un préréglage par défaut pour les nouveaux minuteurs.",
       "exerciseBlockTemplate": "Modèle des blocs d'exercices. Variables disponibles : {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Chemin d'accès au dossier contenant les pages d'exercices.",
       "generateDefaultTemplates": "Générez le modèle de page d'exercice par défaut et la référence des tags dans le dossier 'Workout Templates'. Vous pouvez personnaliser ces fichiers pour modifier la langue et la structure.",
-      "noCustomProtocols": "Aucun protocole personnalisé n'est configuré. Cliquez sur « Ajouter un protocole » pour en créer un.",
       "noPresets": "Aucun préréglage de minuteur configuré. Cliquez sur « Ajouter un préréglage » pour en créer un.",
       "presetDurationDesc": "Durée en secondes (par exemple, 90 pour un minuteur de 90 secondes).",
       "presetNameDesc": "Nom unique pour ce préréglage de minuteur (par exemple, « Repos 90 s », « HIIT 30/10 »).",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
-      "customProtocols": "Protocoles personnalisés",
       "defaultExactMatch": "Correspondance exacte par défaut",
       "defaultRepsPerSet": "Répétitions par série par défaut",
       "defaultTimerPreset": "Préréglage de minuteur par défaut",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Options avancées",
       "csvManagement": "Gestion des fichiers CSV",
-      "customProtocols": "Protocoles personnalisés",
       "maintenance": "Maintenance",
       "quickLog": "Journalisation mobile",
       "setupAndData": "Configuration et données",
       "templates": "Modèles",
       "timerPresets": "Préréglages du minuteur",
       "trainingParameters": "Paramètres d'entraînement",
-      "savedPresets": "Préréglages sauvegardés",
-      "savedProtocols": "Protocoles enregistrés",
       "gettingStarted": "Premiers pas",
       "timerDeviceCues": "Indices pour les dispositifs de minuterie"
     },

@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Esiste già un file CSV tag muscolari. Vuoi sovrascriverlo con i valori predefiniti? Questo rimuoverà eventuali tag personalizzati.",
       "csvFolder": "Cartella dove verranno salvati i file CSV dei registri allenamento e tag muscolari.",
-      "customProtocols": "Crea protocolli allenamento personalizzati per tracciare tecniche di allenamento specializzate",
       "defaultExactMatch": "Quando abilitato, il filtraggio esercizi usa corrispondenza esatta del nome per impostazione predefinita. Disabilita per corrispondenza fuzzy.",
       "defaultRepsPerSet": "Numero di ripetizioni presunto quando non specificato. Se 0, usa 'Durata serie di riserva'.",
       "defaultTimerPreset": "Seleziona un preset predefinito per i nuovi timer",
       "exerciseBlockTemplate": "Template per blocchi esercizio. Placeholder disponibili: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Percorso alla cartella contenente le pagine degli esercizi",
       "generateDefaultTemplates": "Genera template predefinito pagina esercizio e riferimento tag nella cartella 'Workout Templates'. Puoi personalizzare questi file per cambiare lingua e struttura.",
-      "noCustomProtocols": "Nessun protocollo personalizzato configurato. Clicca 'Aggiungi protocollo' per crearne uno.",
       "noPresets": "Nessun preset timer configurato. Clicca 'Aggiungi preset' per crearne uno.",
       "presetDurationDesc": "Durata in secondi (ad esempio, 90 per un timer di 90 secondi).",
       "presetNameDesc": "Nome univoco per questo preset del timer (ad esempio, 'Riposo 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
-      "customProtocols": "Protocolli personalizzati",
       "defaultExactMatch": "Corrispondenza esatta predefinita",
       "defaultRepsPerSet": "Ripetizioni predefinite per serie",
       "defaultTimerPreset": "Preset timer predefinito",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Avanzate",
       "csvManagement": "Gestione file CSV",
-      "customProtocols": "Protocolli personalizzati",
       "maintenance": "Manutenzione",
       "quickLog": "Registro mobile",
       "setupAndData": "Configurazione e dati",
       "templates": "Template",
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di allenamento",
-      "savedPresets": "Preimpostazioni salvate",
-      "savedProtocols": "Protocolli salvati",
       "gettingStarted": "Inizia",
       "timerDeviceCues": "Indicazioni per il dispositivo timer"
     },

@@ -2,6 +2,8 @@ interface CreateElOptions {
   cls?: string | string[];
   text?: string;
   attr?: Record<string, string>;
+  /** Like Obsidian's DomElementInfo.value (inputs, selects, options) */
+  value?: string;
 }
 
 export type ObsidianHTMLElement = HTMLElement & {
@@ -126,6 +128,10 @@ const applyOptions = (
     Object.entries(options.attr).forEach(([key, value]) => {
       element.setAttribute(key, value);
     });
+  }
+
+  if (options.value !== undefined && "value" in element) {
+    (element as HTMLInputElement).value = options.value;
   }
 };
 

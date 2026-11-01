@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
       "csvFolder": "Ordner, in dem die CSV-Dateien für Trainingsprotokolle und Muskel-Tags gespeichert werden.",
-      "customProtocols": "Erstelle benutzerdefinierte Trainingsprotokolle, um spezielle Trainingstechniken zu erfassen",
       "defaultExactMatch": "Wenn aktiviert, werden Übungen standardmäßig nach exaktem Namen gefiltert. Deaktiviere es für eine unscharfe Suche.",
       "defaultRepsPerSet": "Angenommene Anzahl an Wiederholungen, wenn nicht angegeben. Bei 0 wird die 'Fallback-Satzdauer' verwendet.",
       "defaultTimerPreset": "Wähle eine Standard-Voreinstellung für neue Timer",
       "exerciseBlockTemplate": "Vorlage für Übungsblöcke. Verfügbare Platzhalter: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pfad zum Ordner mit Übungsseiten",
       "generateDefaultTemplates": "Erstellt die Standardvorlage für Übungsseiten und die Tag-Referenz im Ordner 'Workout Templates'. Du kannst diese Dateien anpassen, um Sprache und Struktur zu ändern.",
-      "noCustomProtocols": "Keine benutzerdefinierten Protokolle konfiguriert. Klicke auf 'Protokoll hinzufügen', um eines zu erstellen.",
       "noPresets": "Keine Timer-Voreinstellungen konfiguriert. Klicke auf 'Voreinstellung hinzufügen', um eine zu erstellen.",
       "presetDurationDesc": "Dauer in Sekunden (z. B. 90 für einen Timer von 90 Sekunden).",
       "presetNameDesc": "Eindeutiger Name für diese Timer-Voreinstellung (z. B. 'Rest 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
-      "customProtocols": "Benutzerdefinierte Protokolle",
       "defaultExactMatch": "Standardmäßig exakte Übereinstimmung",
       "defaultRepsPerSet": "Standard-Wiederholungen pro Satz",
       "defaultTimerPreset": "Standard-Voreinstellung für Timer",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Erweitert",
       "csvManagement": "CSV-Dateiverwaltung",
-      "customProtocols": "Benutzerdefinierte Protokolle",
       "maintenance": "Wartung",
       "quickLog": "Mobile Erfassung",
       "setupAndData": "Einrichtung und Daten",
       "templates": "Vorlagen",
       "timerPresets": "Timer-Voreinstellungen",
       "trainingParameters": "Parameter für das Training",
-      "savedPresets": "Gespeicherte Voreinstellungen",
-      "savedProtocols": "Gespeicherte Protokolle",
       "gettingStarted": "Wie man anfängt",
       "timerDeviceCues": "Hinweise für Timer-Geräte"
     },

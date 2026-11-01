@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
       "csvFolder": "存储训练记录和肌肉标签 CSV 文件的文件夹。",
-      "customProtocols": "创建自定义训练方案以跟踪专业训练技术。",
       "defaultExactMatch": "启用时，训练筛选默认使用精确名称匹配。禁用则使用模糊匹配。",
       "defaultRepsPerSet": "未指定时的默认次数。若为 0，则使用'备用组时长'。",
       "defaultTimerPreset": "选择新计时器的默认预设",
       "exerciseBlockTemplate": "训练块模板。可用占位符：{{exercise}}、{{duration}}、{{workout}}、{{preset}}",
       "exerciseFolder": "包含训练页面的文件夹路径",
       "generateDefaultTemplates": "在'训练模板'文件夹中生成默认的训练页面模板和标签参考。您可以自定义这些文件以更改语言和结构。",
-      "noCustomProtocols": "未配置自定义训练方案。点击'添加方案'创建一个。",
       "noPresets": "未配置计时器预设。点击'添加预设'创建一个。",
       "presetDurationDesc": "时长（秒）（例如：90 表示 90 秒计时器）。",
       "presetNameDesc": "为此计时器预设设置唯一名称（例如：'休息90秒'、'HIIT 30/10'）。",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
-      "customProtocols": "自定义训练方案",
       "defaultExactMatch": "默认精确匹配",
       "defaultRepsPerSet": "默认每组次数",
       "defaultTimerPreset": "默认计时器预设",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "高级",
       "csvManagement": "CSV 文件管理",
-      "customProtocols": "自定义训练方案",
       "maintenance": "维护",
       "quickLog": "移动记录",
       "setupAndData": "设置与数据",
       "templates": "模板",
       "timerPresets": "计时器预设",
       "trainingParameters": "训练参数",
-      "savedPresets": "保存的预设",
-      "savedProtocols": "已保存的协议",
       "gettingStarted": "开始",
       "timerDeviceCues": "定时器设备提示"
     },

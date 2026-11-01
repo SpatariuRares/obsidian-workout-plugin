@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
       "csvFolder": "存放運動記錄和肌肉標籤 CSV 檔案的資料夾。",
-      "customProtocols": "建立自訂的訓練法，以追蹤專業的訓練技巧。",
       "defaultExactMatch": "啟用時，運動篩選預設使用完全名稱匹配。 停用以進行模糊匹配。",
       "defaultRepsPerSet": "未指定時預設的每組次數。如果為 0，則使用「備用每組時長」。",
       "defaultTimerPreset": "選擇預設的計時器設定",
       "exerciseBlockTemplate": "動作區塊範本。可用的預留位置：{{exercise}}、{{duration}}、{{workout}}、{{preset}}",
       "exerciseFolder": "包含動作頁面的資料夾路徑",
       "generateDefaultTemplates": "在「運動範本」資料夾中產生預設的動作頁面範本和標籤參考。您可以自訂這些檔案，以更改語言和結構。",
-      "noCustomProtocols": "沒有設定任何自訂訓練法。點擊「新增訓練法」以建立一個。",
       "noPresets": "沒有設定任何計時器預設。點擊「新增預設」以建立一個。",
       "presetDurationDesc": "時間長度（以秒為單位，例如：90 秒，用於 90 秒計時器）。",
       "presetNameDesc": "為此計時器預設設定指定一個獨特的名稱 (例如：'休息 90 秒'、'HIIT 30/10')。",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
-      "customProtocols": "自訂訓練法",
       "defaultExactMatch": "預設完全匹配",
       "defaultRepsPerSet": "預設每組動作次數",
       "defaultTimerPreset": "預設計時器設定",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "進階",
       "csvManagement": "CSV 檔案管理",
-      "customProtocols": "自訂訓練法",
       "maintenance": "維護",
       "quickLog": "行動裝置記錄",
       "setupAndData": "設定與資料",
       "templates": "範本",
       "timerPresets": "計時器預設",
       "trainingParameters": "訓練參數",
-      "savedPresets": "儲存的預設",
-      "savedProtocols": "儲存的協議",
       "gettingStarted": "開始使用",
       "timerDeviceCues": "計時器設備提示"
     },

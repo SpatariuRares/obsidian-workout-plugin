@@ -35,6 +35,8 @@ import { WorkoutEventBus } from "@app/services/events/WorkoutEventBus";
 import type { LogBulkChangedPayload } from "@app/services/events/WorkoutEventTypes";
 import type { WeightUnit } from "@app/utils/WeightUnitUtils";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
+import { withDefaultProtocols } from "@app/services/protocols/ProtocolCatalog";
+import { withDefaultTimerPresets } from "@app/features/timer/business/timerPresets";
 
 // Extend Window interface for WorkoutPlannerAPI
 declare global {
@@ -109,6 +111,28 @@ export default class WorkoutChartsPlugin extends Plugin {
 
     // Initialize LocalizationService (must be first - other services may use translations)
     LocalizationService.initialize(this.app);
+
+    // Warm-up, drop set, ... appear in Settings → Saved protocols (named in
+    // the vault's language), on new installs and on updates alike
+    // Tabata and EMOM appear in Settings → Saved presets the same way
+    if (
+      !this.settings.protocolDefaultsAdded ||
+      !this.settings.timerPresetDefaultsAdded
+    ) {
+      if (!this.settings.protocolDefaultsAdded) {
+        this.settings.customProtocols = withDefaultProtocols(
+          this.settings.customProtocols,
+        );
+        this.settings.protocolDefaultsAdded = true;
+      }
+      if (!this.settings.timerPresetDefaultsAdded) {
+        this.settings.timerPresets = withDefaultTimerPresets(
+          this.settings.timerPresets,
+        );
+        this.settings.timerPresetDefaultsAdded = true;
+      }
+      await this.saveSettings();
+    }
 
     // Initialize ParameterUtils with weight unit
     ParameterUtils.setWeightUnit(this.settings.weightUnit);

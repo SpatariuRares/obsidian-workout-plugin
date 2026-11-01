@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
       "csvFolder": "Folder, w którym będą przechowywane pliki CSV z logami treningów i tagami mięśni.",
-      "customProtocols": "Stwórz własne protokoły treningowe, aby śledzić specjalistyczne techniki treningowe",
       "defaultExactMatch": "Gdy jest włączone, filtrowanie ćwiczeń domyślnie wykorzystuje dokładne dopasowanie nazwy. Wyłącz, aby używać nieprecyzyjnego dopasowania.",
       "defaultRepsPerSet": "Założona liczba powtórzeń, jeśli nie została określona. Jeśli wynosi 0, używany jest 'Rezerwowy czas trwania serii'.",
       "defaultTimerPreset": "Wybierz domyślne ustawienie dla nowych timerów",
       "exerciseBlockTemplate": "Szablon dla bloków ćwiczeń. Dostępne zmienne: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Ścieżka do folderu zawierającego strony ćwiczeń",
       "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczenia i spis tagów w folderze 'Workout Templates'. Możesz dostosować te pliki, aby zmienić język i strukturę.",
-      "noCustomProtocols": "Brak skonfigurowanych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
       "noPresets": "Brak skonfigurowanych ustawień timera. Kliknij „Dodaj ustawienie”, aby je utworzyć.",
       "presetDurationDesc": "Czas w sekundach (np. 90 dla timera o czasie trwania 90 sekund).",
       "presetNameDesc": "Unikalna nazwa dla tego ustawienia timera (np. 'Przerwa 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
-      "customProtocols": "Dostosowane protokoły",
       "defaultExactMatch": "Domyślnie dokładne dopasowanie",
       "defaultRepsPerSet": "Domyślna liczba powtórzeń na serię",
       "defaultTimerPreset": "Domyślne ustawienie timera",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Zaawansowane",
       "csvManagement": "Zarządzanie plikami CSV",
-      "customProtocols": "Dostosowane protokoły",
       "maintenance": "Utrzymanie",
       "quickLog": "Rejestrowanie na urządzeniach mobilnych",
       "setupAndData": "Konfiguracja i dane",
       "templates": "Szablony",
       "timerPresets": "Predefiniowane ustawienia timera",
       "trainingParameters": "Parametry treningu",
-      "savedPresets": "Zapisane ustawienia",
-      "savedProtocols": "Zapisane protokoły",
       "gettingStarted": "Jak zacząć",
       "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera"
     },

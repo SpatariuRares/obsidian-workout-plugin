@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "既存の筋肉タグのCSVファイルが存在します。デフォルト値で上書きしますか？これにより、すべてのカスタムタグが削除されます。",
       "csvFolder": "ワークアウトの記録と筋肉タグのCSVファイルを保存するフォルダ。",
-      "customProtocols": "特定のトレーニング技術を追跡するための、独自のワークアウトプロトコルを作成する。",
       "defaultExactMatch": "有効にした場合、フィルタリングはデフォルトで完全一致による名前のマッチングを使用します。あいまいなマッチングを使用するには、無効にします。",
       "defaultRepsPerSet": "指定がない場合に想定するレップ数。0の場合は「代替のセット時間」を使用します。",
       "defaultTimerPreset": "新しいタイマーのデフォルトのプリセットを選択してください。",
       "exerciseBlockTemplate": "エクササイズブロックのテンプレート。利用可能なプレースホルダー: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "エクササイズページの保存されているフォルダへのパス",
       "generateDefaultTemplates": "'ワークアウトテンプレート'フォルダに、デフォルトのエクササイズページのテンプレートとタグの参照を作成します。これらのファイルは、言語や構造を変更するためにカスタマイズできます。",
-      "noCustomProtocols": "カスタムプロトコルは設定されていません。 'プロトコルを追加' をクリックして作成してください。",
       "noPresets": "タイマーのプリセットは設定されていません。「プリセットを追加」をクリックして、新しいプリセットを作成してください。",
       "presetDurationDesc": "秒単位の時間（例：90秒タイマーなら 90）。",
       "presetNameDesc": "このタイマープリセットの固有の名前 (例: 'レスト 90秒', 'HIIT 30/10')",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
-      "customProtocols": "カスタムプロトコル",
       "defaultExactMatch": "デフォルトの完全一致",
       "defaultRepsPerSet": "デフォルトのセットごとの回数",
       "defaultTimerPreset": "デフォルトのタイマープリセット",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "詳細設定",
       "csvManagement": "CSVファイルの管理",
-      "customProtocols": "カスタムプロトコル",
       "maintenance": "メンテナンス",
       "quickLog": "モバイルでの記録",
       "setupAndData": "設定とデータ",
       "templates": "テンプレート",
       "timerPresets": "タイマープリセット",
       "trainingParameters": "トレーニングパラメータ",
-      "savedPresets": "保存されたプリセット",
-      "savedProtocols": "保存されたプロトコル",
       "gettingStarted": "開始",
       "timerDeviceCues": "タイマーデバイスの操作ガイダンス"
     },

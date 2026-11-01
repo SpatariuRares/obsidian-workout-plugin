@@ -77,7 +77,7 @@ sound: true
 showControls: true
 ```
 
-Timer types: Countdown (single), Interval (rounds of work then rest, the last rest included; `work`/`rest`, or `duration` as the work), Stopwatch. Presets are saved in settings and reusable across notes; Tabata (20/10 × 8) and EMOM (60 × 10) are built in, and a saved preset with the same name replaces them. Distinct sounds for work start, rest start and completion.
+Timer types: Countdown (single), Interval (rounds of work then rest, the last rest included; `work`/`rest`, or `duration` as the work), Stopwatch. Presets are saved in settings and reusable across notes; Tabata (20/10 × 8) and EMOM (60 × 10) are built in and added to the saved presets once, on install or on the first update that has them, so users see and edit them like their own; a deleted one stays deleted from the list but blocks that name it keep working. Distinct sounds for work start, rest start and completion.
 
 ### 3. `workout-chart` - Exercise Progression Charts
 
@@ -150,14 +150,15 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 
 | Protocol   | Abbreviation |
 | ---------- | ------------ |
-| Standard   | STD          |
+| Standard   | (no badge)   |
+| Warm-up    | WU           |
 | Drop Set   | DS           |
 | Myo-Reps   | MYO          |
 | Rest-Pause | RP           |
 | Superset   | SS           |
 | 21s        | 21           |
 
-Users can define custom protocols with name, abbreviation (max 3 chars), and color.
+Every protocol except Standard is an entry of the protocol list in the settings, with name, abbreviation (max 3 chars) and color. The built-in ones are added to that list once, on install or on the first update that has them, so users see how protocols work and can edit or delete them like their own. A protocol's id keeps its meaning whatever its entry says (warm-up and drop sets never count as PRs), and a deleted built-in keeps its name on sets already logged.
 
 ### Exercise Pages
 

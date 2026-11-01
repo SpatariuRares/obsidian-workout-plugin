@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Um arquivo CSV de tags musculares já existe. Você deseja sobrescrevê-lo com valores padrão? Isso removerá todas as tags personalizadas.",
       "csvFolder": "Pasta onde os arquivos CSV de registros de treino e tags musculares serão armazenados.",
-      "customProtocols": "Crie protocolos de treino personalizados para acompanhar técnicas de treino especializadas.",
       "defaultExactMatch": "Quando ativado, o filtro de exercícios usa correspondência exata por padrão. Desative para correspondência aproximada.",
       "defaultRepsPerSet": "Número de repetições assumido quando não especificado. Se for 0, utiliza a 'Duração de série alternativa'.",
       "defaultTimerPreset": "Selecione uma predefinição padrão para novos temporizadores",
       "exerciseBlockTemplate": "Modelo para blocos de exercícios. Placeholders disponíveis: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Caminho para a pasta que contém as páginas de exercícios.",
       "generateDefaultTemplates": "Gere o modelo padrão da página de exercícios e a referência de tags na pasta 'Workout Templates'. Você pode personalizar esses arquivos para alterar o idioma e a estrutura.",
-      "noCustomProtocols": "Nenhum protocolo personalizado configurado. Clique em \"Adicionar protocolo\" para criar um.",
       "noPresets": "Não existem predefinições de temporizador. Clique em 'Adicionar predefinição' para criar uma.",
       "presetDurationDesc": "Duração em segundos (por exemplo, 90 para um temporizador de 90 segundos).",
       "presetNameDesc": "Nome exclusivo para esta predefinição de temporizador (por exemplo, 'Descanso 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
-      "customProtocols": "Protocolos personalizados",
       "defaultExactMatch": "Correspondência exata padrão",
       "defaultRepsPerSet": "Número padrão de repetições por série",
       "defaultTimerPreset": "Predefinição padrão do temporizador",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Avançado",
       "csvManagement": "Gerenciamento de arquivos CSV",
-      "customProtocols": "Protocolos personalizados",
       "maintenance": "Manutenção",
       "quickLog": "Registro móvel",
       "setupAndData": "Configuração e dados",
       "templates": "Modelos",
       "timerPresets": "Predefinições de temporizador",
       "trainingParameters": "Parâmetros de treinamento",
-      "savedPresets": "Predefinições salvas",
-      "savedProtocols": "Protocolos salvos",
       "gettingStarted": "Como começar",
       "timerDeviceCues": "Sinais para dispositivos de temporizador"
     },

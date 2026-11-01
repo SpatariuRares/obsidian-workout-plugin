@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
       "csvFolder": "Directorul unde vor fi stocate fișierele CSV cu jurnalele de antrenament și etichetele pentru mușchi.",
-      "customProtocols": "Creați protocoale de antrenament personalizate pentru a urmări tehnici de antrenament specializate.",
       "defaultExactMatch": "Când este activat, filtrarea exercițiilor utilizează, în mod implicit, potrivirea exactă a numelor. Dezactivați pentru potrivire aproximativă.",
       "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a setului”.",
       "defaultTimerPreset": "Selectați o presetare implicită pentru temporizatoarele noi",
       "exerciseBlockTemplate": "Șablon pentru blocuri de exerciții. Locuri de înlocuire disponibile: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Calea către folderul care conține paginile cu exerciții",
       "generateDefaultTemplates": "Generează șablonul implicit pentru pagina de exerciții și referința pentru etichete în folderul 'Workout Templates'. Puteți personaliza aceste fișiere pentru a modifica limba și structura.",
-      "noCustomProtocols": "Nu sunt configurate protocoale personalizate. Dați clic pe „Adaugă protocol” pentru a crea unul.",
       "noPresets": "Nu sunt configurate preset-uri pentru temporizator. Dați clic pe „Adaugă preset” pentru a crea unul.",
       "presetDurationDesc": "Durata în secunde (de exemplu, 90 pentru un temporizator de 90 de secunde).",
       "presetNameDesc": "Nume unic pentru acest preset de temporizator (de exemplu, 'Odihnă 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
-      "customProtocols": "Protocoale personalizate",
       "defaultExactMatch": "Potrivire exactă implicită",
       "defaultRepsPerSet": "Numărul implicit de repetări per set",
       "defaultTimerPreset": "Preset implicit pentru temporizator",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Avansat",
       "csvManagement": "Gestionarea fișierelor CSV",
-      "customProtocols": "Protocoale personalizate",
       "maintenance": "Întreținere",
       "quickLog": "Înregistrare mobilă",
       "setupAndData": "Configurare și date",
       "templates": "Șabloane",
       "timerPresets": "Preseturi temporizator",
       "trainingParameters": "Parametri de antrenament",
-      "savedPresets": "Prezăseturi salvate",
-      "savedProtocols": "Protocoale salvate",
       "gettingStarted": "Începe",
       "timerDeviceCues": "Indicații pentru dispozitive de cronometrare"
     },

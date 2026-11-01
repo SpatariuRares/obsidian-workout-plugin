@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
       "csvFolder": "Mappe der treningsloggene og muskel-tagg-CSV-filene skal lagres.",
-      "customProtocols": "Opprett egendefinerte treningsprotokoller for å spore spesialiserte treningsteknikker",
       "defaultExactMatch": "Når aktivert, filtreres øvelser som standard på nøyaktig navn. Deaktiver for omtrentlig match.",
       "defaultRepsPerSet": "Antatt antall repetisjoner når det ikke er angitt. Hvis 0, brukes 'Reservevarighet per sett'.",
       "defaultTimerPreset": "Velg en standard forhåndsinnstilling for nye timere",
       "exerciseBlockTemplate": "Mal for øvelsesblokker. Tilgjengelige plassholdere: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Sti til mappen som inneholder øvelsessider",
       "generateDefaultTemplates": "Generer standardmal for øvelsessider og tag-referanse i mappen 'Workout Templates'. Du kan tilpasse disse filene for å endre språk og struktur.",
-      "noCustomProtocols": "Ingen egne protokoller er konfigurert. Klikk på «Legg til protokoll» for å opprette en.",
       "noPresets": "Ingen timer-forhåndsinnstillinger er konfigurert. Klikk på «Legg til forhåndsinnstilling» for å opprette en.",
       "presetDurationDesc": "Varighet i sekunder (f.eks. 90 for en 90-sekunders timer).",
       "presetNameDesc": "Unikt navn for denne timer-forhåndsinnstillingen (f.eks. 'Rest 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
-      "customProtocols": "Tilpassede protokoller",
       "defaultExactMatch": "Standard nøyaktig match",
       "defaultRepsPerSet": "Standard antall repetisjoner per sett",
       "defaultTimerPreset": "Standard forhåndsinnstilling for timer",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Avansert",
       "csvManagement": "Administrasjon av CSV-filer",
-      "customProtocols": "Tilpassede protokoller",
       "maintenance": "Vedlikehold",
       "quickLog": "Mobillogging",
       "setupAndData": "Oppsett og data",
       "templates": "Maler",
       "timerPresets": "Timer-forhåndsinnstillinger",
       "trainingParameters": "Treningsparametere",
-      "savedPresets": "Lagrede forhåndsinnstillinger",
-      "savedProtocols": "Lagrede protokoller",
       "gettingStarted": "Komme i gang",
       "timerDeviceCues": "Varsler for tidtakeren"
     },

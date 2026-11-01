@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
       "csvFolder": "Map waar de bestanden met trainingsgegevens en spierlabels (CSV) worden opgeslagen.",
-      "customProtocols": "Maak aangepaste trainingsprotocollen om gespecialiseerde trainingsmethoden te volgen.",
       "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor onnauwkeurige overeenkomsten.",
       "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per set' gebruikt.",
       "defaultTimerPreset": "Selecteer een standaardinstelling voor nieuwe timers",
       "exerciseBlockTemplate": "Template voor oefenblokken. Beschikbare placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Pad naar de map met de oefenpagina's",
       "generateDefaultTemplates": "Genereer een standaardsjabloon voor oefeningspagina's en een labeloverzicht in de map 'Workout Templates'. Je kunt deze bestanden aanpassen om de taal en structuur te wijzigen.",
-      "noCustomProtocols": "Geen aangepaste protocollen zijn geconfigureerd. Klik op 'Protocol toevoegen' om er een aan te maken.",
       "noPresets": "Geen timervoorinstellingen geconfigureerd. Klik op 'Voorinstelling toevoegen' om er een aan te maken.",
       "presetDurationDesc": "Duur in seconden (bijvoorbeeld 90 voor een timer van 90 seconden).",
       "presetNameDesc": "Unieke naam voor deze timervoorinstelling (bijvoorbeeld: 'Rust 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
-      "customProtocols": "Aangepaste protocollen",
       "defaultExactMatch": "Standaard exacte overeenkomst",
       "defaultRepsPerSet": "Standaard aantal herhalingen per set",
       "defaultTimerPreset": "Standaard timerinstelling",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Geavanceerd",
       "csvManagement": "Beheer van CSV-bestanden",
-      "customProtocols": "Aangepaste protocollen",
       "maintenance": "Onderhoud",
       "quickLog": "Mobiel loggen",
       "setupAndData": "Instellingen en gegevens",
       "templates": "Templates",
       "timerPresets": "Timervoorinstellingen",
       "trainingParameters": "Parameters voor training",
-      "savedPresets": "Opgeslagen instellingen",
-      "savedProtocols": "Opgeslagen protocollen",
       "gettingStarted": "Beginnen",
       "timerDeviceCues": "Instructies voor timer-apparaten"
     },

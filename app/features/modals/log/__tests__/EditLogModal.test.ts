@@ -50,7 +50,7 @@ const original: WorkoutLogData = {
   origine: "[[Leg day]]",
 };
 
-async function openModal() {
+async function openModal(log: WorkoutLogData = original) {
   const app = {
     workspace: { getActiveViewOfType: () => null },
     vault: { getMarkdownFiles: () => [] },
@@ -79,7 +79,7 @@ async function openModal() {
     deleteWorkoutLogEntry,
   } as unknown as WorkoutPluginContext;
 
-  const modal = new EditLogModal(app, plugin, original);
+  const modal = new EditLogModal(app, plugin, log);
   const contentEl = createObsidianContainer();
   const close = jest.fn();
   Object.assign(modal, { contentEl, close });
@@ -168,6 +168,24 @@ describe("EditLogModal", () => {
         workout: "Leg day",
         origine: "[[Leg day]]",
       }),
+    );
+  });
+
+  it("keeps the protocol of a set whose protocol is no longer in the settings list", async () => {
+    // Drop set deleted from Settings → Protocols: the list is empty here
+    const dropSet = { ...original, protocol: WorkoutProtocol.DROP_SET };
+    const { contentEl, save, updateWorkoutLogEntry } = await openModal(dropSet);
+
+    const option = [...contentEl.querySelectorAll("option")].find(
+      (o) => o.value === WorkoutProtocol.DROP_SET,
+    );
+    expect(option?.textContent).toBe(t("modal.selectOptions.dropSet"));
+
+    await save();
+
+    expect(updateWorkoutLogEntry).toHaveBeenCalledWith(
+      dropSet,
+      expect.objectContaining({ protocol: WorkoutProtocol.DROP_SET }),
     );
   });
 });

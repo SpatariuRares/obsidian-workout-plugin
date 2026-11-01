@@ -97,7 +97,6 @@ const EXPECTED_ROWS = [
   "settings.labels.defaultExactMatch",
   "settings.labels.showRibbonIcon",
   "settings.labels.defaultTimerPreset",
-  "settings.labels.customProtocols",
   "settings.labels.repDuration",
   "settings.labels.defaultRepsPerSet",
   "settings.labels.setDuration",

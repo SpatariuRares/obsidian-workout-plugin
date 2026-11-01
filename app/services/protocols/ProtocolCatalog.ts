@@ -31,6 +31,8 @@ const BUILT_IN: ReadonlyArray<{
   abbreviation: string;
   color: string;
   badgeClass: string;
+  /** Entry added to the settings list ("Saved protocols"); none for standard */
+  defaults?: { abbreviation: string; color: string };
 }> = [
   {
     id: WorkoutProtocol.STANDARD,
@@ -45,6 +47,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "WU",
     color: NEUTRAL_CHART_COLOR,
     badgeClass: "workout-protocol-badge-warmup",
+    defaults: { abbreviation: "WU", color: "#9ca3af" },
   },
   {
     id: WorkoutProtocol.DROP_SET,
@@ -52,6 +55,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "Drop",
     color: "rgba(239, 68, 68, 0.7)",
     badgeClass: "workout-protocol-badge-drop",
+    defaults: { abbreviation: "DS", color: "#ef4444" },
   },
   {
     id: WorkoutProtocol.MYO_REPS,
@@ -59,6 +63,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "Myo",
     color: "rgba(168, 85, 247, 0.7)",
     badgeClass: "workout-protocol-badge-myo",
+    defaults: { abbreviation: "MYO", color: "#a855f7" },
   },
   {
     id: WorkoutProtocol.REST_PAUSE,
@@ -66,6 +71,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "RP",
     color: "rgba(249, 115, 22, 0.7)",
     badgeClass: "workout-protocol-badge-rp",
+    defaults: { abbreviation: "RP", color: "#f97316" },
   },
   {
     id: WorkoutProtocol.SUPERSET,
@@ -73,6 +79,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "SS",
     color: "rgba(59, 130, 246, 0.7)",
     badgeClass: "workout-protocol-badge-superset",
+    defaults: { abbreviation: "SS", color: "#3b82f6" },
   },
   {
     id: WorkoutProtocol.TWENTYONE,
@@ -80,6 +87,7 @@ const BUILT_IN: ReadonlyArray<{
     abbreviation: "21s",
     color: "rgba(34, 197, 94, 0.7)",
     badgeClass: "workout-protocol-badge-21",
+    defaults: { abbreviation: "21", color: "#22c55e" },
   },
 ];
 
@@ -92,7 +100,65 @@ export function protocolId(raw: string | undefined | null): string {
 }
 
 /**
- * The built-in protocols plus the user's custom ones (settings). The one
+ * The built-in protocols (warm-up, drop set, ...) as entries of the settings
+ * list, named in the current language. Standard has none: it is the default
+ * and cannot be removed.
+ */
+export function defaultProtocolEntries(): CustomProtocolConfig[] {
+  return BUILT_IN.flatMap((p) =>
+    p.defaults
+      ? [
+          {
+            id: p.id,
+            name: t(p.nameKey),
+            abbreviation: p.defaults.abbreviation,
+            color: p.defaults.color,
+          },
+        ]
+      : [],
+  );
+}
+
+/**
+ * The settings list with the built-in entries it lacks added after the user's
+ * own (so their order stays). Run once per vault (see `protocolDefaultsAdded`),
+ * so a built-in the user deletes stays deleted. A built-in is skipped when the
+ * user already has a protocol with its id or its name: two entries with one
+ * name could not be saved any more.
+ */
+export function withDefaultProtocols(
+  custom: CustomProtocolConfig[] | null | undefined,
+): CustomProtocolConfig[] {
+  const mine = custom ?? [];
+  const ids = new Set(mine.map((p) => protocolId(p.id)));
+  const names = new Set(mine.map((p) => StringUtils.normalize(p.name)));
+  return [
+    ...mine,
+    ...defaultProtocolEntries().filter(
+      (p) => !ids.has(p.id) && !names.has(StringUtils.normalize(p.name)),
+    ),
+  ];
+}
+
+/**
+ * Whether this entry is a built-in protocol as the plugin added it (name in
+ * the current language, default badge), so its explanation still applies
+ */
+export function isUnchangedDefaultProtocol(
+  protocol: CustomProtocolConfig,
+): boolean {
+  return defaultProtocolEntries().some(
+    (p) =>
+      p.id === protocolId(protocol.id) &&
+      p.name === protocol.name &&
+      p.abbreviation === protocol.abbreviation &&
+      p.color.toLowerCase() === protocol.color.toLowerCase(),
+  );
+}
+
+/**
+ * Standard plus the protocols in the settings list, where the built-ins
+ * (warm-up, drop set, ...) are entries the user can edit or delete. The one
  * place that knows a protocol's name, badge and color.
  */
 export class ProtocolCatalog {
@@ -100,8 +166,7 @@ export class ProtocolCatalog {
 
   resolve(raw: string | undefined | null): ProtocolInfo {
     const id = protocolId(raw);
-    const builtIn = BUILT_IN.find((p) => (p.id as string) === id);
-    if (builtIn) return toInfo(builtIn);
+    if (id === (WorkoutProtocol.STANDARD as string)) return toInfo(BUILT_IN[0]);
 
     const custom = this.custom.find((p) => protocolId(p.id) === id);
     if (custom) {
@@ -116,6 +181,10 @@ export class ProtocolCatalog {
       };
     }
 
+    // A built-in removed from the settings list: sets logged with it keep their name
+    const builtIn = BUILT_IN.find((p) => (p.id as string) === id);
+    if (builtIn) return toInfo(builtIn);
+
     // Logged with a custom protocol that was later deleted
     return {
       id,
@@ -127,12 +196,16 @@ export class ProtocolCatalog {
     };
   }
 
-  /** Built-ins (standard first), then the custom protocols */
+  /** What a set can be logged with: standard, then the settings list in order */
   all(): ProtocolInfo[] {
-    return [
-      ...BUILT_IN.map(toInfo),
+    const byId = new Map<string, ProtocolInfo>();
+    for (const info of [
+      toInfo(BUILT_IN[0]),
       ...this.custom.map((p) => this.resolve(p.id)),
-    ];
+    ]) {
+      if (!byId.has(info.id)) byId.set(info.id, info);
+    }
+    return [...byId.values()];
   }
 }
 

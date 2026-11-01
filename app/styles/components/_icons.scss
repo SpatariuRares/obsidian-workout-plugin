@@ -11,7 +11,7 @@
 }
 
 /* A button with an icon and text: icon, then label, centred */
-.workout-btn:has(> .workout-btn-icon) {
+.workout-btn.workout-btn-with-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;

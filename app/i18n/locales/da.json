@@ -740,14 +740,12 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Der findes allerede en CSV-fil med muskeltags. Vil du overskrive den med standardværdier? Det fjerner alle brugerdefinerede tags.",
       "csvFolder": "Mappe, hvor CSV-filerne med træningslogs og muskeltags gemmes.",
-      "customProtocols": "Opret brugerdefinerede træningsprotokoller til at registrere specialiserede træningsteknikker",
       "defaultExactMatch": "Når det er aktiveret, filtreres øvelser som standard på præcist navn. Deaktiver for fuzzy match.",
       "defaultRepsPerSet": "Antaget antal gentagelser, hvis intet er angivet. Hvis 0, bruges 'Reservevarighed for sæt'.",
       "defaultTimerPreset": "Vælg en standardforudindstilling for nye timere",
       "exerciseBlockTemplate": "Skabelon til øvelsesblokke. Tilgængelige pladsholdere: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Sti til mappen med øvelsessider",
       "generateDefaultTemplates": "Generer standardskabelon til øvelsessider og tag-reference i mappen 'Workout Templates'. Du kan tilpasse disse filer for at ændre sprog og struktur.",
-      "noCustomProtocols": "Ingen brugerdefinerede protokoller konfigureret. Klik på 'Tilføj protokol' for at oprette en.",
       "noPresets": "Ingen timer-forudindstillinger konfigureret. Klik på 'Tilføj forudindstilling' for at oprette en.",
       "presetDurationDesc": "Varighed i sekunder (f.eks. 90 for en 90-sekunders timer).",
       "presetNameDesc": "Unikt navn til denne timer-forudindstilling (f.eks. 'Rest 90s', 'HIIT 30/10').",
@@ -770,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
-      "customProtocols": "Brugerdefinerede protokoller",
       "defaultExactMatch": "Præcist match som standard",
       "defaultRepsPerSet": "Standard antal gentagelser pr. sæt",
       "defaultTimerPreset": "Standard-timerforudindstilling",
@@ -829,15 +826,12 @@
     "sections": {
       "advanced": "Avanceret",
       "csvManagement": "Administration af CSV-filer",
-      "customProtocols": "Brugerdefinerede protokoller",
       "maintenance": "Vedligehold",
       "quickLog": "Mobillogning",
       "setupAndData": "Opsætning og data",
       "templates": "Skabeloner",
       "timerPresets": "Timer-forudindstillinger",
       "trainingParameters": "Træningsparametre",
-      "savedPresets": "Gemte forudindstillinger",
-      "savedProtocols": "Gemte protokoller",
       "gettingStarted": "Sådan kommer du i gang",
       "timerDeviceCues": "Tidsmåler-relaterede signaler"
     },

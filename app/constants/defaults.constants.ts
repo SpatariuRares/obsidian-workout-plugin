@@ -40,6 +40,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   defaultExactMatch: true,
   /** Saved timer presets (empty by default) */
   timerPresets: {},
+  /** False until Tabata and EMOM are added to the list on first load */
+  timerPresetDefaultsAdded: false,
   /** Default timer preset to use (null means no default) */
   defaultTimerPreset: null,
   keepScreenAwake: true,
@@ -64,6 +66,8 @@ workout: {{workout}}
   achievedTargets: {},
   /** User-defined custom protocols */
   customProtocols: [],
+  /** False until the built-in protocols are added to the list on first load */
+  protocolDefaultsAdded: false,
   /** Default set duration for fallback estimation (45 seconds) */
   setDuration: 45,
   /** Default duration per repetition (5 seconds) */

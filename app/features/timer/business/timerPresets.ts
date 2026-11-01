@@ -26,25 +26,41 @@ const BUILT_IN_TIMER_PRESETS: Record<string, TimerPresetConfig> = {
 };
 
 /**
- * The settings list with the built-in presets it lacks put first. Run once per
- * vault (see `timerPresetDefaultsAdded`), so a built-in the user deletes stays
- * deleted. A saved preset with the same name, in any case, is kept as it is.
+ * The settings list with the built-in presets it lacks added after the user's
+ * own (so their order stays). Run once per vault (see
+ * `timerPresetDefaultsAdded`), so a built-in the user deletes stays deleted.
+ * A saved preset with the same name, in any case, is kept as it is.
  */
 export function withDefaultTimerPresets(
-  saved: Record<string, TimerPresetConfig> = {},
+  saved: Record<string, TimerPresetConfig> | null | undefined,
 ): Record<string, TimerPresetConfig> {
-  const names = new Set(Object.keys(saved).map((n) => n.toLowerCase()));
+  const mine = saved ?? {};
+  const names = new Set(Object.keys(mine).map((n) => n.toLowerCase()));
   const added = Object.fromEntries(
     Object.entries(BUILT_IN_TIMER_PRESETS)
       .filter(([name]) => !names.has(name.toLowerCase()))
       .map(([name, preset]) => [name, { ...preset }]),
   );
-  return { ...added, ...saved };
+  return { ...mine, ...added };
 }
 
-/** Whether `name` is one of the presets the plugin ships (Tabata, EMOM) */
-export function isBuiltInTimerPreset(name: string): boolean {
-  return Object.prototype.hasOwnProperty.call(BUILT_IN_TIMER_PRESETS, name);
+/**
+ * Whether this preset is a built-in one as the plugin added it (same name and
+ * timing), so its explanation still applies
+ */
+export function isUnchangedDefaultTimerPreset(
+  preset: TimerPresetConfig,
+): boolean {
+  if (!Object.prototype.hasOwnProperty.call(BUILT_IN_TIMER_PRESETS, preset.name)) {
+    return false;
+  }
+  const builtIn = BUILT_IN_TIMER_PRESETS[preset.name];
+  return (
+    builtIn.type === preset.type &&
+    builtIn.duration === preset.duration &&
+    (builtIn.rest ?? 0) === (preset.rest ?? 0) &&
+    builtIn.rounds === preset.rounds
+  );
 }
 
 /**

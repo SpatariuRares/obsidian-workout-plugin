@@ -19,6 +19,10 @@ import { fillDynamicInputsFromCustomFields } from "@app/utils/form/FormUtils";
 import { RecentExercisesService } from "@app/features/modals/base/services/RecentExercisesService";
 import { t } from "@app/i18n";
 import { trainingDay } from "@app/services/history/TrainingHistory";
+import {
+  ProtocolCatalog,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
 
 /**
  * Abstract base class for workout log modals.
@@ -198,7 +202,18 @@ export abstract class BaseLogModal extends ModalBase {
       formElements.dateInput.value = trainingDay(data.date);
     }
     if (data.protocol && formElements.protocolSelect) {
-      formElements.protocolSelect.value = data.protocol;
+      const select = formElements.protocolSelect;
+      const id = protocolId(data.protocol);
+      // A set logged with a protocol no longer in the settings list (e.g. a
+      // deleted drop set) keeps it: without an option the select would be
+      // empty and saving would turn the set into standard
+      if (!Array.from(select.options).some((o) => o.value === id)) {
+        const info = new ProtocolCatalog(
+          this.plugin.settings.customProtocols,
+        ).resolve(id);
+        select.createEl("option", { text: info.name, value: id });
+      }
+      select.value = id;
     }
 
     // Pre-fill custom fields

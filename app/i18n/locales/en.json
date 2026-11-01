@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
       "csvFolder": "Folder where the workout logs and muscle tags CSV files will be stored.",
-      "customProtocols": "Protocols you can pick when you log a set. Warm-up, drop set and the other built-in ones are listed below: edit or delete them like the ones you add.",
       "defaultExactMatch": "When enabled, exercise filtering uses exact name matching by default. Disable for fuzzy matching.",
       "defaultRepsPerSet": "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
       "defaultTimerPreset": "Select a default preset for new timers",
@@ -749,7 +748,7 @@
       "exerciseBlockTemplate": "Template for exercise blocks. Available placeholders: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Path to the folder containing exercise pages",
       "generateDefaultTemplates": "Generate default exercise page template and tag reference in the 'Workout Templates' folder. You can customize these files to change the language and structure.",
-      "noCustomProtocols": "No custom protocols configured. Click 'Add protocol' to create one.",
+      "noCustomProtocols": "No protocols yet. Click 'Add protocol' to create one.",
       "noPresets": "No timer presets configured. Click 'Add preset' to create one.",
       "presetDurationDesc": "Duration in seconds (e.g., 90 for a 90-second timer).",
       "presetNameDesc": "Unique name for this timer preset (e.g., 'Rest 90s', 'HIIT 30/10').",
@@ -770,7 +769,6 @@
     },
     "labels": {
       "csvPath": "CSV log file path",
-      "customProtocols": "Custom protocols",
       "defaultExactMatch": "Default exact match",
       "defaultRepsPerSet": "Default reps per set",
       "defaultTimerPreset": "Default timer preset",
@@ -829,11 +827,9 @@
     "sections": {
       "advanced": "Advanced",
       "csvManagement": "CSV file management",
-      "customProtocols": "Custom protocols",
+      "customProtocols": "Protocols",
       "maintenance": "Maintenance",
       "quickLog": "Mobile logging",
-      "savedPresets": "Saved presets",
-      "savedProtocols": "Saved protocols",
       "setupAndData": "Setup & data",
       "templates": "Templates",
       "timerPresets": "Timer presets",

@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Šablona pro bloky cvičení. Dostupné zástupné znaky: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Cesta ke složce obsahující stránky cvičení",
       "generateDefaultTemplates": "Vygeneruje výchozí šablonu stránky cvičení a přehled štítků ve složce 'Workout Templates'. Úpravou těchto souborů můžete změnit jazyk a strukturu.",
-      "noCustomProtocols": "Nejsou nastaveny žádné vlastní protokoly. Klikněte na 'Přidat protokol' a vytvořte nový.",
       "noPresets": "Nejsou nastaveny žádné předvolby časovače. Klikněte na 'Přidat předvolbu' a vytvořte novou.",
       "presetDurationDesc": "Doba trvání v sekundách (např. 90 pro časovač 90 sekund).",
       "presetNameDesc": "Jedinečný název této předvolby časovače (např. 'Odpočinek 90s', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
-      "customProtocols": "Vlastní protokoly",
       "defaultExactMatch": "Výchozí přesná shoda",
       "defaultRepsPerSet": "Výchozí počet opakování v sérii",
       "defaultTimerPreset": "Výchozí předvolba časovače",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Pokročilé",
       "csvManagement": "Správa CSV souborů",
-      "customProtocols": "Vlastní protokoly",
       "maintenance": "Údržba",
       "quickLog": "Mobilní záznamy",
       "setupAndData": "Nastavení a data",
       "templates": "Šablony",
       "timerPresets": "Předvolby časovače",
       "trainingParameters": "Parametry tréninku",
-      "savedPresets": "Uložené přednastavení",
-      "savedProtocols": "Uložené protokoly",
       "gettingStarted": "Začít",
       "timerDeviceCues": "Indikátory pro zařízení časovače"
     },

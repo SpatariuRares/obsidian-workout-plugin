@@ -1,5 +1,5 @@
 import {
-  isBuiltInTimerPreset,
+  isUnchangedDefaultTimerPreset,
   timerPresets,
   withDefaultTimerPresets,
 } from "@app/features/timer/business/timerPresets";
@@ -14,10 +14,10 @@ const rest: TimerPresetConfig = {
 };
 
 describe("withDefaultTimerPresets", () => {
-  it("puts Tabata and EMOM before the saved presets", () => {
+  it("adds Tabata and EMOM after the saved presets, keeping their order", () => {
     const list = withDefaultTimerPresets({ Rest: rest });
 
-    expect(Object.keys(list)).toEqual(["Tabata", "EMOM", "Rest"]);
+    expect(Object.keys(list)).toEqual(["Rest", "Tabata", "EMOM"]);
     expect(list.Tabata).toMatchObject({ duration: 20, rest: 10, rounds: 8 });
   });
 
@@ -26,8 +26,12 @@ describe("withDefaultTimerPresets", () => {
 
     const list = withDefaultTimerPresets({ tabata: mine });
 
-    expect(Object.keys(list)).toEqual(["EMOM", "tabata"]);
+    expect(Object.keys(list)).toEqual(["tabata", "EMOM"]);
     expect(list.tabata).toBe(mine);
+  });
+
+  it("copes with a missing list in the saved settings", () => {
+    expect(Object.keys(withDefaultTimerPresets(null))).toEqual(["Tabata", "EMOM"]);
   });
 
   it("adds copies, so editing one leaves the built-in untouched", () => {
@@ -41,7 +45,16 @@ describe("withDefaultTimerPresets", () => {
 describe("timerPresets", () => {
   it("still finds a built-in deleted from the list, so blocks naming it work", () => {
     expect(timerPresets({ timerPresets: { Rest: rest } }).EMOM).toBeDefined();
-    expect(isBuiltInTimerPreset("EMOM")).toBe(true);
-    expect(isBuiltInTimerPreset("Rest")).toBe(false);
+  });
+});
+
+describe("isUnchangedDefaultTimerPreset", () => {
+  it("is true only for a built-in preset with its original timing", () => {
+    const { Tabata } = withDefaultTimerPresets({});
+
+    expect(isUnchangedDefaultTimerPreset(Tabata)).toBe(true);
+    expect(isUnchangedDefaultTimerPreset({ ...Tabata, rounds: 6 })).toBe(false);
+    expect(isUnchangedDefaultTimerPreset(rest)).toBe(false);
+    expect(isUnchangedDefaultTimerPreset({ ...rest, name: "toString" })).toBe(false);
   });
 });

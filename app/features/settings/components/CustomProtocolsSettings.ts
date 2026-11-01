@@ -6,7 +6,10 @@ import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+import {
+  isUnchangedDefaultProtocol,
+  protocolId,
+} from "@app/services/protocols/ProtocolCatalog";
 
 /** Explanation shown under each built-in protocol in the list */
 const PROTOCOL_HELP: Record<string, string> = {
@@ -29,20 +32,12 @@ export class CustomProtocolsSettings {
   definitions(): DefinitionItem[] {
     const protocols = this.plugin.settings.customProtocols || [];
 
+    // One list: the built-in protocols are entries of it, so a separate
+    // "custom protocols" header would read as a second, empty list
     return [
       {
-        type: "group",
-        heading: t("settings.sections.customProtocols"),
-        items: [
-          {
-            name: t("settings.labels.customProtocols"),
-            desc: t("settings.descriptions.customProtocols"),
-          },
-        ],
-      },
-      {
         type: "list",
-        heading: t("settings.sections.savedProtocols"),
+        heading: t("settings.sections.customProtocols"),
         emptyState: t("settings.descriptions.noCustomProtocols"),
         addItem: {
           name: t("settings.buttons.addProtocol"),
@@ -91,8 +86,11 @@ export class CustomProtocolsSettings {
     container.createSpan({ text: `ID: ${protocol.id}` });
 
     // What a built-in protocol is for, so the default entries explain themselves
+    // (only while it is as added: a renamed entry may mean something else)
     const help = PROTOCOL_HELP[protocolId(protocol.id)];
-    if (help) fragment.createDiv({ text: t(help) });
+    if (help && isUnchangedDefaultProtocol(protocol)) {
+      fragment.createDiv({ text: t(help) });
+    }
 
     return fragment;
   }
@@ -174,7 +172,9 @@ export class CustomProtocolsSettings {
           p.id !== protocol.id,
       );
 
-    if (existingNameIndex !== -1) {
+    // A new protocol whose name gives an id already in the list (e.g.
+    // "Superset") would silently replace that entry
+    if (existingNameIndex !== -1 || (!originalId && existingIndex !== -1)) {
       new Notice(t("settings.messages.protocolNameExists"));
       return false;
     }

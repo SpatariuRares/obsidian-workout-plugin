@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "व्यायाम ब्लॉक के लिए टेम्पलेट। उपलब्ध प्लेसहोल्डर: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "व्यायाम पृष्ठों वाले फ़ोल्डर का पथ",
       "generateDefaultTemplates": "'Workout Templates' फ़ोल्डर में डिफ़ॉल्ट व्यायाम पृष्ठ टेम्पलेट और टैग संदर्भ बनाएँ। भाषा और संरचना बदलने के लिए आप इन फ़ाइलों को अनुकूलित कर सकते हैं।",
-      "noCustomProtocols": "कोई कस्टम प्रोटोकॉल कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रोटोकॉल जोड़ें' पर क्लिक करें।",
       "noPresets": "कोई टाइमर प्रीसेट कॉन्फ़िगर नहीं किया गया है। एक बनाने के लिए 'प्रीसेट जोड़ें' पर क्लिक करें।",
       "presetDurationDesc": "सेकंड में अवधि (उदाहरण के लिए, 90 सेकंड के टाइमर के लिए 90)।",
       "presetNameDesc": "इस टाइमर प्रीसेट के लिए एक अद्वितीय नाम (उदाहरण के लिए, 'रेस्ट 90', 'HIIT 30/10')।",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
-      "customProtocols": "कस्टम प्रोटोकॉल",
       "defaultExactMatch": "डिफ़ॉल्ट सटीक मिलान",
       "defaultRepsPerSet": "प्रति सेट डिफ़ॉल्ट रेप्स",
       "defaultTimerPreset": "डिफ़ॉल्ट टाइमर प्रीसेट",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "उन्नत",
       "csvManagement": "CSV फ़ाइल प्रबंधन",
-      "customProtocols": "कस्टम प्रोटोकॉल",
       "maintenance": "रखरखाव",
       "quickLog": "मोबाइल लॉगिंग",
       "setupAndData": "स्थापना और डेटा",
       "templates": "टेम्प्लेट",
       "timerPresets": "टाइमर प्रीसेट",
       "trainingParameters": "प्रशिक्षण पैरामीटर",
-      "savedPresets": "सेव की गई प्रीसेट",
-      "savedProtocols": "सहे हुए प्रोटोकॉल",
       "gettingStarted": "शुरू करना",
       "timerDeviceCues": "टाइमर डिवाइस संकेत"
     },

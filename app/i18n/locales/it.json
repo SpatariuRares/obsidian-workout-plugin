@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Template per blocchi esercizio. Placeholder disponibili: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Percorso alla cartella contenente le pagine degli esercizi",
       "generateDefaultTemplates": "Genera template predefinito pagina esercizio e riferimento tag nella cartella 'Workout Templates'. Puoi personalizzare questi file per cambiare lingua e struttura.",
-      "noCustomProtocols": "Nessun protocollo personalizzato configurato. Clicca 'Aggiungi protocollo' per crearne uno.",
       "noPresets": "Nessun preset timer configurato. Clicca 'Aggiungi preset' per crearne uno.",
       "presetDurationDesc": "Durata in secondi (ad esempio, 90 per un timer di 90 secondi).",
       "presetNameDesc": "Nome univoco per questo preset del timer (ad esempio, 'Riposo 90s', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
-      "customProtocols": "Protocolli personalizzati",
       "defaultExactMatch": "Corrispondenza esatta predefinita",
       "defaultRepsPerSet": "Ripetizioni predefinite per serie",
       "defaultTimerPreset": "Preset timer predefinito",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Avanzate",
       "csvManagement": "Gestione file CSV",
-      "customProtocols": "Protocolli personalizzati",
       "maintenance": "Manutenzione",
       "quickLog": "Registro mobile",
       "setupAndData": "Configurazione e dati",
       "templates": "Template",
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di allenamento",
-      "savedPresets": "Preimpostazioni salvate",
-      "savedProtocols": "Protocolli salvati",
       "gettingStarted": "Inizia",
       "timerDeviceCues": "Indicazioni per il dispositivo timer"
     },

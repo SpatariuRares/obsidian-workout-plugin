@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Egzersiz blokları için şablon. Kullanılabilir yer tutucular: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Egzersiz sayfalarının bulunduğu klasörün yolu",
       "generateDefaultTemplates": "'Workout Templates' klasöründe varsayılan egzersiz sayfası şablonunu ve etiket başvurusunu oluşturun. Dili ve yapıyı değiştirmek için bu dosyaları özelleştirebilirsiniz.",
-      "noCustomProtocols": "Özel protokoller yapılandırılmamış. \"Protokol ekle\" seçeneğine tıklayarak bir tane oluşturabilirsiniz.",
       "noPresets": "Zamanlayıcı ön ayarı yapılandırılmamış. Yeni bir tane oluşturmak için 'Ön ayar ekle'ye tıklayın.",
       "presetDurationDesc": "Saniye cinsinden süre (örneğin, 90 saniyelik bir zamanlayıcı için 90).",
       "presetNameDesc": "Bu zamanlayıcı ön ayarı için benzersiz bir isim (örneğin, '90 saniye dinlenme', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
-      "customProtocols": "Özel protokoller",
       "defaultExactMatch": "Varsayılan tam eşleşme",
       "defaultRepsPerSet": "Set başına varsayılan tekrar sayısı",
       "defaultTimerPreset": "Varsayılan zamanlayıcı ön ayarı",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Gelişmiş",
       "csvManagement": "CSV dosya yönetimi",
-      "customProtocols": "Özel protokoller",
       "maintenance": "Bakım",
       "quickLog": "Mobil günlük kaydı",
       "setupAndData": "Kurulum ve veri",
       "templates": "Şablonlar",
       "timerPresets": "Zamanlayıcı ön ayarları",
       "trainingParameters": "Antrenman parametreleri",
-      "savedPresets": "Kaydedilmiş ön ayarlar",
-      "savedProtocols": "Kaydedilmiş protokoller",
       "gettingStarted": "Başlangıç",
       "timerDeviceCues": "Zamanlayıcı cihaz uyarıları"
     },

@@ -4,6 +4,7 @@ import type { App, SettingDefinitionItem, SettingDefinitionList } from "obsidian
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
 import { DurationEstimationSettings } from "@app/features/duration/settings/DurationEstimationSettings";
 import { TimerPresetsSettings } from "@app/features/timer/settings/TimerPresetsSettings";
+import { defaultProtocolEntries } from "@app/services/protocols/ProtocolCatalog";
 import { withDefaultTimerPresets } from "@app/features/timer/business/timerPresets";
 import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
 import { t } from "@app/i18n";
@@ -69,20 +70,26 @@ describe("custom protocols list", () => {
       {
         settings: {
           customProtocols: [
-            { id: "drop_set", name: "Drop set", abbreviation: "DS", color: "#ef4444" },
+            defaultProtocolEntries()[1],
+            { ...defaultProtocolEntries()[1], id: "x", name: "Stripping" },
+            { ...defaultProtocolEntries()[2], name: "Myo-reps (mine)" },
           ],
         },
       } as unknown as WorkoutPluginContext,
       jest.fn(),
     );
 
-    const desc = listOf(section.definitions()).items[0].desc as DocumentFragment;
+    const [drop, other, renamed] = listOf(section.definitions()).items.map(
+      (i) => (i.desc as DocumentFragment).textContent,
+    );
 
-    expect(desc.textContent).toContain(t("settings.protocolHelp.dropSet"));
+    expect(drop).toContain(t("settings.protocolHelp.dropSet"));
+    expect(other).not.toContain(t("settings.protocolHelp.dropSet"));
+    expect(renamed).not.toContain(t("settings.protocolHelp.myoReps"));
   });
 
   it("titles the list so its add button has a header row", () => {
-    expect(setup().list.heading).toBe(t("settings.sections.savedProtocols"));
+    expect(setup().list.heading).toBe(t("settings.sections.customProtocols"));
   });
 
   it("titles the form by whether it adds or edits a protocol", () => {
@@ -137,6 +144,28 @@ describe("custom protocols list", () => {
     ]);
     expect(plugin.settings.customProtocols[1].abbreviation).toBe("RP");
     expect(refresh).toHaveBeenCalled();
+  });
+
+  it("refuses a new protocol whose name gives the id of one in the list", async () => {
+    const { plugin, refresh, list } = setup();
+    const modal = captureModal(() => list.addItem!.action(document.body));
+    const form = modal.contentEl;
+
+    await mockSettingNamed(form, t("settings.labels.protocolName"))
+      .component("text")
+      .change("MYO" as never);
+    await mockSettingNamed(form, t("settings.labels.protocolAbbreviation"))
+      .component("text")
+      .change("MY" as never);
+    Array.from(form.querySelectorAll("button"))
+      .find((b) => b.textContent === t("settings.buttons.saveProtocol"))!
+      .click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(plugin.settings.customProtocols).toEqual([
+      { id: "myo", name: "Myo", abbreviation: "MYO", color: "#112233" },
+    ]);
+    expect(refresh).not.toHaveBeenCalled();
   });
 
   it("keeps the form open and saves nothing when the name is empty", async () => {
@@ -194,11 +223,11 @@ describe("timer presets list", () => {
 
     const items = listOf(section.definitions()).items!;
 
-    expect(items.map((i) => i.name)).toEqual(["Tabata", "EMOM", "rest"]);
-    expect((items[0].desc as DocumentFragment).textContent).toContain(
+    expect(items.map((i) => i.name)).toEqual(["rest", "Tabata", "EMOM"]);
+    expect((items[1].desc as DocumentFragment).textContent).toContain(
       t("settings.presetHelp.tabata"),
     );
-    expect(typeof items[2].desc).toBe("string");
+    expect(typeof items[0].desc).toBe("string");
   });
 
   it("titles the list and the form", () => {
@@ -208,7 +237,7 @@ describe("timer presets list", () => {
       list.items![0].action!(document.body),
     );
 
-    expect(list.heading).toBe(t("settings.sections.savedPresets"));
+    expect(list.heading).toBe(t("settings.sections.timerPresets"));
     expect(adding.titleEl.textContent).toBe(t("settings.buttons.addPreset"));
     expect(editing.titleEl.textContent).toBe(t("settings.tooltips.editPreset"));
   });

@@ -1,6 +1,7 @@
 import {
   ProtocolCatalog,
   defaultProtocolEntries,
+  isUnchangedDefaultProtocol,
   protocolId,
   withDefaultProtocols,
 } from "@app/services/protocols/ProtocolCatalog";
@@ -53,7 +54,6 @@ describe("ProtocolCatalog", () => {
       name: "Stripping",
       abbreviation: "STR",
       badgeColor: "#000000",
-      builtIn: true,
     });
   });
 
@@ -81,13 +81,13 @@ describe("ProtocolCatalog", () => {
       new ProtocolCatalog(withDefaultProtocols([cluster])).all().map((p) => p.id),
     ).toEqual([
       "standard",
+      "cluster",
       "warmup",
       "drop_set",
       "myo_reps",
       "rest_pause",
       "superset",
       "twentyone",
-      "cluster",
     ]);
   });
 
@@ -116,20 +116,47 @@ describe("default protocol entries", () => {
     }
   });
 
-  it("are added before the user's protocols without replacing one with the same id", () => {
+  it("are added after the user's protocols without replacing one with the same id", () => {
     const mine = { id: "Warmup", name: "Ramp-up", abbreviation: "RU", color: "#123456" };
 
     const list = withDefaultProtocols([mine, cluster]);
 
     expect(list.map((p) => p.id)).toEqual([
+      "Warmup",
+      "cluster",
       "drop_set",
       "myo_reps",
       "rest_pause",
       "superset",
       "twentyone",
-      "Warmup",
-      "cluster",
     ]);
     expect(list).toContain(mine);
+  });
+
+  it("skip a built-in whose name the user already gave a protocol of their own", () => {
+    const mine = {
+      id: "restpause",
+      name: ` ${t("modal.selectOptions.restPause").toUpperCase()} `,
+      abbreviation: "RP",
+      color: "#123456",
+    };
+
+    const ids = withDefaultProtocols([mine]).map((p) => p.id);
+
+    expect(ids).toContain("restpause");
+    expect(ids).not.toContain("rest_pause");
+  });
+
+  it("cope with a missing list in the saved settings", () => {
+    expect(withDefaultProtocols(null)).toHaveLength(6);
+  });
+
+  it("count as unchanged only while name, badge and color are as added", () => {
+    const [warmup] = defaultProtocolEntries();
+
+    expect(isUnchangedDefaultProtocol(warmup)).toBe(true);
+    expect(isUnchangedDefaultProtocol({ ...warmup, color: warmup.color.toUpperCase() })).toBe(true);
+    expect(isUnchangedDefaultProtocol({ ...warmup, name: "Ramp-up" })).toBe(false);
+    expect(isUnchangedDefaultProtocol(cluster)).toBe(false);
   });
 });

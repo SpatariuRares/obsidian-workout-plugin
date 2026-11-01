@@ -120,23 +120,40 @@ export function defaultProtocolEntries(): CustomProtocolConfig[] {
 }
 
 /**
- * The settings list with the built-in entries it lacks put first. Run once
- * per vault (see `protocolDefaultsAdded`), so a built-in the user deletes
- * stays deleted.
+ * The settings list with the built-in entries it lacks added after the user's
+ * own (so their order stays). Run once per vault (see `protocolDefaultsAdded`),
+ * so a built-in the user deletes stays deleted. A built-in is skipped when the
+ * user already has a protocol with its id or its name: two entries with one
+ * name could not be saved any more.
  */
 export function withDefaultProtocols(
-  custom: CustomProtocolConfig[] = [],
+  custom: CustomProtocolConfig[] | null | undefined,
 ): CustomProtocolConfig[] {
-  const ids = new Set(custom.map((p) => protocolId(p.id)));
+  const mine = custom ?? [];
+  const ids = new Set(mine.map((p) => protocolId(p.id)));
+  const names = new Set(mine.map((p) => StringUtils.normalize(p.name)));
   return [
-    ...defaultProtocolEntries().filter((p) => !ids.has(p.id)),
-    ...custom,
+    ...mine,
+    ...defaultProtocolEntries().filter(
+      (p) => !ids.has(p.id) && !names.has(StringUtils.normalize(p.name)),
+    ),
   ];
 }
 
-/** Built-in protocols keep their meaning by id (warm-up and drop sets are not records) */
-function isBuiltInId(id: string): boolean {
-  return BUILT_IN.some((p) => (p.id as string) === id);
+/**
+ * Whether this entry is a built-in protocol as the plugin added it (name in
+ * the current language, default badge), so its explanation still applies
+ */
+export function isUnchangedDefaultProtocol(
+  protocol: CustomProtocolConfig,
+): boolean {
+  return defaultProtocolEntries().some(
+    (p) =>
+      p.id === protocolId(protocol.id) &&
+      p.name === protocol.name &&
+      p.abbreviation === protocol.abbreviation &&
+      p.color.toLowerCase() === protocol.color.toLowerCase(),
+  );
 }
 
 /**
@@ -160,7 +177,7 @@ export class ProtocolCatalog {
         color: hexToRgba(custom.color, CHART_ALPHA),
         badgeColor: custom.color,
         badgeClass: "workout-protocol-badge-custom",
-        builtIn: isBuiltInId(id),
+        builtIn: false,
       };
     }
 
@@ -181,10 +198,14 @@ export class ProtocolCatalog {
 
   /** What a set can be logged with: standard, then the settings list in order */
   all(): ProtocolInfo[] {
-    const ids = new Set<string>();
-    return [toInfo(BUILT_IN[0]), ...this.custom.map((p) => this.resolve(p.id))].filter(
-      (p) => !ids.has(p.id) && ids.add(p.id),
-    );
+    const byId = new Map<string, ProtocolInfo>();
+    for (const info of [
+      toInfo(BUILT_IN[0]),
+      ...this.custom.map((p) => this.resolve(p.id)),
+    ]) {
+      if (!byId.has(info.id)) byId.set(info.id, info);
+    }
+    return [...byId.values()];
   }
 }
 

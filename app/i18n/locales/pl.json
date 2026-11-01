@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Szablon dla bloków ćwiczeń. Dostępne zmienne: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Ścieżka do folderu zawierającego strony ćwiczeń",
       "generateDefaultTemplates": "Utwórz domyślny szablon strony ćwiczenia i spis tagów w folderze 'Workout Templates'. Możesz dostosować te pliki, aby zmienić język i strukturę.",
-      "noCustomProtocols": "Brak skonfigurowanych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć.",
       "noPresets": "Brak skonfigurowanych ustawień timera. Kliknij „Dodaj ustawienie”, aby je utworzyć.",
       "presetDurationDesc": "Czas w sekundach (np. 90 dla timera o czasie trwania 90 sekund).",
       "presetNameDesc": "Unikalna nazwa dla tego ustawienia timera (np. 'Przerwa 90s', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
-      "customProtocols": "Dostosowane protokoły",
       "defaultExactMatch": "Domyślnie dokładne dopasowanie",
       "defaultRepsPerSet": "Domyślna liczba powtórzeń na serię",
       "defaultTimerPreset": "Domyślne ustawienie timera",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Zaawansowane",
       "csvManagement": "Zarządzanie plikami CSV",
-      "customProtocols": "Dostosowane protokoły",
       "maintenance": "Utrzymanie",
       "quickLog": "Rejestrowanie na urządzeniach mobilnych",
       "setupAndData": "Konfiguracja i dane",
       "templates": "Szablony",
       "timerPresets": "Predefiniowane ustawienia timera",
       "trainingParameters": "Parametry treningu",
-      "savedPresets": "Zapisane ustawienia",
-      "savedProtocols": "Zapisane protokoły",
       "gettingStarted": "Jak zacząć",
       "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera"
     },

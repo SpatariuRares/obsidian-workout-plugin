@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "운동 블록 템플릿. 사용 가능한 자리 표시: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "운동 페이지가 포함된 폴더의 경로",
       "generateDefaultTemplates": "'운동 템플릿' 폴더에 기본 운동 페이지 템플릿 및 태그 참조를 생성합니다. 이 파일을 수정하여 언어 및 구조를 변경할 수 있습니다.",
-      "noCustomProtocols": "사용자 정의 프로토콜이 구성되지 않았습니다. '프로토콜 추가'를 클릭하여 새 프로토콜을 생성하십시오.",
       "noPresets": "타이머 프리셋이 설정되지 않았습니다. '프리셋 추가'를 클릭하여 새 프리셋을 만드세요.",
       "presetDurationDesc": "초 단위 시간 (예: 90초 타이머의 경우 90).",
       "presetNameDesc": "이 타이머 프리셋에 고유한 이름을 지정합니다 (예: '휴식 90초', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "CSV 로그 파일 경로",
-      "customProtocols": "사용자 정의 프로토콜",
       "defaultExactMatch": "기본 정확 일치",
       "defaultRepsPerSet": "세트당 기본 반복 횟수",
       "defaultTimerPreset": "기본 타이머 프리셋",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "고급",
       "csvManagement": "CSV 파일 관리",
-      "customProtocols": "사용자 정의 프로토콜",
       "maintenance": "유지보수",
       "quickLog": "모바일 로깅",
       "setupAndData": "설정 및 데이터",
       "templates": "템플릿",
       "timerPresets": "타이머 프리셋",
       "trainingParameters": "훈련 매개변수",
-      "savedPresets": "저장된 프리셋",
-      "savedProtocols": "저장된 프로토콜",
       "gettingStarted": "시작하기",
       "timerDeviceCues": "타이머 장치 관련 알림"
     },

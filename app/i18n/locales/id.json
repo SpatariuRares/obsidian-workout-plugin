@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Templat untuk blok latihan. Placeholder yang tersedia: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Jalur ke folder yang berisi halaman-halaman latihan",
       "generateDefaultTemplates": "Buat templat halaman latihan dan referensi tag standar di folder 'Workout Templates'. Anda dapat menyesuaikan file-file ini untuk mengubah bahasa dan struktur.",
-      "noCustomProtocols": "Tidak ada protokol khusus yang dikonfigurasi. Klik 'Tambahkan protokol' untuk membuatnya.",
       "noPresets": "Belum ada preset timer. Klik 'Tambahkan preset' untuk membuatnya.",
       "presetDurationDesc": "Durasi dalam detik (misalnya, 90 untuk timer 90 detik).",
       "presetNameDesc": "Nama unik untuk preset timer ini (misalnya, 'Istirahat 90 detik', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
-      "customProtocols": "Protokol khusus",
       "defaultExactMatch": "Pencocokan persis default",
       "defaultRepsPerSet": "Jumlah repetisi standar per set",
       "defaultTimerPreset": "Preset timer default",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Lanjutan",
       "csvManagement": "Manajemen file CSV",
-      "customProtocols": "Protokol khusus",
       "maintenance": "Pemeliharaan",
       "quickLog": "Pencatatan melalui perangkat seluler",
       "setupAndData": "Pengaturan & data",
       "templates": "Templat",
       "timerPresets": "Preset timer",
       "trainingParameters": "Parameter pelatihan",
-      "savedPresets": "Preset yang telah disimpan",
-      "savedProtocols": "Protokol yang disimpan",
       "gettingStarted": "Memulai",
       "timerDeviceCues": "Petunjuk perangkat timer"
     },

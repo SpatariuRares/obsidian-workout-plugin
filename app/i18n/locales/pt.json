@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Modelo para blocos de exercícios. Placeholders disponíveis: {{exercise}}, {{duration}}, {{workout}}, {{preset}}",
       "exerciseFolder": "Caminho para a pasta que contém as páginas de exercícios.",
       "generateDefaultTemplates": "Gere o modelo padrão da página de exercícios e a referência de tags na pasta 'Workout Templates'. Pode personalizar estes ficheiros para alterar o idioma e a estrutura.",
-      "noCustomProtocols": "Não foram configurados protocolos personalizados. Clique em \"Adicionar protocolo\" para criar um.",
       "noPresets": "Não existem predefinições de temporizador. Clique em 'Adicionar predefinição' para criar uma.",
       "presetDurationDesc": "Duração em segundos (por exemplo, 90 para um temporizador de 90 segundos).",
       "presetNameDesc": "Nome exclusivo para esta predefinição de temporizador (por exemplo, 'Descanso 90s', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
-      "customProtocols": "Protocolos personalizados",
       "defaultExactMatch": "Correspondência exata padrão",
       "defaultRepsPerSet": "Número padrão de repetições por série",
       "defaultTimerPreset": "Predefinição padrão de temporizador",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Avançado",
       "csvManagement": "Gerenciamento de arquivos CSV",
-      "customProtocols": "Protocolos personalizados",
       "maintenance": "Manutenção",
       "quickLog": "Registo móvel",
       "setupAndData": "Configuração e dados",
       "templates": "Modelos",
       "timerPresets": "Predefinições de temporizador",
       "trainingParameters": "Parâmetros de treinamento",
-      "savedPresets": "Predefinições salvas",
-      "savedProtocols": "Protocolos salvos",
       "gettingStarted": "Como começar",
       "timerDeviceCues": "Sinais para dispositivos de temporizador"
     },

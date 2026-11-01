@@ -6,7 +6,7 @@ import {
   TimerPresetConfig,
 } from "@app/features/timer/types";
 import { TimerPresetEditorModal } from "@app/features/timer/modals/TimerPresetEditorModal";
-import { isBuiltInTimerPreset } from "@app/features/timer/business/timerPresets";
+import { isUnchangedDefaultTimerPreset } from "@app/features/timer/business/timerPresets";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
@@ -64,8 +64,25 @@ export class TimerPresetsSettings {
         ],
       },
       {
-        type: "group",
+        type: "list",
         heading: t("settings.sections.timerPresets"),
+        emptyState: t("settings.descriptions.noPresets"),
+        addItem: {
+          name: t("settings.buttons.addPreset"),
+          action: () => this.showPresetEditor(null),
+        },
+        onDelete: (index) => this.confirmDelete(presetNames[index]),
+        deleteTooltip: t("settings.tooltips.deletePreset"),
+        items: presetNames.map((name) => ({
+          name: presets[name].name,
+          desc: this.formatPresetDetails(presets[name]),
+          tooltip: t("settings.tooltips.editPreset"),
+          action: () => this.showPresetEditor(presets[name]),
+        })),
+      },
+      // The presets first, under one heading, then which one new timers use
+      {
+        type: "group",
         items: [
           {
             name: t("settings.labels.defaultTimerPreset"),
@@ -89,23 +106,6 @@ export class TimerPresetsSettings {
           },
         ],
       },
-      {
-        type: "list",
-        heading: t("settings.sections.savedPresets"),
-        emptyState: t("settings.descriptions.noPresets"),
-        addItem: {
-          name: t("settings.buttons.addPreset"),
-          action: () => this.showPresetEditor(null),
-        },
-        onDelete: (index) => this.confirmDelete(presetNames[index]),
-        deleteTooltip: t("settings.tooltips.deletePreset"),
-        items: presetNames.map((name) => ({
-          name: presets[name].name,
-          desc: this.formatPresetDetails(presets[name]),
-          tooltip: t("settings.tooltips.editPreset"),
-          action: () => this.showPresetEditor(presets[name]),
-        })),
-      },
     ];
   }
 
@@ -125,7 +125,7 @@ export class TimerPresetsSettings {
   ): string | DocumentFragment {
     const details = this.formatPresetSummary(preset);
     const help = BUILT_IN_PRESET_HELP[preset.name];
-    if (!help || !isBuiltInTimerPreset(preset.name)) return details;
+    if (!help || !isUnchangedDefaultTimerPreset(preset)) return details;
 
     // What a built-in preset is for, so the default entries explain themselves
     const fragment = createFragment();

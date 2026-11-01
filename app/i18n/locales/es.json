@@ -746,7 +746,6 @@
       "exerciseBlockTemplate": "Plantilla para bloques de ejercicios. Marcadores de posición disponibles: {{exercise}}, {{duration}}, {{workout}}, {{preset}}.",
       "exerciseFolder": "Ruta a la carpeta que contiene las páginas de ejercicios.",
       "generateDefaultTemplates": "Genera una plantilla predeterminada de página de ejercicio y una referencia de etiquetas en la carpeta 'Workout Templates'. Puede personalizar estos archivos para modificar el idioma y la estructura.",
-      "noCustomProtocols": "No se han configurado protocolos personalizados. Haga clic en \"Añadir protocolo\" para crear uno.",
       "noPresets": "No hay preajustes de temporizador configurados. Haga clic en 'Añadir preajuste' para crear uno.",
       "presetDurationDesc": "Duración en segundos (por ejemplo, 90 para un temporizador de 90 segundos).",
       "presetNameDesc": "Nombre único para este preajuste de temporizador (por ejemplo, 'Descanso 90s', 'HIIT 30/10').",
@@ -769,7 +768,6 @@
     },
     "labels": {
       "csvPath": "Ruta del archivo de registro CSV",
-      "customProtocols": "Protocolos personalizados",
       "defaultExactMatch": "Coincidencia exacta predeterminada",
       "defaultRepsPerSet": "Número de repeticiones predeterminado por serie",
       "defaultTimerPreset": "Preajuste de temporizador predeterminado",
@@ -828,15 +826,12 @@
     "sections": {
       "advanced": "Avanzado",
       "csvManagement": "Gestión de archivos CSV",
-      "customProtocols": "Protocolos personalizados",
       "maintenance": "Mantenimiento",
       "quickLog": "Registro móvil",
       "setupAndData": "Configuración y datos",
       "templates": "Plantillas",
       "timerPresets": "Preajustes de temporizador",
       "trainingParameters": "Parámetros de entrenamiento",
-      "savedPresets": "Preajustes guardados",
-      "savedProtocols": "Protocolos guardados",
       "gettingStarted": "Cómo empezar",
       "timerDeviceCues": "Indicaciones para dispositivos de temporizador"
     },

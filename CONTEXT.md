@@ -150,14 +150,15 @@ Custom columns added dynamically per exercise type (duration, distance, heartRat
 
 | Protocol   | Abbreviation |
 | ---------- | ------------ |
-| Standard   | STD          |
+| Standard   | (no badge)   |
+| Warm-up    | WU           |
 | Drop Set   | DS           |
 | Myo-Reps   | MYO          |
 | Rest-Pause | RP           |
 | Superset   | SS           |
 | 21s        | 21           |
 
-Users can define custom protocols with name, abbreviation (max 3 chars), and color.
+Every protocol except Standard is an entry of the protocol list in the settings, with name, abbreviation (max 3 chars) and color. The built-in ones are added to that list once, on install or on the first update that has them, so users see how protocols work and can edit or delete them like their own. A protocol's id keeps its meaning whatever its entry says (warm-up and drop sets never count as PRs), and a deleted built-in keeps its name on sets already logged.
 
 ### Exercise Pages
 

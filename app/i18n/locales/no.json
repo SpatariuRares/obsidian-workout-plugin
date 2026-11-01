@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "En CSV-fil med muskeltagger finnes allerede. Vil du overskrive den med standardverdier? Dette fjerner alle egendefinerte tagger.",
       "csvFolder": "Mappe der treningsloggene og muskel-tagg-CSV-filene skal lagres.",
-      "customProtocols": "Opprett egendefinerte treningsprotokoller for å spore spesialiserte treningsteknikker",
       "defaultExactMatch": "Når aktivert, filtreres øvelser som standard på nøyaktig navn. Deaktiver for omtrentlig match.",
       "defaultRepsPerSet": "Antatt antall repetisjoner når det ikke er angitt. Hvis 0, brukes 'Reservevarighet per sett'.",
       "defaultTimerPreset": "Velg en standard forhåndsinnstilling for nye timere",

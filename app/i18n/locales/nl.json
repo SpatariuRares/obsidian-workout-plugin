@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Er bestaat al een CSV-bestand met spierlabels. Wilt u dit overschrijven met standaardwaarden? Dit verwijdert alle aangepaste labels.",
       "csvFolder": "Map waar de bestanden met trainingsgegevens en spierlabels (CSV) worden opgeslagen.",
-      "customProtocols": "Maak aangepaste trainingsprotocollen om gespecialiseerde trainingsmethoden te volgen.",
       "defaultExactMatch": "Wanneer ingeschakeld, gebruikt de filterfunctie standaard exacte overeenkomsten. Schakel uit voor onnauwkeurige overeenkomsten.",
       "defaultRepsPerSet": "Aangenomen aantal herhalingen indien niet opgegeven. Bij 0 wordt de 'Terugvalduur per set' gebruikt.",
       "defaultTimerPreset": "Selecteer een standaardinstelling voor nieuwe timers",

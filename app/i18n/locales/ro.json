@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
       "csvFolder": "Directorul unde vor fi stocate fișierele CSV cu jurnalele de antrenament și etichetele pentru mușchi.",
-      "customProtocols": "Creați protocoale de antrenament personalizate pentru a urmări tehnici de antrenament specializate.",
       "defaultExactMatch": "Când este activat, filtrarea exercițiilor utilizează, în mod implicit, potrivirea exactă a numelor. Dezactivați pentru potrivire aproximativă.",
       "defaultRepsPerSet": "Numărul presupus de repetări, dacă nu este specificat. Dacă este 0, se folosește „Durată implicită a setului”.",
       "defaultTimerPreset": "Selectați o presetare implicită pentru temporizatoarele noi",

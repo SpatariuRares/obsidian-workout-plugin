@@ -62,6 +62,24 @@ describe("custom protocols list", () => {
     return { plugin, refresh, list: listOf(section.definitions()) };
   }
 
+  it("explains what a built-in protocol is for under its entry", () => {
+    const section = new CustomProtocolsSettings(
+      app,
+      {
+        settings: {
+          customProtocols: [
+            { id: "drop_set", name: "Drop set", abbreviation: "DS", color: "#ef4444" },
+          ],
+        },
+      } as unknown as WorkoutPluginContext,
+      jest.fn(),
+    );
+
+    const desc = listOf(section.definitions()).items[0].desc as DocumentFragment;
+
+    expect(desc.textContent).toContain(t("settings.protocolHelp.dropSet"));
+  });
+
   it("titles the list so its add button has a header row", () => {
     expect(setup().list.heading).toBe(t("settings.sections.savedProtocols"));
   });

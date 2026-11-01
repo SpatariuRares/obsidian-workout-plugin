@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "File CSV untuk tag otot sudah ada. Apakah Anda ingin menimpanya dengan nilai default? Ini akan menghapus semua tag yang telah Anda buat.",
       "csvFolder": "Folder tempat file CSV log latihan dan tag otot akan disimpan.",
-      "customProtocols": "Buat protokol latihan khusus untuk melacak teknik pelatihan yang spesifik.",
       "defaultExactMatch": "Saat diaktifkan, penyaringan akan menggunakan pencocokan nama yang tepat secara default. Nonaktifkan untuk pencocokan yang tidak tepat.",
       "defaultRepsPerSet": "Jumlah repetisi yang diasumsikan jika tidak ditentukan. Jika 0, menggunakan 'Durasi set cadangan'.",
       "defaultTimerPreset": "Pilih preset default untuk timer baru",

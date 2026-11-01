@@ -1,6 +1,8 @@
 import {
   ProtocolCatalog,
+  defaultProtocolEntries,
   protocolId,
+  withDefaultProtocols,
 } from "@app/services/protocols/ProtocolCatalog";
 import { WorkoutProtocol } from "@app/types/WorkoutLogData";
 import { t } from "@app/i18n";
@@ -19,7 +21,7 @@ describe("protocolId", () => {
 describe("ProtocolCatalog", () => {
   const catalog = new ProtocolCatalog([cluster]);
 
-  it("describes a built-in protocol with its translated name, badge and chart color", () => {
+  it("describes a built-in protocol missing from the list with its translated name, badge and chart color", () => {
     expect(catalog.resolve("drop_set")).toEqual({
       id: "drop_set",
       name: t("modal.selectOptions.dropSet"),
@@ -42,12 +44,26 @@ describe("ProtocolCatalog", () => {
     });
   });
 
-  it("lets a built-in protocol win over a custom one with the same id", () => {
-    const conflicting = new ProtocolCatalog([
-      { id: "drop_set", name: "Custom drop", abbreviation: "CD", color: "#000000" },
+  it("uses the settings entry of a built-in protocol, so the user can edit it", () => {
+    const edited = new ProtocolCatalog([
+      { id: "drop_set", name: "Stripping", abbreviation: "STR", color: "#000000" },
     ]);
 
-    expect(conflicting.resolve("drop_set").abbreviation).toBe("Drop");
+    expect(edited.resolve("drop_set")).toMatchObject({
+      name: "Stripping",
+      abbreviation: "STR",
+      badgeColor: "#000000",
+      builtIn: true,
+    });
+  });
+
+  it("keeps standard built in even if the list has an entry with its id", () => {
+    const odd = new ProtocolCatalog([
+      { id: "standard", name: "Normal", abbreviation: "N", color: "#000000" },
+    ]);
+
+    expect(odd.resolve("standard").abbreviation).toBe("");
+    expect(odd.all().map((p) => p.id)).toEqual(["standard"]);
   });
 
   it("still describes a protocol nobody defines any more, by its id", () => {
@@ -59,8 +75,11 @@ describe("ProtocolCatalog", () => {
     });
   });
 
-  it("lists built-ins first, standard on top, then custom ones", () => {
-    expect(catalog.all().map((p) => p.id)).toEqual([
+  it("lists standard, then the settings list in its order", () => {
+    expect(catalog.all().map((p) => p.id)).toEqual(["standard", "cluster"]);
+    expect(
+      new ProtocolCatalog(withDefaultProtocols([cluster])).all().map((p) => p.id),
+    ).toEqual([
       "standard",
       "warmup",
       "drop_set",
@@ -74,5 +93,43 @@ describe("ProtocolCatalog", () => {
 
   it("gives standard no badge", () => {
     expect(catalog.resolve(undefined).abbreviation).toBe("");
+  });
+});
+
+describe("default protocol entries", () => {
+  it("are the built-ins except standard, translated and valid for the protocol editor", () => {
+    const entries = defaultProtocolEntries();
+
+    expect(entries.map((p) => p.id)).toEqual([
+      "warmup",
+      "drop_set",
+      "myo_reps",
+      "rest_pause",
+      "superset",
+      "twentyone",
+    ]);
+    expect(entries[1].name).toBe(t("modal.selectOptions.dropSet"));
+    for (const entry of entries) {
+      expect(entry.abbreviation.length).toBeLessThanOrEqual(3);
+      expect(entry.abbreviation).toBe(entry.abbreviation.toUpperCase());
+      expect(entry.color).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+  });
+
+  it("are added before the user's protocols without replacing one with the same id", () => {
+    const mine = { id: "Warmup", name: "Ramp-up", abbreviation: "RU", color: "#123456" };
+
+    const list = withDefaultProtocols([mine, cluster]);
+
+    expect(list.map((p) => p.id)).toEqual([
+      "drop_set",
+      "myo_reps",
+      "rest_pause",
+      "superset",
+      "twentyone",
+      "Warmup",
+      "cluster",
+    ]);
+    expect(list).toContain(mine);
   });
 });

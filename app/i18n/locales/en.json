@@ -740,7 +740,7 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "A muscle tags CSV file already exists. Do you want to overwrite it with default values? This will remove any custom tags.",
       "csvFolder": "Folder where the workout logs and muscle tags CSV files will be stored.",
-      "customProtocols": "Create custom workout protocols to track specialized training techniques",
+      "customProtocols": "Protocols you can pick when you log a set. Warm-up, drop set and the other built-in ones are listed below: edit or delete them like the ones you add.",
       "defaultExactMatch": "When enabled, exercise filtering uses exact name matching by default. Disable for fuzzy matching.",
       "defaultRepsPerSet": "Assumed number of reps when not specified. If 0, uses 'Fallback set duration'.",
       "defaultTimerPreset": "Select a default preset for new timers",
@@ -852,6 +852,14 @@
       "csvPathEmpty": "Path cannot be empty",
       "mustBeNonNegative": "Must be 0 or greater",
       "mustBePositive": "Must be greater than 0"
+    },
+    "protocolHelp": {
+      "warmup": "Light sets before the working sets. They don't count toward personal records.",
+      "dropSet": "Lower the weight right after failure and keep going. Drop sets don't count toward personal records.",
+      "myoReps": "One activation set, then short mini-sets with a few seconds of rest.",
+      "restPause": "Rest a few seconds after failure, then do a few more reps.",
+      "superset": "Two exercises back to back, without resting in between.",
+      "twentyone": "7 reps in the lower half, 7 in the upper half, then 7 full reps."
     }
   },
   "stats": {

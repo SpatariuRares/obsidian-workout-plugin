@@ -64,6 +64,8 @@ workout: {{workout}}
   achievedTargets: {},
   /** User-defined custom protocols */
   customProtocols: [],
+  /** False until the built-in protocols are added to the list on first load */
+  protocolDefaultsAdded: false,
   /** Default set duration for fallback estimation (45 seconds) */
   setDuration: 45,
   /** Default duration per repetition (5 seconds) */

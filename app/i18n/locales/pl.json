@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Plik CSV z tagami mięśni już istnieje. Czy chcesz go zastąpić wartościami domyślnymi? To spowoduje usunięcie wszystkich niestandardowych tagów.",
       "csvFolder": "Folder, w którym będą przechowywane pliki CSV z logami treningów i tagami mięśni.",
-      "customProtocols": "Stwórz własne protokoły treningowe, aby śledzić specjalistyczne techniki treningowe",
       "defaultExactMatch": "Gdy jest włączone, filtrowanie ćwiczeń domyślnie wykorzystuje dokładne dopasowanie nazwy. Wyłącz, aby używać nieprecyzyjnego dopasowania.",
       "defaultRepsPerSet": "Założona liczba powtórzeń, jeśli nie została określona. Jeśli wynosi 0, używany jest 'Rezerwowy czas trwania serii'.",
       "defaultTimerPreset": "Wybierz domyślne ustawienie dla nowych timerów",

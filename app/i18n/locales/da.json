@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Der findes allerede en CSV-fil med muskeltags. Vil du overskrive den med standardværdier? Det fjerner alle brugerdefinerede tags.",
       "csvFolder": "Mappe, hvor CSV-filerne med træningslogs og muskeltags gemmes.",
-      "customProtocols": "Opret brugerdefinerede træningsprotokoller til at registrere specialiserede træningsteknikker",
       "defaultExactMatch": "Når det er aktiveret, filtreres øvelser som standard på præcist navn. Deaktiver for fuzzy match.",
       "defaultRepsPerSet": "Antaget antal gentagelser, hvis intet er angivet. Hvis 0, bruges 'Reservevarighed for sæt'.",
       "defaultTimerPreset": "Vælg en standardforudindstilling for nye timere",

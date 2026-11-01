@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Soubor CSV se štítky svalů už existuje. Chcete jej přepsat výchozími hodnotami? Tím odstraníte všechny vlastní štítky.",
       "csvFolder": "Složka, ve které budou uloženy soubory CSV se záznamy tréninků a štítky svalů.",
-      "customProtocols": "Vytvořte vlastní tréninkové protokoly pro sledování specializovaných tréninkových technik",
       "defaultExactMatch": "Pokud je zapnuto, filtrování cvičení ve výchozím stavu používá přesnou shodu názvu. Vypněte pro přibližnou shodu.",
       "defaultRepsPerSet": "Předpokládaný počet opakování, pokud není zadán. Pokud je 0, použije se 'Záložní doba série'.",
       "defaultTimerPreset": "Vyberte výchozí předvolbu pro nové časovače",

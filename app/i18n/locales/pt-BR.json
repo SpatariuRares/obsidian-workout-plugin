@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Um arquivo CSV de tags musculares já existe. Você deseja sobrescrevê-lo com valores padrão? Isso removerá todas as tags personalizadas.",
       "csvFolder": "Pasta onde os arquivos CSV de registros de treino e tags musculares serão armazenados.",
-      "customProtocols": "Crie protocolos de treino personalizados para acompanhar técnicas de treino especializadas.",
       "defaultExactMatch": "Quando ativado, o filtro de exercícios usa correspondência exata por padrão. Desative para correspondência aproximada.",
       "defaultRepsPerSet": "Número de repetições assumido quando não especificado. Se for 0, utiliza a 'Duração de série alternativa'.",
       "defaultTimerPreset": "Selecione uma predefinição padrão para novos temporizadores",

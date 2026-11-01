@@ -6,6 +6,17 @@ import { CustomProtocolConfig } from "@app/types/WorkoutLogData";
 import { ProtocolBadge } from "@app/components/atoms";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+import { protocolId } from "@app/services/protocols/ProtocolCatalog";
+
+/** Explanation shown under each built-in protocol in the list */
+const PROTOCOL_HELP: Record<string, string> = {
+  warmup: "settings.protocolHelp.warmup",
+  drop_set: "settings.protocolHelp.dropSet",
+  myo_reps: "settings.protocolHelp.myoReps",
+  rest_pause: "settings.protocolHelp.restPause",
+  superset: "settings.protocolHelp.superset",
+  twentyone: "settings.protocolHelp.twentyone",
+};
 
 export class CustomProtocolsSettings {
   constructor(
@@ -78,6 +89,10 @@ export class CustomProtocolsSettings {
 
     // Add ID info
     container.createSpan({ text: `ID: ${protocol.id}` });
+
+    // What a built-in protocol is for, so the default entries explain themselves
+    const help = PROTOCOL_HELP[protocolId(protocol.id)];
+    if (help) fragment.createDiv({ text: t(help) });
 
     return fragment;
   }

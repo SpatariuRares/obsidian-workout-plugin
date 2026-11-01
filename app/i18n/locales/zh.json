@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "肌肉标签 CSV 文件已存在。是否要用默认值覆盖？这将删除所有自定义标签。",
       "csvFolder": "存储训练记录和肌肉标签 CSV 文件的文件夹。",
-      "customProtocols": "创建自定义训练方案以跟踪专业训练技术。",
       "defaultExactMatch": "启用时，训练筛选默认使用精确名称匹配。禁用则使用模糊匹配。",
       "defaultRepsPerSet": "未指定时的默认次数。若为 0，则使用'备用组时长'。",
       "defaultTimerPreset": "选择新计时器的默认预设",

@@ -113,7 +113,7 @@ await plugin.updateWorkoutLogEntry(log, toLogEntryInput(log)); // toLogEntryInpu
 
 #### ProtocolCatalog (`app/services/protocols/ProtocolCatalog.ts`)
 
-The only place that knows what a protocol looks like: `new ProtocolCatalog(settings.customProtocols).resolve(id)` gives its translated name, badge text/class and chart color; `.all()` lists built-ins then custom ones. Use `protocolId(raw)` to normalize an id (lower case, empty = standard). Custom ids are kept in the CSV, so never map an unknown id to standard.
+The only place that knows what a protocol looks like: `new ProtocolCatalog(settings.customProtocols).resolve(id)` gives its name, badge text/class and chart color; `.all()` lists standard, then the settings list in order. The built-ins (warm-up, drop set, myo reps, rest-pause, superset, 21s) are ordinary entries of `customProtocols`: `withDefaultProtocols` adds them once on load (`protocolDefaultsAdded`, in the vault's language), so users see, edit and delete them in Settings → Saved protocols; a deleted built-in still resolves to its translated name for sets already logged. Standard is never in the list. The id keeps its meaning whatever the entry says (warm-up and drop sets are not PRs). Use `protocolId(raw)` to normalize an id (lower case, empty = standard). Custom ids are kept in the CSV, so never map an unknown id to standard.
 
 #### TrainingHistory (`app/services/history/TrainingHistory.ts`)
 

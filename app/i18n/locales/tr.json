@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Kas etiketleri CSV dosyası zaten mevcut. Varsayılan değerlerle üzerine yazmak ister misiniz? Bu, tüm özel etiketleri kaldıracaktır.",
       "csvFolder": "Antrenman günlükleri ve kas etiketleri CSV dosyalarının saklanacağı klasör.",
-      "customProtocols": "Özel antrenman tekniklerini takip etmek için özel antrenman protokolleri oluşturun",
       "defaultExactMatch": "Etkinleştirildiğinde, egzersiz filtreleme varsayılan olarak tam isim eşleşmesini kullanır. Bulanık eşleşme için devre dışı bırakın.",
       "defaultRepsPerSet": "Belirtilmediğinde varsayılan tekrar sayısı. 0 ise 'Yedek set süresi' kullanılır.",
       "defaultTimerPreset": "Yeni zamanlayıcılar için varsayılan bir ön ayar seçin",

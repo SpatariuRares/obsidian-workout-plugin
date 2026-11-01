@@ -120,6 +120,8 @@ export interface WorkoutChartsSettings {
   weightIncrement: number;
   achievedTargets: Record<string, number>;
   customProtocols: CustomProtocolConfig[];
+  /** The built-in protocols were added to `customProtocols` (once, so deleted ones stay deleted) */
+  protocolDefaultsAdded: boolean;
   /** Default duration per set in seconds for workout duration estimation */
   setDuration: number;
   /** Duration per repetition in seconds. Used when reps are detected. */

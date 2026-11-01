@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Eine CSV-Datei für Muskel-Tags existiert bereits. Möchtest du sie mit Standardwerten überschreiben? Dadurch werden alle benutzerdefinierten Tags entfernt.",
       "csvFolder": "Ordner, in dem die CSV-Dateien für Trainingsprotokolle und Muskel-Tags gespeichert werden.",
-      "customProtocols": "Erstelle benutzerdefinierte Trainingsprotokolle, um spezielle Trainingstechniken zu erfassen",
       "defaultExactMatch": "Wenn aktiviert, werden Übungen standardmäßig nach exaktem Namen gefiltert. Deaktiviere es für eine unscharfe Suche.",
       "defaultRepsPerSet": "Angenommene Anzahl an Wiederholungen, wenn nicht angegeben. Bei 0 wird die 'Fallback-Satzdauer' verwendet.",
       "defaultTimerPreset": "Wähle eine Standard-Voreinstellung für neue Timer",

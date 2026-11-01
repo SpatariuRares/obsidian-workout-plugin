@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "已經存在一個肌肉標籤的 CSV 檔案。您是否要用預設值覆蓋它？這將會移除任何自訂標籤。",
       "csvFolder": "存放運動記錄和肌肉標籤 CSV 檔案的資料夾。",
-      "customProtocols": "建立自訂的訓練法，以追蹤專業的訓練技巧。",
       "defaultExactMatch": "啟用時，運動篩選預設使用完全名稱匹配。 停用以進行模糊匹配。",
       "defaultRepsPerSet": "未指定時預設的每組次數。如果為 0，則使用「備用每組時長」。",
       "defaultTimerPreset": "選擇預設的計時器設定",

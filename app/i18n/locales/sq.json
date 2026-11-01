@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Një skedar CSV me etiketat e muskujve ekziston tashmë. Doni ta mbishkruani me vlerat e paracaktuara? Kjo do të fshijë të gjitha etiketat e personalizuara.",
       "csvFolder": "Dosja ku do të ruhen skedarët CSV të regjistrit të stërvitjeve dhe të etiketave të muskujve.",
-      "customProtocols": "Krijoni protokolle stërvitjeje të personalizuara për të ndjekur teknika të specializuara stërvitjeje",
       "defaultExactMatch": "Kur është aktivizuar, filtrimi i ushtrimeve përdor si parazgjedhje përputhjen e saktë të emrit. Çaktivizojeni për përputhje të përafërt.",
       "defaultRepsPerSet": "Numri i supozuar i përsëritjeve kur nuk është specifikuar. Nëse është 0, përdoret 'Kohëzgjatja rezervë e serisë'.",
       "defaultTimerPreset": "Zgjidhni një paracaktim të parazgjedhur për timerët e rinj",

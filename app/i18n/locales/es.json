@@ -740,7 +740,6 @@
     "descriptions": {
       "confirmOverwriteMuscleTags": "Ya existe un archivo CSV de etiquetas de músculos. ¿Desea sobrescribirlo con los valores predeterminados? Esto eliminará cualquier etiqueta personalizada.",
       "csvFolder": "Carpeta donde se almacenarán los archivos CSV con los registros de entrenamiento y las etiquetas de los músculos.",
-      "customProtocols": "Cree protocolos de entrenamiento personalizados para registrar técnicas de entrenamiento especializadas.",
       "defaultExactMatch": "Cuando está activada, la función de filtrado de ejercicios utiliza, por defecto, la coincidencia exacta del nombre. Desactive esta opción para realizar una búsqueda más flexible.",
       "defaultRepsPerSet": "Número de repeticiones asumido cuando no se especifica. Si es 0, se usa la 'Duración de serie alternativa'.",
       "defaultTimerPreset": "Seleccione un preajuste predeterminado para los nuevos temporizadores.",

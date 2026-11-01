@@ -113,6 +113,7 @@ describe("Button atom", () => {
     expect(
       button.querySelector(".workout-btn-icon")?.getAttribute("data-icon"),
     ).toBe("search");
+    expect(button.classList.contains("workout-btn-with-icon")).toBe(true);
   });
 
   it("creates button with empty text and no icon", () => {
@@ -123,5 +124,6 @@ describe("Button atom", () => {
     });
 
     expect(button.textContent).toBe("");
+    expect(button.classList.contains("workout-btn-with-icon")).toBe(false);
   });
 });

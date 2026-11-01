@@ -65,6 +65,9 @@ export class Button {
     });
 
     if (props.icon) {
+      // A class instead of `:has(> .workout-btn-icon)` in CSS: `:has` makes
+      // the browser re-check selectors on every DOM change below the button
+      btn.addClass("workout-btn-with-icon");
       Icon.create(btn, { name: props.icon, className: "workout-btn-icon" });
     }
     if (props.text) btn.appendText(props.text);

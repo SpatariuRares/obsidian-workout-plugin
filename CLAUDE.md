@@ -666,6 +666,8 @@ app/styles/
 └── _chart.scss, _table.scss, _timer.scss, _modal.scss, _settings.scss, _duration.scss
 ```
 
+**Never use `:has()`**: it forces broad style invalidation on every DOM change under the matched elements. Add a class from the TypeScript that builds the element instead (e.g. `Button.create` adds `workout-btn-with-icon` when it draws an icon).
+
 **Build**: `node build-css.mjs` compiles with Sass → outputs `styles.css`
 
 **Never edit `styles.css` or `main.js` directly.** They are build outputs and get overwritten. `styles.css` is committed because releases ship it.

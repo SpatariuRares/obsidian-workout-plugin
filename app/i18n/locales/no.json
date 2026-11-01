@@ -19,10 +19,12 @@
       "pace": "Tempo",
       "reps": "Repetisjoner",
       "volume": "Volum",
-      "weight": "Vekt"
+      "weight": "Vekt",
+      "e1rm": "Estimerte 1RM"
     },
     "defaultTitle": "Trend {type}",
-    "noTypesAvailable": "Ingen diagramtyper tilgjengelig"
+    "noTypesAvailable": "Ingen diagramtyper tilgjengelig",
+    "noEligibleE1rm": "Ingen egnet sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og drop sets."
   },
   "commands": {
     "addExerciseBlock": "Legg til øvelsesblokk",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Migrer øvelsestyper",
     "createExampleNotes": "Opprett eksempelnotater",
     "openGettingStartedGuide": "Åpne veiledning",
-    "startTour": "Start guiden"
+    "startTour": "Start guiden",
+    "importWorkouts": "Importer fra Strong eller Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Opprett logg for: {exerciseName}",
     "createLogButtonText": "Opprett logg for: {exerciseName}",
     "noDataTitle": "Ingen logger funnet for {exerciseName}",
-    "exploreExampleData": "Eller utforsk med eksempeldata"
+    "exploreExampleData": "Eller utforsk med eksempeldata",
+    "lastSet": "Siste gang: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Personlig rekord: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Kodeblokk satt inn",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Oppdater mål",
       "updateTimer": "Oppdater timer",
       "decreaseBy": "Reduser {label} med {increment}",
-      "increaseBy": "Øk {label} med {increment}"
+      "increaseBy": "Øk {label} med {increment}",
+      "deleteSet": "Slett sett"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Alternativer",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} kan være høyst {max}",
       "validFieldRequired": "{field} er obligatorisk",
       "migrationNoUpdates": "Alle øvelsessider er allerede oppdatert",
-      "validMustBeWholeNumber": "{field} må være et helt tall"
+      "validMustBeWholeNumber": "{field} må være et helt tall",
+      "newRecord": "Nytt oppføring: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Diagrammet er lagt inn med suksess!",
+      "dashboardInserted": "Dashboard er nå satt inn med suksess!",
+      "exerciseNameRequired": "Vennligst oppgi et treningsnavn",
+      "exerciseSectionCreated": "Øvelsesseksjon opprettet med suksess!",
+      "tableInserted": "Tabellen er lagt til med suksess!",
+      "tableUpdated": "Tabellen er oppdatert med suksess!",
+      "timerInserted": "Timer er lagt til med suksess!",
+      "timerUpdated": "Tidspremmingen er oppdatert med suksess!",
+      "validChooseExercise": "Velg en øvelse",
+      "validationCombinedMode": "For type 'trening + treningsøkt' må du fylle ut begge feltene!"
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Etikett:",
@@ -653,7 +671,8 @@
       "text": "Tekst",
       "timed": "Tidsbasert",
       "twentyones": "21-ere",
-      "yesNo": "Ja/nei"
+      "yesNo": "Ja/nei",
+      "warmup": "Oppvarming"
     },
     "sets": "Sett:",
     "similarTags": "Liknende tagger:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sett: {sets}\n- Repetisjoner: {reps}\n- Pause: {restTime}s\n\n",
     "noteTemplate": "**Merk: {note}**\n",
     "date": "Dato",
-    "weightUnitToggle": "Enhet for denne oppføringen"
+    "weightUnitToggle": "Enhet for denne oppføringen",
+    "rest": "Rest",
+    "work": "Arbeid"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
       "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
       "takeTour": "Gi en kort oversikt over logging, diagrammer, tabeller og tidsmålere.",
-      "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen."
+      "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen.",
+      "keepScreenAwake": "Prøv å holde skjermen aktiv mens en timer kjører i forgrunnen. Bruker mer batteri; tilgjengelighet avhenger av enheten og systeminnstillingene dine.",
+      "vibrateOnCompletion": "Vibrer kort når en timer er ferdig, uavhengig av lyd. Krever et trykk på siden og en støttet enhet (f.eks. Android). Ikke tilgjengelig på iOS; ingen varsler i bakgrunnen.",
+      "presetRestDesc": "Antall sekunder med hvile etter hver runde av øvelsen (0 for ingen hvile)."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -769,7 +793,10 @@
       "weightUnit": "Enhet for vekt",
       "showRibbonIcon": "Vis ikon for hurtiglogging",
       "welcomeWindow": "Velkomstvindu",
-      "takeTour": "Veiledet tur"
+      "takeTour": "Veiledet tur",
+      "keepScreenAwake": "Hold skjermen aktiv mens en timer kjører",
+      "vibrateOnCompletion": "Vibrer når en timer er ferdig",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Treningsparametere",
       "savedPresets": "Lagrede forhåndsinnstillinger",
       "savedProtocols": "Lagrede protokoller",
-      "gettingStarted": "Komme i gang"
+      "gettingStarted": "Komme i gang",
+      "timerDeviceCues": "Varsler for tidtakeren"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
@@ -833,7 +861,8 @@
     "recentTrend": "Nylig trend",
     "recentVsPrev": " (vs forrige)",
     "sessions": "Økter",
-    "average": "Gjennomsnitt:"
+    "average": "Gjennomsnitt:",
+    "title": "{dataTypeLabel} statistikk ({contextLabel}):"
   },
   "table": {
     "actions": "Handlinger",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Trendlinje",
     "refreshingTable": "Oppdaterer tabell...",
-    "setCount": "{count} angir"
+    "setCount": "{count} angir",
+    "deleteSetMessage": "{set} vil bli fjernet fra loggen din. Dette kan ikke angres.",
+    "deleteSetTitle": "Slette denne samlingen?"
   },
   "timeperiods": {
     "month": "Måned",
@@ -899,7 +930,16 @@
       "detailsControls": "Kontroller",
       "detailsSound": "Lyd"
     },
-    "stopwatch": "Stoppeklokke"
+    "stopwatch": "Stoppeklokke",
+    "phase": {
+      "rest": "Hvile",
+      "work": "Arbeid"
+    },
+    "round": "Runde {current} av {total}",
+    "status": {
+      "done": "Fullført",
+      "paused": "Pause"
+    }
   },
   "trends": {
     "declining": "Nedgang",
@@ -962,7 +1002,9 @@
         "text": "Trykk på +-knappen for å åpne skjemaet, og lagre deretter et sett. Det vises umiddelbart i tabellen."
       },
       "rowActions": {
-        "title": "Rediger eller slett en samling"
+        "title": "Rediger eller slett en samling",
+        "mobileText": "Slett et sett for å fikse det. For å slette det, bruk \"Slett sett\" i skjemaet som åpnes.",
+        "text": "Bruk blyanten på en rad for å sette sammen en gruppe. For å fjerne den, bruk \"Slett gruppe\" i skjemaet som åpnes."
       },
       "chart": {
         "title": "Din fremgang",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Vis meg"
+  },
+  "import": {
+    "chooseFile": "Velg CSV-fil",
+    "notAnExport": "Denne filen er ikke en \"Strong\" eller \"Hevy\" eksport.",
+    "noSets": "Ingen sett kunne leses fra denne filen. Sjekk at det er CSV-filen som appen eksporterte, uten endringer.",
+    "readError": "Kunne ikke lese filen: {error}",
+    "source": "Eksporter fra {source}",
+    "setsFound": "Sett i filen: {count}",
+    "setsToAdd": "Sett å legge til: {count}",
+    "duplicates": "Reddet i loggen din, hoppet over: {count}",
+    "dateRange": "Opplæringsdager: fra {first} til {last}",
+    "newExercises": "Øvelser uten side: {exercises}",
+    "nothingToAdd": "Hver oppføring i denne filen finnes allerede i loggen din.",
+    "backupNote": "Loggen din blir sikkerhetskopiert før innstillingene legges til.",
+    "importButton": "Importer sett",
+    "imported": "Import fullført. Elementer lagt til: {count}",
+    "error": "Import mislyktes: {error}",
+    "title": "Importer fra Strong eller Hevy",
+    "intro": "Velg CSV-filen fra appens eksport av treningsdata. Innholdet vil ikke bli generert før du bekrefter."
   }
 }

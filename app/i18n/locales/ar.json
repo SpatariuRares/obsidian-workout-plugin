@@ -19,10 +19,12 @@
       "pace": "الوتيرة",
       "reps": "التكرارات",
       "volume": "الحجم",
-      "weight": "الوزن"
+      "weight": "الوزن",
+      "e1rm": "Estimated 1RM"
     },
     "defaultTitle": "الاتجاه {type}",
-    "noTypesAvailable": "لا توجد أنواع مخططات متاحة"
+    "noTypesAvailable": "لا توجد أنواع مخططات متاحة",
+    "noEligibleE1rm": "لا توجد مجموعات مناسبة لتقدير الوزن الأقصى (1RM). سجل وزنًا إيجابيًا مع 1-12 تكرارًا، مع استثناء تمارين الإحماء ومجموعات التخفيض."
   },
   "commands": {
     "addExerciseBlock": "إضافة كتلة تمرين",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "ترحيل أنواع التمارين",
     "createExampleNotes": "إنشاء ملاحظات نموذجية",
     "openGettingStartedGuide": "فتح دليل البدء السريع",
-    "startTour": "ابدأ الجولة"
+    "startTour": "ابدأ الجولة",
+    "importWorkouts": "استيراد من \"Strong\" أو \"Hevy\""
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "إنشاء سجل لـ: {exerciseName}",
     "createLogButtonText": "إنشاء سجل لـ: {exerciseName}",
     "noDataTitle": "لم يتم العثور على أي سجلات لـ {exerciseName}",
-    "exploreExampleData": "أو استكشف باستخدام بيانات مثال"
+    "exploreExampleData": "أو استكشف باستخدام بيانات مثال",
+    "lastSet": "آخر مرة: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "سجل شخصي: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "تم إدراج كتلة الكود",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "تحديث الهدف",
       "updateTimer": "تحديث المؤقت",
       "decreaseBy": "تقليل {label} بمقدار {increment}",
-      "increaseBy": "زيادة {label} بمقدار {increment}"
+      "increaseBy": "زيادة {label} بمقدار {increment}",
+      "deleteSet": "حذف المجموعة"
     },
     "canvasLayout": "الترتيب",
     "canvasOptions": "الخيارات",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} يجب أن يكون على الأكثر {max}",
       "validFieldRequired": "{field} مطلوب",
       "migrationNoUpdates": "جميع صفحات التمارين محدّثة بالفعل",
-      "validMustBeWholeNumber": "يجب أن تكون القيمة {field} عبارة عن عدد صحيح."
+      "validMustBeWholeNumber": "يجب أن تكون القيمة {field} عبارة عن عدد صحيح.",
+      "newRecord": "سجل جديد: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "تم إدراج الرسم البياني بنجاح!",
+      "dashboardInserted": "تم إدراج لوحة المعلومات بنجاح!",
+      "exerciseNameRequired": "الرجاء إدخال اسم التمرين",
+      "exerciseSectionCreated": "تم إنشاء قسم التمرين بنجاح!",
+      "tableInserted": "تم إدراج الجدول بنجاح!",
+      "tableUpdated": "تم تحديث الجدول بنجاح!",
+      "timerInserted": "تم إدخال المؤقت بنجاح!",
+      "timerUpdated": "تم تحديث المؤقت بنجاح!",
+      "validChooseExercise": "اختر تمرينًا",
+      "validationCombinedMode": "بالنسبة لنوع \"التمارين + التدريب\"، يجب عليك ملء كلا الحقلين!"
     },
     "parameterKey": "المفتاح:",
     "parameterLabel": "الاسم:",
@@ -653,7 +671,8 @@
       "text": "نص",
       "timed": "بالوقت",
       "twentyones": "21s",
-      "yesNo": "نعم/لا"
+      "yesNo": "نعم/لا",
+      "warmup": "تسخين"
     },
     "sets": "المجموعات:",
     "similarTags": "علامات مشابهة:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - المجموعات: {sets}\n- التكرارات: {reps}\n- الراحة: {restTime} ث\n\n",
     "noteTemplate": "**ملاحظة: {note}**\n",
     "date": "التاريخ",
-    "weightUnitToggle": "وحدة القياس لهذا العنصر"
+    "weightUnitToggle": "وحدة القياس لهذا العنصر",
+    "work": "العمل",
+    "rest": "الراحة"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "إظهار أيقونة الدمبل في الشريط الجانبي لفتح نموذج سجل التدريب",
       "weightUnit": "وحدة للرسوم البيانية، والمجموعات، والسجلات الجديدة. تحتفظ كل سجل بالوحدة التي تم إدخاله فيها.",
       "takeTour": "قدم شرحًا موجزًا حول تسجيل البيانات، والرسوم البيانية، والجداول، والمؤقتات.",
-      "welcomeWindow": "اعرض نافذة الترحيب مرة أخرى لبدء العمل باستخدام بيانات نموذجية أو من البداية."
+      "welcomeWindow": "اعرض نافذة الترحيب مرة أخرى لبدء العمل باستخدام بيانات نموذجية أو من البداية.",
+      "keepScreenAwake": "حاول الحفاظ على تشغيل الشاشة أثناء تشغيل أي مؤقت في المقدمة. يستهلك المزيد من البطارية؛ وتعتمد التوفر على جهازك وإعدادات النظام.",
+      "vibrateOnCompletion": "اهتز بشكل مؤقت عند انتهاء المؤقت، بشكل مستقل عن الصوت. يتطلب النقر على الصفحة و جهاز متوافق (مثل Android). غير متوفر على نظام iOS؛ لا توجد تنبيهات في الخلفية.",
+      "presetRestDesc": "عدد الثواني المخصصة للراحة بعد كل دور (0 تعني عدم وجود راحة)."
     },
     "labels": {
       "csvPath": "مسار ملف سجل CSV",
@@ -769,7 +793,10 @@
       "weightUnit": "وحدة الوزن",
       "showRibbonIcon": "إظهار أيقونة التسجيل السريع",
       "welcomeWindow": "نافذة الترحيب",
-      "takeTour": "جولة إرشادية"
+      "takeTour": "جولة إرشادية",
+      "keepScreenAwake": "حافظ على تشغيل الشاشة أثناء تشغيل المؤقت",
+      "vibrateOnCompletion": "تشغيل الاهتزاز عند انتهاء المؤقت",
+      "presetRest": "إعدادات"
     },
     "messages": {
       "confirmDeletePreset": "هل أنت متأكد من أنك تريد حذف هذا الإعداد؟",
@@ -811,7 +838,8 @@
       "trainingParameters": "معلمات التدريب",
       "savedPresets": "الإعدادات المحفوظة",
       "savedProtocols": "البروتوكولات المحفوظة",
-      "gettingStarted": "ابدأ"
+      "gettingStarted": "ابدأ",
+      "timerDeviceCues": "إشارات جهاز المؤقت"
     },
     "tooltips": {
       "deletePreset": "حذف الإعداد المسبق",
@@ -833,7 +861,8 @@
     "recentTrend": "الاتجاه الأخير",
     "recentVsPrev": " (مقابل السابق)",
     "sessions": "الجلسات",
-    "average": "المتوسط:"
+    "average": "المتوسط:",
+    "title": "{dataTypeLabel} إحصائيات ({contextLabel}):"
   },
   "table": {
     "actions": "الإجراءات",
@@ -879,7 +908,9 @@
     },
     "trendLine": "خط الاتجاه",
     "refreshingTable": "جارٍ تحديث الجدول...",
-    "setCount": "{count} يحدد"
+    "setCount": "{count} يحدد",
+    "deleteSetMessage": "{set} سيتم حذفه من سجلاتك. لا يمكن التراجع عن هذا الإجراء.",
+    "deleteSetTitle": "حذف هذا المجموعة؟"
   },
   "timeperiods": {
     "month": "شهر",
@@ -899,7 +930,16 @@
       "detailsControls": "عناصر التحكم",
       "detailsSound": "الصوت"
     },
-    "stopwatch": "ساعة إيقاف"
+    "stopwatch": "ساعة إيقاف",
+    "phase": {
+      "rest": "راحة",
+      "work": "العمل"
+    },
+    "round": "الجولة {current} من {total}",
+    "status": {
+      "done": "تم",
+      "paused": "متوقف"
+    }
   },
   "trends": {
     "declining": "متناقص",
@@ -962,7 +1002,9 @@
         "text": "اضغط على زر \"+\" لفتح النموذج، ثم احفظ مجموعة. سيظهر تلقائيًا في الجدول."
       },
       "rowActions": {
-        "title": "تحرير أو حذف مجموعة"
+        "title": "تحرير أو حذف مجموعة",
+        "mobileText": "اضغط على المجموعة لتعديلها. لإزالتها، استخدم خيار \"حذف المجموعة\" في النموذج الذي يظهر.",
+        "text": "استخدم الأداة \"قلم\" لتحديد مجموعة من العناصر في صف. لإزالتها، استخدم \"حذف المجموعة\" في النموذج الذي يظهر."
       },
       "chart": {
         "title": "تقدمك",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "اعرض لي"
+  },
+  "import": {
+    "chooseFile": "اختر ملف CSV",
+    "notAnExport": "هذا الملف ليس ملف تصدير قوي أو ثقيل.",
+    "noSets": "لم يتمكن من قراءة أي مجموعات من هذا الملف. تأكد من أنه ملف CSV الذي تم تصديره بواسطة التطبيق، ولم يتم تعديله.",
+    "readError": "تعذر قراءة الملف: {error}",
+    "source": "تصدير من {source}",
+    "setsFound": "المجموعات الموجودة في الملف: {count}",
+    "setsToAdd": "المجموعات لإضافتها: {count}",
+    "duplicates": "تم تسجيله بالفعل في سجل الأحداث، تم تخطيه: {count}",
+    "dateRange": "أيام التدريب: من {first} إلى {last}",
+    "newExercises": "تمارين بدون صفحة: {exercises}",
+    "nothingToAdd": "كل مجموعة في هذا الملف موجودة بالفعل في سجلاتك.",
+    "backupNote": "يتم نسخ سجلاتك احتياطيًا قبل إضافة المجموعات.",
+    "importButton": "استيراد المجموعات",
+    "imported": "تم الاستيراد. تم إضافة المجموعات: {count}",
+    "error": "فشل الاستيراد: {error}",
+    "title": "استيراد من Strong أو Hevy",
+    "intro": "اختر ملف CSV من بيانات التمرين التي يتم تصديرها من التطبيق. لا يتم إنشاء أي شيء حتى تقوم بالتأكيد."
   }
 }

@@ -19,10 +19,12 @@
       "pace": "गति",
       "reps": "रेप्स",
       "volume": "मात्रा",
-      "weight": "वजन"
+      "weight": "वजन",
+      "e1rm": "अनुमानित 1RM"
     },
     "defaultTitle": "ट्रेंड {type}",
-    "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं"
+    "noTypesAvailable": "कोई चार्ट प्रकार उपलब्ध नहीं",
+    "noEligibleE1rm": "अनुमानित 1RM के लिए कोई उपयुक्त सेट उपलब्ध नहीं हैं। वार्म-अप और ड्रॉप सेट को छोड़कर, 1-12 रेप्स के साथ एक सकारात्मक वजन लॉग करें।"
   },
   "commands": {
     "addExerciseBlock": "व्यायाम ब्लॉक जोड़ें",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "व्यायाम प्रकार माइग्रेट करें",
     "createExampleNotes": "उदाहरण नोट्स बनाएँ",
     "openGettingStartedGuide": "शुरू करने के लिए गाइड खोलें",
-    "startTour": "टूर शुरू करें"
+    "startTour": "टूर शुरू करें",
+    "importWorkouts": "स्ट्रॉन्ग या हेवी से इम्पोर्ट करें"
   },
   "common": {
     "bpm": "बीपीएम",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "इसके लिए लॉग बनाएं: {exerciseName}",
     "createLogButtonText": "इसके लिए लॉग बनाएं: {exerciseName}",
     "noDataTitle": "{exerciseName} के लिए कोई लॉग नहीं मिला",
-    "exploreExampleData": "या उदाहरण डेटा के साथ खोज करें।"
+    "exploreExampleData": "या उदाहरण डेटा के साथ खोज करें।",
+    "lastSet": "पिछली बार: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "व्यक्तिगत रिकॉर्ड: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "कोड ब्लॉक डाला गया",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "लक्ष्य अपडेट करें",
       "updateTimer": "टाइमर को अपडेट करें",
       "decreaseBy": "{label} को {increment} से कम करें",
-      "increaseBy": "{label} को {increment} से बढ़ाएं"
+      "increaseBy": "{label} को {increment} से बढ़ाएं",
+      "deleteSet": "सेट हटाएं"
     },
     "canvasLayout": "लेआउट",
     "canvasOptions": "विकल्प",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} अधिकतम {max} होना चाहिए",
       "validFieldRequired": "{field} आवश्यक है",
       "migrationNoUpdates": "सभी व्यायाम पृष्ठ पहले से अप-टू-डेट हैं",
-      "validMustBeWholeNumber": "{field} एक पूर्ण संख्या होनी चाहिए"
+      "validMustBeWholeNumber": "{field} एक पूर्ण संख्या होनी चाहिए",
+      "newRecord": "नया रिकॉर्ड: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "चार्ट सफलतापूर्वक डाला गया!",
+      "dashboardInserted": "डैशबोर्ड सफलतापूर्वक डाला गया!",
+      "exerciseNameRequired": "कृपया व्यायाम का नाम दर्ज करें",
+      "exerciseSectionCreated": "व्यायाम अनुभाग सफलतापूर्वक बनाया गया!",
+      "tableInserted": "टेबल सफलतापूर्वक डाला गया!",
+      "tableUpdated": "टेबल सफलतापूर्वक अपडेट हो गई!",
+      "timerInserted": "टाइमर सफलतापूर्वक डाला गया!",
+      "timerUpdated": "टाइमर सफलतापूर्वक अपडेट हो गया!",
+      "validChooseExercise": "एक व्यायाम चुनें",
+      "validationCombinedMode": "'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड भरना होगा!"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",
@@ -653,7 +671,8 @@
       "text": "टेक्स्ट",
       "timed": "समयबद्ध",
       "twentyones": "21s",
-      "yesNo": "हाँ/नहीं"
+      "yesNo": "हाँ/नहीं",
+      "warmup": "वार्म-अप"
     },
     "sets": "सेट्स:",
     "similarTags": "समान टैग:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - सेट: {sets}\n- रेप्स: {reps}\n- आराम: {restTime} सेकंड\n\n",
     "noteTemplate": "**नोट: {note}**\n",
     "date": "तिथि",
-    "weightUnitToggle": "इस प्रविष्टि के लिए इकाई"
+    "weightUnitToggle": "इस प्रविष्टि के लिए इकाई",
+    "work": "काम",
+    "rest": "पुनः"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "रिबन में डंबल आइकन दिखाएँ जो वर्कआउट लॉग फ़ॉर्म खोलता है",
       "weightUnit": "चार्ट, कुल और नए लॉग के लिए इकाई। प्रत्येक लॉग में वह इकाई दर्ज की गई थी।",
       "takeTour": "लॉगिंग, चार्ट, टेबल और टाइमर के बारे में एक संक्षिप्त विवरण दें।",
-      "welcomeWindow": "उदाहरण डेटा के साथ शुरुआत करने या बिल्कुल नए से शुरू करने के लिए, वेलकम विंडो को फिर से दिखाएं।"
+      "welcomeWindow": "उदाहरण डेटा के साथ शुरुआत करने या बिल्कुल नए से शुरू करने के लिए, वेलकम विंडो को फिर से दिखाएं।",
+      "keepScreenAwake": "किसी भी टाइमर के चलने के दौरान स्क्रीन को चालू रखने का प्रयास करें। इससे बैटरी अधिक खर्च होगी; इसकी उपलब्धता आपके डिवाइस और सिस्टम सेटिंग्स पर निर्भर करती है।",
+      "vibrateOnCompletion": "जब टाइमर समाप्त होता है, तो ध्वनि के बिना, थोड़े समय के लिए कंपन होता है। इसके लिए पेज पर टैप करने और समर्थित डिवाइस (जैसे Android) की आवश्यकता होती है। iOS पर उपलब्ध नहीं; पृष्ठभूमि में कोई सूचना नहीं।",
+      "presetRestDesc": "प्रत्येक राउंड के काम के बाद आराम करने के लिए लगने वाला समय (0 का मतलब कोई आराम नहीं)।"
     },
     "labels": {
       "csvPath": "CSV लॉग फ़ाइल का पथ",
@@ -769,7 +793,10 @@
       "weightUnit": "वज़न की इकाई",
       "showRibbonIcon": "क्विक लॉग आइकन दिखाएँ",
       "welcomeWindow": "स्वागत विंडो",
-      "takeTour": "निर्देशित दौरा"
+      "takeTour": "निर्देशित दौरा",
+      "keepScreenAwake": "जब टाइमर चल रहा हो तो स्क्रीन को चालू रखें।",
+      "vibrateOnCompletion": "टाइमर समाप्त होने पर कंपन करें",
+      "presetRest": "पुन:"
     },
     "messages": {
       "confirmDeletePreset": "क्या आप वाकई इस प्रीसेट को डिलीट करना चाहते हैं?",
@@ -811,7 +838,8 @@
       "trainingParameters": "प्रशिक्षण पैरामीटर",
       "savedPresets": "सेव की गई प्रीसेट",
       "savedProtocols": "सहे हुए प्रोटोकॉल",
-      "gettingStarted": "शुरू करना"
+      "gettingStarted": "शुरू करना",
+      "timerDeviceCues": "टाइमर डिवाइस संकेत"
     },
     "tooltips": {
       "deletePreset": "प्रीसेट हटाएं",
@@ -833,7 +861,8 @@
     "recentTrend": "हाल का ट्रेंड",
     "recentVsPrev": " (पिछले से)",
     "sessions": "सत्र",
-    "average": "औसत:"
+    "average": "औसत:",
+    "title": "{dataTypeLabel} आँकड़े ({contextLabel}):"
   },
   "table": {
     "actions": "क्रियाएं",
@@ -879,7 +908,9 @@
     },
     "trendLine": "ट्रेंड लाइन",
     "refreshingTable": "तालिका रीफ़्रेश हो रही है...",
-    "setCount": "{count} सेट करें"
+    "setCount": "{count} सेट करें",
+    "deleteSetMessage": "{set} आपके लॉग से हटा दिया जाएगा। इसे पूर्ववत नहीं किया जा सकता।",
+    "deleteSetTitle": "इस सेट को हटाएँ?"
   },
   "timeperiods": {
     "month": "महीना",
@@ -899,7 +930,16 @@
       "detailsControls": "नियंत्रण",
       "detailsSound": "ध्वनि"
     },
-    "stopwatch": "स्टॉपवॉच"
+    "stopwatch": "स्टॉपवॉच",
+    "phase": {
+      "rest": "विराम",
+      "work": "काम"
+    },
+    "round": "राउंड {current} में {total}",
+    "status": {
+      "done": "पूर्ण",
+      "paused": "विघटित"
+    }
   },
   "trends": {
     "declining": "घटती हुई",
@@ -962,7 +1002,9 @@
         "text": "फॉर्म खोलने के लिए '+' बटन पर टैप करें, फिर एक सेट सहेजें। यह तुरंत टेबल में आ जाएगा।"
       },
       "rowActions": {
-        "title": "संपादित करें या एक सेट हटाएं"
+        "title": "संपादित करें या एक सेट हटाएं",
+        "mobileText": "एक सेट पर टैप करके इसे ठीक करें। इसे हटाने के लिए, खुलने वाले फॉर्म में \"सेट हटाएं\" विकल्प का उपयोग करें।",
+        "text": "पंख का उपयोग करके एक पंक्ति में एक सेट को ठीक करें। इसे हटाने के लिए, खुलने वाले फॉर्म में \"सेट हटाएं\" विकल्प का उपयोग करें।"
       },
       "chart": {
         "title": "आपका प्रगति",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "मुझे दिखाओ"
+  },
+  "import": {
+    "chooseFile": "CSV फ़ाइल चुनें",
+    "notAnExport": "यह फ़ाइल एक मजबूत या भारी निर्यात नहीं है।",
+    "noSets": "इस फ़ाइल से कोई सेट नहीं पढ़ा जा सका। जांच करें कि यह CSV फ़ाइल है जिसे ऐप ने बिना किसी बदलाव के निर्यात किया है।",
+    "readError": "फ़ाइल पढ़ने में असमर्थ: {error}",
+    "source": "{source} से निर्यात करें",
+    "setsFound": "फ़ाइल में मौजूद सेट: {count}",
+    "setsToAdd": "जो सेट जोड़ें: {count}",
+    "duplicates": "पहले से आपके लॉग में शामिल, अनदेखा किया गया: {count}",
+    "dateRange": "प्रशिक्षण के दिन: {first} से {last} तक",
+    "newExercises": "बिना पेज के व्यायाम: {exercises}",
+    "nothingToAdd": "इस फ़ाइल में मौजूद प्रत्येक सेट पहले से ही आपके लॉग में मौजूद है।",
+    "backupNote": "आपके लॉग को सेट जोड़ने से पहले बैकअप किया जाता है।",
+    "importButton": "आयात सेट",
+    "imported": "आयात पूरा हुआ। निम्नलिखित सेट जोड़े गए: {count}",
+    "error": "आयात विफल: {error}",
+    "title": "स्ट्रॉन्ग या हेवी से आयात करें",
+    "intro": "ऐप के वर्कआउट डेटा निर्यात से CSV चुनें। जब तक आप पुष्टि नहीं करते, तब तक कुछ भी नहीं लिखा जाएगा।"
   }
 }

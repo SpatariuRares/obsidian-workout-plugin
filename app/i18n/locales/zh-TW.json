@@ -19,10 +19,12 @@
       "pace": "配速",
       "reps": "次數",
       "volume": "訓練量",
-      "weight": "重量"
+      "weight": "重量",
+      "e1rm": "預估的 1RM"
     },
     "defaultTitle": "趨勢 {type}",
-    "noTypesAvailable": "沒有可用的圖表類型"
+    "noTypesAvailable": "沒有可用的圖表類型",
+    "noEligibleE1rm": "無法進行 1RM 估算。請記錄 1–12 次重複的正面重量，但不包括熱身和減重訓練。"
   },
   "commands": {
     "addExerciseBlock": "新增動作區塊",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "遷移動作類型",
     "createExampleNotes": "建立範例說明",
     "openGettingStartedGuide": "開啟新手指南",
-    "startTour": "開始導覽"
+    "startTour": "開始導覽",
+    "importWorkouts": "從「強」或「重」資料庫匯入"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "建立記錄：{exerciseName}",
     "createLogButtonText": "建立記錄：{exerciseName}",
     "noDataTitle": "找不到 {exerciseName} 的記錄",
-    "exploreExampleData": "或者，使用範例資料進行探索"
+    "exploreExampleData": "或者，使用範例資料進行探索",
+    "lastSet": "上次：{set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "個人記錄：{weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "已插入程式碼區塊",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "更新目標",
       "updateTimer": "更新計時器",
       "decreaseBy": "將{label}減少{increment}",
-      "increaseBy": "將{label}增加{increment}"
+      "increaseBy": "將{label}增加{increment}",
+      "deleteSet": "刪除集合"
     },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field}最多為{max}",
       "validFieldRequired": "{field}為必填",
       "migrationNoUpdates": "所有動作頁面皆已是最新狀態",
-      "validMustBeWholeNumber": "{field} 必須為整數"
+      "validMustBeWholeNumber": "{field} 必須為整數",
+      "newRecord": "新記錄：{weight} {unit} (+{increase} {unit})",
+      "chartInserted": "圖表已成功插入！",
+      "dashboardInserted": "儀表板已成功插入！",
+      "exerciseNameRequired": "請輸入運動名稱",
+      "exerciseSectionCreated": "運動區已成功建立！",
+      "tableInserted": "表格已成功插入！",
+      "tableUpdated": "表格已成功更新！",
+      "timerInserted": "計時器已成功插入！",
+      "timerUpdated": "計時器已成功更新！",
+      "validChooseExercise": "選擇一個運動",
+      "validationCombinedMode": "對於「運動 + 訓練」類型，您必須填寫兩個欄位！"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",
@@ -653,7 +671,8 @@
       "text": "文字",
       "timed": "計時",
       "twentyones": "21 次訓練法",
-      "yesNo": "是/否"
+      "yesNo": "是/否",
+      "warmup": "預熱"
     },
     "sets": "組數：",
     "similarTags": "類似標籤：",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 組數：{sets}\n- 次數：{reps}\n- 休息：{restTime} 秒\n\n",
     "noteTemplate": "**備註：{note}**\n",
     "date": "日期",
-    "weightUnitToggle": "此欄位所使用的單位"
+    "weightUnitToggle": "此欄位所使用的單位",
+    "work": "工作",
+    "rest": "重置"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "在功能區顯示啞鈴圖示，點擊即可開啟運動紀錄表單",
       "weightUnit": "用於圖表、總數和新記錄的單位。 每個記錄都會保留它被輸入的單位。",
       "takeTour": "簡要說明：介紹記錄、圖表、表格和計時器的使用方法。",
-      "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。"
+      "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。",
+      "keepScreenAwake": "盡可能在任何計時器正在運作時保持螢幕開啟狀態。這會消耗更多電力；其可用性取決於您的裝置和系統設定。",
+      "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的設備（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
+      "presetRestDesc": "每輪工作後，休息的秒數 (0 表示不休息)。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -769,7 +793,10 @@
       "weightUnit": "重量單位",
       "showRibbonIcon": "顯示快速紀錄圖示",
       "welcomeWindow": "歡迎畫面",
-      "takeTour": "導覽"
+      "takeTour": "導覽",
+      "keepScreenAwake": "在計時器運作時，保持螢幕開啟",
+      "vibrateOnCompletion": "當計時器結束時，產生震動",
+      "presetRest": "預設"
     },
     "messages": {
       "confirmDeletePreset": "您確定要刪除這個預設嗎？",
@@ -811,7 +838,8 @@
       "trainingParameters": "訓練參數",
       "savedPresets": "儲存的預設",
       "savedProtocols": "儲存的協議",
-      "gettingStarted": "開始使用"
+      "gettingStarted": "開始使用",
+      "timerDeviceCues": "計時器設備提示"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
@@ -833,7 +861,8 @@
     "recentTrend": "近期趨勢",
     "recentVsPrev": " (與上次比)",
     "sessions": "訓練次數",
-    "average": "平均值："
+    "average": "平均值：",
+    "title": "{dataTypeLabel} statistics ({contextLabel}):"
   },
   "table": {
     "actions": "操作",
@@ -879,7 +908,9 @@
     },
     "trendLine": "趨勢線",
     "refreshingTable": "正在重新整理表格...",
-    "setCount": "{count} 設置"
+    "setCount": "{count} 設置",
+    "deleteSetMessage": "{set} 將會從您的記錄中移除。 這一操作無法撤銷。",
+    "deleteSetTitle": "刪除此組？"
   },
   "timeperiods": {
     "month": "月份",
@@ -899,7 +930,16 @@
       "detailsControls": "控制",
       "detailsSound": "聲音"
     },
-    "stopwatch": "碼錶"
+    "stopwatch": "碼錶",
+    "phase": {
+      "rest": "休息",
+      "work": "工作"
+    },
+    "round": "第 {current} 輪的 {total}",
+    "status": {
+      "done": "完成",
+      "paused": "暫停"
+    }
   },
   "trends": {
     "declining": "下降",
@@ -962,7 +1002,9 @@
         "text": "點擊 \"+\" 按鈕以開啟表單，然後儲存設定。設定會立即顯示在表格中。"
       },
       "rowActions": {
-        "title": "編輯或刪除一個集合"
+        "title": "編輯或刪除一個集合",
+        "mobileText": "點擊一個選項來修正它。若要移除它，請在開啟的表單中使用「刪除選項」功能。",
+        "text": "使用鉛筆在某一行上標記，以建立一個集合。要移除它，請在彈出視窗中使用「刪除集合」功能。"
       },
       "chart": {
         "title": "您的進度",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "請顯示"
+  },
+  "import": {
+    "chooseFile": "選擇 CSV 檔案",
+    "notAnExport": "這不是強或重型匯出的檔案。",
+    "noSets": "無法從此檔案讀取任何設定。請確認這是否為應用程式匯出的 CSV 檔案，且沒有任何變更。",
+    "readError": "無法讀取檔案：{error}",
+    "source": "從 {source} 匯出",
+    "setsFound": "檔案中的集合：{count}",
+    "setsToAdd": "要新增的集合：{count}",
+    "duplicates": "已記錄在您的日誌中，已跳過：{count}",
+    "dateRange": "培訓日期：{first} 至 {last}",
+    "newExercises": "沒有頁面的運動：{exercises}",
+    "nothingToAdd": "這個檔案中的每個組別，已經記錄在您的日誌中。",
+    "backupNote": "您的記錄在新增設定之前已備份。",
+    "importButton": "匯入套組",
+    "imported": "匯入完成。已新增設定：{count}",
+    "error": "匯入失敗：{error}",
+    "title": "從 Strong 或 Hevy 匯入",
+    "intro": "從應用程式的運動數據匯出中選擇 CSV 檔案。 匯出內容不會被儲存，直到您確認。"
   }
 }

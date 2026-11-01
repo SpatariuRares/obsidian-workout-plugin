@@ -19,10 +19,12 @@
       "pace": "配速",
       "reps": "次数",
       "volume": "训练量",
-      "weight": "重量"
+      "weight": "重量",
+      "e1rm": "预估的 1RM"
     },
     "defaultTitle": "趋势 {type}",
-    "noTypesAvailable": "没有可用的图表类型"
+    "noTypesAvailable": "没有可用的图表类型",
+    "noEligibleE1rm": "无法进行估计的 1RM（最大力量）训练。记录 1-12 次重复的积极重量，但不包括热身和减重训练。"
   },
   "commands": {
     "addExerciseBlock": "添加训练动作块",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "迁移训练动作类型",
     "createExampleNotes": "创建示例笔记",
     "openGettingStartedGuide": "打开新手指南",
-    "startTour": "开始导览"
+    "startTour": "开始导览",
+    "importWorkouts": "从 Strong 或 Hevy 导入"
   },
   "common": {
     "bpm": "次/分钟",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "创建记录：{exerciseName}",
     "createLogButtonText": "创建记录：{exerciseName}",
     "noDataTitle": "未找到与 {exerciseName} 相关的记录",
-    "exploreExampleData": "或者，使用示例数据进行探索"
+    "exploreExampleData": "或者，使用示例数据进行探索",
+    "lastSet": "上次：{set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "个人记录：{weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "已插入代码块",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "更新目标",
       "updateTimer": "更新计时器",
       "decreaseBy": "将{label}减少{increment}",
-      "increaseBy": "将{label}增加{increment}"
+      "increaseBy": "将{label}增加{increment}",
+      "deleteSet": "删除集合"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field}最多为{max}",
       "validFieldRequired": "{field}为必填项",
       "migrationNoUpdates": "所有训练页面均已是最新",
-      "validMustBeWholeNumber": "{field} 必须是整数"
+      "validMustBeWholeNumber": "{field} 必须是整数",
+      "newRecord": "新记录：{weight} {unit} (+{increase} {unit})",
+      "chartInserted": "图表已成功插入！",
+      "dashboardInserted": "仪表盘已成功插入！",
+      "exerciseNameRequired": "请填写锻炼名称",
+      "exerciseSectionCreated": "运动板块已成功创建！",
+      "tableInserted": "表格已成功插入！",
+      "tableUpdated": "表格已成功更新！",
+      "timerInserted": "倒计时已成功插入！",
+      "timerUpdated": "计时器已成功更新！",
+      "validChooseExercise": "选择一项运动",
+      "validationCombinedMode": "对于“锻炼 + 训练”类型的项目，您必须同时填写这两个字段！"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -653,7 +671,8 @@
       "text": "文本",
       "timed": "计时",
       "twentyones": "21次",
-      "yesNo": "是/否"
+      "yesNo": "是/否",
+      "warmup": "预热"
     },
     "sets": "组数：",
     "similarTags": "相似标签：",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - 组数：{sets}\n- 次数：{reps}\n- 休息：{restTime} 秒\n\n",
     "noteTemplate": "**备注：{note}**\n",
     "date": "日期",
-    "weightUnitToggle": "此条目对应的单位"
+    "weightUnitToggle": "此条目对应的单位",
+    "rest": "恢复",
+    "work": "工作"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "在功能区中显示用于打开训练记录表单的哑铃图标",
       "weightUnit": "用于图表、总计和新日志的单位。每个日志都保留了它被输入的单位。",
       "takeTour": "简要介绍：记录、图表、表格和计时器的使用方法。",
-      "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。"
+      "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。",
+      "keepScreenAwake": "尝试在任何计时器在前台运行时保持屏幕唤醒。 这会消耗更多电量；具体可用性取决于您的设备和系统设置。",
+      "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
+      "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -769,7 +793,10 @@
       "weightUnit": "重量单位",
       "showRibbonIcon": "显示快速记录图标",
       "welcomeWindow": "欢迎窗口",
-      "takeTour": "导览"
+      "takeTour": "导览",
+      "keepScreenAwake": "在计时器运行期间，保持屏幕开启",
+      "vibrateOnCompletion": "当计时器完成时，振动",
+      "presetRest": "休息"
     },
     "messages": {
       "confirmDeletePreset": "确定要删除此预设吗？",
@@ -811,7 +838,8 @@
       "trainingParameters": "训练参数",
       "savedPresets": "保存的预设",
       "savedProtocols": "已保存的协议",
-      "gettingStarted": "开始"
+      "gettingStarted": "开始",
+      "timerDeviceCues": "定时器设备提示"
     },
     "tooltips": {
       "deletePreset": "删除预设",
@@ -833,7 +861,8 @@
     "recentTrend": "近期趋势",
     "recentVsPrev": " (与上次比)",
     "sessions": "训练次数",
-    "average": "平均值："
+    "average": "平均值：",
+    "title": "{dataTypeLabel} 统计信息 ({contextLabel}):"
   },
   "table": {
     "actions": "操作",
@@ -879,7 +908,9 @@
     },
     "trendLine": "趋势线",
     "refreshingTable": "正在刷新表格...",
-    "setCount": "{count} 设置"
+    "setCount": "{count} 设置",
+    "deleteSetMessage": "{set} 将从您的日志中删除。 无法撤销此操作。",
+    "deleteSetTitle": "删除此集合？"
   },
   "timeperiods": {
     "month": "月",
@@ -899,7 +930,16 @@
       "detailsControls": "控件",
       "detailsSound": "声音"
     },
-    "stopwatch": "秒表"
+    "stopwatch": "秒表",
+    "phase": {
+      "rest": "休息",
+      "work": "工作"
+    },
+    "round": "第 {current} 轮 {total}",
+    "status": {
+      "done": "完成",
+      "paused": "暂停"
+    }
   },
   "trends": {
     "declining": "下降",
@@ -962,7 +1002,9 @@
         "text": "点击“+”按钮打开表单，然后保存一个设置。 这样，设置就会立即出现在表格中。"
       },
       "rowActions": {
-        "title": "编辑或删除一组"
+        "title": "编辑或删除一组",
+        "mobileText": "点击一个选项来修复它。要删除它，请在打开的表单中使用“删除选项”功能。",
+        "text": "使用铅笔在一个行上标记，以固定一组。要删除它，请在打开的表单中使用“删除一组”功能。"
       },
       "chart": {
         "title": "您的进度",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "显示"
+  },
+  "import": {
+    "chooseFile": "选择 CSV 文件",
+    "notAnExport": "此文件不是强力或重型导出文件。",
+    "noSets": "无法从该文件读取任何数据集。请确认该文件是应用程序导出的 CSV 文件，并且没有进行任何修改。",
+    "readError": "无法读取文件：{error}",
+    "source": "从 {source} 导出",
+    "setsFound": "文件中找到的集合：{count}",
+    "setsToAdd": "要添加的集合：{count}",
+    "duplicates": "已记录在您的日志中，已跳过：{count}",
+    "dateRange": "培训日：{first} 至 {last}",
+    "newExercises": "没有页面的练习：{exercises}",
+    "nothingToAdd": "此文件中的每个集合都已经记录在您的日志中。",
+    "backupNote": "在添加设置之前，您的日志会被备份。",
+    "importButton": "导入数据集",
+    "imported": "导入完成。已添加：{count}",
+    "error": "导入失败：{error}",
+    "title": "从 Strong 或 Hevy 导入",
+    "intro": "从应用程序的锻炼数据导出中选择CSV文件。 只有在您确认后才会生成文件。"
   }
 }

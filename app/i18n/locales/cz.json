@@ -19,10 +19,12 @@
       "pace": "Tempo",
       "reps": "Opakování",
       "volume": "Objem",
-      "weight": "Hmotnost"
+      "weight": "Hmotnost",
+      "e1rm": "Odhadovaná hodnota 1RM"
     },
     "defaultTitle": "Trend {type}",
-    "noTypesAvailable": "není dostupných žádných typů grafů"
+    "noTypesAvailable": "není dostupných žádných typů grafů",
+    "noEligibleE1rm": "Neexistují žádné vhodné série pro odhad 1RM. Zaznamenejte pozitivní váhu s 1–12 opakováními, přičemž vylučte rozcvičku a série s postupným snižováním váhy."
   },
   "commands": {
     "addExerciseBlock": "Přidat blok cvičení",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Migrovat typy cvičení",
     "createExampleNotes": "Vytvořte ukázkové poznámky",
     "openGettingStartedGuide": "Zobrazit návod pro začátek",
-    "startTour": "Spustit prohlídku"
+    "startTour": "Spustit prohlídku",
+    "importWorkouts": "Import z Strong nebo Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Vytvořit záznam pro: {exerciseName}",
     "createLogButtonText": "Vytvořit záznam pro: {exerciseName}",
     "noDataTitle": "Pro {exerciseName} nebyly nalezeny žádné záznamy",
-    "exploreExampleData": "Nebo prozkoumejte s ukázkovými daty"
+    "exploreExampleData": "Nebo prozkoumejte s ukázkovými daty",
+    "lastSet": "Poslední nastavení: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Osobní rekord: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Blok kódu vložen",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Aktualizovat cíl",
       "updateTimer": "Aktualizovat časovač",
       "decreaseBy": "Snížit {label} o {increment}",
-      "increaseBy": "Zvýšit {label} o {increment}"
+      "increaseBy": "Zvýšit {label} o {increment}",
+      "deleteSet": "Smazat sad"
     },
     "canvasLayout": "Rozvržení",
     "canvasOptions": "Možnosti",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} musí být nejvýše {max}",
       "validFieldRequired": "{field} je povinné",
       "migrationNoUpdates": "Všechny stránky cvičení jsou již aktuální",
-      "validMustBeWholeNumber": "Hodnota {field} musí být celé číslo."
+      "validMustBeWholeNumber": "Hodnota {field} musí být celé číslo.",
+      "newRecord": "Nová hodnota: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Graf byl úspěšně vložen!",
+      "dashboardInserted": "Dashboard byl úspěšně vložen!",
+      "exerciseNameRequired": "Prosím, zadejte název cvičení.",
+      "exerciseSectionCreated": "Úsek pro cvičení byl úspěšně vytvořen!",
+      "tableInserted": "Tabulka byla úspěšně přidána!",
+      "tableUpdated": "Tabulka byla úspěšně aktualizována!",
+      "timerInserted": "Časovač byl úspěšně vložen!",
+      "timerUpdated": "Časovač byl úspěšně aktualizován!",
+      "validChooseExercise": "Vyberte si cvičení",
+      "validationCombinedMode": "Pro typ „cvičení + trénink“ musíte vyplnit obě pole!"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",
@@ -653,7 +671,8 @@
       "text": "Text",
       "timed": "Časované",
       "twentyones": "Dvacetjedenky",
-      "yesNo": "Ano/Ne"
+      "yesNo": "Ano/Ne",
+      "warmup": "Rozcvička"
     },
     "sets": "Série:",
     "similarTags": "Podobné štítky:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Série: {sets}\n- Opakování: {reps}\n- Pauza: {restTime}s\n\n",
     "noteTemplate": "**Poznámka: {note}**\n",
     "date": "Datum",
-    "weightUnitToggle": "Jednotka pro tento záznam"
+    "weightUnitToggle": "Jednotka pro tento záznam",
+    "work": "Práce",
+    "rest": "Zastavit"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Zobrazit ikonu činky v postranním panelu, která otevře formulář záznamu tréninku",
       "weightUnit": "Jednotka pro grafy, souhrny a nové záznamy. Každý záznam si uchovává jednotku, ve které byl vytvořen.",
       "takeTour": "Krátce se podívejte na logování, grafy, tabulky a časovače.",
-      "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku."
+      "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku.",
+      "keepScreenAwake": "Pokuste se, aby obrazovka zůstala aktivní, zatímco běží jakýkoli časovač na prvním plánu. Spotřebuje více baterie; dostupnost závisí na vašem zařízení a systémových nastaveních.",
+      "vibrateOnCompletion": "Krátké vibrace po skončení časovače, bez ohledu na zvuk. Vyžaduje stisknutí na stránce a kompatibilní zařízení (např. Android). Není k dispozici pro iOS; bez upozornění na pozadí.",
+      "presetRestDesc": "Sekundy odpočinku po každém kole (0 znamená žádný odpočinek)."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -769,7 +793,10 @@
       "weightUnit": "Jednotka hmotnosti",
       "showRibbonIcon": "Zobrazit ikonu rychlého záznamu",
       "welcomeWindow": "Okno přivítání",
-      "takeTour": "Prohlídka s průvodcem"
+      "takeTour": "Prohlídka s průvodcem",
+      "keepScreenAwake": "Udržení obrazovky aktivní, zatímco běží časovač.",
+      "vibrateOnCompletion": "Vibrujte, když časovač skončí",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Opravdu chcete tuto předvolbu smazat?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Parametry tréninku",
       "savedPresets": "Uložené přednastavení",
       "savedProtocols": "Uložené protokoly",
-      "gettingStarted": "Začít"
+      "gettingStarted": "Začít",
+      "timerDeviceCues": "Indikátory pro zařízení časovače"
     },
     "tooltips": {
       "deletePreset": "Smazat předvolbu",
@@ -833,7 +861,8 @@
     "recentTrend": "Nedávný trend",
     "recentVsPrev": " (vs předch.)",
     "sessions": "Tréninky",
-    "average": "Průměr:"
+    "average": "Průměr:",
+    "title": "{dataTypeLabel} statistiky ({contextLabel}):"
   },
   "table": {
     "actions": "Akce",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Spojnice trendu",
     "refreshingTable": "Obnovování tabulky...",
-    "setCount": "{count} nastavuje"
+    "setCount": "{count} nastavuje",
+    "deleteSetMessage": "{set} bude odstraněno z vašeho logu. Toto nelze zrušit.",
+    "deleteSetTitle": "Smazat tuto sadu?"
   },
   "timeperiods": {
     "month": "Měsíc",
@@ -899,7 +930,16 @@
       "detailsControls": "Ovládací prvky",
       "detailsSound": "Zvuk"
     },
-    "stopwatch": "Stopky"
+    "stopwatch": "Stopky",
+    "phase": {
+      "rest": "Odpočinek",
+      "work": "Práce"
+    },
+    "round": "Kolo {current} z {total}",
+    "status": {
+      "done": "Dokončeno",
+      "paused": "Pozastaveno"
+    }
   },
   "trends": {
     "declining": "Klesající",
@@ -962,7 +1002,9 @@
         "text": "Stiskněte tlačítko +, abyste otevřeli formulář, a poté uložte sadu. Sadě se okamžitě zobrazí v tabulce."
       },
       "rowActions": {
-        "title": "Upravte nebo odstraňte sadu"
+        "title": "Upravte nebo odstraňte sadu",
+        "mobileText": "Klepete na sadu, abyste ji opravili. Pro odstranění použijte možnost \"Smazat sadu\" ve formuláři, který se otevře.",
+        "text": "Použijte tužku k označení řádku a vytvoření sady. Pro odstranění použijte funkci \"Smazat sadu\" v okně, které se otevře."
       },
       "chart": {
         "title": "Váš pokrok",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Zobraz mi"
+  },
+  "import": {
+    "chooseFile": "Vyberte soubor ve formátu CSV",
+    "notAnExport": "Tento soubor není exportem typu \"Silný\" nebo \"Hrubý\".",
+    "noSets": "Nebylo možné načíst žádná data z tohoto souboru. Ujistěte se, že se jedná o CSV soubor, který aplikace exportovala, a že nebyl změněn.",
+    "readError": "Nemožno načíst soubor: {error}",
+    "source": "Export z {source}",
+    "setsFound": "Sady v souboru: {count}",
+    "setsToAdd": "Sady k přidání: {count}",
+    "duplicates": "Už zaznamenáno ve vašem logu, přeskočeno: {count}",
+    "dateRange": "Dny tréninku: od {first} do {last}",
+    "newExercises": "Cvičení bez stránky: {exercises}",
+    "nothingToAdd": "Každý záznam v tomto souboru je již zaznamenán ve vašem logu.",
+    "backupNote": "Váš log je zálohován před přidáním sad.",
+    "importButton": "Importovat sady",
+    "imported": "Import dokončen. Přidány sady: {count}",
+    "error": "Neúspěšné importování: {error}",
+    "title": "Import z Strong nebo Hevy",
+    "intro": "Vyberte soubor CSV z exportu dat tréninků v aplikaci. Žádná data se nezapisují, dokud to nepotvrdíte."
   }
 }

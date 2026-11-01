@@ -19,10 +19,12 @@
       "pace": "Tempo",
       "reps": "Wiederholungen",
       "volume": "Volumen",
-      "weight": "Gewicht"
+      "weight": "Gewicht",
+      "e1rm": "Geschätzter Wert für 1RM"
     },
     "defaultTitle": "Trend {type}",
-    "noTypesAvailable": "Keine verfügbaren Diagrammtypen"
+    "noTypesAvailable": "Keine verfügbaren Diagrammtypen",
+    "noEligibleE1rm": "Keine geeigneten Sätze für die Schätzung des 1RM. Einen positiven Wert mit 1–12 Wiederholungen protokollieren, wobei Aufwärmen und Drop-Sets ausgeschlossen sind."
   },
   "commands": {
     "addExerciseBlock": "Übungsblock hinzufügen",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Übungstypen migrieren",
     "createExampleNotes": "Beispielnotizen erstellen",
     "openGettingStartedGuide": "Öffne die Einführung",
-    "startTour": "Beginnen Sie die Tour"
+    "startTour": "Beginnen Sie die Tour",
+    "importWorkouts": "Import von Strong oder Hevy"
   },
   "common": {
     "bpm": "BPM",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Protokoll erstellen für: {exerciseName}",
     "createLogButtonText": "Protokoll erstellen für: {exerciseName}",
     "noDataTitle": "Keine Protokolle für {exerciseName} gefunden",
-    "exploreExampleData": "Oder erkunden Sie mit Beispieldaten"
+    "exploreExampleData": "Oder erkunden Sie mit Beispieldaten",
+    "lastSet": "Letzte Einstellung: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Persönliche Bestleistung: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Codeblock eingefügt",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Ziel aktualisieren",
       "updateTimer": "Timer aktualisieren",
       "decreaseBy": "{label} um {increment} verringern",
-      "increaseBy": "{label} um {increment} erhöhen"
+      "increaseBy": "{label} um {increment} erhöhen",
+      "deleteSet": "Set löschen"
     },
     "canvasLayout": "Anordnung",
     "canvasOptions": "Einstellungen",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} darf höchstens {max} sein",
       "validFieldRequired": "{field} ist erforderlich",
       "migrationNoUpdates": "Alle Übungsseiten sind bereits aktuell",
-      "validMustBeWholeNumber": "{field} muss eine ganze Zahl sein"
+      "validMustBeWholeNumber": "{field} muss eine ganze Zahl sein",
+      "newRecord": "Neuer Eintrag: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Diagramm erfolgreich eingefügt!",
+      "dashboardInserted": "Dashboard erfolgreich eingefügt!",
+      "exerciseNameRequired": "Bitte geben Sie einen Namen für die Übung ein",
+      "exerciseSectionCreated": "Übungsteil erfolgreich erstellt!",
+      "tableInserted": "Tabelle erfolgreich eingefügt!",
+      "tableUpdated": "Tabelle erfolgreich aktualisiert!",
+      "timerInserted": "Timer erfolgreich eingefügt!",
+      "timerUpdated": "Timer erfolgreich aktualisiert!",
+      "validChooseExercise": "Wählen Sie eine Übung",
+      "validationCombinedMode": "Für den Typ \"Übung + Training\" müssen Sie beide Felder ausfüllen!"
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -653,7 +671,8 @@
       "text": "Text",
       "timed": "Zeitbasiert",
       "twentyones": "21er",
-      "yesNo": "Ja/Nein"
+      "yesNo": "Ja/Nein",
+      "warmup": "Aufwärmen"
     },
     "sets": "Sätze:",
     "similarTags": "Ähnliche Tags:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sätze: {sets}\n- Wiederholungen: {reps}\n- Pause: {restTime}s\n\n",
     "noteTemplate": "**Hinweis: {note}**\n",
     "date": "Datum",
-    "weightUnitToggle": "Einheit für diesen Eintrag"
+    "weightUnitToggle": "Einheit für diesen Eintrag",
+    "work": "Arbeiten",
+    "rest": "Rest"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Hantelsymbol in der Seitenleiste anzeigen, das das Formular für das Trainingsprotokoll öffnet",
       "weightUnit": "Einheit für Diagramme, Gesamtsummen und neue Protokolle. Jedes Protokoll behält die Einheit bei, in der es erstellt wurde.",
       "takeTour": "Geben Sie einen kurzen Überblick über das Protokollieren, Diagramme, Tabellen und Timer.",
-      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen."
+      "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen.",
+      "keepScreenAwake": "Versuchen Sie, den Bildschirm aktiv zu halten, während eine Hintergrund- oder Vordergrund-Uhr läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von Ihrem Gerät und Ihren Systemeinstellungen ab.",
+      "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
+      "presetRestDesc": "Sekunden der Ruhe nach der Arbeit jeder Runde (0 für keine Ruhe)."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -769,7 +793,10 @@
       "weightUnit": "Gewichtseinheit",
       "showRibbonIcon": "Symbol für Schnellprotokoll anzeigen",
       "welcomeWindow": "Willkommensfenster",
-      "takeTour": "Führte Tour"
+      "takeTour": "Führte Tour",
+      "keepScreenAwake": "Halte den Bildschirm aktiv, während eine Zeitmessung läuft",
+      "vibrateOnCompletion": "Vibration, wenn ein Timer abgelaufen ist",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Möchtest du diese Voreinstellung wirklich löschen?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Parameter für das Training",
       "savedPresets": "Gespeicherte Voreinstellungen",
       "savedProtocols": "Gespeicherte Protokolle",
-      "gettingStarted": "Wie man anfängt"
+      "gettingStarted": "Wie man anfängt",
+      "timerDeviceCues": "Hinweise für Timer-Geräte"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",
@@ -833,7 +861,8 @@
     "recentTrend": "Aktueller Trend",
     "recentVsPrev": " (vs. vorh.)",
     "sessions": "Sitzungen",
-    "average": "Durchschnitt:"
+    "average": "Durchschnitt:",
+    "title": "{dataTypeLabel} Statistiken ({contextLabel}):"
   },
   "table": {
     "actions": "Aktionen",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Trendlinie",
     "refreshingTable": "Tabelle wird aktualisiert...",
-    "setCount": "{count} legt fest"
+    "setCount": "{count} legt fest",
+    "deleteSetMessage": "{set} wird aus Ihrem Protokoll entfernt. Dies kann nicht rückgängig gemacht werden.",
+    "deleteSetTitle": "Diesen Datensatz löschen?"
   },
   "timeperiods": {
     "month": "Monat",
@@ -899,7 +930,16 @@
       "detailsControls": "Steuerung",
       "detailsSound": "Ton"
     },
-    "stopwatch": "Stoppuhr"
+    "stopwatch": "Stoppuhr",
+    "phase": {
+      "rest": "Pause",
+      "work": "Arbeit"
+    },
+    "round": "Runde {current} von {total}",
+    "status": {
+      "done": "Fertig",
+      "paused": "Angehalten"
+    }
   },
   "trends": {
     "declining": "Rückläufig",
@@ -962,7 +1002,9 @@
         "text": "Drücken Sie die Schaltfläche \"+\", um das Formular zu öffnen, und speichern Sie dann eine Einstellung. Sie wird sofort in der Tabelle angezeigt."
       },
       "rowActions": {
-        "title": "Bearbeiten oder löschen Sie eine Gruppe"
+        "title": "Bearbeiten oder löschen Sie eine Gruppe",
+        "mobileText": "Tippen Sie auf eine Gruppe, um sie zu korrigieren. Um sie zu entfernen, verwenden Sie die Option \"Gruppe löschen\" im Formular, das geöffnet wird.",
+        "text": "Verwenden Sie das Bleistift-Symbol in einer Zeile, um eine Auswahl zu speichern. Um diese zu löschen, verwenden Sie die Option \"Auswahl löschen\" im geöffneten Formular."
       },
       "chart": {
         "title": "Ihr Fortschritt",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Zeige mir"
+  },
+  "import": {
+    "chooseFile": "Wählen Sie die CSV-Datei aus",
+    "notAnExport": "Diese Datei ist weder ein \"Stark\"- noch ein \"Schwer\"-Export.",
+    "noSets": "Es konnten keine Datensätze aus dieser Datei gelesen werden. Bitte überprüfen Sie, ob es sich um die CSV-Datei handelt, die die App exportiert hat, und ob sie unverändert ist.",
+    "readError": "Datei konnte nicht gelesen werden: {error}",
+    "source": "Exportieren von {source}",
+    "setsFound": "Sets in the file: {count}",
+    "setsToAdd": "Sets zum Hinzufügen: {count}",
+    "duplicates": "Bereits in Ihrem Protokoll, übersprungen: {count}",
+    "dateRange": "Trainingsdaten: von {first} bis {last}",
+    "newExercises": "Übungen ohne Seitenzahl: {exercises}",
+    "nothingToAdd": "Jedes Element in dieser Datei ist bereits in Ihrem Protokoll vorhanden.",
+    "backupNote": "Ihre Protokolle werden gesichert, bevor die Sätze hinzugefügt werden.",
+    "importButton": "Importe erstellen",
+    "imported": "Import abgeschlossen. Ergänzte Datensätze: {count}",
+    "error": "Import fehlgeschlagen: {error}",
+    "title": "Import von Strong oder Hevy",
+    "intro": "Wählen Sie die CSV-Datei aus den Exportoptionen für Trainingsdaten der App. Die Datei wird erst erstellt, wenn Sie bestätigen."
   }
 }

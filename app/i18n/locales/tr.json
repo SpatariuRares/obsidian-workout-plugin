@@ -19,10 +19,12 @@
       "pace": "Tempo",
       "reps": "Tekrarlar",
       "volume": "Hacim",
-      "weight": "Ağırlık"
+      "weight": "Ağırlık",
+      "e1rm": "Tahmini 1RM"
     },
     "defaultTitle": "{type} trendi",
-    "noTypesAvailable": "kullanılabilir grafik türü yok"
+    "noTypesAvailable": "kullanılabilir grafik türü yok",
+    "noEligibleE1rm": "Tahmini 1RM için uygun olmayan setler. Isınma ve düşüş setlerini hariç tutarak, 1-12 tekrar aralığında pozitif ağırlık kaydı oluşturun."
   },
   "commands": {
     "addExerciseBlock": "Egzersiz bloğu ekle",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Egzersiz türlerini taşı",
     "createExampleNotes": "Örnek notlar oluştur",
     "openGettingStartedGuide": "Başlangıç kılidını aç",
-    "startTour": "Turu başlatın"
+    "startTour": "Turu başlatın",
+    "importWorkouts": "Strong veya Hevy'den içe aktar"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Kayıt oluştur: {exerciseName}",
     "createLogButtonText": "Kayıt oluştur: {exerciseName}",
     "noDataTitle": "{exerciseName} için kayıt bulunamadı",
-    "exploreExampleData": "Veya örnek veriyle keşfet"
+    "exploreExampleData": "Veya örnek veriyle keşfet",
+    "lastSet": "Son kez: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Kişisel rekor: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Kod bloğu eklendi",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Hedef ağırlığı güncelle",
       "updateTimer": "Zamanlayıcıyı güncelle",
       "decreaseBy": "{label} değerini {increment} azalt",
-      "increaseBy": "{label} değerini {increment} artır"
+      "increaseBy": "{label} değerini {increment} artır",
+      "deleteSet": "Set'i sil"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} en fazla {max} olmalıdır",
       "validFieldRequired": "{field} zorunludur",
       "migrationNoUpdates": "Tüm egzersiz sayfaları zaten güncel",
-      "validMustBeWholeNumber": "{field} tamsayı olmalıdır"
+      "validMustBeWholeNumber": "{field} tamsayı olmalıdır",
+      "newRecord": "Yeni kayıt: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Grafik başarıyla eklendi!",
+      "dashboardInserted": "Gösterge paneli başarıyla eklendi!",
+      "exerciseNameRequired": "Lütfen bir egzersiz adı girin",
+      "exerciseSectionCreated": "Egzersiz bölümü başarıyla oluşturuldu!",
+      "tableInserted": "Tablo başarıyla eklendi!",
+      "tableUpdated": "Tablo başarıyla güncellendi!",
+      "timerInserted": "Zamanlayıcı başarıyla eklendi!",
+      "timerUpdated": "Zamanlayıcı başarıyla güncellendi!",
+      "validChooseExercise": "Bir egzersiz seçin",
+      "validationCombinedMode": "'Egzersiz + antrenman' türü için, her iki alanı da doldurmanız gerekmektedir!"
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -653,7 +671,8 @@
       "text": "Metin",
       "timed": "Süreli",
       "twentyones": "Yirmi bir",
-      "yesNo": "Evet/Hayır"
+      "yesNo": "Evet/Hayır",
+      "warmup": "Isınma"
     },
     "sets": "Setler:",
     "similarTags": "Benzer etiketler:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Setler: {sets}\n- Tekrarlar: {reps}\n- Dinlenme: {restTime} sn\n\n",
     "noteTemplate": "**Not: {note}**\n",
     "date": "Tarih",
-    "weightUnitToggle": "Bu girdinin birim değeri"
+    "weightUnitToggle": "Bu girdinin birim değeri",
+    "work": "Çalış",
+    "rest": "Dinlenme"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Şerit menüde antrenman kaydı formunu açan dambıl simgesini göster",
       "weightUnit": "Grafikler, toplamlar ve yeni günlükler için birim. Her günlük, girildiği birimi korur.",
       "takeTour": "Günlük kaydı, grafikler, tablolar ve zamanlayıcıları kısaca açıklayın.",
-      "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin."
+      "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin.",
+      "keepScreenAwake": "Zamanlayıcı çalışırken ekranın açık kalmasına çalışın. Daha fazla pil tüketir; kullanılabilirlik, cihazınızın ve sistem ayarlarınızın özelliklerine bağlıdır.",
+      "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
+      "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir)."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -769,7 +793,10 @@
       "weightUnit": "Ağırlık birimi",
       "showRibbonIcon": "Hızlı kayıt simgesini göster",
       "welcomeWindow": "Hoş geldiniz penceresi",
-      "takeTour": "Rehberli tur"
+      "takeTour": "Rehberli tur",
+      "keepScreenAwake": "Zamanlayıcı çalışırken ekranı açık tut",
+      "vibrateOnCompletion": "Zamanlayıcı bittiğinde titreşim",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Bu ön ayarı gerçekten silmek istiyor musunuz?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Antrenman parametreleri",
       "savedPresets": "Kaydedilmiş ön ayarlar",
       "savedProtocols": "Kaydedilmiş protokoller",
-      "gettingStarted": "Başlangıç"
+      "gettingStarted": "Başlangıç",
+      "timerDeviceCues": "Zamanlayıcı cihaz uyarıları"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",
@@ -833,7 +861,8 @@
     "recentTrend": "Son trend",
     "recentVsPrev": " (öncekiyle)",
     "sessions": "Oturumlar",
-    "average": "Ortalama:"
+    "average": "Ortalama:",
+    "title": "{dataTypeLabel} istatistikler ({contextLabel}):"
   },
   "table": {
     "actions": "Eylemler",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Trend çizgisi",
     "refreshingTable": "Tablo yenileniyor...",
-    "setCount": "{count} değerini ayarlar"
+    "setCount": "{count} değerini ayarlar",
+    "deleteSetMessage": "{set}, günlük kaydınızdan silinecektir. Bu işlemi geri alınamaz.",
+    "deleteSetTitle": "Bu seti silmek mi?"
   },
   "timeperiods": {
     "month": "Ay",
@@ -899,7 +930,16 @@
       "detailsControls": "Kontroller",
       "detailsSound": "Ses"
     },
-    "stopwatch": "Stoper"
+    "stopwatch": "Stoper",
+    "phase": {
+      "rest": "Dinlenme",
+      "work": "Çalışma"
+    },
+    "round": "Tur {current} of {total}",
+    "status": {
+      "done": "Tamamlandı",
+      "paused": "Durdurulmuş"
+    }
   },
   "trends": {
     "declining": "Azalan",
@@ -962,7 +1002,9 @@
         "text": "'+' düğmesine basarak formu açın, ardından bir set kaydedin. Form, hemen tabloya eklenecektir."
       },
       "rowActions": {
-        "title": "Bir küme'yi düzenle veya sil"
+        "title": "Bir küme'yi düzenle veya sil",
+        "mobileText": "Bir küme seçerek düzeltin. Silmek için, açılan formda \"Küme Sil\" seçeneğini kullanın.",
+        "text": "Bir satırdaki kalem kullanarak bir kümeyi sabitleyin. Kümeyi kaldırmak için, açılan formda \"Küme Sil\" seçeneğini kullanın."
       },
       "chart": {
         "title": "İlerlemeniz",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Beni göster"
+  },
+  "import": {
+    "chooseFile": "CSV dosyasını seçin",
+    "notAnExport": "Bu dosya, \"Strong\" veya \"Hevy\" bir dışa aktarma değildir.",
+    "noSets": "Bu dosyadan herhangi bir veri okunamadı. Uygulama tarafından dışa aktarılan ve herhangi bir değişiklik yapılmamış CSV dosyasının doğru olduğundan emin olun.",
+    "readError": "Dosya okunamadı: {error}",
+    "source": "{source}'dan dışa aktar",
+    "setsFound": "Dosyadaki küpler: {count}",
+    "setsToAdd": "Eklenecek setler: {count}",
+    "duplicates": "Zaten günlük kaydınızda, atlandı: {count}",
+    "dateRange": "Eğitim günleri: {first} ile {last}",
+    "newExercises": "Sayfa olmayan egzersizler: {exercises}",
+    "nothingToAdd": "Bu dosyadaki her bir küme, zaten günlük kaydınızda yer almaktadır.",
+    "backupNote": "Günlükleriniz, ayarların eklenmeden önce yedeklenir.",
+    "importButton": "İçe aktar",
+    "imported": "İçe aktarma tamamlandı. Eklenecek öğeler: {count}",
+    "error": "İmport işlemi başarısız oldu: {error}",
+    "title": "\"Strong\" veya \"Hevy\"'den içe aktar",
+    "intro": "Uygulamanın egzersiz verilerini dışa aktarma seçeneğinden CSV dosyasını seçin. Kaydetmek için onaylamadan herhangi bir şey kaydedilmez."
   }
 }

@@ -19,10 +19,12 @@
       "pace": "ペース",
       "reps": "レップ数",
       "volume": "ボリューム",
-      "weight": "重量"
+      "weight": "重量",
+      "e1rm": "推定 1RM"
     },
     "defaultTitle": "トレンド {type}",
-    "noTypesAvailable": "利用可能なグラフの種類はありません"
+    "noTypesAvailable": "利用可能なグラフの種類はありません",
+    "noEligibleE1rm": "1RM（推定最大挙上重量）の該当するセットは存在しません。ウォーミングアップやドロップセットを除いた、1～12回繰り返しの正の重量を記録してください。"
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "エクササイズタイプを移行",
     "createExampleNotes": "例を作成する",
     "openGettingStartedGuide": "チュートリアルを開始する",
-    "startTour": "ツアーを開始する"
+    "startTour": "ツアーを開始する",
+    "importWorkouts": "Strong または Hevy からインポート"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "{exerciseName} のログを作成する",
     "createLogButtonText": "{exerciseName} のログを作成する",
     "noDataTitle": "{exerciseName} のログが見つかりません",
-    "exploreExampleData": "または、サンプルデータを使って探求してみる"
+    "exploreExampleData": "または、サンプルデータを使って探求してみる",
+    "lastSet": "前回: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "パーソナル記録: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "コードブロックを挿入しました",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "目標を更新",
       "updateTimer": "タイマーを更新",
       "decreaseBy": "{label}を{increment}減らす",
-      "increaseBy": "{label}を{increment}増やす"
+      "increaseBy": "{label}を{increment}増やす",
+      "deleteSet": "セットを削除"
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field}は{max}以下でなければなりません",
       "validFieldRequired": "{field}は必須です",
       "migrationNoUpdates": "すべてのエクササイズページはすでに最新です",
-      "validMustBeWholeNumber": "{field} は、整数である必要があります。"
+      "validMustBeWholeNumber": "{field} は、整数である必要があります。",
+      "newRecord": "新規記録: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "グラフが正常に挿入されました！",
+      "dashboardInserted": "ダッシュボードの挿入に成功しました！",
+      "exerciseNameRequired": "運動の名前を入力してください",
+      "exerciseSectionCreated": "エクササイズセクションの作成に成功しました！",
+      "tableInserted": "テーブルが正常に挿入されました！",
+      "tableUpdated": "テーブルが正常に更新されました！",
+      "timerInserted": "タイマーが正常に挿入されました！",
+      "timerUpdated": "タイマーが正常に更新されました！",
+      "validChooseExercise": "エクササイズを選択してください",
+      "validationCombinedMode": "「運動 + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -653,7 +671,8 @@
       "text": "テキスト",
       "timed": "時間指定",
       "twentyones": "21s",
-      "yesNo": "はい/いいえ"
+      "yesNo": "はい/いいえ",
+      "warmup": "ウォーミングアップ"
     },
     "sets": "セット数:",
     "similarTags": "関連するタグ:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- 回数: {reps}\n- 休憩: {restTime}秒\n\n",
     "noteTemplate": "**メモ: {note}**\n",
     "date": "日付",
-    "weightUnitToggle": "このエントリの単位"
+    "weightUnitToggle": "このエントリの単位",
+    "rest": "休憩",
+    "work": "作業"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
       "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。",
       "takeTour": "ログ、グラフ、表、タイマーなどの基本的な機能について、簡単に説明します。",
-      "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。"
+      "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。",
+      "keepScreenAwake": "タイマーが実行されている間、画面を常に表示するようにしてください。バッテリー消費が大きくなります。利用可能かどうかは、お使いのデバイスとシステム設定によって異なります。",
+      "vibrateOnCompletion": "タイマーが終了した際に、音とは別に短い振動が発生します。ページへのタップと、Androidなどの対応デバイスが必要です。iOSでは利用できません。バックグラウンドアラートは表示されません。",
+      "presetRestDesc": "各ラウンドの作業後の休憩時間（0は休憩なし）。"
     },
     "labels": {
       "csvPath": "CSV形式のログファイルのパス",
@@ -769,7 +793,10 @@
       "weightUnit": "単位（重量）",
       "showRibbonIcon": "クイック記録アイコンを表示",
       "welcomeWindow": "ウェルカムウィンドウ",
-      "takeTour": "ガイド付きツアー"
+      "takeTour": "ガイド付きツアー",
+      "keepScreenAwake": "タイマーが動作中に画面をオンにする",
+      "vibrateOnCompletion": "タイマーが終了したときに振動する",
+      "presetRest": "リセット"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
@@ -811,7 +838,8 @@
       "trainingParameters": "トレーニングパラメータ",
       "savedPresets": "保存されたプリセット",
       "savedProtocols": "保存されたプロトコル",
-      "gettingStarted": "開始"
+      "gettingStarted": "開始",
+      "timerDeviceCues": "タイマーデバイスの操作ガイダンス"
     },
     "tooltips": {
       "deletePreset": "プリセットを削除",
@@ -833,7 +861,8 @@
     "recentTrend": "最近の傾向",
     "recentVsPrev": " (前回比)",
     "sessions": "セッション",
-    "average": "平均:"
+    "average": "平均:",
+    "title": "{dataTypeLabel} 統計情報 ({contextLabel}):"
   },
   "table": {
     "actions": "操作",
@@ -879,7 +908,9 @@
     },
     "trendLine": "トレンドライン",
     "refreshingTable": "テーブルを更新中...",
-    "setCount": "{count} を設定する"
+    "setCount": "{count} を設定する",
+    "deleteSetMessage": "{set} は、ログから削除されます。この操作は元に戻すことができません。",
+    "deleteSetTitle": "このセットを削除しますか？"
   },
   "timeperiods": {
     "month": "月",
@@ -899,7 +930,16 @@
       "detailsControls": "操作",
       "detailsSound": "音"
     },
-    "stopwatch": "ストップウォッチ"
+    "stopwatch": "ストップウォッチ",
+    "phase": {
+      "rest": "休憩",
+      "work": "作業"
+    },
+    "round": "ラウンド {current} の {total}",
+    "status": {
+      "done": "完了",
+      "paused": "一時停止"
+    }
   },
   "trends": {
     "declining": "減少",
@@ -962,7 +1002,9 @@
         "text": "「+」ボタンを押してフォームを開き、その後、設定を保存します。すると、すぐにテーブルに表示されます。"
       },
       "rowActions": {
-        "title": "編集または削除する"
+        "title": "編集または削除する",
+        "mobileText": "設定を修正するには、セットを選択してタップしてください。削除するには、開いたフォームで「セットを削除」を選択してください。",
+        "text": "ペンを使って行を修正して、セットを固定します。削除するには、開いたフォームで「セットを削除」を使用します。"
       },
       "chart": {
         "title": "あなたの進捗状況",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Show me"
+  },
+  "import": {
+    "chooseFile": "CSV ファイルを選択する",
+    "notAnExport": "このファイルは、強力なエクスポートやヘビーエクスポートではありません。",
+    "noSets": "このファイルからデータ読み取ることができませんでした。アプリがエクスポートしたCSVファイルが、変更なしで正しい形式になっているか確認してください。",
+    "readError": "ファイルを開くことができません: {error}",
+    "source": "{source} からエクスポート",
+    "setsFound": "ファイル内のセット: {count}",
+    "setsToAdd": "追加するセット: {count}",
+    "duplicates": "すでにログに記録されています。スキップされました：{count}",
+    "dateRange": "研修期間: {first} から {last} までの期間",
+    "newExercises": "ページがないエクササイズ: {exercises}",
+    "nothingToAdd": "このファイル内のすべてのセットは、すでにログに記録されています。",
+    "backupNote": "設定が追加される前に、ログがバックアップされます。",
+    "importButton": "インポート",
+    "imported": "インポート完了。 追加された設定: {count}",
+    "error": "インポートに失敗しました: {error}",
+    "title": "Strong または Hevy からインポート",
+    "intro": "アプリのワークアウトデータのエクスポートからCSVを選択してください。確認するまで何も書き込まれません。"
   }
 }

@@ -19,10 +19,12 @@
       "pace": "Rythme",
       "reps": "Répétitions",
       "volume": "Volume",
-      "weight": "Poids"
+      "weight": "Poids",
+      "e1rm": "Estimation de la valeur de 1RM"
     },
     "defaultTitle": "Évolution {type}",
-    "noTypesAvailable": "Aucun type de graphique disponible"
+    "noTypesAvailable": "Aucun type de graphique disponible",
+    "noEligibleE1rm": "Aucun ensemble de poids approprié pour l'estimation du 1RM. Enregistrer un poids positif avec 1 à 12 répétitions, en excluant les séries de montée et de descente."
   },
   "commands": {
     "addExerciseBlock": "Ajouter un bloc d'exercice",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Migrer les types d'exercices",
     "createExampleNotes": "Créer des notes d'exemple",
     "openGettingStartedGuide": "Ouvrir le guide de démarrage",
-    "startTour": "Commencer la visite"
+    "startTour": "Commencer la visite",
+    "importWorkouts": "Importer depuis Strong ou Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Créer un journal pour : {exerciseName}",
     "createLogButtonText": "Créer un journal pour : {exerciseName}",
     "noDataTitle": "Aucun enregistrement trouvé pour {exerciseName}",
-    "exploreExampleData": "Ou explorez avec des données d'exemple."
+    "exploreExampleData": "Ou explorez avec des données d'exemple.",
+    "lastSet": "Dernière fois : {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Record personnel : {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Bloc de code inséré",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Mettre à jour la cible",
       "updateTimer": "Mettre à jour le minuteur",
       "decreaseBy": "Diminuer {label} de {increment}",
-      "increaseBy": "Augmenter {label} de {increment}"
+      "increaseBy": "Augmenter {label} de {increment}",
+      "deleteSet": "Supprimer"
     },
     "canvasLayout": "Mise en page",
     "canvasOptions": "Options",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} doit être au maximum {max}",
       "validFieldRequired": "{field} est obligatoire",
       "migrationNoUpdates": "Toutes les pages d'exercices sont déjà à jour",
-      "validMustBeWholeNumber": "{field} doit être un nombre entier."
+      "validMustBeWholeNumber": "{field} doit être un nombre entier.",
+      "newRecord": "Nouvelle valeur : {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Le graphique a été inséré avec succès !",
+      "dashboardInserted": "Le tableau de bord a été inséré avec succès !",
+      "exerciseNameRequired": "Veuillez saisir le nom de l'exercice.",
+      "exerciseSectionCreated": "La section d'exercices a été créée avec succès !",
+      "tableInserted": "La table a été insérée avec succès !",
+      "tableUpdated": "La table a été mise à jour avec succès !",
+      "timerInserted": "Le minuteur a été inséré avec succès !",
+      "timerUpdated": "Le minuteur a été mis à jour avec succès !",
+      "validChooseExercise": "Sélectionner un exercice",
+      "validationCombinedMode": "Pour le type « exercice + entraînement », vous devez remplir les deux champs."
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -653,7 +671,8 @@
       "text": "Texte",
       "timed": "Chronométré",
       "twentyones": "21s",
-      "yesNo": "Oui/Non"
+      "yesNo": "Oui/Non",
+      "warmup": "Préparation"
     },
     "sets": "Séries :",
     "similarTags": "Tags similaires :",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName} :\n### - Séries : {sets}\n- Répétitions : {reps}\n- Repos : {restTime}s\n\n",
     "noteTemplate": "**Note : {note}**\n",
     "date": "Date",
-    "weightUnitToggle": "Unité pour cette entrée"
+    "weightUnitToggle": "Unité pour cette entrée",
+    "rest": "Reposer",
+    "work": "Travail"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
       "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
       "takeTour": "Présentez brièvement les fonctionnalités de journalisation, de graphiques, de tableaux et de minuteurs.",
-      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro."
+      "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro.",
+      "keepScreenAwake": "Essayez de maintenir l'écran allumé pendant que l'une des minuteries fonctionne en premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
+      "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur s'éteint, indépendamment du son. Nécessite un clic sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
+      "presetRestDesc": "Nombre de secondes de repos après chaque série d'exercices (0 pour aucun repos)."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -769,7 +793,10 @@
       "weightUnit": "Unité de poids",
       "showRibbonIcon": "Afficher l'icône de saisie rapide",
       "welcomeWindow": "Fenêtre de bienvenue",
-      "takeTour": "Visite guidée"
+      "takeTour": "Visite guidée",
+      "keepScreenAwake": "Maintenir l'écran allumé pendant que le minuteur est en cours",
+      "vibrateOnCompletion": "Vibrer à la fin d'un minuteur",
+      "presetRest": "Préférences"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Paramètres d'entraînement",
       "savedPresets": "Préréglages sauvegardés",
       "savedProtocols": "Protocoles enregistrés",
-      "gettingStarted": "Premiers pas"
+      "gettingStarted": "Premiers pas",
+      "timerDeviceCues": "Indices pour les dispositifs de minuterie"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",
@@ -833,7 +861,8 @@
     "recentTrend": "Tendance récente",
     "recentVsPrev": " (vs préc.)",
     "sessions": "Séances",
-    "average": "Moyenne :"
+    "average": "Moyenne :",
+    "title": "{dataTypeLabel} Statistiques ({contextLabel}) :"
   },
   "table": {
     "actions": "Actions",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Ligne de tendance",
     "refreshingTable": "Actualisation du tableau...",
-    "setCount": "{count} définit"
+    "setCount": "{count} définit",
+    "deleteSetMessage": "{set} sera supprimé de votre journal. Il n'est pas possible de revenir en arrière.",
+    "deleteSetTitle": "Supprimer cet ensemble ?"
   },
   "timeperiods": {
     "month": "Mois",
@@ -899,7 +930,16 @@
       "detailsControls": "Contrôles",
       "detailsSound": "Son"
     },
-    "stopwatch": "Chronomètre"
+    "stopwatch": "Chronomètre",
+    "phase": {
+      "rest": "Repos",
+      "work": "Travail"
+    },
+    "round": "Tour {current} de {total}",
+    "status": {
+      "done": "Terminé",
+      "paused": "En pause"
+    }
   },
   "trends": {
     "declining": "En baisse",
@@ -962,7 +1002,9 @@
         "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez un ensemble. Il apparaîtra immédiatement dans le tableau."
       },
       "rowActions": {
-        "title": "Modifier ou supprimer un ensemble"
+        "title": "Modifier ou supprimer un ensemble",
+        "mobileText": "Appuyez sur un ensemble pour le supprimer. Pour le supprimer, utilisez l'option \"Supprimer l'ensemble\" dans le formulaire qui s'ouvre.",
+        "text": "Utilisez le crayon sur une ligne pour définir un ensemble. Pour le supprimer, utilisez « Supprimer l'ensemble » dans le formulaire qui s'ouvre."
       },
       "chart": {
         "title": "Votre progression",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Montrez-moi"
+  },
+  "import": {
+    "chooseFile": "Sélectionner le fichier CSV",
+    "notAnExport": "Ce fichier n'est ni une exportation \"Strong\" ni une exportation \"Hevy\".",
+    "noSets": "Aucun ensemble n'a pu être lu à partir de ce fichier. Vérifiez que c'est le fichier CSV que l'application a exporté, sans modification.",
+    "readError": "Impossible de lire le fichier : {error}",
+    "source": "Exporter depuis {source}",
+    "setsFound": "Ensembles dans le fichier : {count}",
+    "setsToAdd": "Ensembles à ajouter : {count}",
+    "duplicates": "Déjà présent dans votre journal, ignoré : {count}",
+    "dateRange": "Jours de formation : du {first} au {last}",
+    "newExercises": "Exercices sans page : {exercises}",
+    "nothingToAdd": "Chaque ensemble dans ce fichier est déjà enregistré dans votre journal.",
+    "backupNote": "Vos journaux sont sauvegardés avant que les ensembles ne soient ajoutés.",
+    "importButton": "Importer des ensembles",
+    "imported": "Import terminé. Paramètres ajoutés : {count}",
+    "error": "Échec de l'importation : {error}",
+    "title": "Importer depuis Strong ou Hevy",
+    "intro": "Choisissez le fichier CSV à partir de l'exportation de données d'entraînement de l'application. Rien n'est enregistré tant que vous ne confirmez pas."
   }
 }

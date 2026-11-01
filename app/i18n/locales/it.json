@@ -19,10 +19,12 @@
       "pace": "Velocità",
       "reps": "Ripetizioni",
       "volume": "Volume",
-      "weight": "Peso"
+      "weight": "Peso",
+      "e1rm": "Valore stimato per 1RM"
     },
     "defaultTitle": "Andamento {type}",
-    "noTypesAvailable": "nessun tipo di grafico disponibile"
+    "noTypesAvailable": "nessun tipo di grafico disponibile",
+    "noEligibleE1rm": "Non sono disponibili serie valide per il calcolo del 1RM stimato. Registrare un peso positivo con 1-12 ripetizioni, escludendo il riscaldamento e le serie di drop set."
   },
   "commands": {
     "addExerciseBlock": "Aggiungi blocco esercizio",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Migra tipi di esercizio",
     "createExampleNotes": "Crea note di esempio",
     "openGettingStartedGuide": "Apri la guida per iniziare",
-    "startTour": "Inizia il tour"
+    "startTour": "Inizia il tour",
+    "importWorkouts": "Importa da Strong o Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Crea log per: {exerciseName}",
     "createLogButtonText": "Crea log per: {exerciseName}",
     "noDataTitle": "Nessun log trovato per {exerciseName}",
-    "exploreExampleData": "Oppure esplora utilizzando dati di esempio."
+    "exploreExampleData": "Oppure esplora utilizzando dati di esempio.",
+    "lastSet": "Ultima volta: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Record personale: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Blocco di codice inserito",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Aggiorna target",
       "updateTimer": "Aggiorna timer",
       "decreaseBy": "Diminuisci {label} di {increment}",
-      "increaseBy": "Aumenta {label} di {increment}"
+      "increaseBy": "Aumenta {label} di {increment}",
+      "deleteSet": "Elimina l'insieme"
     },
     "canvasLayout": "Disposizione",
     "canvasOptions": "Opzioni",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} deve essere al massimo {max}",
       "validFieldRequired": "{field} è obbligatorio",
       "migrationNoUpdates": "Tutte le pagine esercizio sono già aggiornate",
-      "validMustBeWholeNumber": "{field} deve essere un numero intero"
+      "validMustBeWholeNumber": "{field} deve essere un numero intero",
+      "newRecord": "Nuovo record: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Grafico inserito correttamente!",
+      "dashboardInserted": "Il pannello di controllo è stato inserito correttamente!",
+      "exerciseNameRequired": "Si prega di inserire il nome dell'esercizio.",
+      "exerciseSectionCreated": "Sezione esercizi creata con successo!",
+      "tableInserted": "Tabella inserita correttamente!",
+      "tableUpdated": "Tabella aggiornata correttamente!",
+      "timerInserted": "Timer inserito correttamente!",
+      "timerUpdated": "Timer aggiornato correttamente!",
+      "validChooseExercise": "Seleziona un esercizio",
+      "validationCombinedMode": "Per il tipo \"esercizio + allenamento\", è necessario compilare entrambi i campi!"
     },
     "parameterKey": "Chiave:",
     "parameterLabel": "Etichetta:",
@@ -653,7 +671,8 @@
       "text": "Testo",
       "timed": "A tempo",
       "twentyones": "21",
-      "yesNo": "Sì/No"
+      "yesNo": "Sì/No",
+      "warmup": "Riscaldamento"
     },
     "sets": "Serie:",
     "similarTags": "Tag simili:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Serie: {sets}\n- Ripetizioni: {reps}\n- Riposo: {restTime}s\n\n",
     "noteTemplate": "**Nota: {note}**\n",
     "date": "Data",
-    "weightUnitToggle": "Unità per questo elemento"
+    "weightUnitToggle": "Unità per questo elemento",
+    "work": "Lavoro",
+    "rest": "Riposo"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Mostra nella barra laterale l'icona del manubrio che apre il modulo del registro allenamento",
       "weightUnit": "Unità per grafici, totali e nuovi registri. Ogni registro mantiene l'unità in cui è stato inserito.",
       "takeTour": "Fornire una breve panoramica sull'utilizzo di log, grafici, tabelle e timer.",
-      "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero."
+      "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero.",
+      "keepScreenAwake": "Cerca di mantenere lo schermo attivo mentre è in esecuzione un timer in primo piano. Consuma più batteria; la disponibilità dipende dal tuo dispositivo e dalle impostazioni del sistema.",
+      "vibrateOnCompletion": "Vibra brevemente quando un timer termina, indipendentemente dall'emissione di suoni. Richiede un tocco sulla pagina e un dispositivo compatibile (come Android). Non disponibile su iOS; nessuna notifica in background.",
+      "presetRestDesc": "Secondi di riposo dopo ogni serie di esercizi (0 per nessun riposo)."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -769,7 +793,10 @@
       "weightUnit": "Unità di misura peso",
       "showRibbonIcon": "Mostra icona di registrazione rapida",
       "welcomeWindow": "Finestra di benvenuto",
-      "takeTour": "Tour guidato"
+      "takeTour": "Tour guidato",
+      "keepScreenAwake": "Mantieni lo schermo attivo durante l'esecuzione di un timer.",
+      "vibrateOnCompletion": "Vibra al completamento del timer",
+      "presetRest": "Impostazioni predefinite"
     },
     "messages": {
       "confirmDeletePreset": "Sei sicuro di voler eliminare questo preset?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Parametri di allenamento",
       "savedPresets": "Preimpostazioni salvate",
       "savedProtocols": "Protocolli salvati",
-      "gettingStarted": "Inizia"
+      "gettingStarted": "Inizia",
+      "timerDeviceCues": "Indicazioni per il dispositivo timer"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",
@@ -833,7 +861,8 @@
     "recentTrend": "Andamento recente",
     "recentVsPrev": " (vs prec.)",
     "sessions": "Sessioni",
-    "average": "Valore medio:"
+    "average": "Valore medio:",
+    "title": "{dataTypeLabel} statistiche ({contextLabel}):"
   },
   "table": {
     "actions": "Azioni",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Linea di tendenza",
     "refreshingTable": "Aggiornamento tabella...",
-    "setCount": "{count} imposta"
+    "setCount": "{count} imposta",
+    "deleteSetMessage": "{set} verrà eliminato dal tuo registro. Non è possibile annullare questa operazione.",
+    "deleteSetTitle": "Eliminare questo set?"
   },
   "timeperiods": {
     "month": "Mese",
@@ -899,7 +930,16 @@
       "detailsControls": "Controlli",
       "detailsSound": "Suono"
     },
-    "stopwatch": "Cronometro"
+    "stopwatch": "Cronometro",
+    "phase": {
+      "rest": "Pausa",
+      "work": "Fase di lavoro"
+    },
+    "round": "Giro {current} di {total}",
+    "status": {
+      "done": "Completato",
+      "paused": "In pausa"
+    }
   },
   "trends": {
     "declining": "In calo",
@@ -962,7 +1002,9 @@
         "text": "Premi il pulsante \"+\" per aprire il modulo, quindi salva un set. Apparirà immediatamente nella tabella."
       },
       "rowActions": {
-        "title": "Modifica o elimina un insieme"
+        "title": "Modifica o elimina un insieme",
+        "mobileText": "Tocca un set per correggerlo. Per rimuoverlo, utilizza l'opzione \"Elimina set\" nel modulo che si apre.",
+        "text": "Utilizza la matita su una riga per fissare un insieme. Per rimuoverlo, utilizza l'opzione \"Elimina insieme\" nel modulo che si apre."
       },
       "chart": {
         "title": "Il tuo progresso",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Mostrami"
+  },
+  "import": {
+    "chooseFile": "Seleziona il file CSV",
+    "notAnExport": "Questo file non è un'esportazione \"Strong\" o \"Hevy\".",
+    "noSets": "Non è stato possibile leggere alcun set da questo file. Verificare che sia il file CSV esportato dall'app, senza modifiche.",
+    "readError": "Impossibile leggere il file: {error}",
+    "source": "Esporta da {source}",
+    "setsFound": "Insiemi nel file: {count}",
+    "setsToAdd": "Set da aggiungere: {count}",
+    "duplicates": "Già presente nel log, saltato: {count}",
+    "dateRange": "Giorni di formazione: da {first} a {last}",
+    "newExercises": "Esercizi senza pagina: {exercises}",
+    "nothingToAdd": "Ogni insieme presente in questo file è già presente nel tuo registro.",
+    "backupNote": "Il tuo log viene salvato prima che vengano aggiunti i set.",
+    "importButton": "Importa set",
+    "imported": "Importato. Elementi aggiunti: {count}",
+    "error": "Errore durante l'importazione: {error}",
+    "title": "Importa da Strong o Hevy",
+    "intro": "Seleziona il file CSV dall'esportazione dei dati dell'allenamento dell'app. Non verrà creato alcun file finché non lo confermi."
   }
 }

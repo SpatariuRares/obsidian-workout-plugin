@@ -19,10 +19,12 @@
       "pace": "Tempo",
       "reps": "Herhalingen",
       "volume": "Volume",
-      "weight": "Gewicht"
+      "weight": "Gewicht",
+      "e1rm": "Geschatte 1RM"
     },
     "defaultTitle": "Trend {type}",
-    "noTypesAvailable": "Geen beschikbare grafiektypen"
+    "noTypesAvailable": "Geen beschikbare grafiektypen",
+    "noEligibleE1rm": "Geen geschikte sets voor de geschatte 1RM. Noteer een positief gewicht met 1-12 herhalingen, exclusief warming-up en drop sets."
   },
   "commands": {
     "addExerciseBlock": "Oefeningsblok toevoegen",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Oefeningstypen migreren",
     "createExampleNotes": "Maak voorbeeldnotities",
     "openGettingStartedGuide": "Open handleiding",
-    "startTour": "Begin de tour"
+    "startTour": "Begin de tour",
+    "importWorkouts": "Importeren vanuit Strong of Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Log aanmaken voor: {exerciseName}",
     "createLogButtonText": "Log aanmaken voor: {exerciseName}",
     "noDataTitle": "Geen logs gevonden voor {exerciseName}",
-    "exploreExampleData": "Of bekijk voorbeelddatasets"
+    "exploreExampleData": "Of bekijk voorbeelddatasets",
+    "lastSet": "Laatste keer: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Persoonlijk record: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Codeblok ingevoegd",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Doelgewicht bijwerken",
       "updateTimer": "Timer bijwerken",
       "decreaseBy": "{label} met {increment} verlagen",
-      "increaseBy": "{label} met {increment} verhogen"
+      "increaseBy": "{label} met {increment} verhogen",
+      "deleteSet": "Verwijder set"
     },
     "canvasLayout": "Lay-out",
     "canvasOptions": "Opties",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} mag maximaal {max} zijn",
       "validFieldRequired": "{field} is verplicht",
       "migrationNoUpdates": "Alle oefenpagina's zijn al bijgewerkt",
-      "validMustBeWholeNumber": "{field} moet een geheel getal zijn"
+      "validMustBeWholeNumber": "{field} moet een geheel getal zijn",
+      "newRecord": "Nieuw record: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Grafiek succesvol ingevoerd!",
+      "dashboardInserted": "Dashboard succesvol geïnstalleerd!",
+      "exerciseNameRequired": "Geef een naam voor de oefening op",
+      "exerciseSectionCreated": "Oefenmodule succesvol aangemaakt!",
+      "tableInserted": "Tabel succesvol toegevoegd!",
+      "tableUpdated": "Tabel is succesvol bijgewerkt!",
+      "timerInserted": "Timer is succesvol geïnstalleerd!",
+      "timerUpdated": "Timer is succesvol bijgewerkt!",
+      "validChooseExercise": "Kies een oefening",
+      "validationCombinedMode": "Voor het type 'oefening + training' moet u beide velden invullen!"
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",
@@ -653,7 +671,8 @@
       "text": "Tekst",
       "timed": "Getimed",
       "twentyones": "21s",
-      "yesNo": "Ja/Nee"
+      "yesNo": "Ja/Nee",
+      "warmup": "Voorbereiding"
     },
     "sets": "Sets:",
     "similarTags": "Vergelijkbare labels:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Sets: {sets}\n- Herhalingen: {reps}\n- Rust: {restTime}s\n\n",
     "noteTemplate": "**Opmerking: {note}**\n",
     "date": "Datum",
-    "weightUnitToggle": "Eenheid voor deze vermelding"
+    "weightUnitToggle": "Eenheid voor deze vermelding",
+    "rest": "Rest",
+    "work": "Werk"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Toon het halterpictogram in het lint dat het formulier voor het trainingslogboek opent",
       "weightUnit": "Eenheid voor grafieken, totals en nieuwe logs. Elke log houdt de eenheid bij waarin deze is ingevoerd.",
       "takeTour": "Geef een korte uitleg over het gebruik van logging, grafieken, tabellen en timers.",
-      "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul."
+      "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
+      "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van uw apparaat en systeeminstellingen.",
+      "vibrateOnCompletion": "Tril dan kort wanneer een timer afloopt, onafhankelijk van geluid. Vereist een aanraking op de pagina en een compatibel apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen in de achtergrond.",
+      "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust)."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -769,7 +793,10 @@
       "weightUnit": "Eenheid voor gewicht",
       "showRibbonIcon": "Pictogram voor snel loggen tonen",
       "welcomeWindow": "Welkomstscherm",
-      "takeTour": "Gidsen rondleiding"
+      "takeTour": "Gidsen rondleiding",
+      "keepScreenAwake": "Houd het scherm actief terwijl een timer loopt",
+      "vibrateOnCompletion": "Tril als een timer is voltooid",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Weet u zeker dat u deze voorinstelling wilt verwijderen?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Parameters voor training",
       "savedPresets": "Opgeslagen instellingen",
       "savedProtocols": "Opgeslagen protocollen",
-      "gettingStarted": "Beginnen"
+      "gettingStarted": "Beginnen",
+      "timerDeviceCues": "Instructies voor timer-apparaten"
     },
     "tooltips": {
       "deletePreset": "Voorinstelling verwijderen",
@@ -833,7 +861,8 @@
     "recentTrend": "Recente trend",
     "recentVsPrev": " (vs vorig)",
     "sessions": "Sessies",
-    "average": "Gemiddelde:"
+    "average": "Gemiddelde:",
+    "title": "{dataTypeLabel} statistieken ({contextLabel}):"
   },
   "table": {
     "actions": "Acties",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Trendlijn",
     "refreshingTable": "Tabel vernieuwen...",
-    "setCount": "{count} instellen"
+    "setCount": "{count} instellen",
+    "deleteSetMessage": "{set} wordt verwijderd uit uw logbestand. Dit kan niet worden teruggedraaid.",
+    "deleteSetTitle": "Deze set verwijderen?"
   },
   "timeperiods": {
     "month": "Maand",
@@ -899,7 +930,16 @@
       "detailsControls": "Bedieningselementen",
       "detailsSound": "Geluid"
     },
-    "stopwatch": "Stopwatch"
+    "stopwatch": "Stopwatch",
+    "phase": {
+      "rest": "Rust",
+      "work": "Werk"
+    },
+    "round": "Ronde {current} van {total}",
+    "status": {
+      "done": "Voltooid",
+      "paused": "Gestopt"
+    }
   },
   "trends": {
     "declining": "Afnemend",
@@ -962,7 +1002,9 @@
         "text": "Druk op de + knop om het formulier te openen, en sla vervolgens een set op. Het wordt direct in de tabel weergegeven."
       },
       "rowActions": {
-        "title": "Bewerk of verwijder een set"
+        "title": "Bewerk of verwijder een set",
+        "mobileText": "Tik op een set om deze te corrigeren. Om deze te verwijderen, gebruik je de optie \"Set verwijderen\" in het formulier dat wordt geopend.",
+        "text": "Gebruik de potlood om een set te selecteren. Om deze te verwijderen, gebruik je de optie \"Set verwijderen\" in het formulier dat wordt geopend."
       },
       "chart": {
         "title": "Uw voortgang",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Laat me zien"
+  },
+  "import": {
+    "chooseFile": "Kies een CSV-bestand",
+    "notAnExport": "Dit bestand is geen export van het type \"Sterk\" of \"Zwaar\".",
+    "noSets": "Geen gegevens konden worden gelezen uit dit bestand. Controleer of dit het CSV-bestand is dat de app heeft geëxporteerd, zonder wijzigingen.",
+    "readError": "Kon het bestand niet openen: {error}",
+    "source": "Exporteer vanuit {source}",
+    "setsFound": "Sets in het bestand: {count}",
+    "setsToAdd": "Sets toe te voegen: {count}",
+    "duplicates": "Al in uw logbestand, overgeslagen: {count}",
+    "dateRange": "Trainingsdagen: van {first} tot {last}",
+    "newExercises": "Oefeningen zonder pagina: {exercises}",
+    "nothingToAdd": "Elke set in dit bestand staat al in uw logbestand.",
+    "backupNote": "Uw log wordt gebackupt voordat de sets worden toegevoegd.",
+    "importButton": "Importeren",
+    "imported": "Import voltooid. Sets toegevoegd: {count}",
+    "error": "Import mislukt: {error}",
+    "title": "Importeren vanuit Strong of Hevy",
+    "intro": "Selecteer het CSV-bestand uit de exportfunctie voor trainingsgegevens van de app. Er wordt niets opgeslagen totdat u dit bevestigt."
   }
 }

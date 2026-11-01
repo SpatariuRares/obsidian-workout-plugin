@@ -19,10 +19,12 @@
       "pace": "Ritm",
       "reps": "Repetări",
       "volume": "Volum",
-      "weight": "Greutate"
+      "weight": "Greutate",
+      "e1rm": "Estimare pentru 1RM"
     },
     "defaultTitle": "Tendință {type}",
-    "noTypesAvailable": "Nu sunt disponibile tipuri de grafice."
+    "noTypesAvailable": "Nu sunt disponibile tipuri de grafice.",
+    "noEligibleE1rm": "Nu există serii eligibile pentru estimarea greutății de 1RM. Înregistrați o greutate pozitivă cu 1–12 repetări, excluzând încălzirea și seriile de scădere a greutății."
   },
   "commands": {
     "addExerciseBlock": "Adaugă bloc de exercițiu",
@@ -37,7 +39,8 @@
     "migrateExerciseTypes": "Migrează tipurile de exerciții",
     "createExampleNotes": "Creați note de exemplu",
     "openGettingStartedGuide": "Deschide ghidul de pornire",
-    "startTour": "Începeți turul"
+    "startTour": "Începeți turul",
+    "importWorkouts": "Import din Strong sau Hevy"
   },
   "common": {
     "bpm": "bpm",
@@ -399,7 +402,10 @@
     "createLogButtonAria": "Creează jurnal pentru: {exerciseName}",
     "createLogButtonText": "Creează jurnal pentru: {exerciseName}",
     "noDataTitle": "Nu au fost găsite înregistrări pentru {exerciseName}",
-    "exploreExampleData": "Sau explorați folosind date de exemplu"
+    "exploreExampleData": "Sau explorați folosind date de exemplu",
+    "lastSet": "Ultima dată: {set}",
+    "weightedSet": "{weight} {unit} × {reps}",
+    "personalRecord": "Record personal: {weight} {unit} × {reps}"
   },
   "messages": {
     "codeInserted": "Bloc de cod inserat",
@@ -472,7 +478,8 @@
       "updateTargetWeight": "Actualizează ținta",
       "updateTimer": "Actualizează temporizatorul",
       "decreaseBy": "Scade {label} cu {increment}",
-      "increaseBy": "Crește {label} cu {increment}"
+      "increaseBy": "Crește {label} cu {increment}",
+      "deleteSet": "Șterge setul"
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
@@ -590,7 +597,18 @@
       "validMaxValue": "{field} trebuie să fie cel mult {max}",
       "validFieldRequired": "{field} este obligatoriu",
       "migrationNoUpdates": "Toate paginile de exerciții sunt deja actualizate",
-      "validMustBeWholeNumber": "{field} trebuie să fie un număr întreg"
+      "validMustBeWholeNumber": "{field} trebuie să fie un număr întreg",
+      "newRecord": "Înregistrare nouă: {weight} {unit} (+{increase} {unit})",
+      "chartInserted": "Graficul a fost inserat cu succes!",
+      "dashboardInserted": "Panoul de control a fost inserat cu succes!",
+      "exerciseNameRequired": "Vă rugăm să introduceți numele exercițiului.",
+      "exerciseSectionCreated": "Secțiunea de exerciții a fost creată cu succes!",
+      "tableInserted": "Tabela a fost inserată cu succes!",
+      "tableUpdated": "Tabelul a fost actualizat cu succes!",
+      "timerInserted": "Cronometrul a fost introdus cu succes!",
+      "timerUpdated": "Cronometrul a fost actualizat cu succes!",
+      "validChooseExercise": "Alege un exercițiu",
+      "validationCombinedMode": "Pentru tipul 'exerciții + antrenament', trebuie să completați ambele câmpuri!"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -653,7 +671,8 @@
       "text": "Text",
       "timed": "Cronometrat",
       "twentyones": "21s",
-      "yesNo": "Da/Nu"
+      "yesNo": "Da/Nu",
+      "warmup": "Încălzire"
     },
     "sets": "Seturi:",
     "similarTags": "Etichete similare:",
@@ -695,7 +714,9 @@
     "exerciseSectionTemplate": "## {exerciseName}:\n### - Seturi: {sets}\n- Repetări: {reps}\n- Pauză: {restTime}s\n\n",
     "noteTemplate": "**Notă: {note}**\n",
     "date": "Data",
-    "weightUnitToggle": "Unitate pentru această înregistrare"
+    "weightUnitToggle": "Unitate pentru această înregistrare",
+    "rest": "Repaus",
+    "work": "Activitate"
   },
   "settings": {
     "buttons": {
@@ -742,7 +763,10 @@
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
       "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
       "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și cronometre.",
-      "welcomeWindow": "Reafășiți fereastra de bun venit pentru a începe cu date de exemplu sau de la zero."
+      "welcomeWindow": "Reafășiți fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
+      "keepScreenAwake": "Încercați să mențineți ecranul activ în timp ce rulează oricare dintre temporizatoare în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și setările sistemului dumneavoastră.",
+      "vibrateOnCompletion": "Vibrație scurtă atunci când un cronometru se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
+      "presetRestDesc": "Secunde de odihnă după fiecare rundă de lucru (0 pentru absența odihnei)."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -769,7 +793,10 @@
       "weightUnit": "Unitatea de măsură a greutății",
       "showRibbonIcon": "Afișează pictograma de înregistrare rapidă",
       "welcomeWindow": "Ferestruță de bun venit",
-      "takeTour": "Tur ghidat"
+      "takeTour": "Tur ghidat",
+      "keepScreenAwake": "Păstrează ecranul activ în timp ce funcționează un cronometru",
+      "vibrateOnCompletion": "Vibrați la finalizarea unui cronometru",
+      "presetRest": "Rest"
     },
     "messages": {
       "confirmDeletePreset": "Sunteți sigur(ă) că doriți să ștergeți acest preset?",
@@ -811,7 +838,8 @@
       "trainingParameters": "Parametri de antrenament",
       "savedPresets": "Prezăseturi salvate",
       "savedProtocols": "Protocoale salvate",
-      "gettingStarted": "Începe"
+      "gettingStarted": "Începe",
+      "timerDeviceCues": "Indicații pentru dispozitive de cronometrare"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",
@@ -833,7 +861,8 @@
     "recentTrend": "Tendință recentă",
     "recentVsPrev": " (vs ant.)",
     "sessions": "Sesiuni",
-    "average": "Media:"
+    "average": "Media:",
+    "title": "{dataTypeLabel} statistici ({contextLabel}):"
   },
   "table": {
     "actions": "Acțiuni",
@@ -879,7 +908,9 @@
     },
     "trendLine": "Linie de tendință",
     "refreshingTable": "Se reîmprospătează tabelul...",
-    "setCount": "{count} setează"
+    "setCount": "{count} setează",
+    "deleteSetMessage": "{set} va fi eliminat din jurnalul dumneavoastră. Nu se poate anula această acțiune.",
+    "deleteSetTitle": "Șterge acest set?"
   },
   "timeperiods": {
     "month": "Luna",
@@ -899,7 +930,16 @@
       "detailsControls": "Comenzi",
       "detailsSound": "Sunet"
     },
-    "stopwatch": "Cronometru"
+    "stopwatch": "Cronometru",
+    "phase": {
+      "rest": "Pauză",
+      "work": "Activ"
+    },
+    "round": "Runda [{current}] a competiției [{total}]",
+    "status": {
+      "done": "Terminat",
+      "paused": "Suspendat"
+    }
   },
   "trends": {
     "declining": "În scădere",
@@ -962,7 +1002,9 @@
         "text": "Apasă butonul \"+\" pentru a deschide formularul, apoi salvează un set. Acesta va apărea imediat în tabel."
       },
       "rowActions": {
-        "title": "Modifică sau șterge un set"
+        "title": "Modifică sau șterge un set",
+        "mobileText": "Atinge un set pentru a-l corecta. Pentru a-l elimina, folosește opțiunea „Șterge set” din formularul care se deschide.",
+        "text": "Utilizați instrumentul de desen pe o linie pentru a fixa un set. Pentru a-l elimina, utilizați opțiunea \"Șterge set\" din formularul care se deschide."
       },
       "chart": {
         "title": "Progresul tău",
@@ -999,5 +1041,24 @@
       }
     },
     "showMe": "Arată-mi"
+  },
+  "import": {
+    "chooseFile": "Selectați fișierul CSV",
+    "notAnExport": "Acest fișier nu este un export \"Strong\" sau \"Hevy\".",
+    "noSets": "Nu s-au putut citi seturi din acest fișier. Verificați dacă este fișierul CSV exportat de aplicație, fără modificări.",
+    "readError": "Nu a fost posibil să se citească fișierul: {error}",
+    "source": "Export din {source}",
+    "setsFound": "Seturi din fișier: {count}",
+    "setsToAdd": "Seturi de adăugat: {count}",
+    "duplicates": "Deja în jurnalul tău, a fost omis: {count}",
+    "dateRange": "Zile de instruire: de la {first} la {last}",
+    "newExercises": "Exerciții fără pagină: {exercises}",
+    "nothingToAdd": "Fiecare set din acest fișier este deja în jurnalul dumneavoastră.",
+    "backupNote": "Jurnalul este salvat înainte de adăugarea seturilor.",
+    "importButton": "Importă seturi",
+    "imported": "Import finalizat. Seturi adăugate: {count}",
+    "error": "Eșecul importului: {error}",
+    "title": "Import din Strong sau Hevy",
+    "intro": "Selectați fișierul CSV din lista de export a datelor de antrenament din aplicație. Nicio informație nu va fi salvată până nu confirmați."
   }
 }

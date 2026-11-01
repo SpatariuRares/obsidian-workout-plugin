@@ -273,7 +273,7 @@ describe("EmbeddedTableView", () => {
       (view as any).filterData = origFilter;
     });
 
-    it("keeps Add log, prefilled from the whole history, when an exercise has no set in the filter", async () => {
+    it("offers the first log, prefilled from the whole history, when no set matches the block", async () => {
       const origFilter = (view as any).filterData;
       (view as any).filterData = jest.fn().mockReturnValue({
         filteredData: [],
@@ -286,13 +286,59 @@ describe("EmbeddedTableView", () => {
 
       await view.createTable(container, [older, latest], {
         exercise: "Bench Press",
+        workout: "Push Day",
       });
 
       expect(TableRenderer.renderTable).not.toHaveBeenCalled();
-      expect(LogCallouts.renderNoMatchMessage).toHaveBeenCalled();
+      expect(LogCallouts.renderNoMatchMessage).not.toHaveBeenCalled();
       const call = (LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0];
       expect(call[1]).toBe("Bench Press");
       expect(call[5]).toMatchObject({ weight: 80 });
+      expect(call[6]).toBe(true);
+
+      (view as any).filterData = origFilter;
+    });
+
+    it("keeps Add log and the no-match message when only the date range hides the sets", async () => {
+      const origFilter = (view as any).filterData;
+      const log = createLog({ date: "2024-01-15T10:00:00" });
+      (view as any).filterData = jest.fn(
+        (_data: unknown, params: { dateRange?: number }) => ({
+          filteredData: params.dateRange ? [] : [log],
+          filterMethodUsed: "test",
+          titlePrefix: "Bench Press",
+        }),
+      );
+      const container = document.createElement("div");
+
+      await view.createTable(container, [log], {
+        exercise: "Bench Press",
+        dateRange: 1,
+      });
+
+      expect(LogCallouts.renderNoMatchMessage).toHaveBeenCalled();
+      const call = (LogCallouts.renderAddLogButton as jest.Mock).mock.calls[0];
+      expect(call[6]).toBe(false);
+
+      (view as any).filterData = origFilter;
+    });
+
+    it("keeps the no-match message when the add button is hidden", async () => {
+      const origFilter = (view as any).filterData;
+      (view as any).filterData = jest.fn().mockReturnValue({
+        filteredData: [],
+        filterMethodUsed: "test",
+        titlePrefix: "Bench Press",
+      });
+      const container = document.createElement("div");
+
+      await view.createTable(container, [createLog()], {
+        exercise: "Bench Press",
+        showAddButton: false,
+      });
+
+      expect(LogCallouts.renderAddLogButton).not.toHaveBeenCalled();
+      expect(LogCallouts.renderNoMatchMessage).toHaveBeenCalled();
 
       (view as any).filterData = origFilter;
     });
@@ -441,6 +487,7 @@ describe("EmbeddedTableView", () => {
         plugin,
         expect.any(AbortSignal),
         squat,
+        false,
       );
     });
 

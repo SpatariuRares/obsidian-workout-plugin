@@ -34,3 +34,4 @@ scripts/learning/error-log.json
 
 # Screenshot captures (obsidian-verify recipes)
 .shots/
+docs/ui-*

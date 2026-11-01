@@ -128,7 +128,7 @@ The rules for a field (see "Field" in `CONTEXT.md`): `fieldKey(name)` gives the 
 
 #### WorkoutNote (`app/services/notes/WorkoutNote.ts`)
 
-`readWorkoutNote(content)` is the only place that finds the plugin's code blocks in a note's text: each block's type, body and line range (to rewrite it in place), and the note's level-2 sections with their prose. It skips blocks shown inside a longer fence (a ````markdown example) and copes with CRLF. Parse a block's body with its schema (`tableBlock.parse(block.body)`), never with a regex. Used by the duration estimate, canvas export, the block editor and the block-id migration. The timer a `workout-timer` block runs (preset, default preset, defaults) comes from `resolveTimer` (`app/features/timer/business/resolveTimer.ts`).
+`readWorkoutNote(content)` is the only place that finds the plugin's code blocks in a note's text: each block's type, body and line range (to rewrite it in place), and the note's level-2 sections with their prose. It skips blocks shown inside a longer fence (a ````markdown example) and copes with CRLF. Parse a block's body with its schema (`tableBlock.parse(block.body)`), never with a regex. Used by the duration estimate, canvas export, the block editor and the block-id migration. The timer a `workout-timer` block runs (preset, default preset, defaults) comes from `resolveTimer` (`app/features/timer/business/resolveTimer.ts`); the presets a block can name (built-in Tabata/EMOM plus saved ones) from `timerPresets(settings)`. Interval phases, rounds and total length come only from `intervalSchedule.ts` (`intervalPlan`, `intervalAt`, `intervalSeconds`), used by the timer, its display and the duration estimate.
 
 #### ExampleGeneratorService (`app/services/examples/ExampleGeneratorService.ts`)
 
@@ -453,12 +453,14 @@ targetReps: 8
 
 ```yaml
 type: countdown # countdown, interval, stopwatch
-duration: 90 # seconds
+duration: 90 # seconds (interval: work per round)
+work: 20 # interval only, wins over duration
+rest: 10 # interval only, after each round's work (last round included)
 rounds: 8 # interval only
 showControls: true
 sound: true # default true
 autoStart: false # start as soon as the block renders (once per timer)
-preset: rest # saved preset used as base config
+preset: rest # saved preset used as base config; Tabata and EMOM are built in (timerPresets.ts)
 exercise: Squat
 workout: Leg Day
 ```

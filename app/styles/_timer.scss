@@ -124,11 +124,23 @@
     color: var(--text-muted);
   }
 
-  .workout-timer-status {
+  .workout-timer-status,
+  .workout-timer-phase {
     font-size: var(--workout-font-sm);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
+  }
+
+  /* Interval phases: work in the accent color, rest muted */
+  .workout-timer-phase {
+    color: var(--workout-text-accent);
+    font-weight: var(--font-semibold);
+  }
+
+  &.is-rest .workout-timer-phase,
+  &.is-rest .workout-timer-time-display {
+    color: var(--workout-text-success);
   }
 
   .workout-timer-complete {

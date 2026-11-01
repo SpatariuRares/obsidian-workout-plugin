@@ -646,6 +646,7 @@
     },
     "protocol": "Protocol:",
     "recentExercises": "Recent:",
+    "rest": "Rest",
     "restTime": "Rest time (seconds):",
     "rounds": "Rounds:",
     "save": "Save",
@@ -661,7 +662,6 @@
       "progressiveOverload": "Progressive overload",
       "tableType": "Table type",
       "target": "Target",
-      "timerConfiguration": "Timer configuration",
       "workout": "Workout"
     },
     "selectOptions": {
@@ -711,10 +711,11 @@
       "insertTimer": "Insert workout timer",
       "muscleTagManager": "Manage muscle tags"
     },
+    "weightUnitToggle": "Unit for this entry",
+    "work": "Work",
     "workout": "Workout (optional):",
     "workoutFile": "Workout file:",
-    "workoutNameOptional": "Workout name (optional):",
-    "weightUnitToggle": "Unit for this entry"
+    "workoutNameOptional": "Workout name (optional):"
   },
   "settings": {
     "buttons": {
@@ -752,6 +753,7 @@
       "presetDurationDesc": "Duration in seconds (e.g., 90 for a 90-second timer).",
       "presetNameDesc": "Unique name for this timer preset (e.g., 'Rest 90s', 'HIIT 30/10').",
       "presetRoundsDesc": "Number of interval rounds to cycle through before stopping.",
+      "presetRestDesc": "Seconds of rest after the work of each round (0 for no rest).",
       "protocolAbbreviation": "Short abbreviation shown in badge (max 3 characters)",
       "protocolColor": "Badge background color (hex format, e.g., #FF5733)",
       "quickWeightIncrement": "Weight increment used by +/- buttons in create/edit workout log modals (e.g., 2.5 for +2.5 / -2.5 units)",
@@ -779,6 +781,7 @@
       "presetDuration": "Duration (seconds)",
       "presetName": "Preset name",
       "presetRounds": "Rounds",
+      "presetRest": "Rest",
       "presetShowControls": "Show controls",
       "presetSound": "Sound",
       "presetType": "Timer type",
@@ -922,6 +925,10 @@
     "countdown": "Countdown",
     "editTimer": "Edit timer",
     "interval": "Interval",
+    "phase": {
+      "rest": "Rest",
+      "work": "Work"
+    },
     "presets": {
       "detailsControls": "Controls",
       "detailsSound": "Sound"

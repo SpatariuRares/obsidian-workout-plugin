@@ -32,4 +32,34 @@ describe("resolveTimer", () => {
   it("should report an unknown preset", () => {
     expect(resolveTimer({ preset: "nope" }, settings()).error).toContain('"nope"');
   });
+
+  it("should offer the built-in Tabata and EMOM presets", () => {
+    const none = { timerPresets: {}, defaultTimerPreset: null };
+    expect(resolveTimer({ preset: "Tabata" }, none).params).toMatchObject({
+      type: TIMER_TYPE.INTERVAL,
+      duration: 20,
+      rest: 10,
+      rounds: 8,
+    });
+    expect(resolveTimer({ preset: "EMOM" }, none).params).toMatchObject({
+      type: TIMER_TYPE.INTERVAL,
+      duration: 60,
+      rounds: 10,
+    });
+  });
+
+  it("should let a user preset with a built-in's name win", () => {
+    const own = { ...tabata, name: "Tabata", duration: 30 };
+    const result = resolveTimer(
+      { preset: "Tabata" },
+      { timerPresets: { Tabata: own }, defaultTimerPreset: null },
+    );
+    expect(result.params.duration).toBe(30);
+  });
+
+  it("should take a block's work and rest", () => {
+    expect(
+      resolveTimer({ type: TIMER_TYPE.INTERVAL, work: 40, rest: 20 }, settings()).params,
+    ).toMatchObject({ work: 40, rest: 20 });
+  });
 });

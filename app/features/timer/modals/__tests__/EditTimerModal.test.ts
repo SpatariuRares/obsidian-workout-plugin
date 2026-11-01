@@ -32,8 +32,8 @@ const NOTE = [
   "```",
 ].join("\n");
 
-function openModal() {
-  const state = { content: NOTE };
+function openModal(note = NOTE) {
+  const state = { content: note };
   const app = {
     workspace: {
       getActiveViewOfType: () => ({ file: { path: "Leg day.md", basename: "Leg day" } }),
@@ -57,7 +57,7 @@ function openModal() {
     }),
   } as unknown as WorkoutPluginContext;
 
-  const params = timerBlock.parse(NOTE.split("\n").slice(1, -1).join("\n")).params;
+  const params = timerBlock.parse(note.split("\n").slice(1, -1).join("\n")).params;
   const modal = new EditTimerModal(app, plugin, params);
   const contentEl = createObsidianContainer();
   Object.assign(modal, { contentEl, close: jest.fn() });
@@ -95,5 +95,27 @@ describe("EditTimerModal", () => {
     await flush();
 
     expect(state.content).toBe(NOTE);
+  });
+
+  it("writes the work of an interval to the duration line the block already uses", async () => {
+    const interval = [
+      "```workout-timer",
+      "id: t1",
+      "type: interval",
+      "duration: 20",
+      "rest: 10",
+      "rounds: 8",
+      "```",
+    ].join("\n");
+    const { state, contentEl, update } = openModal(interval);
+    const work = [...contentEl.querySelectorAll<HTMLInputElement>("input")].find(
+      (input) => input.value === "20",
+    )!;
+
+    work.value = "30";
+    update();
+    await flush();
+
+    expect(state.content).toBe(interval.replace("duration: 20", "duration: 30"));
   });
 });

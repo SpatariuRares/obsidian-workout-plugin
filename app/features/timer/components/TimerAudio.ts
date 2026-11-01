@@ -1,5 +1,32 @@
 type AudioContextCtor = typeof AudioContext;
 
+/** What a sound announces: an interval phase starting, or the timer ending */
+export type TimerCue = "work" | "rest" | "end";
+
+/** Tones as [frequency Hz, start s, length s] */
+const CUE_TONES: Record<TimerCue, Array<[number, number, number]>> = {
+  // Two short high beeps: go
+  work: [
+    [880, 0, 0.15],
+    [1174.66, 0.18, 0.25],
+  ],
+  // One low falling pair: ease off
+  rest: [
+    [523.25, 0, 0.3],
+    [392, 0.25, 0.4],
+  ],
+  // Rising C major arpeggio, then back down to C
+  end: [
+    [523.25, 0, 0.4],
+    [659.25, 0.1, 0.4],
+    [783.99, 0.2, 0.4],
+    [1046.5, 0.3, 0.4],
+    [783.99, 0.5, 0.3],
+    [659.25, 0.65, 0.3],
+    [523.25, 0.8, 0.4],
+  ],
+};
+
 /**
  * Notification sound for a single timer.
  *
@@ -18,7 +45,7 @@ export class TimerAudio {
     }
   }
 
-  play(): void {
+  play(cue: TimerCue = "end"): void {
     try {
       const context = this.getContext();
       if (!context) return;
@@ -26,13 +53,8 @@ export class TimerAudio {
         void context.resume().catch(() => {});
       }
 
-      // Create a more pleasant notification sound with multiple tones
-      const playTone = (
-        frequency: number,
-        startTime: number,
-        duration: number,
-        volume: number = 0.15,
-      ) => {
+      const now = context.currentTime;
+      for (const [frequency, start, length] of CUE_TONES[cue]) {
         const oscillator = context.createOscillator();
         const gainNode = context.createGain();
 
@@ -42,31 +64,14 @@ export class TimerAudio {
         oscillator.frequency.value = frequency;
         oscillator.type = "sine";
 
+        const startTime = now + start;
         gainNode.gain.setValueAtTime(0, startTime);
-        gainNode.gain.linearRampToValueAtTime(
-          volume,
-          startTime + 0.08,
-        );
-        gainNode.gain.exponentialRampToValueAtTime(
-          0.01,
-          startTime + duration,
-        );
+        gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.08);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + length);
 
         oscillator.start(startTime);
-        oscillator.stop(startTime + duration);
-      };
-
-      const currentTime = context.currentTime;
-
-      playTone(523.25, currentTime, 0.4); // C5
-      playTone(659.25, currentTime + 0.1, 0.4); // E5
-      playTone(783.99, currentTime + 0.2, 0.4); // G5
-      playTone(1046.5, currentTime + 0.3, 0.4); // C6
-
-      // Resolution: descending back to C
-      playTone(783.99, currentTime + 0.5, 0.3); // G5
-      playTone(659.25, currentTime + 0.65, 0.3); // E5
-      playTone(523.25, currentTime + 0.8, 0.4); // C5 (final note)
+        oscillator.stop(startTime + length);
+      }
     } catch {
       // Silently fail if audio is unavailable
     }

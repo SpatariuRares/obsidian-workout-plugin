@@ -13,6 +13,10 @@ import {
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
+import {
+  intervalPlan,
+  intervalSeconds,
+} from "@app/features/timer/business/intervalSchedule";
 import { TIMER_TYPE } from "@app/features/timer/types";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import type {
@@ -121,10 +125,9 @@ export class WorkoutFileAnalyzer {
     if (parsed.errors.length > 0) return 0;
     const { params, error } = resolveTimer(parsed.params, this.plugin.settings);
     if (error || params.type === TIMER_TYPE.STOPWATCH) return 0;
-    const duration = params.duration ?? 0;
     return params.type === TIMER_TYPE.INTERVAL
-      ? duration * (params.rounds ?? 1)
-      : duration;
+      ? intervalSeconds(intervalPlan(params))
+      : params.duration ?? 0;
   }
 
   /**

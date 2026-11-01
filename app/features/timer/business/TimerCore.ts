@@ -5,7 +5,14 @@ import {
   TimerCallbacks,
   TIMER_TYPE,
 } from "@app/features/timer/types";
-import { TimerAudio } from "@app/features/timer/components/TimerAudio";
+import {
+  TimerAudio,
+  type TimerCue,
+} from "@app/features/timer/components/TimerAudio";
+import {
+  intervalAt,
+  intervalPlan,
+} from "@app/features/timer/business/intervalSchedule";
 import { TimerDisplay } from "@app/features/timer/components/TimerDisplay";
 import { TimerControls } from "@app/features/timer/components/TimerControls";
 import { t } from "@app/i18n";
@@ -32,6 +39,8 @@ export class TimerCore {
       totalRounds: 1,
       timerType: TIMER_TYPE.COUNTDOWN,
       duration: 30,
+      rest: 0,
+      phase: "work",
       surfaces: [],
     };
   }
@@ -89,6 +98,11 @@ export class TimerCore {
           currentRound: 1,
         });
       }
+    } else if (
+      this.state.timerType === TIMER_TYPE.INTERVAL &&
+      this.state.phase === "done"
+    ) {
+      this.setState({ elapsedTime: 0, currentRound: 1, phase: "work" });
     }
 
     // Resume audio while still inside the user's tap (required on mobile)
@@ -131,6 +145,7 @@ export class TimerCore {
     this.setState({
       elapsedTime: 0,
       currentRound: 1,
+      phase: "work",
     });
     this.updateDisplay();
   }
@@ -161,25 +176,34 @@ export class TimerCore {
         return;
       }
     } else if (this.state.timerType === TIMER_TYPE.INTERVAL) {
-      // Use duration for interval timing (same as countdown)
-      const intervalElapsed =
-        this.state.elapsedTime % (this.state.duration * 1000);
-      if (intervalElapsed < 100 && this.state.elapsedTime > 0) {
-        this.setState({ currentRound: this.state.currentRound + 1 });
-        if (this.state.currentRound > this.state.totalRounds) {
-          this.handleTimerComplete();
-          return;
-        }
-        this.playSound();
+      const point = intervalAt(
+        intervalPlan({
+          duration: this.state.duration,
+          rest: this.state.rest,
+          rounds: this.state.totalRounds,
+        }),
+        this.state.elapsedTime,
+      );
+      if (point.phase === "done") {
+        this.setState({ phase: "done" });
+        this.handleTimerComplete();
+        return;
+      }
+      if (
+        point.phase !== this.state.phase ||
+        point.round !== this.state.currentRound
+      ) {
+        this.setState({ phase: point.phase, currentRound: point.round });
+        this.playSound(point.phase);
       }
     }
 
     this.updateDisplay();
   }
 
-  private playSound(): void {
+  private playSound(cue: TimerCue = "end"): void {
     if (!this.soundEnabled) return;
-    this.audio.play();
+    this.audio.play(cue);
     this.callbacks.onSoundPlay?.();
   }
 

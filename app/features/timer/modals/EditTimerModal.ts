@@ -49,6 +49,22 @@ export class EditTimerModal extends InsertTimerModal {
     return this.initialParams.id || super.getCodeBlockId();
   }
 
+  /**
+   * An interval block written with `duration` (before `work` existed) keeps
+   * that line, so editing the work never leaves two conflicting values
+   */
+  protected collectParams(): EmbeddedTimerParams {
+    const params = super.collectParams();
+    if (
+      params.work !== undefined &&
+      this.initialParams.work === undefined &&
+      this.initialParams.duration !== undefined
+    ) {
+      return { ...params, duration: params.work, work: undefined };
+    }
+    return params;
+  }
+
   protected createConfigurationSections(
     container: HTMLElement,
   ): void {
@@ -80,9 +96,13 @@ export class EditTimerModal extends InsertTimerModal {
     if (params.type) {
       this.timerHandlers.setTimerType(params.type);
     }
-    if (params.duration !== undefined) {
-      this.timerElements.durationInput.value =
-        params.duration.toString();
+    // For intervals the duration field shows the work phase
+    const duration = params.work ?? params.duration;
+    if (duration !== undefined) {
+      this.timerElements.durationInput.value = duration.toString();
+    }
+    if (params.rest !== undefined) {
+      this.timerElements.restInput.value = params.rest.toString();
     }
     if (params.rounds !== undefined) {
       this.timerElements.roundsInput.value = params.rounds.toString();

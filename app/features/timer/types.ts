@@ -1,5 +1,6 @@
 import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
 import type { timerBlock } from "@app/features/timer/timerBlock";
+import type { IntervalPhase } from "@app/features/timer/business/intervalSchedule";
 import {
   TIMER_TYPE,
   type TimerPresetConfig,
@@ -19,7 +20,12 @@ export interface TimerState {
   currentRound: number;
   totalRounds: number;
   timerType: TIMER_TYPE;
+  /** Seconds; for interval timers the work phase of each round */
   duration: number;
+  /** Interval timers: seconds of rest after each round's work */
+  rest: number;
+  /** Interval timers: the phase the timer is in */
+  phase: IntervalPhase;
   /** Every rendering of the block the timer draws on (see TimerSurface) */
   surfaces: TimerSurface[];
 }

@@ -1951,11 +1951,22 @@ tr.workout-table-row-tappable:active {
 .workout-timer.is-paused .workout-timer-time-display {
   color: var(--text-muted);
 }
-.workout-timer .workout-timer-status {
+.workout-timer .workout-timer-status,
+.workout-timer .workout-timer-phase {
   font-size: var(--workout-font-sm);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+.workout-timer {
+  /* Interval phases: work in the accent color, rest muted */
+}
+.workout-timer .workout-timer-phase {
+  color: var(--workout-text-accent);
+  font-weight: var(--font-semibold);
+}
+.workout-timer.is-rest .workout-timer-phase, .workout-timer.is-rest .workout-timer-time-display {
+  color: var(--workout-text-success);
 }
 .workout-timer .workout-timer-complete {
   display: inline-flex;

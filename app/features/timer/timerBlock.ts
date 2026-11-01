@@ -15,8 +15,12 @@ export const timerBlock = defineCodeBlock("workout-timer", {
     values: Object.values(TIMER_TYPE),
     default: TIMER_TYPE.COUNTDOWN,
   },
-  /** Seconds (per round for interval timers) */
+  /** Seconds (the work phase of each round for interval timers) */
   duration: { kind: "number", min: 1, default: 30 },
+  /** Interval timers only: seconds of work per round (wins over duration) */
+  work: { kind: "number", min: 1 },
+  /** Interval timers only: seconds of rest after each round's work */
+  rest: { kind: "number", min: 0, default: 0 },
   /** Interval timers only */
   rounds: { kind: "number", min: 1, default: 1 },
   exercise: { kind: "string" },

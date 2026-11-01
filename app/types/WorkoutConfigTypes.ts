@@ -36,4 +36,6 @@ export interface TimerPresetConfig {
   showControls: boolean;
   sound: boolean;
   rounds?: number;
+  /** Interval timers: seconds of rest after each round (duration is the work) */
+  rest?: number;
 }

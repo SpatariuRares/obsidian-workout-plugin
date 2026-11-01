@@ -92,6 +92,20 @@ export class TimerPresetEditorModal extends ModalBase {
               }
             }),
         );
+
+      new Setting(contentEl)
+        .setName(t("settings.labels.presetRest"))
+        .setDesc(t("settings.descriptions.presetRestDesc"))
+        .addText((text) =>
+          text
+            .setValue(String(formState.rest ?? 0))
+            .onChange((value) => {
+              const num = parseInt(value);
+              if (!isNaN(num) && num >= 0) {
+                formState.rest = num;
+              }
+            }),
+        );
     }
 
     new Setting(contentEl)

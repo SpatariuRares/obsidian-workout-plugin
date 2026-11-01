@@ -13,6 +13,7 @@ import {
 import { BaseView } from "@app/features/common/views/BaseView";
 import { TimerActionSelect } from "@app/features/timer/ui/TimerActionSelect";
 import { resolveTimer } from "@app/features/timer/business/resolveTimer";
+import { intervalPlan } from "@app/features/timer/business/intervalSchedule";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 
 export class EmbeddedTimerView extends BaseView {
@@ -52,13 +53,17 @@ export class EmbeddedTimerView extends BaseView {
       // without resetting the core timing state, unless parameters changed significantly
       const currentState = this.timerCore.getState();
       const timerType = resolvedParams.type ?? TIMER_TYPE.COUNTDOWN;
-      const duration = resolvedParams.duration ?? 30;
-      const totalRounds = resolvedParams.rounds ?? 1;
+      const plan = intervalPlan(resolvedParams);
+      const isInterval = timerType === TIMER_TYPE.INTERVAL;
+      const duration = isInterval ? plan.work : resolvedParams.duration ?? 30;
+      const rest = isInterval ? plan.rest : 0;
+      const totalRounds = plan.rounds;
 
       const needsReset =
         !this.timerCore.isRunning() ||
         currentState.timerType !== timerType ||
         currentState.duration !== duration ||
+        currentState.rest !== rest ||
         currentState.totalRounds !== totalRounds;
 
       if (needsReset) {
@@ -66,9 +71,11 @@ export class EmbeddedTimerView extends BaseView {
         this.timerCore.setState({
           timerType,
           duration,
+          rest,
           totalRounds,
           elapsedTime: 0,
           currentRound: 1,
+          phase: "work",
           isRunning: false,
           startTime: undefined,
         });

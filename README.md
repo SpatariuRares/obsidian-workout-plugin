@@ -229,18 +229,31 @@ duration: 90
 exercise: Bench Press
 ```
 
+An interval timer can alternate work and rest. The display shows **Work** or **Rest**, and each phase starts with its own sound. Each round is its work followed by its rest, the last one included, so this Tabata runs 4:00:
+
+```workout-timer
+type: interval
+work: 20
+rest: 10
+rounds: 8
+```
+
+`preset: Tabata` (20 s work, 10 s rest, 8 rounds) and `preset: EMOM` (a round every minute for 10 minutes) are built in. A saved preset with the same name replaces them.
+
 <details>
 <summary>All parameters</summary>
 
 | Parameter             | Default     | What it does                                                          |
 | --------------------- | ----------- | --------------------------------------------------------------------- |
 | `type`                | `countdown` | `countdown`, `interval` or `stopwatch`                                |
-| `duration`            | `30`        | Seconds (countdown and interval)                                      |
+| `duration`            | `30`        | Seconds (countdown; for interval the work of each round)              |
+| `work`                | —           | Interval: seconds of work per round (replaces `duration`)             |
+| `rest`                | `0`         | Interval: seconds of rest after each round's work                     |
 | `rounds`              | `1`         | Rounds (interval)                                                     |
 | `sound`               | `true`      | Beep when time is up                                                  |
 | `autoStart`           | `false`     | Start as soon as the note opens                                       |
 | `showControls`        | `true`      | Show start, pause and reset                                           |
-| `preset`              | —           | Start from a saved preset; other parameters override it               |
+| `preset`              | —           | Start from a preset (saved, `Tabata` or `EMOM`); parameters override it |
 | `exercise`, `workout` | —           | Restart the timer when you log a set for this exercise or workout     |
 | `superset`            | `false`     | Canvas export only: draw this exercise and the next one as a superset |
 

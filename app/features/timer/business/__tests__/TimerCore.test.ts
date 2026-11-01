@@ -137,3 +137,54 @@ describe("TimerCore surfaces", () => {
     expect(drawn).toEqual([reading, editing]);
   });
 });
+
+describe("TimerCore interval phases", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(1_000_000);
+    (TimerAudio as jest.MockedClass<typeof TimerAudio>).mockClear();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  const startTabata = () => {
+    const core = new TimerCore("t1");
+    core.setState({
+      timerType: TIMER_TYPE.INTERVAL,
+      duration: 20,
+      rest: 10,
+      totalRounds: 2,
+    });
+    core.addSurface(surface());
+    core.start();
+    return core;
+  };
+
+  it("plays the rest sound when work ends and the work sound when the next round starts", () => {
+    const core = startTabata();
+
+    jest.advanceTimersByTime(20_100);
+    expect(audioInstance().play).toHaveBeenLastCalledWith("rest");
+    expect(core.getState()).toMatchObject({ phase: "rest", currentRound: 1 });
+
+    jest.advanceTimersByTime(10_000);
+    expect(audioInstance().play).toHaveBeenLastCalledWith("work");
+    expect(core.getState()).toMatchObject({ phase: "work", currentRound: 2 });
+    expect(audioInstance().play).toHaveBeenCalledTimes(2);
+    core.destroy();
+  });
+
+  it("finishes after the last round's rest", () => {
+    const core = startTabata();
+
+    jest.advanceTimersByTime(59_000);
+    expect(core.isRunning()).toBe(true);
+
+    jest.advanceTimersByTime(1_200);
+    expect(core.isRunning()).toBe(false);
+    expect(core.getState().phase).toBe("done");
+    expect(audioInstance().play).toHaveBeenLastCalledWith("end");
+  });
+});

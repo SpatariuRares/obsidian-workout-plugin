@@ -121,6 +121,9 @@ export class TimerPresetsSettings {
     if (preset.type === TIMER_TYPE.INTERVAL && preset.rounds) {
       parts.push(`Rounds: ${preset.rounds}`);
     }
+    if (preset.type === TIMER_TYPE.INTERVAL && preset.rest) {
+      parts.push(`${t("settings.labels.presetRest")}: ${preset.rest}s`);
+    }
 
     const options: string[] = [];
     if (preset.showControls)

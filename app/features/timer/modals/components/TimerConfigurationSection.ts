@@ -16,8 +16,13 @@ import { CONSTANTS } from "@app/constants";
 export interface TimerConfigurationElements {
   timerTypeChips: Map<TIMER_TYPE, HTMLButtonElement>;
   selectedTimerType: TIMER_TYPE;
+  /** Row under the timer type for the presets of that type (filled by the modal) */
+  presetGroup: HTMLElement;
+  presetChipsContainer: HTMLElement;
   durationInput: HTMLInputElement;
   durationContainer: HTMLElement;
+  restInput: HTMLInputElement;
+  restContainer: HTMLElement;
   roundsInput: HTMLInputElement;
   roundsContainer: HTMLElement;
   exerciseInput: HTMLInputElement;
@@ -32,26 +37,26 @@ export interface TimerConfigurationHandlers {
 
 const DURATION_INCREMENT = 15;
 const ROUNDS_INCREMENT = 1;
+const REST_INCREMENT = 5;
 
 export class TimerConfigurationSection {
   /**
-   * Creates the timer configuration section with chips, adjust fields, and compact options
+   * Creates the timer fields (type chips, presets, adjust fields) directly in
+   * the modal, then the display options. onTypeChange runs when the user
+   * picks another type.
    */
   static create(
     modal: ModalBase,
     container: HTMLElement,
     plugin: WorkoutPluginContext,
+    onTypeChange?: (type: TIMER_TYPE) => void,
   ): {
     elements: TimerConfigurationElements;
     handlers: TimerConfigurationHandlers;
   } {
-    const timerSection = modal.createSection(
-      container,
-      t("modal.sections.timerConfiguration"),
-    );
-
+    // The modal is already about the timer, so its fields need no card
     // Timer Type - chips instead of select
-    const typeGroup = modal.createFormGroup(timerSection);
+    const typeGroup = modal.createFormGroup(container);
     typeGroup.createEl("label", {
       text: t("modal.timerType"),
     });
@@ -89,8 +94,15 @@ export class TimerConfigurationSection {
       timerTypeChips.set(type, chip);
     }
 
+    // Presets of the selected type, between the type and its values
+    const presetGroup = modal.createFormGroup(container);
+    presetGroup.createEl("label", { text: t("modal.sections.preset") });
+    const presetChipsContainer = presetGroup.createDiv({
+      cls: "workout-timer-preset-chips",
+    });
+
     // Parameters container (grid: 1 col mobile, 2 col desktop)
-    const parametersContainer = timerSection.createDiv({
+    const parametersContainer = container.createDiv({
       cls: "workout-parameters-container",
     });
 
@@ -108,6 +120,20 @@ export class TimerConfigurationSection {
         DURATION_INCREMENT,
         "s",
       );
+
+    // Rest field with +/- adjust (interval only)
+    const restContainer = parametersContainer.createDiv({
+      cls: "workout-field-with-adjust",
+    });
+    const restInput = TimerConfigurationSection.createAdjustFieldInContainer(
+      restContainer,
+      t("modal.rest"),
+      0,
+      0,
+      CONSTANTS.WORKOUT.MODAL.DEFAULTS.TIMER_DURATION_MAX,
+      REST_INCREMENT,
+      "s",
+    );
 
     // Rounds field with +/- adjust
     const roundsContainer = parametersContainer.createDiv({
@@ -127,7 +153,7 @@ export class TimerConfigurationSection {
     const { elements: exerciseElements } =
       ExerciseAutocomplete.create(
         modal,
-        timerSection,
+        container,
         plugin,
         undefined,
         { showCreateButton: false },
@@ -163,8 +189,12 @@ export class TimerConfigurationSection {
     const elements: TimerConfigurationElements = {
       timerTypeChips,
       selectedTimerType,
+      presetGroup,
+      presetChipsContainer,
       durationInput,
       durationContainer,
+      restInput,
+      restContainer,
       roundsInput,
       roundsContainer,
       exerciseInput: exerciseElements.exerciseInput,
@@ -178,10 +208,21 @@ export class TimerConfigurationSection {
         elements.selectedTimerType === TIMER_TYPE.INTERVAL;
       const isStopwatch =
         elements.selectedTimerType === TIMER_TYPE.STOPWATCH;
-      if (isInterval) {
-        roundsContainer.removeClass("workout-display-none");
-      } else {
-        roundsContainer.addClass("workout-display-none");
+      // For intervals the duration is the work phase of each round
+      const durationLabel = durationContainer.querySelector(
+        ".workout-field-label",
+      );
+      if (durationLabel) {
+        durationLabel.textContent = isInterval
+          ? `${t("modal.work")} (s)`
+          : `${t("modal.duration")} (s)`;
+      }
+      for (const intervalOnly of [roundsContainer, restContainer]) {
+        if (isInterval) {
+          intervalOnly.removeClass("workout-display-none");
+        } else {
+          intervalOnly.addClass("workout-display-none");
+        }
       }
       if (isStopwatch) {
         durationContainer.addClass("workout-display-none");
@@ -197,6 +238,7 @@ export class TimerConfigurationSection {
         Chip.setSelected(chip, t === type);
       }
       updateVisibility();
+      onTypeChange?.(type);
     };
 
     const handlers: TimerConfigurationHandlers = {
@@ -314,11 +356,14 @@ export class TimerConfigurationSection {
       sound: elements.soundToggle.checked,
     };
 
-    if (timerType !== TIMER_TYPE.STOPWATCH) {
+    if (timerType === TIMER_TYPE.COUNTDOWN) {
       values.duration = parseInt(elements.durationInput.value) || 30;
     }
 
+    // For intervals the duration field is the work phase of each round
     if (timerType === TIMER_TYPE.INTERVAL) {
+      values.work = parseInt(elements.durationInput.value) || 30;
+      values.rest = Math.max(0, parseInt(elements.restInput.value) || 0);
       values.rounds = parseInt(elements.roundsInput.value) || 5;
     }
 

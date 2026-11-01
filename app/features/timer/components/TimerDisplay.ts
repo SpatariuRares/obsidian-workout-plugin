@@ -3,6 +3,12 @@ import {
   TimerSurface,
   TIMER_TYPE,
 } from "@app/features/timer/types";
+import {
+  intervalAt,
+  intervalPlan,
+  intervalSeconds,
+  type IntervalPhase,
+} from "@app/features/timer/business/intervalSchedule";
 import { Icon } from "@app/components/atoms";
 import { ICONS } from "@app/constants/ui.constants";
 import { t } from "@app/i18n";
@@ -21,16 +27,34 @@ export class TimerDisplay {
       .padStart(2, "0")}`;
   }
 
+  private static plan(state: TimerState) {
+    return intervalPlan({
+      duration: state.duration,
+      rest: state.rest,
+      rounds: state.totalRounds,
+    });
+  }
+
+  /** Time left in the countdown, or in the current interval phase */
   private static getRemaining(state: TimerState): number | null {
     if (state.timerType === TIMER_TYPE.COUNTDOWN) {
       return Math.max(0, state.duration * 1000 - state.elapsedTime);
     }
     if (state.timerType === TIMER_TYPE.INTERVAL) {
-      const intervalElapsed =
-        state.elapsedTime % (state.duration * 1000);
-      return state.duration * 1000 - intervalElapsed;
+      return intervalAt(this.plan(state), state.elapsedTime).remainingMs;
     }
     return null;
+  }
+
+  /** Time left until the whole timer ends (drives the last-seconds overlay) */
+  private static getRemainingToEnd(state: TimerState): number | null {
+    if (state.timerType === TIMER_TYPE.INTERVAL) {
+      return Math.max(
+        0,
+        intervalSeconds(this.plan(state)) * 1000 - state.elapsedTime,
+      );
+    }
+    return this.getRemaining(state);
   }
 
   private static showUrgentOverlay(
@@ -69,18 +93,20 @@ export class TimerDisplay {
     }
 
     const remaining = this.getRemaining(state);
+    const remainingToEnd = this.getRemainingToEnd(state);
     const isCompleted =
       !state.isRunning &&
-      state.timerType === TIMER_TYPE.COUNTDOWN &&
-      state.elapsedTime >= state.duration * 1000;
+      ((state.timerType === TIMER_TYPE.COUNTDOWN &&
+        state.elapsedTime >= state.duration * 1000) ||
+        (state.timerType === TIMER_TYPE.INTERVAL && state.phase === "done"));
     const isUrgent =
       state.isRunning &&
-      remaining !== null &&
-      remaining > 0 &&
-      remaining <= URGENT_THRESHOLD_MS;
+      remainingToEnd !== null &&
+      remainingToEnd > 0 &&
+      remainingToEnd <= URGENT_THRESHOLD_MS;
 
-    if (isUrgent && remaining !== null) {
-      this.showUrgentOverlay(timerId, Math.ceil(remaining / 1000));
+    if (isUrgent && remainingToEnd !== null) {
+      this.showUrgentOverlay(timerId, Math.ceil(remainingToEnd / 1000));
     } else {
       this.hideUrgentOverlay(timerId);
     }
@@ -94,6 +120,14 @@ export class TimerDisplay {
             total: state.totalRounds,
           })
         : "";
+    // Work/rest only means something when the rounds have a rest
+    const phase =
+      state.timerType === TIMER_TYPE.INTERVAL &&
+      state.rest > 0 &&
+      state.phase !== "done" &&
+      !isCompleted
+        ? state.phase
+        : undefined;
 
     for (const surface of state.surfaces) {
       this.drawSurface(surface, state, {
@@ -101,6 +135,7 @@ export class TimerDisplay {
         isCompleted,
         isPaused,
         roundText,
+        phase,
       });
     }
   }
@@ -121,13 +156,20 @@ export class TimerDisplay {
   private static drawSurface(
     surface: TimerSurface,
     state: TimerState,
-    view: { time: string; isCompleted: boolean; isPaused: boolean; roundText: string },
+    view: {
+      time: string;
+      isCompleted: boolean;
+      isPaused: boolean;
+      roundText: string;
+      phase?: Exclude<IntervalPhase, "done">;
+    },
   ): void {
     const display = surface.timerDisplay;
     display.empty();
     const timer = display.closest(".workout-timer");
     timer?.classList.toggle("is-running", state.isRunning);
     timer?.classList.toggle("is-paused", view.isPaused);
+    timer?.classList.toggle("is-rest", view.phase === "rest");
     if (surface.roundCounterDisplay) {
       surface.roundCounterDisplay.textContent = view.roundText;
     }
@@ -139,6 +181,15 @@ export class TimerDisplay {
       return;
     }
 
+    if (view.phase) {
+      display.createSpan({
+        cls: "workout-timer-phase",
+        text:
+          view.phase === "rest"
+            ? t("timer.phase.rest")
+            : t("timer.phase.work"),
+      });
+    }
     display.createSpan({
       cls: "workout-timer-time-display",
       text: view.time,

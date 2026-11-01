@@ -133,6 +133,23 @@
         flex: none;
       }
 
+      /* The exercise is the card's title, on its own line: shared with the
+         numbers it got a narrow column, one word per line, cut off */
+      td.workout-table-exercise-cell {
+        order: -1;
+        flex: 1 1 100%;
+        font-weight: var(--workout-font-weight-semibold);
+
+        &::before {
+          display: none;
+        }
+      }
+
+      /* A value the set does not have (duration of a strength set) */
+      td.workout-table-na-cell {
+        display: none;
+      }
+
       /* Protocol badge and notes go on a second line under the numbers:
          squeezed into the first line they broke words letter by letter.
          The ::after item is a full-width line break, added only to rows

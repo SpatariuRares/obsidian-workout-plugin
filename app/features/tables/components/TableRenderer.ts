@@ -16,6 +16,7 @@ import {
   type ProtocolInfo,
 } from "@app/services/protocols/ProtocolCatalog";
 import { CONSTANTS, mapColumnIdentifiersToLabels } from "@app/constants";
+import { t } from "@app/i18n";
 
 export class TableRenderer {
   /**
@@ -141,6 +142,8 @@ export class TableRenderer {
     const volumeColumnIndex = columnOf(COLUMNS.VOLUME);
     const actionsColumnIndex = columnOf(COLUMNS.ACTIONS);
     const notesColumnIndex = columnOf(COLUMNS.NOTES);
+    const exerciseColumnIndex = columnOf(COLUMNS.EXERCISE);
+    const notAvailable = t("table.notAvailable");
     // On phones the header row is hidden and each row becomes a card, so
     // value cells carry their column name (rendered via CSS attr())
     const columnLabels = mapColumnIdentifiersToLabels(headers);
@@ -188,8 +191,21 @@ export class TableRenderer {
             text: cell,
             attr: labelAttr(cellIndex),
           });
+        } else if (cellIndex === exerciseColumnIndex) {
+          // Phones: the card's title, on its own line above the numbers
+          tr.createEl("td", {
+            cls: "workout-table-exercise-cell",
+            text: cell,
+            attr: labelAttr(cellIndex),
+          });
         } else {
-          tr.createEl("td", { text: cell, attr: labelAttr(cellIndex) });
+          // Phones hide N/A values: a strength set in a table that also
+          // shows cardio has no duration, and the card has no room to say so
+          tr.createEl("td", {
+            cls: cell === notAvailable ? "workout-table-na-cell" : undefined,
+            text: cell,
+            attr: labelAttr(cellIndex),
+          });
         }
       });
 

@@ -367,6 +367,46 @@ describe("TableRenderer", () => {
       );
     });
 
+    it("marks the exercise cell so it becomes the card title on phones", () => {
+      const container = document.createElement("div");
+      const exerciseCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.EXERCISE.value;
+      TableRenderer.renderTable(
+        container,
+        ["Date", exerciseCol],
+        [
+          createRow({
+            dateKey: "2024-01-15",
+            displayRow: ["10:00", "Lying Leg Curl (Sdraiato)"],
+          }),
+        ],
+        {},
+      );
+
+      const cell = container.querySelector(".workout-table-exercise-cell");
+      expect(cell?.textContent).toBe("Lying Leg Curl (Sdraiato)");
+    });
+
+    it("marks N/A values so phones can hide them", () => {
+      const container = document.createElement("div");
+      const repsCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.REPS.value;
+      const durationCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.DURATION.value;
+      TableRenderer.renderTable(
+        container,
+        ["Date", repsCol, durationCol],
+        [
+          createRow({
+            dateKey: "2024-01-15",
+            displayRow: ["10:00", "8", t("table.notAvailable")],
+          }),
+        ],
+        {},
+      );
+
+      const cells = container.querySelectorAll("tr.workout-same-day-log td");
+      expect(cells[1].classList.contains("workout-table-na-cell")).toBe(false);
+      expect(cells[2].classList.contains("workout-table-na-cell")).toBe(true);
+    });
+
     describe("rows with a second line (notes or protocol badge)", () => {
       const notesCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.NOTES.value;
       const protocolCol = CONSTANTS.WORKOUT.TABLE.COLUMNS.PROTOCOL.value;

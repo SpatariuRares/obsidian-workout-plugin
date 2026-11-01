@@ -41,6 +41,8 @@ const context = await esbuild.context({
   treeShaking: true,
   outfile: "main.js",
   minify: prod,
+  // Translations are bundled; \uXXXX escapes would triple non-Latin text
+  charset: "utf8",
 });
 
 if (prod) {

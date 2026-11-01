@@ -764,7 +764,8 @@
       "welcomeWindow": "Toon het startvenster opnieuw om te beginnen met voorbeeldgegevens of vanaf nul.",
       "keepScreenAwake": "Probeer het scherm actief te houden terwijl een timer op de voorgrond draait. Dit verbruikt meer batterij; de beschikbaarheid hangt af van uw apparaat en systeeminstellingen.",
       "vibrateOnCompletion": "Tril dan kort wanneer een timer afloopt, onafhankelijk van geluid. Vereist een aanraking op de pagina en een compatibel apparaat (zoals Android). Niet beschikbaar op iOS; geen meldingen in de achtergrond.",
-      "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust)."
+      "presetRestDesc": "Aantal seconden rust na het uitvoeren van elke ronde (0 voor geen rust).",
+      "noCustomProtocols": "Er zijn nog geen protocollen. Klik op 'Protocol toevoegen' om er een aan te maken."
     },
     "labels": {
       "csvPath": "Pad naar het CSV-logbestand",
@@ -833,7 +834,8 @@
       "timerPresets": "Timervoorinstellingen",
       "trainingParameters": "Parameters voor training",
       "gettingStarted": "Beginnen",
-      "timerDeviceCues": "Instructies voor timer-apparaten"
+      "timerDeviceCues": "Instructies voor timer-apparaten",
+      "customProtocols": "Protocollen"
     },
     "tooltips": {
       "deletePreset": "Voorinstelling verwijderen",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Het pad mag niet leeg zijn",
       "mustBeNonNegative": "Moet 0 of groter zijn",
       "mustBePositive": "Moet groter zijn dan 0"
+    },
+    "protocolHelp": {
+      "warmup": "De 'licht'-sets worden uitgevoerd vóór de 'werk'-sets. Ze tellen niet mee voor persoonlijke records.",
+      "dropSet": "Verlaag het gewicht direct na een mislukte herhaling en ga verder. Drop sets tellen niet mee voor persoonlijke records.",
+      "myoReps": "Eén reeks van activaties, gevolgd door korte mini-reeksen met een paar seconden rust.",
+      "restPause": "Neem een paar seconden rust na een mislukte poging, en voer dan een paar extra herhalingen uit.",
+      "superset": "Twee oefeningen achter elkaar, zonder pauze ertussen.",
+      "twentyone": "7 herhalingen in de onderste helft, 7 in de bovenste helft, en daarna 7 volledige herhalingen."
+    },
+    "presetHelp": {
+      "tabata": "20 seconden intensieve inspanning, 10 seconden rust, 8 ronden: in totaal 4 minuten.",
+      "emom": "Elke minuut op de minuut: begin met elke set aan het begin van de minuut en rust voor de resterende tijd, 10 rondes."
     }
   },
   "stats": {

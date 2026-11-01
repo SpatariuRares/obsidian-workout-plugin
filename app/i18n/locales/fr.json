@@ -764,7 +764,8 @@
       "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro.",
       "keepScreenAwake": "Essayez de maintenir l'écran allumé pendant que l'une des minuteries fonctionne en premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
       "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur s'éteint, indépendamment du son. Nécessite un clic sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
-      "presetRestDesc": "Nombre de secondes de repos après chaque série d'exercices (0 pour aucun repos)."
+      "presetRestDesc": "Nombre de secondes de repos après chaque série d'exercices (0 pour aucun repos).",
+      "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un."
     },
     "labels": {
       "csvPath": "Chemin du fichier journal CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Préréglages du minuteur",
       "trainingParameters": "Paramètres d'entraînement",
       "gettingStarted": "Premiers pas",
-      "timerDeviceCues": "Indices pour les dispositifs de minuterie"
+      "timerDeviceCues": "Indices pour les dispositifs de minuterie",
+      "customProtocols": "Protocoles"
     },
     "tooltips": {
       "deletePreset": "Supprimer le préréglage",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Le chemin ne peut pas être vide",
       "mustBeNonNegative": "Doit être 0 ou supérieur",
       "mustBePositive": "Doit être supérieur à 0"
+    },
+    "protocolHelp": {
+      "warmup": "Les séances de lumière sont effectuées avant les séances de travail. Elles ne sont pas prises en compte pour les statistiques personnelles.",
+      "dropSet": "Réduisez le poids immédiatement après l'échec et continuez. Les séries de descente de poids ne sont pas prises en compte pour les records personnels.",
+      "myoReps": "Un ensemble d'activations, suivi de courts ensembles miniatures avec quelques secondes de repos.",
+      "restPause": "Reposez quelques secondes après l'échec, puis effectuez quelques répétitions supplémentaires.",
+      "superset": "Deux exercices l'un après l'autre, sans pause entre les deux.",
+      "twentyone": "7 répétitions dans la partie inférieure, 7 dans la partie supérieure, puis 7 répétitions complètes."
+    },
+    "presetHelp": {
+      "tabata": "20 secondes de travail à intensité maximale, 10 secondes de repos, 8 séries : un total de 4 minutes.",
+      "emom": "Chaque minute, au début de chaque minute : commencez vos répétitions au début de la minute et reposez-vous pendant le temps restant, 10 séries."
     }
   },
   "stats": {

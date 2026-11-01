@@ -764,7 +764,8 @@
       "welcomeWindow": "Znovu zobrazte okno s uvítacími informacemi, abyste mohli začít s ukázkovými daty nebo od začátku.",
       "keepScreenAwake": "Pokuste se, aby obrazovka zůstala aktivní, zatímco běží jakýkoli časovač na prvním plánu. Spotřebuje více baterie; dostupnost závisí na vašem zařízení a systémových nastaveních.",
       "vibrateOnCompletion": "Krátké vibrace po skončení časovače, bez ohledu na zvuk. Vyžaduje stisknutí na stránce a kompatibilní zařízení (např. Android). Není k dispozici pro iOS; bez upozornění na pozadí.",
-      "presetRestDesc": "Sekundy odpočinku po každém kole (0 znamená žádný odpočinek)."
+      "presetRestDesc": "Sekundy odpočinku po každém kole (0 znamená žádný odpočinek).",
+      "noCustomProtocols": "V současné době nejsou definovány žádné protokoly. Klikněte na tlačítko „Přidat protokol“, abyste jej vytvořili."
     },
     "labels": {
       "csvPath": "Cesta k souboru záznamů CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Předvolby časovače",
       "trainingParameters": "Parametry tréninku",
       "gettingStarted": "Začít",
-      "timerDeviceCues": "Indikátory pro zařízení časovače"
+      "timerDeviceCues": "Indikátory pro zařízení časovače",
+      "customProtocols": "Protokoly"
     },
     "tooltips": {
       "deletePreset": "Smazat předvolbu",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Cesta nemůže být prázdná",
       "mustBeNonNegative": "Musí být 0 nebo větší",
       "mustBePositive": "Musí být větší než 0"
+    },
+    "protocolHelp": {
+      "warmup": "Světla se zapínají před pracovními světly. Nepočítají se do osobních záznamů.",
+      "dropSet": "Snižte váhu hned po selhání a pokračujte. Sady s poklesem váhy se nepočítají do osobních rekordů.",
+      "myoReps": "Jedna série aktivací, poté krátké mini-série s odpočinkem po několik sekund.",
+      "restPause": "Po selhání odpočiňte několik sekund a poté proveďte několik dalších opakování.",
+      "superset": "Dva cviky po sobě, bez přestávky mezi nimi.",
+      "twentyone": "7 opakování v dolní polovině, 7 opakování v horní polovině, poté 7 kompletních opakování."
+    },
+    "presetHelp": {
+      "tabata": "20 sekund intenzivní práce, 10 sekund odpočinku, 8 kol: celkem 4 minuty.",
+      "emom": "Každá minuta na minutu: začněte s cviky na začátku každé minuty a odpočívejte, dokud nezmizí čas, 10 sérií."
     }
   },
   "stats": {

@@ -764,7 +764,8 @@
       "welcomeWindow": "再次顯示歡迎畫面，以便從範例資料開始，或從頭開始。",
       "keepScreenAwake": "盡可能在任何計時器正在運作時保持螢幕開啟狀態。這會消耗更多電力；其可用性取決於您的裝置和系統設定。",
       "vibrateOnCompletion": "在計時器結束時，會短暫震動，與聲音無關。需要點擊頁面，並使用支援的設備（例如 Android）。在 iOS 系統上不可用；不會發送背景警示。",
-      "presetRestDesc": "每輪工作後，休息的秒數 (0 表示不休息)。"
+      "presetRestDesc": "每輪工作後，休息的秒數 (0 表示不休息)。",
+      "noCustomProtocols": "目前尚未設定任何協議。點擊「新增協議」以建立一個。"
     },
     "labels": {
       "csvPath": "CSV 記錄檔路徑",
@@ -833,7 +834,8 @@
       "timerPresets": "計時器預設",
       "trainingParameters": "訓練參數",
       "gettingStarted": "開始使用",
-      "timerDeviceCues": "計時器設備提示"
+      "timerDeviceCues": "計時器設備提示",
+      "customProtocols": "協議"
     },
     "tooltips": {
       "deletePreset": "刪除預設",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "路徑欄位不能為空",
       "mustBeNonNegative": "必須為 0 或大於 0",
       "mustBePositive": "必須大於 0"
+    },
+    "protocolHelp": {
+      "warmup": "在工作階段之前，會先進行暖機。這些時間不計入個人記錄。",
+      "dropSet": "在失敗後立即降低重量，並繼續進行。「分組訓練」不計入個人紀錄。",
+      "myoReps": "進行一次啟動，然後進行短時間的迷你組，每組之間休息幾秒。",
+      "restPause": "在失敗後休息幾秒，然後再進行幾次。",
+      "superset": "連續進行兩個動作，中間沒有休息。",
+      "twentyone": "重複 7 次，分別在下半身、上半身，然後再重複 7 次。"
+    },
+    "presetHelp": {
+      "tabata": "20 秒高強度運動，10 秒休息，共 8 輪：總共 4 分鐘。",
+      "emom": "每分鐘一次：從每分鐘的開始處開始，進行動作，然後休息剩餘的時間，共進行 10 組。"
     }
   },
   "stats": {

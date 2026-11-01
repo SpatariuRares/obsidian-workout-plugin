@@ -764,7 +764,8 @@
       "welcomeWindow": "Para se të filloni, shfaqeni përsëri ekranin e mirëse vijues për të filluar me të dhëna shembullore ose nga e para.",
       "keepScreenAwake": "Në përpjekje për të mbajtur ekranin aktiv ndërsa ndonjë timer funksionon në plan. Konsumon më shumë energji; disponibiliteti varet nga dispozitja dhe konfigurimi i sistemit tuaj.",
       "vibrateOnCompletion": "Vibrimi shkurtër kur skedoni, duke u ndarë nga çelëza. Kërkohet një hap në faqe dhe një dispozitiv i mbështetur (si Android). Nuk është i disponueshëm në iOS; nuk ka alarme në ffon.",
-      "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim)."
+      "presetRestDesc": "Sekondat e pushimit pas punës së çdo raunde (0 për pa pushim).",
+      "noCustomProtocols": "Aktualisht nuk ka protokole. Klikoni 'Shto protokol' për të krijuar një."
     },
     "labels": {
       "csvPath": "Shtegu i skedarit të regjistrit CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Paracaktimet e timerit",
       "trainingParameters": "Parametrat e stërvitjes",
       "gettingStarted": "Fillimi",
-      "timerDeviceCues": "Simboli/indikatorët për pajisjet që kanë funksion kohor"
+      "timerDeviceCues": "Simboli/indikatorët për pajisjet që kanë funksion kohor",
+      "customProtocols": "Протоколи"
     },
     "tooltips": {
       "deletePreset": "Fshi paracaktimin",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Shtegu nuk mund të jetë bosh",
       "mustBeNonNegative": "Duhet të jetë 0 ose më shumë",
       "mustBePositive": "Duhet të jetë më i madh se 0"
+    },
+    "protocolHelp": {
+      "warmup": "Trajnimi lehtë para se të bëhen trajnimet e rëndësishme. Ata nuk janë të numëruara në rekordet personale.",
+      "dropSet": "Reduktoni peshat menjëherë pas humburjes dhe vazhdoni. Seritë e ulëse nuk llogatohen në rekordet personale.",
+      "myoReps": "Një serije aktivizimi, pastaj serije të shkurtra mini me pauza të shkurtra.",
+      "restPause": "Pa një sekondë pas dështimit, pastaj kryeni disa repetime të tjera.",
+      "superset": "Dy ushtrime një pas tjetrës, pa ndonjë pauzë mes tyre.",
+      "twentyone": "7 ser në pjesën e poshtme, 7 në pjesën e sipërme, pastaj 7 ser të plota."
+    },
+    "presetHelp": {
+      "tabata": "20 sekonda pune me maksimalisht, 10 sekonda pushim, 8 runda: 4 minuta në total.",
+      "emom": "Për çdo minutë, në minutë të plota: filloni seritë në fillimin e çdo minute dhe paqësojeni për pjesën e mbetur, 10 seritë."
     }
   },
   "stats": {

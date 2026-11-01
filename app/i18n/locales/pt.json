@@ -764,7 +764,8 @@
       "welcomeWindow": "Exiba novamente a janela de boas-vindas para começar com dados de exemplo ou do zero.",
       "keepScreenAwake": "Tente manter a tela ativa enquanto algum temporizador estiver em execução em primeiro plano. Consome mais bateria; a disponibilidade depende do seu dispositivo e das configurações do sistema.",
       "vibrateOnCompletion": "Vibre brevemente quando um temporizador terminar, independentemente do som. Requer um toque na página e um dispositivo compatível (como o Android). Não disponível no iOS; sem notificações em segundo plano.",
-      "presetRestDesc": "Segundos de descanso após o trabalho de cada rodada (0 para sem descanso)."
+      "presetRestDesc": "Segundos de descanso após o trabalho de cada rodada (0 para sem descanso).",
+      "noCustomProtocols": "Ainda não existem protocolos definidos. Clique em \"Adicionar protocolo\" para criar um."
     },
     "labels": {
       "csvPath": "Caminho do arquivo de log CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Predefinições de temporizador",
       "trainingParameters": "Parâmetros de treinamento",
       "gettingStarted": "Como começar",
-      "timerDeviceCues": "Sinais para dispositivos de temporizador"
+      "timerDeviceCues": "Sinais para dispositivos de temporizador",
+      "customProtocols": "Protocolos"
     },
     "tooltips": {
       "deletePreset": "Excluir predefinição",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "O caminho não pode estar vazio",
       "mustBeNonNegative": "Deve ser 0 ou um valor positivo.",
       "mustBePositive": "Deve ser maior que 0"
+    },
+    "protocolHelp": {
+      "warmup": "Os treinos de aquecimento são realizados antes dos treinos principais. Eles não são considerados como parte dos seus registros pessoais.",
+      "dropSet": "Diminua o peso imediatamente após a falha e continue. As séries descendentes não contam para os seus recordes pessoais.",
+      "myoReps": "Um conjunto de ativação, seguido por conjuntos curtos e mini-conjuntos com alguns segundos de descanso.",
+      "restPause": "Descanse alguns segundos após a falha, e depois faça mais algumas repetições.",
+      "superset": "Dois exercícios um após o outro, sem descanso entre eles.",
+      "twentyone": "7 repetições na parte inferior, 7 na parte superior, e depois 7 repetições completas."
+    },
+    "presetHelp": {
+      "tabata": "20 segundos de esforço máximo, 10 segundos de descanso, 8 séries: total de 4 minutos.",
+      "emom": "A cada minuto, a cada minuto: comece as repetições no início de cada minuto e descanse pelo restante do tempo, 10 séries."
     }
   },
   "stats": {

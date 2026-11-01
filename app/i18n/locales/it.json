@@ -764,7 +764,8 @@
       "welcomeWindow": "Mostra nuovamente la finestra di benvenuto per iniziare con dati di esempio o da zero.",
       "keepScreenAwake": "Cerca di mantenere lo schermo attivo mentre è in esecuzione un timer in primo piano. Consuma più batteria; la disponibilità dipende dal tuo dispositivo e dalle impostazioni del sistema.",
       "vibrateOnCompletion": "Vibra brevemente quando un timer termina, indipendentemente dall'emissione di suoni. Richiede un tocco sulla pagina e un dispositivo compatibile (come Android). Non disponibile su iOS; nessuna notifica in background.",
-      "presetRestDesc": "Secondi di riposo dopo ogni serie di esercizi (0 per nessun riposo)."
+      "presetRestDesc": "Secondi di riposo dopo ogni serie di esercizi (0 per nessun riposo).",
+      "noCustomProtocols": "Al momento non sono definite. Clicca su \"Aggiungi protocollo\" per crearne uno."
     },
     "labels": {
       "csvPath": "Percorso file CSV registro",
@@ -833,7 +834,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parametri di allenamento",
       "gettingStarted": "Inizia",
-      "timerDeviceCues": "Indicazioni per il dispositivo timer"
+      "timerDeviceCues": "Indicazioni per il dispositivo timer",
+      "customProtocols": "Protocolli"
     },
     "tooltips": {
       "deletePreset": "Elimina preset",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Il percorso non può essere vuoto",
       "mustBeNonNegative": "Deve essere 0 o superiore",
       "mustBePositive": "Deve essere maggiore di 0"
+    },
+    "protocolHelp": {
+      "warmup": "I minuti di riscaldamento vengono conteggiati prima dei minuti di allenamento. Non vengono inclusi nei record personali.",
+      "dropSet": "Riduci il peso subito dopo il fallimento e continua. Gli esercizi a serie multiple non vengono considerati per stabilire i propri record personali.",
+      "myoReps": "Un set di attivazioni, seguito da brevi serie di esercizi con una pausa di pochi secondi.",
+      "restPause": "Riposare per alcuni secondi dopo il fallimento, quindi eseguire alcuni altri esercizi.",
+      "superset": "Due esercizi uno dopo l'altro, senza pause intermedie.",
+      "twentyone": "7 ripetizioni nella parte inferiore, 7 nella parte superiore, quindi 7 ripetizioni complete."
+    },
+    "presetHelp": {
+      "tabata": "20 secondi di lavoro intenso, 10 secondi di riposo, 8 serie: in totale 4 minuti.",
+      "emom": "Ogni minuto intero: inizia ogni serie all'inizio di ogni minuto e riposa per il tempo rimanente, per un totale di 10 serie."
     }
   },
   "stats": {

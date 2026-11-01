@@ -764,7 +764,8 @@
       "welcomeWindow": "Wyświetl ponownie okno powitalne, aby rozpocząć pracę z przykładowymi danymi lub od zera.",
       "keepScreenAwake": "Spróbuj utrzymać ekran włączony, gdy działa jakiś timer w pierwszym planie. Zużywa więcej energii; dostępność zależy od Twojego urządzenia i ustawień systemu.",
       "vibrateOnCompletion": "Wibracja na krótko, gdy timer się skończy, niezależnie od dźwięku. Wymaga naciśnięcia na stronie i obsługującego urządzenia (np. Android). Nie jest dostępne na iOS; brak powiadomień w tle.",
-      "presetRestDesc": "Sekundy odpoczynku po zakończeniu każdej rundy (0 oznacza brak odpoczynku)."
+      "presetRestDesc": "Sekundy odpoczynku po zakończeniu każdej rundy (0 oznacza brak odpoczynku).",
+      "noCustomProtocols": "Obecnie nie zdefiniowano żadnych protokołów. Kliknij przycisk „Dodaj protokół”, aby go utworzyć."
     },
     "labels": {
       "csvPath": "Ścieżka do pliku logu CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Predefiniowane ustawienia timera",
       "trainingParameters": "Parametry treningu",
       "gettingStarted": "Jak zacząć",
-      "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera"
+      "timerDeviceCues": "Przypomnienia dotyczące urządzenia timera",
+      "customProtocols": "Protokół"
     },
     "tooltips": {
       "deletePreset": "Usuń ustawienie",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Ścieżka nie może być pusta",
       "mustBeNonNegative": "Musi być równe 0 lub większe",
       "mustBePositive": "Musi być większe niż 0"
+    },
+    "protocolHelp": {
+      "warmup": "Seanse rozgrzewkowe odbywają się przed sesjami treningowymi. Nie są uwzględniane w osobistych rekordach.",
+      "dropSet": "Zmniejsz obciążenie od razu po nieudanym powtórzeniu i kontynuuj. Seria obniżania obciążenia nie jest uwzględniana w osobistych rekordach.",
+      "myoReps": "Jedna seria aktywacji, a następnie krótkie, mini-serie z przerwą na kilka sekund.",
+      "restPause": "Odpocznij przez kilka sekund po niepowodzeniu, a następnie wykonaj kilka kolejnych powtórzeń.",
+      "superset": "Dwa ćwiczenia jeden po drugim, bez przerwy między nimi.",
+      "twentyone": "7 powtórzeń w dolnej części, 7 w górnej części, a następnie 7 pełnych powtórzeń."
+    },
+    "presetHelp": {
+      "tabata": "20 sekund intensywnej pracy, 10 sekund odpoczynku, 8 rund: łącznie 4 minuty.",
+      "emom": "Każda minuta po upływie: rozpoczynaj serie od początku każdej minuty i odpoczywaj, aż minie pozostały czas, 10 serii."
     }
   },
   "stats": {

@@ -764,7 +764,8 @@
       "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal.",
       "keepScreenAwake": "Usahakan untuk menjaga layar tetap menyala saat ada timer yang berjalan di latar depan. Menggunakan lebih banyak baterai; ketersediaan tergantung pada perangkat dan pengaturan sistem Anda.",
       "vibrateOnCompletion": "Bergetar sebentar saat timer selesai, terlepas dari suara. Membutuhkan sentuhan pada halaman dan perangkat yang didukung (seperti Android). Tidak tersedia di iOS; tidak ada notifikasi latar belakang.",
-      "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat)."
+      "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
+      "noCustomProtocols": "Belum ada protokol yang dibuat. Klik 'Tambah protokol' untuk membuatnya."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Preset timer",
       "trainingParameters": "Parameter pelatihan",
       "gettingStarted": "Memulai",
-      "timerDeviceCues": "Petunjuk perangkat timer"
+      "timerDeviceCues": "Petunjuk perangkat timer",
+      "customProtocols": "Protokol"
     },
     "tooltips": {
       "deletePreset": "Hapus preset",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Jalur tidak boleh kosong",
       "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
       "mustBePositive": "Harus lebih besar dari 0"
+    },
+    "protocolHelp": {
+      "warmup": "Latihan ringan dilakukan sebelum latihan berat. Latihan ini tidak dihitung sebagai bagian dari rekor pribadi.",
+      "dropSet": "Kurangi beban segera setelah gagal dan terus lakukan. Serangkaian penurunan beban tidak dihitung sebagai rekor pribadi.",
+      "myoReps": "Satu set aktivasi, kemudian set mini pendek dengan jeda beberapa detik.",
+      "restPause": "Istirahat selama beberapa detik setelah kegagalan, lalu lakukan beberapa repetisi lagi.",
+      "superset": "Dua latihan secara berurutan, tanpa jeda istirahat di antaranya.",
+      "twentyone": "7 repetisi di bagian bawah, 7 repetisi di bagian atas, kemudian 7 repetisi penuh."
+    },
+    "presetHelp": {
+      "tabata": "20 detik kerja maksimal, 10 detik istirahat, 8 putaran: total 4 menit.",
+      "emom": "Setiap menit penuh: mulai latihan Anda di awal setiap menit dan istirahat selama sisa waktu, sebanyak 10 set."
     }
   },
   "stats": {

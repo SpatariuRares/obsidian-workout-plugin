@@ -764,7 +764,8 @@
       "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen.",
       "keepScreenAwake": "Prøv å holde skjermen aktiv mens en timer kjører i forgrunnen. Bruker mer batteri; tilgjengelighet avhenger av enheten og systeminnstillingene dine.",
       "vibrateOnCompletion": "Vibrer kort når en timer er ferdig, uavhengig av lyd. Krever et trykk på siden og en støttet enhet (f.eks. Android). Ikke tilgjengelig på iOS; ingen varsler i bakgrunnen.",
-      "presetRestDesc": "Antall sekunder med hvile etter hver runde av øvelsen (0 for ingen hvile)."
+      "presetRestDesc": "Antall sekunder med hvile etter hver runde av øvelsen (0 for ingen hvile).",
+      "noCustomProtocols": "Ingen protokoller er opprettet ennå. Klikk på «Legg til protokoll» for å opprette en."
     },
     "labels": {
       "csvPath": "Sti til CSV-loggfil",
@@ -833,7 +834,8 @@
       "timerPresets": "Timer-forhåndsinnstillinger",
       "trainingParameters": "Treningsparametere",
       "gettingStarted": "Komme i gang",
-      "timerDeviceCues": "Varsler for tidtakeren"
+      "timerDeviceCues": "Varsler for tidtakeren",
+      "customProtocols": "Protokoller"
     },
     "tooltips": {
       "deletePreset": "Slett forhåndsinnstilling",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Stien kan ikke være tom",
       "mustBeNonNegative": "Må være 0 eller større",
       "mustBePositive": "Må være større enn 0"
+    },
+    "protocolHelp": {
+      "warmup": "Lysøkter foregår før treningsøktene. De teller ikke med i personlige resultater.",
+      "dropSet": "Reduser vekten umiddelbart etter mislykket forsøk, og fortsett. «Drop sets» teller ikke med i personlige rekorder.",
+      "myoReps": "Én treningssett, deretter korte, små sett med noen få sekunders pause.",
+      "restPause": "Ta en pause i noen sekunder etter feil, og utfør deretter noen flere repetisjoner.",
+      "superset": "To øvelser etter hverandre, uten pause imellom.",
+      "twentyone": "7 repetisjoner i den nedre delen, 7 i den øvre delen, og deretter 7 fullstendige repetisjoner."
+    },
+    "presetHelp": {
+      "tabata": "20 sekunder med maksimal innsats, 10 sekunder med hvile, 8 runder: totalt 4 minutter.",
+      "emom": "Hvert minutt på minuttet: Start med øvelsene på begynnelsen av hvert minutt, og ta en pause for resten av minuttet, 10 runder."
     }
   },
   "stats": {

@@ -764,7 +764,8 @@
       "welcomeWindow": "再次显示欢迎窗口，以便使用示例数据或从头开始。",
       "keepScreenAwake": "尝试在任何计时器在前台运行时保持屏幕唤醒。 这会消耗更多电量；具体可用性取决于您的设备和系统设置。",
       "vibrateOnCompletion": "在计时器结束时，即使没有声音，也会短暂地震动。需要点击页面并使用支持的设备（例如 Android）。在 iOS 上不可用；不支持后台警报。",
-      "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。"
+      "presetRestDesc": "每轮工作后，休息的时间（0 表示不休息）。",
+      "noCustomProtocols": "目前还没有设置任何协议。点击“添加协议”以创建新的协议。"
     },
     "labels": {
       "csvPath": "CSV 记录文件路径",
@@ -833,7 +834,8 @@
       "timerPresets": "计时器预设",
       "trainingParameters": "训练参数",
       "gettingStarted": "开始",
-      "timerDeviceCues": "定时器设备提示"
+      "timerDeviceCues": "定时器设备提示",
+      "customProtocols": "协议"
     },
     "tooltips": {
       "deletePreset": "删除预设",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "路径不能为空",
       "mustBeNonNegative": "必须为 0 或以上",
       "mustBePositive": "必须大于 0"
+    },
+    "protocolHelp": {
+      "warmup": "在工作组之前进行轻量级训练。这些训练不计入个人记录。",
+      "dropSet": "在失败后立即降低重量，并继续进行。 降重组不计入个人记录。",
+      "myoReps": "一套激活动作，然后进行短时间的迷你组，中间休息几秒钟。",
+      "restPause": "在失败后休息几秒钟，然后再进行几次。",
+      "superset": "连续进行两次练习，中间不休息。",
+      "twentyone": "共 7 次，分别在下半部和上半部各进行 7 次，然后进行 7 次完整动作。"
+    },
+    "presetHelp": {
+      "tabata": "20 秒高强度工作，10 秒休息，共 8 轮：总共 4 分钟。",
+      "emom": "每分钟一次：在每分钟的开始时开始进行动作，然后休息，共进行10组。"
     }
   },
   "stats": {

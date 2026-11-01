@@ -764,7 +764,8 @@
       "welcomeWindow": "Örnek verilerle veya sıfırdan başlamak için, tekrar \"Hoş geldiniz\" penceresini gösterin.",
       "keepScreenAwake": "Zamanlayıcı çalışırken ekranın açık kalmasına çalışın. Daha fazla pil tüketir; kullanılabilirlik, cihazınızın ve sistem ayarlarınızın özelliklerine bağlıdır.",
       "vibrateOnCompletion": "Zamanlayıcı bittiğinde, sesten bağımsız olarak kısa bir süre titreşim sağlar. Sayfaya dokunma ve uyumlu bir cihaz (örneğin Android) gerektirir. iOS'ta mevcut değildir; arka planda bildirimler gönderilmez.",
-      "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir)."
+      "presetRestDesc": "Her turun sonunda yapılan dinlenme süresi (0, dinlenme yok anlamına gelir).",
+      "noCustomProtocols": "Henüz herhangi bir protokol tanımlanmamış. \"Protokol Ekle\" düğmesine tıklayarak bir tane oluşturabilirsiniz."
     },
     "labels": {
       "csvPath": "CSV günlük dosyası yolu",
@@ -833,7 +834,8 @@
       "timerPresets": "Zamanlayıcı ön ayarları",
       "trainingParameters": "Antrenman parametreleri",
       "gettingStarted": "Başlangıç",
-      "timerDeviceCues": "Zamanlayıcı cihaz uyarıları"
+      "timerDeviceCues": "Zamanlayıcı cihaz uyarıları",
+      "customProtocols": "Protokoller"
     },
     "tooltips": {
       "deletePreset": "Ön ayarı sil",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Yol boş olamaz",
       "mustBeNonNegative": "0 veya daha büyük olmalıdır",
       "mustBePositive": "0'dan büyük olmalıdır"
+    },
+    "protocolHelp": {
+      "warmup": "Çalışma setlerinden önce tamamlanan setler için puan verilir. Bu puanlar kişisel rekorlara dahil edilmez.",
+      "dropSet": "Başarısızlık anında ağırlığı düşürün ve tekrar deneyin. \"Drop set\"ler, kişisel rekorlarınıza dahil edilmez.",
+      "myoReps": "Bir aktivasyon seti, ardından birkaç saniyelik dinlenme ile kısa mini setler.",
+      "restPause": "Başarısızlık durumunda birkaç saniye dinlenin, ardından birkaç tekrar daha yapın.",
+      "superset": "İki egzersizi ardışık olarak, aralarında dinlenmeden yapın.",
+      "twentyone": "Alt yarım vücudu için 7 tekrar, üst yarım vücudu için 7 tekrar, ardından 7 tam tekrar."
+    },
+    "presetHelp": {
+      "tabata": "20 saniye boyunca maksimum yoğunlukta çalışma, 10 saniye dinlenme, 8 tur: Toplamda 4 dakika.",
+      "emom": "Dakikada bir: Her dakikanın başında tekrarınızı başlatın ve kalan sürede dinlenin, 10 tekrar."
     }
   },
   "stats": {

@@ -764,7 +764,8 @@
       "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden.",
       "keepScreenAwake": "Forsøg at holde skærmen aktiv, mens en timer kører i forgrunden. Bruger mere batteri; tilgængelighed afhænger af din enhed og systemindstillinger.",
       "vibrateOnCompletion": "Vibrer kortvarigt, når en timer er færdig, uafhængigt af lyd. Kræver et tryk på siden og en kompatibel enhed (f.eks. Android). Ikke tilgængeligt på iOS; ingen notifikationer i baggrunden.",
-      "presetRestDesc": "Sekunder af pause efter arbejdet i hver runde (0 for ingen pause)."
+      "presetRestDesc": "Sekunder af pause efter arbejdet i hver runde (0 for ingen pause).",
+      "noCustomProtocols": "Ingen protokoller er defineret endnu. Klik på 'Tilføj protokol' for at oprette en."
     },
     "labels": {
       "csvPath": "Sti til CSV-logfil",
@@ -833,7 +834,8 @@
       "timerPresets": "Timer-forudindstillinger",
       "trainingParameters": "Træningsparametre",
       "gettingStarted": "Sådan kommer du i gang",
-      "timerDeviceCues": "Tidsmåler-relaterede signaler"
+      "timerDeviceCues": "Tidsmåler-relaterede signaler",
+      "customProtocols": "Protokoller"
     },
     "tooltips": {
       "deletePreset": "Slet forudindstilling",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Stien må ikke være tom",
       "mustBeNonNegative": "Skal være 0 eller større",
       "mustBePositive": "Skal være større end 0"
+    },
+    "protocolHelp": {
+      "warmup": "Lysperioderne er før arbejdsperioderne. De tæller ikke med i personlige rekorder.",
+      "dropSet": "Reducer vægten lige efter et mislykket forsøg og fortsæt. Drop sets tæller ikke med i personlige rekorder.",
+      "myoReps": "Én sæt med aktivering, efterfulgt af korte mini-sæt med et par sekunders pause.",
+      "restPause": "Tag en pause i et par sekunder efter mislykket forsøg, og udfør derefter et par flere gentagelser.",
+      "superset": "To øvelser efter hinanden, uden pause imellem.",
+      "twentyone": "7 gentagelser i den nedre del, 7 i den øvre del, og derefter 7 fulde gentagelser."
+    },
+    "presetHelp": {
+      "tabata": "20 sekunders maksimal indsats, 10 sekunders pause, 8 runder: i alt 4 minutter.",
+      "emom": "Hvert minut, præcist: start dine gentagelser i starten af hvert minut og hvil for resten af tiden, 10 sæt."
     }
   },
   "stats": {

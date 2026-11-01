@@ -764,7 +764,8 @@
       "welcomeWindow": "Zeigen Sie das Willkommensfenster erneut, um mit Beispieldaten oder von Grund auf neu zu beginnen.",
       "keepScreenAwake": "Versuchen Sie, den Bildschirm aktiv zu halten, während eine Hintergrund- oder Vordergrund-Uhr läuft. Verbraucht mehr Akku; die Verfügbarkeit hängt von Ihrem Gerät und Ihren Systemeinstellungen ab.",
       "vibrateOnCompletion": "Kurz vibrieren, wenn ein Timer abläuft, unabhängig von Ton. Benötigt einen Klick auf der Seite und ein kompatibles Gerät (z. B. Android). Nicht verfügbar auf iOS; keine Benachrichtigungen im Hintergrund.",
-      "presetRestDesc": "Sekunden der Ruhe nach der Arbeit jeder Runde (0 für keine Ruhe)."
+      "presetRestDesc": "Sekunden der Ruhe nach der Arbeit jeder Runde (0 für keine Ruhe).",
+      "noCustomProtocols": "Noch keine Protokolle vorhanden. Klicken Sie auf „Protokoll hinzufügen“, um eines zu erstellen."
     },
     "labels": {
       "csvPath": "CSV-Logdateipfad",
@@ -833,7 +834,8 @@
       "timerPresets": "Timer-Voreinstellungen",
       "trainingParameters": "Parameter für das Training",
       "gettingStarted": "Wie man anfängt",
-      "timerDeviceCues": "Hinweise für Timer-Geräte"
+      "timerDeviceCues": "Hinweise für Timer-Geräte",
+      "customProtocols": "Protokolle"
     },
     "tooltips": {
       "deletePreset": "Voreinstellung löschen",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Der Pfad darf nicht leer sein",
       "mustBeNonNegative": "Muss 0 oder größer sein",
       "mustBePositive": "Muss größer als 0 sein"
+    },
+    "protocolHelp": {
+      "warmup": "Die Lichtintervalle werden vor den Arbeitsintervallen festgelegt. Sie zählen nicht zu persönlichen Bestleistungen.",
+      "dropSet": "Reduzieren Sie das Gewicht direkt nach dem Ausfall und setzen Sie die Übung fort. Drop-Sets zählen nicht zu Ihren persönlichen Bestleistungen.",
+      "myoReps": "Ein Satz zur Aktivierung, gefolgt von kurzen Mini-Sätzen mit einer kurzen Pause von wenigen Sekunden.",
+      "restPause": "Ruhen Sie ein paar Sekunden nach dem Ausfall, und führen Sie dann ein paar weitere Wiederholungen aus.",
+      "superset": "Zwei Übungen direkt hintereinander, ohne Pausen dazwischen.",
+      "twentyone": "7 Wiederholungen im unteren Bereich, 7 Wiederholungen im oberen Bereich, dann 7 vollständige Wiederholungen."
+    },
+    "presetHelp": {
+      "tabata": "20 Sekunden intensives Training, 10 Sekunden Pause, 8 Runden: insgesamt 4 Minuten.",
+      "emom": "Jede Minute genau: Beginnen Sie mit den Wiederholungen am Anfang jeder Minute und machen Sie eine Pause für den Rest der Minute, 10 Runden."
     }
   },
   "stats": {

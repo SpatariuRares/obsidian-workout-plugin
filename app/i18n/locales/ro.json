@@ -764,7 +764,8 @@
       "welcomeWindow": "Reafășiți fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
       "keepScreenAwake": "Încercați să mențineți ecranul activ în timp ce rulează oricare dintre temporizatoare în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și setările sistemului dumneavoastră.",
       "vibrateOnCompletion": "Vibrație scurtă atunci când un cronometru se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
-      "presetRestDesc": "Secunde de odihnă după fiecare rundă de lucru (0 pentru absența odihnei)."
+      "presetRestDesc": "Secunde de odihnă după fiecare rundă de lucru (0 pentru absența odihnei).",
+      "noCustomProtocols": "Nu există protocoale definite. Dați clic pe „Adaugă protocol” pentru a crea unul."
     },
     "labels": {
       "csvPath": "Cale către fișierul de jurnal CSV",
@@ -833,7 +834,8 @@
       "timerPresets": "Preseturi temporizator",
       "trainingParameters": "Parametri de antrenament",
       "gettingStarted": "Începe",
-      "timerDeviceCues": "Indicații pentru dispozitive de cronometrare"
+      "timerDeviceCues": "Indicații pentru dispozitive de cronometrare",
+      "customProtocols": "Protocoale"
     },
     "tooltips": {
       "deletePreset": "Șterge preset",
@@ -846,6 +848,18 @@
       "csvPathEmpty": "Calea nu poate fi goală",
       "mustBeNonNegative": "Trebuie să fie 0 sau mai mare",
       "mustBePositive": "Trebuie să fie mai mare decât 0"
+    },
+    "protocolHelp": {
+      "warmup": "Seturile de lumină sunt înregistrate înainte de seturile de lucru. Nu sunt considerate în totalul recordurilor personale.",
+      "dropSet": "Reduce greutatea imediat după fiecare încercare și continuă. Seria de exerciții nu se ia în calcul pentru recordurile personale.",
+      "myoReps": "Un set de activare, urmat de seturi scurte, mini-seturi, cu pauze de câteva secunde.",
+      "restPause": "Odihnește-te câteva secunde după eșec, apoi efectuează câteva repetări suplimentare.",
+      "superset": "Două exerciții una după alta, fără pauză între ele.",
+      "twentyone": "7 repetări în partea inferioară, 7 în partea superioară, apoi 7 repetări complete."
+    },
+    "presetHelp": {
+      "tabata": "20 de secunde de efort maxim, 10 secunde de odihnă, 8 runde: în total, 4 minute.",
+      "emom": "La fiecare minut, la fiecare minut: începeți seria de exerciții la începutul fiecărui minut și odihniți-vă pentru restul minutului, 10 serii."
     }
   },
   "stats": {

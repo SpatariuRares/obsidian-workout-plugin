@@ -40,6 +40,8 @@ export const DEFAULT_SETTINGS: WorkoutChartsSettings = {
   defaultExactMatch: true,
   /** Saved timer presets (empty by default) */
   timerPresets: {},
+  /** False until Tabata and EMOM are added to the list on first load */
+  timerPresetDefaultsAdded: false,
   /** Default timer preset to use (null means no default) */
   defaultTimerPreset: null,
   keepScreenAwake: true,

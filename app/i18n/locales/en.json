@@ -860,6 +860,10 @@
       "restPause": "Rest a few seconds after failure, then do a few more reps.",
       "superset": "Two exercises back to back, without resting in between.",
       "twentyone": "7 reps in the lower half, 7 in the upper half, then 7 full reps."
+    },
+    "presetHelp": {
+      "tabata": "20 seconds of all-out work, 10 seconds of rest, 8 rounds: 4 minutes in total.",
+      "emom": "Every minute on the minute: start your reps at the top of each minute and rest for what is left of it, 10 rounds."
     }
   },
   "stats": {

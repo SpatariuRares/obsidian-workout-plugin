@@ -4,6 +4,7 @@ import type { App, SettingDefinitionItem, SettingDefinitionList } from "obsidian
 import { CustomProtocolsSettings } from "@app/features/settings/components/CustomProtocolsSettings";
 import { DurationEstimationSettings } from "@app/features/duration/settings/DurationEstimationSettings";
 import { TimerPresetsSettings } from "@app/features/timer/settings/TimerPresetsSettings";
+import { withDefaultTimerPresets } from "@app/features/timer/business/timerPresets";
 import { renderSettingDefinitions } from "@app/features/settings/renderSettingDefinitions";
 import { t } from "@app/i18n";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
@@ -179,6 +180,26 @@ describe("timer presets list", () => {
     );
     return { plugin, refresh, definitions: section.definitions() };
   }
+
+  it("explains a built-in preset under its entry", () => {
+    const { plugin } = setup();
+    plugin.settings.timerPresets = withDefaultTimerPresets(
+      plugin.settings.timerPresets as never,
+    ) as Record<string, unknown>;
+    const section = new TimerPresetsSettings(
+      app,
+      plugin as unknown as WorkoutPluginContext,
+      jest.fn(),
+    );
+
+    const items = listOf(section.definitions()).items!;
+
+    expect(items.map((i) => i.name)).toEqual(["Tabata", "EMOM", "rest"]);
+    expect((items[0].desc as DocumentFragment).textContent).toContain(
+      t("settings.presetHelp.tabata"),
+    );
+    expect(typeof items[2].desc).toBe("string");
+  });
 
   it("titles the list and the form", () => {
     const list = listOf(setup().definitions);

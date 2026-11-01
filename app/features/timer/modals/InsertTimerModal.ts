@@ -54,9 +54,9 @@ export class InsertTimerModal extends BaseInsertModal {
     this.timerElements = timerElements;
     this.timerHandlers = timerHandlers;
 
-    // Preset chips (built-in and saved) under the timer type
-    const presets = timerPresets(this.plugin.settings);
-    for (const name of Object.keys(presets)) {
+    // Preset chips under the timer type: the Saved presets list (Tabata and
+    // EMOM are in it unless the user deleted them)
+    for (const name of Object.keys(this.plugin.settings.timerPresets)) {
       const isDefault = name === this.plugin.settings.defaultTimerPreset;
       const chip = Chip.create(timerElements.presetChipsContainer, {
         text: name,

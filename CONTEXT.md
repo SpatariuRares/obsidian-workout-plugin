@@ -77,7 +77,7 @@ sound: true
 showControls: true
 ```
 
-Timer types: Countdown (single), Interval (rounds of work then rest, the last rest included; `work`/`rest`, or `duration` as the work), Stopwatch. Presets are saved in settings and reusable across notes; Tabata (20/10 × 8) and EMOM (60 × 10) are built in, and a saved preset with the same name replaces them. Distinct sounds for work start, rest start and completion.
+Timer types: Countdown (single), Interval (rounds of work then rest, the last rest included; `work`/`rest`, or `duration` as the work), Stopwatch. Presets are saved in settings and reusable across notes; Tabata (20/10 × 8) and EMOM (60 × 10) are built in and added to the saved presets once, on install or on the first update that has them, so users see and edit them like their own; a deleted one stays deleted from the list but blocks that name it keep working. Distinct sounds for work start, rest start and completion.
 
 ### 3. `workout-chart` - Exercise Progression Charts
 

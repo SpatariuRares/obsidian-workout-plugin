@@ -6,8 +6,15 @@ import {
   TimerPresetConfig,
 } from "@app/features/timer/types";
 import { TimerPresetEditorModal } from "@app/features/timer/modals/TimerPresetEditorModal";
+import { isBuiltInTimerPreset } from "@app/features/timer/business/timerPresets";
 import { ConfirmModal } from "@app/features/modals/common/ConfirmModal";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
+
+/** Explanation shown under each built-in preset in the list */
+const BUILT_IN_PRESET_HELP: Record<string, string> = {
+  Tabata: "settings.presetHelp.tabata",
+  EMOM: "settings.presetHelp.emom",
+};
 
 export class TimerPresetsSettings {
   constructor(
@@ -113,7 +120,21 @@ export class TimerPresetsSettings {
     ).open();
   }
 
-  private formatPresetDetails(preset: TimerPresetConfig): string {
+  private formatPresetDetails(
+    preset: TimerPresetConfig,
+  ): string | DocumentFragment {
+    const details = this.formatPresetSummary(preset);
+    const help = BUILT_IN_PRESET_HELP[preset.name];
+    if (!help || !isBuiltInTimerPreset(preset.name)) return details;
+
+    // What a built-in preset is for, so the default entries explain themselves
+    const fragment = createFragment();
+    fragment.createDiv({ text: details });
+    fragment.createDiv({ text: t(help) });
+    return fragment;
+  }
+
+  private formatPresetSummary(preset: TimerPresetConfig): string {
     const parts: string[] = [];
     parts.push(`Type: ${preset.type}`);
     parts.push(`Duration: ${preset.duration}s`);

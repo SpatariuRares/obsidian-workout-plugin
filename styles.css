@@ -1408,6 +1408,24 @@ button.workout-icon-dropdown-btn:focus-visible {
     flex: none;
   }
   .workout-table-content-container .workout-table-container .workout-log-table {
+    /* The exercise is the card's title, on its own line: shared with the
+       numbers it got a narrow column, one word per line, cut off */
+  }
+  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-exercise-cell {
+    order: -1;
+    flex: 1 1 100%;
+    font-weight: var(--workout-font-weight-semibold);
+  }
+  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-exercise-cell::before {
+    display: none;
+  }
+  .workout-table-content-container .workout-table-container .workout-log-table {
+    /* A value the set does not have (duration of a strength set) */
+  }
+  .workout-table-content-container .workout-table-container .workout-log-table td.workout-table-na-cell {
+    display: none;
+  }
+  .workout-table-content-container .workout-table-container .workout-log-table {
     /* Protocol badge and notes go on a second line under the numbers:
        squeezed into the first line they broke words letter by letter.
        The ::after item is a full-width line break, added only to rows

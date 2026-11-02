@@ -518,9 +518,6 @@
     "importMerge": "Mesclar",
     "importReplace": "Substituir todos",
     "importTags": "Importar tags",
-    "info": {
-      "dashboardDescription": "Isso irá inserir um painel de treino completo, com estatísticas, gráficos e ações rápidas."
-    },
     "labels": {
       "actions": "Ações",
       "currentFileInfo": "Arquivo atual: {fileName}",

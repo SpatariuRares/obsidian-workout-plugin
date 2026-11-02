@@ -518,9 +518,6 @@
     "importMerge": "Slå sammen",
     "importReplace": "Erstatt alle",
     "importTags": "Importer tagger",
-    "info": {
-      "dashboardDescription": "Dette vil legge til et omfattende treningsdashbord med statistikk, grafer og raske handlinger."
-    },
     "labels": {
       "actions": "Handlinger",
       "currentFileInfo": "Gjeldende fil: {fileName}",

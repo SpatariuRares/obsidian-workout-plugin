@@ -3,10 +3,14 @@ import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 
 /**
- * Which block to edit: by the `id` the insert modals write, or by exercise
- * for blocks written before ids existed (first match wins).
+ * Which block to edit: by the `id` the insert modals write, or, for blocks
+ * written before ids existed, by exercise (first match wins) or by the line
+ * of its opening fence (`MarkdownSectionInformation.lineStart`).
  */
-export type CodeBlockMatch = { id: string } | { exercise: string };
+export type CodeBlockMatch =
+  | { id: string }
+  | { exercise: string }
+  | { line: number };
 
 /** Edits code block parameters in the note open in the active view */
 export class CodeBlockEditorService {
@@ -21,14 +25,20 @@ export class CodeBlockEditorService {
     match: CodeBlockMatch,
     changes: P,
   ): Promise<boolean> {
-    const file = app.workspace.getActiveViewOfType(MarkdownView)?.file;
+    const file =
+      app.workspace.getActiveViewOfType(MarkdownView)?.file;
     if (!file) return false;
 
     let found = false;
     try {
       // Vault API, not the editor, so it works in Reading view too
       await app.vault.process(file, (content) => {
-        const patched = patchBlockInNote(content, schema, match, changes);
+        const patched = patchBlockInNote(
+          content,
+          schema,
+          match,
+          changes,
+        );
         found = patched !== null;
         return patched ?? content;
       });
@@ -48,11 +58,16 @@ function patchBlockInNote<P>(
   const crlf = content.includes("\r\n");
   for (const block of readWorkoutNote(content).blocks) {
     if (block.type !== schema.type) continue;
-    const params = schema.parse(block.body).params as Record<string, unknown>;
+    const params = schema.parse(block.body).params as Record<
+      string,
+      unknown
+    >;
     const isMatch =
       "id" in match
         ? params.id === match.id
-        : params.exercise === match.exercise;
+        : "line" in match
+          ? block.start === match.line
+          : params.exercise === match.exercise;
     if (!isMatch) continue;
 
     const patched = schema.patch(block.body, changes);
@@ -62,7 +77,9 @@ function patchBlockInNote<P>(
       block.end - block.start - 1,
       ...(patched === ""
         ? []
-        : patched.split("\n").map((line) => (crlf ? `${line}\r` : line))),
+        : patched
+            .split("\n")
+            .map((line) => (crlf ? `${line}\r` : line))),
     );
     return lines.join("\n");
   }

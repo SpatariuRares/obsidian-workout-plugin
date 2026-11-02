@@ -518,9 +518,6 @@
     "importMerge": "विलय",
     "importReplace": "सभी को बदलें",
     "importTags": "टैग आयात करें",
-    "info": {
-      "dashboardDescription": "यह एक विस्तृत वर्कआउट डैशबोर्ड डालेगा जिसमें आंकड़े, चार्ट और त्वरित क्रियाएं शामिल होंगी।"
-    },
     "labels": {
       "actions": "क्रियाएं",
       "currentFileInfo": "वर्तमान फ़ाइल: {fileName}",

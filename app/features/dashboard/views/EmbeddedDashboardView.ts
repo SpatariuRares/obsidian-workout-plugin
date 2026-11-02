@@ -1,30 +1,26 @@
-import {
-  WorkoutLogData,
-} from "@app/types/WorkoutLogData";
+import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { BaseView } from "@app/features/common/views/BaseView";
-import { SummaryWidget } from "@app/features/dashboard/widgets/summary/SummaryWidget";
-import { QuickStatsCards } from "@app/features/dashboard/widgets/quick-stats/QuickStatsCards";
-import { VolumeAnalytics } from "@app/features/dashboard/widgets/volume-analytics/VolumeAnalytics";
-import { RecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/RecentWorkouts";
-import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
-import { MuscleTagsWidget } from "@app/features/dashboard/widgets/muscle-tags/MuscleTagsWidget";
-import { WidgetsFileError } from "@app/features/dashboard/widgets/file-errors/WidgetsFileError";
-import { ProtocolDistribution } from "@app/features/dashboard/widgets/protocol-distribution/ProtocolDistribution";
-import { ProtocolEffectiveness } from "@app/features/dashboard/widgets/protocol-effectiveness/ProtocolEffectiveness";
-import { DurationComparison } from "@app/features/dashboard/widgets/duration-comparison/DurationComparison";
-import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
+import {
+  DASHBOARD_WIDGETS,
+  DashboardWidgetContext,
+  resolveWidgets,
+} from "@app/features/dashboard/widgets/dashboardWidgets";
 import {
   EmbeddedDashboardParams,
   ProtocolFilterCallback,
 } from "@app/features/dashboard/types";
+import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
 import { DomUtils } from "@app/utils/DomUtils";
 import { DataFilter } from "@app/services/data/DataFilter";
 import { t } from "@app/i18n";
 import { protocolId } from "@app/services/protocols/ProtocolCatalog";
-import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
+import {
+  TOUR_TARGETS,
+  markTourTarget,
+} from "@app/features/tour/tourTargets";
 
 /**
  * Dashboard View for displaying comprehensive workout analytics
@@ -149,7 +145,9 @@ export class EmbeddedDashboardView extends BaseView {
     protocol: string,
   ): WorkoutLogData[] {
     const wanted = protocolId(protocol);
-    return data.filter((entry) => protocolId(entry.protocol) === wanted);
+    return data.filter(
+      (entry) => protocolId(entry.protocol) === wanted,
+    );
   }
 
   /**
@@ -167,13 +165,19 @@ export class EmbeddedDashboardView extends BaseView {
     });
     markTourTarget(dashboardEl, TOUR_TARGETS.dashboard);
 
-    // Add dashboard title if provided
+    // Title (if any) and the menu to edit the block
+    const headerEl = dashboardEl.createDiv({
+      cls: params.title
+        ? "workout-dashboard-header workout-dashboard-header-titled"
+        : "workout-dashboard-header",
+    });
     if (params.title) {
-      dashboardEl.createEl("h2", {
+      headerEl.createEl("h2", {
         text: params.title,
         cls: "workout-dashboard-title",
       });
     }
+    DashboardActionSelect.render(headerEl, this.plugin.app, params);
 
     // Create dashboard grid layout
     const gridEl = dashboardEl.createDiv({
@@ -186,44 +190,20 @@ export class EmbeddedDashboardView extends BaseView {
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
 
-    const dashboardId = getElementScopedId(container);
-
-    // show* flags hide optional widgets; every widget is shown by default
-    if (params.showSummary !== false) {
-      // Records are judged against all history, not just this period
-      const history = (await this.plugin.getWorkoutLogData()) || [];
-      SummaryWidget.render(gridEl, displayData, params, history);
-    }
-    if (params.showQuickStats !== false) {
-      QuickStatsCards.render(gridEl, displayData, params);
-    }
-    await MuscleHeatMap.render(
-      gridEl,
-      displayData,
+    const ctx: DashboardWidgetContext = {
+      grid: gridEl,
+      data: displayData,
+      periodData: data,
       params,
-      this.plugin,
-    );
-    if (params.showVolumeAnalytics !== false) {
-      VolumeAnalytics.render(gridEl, displayData, params, {
-        chartId: `volume-analytics-${dashboardId}`,
-      });
+      plugin: this.plugin,
+      dashboardId: getElementScopedId(container),
+      onProtocolFilterChange,
+      history: async () =>
+        (await this.plugin.getWorkoutLogData()) || [],
+    };
+    for (const id of resolveWidgets(params)) {
+      await DASHBOARD_WIDGETS[id].render(ctx);
     }
-    if (params.showRecentWorkouts !== false) {
-      RecentWorkouts.render(gridEl, displayData, params);
-    }
-    ProtocolDistribution.render(gridEl, data, params, this.plugin, {
-      chartId: `protocol-distribution-${dashboardId}`,
-      onFilterChange: onProtocolFilterChange,
-    });
-    ProtocolEffectiveness.render(gridEl, data, params, this.plugin);
-    DurationComparison.render(gridEl, data, params, {
-      setDuration: this.plugin.settings.setDuration,
-    });
-    if (params.showQuickActions !== false) {
-      QuickActions.render(gridEl, params, this.plugin);
-    }
-    await WidgetsFileError.render(gridEl, this.plugin);
-    await MuscleTagsWidget.render(gridEl, params, this.plugin);
 
     // Apply bento layout and observe for resize
     this.applyBentoLayout(gridEl);

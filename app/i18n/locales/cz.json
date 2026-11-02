@@ -518,9 +518,6 @@
     "importMerge": "Sloučit",
     "importReplace": "Nahradit vše",
     "importTags": "Importovat štítky",
-    "info": {
-      "dashboardDescription": "Vloží komplexní přehled tréninků se statistikami, grafy a rychlými akcemi."
-    },
     "labels": {
       "actions": "Akce",
       "currentFileInfo": "Aktuální soubor: {fileName}",

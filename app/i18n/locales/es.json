@@ -518,9 +518,6 @@
     "importMerge": "Unir",
     "importReplace": "Sustituir todo",
     "importTags": "Importar etiquetas",
-    "info": {
-      "dashboardDescription": "Esto insertará un panel de control completo para el entrenamiento, que incluirá estadísticas, gráficos y acciones rápidas."
-    },
     "labels": {
       "actions": "Acciones",
       "currentFileInfo": "Archivo actual: {fileName}",

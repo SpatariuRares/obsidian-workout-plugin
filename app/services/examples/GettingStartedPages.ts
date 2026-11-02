@@ -64,7 +64,10 @@ export function gettingStartedPages() {
       name: "05 Statistics",
       title: t("tour.noteDashboard"),
       intro: t("tour.steps.dashboard.text"),
-      block: dashboardBlock.serialize({ dateRange: 60 }),
+      block: dashboardBlock.serialize({
+        id: generateCodeBlockId(),
+        dateRange: 60,
+      }),
     },
     {
       name: "06 Rest timer",

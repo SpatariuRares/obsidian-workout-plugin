@@ -518,9 +518,6 @@
     "importMerge": "合并",
     "importReplace": "替换所有",
     "importTags": "导入标签",
-    "info": {
-      "dashboardDescription": "这将插入一个全面的训练仪表盘，包含统计数据、图表和快速操作。"
-    },
     "labels": {
       "actions": "操作",
       "currentFileInfo": "当前文件：{fileName}",

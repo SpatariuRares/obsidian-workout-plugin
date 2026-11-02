@@ -176,6 +176,16 @@
         "sets": "Average sets: {value}",
         "reps": "Average reps: {value}"
       }
+    },
+    "editDashboard": "Edit dashboard",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Tick the widgets to show. Drag them by the handle, or use the arrows, to change their order.",
+      "moveUp": "Move {widget} up",
+      "moveDown": "Move {widget} down",
+      "allHistory": "Empty: all history",
+      "recentWorkoutsLimit": "Workouts in the recent list:",
+      "volumeTrendDays": "Days in the volume trend:"
     }
   },
   "duration": {
@@ -479,7 +489,8 @@
       "update": "Update log",
       "updateTable": "Update table",
       "updateTargetWeight": "Update target",
-      "updateTimer": "Update timer"
+      "updateTimer": "Update timer",
+      "updateDashboard": "Update dashboard"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Options",
@@ -528,9 +539,6 @@
     "importReplace": "Replace all",
     "importReplaceAriaLabel": "Replace: overwrite all existing tags",
     "importTags": "Import tags",
-    "info": {
-      "dashboardDescription": "This will insert a comprehensive workout dashboard with statistics, charts, and quick actions."
-    },
     "labels": {
       "actions": "Actions",
       "currentFileInfo": "Current file: {fileName}",
@@ -619,7 +627,9 @@
       "validMustBeNumber": "{field} must be a valid number",
       "validMustBeWholeNumber": "{field} must be a whole number",
       "validationCombinedMode": "For 'exercise + workout' type you must fill both fields!",
-      "validationFillAll": "Please fill in all fields with valid values"
+      "validationFillAll": "Please fill in all fields with valid values",
+      "dashboardUpdated": "Dashboard updated successfully!",
+      "dashboardUpdateFailed": "Failed to update dashboard. Make sure the file is open in the editor."
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",
@@ -710,7 +720,8 @@
       "insertDuration": "Insert workout duration",
       "insertTable": "Insert workout log table",
       "insertTimer": "Insert workout timer",
-      "muscleTagManager": "Manage muscle tags"
+      "muscleTagManager": "Manage muscle tags",
+      "editDashboard": "Edit dashboard"
     },
     "weightUnitToggle": "Unit for this entry",
     "work": "Work",

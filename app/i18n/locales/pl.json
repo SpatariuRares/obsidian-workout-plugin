@@ -518,9 +518,6 @@
     "importMerge": "Scaluj",
     "importReplace": "Zastąp wszystko",
     "importTags": "Importuj tagi",
-    "info": {
-      "dashboardDescription": "To doda kompleksowy panel kontrolny z danymi statystycznymi, wykresami i szybkim dostępem do funkcji."
-    },
     "labels": {
       "actions": "Akcje",
       "currentFileInfo": "Bieżący plik: {fileName}",

@@ -518,9 +518,6 @@
     "importMerge": "合併",
     "importReplace": "全部替換",
     "importTags": "匯入標籤",
-    "info": {
-      "dashboardDescription": "這將插入一個完整的運動儀表板，包含統計資料、圖表和快速操作。"
-    },
     "labels": {
       "actions": "操作",
       "currentFileInfo": "目前檔案：{fileName}",

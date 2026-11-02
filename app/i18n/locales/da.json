@@ -518,9 +518,6 @@
     "importMerge": "Flet",
     "importReplace": "Erstat alt",
     "importTags": "Importér tags",
-    "info": {
-      "dashboardDescription": "Dette vil indsætte et omfattende træningsdashboard med statistikker, grafer og hurtige handlinger."
-    },
     "labels": {
       "actions": "Handlinger",
       "currentFileInfo": "Aktuel fil: {fileName}",

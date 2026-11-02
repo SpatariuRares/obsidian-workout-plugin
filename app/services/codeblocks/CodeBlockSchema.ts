@@ -26,10 +26,11 @@ interface EnumField<V extends string = string> {
   values: readonly V[];
   default?: V;
 }
-/** `[a, b]` or `a, b` */
-interface ListField {
+/** `[a, b]` or `a, b`; with `values`, each item must be one of them */
+interface ListField<V extends string = string> {
   kind: "list";
-  default?: string[];
+  values?: readonly V[];
+  default?: V[];
 }
 /** A number (pixels) or a CSS length such as `50vh` */
 interface SizeField {
@@ -53,8 +54,8 @@ type FieldValue<F> = F extends EnumField<infer V>
       ? number
       : F extends BooleanField
         ? boolean
-        : F extends ListField
-          ? string[]
+        : F extends ListField<infer V>
+          ? V[]
           : F extends SizeField
             ? number | string
             : never;
@@ -257,35 +258,48 @@ function readValue(
         return { value: false };
       }
       return { error: t("codeBlocks.validation.notABoolean", { key, value }) };
-    case "enum": {
-      // Any case, stored with the canonical spelling ("DESC" → "desc")
-      const match = field.values.find(
-        (allowed) => allowed.toLowerCase() === value.toLowerCase(),
-      );
-      if (match !== undefined) return { value: match };
-      return {
-        error: t("codeBlocks.validation.notOneOf", {
-          key,
-          value,
-          allowed: field.values.join(", "),
-        }),
-      };
-    }
+    case "enum":
+      return readChoice(key, value, field.values);
     case "list": {
       const inner =
         raw.startsWith("[") && raw.endsWith("]") ? raw.slice(1, -1) : raw;
-      return {
-        value: inner
-          .split(",")
-          .map((item) => unquote(item.trim()))
-          .filter((item) => item.length > 0),
-      };
+      const items = inner
+        .split(",")
+        .map((item) => unquote(item.trim()))
+        .filter((item) => item.length > 0);
+      if (!field.values) return { value: items };
+      const values: string[] = [];
+      for (const item of items) {
+        const result = readChoice(key, item, field.values);
+        if ("error" in result) return result;
+        values.push(result.value);
+      }
+      return { value: values };
     }
     case "size": {
       const num = Number(value);
       return { value: value !== "" && Number.isFinite(num) ? num : value };
     }
   }
+}
+
+/** Any case, stored with the canonical spelling ("DESC" → "desc") */
+function readChoice(
+  key: string,
+  value: string,
+  allowed: readonly string[],
+): { value: string } | { error: string } {
+  const match = allowed.find(
+    (option) => option.toLowerCase() === value.toLowerCase(),
+  );
+  if (match !== undefined) return { value: match };
+  return {
+    error: t("codeBlocks.validation.notOneOf", {
+      key,
+      value,
+      allowed: allowed.join(", "),
+    }),
+  };
 }
 
 function writeValue(value: unknown): string {

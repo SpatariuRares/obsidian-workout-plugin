@@ -289,6 +289,7 @@ export class CodeBlockProcessorService {
       const params: EmbeddedDashboardParams = {
         ...dashboardBlock.defaults,
         ...parsed,
+        fenceLine: () => ctx.getSectionInfo(el)?.lineStart,
       };
       const logData =
         await this.embeddedDashboardView.loadDashboardData(params);

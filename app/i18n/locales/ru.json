@@ -518,9 +518,6 @@
     "importMerge": "Объединить",
     "importReplace": "Заменить все",
     "importTags": "Импортировать теги",
-    "info": {
-      "dashboardDescription": "Будет добавлена полноценная панель тренировок со статистикой, графиками и быстрыми действиями."
-    },
     "labels": {
       "actions": "Действия",
       "currentFileInfo": "Текущий файл: {fileName}",

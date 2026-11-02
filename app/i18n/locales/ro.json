@@ -518,9 +518,6 @@
     "importMerge": "Îmbină",
     "importReplace": "Înlocuiește toate",
     "importTags": "Importă etichete",
-    "info": {
-      "dashboardDescription": "Aceasta va introduce un panou de control complet pentru antrenamente, cu statistici, grafice și acțiuni rapide."
-    },
     "labels": {
       "actions": "Acțiuni",
       "currentFileInfo": "Fișier curent: {fileName}",

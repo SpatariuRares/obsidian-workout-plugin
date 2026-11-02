@@ -518,9 +518,6 @@
     "importMerge": "Unisci",
     "importReplace": "Sostituisci tutti",
     "importTags": "Importa tag",
-    "info": {
-      "dashboardDescription": "Questo inserirà una dashboard di allenamento completa, con statistiche, grafici e azioni rapide."
-    },
     "labels": {
       "actions": "Azioni",
       "currentFileInfo": "File corrente: {fileName}",

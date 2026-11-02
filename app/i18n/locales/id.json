@@ -518,9 +518,6 @@
     "importMerge": "Gabungkan",
     "importReplace": "Ganti semua",
     "importTags": "Impor tag",
-    "info": {
-      "dashboardDescription": "Ini akan menyisipkan dasbor latihan yang komprehensif dengan statistik, grafik, dan tindakan cepat."
-    },
     "labels": {
       "actions": "Tindakan",
       "currentFileInfo": "File saat ini: {fileName}",

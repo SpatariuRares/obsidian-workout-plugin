@@ -3,6 +3,8 @@ import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import { durationBlock } from "@app/features/duration/durationBlock";
+import { DASHBOARD_WIDGET_IDS } from "@app/features/dashboard/types";
+import { t } from "@app/i18n";
 import type { CodeBlockSchema } from "@app/services/codeblocks/CodeBlockSchema";
 
 function errorKeys<P>(schema: CodeBlockSchema<P>, source: string): number {
@@ -97,16 +99,34 @@ describe("block schemas", () => {
   });
 
   describe("workout-dashboard", () => {
-    it("shows every widget unless the block turns it off", () => {
-      expect(dashboardBlock.defaults).toMatchObject({
-        showSummary: true,
-        showQuickStats: true,
-        showVolumeAnalytics: true,
-        showRecentWorkouts: true,
-        showQuickActions: true,
+    it("defaults the widget settings and leaves the widget list unset", () => {
+      expect(dashboardBlock.defaults).toEqual({
         recentWorkoutsLimit: 5,
         volumeTrendDays: 30,
       });
+    });
+
+    it("reads the widgets to show in any case, in the order written", () => {
+      expect(
+        dashboardBlock.parse("widgets: [Volume, heatmap, summary]"),
+      ).toEqual({
+        params: { widgets: ["volume", "heatMap", "summary"] },
+        errors: [],
+      });
+    });
+
+    it("rejects a widget it doesn't know, naming the ones it does", () => {
+      const { params, errors } = dashboardBlock.parse(
+        "widgets: [summary, calendar]",
+      );
+      expect(params).toEqual({});
+      expect(errors).toEqual([
+        t("codeBlocks.validation.notOneOf", {
+          key: "widgets",
+          value: "calendar",
+          allowed: DASHBOARD_WIDGET_IDS.join(", "),
+        }),
+      ]);
     });
   });
 });

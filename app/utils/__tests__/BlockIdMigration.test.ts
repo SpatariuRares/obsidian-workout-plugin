@@ -12,6 +12,16 @@ describe("addMissingBlockIds", () => {
     next = 0;
   });
 
+  it("should give an id to a dashboard, so it can be edited", () => {
+    const result = addMissingBlockIds(
+      note("```workout-dashboard", "dateRange: 30", "```"),
+    );
+
+    expect(result.content).toBe(
+      note("```workout-dashboard", "id: id1", "dateRange: 30", "```"),
+    );
+  });
+
   it("should give an id to log and timer blocks that have none", () => {
     const result = addMissingBlockIds(
       note(

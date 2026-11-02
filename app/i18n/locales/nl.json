@@ -518,9 +518,6 @@
     "importMerge": "Samenvoegen",
     "importReplace": "Alles vervangen",
     "importTags": "Labels importeren",
-    "info": {
-      "dashboardDescription": "Dit voegt een uitgebreid trainingsdashboard toe met statistieken, grafieken en snelle acties."
-    },
     "labels": {
       "actions": "Acties",
       "currentFileInfo": "Huidig bestand: {fileName}",

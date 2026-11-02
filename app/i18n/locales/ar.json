@@ -518,9 +518,6 @@
     "importMerge": "دمج",
     "importReplace": "استبدال الكل",
     "importTags": "استيراد العلامات",
-    "info": {
-      "dashboardDescription": "سيقوم هذا بإضافة لوحة معلومات شاملة للتمارين الرياضية تتضمن إحصائيات ورسوم بيانية وإجراءات سريعة."
-    },
     "labels": {
       "actions": "الإجراءات",
       "currentFileInfo": "الملف الحالي: {fileName}",

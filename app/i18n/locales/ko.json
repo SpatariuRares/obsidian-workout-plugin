@@ -518,9 +518,6 @@
     "importMerge": "병합",
     "importReplace": "모든 것을 대체",
     "importTags": "태그 가져오기",
-    "info": {
-      "dashboardDescription": "이 기능을 통해 포괄적인 운동 대시보드를 생성할 수 있으며, 여기에는 통계, 차트, 그리고 빠른 실행 기능이 포함됩니다."
-    },
     "labels": {
       "actions": "액션",
       "currentFileInfo": "현재 파일: {fileName}",

@@ -518,9 +518,6 @@
     "importMerge": "Fusionner",
     "importReplace": "Tout remplacer",
     "importTags": "Importer des tags",
-    "info": {
-      "dashboardDescription": "Cela permettra d'insérer un tableau de bord complet pour l'entraînement, comprenant des statistiques, des graphiques et des actions rapides."
-    },
     "labels": {
       "actions": "Actions",
       "currentFileInfo": "Fichier actuel : {fileName}",

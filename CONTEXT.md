@@ -103,11 +103,7 @@ Features: linear regression trend lines, trend headers with % change, statistics
 ```yaml
 title: My Dashboard
 dateRange: 30
-showSummary: true
-showQuickStats: true
-showVolumeAnalytics: true
-showRecentWorkouts: true
-showQuickActions: true
+widgets: [summary, heatMap, volume, recentWorkouts] # order shown; unset = all
 recentWorkoutsLimit: 5
 volumeTrendDays: 30
 ```

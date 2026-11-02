@@ -518,9 +518,6 @@
     "importMerge": "Bashko",
     "importReplace": "Zëvendëso të gjitha",
     "importTags": "Importo etiketat",
-    "info": {
-      "dashboardDescription": "Kjo do të shtojë një panel të plotë stërvitjeje me statistika, grafikë dhe veprime të shpejta."
-    },
     "labels": {
       "actions": "Veprime",
       "currentFileInfo": "Skedari aktual: {fileName}",

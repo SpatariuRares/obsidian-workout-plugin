@@ -518,9 +518,6 @@
     "importMerge": "Zusammenführen",
     "importReplace": "Alle ersetzen",
     "importTags": "Tags importieren",
-    "info": {
-      "dashboardDescription": "Dies fügt eine umfassende Trainingsübersicht mit Statistiken, Diagrammen und schnellen Aktionen hinzu."
-    },
     "labels": {
       "actions": "Aktionen",
       "currentFileInfo": "Aktuelle Datei: {fileName}",

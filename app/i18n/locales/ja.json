@@ -518,9 +518,6 @@
     "importMerge": "マージ",
     "importReplace": "すべて置換",
     "importTags": "タグをインポート",
-    "info": {
-      "dashboardDescription": "これにより、統計、グラフ、および迅速な操作を含む、包括的なワークアウトダッシュボードが挿入されます。"
-    },
     "labels": {
       "actions": "操作",
       "currentFileInfo": "現在のファイル：{fileName}",

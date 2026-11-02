@@ -603,6 +603,9 @@ export const ICONS = {
     EDIT: "pencil",
     GOTO: "link",
     MENU: "more-vertical",
+    MOVE_UP: "arrow-up",
+    MOVE_DOWN: "arrow-down",
+    DRAG: "grip-vertical",
   },
   STATUS: {
     INFO: "info",

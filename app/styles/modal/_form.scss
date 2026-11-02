@@ -243,3 +243,67 @@
   font-size: var(--workout-font-sm);
   font-style: italic;
 }
+
+/* Dashboard modal: one card per widget, dragged by its grip or moved with
+   the arrows; the buttons stay visible at the bottom of the long form */
+.workout-dashboard-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-space-sm);
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-dashboard-widget-row {
+  display: flex;
+  align-items: center;
+  gap: var(--workout-space-sm);
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+
+  label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &.is-hidden-widget label {
+    color: var(--text-muted);
+  }
+
+  &.is-dragging {
+    border-color: var(--interactive-accent);
+    box-shadow: var(--shadow-s);
+  }
+
+  button {
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-muted);
+
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+}
+
+.workout-dashboard-widget-grip {
+  display: flex;
+  color: var(--text-faint);
+  cursor: grab;
+  /* The pointer drags the row instead of scrolling the modal */
+  touch-action: none;
+}
+
+.workout-dashboard-form > .workout-buttons-container {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding: var(--workout-space-md) 0;
+  background: var(--modal-background, var(--background-primary));
+  border-top: var(--workout-border-thin) solid
+    var(--background-modifier-border);
+  /* Covers the modal's bottom padding, where the list would show through */
+  box-shadow: 0 var(--workout-space-lg) 0
+    var(--modal-background, var(--background-primary));
+}

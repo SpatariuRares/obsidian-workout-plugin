@@ -518,9 +518,6 @@
     "importMerge": "Birleştir",
     "importReplace": "Tümünü değiştir",
     "importTags": "Etiketleri içe aktar",
-    "info": {
-      "dashboardDescription": "Bu, istatistikler, grafikler ve hızlı eylemler içeren kapsamlı bir antrenman gösterge paneli ekler."
-    },
     "labels": {
       "actions": "Eylemler",
       "currentFileInfo": "Geçerli dosya: {fileName}",

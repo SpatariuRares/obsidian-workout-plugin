@@ -3,11 +3,12 @@ import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { readWorkoutNote } from "@app/services/notes/WorkoutNote";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
+import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 
 /** Blocks the edit modals find by id */
-const SCHEMAS = [tableBlock, timerBlock];
+const SCHEMAS = [tableBlock, timerBlock, dashboardBlock];
 
-/** Adds an `id:` line to every log and timer block that has none */
+/** Adds an `id:` line to every log, timer and dashboard block that has none */
 export function addMissingBlockIds(content: string): {
   content: string;
   modified: boolean;

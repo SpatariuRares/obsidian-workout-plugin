@@ -6,6 +6,7 @@ import { QuickStatsCards } from "@app/features/dashboard/widgets/quick-stats/Qui
 import { VolumeAnalytics } from "@app/features/dashboard/widgets/volume-analytics/VolumeAnalytics";
 import { RecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/RecentWorkouts";
 import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
+import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import type WorkoutChartsPlugin from "main";
@@ -96,7 +97,7 @@ describe("EmbeddedDashboardView widget params", () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  it("renders every optional widget by default", async () => {
+  it("renders every widget by default", async () => {
     await render({});
 
     for (const w of [
@@ -110,20 +111,17 @@ describe("EmbeddedDashboardView widget params", () => {
     }
   });
 
-  it.each([
-    ["showSummary", SummaryWidget],
-    ["showQuickStats", QuickStatsCards],
-    ["showVolumeAnalytics", VolumeAnalytics],
-    ["showRecentWorkouts", RecentWorkouts],
-    ["showQuickActions", QuickActions],
-  ] as const)(
-    "hides the widget when %s is false",
-    async (flag, w) => {
-      await render({ [flag]: false });
+  it("draws only the listed widgets, in the listed order", async () => {
+    await render({ widgets: ["volume", "heatMap", "summary"] });
 
+    const order = [VolumeAnalytics, MuscleHeatMap, SummaryWidget].map(
+      (w) => (w.render as jest.Mock).mock.invocationCallOrder[0],
+    );
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+    for (const w of [QuickStatsCards, RecentWorkouts, QuickActions]) {
       expect(w.render).not.toHaveBeenCalled();
-    },
-  );
+    }
+  });
 
   it("gives the summary all history, so records are judged against it", async () => {
     await render({});

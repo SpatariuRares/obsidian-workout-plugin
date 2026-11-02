@@ -471,11 +471,12 @@ workout: Leg Day
 ```yaml
 title: Training overview
 dateRange: 30
-showSummary: true # also showQuickStats, showVolumeAnalytics,
-showRecentWorkouts: true #      showQuickActions
+widgets: [summary, heatMap, volume, recentWorkouts] # order shown; unset = all (DASHBOARD_WIDGET_IDS)
 recentWorkoutsLimit: 5
 volumeTrendDays: 7
 ```
+
+The widgets live in one registry, `app/features/dashboard/widgets/dashboardWidgets.ts` (`DASHBOARD_WIDGETS`, `resolveWidgets(params)`); the view loops over it. `InsertDashboardModal` is the form (checkboxes + ↑/↓ order) and writes `widgets` only when it differs from the default, so untouched dashboards get later widgets; `EditDashboardModal` (kebab menu on every dashboard, `DashboardActionSelect`) patches the change. The old `showSummary`/`showQuickStats`/... flags were removed: the schema skips them, so such blocks show every widget. A block without an `id` is found by the line of its opening fence (`CodeBlockMatch { line }`, from `ctx.getSectionInfo`, read at click time) and gets an `id` when saved.
 
 Code blocks written by the insert modals also carry an `id`, used to find the block when it is edited.
 
@@ -526,7 +527,7 @@ The settings tab is declarative (Obsidian 1.13+ settings search). Every row come
 1. Create widget in `app/features/dashboard/widgets/[widget-name]/`
 2. Create business logic in `business/` subdirectory
 3. Use `DashboardCard` component from `app/features/dashboard/ui/`
-4. Register widget in `EmbeddedDashboardView.render()`
+4. Add its id to `DASHBOARD_WIDGET_IDS` (`dashboard/types.ts`) and an entry to `DASHBOARD_WIDGETS` (`widgets/dashboardWidgets.ts`); the view and the modals read the registry
 5. Add widget UI strings as keys in `app/i18n/locales/en.json` and read them with `t()` (see "Internationalization")
 
 ### Modifying Constants

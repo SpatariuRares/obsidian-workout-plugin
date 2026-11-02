@@ -168,7 +168,10 @@ A `workout-dashboard` block opens with four numbers: total workouts, weekly stre
 ```workout-dashboard
 title: Last three months
 dateRange: 90
+widgets: [summary, heatMap, volume, recentWorkouts]
 ```
+
+To choose the widgets and their order without writing YAML, insert the dashboard with the **Insert workout dashboard** command, or open the ⋮ menu at the top right of an inserted dashboard and pick **Edit dashboard**.
 
 The heat map shows which muscles you trained over the last week, month or year, front and back, by **Volume**, **Sets** or **Reps**. It's the quickest way to notice you've skipped legs for three weeks. Under it, a short training analysis warns you about imbalances, like a front that works much more than the back. It reads the muscle tags of your [exercise pages](#exercise-types). Bodyweight and timed exercises have no weight, so they light up only under Sets and Reps.
 
@@ -177,13 +180,13 @@ The heat map shows which muscles you trained over the last week, month or year, 
 <details>
 <summary>All parameters</summary>
 
-| Parameter                                                                                        | Default | What it does                   |
-| ------------------------------------------------------------------------------------------------ | ------- | ------------------------------ |
-| `title`                                                                                          | —       | Heading above the dashboard    |
-| `dateRange`                                                                                      | all     | Only sets from the last N days |
-| `showSummary`, `showQuickStats`, `showVolumeAnalytics`, `showRecentWorkouts`, `showQuickActions` | `true`  | Hide a section with `false`    |
-| `recentWorkoutsLimit`                                                                            | `5`     | Workouts in the recent list    |
-| `volumeTrendDays`                                                                                | `30`    | Days in the volume trend chart |
+| Parameter             | Default | What it does                                                                                                                                                                                                |
+| --------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`               | —       | Heading above the dashboard                                                                                                                                                                                 |
+| `dateRange`           | all     | Only sets from the last N days                                                                                                                                                                              |
+| `widgets`             | all     | The widgets to show, in this order: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags` |
+| `recentWorkoutsLimit` | `5`     | Workouts in the recent list                                                                                                                                                                                 |
+| `volumeTrendDays`     | `30`    | Days in the volume trend chart                                                                                                                                                                              |
 
 </details>
 

@@ -11,6 +11,7 @@ import {
   resolveWidgets,
 } from "@app/features/dashboard/widgets/dashboardWidgets";
 import {
+  DashboardViewState,
   DashboardWidgetId,
   EmbeddedDashboardParams,
   ProtocolFilterCallback,
@@ -89,11 +90,12 @@ export class EmbeddedDashboardView extends BaseView {
   async refreshDashboard(
     container: HTMLElement,
     params: EmbeddedDashboardParams,
+    state: DashboardViewState = {},
   ): Promise<void> {
     const freshData = await this.loadDashboardData(params);
     container.empty();
     if (freshData.length > 0) {
-      await this.createDashboard(container, freshData, params);
+      await this.createDashboard(container, freshData, params, state);
     }
   }
 
@@ -104,6 +106,7 @@ export class EmbeddedDashboardView extends BaseView {
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedDashboardParams,
+    state: DashboardViewState = {},
   ): Promise<void> {
     try {
       // Clear container
@@ -139,8 +142,8 @@ export class EmbeddedDashboardView extends BaseView {
       // Create dashboard layout
       // Re-render this dashboard (and only this one) on pie chart clicks
       const onProtocolFilterChange = (protocol: string | null) => {
-        void this.createDashboard(container, logData, {
-          ...params,
+        void this.createDashboard(container, logData, params, {
+          ...state,
           activeProtocolFilter: protocol,
         });
       };
@@ -149,6 +152,7 @@ export class EmbeddedDashboardView extends BaseView {
         container,
         filteredData,
         params,
+        state,
         onProtocolFilterChange,
       );
     } catch (error) {
@@ -179,6 +183,7 @@ export class EmbeddedDashboardView extends BaseView {
     container: HTMLElement,
     data: WorkoutLogData[],
     params: EmbeddedDashboardParams,
+    state: DashboardViewState,
     onProtocolFilterChange: ProtocolFilterCallback,
   ): Promise<void> {
     // Create main dashboard container
@@ -199,12 +204,10 @@ export class EmbeddedDashboardView extends BaseView {
         cls: "workout-dashboard-title",
       });
     }
-    DashboardActionSelect.render(
-      headerEl,
-      this.plugin.app,
-      params,
-      () => dashboardEl.getBoundingClientRect().width,
-    );
+    DashboardActionSelect.render(headerEl, this.plugin.app, params, {
+      fenceLine: state.fenceLine,
+      noteWidth: () => dashboardEl.getBoundingClientRect().width,
+    });
 
     // Grid layout: each widget in its cells; a broken grid shows why instead
     const placements =
@@ -235,7 +238,7 @@ export class EmbeddedDashboardView extends BaseView {
     });
 
     // Apply protocol filter if set (for widgets that support it)
-    const activeProtocolFilter = params.activeProtocolFilter;
+    const { activeProtocolFilter } = state;
     const displayData = activeProtocolFilter
       ? this.filterByProtocol(data, activeProtocolFilter)
       : data;
@@ -247,6 +250,7 @@ export class EmbeddedDashboardView extends BaseView {
       params,
       plugin: this.plugin,
       dashboardId: getElementScopedId(container),
+      activeProtocolFilter: activeProtocolFilter ?? null,
       onProtocolFilterChange,
       history: async () =>
         (await this.plugin.getWorkoutLogData()) || [],

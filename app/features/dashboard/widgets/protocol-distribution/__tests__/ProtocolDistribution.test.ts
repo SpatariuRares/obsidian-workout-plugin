@@ -48,7 +48,6 @@ describe("ProtocolDistribution", () => {
     ProtocolDistribution.render(
       createObsidianContainer(),
       logs,
-      {},
       undefined,
       { chartId: "protocol-distribution-a" },
     );
@@ -66,11 +65,11 @@ describe("ProtocolDistribution", () => {
     const containerA = createObsidianContainer();
     const containerB = createObsidianContainer();
 
-    ProtocolDistribution.render(containerA, logs, {}, undefined, {
+    ProtocolDistribution.render(containerA, logs, undefined, {
       chartId: "protocol-distribution-a",
       onFilterChange: onFilterA,
     });
-    ProtocolDistribution.render(containerB, logs, {}, undefined, {
+    ProtocolDistribution.render(containerB, logs, undefined, {
       chartId: "protocol-distribution-b",
       onFilterChange: onFilterB,
     });
@@ -88,11 +87,11 @@ describe("ProtocolDistribution", () => {
     ProtocolDistribution.render(
       container,
       logs,
-      { activeProtocolFilter: WorkoutProtocol.STANDARD },
       undefined,
       {
         chartId: "protocol-distribution-a",
         onFilterChange: onFilter,
+        activeFilter: WorkoutProtocol.STANDARD,
       },
     );
     const items = [

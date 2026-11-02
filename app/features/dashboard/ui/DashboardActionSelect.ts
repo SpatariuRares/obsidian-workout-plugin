@@ -16,8 +16,12 @@ export class DashboardActionSelect {
     container: HTMLElement,
     app: App,
     params: EmbeddedDashboardParams,
-    /** The dashboard's width in the note, read when the menu is used */
-    noteWidth: () => number,
+    where: {
+      /** The line of the block's opening fence, for a block without an id */
+      fenceLine?: () => number | undefined;
+      /** The dashboard's width in the note, read when the menu is used */
+      noteWidth: () => number;
+    },
   ): HTMLElement {
     const { wrapper } = IconDropdown.create(container, {
       icon: ICONS.ACTIONS.MENU,
@@ -34,8 +38,8 @@ export class DashboardActionSelect {
     IconDropdown.onChange(wrapper, (value) => {
       if (value === "edit") {
         new EditDashboardModal(app, params, {
-          fenceLine: params.fenceLine?.(),
-          noteWidth: noteWidth() || undefined,
+          fenceLine: where.fenceLine?.(),
+          noteWidth: where.noteWidth() || undefined,
         }).open();
       }
     });

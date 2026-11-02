@@ -19,12 +19,15 @@ export type DashboardWidgetId = (typeof DASHBOARD_WIDGET_IDS)[number];
 /** Parameters of a `workout-dashboard` block; the schema is in dashboardBlock.ts */
 export type EmbeddedDashboardParams = BlockParams<
   typeof dashboardBlock
-> & {
-  /** View state, not a block parameter: the protocol chosen in the distribution widget */
+>;
+
+/** What the view knows about a rendered dashboard besides its block parameters */
+export interface DashboardViewState {
+  /** The protocol chosen in the distribution widget */
   activeProtocolFilter?: string | null;
-  /** View state: the line of the block's opening fence, read when needed (the note may have changed) */
+  /** The line of the block's opening fence, read when needed (the note may have changed) */
   fenceLine?: () => number | undefined;
-};
+}
 
 /**
  * Callback type for protocol filter changes in dashboard

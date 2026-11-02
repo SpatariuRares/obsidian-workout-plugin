@@ -7,6 +7,8 @@ import { VolumeAnalytics } from "@app/features/dashboard/widgets/volume-analytic
 import { RecentWorkouts } from "@app/features/dashboard/widgets/recent-workouts/RecentWorkouts";
 import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/QuickActions";
 import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
+import { ProtocolDistribution } from "@app/features/dashboard/widgets/protocol-distribution/ProtocolDistribution";
+import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
 import { t } from "@app/i18n";
@@ -333,5 +335,46 @@ describe("EmbeddedDashboardView resize watching", () => {
 
     expect(observers).toHaveLength(2);
     expect(observers[0].disconnect).not.toHaveBeenCalled();
+  });
+});
+
+describe("EmbeddedDashboardView view state", () => {
+  beforeAll(() => {
+    (
+      window as unknown as { ResizeObserver: unknown }
+    ).ResizeObserver = FakeResizeObserver;
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it("keeps the block's line for the edit menu after a protocol is picked, apart from the block parameters", async () => {
+    const menu = jest.spyOn(DashboardActionSelect, "render");
+    const view = new EmbeddedDashboardView({
+      settings: {},
+      getWorkoutLogData: async () => history,
+    } as unknown as WorkoutChartsPlugin);
+    const params: EmbeddedDashboardParams = { title: "Stats" };
+
+    await view.createDashboard(
+      createObsidianContainer(),
+      logs,
+      params,
+      {
+        fenceLine: () => 7,
+      },
+    );
+    // The options the protocol widget was last drawn with
+    const widgetOptions = () =>
+      (ProtocolDistribution.render as jest.Mock).mock.calls.at(-1).at(-1) as {
+        onFilterChange: (protocol: string | null) => void;
+        activeFilter?: string | null;
+      };
+    widgetOptions().onFilterChange("dropset");
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const [, , menuParams, where] = menu.mock.calls.at(-1)!;
+    expect(where.fenceLine?.()).toBe(7);
+    expect(menuParams).toEqual({ title: "Stats" });
+    expect(widgetOptions().activeFilter).toBe("dropset");
   });
 });

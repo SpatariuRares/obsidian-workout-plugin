@@ -9,7 +9,10 @@ import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
-import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import {
+  DashboardViewState,
+  EmbeddedDashboardParams,
+} from "@app/features/dashboard/types";
 import { chartBlock } from "@app/features/charts/chartBlock";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
@@ -289,6 +292,9 @@ export class CodeBlockProcessorService {
       const params: EmbeddedDashboardParams = {
         ...dashboardBlock.defaults,
         ...parsed,
+      };
+      // Where the block is, for the edit menu of a block without an id
+      const state: DashboardViewState = {
         fenceLine: () => ctx.getSectionInfo(el)?.lineStart,
       };
       const logData =
@@ -303,6 +309,7 @@ export class CodeBlockProcessorService {
         el,
         logData,
         params,
+        state,
       );
 
       ctx.addChild(
@@ -313,7 +320,8 @@ export class CodeBlockProcessorService {
             // Nessun filtro esercizio/workout = sempre refresh
             muscleTagsAware: true, // Dashboard mostra muscle heat map
           },
-          () => this.embeddedDashboardView.refreshDashboard(el, params),
+          () =>
+            this.embeddedDashboardView.refreshDashboard(el, params, state),
         ),
       );
     } catch (error) {

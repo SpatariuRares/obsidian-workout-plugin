@@ -1,9 +1,6 @@
 import { WidgetContainer } from "@app/features/dashboard/ui/WidgetContainer";
 import type { WorkoutLogData } from "@app/types/WorkoutLogData";
-import {
-  EmbeddedDashboardParams,
-  ProtocolFilterCallback,
-} from "@app/features/dashboard/types";
+import { ProtocolFilterCallback } from "@app/features/dashboard/types";
 import { DateUtils } from "@app/utils/DateUtils";
 import type { ChartConfiguration } from "chart.js";
 import type { SettingsPort } from "@app/types/PluginPorts";
@@ -35,6 +32,8 @@ interface ProtocolDistributionOptions {
   /** Stable per-dashboard ID, so re-renders replace this dashboard's chart only */
   chartId: string;
   onFilterChange?: ProtocolFilterCallback;
+  /** The protocol the dashboard is filtered by, if any */
+  activeFilter?: string | null;
 }
 
 /**
@@ -47,14 +46,12 @@ export class ProtocolDistribution {
    * Renders the protocol distribution widget
    * @param container - The container element to render in
    * @param data - Workout log data
-   * @param params - Dashboard parameters
    * @param plugin - Plugin instance for accessing custom protocols
    * @param options - Chart ID and filter callback of the owning dashboard
    */
   static render(
     container: HTMLElement,
     data: WorkoutLogData[],
-    params: EmbeddedDashboardParams,
     plugin: SettingsPort | undefined,
     options: ProtocolDistributionOptions,
   ): void {
@@ -84,7 +81,7 @@ export class ProtocolDistribution {
     }
 
     // Render active filter indicator if filter is set
-    const activeFilter = params.activeProtocolFilter;
+    const activeFilter = options.activeFilter;
     if (activeFilter) {
       this.renderActiveFilterIndicator(
         widgetEl,

@@ -30,6 +30,8 @@ export interface DashboardWidgetContext {
   plugin: WorkoutPluginContext;
   /** Unique per rendered dashboard, so two dashboards keep separate charts */
   dashboardId: string;
+  /** The protocol chosen in the distribution widget, if any */
+  activeProtocolFilter: string | null;
   onProtocolFilterChange: ProtocolFilterCallback;
   /** Every logged set */
   history(): Promise<WorkoutLogData[]>;
@@ -98,11 +100,11 @@ export const DASHBOARD_WIDGETS: Record<
       ProtocolDistribution.render(
         ctx.grid,
         ctx.periodData,
-        ctx.params,
         ctx.plugin,
         {
           chartId: `protocol-distribution-${ctx.dashboardId}`,
           onFilterChange: ctx.onProtocolFilterChange,
+          activeFilter: ctx.activeProtocolFilter,
         },
       ),
   },

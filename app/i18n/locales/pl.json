@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "Znaleziono podobne tagi: {count}",
       "muscleTagSimilarWarning": "Podobny tag już istnieje",
       "suggestedNextWeight": "Sugerowany następny ciężar: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Nie udało się zaktualizować tabeli. Upewnij się, że plik jest otwarty w edytorze.",
       "targetAchieved": "Cel osiągnięty!",
       "timerElementsNotInitialized": "Elementy timera nie zostały zainicjalizowane",
-      "timerUpdateFailed": "Nie udało się zaktualizować timera. Upewnij się, że plik jest otwarty w edytorze.",
       "validationFillAll": "Wypełnij wszystkie pola prawidłowymi wartościami",
       "validMissingField": "Brak wymaganego pola: {field}",
       "validMustBeNumber": "{field} musi być prawidłową liczbą",
@@ -636,8 +634,7 @@
       "timerUpdated": "Timer został pomyślnie zaktualizowany!",
       "validChooseExercise": "Wybierz ćwiczenie",
       "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
-      "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!",
-      "dashboardUpdateFailed": "Nie udało się zaktualizować panelu kontrolnego. Upewnij się, że plik jest otwarty w edytorze."
+      "dashboardUpdated": "Panel kontrolny został pomyślnie zaktualizowany!"
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",

@@ -19,8 +19,8 @@ describe("readWorkoutNote", () => {
     );
 
     expect(blocks).toEqual([
-      { type: "workout-log", body: "exercise: Squat\nlimit: 5", start: 1, end: 4 },
-      { type: "workout-timer", body: "preset: rest", start: 6, end: 8 },
+      { type: "workout-log", body: "exercise: Squat\nlimit: 5", start: 1, end: 4, quote: "" },
+      { type: "workout-timer", body: "preset: rest", start: 6, end: 8, quote: "" },
     ]);
   });
 
@@ -47,7 +47,43 @@ describe("readWorkoutNote", () => {
   it("should read blocks with Windows line endings and an indented fence", () => {
     const { blocks } = readWorkoutNote("  ```workout-log\r\nexercise: Squat\r\n  ```\r\n");
 
-    expect(blocks).toEqual([{ type: "workout-log", body: "exercise: Squat", start: 0, end: 2 }]);
+    expect(blocks).toEqual([{ type: "workout-log", body: "exercise: Squat", start: 0, end: 2, quote: "" }]);
+  });
+
+  it("should read blocks inside a callout, nested ones included, without their markers", () => {
+    const { blocks } = readWorkoutNote(
+      note(
+        "> [!note] Today",
+        "> ```workout-dashboard",
+        "> title: Week",
+        ">",
+        "> ```",
+        "> > ```workout-timer",
+        "> > duration: 60",
+        "> > ```",
+      ),
+    );
+
+    expect(blocks).toEqual([
+      { type: "workout-dashboard", body: "title: Week\n", start: 1, end: 4, quote: "> " },
+      { type: "workout-timer", body: "duration: 60", start: 5, end: 7, quote: "> > " },
+    ]);
+  });
+
+  it("should not close a block with a fence at another quote depth, nor outside its callout", () => {
+    const { blocks } = readWorkoutNote(
+      note(
+        "```workout-log",
+        "> ```",
+        "exercise: Squat",
+        "```",
+        "> ```workout-timer",
+        "duration: 60",
+        "```",
+      ),
+    );
+
+    expect(blocks.map((b) => [b.type, b.body])).toEqual([["workout-log", "> ```\nexercise: Squat"]]);
   });
 
   it("should skip a block that is never closed", () => {

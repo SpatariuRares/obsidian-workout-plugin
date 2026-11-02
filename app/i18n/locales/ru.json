@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "Найдено похожих тегов: {count}",
       "muscleTagSimilarWarning": "Похожий тег уже существует",
       "suggestedNextWeight": "Рекомендуемый следующий вес: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Не удалось обновить таблицу. Убедитесь, что файл открыт в редакторе.",
       "targetAchieved": "Цель достигнута!",
       "timerElementsNotInitialized": "Элементы таймера не инициализированы",
-      "timerUpdateFailed": "Не удалось обновить таймер. Убедитесь, что файл открыт в редакторе.",
       "validationFillAll": "Пожалуйста, заполните все поля допустимыми значениями",
       "validMissingField": "Отсутствует обязательное поле: {field}",
       "validMustBeNumber": "Значение поля «{field}» должно быть корректным числом",
@@ -636,8 +634,7 @@
       "timerUpdated": "Таймер успешно обновлен!",
       "validChooseExercise": "Выберите упражнение",
       "validationCombinedMode": "Для типа \"упражнения + тренировка\" необходимо заполнить оба поля!",
-      "dashboardUpdated": "Панель управления успешно обновлена!",
-      "dashboardUpdateFailed": "Не удалось обновить панель управления. Убедитесь, что файл открыт в редакторе."
+      "dashboardUpdated": "Панель управления успешно обновлена!"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Метка:",

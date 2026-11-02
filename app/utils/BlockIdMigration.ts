@@ -22,7 +22,10 @@ export function addMissingBlockIds(content: string): {
 
   const crlf = content.includes("\r\n");
   const lines = content.split("\n");
-  const ids = missing.map((block) => ({ block, id: `id: ${generateCodeBlockId()}` }));
+  const ids = missing.map((block) => ({
+    block,
+    id: `${block.quote}id: ${generateCodeBlockId()}`,
+  }));
   // Insert bottom-up, so earlier line numbers stay valid
   for (const { block, id } of ids.reverse()) {
     lines.splice(block.start + 1, 0, crlf ? `${id}\r` : id);

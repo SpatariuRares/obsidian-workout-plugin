@@ -16,14 +16,18 @@ import { t } from "@app/i18n";
  */
 export class EditTimerModal extends InsertTimerModal {
   private readonly initialParams: EmbeddedTimerParams;
+  private readonly sourcePath: string;
 
+  /** @param sourcePath - The note the block is written in */
   constructor(
     app: App,
     plugin: WorkoutPluginContext,
     params: EmbeddedTimerParams,
+    sourcePath: string,
   ) {
     super(app, plugin);
     this.initialParams = params;
+    this.sourcePath = sourcePath;
   }
 
   protected getModalTitle(): string {
@@ -118,6 +122,7 @@ export class EditTimerModal extends InsertTimerModal {
     const { id } = this.initialParams;
     createEditButtons(this, container, {
       schema: timerBlock,
+      path: this.sourcePath,
       match: id ? { id } : null,
       collectParams: () => this.collectParams(),
       buttonText: this.getButtonText(),

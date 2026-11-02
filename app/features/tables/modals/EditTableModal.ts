@@ -18,14 +18,18 @@ import { t } from "@app/i18n";
  */
 export class EditTableModal extends InsertTableModal {
   private readonly initialParams: EmbeddedTableParams;
+  private readonly sourcePath: string;
 
+  /** @param sourcePath - The note the block is written in */
   constructor(
     app: App,
     plugin: WorkoutPluginContext,
     params: EmbeddedTableParams,
+    sourcePath: string,
   ) {
     super(app, plugin);
     this.initialParams = params;
+    this.sourcePath = sourcePath;
   }
 
   protected getModalTitle(): string {
@@ -122,6 +126,7 @@ export class EditTableModal extends InsertTableModal {
     const { id } = this.initialParams;
     createEditButtons(this, container, {
       schema: tableBlock,
+      path: this.sourcePath,
       match: id ? { id } : null,
       collectParams: () => this.collectParams(),
       buttonText: this.getButtonText(),

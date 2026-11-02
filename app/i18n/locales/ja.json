@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "類似のタグが {count} 件見つかりました",
       "muscleTagSimilarWarning": "似たタグがすでに存在します",
       "suggestedNextWeight": "次回の推奨重量：{suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "テーブルの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
       "targetAchieved": "目標達成！",
       "timerElementsNotInitialized": "タイマー要素が初期化されていません",
-      "timerUpdateFailed": "タイマーの更新に失敗しました。エディタでファイルが開かれていることを確認してください。",
       "validationFillAll": "すべてのフィールドに有効な値を入力してください。",
       "validMissingField": "必須フィールドがありません：{field}",
       "validMustBeNumber": "{field}は有効な数値でなければなりません",
@@ -636,8 +634,7 @@
       "timerUpdated": "タイマーが正常に更新されました！",
       "validChooseExercise": "エクササイズを選択してください",
       "validationCombinedMode": "「エクササイズ + ワークアウト」タイプの場合は、両方のフィールドを必ず入力してください！",
-      "dashboardUpdated": "ダッシュボードを更新しました！",
-      "dashboardUpdateFailed": "ダッシュボードの更新に失敗しました。ファイルがエディタで開かれているか確認してください。"
+      "dashboardUpdated": "ダッシュボードを更新しました！"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",

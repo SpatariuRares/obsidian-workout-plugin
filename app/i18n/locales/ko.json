@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "유사한 태그 {count}개 발견",
       "muscleTagSimilarWarning": "비슷한 태그가 이미 있습니다",
       "suggestedNextWeight": "다음 추천 무게: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "테이블 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "targetAchieved": "목표 달성!",
       "timerElementsNotInitialized": "타이머 요소가 초기화되지 않음",
-      "timerUpdateFailed": "타이머 업데이트에 실패했습니다. 편집기에서 파일이 열려 있는지 확인하십시오.",
       "validationFillAll": "모든 필드에 유효한 값을 입력해 주세요.",
       "validMissingField": "필수 필드 없음: {field}",
       "validMustBeNumber": "{field}은(는) 유효한 숫자여야 합니다",
@@ -636,8 +634,7 @@
       "timerUpdated": "타이머가 성공적으로 업데이트되었습니다!",
       "validChooseExercise": "운동 종목을 선택하세요",
       "validationCombinedMode": "'운동 종목 + 운동 루틴' 유형에서는 두 필드를 모두 입력해야 합니다!",
-      "dashboardUpdated": "대시보드가 업데이트되었습니다!",
-      "dashboardUpdateFailed": "대시보드 업데이트에 실패했습니다. 파일이 편집기에서 열려 있는지 확인하세요."
+      "dashboardUpdated": "대시보드가 업데이트되었습니다!"
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",

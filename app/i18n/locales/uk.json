@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "Знайдено схожих тегів: {count}",
       "muscleTagSimilarWarning": "Схожий тег уже існує",
       "suggestedNextWeight": "Рекомендована наступна вага: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Не вдалося оновити таблицю. Переконайтеся, що файл відкритий у редакторі.",
       "targetAchieved": "Ціль досягнуто!",
       "timerElementsNotInitialized": "Елементи таймера не були ініціалізовані",
-      "timerUpdateFailed": "Не вдалося оновити таймер. Переконайтеся, що файл відкритий у редакторі.",
       "validationFillAll": "Будь ласка, заповніть усі поля дійсними значеннями",
       "validMissingField": "Відсутнє обов'язкове поле: {field}",
       "validMustBeNumber": "{field} повинно бути числом",
@@ -636,8 +634,7 @@
       "timerUpdated": "Таймер оновлено успішно!",
       "validChooseExercise": "Виберіть вправу",
       "validationCombinedMode": "Для типу «вправа + тренування» потрібно заповнити обидва поля!",
-      "dashboardUpdated": "Панель успішно оновлено!",
-      "dashboardUpdateFailed": "Не вдалося оновити панель. Переконайтеся, що файл відкрито в редакторі."
+      "dashboardUpdated": "Панель успішно оновлено!"
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",

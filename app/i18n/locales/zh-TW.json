@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "找到 {count} 個類似標籤",
       "muscleTagSimilarWarning": "已有類似的標籤",
       "suggestedNextWeight": "建議下次重量：{suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "無法更新表格。請確認檔案已在編輯器中開啟。",
       "targetAchieved": "已達成目標！",
       "timerElementsNotInitialized": "計時元素尚未初始化",
-      "timerUpdateFailed": "計時器更新失敗。請確認檔案已在編輯器中開啟。",
       "validationFillAll": "請務必填寫所有欄位，並使用有效的值。",
       "validMissingField": "缺少必填欄位：{field}",
       "validMustBeNumber": "{field} 必須是有效的數字",
@@ -636,8 +634,7 @@
       "timerUpdated": "計時器已成功更新！",
       "validChooseExercise": "請選擇一個動作",
       "validationCombinedMode": "對於「動作 + 運動」類型，您必須填寫兩個欄位！",
-      "dashboardUpdated": "儀表板已成功更新！",
-      "dashboardUpdateFailed": "無法更新儀表板。請確認檔案已在編輯器中開啟。"
+      "dashboardUpdated": "儀表板已成功更新！"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",

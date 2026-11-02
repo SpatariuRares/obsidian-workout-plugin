@@ -44,7 +44,7 @@ export abstract class BaseView {
     container: HTMLElement,
     logData: WorkoutLogData[],
     exerciseName?: string,
-    currentPageLink?: string,
+    sourcePath?: string,
     codeBlockId?: string,
   ): boolean {
     if (logData.length === 0) {
@@ -52,7 +52,7 @@ export abstract class BaseView {
         container,
         this.plugin,
         exerciseName,
-        currentPageLink,
+        sourcePath,
         codeBlockId,
       );
       return true;

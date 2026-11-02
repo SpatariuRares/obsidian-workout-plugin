@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "U gjetën {count} etiketa të ngjashme",
       "muscleTagSimilarWarning": "Ekziston tashmë një etiketë e ngjashme",
       "suggestedNextWeight": "Pesha e sugjeruar e radhës: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Përditësimi i tabelës dështoi. Sigurohuni që skedari është i hapur në redaktues.",
       "targetAchieved": "Objektivi u arrit!",
       "timerElementsNotInitialized": "Elementët e timerit nuk janë inicializuar",
-      "timerUpdateFailed": "Përditësimi i timerit dështoi. Sigurohuni që skedari është i hapur në redaktues.",
       "validationFillAll": "Ju lutemi, plotësoni të gjitha fushat me vlera të vlefshme.",
       "validMissingField": "Mungon fusha e detyrueshme: {field}",
       "validMustBeNumber": "{field} duhet të jetë numër i vlefshëm",
@@ -636,8 +634,7 @@
       "timerUpdated": "Timeri u përditësua me sukses!",
       "validChooseExercise": "Zgjidhni një ushtrim",
       "validationCombinedMode": "Për tipin 'ushtrim + stërvitje' duhet të plotësoni të dyja fushat!",
-      "dashboardUpdated": "Paneli u përditësua me sukses!",
-      "dashboardUpdateFailed": "Përditësimi i panelit dështoi. Sigurohu që skedari të jetë hapur në redaktor."
+      "dashboardUpdated": "Paneli u përditësua me sukses!"
     },
     "parameterKey": "Çelësi:",
     "parameterLabel": "Etiketa:",

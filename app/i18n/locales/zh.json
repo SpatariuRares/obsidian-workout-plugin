@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "找到 {count} 个相似标签",
       "muscleTagSimilarWarning": "已存在相似的标签",
       "suggestedNextWeight": "建议下次重量：{suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "更新表格失败。请确保文件已在编辑器中打开。",
       "targetAchieved": "已达成目标！",
       "timerElementsNotInitialized": "计时器元素未初始化",
-      "timerUpdateFailed": "更新计时器失败。请确保文件已在编辑器中打开。",
       "validationFillAll": "请填写所有字段并使用有效值。",
       "validMissingField": "缺少必填字段：{field}",
       "validMustBeNumber": "{field}必须是有效数字",
@@ -636,8 +634,7 @@
       "timerUpdated": "计时器已成功更新！",
       "validChooseExercise": "请选择一个训练动作",
       "validationCombinedMode": "对于“训练动作 + 训练计划”类型，您必须同时填写这两个字段！",
-      "dashboardUpdated": "仪表盘已成功更新！",
-      "dashboardUpdateFailed": "更新仪表盘失败。请确保文件已在编辑器中打开。"
+      "dashboardUpdated": "仪表盘已成功更新！"
     },
     "parameterKey": "键：",
     "parameterLabel": "显示名称：",

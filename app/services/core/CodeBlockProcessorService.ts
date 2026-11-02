@@ -4,7 +4,6 @@ import { EmbeddedTableView } from "@app/features/tables/views/EmbeddedTableView"
 import { EmbeddedTimerView } from "@app/features/timer/views/EmbeddedTimerView";
 import { EmbeddedDashboardView } from "@app/features/dashboard/views/EmbeddedDashboardView";
 import { EmbeddedDurationView } from "@app/features/duration/views/EmbeddedDurationView";
-import { PathUtils } from "@app/utils/PathUtils";
 import { ErrorUtils } from "@app/utils/ErrorUtils";
 import { EmbeddedChartParams } from "@app/features/charts/types";
 import { EmbeddedTableParams } from "@app/features/tables/types";
@@ -186,13 +185,12 @@ export class CodeBlockProcessorService {
         ...parsed,
       };
 
-      const pageLink = PathUtils.toWikiLink(ctx.sourcePath);
       const logData = await this.loadLogData();
       await this.embeddedTableView.createTable(
         el,
         logData,
         params,
-        pageLink,
+        ctx.sourcePath,
       );
 
       ctx.addChild(
@@ -206,7 +204,7 @@ export class CodeBlockProcessorService {
             muscleTagsAware: false,
           },
           () =>
-            this.embeddedTableView.refreshTable(el, params, pageLink),
+            this.embeddedTableView.refreshTable(el, params, ctx.sourcePath),
         ),
       );
     } catch (error) {
@@ -277,7 +275,7 @@ export class CodeBlockProcessorService {
       ),
     );
 
-    timerView.createTimer(container, params);
+    timerView.createTimer(container, params, ctx.sourcePath);
   }
 
   // Handle workout dashboard code blocks
@@ -293,9 +291,18 @@ export class CodeBlockProcessorService {
         ...dashboardBlock.defaults,
         ...parsed,
       };
-      // Where the block is, for the edit menu of a block without an id
+      // Where the block is, for the edit menu
       const state: DashboardViewState = {
-        fenceLine: () => ctx.getSectionInfo(el)?.lineStart,
+        sourcePath: ctx.sourcePath,
+        matchWithoutId: () => {
+          const section = ctx.getSectionInfo(el);
+          return {
+            body: source,
+            lines: section
+              ? { start: section.lineStart, end: section.lineEnd }
+              : undefined,
+          };
+        },
       };
       const logData =
         await this.embeddedDashboardView.loadDashboardData(params);
@@ -380,7 +387,7 @@ export class CodeBlockProcessorService {
       el,
       this.plugin,
       undefined,
-      PathUtils.toWikiLink(ctx.sourcePath),
+      ctx.sourcePath,
     );
   }
 

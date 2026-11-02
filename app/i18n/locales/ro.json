@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} etichete similare găsite",
       "muscleTagSimilarWarning": "Există deja o etichetă similară",
       "suggestedNextWeight": "Următoarea greutate sugerată: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Nu s-a putut actualiza tabelul. Asigură-te că fișierul este deschis în editor.",
       "targetAchieved": "Țintă atinsă!",
       "timerElementsNotInitialized": "Elementele temporizatorului nu au fost inițializate",
-      "timerUpdateFailed": "Nu s-a putut actualiza temporizatorul. Asigură-te că fișierul este deschis în editor.",
       "validationFillAll": "Completează toate câmpurile cu valori valide.",
       "validMissingField": "Câmp obligatoriu lipsă: {field}",
       "validMustBeNumber": "{field} trebuie să fie un număr valid",
@@ -636,8 +634,7 @@
       "timerUpdated": "Temporizatorul a fost actualizat cu succes!",
       "validChooseExercise": "Alege un exercițiu",
       "validationCombinedMode": "Pentru tipul „exercițiu + antrenament”, completează ambele câmpuri!",
-      "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!",
-      "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord. Asigură-te că fișierul este deschis în editor."
+      "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!"
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",

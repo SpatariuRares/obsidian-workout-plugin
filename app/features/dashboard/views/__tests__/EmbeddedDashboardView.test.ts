@@ -348,7 +348,7 @@ describe("EmbeddedDashboardView view state", () => {
 
   afterEach(() => jest.restoreAllMocks());
 
-  it("keeps the block's line for the edit menu after a protocol is picked, apart from the block parameters", async () => {
+  it("keeps the block's place for the edit menu after a protocol is picked, apart from the block parameters", async () => {
     const menu = jest.spyOn(DashboardActionSelect, "render");
     const view = new EmbeddedDashboardView({
       settings: {},
@@ -361,7 +361,8 @@ describe("EmbeddedDashboardView view state", () => {
       logs,
       params,
       {
-        fenceLine: () => 7,
+        sourcePath: "Stats.md",
+        matchWithoutId: () => ({ body: "title: Stats" }),
       },
     );
     // The options the protocol widget was last drawn with
@@ -374,7 +375,8 @@ describe("EmbeddedDashboardView view state", () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     const [, , menuParams, where] = menu.mock.calls.at(-1)!;
-    expect(where.fenceLine?.()).toBe(7);
+    expect(where.sourcePath).toBe("Stats.md");
+    expect(where.matchWithoutId?.()).toEqual({ body: "title: Stats" });
     expect(menuParams).toEqual({ title: "Stats" });
     expect(widgetOptions().activeFilter).toBe("dropset");
   });

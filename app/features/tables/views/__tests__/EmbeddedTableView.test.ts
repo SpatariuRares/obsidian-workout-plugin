@@ -605,6 +605,7 @@ describe("EmbeddedTableView", () => {
       expect(CodeBlockEditorService.patchCodeBlock).toHaveBeenCalledWith(
         plugin.app,
         tableBlock,
+        "",
         { exercise: "Bench Press" },
         { targetWeight: 82.5 },
       );
@@ -675,6 +676,19 @@ describe("EmbeddedTableView", () => {
         .calls[0][1];
       expect(props.params).toEqual(params);
     });
+
+    it("gives the edit action the note the block is written in", async () => {
+      await view.createTable(
+        document.createElement("div"),
+        [createLog()],
+        { id: "t1", exercise: "Bench" },
+        "Workouts/Stats.md",
+      );
+
+      const props = (ExerciseActionSelect.render as jest.Mock).mock
+        .calls[0][1];
+      expect(props.sourcePath).toBe("Workouts/Stats.md");
+    });
   });
 
   describe("source note link", () => {
@@ -684,7 +698,7 @@ describe("EmbeddedTableView", () => {
       });
       const container = document.createElement("div");
 
-      await view.createTable(container, [createLog()], {}, "[[Leg Day]]");
+      await view.createTable(container, [createLog()], {}, "Workouts/Leg Day.md");
 
       // 3rd argument: the note the set is logged from
       expect(
@@ -695,7 +709,7 @@ describe("EmbeddedTableView", () => {
     it("keeps the source note link on refresh", async () => {
       const container = document.createElement("div");
 
-      await view.refreshTable(container, {}, "[[Leg Day]]");
+      await view.refreshTable(container, {}, "Workouts/Leg Day.md");
 
       const call = (LogCallouts.renderAddLogButton as jest.Mock).mock
         .calls[0];

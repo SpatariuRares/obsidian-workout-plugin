@@ -644,12 +644,12 @@
       "muscleTagSimilarWarning": "A similar tag already exists",
       "suggestedNextWeight": "Suggested next weight: {suggestedWeight}{weightUnit}",
       "tableInserted": "Table inserted successfully!",
-      "tableUpdateFailed": "Failed to update table. Make sure the file is open in the editor.",
+      "tableUpdateFailed": "Failed to update table: it was not found in its note. Reopen the note and try again.",
       "tableUpdated": "Table updated successfully!",
       "targetAchieved": "Target reached!",
       "timerElementsNotInitialized": "Timer elements not initialized",
       "timerInserted": "Timer inserted successfully!",
-      "timerUpdateFailed": "Failed to update timer. Make sure the file is open in the editor.",
+      "timerUpdateFailed": "Failed to update timer: it was not found in its note. Reopen the note and try again.",
       "timerUpdated": "Timer updated successfully!",
       "validChooseExercise": "Choose an exercise",
       "validFieldRequired": "{field} is required",
@@ -661,7 +661,7 @@
       "validationCombinedMode": "For 'exercise + workout' type you must fill both fields!",
       "validationFillAll": "Please fill in all fields with valid values",
       "dashboardUpdated": "Dashboard updated successfully!",
-      "dashboardUpdateFailed": "Failed to update dashboard. Make sure the file is open in the editor."
+      "dashboardUpdateFailed": "Failed to update dashboard: it was not found in its note, or another dashboard without an id has the same settings. Reopen the note and try again."
     },
     "parameterKey": "Key:",
     "parameterLabel": "Label:",

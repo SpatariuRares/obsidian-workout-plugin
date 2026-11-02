@@ -10,6 +10,7 @@ import { t } from "@app/i18n";
 import { openGettingStartedGuide } from "@app/services/examples/GettingStartedGuide";
 import { TOUR_TARGETS, markTourTarget } from "@app/features/tour/tourTargets";
 import { ICONS } from "@app/constants/ui.constants";
+import { PathUtils } from "@app/utils/PathUtils";
 
 /**
  * Log-related callouts and buttons used across chart/table/dashboard views.
@@ -39,7 +40,7 @@ export class LogCallouts {
     container: HTMLElement,
     plugin: WorkoutPluginContext,
     exerciseName?: string,
-    currentPageLink?: string,
+    sourcePath?: string,
     codeBlockId?: string,
   ): void {
     Feedback.renderEmpty(container, "", {
@@ -75,7 +76,7 @@ export class LogCallouts {
     markTourTarget(createButton, TOUR_TARGETS.tableAddButton);
 
     Button.onClick(createButton, () => {
-      let link = currentPageLink;
+      let link = sourcePath ? PathUtils.toWikiLink(sourcePath) : "";
       if (!link) {
         const activeView =
           plugin.app.workspace.getActiveViewOfType(MarkdownView);
@@ -114,6 +115,7 @@ export class LogCallouts {
           exercise: exerciseName,
           id: codeBlockId,
         },
+        sourcePath,
       });
     }
   }

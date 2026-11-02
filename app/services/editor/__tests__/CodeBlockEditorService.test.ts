@@ -1,4 +1,4 @@
-import { App } from "obsidian";
+import { App, TFile } from "obsidian";
 import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
 import { tableBlock } from "@app/features/tables/tableBlock";
 import { timerBlock } from "@app/features/timer/timerBlock";
@@ -7,14 +7,14 @@ function note(...lines: string[]): string {
   return lines.join("\n");
 }
 
-function setup(content: string, hasActiveNote = true) {
+const PATH = "Leg day.md";
+
+function setup(content: string) {
   const state = { content };
+  const file = Object.assign(new TFile(), { path: PATH });
   const app = {
-    workspace: {
-      getActiveViewOfType: () =>
-        hasActiveNote ? { file: { path: "Leg day.md" } } : null,
-    },
     vault: {
+      getAbstractFileByPath: (path: string) => (path === PATH ? file : null),
       process: jest.fn(async (_file: unknown, fn: (c: string) => string) => {
         state.content = fn(state.content);
       }),
@@ -48,8 +48,9 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     const { app, state } = setup(NOTE);
 
     const ok = await CodeBlockEditorService.patchCodeBlock(
-      app,
-      tableBlock,
+        app,
+        tableBlock,
+        PATH,
       { id: "a1" },
       { limit: 20, exercise: "Front squat" },
     );
@@ -69,8 +70,9 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     );
 
     await CodeBlockEditorService.patchCodeBlock(
-      app,
-      tableBlock,
+        app,
+        tableBlock,
+        PATH,
       { exercise: "Bench Press" },
       { targetWeight: 105 },
     );
@@ -84,8 +86,9 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     const { app, state } = setup(NOTE);
 
     await CodeBlockEditorService.patchCodeBlock(
-      app,
-      timerBlock,
+        app,
+        timerBlock,
+        PATH,
       { id: "t1" },
       { autoStart: true },
     );
@@ -100,6 +103,7 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
       await CodeBlockEditorService.patchCodeBlock(
         app,
         tableBlock,
+        PATH,
         { id: "zz" },
         { limit: 5 },
       ),
@@ -107,12 +111,13 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     expect(state.content).toBe(NOTE);
   });
 
-  it("returns false without an active note or when the write fails", async () => {
-    const noNote = setup(NOTE, false);
+  it("returns false for a note that doesn't exist or when the write fails", async () => {
+    const noNote = setup(NOTE);
     expect(
       await CodeBlockEditorService.patchCodeBlock(
         noNote.app,
         tableBlock,
+        "Gone.md",
         { id: "a1" },
         { limit: 5 },
       ),
@@ -126,6 +131,7 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
       await CodeBlockEditorService.patchCodeBlock(
         failing.app,
         tableBlock,
+        PATH,
         { id: "a1" },
         { limit: 5 },
       ),
@@ -137,7 +143,10 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
     const real = note("```workout-log", "exercise: Squat", "```");
     const { app, state } = setup(note(example, real));
 
-    await CodeBlockEditorService.patchCodeBlock(app, tableBlock, { exercise: "Squat" }, { limit: 5 });
+    await CodeBlockEditorService.patchCodeBlock(
+        app,
+        tableBlock,
+        PATH, { exercise: "Squat" }, { limit: 5 });
 
     expect(state.content).toBe(
       note(example, "```workout-log", "exercise: Squat", "limit: 5", "```"),
@@ -147,7 +156,10 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
   it("keeps Windows line endings", async () => {
     const { app, state } = setup("```workout-log\r\nid: a1\r\n```\r\n");
 
-    await CodeBlockEditorService.patchCodeBlock(app, tableBlock, { id: "a1" }, { limit: 5 });
+    await CodeBlockEditorService.patchCodeBlock(
+        app,
+        tableBlock,
+        PATH, { id: "a1" }, { limit: 5 });
 
     expect(state.content).toBe("```workout-log\r\nid: a1\r\nlimit: 5\r\n```\r\n");
   });
@@ -159,9 +171,85 @@ describe("CodeBlockEditorService.patchCodeBlock", () => {
       await CodeBlockEditorService.patchCodeBlock(
         app,
         tableBlock,
+        PATH,
         { id: "a1" },
         { limit: 5 },
       ),
     ).toBe(false);
+  });
+
+  it("edits a block inside a callout and keeps the callout's markers", async () => {
+    const { app, state } = setup(
+      note("> [!note] Today", "> ```workout-log", "> id: a1", "> ```", "after"),
+    );
+
+    const ok = await CodeBlockEditorService.patchCodeBlock(
+      app,
+      tableBlock,
+      PATH,
+      { id: "a1" },
+      { limit: 5 },
+    );
+
+    expect(ok).toBe(true);
+    expect(state.content).toBe(
+      note("> [!note] Today", "> ```workout-log", "> id: a1", "> limit: 5", "> ```", "after"),
+    );
+  });
+
+  it("finds a block without an id by its body, within the lines it was rendered in", async () => {
+    const callout = note("> [!note]", "> ```workout-timer", "> duration: 60", "> ```");
+    const { app, state } = setup(note("# Day", callout, "", "```workout-timer", "duration: 60", "```"));
+
+    await CodeBlockEditorService.patchCodeBlock(
+      app,
+      timerBlock,
+      PATH,
+      { body: "duration: 60", lines: { start: 1, end: 4 } },
+      { sound: false },
+    );
+
+    expect(state.content).toBe(
+      note(
+        "# Day",
+        "> [!note]",
+        "> ```workout-timer",
+        "> duration: 60",
+        "> sound: false",
+        "> ```",
+        "",
+        "```workout-timer",
+        "duration: 60",
+        "```",
+      ),
+    );
+  });
+
+  it("finds a block without an id by its body alone when Obsidian gives no lines", async () => {
+    const { app, state } = setup(
+      note("> [!note]", "> ```workout-timer", "> duration: 60", "> ```", "```workout-timer", "duration: 90", "```"),
+    );
+
+    await CodeBlockEditorService.patchCodeBlock(app, timerBlock, PATH, { body: "duration: 60\n" }, { sound: false });
+
+    expect(state.content).toBe(
+      note("> [!note]", "> ```workout-timer", "> duration: 60", "> sound: false", "> ```", "```workout-timer", "duration: 90", "```"),
+    );
+  });
+
+  it("refuses to guess when more than one block has that body", async () => {
+    const content = note("> ```workout-timer", "> duration: 60", "> ```", "```workout-timer", "duration: 60", "```");
+    const { app, state } = setup(content);
+
+    expect(
+      await CodeBlockEditorService.patchCodeBlock(
+        app,
+        timerBlock,
+        PATH,
+        { body: "duration: 60" },
+        { sound: false },
+      ),
+    ).toBe(false);
+    expect(state.content).toBe(content);
   });
 });

@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} tag serupa ditemukan",
       "muscleTagSimilarWarning": "Tag yang mirip sudah ada",
       "suggestedNextWeight": "Beban berikutnya yang disarankan: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Gagal memperbarui tabel. Pastikan file tersebut terbuka di editor.",
       "targetAchieved": "Target tercapai!",
       "timerElementsNotInitialized": "Elemen timer belum diinisialisasi",
-      "timerUpdateFailed": "Gagal memperbarui timer. Pastikan file tersebut terbuka di dalam editor.",
       "validationFillAll": "Mohon isi semua kolom dengan nilai yang valid.",
       "validMissingField": "Bidang wajib tidak ada: {field}",
       "validMustBeNumber": "{field} harus berupa angka valid",
@@ -636,8 +634,7 @@
       "timerUpdated": "Timer telah diperbarui dengan sukses!",
       "validChooseExercise": "Pilih latihan",
       "validationCombinedMode": "Untuk jenis 'latihan + sesi latihan', Anda harus mengisi kedua kolom!",
-      "dashboardUpdated": "Dasbor berhasil diperbarui!",
-      "dashboardUpdateFailed": "Gagal memperbarui dasbor. Pastikan file terbuka di editor."
+      "dashboardUpdated": "Dasbor berhasil diperbarui!"
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",

@@ -13,6 +13,8 @@ import { t } from "@app/i18n";
 
 export interface EditButtonsOptions<P> {
   schema: CodeBlockSchema<P>;
+  /** The note the block is written in (`ctx.sourcePath`) */
+  path: string;
   /** How to find the block; null when it can't be found (update fails) */
   match: CodeBlockMatch | null;
   collectParams: () => P;
@@ -56,12 +58,13 @@ export function createEditButtons<P extends { id?: string }>(
     }
 
     const changes = changedParams(formAtOpen, options.collectParams());
-    // A block found by its line gets an id, so the next edit finds it by id
-    if ("line" in match) changes.id = generateCodeBlockId();
+    // A block found by its body gets an id, so the next edit finds it by id
+    if ("body" in match) changes.id = generateCodeBlockId();
 
     void CodeBlockEditorService.patchCodeBlock(
       modal.app,
       options.schema,
+      options.path,
       match,
       changes,
     ).then((success) => {

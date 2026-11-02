@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} lignende tag(e) fundet",
       "muscleTagSimilarWarning": "Der findes allerede et lignende tag",
       "suggestedNextWeight": "Foreslået næste vægt: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Opdatering af tabellen mislykkedes. Sørg for, at filen er åben i redigeringsprogrammet.",
       "targetAchieved": "Mål nået!",
       "timerElementsNotInitialized": "Timerelementer er ikke initialiseret",
-      "timerUpdateFailed": "Kunne ikke opdatere timeren. Sørg for, at filen er åben i redigeringsprogrammet.",
       "validationFillAll": "Udfyld alle felter med gyldige værdier",
       "validMissingField": "Obligatorisk felt mangler: {field}",
       "validMustBeNumber": "{field} skal være et gyldigt tal",
@@ -636,8 +634,7 @@
       "timerUpdated": "Timer er opdateret med succes!",
       "validChooseExercise": "Vælg en øvelse",
       "validationCombinedMode": "For \"øvelse + træning\"-typen skal du udfylde begge felter!",
-      "dashboardUpdated": "Dashboardet er opdateret!",
-      "dashboardUpdateFailed": "Dashboardet kunne ikke opdateres. Sørg for, at filen er åben i editoren."
+      "dashboardUpdated": "Dashboardet er opdateret!"
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",

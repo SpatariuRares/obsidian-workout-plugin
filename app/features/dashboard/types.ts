@@ -1,3 +1,4 @@
+import type { CodeBlockMatch } from "@app/services/editor/CodeBlockEditorService";
 import type { BlockParams } from "@app/services/codeblocks/CodeBlockSchema";
 import type { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 /** The widgets a dashboard can show, in their default order */
@@ -26,8 +27,10 @@ export type EmbeddedDashboardParams = BlockParams<
 export interface DashboardViewState {
   /** The protocol chosen in the distribution widget */
   activeProtocolFilter?: string | null;
-  /** The line of the block's opening fence, read when needed (the note may have changed) */
-  fenceLine?: () => number | undefined;
+  /** The note the block is written in, for the edit menu */
+  sourcePath?: string;
+  /** How to find the block when it has no id, read when the menu is used */
+  matchWithoutId?: () => CodeBlockMatch;
 }
 
 /**

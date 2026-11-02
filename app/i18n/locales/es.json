@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "Se encontraron {count} etiquetas similares",
       "muscleTagSimilarWarning": "Ya existe una etiqueta similar",
       "suggestedNextWeight": "Siguiente peso sugerido: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "No se pudo actualizar la tabla. Asegúrate de que el archivo esté abierto en el editor.",
       "targetAchieved": "¡Objetivo alcanzado!",
       "timerElementsNotInitialized": "Elementos del temporizador no inicializados",
-      "timerUpdateFailed": "No se pudo actualizar el temporizador. Asegúrate de que el archivo esté abierto en el editor.",
       "validationFillAll": "Rellena todos los campos con valores válidos",
       "validMissingField": "Campo obligatorio faltante: {field}",
       "validMustBeNumber": "{field} debe ser un número válido",
@@ -636,8 +634,7 @@
       "timerUpdated": "¡El temporizador se ha actualizado correctamente!",
       "validChooseExercise": "Elige un ejercicio",
       "validationCombinedMode": "Para el tipo 'ejercicio + entrenamiento', completa ambos campos.",
-      "dashboardUpdated": "¡Panel actualizado correctamente!",
-      "dashboardUpdateFailed": "No se pudo actualizar el panel. Asegúrate de que el archivo esté abierto en el editor."
+      "dashboardUpdated": "¡Panel actualizado correctamente!"
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Etiqueta:",

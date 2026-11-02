@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { App } from "obsidian";
+import { App, TFile } from "obsidian";
 
 jest.mock("obsidian", () => {
   const actual = jest.requireActual("obsidian");
@@ -39,6 +39,8 @@ function openModal(note = NOTE) {
       getActiveViewOfType: () => ({ file: { path: "Leg day.md", basename: "Leg day" } }),
     },
     vault: {
+      getAbstractFileByPath: (path: string) =>
+        Object.assign(new TFile(), { path }),
       process: jest.fn(async (_file: unknown, fn: (c: string) => string) => {
         state.content = fn(state.content);
       }),
@@ -58,7 +60,7 @@ function openModal(note = NOTE) {
   } as unknown as WorkoutPluginContext;
 
   const params = timerBlock.parse(note.split("\n").slice(1, -1).join("\n")).params;
-  const modal = new EditTimerModal(app, plugin, params);
+  const modal = new EditTimerModal(app, plugin, params, "Leg day.md");
   const contentEl = createObsidianContainer();
   Object.assign(modal, { contentEl, close: jest.fn() });
   modal.onOpen();

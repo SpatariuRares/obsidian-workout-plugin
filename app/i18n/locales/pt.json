@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} tags semelhantes encontradas",
       "muscleTagSimilarWarning": "Já existe uma tag semelhante",
       "suggestedNextWeight": "Próximo peso sugerido: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Não foi possível atualizar a tabela. Certifique-se de que o ficheiro está aberto no editor.",
       "targetAchieved": "Objetivo alcançado!",
       "timerElementsNotInitialized": "Os elementos do temporizador não foram inicializados",
-      "timerUpdateFailed": "Não foi possível atualizar o temporizador. Certifique-se de que o ficheiro está aberto no editor.",
       "validationFillAll": "Por favor, preencha todos os campos com valores válidos.",
       "validMissingField": "Campo obrigatório ausente: {field}",
       "validMustBeNumber": "{field} deve ser um número válido",
@@ -636,8 +634,7 @@
       "timerUpdated": "Temporizador atualizado com sucesso!",
       "validChooseExercise": "Selecione um exercício",
       "validationCombinedMode": "Para o tipo 'exercício + treino', tem de preencher ambos os campos!",
-      "dashboardUpdated": "Painel atualizado com sucesso!",
-      "dashboardUpdateFailed": "Não foi possível atualizar o painel. Certifique-se de que o ficheiro está aberto no editor."
+      "dashboardUpdated": "Painel atualizado com sucesso!"
     },
     "parameterKey": "Chave:",
     "parameterLabel": "Rótulo:",

@@ -336,7 +336,7 @@ describe("CodeBlockProcessorService", () => {
         el,
         mockPlugin,
         undefined,
-        "[[path]]",
+        "test/path.md",
       );
     });
 
@@ -570,7 +570,7 @@ describe("CodeBlockProcessorService", () => {
         expect.any(HTMLElement),
         [],
         expect.any(Object),
-        "[[path]]",
+        "test/path.md",
       );
     });
 
@@ -589,7 +589,7 @@ describe("CodeBlockProcessorService", () => {
         expect.any(HTMLElement),
         [],
         expect.any(Object),
-        "[[path]]",
+        "test/path.md",
       );
     });
   });

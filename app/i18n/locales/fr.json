@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} tag(s) similaire(s) trouvé(s)",
       "muscleTagSimilarWarning": "Un tag similaire existe déjà",
       "suggestedNextWeight": "Prochain poids suggéré : {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Échec de la mise à jour du tableau. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "targetAchieved": "Objectif atteint !",
       "timerElementsNotInitialized": "Éléments du minuteur non initialisés",
-      "timerUpdateFailed": "Échec de la mise à jour du minuteur. Assurez-vous que le fichier est ouvert dans l'éditeur.",
       "validationFillAll": "Veuillez remplir tous les champs avec des valeurs valides.",
       "validMissingField": "Champ obligatoire manquant : {field}",
       "validMustBeNumber": "{field} doit être un nombre valide",
@@ -636,8 +634,7 @@
       "timerUpdated": "Le minuteur a été mis à jour avec succès !",
       "validChooseExercise": "Sélectionner un exercice",
       "validationCombinedMode": "Pour le type « exercice + entraînement », vous devez remplir les deux champs.",
-      "dashboardUpdated": "Tableau de bord mis à jour avec succès !",
-      "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord. Vérifiez que le fichier est ouvert dans l'éditeur."
+      "dashboardUpdated": "Tableau de bord mis à jour avec succès !"
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",

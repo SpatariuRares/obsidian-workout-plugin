@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} vergelijkbare label(s) gevonden",
       "muscleTagSimilarWarning": "Er bestaat al een vergelijkbaar label",
       "suggestedNextWeight": "Voorgesteld volgend gewicht: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Update van de tabel is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "targetAchieved": "Doel bereikt!",
       "timerElementsNotInitialized": "Timer-elementen zijn niet geïnitialiseerd",
-      "timerUpdateFailed": "Update van de timer is mislukt. Zorg ervoor dat het bestand openstaat in de editor.",
       "validationFillAll": "Vul alle velden in met geldige waarden.",
       "validMissingField": "Verplicht veld ontbreekt: {field}",
       "validMustBeNumber": "{field} moet een geldig getal zijn",
@@ -636,8 +634,7 @@
       "timerUpdated": "Timer is succesvol bijgewerkt!",
       "validChooseExercise": "Kies een oefening",
       "validationCombinedMode": "Voor het type 'oefening + training' moet je beide velden invullen!",
-      "dashboardUpdated": "Dashboard succesvol bijgewerkt!",
-      "dashboardUpdateFailed": "Dashboard bijwerken mislukt. Zorg dat het bestand in de editor geopend is."
+      "dashboardUpdated": "Dashboard succesvol bijgewerkt!"
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",

@@ -22,6 +22,16 @@ describe("addMissingBlockIds", () => {
     );
   });
 
+  it("should give an id to a block inside a callout, inside the callout", () => {
+    const result = addMissingBlockIds(
+      note("> [!tip]", "> ```workout-dashboard", "> dateRange: 30", "> ```"),
+    );
+
+    expect(result.content).toBe(
+      note("> [!tip]", "> ```workout-dashboard", "> id: id1", "> dateRange: 30", "> ```"),
+    );
+  });
+
   it("should give an id to log and timer blocks that have none", () => {
     const result = addMissingBlockIds(
       note(

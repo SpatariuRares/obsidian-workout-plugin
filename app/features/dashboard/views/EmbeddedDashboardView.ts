@@ -204,10 +204,13 @@ export class EmbeddedDashboardView extends BaseView {
         cls: "workout-dashboard-title",
       });
     }
-    DashboardActionSelect.render(headerEl, this.plugin.app, params, {
-      fenceLine: state.fenceLine,
-      noteWidth: () => dashboardEl.getBoundingClientRect().width,
-    });
+    if (state.sourcePath !== undefined) {
+      DashboardActionSelect.render(headerEl, this.plugin.app, params, {
+        sourcePath: state.sourcePath,
+        matchWithoutId: state.matchWithoutId,
+        noteWidth: () => dashboardEl.getBoundingClientRect().width,
+      });
+    }
 
     // Grid layout: each widget in its cells; a broken grid shows why instead
     const placements =

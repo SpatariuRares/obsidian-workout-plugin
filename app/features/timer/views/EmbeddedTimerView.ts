@@ -36,9 +36,11 @@ export class EmbeddedTimerView extends BaseView {
     });
   }
 
+  /** @param sourcePath - The note the block is written in, for its edit menu */
   createTimer(
     container: HTMLElement,
     params: EmbeddedTimerParams,
+    sourcePath: string,
   ): void {
     try {
       // Resolve parameters from preset and defaults
@@ -83,7 +85,7 @@ export class EmbeddedTimerView extends BaseView {
 
       this.timerCore.setSoundEnabled(resolvedParams.sound !== false);
 
-      this.renderTimerContent(container, resolvedParams, params);
+      this.renderTimerContent(container, resolvedParams, params, sourcePath);
 
       // autoStart fires once per timer, not on every re-render
       if (resolvedParams.autoStart && !this.autoStarted) {
@@ -115,6 +117,7 @@ export class EmbeddedTimerView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTimerParams,
     originalParams: EmbeddedTimerParams,
+    sourcePath: string,
   ): void {
     container.empty();
 
@@ -169,6 +172,7 @@ export class EmbeddedTimerView extends BaseView {
       app: this.plugin.app,
       plugin: this.plugin,
       params: originalParams,
+      sourcePath,
     });
 
     // Draw on this rendering too (the note may also be open in another view)

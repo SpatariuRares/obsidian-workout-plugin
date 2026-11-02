@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "Nalezeno podobných štítků: {count}",
       "muscleTagSimilarWarning": "Podobný štítek už existuje",
       "suggestedNextWeight": "Navrhovaná další váha: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "Tabulku se nepodařilo aktualizovat. Ujistěte se, že je soubor otevřený v editoru.",
       "targetAchieved": "Cíl splněn!",
       "timerElementsNotInitialized": "Prvky časovače nebyly inicializovány",
-      "timerUpdateFailed": "Časovač se nepodařilo aktualizovat. Ujistěte se, že je soubor otevřený v editoru.",
       "validationFillAll": "Prosím, vyplňte všechna pole platnými hodnotami",
       "validMissingField": "Chybí povinné pole: {field}",
       "validMustBeNumber": "{field} musí být platné číslo",
@@ -636,8 +634,7 @@
       "timerUpdated": "Časovač byl úspěšně aktualizován!",
       "validChooseExercise": "Vyberte si cvičení",
       "validationCombinedMode": "Pro typ „cvičení + trénink“ musíte vyplnit obě pole!",
-      "dashboardUpdated": "Dashboard byl úspěšně aktualizován!",
-      "dashboardUpdateFailed": "Dashboard se nepodařilo aktualizovat. Ujistěte se, že je soubor otevřen v editoru."
+      "dashboardUpdated": "Dashboard byl úspěšně aktualizován!"
     },
     "parameterKey": "Klíč:",
     "parameterLabel": "Název:",

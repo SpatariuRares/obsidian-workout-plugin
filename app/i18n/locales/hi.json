@@ -613,10 +613,8 @@
       "muscleTagSimilarFound": "{count} मिलते-जुलते टैग मिले",
       "muscleTagSimilarWarning": "मिलता-जुलता टैग पहले से मौजूद है",
       "suggestedNextWeight": "सुझाया गया अगला वजन: {suggestedWeight}{weightUnit}",
-      "tableUpdateFailed": "तालिका अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "targetAchieved": "लक्ष्य पूरा!",
       "timerElementsNotInitialized": "टाइमर के तत्व अभी तक शुरू नहीं किए गए हैं",
-      "timerUpdateFailed": "टाइमर को अपडेट करने में विफल। सुनिश्चित करें कि फ़ाइल संपादक में खुली है।",
       "validationFillAll": "कृपया सभी फ़ील्ड्स में वैध मान भरें।",
       "validMissingField": "आवश्यक फ़ील्ड गायब है: {field}",
       "validMustBeNumber": "{field} एक मान्य संख्या होनी चाहिए",
@@ -636,8 +634,7 @@
       "timerUpdated": "टाइमर सफलतापूर्वक अपडेट हो गया!",
       "validChooseExercise": "एक व्यायाम चुनें",
       "validationCombinedMode": "'व्यायाम + वर्कआउट' प्रकार के लिए, आपको दोनों फ़ील्ड भरना होगा!",
-      "dashboardUpdated": "डैशबोर्ड सफलतापूर्वक अपडेट हुआ!",
-      "dashboardUpdateFailed": "डैशबोर्ड अपडेट नहीं हो सका। सुनिश्चित करें कि फ़ाइल एडिटर में खुली हो।"
+      "dashboardUpdated": "डैशबोर्ड सफलतापूर्वक अपडेट हुआ!"
     },
     "parameterKey": "कुंजी:",
     "parameterLabel": "लेबल:",

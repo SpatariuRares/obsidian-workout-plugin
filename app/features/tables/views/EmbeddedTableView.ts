@@ -18,6 +18,7 @@ import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorServ
 import { Button } from "@app/components";
 import { TrainingHistory } from "@app/services/history/TrainingHistory";
 import { t } from "@app/i18n";
+import { PathUtils } from "@app/utils/PathUtils";
 
 /**
  * TableRenderChild extends MarkdownRenderChild to manage event listener lifecycle
@@ -58,23 +59,23 @@ export class EmbeddedTableView extends BaseView {
   }
 
   /**
-   * @param pageLink - Wiki link to the note containing the code block,
-   * used as the origin of logs added from this table
+   * @param sourcePath - The note containing the code block: the origin of
+   * logs added from this table, and where its edit menu writes
    */
   async createTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    pageLink = "",
+    sourcePath = "",
   ): Promise<void> {
-    await this.renderTable(container, logData, params, pageLink);
+    await this.renderTable(container, logData, params, sourcePath);
   }
 
   private async renderTable(
     container: HTMLElement,
     logData: WorkoutLogData[],
     params: EmbeddedTableParams,
-    pageLink: string,
+    sourcePath: string,
   ): Promise<void> {
     try {
       const loadingDiv = this.showLoadingIndicator(container);
@@ -84,7 +85,7 @@ export class EmbeddedTableView extends BaseView {
           container,
           logData,
           params.exercise,
-          pageLink || undefined,
+          sourcePath || undefined,
           params.id,
         )
       ) {
@@ -102,7 +103,7 @@ export class EmbeddedTableView extends BaseView {
       if (filterResult.filteredData.length === 0) {
         loadingDiv.remove();
         if (params.exercise) {
-          this.renderEmptyExerciseTable(container, params, logData, pageLink);
+          this.renderEmptyExerciseTable(container, params, logData, sourcePath);
           return;
         }
         this.handleNoFilteredData(
@@ -125,7 +126,7 @@ export class EmbeddedTableView extends BaseView {
       this.renderTableContentOptimized(
         container,
         { ...tableData, params },
-        pageLink,
+        sourcePath,
       );
     } catch (error) {
       const errorObj =
@@ -137,7 +138,7 @@ export class EmbeddedTableView extends BaseView {
   private renderTableContentOptimized(
     container: HTMLElement,
     tableData: TableData,
-    pageLink: string,
+    sourcePath: string,
   ): void {
     const { headers, rows, filterResult, params } = tableData;
 
@@ -159,7 +160,7 @@ export class EmbeddedTableView extends BaseView {
         params,
         filterResult,
         signal,
-        pageLink,
+        sourcePath,
       );
     }
 
@@ -184,7 +185,7 @@ export class EmbeddedTableView extends BaseView {
         container,
         signal,
         this.plugin.settings.weightUnit,
-        pageLink,
+        sourcePath,
       );
     }
 
@@ -223,7 +224,7 @@ export class EmbeddedTableView extends BaseView {
     container: HTMLElement,
     params: EmbeddedTableParams,
     logData: WorkoutLogData[],
-    pageLink: string,
+    sourcePath: string,
   ): void {
     this.unloadRenderChild(container);
     container.empty();
@@ -246,7 +247,7 @@ export class EmbeddedTableView extends BaseView {
         params,
         { filteredData: logData },
         renderChild.getSignal(),
-        pageLink,
+        sourcePath,
         firstLog,
       );
     }
@@ -265,10 +266,11 @@ export class EmbeddedTableView extends BaseView {
     params: EmbeddedTableParams,
     filterResult: { filteredData: WorkoutLogData[] },
     signal: AbortSignal,
-    pageLink: string,
+    sourcePath: string,
     firstLog = false,
   ): void {
-    const currentPageLink = pageLink || this.getActivePageLink();
+    const currentPageLink =
+      PathUtils.toWikiLink(sourcePath) || this.getActivePageLink();
     const exerciseName =
       params.exercise || t("modal.sections.workout");
 
@@ -299,6 +301,7 @@ export class EmbeddedTableView extends BaseView {
           app: this.plugin.app,
           plugin: this.plugin,
           params,
+          sourcePath,
         },
         signal,
       );
@@ -315,7 +318,7 @@ export class EmbeddedTableView extends BaseView {
     tableContainer: HTMLElement,
     signal: AbortSignal,
     weightUnit: string,
-    pageLink: string,
+    sourcePath: string,
   ): void {
     const { targetWeight, targetReps, exercise } = params;
 
@@ -353,6 +356,7 @@ export class EmbeddedTableView extends BaseView {
           const success = await CodeBlockEditorService.patchCodeBlock(
             this.plugin.app,
             tableBlock,
+            sourcePath,
             params.id ? { id: params.id } : { exercise },
             { targetWeight: newWeight },
           );
@@ -360,7 +364,7 @@ export class EmbeddedTableView extends BaseView {
             await this.refreshTable(
               tableContainer,
               { ...params, targetWeight: newWeight },
-              pageLink,
+              sourcePath,
             );
           }
         },
@@ -372,11 +376,11 @@ export class EmbeddedTableView extends BaseView {
   public async refreshTable(
     container: HTMLElement,
     params: EmbeddedTableParams,
-    pageLink = "",
+    sourcePath = "",
   ): Promise<void> {
     try {
       const logData = await this.plugin.getWorkoutLogData();
-      await this.renderTable(container, logData, params, pageLink);
+      await this.renderTable(container, logData, params, sourcePath);
     } catch (error) {
       this.handleError(
         container,

@@ -17,6 +17,8 @@ export interface TimerActionSelectProps {
   app: App;
   plugin: WorkoutPluginContext;
   params: EmbeddedTimerParams;
+  /** The note the block is written in */
+  sourcePath: string;
 }
 
 export class TimerActionSelect {
@@ -29,7 +31,7 @@ export class TimerActionSelect {
     props: TimerActionSelectProps,
     signal?: AbortSignal,
   ): HTMLElement | null {
-    const { app, plugin, params } = props;
+    const { app, plugin, params, sourcePath } = props;
 
     if (!params.id) {
       return null;
@@ -55,6 +57,7 @@ export class TimerActionSelect {
             app,
             plugin,
             params,
+            sourcePath,
           );
           modal.open();
         }

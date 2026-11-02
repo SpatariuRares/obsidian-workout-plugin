@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { App } from "obsidian";
+import { App, TFile } from "obsidian";
 
 jest.mock("obsidian", () => {
   const actual = jest.requireActual("obsidian");
@@ -39,6 +39,8 @@ function fakeApp(content = "") {
       }),
     },
     vault: {
+      getAbstractFileByPath: (path: string) =>
+        Object.assign(new TFile(), { path }),
       process: jest.fn(
         async (_file: unknown, fn: (c: string) => string) => {
           state.content = fn(state.content);
@@ -178,7 +180,13 @@ describe("EditDashboardModal", () => {
     const modal = new EditDashboardModal(
       app,
       dashboardBlock.parse(body).params,
-      { fenceLine },
+      {
+        sourcePath: "Stats.md",
+        matchWithoutId:
+          fenceLine === undefined
+            ? undefined
+            : { body, lines: { start: fenceLine, end } },
+      },
     );
     return {
       state,
@@ -221,7 +229,7 @@ describe("EditDashboardModal", () => {
     );
   });
 
-  it("finds a block written without an id by its line and gives it one", async () => {
+  it("finds a block written without an id by its body and lines and gives it one", async () => {
     const withoutId = note(
       "```workout-dashboard",
       "dateRange: 30",
@@ -364,7 +372,7 @@ describe("dashboard modal, grid layout", () => {
         GRID.split("\n").slice(1, -1).join("\n"),
       ).params;
       const f = gridForm(
-        new EditDashboardModal(app, params, { noteWidth: 600 }),
+        new EditDashboardModal(app, params, { sourcePath: "Stats.md", noteWidth: 600 }),
         t("modal.buttons.updateDashboard"),
       );
       return { state, ...f };
@@ -452,7 +460,7 @@ describe("dashboard modal, grid layout", () => {
       ).params;
       // 300px fit one column (a phone): the grid was made for two
       const f = gridForm(
-        new EditDashboardModal(app, params, { noteWidth: 300 }),
+        new EditDashboardModal(app, params, { sourcePath: "Stats.md", noteWidth: 300 }),
         t("modal.buttons.updateDashboard"),
       );
 
@@ -480,7 +488,7 @@ describe("dashboard modal, grid layout", () => {
       ).params;
       // 1300px fit four columns, the grid was saved for two
       const f = gridForm(
-        new EditDashboardModal(app, params, { noteWidth: 1300 }),
+        new EditDashboardModal(app, params, { sourcePath: "Stats.md", noteWidth: 1300 }),
         t("modal.buttons.updateDashboard"),
       );
       const title = f.contentEl.querySelector<HTMLInputElement>(

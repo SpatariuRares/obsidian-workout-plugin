@@ -1,11 +1,9 @@
-import { App, Notice } from "obsidian";
+import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTimerModal } from "@app/features/timer/modals/InsertTimerModal";
 import { EmbeddedTimerParams } from "@app/features/timer/types";
-import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
-import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
 import { timerBlock } from "@app/features/timer/timerBlock";
-import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
+import { createEditButtons } from "@app/features/modals/base/components/createEditButtons";
 import { Chip } from "@app/components/atoms/Chip";
 import { t } from "@app/i18n";
 
@@ -18,8 +16,6 @@ import { t } from "@app/i18n";
  */
 export class EditTimerModal extends InsertTimerModal {
   private readonly initialParams: EmbeddedTimerParams;
-  /** The form as it opened, to tell which parameters the user changed */
-  private formAtOpen: EmbeddedTimerParams = {};
 
   constructor(
     app: App,
@@ -70,7 +66,6 @@ export class EditTimerModal extends InsertTimerModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
-    this.formAtOpen = this.collectParams();
   }
 
   /**
@@ -119,51 +114,15 @@ export class EditTimerModal extends InsertTimerModal {
     }
   }
 
-  /**
-   * Override button creation to replace code block instead of inserting
-   */
   protected createButtons(container: HTMLElement): void {
-    const updateBtn = Button.create(container, {
-      text: this.getButtonText(),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: this.getButtonText(),
-    });
-
-    const cancelBtn = Button.create(container, {
-      text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("modal.buttons.cancel"),
-    });
-
-    Button.onClick(cancelBtn, () => this.close());
-
-    Button.onClick(updateBtn, () => {
-      const id = this.initialParams.id;
-
-      if (!id) {
-        new Notice(t("modal.notices.timerUpdateFailed"));
-        this.close();
-        return;
-      }
-
-      // Only what the user changed: autoStart, workout, comments and the
-      // line order stay as they are in the note
-      const changes = changedParams(this.formAtOpen, this.collectParams());
-
-      void CodeBlockEditorService.patchCodeBlock(
-        this.app,
-        timerBlock,
-        { id },
-        changes,
-      ).then((success) => {
-        if (success) {
-          new Notice(this.getSuccessMessage());
-        } else {
-          new Notice(t("modal.notices.timerUpdateFailed"));
-        }
-      });
-
-      this.close();
+    const { id } = this.initialParams;
+    createEditButtons(this, container, {
+      schema: timerBlock,
+      match: id ? { id } : null,
+      collectParams: () => this.collectParams(),
+      buttonText: this.getButtonText(),
+      successMessage: this.getSuccessMessage(),
+      failureMessage: t("modal.notices.timerUpdateFailed"),
     });
   }
 }

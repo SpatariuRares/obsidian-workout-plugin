@@ -1,14 +1,12 @@
-import { App, Notice } from "obsidian";
+import { App } from "obsidian";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
 import { InsertTableModal } from "@app/features/tables/modals/InsertTableModal";
 import {
   EmbeddedTableParams,
   TABLE_TYPE,
 } from "@app/features/tables/types";
-import { CodeBlockEditorService } from "@app/services/editor/CodeBlockEditorService";
-import { changedParams } from "@app/services/codeblocks/CodeBlockSchema";
 import { tableBlock } from "@app/features/tables/tableBlock";
-import { Button, BUTTONVARIANT } from "@app/components/atoms/Button";
+import { createEditButtons } from "@app/features/modals/base/components/createEditButtons";
 import { t } from "@app/i18n";
 
 /**
@@ -20,8 +18,6 @@ import { t } from "@app/i18n";
  */
 export class EditTableModal extends InsertTableModal {
   private readonly initialParams: EmbeddedTableParams;
-  /** The form as it opened, to tell which parameters the user changed */
-  private formAtOpen: EmbeddedTableParams = {};
 
   constructor(
     app: App,
@@ -56,7 +52,6 @@ export class EditTableModal extends InsertTableModal {
   ): void {
     super.createConfigurationSections(container);
     this.prefillFields();
-    this.formAtOpen = this.collectParams();
   }
 
   /**
@@ -123,51 +118,15 @@ export class EditTableModal extends InsertTableModal {
     return TABLE_TYPE.ALL;
   }
 
-  /**
-   * Override button creation to replace code block instead of inserting
-   */
   protected createButtons(container: HTMLElement): void {
-    const updateBtn = Button.create(container, {
-      text: this.getButtonText(),
-      variant: BUTTONVARIANT.PRIMARY,
-      ariaLabel: this.getButtonText(),
-    });
-
-    const cancelBtn = Button.create(container, {
-      text: t("modal.buttons.cancel"),
-      variant: BUTTONVARIANT.SECONDARY,
-      ariaLabel: t("modal.buttons.cancel"),
-    });
-
-    Button.onClick(cancelBtn, () => this.close());
-
-    Button.onClick(updateBtn, () => {
-      const id = this.initialParams.id;
-
-      if (!id) {
-        new Notice(t("modal.notices.tableUpdateFailed"));
-        this.close();
-        return;
-      }
-
-      // Only what the user changed: parameters the form doesn't show,
-      // comments and the line order stay as they are in the note
-      const changes = changedParams(this.formAtOpen, this.collectParams());
-
-      void CodeBlockEditorService.patchCodeBlock(
-        this.app,
-        tableBlock,
-        { id },
-        changes,
-      ).then((success) => {
-        if (success) {
-          new Notice(this.getSuccessMessage());
-        } else {
-          new Notice(t("modal.notices.tableUpdateFailed"));
-        }
-      });
-
-      this.close();
+    const { id } = this.initialParams;
+    createEditButtons(this, container, {
+      schema: tableBlock,
+      match: id ? { id } : null,
+      collectParams: () => this.collectParams(),
+      buttonText: this.getButtonText(),
+      successMessage: this.getSuccessMessage(),
+      failureMessage: t("modal.notices.tableUpdateFailed"),
     });
   }
 }

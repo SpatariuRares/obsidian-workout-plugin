@@ -400,7 +400,7 @@ Source of truth: one schema per block, built with `defineCodeBlock` (`app/servic
 
 - **Reading**: `CodeBlockProcessorService` calls `schema.parse(source)`. Invalid values show an error in place of the block; views get the params with `schema.defaults` applied (the timer applies them itself, under the preset).
 - **Writing**: insert modals and example generators call `schema.serialize(params)`. Never build a block with string concatenation.
-- **Editing**: edit modals snapshot the form when it opens (`collectParams()`), then `CodeBlockEditorService.patchCodeBlock(app, schema, { id }, changedParams(before, after))`. Only changed lines are rewritten; comments, order and parameters the form doesn't show stay as typed.
+- **Editing**: edit modals draw their buttons with `createEditButtons(modal, container, { schema, match, collectParams, ... })` (`app/features/modals/base/components/createEditButtons.ts`): it snapshots the form when the buttons are drawn (after the prefill), and Update calls `CodeBlockEditorService.patchCodeBlock(app, schema, match, changedParams(before, after))`. Only changed lines are rewritten; comments, order and parameters the form doesn't show stay as typed. A block found by its line gets an `id` on save.
 - **Adding a parameter**: add it to the schema (with default and limits), read it in the view, and if a modal sets it, return it from `collectParams()`. Then update the examples below.
 
 #### workout-chart

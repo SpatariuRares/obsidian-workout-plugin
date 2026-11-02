@@ -1,15 +1,31 @@
+import { Platform } from "obsidian";
 import { WorkoutLogData } from "@app/types/WorkoutLogData";
 import type { WorkoutPluginContext } from "@app/types/PluginPorts";
-import { BaseView } from "@app/features/common/views/BaseView";
+import {
+  BaseView,
+  renderInvalidParams,
+} from "@app/features/common/views/BaseView";
 import {
   DASHBOARD_WIDGETS,
   DashboardWidgetContext,
   resolveWidgets,
 } from "@app/features/dashboard/widgets/dashboardWidgets";
 import {
+  DashboardWidgetId,
   EmbeddedDashboardParams,
   ProtocolFilterCallback,
 } from "@app/features/dashboard/types";
+import {
+  cellProps,
+  columnsForWidth,
+  gridColumns,
+  gridPlacements,
+  gridProblemMessages,
+} from "@app/features/dashboard/layout/dashboardGrid";
+import {
+  fitColumns,
+  Placement,
+} from "@app/features/dashboard/layout/gridLayout";
 import { DashboardActionSelect } from "@app/features/dashboard/ui/DashboardActionSelect";
 import { getElementScopedId } from "@app/utils/IdUtils";
 import { VIEW_TYPES } from "@app/types/ViewTypes";
@@ -28,10 +44,14 @@ import {
  * Supports protocol filtering via click interaction on pie chart
  */
 export class EmbeddedDashboardView extends BaseView {
-  /** ResizeObserver for bento layout recalculation */
-  private resizeObserver: ResizeObserver | null = null;
-  /** Debounce timer for resize recalculation */
-  private resizeTimer: number | null = null;
+  /**
+   * One resize watcher per dashboard (keyed by its code block element), so
+   * rendering one dashboard never stops another from following its width
+   */
+  private resizeWatchers = new Map<
+    HTMLElement,
+    { observer: ResizeObserver; timer: number | null }
+  >();
 
   constructor(plugin: WorkoutPluginContext) {
     super(plugin);
@@ -43,8 +63,10 @@ export class EmbeddedDashboardView extends BaseView {
    */
   public cleanup(): void {
     try {
-      // Clean up resize observer
-      this.destroyResizeObserver();
+      // Clean up resize observers
+      for (const container of [...this.resizeWatchers.keys()]) {
+        this.stopWatching(container);
+      }
     } catch {
       return;
     }
@@ -177,11 +199,39 @@ export class EmbeddedDashboardView extends BaseView {
         cls: "workout-dashboard-title",
       });
     }
-    DashboardActionSelect.render(headerEl, this.plugin.app, params);
+    DashboardActionSelect.render(
+      headerEl,
+      this.plugin.app,
+      params,
+      () => dashboardEl.getBoundingClientRect().width,
+    );
+
+    // Grid layout: each widget in its cells; a broken grid shows why instead
+    const placements =
+      params.layout === "grid" ? gridPlacements(params) : null;
+    const savedColumns =
+      placements && gridColumns(params, placements);
+    if (placements && savedColumns) {
+      const problems = gridProblemMessages(placements, savedColumns);
+      if (problems.length > 0) {
+        renderInvalidParams(dashboardEl, problems);
+        return;
+      }
+    }
+
+    if (placements && placements.length === 0) {
+      dashboardEl.createEl("p", {
+        text: t("dashboard.grid.empty"),
+        cls: "setting-item-description",
+      });
+      return;
+    }
 
     // Create dashboard grid layout
     const gridEl = dashboardEl.createDiv({
-      cls: "workout-dashboard-grid",
+      cls: placements
+        ? "workout-dashboard-grid is-inventory"
+        : "workout-dashboard-grid",
     });
 
     // Apply protocol filter if set (for widgets that support it)
@@ -201,48 +251,94 @@ export class EmbeddedDashboardView extends BaseView {
       history: async () =>
         (await this.plugin.getWorkoutLogData()) || [],
     };
-    for (const id of resolveWidgets(params)) {
+    const ids = placements
+      ? placements.map((p) => p.id as DashboardWidgetId)
+      : resolveWidgets(params);
+    for (const id of ids) {
+      const drawn = gridEl.children.length;
       await DASHBOARD_WIDGETS[id].render(ctx);
+      // Tag what the widget drew, so the grid can place it
+      for (const el of Array.from(gridEl.children).slice(drawn)) {
+        (el as HTMLElement).dataset.widget = id;
+      }
     }
 
-    // Apply bento layout and observe for resize
-    this.applyBentoLayout(gridEl);
-    this.observeGridResize(gridEl);
+    // Lay the widgets out now and again whenever the width changes
+    const layout =
+      placements && savedColumns
+        ? () => this.applyGridLayout(gridEl, placements, savedColumns)
+        : () => this.applyBentoLayout(gridEl);
+    layout();
+    this.observeGridResize(container, gridEl, layout);
   }
 
   /**
-   * Observes the grid element for size changes and recalculates bento layout.
-   * Debounced to avoid excessive recalculations during smooth resizing.
+   * Places each widget in its cells. The columns follow the dashboard's
+   * width: as saved when they all fit (wider cells when there is room),
+   * otherwise the widgets are packed again in reading order.
    */
-  private observeGridResize(gridEl: HTMLElement): void {
-    this.destroyResizeObserver();
+  private applyGridLayout(
+    gridEl: HTMLElement,
+    placements: Placement[],
+    savedColumns: number,
+  ): void {
+    // Phones always stack, landscape included
+    const available = Platform.isPhone
+      ? 1
+      : columnsForWidth(gridEl.getBoundingClientRect().width, gridEl);
+    const columns = Math.min(available, savedColumns);
+    const fitted = fitColumns(placements, columns);
 
-    let lastWidth = gridEl.getBoundingClientRect().width;
-
-    this.resizeObserver = new ResizeObserver((entries) => {
-      const newWidth = entries[0]?.contentRect.width ?? 0;
-      // Only recalculate when width changes (height changes are from our own span updates)
-      if (Math.abs(newWidth - lastWidth) < 1) return;
-      lastWidth = newWidth;
-
-      if (this.resizeTimer) window.clearTimeout(this.resizeTimer);
-      this.resizeTimer = window.setTimeout(() => {
-        this.applyBentoLayout(gridEl);
-      }, 150);
+    DomUtils.setCssProps(gridEl, {
+      "--workout-grid-columns": String(columns),
     });
-
-    this.resizeObserver.observe(gridEl);
+    for (const el of Array.from(gridEl.children) as HTMLElement[]) {
+      const cell = fitted.find((p) => p.id === el.dataset.widget);
+      if (!cell) continue;
+      DomUtils.setCssProps(el, cellProps(cell));
+    }
   }
 
-  private destroyResizeObserver(): void {
-    if (this.resizeTimer) {
-      window.clearTimeout(this.resizeTimer);
-      this.resizeTimer = null;
-    }
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-      this.resizeObserver = null;
-    }
+  /**
+   * Observes the grid element for size changes and lays it out again.
+   * Debounced to avoid excessive recalculations during smooth resizing.
+   */
+  private observeGridResize(
+    container: HTMLElement,
+    gridEl: HTMLElement,
+    layout: () => void,
+  ): void {
+    // A re-render of this dashboard replaces its watcher
+    this.stopWatching(container);
+
+    let lastWidth = gridEl.getBoundingClientRect().width;
+    const watcher = {
+      timer: null as number | null,
+      observer: new ResizeObserver((entries) => {
+        // The note was closed or the block re-rendered elsewhere
+        if (!gridEl.isConnected) {
+          this.stopWatching(container);
+          return;
+        }
+        const newWidth = entries[0]?.contentRect.width ?? 0;
+        // Only recalculate when width changes (height changes are from our own span updates)
+        if (Math.abs(newWidth - lastWidth) < 1) return;
+        lastWidth = newWidth;
+
+        if (watcher.timer) window.clearTimeout(watcher.timer);
+        watcher.timer = window.setTimeout(layout, 150);
+      }),
+    };
+    watcher.observer.observe(gridEl);
+    this.resizeWatchers.set(container, watcher);
+  }
+
+  private stopWatching(container: HTMLElement): void {
+    const watcher = this.resizeWatchers.get(container);
+    if (!watcher) return;
+    if (watcher.timer) window.clearTimeout(watcher.timer);
+    watcher.observer.disconnect();
+    this.resizeWatchers.delete(container);
   }
 
   /**

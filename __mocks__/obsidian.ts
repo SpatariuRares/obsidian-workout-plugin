@@ -127,8 +127,8 @@ export const setIcon = (el: HTMLElement, icon: string) => {
   el.dataset.icon = icon;
 };
 
-/** Mutable in tests: `Platform.isMobile = true` */
-export const Platform = { isMobile: false };
+/** Mutable in tests: `Platform.isMobile = true`, `Platform.isPhone = true` */
+export const Platform = { isMobile: false, isPhone: false };
 
 type ScopeHandler = (evt: KeyboardEvent, ctx: unknown) => unknown;
 

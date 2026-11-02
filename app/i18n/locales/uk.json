@@ -176,6 +176,31 @@
         "backDominant": "Незбалансованість перед-зад: ваша спина працює набагато більше, ніж передня частина.",
         "frontDominant": "Незбалансованість перед-зад: ваша передня частина працює набагато більше, ніж задня."
       }
+    },
+    "editDashboard": "Редагувати панель",
+    "modal": {
+      "widgets": "Віджети",
+      "widgetsHint": "Позначте віджети, які потрібно показати. Перетягуйте їх за ручку або використовуйте стрілки, щоб змінити порядок.",
+      "moveUp": "Перемістити {widget} вгору",
+      "moveDown": "Перемістити {widget} вниз",
+      "allHistory": "Порожньо: вся історія",
+      "recentWorkoutsLimit": "Кількість тренувань у списку останніх:",
+      "volumeTrendDays": "Кількість днів у тренді обсягу:",
+      "gridColumns": "Колонки:",
+      "layout": "Макет",
+      "layoutGrid": "Сітка",
+      "layoutList": "Список",
+      "stash": "Немає на панелі",
+      "stashEmpty": "Усі віджети на панелі",
+      "tile": "{widget}: колонка {column}, рядок {row}, ширина {width}, висота {height}",
+      "minOneColumn": "Мін. 1 колонка",
+      "minColumns": "Мін. {columns} колонок",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} виходить за межі {columns} колонок сітки",
+      "narrow": "{widget} потребує щонайменше {min} колонок",
+      "overlap": "{widget} перекривається з {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Оновити таймер",
       "decreaseBy": "Зменшити {label} на {increment}",
       "increaseBy": "Збільшити {label} на {increment}",
-      "deleteSet": "Видалити набір"
+      "deleteSet": "Видалити набір",
+      "updateDashboard": "Оновити панель"
     },
     "canvasLayout": "Макет",
     "canvasOptions": "Параметри",
@@ -605,7 +631,9 @@
       "timerInserted": "Таймер успішно встановлено!",
       "timerUpdated": "Час оновлено успішно!",
       "validChooseExercise": "Виберіть вправу",
-      "validationCombinedMode": "Для типу \"тренування + фітнес\" необхідно заповнити обидва поля!"
+      "validationCombinedMode": "Для типу \"тренування + фітнес\" необхідно заповнити обидва поля!",
+      "dashboardUpdated": "Панель успішно оновлено!",
+      "dashboardUpdateFailed": "Не вдалося оновити панель. Переконайтеся, що файл відкрито в редакторі."
     },
     "parameterKey": "Ключ:",
     "parameterLabel": "Мітка:",
@@ -695,7 +723,8 @@
       "insertDuration": "Додати тривалість тренування",
       "insertTable": "Додати таблицю журналу тренувань",
       "insertTimer": "Додати таймер для тренування",
-      "muscleTagManager": "Керувати тегами м'язів"
+      "muscleTagManager": "Керувати тегами м'язів",
+      "editDashboard": "Редагувати панель"
     },
     "workout": "Тренування (необов'язково):",
     "workoutFile": "Файл тренування:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} має бути {min} або більше, але воно {value}",
       "outOfRange": "{key} має бути в межах від {min} до {max}, але воно є {value}",
       "notABoolean": "{key} має бути значенням \"true\" або \"false\", але воно \"{value}\"",
-      "notOneOf": "{key} має бути одним із {allowed}, але воно \"{value}\""
+      "notOneOf": "{key} має бути одним із {allowed}, але воно \"{value}\"",
+      "notACell": "{key} має бути чотирма цілими числами від 1 (колонка, рядок, ширина, висота), але зараз \"{value}\""
     }
   },
   "welcome": {

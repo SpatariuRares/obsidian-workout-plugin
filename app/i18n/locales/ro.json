@@ -127,7 +127,7 @@
       "columnProgression": "Progres",
       "columnProtocol": "Protocol",
       "columnVolumeChange": "Variația volumului",
-      "disclaimer": "Atenție",
+      "disclaimer": "Notă",
       "noData": "Nu sunt încă destule date: fiecare protocol are nevoie de cel puțin 5 serii înregistrate.",
       "title": "Eficiența protocolului",
       "subtitle": "Cum a funcționat fiecare protocol în toate seturile înregistrate"
@@ -176,6 +176,31 @@
         "backDominant": "Diferență între partea anterioară și cea posterioară: mușchii din partea posterioară lucrează mult mai intens decât cei din partea anterioară.",
         "frontDominant": "Dezechilibru față/spate: mușchii din partea din față lucrează mult mai intens decât cei din partea din spate."
       }
+    },
+    "editDashboard": "Editează tabloul de bord",
+    "modal": {
+      "widgets": "Widgeturi",
+      "widgetsHint": "Bifează widgeturile de afișat. Trage-le de mâner sau folosește săgețile pentru a le schimba ordinea.",
+      "moveUp": "Mută {widget} în sus",
+      "moveDown": "Mută {widget} în jos",
+      "allHistory": "Gol: tot istoricul",
+      "recentWorkoutsLimit": "Numărul de antrenamente din lista recentă:",
+      "volumeTrendDays": "Numărul de zile din tendința volumului:",
+      "gridColumns": "Coloane:",
+      "layout": "Aspect",
+      "layoutGrid": "Grilă",
+      "layoutList": "Listă",
+      "stash": "Nu este pe tabloul de bord",
+      "stashEmpty": "Toate widgeturile sunt pe tabloul de bord",
+      "tile": "{widget}: coloana {column}, rândul {row}, lățime {width}, înălțime {height}",
+      "minOneColumn": "Min. 1 coloană",
+      "minColumns": "Min. {columns} coloane",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} depășește cele {columns} coloane ale grilei",
+      "narrow": "{widget} are nevoie de cel puțin {min} coloane",
+      "overlap": "{widget} se suprapune cu {other}"
     }
   },
   "duration": {
@@ -356,7 +381,7 @@
       "supersetLunges": "Superset cu fandări"
     },
     "createToOpenGuide": "Ghidul de pornire face parte din notele de exemplu, care nu există încă. Ar trebui să le creăm acum?",
-    "pointedAtExamples": "Acum, opiniile tale vor citi log-ul de exemplu și exercițiile. Modifică această opțiune în setările datelor.",
+    "pointedAtExamples": "Vizualizările tale citesc acum jurnalul și exercițiile de exemplu. Schimbă această opțiune în setările datelor.",
     "usesSeparateLog": "Deoarece aveți deja un jurnal de antrenament, acesta a rămas nemodificat. Exemplele folosesc propriul lor fișier de jurnal."
   },
   "forms": {
@@ -479,7 +504,8 @@
       "updateTimer": "Actualizează temporizatorul",
       "decreaseBy": "Scade {label} cu {increment}",
       "increaseBy": "Crește {label} cu {increment}",
-      "deleteSet": "Șterge setul"
+      "deleteSet": "Șterge setul",
+      "updateDashboard": "Actualizează tabloul de bord"
     },
     "canvasLayout": "Aranjament",
     "canvasOptions": "Opțiuni",
@@ -548,7 +574,7 @@
       "auditRenameFileError": "Nu s-a putut redenumi fișierul: {error}",
       "auditRenameFileSuccess": "Fișier redenumit",
       "auditRenameSuccess": "Redenumit ({count} fișiere actualizate)",
-      "auditScanError": "Eroare la scanare: {error}",
+      "auditScanError": "Eroare la scanarea fișierelor de exerciții: {error}",
       "auditScanning": "Se scanează fișierele de exerciții...",
       "canvasExportError": "Eroare la exportarea pe canvas: {error}",
       "canvasExported": "Canvas exportat ({path})",
@@ -605,7 +631,9 @@
       "timerInserted": "Cronometrul a fost introdus cu succes!",
       "timerUpdated": "Cronometrul a fost actualizat cu succes!",
       "validChooseExercise": "Alege un exercițiu",
-      "validationCombinedMode": "Pentru tipul 'exerciții + antrenament', trebuie să completați ambele câmpuri!"
+      "validationCombinedMode": "Pentru tipul 'exerciții + antrenament', trebuie să completați ambele câmpuri!",
+      "dashboardUpdated": "Tabloul de bord a fost actualizat cu succes!",
+      "dashboardUpdateFailed": "Nu s-a putut actualiza tabloul de bord. Asigură-te că fișierul este deschis în editor."
     },
     "parameterKey": "Cheie:",
     "parameterLabel": "Etichetă:",
@@ -695,7 +723,8 @@
       "insertDuration": "Adaugă durata antrenamentului",
       "insertTable": "Adaugă tabelul jurnalului de antrenament",
       "insertTimer": "Adaugă temporizator pentru antrenament",
-      "muscleTagManager": "Gestionează etichetele pentru mușchi"
+      "muscleTagManager": "Gestionează etichetele pentru mușchi",
+      "editDashboard": "Editează tabloul de bord"
     },
     "workout": "Antrenament (opțional):",
     "workoutFile": "Fișier antrenament:",
@@ -732,7 +761,7 @@
       "savePreset": "Salvează",
       "saveProtocol": "Salvează",
       "showWelcome": "Afișează mesajul de bun venit",
-      "takeTour": "Urmăriți turul"
+      "takeTour": "Începeți turul"
     },
     "descriptions": {
       "confirmOverwriteMuscleTags": "Un fișier CSV cu etichete pentru mușchi există deja. Vrei să îl suprascrii cu valorile implicite? Acest lucru va elimina toate etichetele personalizate.",
@@ -758,7 +787,7 @@
       "showRibbonIcon": "Afișează în bara laterală pictograma cu gantera care deschide formularul jurnalului de antrenament",
       "weightUnit": "Unitate pentru grafice, totaluri și înregistrări noi. Fiecare înregistrare păstrează unitatea în care a fost introdusă.",
       "takeTour": "Oferă o scurtă prezentare a funcțiilor de înregistrare, grafice, tabele și cronometre.",
-      "welcomeWindow": "Reafășiți fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
+      "welcomeWindow": "Afișați din nou fereastra de bun venit pentru a începe cu date de exemplu sau de la zero.",
       "keepScreenAwake": "Încercați să mențineți ecranul activ în timp ce rulează oricare dintre temporizatoare în prim-plan. Consumă mai multă baterie; disponibilitatea depinde de dispozitivul și setările sistemului dumneavoastră.",
       "vibrateOnCompletion": "Vibrație scurtă atunci când un cronometru se termină, indiferent de sunet. Necesită un clic pe pagină și un dispozitiv compatibil (cum ar fi Android). Nu este disponibil pe iOS; nu există notificări în fundal.",
       "presetRestDesc": "Secunde de odihnă după fiecare rundă de lucru (0 pentru absența odihnei).",
@@ -791,7 +820,7 @@
       "takeTour": "Tur ghidat",
       "keepScreenAwake": "Păstrează ecranul activ în timp ce funcționează un cronometru",
       "vibrateOnCompletion": "Vibrați la finalizarea unui cronometru",
-      "presetRest": "Rest"
+      "presetRest": "Repaus"
     },
     "messages": {
       "confirmDeletePreset": "Sunteți sigur(ă) că doriți să ștergeți acest preset?",
@@ -847,8 +876,8 @@
       "mustBePositive": "Trebuie să fie mai mare decât 0"
     },
     "protocolHelp": {
-      "warmup": "Seturile de lumină sunt înregistrate înainte de seturile de lucru. Nu sunt considerate în totalul recordurilor personale.",
-      "dropSet": "Reduce greutatea imediat după fiecare încercare și continuă. Seria de exerciții nu se ia în calcul pentru recordurile personale.",
+      "warmup": "Seturile de încălzire dinaintea seturilor de lucru. Nu contează pentru recordurile personale.",
+      "dropSet": "Scade greutatea imediat după eșec și continuă. Seriile de scădere a greutății nu se iau în calcul pentru recordurile personale.",
       "myoReps": "Un set de activare, urmat de seturi scurte, mini-seturi, cu pauze de câteva secunde.",
       "restPause": "Odihnește-te câteva secunde după eșec, apoi efectuează câteva repetări suplimentare.",
       "superset": "Două exerciții una după alta, fără pauză între ele.",
@@ -856,7 +885,7 @@
     },
     "presetHelp": {
       "tabata": "20 de secunde de efort maxim, 10 secunde de odihnă, 8 runde: în total, 4 minute.",
-      "emom": "La fiecare minut, la fiecare minut: începeți seria de exerciții la începutul fiecărui minut și odihniți-vă pentru restul minutului, 10 serii."
+      "emom": "La fiecare minut, fix: începeți repetările la începutul fiecărui minut și odihniți-vă până la finalul lui, 10 runde."
     }
   },
   "stats": {
@@ -887,7 +916,7 @@
     "columns": {
       "distanceUnit": "Distanță ({distanceUnit})",
       "duration": "Dur",
-      "heartRate": "Frecvența cardiacă",
+      "heartRate": "Puls",
       "pace": "Ritmul",
       "reps": "Rep",
       "volumeUnit": "Volum ({weightUnit})",
@@ -913,7 +942,7 @@
     },
     "trendLine": "Linie de tendință",
     "refreshingTable": "Se reîmprospătează tabelul...",
-    "setCount": "{count} setează",
+    "setCount": "{count} seturi",
     "deleteSetMessage": "{set} va fi eliminat din jurnalul dumneavoastră. Nu se poate anula această acțiune.",
     "deleteSetTitle": "Șterge acest set?"
   },
@@ -940,7 +969,7 @@
       "rest": "Pauză",
       "work": "Activ"
     },
-    "round": "Runda [{current}] a competiției [{total}]",
+    "round": "Runda {current} din {total}",
     "status": {
       "done": "Terminat",
       "paused": "Suspendat"
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} trebuie să fie {min} sau mai mare, dar este {value}",
       "outOfRange": "{key} trebuie să se situeze între {min} și {max}, dar este {value}",
       "notABoolean": "{key} trebuie să fie adevărat sau fals, dar este \"{value}\"",
-      "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\""
+      "notOneOf": "{key} trebuie să fie unul dintre {allowed}, dar este \"{value}\"",
+      "notACell": "{key} trebuie să fie patru numere întregi începând cu 1 (coloană, rând, lățime, înălțime), dar este \"{value}\""
     }
   },
   "welcome": {
@@ -1009,7 +1039,7 @@
       "rowActions": {
         "title": "Modifică sau șterge un set",
         "mobileText": "Atinge un set pentru a-l corecta. Pentru a-l elimina, folosește opțiunea „Șterge set” din formularul care se deschide.",
-        "text": "Utilizați instrumentul de desen pe o linie pentru a fixa un set. Pentru a-l elimina, utilizați opțiunea \"Șterge set\" din formularul care se deschide."
+        "text": "Folosiți creionul de pe un rând pentru a corecta un set. Pentru a-l șterge, folosiți „Șterge setul” din formularul care se deschide."
       },
       "chart": {
         "title": "Progresul tău",
@@ -1030,7 +1060,7 @@
       "ribbon": {
         "title": "Înregistrează de la orice notă",
         "text": "Pictograma cu gantera din bara de instrumente deschide formularul de jurnalizare de oriunde.",
-        "mobileText": "Pe un telefon, nu există pictograma \"ribbon\" aici. Utilizați paleta de comenzi pentru a deschide formularul de jurnal de la orice notă."
+        "mobileText": "Pe un telefon nu există pictograma din bara laterală aici. Folosiți paleta de comenzi pentru a deschide formularul de jurnal din orice notă."
       },
       "commands": {
         "title": "Introduceți comenzile",

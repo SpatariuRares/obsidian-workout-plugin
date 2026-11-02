@@ -176,6 +176,31 @@
         "backDominant": "前後肌肉力量失衡：您的後方肌肉活動量遠大於您的前方肌肉。",
         "frontDominant": "前後肌肉力量失衡：您的前側肌肉活動量遠大於後側。"
       }
+    },
+    "editDashboard": "編輯儀表板",
+    "modal": {
+      "widgets": "小工具",
+      "widgetsHint": "勾選要顯示的小工具。拖曳把手或使用箭頭即可變更順序。",
+      "moveUp": "將 {widget} 上移",
+      "moveDown": "將 {widget} 下移",
+      "allHistory": "空白：全部歷史紀錄",
+      "recentWorkoutsLimit": "最近列表中的訓練數量：",
+      "volumeTrendDays": "體積趨勢中的天數：",
+      "gridColumns": "欄數：",
+      "layout": "版面配置",
+      "layoutGrid": "網格",
+      "layoutList": "清單",
+      "stash": "不在儀表板上",
+      "stashEmpty": "所有小工具都在儀表板上",
+      "tile": "{widget}：第 {column} 欄，第 {row} 列，寬 {width}，高 {height}",
+      "minOneColumn": "最少 1 欄",
+      "minColumns": "最少 {columns} 欄",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} 超出網格的 {columns} 欄",
+      "narrow": "{widget} 至少需要 {min} 欄",
+      "overlap": "{widget} 與 {other} 重疊"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "更新計時器",
       "decreaseBy": "將{label}減少{increment}",
       "increaseBy": "將{label}增加{increment}",
-      "deleteSet": "刪除集合"
+      "deleteSet": "刪除集合",
+      "updateDashboard": "更新儀表板"
     },
     "canvasLayout": "佈局",
     "canvasOptions": "選項",
@@ -605,7 +631,9 @@
       "timerInserted": "計時器已成功插入！",
       "timerUpdated": "計時器已成功更新！",
       "validChooseExercise": "選擇一個運動",
-      "validationCombinedMode": "對於「運動 + 訓練」類型，您必須填寫兩個欄位！"
+      "validationCombinedMode": "對於「運動 + 訓練」類型，您必須填寫兩個欄位！",
+      "dashboardUpdated": "儀表板已成功更新！",
+      "dashboardUpdateFailed": "無法更新儀表板。請確認檔案已在編輯器中開啟。"
     },
     "parameterKey": "鍵：",
     "parameterLabel": "標籤：",
@@ -695,7 +723,8 @@
       "insertDuration": "插入運動時長",
       "insertTable": "插入運動記錄表格",
       "insertTimer": "插入運動計時器",
-      "muscleTagManager": "管理肌肉標籤"
+      "muscleTagManager": "管理肌肉標籤",
+      "editDashboard": "編輯儀表板"
     },
     "workout": "運動 (可選)：",
     "workoutFile": "運動檔案：",
@@ -867,7 +896,7 @@
     "recentVsPrev": " (與上次比)",
     "sessions": "訓練次數",
     "average": "平均值：",
-    "title": "{dataTypeLabel} statistics ({contextLabel}):"
+    "title": "{dataTypeLabel}統計（{contextLabel}）："
   },
   "table": {
     "actions": "操作",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} 必須大於或等於 {min}，但目前為 {value}。",
       "outOfRange": "{key} 必須在 {min} 和 {max} 之間，但目前是 {value}。",
       "notABoolean": "{key} 必須為「真」或「假」，但目前為「{value}」",
-      "notOneOf": "{key} 必須是 {allowed} 中的一種，但目前是 \"{value}\"。"
+      "notOneOf": "{key} 必須是 {allowed} 中的一種，但目前是 \"{value}\"。",
+      "notACell": "{key} 必須是從 1 開始的四個整數（欄、列、寬、高），但目前為 \"{value}\""
     }
   },
   "welcome": {

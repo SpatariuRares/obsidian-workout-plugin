@@ -20,11 +20,11 @@
       "reps": "Repetisjoner",
       "volume": "Volum",
       "weight": "Vekt",
-      "e1rm": "Estimerte 1RM"
+      "e1rm": "Estimert 1RM"
     },
     "defaultTitle": "Trend {type}",
     "noTypesAvailable": "Ingen diagramtyper tilgjengelig",
-    "noEligibleE1rm": "Ingen egnet sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og drop sets."
+    "noEligibleE1rm": "Ingen egnede sett for estimert 1RM. Logg en positiv vekt med 1–12 repetisjoner, ekskludert oppvarming og dropsett."
   },
   "commands": {
     "addExerciseBlock": "Legg til øvelsesblokk",
@@ -103,7 +103,7 @@
       "noTags": "Ingen muskeltagger i frontmatter",
       "title": "Filfeil",
       "tooManyTags": "For mange muskeltagger ({count})",
-      "sharedName": "Samme treningsnavn som {pages}: loggene går til kun ett av dem."
+      "sharedName": "Samme øvelsesnavn som {pages}: loggene går bare til én av dem."
     },
     "muscleTags": {
       "description": "Beskrivelse",
@@ -129,8 +129,8 @@
       "columnVolumeChange": "Endring i volum",
       "disclaimer": "Ansvarsfraskrivelse",
       "noData": "Ikke nok data ennå: hver protokoll trenger minst 5 loggførte sett.",
-      "title": "Effektivitet av protokollen",
-      "subtitle": "Hvordan hvert protokoll har fungert i alle registrerte sett"
+      "title": "Effektivitet av protokoller",
+      "subtitle": "Hvordan hver protokoll har fungert i alle registrerte sett"
     },
     "quickActions": {
       "addWorkoutLog": "Legg til treningslogg",
@@ -176,6 +176,31 @@
         "backDominant": "Ubalanse mellom for- og bakside: ryggen din er mye mer aktiv enn forside.",
         "frontDominant": "Ubalanse mellom for- og bakside: din forside fungerer mye mer enn din bakside."
       }
+    },
+    "editDashboard": "Rediger dashbord",
+    "modal": {
+      "widgets": "Widgeter",
+      "widgetsHint": "Kryss av for widgetene som skal vises. Dra dem etter håndtaket, eller bruk pilene, for å endre rekkefølgen.",
+      "moveUp": "Flytt {widget} opp",
+      "moveDown": "Flytt {widget} ned",
+      "allHistory": "Tom: hele historikken",
+      "recentWorkoutsLimit": "Antall økter i den siste listen:",
+      "volumeTrendDays": "Antall dager i volumtrenden:",
+      "gridColumns": "Kolonner:",
+      "layout": "Oppsett",
+      "layoutGrid": "Rutenett",
+      "layoutList": "Liste",
+      "stash": "Ikke på dashbordet",
+      "stashEmpty": "Alle widgeter er på dashbordet",
+      "tile": "{widget}: kolonne {column}, rad {row}, {width} bred, {height} høy",
+      "minOneColumn": "Min. 1 kolonne",
+      "minColumns": "Min. {columns} kolonner",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} går utenfor de {columns} kolonnene i rutenettet",
+      "narrow": "{widget} trenger minst {min} kolonner",
+      "overlap": "{widget} overlapper {other}"
     }
   },
   "duration": {
@@ -323,7 +348,7 @@
       "continueWithWorkout": "Åpne [[{workout}]] for å prøve en komplett treningsøkt med øvelseslister og pausetimer.",
       "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og treningsprotokoller.",
       "ownData": "Når du er klar, velg din egen CSV-mappe og eksempelmappe i Innstillinger → Oppsett og data. Behold eksempelmappen som en referanse.",
-      "openGuideDesc": "Åpne \"Start\"-siden med eksempler som viser bruk av tabeller, diagrammer, stoppeklokker og dashbord."
+      "openGuideDesc": "Åpne siden «Hvordan komme i gang» med fungerende eksempler på tabeller, diagrammer, timere og dashbord."
     },
     "hiit": {
       "cyclingCooldownTitle": "Nedtrapping på sykkel",
@@ -355,8 +380,8 @@
       "supersetCalves": "Superset med tåhev med kroppsvekt",
       "supersetLunges": "Superset med utfall"
     },
-    "createToOpenGuide": "Veiledningen for å komme i gang er en del av eksempelkravene, som ikke finnes ennå. Skal vi lage dem nå?",
-    "pointedAtExamples": "Dine innstillinger vil nå lese eksempel-loggene og øvelsene. Endre dette i innstillingene for data.",
+    "createToOpenGuide": "Veiledningen for å komme i gang er en del av eksempelnotatene, som ikke finnes ennå. Skal vi lage dem nå?",
+    "pointedAtExamples": "Visningene dine leser nå eksempelloggen og øvelsene. Endre dette i datainnstillingene.",
     "usesSeparateLog": "Du har allerede en treningslogg, så den ble ikke endret. Eksemplene bruker sin egen loggfil."
   },
   "forms": {
@@ -382,7 +407,7 @@
       "dailyVolume": "Daglig volum ({unit})",
       "pace": "Tempo (min/km)",
       "totalCustom": "Totalt {label}",
-      "totalDistance": "Total distanse (km)",
+      "totalDistance": "Total avstand (km)",
       "totalDuration": "Total varighet (sek)",
       "totalVolume": "Totalvolum ({unit})",
       "totalWeight": "Totalvekt ({unit})"
@@ -424,7 +449,7 @@
     },
     "imbalanceAlerts": "Varsler om ubalanse",
     "insufficientData": "Ikke nok data",
-    "noDataPeriod": "Ingen treningsdata funnet for det valgte tidsperioden.",
+    "noDataPeriod": "Ingen treningsdata funnet for den valgte tidsperioden.",
     "noImbalances": "Ingen ubalanser funnet",
     "success": {
       "blockIdsAdded": "La til {count} manglende ID(er) i {files} fil(er)",
@@ -479,7 +504,8 @@
       "updateTimer": "Oppdater timer",
       "decreaseBy": "Reduser {label} med {increment}",
       "increaseBy": "Øk {label} med {increment}",
-      "deleteSet": "Slett sett"
+      "deleteSet": "Slett sett",
+      "updateDashboard": "Oppdater dashbord"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Alternativer",
@@ -595,17 +621,19 @@
       "validFieldRequired": "{field} er obligatorisk",
       "migrationNoUpdates": "Alle øvelsessider er allerede oppdatert",
       "validMustBeWholeNumber": "{field} må være et helt tall",
-      "newRecord": "Nytt oppføring: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Ny rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Diagrammet er lagt inn med suksess!",
       "dashboardInserted": "Dashboard er nå satt inn med suksess!",
-      "exerciseNameRequired": "Vennligst oppgi et treningsnavn",
+      "exerciseNameRequired": "Vennligst oppgi et øvelsesnavn",
       "exerciseSectionCreated": "Øvelsesseksjon opprettet med suksess!",
       "tableInserted": "Tabellen er lagt til med suksess!",
       "tableUpdated": "Tabellen er oppdatert med suksess!",
       "timerInserted": "Timer er lagt til med suksess!",
-      "timerUpdated": "Tidspremmingen er oppdatert med suksess!",
+      "timerUpdated": "Timeren er oppdatert!",
       "validChooseExercise": "Velg en øvelse",
-      "validationCombinedMode": "For type 'trening + treningsøkt' må du fylle ut begge feltene!"
+      "validationCombinedMode": "For type 'øvelse + trening' må du fylle ut begge feltene!",
+      "dashboardUpdated": "Dashbordet ble oppdatert!",
+      "dashboardUpdateFailed": "Kunne ikke oppdatere dashbordet. Sørg for at filen er åpen i redigeringsprogrammet."
     },
     "parameterKey": "Nøkkel:",
     "parameterLabel": "Etikett:",
@@ -648,7 +676,7 @@
       "tableType": "Tabelltype",
       "target": "Mål",
       "workout": "Trening",
-      "mobileOptions": "Nylige treningsøkter og treningsplaner"
+      "mobileOptions": "Nylige øvelser og trening"
     },
     "selectOptions": {
       "allLogs": "Alle loggføringer",
@@ -660,7 +688,7 @@
       "exerciseWorkout": "Øvelse i en økt",
       "myoReps": "Myo-reps",
       "number": "Antall",
-      "restPause": "Rest-pause",
+      "restPause": "Hvilepause",
       "specificExercise": "Bestemt øvelse",
       "standard": "Standard",
       "strength": "Styrke",
@@ -695,7 +723,8 @@
       "insertDuration": "Legg til treningsvarighet",
       "insertTable": "Legg til tabell for treningslogg",
       "insertTimer": "Legg til trenings-timer",
-      "muscleTagManager": "Administrer muskeltagger"
+      "muscleTagManager": "Administrer muskeltagger",
+      "editDashboard": "Rediger dashbord"
     },
     "workout": "Trening (valgfritt):",
     "workoutFile": "Treningsfil:",
@@ -712,7 +741,7 @@
     "noteTemplate": "**Merk: {note}**\n",
     "date": "Dato",
     "weightUnitToggle": "Enhet for denne oppføringen",
-    "rest": "Rest",
+    "rest": "Hvile",
     "work": "Arbeid"
   },
   "settings": {
@@ -755,7 +784,7 @@
       "setDuration": "Brukes når antall repetisjoner ikke er angitt (reserveverdi). Typisk område: 30-60 sekunder.",
       "setupCSV": "Opprett både workout_logs.csv og muscle-tags.csv i den angitte mappen.",
       "weightIncrement": "Standard vektøkning for progressiv overbelastning (f.eks. 2,5 for økninger på 2,5 enheter)",
-      "showRibbonIcon": "Vis manualikonet i båndet som åpner skjemaet for treningsloggen",
+      "showRibbonIcon": "Vis hantelikonet i båndet som åpner skjemaet for treningsloggen",
       "weightUnit": "Enheter for diagrammer, summer og nye logger. Hver logg beholder enheten den ble opprettet i.",
       "takeTour": "Gi en kort oversikt over logging, diagrammer, tabeller og tidsmålere.",
       "welcomeWindow": "Vis vinduet for velkomst igjen for å starte med eksempeldata eller fra begynnelsen.",
@@ -791,7 +820,7 @@
       "takeTour": "Veiledet tur",
       "keepScreenAwake": "Hold skjermen aktiv mens en timer kjører",
       "vibrateOnCompletion": "Vibrer når en timer er ferdig",
-      "presetRest": "Rest"
+      "presetRest": "Hvile"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på at du vil slette denne forhåndsinnstillingen?",
@@ -847,16 +876,16 @@
       "mustBePositive": "Må være større enn 0"
     },
     "protocolHelp": {
-      "warmup": "Lysøkter foregår før treningsøktene. De teller ikke med i personlige resultater.",
-      "dropSet": "Reduser vekten umiddelbart etter mislykket forsøk, og fortsett. «Drop sets» teller ikke med i personlige rekorder.",
-      "myoReps": "Én treningssett, deretter korte, små sett med noen få sekunders pause.",
+      "warmup": "Lette sett før de vanlige settene. De teller ikke med i personlige rekorder.",
+      "dropSet": "Reduser vekten umiddelbart etter at du har mislyktes, og fortsett. Dropsett teller ikke med i personlige rekorder.",
+      "myoReps": "Ett aktiveringssett, deretter korte minisett med noen få sekunders pause.",
       "restPause": "Ta en pause i noen sekunder etter feil, og utfør deretter noen flere repetisjoner.",
       "superset": "To øvelser etter hverandre, uten pause imellom.",
       "twentyone": "7 repetisjoner i den nedre delen, 7 i den øvre delen, og deretter 7 fullstendige repetisjoner."
     },
     "presetHelp": {
       "tabata": "20 sekunder med maksimal innsats, 10 sekunder med hvile, 8 runder: totalt 4 minutter.",
-      "emom": "Hvert minutt på minuttet: Start med øvelsene på begynnelsen av hvert minutt, og ta en pause for resten av minuttet, 10 runder."
+      "emom": "Hvert minutt på minuttet: start repetisjonene i begynnelsen av hvert minutt, og hvil resten av minuttet, 10 runder."
     }
   },
   "stats": {
@@ -866,7 +895,7 @@
     "recentTrend": "Nylig trend",
     "recentVsPrev": " (vs forrige)",
     "sessions": "Økter",
-    "average": "Gjennomsnitt:",
+    "average": "Gjennomsnitt: ",
     "title": "{dataTypeLabel} statistikk ({contextLabel}):"
   },
   "table": {
@@ -907,15 +936,15 @@
     "notAvailable": "I/T",
     "refreshSuccess": "Tabellen er oppdatert",
     "target": {
-      "progressTooltip": "Best: {best} repetisjoner / Mål: {target} repetisjoner",
+      "progressTooltip": "Beste: {best} repetisjoner / Mål: {target} repetisjoner",
       "repsSuffix": "repetisjoner",
       "separator": " × "
     },
     "trendLine": "Trendlinje",
     "refreshingTable": "Oppdaterer tabell...",
-    "setCount": "{count} angir",
+    "setCount": "{count} sett",
     "deleteSetMessage": "{set} vil bli fjernet fra loggen din. Dette kan ikke angres.",
-    "deleteSetTitle": "Slette denne samlingen?"
+    "deleteSetTitle": "Slette dette settet?"
   },
   "timeperiods": {
     "month": "Måned",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} må være {min} eller mer, men det er {value}",
       "outOfRange": "{key} må være mellom {min} og {max}, men det er {value}.",
       "notABoolean": "{key} må være sant eller usant, men det er \"{value}\"",
-      "notOneOf": "{key} må være en av {allowed}, men det er \"{value}\"."
+      "notOneOf": "{key} må være en av {allowed}, men det er \"{value}\".",
+      "notACell": "{key} må være fire hele tall fra 1 (kolonne, rad, bredde, høyde), men det er \"{value}\""
     }
   },
   "welcome": {
@@ -985,14 +1015,14 @@
     "tryExamples": "Prøv med eksempeldata",
     "startScratch": "Start fra bunnen av",
     "later": "Senere",
-    "tryExamplesDesc": "Legger til eksempeløvelser, og guider deg deretter gjennom bruken av plugin-et for disse.",
+    "tryExamplesDesc": "Legger til eksempeløkter, og guider deg deretter gjennom bruken av plugin-et for disse.",
     "startScratchDesc": "Veileder deg gjennom plugin-et med dine egne data, og starter med ditt første sett.",
     "tourOnYourData": "Du har allerede en treningslogg, så turen bruker dine egne data."
   },
   "tour": {
     "back": "Tilbake",
     "next": "Neste",
-    "skip": "Hoppe over",
+    "skip": "Hopp over",
     "done": "Fullført",
     "progress": "{current} av {total}",
     "noteName": "Guidet tur",
@@ -1000,16 +1030,16 @@
     "noteTable": "Dine sett",
     "noteChart": "Fremskritt",
     "noteDashboard": "Dashboard",
-    "noteTimer": "Restetid",
+    "noteTimer": "Hviletimer",
     "steps": {
       "logSet": {
-        "title": "Logg din første serie",
+        "title": "Logg ditt første sett",
         "text": "Trykk på +-knappen for å åpne skjemaet, og lagre deretter et sett. Det vises umiddelbart i tabellen."
       },
       "rowActions": {
-        "title": "Rediger eller slett en samling",
-        "mobileText": "Slett et sett for å fikse det. For å slette det, bruk \"Slett sett\" i skjemaet som åpnes.",
-        "text": "Bruk blyanten på en rad for å sette sammen en gruppe. For å fjerne den, bruk \"Slett gruppe\" i skjemaet som åpnes."
+        "title": "Rediger eller slett et sett",
+        "mobileText": "Trykk på et sett for å rette det. For å slette det, bruk «Slett sett» i skjemaet som åpnes.",
+        "text": "Bruk blyanten på en rad for å rette et sett. For å fjerne det, bruk «Slett sett» i skjemaet som åpnes."
       },
       "chart": {
         "title": "Din fremgang",
@@ -1020,25 +1050,25 @@
       },
       "dashboard": {
         "title": "Ditt dashbord",
-        "text": "Totale, trender i volum og nylige treningsøkter, alt samlet på ett sted.",
+        "text": "Totaler, volumtrender og nylige treningsøkter, alt samlet på ett sted.",
         "textMine": "Totaler, trender i volum og nylige treningsøkter. Den fylles ut etter hvert som du registrerer flere sett."
       },
       "timer": {
-        "title": "Tidsbegrenset",
+        "title": "Hviletimer",
         "text": "Trykk på \"Start\" for å starte en nedtelling mellom settene."
       },
       "ribbon": {
-        "title": "Logg fra hvilken som helst notat",
-        "text": "Ikonet for vektskiven i båndet åpner loggformularen fra hvor som helst.",
-        "mobileText": "På en mobiltelefon finnes det ikke en \"ribbon\"-ikon her. Bruk kommando-paletten for å åpne logg-formatet fra hvilken som helst notat."
+        "title": "Logg fra et hvilket som helst notat",
+        "text": "Hantelikonet i båndet åpner loggskjemaet fra hvor som helst.",
+        "mobileText": "På en mobiltelefon finnes det ikke et båndikon her. Bruk kommandopaletten for å åpne loggskjemaet fra et hvilket som helst notat."
       },
       "commands": {
         "title": "Legg til kommandoer",
-        "text": "Åpne kommando-paletten og kjør kommandoen \"Legg til treningsøkt\" for å legge til en tabell, et diagram, en timer eller et dashbord i en notat."
+        "text": "Åpne kommandopaletten og kjør kommandoen \"Legg til treningsøkt\" for å legge til en tabell, et diagram, en timer eller et dashbord i et notat."
       },
       "end": {
         "title": "Du er klar.",
-        "text": "Du kan ta denne turen igjen fra Innstillinger → Begynn."
+        "text": "Du kan ta denne turen igjen fra Innstillinger → Komme i gang."
       },
       "muscles": {
         "title": "Muskelvarmekart",
@@ -1049,21 +1079,21 @@
   },
   "import": {
     "chooseFile": "Velg CSV-fil",
-    "notAnExport": "Denne filen er ikke en \"Strong\" eller \"Hevy\" eksport.",
+    "notAnExport": "Denne filen er ikke en eksport fra Strong eller Hevy.",
     "noSets": "Ingen sett kunne leses fra denne filen. Sjekk at det er CSV-filen som appen eksporterte, uten endringer.",
     "readError": "Kunne ikke lese filen: {error}",
-    "source": "Eksporter fra {source}",
+    "source": "Eksport fra {source}",
     "setsFound": "Sett i filen: {count}",
     "setsToAdd": "Sett å legge til: {count}",
-    "duplicates": "Reddet i loggen din, hoppet over: {count}",
-    "dateRange": "Opplæringsdager: fra {first} til {last}",
+    "duplicates": "Allerede i loggen din, hoppet over: {count}",
+    "dateRange": "Treningsdager: fra {first} til {last}",
     "newExercises": "Øvelser uten side: {exercises}",
-    "nothingToAdd": "Hver oppføring i denne filen finnes allerede i loggen din.",
-    "backupNote": "Loggen din blir sikkerhetskopiert før innstillingene legges til.",
+    "nothingToAdd": "Alle sett i denne filen finnes allerede i loggen din.",
+    "backupNote": "Loggen din sikkerhetskopieres før settene legges til.",
     "importButton": "Importer sett",
-    "imported": "Import fullført. Elementer lagt til: {count}",
+    "imported": "Import fullført. Sett lagt til: {count}",
     "error": "Import mislyktes: {error}",
     "title": "Importer fra Strong eller Hevy",
-    "intro": "Velg CSV-filen fra appens eksport av treningsdata. Innholdet vil ikke bli generert før du bekrefter."
+    "intro": "Velg CSV-filen fra appens eksport av treningsdata. Ingenting skrives før du bekrefter."
   }
 }

@@ -24,7 +24,7 @@
     },
     "defaultTitle": "トレンド {type}",
     "noTypesAvailable": "利用可能なグラフの種類はありません",
-    "noEligibleE1rm": "1RM（推定最大挙上重量）の該当するセットは存在しません。ウォーミングアップやドロップセットを除いた、1～12回繰り返しの正の重量を記録してください。"
+    "noEligibleE1rm": "1RM（推定最大挙上重量）の対象となるセットがありません。ウォーミングアップとドロップセットを除き、1～12レップで正の重量を記録してください。"
   },
   "commands": {
     "addExerciseBlock": "エクササイズブロックを追加",
@@ -37,8 +37,8 @@
     "insertTable": "ワークアウト表を挿入",
     "manageMuscleTags": "筋肉タグを管理",
     "migrateExerciseTypes": "エクササイズタイプを移行",
-    "createExampleNotes": "例を作成する",
-    "openGettingStartedGuide": "チュートリアルを開始する",
+    "createExampleNotes": "サンプルのメモを作成",
+    "openGettingStartedGuide": "はじめにガイドを開く",
     "startTour": "ツアーを開始する",
     "importWorkouts": "Strong または Hevy からインポート"
   },
@@ -74,11 +74,11 @@
       "willConvertOne": "1つのログエントリが変換されます"
     },
     "sectionExercise": "エクササイズ",
-    "success": "{count} のログエントリを正常に変換しました",
+    "success": "{count} 件のログエントリを正常に変換しました",
     "title": "エクササイズデータを変換する",
     "typeSelect": {
       "convertTo": "変換先:",
-      "updateFileType": "エクササイズファイルのファイルタイプを更新する"
+      "updateFileType": "エクササイズファイルの種類を更新する"
     }
   },
   "dashboard": {
@@ -88,8 +88,8 @@
       "columnVariance": "変動",
       "columnWorkout": "ワークアウト",
       "minutesSuffix": "分",
-      "noData": "比較できるセッションがまだ足りません。",
-      "subtitle": "予想時間と実際のトレーニング時間",
+      "noData": "比較するためのセッションがまだ足りません。",
+      "subtitle": "推定時間と実際のワークアウト時間",
       "title": "所要時間の比較",
       "varianceTrendDeclining": "推定時間が実際のセッションから離れてきています",
       "varianceTrendImproving": "推定時間が実際のセッションに近づいています",
@@ -142,7 +142,7 @@
       "week": "週",
       "workouts": "ワークアウト",
       "year": "年",
-      "title": "クイックな統計"
+      "title": "クイック統計"
     },
     "recentWorkouts": {
       "fallbackName": "ワークアウト",
@@ -173,9 +173,34 @@
         "reps": "平均レップ数: {value}"
       },
       "imbalance": {
-        "backDominant": "前後のバランス: あなたの体前部は、体後部よりもはるかに活動しています。",
+        "backDominant": "前後のバランスの偏り：後側の筋肉が前側の筋肉よりもはるかに活動しています。",
         "frontDominant": "前後のバランスの偏り：前側の筋肉が後側の筋肉よりもはるかに活動しています。"
       }
+    },
+    "editDashboard": "ダッシュボードを編集",
+    "modal": {
+      "widgets": "ウィジェット",
+      "widgetsHint": "表示するウィジェットにチェックを入れてください。ハンドルでドラッグするか、矢印で並び順を変更できます。",
+      "moveUp": "{widget} を上に移動",
+      "moveDown": "{widget} を下に移動",
+      "allHistory": "空欄: すべての履歴",
+      "recentWorkoutsLimit": "最近のリストのワークアウト数:",
+      "volumeTrendDays": "ボリューム推移の日数:",
+      "gridColumns": "列数:",
+      "layout": "レイアウト",
+      "layoutGrid": "グリッド",
+      "layoutList": "リスト",
+      "stash": "ダッシュボードにないウィジェット",
+      "stashEmpty": "すべてのウィジェットがダッシュボードに表示されています",
+      "tile": "{widget}: 列 {column}、行 {row}、幅 {width}、高さ {height}",
+      "minOneColumn": "最小 1 列",
+      "minColumns": "最小 {columns} 列",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} がグリッドの {columns} 列からはみ出しています",
+      "narrow": "{widget} には少なくとも {min} 列が必要です",
+      "overlap": "{widget} が {other} と重なっています"
     }
   },
   "duration": {
@@ -252,10 +277,10 @@
       "combinedTitle": "組み合わせ（エクササイズ + ワークアウト）",
       "commandsNote": "**コマンド**（Ctrl/Cmd + P）: ワークアウト記録を作成、ワークアウトグラフを挿入、ワークアウトタイマーを挿入、エクササイズページを作成",
       "countdownTimerTitle": "カウントダウンタイマー",
-      "durationEstimatorIntro": "現在のメモに記載されているエクササイズのリストに基づいて、合計のトレーニング時間を推定します。",
+      "durationEstimatorIntro": "現在のメモに記載されているエクササイズをもとに、ワークアウト全体の所要時間を推定します。",
       "durationEstimatorTitle": "4. 所要時間の推定",
       "intervalTimerTitle": "インターバルタイマー",
-      "intro": "Workout プラグインで利用可能なすべてのコードブロックタイプの完全なリファレンス。",
+      "intro": "ワークアウトプラグインで利用可能なすべてのコードブロックタイプの完全なリファレンス。",
       "protocol21s": "7+7+7 のパーシャルレップ",
       "protocolDropset": "重量を下げてレップを続ける",
       "protocolMyoReps": "アクティベーションセット + ミニセット",
@@ -264,9 +289,9 @@
       "protocolSuperset": "2つのエクササイズを組み合わせる",
       "quickReferenceTitle": "クイックリファレンス",
       "strengthExerciseTitle": "筋力エクササイズ（ボリューム + 重量）",
-      "tablesIntro": "テーブルには、ソートおよび編集機能を使用して、ワークアウトの記録を表示します。",
+      "tablesIntro": "テーブルでは、並べ替えと編集に対応した形で、ワークアウト記録を表示します。",
       "tablesTitle": "2. テーブル",
-      "timedExerciseTitle": "時間制限付きエクササイズ (時間)",
+      "timedExerciseTitle": "時間制限付きエクササイズ（時間）",
       "timersTitle": "3. タイマー",
       "tip": "**ヒント**：個人用ダッシュボードは [[{dashboard}]] を参照してください",
       "title": "機能紹介",
@@ -317,16 +342,16 @@
       "welcome": "ようこそ！このフォルダには、すべての機能を学ぶのに役立つサンプルファイルが含まれています。",
       "workoutsDesc": "例となるワークアウトのテンプレート",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "各ページで1つの機能を探求してください。リンクを順番にクリックするか、以下の機能を選択してください。「戻る」と「次へ」を使用してメモ間の移動を行い、各例を探索するために通常通りにスクロールしてください。",
+      "pagesIntro": "各ページで機能を1つずつ見ていきましょう。リンクを順にたどるか、下から機能を選んでください。「戻る」と「次へ」でメモ間を移動し、通常どおりスクロールして各例を確認できます。",
       "liveIntro": "以下のすべての機能について、6週間のサンプルワークアウトで詳しく調べてください。これはデモデータです。操作を試して、自分のメモがどのように機能するかを確認してください。",
       "tryLog": "「+」ボタンを使用して、セットを追加します。テーブル、グラフ、ダッシュボードはすべて同じCSVファイルを読み取ります。",
-      "continueWithWorkout": "[[{workout}]] を開き、エクササイズ表と休憩タイマーを使った、包括的なワークアウトを試してください。",
-      "moreExamples": "[[{showcase}]] を参照して、さらに多くのグラフの種類、フィルター、およびトレーニング手順を確認してください。",
-      "ownData": "準備が整ったら、設定 → セットアップ & データで、ご自身の CSV フォルダとエクササイズ フォルダを選択してください。例として、フォルダを保管しておいてください。",
+      "continueWithWorkout": "[[{workout}]] を開いて、エクササイズのテーブルと休憩タイマーを使った完全なワークアウトをお試しください。",
+      "moreExamples": "[[{showcase}]] を参照して、さらに多くのグラフの種類、フィルター、トレーニングプロトコルを確認してください。",
+      "ownData": "準備ができたら、設定 → 設定とデータで、ご自身のCSVフォルダーとエクササイズフォルダーを選択してください。サンプルフォルダーは参考として残しておいてください。",
       "openGuideDesc": "テーブル、グラフ、タイマー、ダッシュボードなどの動作例を含む、チュートリアルページを開きます。"
     },
     "hiit": {
-      "cyclingCooldownTitle": "サイクリングクールダウン",
+      "cyclingCooldownTitle": "サイクリングのクールダウン",
       "intro": "高強度インターバルトレーニング。インターバルタイマーと有酸素トラッキング機能付き。",
       "runningProgressTitle": "ランニングの進捗",
       "sprintIntervalsTitle": "スプリントインターバル (30秒 × 8ラウンド)",
@@ -335,7 +360,7 @@
     },
     "workout": {
       "chart": "グラフ",
-      "duration": "期間",
+      "duration": "所要時間",
       "note": "メモ: 全力で追い込む",
       "recoverySuffix": "（回復：{seconds}秒）",
       "setsReps": "{sets} セット × {reps} レップ"
@@ -355,8 +380,8 @@
       "supersetCalves": "自重カーフレイズとスーパーセット",
       "supersetLunges": "ランジとスーパーセット"
     },
-    "createToOpenGuide": "「はじめに」ガイドは、まだ存在しない「例」に関するメモの一部です。今、作成しますか？",
-    "pointedAtExamples": "現在、あなたの意見は、例示されたログと演習を参照しています。この設定をデータ設定で変更してください。",
+    "createToOpenGuide": "「はじめに」ガイドは、まだ作成されていないサンプルのメモに含まれています。今すぐ作成しますか？",
+    "pointedAtExamples": "ビューは現在、サンプルのログとエクササイズを読み込んでいます。データ設定で変更できます。",
     "usesSeparateLog": "すでにワークアウトの記録があるため、変更は行われていません。この例では、それぞれの記録ファイルを使用しています。"
   },
   "forms": {
@@ -402,7 +427,7 @@
     "createLogButtonAria": "{exerciseName} のログを作成する",
     "createLogButtonText": "{exerciseName} のログを作成する",
     "noDataTitle": "{exerciseName} のログが見つかりません",
-    "exploreExampleData": "または、サンプルデータを使って探求してみる",
+    "exploreExampleData": "またはサンプルデータで試す",
     "lastSet": "前回: {set}",
     "weightedSet": "{weight} {unit} × {reps}",
     "personalRecord": "パーソナル記録: {weight} {unit} × {reps}"
@@ -427,10 +452,10 @@
     "noDataPeriod": "選択した期間のワークアウトデータが見つかりませんでした。",
     "noImbalances": "アンバランスは見つかりませんでした",
     "success": {
-      "blockIdsAdded": "{count} の欠落した ID を {files} ファイルに登録しました。",
+      "blockIdsAdded": "{count} 件の欠落したIDを {files} 件のファイルに追加しました。",
       "csvCreated": "CSVファイルが正常に作成されました！",
       "noBlockIdsNeeded": "すべてのコードブロックには、すでにIDが割り当てられています。",
-      "weightUnitsStamped": "{count} の古いログに、重量単位を保存しました。"
+      "weightUnitsStamped": "{count} 件の古いログに重量の単位を保存しました。"
     },
     "tagReferenceGenerated": "タグ一覧を生成しました！",
     "timerCompleted": "タイマーが終了しました！",
@@ -479,7 +504,8 @@
       "updateTimer": "タイマーを更新",
       "decreaseBy": "{label}を{increment}減らす",
       "increaseBy": "{label}を{increment}増やす",
-      "deleteSet": "セットを削除"
+      "deleteSet": "セットを削除",
+      "updateDashboard": "ダッシュボードを更新"
     },
     "canvasLayout": "レイアウト",
     "canvasOptions": "オプション",
@@ -501,7 +527,7 @@
       "useCurrentWorkoutFile": "現在のワークアウトファイルを使用"
     },
     "confirmAction": "確認",
-    "csvExercise": "CSV のエクササイズ",
+    "csvExercise": "CSVのエクササイズ",
     "customParameters": "カスタムパラメータ：",
     "customTitle": "カスタムタイトル:",
     "dataLimit": "データ制限:",
@@ -575,7 +601,7 @@
       "muscleTagImportInvalidGroup": "無効な筋肉グループ「{group}」がタグ「{tag}」に指定されています。有効な筋肉グループを指定してください。",
       "muscleTagImportNoValid": "ファイルに有効なタグが見つかりません",
       "muscleTagImportPreview": "{count} タグをインポート",
-      "muscleTagImported": "{count} 筋肉タグが正常にインポートされました！",
+      "muscleTagImported": "{count} 件の筋肉タグをインポートしました！",
       "muscleTagLoading": "タグを読み込み中...",
       "muscleTagNoResults": "検索に一致するタグはありません",
       "muscleTagSaveError": "筋肉タグの保存に失敗しました: {error}",
@@ -594,18 +620,20 @@
       "validMaxValue": "{field}は{max}以下でなければなりません",
       "validFieldRequired": "{field}は必須です",
       "migrationNoUpdates": "すべてのエクササイズページはすでに最新です",
-      "validMustBeWholeNumber": "{field} は、整数である必要があります。",
+      "validMustBeWholeNumber": "{field} は整数である必要があります。",
       "newRecord": "新規記録: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "グラフが正常に挿入されました！",
       "dashboardInserted": "ダッシュボードの挿入に成功しました！",
-      "exerciseNameRequired": "運動の名前を入力してください",
+      "exerciseNameRequired": "エクササイズ名を入力してください",
       "exerciseSectionCreated": "エクササイズセクションの作成に成功しました！",
       "tableInserted": "テーブルが正常に挿入されました！",
       "tableUpdated": "テーブルが正常に更新されました！",
       "timerInserted": "タイマーが正常に挿入されました！",
       "timerUpdated": "タイマーが正常に更新されました！",
       "validChooseExercise": "エクササイズを選択してください",
-      "validationCombinedMode": "「運動 + トレーニング」タイプの場合は、両方のフィールドを必ず入力してください！"
+      "validationCombinedMode": "「エクササイズ + ワークアウト」タイプの場合は、両方のフィールドを必ず入力してください！",
+      "dashboardUpdated": "ダッシュボードを更新しました！",
+      "dashboardUpdateFailed": "ダッシュボードの更新に失敗しました。ファイルがエディタで開かれているか確認してください。"
     },
     "parameterKey": "キー:",
     "parameterLabel": "ラベル:",
@@ -629,7 +657,7 @@
       "selectMuscleGroup": "筋肉グループを選択してください...",
       "selectWorkoutFile": "エクスポートするワークアウトファイルを選択...",
       "sets": "4",
-      "workout": "例：ワークアウト A、トレーニング B、または、以下のチェックボックスを使用"
+      "workout": "例：ワークアウト A、ワークアウト B、または下のチェックボックスを使用"
     },
     "protocol": "プロトコル：",
     "recentExercises": "最近:",
@@ -645,10 +673,10 @@
       "options": "オプション",
       "preset": "プリセット",
       "progressiveOverload": "漸進性過負荷",
-      "tableType": "表の種類",
+      "tableType": "テーブルの種類",
       "target": "目標",
       "workout": "ワークアウト",
-      "mobileOptions": "最近のトレーニングとワークアウト"
+      "mobileOptions": "最近のエクササイズとワークアウト"
     },
     "selectOptions": {
       "allLogs": "すべての記録",
@@ -695,7 +723,8 @@
       "insertDuration": "ワークアウトの所要時間を挿入",
       "insertTable": "ワークアウト記録テーブルを挿入",
       "insertTimer": "ワークアウトタイマーを挿入",
-      "muscleTagManager": "筋肉タグを管理"
+      "muscleTagManager": "筋肉タグを管理",
+      "editDashboard": "ダッシュボードを編集"
     },
     "workout": "ワークアウト（任意）：",
     "workoutFile": "ワークアウトファイル:",
@@ -708,7 +737,7 @@
       "missingElements": "要素が見つかりません",
       "validationCombinedMode": "エクササイズ + ワークアウトのタイプでは、両方のフィールドを入力してください"
     },
-    "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- 回数: {reps}\n- 休憩: {restTime}秒\n\n",
+    "exerciseSectionTemplate": "## {exerciseName}:\n### - セット数: {sets}\n- レップ数: {reps}\n- 休憩: {restTime}秒\n\n",
     "noteTemplate": "**メモ: {note}**\n",
     "date": "日付",
     "weightUnitToggle": "このエントリの単位",
@@ -757,7 +786,7 @@
       "weightIncrement": "漸進性過負荷で使うデフォルトの重量増分（例：2.5 単位ずつ増やすなら 2.5）",
       "showRibbonIcon": "ワークアウト記録フォームを開くダンベルアイコンをリボンに表示します",
       "weightUnit": "グラフ、合計、および新規ログの単位。各ログは、入力された単位を保持します。",
-      "takeTour": "ログ、グラフ、表、タイマーなどの基本的な機能について、簡単に説明します。",
+      "takeTour": "短いメモで、ログ、グラフ、テーブル、タイマーの基本を順に説明します。",
       "welcomeWindow": "例となるデータを使用するか、最初から設定を開始するために、ウェルカムウィンドウを再度表示します。",
       "keepScreenAwake": "タイマーが実行されている間、画面を常に表示するようにしてください。バッテリー消費が大きくなります。利用可能かどうかは、お使いのデバイスとシステム設定によって異なります。",
       "vibrateOnCompletion": "タイマーが終了した際に、音とは別に短い振動が発生します。ページへのタップと、Androidなどの対応デバイスが必要です。iOSでは利用できません。バックグラウンドアラートは表示されません。",
@@ -781,7 +810,7 @@
       "protocolAbbreviation": "略語",
       "protocolColor": "バッジの色",
       "protocolName": "プロトコルの名前",
-      "repDuration": "1回の繰り返しあたりの時間（秒）",
+      "repDuration": "1レップあたりの時間（秒）",
       "runAllMaintenance": "すべてのメンテナンスタスクを実行する",
       "setDuration": "代替のセット時間（秒）",
       "setupCSV": "CSVファイルのセットアップ",
@@ -791,7 +820,7 @@
       "takeTour": "ガイド付きツアー",
       "keepScreenAwake": "タイマーが動作中に画面をオンにする",
       "vibrateOnCompletion": "タイマーが終了したときに振動する",
-      "presetRest": "リセット"
+      "presetRest": "休憩"
     },
     "messages": {
       "confirmDeletePreset": "このプリセットを削除してもよろしいですか？",
@@ -847,8 +876,8 @@
       "mustBePositive": "0より大きい値にしてください"
     },
     "protocolHelp": {
-      "warmup": "作業セッションの前に、軽い運動セッションを行う。これは、個人の記録には含まれない。",
-      "dropSet": "失敗後すぐに重量を下げ、継続してトレーニングを続ける。ドロップセットは、個人の記録にはカウントされない。",
+      "warmup": "本番のセットの前に、軽めのセットを行う。個人記録には含まれない。",
+      "dropSet": "失敗後すぐに重量を下げ、そのまま続ける。ドロップセットは個人記録にはカウントされない。",
       "myoReps": "1つのアクティベーションセットを行い、その後、数秒の休憩を挟んで短いミニセットを行います。",
       "restPause": "失敗後、数秒休憩してから、さらに数回繰り返してください。",
       "superset": "2つのエクササイズを連続して、休憩なしで行う。",
@@ -856,17 +885,17 @@
     },
     "presetHelp": {
       "tabata": "20秒間の全力集中、10秒間の休憩、8ラウンド：合計4分。",
-      "emom": "1分ごとに：各分の最初からエクササイズを開始し、残りの時間で休憩し、合計10回繰り返す。"
+      "emom": "1分ごとに：各分の最初にレップを始め、残りの時間は休憩する。10ラウンド行う。"
     }
   },
   "stats": {
-    "max": "最大：",
-    "min": "最小：",
+    "max": "最大: ",
+    "min": "最小: ",
     "recentLast3": " (直近3回)",
     "recentTrend": "最近の傾向",
     "recentVsPrev": " (前回比)",
     "sessions": "セッション",
-    "average": "平均:",
+    "average": "平均: ",
     "title": "{dataTypeLabel} 統計情報 ({contextLabel}):"
   },
   "table": {
@@ -905,7 +934,7 @@
     },
     "noData": "データなし",
     "notAvailable": "該当なし",
-    "refreshSuccess": "表を更新しました",
+    "refreshSuccess": "テーブルを更新しました",
     "target": {
       "progressTooltip": "ベスト: {best} レップ / 目標: {target} レップ",
       "repsSuffix": "レップ",
@@ -913,7 +942,7 @@
     },
     "trendLine": "トレンドライン",
     "refreshingTable": "テーブルを更新中...",
-    "setCount": "{count} を設定する",
+    "setCount": "{count} セット",
     "deleteSetMessage": "{set} は、ログから削除されます。この操作は元に戻すことができません。",
     "deleteSetTitle": "このセットを削除しますか？"
   },
@@ -924,7 +953,7 @@
   },
   "timer": {
     "controls": {
-      "pauseTimer": "タイマー一時停止",
+      "pauseTimer": "タイマーを一時停止",
       "resetTimer": "タイマーをリセットする",
       "startTimer": "タイマーを開始する"
     },
@@ -973,10 +1002,11 @@
     "validation": {
       "title": "無効なパラメータ:",
       "notANumber": "{key} は数値である必要がありますが、現在は \"{value}\" です。",
-      "tooSmall": "{key} は {min} 文字以上である必要がありますが、現在は {value} です。",
+      "tooSmall": "{key} は {min} 以上である必要がありますが、現在は {value} です。",
       "outOfRange": "{key} は {min} と {max} の範囲内である必要がありますが、{value} です。",
       "notABoolean": "{key} は真または偽の値である必要がありますが、実際には「{value}」となっています。",
-      "notOneOf": "{key} は、{allowed} のいずれかである必要がありますが、実際には \"{value}\" です。"
+      "notOneOf": "{key} は、{allowed} のいずれかである必要がありますが、実際には \"{value}\" です。",
+      "notACell": "{key} は1以上の整数4つ（列、行、幅、高さ）である必要がありますが、値は \"{value}\" です。"
     }
   },
   "welcome": {
@@ -986,7 +1016,7 @@
     "startScratch": "最初から始める",
     "later": "後で",
     "tryExamplesDesc": "サンプルワークアウトを追加し、それらを使用してプラグインの使い方を説明します。",
-    "startScratchDesc": "あなたのデータを使って、プラグインの使い方を段階的に説明します。最初は、最初のデータセットから開始します。",
+    "startScratchDesc": "あなたのデータを使って、プラグインの使い方を段階的に説明します。最初のセットを記録するところから始めます。",
     "tourOnYourData": "すでにワークアウトの記録をお持ちなので、ツアーはあなたのデータに基づいて実行されます。"
   },
   "tour": {
@@ -1004,64 +1034,64 @@
     "steps": {
       "logSet": {
         "title": "最初のセットを記録する",
-        "text": "「+」ボタンを押してフォームを開き、その後、設定を保存します。すると、すぐにテーブルに表示されます。"
+        "text": "「+」ボタンを押してフォームを開き、セットを保存します。すぐにテーブルに表示されます。"
       },
       "rowActions": {
         "title": "編集または削除する",
-        "mobileText": "設定を修正するには、セットを選択してタップしてください。削除するには、開いたフォームで「セットを削除」を選択してください。",
-        "text": "ペンを使って行を修正して、セットを固定します。削除するには、開いたフォームで「セットを削除」を使用します。"
+        "mobileText": "セットをタップして修正できます。削除するには、開いたフォームで「セットを削除」を使用してください。",
+        "text": "行の鉛筆アイコンでセットを修正できます。削除するには、開いたフォームで「セットを削除」を使用します。"
       },
       "chart": {
         "title": "あなたの進捗状況",
-        "text": "このグラフは、運動が時間とともにどのように変化するかを示し、トレンドラインと統計データを含んでいます。",
-        "textMine": "このグラフは、運動が時間とともにどのように変化するかを示しています。最初はほとんどデータがありませんが、数回記録を付けると、グラフが動き始めます。",
-        "mobileText": "スマートフォンでは、同じ数字で構成された表としてグラフが表示されます。",
+        "text": "このグラフは、エクササイズが時間とともにどう変化しているかを示し、トレンドラインと統計を含みます。",
+        "textMine": "このグラフは、エクササイズが時間とともにどう変化しているかを示します。最初はほとんどデータがありませんが、数セット記録すると、グラフが動き始めます。",
+        "mobileText": "スマートフォンでは、グラフは同じ数字の表として表示されます。",
         "mobileTextMine": "スマートフォンでは、グラフは表形式で表示されます。最初はほとんど空ですが、数セットのデータを入力すると表示が充実します。"
       },
       "dashboard": {
         "title": "ダッシュボード",
-        "text": "合計、体積の推移、および最近のトレーニング記録を、すべて1つのブロックにまとめました。",
-        "textMine": "合計、ボリュームの推移、および最近のトレーニング記録。 記録するごとに、内容が自動的に更新されます。"
+        "text": "合計、ボリュームの推移、最近のワークアウト記録を、すべて1つのブロックにまとめました。",
+        "textMine": "合計、ボリュームの推移、最近のワークアウト記録。記録するたびに、内容が自動的に更新されます。"
       },
       "timer": {
-        "title": "タイマーのリセット",
+        "title": "休憩タイマー",
         "text": "「開始」ボタンを押して、セット間のカウントダウンを開始してください。"
       },
       "ribbon": {
         "title": "メモからログを記録する",
         "text": "リボン内のダンベルアイコンをクリックすると、ログフォームがどこからでも開きます。",
-        "mobileText": "スマートフォンでは、この場所にはリボンアイコンは表示されません。 任意のノートから、コマンドパレットを使用してログフォームを開くことができます。"
+        "mobileText": "スマートフォンではこの場所にリボンアイコンは表示されません。任意のメモから、コマンドパレットでログフォームを開けます。"
       },
       "commands": {
-        "title": "コマンドを入力する",
-        "text": "コマンドパレットを開き、「ワークアウト」コマンドを実行して、メモにテーブル、グラフ、タイマー、またはダッシュボードを追加します。"
+        "title": "挿入コマンド",
+        "text": "コマンドパレットを開き、「ワークアウトを挿入」系のコマンドを実行して、メモにテーブル、グラフ、タイマー、ダッシュボードを追加します。"
       },
       "end": {
         "title": "準備完了",
-        "text": "設定 → 始めることから、このツアーを再度実行できます。"
+        "text": "設定 → 開始から、このツアーをもう一度実行できます。"
       },
       "muscles": {
-        "title": "筋肉の温かさマップ",
+        "title": "筋肉ヒートマップ",
         "text": "ヒートマップは、最後にトレーニングした筋肉を示しています。"
       }
     },
-    "showMe": "Show me"
+    "showMe": "ここを表示"
   },
   "import": {
     "chooseFile": "CSV ファイルを選択する",
-    "notAnExport": "このファイルは、強力なエクスポートやヘビーエクスポートではありません。",
-    "noSets": "このファイルからデータ読み取ることができませんでした。アプリがエクスポートしたCSVファイルが、変更なしで正しい形式になっているか確認してください。",
+    "notAnExport": "このファイルは Strong または Hevy のエクスポートではありません。",
+    "noSets": "このファイルからセットを読み取れませんでした。アプリがエクスポートしたCSVを変更せずに使っているか確認してください。",
     "readError": "ファイルを開くことができません: {error}",
     "source": "{source} からエクスポート",
     "setsFound": "ファイル内のセット: {count}",
     "setsToAdd": "追加するセット: {count}",
     "duplicates": "すでにログに記録されています。スキップされました：{count}",
-    "dateRange": "研修期間: {first} から {last} までの期間",
+    "dateRange": "トレーニング日: {first} から {last} まで",
     "newExercises": "ページがないエクササイズ: {exercises}",
     "nothingToAdd": "このファイル内のすべてのセットは、すでにログに記録されています。",
-    "backupNote": "設定が追加される前に、ログがバックアップされます。",
-    "importButton": "インポート",
-    "imported": "インポート完了。 追加された設定: {count}",
+    "backupNote": "セットが追加される前に、ログがバックアップされます。",
+    "importButton": "セットをインポート",
+    "imported": "インポート完了。追加されたセット: {count}",
     "error": "インポートに失敗しました: {error}",
     "title": "Strong または Hevy からインポート",
     "intro": "アプリのワークアウトデータのエクスポートからCSVを選択してください。確認するまで何も書き込まれません。"

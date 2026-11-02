@@ -176,6 +176,31 @@
         "backDominant": "Ön-arka dengesizlik: Sırt kaslarınız, ön kaslarınıza göre çok daha fazla çalışıyor.",
         "frontDominant": "Ön-arka dengesizliği: Ön tarafınız, arka tarafınızdan çok daha fazla çalışıyor."
       }
+    },
+    "editDashboard": "Panoyu düzenle",
+    "modal": {
+      "widgets": "Widget'lar",
+      "widgetsHint": "Gösterilecek widget'ları işaretleyin. Sırasını değiştirmek için tutamaçtan sürükleyin veya okları kullanın.",
+      "moveUp": "{widget} öğesini yukarı taşı",
+      "moveDown": "{widget} öğesini aşağı taşı",
+      "allHistory": "Boş: tüm geçmiş",
+      "recentWorkoutsLimit": "Son listedeki antrenman sayısı:",
+      "volumeTrendDays": "Hacim trendindeki gün sayısı:",
+      "gridColumns": "Sütunlar:",
+      "layout": "Düzen",
+      "layoutGrid": "Izgara",
+      "layoutList": "Liste",
+      "stash": "Panoda değil",
+      "stashEmpty": "Tüm widget'lar panoda",
+      "tile": "{widget}: sütun {column}, satır {row}, genişlik {width}, yükseklik {height}",
+      "minOneColumn": "En az 1 sütun",
+      "minColumns": "En az {columns} sütun",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} ızgaranın {columns} sütununun dışına taşıyor",
+      "narrow": "{widget} en az {min} sütun gerektirir",
+      "overlap": "{widget}, {other} ile çakışıyor"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Zamanlayıcıyı güncelle",
       "decreaseBy": "{label} değerini {increment} azalt",
       "increaseBy": "{label} değerini {increment} artır",
-      "deleteSet": "Set'i sil"
+      "deleteSet": "Set'i sil",
+      "updateDashboard": "Panoyu güncelle"
     },
     "canvasLayout": "Düzen",
     "canvasOptions": "Seçenekler",
@@ -605,7 +631,9 @@
       "timerInserted": "Zamanlayıcı başarıyla eklendi!",
       "timerUpdated": "Zamanlayıcı başarıyla güncellendi!",
       "validChooseExercise": "Bir egzersiz seçin",
-      "validationCombinedMode": "'Egzersiz + antrenman' türü için, her iki alanı da doldurmanız gerekmektedir!"
+      "validationCombinedMode": "'Egzersiz + antrenman' türü için, her iki alanı da doldurmanız gerekmektedir!",
+      "dashboardUpdated": "Pano başarıyla güncellendi!",
+      "dashboardUpdateFailed": "Pano güncellenemedi. Dosyanın editörde açık olduğundan emin olun."
     },
     "parameterKey": "Anahtar:",
     "parameterLabel": "Etiket:",
@@ -695,7 +723,8 @@
       "insertDuration": "Antrenman süresi ekle",
       "insertTable": "Antrenman günlüğü tablosu ekle",
       "insertTimer": "Antrenman zamanlayıcısı ekle",
-      "muscleTagManager": "Kas etiketlerini yönet"
+      "muscleTagManager": "Kas etiketlerini yönet",
+      "editDashboard": "Panoyu düzenle"
     },
     "workout": "Antrenman (isteğe bağlı):",
     "workoutFile": "Antrenman dosyası:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} değeri {min} veya daha büyük olmalıdır, ancak şu anda {value} değerindedir.",
       "outOfRange": "{key} değeri, {min} ile {max} arasında olmalıdır, ancak {value} değerindedir.",
       "notABoolean": "{key} ya doğru ya da yanlış olmalıdır, ancak şu anda \"{value}\" değerindedir.",
-      "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir."
+      "notOneOf": "{key}, {allowed}'den biri olmalıdır, ancak \"{value}\" değeridir.",
+      "notACell": "{key}, 1'den başlayan dört tam sayı olmalı (sütun, satır, genişlik, yükseklik), ama değeri \"{value}\""
     }
   },
   "welcome": {

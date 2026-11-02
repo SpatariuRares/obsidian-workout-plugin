@@ -9,6 +9,8 @@ import { QuickActions } from "@app/features/dashboard/widgets/quick-actions/Quic
 import { MuscleHeatMap } from "@app/features/dashboard/widgets/muscle-heat-map/MuscleHeatMap";
 import { createObsidianContainer } from "@app/components/__tests__/obsidianDomMocks";
 import { EmbeddedDashboardParams } from "@app/features/dashboard/types";
+import { t } from "@app/i18n";
+import { Platform } from "obsidian";
 import type WorkoutChartsPlugin from "main";
 
 function mockWidget(name: string) {
@@ -76,7 +78,12 @@ const logs = [
 
 // Everything ever logged; the dashboard is given only its period (`logs`)
 const history = [
-  { ...logs[0], date: "2025-01-01T10:00:00.000Z", weight: 90, volume: 450 },
+  {
+    ...logs[0],
+    date: "2025-01-01T10:00:00.000Z",
+    weight: 90,
+    volume: 450,
+  },
   ...logs,
 ];
 
@@ -171,5 +178,160 @@ describe("EmbeddedDashboardView bento layout", () => {
     ).toMatch(/^span \d+$/);
     // An inline grid-row-end would beat the phone layout's `grid-row: auto`
     expect(widgets[0].style.gridRowEnd).toBe("");
+  });
+});
+
+describe("EmbeddedDashboardView grid layout", () => {
+  beforeAll(() => {
+    (
+      window as unknown as { ResizeObserver: unknown }
+    ).ResizeObserver = FakeResizeObserver;
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Each mocked widget draws its card, as the real ones do
+    for (const w of [
+      SummaryWidget,
+      RecentWorkouts,
+      VolumeAnalytics,
+    ]) {
+      (w.render as jest.Mock).mockImplementation(
+        (grid: HTMLElement) =>
+          grid.createDiv({ cls: "workout-dashboard-widget" }),
+      );
+    }
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  /** Renders with the dashboard `width` px wide (jsdom lays nothing out) */
+  const renderGrid = async (
+    params: EmbeddedDashboardParams,
+    width: number,
+  ) => {
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockReturnValue({ width, height: 0 } as DOMRect);
+    const container = createObsidianContainer();
+    await new EmbeddedDashboardView({
+      settings: {},
+      getWorkoutLogData: async () => history,
+    } as unknown as WorkoutChartsPlugin).createDashboard(
+      container,
+      logs,
+      params,
+    );
+    const cell = (cls: string) =>
+      [
+        ...container.querySelectorAll<HTMLElement>(
+          ".workout-dashboard-widget",
+        ),
+      ]
+        .filter((el) => el.dataset.widget === cls)
+        .map((el) => [
+          el.style.getPropertyValue("--workout-cell-column"),
+          el.style.getPropertyValue("--workout-cell-row"),
+        ])[0];
+    return { container, cell };
+  };
+
+  const GRID: EmbeddedDashboardParams = {
+    layout: "grid",
+    columns: 2,
+    "grid.volume": { column: 1, row: 2, width: 2, height: 1 },
+    "grid.recentWorkouts": { column: 2, row: 1, width: 1, height: 1 },
+    "grid.summary": { column: 1, row: 1, width: 1, height: 1 },
+  };
+
+  it("draws only the placed widgets, in reading order, each in its cells", async () => {
+    const { container, cell } = await renderGrid(GRID, 900);
+
+    const order = [
+      SummaryWidget,
+      RecentWorkouts,
+      VolumeAnalytics,
+    ].map((w) => (w.render as jest.Mock).mock.invocationCallOrder[0]);
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+    expect(QuickStatsCards.render).not.toHaveBeenCalled();
+    expect(
+      container
+        .querySelector<HTMLElement>(".workout-dashboard-grid")!
+        .style.getPropertyValue("--workout-grid-columns"),
+    ).toBe("2");
+    expect(cell("summary")).toEqual(["1 / span 1", "1 / span 1"]);
+    expect(cell("recentWorkouts")).toEqual([
+      "2 / span 1",
+      "1 / span 1",
+    ]);
+    expect(cell("volume")).toEqual(["1 / span 2", "2 / span 1"]);
+  });
+
+  it("stacks the widgets in reading order when only one column fits", async () => {
+    const { cell } = await renderGrid(GRID, 300);
+
+    expect(cell("summary")).toEqual(["1 / span 1", "1 / span 1"]);
+    expect(cell("recentWorkouts")).toEqual([
+      "1 / span 1",
+      "2 / span 1",
+    ]);
+    expect(cell("volume")).toEqual(["1 / span 1", "3 / span 1"]);
+  });
+
+  it("stacks the widgets on a phone however wide it is", async () => {
+    Platform.isPhone = true;
+    try {
+      const { cell } = await renderGrid(GRID, 900);
+      expect(cell("recentWorkouts")).toEqual(["1 / span 1", "2 / span 1"]);
+    } finally {
+      Platform.isPhone = false;
+    }
+  });
+
+  it("says how to place widgets when the grid has none", async () => {
+    const { container } = await renderGrid({ layout: "grid" }, 900);
+
+    expect(container.textContent).toContain(t("dashboard.grid.empty"));
+  });
+
+  it("shows what is wrong with the grid instead of the widgets", async () => {
+    const { container } = await renderGrid(
+      {
+        ...GRID,
+        "grid.summary": { column: 1, row: 1, width: 2, height: 1 },
+      },
+      900,
+    );
+
+    expect(SummaryWidget.render).not.toHaveBeenCalled();
+    expect(container.textContent).toContain(
+      t("dashboard.grid.overlap", {
+        widget: t("dashboard.recentWorkouts.title"),
+        other: t("dashboard.summary.title"),
+      }),
+    );
+  });
+});
+
+describe("EmbeddedDashboardView resize watching", () => {
+  it("keeps following the first dashboard's width after a second one renders", async () => {
+    const observers: FakeResizeObserver[] = [];
+    (window as unknown as { ResizeObserver: unknown }).ResizeObserver =
+      class extends FakeResizeObserver {
+        constructor() {
+          super();
+          observers.push(this);
+        }
+      };
+    const view = new EmbeddedDashboardView({
+      settings: {},
+      getWorkoutLogData: async () => history,
+    } as unknown as WorkoutChartsPlugin);
+
+    await view.createDashboard(createObsidianContainer(), logs, {});
+    await view.createDashboard(createObsidianContainer(), logs, {});
+
+    expect(observers).toHaveLength(2);
+    expect(observers[0].disconnect).not.toHaveBeenCalled();
   });
 });

@@ -44,7 +44,7 @@
   },
   "common": {
     "bpm": "bpm",
-    "cancel": "Annulér",
+    "cancel": "Annuller",
     "clear": "Ryd",
     "convert": "Konverter",
     "exercise": "Øvelse",
@@ -119,7 +119,7 @@
       "clearFilter": "Ryd filter",
       "filterActive": "Filtreret efter",
       "noData": "Ingen sæt logget de seneste 30 dage",
-      "subtitle": "Detaljeret oversigt over træningsprotokol (de seneste 30 dage)",
+      "subtitle": "Oversigt over træningsprotokoller (de seneste 30 dage)",
       "title": "Fordeling af protokoller"
     },
     "protocolEffectiveness": {
@@ -130,7 +130,7 @@
       "disclaimer": "Ansvarsfraskrivelse",
       "noData": "Ikke nok data endnu: hver protokol skal have mindst 5 loggede sæt.",
       "title": "Effektivitet af protokollen",
-      "subtitle": "Hvordan hvert protokoll har fungeret på tværs af alle registrerede sæt"
+      "subtitle": "Hvordan hver protokol har fungeret på tværs af alle registrerede sæt"
     },
     "quickActions": {
       "addWorkoutLog": "Tilføj træningslog",
@@ -176,6 +176,31 @@
         "backDominant": "Ubalance mellem for- og bagside: din bagside arbejder meget mere end din forside.",
         "frontDominant": "Ubalance mellem for- og bagside: din forside arbejder meget mere end din bagside."
       }
+    },
+    "editDashboard": "Rediger dashboard",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Markér de widgets, der skal vises. Træk dem i håndtaget, eller brug pilene, for at ændre rækkefølgen.",
+      "moveUp": "Flyt {widget} op",
+      "moveDown": "Flyt {widget} ned",
+      "allHistory": "Tom: al historik",
+      "recentWorkoutsLimit": "Antal træninger i listen over seneste træninger:",
+      "volumeTrendDays": "Antal dage i volumentrenden:",
+      "gridColumns": "Kolonner:",
+      "layout": "Layout",
+      "layoutGrid": "Gitter",
+      "layoutList": "Liste",
+      "stash": "Ikke på dashboardet",
+      "stashEmpty": "Alle widgets er på dashboardet",
+      "tile": "{widget}: kolonne {column}, række {row}, {width} bred, {height} høj",
+      "minOneColumn": "Min. 1 kolonne",
+      "minColumns": "Min. {columns} kolonner",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} går ud over gitterets {columns} kolonner",
+      "narrow": "{widget} kræver mindst {min} kolonner",
+      "overlap": "{widget} overlapper {other}"
     }
   },
   "duration": {
@@ -252,7 +277,7 @@
       "combinedTitle": "Kombineret (øvelse + træning)",
       "commandsNote": "**Kommandoer** (Ctrl/Cmd + P): Opret træningslog, Indsæt træningsdiagram, Indsæt træningstimer, Opret øvelsesside",
       "countdownTimerTitle": "Nedtællingstimer",
-      "durationEstimatorIntro": "Vurderer samlet træningsvarighed baseret på den aktuelle notes øvelser.",
+      "durationEstimatorIntro": "Vurderer samlet træningsvarighed ud fra øvelserne i den aktuelle note.",
       "durationEstimatorTitle": "4. Varighedsestimator",
       "intervalTimerTitle": "Intervaltimer",
       "intro": "Fuldstændig reference over alle kodebloktyper, der er tilgængelige i Workout Plugin.",
@@ -317,10 +342,10 @@
       "welcome": "Velkommen! Denne mappe indeholder eksempelfiler, der hjælper dig med at lære alle funktionerne.",
       "workoutsDesc": "Eksempler på træningsskabeloner",
       "workoutsFolder": "**{folder}/**",
-      "pagesIntro": "Udforsk én funktion pr. side. Følg linksne i rækkefølge, eller vælg en funktion nedenfor. Brug \"Tilbage\" og \"Næste\" for at navigere mellem notaterne; scroll normalt for at udforske hvert eksempel.",
+      "pagesIntro": "Udforsk én funktion pr. side. Følg linkene i rækkefølge, eller vælg en funktion nedenfor. Brug \"Tilbage\" og \"Næste\" for at navigere mellem notaterne; scroll normalt for at udforske hvert eksempel.",
       "liveIntro": "Udforsk alle funktioner nedenfor med seks ugers eksempstræning. Dette er demo-data; prøv kontrollerne og se, hvordan dine noter fungerer.",
       "tryLog": "Brug \"+\" knappen til at tilføje et sæt. Tabellen, diagrammerne og dashboardet læser alle det samme CSV-format.",
-      "continueWithWorkout": "Åbn [[{workout}]], for at prøve en komplet træning med øvelsesvejledninger og pausetimer.",
+      "continueWithWorkout": "Åbn [[{workout}]] for at prøve en komplet træning med øvelsestabeller og pausetimere.",
       "moreExamples": "Se [[{showcase}]] for flere diagramtyper, filtre og træningsprotokoller.",
       "ownData": "Når du er klar, vælg din egen CSV-mappe og eksempelfolder i Indstillinger → Opsætning & data. Behold eksempelfolderen som en reference.",
       "openGuideDesc": "Åbn siden med eksempler, der viser, hvordan man bruger tabeller, diagrammer, tidsmålere og dashboardet."
@@ -352,10 +377,10 @@
       }
     },
     "notes": {
-      "supersetCalves": "Superset med calf raises med egen kropsvægt",
-      "supersetLunges": "Superset med lunges"
+      "supersetCalves": "Superset med tåhævninger med egen kropsvægt",
+      "supersetLunges": "Superset med udfald"
     },
-    "createToOpenGuide": "Guidet til begyndelsen er en del af eksemplerne, som endnu ikke findes. Skal vi oprette dem nu?",
+    "createToOpenGuide": "Startvejledningen er en del af eksempelnoterne, som endnu ikke findes. Skal de oprettes nu?",
     "pointedAtExamples": "Dine indstillinger læser nu eksemplerne og øvelserne. Ændr dette i indstillingerne for data.",
     "usesSeparateLog": "Du har allerede en træningslog, så den blev ikke ændret. Eksemplerne bruger deres egen logfil."
   },
@@ -479,7 +504,8 @@
       "updateTimer": "Opdater timer",
       "decreaseBy": "Sænk {label} med {increment}",
       "increaseBy": "Øg {label} med {increment}",
-      "deleteSet": "Slet sæt"
+      "deleteSet": "Slet sæt",
+      "updateDashboard": "Opdater dashboard"
     },
     "canvasLayout": "Layout",
     "canvasOptions": "Valgmuligheder",
@@ -595,17 +621,19 @@
       "validFieldRequired": "{field} er obligatorisk",
       "migrationNoUpdates": "Alle øvelsessider er allerede opdaterede",
       "validMustBeWholeNumber": "{field} skal være et heltal",
-      "newRecord": "Ny registrering: {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Ny rekord: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Diagram er blevet indsat med succes!",
       "dashboardInserted": "Dashboard er blevet indsat med succes!",
-      "exerciseNameRequired": "Vær venlig at angive et træningsnavn",
+      "exerciseNameRequired": "Indtast et øvelsesnavn",
       "exerciseSectionCreated": "Øvelsessektionen er oprettet med succes!",
-      "tableInserted": "Bordet er blevet indsat med succes!",
-      "tableUpdated": "Bordet er blevet opdateret med succes!",
+      "tableInserted": "Tabellen er blevet indsat med succes!",
+      "tableUpdated": "Tabellen er blevet opdateret med succes!",
       "timerInserted": "Timer er blevet indsat med succes!",
       "timerUpdated": "Timer er opdateret med succes!",
       "validChooseExercise": "Vælg en øvelse",
-      "validationCombinedMode": "For \"øvelse + træning\"-typen skal du udfylde begge felter!"
+      "validationCombinedMode": "For \"øvelse + træning\"-typen skal du udfylde begge felter!",
+      "dashboardUpdated": "Dashboardet er opdateret!",
+      "dashboardUpdateFailed": "Dashboardet kunne ikke opdateres. Sørg for, at filen er åben i editoren."
     },
     "parameterKey": "Nøgle:",
     "parameterLabel": "Etiket:",
@@ -648,7 +676,7 @@
       "tableType": "Tabeltype",
       "target": "Mål",
       "workout": "Træning",
-      "mobileOptions": "Seneste træninger og træningsprogrammer"
+      "mobileOptions": "Seneste øvelser og træning"
     },
     "selectOptions": {
       "allLogs": "Alle logposter",
@@ -660,10 +688,10 @@
       "exerciseWorkout": "Øvelse i en træning",
       "myoReps": "Myo-reps",
       "number": "Tal",
-      "restPause": "Rest-pause",
+      "restPause": "Hvilepause",
       "specificExercise": "Bestemt øvelse",
       "standard": "Standard",
-      "strength": "Kraft",
+      "strength": "Styrke",
       "superset": "Supersæt",
       "text": "Tekst",
       "timed": "Tidsbaseret",
@@ -695,7 +723,8 @@
       "insertDuration": "Indsæt træningsvarighed",
       "insertTable": "Indsæt træningslogtabel",
       "insertTimer": "Indsæt træningstimer",
-      "muscleTagManager": "Administrer muskeltags"
+      "muscleTagManager": "Administrer muskeltags",
+      "editDashboard": "Rediger dashboard"
     },
     "workout": "Træning (valgfrit):",
     "workoutFile": "Træningsfil:",
@@ -712,7 +741,7 @@
     "noteTemplate": "**Bemærk: {note}**\n",
     "date": "Dato",
     "weightUnitToggle": "Enhed for denne post",
-    "rest": "Rest",
+    "rest": "Hvile",
     "work": "Arbejde"
   },
   "settings": {
@@ -761,7 +790,7 @@
       "welcomeWindow": "Vis vinduet med velkomstbeskeden igen for at starte med eksempeldata eller fra bunden.",
       "keepScreenAwake": "Forsøg at holde skærmen aktiv, mens en timer kører i forgrunden. Bruger mere batteri; tilgængelighed afhænger af din enhed og systemindstillinger.",
       "vibrateOnCompletion": "Vibrer kortvarigt, når en timer er færdig, uafhængigt af lyd. Kræver et tryk på siden og en kompatibel enhed (f.eks. Android). Ikke tilgængeligt på iOS; ingen notifikationer i baggrunden.",
-      "presetRestDesc": "Sekunder af pause efter arbejdet i hver runde (0 for ingen pause).",
+      "presetRestDesc": "Sekunder med hvile efter arbejdet i hver runde (0 for ingen hvile).",
       "noCustomProtocols": "Ingen protokoller er defineret endnu. Klik på 'Tilføj protokol' for at oprette en."
     },
     "labels": {
@@ -791,7 +820,7 @@
       "takeTour": "Guidet tur",
       "keepScreenAwake": "Hold skærmen tændt, mens en timer kører",
       "vibrateOnCompletion": "Vibrer når en timer er færdig",
-      "presetRest": "Rest"
+      "presetRest": "Hvile"
     },
     "messages": {
       "confirmDeletePreset": "Er du sikker på, at du vil slette denne forudindstilling?",
@@ -831,7 +860,7 @@
       "timerPresets": "Timer-forudindstillinger",
       "trainingParameters": "Træningsparametre",
       "gettingStarted": "Sådan kommer du i gang",
-      "timerDeviceCues": "Tidsmåler-relaterede signaler",
+      "timerDeviceCues": "Signaler fra timeren",
       "customProtocols": "Protokoller"
     },
     "tooltips": {
@@ -847,16 +876,16 @@
       "mustBePositive": "Skal være større end 0"
     },
     "protocolHelp": {
-      "warmup": "Lysperioderne er før arbejdsperioderne. De tæller ikke med i personlige rekorder.",
-      "dropSet": "Reducer vægten lige efter et mislykket forsøg og fortsæt. Drop sets tæller ikke med i personlige rekorder.",
-      "myoReps": "Én sæt med aktivering, efterfulgt af korte mini-sæt med et par sekunders pause.",
+      "warmup": "Lette sæt før arbejdssættene. De tæller ikke med i personlige rekorder.",
+      "dropSet": "Reducer vægten lige efter et mislykket forsøg og fortsæt. Dropsæt tæller ikke med i personlige rekorder.",
+      "myoReps": "Ét aktiveringssæt, efterfulgt af korte minisæt med et par sekunders pause.",
       "restPause": "Tag en pause i et par sekunder efter mislykket forsøg, og udfør derefter et par flere gentagelser.",
       "superset": "To øvelser efter hinanden, uden pause imellem.",
       "twentyone": "7 gentagelser i den nedre del, 7 i den øvre del, og derefter 7 fulde gentagelser."
     },
     "presetHelp": {
       "tabata": "20 sekunders maksimal indsats, 10 sekunders pause, 8 runder: i alt 4 minutter.",
-      "emom": "Hvert minut, præcist: start dine gentagelser i starten af hvert minut og hvil for resten af tiden, 10 sæt."
+      "emom": "Hvert minut, præcist: start dine gentagelser i starten af hvert minut og hvil for resten af tiden, 10 runder."
     }
   },
   "stats": {
@@ -866,7 +895,7 @@
     "recentTrend": "Seneste tendens",
     "recentVsPrev": " (vs forrige)",
     "sessions": "Træningspas",
-    "average": "Gennemsnit:",
+    "average": "Gennemsnit: ",
     "title": "{dataTypeLabel} statistik ({contextLabel}):"
   },
   "table": {
@@ -913,9 +942,9 @@
     },
     "trendLine": "Tendenslinje",
     "refreshingTable": "Opdaterer tabel...",
-    "setCount": "{count} sætter",
+    "setCount": "{count} sæt",
     "deleteSetMessage": "{set} vil blive slettet fra din log. Dette kan ikke annulleres.",
-    "deleteSetTitle": "Slette denne samling?"
+    "deleteSetTitle": "Slet dette sæt?"
   },
   "timeperiods": {
     "month": "Måned",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} skal være {min} eller mere, men det er {value}",
       "outOfRange": "{key} skal være mellem {min} og {max}, men det er {value}",
       "notABoolean": "{key} skal være enten sand eller falsk, men det er \"{value}\"",
-      "notOneOf": "{key} skal være en af {allowed}, men det er \"{value}\""
+      "notOneOf": "{key} skal være en af {allowed}, men det er \"{value}\"",
+      "notACell": "{key} skal være fire hele tal fra 1 og op (kolonne, række, bredde, højde), men det er \"{value}\""
     }
   },
   "welcome": {
@@ -1000,16 +1030,16 @@
     "noteTable": "Dine sæt",
     "noteChart": "Fremskridt",
     "noteDashboard": "Dashboard",
-    "noteTimer": "Timer for hvile",
+    "noteTimer": "Hviletimer",
     "steps": {
       "logSet": {
         "title": "Log dit første sæt",
-        "text": "Tryk på +-knappen for at åbne formularen, og gem derefter en opsætning. Den vises straks i tabellen."
+        "text": "Tryk på +-knappen for at åbne formularen, og gem derefter et sæt. Det vises straks i tabellen."
       },
       "rowActions": {
-        "title": "Rediger eller slet en gruppe",
-        "mobileText": "Tryk på en gruppe for at rette den. For at fjerne den, skal du bruge \"Slet gruppe\" i den formular, der åbnes.",
-        "text": "Brug blyant til at markere en række for at fastlåse en gruppe. For at fjerne den, brug \"Slet gruppe\" i formularen, der åbnes."
+        "title": "Rediger eller slet et sæt",
+        "mobileText": "Tryk på et sæt for at rette det. For at fjerne det, skal du bruge \"Slet sæt\" i formularen, der åbnes.",
+        "text": "Brug blyanten på en række for at rette et sæt. For at fjerne det, skal du bruge \"Slet sæt\" i formularen, der åbnes."
       },
       "chart": {
         "title": "Din fremgang",
@@ -1021,28 +1051,28 @@
       "dashboard": {
         "title": "Dit overblik",
         "text": "Samlede tal, udvikling i volumen og seneste træninger, alt sammen på ét sted.",
-        "textMine": "Samlet resultater, volumenstrends og seneste træninger. Den fyldes op, efterhånden som du registrerer flere sæt."
+        "textMine": "Samlede resultater, volumentendenser og seneste træninger. Det fyldes op, efterhånden som du registrerer flere sæt."
       },
       "timer": {
-        "title": "Timer for pauser",
+        "title": "Hviletimer",
         "text": "Tryk på \"Start\" for at starte en tæller mellem sæt."
       },
       "ribbon": {
         "title": "Log fra enhver note",
-        "text": "Dværgstang-ikonet i båndet åbner log-formularen fra hvor som helst.",
-        "mobileText": "På en telefon er der ikke nogen \"ribbon\"-ikon her. Brug kommandopanelet til at åbne log-formularen fra enhver note."
+        "text": "Håndvægtikonet i båndet åbner formularen til træningslog fra hvor som helst.",
+        "mobileText": "På en telefon er der ingen båndikon her. Brug kommandopaletten til at åbne formularen fra ethvert notat."
       },
       "commands": {
         "title": "Indsæt kommandoer",
-        "text": "Åbn kommandopalet og kør kommandoen \"Indsæt træning\" for at tilføje en tabel, et diagram, en timer eller et dashboard til en note."
+        "text": "Åbn kommandopaletten og kør kommandoen \"Indsæt træning\" for at tilføje en tabel, et diagram, en timer eller et dashboard til en note."
       },
       "end": {
         "title": "Du er klar.",
-        "text": "Du kan gennemføre denne tur igen fra Indstillinger → Start."
+        "text": "Du kan gennemføre denne tur igen fra Indstillinger → Sådan kommer du i gang."
       },
       "muscles": {
-        "title": "Muskelvarme-kort",
-        "text": "Heatkortet viser, hvilke muskler du har trænet senest."
+        "title": "Muskel-heatmap",
+        "text": "Heatmappet viser, hvilke muskler du har trænet senest."
       }
     },
     "showMe": "Vis mig"
@@ -1055,11 +1085,11 @@
     "source": "Eksporter fra {source}",
     "setsFound": "Sæt i filen: {count}",
     "setsToAdd": "Sæt at tilføje: {count}",
-    "duplicates": "Redder allerede i din log, overset: {count}",
+    "duplicates": "Allerede i din log, sprunget over: {count}",
     "dateRange": "Træningsdage: fra {first} til {last}",
     "newExercises": "Øvelser uden side: {exercises}",
     "nothingToAdd": "Hvert sæt i denne fil er allerede registreret i din log.",
-    "backupNote": "Dine logfiler gemmes, før indstillingerne tilføjes.",
+    "backupNote": "Din log sikkerhedskopieres, før sættene tilføjes.",
     "importButton": "Importer sæt",
     "imported": "Import fuldført. Tilføjede sæt: {count}",
     "error": "Import mislykkedes: {error}",

@@ -176,6 +176,31 @@
         "backDominant": "Nierównowaga: Twoja grupa mięśniowa tylna pracuje znacznie bardziej niż grupa mięśniowa przednia.",
         "frontDominant": "Nierównowaga: Twoja przednia część mięśni jest znacznie bardziej obciążona niż tylna."
       }
+    },
+    "editDashboard": "Edytuj pulpit",
+    "modal": {
+      "widgets": "Widżety",
+      "widgetsHint": "Zaznacz widżety, które mają być wyświetlane. Przeciągnij je za uchwyt lub użyj strzałek, aby zmienić kolejność.",
+      "moveUp": "Przesuń {widget} w górę",
+      "moveDown": "Przesuń {widget} w dół",
+      "allHistory": "Pusto: cała historia",
+      "recentWorkoutsLimit": "Liczba treningów na liście ostatnich:",
+      "volumeTrendDays": "Liczba dni w trendzie objętości:",
+      "gridColumns": "Kolumny:",
+      "layout": "Układ",
+      "layoutGrid": "Siatka",
+      "layoutList": "Lista",
+      "stash": "Nie ma go na pulpicie",
+      "stashEmpty": "Wszystkie widżety są na pulpicie",
+      "tile": "{widget}: kolumna {column}, wiersz {row}, szerokość {width}, wysokość {height}",
+      "minOneColumn": "Min. 1 kolumna",
+      "minColumns": "Min. {columns} kolumn",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} wychodzi poza {columns} kolumn siatki",
+      "narrow": "{widget} wymaga co najmniej {min} kolumn",
+      "overlap": "{widget} nakłada się na {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Zaktualizuj timer",
       "decreaseBy": "Zmniejsz {label} o {increment}",
       "increaseBy": "Zwiększ {label} o {increment}",
-      "deleteSet": "Usuń zestaw"
+      "deleteSet": "Usuń zestaw",
+      "updateDashboard": "Zaktualizuj pulpit"
     },
     "canvasLayout": "Układ",
     "canvasOptions": "Opcje",
@@ -605,7 +631,9 @@
       "timerInserted": "Timer został pomyślnie wstawiony!",
       "timerUpdated": "Timer został pomyślnie zaktualizowany!",
       "validChooseExercise": "Wybierz ćwiczenie",
-      "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!"
+      "validationCombinedMode": "Dla typu 'ćwiczenia + trening' musisz wypełnić oba pola!",
+      "dashboardUpdated": "Pulpit został pomyślnie zaktualizowany!",
+      "dashboardUpdateFailed": "Nie udało się zaktualizować pulpitu. Upewnij się, że plik jest otwarty w edytorze."
     },
     "parameterKey": "Klucz:",
     "parameterLabel": "Etykieta:",
@@ -695,7 +723,8 @@
       "insertDuration": "Dodaj czas trwania treningu",
       "insertTable": "Dodaj tabelę z dziennikiem treningów",
       "insertTimer": "Dodaj timer treningowy",
-      "muscleTagManager": "Zarządzaj tagami mięśni"
+      "muscleTagManager": "Zarządzaj tagami mięśni",
+      "editDashboard": "Edytuj pulpit"
     },
     "workout": "Trening (opcjonalnie):",
     "workoutFile": "Plik treningowy:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} musi mieć co najmniej {min} znaków, ale jest {value}",
       "outOfRange": "{key} musi mieścić się w przedziale od {min} do {max}, ale jest {value}.",
       "notABoolean": "{key} musi być wartością prawdy lub fałszu, ale jest \"{value}\"",
-      "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\""
+      "notOneOf": "{key} musi być jednym z {allowed}, ale jest \"{value}\"",
+      "notACell": "{key} musi być czterema liczbami całkowitymi od 1 (kolumna, wiersz, szerokość, wysokość), ale wynosi \"{value}\""
     }
   },
   "welcome": {

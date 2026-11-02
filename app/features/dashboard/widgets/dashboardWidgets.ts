@@ -38,6 +38,8 @@ export interface DashboardWidgetContext {
 interface DashboardWidget {
   /** Shown in the dashboard modal */
   label(): string;
+  /** Grid layout: the fewest columns its content reads well in */
+  minColumns: number;
   render(ctx: DashboardWidgetContext): void | Promise<void>;
 }
 
@@ -48,6 +50,7 @@ export const DASHBOARD_WIDGETS: Record<
 > = {
   summary: {
     label: () => t("dashboard.summary.title"),
+    minColumns: 1,
     // Records are judged against all history, not just this period
     render: async (ctx) =>
       SummaryWidget.render(
@@ -59,11 +62,13 @@ export const DASHBOARD_WIDGETS: Record<
   },
   quickStats: {
     label: () => t("dashboard.quickStats.title"),
+    minColumns: 1,
     render: (ctx) =>
       QuickStatsCards.render(ctx.grid, ctx.data, ctx.params),
   },
   heatMap: {
     label: () => t("general.muscleHeatMap"),
+    minColumns: 2,
     render: (ctx) =>
       MuscleHeatMap.render(
         ctx.grid,
@@ -74,6 +79,7 @@ export const DASHBOARD_WIDGETS: Record<
   },
   volume: {
     label: () => t("dashboard.volumeAnalytics.title"),
+    minColumns: 2,
     render: (ctx) =>
       VolumeAnalytics.render(ctx.grid, ctx.data, ctx.params, {
         chartId: `volume-analytics-${ctx.dashboardId}`,
@@ -81,11 +87,13 @@ export const DASHBOARD_WIDGETS: Record<
   },
   recentWorkouts: {
     label: () => t("dashboard.recentWorkouts.title"),
+    minColumns: 1,
     render: (ctx) =>
       RecentWorkouts.render(ctx.grid, ctx.data, ctx.params),
   },
   protocolDistribution: {
     label: () => t("dashboard.protocolDistribution.title"),
+    minColumns: 2,
     render: (ctx) =>
       ProtocolDistribution.render(
         ctx.grid,
@@ -100,6 +108,7 @@ export const DASHBOARD_WIDGETS: Record<
   },
   protocolEffectiveness: {
     label: () => t("dashboard.protocolEffectiveness.title"),
+    minColumns: 2,
     render: (ctx) =>
       ProtocolEffectiveness.render(
         ctx.grid,
@@ -110,6 +119,7 @@ export const DASHBOARD_WIDGETS: Record<
   },
   duration: {
     label: () => t("dashboard.durationComparison.title"),
+    minColumns: 2,
     render: (ctx) =>
       DurationComparison.render(
         ctx.grid,
@@ -122,15 +132,18 @@ export const DASHBOARD_WIDGETS: Record<
   },
   quickActions: {
     label: () => t("dashboard.quickActions.title"),
+    minColumns: 1,
     render: (ctx) =>
       QuickActions.render(ctx.grid, ctx.params, ctx.plugin),
   },
   fileErrors: {
     label: () => t("dashboard.fileErrors.title"),
+    minColumns: 1,
     render: (ctx) => WidgetsFileError.render(ctx.grid, ctx.plugin),
   },
   muscleTags: {
     label: () => t("dashboard.muscleTags.title"),
+    minColumns: 2,
     render: (ctx) =>
       MuscleTagsWidget.render(ctx.grid, ctx.params, ctx.plugin),
   },

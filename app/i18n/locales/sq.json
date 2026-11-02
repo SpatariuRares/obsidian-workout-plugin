@@ -176,6 +176,31 @@
         "backDominant": "Diferencë mes pjesës front dhe back: pjesa e prapa e trupit punon shumë më shumë se pjesa e përpara.",
         "frontDominant": "Diferencë mes pjesëve përpara dhe prapa: pjesa përpara është shumë më aktive se pjesa e prapa."
       }
+    },
+    "editDashboard": "Redakto panelin",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Shëno widgets-et që do të shfaqen. Tërhiqi me dorezën, ose përdor shigjetat, për të ndryshuar radhitjen.",
+      "moveUp": "Lëviz {widget} lart",
+      "moveDown": "Lëviz {widget} poshtë",
+      "allHistory": "Bosh: e gjithë historia",
+      "recentWorkoutsLimit": "Numri i stërvitjeve në listën e fundit:",
+      "volumeTrendDays": "Numri i ditëve në trendin e vëllimit:",
+      "gridColumns": "Kolonat:",
+      "layout": "Paraqitja",
+      "layoutGrid": "Rrjetë",
+      "layoutList": "Listë",
+      "stash": "Jo në panel",
+      "stashEmpty": "Çdo widget është në panel",
+      "tile": "{widget}: kolona {column}, rreshti {row}, gjerësia {width}, lartësia {height}",
+      "minOneColumn": "Min. 1 kolonë",
+      "minColumns": "Min. {columns} kolona",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} del jashtë {columns} kolonave të rrjetit",
+      "narrow": "{widget} ka nevojë për të paktën {min} kolona",
+      "overlap": "{widget} mbivendoset me {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Përditëso timerin",
       "decreaseBy": "Ul {label} me {increment}",
       "increaseBy": "Rrit {label} me {increment}",
-      "deleteSet": "Fshiri"
+      "deleteSet": "Fshiri",
+      "updateDashboard": "Përditëso panelin"
     },
     "canvasLayout": "Paraqitja",
     "canvasOptions": "Opsione",
@@ -605,7 +631,9 @@
       "timerInserted": "Timeri u vendos suksesfully!",
       "timerUpdated": "Zëri i timer-it u përditësoi me sukses!",
       "validChooseExercise": "Pëzgjidh një veprim",
-      "validationCombinedMode": "Për tipin 'eksercizim + stërvitje', duhet të mbushni të dy fushat!"
+      "validationCombinedMode": "Për tipin 'eksercizim + stërvitje', duhet të mbushni të dy fushat!",
+      "dashboardUpdated": "Paneli u përditësua me sukses!",
+      "dashboardUpdateFailed": "Përditësimi i panelit dështoi. Sigurohu që skedari të jetë hapur në redaktor."
     },
     "parameterKey": "Çelësi:",
     "parameterLabel": "Etiketa:",
@@ -695,7 +723,8 @@
       "insertDuration": "Shto kohëzgjatjen e stërvitjes",
       "insertTable": "Shto tabelë regjistrimi stërvitjeje",
       "insertTimer": "Shto timer stërvitjeje",
-      "muscleTagManager": "Menaxho etiketat e muskujve"
+      "muscleTagManager": "Menaxho etiketat e muskujve",
+      "editDashboard": "Redakto panelin"
     },
     "workout": "Stërvitja (opsionale):",
     "workoutFile": "Skedari i stërvitjes:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} duhet të jetë {min} ose më shumë, por është {value}",
       "outOfRange": "{key} duhet të jetë mes {min} dhe {max}, por është {value}.",
       "notABoolean": "{key} duhet të jetë \"true\" ose \"false\", por është \"{value}\"",
-      "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\""
+      "notOneOf": "{key} duhet të jetë ndër {allowed}, por është \"{value}\"",
+      "notACell": "{key} duhet të jetë katër numra të plotë nga 1 (kolona, rreshti, gjerësia, lartësia), por është \"{value}\""
     }
   },
   "welcome": {

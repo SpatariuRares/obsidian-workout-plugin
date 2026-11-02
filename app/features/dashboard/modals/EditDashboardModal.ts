@@ -11,16 +11,21 @@ import { t } from "@app/i18n";
  * block, found by its ID or, without one, by its line.
  */
 export class EditDashboardModal extends InsertDashboardModal {
+  private readonly fenceLine?: number;
+
   /**
-   * @param fenceLine - Line of the block's opening fence, to find a block
-   * written without an id (it gets one when saved)
+   * @param where.fenceLine - Line of the block's opening fence, to find a
+   * block written without an id (it gets one when saved)
+   * @param where.noteWidth - Width of the dashboard in the note, for the
+   * grid's columns
    */
   constructor(
     app: App,
     params: EmbeddedDashboardParams,
-    private readonly fenceLine?: number,
+    where: { fenceLine?: number; noteWidth?: number } = {},
   ) {
-    super(app, params);
+    super(app, params, where.noteWidth);
+    this.fenceLine = where.fenceLine;
   }
 
   protected getModalTitle(): string {

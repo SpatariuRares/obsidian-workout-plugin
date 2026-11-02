@@ -115,6 +115,42 @@ describe("block schemas", () => {
       });
     });
 
+    it("reads a grid layout: its columns and one cell rectangle per widget", () => {
+      expect(
+        dashboardBlock.parse(
+          ["layout: grid", "columns: 3", "grid.heatMap: 1 2 2 3"].join("\n"),
+        ),
+      ).toEqual({
+        params: {
+          layout: "grid",
+          columns: 3,
+          "grid.heatMap": { column: 1, row: 2, width: 2, height: 3 },
+        },
+        errors: [],
+      });
+    });
+
+    it("rejects a cell that isn't four positive whole numbers", () => {
+      for (const value of ["1 2 3", "1 2 x 1", "0 1 1 1", "1 1 1.5 1"]) {
+        expect(dashboardBlock.parse(`grid.summary: ${value}`).errors).toEqual([
+          t("codeBlocks.validation.notACell", { key: "grid.summary", value }),
+        ]);
+      }
+    });
+
+    it("writes a cell as column, row, width and height", () => {
+      expect(
+        dashboardBlock.serialize({
+          layout: "grid",
+          "grid.summary": { column: 1, row: 1, width: 3, height: 1 },
+        }),
+      ).toBe(
+        ["```workout-dashboard", "layout: grid", "grid.summary: 1 1 3 1", "```"].join(
+          "\n",
+        ),
+      );
+    });
+
     it("rejects a widget it doesn't know, naming the ones it does", () => {
       const { params, errors } = dashboardBlock.parse(
         "widgets: [summary, calendar]",

@@ -185,7 +185,26 @@
       "moveDown": "Move {widget} down",
       "allHistory": "Empty: all history",
       "recentWorkoutsLimit": "Workouts in the recent list:",
-      "volumeTrendDays": "Days in the volume trend:"
+      "volumeTrendDays": "Days in the volume trend:",
+      "layout": "Layout",
+      "layoutList": "List",
+      "layoutGrid": "Grid",
+      "gridHint": "Drag a widget to move it and its corner to resize it; the stash below shows the smallest size each widget can take. Take a widget off with its × or by dropping it on the stash. With the keyboard: arrows move, Shift and arrows resize, Delete takes it off.",
+      "gridColumnsMeasured": "{columns} columns fit the note's width.",
+      "gridColumns": "Columns:",
+      "stash": "Not on the dashboard",
+      "stashEmpty": "Every widget is on the dashboard",
+      "tile": "{widget}: column {column}, row {row}, {width} wide, {height} tall",
+      "minOneColumn": "Min. 1 column",
+      "minColumns": "Min. {columns} columns",
+      "size": "{width} × {height}",
+      "remove": "Take {widget} off the dashboard"
+    },
+    "grid": {
+      "outside": "{widget} goes past the {columns} columns of the grid",
+      "narrow": "{widget} needs at least {min} columns",
+      "overlap": "{widget} overlaps {other}",
+      "empty": "No widget is on the grid yet. Open Edit dashboard in the ⋮ menu to place some."
     }
   },
   "duration": {
@@ -990,7 +1009,8 @@
       "tooSmall": "{key} must be {min} or more, but it is {value}",
       "outOfRange": "{key} must be between {min} and {max}, but it is {value}",
       "notABoolean": "{key} must be true or false, but it is \"{value}\"",
-      "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\""
+      "notOneOf": "{key} must be one of {allowed}, but it is \"{value}\"",
+      "notACell": "{key} must be four whole numbers from 1 up (column, row, width, height), but it is \"{value}\""
     }
   },
   "welcome": {

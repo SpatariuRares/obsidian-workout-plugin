@@ -4,7 +4,7 @@
     "fallbackTableMessage": "Le graphique n'a pas pu être affiché, les données sont donc présentées sous forme de tableau.",
     "labels": {
       "quickWeightIncrementUnit": "Les boutons de poids incrémentent de {weightIncrementUnit}",
-      "trendType": "Tendance {type}:",
+      "trendType": "Tendance {type} :",
       "variationFromTo": " de {startValue} à {endValue}",
       "weightIncrementUnit": "Augmentation du poids {weightIncrementUnit}"
     },
@@ -20,11 +20,11 @@
       "reps": "Répétitions",
       "volume": "Volume",
       "weight": "Poids",
-      "e1rm": "Estimation de la valeur de 1RM"
+      "e1rm": "1RM estimé"
     },
     "defaultTitle": "Évolution {type}",
     "noTypesAvailable": "Aucun type de graphique disponible",
-    "noEligibleE1rm": "Aucun ensemble de poids approprié pour l'estimation du 1RM. Enregistrer un poids positif avec 1 à 12 répétitions, en excluant les séries de montée et de descente."
+    "noEligibleE1rm": "Aucune série éligible pour l'estimation du 1RM. Enregistrez un poids positif avec 1 à 12 répétitions, hors échauffements et drop sets."
   },
   "commands": {
     "addExerciseBlock": "Ajouter un bloc d'exercice",
@@ -56,7 +56,7 @@
     "workout": "Entraînement"
   },
   "convert": {
-    "currentType": "Type actuel:",
+    "currentType": "Type actuel :",
     "errors": {
       "convertError": "Erreur lors de la conversion des données de l'exercice : {error}"
     },
@@ -84,7 +84,7 @@
   "dashboard": {
     "durationComparison": {
       "columnActual": "Réel",
-      "columnEstimated": "Prévision",
+      "columnEstimated": "Estimée",
       "columnVariance": "Écart",
       "columnWorkout": "Entraînement",
       "minutesSuffix": " min",
@@ -103,7 +103,7 @@
       "noTags": "Aucun tag musculaire dans le frontmatter",
       "title": "Erreurs de fichier",
       "tooManyTags": "Trop de tags musculaires ({count})",
-      "sharedName": "Le même nom d'exercice que {pages} : les logs sont enregistrés dans l'un et l'autre."
+      "sharedName": "Même nom d'exercice que {pages} : les entrées de journal ne vont que dans l'une d'elles."
     },
     "muscleTags": {
       "description": "Description",
@@ -129,8 +129,8 @@
       "columnVolumeChange": "Variation du volume",
       "disclaimer": "Avertissement",
       "noData": "Pas encore assez de données : chaque protocole nécessite au moins 5 séries enregistrées.",
-      "title": "Efficacité du protocole",
-      "subtitle": "Comment chaque protocole a fonctionné sur l'ensemble des ensembles enregistrés."
+      "title": "Efficacité des protocoles",
+      "subtitle": "Comment chaque protocole a fonctionné sur l'ensemble des séries enregistrées."
     },
     "quickActions": {
       "addWorkoutLog": "Ajouter une entrée d'entraînement",
@@ -176,11 +176,36 @@
         "backDominant": "Déséquilibre avant/arrière : vos muscles du dos sont beaucoup plus sollicités que vos muscles du devant.",
         "frontDominant": "Déséquilibre avant/arrière : votre partie avant travaille beaucoup plus que votre partie arrière."
       }
+    },
+    "editDashboard": "Modifier le tableau de bord",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Cochez les widgets à afficher. Faites-les glisser par la poignée, ou utilisez les flèches, pour changer leur ordre.",
+      "moveUp": "Monter {widget}",
+      "moveDown": "Descendre {widget}",
+      "allHistory": "Vide : tout l'historique",
+      "recentWorkoutsLimit": "Nombre de séances dans la liste récente :",
+      "volumeTrendDays": "Nombre de jours dans la tendance du volume :",
+      "gridColumns": "Colonnes :",
+      "layout": "Disposition",
+      "layoutGrid": "Grille",
+      "layoutList": "Liste",
+      "stash": "Absent du tableau de bord",
+      "stashEmpty": "Tous les widgets sont sur le tableau de bord",
+      "tile": "{widget} : colonne {column}, ligne {row}, largeur {width}, hauteur {height}",
+      "minOneColumn": "Min. 1 colonne",
+      "minColumns": "Min. {columns} colonnes",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} dépasse les {columns} colonnes de la grille",
+      "narrow": "{widget} nécessite au moins {min} colonnes",
+      "overlap": "{widget} chevauche {other}"
     }
   },
   "duration": {
     "estimatedDuration": "Durée estimée",
-    "lastSession": "Dernière session",
+    "lastSession": "Dernière séance",
     "restTime": "Durée de repos",
     "setTime": "Durée par série",
     "unableToAnalyze": "Impossible d'analyser le fichier d'entraînement."
@@ -248,7 +273,7 @@
       "codeBlockWorkoutDashboard": "Aperçu complet des statistiques",
       "codeBlockWorkoutDuration": "Estimer la durée de l'entraînement",
       "codeBlockWorkoutLog": "Afficher le tableau des données d'entraînement",
-      "codeBlockWorkoutTimer": "Minuteur à rebours ou par intervalles",
+      "codeBlockWorkoutTimer": "Compte à rebours ou minuteur par intervalles",
       "combinedTitle": "Combiné (Exercice + Entraînement)",
       "commandsNote": "**Commandes** (Ctrl/Cmd + P) : Créer un journal d'entraînement, Insérer un graphique d'entraînement, Insérer un minuteur d'entraînement, Créer une page d'exercice",
       "countdownTimerTitle": "Compte à rebours",
@@ -319,15 +344,15 @@
       "workoutsFolder": "**{folder}/**",
       "pagesIntro": "Explorez une fonctionnalité par page. Suivez les liens dans l'ordre, ou choisissez une fonctionnalité ci-dessous. Utilisez les boutons \"Précédent\" et \"Suivant\" pour naviguer entre les notes ; faites défiler normalement pour explorer chaque exemple.",
       "liveIntro": "Explorez toutes les fonctionnalités ci-dessous avec des exemples d'entraînements sur six semaines. Il s'agit de données de démonstration ; essayez les commandes et voyez comment vos notes fonctionnent.",
-      "tryLog": "Utilisez le bouton \"+\" pour ajouter un ensemble de données. La table, les graphiques et le tableau de bord utilisent le même fichier CSV.",
+      "tryLog": "Utilisez le bouton \"+\" pour ajouter une série. Le tableau, les graphiques et le tableau de bord utilisent le même fichier CSV.",
       "continueWithWorkout": "Ouvrez [[{workout}]] pour essayer un entraînement complet avec des tableaux d'exercices et des minuteries de repos.",
       "moreExamples": "Consultez [[{showcase}]] pour plus d'informations sur les différents types de graphiques, les filtres et les protocoles de formation.",
       "ownData": "Lorsque vous êtes prêt, choisissez votre propre dossier CSV et votre dossier d'exemple dans les paramètres → Configuration et données. Conservez le dossier d'exemple comme référence.",
-      "openGuideDesc": "Ouvrez la page \"débuter\" avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
+      "openGuideDesc": "Ouvrez la page « Comment débuter » avec des exemples fonctionnels de tableaux, de graphiques, de minuteurs et du tableau de bord."
     },
     "hiit": {
       "cyclingCooldownTitle": "Retour au calme à vélo",
-      "intro": "Programme d'entraînement par intervalles de haute intensité, avec chronomètres intégrés et suivi des performances cardiovasculaires.",
+      "intro": "Programme d'entraînement par intervalles de haute intensité, avec minuteurs intégrés et suivi des performances cardiovasculaires.",
       "runningProgressTitle": "Progression en course à pied",
       "sprintIntervalsTitle": "Intervalles de sprint (30 s × 8 tours)",
       "title": "Séance de cardio HIIT",
@@ -338,7 +363,7 @@
       "duration": "Durée",
       "note": "Remarque : donnez tout",
       "recoverySuffix": "(Temps de récupération : {seconds} secondes)",
-      "setsReps": "{sets} séries x {reps} répétitions"
+      "setsReps": "{sets} séries × {reps} répétitions"
     },
     "workouts": {
       "cardioDay": {
@@ -376,7 +401,7 @@
       "avgCustom": "Valeur moyenne {label}",
       "avgDistance": "Distance moyenne (km)",
       "avgDuration": "Durée moyenne (sec)",
-      "avgHeartRate": "Rythme cardiaque moyen (battements par minute)",
+      "avgHeartRate": "Fréquence cardiaque moyenne (bpm)",
       "avgVolume": "Volume moyen ({unit})",
       "avgWeight": "Poids moyen ({unit})",
       "dailyVolume": "Volume quotidien ({unit})",
@@ -419,7 +444,7 @@
       "muscleTagsCsvError": "Erreur de création du CSV des tags musculaires : {error}",
       "muscleTagsLoadError": "Erreur de chargement des tags musculaires : {error}",
       "templateGenError": "Échec de la génération des modèles : {error}",
-      "workoutLogCreateError": "Impossible de créer le fichier CSV au chemin: {path}. Veuillez vérifier le chemin dans les paramètres.",
+      "workoutLogCreateError": "Impossible de créer le fichier CSV au chemin : {path}. Veuillez vérifier le chemin dans les paramètres.",
       "tableRenderError": "Erreur lors du rendu du tableau"
     },
     "imbalanceAlerts": "Alertes de déséquilibre",
@@ -430,7 +455,7 @@
       "blockIdsAdded": "{count} ID manquant(s) ajouté(s) dans {files} fichier(s)",
       "csvCreated": "Le fichier CSV a été créé avec succès !",
       "noBlockIdsNeeded": "Tous les blocs de code ont déjà des identifiants.",
-      "weightUnitsStamped": "Enregisté l'unité de poids dans les anciens journaux {count}."
+      "weightUnitsStamped": "Unité de poids enregistrée pour {count} anciens journaux."
     },
     "tagReferenceGenerated": "Référence des tags générée avec succès !",
     "timerCompleted": "Minuteur terminé !",
@@ -479,7 +504,8 @@
       "updateTimer": "Mettre à jour le minuteur",
       "decreaseBy": "Diminuer {label} de {increment}",
       "increaseBy": "Augmenter {label} de {increment}",
-      "deleteSet": "Supprimer"
+      "deleteSet": "Supprimer la série",
+      "updateDashboard": "Mettre à jour le tableau de bord"
     },
     "canvasLayout": "Mise en page",
     "canvasOptions": "Options",
@@ -507,7 +533,7 @@
     "dataLimit": "Limite de données :",
     "dataType": "Type de données :",
     "dateRange": "Période (en jours) :",
-    "daysRange": "Durée :",
+    "daysRange": "Plage (en jours) :",
     "delete": "Supprimer",
     "duration": "Durée (en secondes) :",
     "editTag": "Modifier le tag",
@@ -548,7 +574,7 @@
       "auditRenameFileError": "Impossible de renommer le fichier : {error}",
       "auditRenameFileSuccess": "Fichier renommé",
       "auditRenameSuccess": "Renommé ({count} fichiers mis à jour)",
-      "auditScanError": "Erreur lors du scan : {error}",
+      "auditScanError": "Erreur lors de l'analyse : {error}",
       "auditScanning": "Analyse des fichiers d'exercices...",
       "canvasExportError": "Erreur d'exportation vers le canvas : {error}",
       "canvasExported": "Canvas exporté ({path})",
@@ -563,7 +589,7 @@
       "logCreated": "Journal d'entraînement créé avec succès !",
       "logUpdated": "Votre journal d'entraînement a été mis à jour avec succès !",
       "migrationComplete": "Migration terminée. {count} fichiers d'exercice mis à jour.",
-      "migrationError": "Erreur de migration: {error}",
+      "migrationError": "Erreur de migration : {error}",
       "muscleTagCount": "{count} tag(s) trouvé(s)",
       "muscleTagDeleteConfirm": "Êtes-vous sûr de vouloir supprimer le tag \"{tag}\" ?",
       "muscleTagDeleted": "Tag supprimé",
@@ -595,7 +621,7 @@
       "validFieldRequired": "{field} est obligatoire",
       "migrationNoUpdates": "Toutes les pages d'exercices sont déjà à jour",
       "validMustBeWholeNumber": "{field} doit être un nombre entier.",
-      "newRecord": "Nouvelle valeur : {weight} {unit} (+{increase} {unit})",
+      "newRecord": "Nouveau record : {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Le graphique a été inséré avec succès !",
       "dashboardInserted": "Le tableau de bord a été inséré avec succès !",
       "exerciseNameRequired": "Veuillez saisir le nom de l'exercice.",
@@ -605,7 +631,9 @@
       "timerInserted": "Le minuteur a été inséré avec succès !",
       "timerUpdated": "Le minuteur a été mis à jour avec succès !",
       "validChooseExercise": "Sélectionner un exercice",
-      "validationCombinedMode": "Pour le type « exercice + entraînement », vous devez remplir les deux champs."
+      "validationCombinedMode": "Pour le type « exercice + entraînement », vous devez remplir les deux champs.",
+      "dashboardUpdated": "Tableau de bord mis à jour avec succès !",
+      "dashboardUpdateFailed": "Échec de la mise à jour du tableau de bord. Vérifiez que le fichier est ouvert dans l'éditeur."
     },
     "parameterKey": "Clé :",
     "parameterLabel": "Étiquette :",
@@ -632,9 +660,9 @@
       "workout": "ex. : Entraînement A, Training B, ou cochez la case ci-dessous"
     },
     "protocol": "Protocole :",
-    "recentExercises": "Récemment :",
+    "recentExercises": "Récents :",
     "restTime": "Temps de repos (en secondes) :",
-    "rounds": "Rondes :",
+    "rounds": "Tours :",
     "save": "Enregistrer",
     "sections": {
       "advancedOptions": "Options avancées",
@@ -695,7 +723,8 @@
       "insertDuration": "Insérer la durée de l'entraînement",
       "insertTable": "Insérer le tableau du journal d'entraînement",
       "insertTimer": "Insérer un minuteur d'entraînement",
-      "muscleTagManager": "Gérer les tags musculaires"
+      "muscleTagManager": "Gérer les tags musculaires",
+      "editDashboard": "Modifier le tableau de bord"
     },
     "workout": "Entraînement (facultatif) :",
     "workoutFile": "Fichier d'entraînement :",
@@ -712,7 +741,7 @@
     "noteTemplate": "**Note : {note}**\n",
     "date": "Date",
     "weightUnitToggle": "Unité pour cette entrée",
-    "rest": "Reposer",
+    "rest": "Repos",
     "work": "Travail"
   },
   "settings": {
@@ -757,11 +786,11 @@
       "weightIncrement": "Incrément de poids par défaut pour la surcharge progressive (par exemple, 2,5 pour des incréments de 2,5 unités).",
       "showRibbonIcon": "Afficher dans le ruban l'icône d'haltère qui ouvre le formulaire du journal d'entraînement",
       "weightUnit": "Unité pour les graphiques, les totaux et les nouveaux enregistrements. Chaque enregistrement conserve l'unité dans laquelle il a été créé.",
-      "takeTour": "Présentez brièvement les fonctionnalités de journalisation, de graphiques, de tableaux et de minuteurs.",
+      "takeTour": "Parcourez rapidement l'enregistrement, les graphiques, les tableaux et les minuteurs sur une note courte.",
       "welcomeWindow": "Réafficher la fenêtre d'accueil pour démarrer avec des données d'exemple ou à partir de zéro.",
       "keepScreenAwake": "Essayez de maintenir l'écran allumé pendant que l'une des minuteries fonctionne en premier plan. Consomme plus de batterie ; la disponibilité dépend de votre appareil et de vos paramètres système.",
       "vibrateOnCompletion": "Vibre brièvement lorsque le minuteur s'éteint, indépendamment du son. Nécessite un clic sur la page et un appareil compatible (par exemple, Android). Non disponible sur iOS ; pas d'alertes en arrière-plan.",
-      "presetRestDesc": "Nombre de secondes de repos après chaque série d'exercices (0 pour aucun repos).",
+      "presetRestDesc": "Nombre de secondes de repos après le travail de chaque tour (0 pour aucun repos).",
       "noCustomProtocols": "Aucun protocole n'est défini pour le moment. Cliquez sur « Ajouter un protocole » pour en créer un."
     },
     "labels": {
@@ -774,7 +803,7 @@
       "generateDefaultTemplates": "Générer les modèles par défaut",
       "presetDuration": "Durée (secondes)",
       "presetName": "Nom du préréglage",
-      "presetRounds": "Rondes",
+      "presetRounds": "Tours",
       "presetShowControls": "Afficher les commandes",
       "presetSound": "Son",
       "presetType": "Type de minuteur",
@@ -791,7 +820,7 @@
       "takeTour": "Visite guidée",
       "keepScreenAwake": "Maintenir l'écran allumé pendant que le minuteur est en cours",
       "vibrateOnCompletion": "Vibrer à la fin d'un minuteur",
-      "presetRest": "Préférences"
+      "presetRest": "Repos"
     },
     "messages": {
       "confirmDeletePreset": "Êtes-vous sûr de vouloir supprimer ce préréglage ?",
@@ -831,7 +860,7 @@
       "timerPresets": "Préréglages du minuteur",
       "trainingParameters": "Paramètres d'entraînement",
       "gettingStarted": "Premiers pas",
-      "timerDeviceCues": "Indices pour les dispositifs de minuterie",
+      "timerDeviceCues": "Signaux du minuteur sur l'appareil",
       "customProtocols": "Protocoles"
     },
     "tooltips": {
@@ -847,9 +876,9 @@
       "mustBePositive": "Doit être supérieur à 0"
     },
     "protocolHelp": {
-      "warmup": "Les séances de lumière sont effectuées avant les séances de travail. Elles ne sont pas prises en compte pour les statistiques personnelles.",
+      "warmup": "Séries légères effectuées avant les séries de travail. Elles ne comptent pas dans les records personnels.",
       "dropSet": "Réduisez le poids immédiatement après l'échec et continuez. Les séries de descente de poids ne sont pas prises en compte pour les records personnels.",
-      "myoReps": "Un ensemble d'activations, suivi de courts ensembles miniatures avec quelques secondes de repos.",
+      "myoReps": "Une série d'activation, suivie de courtes mini-séries avec quelques secondes de repos.",
       "restPause": "Reposez quelques secondes après l'échec, puis effectuez quelques répétitions supplémentaires.",
       "superset": "Deux exercices l'un après l'autre, sans pause entre les deux.",
       "twentyone": "7 répétitions dans la partie inférieure, 7 dans la partie supérieure, puis 7 répétitions complètes."
@@ -867,7 +896,7 @@
     "recentVsPrev": " (vs préc.)",
     "sessions": "Séances",
     "average": "Moyenne :",
-    "title": "{dataTypeLabel} Statistiques ({contextLabel}) :"
+    "title": "Statistiques {dataTypeLabel} ({contextLabel}) :"
   },
   "table": {
     "actions": "Actions",
@@ -901,7 +930,7 @@
     "gotoExercise": "Aller à l'exercice",
     "invalidDate": "Date invalide",
     "labels": {
-      "target": "Cible:"
+      "target": "Cible :"
     },
     "noData": "Aucune donnée",
     "notAvailable": "N/D",
@@ -913,9 +942,9 @@
     },
     "trendLine": "Ligne de tendance",
     "refreshingTable": "Actualisation du tableau...",
-    "setCount": "{count} définit",
-    "deleteSetMessage": "{set} sera supprimé de votre journal. Il n'est pas possible de revenir en arrière.",
-    "deleteSetTitle": "Supprimer cet ensemble ?"
+    "setCount": "{count} séries",
+    "deleteSetMessage": "{set} sera supprimé de votre journal. Cette action est irréversible.",
+    "deleteSetTitle": "Supprimer cette série ?"
   },
   "timeperiods": {
     "month": "Mois",
@@ -971,12 +1000,13 @@
   },
   "codeBlocks": {
     "validation": {
-      "title": "Paramètres invalides:",
+      "title": "Paramètres invalides :",
       "notANumber": "{key} doit être un nombre, mais il s'agit de \"{value}\".",
       "tooSmall": "{key} doit être supérieur ou égal à {min}, mais il est {value}",
       "outOfRange": "{key} doit se situer entre {min} et {max}, mais il est {value}.",
       "notABoolean": "{key} doit être vrai ou faux, mais il s'agit de \"{value}\".",
-      "notOneOf": "{key} doit être l'une des valeurs suivantes : {allowed}, mais elle est \"{value}\""
+      "notOneOf": "{key} doit être l'une des valeurs suivantes : {allowed}, mais elle est \"{value}\"",
+      "notACell": "{key} doit être quatre nombres entiers à partir de 1 (colonne, ligne, largeur, hauteur), mais vaut \"{value}\""
     }
   },
   "welcome": {
@@ -986,30 +1016,30 @@
     "startScratch": "Commencer à zéro",
     "later": "Plus tard",
     "tryExamplesDesc": "Ajoute des exemples d'entraînements, puis vous guide à travers l'utilisation du plugin avec ces exemples.",
-    "startScratchDesc": "Vous guide à travers l'utilisation du plugin sur vos propres données, en commençant par votre premier ensemble.",
-    "tourOnYourData": "Vous avez déjà un journal d'entraînement, donc le programme s'exécute sur vos propres données."
+    "startScratchDesc": "Vous guide à travers l'utilisation du plugin sur vos propres données, en commençant par votre première série.",
+    "tourOnYourData": "Vous avez déjà un journal d'entraînement, donc la visite se déroule sur vos propres données."
   },
   "tour": {
     "back": "Retour",
     "next": "Suivant",
-    "skip": "Passer au tour suivant",
+    "skip": "Passer la visite",
     "done": "Terminé",
     "progress": "{current} de {total}",
     "noteName": "Visite guidée",
     "noteIntro": "La visite guidée met en évidence chaque élément du plugin sur cette page. Modifiez ou supprimez cette note à votre guise.",
-    "noteTable": "Vos ensembles",
+    "noteTable": "Vos séries",
     "noteChart": "Progression",
     "noteDashboard": "Tableau de bord",
     "noteTimer": "Minuteur de repos",
     "steps": {
       "logSet": {
-        "title": "Enregistrez votre premier ensemble",
-        "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez un ensemble. Il apparaîtra immédiatement dans le tableau."
+        "title": "Enregistrez votre première série",
+        "text": "Appuyez sur le bouton \"+\" pour ouvrir le formulaire, puis enregistrez une série. Elle apparaît immédiatement dans le tableau."
       },
       "rowActions": {
-        "title": "Modifier ou supprimer un ensemble",
-        "mobileText": "Appuyez sur un ensemble pour le supprimer. Pour le supprimer, utilisez l'option \"Supprimer l'ensemble\" dans le formulaire qui s'ouvre.",
-        "text": "Utilisez le crayon sur une ligne pour définir un ensemble. Pour le supprimer, utilisez « Supprimer l'ensemble » dans le formulaire qui s'ouvre."
+        "title": "Modifier ou supprimer une série",
+        "mobileText": "Appuyez sur une série pour la corriger. Pour la supprimer, utilisez « Supprimer la série » dans le formulaire qui s'ouvre.",
+        "text": "Utilisez le crayon sur une ligne pour corriger une série. Pour la supprimer, utilisez « Supprimer la série » dans le formulaire qui s'ouvre."
       },
       "chart": {
         "title": "Votre progression",
@@ -1020,25 +1050,25 @@
       },
       "dashboard": {
         "title": "Votre tableau de bord",
-        "text": "Résultats, tendances du volume et séances d'entraînement récentes, le tout regroupé.",
-        "textMine": "Résultats, tendances du volume et séances d'entraînement récentes. Il se remplit à mesure que vous enregistrez davantage de séries."
+        "text": "Totaux, tendances du volume et séances récentes, regroupés dans un seul bloc.",
+        "textMine": "Totaux, tendances du volume et séances récentes. Il se remplit à mesure que vous enregistrez davantage de séries."
       },
       "timer": {
-        "title": "Minuteur de pause",
+        "title": "Minuteur de repos",
         "text": "Appuyez sur le bouton \"Démarrer\" pour lancer un compte à rebours entre les séries."
       },
       "ribbon": {
-        "title": "Accéder à la liste des notes",
-        "text": "L'icône de haltère dans la barre permet d'ouvrir le formulaire d'historique depuis n'importe quel endroit.",
+        "title": "Enregistrer depuis n'importe quelle note",
+        "text": "L'icône d'haltère dans le ruban ouvre le formulaire d'enregistrement depuis n'importe quelle note.",
         "mobileText": "Sur un téléphone, il n'y a pas d'icône de ruban ici. Utilisez la palette de commandes pour ouvrir le formulaire de journal depuis n'importe quelle note."
       },
       "commands": {
         "title": "Ajouter des commandes",
-        "text": "Ouvrez la palette de commandes et exécutez la commande \"Insérer un entraînement\" pour ajouter une table, un graphique, un minuteur ou un tableau de bord à une note."
+        "text": "Ouvrez la palette de commandes et lancez une commande « Insérer » pour ajouter un tableau, un graphique, un minuteur ou un tableau de bord à une note."
       },
       "end": {
         "title": "Vous êtes prêt.",
-        "text": "Vous pouvez refaire cette visite à nouveau depuis les Paramètres → Début."
+        "text": "Vous pouvez refaire cette visite depuis Paramètres → Premiers pas."
       },
       "muscles": {
         "title": "Carte de chaleur musculaire",
@@ -1050,18 +1080,18 @@
   "import": {
     "chooseFile": "Sélectionner le fichier CSV",
     "notAnExport": "Ce fichier n'est ni une exportation \"Strong\" ni une exportation \"Hevy\".",
-    "noSets": "Aucun ensemble n'a pu être lu à partir de ce fichier. Vérifiez que c'est le fichier CSV que l'application a exporté, sans modification.",
+    "noSets": "Aucune série n'a pu être lue à partir de ce fichier. Vérifiez que c'est le fichier CSV que l'application a exporté, sans modification.",
     "readError": "Impossible de lire le fichier : {error}",
     "source": "Exporter depuis {source}",
-    "setsFound": "Ensembles dans le fichier : {count}",
-    "setsToAdd": "Ensembles à ajouter : {count}",
-    "duplicates": "Déjà présent dans votre journal, ignoré : {count}",
-    "dateRange": "Jours de formation : du {first} au {last}",
+    "setsFound": "Séries dans le fichier : {count}",
+    "setsToAdd": "Séries à ajouter : {count}",
+    "duplicates": "Déjà dans votre journal, ignorées : {count}",
+    "dateRange": "Jours d'entraînement : du {first} au {last}",
     "newExercises": "Exercices sans page : {exercises}",
-    "nothingToAdd": "Chaque ensemble dans ce fichier est déjà enregistré dans votre journal.",
-    "backupNote": "Vos journaux sont sauvegardés avant que les ensembles ne soient ajoutés.",
-    "importButton": "Importer des ensembles",
-    "imported": "Import terminé. Paramètres ajoutés : {count}",
+    "nothingToAdd": "Chaque série de ce fichier est déjà dans votre journal.",
+    "backupNote": "Votre journal est sauvegardé avant l'ajout des séries.",
+    "importButton": "Importer les séries",
+    "imported": "Import terminé. Séries ajoutées : {count}",
     "error": "Échec de l'importation : {error}",
     "title": "Importer depuis Strong ou Hevy",
     "intro": "Choisissez le fichier CSV à partir de l'exportation de données d'entraînement de l'application. Rien n'est enregistré tant que vous ne confirmez pas."

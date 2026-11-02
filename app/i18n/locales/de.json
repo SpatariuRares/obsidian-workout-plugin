@@ -176,6 +176,31 @@
         "backDominant": "Ungleichgewicht: Ihre hintere Muskelgruppe arbeitet deutlich stärker als Ihre vordere.",
         "frontDominant": "Ungleichgewicht: Ihre Vorderseite arbeitet deutlich mehr als Ihre Rückseite."
       }
+    },
+    "editDashboard": "Dashboard bearbeiten",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Markiere die Widgets, die angezeigt werden sollen. Ziehe sie am Griff oder nutze die Pfeile, um die Reihenfolge zu ändern.",
+      "moveUp": "{widget} nach oben verschieben",
+      "moveDown": "{widget} nach unten verschieben",
+      "allHistory": "Leer: gesamter Verlauf",
+      "recentWorkoutsLimit": "Anzahl Trainings in der Liste der letzten:",
+      "volumeTrendDays": "Tage im Volumentrend:",
+      "gridColumns": "Spalten:",
+      "layout": "Layout",
+      "layoutGrid": "Raster",
+      "layoutList": "Liste",
+      "stash": "Nicht auf dem Dashboard",
+      "stashEmpty": "Alle Widgets sind auf dem Dashboard",
+      "tile": "{widget}: Spalte {column}, Zeile {row}, {width} breit, {height} hoch",
+      "minOneColumn": "Min. 1 Spalte",
+      "minColumns": "Min. {columns} Spalten",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} ragt über die {columns} Spalten des Rasters hinaus",
+      "narrow": "{widget} benötigt mindestens {min} Spalten",
+      "overlap": "{widget} überlappt {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Timer aktualisieren",
       "decreaseBy": "{label} um {increment} verringern",
       "increaseBy": "{label} um {increment} erhöhen",
-      "deleteSet": "Set löschen"
+      "deleteSet": "Set löschen",
+      "updateDashboard": "Dashboard aktualisieren"
     },
     "canvasLayout": "Anordnung",
     "canvasOptions": "Einstellungen",
@@ -605,7 +631,9 @@
       "timerInserted": "Timer erfolgreich eingefügt!",
       "timerUpdated": "Timer erfolgreich aktualisiert!",
       "validChooseExercise": "Wählen Sie eine Übung",
-      "validationCombinedMode": "Für den Typ \"Übung + Training\" müssen Sie beide Felder ausfüllen!"
+      "validationCombinedMode": "Für den Typ \"Übung + Training\" müssen Sie beide Felder ausfüllen!",
+      "dashboardUpdated": "Dashboard erfolgreich aktualisiert!",
+      "dashboardUpdateFailed": "Dashboard konnte nicht aktualisiert werden. Stelle sicher, dass die Datei im Editor geöffnet ist."
     },
     "parameterKey": "Schlüssel:",
     "parameterLabel": "Beschriftung:",
@@ -695,7 +723,8 @@
       "insertDuration": "Trainingsdauer einfügen",
       "insertTable": "Tabelle der Trainingsprotokolle einfügen",
       "insertTimer": "Trainings-Timer einfügen",
-      "muscleTagManager": "Muskel-Tags verwalten"
+      "muscleTagManager": "Muskel-Tags verwalten",
+      "editDashboard": "Dashboard bearbeiten"
     },
     "workout": "Training (optional):",
     "workoutFile": "Trainingsdatei:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} muss mindestens {min} sein, aber es ist {value}",
       "outOfRange": "{key} muss zwischen {min} und {max} liegen, aber es ist {value}.",
       "notABoolean": "{key} muss entweder wahr oder falsch sein, aber es ist \"{value}\"",
-      "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\""
+      "notOneOf": "{key} muss einer von {allowed} sein, aber es ist \"{value}\"",
+      "notACell": "{key} muss vier ganze Zahlen ab 1 sein (Spalte, Zeile, Breite, Höhe), ist aber \"{value}\""
     }
   },
   "welcome": {

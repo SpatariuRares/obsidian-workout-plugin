@@ -176,6 +176,31 @@
         "backDominant": "前后肌肉力量失衡：您的后侧肌肉活动量远大于前侧。",
         "frontDominant": "前部与后部的力量失衡：您的前部力量远大于后部。"
       }
+    },
+    "editDashboard": "编辑仪表板",
+    "modal": {
+      "widgets": "小组件",
+      "widgetsHint": "勾选要显示的小组件。拖动手柄或使用箭头即可更改顺序。",
+      "moveUp": "上移 {widget}",
+      "moveDown": "下移 {widget}",
+      "allHistory": "留空：全部历史",
+      "recentWorkoutsLimit": "最近列表中的训练数：",
+      "volumeTrendDays": "体积趋势中的天数：",
+      "gridColumns": "列数：",
+      "layout": "布局",
+      "layoutGrid": "网格",
+      "layoutList": "列表",
+      "stash": "不在仪表板上",
+      "stashEmpty": "所有小组件都在仪表板上",
+      "tile": "{widget}：第 {column} 列，第 {row} 行，宽 {width}，高 {height}",
+      "minOneColumn": "最少 1 列",
+      "minColumns": "最少 {columns} 列",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} 超出了网格的 {columns} 列",
+      "narrow": "{widget} 至少需要 {min} 列",
+      "overlap": "{widget} 与 {other} 重叠"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "更新计时器",
       "decreaseBy": "将{label}减少{increment}",
       "increaseBy": "将{label}增加{increment}",
-      "deleteSet": "删除集合"
+      "deleteSet": "删除集合",
+      "updateDashboard": "更新仪表板"
     },
     "canvasLayout": "布局",
     "canvasOptions": "选项",
@@ -605,7 +631,9 @@
       "timerInserted": "倒计时已成功插入！",
       "timerUpdated": "计时器已成功更新！",
       "validChooseExercise": "选择一项运动",
-      "validationCombinedMode": "对于“锻炼 + 训练”类型的项目，您必须同时填写这两个字段！"
+      "validationCombinedMode": "对于“锻炼 + 训练”类型的项目，您必须同时填写这两个字段！",
+      "dashboardUpdated": "仪表板已成功更新！",
+      "dashboardUpdateFailed": "更新仪表板失败。请确保文件已在编辑器中打开。"
     },
     "parameterKey": "键：",
     "parameterLabel": "标签：",
@@ -695,7 +723,8 @@
       "insertDuration": "插入训练时长",
       "insertTable": "插入训练记录表格",
       "insertTimer": "插入训练计时器",
-      "muscleTagManager": "管理肌肉标签"
+      "muscleTagManager": "管理肌肉标签",
+      "editDashboard": "编辑仪表板"
     },
     "workout": "训练（可选）：",
     "workoutFile": "训练文件：",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} 必须大于或等于 {min}，但目前是 {value}",
       "outOfRange": "{key} 的值必须在 {min} 和 {max} 之间，但实际上是 {value}。",
       "notABoolean": "{key} 必须是真或假，但现在是 \"{value}\"。",
-      "notOneOf": "{key} 必须是 {allowed} 中的一个，但实际上是 \"{value}\"。"
+      "notOneOf": "{key} 必须是 {allowed} 中的一个，但实际上是 \"{value}\"。",
+      "notACell": "{key} 必须是从 1 开始的四个整数（列、行、宽、高），但当前为 \"{value}\""
     }
   },
   "welcome": {

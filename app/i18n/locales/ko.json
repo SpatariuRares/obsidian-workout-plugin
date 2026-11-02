@@ -176,6 +176,31 @@
         "backDominant": "전체와 후면의 불균형: 후면 근육이 전면 근육보다 훨씬 더 많이 사용됩니다.",
         "frontDominant": "전면-후면 불균형: 전면 근육이 후면 근육보다 훨씬 더 많이 사용됩니다."
       }
+    },
+    "editDashboard": "대시보드 편집",
+    "modal": {
+      "widgets": "위젯",
+      "widgetsHint": "표시할 위젯을 체크하세요. 손잡이를 드래그하거나 화살표를 사용해 순서를 바꿀 수 있습니다.",
+      "moveUp": "{widget}을(를) 위로 이동",
+      "moveDown": "{widget}을(를) 아래로 이동",
+      "allHistory": "비어 있음: 전체 기록",
+      "recentWorkoutsLimit": "최근 목록의 운동 수:",
+      "volumeTrendDays": "볼륨 추세의 일 수:",
+      "gridColumns": "열:",
+      "layout": "레이아웃",
+      "layoutGrid": "그리드",
+      "layoutList": "목록",
+      "stash": "대시보드에 없음",
+      "stashEmpty": "모든 위젯이 대시보드에 있습니다",
+      "tile": "{widget}: 열 {column}, 행 {row}, 너비 {width}, 높이 {height}",
+      "minOneColumn": "최소 1열",
+      "minColumns": "최소 {columns}열",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget}이(가) 그리드의 {columns}개 열을 벗어납니다",
+      "narrow": "{widget}에는 최소 {min}개 열이 필요합니다",
+      "overlap": "{widget}이(가) {other}와(과) 겹칩니다"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "타이머 업데이트",
       "decreaseBy": "{label}을(를) {increment} 줄이기",
       "increaseBy": "{label}을(를) {increment} 늘리기",
-      "deleteSet": "세트 삭제"
+      "deleteSet": "세트 삭제",
+      "updateDashboard": "대시보드 업데이트"
     },
     "canvasLayout": "레이아웃",
     "canvasOptions": "옵션",
@@ -605,7 +631,9 @@
       "timerInserted": "타이머가 성공적으로 삽입되었습니다!",
       "timerUpdated": "타이머가 성공적으로 업데이트되었습니다!",
       "validChooseExercise": "운동을 선택하세요",
-      "validationCombinedMode": "'운동 + 운동 루틴' 유형의 경우, 두 필드를 모두 작성해야 합니다!"
+      "validationCombinedMode": "'운동 + 운동 루틴' 유형의 경우, 두 필드를 모두 작성해야 합니다!",
+      "dashboardUpdated": "대시보드가 업데이트되었습니다!",
+      "dashboardUpdateFailed": "대시보드 업데이트에 실패했습니다. 파일이 편집기에서 열려 있는지 확인하세요."
     },
     "parameterKey": "키:",
     "parameterLabel": "레이블:",
@@ -695,7 +723,8 @@
       "insertDuration": "운동 시간 삽입",
       "insertTable": "운동 기록 테이블 삽입",
       "insertTimer": "운동 타이머 삽입",
-      "muscleTagManager": "근육 태그 관리"
+      "muscleTagManager": "근육 태그 관리",
+      "editDashboard": "대시보드 편집"
     },
     "workout": "운동 (선택 사항):",
     "workoutFile": "운동 파일:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key}는 {min} 이상이어야 하지만, 현재는 {value}입니다.",
       "outOfRange": "{key}는 {min}과 {max} 사이의 값이어야 하지만, 현재는 {value}입니다.",
       "notABoolean": "{key}는 참 또는 거짓이어야 하지만, 현재 \"{value}\"입니다.",
-      "notOneOf": "{key}는 {allowed} 중 하나여야 하지만, 현재 \"{value}\"입니다."
+      "notOneOf": "{key}는 {allowed} 중 하나여야 하지만, 현재 \"{value}\"입니다.",
+      "notACell": "{key}은(는) 1부터 시작하는 정수 4개(열, 행, 너비, 높이)여야 하지만 \"{value}\"입니다"
     }
   },
   "welcome": {

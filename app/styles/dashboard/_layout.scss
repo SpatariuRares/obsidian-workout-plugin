@@ -61,6 +61,23 @@
   .widget-wide {
     grid-column: span 2;
   }
+
+  /* Grid ("inventory") layout: EmbeddedDashboardView sets the columns for
+     the dashboard's width and each widget's cells; rows grow with content.
+     More specific than the bento and phone rules, which it replaces. */
+  .workout-dashboard-grid.is-inventory {
+    grid-template-columns: repeat(
+      var(--workout-grid-columns, 1),
+      minmax(0, 1fr)
+    );
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+
+    .workout-dashboard-widget {
+      grid-column: var(--workout-cell-column, auto);
+      grid-row: var(--workout-cell-row, auto);
+    }
+  }
 }
 
 @media (max-width: variables.$breakpoint-xl) {

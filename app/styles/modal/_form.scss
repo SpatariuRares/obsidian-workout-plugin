@@ -307,3 +307,173 @@
   box-shadow: 0 var(--workout-space-lg) 0
     var(--modal-background, var(--background-primary));
 }
+
+/* The list or the grid, whichever the layout isn't, is [hidden]: keep it out
+   of the layout even where a rule here sets its display */
+.workout-dashboard-form [hidden] {
+  display: none;
+}
+
+/* Dashboard modal, grid layout: GridEditor draws the cells, the tiles of the
+   placed widgets (positioned with the same CSS variables as the dashboard)
+   and the stash of the others. */
+.workout-dashboard-grid-area {
+  margin-bottom: var(--workout-space-md);
+}
+
+.workout-grid-editor {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--workout-grid-columns, 1),
+    minmax(0, 1fr)
+  );
+  grid-template-rows: repeat(var(--workout-grid-rows, 1), 56px);
+  gap: var(--workout-space-xs);
+  padding: var(--workout-space-xs);
+  background: var(--background-primary);
+  border: var(--workout-border-thin) solid
+    var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-grid-editor-cell,
+.workout-grid-tile {
+  grid-column: var(--workout-cell-column);
+  grid-row: var(--workout-cell-row);
+  min-width: 0;
+}
+
+.workout-grid-editor-cell {
+  border: var(--workout-border-thin) dashed
+    var(--background-modifier-border);
+  border-radius: var(--workout-radius-sm);
+}
+
+.workout-grid-tile {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  background: var(--background-secondary);
+  border: var(--workout-border-thin) solid var(--interactive-accent);
+  border-radius: var(--workout-radius-md);
+  font-size: var(--workout-font-sm);
+  cursor: grab;
+  user-select: none;
+  /* The pointer moves the tile instead of scrolling the modal */
+  touch-action: none;
+
+  &:focus-visible {
+    outline: var(--workout-border-medium) solid var(--interactive-accent);
+  }
+}
+
+.workout-grid-preview {
+  z-index: 2;
+  opacity: 0.6;
+  pointer-events: none;
+  border-style: dashed;
+
+  &.is-conflict {
+    border-color: var(--workout-text-error);
+  }
+}
+
+/* Takes the widget off the grid (back to the stash) */
+.workout-grid-tile-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: flex;
+  padding: 2px;
+  height: auto;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  cursor: pointer;
+
+  .svg-icon {
+    width: var(--icon-xs, 14px);
+    height: var(--icon-xs, 14px);
+  }
+}
+
+.workout-grid-tile-resize {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 14px;
+  height: 14px;
+  border-right: var(--workout-border-medium) solid var(--text-muted);
+  border-bottom: var(--workout-border-medium) solid var(--text-muted);
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.workout-grid-stash {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--workout-space-xs);
+  margin-top: var(--workout-space-sm);
+  padding: var(--workout-space-sm);
+  border: var(--workout-border-thin) dashed
+    var(--background-modifier-border);
+  border-radius: var(--workout-radius-md);
+}
+
+.workout-grid-stash-title {
+  width: 100%;
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-grid-stash-empty {
+  color: var(--text-faint);
+  font-size: var(--workout-font-sm);
+}
+
+.workout-grid-stash-items {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--workout-grid-columns, 1),
+    minmax(0, 1fr)
+  );
+  gap: var(--workout-space-xs);
+  width: 100%;
+}
+
+/* A stashed widget is drawn at its smallest size on the grid */
+.workout-grid-stash-item {
+  grid-column: var(--workout-cell-column, auto);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  height: auto;
+  min-height: 56px;
+  padding: var(--workout-space-xs) var(--workout-space-sm);
+  border: var(--workout-border-thin) dashed var(--interactive-accent);
+  border-radius: var(--workout-radius-md);
+  white-space: normal;
+  text-align: left;
+  cursor: grab;
+  touch-action: none;
+}
+
+.workout-grid-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* Room for the × in the corner */
+  padding-right: calc(var(--workout-space-sm) + 18px);
+}
+
+.workout-grid-tile-label {
+  font-weight: var(--workout-font-weight-semibold);
+}
+
+.workout-grid-size {
+  color: var(--text-muted);
+  font-size: var(--workout-font-sm);
+}

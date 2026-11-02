@@ -176,6 +176,31 @@
         "backDominant": "Desequilibrio entre la parte frontal y la trasera: su espalda trabaja mucho más que su parte frontal.",
         "frontDominant": "Desequilibrio entre la parte frontal y la trasera: tu parte frontal trabaja mucho más que tu parte trasera."
       }
+    },
+    "editDashboard": "Editar panel",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Marca los widgets que quieres mostrar. Arrástralos por el asa o usa las flechas para cambiar su orden.",
+      "moveUp": "Subir {widget}",
+      "moveDown": "Bajar {widget}",
+      "allHistory": "Vacío: todo el historial",
+      "recentWorkoutsLimit": "Entrenamientos en la lista reciente:",
+      "volumeTrendDays": "Días en la tendencia de volumen:",
+      "gridColumns": "Columnas:",
+      "layout": "Diseño",
+      "layoutGrid": "Cuadrícula",
+      "layoutList": "Lista",
+      "stash": "No está en el panel",
+      "stashEmpty": "Todos los widgets están en el panel",
+      "tile": "{widget}: columna {column}, fila {row}, {width} de ancho, {height} de alto",
+      "minOneColumn": "Mín. 1 columna",
+      "minColumns": "Mín. {columns} columnas",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} se sale de las {columns} columnas de la cuadrícula",
+      "narrow": "{widget} necesita al menos {min} columnas",
+      "overlap": "{widget} se solapa con {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Actualizar temporizador",
       "decreaseBy": "Disminuir {label} en {increment}",
       "increaseBy": "Aumentar {label} en {increment}",
-      "deleteSet": "Eliminar conjunto"
+      "deleteSet": "Eliminar conjunto",
+      "updateDashboard": "Actualizar panel"
     },
     "canvasLayout": "Diseño",
     "canvasOptions": "Opciones",
@@ -605,7 +631,9 @@
       "timerInserted": "El temporizador se ha insertado correctamente.",
       "timerUpdated": "¡El temporizador se ha actualizado correctamente!",
       "validChooseExercise": "Seleccione un ejercicio",
-      "validationCombinedMode": "Para el tipo de 'ejercicio + entrenamiento', debe completar ambos campos."
+      "validationCombinedMode": "Para el tipo de 'ejercicio + entrenamiento', debe completar ambos campos.",
+      "dashboardUpdated": "¡Panel actualizado correctamente!",
+      "dashboardUpdateFailed": "No se pudo actualizar el panel. Asegúrate de que el archivo esté abierto en el editor."
     },
     "parameterKey": "Clave:",
     "parameterLabel": "Etiqueta:",
@@ -695,7 +723,8 @@
       "insertDuration": "Insertar duración de entrenamiento",
       "insertTable": "Insertar tabla de registro de entrenamiento",
       "insertTimer": "Insertar temporizador de entrenamiento",
-      "muscleTagManager": "Gestionar etiquetas musculares"
+      "muscleTagManager": "Gestionar etiquetas musculares",
+      "editDashboard": "Editar panel"
     },
     "workout": "Entrenamiento (opcional):",
     "workoutFile": "Archivo de entrenamiento:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} debe ser {min} o más, pero actualmente es {value}",
       "outOfRange": "{key} debe estar entre {min} y {max}, pero es {value}",
       "notABoolean": "{key} debe ser verdadero o falso, pero es \"{value}\".",
-      "notOneOf": "{key} debe ser uno de {allowed}, pero es \"{value}\"."
+      "notOneOf": "{key} debe ser uno de {allowed}, pero es \"{value}\".",
+      "notACell": "{key} debe ser cuatro números enteros desde 1 (columna, fila, ancho, alto), pero es \"{value}\""
     }
   },
   "welcome": {

@@ -178,7 +178,7 @@ describe("EditDashboardModal", () => {
     const modal = new EditDashboardModal(
       app,
       dashboardBlock.parse(body).params,
-      fenceLine,
+      { fenceLine },
     );
     return {
       state,
@@ -245,5 +245,222 @@ describe("EditDashboardModal", () => {
     expect(params.id).toBe("d1");
     expect(params.dateRange).toBe(60);
     expect(params.widgets).not.toContain("summary");
+  });
+});
+
+describe("dashboard modal, grid layout", () => {
+  const inserted = (text: string) =>
+    dashboardBlock.parse(text.split("\n").slice(1, -3).join("\n"))
+      .params;
+
+  const gridForm = (
+    modal: InsertDashboardModal,
+    buttonText: string,
+  ) => {
+    const f = form(modal, buttonText);
+    const tile = (id: string) =>
+      f.contentEl.querySelector<HTMLElement>(
+        `.workout-grid-tile[data-widget="${id}"]`,
+      );
+    const key = (id: string, keyName: string, shiftKey = false) =>
+      tile(id)!.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: keyName,
+          shiftKey,
+          bubbles: true,
+        }),
+      );
+    const layoutSelect = f.contentEl.querySelector<HTMLSelectElement>(
+      "select.workout-dashboard-layout",
+    )!;
+    const setLayout = (value: "list" | "grid") => {
+      layoutSelect.value = value;
+      layoutSelect.dispatchEvent(new Event("change"));
+    };
+    return { ...f, tile, key, setLayout };
+  };
+
+  it("packs the ticked widgets into the note's columns when switched to grid", () => {
+    const { app, state } = fakeApp();
+    // (900 + 16) / (280 + 16): three columns fit
+    const f = gridForm(
+      new InsertDashboardModal(app, {}, 900),
+      t("modal.buttons.insertDashboard"),
+    );
+
+    f.setLayout("grid");
+    f.submit();
+
+    const params = inserted(state.inserted);
+    expect(params.layout).toBe("grid");
+    expect(params.columns).toBe(3);
+    expect(params.widgets).toBeUndefined();
+    expect(params["grid.summary"]).toEqual({
+      column: 1,
+      row: 1,
+      width: 1,
+      height: 1,
+    });
+    expect(params["grid.quickStats"]).toEqual({
+      column: 2,
+      row: 1,
+      width: 1,
+      height: 1,
+    });
+    // The heat map needs two columns: the rest of row 1 is too narrow
+    expect(params["grid.heatMap"]).toEqual({
+      column: 1,
+      row: 2,
+      width: 2,
+      height: 1,
+    });
+  });
+
+  it("asks for the columns when it can't measure the note", () => {
+    const { app } = fakeApp();
+    const f = gridForm(
+      new InsertDashboardModal(app),
+      t("modal.buttons.insertDashboard"),
+    );
+
+    f.setLayout("grid");
+
+    const columns = f.contentEl.querySelector<HTMLInputElement>(
+      "input.workout-dashboard-grid-columns",
+    );
+    expect(columns?.value).toBe("2");
+  });
+
+  describe("editing a grid", () => {
+    const GRID = note(
+      "```workout-dashboard",
+      "id: d1",
+      "layout: grid",
+      "columns: 2",
+      "grid.summary: 1 1 1 1",
+      "grid.recentWorkouts: 2 1 1 1",
+      "```",
+    );
+
+    const openGrid = () => {
+      const { app, state } = fakeApp(GRID);
+      const params = dashboardBlock.parse(
+        GRID.split("\n").slice(1, -1).join("\n"),
+      ).params;
+      const f = gridForm(
+        new EditDashboardModal(app, params, { noteWidth: 600 }),
+        t("modal.buttons.updateDashboard"),
+      );
+      return { state, ...f };
+    };
+
+    it("moves a widget with the arrow keys, rewriting only its line", async () => {
+      const f = openGrid();
+
+      f.key("summary", "ArrowDown");
+      f.submit();
+      await flush();
+
+      expect(f.state.content).toBe(
+        GRID.replace(
+          "grid.summary: 1 1 1 1",
+          "grid.summary: 1 2 1 1",
+        ),
+      );
+    });
+
+    it("refuses to move a widget onto another", async () => {
+      const f = openGrid();
+
+      f.key("summary", "ArrowRight");
+      f.submit();
+      await flush();
+
+      expect(f.state.content).toBe(GRID);
+    });
+
+    it("makes a widget taller with Shift and an arrow", async () => {
+      const f = openGrid();
+
+      f.key("summary", "ArrowDown", true);
+      f.submit();
+      await flush();
+
+      expect(f.state.content).toBe(
+        GRID.replace(
+          "grid.summary: 1 1 1 1",
+          "grid.summary: 1 1 1 2",
+        ),
+      );
+    });
+
+    it("sends a widget to the stash with Delete, and back to the first free spot with a click", async () => {
+      const f = openGrid();
+
+      f.key("summary", "Delete");
+      expect(f.tile("summary")).toBeNull();
+      const stashed = f.contentEl.querySelector<HTMLElement>(
+        '.workout-grid-stash [data-widget="summary"]',
+      )!;
+      stashed.click();
+      f.submit();
+      await flush();
+
+      expect(f.state.content).toBe(GRID);
+    });
+
+    it("takes a widget off with its × and moves the focus to it in the stash", async () => {
+      const f = openGrid();
+
+      f.tile("summary")!
+        .querySelector<HTMLButtonElement>(".workout-grid-tile-remove")!
+        .click();
+
+      expect(f.tile("summary")).toBeNull();
+      expect(document.activeElement?.getAttribute("data-widget")).toBe("summary");
+      f.submit();
+      await flush();
+      expect(f.state.content).toBe(GRID.replace("grid.summary: 1 1 1 1\n", ""));
+    });
+
+    it("leaves the grid lines alone when only the title changes in a wider note", async () => {
+      const { app, state } = fakeApp(GRID);
+      const params = dashboardBlock.parse(GRID.split("\n").slice(1, -1).join("\n")).params;
+      // 1300px fit four columns, the grid was saved for two
+      const f = gridForm(
+        new EditDashboardModal(app, params, { noteWidth: 1300 }),
+        t("modal.buttons.updateDashboard"),
+      );
+      const title = f.contentEl.querySelector<HTMLInputElement>("input[type=text]")!;
+
+      title.value = "Legs";
+      f.submit();
+      await flush();
+
+      // Only the new title line: columns and cells stay as saved
+      expect(state.content).toBe(
+        GRID.replace(
+          "grid.recentWorkouts: 2 1 1 1\n```",
+          "grid.recentWorkouts: 2 1 1 1\ntitle: Legs\n```",
+        ),
+      );
+    });
+
+    it("writes the widgets in reading order when switched back to list", async () => {
+      const f = openGrid();
+
+      f.setLayout("list");
+      f.submit();
+      await flush();
+
+      expect(f.state.content).toBe(
+        note(
+          "```workout-dashboard",
+          "id: d1",
+          "widgets: [summary, recentWorkouts]",
+          "```",
+        ),
+      );
+    });
   });
 });

@@ -104,6 +104,7 @@ Features: linear regression trend lines, trend headers with % change, statistics
 title: My Dashboard
 dateRange: 30
 widgets: [summary, heatMap, volume, recentWorkouts] # order shown; unset = all
+# or layout: grid, columns: 3, grid.summary: 1 1 3 1 (column row width height), one line per widget
 recentWorkoutsLimit: 5
 volumeTrendDays: 30
 ```

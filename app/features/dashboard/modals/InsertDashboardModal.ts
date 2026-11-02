@@ -1,4 +1,4 @@
-import { App } from "obsidian";
+import { App, MarkdownView } from "obsidian";
 import { BaseInsertModal } from "@app/features/modals/base/BaseInsertModal";
 import { dashboardBlock } from "@app/features/dashboard/dashboardBlock";
 import {
@@ -16,6 +16,20 @@ import {
   BUTTONSIZE,
 } from "@app/components/atoms/Button";
 import { Icon } from "@app/components/atoms/Icon";
+import { GridEditor } from "@app/features/dashboard/ui/GridEditor";
+import {
+  columnsForWidth,
+  gridColumns,
+  gridParams,
+  gridPlacements,
+  minColumnsOf,
+} from "@app/features/dashboard/layout/dashboardGrid";
+import {
+  autoPack,
+  fitColumns,
+  Placement,
+  readingOrder,
+} from "@app/features/dashboard/layout/gridLayout";
 import { ICONS } from "@app/constants/ui.constants";
 import { generateCodeBlockId } from "@app/utils/IdUtils";
 import { t } from "@app/i18n";
@@ -29,8 +43,9 @@ const WIDGET_SETTINGS = {
 >;
 
 /**
- * The dashboard form: title, period, which widgets to show and in what
- * order. Opens on `initialParams`, so the edit modal reuses it as is.
+ * The dashboard form: title, period, and the widgets, either as a list
+ * (which ones, in what order) or as a grid (each widget in its cells).
+ * Opens on `initialParams`, so the edit modal reuses it as is.
  */
 export class InsertDashboardModal extends BaseInsertModal {
   /** Every widget, in the order the form shows them */
@@ -43,14 +58,36 @@ export class InsertDashboardModal extends BaseInsertModal {
     HTMLInputElement
   >;
   private listEl!: HTMLElement;
+  private gridAreaEl!: HTMLElement;
+  private widgetsHintEl!: HTMLElement;
   /** The document listeners of a drag in progress */
   private dragListeners: AbortController | null = null;
+  private layout: "list" | "grid";
+  /** Grid layout: the widgets on the grid */
+  protected placements: Placement[] = [];
+  /** Grid layout: the columns the grid is made for */
+  protected gridColumns = 2;
+  /** Whether the columns come from the note's width (else the user types them) */
+  private columnsMeasured = false;
+  /**
+   * Until the user changes the grid, the form gives back the block's own
+   * grid: opening a grid in a note of another width (refitted on screen)
+   * and saving a title must not rewrite it
+   */
+  private gridTouched = false;
+  private gridEditor: GridEditor | null = null;
 
+  /**
+   * @param noteWidth - The width of the note the dashboard lives in, for
+   * the grid's columns; measured from the active note when not given
+   */
   constructor(
     app: App,
     protected readonly initialParams: EmbeddedDashboardParams = {},
+    private readonly noteWidth?: number,
   ) {
     super(app);
+    this.layout = initialParams.layout === "grid" ? "grid" : "list";
     const shown = resolveWidgets(initialParams);
     this.shown = new Set(shown);
     this.order = [
@@ -61,6 +98,7 @@ export class InsertDashboardModal extends BaseInsertModal {
 
   onClose(): void {
     this.dragListeners?.abort();
+    this.gridEditor?.destroy();
     super.onClose();
   }
 
@@ -105,13 +143,29 @@ export class InsertDashboardModal extends BaseInsertModal {
       container,
       t("dashboard.modal.widgets"),
     );
-    widgets.createEl("p", {
-      text: t("dashboard.modal.widgetsHint"),
+    const layoutSelect = this.createSelect(
+      this.createFormGroup(widgets),
+      t("dashboard.modal.layout"),
+      [
+        { text: t("dashboard.modal.layoutList"), value: "list" },
+        { text: t("dashboard.modal.layoutGrid"), value: "grid" },
+      ],
+    );
+    layoutSelect.addClass("workout-dashboard-layout");
+    layoutSelect.value = this.layout;
+    layoutSelect.addEventListener("change", () =>
+      this.setLayout(layoutSelect.value === "grid" ? "grid" : "list"),
+    );
+    this.widgetsHintEl = widgets.createEl("p", {
       cls: "setting-item-description",
     });
     this.listEl = widgets.createDiv({
       cls: "workout-dashboard-widget-list",
     });
+    this.gridAreaEl = widgets.createDiv({
+      cls: "workout-dashboard-grid-area",
+    });
+    this.setUpGrid(params);
 
     this.settingInputs = {
       recentWorkoutsLimit: this.createNumberInput(
@@ -133,7 +187,7 @@ export class InsertDashboardModal extends BaseInsertModal {
         1,
       ),
     };
-    this.renderWidgetList();
+    this.renderWidgets();
   }
 
   protected generateCode(): string {
@@ -153,10 +207,13 @@ export class InsertDashboardModal extends BaseInsertModal {
     const isDefault =
       widgets.length === DASHBOARD_WIDGET_IDS.length &&
       widgets.every((id, i) => id === DASHBOARD_WIDGET_IDS[i]);
+    const grid = this.layout === "grid";
     const params: EmbeddedDashboardParams = {
       title: this.titleInput.value.trim() || undefined,
       dateRange: readNumber(this.dateRangeInput, 0),
-      widgets: isDefault ? undefined : widgets,
+      widgets: grid || isDefault ? undefined : widgets,
+      layout: grid ? "grid" : undefined,
+      ...this.gridLines(grid),
     };
     for (const key of Object.keys(
       WIDGET_SETTINGS,
@@ -166,6 +223,128 @@ export class InsertDashboardModal extends BaseInsertModal {
         value === dashboardBlock.defaults[key] ? undefined : value;
     }
     return params;
+  }
+
+  /** `columns` and the `grid.<widget>` lines: the block's own until touched */
+  private gridLines(grid: boolean): EmbeddedDashboardParams {
+    if (!grid) return { columns: undefined, ...gridParams([]) };
+    if (!this.gridTouched) {
+      return {
+        columns: this.initialParams.columns,
+        ...gridParams(gridPlacements(this.initialParams)),
+      };
+    }
+    return {
+      columns: this.gridColumns,
+      ...gridParams(this.placements),
+    };
+  }
+
+  /**
+   * The grid's columns (from the note's width, or typed in when it can't be
+   * measured) and, for a grid block, its widgets fitted into them
+   */
+  private setUpGrid(params: EmbeddedDashboardParams): void {
+    const width = this.noteWidth ?? measureNoteWidth(this.app);
+    this.columnsMeasured = width !== undefined;
+    const saved = gridPlacements(params);
+    if (width !== undefined) {
+      this.gridColumns = columnsForWidth(width, this.contentEl);
+    } else if (params.layout === "grid") {
+      this.gridColumns = gridColumns(params, saved);
+    }
+    this.placements = fitColumns(saved, this.gridColumns);
+  }
+
+  /**
+   * List → grid: the ticked widgets, in order, packed at their minimum
+   * width. Grid → list: the placed widgets in reading order, ticked.
+   */
+  private setLayout(layout: "list" | "grid"): void {
+    if (layout === this.layout) return;
+    this.gridTouched = true;
+    if (layout === "grid") {
+      this.placements = autoPack(
+        this.order
+          .filter((id) => this.shown.has(id))
+          .map((id) => ({ id, width: minColumnsOf(id), height: 1 })),
+        this.gridColumns,
+      );
+    } else {
+      const placed = readingOrder(this.placements).map(
+        (p) => p.id as DashboardWidgetId,
+      );
+      this.shown = new Set(placed);
+      this.order = [
+        ...placed,
+        ...this.order.filter((id) => !this.shown.has(id)),
+      ];
+    }
+    this.layout = layout;
+    this.renderWidgets();
+  }
+
+  /** Shows the list or the grid editor, whichever the layout is */
+  private renderWidgets(): void {
+    const grid = this.layout === "grid";
+    this.listEl.hidden = grid;
+    this.gridAreaEl.hidden = !grid;
+    // One line above the widgets: in a grid, the columns come first
+    this.widgetsHintEl.setText(
+      grid
+        ? [
+            this.columnsMeasured
+              ? t("dashboard.modal.gridColumnsMeasured", {
+                  columns: String(this.gridColumns),
+                })
+              : "",
+            t("dashboard.modal.gridHint"),
+          ]
+            .filter(Boolean)
+            .join(" ")
+        : t("dashboard.modal.widgetsHint"),
+    );
+    if (grid) this.renderGrid();
+    else this.renderWidgetList();
+  }
+
+  private renderGrid(): void {
+    this.gridEditor?.destroy();
+    this.gridAreaEl.empty();
+    if (!this.columnsMeasured) {
+      const columnsInput = this.createNumberInput(
+        this.createFormGroup(this.gridAreaEl),
+        t("dashboard.modal.gridColumns"),
+        String(this.gridColumns),
+        1,
+        12,
+      );
+      columnsInput.addClass("workout-dashboard-grid-columns");
+      columnsInput.addEventListener("change", () => {
+        const columns = readNumber(columnsInput, 1);
+        if (!columns || columns > 12) return;
+        this.gridColumns = Math.floor(columns);
+        this.gridTouched = true;
+        this.placements = fitColumns(
+          this.placements,
+          this.gridColumns,
+        );
+        this.gridEditor?.update({
+          columns: this.gridColumns,
+          placements: this.placements,
+        });
+      });
+    }
+    this.gridEditor = new GridEditor(this.gridAreaEl.createDiv(), {
+      columns: this.gridColumns,
+      placements: this.placements,
+      onChange: (placements) => {
+        this.placements = placements;
+        this.gridTouched = true;
+        this.updateWidgetSettings();
+      },
+    });
+    this.updateWidgetSettings();
   }
 
   private renderWidgetList(): void {
@@ -284,15 +463,32 @@ export class InsertDashboardModal extends BaseInsertModal {
     doc.addEventListener("pointercancel", onEnd, { signal });
   }
 
-  /** A widget's setting shows only while that widget is ticked */
+  /** A widget's setting shows only while that widget is on the dashboard */
   private updateWidgetSettings(): void {
     for (const [key, widget] of Object.entries(WIDGET_SETTINGS)) {
       const group = this.settingInputs[
         key as keyof typeof WIDGET_SETTINGS
       ]?.closest<HTMLElement>(".workout-charts-form-group");
-      if (group) group.hidden = !this.shown.has(widget);
+      if (!group) continue;
+      group.hidden =
+        this.layout === "grid"
+          ? !this.placements.some((p) => p.id === widget)
+          : !this.shown.has(widget);
     }
   }
+}
+
+/**
+ * The width of the active note's content (readable line width included),
+ * or undefined when there is no note to measure
+ */
+function measureNoteWidth(app: App): number | undefined {
+  const view = app.workspace.getActiveViewOfType(MarkdownView);
+  const content = view?.contentEl?.querySelector(
+    ".markdown-preview-sizer, .cm-sizer",
+  );
+  const width = content?.getBoundingClientRect().width ?? 0;
+  return width > 0 ? width : undefined;
 }
 
 /** The number typed in, or undefined when empty or below `min` */

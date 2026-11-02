@@ -173,6 +173,16 @@ widgets: [summary, heatMap, volume, recentWorkouts]
 
 To choose the widgets and their order without writing YAML, insert the dashboard with the **Insert workout dashboard** command, or open the ⋮ menu at the top right of an inserted dashboard and pick **Edit dashboard**.
 
+Set **Layout** to **Grid** in that window to place each widget yourself, like items in an inventory: drag a widget to move it, drag its corner to make it wider or taller, and drop it under the grid to take it off. The keyboard works too: arrows move, Shift and arrows resize, Delete takes a widget off. The grid has as many columns as fit the width of your note; in a narrower pane the widgets are packed again in reading order, and on a phone they are stacked. The block keeps one line per widget (column, row, width, height):
+
+```workout-dashboard
+layout: grid
+columns: 3
+grid.summary: 1 1 3 1
+grid.heatMap: 1 2 2 2
+grid.recentWorkouts: 3 2 1 1
+```
+
 The heat map shows which muscles you trained over the last week, month or year, front and back, by **Volume**, **Sets** or **Reps**. It's the quickest way to notice you've skipped legs for three weeks. Under it, a short training analysis warns you about imbalances, like a front that works much more than the back. It reads the muscle tags of your [exercise pages](#exercise-types). Bodyweight and timed exercises have no weight, so they light up only under Sets and Reps.
 
 <img src="assets/heatmap.png" width="720" alt="Muscle heat map for the week on desktop and on a phone: chest and quads trained">
@@ -185,6 +195,9 @@ The heat map shows which muscles you trained over the last week, month or year, 
 | `title`               | —       | Heading above the dashboard                                                                                                                                                                                 |
 | `dateRange`           | all     | Only sets from the last N days                                                                                                                                                                              |
 | `widgets`             | all     | The widgets to show, in this order: `summary`, `quickStats`, `heatMap`, `volume`, `recentWorkouts`, `protocolDistribution`, `protocolEffectiveness`, `duration`, `quickActions`, `fileErrors`, `muscleTags` |
+| `layout`              | `list`  | `grid` places each widget in its cells (see above)                                                                                                                                                          |
+| `columns`             | —       | Grid: the columns the grid was made for                                                                                                                                                                     |
+| `grid.<widget>`       | —       | Grid: column, row, width and height of that widget                                                                                                                                                          |
 | `recentWorkoutsLimit` | `5`     | Workouts in the recent list                                                                                                                                                                                 |
 | `volumeTrendDays`     | `30`    | Days in the volume trend chart                                                                                                                                                                              |
 

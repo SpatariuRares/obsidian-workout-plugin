@@ -24,7 +24,7 @@
     },
     "defaultTitle": "Tren {type}",
     "noTypesAvailable": "Tidak ada jenis grafik yang tersedia",
-    "noEligibleE1rm": "Tidak ada set yang memenuhi syarat untuk estimasi 1RM. Catat beban positif dengan 1–12 repetisi, dengan mengecualikan pemanasan dan set penurunan beban."
+    "noEligibleE1rm": "Tidak ada set yang memenuhi syarat untuk estimasi 1RM. Catat beban positif dengan 1–12 repetisi. Pemanasan dan set penurunan beban tidak termasuk."
   },
   "commands": {
     "addExerciseBlock": "Tambah blok latihan",
@@ -127,7 +127,7 @@
       "columnProgression": "Kemajuan",
       "columnProtocol": "Protokol",
       "columnVolumeChange": "Perubahan volume",
-      "disclaimer": "Pernyataan",
+      "disclaimer": "Penafian",
       "noData": "Data belum cukup: setiap protokol perlu minimal 5 set yang dicatat.",
       "title": "Efektivitas protokol",
       "subtitle": "Bagaimana setiap protokol telah bekerja pada semua set yang tercatat"
@@ -173,9 +173,34 @@
         "reps": "Rata-rata repetisi: {value}"
       },
       "imbalance": {
-        "backDominant": "Ketidakseimbangan depan-belakang: otot punggung Anda bekerja jauh lebih banyak daripada otot perut Anda.",
+        "backDominant": "Ketidakseimbangan depan-belakang: bagian belakang Anda bekerja jauh lebih banyak daripada bagian depan Anda.",
         "frontDominant": "Ketidakseimbangan depan-belakang: bagian depan Anda bekerja jauh lebih banyak daripada bagian belakang."
       }
+    },
+    "editDashboard": "Sunting dasbor",
+    "modal": {
+      "widgets": "Widget",
+      "widgetsHint": "Centang widget yang ingin ditampilkan. Seret lewat pegangannya, atau gunakan panah, untuk mengubah urutannya.",
+      "moveUp": "Pindahkan {widget} ke atas",
+      "moveDown": "Pindahkan {widget} ke bawah",
+      "allHistory": "Kosong: semua riwayat",
+      "recentWorkoutsLimit": "Jumlah latihan di daftar terbaru:",
+      "volumeTrendDays": "Jumlah hari dalam tren volume:",
+      "gridColumns": "Kolom:",
+      "layout": "Tata letak",
+      "layoutGrid": "Kisi",
+      "layoutList": "Daftar",
+      "stash": "Tidak ada di dasbor",
+      "stashEmpty": "Semua widget ada di dasbor",
+      "tile": "{widget}: kolom {column}, baris {row}, lebar {width}, tinggi {height}",
+      "minOneColumn": "Min. 1 kolom",
+      "minColumns": "Min. {columns} kolom",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} melewati {columns} kolom kisi",
+      "narrow": "{widget} membutuhkan minimal {min} kolom",
+      "overlap": "{widget} tumpang tindih dengan {other}"
     }
   },
   "duration": {
@@ -286,7 +311,7 @@
       "base": "Contoh The Gym",
       "exercises": "Latihan",
       "log": "Log",
-      "workouts": "Latihan"
+      "workouts": "Sesi latihan"
     },
     "gettingStarted": {
       "commandCreateExercise": "Buat halaman latihan",
@@ -322,7 +347,7 @@
       "tryLog": "Gunakan tombol \"+\" untuk menambahkan satu set. Tabel, grafik, dan dasbor membaca file CSV yang sama.",
       "continueWithWorkout": "Buka [[{workout}]] untuk mencoba latihan lengkap dengan tabel latihan dan timer istirahat.",
       "moreExamples": "Lihat [[{showcase}]] untuk jenis grafik, filter, dan protokol pelatihan lainnya.",
-      "ownData": "Saat Anda siap, pilih folder CSV dan folder contoh Anda di Pengaturan → Konfigurasi & data. Simpan folder contoh sebagai referensi.",
+      "ownData": "Saat Anda siap, pilih folder CSV dan folder latihan Anda sendiri di Pengaturan → Pengaturan & data. Simpan folder contoh sebagai referensi.",
       "openGuideDesc": "Buka halaman \"mulai\" dengan contoh-contoh yang berfungsi dari tabel, grafik, timer, dan dasbor."
     },
     "hiit": {
@@ -356,7 +381,7 @@
       "supersetLunges": "Superset dengan lunges"
     },
     "createToOpenGuide": "Panduan memulai ini adalah bagian dari catatan contoh, yang belum ada. Apakah Anda ingin membuatnya sekarang?",
-    "pointedAtExamples": "Pandangan Anda sekarang membaca contoh log dan latihan. Ubah ini di pengaturan data.",
+    "pointedAtExamples": "Tampilan Anda sekarang membaca contoh log dan latihan. Ubah ini di pengaturan data.",
     "usesSeparateLog": "Anda sudah memiliki log latihan, jadi file tersebut tidak dimodifikasi. Contoh-contoh menggunakan file log mereka sendiri."
   },
   "forms": {
@@ -366,7 +391,7 @@
   },
   "general": {
     "avgReps": "Rata-rata repetisi",
-    "back": "Kembali",
+    "back": "Belakang",
     "currentFile": "File saat ini",
     "dashboard": "Dasbor",
     "delete": "Hapus",
@@ -427,10 +452,10 @@
     "noDataPeriod": "Tidak ada data latihan yang ditemukan untuk periode waktu yang dipilih.",
     "noImbalances": "Tidak ditemukan ketidakseimbangan",
     "success": {
-      "blockIdsAdded": "Menambahkan {count} ID yang hilang di {files} file",
+      "blockIdsAdded": "Ditambahkan {count} ID yang hilang di {files} file",
       "csvCreated": "File CSV berhasil dibuat!",
       "noBlockIdsNeeded": "Semua blok kode sudah memiliki ID.",
-      "weightUnitsStamped": "Menyimpan satuan berat pada {count} log yang lebih lama."
+      "weightUnitsStamped": "Satuan berat disimpan pada {count} log lama"
     },
     "tagReferenceGenerated": "Referensi tag berhasil dibuat!",
     "timerCompleted": "Timer selesai!",
@@ -479,9 +504,10 @@
       "updateTimer": "Perbarui timer",
       "decreaseBy": "Kurangi {label} sebesar {increment}",
       "increaseBy": "Tambah {label} sebesar {increment}",
-      "deleteSet": "Hapus set"
+      "deleteSet": "Hapus set",
+      "updateDashboard": "Perbarui dasbor"
     },
-    "canvasLayout": "Tata Letak",
+    "canvasLayout": "Tata letak",
     "canvasOptions": "Pilihan",
     "checkboxes": {
       "connectSupersets": "Hubungkan superset",
@@ -593,7 +619,7 @@
       "validMinValue": "{field} harus minimal {min}",
       "validMaxValue": "{field} harus paling banyak {max}",
       "validFieldRequired": "{field} wajib diisi",
-      "migrationNoUpdates": "Semua halaman latihan sudah yang terbaru",
+      "migrationNoUpdates": "Semua halaman latihan sudah terbaru",
       "validMustBeWholeNumber": "{field} harus berupa bilangan bulat",
       "newRecord": "Rekor baru: {weight} {unit} (+{increase} {unit})",
       "chartInserted": "Grafik berhasil ditambahkan!",
@@ -605,7 +631,9 @@
       "timerInserted": "Timer berhasil ditambahkan!",
       "timerUpdated": "Timer telah diperbarui dengan sukses!",
       "validChooseExercise": "Pilih latihan",
-      "validationCombinedMode": "Untuk jenis 'olahraga + latihan', Anda harus mengisi kedua kolom!"
+      "validationCombinedMode": "Untuk jenis 'latihan + sesi latihan', Anda harus mengisi kedua kolom!",
+      "dashboardUpdated": "Dasbor berhasil diperbarui!",
+      "dashboardUpdateFailed": "Gagal memperbarui dasbor. Pastikan file terbuka di editor."
     },
     "parameterKey": "Kunci:",
     "parameterLabel": "Label:",
@@ -617,8 +645,8 @@
       "enterTagName": "Masukkan nama tag (misalnya, dada, petto)",
       "exerciseAutocomplete": "Mulai ketik untuk melihat daftar latihan yang tersedia...",
       "folderPath": "misalnya, Latihan atau biarkan kosong untuk direktori utama",
-      "note": "Dorong sekuat mungkin di sini. Ini adalah latihan dasar Anda.",
-      "notes": "misalnya, Bentuk yang baik, merasa kuat",
+      "note": "Berikan usaha maksimal di sini. Ini adalah latihan dasar Anda.",
+      "notes": "misalnya, Teknik bagus, terasa kuat",
       "parameterKey": "misalnya, kecepatan",
       "parameterLabel": "misalnya, Kecepatan",
       "parameterUnit": "misalnya, km/jam",
@@ -629,7 +657,7 @@
       "selectMuscleGroup": "Pilih kelompok otot...",
       "selectWorkoutFile": "Pilih file latihan untuk diekspor...",
       "sets": "4",
-      "workout": "Contohnya: Latihan A, Pelatihan B, atau gunakan kotak centang di bawah"
+      "workout": "Contohnya: Latihan A, Latihan B, atau gunakan kotak centang di bawah"
     },
     "protocol": "Protokol:",
     "recentExercises": "Terbaru:",
@@ -648,7 +676,7 @@
       "tableType": "Jenis tabel",
       "target": "Target",
       "workout": "Latihan",
-      "mobileOptions": "Latihan dan program olahraga terbaru"
+      "mobileOptions": "Latihan terbaru dan sesi latihan"
     },
     "selectOptions": {
       "allLogs": "Semua catatan",
@@ -657,7 +685,7 @@
       "custom": "Khusus",
       "distance": "Jarak",
       "dropSet": "Drop set",
-      "exerciseWorkout": "Gerakan dalam sesi latihan",
+      "exerciseWorkout": "Latihan dalam sesi latihan",
       "myoReps": "Myo reps",
       "number": "Angka",
       "restPause": "Rest-pause",
@@ -695,7 +723,8 @@
       "insertDuration": "Sisipkan durasi latihan",
       "insertTable": "Sisipkan tabel log latihan",
       "insertTimer": "Sisipkan timer latihan",
-      "muscleTagManager": "Kelola tag otot"
+      "muscleTagManager": "Kelola tag otot",
+      "editDashboard": "Sunting dasbor"
     },
     "workout": "Latihan (opsional):",
     "workoutFile": "File latihan:",
@@ -712,7 +741,7 @@
     "noteTemplate": "**Catatan: {note}**\n",
     "date": "Tanggal",
     "weightUnitToggle": "Satuan untuk entri ini",
-    "work": "Bekerja",
+    "work": "Kerja",
     "rest": "Istirahat"
   },
   "settings": {
@@ -749,7 +778,7 @@
       "presetRoundsDesc": "Jumlah putaran interval yang akan dilalui sebelum berhenti.",
       "protocolAbbreviation": "Singkatan singkat yang ditampilkan pada badge (maksimal 3 karakter)",
       "protocolColor": "Warna latar belakang badge (format heksadesimal, contoh: #FF5733)",
-      "quickWeightIncrement": "Nilai penambahan berat yang digunakan oleh tombol + dan - pada modal penciptaan/pengeditan log latihan (misalnya, 2,5 untuk penambahan/pengurangan 2,5 unit).",
+      "quickWeightIncrement": "Nilai penambahan berat yang digunakan oleh tombol + dan - pada modal pembuatan/pengeditan log latihan (misalnya, 2,5 untuk penambahan/pengurangan 2,5 unit).",
       "repDuration": "Perkiraan waktu untuk melakukan satu repetisi. Digunakan ketika jumlah repetisi diketahui (misalnya, 'x 10 repetisi').",
       "runAllMaintenance": "Jalankan semua tugas pemeliharaan secara berurutan. Aman untuk dijalankan beberapa kali.",
       "setDuration": "Digunakan ketika jumlah repetisi tidak ditentukan (sebagai cadangan). Rentang yang umum: 30-60 detik.",
@@ -757,12 +786,12 @@
       "weightIncrement": "Nilai penambahan berat default untuk progressive overload (misalnya, 2,5 untuk penambahan sebesar 2,5 unit)",
       "showRibbonIcon": "Tampilkan ikon dumbel di ribbon yang membuka formulir catatan latihan",
       "weightUnit": "Satuan untuk grafik, total, dan log baru. Setiap log mempertahankan satuan tempat data tersebut dimasukkan.",
-      "takeTour": "Berikan penjelasan singkat tentang cara menggunakan fitur pencatatan, grafik, tabel, dan timer.",
+      "takeTour": "Jalani tur singkat tentang pencatatan, grafik, tabel, dan timer pada sebuah catatan.",
       "welcomeWindow": "Tampilkan kembali jendela selamat datang untuk memulai dengan data contoh atau dari awal.",
       "keepScreenAwake": "Usahakan untuk menjaga layar tetap menyala saat ada timer yang berjalan di latar depan. Menggunakan lebih banyak baterai; ketersediaan tergantung pada perangkat dan pengaturan sistem Anda.",
       "vibrateOnCompletion": "Bergetar sebentar saat timer selesai, terlepas dari suara. Membutuhkan sentuhan pada halaman dan perangkat yang didukung (seperti Android). Tidak tersedia di iOS; tidak ada notifikasi latar belakang.",
       "presetRestDesc": "Detik istirahat setelah menyelesaikan setiap putaran (0 untuk tidak ada istirahat).",
-      "noCustomProtocols": "Belum ada protokol yang dibuat. Klik 'Tambah protokol' untuk membuatnya."
+      "noCustomProtocols": "Belum ada protokol. Klik 'Tambahkan protokol' untuk membuatnya."
     },
     "labels": {
       "csvPath": "Jalur file log CSV",
@@ -781,7 +810,7 @@
       "protocolAbbreviation": "Singkatan",
       "protocolColor": "Warna badge",
       "protocolName": "Nama protokol",
-      "repDuration": "Durasi per pengulangan (detik)",
+      "repDuration": "Durasi per repetisi (detik)",
       "runAllMaintenance": "Jalankan semua tugas pemeliharaan",
       "setDuration": "Durasi set cadangan (detik)",
       "setupCSV": "Siapkan file CSV",
@@ -791,22 +820,22 @@
       "takeTour": "Tur berpemandu",
       "keepScreenAwake": "Jaga layar tetap menyala saat timer berjalan",
       "vibrateOnCompletion": "Bergetar saat timer selesai",
-      "presetRest": "Pengaturan"
+      "presetRest": "Istirahat"
     },
     "messages": {
       "confirmDeletePreset": "Apakah Anda yakin ingin menghapus preset ini?",
       "confirmDeleteProtocol": "Apakah Anda yakin ingin menghapus protokol ini?",
       "csvFilesCreated": "Berkas CSV berhasil dibuat!",
       "presetDeleted": "Preset dihapus",
-      "presetNameExists": "Terdapat preset dengan nama ini yang sudah ada.",
+      "presetNameExists": "Preset dengan nama ini sudah ada",
       "presetNameRequired": "Nama preset diperlukan",
       "presetSaved": "Preset disimpan",
       "protocolAbbreviationRequired": "Singkatan diperlukan (maksimal 3 karakter)",
       "protocolColorRequired": "Mohon masukkan kode warna heksadesimal yang valid (misalnya, #FF5733)",
-      "protocolDeleted": "Protokol telah dihapus",
-      "protocolNameExists": "Ada protokol dengan nama ini yang sudah ada.",
+      "protocolDeleted": "Protokol dihapus",
+      "protocolNameExists": "Protokol dengan nama ini sudah ada",
       "protocolNameRequired": "Nama protokol diperlukan",
-      "protocolSaved": "Protokol tersimpan",
+      "protocolSaved": "Protokol disimpan",
       "weightUnitChangeFailed": "Gagal mengubah satuan berat: {error}"
     },
     "options": {
@@ -838,17 +867,17 @@
       "deletePreset": "Hapus preset",
       "deleteProtocol": "Hapus protokol",
       "editPreset": "Sunting preset",
-      "editProtocol": "Ubah protokol"
+      "editProtocol": "Sunting protokol"
     },
     "validation": {
-      "csvFolderNotFound": "Folder tidak ditemukan di penyimpanan. Jalankan Setup CSV untuk membuatnya.",
+      "csvFolderNotFound": "Folder tidak ditemukan di vault. Jalankan Setup CSV untuk membuatnya.",
       "csvPathEmpty": "Jalur tidak boleh kosong",
       "mustBeNonNegative": "Harus berupa 0 atau lebih besar",
       "mustBePositive": "Harus lebih besar dari 0"
     },
     "protocolHelp": {
-      "warmup": "Latihan ringan dilakukan sebelum latihan berat. Latihan ini tidak dihitung sebagai bagian dari rekor pribadi.",
-      "dropSet": "Kurangi beban segera setelah gagal dan terus lakukan. Serangkaian penurunan beban tidak dihitung sebagai rekor pribadi.",
+      "warmup": "Set ringan sebelum set kerja. Set ini tidak dihitung dalam rekor pribadi.",
+      "dropSet": "Kurangi beban segera setelah gagal dan lanjutkan. Set penurunan beban tidak dihitung sebagai rekor pribadi.",
       "myoReps": "Satu set aktivasi, kemudian set mini pendek dengan jeda beberapa detik.",
       "restPause": "Istirahat selama beberapa detik setelah kegagalan, lalu lakukan beberapa repetisi lagi.",
       "superset": "Dua latihan secara berurutan, tanpa jeda istirahat di antaranya.",
@@ -856,7 +885,7 @@
     },
     "presetHelp": {
       "tabata": "20 detik kerja maksimal, 10 detik istirahat, 8 putaran: total 4 menit.",
-      "emom": "Setiap menit penuh: mulai latihan Anda di awal setiap menit dan istirahat selama sisa waktu, sebanyak 10 set."
+      "emom": "Setiap menit penuh: mulai repetisi Anda di awal setiap menit dan istirahat selama sisa waktunya, 10 putaran."
     }
   },
   "stats": {
@@ -864,9 +893,9 @@
     "min": "Min: ",
     "recentLast3": " (3 terakhir)",
     "recentTrend": "Tren terbaru",
-    "recentVsPrev": " (vs sblm.)",
+    "recentVsPrev": " (vs sebelumnya)",
     "sessions": "Sesi",
-    "average": "Rata-rata:",
+    "average": "Rata-rata: ",
     "title": "{dataTypeLabel} statistik ({contextLabel}):"
   },
   "table": {
@@ -887,7 +916,7 @@
     "columns": {
       "distanceUnit": "Jarak ({distanceUnit})",
       "duration": "Dur",
-      "heartRate": "Detak Jantung",
+      "heartRate": "DJ",
       "pace": "Kecepatan",
       "reps": "Rep",
       "volumeUnit": "Volume ({weightUnit})",
@@ -913,7 +942,7 @@
     },
     "trendLine": "Garis tren",
     "refreshingTable": "Menyegarkan tabel...",
-    "setCount": "{count} mengatur",
+    "setCount": "{count} set",
     "deleteSetMessage": "{set} akan dihapus dari log Anda. Ini tidak dapat dibatalkan.",
     "deleteSetTitle": "Hapus set ini?"
   },
@@ -938,7 +967,7 @@
     "stopwatch": "Stopwatch",
     "phase": {
       "rest": "Istirahat",
-      "work": "Bekerja"
+      "work": "Kerja"
     },
     "round": "Putaran {current} dari {total}",
     "status": {
@@ -974,14 +1003,15 @@
       "title": "Parameter tidak valid:",
       "notANumber": "{key} harus berupa angka, tetapi sekarang \"{value}\"",
       "tooSmall": "{key} harus berupa {min} atau lebih, tetapi saat ini {value}",
-      "outOfRange": "{key} harus berada di antara {min} dan {max}, tetapi nilainya adalah {value}.",
+      "outOfRange": "{key} harus berada di antara {min} dan {max}, tetapi nilainya adalah {value}",
       "notABoolean": "{key} harus berupa benar atau salah, tetapi saat ini bernilai \"{value}\"",
-      "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\""
+      "notOneOf": "{key} harus berupa salah satu dari {allowed}, tetapi sekarang \"{value}\"",
+      "notACell": "{key} harus berupa empat bilangan bulat mulai dari 1 (kolom, baris, lebar, tinggi), tetapi nilainya \"{value}\""
     }
   },
   "welcome": {
     "title": "Selamat datang di plugin latihan",
-    "intro": "Lacak kemajuan Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
+    "intro": "Catat set Anda, lalu lihat dalam bentuk grafik, tabel, dan dasbor. Bagaimana Anda ingin memulai?",
     "tryExamples": "Coba dengan data contoh",
     "startScratch": "Mulai dari awal",
     "later": "Nanti",
@@ -997,23 +1027,23 @@
     "progress": "{current} dari {total}",
     "noteName": "Tur berpemandu",
     "noteIntro": "Panduan tur ini menunjuk ke setiap bagian dari plugin di halaman ini. Edit atau hapus catatan ini kapan pun Anda mau.",
-    "noteTable": "Koleksi Anda",
+    "noteTable": "Set Anda",
     "noteChart": "Kemajuan",
     "noteDashboard": "Dasbor",
     "noteTimer": "Timer istirahat",
     "steps": {
       "logSet": {
         "title": "Catat set pertama Anda",
-        "text": "Tekan tombol \"+\" untuk membuka formulir, lalu simpan satu set. Formulir tersebut akan langsung muncul di tabel."
+        "text": "Tekan tombol \"+\" untuk membuka formulir, lalu simpan satu set. Set tersebut akan langsung muncul di tabel."
       },
       "rowActions": {
-        "title": "Edit atau hapus satu set",
-        "mobileText": "Ketuk sebuah set untuk memperbaikinya. Untuk menghapusnya, gunakan opsi \"Hapus Set\" pada formulir yang terbuka.",
-        "text": "Gunakan pensil pada satu baris untuk mengatur set. Untuk menghapusnya, gunakan opsi \"Hapus Set\" pada formulir yang terbuka."
+        "title": "Sunting atau hapus set",
+        "mobileText": "Ketuk sebuah set untuk memperbaikinya. Untuk menghapusnya, gunakan opsi \"Hapus set\" pada formulir yang terbuka.",
+        "text": "Gunakan ikon pensil pada satu baris untuk menyunting set. Untuk menghapusnya, gunakan opsi \"Hapus set\" pada formulir yang terbuka."
       },
       "chart": {
         "title": "Kemajuan Anda",
-        "text": "Grafik ini menunjukkan bagaimana suatu aktivitas berubah seiring waktu, dengan garis tren dan statistik.",
+        "text": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu, dengan garis tren dan statistik.",
         "textMine": "Grafik ini menunjukkan bagaimana suatu latihan berubah seiring waktu. Grafik ini hampir kosong hingga Anda mencatat beberapa set latihan.",
         "mobileText": "Di ponsel, grafik ditampilkan sebagai tabel dengan angka yang sama.",
         "mobileTextMine": "Di ponsel, grafik ditampilkan sebagai tabel. Grafik ini hampir kosong sampai Anda mencatat beberapa set data."
@@ -1024,17 +1054,17 @@
         "textMine": "Total, tren volume, dan latihan terbaru. Informasi ini akan terisi saat Anda mencatat lebih banyak set latihan."
       },
       "timer": {
-        "title": "Hentikan timer",
+        "title": "Timer istirahat",
         "text": "Tekan tombol \"mulai\" untuk menjalankan hitungan mundur antar set."
       },
       "ribbon": {
         "title": "Catat dari catatan apa pun",
         "text": "Ikon dumbbell pada ribbon membuka formulir log dari mana saja.",
-        "mobileText": "Di ponsel, tidak ada ikon pita di sini. Gunakan palet perintah untuk membuka formulir log dari catatan mana pun."
+        "mobileText": "Di ponsel, tidak ada ikon ribbon di sini. Gunakan palet perintah untuk membuka formulir log dari catatan mana pun."
       },
       "commands": {
         "title": "Masukkan perintah",
-        "text": "Buka palet perintah dan jalankan perintah \"Sisipkan Latihan\" untuk menambahkan tabel, grafik, timer, atau dasbor ke dalam catatan."
+        "text": "Buka palet perintah dan jalankan perintah \"Sisipkan\" (misalnya \"Sisipkan timer latihan\") untuk menambahkan tabel, grafik, timer, atau dasbor ke dalam catatan."
       },
       "end": {
         "title": "Anda sudah siap",
@@ -1049,19 +1079,19 @@
   },
   "import": {
     "chooseFile": "Pilih file CSV",
-    "notAnExport": "File ini bukanlah ekspor yang kuat atau berat.",
+    "notAnExport": "File ini bukan ekspor dari Strong atau Hevy.",
     "noSets": "Tidak ada set data yang dapat dibaca dari file ini. Pastikan bahwa file tersebut adalah file CSV yang diekspor oleh aplikasi, tanpa perubahan.",
-    "readError": "Tidak dapat membaca berkas: {error}",
+    "readError": "Tidak dapat membaca file: {error}",
     "source": "Ekspor dari {source}",
     "setsFound": "Set yang ada dalam file: {count}",
     "setsToAdd": "Set yang akan ditambahkan: {count}",
     "duplicates": "Sudah tercatat dalam log Anda, dilewati: {count}",
     "dateRange": "Hari pelatihan: {first} hingga {last}",
     "newExercises": "Latihan tanpa halaman: {exercises}",
-    "nothingToAdd": "Setiap entri dalam file ini sudah tercatat dalam log Anda.",
+    "nothingToAdd": "Setiap set dalam file ini sudah tercatat dalam log Anda.",
     "backupNote": "Log Anda dicadangkan sebelum set ditambahkan.",
-    "importButton": "Impor kumpulan",
-    "imported": "Impor berhasil. Item yang ditambahkan: {count}",
+    "importButton": "Impor set",
+    "imported": "Impor selesai. Set yang ditambahkan: {count}",
     "error": "Gagal mengimpor: {error}",
     "title": "Impor dari Strong atau Hevy",
     "intro": "Pilih file CSV dari data latihan yang diekspor oleh aplikasi. Tidak ada yang akan ditulis sampai Anda mengonfirmasi."

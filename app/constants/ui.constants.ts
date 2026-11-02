@@ -606,6 +606,7 @@ export const ICONS = {
     MOVE_UP: "arrow-up",
     MOVE_DOWN: "arrow-down",
     DRAG: "grip-vertical",
+    REMOVE: "x",
   },
   STATUS: {
     INFO: "info",

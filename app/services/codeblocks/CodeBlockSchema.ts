@@ -32,6 +32,17 @@ interface ListField<V extends string = string> {
   values?: readonly V[];
   default?: V[];
 }
+/** A rectangle of grid cells, 1-based: `column row width height` */
+export interface CellValue {
+  column: number;
+  row: number;
+  width: number;
+  height: number;
+}
+interface CellField {
+  kind: "cell";
+  default?: CellValue;
+}
 /** A number (pixels) or a CSS length such as `50vh` */
 interface SizeField {
   kind: "size";
@@ -44,6 +55,7 @@ export type FieldSpec =
   | BooleanField
   | EnumField
   | ListField
+  | CellField
   | SizeField;
 
 type FieldValue<F> = F extends EnumField<infer V>
@@ -56,6 +68,8 @@ type FieldValue<F> = F extends EnumField<infer V>
         ? boolean
         : F extends ListField<infer V>
           ? V[]
+          : F extends CellField
+            ? CellValue
           : F extends SizeField
             ? number | string
             : never;
@@ -276,6 +290,18 @@ function readValue(
       }
       return { value: values };
     }
+    case "cell": {
+      const parts = value.split(/\s+/);
+      const numbers = parts.map(Number);
+      if (
+        parts.length !== 4 ||
+        !numbers.every((num) => Number.isInteger(num) && num >= 1)
+      ) {
+        return { error: t("codeBlocks.validation.notACell", { key, value }) };
+      }
+      const [column, row, width, height] = numbers;
+      return { value: { column, row, width, height } };
+    }
     case "size": {
       const num = Number(value);
       return { value: value !== "" && Number.isFinite(num) ? num : value };
@@ -303,5 +329,10 @@ function readChoice(
 }
 
 function writeValue(value: unknown): string {
-  return Array.isArray(value) ? `[${value.join(", ")}]` : String(value);
+  if (Array.isArray(value)) return `[${value.join(", ")}]`;
+  if (typeof value === "object" && value !== null) {
+    const { column, row, width, height } = value as CellValue;
+    return `${column} ${row} ${width} ${height}`;
+  }
+  return String(value);
 }

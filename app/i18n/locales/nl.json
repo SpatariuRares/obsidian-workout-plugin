@@ -176,6 +176,31 @@
         "backDominant": "Asymmetrie voor-achter: uw achterspieren werken veel meer dan uw voorspieren.",
         "frontDominant": "Onevenwichtigheid: uw voorste spieren werken veel meer dan uw achterste spieren."
       }
+    },
+    "editDashboard": "Dashboard bewerken",
+    "modal": {
+      "widgets": "Widgets",
+      "widgetsHint": "Vink de widgets aan die je wilt tonen. Sleep ze via het handvat of gebruik de pijlen om de volgorde te wijzigen.",
+      "moveUp": "{widget} omhoog verplaatsen",
+      "moveDown": "{widget} omlaag verplaatsen",
+      "allHistory": "Leeg: alle geschiedenis",
+      "recentWorkoutsLimit": "Aantal trainingen in de recente lijst:",
+      "volumeTrendDays": "Aantal dagen in de volumetrend:",
+      "gridColumns": "Kolommen:",
+      "layout": "Indeling",
+      "layoutGrid": "Raster",
+      "layoutList": "Lijst",
+      "stash": "Niet op het dashboard",
+      "stashEmpty": "Alle widgets staan op het dashboard",
+      "tile": "{widget}: kolom {column}, rij {row}, {width} breed, {height} hoog",
+      "minOneColumn": "Min. 1 kolom",
+      "minColumns": "Min. {columns} kolommen",
+      "size": "{width} × {height}"
+    },
+    "grid": {
+      "outside": "{widget} gaat voorbij de {columns} kolommen van het raster",
+      "narrow": "{widget} heeft minimaal {min} kolommen nodig",
+      "overlap": "{widget} overlapt {other}"
     }
   },
   "duration": {
@@ -479,7 +504,8 @@
       "updateTimer": "Timer bijwerken",
       "decreaseBy": "{label} met {increment} verlagen",
       "increaseBy": "{label} met {increment} verhogen",
-      "deleteSet": "Verwijder set"
+      "deleteSet": "Verwijder set",
+      "updateDashboard": "Dashboard bijwerken"
     },
     "canvasLayout": "Lay-out",
     "canvasOptions": "Opties",
@@ -605,7 +631,9 @@
       "timerInserted": "Timer is succesvol geïnstalleerd!",
       "timerUpdated": "Timer is succesvol bijgewerkt!",
       "validChooseExercise": "Kies een oefening",
-      "validationCombinedMode": "Voor het type 'oefening + training' moet u beide velden invullen!"
+      "validationCombinedMode": "Voor het type 'oefening + training' moet u beide velden invullen!",
+      "dashboardUpdated": "Dashboard succesvol bijgewerkt!",
+      "dashboardUpdateFailed": "Dashboard bijwerken mislukt. Zorg dat het bestand in de editor geopend is."
     },
     "parameterKey": "Sleutel:",
     "parameterLabel": "Label:",
@@ -695,7 +723,8 @@
       "insertDuration": "Trainingsduur invoegen",
       "insertTable": "Trainingslogtabel invoegen",
       "insertTimer": "Trainingstimer invoegen",
-      "muscleTagManager": "Spierlabels beheren"
+      "muscleTagManager": "Spierlabels beheren",
+      "editDashboard": "Dashboard bewerken"
     },
     "workout": "Training (optioneel):",
     "workoutFile": "Trainingsbestand:",
@@ -976,7 +1005,8 @@
       "tooSmall": "{key} moet {min} of meer zijn, maar het is {value}",
       "outOfRange": "{key} moet tussen {min} en {max} liggen, maar het is {value}.",
       "notABoolean": "{key} moet waar of onwaar zijn, maar het is \"{value}\".",
-      "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\""
+      "notOneOf": "{key} moet één van {allowed} zijn, maar het is \"{value}\"",
+      "notACell": "{key} moet vier gehele getallen vanaf 1 zijn (kolom, rij, breedte, hoogte), maar is \"{value}\""
     }
   },
   "welcome": {
